@@ -1,0 +1,161 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ov-wips-rogue-policy — DT00XTE317 · OmniVista Cirrus / Terra 部署与配置</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE317 · OmniVista Cirrus / Terra 部署与配置</h1>
+<div class="sub">Edition 10 · 478 页 · 云管与本地部署平台</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">平台部署与开通</div>
+<a href="skills/ov-terra-deploy.html">ov-terra-deploy</a>
+<a href="skills/ov-license-org-onboarding.html">ov-license-org-onboarding</a>
+<div class="grp">设备纳管与激活</div>
+<a href="skills/ov-device-activation-troubleshoot.html">ov-device-activation-troubleshoot</a>
+<div class="grp">SSID / 策略 / 认证设计</div>
+<a href="skills/ov-ssid-psk-selection.html">ov-ssid-psk-selection</a>
+<a href="skills/ov-policy-bandwidth-design.html">ov-policy-bandwidth-design</a>
+<a href="skills/ov-wired-auth-config.html">ov-wired-auth-config</a>
+<div class="grp">RF / 漫游 / 安全 / 特殊组网</div>
+<a href="skills/ov-rf-tuning.html">ov-rf-tuning</a>
+<a href="skills/ov-roaming-troubleshoot.html">ov-roaming-troubleshoot</a>
+<a href="skills/ov-wips-rogue-policy.html" class="on">ov-wips-rogue-policy</a>
+<a href="skills/ov-mesh-bridge-rap.html">ov-mesh-bridge-rap</a></aside><main><h1>ov-wips-rogue-policy</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: WIPS, p381-390</p><h1 id="wips-rogue-omnivista">WIPS 三分类与 Rogue 策略（OmniVista 无线入侵防护）</h1>
+<h2 id="r-reading">R — 原文 (Reading)</h2>
+<blockquote>
+<p>"Interfering AP: Any other APs discovered over the air... Rogue AP: Based on the Rogue AP Policy... Friendly AP is not reported as Interfering or Rogue"（p384）
+"Signal Strength Threshold... Default: –70 dbm; Range -50 to -90 dbm"（p385）</p>
+<p>— ALE Training, WIPS (p381-390)</p>
+</blockquote>
+<hr />
+<h2 id="i-interpretation">I — 方法论骨架 (Interpretation)</h2>
+<p>WIPS 是一个"默认宽松、逐级升级"的分类决策模型：</p>
+<ol>
+<li><strong>三分类基线</strong>：空中发现的一切外部 AP（本 OVC 管理的除外）默认归为 <strong>Interfering</strong>（仅干扰，不上纲）；命中 Rogue Policy 任一条才升级为 <strong>Rogue</strong>；手工或按 OUI（默认含 ALE OUI）标记为 <strong>Friendly</strong> 的不再上报。</li>
+<li><strong>Rogue 判定四策略</strong>（任一命中即 Rogue）：① 信号强度超门限（默认 -70dBm，范围 -50~-90）；② 广播了本网配置的有效 SSID（仿冒/钓鱼）；③ SSID 名命中关键字黑名单；④ MAC OUI 命中 Rogue OUI 列表。</li>
+<li><strong>处置动作</strong>：Rogue Containment 默认启用——扫描 AP 向 Rogue 的关联客户端发 de-auth 反制；攻击检测（AP/Client Attack Detection）默认开启，灵敏度分 Custom/High/Medium/Low；Client Blocklist 默认关闭。</li>
+<li><strong>前提依赖</strong>：WIPS 依赖 AP 开启背景扫描（默认间隔 20s/时长 50ms）；扫描期间该射频无 802.11 数据，参数是安全/性能权衡。</li>
+</ol>
+<hr />
+<h2 id="a1-past-application">A1 — 书中的应用 (Past Application)</h2>
+<h3 id="1-rogue-p381-389">案例 1: Rogue 识别与抑制全流程（p381-389）</h3>
+<ul>
+<li><strong>问题</strong>: 网络中发现外部 AP，如何判定危害并自动反制。</li>
+<li><strong>方法论的使用</strong>: 按分类模型走——外部 AP 先落 Interfering；若它广播了本网合法 SSID（Detect Valid SSID 策略）或信号强于 -70dBm，则升 Rogue；Rogue Containment 自动向其关联客户端发 de-auth；WIPS Summary 查看 Rogue AP/客户端关联与 Top N Attacks。</li>
+<li><strong>结论</strong>: 分类是策略驱动的，不是"看见外部 AP 就抓"；调门限即可控制误报/漏报。</li>
+<li><strong>结果</strong>: 非法 AP 被自动抑制，攻击可审计。</li>
+</ul>
+<h3 id="2-ap-ap-rogue">案例 2: 友商/邻居 AP 的定性（"友商 AP 在隔壁算不算 Rogue"）</h3>
+<ul>
+<li><strong>问题</strong>: 隔壁公司或友商的合法 AP 被检出，客户不想被反复告警。</li>
+<li><strong>方法论的使用</strong>: 该 AP 未命中四策略时只是 Interfering；若担心业务干扰或不想上报，按 OUI（如 ALE OUI 默认友好）或手工标记 Friendly。</li>
+<li><strong>结论/结果</strong>: Friendly 不再以 Interfering/Rogue 上报，告警噪音消除。</li>
+</ul>
+<hr />
+<h2 id="a2-future-trigger">A2 — 触发场景 (Future Trigger) ★</h2>
+<h3 id="skill">用户会在什么情境下需要这个 skill?</h3>
+<ol>
+<li>安全巡检发现外部 AP/私装 AP，客户问"这算不算 Rogue、要不要反制"。</li>
+<li>出现钓鱼/仿冒 SSID（同名或近似企业 SSID），需要触发 Rogue 判定与 containment。</li>
+<li>Rogue 误报太多（把邻居/友商 AP 判成 Rogue）或漏报，需要调整四策略与 -70dBm 门限。</li>
+<li>WIPS 攻击告警处置：级别怎么选（Custom/High/Medium/Low）、要不要拉黑攻击源 MAC。</li>
+<li>开 WIPS 前评估背景扫描对客户端性能的影响。</li>
+</ol>
+<h3 id="_1">语言信号 (用户的话里出现这些就应激活)</h3>
+<ul>
+<li>"发现一个不明 AP / 私接的 AP / rogue AP 怎么处理"</li>
+<li>"隔壁公司的 AP 被报成 Rogue 了 / 误报"</li>
+<li>"有人搭了同名 SSID 钓鱼 / spoofed SSID"</li>
+<li>"rogue containment / de-auth 反制是什么、默认开吗"</li>
+<li>"攻击源 MAC 拉黑了怎么没用 / blocklist"</li>
+</ul>
+<h3 id="skill_1">与相邻 skill 的区分</h3>
+<ul>
+<li>与 <code><a href="ov-rf-tuning.html">ov-rf-tuning</a></code> 的区别: RF 调优处理空口质量（信道/功率/负载/扫描参数的性能面）；本 skill 处理"外部设备的安全定性与反制"。背景扫描参数两边都涉及：性能诉求走 RF 调优，检测保真诉求归本 skill。</li>
+<li>与 <code><a href="ov-ssid-psk-selection.html">ov-ssid-psk-selection</a></code> 的区别: SSID 选型管自家网络安全级别；本 skill 管别家 AP 的发现与处置。仿冒 SSID 事件的"根因加固"（如换 802.1X）可衔接 SSID 选型。</li>
+<li>与 <code><a href="ov-device-activation-troubleshoot.html">ov-device-activation-troubleshoot</a></code> 的区别: 设备上线/纳管问题与 WIPS 无关。</li>
+</ul>
+<hr />
+<h2 id="e-execution">E — 可执行步骤 (Execution)</h2>
+<p>当 skill 被激活后, agent 应按以下步骤执行:</p>
+<ol>
+<li><strong>定性目标 AP</strong></li>
+<li>逐条核对四策略：信号强度是否超门限（对照当前配置，默认 -70dBm）？是否广播本网有效 SSID？SSID 名是否命中关键字黑名单？MAC OUI 是否命中 Rogue OUI？输出分类结论：Interfering / Rogue / 建议标记 Friendly。</li>
+<li>完成标准: 给出分类结论 + 命中/未命中的具体策略项。</li>
+<li><strong>选择处置动作</strong></li>
+<li>Rogue → 确认 Rogue Containment（默认启用，de-auth 反制）符合客户意愿（注意反制的法律/邻居影响）；误报 → 调门限（-50~-90）、精简关键字/OUI，或将可信 AP 标记 Friendly；攻击告警 → 按需求选检测级别，攻击源是否拉黑先判断 MAC 类型。</li>
+<li>完成标准: 处置动作明确（配置路径 + 参数值），误报类问题给出策略修正建议。</li>
+<li><strong>验证与评估前提</strong></li>
+<li>确认相关 AP 已开启背景扫描（WIPS 前提）；验证路径：WIPS Summary 看 Rogue AP/客户端关联、Blocklist、Top N Attacks；评估扫描参数对性能的影响（保持默认 20s/50ms，必要时专用扫描 AP 或 Voice/Video Awareness）。</li>
+<li>完成标准: 输出验证方法 + 性能影响说明。</li>
+</ol>
+<hr />
+<h2 id="b-boundary">B — 边界 (Boundary) ★</h2>
+<h3 id="skill_2">不要在以下情况使用此 skill</h3>
+<ul>
+<li>纯空口质量优化（信道冲突、吞吐、负载均衡）：走 <code><a href="ov-rf-tuning.html">ov-rf-tuning</a></code>，发现"外部 AP 干扰"本身不等于安全事件。</li>
+<li>自家 SSID 的认证/加密加固选型：走 <code><a href="ov-ssid-psk-selection.html">ov-ssid-psk-selection</a></code>。</li>
+<li>有线侧准入与认证：走 <code><a href="ov-wired-auth-config.html">ov-wired-auth-config</a></code>。</li>
+</ul>
+<h3 id="_2">作者在书中警告的失败模式</h3>
+<ul>
+<li><strong>Blocklist 限制</strong>（ce19, p387）: 攻击源 MAC 可能是 AP MAC、BSSID 或网卡 MAC；blocklist 只对"真实无线客户端"的源 MAC 有意义（阻断的是关联行为），默认关闭，可配时效。盲目拉黑非客户端 MAC 无效果。</li>
+<li><strong>扫描即代价</strong>（ce15, p373/376）: 扫描期间无 802.11 数据；间隔↑或时长↓ = 漏检↑但性能↑。为灵敏检测收紧扫描会伤客户端吞吐；关闭扫描即失去 WIPS。</li>
+<li><strong>Containment 是主动反制</strong>: 默认启用并向 Rogue 的客户端发 de-auth，波及邻居网络时需客户知情（书中未展开法律边界，属盲点）。</li>
+</ul>
+<h3 id="_3">作者的盲点 / 时代局限</h3>
+<ul>
+<li>未讨论 containment 误伤（把合法邻居网反制）的法律/合规风险；未覆盖 6GHz 频段扫描特性。</li>
+</ul>
+<h3 id="_4">容易混淆的邻近方法论</h3>
+<ul>
+<li>Interfering（默认分类，只代表"空中可见的外部 AP"）≠ Rogue（命中策略才升级）≠ Friendly（白名单）——用户口语中"干扰 AP/非法 AP"常混称，需先按四策略定性再谈处置。</li>
+</ul>
+<hr />
+<h2 id="skills-3">相关 skills (阶段 3 填充)</h2>
+<ul>
+<li>composes-with <code><a href="ov-rf-tuning.html">ov-rf-tuning</a></code>: WIPS 硬依赖背景扫描（默认 20s/50ms）——扫描即代价（扫描期间无 802.11 数据）。性能权衡调参走 RF 调优，检测保真与 Rogue 判定归本 skill，高保真检测用专用扫描 AP 或 Voice/Video Awareness。</li>
+<li>composes-with <code><a href="ov-ssid-psk-selection.html">ov-ssid-psk-selection</a></code>: 仿冒/钓鱼 SSID 事件的安全定性（升 Rogue + containment）归本 skill；根因加固（如换 802.1X、提高 SSID 安全档位）衔接选型 skill。</li>
+<li>composes-with <code><a href="ov-mesh-bridge-rap.html">ov-mesh-bridge-rap</a></code>: Auto Mesh root AP 广播的隐藏 SSID "Stellar-MESH"（5GHz）是合法行为，不是 Rogue/钓鱼——定性前先核对是否自家 Mesh，勿触发 containment 反制。</li>
+</ul>
+<hr />
+<h2 id="_5">审计信息</h2>
+<ul>
+<li><strong>验证通过</strong>: V1 ✓ / V2 ✓ / V3 ✓</li>
+<li><strong>测试通过率</strong>: 待测 (详见 test-prompts.json)</li>
+<li><strong>蒸馏时间</strong>: 2026-08-22</li>
+</ul></main></div></body></html>

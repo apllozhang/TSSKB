@@ -1,0 +1,196 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>aos-igp-routing — DT00XTE216 · OmniSwitch LAN R8 Core Switching</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE216 · OmniSwitch LAN R8 Core Switching</h1>
+<div class="sub">Edition 15 · 724 页 · 核心交换专题（L2/路由/织构/安全/组播；无 Lightning 开局与 AG 深入章节）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">开局与管理面</div>
+<a href="skills/aos-virtual-chassis.html">aos-virtual-chassis</a>
+<div class="grp">L2 基础与冗余</div>
+<a href="skills/aos-vlan-mvrp.html">aos-vlan-mvrp</a>
+<a href="skills/aos-lag-stp.html">aos-lag-stp</a>
+<div class="grp">安全与策略</div>
+<a href="skills/aos-access-guardian-unp.html">aos-access-guardian-unp</a>
+<a href="skills/aos-l2-security.html">aos-l2-security</a>
+<a href="skills/aos-qos-acl-pbr.html">aos-qos-acl-pbr</a>
+<div class="grp">L3 路由</div>
+<a href="skills/aos-igp-routing.html" class="on">aos-igp-routing</a>
+<a href="skills/aos-bgp-vrf.html">aos-bgp-vrf</a>
+<div class="grp">SPB Fabric 与组播</div>
+<a href="skills/aos-spb-fabric.html">aos-spb-fabric</a>
+<a href="skills/aos-multicast.html">aos-multicast</a>
+<a href="skills/aos-diagnostics-ops.html">aos-diagnostics-ops</a></aside><main><h1>aos-igp-routing</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: IP 路由 p396-555; IS-IS p1071-1088</p><h1 id="aos-igp-vrrp">AOS 园区 IGP 路由与 VRRP 网关冗余</h1>
+<h2 id="r-reading">R — 原文 (Reading)</h2>
+<blockquote>
+<p>"HELLO from 192.168.0.2 discarded...invalid helloInterval 10 ... Stub &amp; Totally Stubby: reduce the resource utilization ... Type 7 LSAs = Type 5 LSAs in disguise ... THE VRRP INSTANCE MUST BE DISABLED BEFORE CHANGING THE PRIORITY"</p>
+<p>— ALE Training, OSPF / Areas / VRRP (220 p496, p455-456, p413)</p>
+</blockquote>
+<hr />
+<h2 id="i-interpretation">I — 方法论骨架 (Interpretation)</h2>
+<p>园区 IGP 的 AOS 实现骨架：
+1. <strong>基础</strong>: 静态路由默认优于动态（Local 1 &lt; Static 2 &lt; OSPF 10/110 &lt; ISIS 115/118 &lt; RIP 100/120 &lt; EBGP 190 &lt; IBGP 200，以 show ip route-pref 为准，可用 ip route-pref 改）；主备默认路由用 metric 1/2 区分；下一跳随动态路由变化用递归 <code>follows</code>。Loopback0 做 router-id/BGP peering/服务源地址。
+2. <strong>OSPF 七步</strong>: router-id → ip load ospf → area（定类型）→ interface → 接口入 area 并 admin-state enable（R8 逐接口）→ 重分发（如需）→ 全局 enable。
+3. <strong>区域阶梯</strong>（问题驱动: LSA 太多/路由表太大）: standard → stub（拒 Type4/5，ABR 注默认）→ totally stubby（再拒 Type3）→ NSSA（本区要挂 ASBR，Type7 进、ABR 转 Type5 出）。每种区域 = 一组允许进入的 LSA 白名单。
+4. <strong>收敛路由表</strong>: 内部路由在 ABR 做 Summarization，外部路由在 ASBR 做 Aggregation——位置决定动作。
+5. <strong>重分布两步法</strong>: 先 route-map（有序语句，命中即停；同字段多 match=或、跨字段=与），后 <code>ip redist &lt;源&gt; into &lt;目的&gt; route-map &lt;名&gt;</code>；配了重分布即成 ASBR。
+6. <strong>邻居排障范式</strong>: show ip ospf interface → swlog appid ospf_0 subapp all level debug3 → 日志找 discard 原因（Hello interval/认证/area/MTU 两端不一致）→ 修正到 Full。
+7. <strong>IS-IS</strong>: NSAP(AFI 49, ≥8 字节) / system-id 全网唯一；DIS 选举=最高优先级→最高 MAC，<strong>可抢占</strong>，L1 要求 area-id 相同。
+8. <strong>VRRP</strong>: 双核心用两个 VRID 互为主备做出向负载分担；track 对象关联上行故障自动降优先级，治"网关活着但出口死了"；改 priority 前必须先 disable。</p>
+<hr />
+<h2 id="a1-past-application">A1 — 书中的应用 (Past Application)</h2>
+<h3 id="1-ospf-c18-220-p477-482">案例 1: OSPF 七步配置+重分布（c18, 220 p477-482）</h3>
+<ul>
+<li><strong>问题</strong>: 园区标准 OSPF 开局并把 RIP 路由引入。</li>
+<li><strong>方法论的使用</strong>: router-id 192.168.254.7 → load → area 0 + area 1 type normal|stub|nssa → interface → 接口入 area + enable → route-map RipIntoOspf 过滤 → redist rip into ospf → 全局 enable。</li>
+<li><strong>结果</strong>: 邻居 Full，仅 route-map 允许的前缀被引入。</li>
+</ul>
+<h3 id="2-full-c19-220-p495-496">案例 2: 邻居卡非 Full 排障（c19, 220 p495-496）</h3>
+<ul>
+<li><strong>问题</strong>: 两台交换机 OSPF 邻居起不来。</li>
+<li><strong>方法论的使用</strong>: 开 ospf_0 debug3 日志 → grep 得 "HELLO ... discarded...invalid helloInterval 10"（一端 20s 一端 10s）。</li>
+<li><strong>结论</strong>: 统一两端参数。</li>
+<li><strong>结果</strong>: "# of Full State Neighbors = 1"。该"日志级别旋钮换协议内部视图"法可复用到所有协议排障。</li>
+</ul>
+<h3 id="3-route-map-c20-220-p501-509">案例 3: Route Map 重分布控制（c20, 220 p501-509）</h3>
+<ul>
+<li><strong>问题</strong>: static→rip 只放行默认路由、拒绝 10/8。</li>
+<li><strong>方法论的使用</strong>: seq 1 deny match 10.0.0.0/8（命中即停不重分发）→ seq 2 permit 0.0.0.0/0 → 挂到 ip redist；ACL 辅助聚合前缀；set metric effect add 改属性。</li>
+<li><strong>结果</strong>: show ip redist 只见预期路由。</li>
+</ul>
+<h3 id="4-vrrp-track-c15-220-p403-404">案例 4: VRRP + track 联动（c15, 220 p403-404）</h3>
+<ul>
+<li><strong>问题</strong>: 双核心网关冗余且上行故障要联动切换。</li>
+<li><strong>方法论的使用</strong>: ip vrrp 1 interface int_20 address 192.168.20.254 + priority/preempt → track 3 priority 30 port 1/1/3 → track-association。</li>
+<li><strong>结果</strong>: 上行口 down 时优先级被扣减触发主备切换，虚拟 MAC 00-00-5E-00-01-{VRID} 保证终端无需重 ARP。</li>
+</ul>
+<h3 id="5-is-is-c43-220-p1086-1087">案例 5: IS-IS 单区域最小配置（c43, 220 p1086-1087）</h3>
+<ul>
+<li><strong>问题</strong>: 纯 IP IS-IS 或理解 SPB 控制面。</li>
+<li><strong>方法论的使用</strong>: ip load isis → area-id 49.0001 → activate-ipv4 → 逐 vlan enable + address-family v4。</li>
+<li><strong>结果</strong>: show isis adjacency 正常。</li>
+</ul>
+<hr />
+<h2 id="a2-future-trigger">A2 — 触发场景 (Future Trigger) ★</h2>
+<h3 id="skill">用户会在什么情境下需要这个 skill?</h3>
+<ol>
+<li>园区 IGP 选型与开局: 静态/RIP/OSPF/IS-IS 怎么选、OSPF 七步怎么落。</li>
+<li>边缘区域裁剪: "stub 交换机路由表应以默认路由收尾"，四种区域类型怎么选。</li>
+<li>协议间引入路由: route-map 先行，防误全网重分发成环。</li>
+<li>邻居排障: 卡 Init/2-Way/EXSTART 不上 Full。</li>
+<li>网关冗余: VRRP 双 VRID 分流 + track 上行联动。</li>
+</ol>
+<h3 id="_1">语言信号 (用户的话里出现这些就应激活)</h3>
+<ul>
+<li>"OSPF 邻居 Full / EXSTART / helloInterval / router-id / area 0 / 虚链路"</li>
+<li>"stub / totally stubby / NSSA / LSA / 路由表太大"</li>
+<li>"重分布 / redist / route-map / ASBR / 路由引入"</li>
+<li>"静态默认路由 / metric 主备 / follows 递归"</li>
+<li>"IS-IS / NSAP / DIS / L1L2"</li>
+<li>"VRRP / master backup / 网关冗余 / track 上行口"</li>
+</ul>
+<h3 id="skill_1">与相邻 skill 的区分</h3>
+<ul>
+<li>与 <code><a href="aos-bgp-vrf.html">aos-bgp-vrf</a></code> 的区别: AS 间/外部路由与 VRF 隔离在那边；本 skill 是域内 IGP 与网关冗余。</li>
+<li>与 <code><a href="aos-spb-fabric.html">aos-spb-fabric</a></code> 的区别: SPB 用 IS-IS 做 L2 织构控制面（spb isis），本 skill 是纯 IP 路由的 IS-IS。</li>
+<li>与 <code><a href="aos-lag-stp.html">aos-lag-stp</a></code> 的区别: LAG/DHL 是链路冗余；VRRP 是网关冗余，层次不同。</li>
+</ul>
+<hr />
+<h2 id="e-execution">E — 可执行步骤 (Execution)</h2>
+<p>当 skill 被激活后, agent 应按以下步骤执行:</p>
+<ol>
+<li><strong>需求定位</strong>: 判定是开局配置、区域设计、重分布还是邻居排障/网关冗余。</li>
+<li>完成标准: 明确任务类型与涉及的协议。</li>
+<li><strong>开局（OSPF 七步）</strong>: router-id（手工指定或稳定 Loopback0）→ load → area 定类型 → interface → 接口入 area + enable → 重分发（如需）→ 全局 enable。</li>
+<li>完成标准: show ip ospf neighbor 全 Full，show ip routes 出现预期前缀。</li>
+<li><strong>区域裁剪决策两问</strong>: 该区域要不要看外部路由？要不要自己重分发？——据此选 stub/totally-stubby/NSSA；不直连骨干的区域用虚链路补救（新设计应避免）。</li>
+<li>完成标准: stub 交换机路由表以指向骨干 ABR 的默认路由收尾。</li>
+<li><strong>重分布</strong>: 先建 route-map（deny 即停、全不命中隐式丢弃），再 ip redist ... route-map ... enable；需要收敛路由表时按位置选 ABR Summarization / ASBR Aggregation。</li>
+<li>完成标准: show ip redist 与 route-map 序列一致，无环（双向重分布必配 tag/过滤）。</li>
+<li><strong>邻居排障范式</strong>: show ip ospf interface 比对两端（Hello/Dead、认证、area、MTU）→ swlog appid ospf_0 subapp all level debug3 → 日志定位 discard 原因 → 修正复查 Full 计数。</li>
+<li>完成标准: 邻居 Full 且日志无 discard。</li>
+<li><strong>VRRP</strong>: 建 VR+虚地址；双核心分流配两个 VRID 互为主备；track 对象（PORT/IP/VLAN）关联扣减优先级；改 priority 先 admin-state disable 再 enable。</li>
+<li>完成标准: show ip vrrp 角色符合设计，拔上行口演练切换成功。</li>
+</ol>
+<hr />
+<h2 id="b-boundary">B — 边界 (Boundary) ★</h2>
+<h3 id="skill_2">不要在以下情况使用此 skill</h3>
+<ul>
+<li>BGP 邻居/属性策略、VRF 与 route leak → <code><a href="aos-bgp-vrf.html">aos-bgp-vrf</a></code>。</li>
+<li>SPB 织构（BVLAN/I-SID/spb isis）→ <code><a href="aos-spb-fabric.html">aos-spb-fabric</a></code>；SPB 场景 IS-IS 由 spb isis 接管。</li>
+<li>二层链路冗余（LAG/DHL/STP）→ <code><a href="aos-lag-stp.html">aos-lag-stp</a></code>。</li>
+</ul>
+<h3 id="_2">作者在书中警告的失败模式</h3>
+<ul>
+<li>ce17: OSPF 邻居起不来的第一嫌疑是 Hello/Dead 定时器或认证参数不匹配（日志 "invalid helloInterval"）；区域不直连骨干需虚链路。</li>
+<li>ce18: ECMP 最多 4 条且仅 per-flow，per-packet 不支持——单流永远走哈希选定的单链路。</li>
+<li>ce16: RIP 定时器硬约束 invalid ≥ 3×update，违反被 AOS 拒绝。</li>
+<li>ce15: VRRP 改 priority 前必须先禁用实例，否则不生效。</li>
+<li>ce33: IS-IS DIS 选举<strong>可抢占</strong>——后上线的高优先级路由器会立即抢走 DIS 触发全网 LSP 突增；L1 邻接要求两端 area-id 相同；克隆配置导致 system-id 重复会邻接异常。</li>
+<li>p52: 任何重分布都应挂 route-map；Loopback0 与 OSPF 接口网段自动通告，local VLAN 网段需 redist local。</li>
+<li>p53: GR 对 OSPF/IS-IS 默认关闭、BGP 默认开启——升级/主控切换前要检查。</li>
+</ul>
+<h3 id="_3">作者的盲点 / 时代局限</h3>
+<ul>
+<li>偏好值课件两处数值略异（如 OSPF 10 vs 110），实机以 show ip route-pref 为准。</li>
+<li>教材仅覆盖 IPv4 IGP；IPv6 仅零散提及不成体系。</li>
+</ul>
+<h3 id="_4">容易混淆的邻近方法论</h3>
+<ul>
+<li>OSPF DR 选举（最高优先级→最高 RID）方向与 STP 根桥/VC Master（最低者优先）相反；与 IS-IS DIS 的差别是后者可抢占。</li>
+<li>ABR Summarization vs ASBR Aggregation: 同是收敛，位置决定动作。</li>
+<li>VRRP track vs DHL pre-emption: 都是故障联动，前者扣网关优先级、后者是链路回切防抖。</li>
+</ul>
+<hr />
+<h2 id="skills">相关 skills</h2>
+<ul>
+<li>depends-on（依赖：先学/先配前者）:</li>
+<li><code>aos-switch-access-mgmt</code>：路由配置需管理面就绪</li>
+<li>contrasts-with（对比：易混淆/二选一）: （无）</li>
+<li>composes-with（组合：实际组网搭配使用）:</li>
+<li><code><a href="aos-bgp-vrf.html">aos-bgp-vrf</a></code>：OSPF/IS-IS 路由通过重分布注入 BGP（VPN-IPv4 前缀）实现跨 VRF/跨域传播</li>
+<li><code><a href="aos-multicast.html">aos-multicast</a></code>：PIM 依赖单播 IGP（RPF 检查沿单播路由表）——组网时先 IGP 后 PIM</li>
+</ul>
+<hr />
+<h2 id="_5">审计信息</h2>
+<ul>
+<li><strong>验证通过</strong>: V1 ✓ / V2 ✓ / V3 ✓（verified.md #8）</li>
+<li><strong>测试通过率</strong>: 待测（详见 test-prompts.json）</li>
+<li><strong>蒸馏时间</strong>: 2026-08-22</li>
+</ul></main></div></body></html>

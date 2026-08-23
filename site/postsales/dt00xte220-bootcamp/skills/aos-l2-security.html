@@ -1,0 +1,189 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>aos-l2-security — DT00XTE220 · OmniSwitch LAN R8 Bootcamp</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE220 · OmniSwitch LAN R8 Bootcamp</h1>
+<div class="sub">Edition 23 · 1162 页 · 五天全科训练营（开局→L2→路由→织构→安全→组播→运维）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">开局与管理面</div>
+<a href="skills/aos-switch-access-mgmt.html">aos-switch-access-mgmt</a>
+<a href="skills/aos-virtual-chassis.html">aos-virtual-chassis</a>
+<div class="grp">L2 基础与冗余</div>
+<a href="skills/aos-vlan-mvrp.html">aos-vlan-mvrp</a>
+<a href="skills/aos-lag-stp.html">aos-lag-stp</a>
+<div class="grp">安全与策略</div>
+<a href="skills/aos-access-guardian-unp.html">aos-access-guardian-unp</a>
+<a href="skills/aos-l2-security.html" class="on">aos-l2-security</a>
+<a href="skills/aos-qos-acl-pbr.html">aos-qos-acl-pbr</a>
+<div class="grp">L3 路由</div>
+<a href="skills/aos-igp-routing.html">aos-igp-routing</a>
+<a href="skills/aos-bgp-vrf.html">aos-bgp-vrf</a>
+<div class="grp">SPB Fabric 与组播</div>
+<a href="skills/aos-spb-fabric.html">aos-spb-fabric</a>
+<a href="skills/aos-multicast.html">aos-multicast</a>
+<a href="skills/aos-diagnostics-ops.html">aos-diagnostics-ops</a></aside><main><h1>aos-l2-security</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: 网络与安全 p331-363; DHCP p556-574; ACL p618-632(部分); Private VLAN p848-857; MACsec p789-818</p><h1 id="aos-consistent-security">AOS Consistent Security 二层安全特性集</h1>
+<h2 id="r-reading">R — 原文 (Reading)</h2>
+<blockquote>
+<p>"Untrusted ports only accept DHCP Discover and Request messages; DHCP Offer and ACK are dropped ... DAI is implemented by combining both DHCP snooping and IP source filtering capabilities ... Default violation is restricted"</p>
+<p>— ALE Training, Network Security / DHCP (220 p566-568, p573, p356-359)</p>
+</blockquote>
+<hr />
+<h2 id="i-interpretation">I — 方法论骨架 (Interpretation)</h2>
+<p>AOS 把 L2 安全做成一组可独立开关、可层层叠加的特性，按攻击面选型：
+1. <strong>欺骗类</strong>: DHCP 信任分级（trusted 口全放、untrusted 只放 Discover/Request → 流氓服务器被隔离）→ snooping 建 binding 表 → Option-82 插入位置信息 → IP source filter 按表校验源 MAC/IP → DAI（snooping+source-filter 组合）校验 ARP 防中间人。链条逻辑: 信任分级→绑定表→源校验→ARP 校验。
+2. <strong>ARP/CPU 类</strong>: 内建 DoS 过滤（ICMP 5s 均值&gt;100pps 判攻击）+ ARP defense（未解析下一跳 12 次×5s 建 drop-entry）+ poisoning detection（只接受自己发起请求的 Reply）+ restricted-address 静态钉网关。
+3. <strong>隔离类</strong>: Port Mapping（user↔network 口，user 间永不通；双向 MFF=Port Mapping+dynamic proxy ARP+DHCP snooping）、Private VLAN（primary/secondary community/isolated，先 capability shared-vlan-learning enable）。
+4. <strong>资源类</strong>: 风暴控制（bcast/mcast/uucast 按 pps/mbps/容量百分比，动作 shutdown/trap）、LPS（默认 max MAC=1、filtered=5、violation=restrict；shutdown 300s 自动恢复）。
+5. <strong>加密类</strong>: MACsec（先核对端口能力/免费 site license/机型 static|dynamic 模式矩阵；动态 SAK 按时间 5-120min 或流量 5-1000GB 先到先换；静态 SA ≤4 key，sci-tx/rx 两端交叉）。</p>
+<hr />
+<h2 id="a1-past-application">A1 — 书中的应用 (Past Application)</h2>
+<h3 id="1-c13-220-p336-361">案例 1: 安全特性集全套配置（c13, 220 p336-361）</h3>
+<ul>
+<li><strong>问题</strong>: 接入层防 ARP 中间人、限端口 MAC、抑风暴。</li>
+<li><strong>方法论的使用</strong>: ip dos arp-poison restricted-address 钉关键地址；arp filter sender block；port-mapping session user/network 口；flood-limit bcast rate pps 500 action shutdown；port-security maximum 1 violation shutdown。</li>
+<li><strong>结论</strong>: 每特性独立开关，按攻击面组合。</li>
+<li><strong>结果</strong>: show ip dos / show port-security 验证各特性计数。</li>
+</ul>
+<h3 id="2-dhcp-c22-220-p558-579">案例 2: DHCP 全家桶防欺骗（c22, 220 p558-579）</h3>
+<ul>
+<li><strong>问题</strong>: 跨网段 DHCP 且防私接服务器与 ARP 欺骗。</li>
+<li><strong>方法论的使用</strong>: relay（global 与 per-interface 互斥二选一）→ dhcp-snooping vlan enable + mac-address-verification + option-82-data-insertion → port trust 只给服务器口 → ip-source-filter → dynamic-arp-inspection。</li>
+<li><strong>结论</strong>: 服务器/上级 relay 口必须 trust，否则 OFFER/ACK 在非信任口被丢。</li>
+<li><strong>结果</strong>: show dhcp-snooping binding 有表项、客户端取到地址、DAI 正常放行合法 ARP。</li>
+</ul>
+<h3 id="3-macsec-dynamic-sa-c34-220-p808-818">案例 3: MACsec Dynamic SA 实验（c34, 220 p808-818）</h3>
+<ul>
+<li><strong>问题</strong>: 机房间敏感链路加密。</li>
+<li><strong>方法论的使用</strong>: 先查 capability/license → 明文 ping 基线 → security key/key-chain → 端口 macsec mode dynamic key-chain + key-rotation → 验证 Key Server/Operation Status UP。</li>
+<li><strong>结论</strong>: 平台矩阵碎片化（6860N 仅 dynamic、VFL 口不支持），license 免费但必须先 apply。</li>
+<li><strong>结果</strong>: 加密后 ping 仍通，show interfaces macsec dynamic 状态 UP。</li>
+</ul>
+<h3 id="4-private-vlan-c36-220-p852-853">案例 4: Private VLAN 同子网隔离（c36, 220 p852-853）</h3>
+<ul>
+<li><strong>问题</strong>: 酒店式同子网用户互相隔离。</li>
+<li><strong>方法论的使用</strong>: pvlan 100 + secondary 101 community / 103 isolated，promiscuous 口接网关。</li>
+<li><strong>结果</strong>: MAC 全学在 primary VLAN 100，isolated 口互相不可达。</li>
+</ul>
+<hr />
+<h2 id="a2-future-trigger">A2 — 触发场景 (Future Trigger) ★</h2>
+<h3 id="skill">用户会在什么情境下需要这个 skill?</h3>
+<ol>
+<li>"ARP 欺骗/中间人怎么防"——选型 poisoning detection / DAI / restricted-address。</li>
+<li>"私接 DHCP 服务器 / 客户端拿不到地址"——DHCP snooping 信任模型与 DAI 组合。</li>
+<li>"端口下限制终端数/防私接 hub"——LPS；"广播风暴打挂交换机"——flood-limit。</li>
+<li>同子网用户隔离（酒店/宿舍/医院）——Port Mapping/MFF vs Private VLAN 选型。</li>
+<li>敏感链路二层加密——MACsec 可行性核对与部署。</li>
+</ol>
+<h3 id="_1">语言信号 (用户的话里出现这些就应激活)</h3>
+<ul>
+<li>"ARP 欺骗 / ARP poisoning / 中间人 / DAI / dynamic ARP inspection"</li>
+<li>"DHCP snooping / Option-82 / 流氓 DHCP / binding 表"</li>
+<li>"port-security / LPS / 限 MAC / 风暴控制 / storm control / broadcast 抑制"</li>
+<li>"Private VLAN / PVLAN / 用户二层隔离 / MFF / port mapping"</li>
+<li>"MACsec / 链路加密 / SAK / key-chain"</li>
+</ul>
+<h3 id="skill_1">与相邻 skill 的区分</h3>
+<ul>
+<li>与 <code><a href="aos-access-guardian-unp.html">aos-access-guardian-unp</a></code> 的区别: 那按"终端身份"动态给策略；本 skill 是不问身份的端口级防护特性。</li>
+<li>与 <code><a href="aos-qos-acl-pbr.html">aos-qos-acl-pbr</a></code> 的区别: 那是 policy condition/action 统一引擎（标记/限速/重定向/ACL 规则编写）；本 skill 是专用安全特性（部分 ACL 实例会引用 policy 框架，但选型判断在此）。</li>
+<li>与 <code><a href="aos-switch-access-mgmt.html">aos-switch-access-mgmt</a></code> 的区别: 那是管理员登录/管理面加固；本 skill 面向用户数据面。</li>
+</ul>
+<hr />
+<h2 id="e-execution">E — 可执行步骤 (Execution)</h2>
+<p>当 skill 被激活后, agent 应按以下步骤执行:</p>
+<ol>
+<li><strong>攻击面定位</strong>: 明确威胁（欺骗/泛洪/私接/隔离/窃听），映射到特性组。</li>
+<li>完成标准: 列出候选特性及其防御的攻击面。</li>
+<li><strong>按链条配置而非单点</strong>: 如 DHCP 方向 → relay 二选一 → snooping + binding → 服务器口 port trust → Option-82（按需）→ ip-source-filter → DAI。</li>
+<li>完成标准: 每步有对应 show 命令输出验证（show dhcp-snooping [vlan|port|binding]）。</li>
+<li><strong>资源类参数落地</strong>: flood-limit 选单位（pps/mbps/cap%）+ 动作（shutdown 配 recovery）；LPS 设 maximum/violation，需要锁定时先让终端流量到达再 convert-to-static。</li>
+<li>完成标准: show port-security 显示 MAC 上限与状态；违例动作演练过。</li>
+<li><strong>隔离类选型</strong>: 需要 DHCP 网关代理→MFF（Port Mapping+dynamic proxy ARP+snooping 组合）；纯静态→PVLAN（先 capability shared-vlan-learning enable；一个 primary 只能 1 个 isolated）。</li>
+<li>完成标准: 用户口间不通、到网关/promiscuous 口通。</li>
+<li><strong>MACsec 前置核对</strong>: show interfaces capability 的 Macsec 列 → license apply（免重启）→ 机型模式（static/dynamic）→ dynamic 配 key-chain+key-rotation；static 配 ≤4 key 且两端 sci-tx/rx 交叉。</li>
+<li>完成标准: 加密后业务仍通，show interfaces macsec 状态 UP。</li>
+<li><strong>整体验证</strong>: 模拟攻击面（伪造 ARP/假 DHCP/超限 MAC）确认拦截计数增长。</li>
+<li>完成标准: 各特性 show 计数反映测试流量被处置。</li>
+</ol>
+<hr />
+<h2 id="b-boundary">B — 边界 (Boundary) ★</h2>
+<h3 id="skill_2">不要在以下情况使用此 skill</h3>
+<ul>
+<li>按用户身份动态放行/分 VLAN（802.1X/UNP）→ <code><a href="aos-access-guardian-unp.html">aos-access-guardian-unp</a></code>。</li>
+<li>编写复杂 policy condition/action 规则（限速/重定向/镜像）→ <code><a href="aos-qos-acl-pbr.html">aos-qos-acl-pbr</a></code>。</li>
+<li>管理员登录、SSH、管理站白名单 → <code><a href="aos-switch-access-mgmt.html">aos-switch-access-mgmt</a></code>。</li>
+</ul>
+<h3 id="_2">作者在书中警告的失败模式</h3>
+<ul>
+<li>ce20: DHCP 服务器不在 trust 口 → OFFER/ACK 被 untrusted 口丢弃，全网 DHCP 失败；snooping 没配好，DAI 依赖的 binding 表为空会大量误杀。</li>
+<li>ce38: LPS convert-to-static 必须在终端 MAC <strong>已学到之后</strong>执行，否则无 MAC 可锁、换设备仍能上网；LPS 不支持 LAG 口、仅固定口。</li>
+<li>ce37: Port Mapping 双向会话的 network 口不能与任何会话共享（单向可共享）；同会话 user 口之间永远不能直通。</li>
+<li>ce25: MACsec 平台矩阵碎片化——6870 VFL 口/6465T 11-12 口不支持、6860N 仅 dynamic、需免费 site license；两端 SAK/SCI 不匹配则口 up 不通。</li>
+<li>ce35(后半): PVLAN 下端口 isolated/community 角色由首 MAC 决定，首 MAC 落普通 VLAN 则角色不可再变。</li>
+<li>p82: 一个 Primary VLAN 只能有 1 个 isolated secondary；PVLAN 前须 shared-vlan-learning。</li>
+</ul>
+<h3 id="_3">作者的盲点 / 时代局限</h3>
+<ul>
+<li>教材安全特性以 AOS 8.x 为准；ARP 防御阈值（12 次×5s）、ICMP 100pps/5s 为固定或半固定参数，实际攻击工具速率远超时更依赖风暴控制与 quarantine 联动。</li>
+<li>LPS 不支持 LAG，与"单链路也建 LAG"的最佳实践(p108)冲突时需取舍。</li>
+</ul>
+<h3 id="_4">容易混淆的邻近方法论</h3>
+<ul>
+<li>MFF vs Private VLAN: 都做同子网隔离；MFF 需 DHCP+snooping 组合且网关代理 ARP，PVLAN 静态、需 shared-vlan-learning。</li>
+<li>qos user-port filter bpdu（属 policy 框架）与 LPS/shutdown 类端口处置容易被混为一谈。</li>
+</ul>
+<hr />
+<h2 id="skills">相关 skills</h2>
+<ul>
+<li>depends-on（依赖：先学/先配前者）:</li>
+<li><code><a href="aos-switch-access-mgmt.html">aos-switch-access-mgmt</a></code>：需要管理面（FM/AAA）就绪</li>
+<li><code><a href="aos-vlan-mvrp.html">aos-vlan-mvrp</a></code>：端口隔离/保护端口基于 VLAN 成员语义</li>
+<li>contrasts-with（对比：易混淆/二选一）:</li>
+<li><code><a href="aos-access-guardian-unp.html">aos-access-guardian-unp</a></code>：非认证防御 vs 认证准入：不验证身份的通用护栏 vs 基于身份的动态放行</li>
+<li>composes-with（组合：实际组网搭配使用）:</li>
+<li><code><a href="aos-qos-acl-pbr.html">aos-qos-acl-pbr</a></code>：L2 安全策略（如基于 MAC 的过滤）与 ACL/QOS 共享策略引擎与限速机制</li>
+<li><code><a href="aos-vlan-mvrp.html">aos-vlan-mvrp</a></code>：安全 VLAN 划分（隔离 VLAN/default-profile 落地）依赖 VLAN 体系</li>
+</ul>
+<hr />
+<h2 id="_5">审计信息</h2>
+<ul>
+<li><strong>验证通过</strong>: V1 ✓ / V2 ✓ / V3 ✓（verified.md #6）</li>
+<li><strong>测试通过率</strong>: 待测（详见 test-prompts.json）</li>
+<li><strong>蒸馏时间</strong>: 2026-08-22</li>
+</ul></main></div></body></html>

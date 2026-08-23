@@ -1,0 +1,150 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ov-policy-bandwidth-design — DT00XTE317 · OmniVista Cirrus / Terra 部署与配置</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE317 · OmniVista Cirrus / Terra 部署与配置</h1>
+<div class="sub">Edition 10 · 478 页 · 云管与本地部署平台</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">平台部署与开通</div>
+<a href="skills/ov-terra-deploy.html">ov-terra-deploy</a>
+<a href="skills/ov-license-org-onboarding.html">ov-license-org-onboarding</a>
+<div class="grp">设备纳管与激活</div>
+<a href="skills/ov-device-activation-troubleshoot.html">ov-device-activation-troubleshoot</a>
+<div class="grp">SSID / 策略 / 认证设计</div>
+<a href="skills/ov-ssid-psk-selection.html">ov-ssid-psk-selection</a>
+<a href="skills/ov-policy-bandwidth-design.html" class="on">ov-policy-bandwidth-design</a>
+<a href="skills/ov-wired-auth-config.html">ov-wired-auth-config</a>
+<div class="grp">RF / 漫游 / 安全 / 特殊组网</div>
+<a href="skills/ov-rf-tuning.html">ov-rf-tuning</a>
+<a href="skills/ov-roaming-troubleshoot.html">ov-roaming-troubleshoot</a>
+<a href="skills/ov-wips-rogue-policy.html">ov-wips-rogue-policy</a>
+<a href="skills/ov-mesh-bridge-rap.html">ov-mesh-bridge-rap</a></aside><main><h1>ov-policy-bandwidth-design</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: p237-289 (Unified Policies and Bandwidth Control / Client Accounts / Guest &amp; BYOD)</p><h1 id="omnivista">统一策略分层与三层带宽合同设计 (OmniVista)</h1>
+<h2 id="r-reading">R — 原文 (Reading)</h2>
+<blockquote>
+<p>"Bandwidth contract at SSID level: per SSID and per AP, shared between all users... Bandwidth contract at Access Role Profile level: bandwidth assigned to the users using this profile... A Policy List (ACL/QoS) can restrict the bandwidth as an action."</p>
+<p>— ALE Training, Unified Policies and Bandwidth Control, p268-269</p>
+</blockquote>
+<h2 id="i-interpretation">I — 方法论骨架 (Interpretation)</h2>
+<p>用户权限与带宽由一条自底向上构建、自顶向下生效的分层链收敛：</p>
+<ol>
+<li><strong>分层模型</strong>: SSID(入口) → 认证(UPAM/RADIUS/本地库) → Access Role Profile(角色: VLAN + 默认 Policy List + 每用户带宽) → Policy List(规则集: Accept/Drop、限速、802.1p/DSCP 标记，双向执行)。配置顺序: 先建原子 Policy → 组装 Policy List → 挂到 ARP 或由 RADIUS 账号属性下发。</li>
+<li><strong>三层带宽合同裁决</strong> (粗层兜底、细层收敛): 流量先匹配 Policy List ACL → 命中则按 ACL 限速(每用户每应用)；未命中看 ARP 是否设带宽(每用户)；再看 SSID 合同(该 AP 上此 SSID 全体用户<strong>共享</strong>，不是每用户)；都没有则不限速。</li>
+<li><strong>访客运营体系</strong>: Guest/BYOD Access Strategy 定 Login Strategy / Post Portal Enforcement / 自助注册；Registration Profile 定义配额(数据 MB + 时长)与耗尽处理(阻断或降速)；Service Level(≤5 个)把 ARP + Policy List + Registration Profile 打包成分级套餐；Guest Operator 供前台批量发号与审批。</li>
+</ol>
+<h2 id="a1-past-application">A1 — 书中的应用 (Past Application)</h2>
+<h3 id="1-policy-guest-p263-269">案例 1: Policy-Guest 限速策略 (p263-269)</h3>
+<ul>
+<li><strong>问题</strong>: 访客流量需按应用放行并整体限速。</li>
+<li><strong>方法论的使用</strong>: 先建规则 http-traffic=Accept、Network-traffic=Deny、Guest-speed=1Mb/s、Guest-priority=802.1p=3，组装为 Policy List "Policy-Guest"，挂到访客 ARP。</li>
+<li><strong>结论</strong>: 三层合同中 ACL 级最细，命中即按 1Mb/s 执行；未命中流量回落到 ARP/SSID 级约束。</li>
+<li><strong>结果</strong>: 访客/员工流量按三层合同精确限速。</li>
+</ul>
+<h3 id="2-100mb4h-p271-288">案例 2: 访客配额 100MB/4H 超量降速 (p271-288)</h3>
+<ul>
+<li><strong>问题</strong>: 酒店式访客网络要求超量后降速而非断网。</li>
+<li><strong>方法论的使用</strong>: Registration Profile 设 Data Quota 100MB + Time Quota 4H/天，Exhaustion Handling 选降速 UP=100kB/s、DOWN=1000kB/s。</li>
+<li><strong>结论</strong>: Day1 用 90MB/3H 无动作；Day2 超 100MB 自动触发降速——"配额 + 耗尽处理"成对设计。</li>
+<li><strong>结果</strong>: 访客超限自动降速不断网，前台可用 Guest Operator 批量发号。</li>
+</ul>
+<h2 id="a2-future-trigger">A2 — 触发场景 (Future Trigger) ★</h2>
+<h3 id="skill">用户会在什么情境下需要这个 skill?</h3>
+<ol>
+<li>客户反馈"给访客/某部门限速不生效"或"用户之间互相挤占带宽"——需按三层裁决顺序排查。</li>
+<li>设计访客网络: 门户认证方式、配额(流量/时长)、超量后阻断还是降速、分级套餐。</li>
+<li>一套 SSID 内按角色分权分流: 不同 ARP + Policy List 组合(如员工全通、承包商限 HTTP)。</li>
+</ol>
+<h3 id="_1">语言信号 (用户的话里出现这些就应激活)</h3>
+<ul>
+<li>"限速不生效 / bandwidth contract 不起作用"</li>
+<li>"访客超流量后想降速不想踢下线 / quota exhaustion"</li>
+<li>"policy list 怎么挂到角色上 / Access Role Profile 带宽"</li>
+<li>"service level / registration profile / guest operator / 访客分级"</li>
+</ul>
+<h3 id="skill_1">与相邻 skill 的区分</h3>
+<ul>
+<li>与 <code><a href="ov-ssid-psk-selection.html">ov-ssid-psk-selection</a></code> 的区别: 那个解决"SSID + 加密 + 密钥粒度怎么选"；本 skill 解决"认证之后给多少权限和带宽"。</li>
+<li>与 <code><a href="ov-wired-auth-config.html">ov-wired-auth-config</a></code> 的区别: 那个是有线端口认证四步实操；本 skill 是策略与带宽的设计方法论(有线无线通用)。</li>
+</ul>
+<h2 id="e-execution">E — 可执行步骤 (Execution)</h2>
+<ol>
+<li><strong>定位层级</strong>: 确认用户诉求落在哪一层——应用级限速(Policy List/ACL)、用户级(ARP)、SSID 级共享合同、还是访客配额(Registration Profile)。</li>
+<li>完成标准: 能说出该诉求应由哪层对象承载及理由。</li>
+<li><strong>自底向上构建</strong>: 按 Policy(规则) → Policy List(规则集) → ARP(角色: VLAN + 默认 Policy List + 每用户带宽) → SSID(可选共享合同) 顺序给出配置项与界面路径；访客场景补充 Access Strategy + Registration Profile(配额 + 耗尽处理成对) + Service Level(≤5)。</li>
+<li>完成标准: 输出完整配置清单，含具体参数值(限速 kB/s 或 Mb/s、配额 MB/h)。</li>
+<li><strong>按裁决顺序验证</strong>: 对照三层裁决链(ACL 命中 → ARP → SSID → 不限)推演目标用户流量的实际限速结果，确认与诉求一致。</li>
+<li>判停条件: 若推演结果不符(如 SSID 共享合同被误当每用户限速)，回到步骤 2 修正层级。</li>
+<li>完成标准: 逐层推演结论与客户预期带宽行为一致。</li>
+</ol>
+<h2 id="b-boundary">B — 边界 (Boundary) ★</h2>
+<h3 id="skill_2">不要在以下情况使用此 skill</h3>
+<ul>
+<li>纯 SSID 数量/加密/PSK 粒度选型 → <code><a href="ov-ssid-psk-selection.html">ov-ssid-psk-selection</a></code>。</li>
+<li>设备激活卡状态、平台部署问题 → 对应排障 skill。</li>
+<li>无线信号弱/漫游/信道调优类投诉 → <code><a href="ov-rf-tuning.html">ov-rf-tuning</a></code> / <code><a href="ov-roaming-troubleshoot.html">ov-roaming-troubleshoot</a></code>。</li>
+</ul>
+<h3 id="_2">作者在书中警告的失败模式</h3>
+<ul>
+<li>SSID 级带宽合同是"每 AP 每 SSID 全体用户共享"，不是每用户限速(p268)——误当每用户用会导致用户互相挤占、投诉"限速不生效"。</li>
+<li>Registration Profile 只配配额不配耗尽处理，超量行为不可预期——两者必须成对设计(p283-284)。</li>
+<li>Service Level 最多 5 个(p282)，分级套餐设计超出会失败。</li>
+<li>Guest 账户必填三要素: 登录名/密码、过期日期、Service Level/Registration Profile(p280)，缺一不可。</li>
+</ul>
+<h3 id="_3">作者的盲点 / 时代局限</h3>
+<ul>
+<li>培训书仅演示内置 UPAM 场景; 外部 RADIUS 下发 Policy List 属性时属性名/格式需查版本配套文档。</li>
+<li>带宽合同对上行/下行的分别粒度以当时版本 UI 为准。</li>
+</ul>
+<h3 id="_4">容易混淆的邻近方法论</h3>
+<ul>
+<li>ACL 的 Drop 与限速动作 vs 防火墙安全策略——Policy List 是接入侧 QoS/访问控制，不做状态检测。</li>
+<li>访客配额降速 vs 运营商计费限速——前者按 Registration Profile 触发，与计费系统无关。</li>
+</ul>
+<hr />
+<h2 id="skills-3">相关 skills (阶段 3 填充)</h2>
+<ul>
+<li>composes-with <code><a href="ov-ssid-psk-selection.html">ov-ssid-psk-selection</a></code>: SSID/密钥选型决定"进门身份"，本 skill 决定"进门后多少权限和带宽"——分层链 SSID→认证→ARP→Policy List 的前半段由选型 skill 定，ARP 内容与 Policy List 由本 skill 设计。</li>
+<li>composes-with <code><a href="ov-wired-auth-config.html">ov-wired-auth-config</a></code>: 有线认证四步链只管"端口认证怎么配起来"，其命中/兜底角色的 ARP 内容（VLAN、默认 Policy List、每用户带宽）复用本 skill 的设计方法论——有线无线通用。</li>
+</ul>
+<hr />
+<h2 id="_5">审计信息</h2>
+<ul>
+<li><strong>验证通过</strong>: V1 ✓ / V2 ✓ / V3 ✓</li>
+<li><strong>测试通过率</strong>: 待测 (详见 test-prompts.json)</li>
+<li><strong>蒸馏时间</strong>: 2026-08-22</li>
+</ul></main></div></body></html>

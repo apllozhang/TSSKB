@@ -1,0 +1,114 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>教书理解 BOOK_OVERVIEW — DT00XTE317 · OmniVista Cirrus / Terra 部署与配置</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE317 · OmniVista Cirrus / Terra 部署与配置</h1>
+<div class="sub">Edition 10 · 478 页 · 云管与本地部署平台</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">平台部署与开通</div>
+<a href="skills/ov-terra-deploy.html">ov-terra-deploy</a>
+<a href="skills/ov-license-org-onboarding.html">ov-license-org-onboarding</a>
+<div class="grp">设备纳管与激活</div>
+<a href="skills/ov-device-activation-troubleshoot.html">ov-device-activation-troubleshoot</a>
+<div class="grp">SSID / 策略 / 认证设计</div>
+<a href="skills/ov-ssid-psk-selection.html">ov-ssid-psk-selection</a>
+<a href="skills/ov-policy-bandwidth-design.html">ov-policy-bandwidth-design</a>
+<a href="skills/ov-wired-auth-config.html">ov-wired-auth-config</a>
+<div class="grp">RF / 漫游 / 安全 / 特殊组网</div>
+<a href="skills/ov-rf-tuning.html">ov-rf-tuning</a>
+<a href="skills/ov-roaming-troubleshoot.html">ov-roaming-troubleshoot</a>
+<a href="skills/ov-wips-rogue-policy.html">ov-wips-rogue-policy</a>
+<a href="skills/ov-mesh-bridge-rap.html">ov-mesh-bridge-rap</a></aside><main><h1>教书理解 BOOK_OVERVIEW</h1><h1 id="book_overview-omnivista-cirrus-terra-deployment-and-configuration-edition-10">BOOK_OVERVIEW — OmniVista Cirrus / Terra Deployment and Configuration (Edition 10)</h1>
+<ul>
+<li><strong>来源</strong>: DT00XTE317 - OmniVista Cirrus (10) Terra Deployment and Configuration - eBook (PDF, 478 页)</li>
+<li><strong>作者/出品方</strong>: ALE (Alcatel-Lucent Enterprise) Training Services，售后培训 Participant Guide</li>
+<li><strong>版本</strong>: Edition 10（OVC 10.4.3 时期）</li>
+<li><strong>文本来源</strong>: <code>.cangjie/books/ov-terra-deploy/source.txt</code>（478 页已全部提取）</li>
+</ul>
+<h2 id="1-adler">1. 结构（Adler 第一步：这本书在讲什么，如何组织）</h2>
+<p>全书按"部署生命周期"组织的模块化课程，三大板块：</p>
+<p><strong>A. 平台与开通（Cirrus 云 / Terra 本地）</strong>
+1. OmniVista Cirrus 概述 — SaaS 云管平台，12000 设备（10000 AP + 2000 交换机）
+2. OmniVista Terra 概述 — 本地客户托管版，功能与 Cirrus 对等，VMware 上 3 节点 VM，Kubernetes 集群，2000 设备
+3. License &amp; 订阅 — eBuy 订购 → Subscription Manager 建订阅 → 导入 OVC/Terra；许可证参考号体系（如 OVCX-68-BAS-3Y = 级别/年限/设备类别）
+4. 账户与 Organization — Customer/Partner 账户、MSP 层级、Organization 创建、试用期申请
+5. Terra 服务器安装 — 3×VM（8vCPU/32GB/200GB系统盘+3TB数据盘, ESXi 8, AVX/AVX2）、WebAdmin :3000 初始化、DNS 四域名、build 部署
+6. 站点与用户 — Site/Building/Floor/平面图校准、组织级用户邀请（Admin/Viewer/Limited）</p>
+<p><strong>B. 设备纳管与配置</strong>
+7. Stellar AP 纳管 — DHCP option 43 指向 activation URL、防火墙端口（9093/30123-5, 出向 443/80/123/53）、序列号声明、激活状态机（Waiting→Certificate→Registered→Assigned→VPN→Connected→Provisioning→OV Managed）
+8. AP Group 与 Provisioning Configuration — 逻辑分组（不依赖物理网络）、RF Profile/时区/SSH 等配置集
+9. OmniSwitch 纳管 — cloud-agent（cloudagent.cfg 改 activation URL）、cloud-agent CLI 命令、CLI 模板化 provisioning（Initial/Incremental + Value Mapping）、L2/L3 配置（VLAN/STP/IP Router）、Golden Configuration
+10. 设备组合页 — OmniSwitch R8 家族与 Stellar AP（WiFi 6/6E/7）产品线
+11. SSID 创建 — 向导三段（SSID Settings / Network Assignments / Schedule &amp; VLAN Mapping）、Usage 模板矩阵、四种 PSK 变体（PSK/DSPSK/PPSK/Dynamic PPSK）
+12. UPAM Guest &amp; BYOD — 内置 RADIUS/MAC 认证、Guest/BYOD Access Strategy、Captive Portal 定制、Guest Tunneling (GRE)
+13. 统一策略与带宽控制 — Policy List（ACL/QoS）、三层带宽合同（SSID/ARP/Role）裁决顺序
+14. 客户端账户 — Employee/Company Property/Guest 账户、Service Level（≤5）、Registration Profile（配额+耗尽处理）、Guest Operator
+15. 有线客户端认证 — AAA Server Profile → Access Auth Profile → Access Policy → 本地库 MAC 四步流程（AP 下联口与 OmniSwitch 口）</p>
+<p><strong>C. 运维与优化</strong>
+16. QoE Analytics — 连接时间/漫游时间/RSSI/信道利用率/宕机 5 大属性+失败根因分解
+17. Network &amp; Client Analytics — 信道分布/设备健康/客户端分布/吞吐
+18. Monitoring — Clients、Access Records、Reports（即时/定时）、Heat Map（≥3 AP）、Network Events
+19. Operation &amp; Maintenance — 设备编辑、SSH/重启/收集支持信息、备份、软件升级调度
+20. RF 管理与优化 — DRM 分布式射频管理、RF Profile、Smart Load Balance（Band Steering/Dynamic Load Balance）、Scanning、Smart Air Share、RSSI 值表与推荐参数
+21. WIPS — Interfering/Rogue/Friendly 分类、Rogue 攻陷策略、无线攻击检测/抑制
+22. Roaming — 客户端上下文共享（Add/Del）、L2/L3 漫游判定表、Fast Roaming（OKC/802.11r）、粘性客户端规避（802.11k/v + Roaming RSSI）
+23. RAP 远程 AP — 家庭/分支场景，VPN 服务器 VM + OV2500 五步上线流程
+24. WiFi Bridge &amp; Mesh — 点对点桥接 vs Mesh（≤16 AP/≤4 hops/≤8 slave）、Auto Mesh
+25. IoT — MAC OUI + DHCP 指纹画像、分类与 ARP enforcement</p>
+<h2 id="2-adler">2. 解释（Adler 第二步：核心主张）</h2>
+<p>这本书的"方法论"是 ALE 云管平台的<strong>声明式纳管范式</strong>：
+1. <strong>控制面与数据面分离</strong>：管理流量走 VPN 隧道（certificate + call-home），配置由 AP Group / Provisioning Configuration / Profile 模板下发，而非逐台 CLI。
+2. <strong>状态机思维</strong>：设备激活是一条可诊断的状态链，每个失败状态对应明确排障动作（Factory Reset Required、Failed to Get Certificate…）。
+3. <strong>策略分层模型</strong>：SSID → AP Group → Access Role Profile → Policy List → Bandwidth Contract，一层层收敛用户权限与带宽，三层带宽合同有明确裁决顺序。
+4. <strong>分布式智能</strong>：DRM 让每个 AP 与邻居共享 RF 上下文自主决策信道/功率，漫游靠 AP 间客户端上下文共享而非控制器。
+5. <strong>参数推荐表</strong>：书中大量给出推荐值（RSSI 5/10、最小速率 12/24 Mbps、信道&gt;100、扫描 20s/50ms 等）——售后工程师可直接引用的实战经验。</p>
+<h2 id="3-adler">3. 批判（Adler 第三步：局限）</h2>
+<ul>
+<li>培训幻灯片体例：多为截图+要点，步骤背后的"为什么"较少；大量页面仅是截图标题（提取文本中为空），实际操作细节依赖课堂演示。</li>
+<li>版本敏感：端口、DHCP option、许可证 SKU、DNS 域名等绑定 Edition 10 / OVC 10.4.3，升级后需核对。</li>
+<li>RAP 模块依赖 OV2500（旧平台），与 Terra 章节存在生态混杂。</li>
+<li>无排障决策树汇总页；激活状态明细表是最接近"故障排查手册"的内容。</li>
+</ul>
+<h2 id="4-adler">4. 应用方向（Adler 第四步：读者如何用）</h2>
+<p>读者是 ALE 售后/渠道工程师，核心使用场景：
+- 从零部署 Terra（3 VM + DNS + build）或开通 Cirrus 组织+许可证
+- 新站开局：建 Site → 声明设备 → AP Group + Provisioning Config → SSID → 策略
+- 排障：激活卡在某状态、漫游失败、RSSI 差、Rogue AP
+- 调优：RF Profile 推荐参数、带宽合同设计、访客配额设计</p>
+<p>→ 蒸馏为 skill 时应聚焦：部署清单、激活排障、SSID/PSK 选型决策、策略与带宽分层、RF 调优参数表、漫游排障。这些是可被 agent 在真实售后情境中调用的"框架+清单+推荐值"。</p></main></div></body></html>

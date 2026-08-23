@@ -1,0 +1,163 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ov-mesh-bridge-rap — DT00XTE317 · OmniVista Cirrus / Terra 部署与配置</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE317 · OmniVista Cirrus / Terra 部署与配置</h1>
+<div class="sub">Edition 10 · 478 页 · 云管与本地部署平台</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">平台部署与开通</div>
+<a href="skills/ov-terra-deploy.html">ov-terra-deploy</a>
+<a href="skills/ov-license-org-onboarding.html">ov-license-org-onboarding</a>
+<div class="grp">设备纳管与激活</div>
+<a href="skills/ov-device-activation-troubleshoot.html">ov-device-activation-troubleshoot</a>
+<div class="grp">SSID / 策略 / 认证设计</div>
+<a href="skills/ov-ssid-psk-selection.html">ov-ssid-psk-selection</a>
+<a href="skills/ov-policy-bandwidth-design.html">ov-policy-bandwidth-design</a>
+<a href="skills/ov-wired-auth-config.html">ov-wired-auth-config</a>
+<div class="grp">RF / 漫游 / 安全 / 特殊组网</div>
+<a href="skills/ov-rf-tuning.html">ov-rf-tuning</a>
+<a href="skills/ov-roaming-troubleshoot.html">ov-roaming-troubleshoot</a>
+<a href="skills/ov-wips-rogue-policy.html">ov-wips-rogue-policy</a>
+<a href="skills/ov-mesh-bridge-rap.html" class="on">ov-mesh-bridge-rap</a></aside><main><h1>ov-mesh-bridge-rap</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: WiFi Bridge &amp; Mesh / Remote Access Point, p418-445</p><h1 id="meshbridgerap-ap">Mesh/Bridge/RAP 特殊组网（无线回程与远程 AP）</h1>
+<h2 id="r-reading">R — 原文 (Reading)</h2>
+<blockquote>
+<p>"WiFi Bridge AIM: Replace physical cabling... Cannot provide service (WiFi) to WiFi clients. WiFi Mesh... Can provide service (WiFi) to WiFi clients"（p437）
+"UP TO 8 SLAVE APS. UP TO 4 HOPS... UP TO 16 APS IN THE MESH NETWORK... BEST PRACTICE: BAND: 5 GHZ, CHANNEL &gt; 100"（p438-439）</p>
+<p>— ALE Training, WiFi Bridge &amp; Mesh / RAP (p418-445)</p>
+</blockquote>
+<hr />
+<h2 id="i-interpretation">I — 方法论骨架 (Interpretation)</h2>
+<p>解决"没有网线"的三种组网方案，各有明确边界：</p>
+<ol>
+<li><strong>Bridge（点对点）</strong>：目标是替代物理布线（如隔街楼宇）；可按 VLAN 分隔/保护回程流量；纯回程，<strong>不能</strong>给 WiFi 客户端提供服务。两端 SSID/Band/Passphrase 必须完全一致。</li>
+<li><strong>Mesh（多点）</strong>：回程 + 客户端服务兼得；同样要求 SSID/Band/Passphrase 一致，另需指定 Is Root（可多根）。硬性上限：全网 ≤16 AP、slave ≤8、跳数 ≤4、单跳点对多点 ≤5 AP、每 AP 广播客户端 SSID ≤5。最佳实践：回程 5GHz 且信道号 &gt;100（避开常用客户端信道）。</li>
+<li><strong>Auto Mesh</strong>：接 LAN 且配为 Mesh root 的 AP 自动广播隐藏 SSID "Stellar-MESH"（5GHz）；未接 LAN 的 AP 自动以 non-root 加入——免配置快速组网。</li>
+<li><strong>RAP（远程 AP）</strong>：把企业网延伸到家庭/分支。依赖三方：OVC（声明序列号、RAP 模式、VPN Server 公网 IP、OV2500 IP、客户端 IP 池）+ ALE VPN Server VM（双网卡 eth0 公网/eth1 私网，导入 VPN 设置）+ OV2500（客户端流量 VPN + AP 配置）。运行时五步：AP 凭序列号注册 → OVC 下发 VPN/OV2500 设置 → 建管理 VPN 隧道 → 经隧道从 OV2500 取配置 → 建第二条客户端数据 VPN 隧道。</li>
+</ol>
+<hr />
+<h2 id="a1-past-application">A1 — 书中的应用 (Past Application)</h2>
+<h3 id="1-bridgemesh-auto-meshp435-444">案例 1: Bridge/Mesh 配置与 Auto Mesh（p435-444）</h3>
+<ul>
+<li><strong>问题</strong>: 露营地/隔街楼宇要覆盖但没有布线条件。</li>
+<li><strong>方法论的使用</strong>: 选型——只需回程选 Bridge（示例两端 SSID "STELLAR-BRIDGE"、5GHz、相同 Passphrase）；需要客户端服务选 Mesh（Is Root 指定根，客户端 SSID 如 WIFI GUESTS 2.4&amp;5GHz Open）；规划核对五项限制（≤16/≤8/≤4/≤5/≤5SSID）；回程按最佳实践锁定 5GHz 信道 &gt;100；未配置场景直接用 Auto Mesh（隐藏 Stellar-MESH）。</li>
+<li><strong>结论</strong>: 入口在 Device Catalog 选 AP → Actions &gt; Edit Device &gt; Mesh/Bridge Configuration；Mesh Monitoring 页看拓扑（Root/Repeater、Parent MAC）。</li>
+<li><strong>结果</strong>: 免布线覆盖扩展，拓扑可视化监控。</li>
+</ul>
+<h3 id="2-rap-p418-433">案例 2: RAP 远程办公五步上线（p418-433）</h3>
+<ul>
+<li><strong>问题</strong>: 员工家庭的 AP 要广播企业 Corporate SSID，流量安全回总部。</li>
+<li><strong>方法论的使用</strong>: 管理员按三方顺序预置——① OVC 建 RAP Organization、声明序列号、配管理 VPN 参数并导出；② 部署 ALE VPN Server VM（eth0 公网/eth1 私网）导入 VPN 设置；③ OV2500 配客户端流量 VPN（eth2）并导入 VPN Server、配 AP SSID/射频。AP 侧自动走五步：注册 → 取设置 → 管理 VPN → 取配置 → 客户端 VPN。</li>
+<li><strong>结论</strong>: 双 VPN 隧道分离管理与数据面；可用 Local Breakout + VLAN tagging 分流 Lab/Employees/Visitors SSID。</li>
+<li><strong>结果</strong>: 远端用户连 Corporate SSID 访问总部；排障按五步定位（注册失败→序列号/云连通；无配置→隧道 3 与 OV2500；用户不通→第二条隧道）。</li>
+</ul>
+<hr />
+<h2 id="a2-future-trigger">A2 — 触发场景 (Future Trigger) ★</h2>
+<h3 id="skill">用户会在什么情境下需要这个 skill?</h3>
+<ol>
+<li>无布线条件的覆盖扩展：仓储、营地、大院、老楼——选 Bridge 还是 Mesh、规划规模是否超限。</li>
+<li>隔街楼宇互联替代光纤/线缆（纯回程 Bridge，注意 VLAN tagging 型号限制）。</li>
+<li>临时展会/活动：4-5 台 AP 快速组网（Auto Mesh 免配置）。</li>
+<li>远程办公/门店：员工家里或分支放一台 AP 广播企业 SSID，数据 VPN 回总部（RAP 三方配置与五步排障）。</li>
+<li>"Mesh 第 17 台加不进去 / 桥接连不通 / RAP 拿不到配置"类排障。</li>
+</ol>
+<h3 id="_1">语言信号 (用户的话里出现这些就应激活)</h3>
+<ul>
+<li>"没网线怎么组网 / mesh 最多几台 / 几跳"</li>
+<li>"隔两栋楼做无线桥接 / bridge 还是 mesh"</li>
+<li>"auto mesh / Stellar-MESH 这个隐藏 SSID 是什么"</li>
+<li>"员工家里放个 AP 广播公司 WiFi / RAP / remote AP"</li>
+<li>"VPN Server VM 怎么配 / OV2500 / 远程 AP 注册不上"</li>
+</ul>
+<h3 id="skill_1">与相邻 skill 的区分</h3>
+<ul>
+<li>与 <code><a href="ov-rf-tuning.html">ov-rf-tuning</a></code> 的区别: RF 调优优化既有 AP 的空口参数；本 skill 解决"回程拓扑怎么建"。回程信道选择（5GHz &gt;100）虽是 RF 概念，但它是 Mesh 规则的一部分，归本 skill。</li>
+<li>与 <code><a href="ov-roaming-troubleshoot.html">ov-roaming-troubleshoot</a></code> 的区别: Mesh 内客户端在 root/repeater 间的移动性能问题不等于标准漫游判定表场景；本 skill 先看拓扑/回程质量。</li>
+<li>与 <code><a href="ov-device-activation-troubleshoot.html">ov-device-activation-troubleshoot</a></code> 的区别: RAP 五步中第 1 步（AP 注册）本质是激活链，若卡在注册/取证书阶段应转激活排障 skill；第 2 步之后的 VPN/配置问题归本 skill。</li>
+</ul>
+<hr />
+<h2 id="e-execution">E — 可执行步骤 (Execution)</h2>
+<p>当 skill 被激活后, agent 应按以下步骤执行:</p>
+<ol>
+<li><strong>选型与合规检查</strong></li>
+<li>判断需求：仅需回程（替代线缆）→ Bridge；需同时提供客户端 WiFi → Mesh；远端延伸企业网 → RAP。Mesh 方案核对五项硬限制（≤16 AP / ≤8 slave / ≤4 hops / 单跳 P2MP ≤5 / 每 AP ≤5 客户端 SSID）；RAP 方案确认 AP 型号非 AP1101；Bridge 方案确认两端型号支持 VLAN tagging（AP1101/AP1201/AP1201H 不支持）。</li>
+<li>完成标准: 给出方案结论 + 限制核对结果；超限/不兼容时给出替代（增加 root 节点、改有线回程、换型号）。</li>
+<li><strong>输出配置参数</strong></li>
+<li>Bridge/Mesh：两端一致的 SSID/Band/Passphrase + Is Root（Mesh）；回程锁定 5GHz、信道 &gt;100；免配置场景用 Auto Mesh（默认隐藏 SSID Stellar-MESH @5GHz）。RAP：按三方顺序——OVC（RAP Organization、序列号、VPN 公网 IP/端口、客户端 IP 池、OV2500 IP、导出 VPN 设置）→ VPN Server VM（eth0 公网/eth1 私网，导入）→ OV2500（客户端 VPN eth2 导入 VPN Server、AP SSID/射频）。</li>
+<li>完成标准: 每方配置清单含具体参数值与配置入口。</li>
+<li><strong>验证与排障定位</strong></li>
+<li>Mesh：Mesh Monitoring 看拓扑（Root/Repeater、Parent MAC）；Bridge：验证连通与 VLAN 隔离。RAP：按五步定位——卡注册→查序列号声明与云连通（必要时转激活排障）；拿不到配置→查管理 VPN 隧道与 OV2500；用户不通→查第二条客户端 VPN 隧道。</li>
+<li>完成标准: 给出验证方法 + 按五步/拓扑定位的排障路径。</li>
+</ol>
+<hr />
+<h2 id="b-boundary">B — 边界 (Boundary) ★</h2>
+<h3 id="skill_2">不要在以下情况使用此 skill</h3>
+<ul>
+<li>有线到位、AP 已纳管的常规覆盖优化：走 <code><a href="ov-rf-tuning.html">ov-rf-tuning</a></code>。</li>
+<li>SSID 认证/密钥/Portal 设计：走 <code><a href="ov-ssid-psk-selection.html">ov-ssid-psk-selection</a></code>（本 skill 只管回程与远程组网，客户端 SSID 的安全属性另定）。</li>
+<li>AP 首次纳管卡激活状态（证书/Upgrade/VPN Configuring Failed）：走 <code><a href="ov-device-activation-troubleshoot.html">ov-device-activation-troubleshoot</a></code>，RAP 场景注册阶段同理。</li>
+</ul>
+<h3 id="_2">作者在书中警告的失败模式</h3>
+<ul>
+<li><strong>Mesh 硬性规模限制</strong>（ce23, p439）: 超 16 AP / 5 跳 / 单跳 6 台 / 9 个 slave / 6 个 SSID 会导致拓扑不稳定或节点无法加入；超规模应增加 root 或改有线回程。</li>
+<li><strong>Bridge 不能服务客户端 + 型号 VLAN 限制</strong>（ce24, p437）: 期望桥接同时放号必须选 Mesh；AP1101/AP1201/AP1201H 桥接上 VLAN tagging 不生效；三要素（SSID/Band/Passphrase）不一致则桥接连不通；回程未锁 5GHz 信道 &gt;100 会与客户端流量/雷达冲突。</li>
+<li><strong>RAP 型号与依赖限制</strong>（ce10/p49, p421/432）: AP1101 不兼容 RAP；RAP 硬依赖三方（OVC + VPN Server VM + OV2500）齐备，配置顺序上 1 的导出物是 2 的导入物，跳步即失败。</li>
+<li><strong>Auto Mesh 是默认行为</strong>: 现场出现隐藏 SSID "Stellar-MESH"（5GHz）是 root AP 的正常行为，不是入侵（可与 WIPS skill 的 Rogue 定性衔接）。</li>
+</ul>
+<h3 id="_3">作者的盲点 / 时代局限</h3>
+<ul>
+<li>培训书未给出 Mesh 回程带宽随跳数衰减的量化数据；RAP 的 VPN Server VM 仅限 ALE 提供的镜像，未讨论第三方 VPN 网关兼容性。</li>
+</ul>
+<h3 id="_4">容易混淆的邻近方法论</h3>
+<ul>
+<li>Guest Tunneling（GRE 隧道按 ARP 卸载访客流量，p256）是"客户端流量走隧道"，RAP 的双 VPN 是"AP 回程走隧道"——同为隧道但拓扑与用途不同。</li>
+<li>Auto Mesh 的隐藏 SSID 与 Rogue/钓鱼 SSID：前者是自家 root AP 的合法行为，勿按 WIPS 反制。</li>
+</ul>
+<hr />
+<h2 id="skills-3">相关 skills (阶段 3 填充)</h2>
+<ul>
+<li>depends-on <code><a href="ov-device-activation-troubleshoot.html">ov-device-activation-troubleshoot</a></code>: RAP 五步的第 1 步（AP 凭序列号注册/取证书）本质是激活状态链——卡在注册、取证书、Upgrade 阶段转激活排障 skill；第 2 步之后的 VPN/配置问题才归本 skill。Mesh/Bridge 成员 AP 也须先成为 OV Managed。</li>
+<li>composes-with <code><a href="ov-wips-rogue-policy.html">ov-wips-rogue-policy</a></code>: Auto Mesh 的隐藏 SSID "Stellar-MESH" 与 Rogue/钓鱼 SSID 易混淆——安全侧发现异常 SSID 时先按 WIPS 四策略定性，确认为自家 Mesh root 则标记处理而非反制。</li>
+</ul>
+<hr />
+<h2 id="_5">审计信息</h2>
+<ul>
+<li><strong>验证通过</strong>: V1 ✓ / V2 ✓ / V3 ✓（V3 由 RAP 五步/Mesh 专有限制保证）</li>
+<li><strong>测试通过率</strong>: 待测 (详见 test-prompts.json)</li>
+<li><strong>蒸馏时间</strong>: 2026-08-22</li>
+</ul></main></div></body></html>

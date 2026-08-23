@@ -1,0 +1,346 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>术语词典 — DT00XTE317 · OmniVista Cirrus / Terra 部署与配置</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE317 · OmniVista Cirrus / Terra 部署与配置</h1>
+<div class="sub">Edition 10 · 478 页 · 云管与本地部署平台</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">平台部署与开通</div>
+<a href="skills/ov-terra-deploy.html">ov-terra-deploy</a>
+<a href="skills/ov-license-org-onboarding.html">ov-license-org-onboarding</a>
+<div class="grp">设备纳管与激活</div>
+<a href="skills/ov-device-activation-troubleshoot.html">ov-device-activation-troubleshoot</a>
+<div class="grp">SSID / 策略 / 认证设计</div>
+<a href="skills/ov-ssid-psk-selection.html">ov-ssid-psk-selection</a>
+<a href="skills/ov-policy-bandwidth-design.html">ov-policy-bandwidth-design</a>
+<a href="skills/ov-wired-auth-config.html">ov-wired-auth-config</a>
+<div class="grp">RF / 漫游 / 安全 / 特殊组网</div>
+<a href="skills/ov-rf-tuning.html">ov-rf-tuning</a>
+<a href="skills/ov-roaming-troubleshoot.html">ov-roaming-troubleshoot</a>
+<a href="skills/ov-wips-rogue-policy.html">ov-wips-rogue-policy</a>
+<a href="skills/ov-mesh-bridge-rap.html">ov-mesh-bridge-rap</a></aside><main><h1>术语词典</h1><h1 id="glossary-omnivista-cirrus-terra-deployment-configuration-edition-10">GLOSSARY — OmniVista Cirrus / Terra Deployment &amp; Configuration (Edition 10)</h1>
+<blockquote>
+<p>所有 skill 共享的术语词典。来源: <code>.cangjie/books/ov-terra-deploy/source.txt</code> (DT00XTE317, 478 页); 页码指 source.txt 中的 <code>PAGE</code> 标记。</p>
+<p>⚠️ <strong>最大同名异义陷阱</strong>: 本书中 <strong>ARP = Access Role Profile (网络角色对象)</strong>, 与网络协议里的 ARP (Address Resolution Protocol, 地址解析协议) <strong>无关</strong>。读配置/文档时一律按"角色"理解。</p>
+</blockquote>
+<h2 id="_1">平台与账户</h2>
+<table>
+<thead>
+<tr>
+<th>术语</th>
+<th>全称</th>
+<th>页码</th>
+<th>定义与关系</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OmniVista Cirrus (OVC/OVCX)</td>
+<td>OmniVista Cirrus</td>
+<td>p.1, 5-9, 22-29</td>
+<td>ALE 云管 (SaaS) 平台, 零部署, 上限 12000 台 (10000 AP + 2000 交换机); 许可前缀 OVCX。Terra 的云端对等版本。</td>
+</tr>
+<tr>
+<td>OmniVista Terra (OVTX)</td>
+<td>OmniVista Terra</td>
+<td>p.11-18, 72-91</td>
+<td>OVC 的本地化版本: ESXi 8 上 3 节点 VM (8vCPU/32GB/AVX, 200GB+3TB), Kubernetes 集群, 上限 2000 台; 需 WebAdmin(:3000) + 4 条 DNS 域名 + build(.7z)。</td>
+</tr>
+<tr>
+<td>MSP</td>
+<td>Managed Services Provider</td>
+<td>p.37-60</td>
+<td>托管服务层级: Partner→MSP→Organization; 一个邮箱只属一个 MSP (可用 sub-addressing MyMail+tag@ 绕过)。</td>
+</tr>
+<tr>
+<td>Organization</td>
+<td>Organization</td>
+<td>p.46-58, 106-111</td>
+<td>最顶层管理实体, 含多 Site; 无许可时 Cirrus 需申请 trial、Terra 自动 90 天试用。</td>
+</tr>
+<tr>
+<td>Site</td>
+<td>Site (Building/Floor)</td>
+<td>p.122-128</td>
+<td>物理层级 Site→Building→Floor, 可导平面图支持 Heat Map; SSID Network Assignments 按 Site 应用。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_2">设备纳管</h2>
+<table>
+<thead>
+<tr>
+<th>术语</th>
+<th>全称</th>
+<th>页码</th>
+<th>定义与关系</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Activation Status</td>
+<td>Activation Status</td>
+<td>p.146-147, 166-167</td>
+<td>状态链 Waiting→Certificate→Registered→Upgrade→Assigned→VPN→Connected→Provisioning→OV Managed; 全链约 5 分钟; 每个失败态对应明确动作。</td>
+</tr>
+<tr>
+<td>Call Home</td>
+<td>Call Home</td>
+<td>p.69, 171-172</td>
+<td>设备周期性主动联系服务器 (交换机默认 30 分钟, discovery-interval 可配); 运维动作以下一次 call-home 生效, 重启设备/进程可立即触发。</td>
+</tr>
+<tr>
+<td>DHCP Option 43</td>
+<td>DHCP Option 43</td>
+<td>p.9, 18, 140-141, 161</td>
+<td>下发 activation server URL (Terra: activation.myovterra.com); 交换机可改 /working/cloudagent.cfg 首行实现同等效果。</td>
+</tr>
+<tr>
+<td>cloud-agent</td>
+<td>OmniSwitch cloud-agent</td>
+<td>p.69, 161, 169-172</td>
+<td>OmniSwitch 对接 OV 的进程; <code>show cloud-agent status</code>、<code>admin-state disable force</code> 重建 VPN。DeviceManaged + Certificate Consistent 即正常。</td>
+</tr>
+<tr>
+<td>AP Group</td>
+<td>Access Point Group</td>
+<td>p.151-153, 222, 345</td>
+<td>AP 逻辑配置分组 (SSID/RF Profile/模板), 不依赖物理网络, 混型号, 每组上限 20000。</td>
+</tr>
+<tr>
+<td>Provisioning Configuration</td>
+<td>Provisioning Configuration</td>
+<td>p.154-156, 347</td>
+<td>挂在 AP Group 下的配置集; 必填 Name/Site/RF Profile/Timezone; SSH 运维访问需在此启用。</td>
+</tr>
+<tr>
+<td>CLI Template Provisioning</td>
+<td>CLI Template Based Provisioning (Initial/Incremental)</td>
+<td>p.173-180</td>
+<td>交换机模板化配置: Initial 首次纳管应用, Incremental 增量下发; 与 Golden Configuration 互补 (模板=下发, Golden=校验)。</td>
+</tr>
+<tr>
+<td>Golden Configuration</td>
+<td>Golden Configuration</td>
+<td>p.194-197, 313, 350-351</td>
+<td>配置基准备份; 无偏差即 Compliant, 支持即时/周期 Audit。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_3">接入与策略</h2>
+<table>
+<thead>
+<tr>
+<th>术语</th>
+<th>全称</th>
+<th>页码</th>
+<th>定义与关系</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SSID Usage</td>
+<td>SSID Usage (profile template)</td>
+<td>p.213-219</td>
+<td>创建向导的用途模板: Guest(Open/MAC+CP)、Employee BYOD(802.1X+CP)、Enterprise(802.1X)、Protected(PSK)、Protected BYOD(PSK+CP)。</td>
+</tr>
+<tr>
+<td>PSK 四变体</td>
+<td>PSK / DSPSK / PPSK / Dynamic PPSK</td>
+<td>p.229-235</td>
+<td>全局 PSK (全网一把钥匙) → DSPSK (MAC 认证 + 每设备专属密码, 须开 MAC 认证、禁 AUTO_WPA_WPA2) → PPSK (每条密码绑一个 ARP) → Dynamic PPSK (每条绑 VLAN+ARP, 可选 Priority)。</td>
+</tr>
+<tr>
+<td>UPAM</td>
+<td>Unified Policy Authentication Manager</td>
+<td>p.239-244</td>
+<td>内置认证与访客管理: 内置 RADIUS/MAC 认证服务器、Guest/BYOD Access; Terra 需为 Portal 和 Radius 分配独立 IP。</td>
+</tr>
+<tr>
+<td><strong>ARP</strong> ⚠️</td>
+<td><strong>Access Role Profile</strong> (≠ Address Resolution Protocol)</td>
+<td>p.220, 233-235, 264, 399, 452</td>
+<td>网络角色对象: VLAN + 默认 Policy List + 每用户带宽; 来源 RADIUS/SSID 默认/PPSK 绑定/MAC 默认角色/IoT 自动指派。策略分层中枢。<strong>与地址解析协议无关。</strong></td>
+</tr>
+<tr>
+<td>Policy List</td>
+<td>(Unified) Policy List</td>
+<td>p.264-265, 269</td>
+<td>QoS+ACL 规则集 (Accept/Drop/限速/802.1p/DSCP, 双向); 经 RADIUS 属性或 ARP 的 Default Policy List 分配。</td>
+</tr>
+<tr>
+<td>三层带宽合同</td>
+<td>Bandwidth Contract (SSID/ARP/Role)</td>
+<td>p.267-269</td>
+<td>裁决顺序: Policy List ACL 命中→按规则限速; 否则 ARP 每用户带宽; 否则 SSID 级 (每 AP 每 SSID <strong>全体共享</strong>, 非每用户); 都无则不限。</td>
+</tr>
+<tr>
+<td>Service Level</td>
+<td>Service Level (Guest)</td>
+<td>p.280-282</td>
+<td>访客套餐捆绑 (≤5 个): ARP + Policy List + Registration Profile + 有效期; Guest 账户必填。</td>
+</tr>
+<tr>
+<td>Registration Profile</td>
+<td>Registration Profile</td>
+<td>p.283-284</td>
+<td>有效期 + 时间/数据配额 + 耗尽处理 (阻断或降速); 与配额必须成对设计。</td>
+</tr>
+<tr>
+<td>有线认证四步</td>
+<td>AAA Server Profile → Access Auth Profile → Access Policy</td>
+<td>p.450-456</td>
+<td>有线 (AP 下联口/交换机口) MAC/802.1X 准入链, 第 4 步在 Company Property 登记客户端 MAC; 前置: 两个 ARP (受限兜底/全权) 先挂到 AP Group。</td>
+</tr>
+<tr>
+<td>客户端账户三类</td>
+<td>Employee / Company Property / Guest + Guest Operator</td>
+<td>p.273-281, 286-288</td>
+<td>UPAM 本地库账户; Company Property 是 DSPSK 与有线 MAC 认证的载体; Guest Operator 供前台发号/审批。</td>
+</tr>
+<tr>
+<td>Guest Tunneling</td>
+<td>Guest Tunneling (GRE)</td>
+<td>p.223, 255-256</td>
+<td>按 ARP 从 AP 到集中出口建 per-ARP L2 GRE 隧道隔离访客流量; 与 L3 Roaming 的 GRE 同机制不同用途。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_4">无线优化</h2>
+<table>
+<thead>
+<tr>
+<th>术语</th>
+<th>全称</th>
+<th>页码</th>
+<th>定义与关系</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DRM</td>
+<td>Distributed Radio Management</td>
+<td>p.364-365</td>
+<td>无控制器分布式射频控制面: AP 空口发现邻居、共享 RF 上下文、各自自主做信道/功率动作 (try-wait-retry)。</td>
+</tr>
+<tr>
+<td>RF Profile</td>
+<td>RF Profile</td>
+<td>p.154, 366-368, 374-376</td>
+<td>射频参数集 (国家码/负载均衡/扫描/信道功率/漫游门限), 挂 AP Group 或单 AP; DRM 的参数载体。</td>
+</tr>
+<tr>
+<td>Smart Load Balance</td>
+<td>Band Steering + Dynamic Load Balance</td>
+<td>p.366, 370-372</td>
+<td>Band Steering 按客户端数差 (阈值 10) 引导 5/6GHz; DLB 按 AP 负载设应答定时器; 关联 RSSI 门限推荐 2.4G=5、5G=10 (准入控制)。</td>
+</tr>
+<tr>
+<td>RSSI</td>
+<td>Received Signal Strength Indicator</td>
+<td>p.296-297, 377-379, 416</td>
+<td>每 +1 RSSI = +1dBm; 10-20 (-86~-76dBm) 差 / 21-28 尚可 / ≥29 (-67 以上) 推荐; OV 显示平均值, AP CLI 瞬时值。</td>
+</tr>
+<tr>
+<td>Roaming RSSI Threshold</td>
+<td>Roaming RSSI / 802.11k/v</td>
+<td>p.403-404, 416</td>
+<td>粘性客户端治理: 阈值推荐 2.4G=10、5G=15 (引导切换) + 802.11k/v。<strong>与 DLB 关联 RSSI (5/10) 不是同一参数。</strong></td>
+</tr>
+<tr>
+<td>Fast Roaming</td>
+<td>OKC / 802.11r FT</td>
+<td>p.395, 402, 413</td>
+<td>OKC 仅 WPA2/WPA3 <strong>Enterprise</strong>; 802.11r 限 WPA2/WPA3 (Personal 或 Enterprise); 默认关闭, 按 SSID 启用。</td>
+</tr>
+<tr>
+<td>Client Context</td>
+<td>Client Context Sharing (Add/Del) / L2 &amp; L3 Roaming</td>
+<td>p.394-417</td>
+<td>AP 间共享客户端上下文; 三问判定: 无上下文=新客户端; 有上下文 VLAN 一致=L2 漫游 (默认开); 不一致=L3 漫游 (默认关, home/foreign 间 GRE 隧道)。地理相邻空口不可达可静态配 Neighbor AP。</td>
+</tr>
+<tr>
+<td>QoE Analytics</td>
+<td>Quality of Experience Analytics</td>
+<td>p.290-301</td>
+<td>连接时间/漫游时间/平均 RSSI/信道利用率/uptime 五属性根因面板; "连慢/漫游差/信号差"工单首要入口。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_5">安全与特殊组网</h2>
+<table>
+<thead>
+<tr>
+<th>术语</th>
+<th>全称</th>
+<th>页码</th>
+<th>定义与关系</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>WIPS</td>
+<td>Wireless Intrusion Prevention System</td>
+<td>p.381-389</td>
+<td>三分类: Interfering (默认) / Rogue (命中四策略: 信号&gt;-70dBm、广播合法 SSID、关键字黑名单、Rogue OUI) / Friendly (白名单, 默认含 ALE OUI); Containment 默认开发 de-auth; 依赖背景扫描。</td>
+</tr>
+<tr>
+<td>Bridge / Mesh / Auto Mesh</td>
+<td>WiFi Bridge / WiFi Mesh</td>
+<td>p.435-444</td>
+<td>Bridge 替代线缆但不服务客户端; Mesh 兼得, 限制 ≤16 AP/≤8 slave/≤4 跳/单跳 P2MP ≤5/每 AP ≤5 SSID; 最佳实践回程 5GHz 信道 &gt;100; Auto Mesh root 广播隐藏 SSID "Stellar-MESH"。</td>
+</tr>
+<tr>
+<td>RAP</td>
+<td>Remote Access Point</td>
+<td>p.418-434</td>
+<td>远程 AP: OVC + ALE VPN Server VM + OV2500 三方; 五步上线 (注册→取设置→管理 VPN→取配置→客户端 VPN); AP1101 不兼容。</td>
+</tr>
+<tr>
+<td>IoT Device Profiling</td>
+<td>MAC OUI + DHCP Fingerprinting / ARP Enforcement</td>
+<td>p.461-470</td>
+<td>终端画像分类后经 ARP Enforcement 自动指派 Access Role Profile; 此处 ARP Enforcement = 角色强制 (与 g17 同源概念, 非地址解析协议)。</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<ul>
+<li>原始版 (含逐条 YAML 审计格式): <a href="./candidates/glossary.md">candidates/glossary.md</a></li>
+</ul></main></div></body></html>

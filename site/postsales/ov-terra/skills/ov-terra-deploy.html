@@ -1,0 +1,158 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ov-terra-deploy — DT00XTE317 · OmniVista Cirrus / Terra 部署与配置</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE317 · OmniVista Cirrus / Terra 部署与配置</h1>
+<div class="sub">Edition 10 · 478 页 · 云管与本地部署平台</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">平台部署与开通</div>
+<a href="skills/ov-terra-deploy.html" class="on">ov-terra-deploy</a>
+<a href="skills/ov-license-org-onboarding.html">ov-license-org-onboarding</a>
+<div class="grp">设备纳管与激活</div>
+<a href="skills/ov-device-activation-troubleshoot.html">ov-device-activation-troubleshoot</a>
+<div class="grp">SSID / 策略 / 认证设计</div>
+<a href="skills/ov-ssid-psk-selection.html">ov-ssid-psk-selection</a>
+<a href="skills/ov-policy-bandwidth-design.html">ov-policy-bandwidth-design</a>
+<a href="skills/ov-wired-auth-config.html">ov-wired-auth-config</a>
+<div class="grp">RF / 漫游 / 安全 / 特殊组网</div>
+<a href="skills/ov-rf-tuning.html">ov-rf-tuning</a>
+<a href="skills/ov-roaming-troubleshoot.html">ov-roaming-troubleshoot</a>
+<a href="skills/ov-wips-rogue-policy.html">ov-wips-rogue-policy</a>
+<a href="skills/ov-mesh-bridge-rap.html">ov-mesh-bridge-rap</a></aside><main><h1>ov-terra-deploy</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: p18, 74-91</p><h1 id="omnivista-terra-3-vm">OmniVista Terra 3-VM 部署与初始化清单</h1>
+<h2 id="r-reading">R — 原文 (Reading)</h2>
+<blockquote>
+<p>"Number of Virtual Machines required: 3. Minimum EXSi version: 8. Processors: 8 vCPU @3GHz minimum. CPU must support AVX/AVX2... RAM: 32 GB. System Disk size: 200 GB. Data Disk size: 3 TB."
+"activation.myovterra.com / as.myovterra.com – activation server URL (Main IP); vpn.myovterra.com – VPN (VPN IP); images... myovterra.myovcloud.com – main URL."</p>
+<p>— ALE Training, Servers Installation OmniVista Terra, p75/p90</p>
+</blockquote>
+<hr />
+<h2 id="i-interpretation">I — 方法论骨架 (Interpretation)</h2>
+<p>Terra 是本地化 3 节点 Kubernetes 集群，部署是一条严格串行的验收链，任何一环不满足都会导致后续 build 部署失败：</p>
+<ol>
+<li><strong>硬件/虚拟化前置</strong>：ESXi ≥8、3 台 VM，每台 8vCPU@3GHz（必须支持 AVX/AVX2；vCenter 集群需开 EVC，基线推荐 Ice Lake、最低 Broadwell）、32GB RAM、SSD（≥50MB/s）、系统盘 200GB + 数据盘 3TB。</li>
+<li><strong>每台 VM 初始化</strong>：部署 OVA → 控制台配键盘/hostname（如 ovtx-100）/IP/DNS（须能解析 myovterra.myovcloud.com）/ovtx 密码 → 重启后 <code>ip addr</code> 核对。</li>
+<li><strong>WebAdmin 初始化</strong>（任一节点 IP:3000）：建 admin 账号 → General Info + 第 2/3 节点 IP 校验 → 定义 4 个 IP（Main / VPN / UPAM Portal / UPAM Radius）→ SMTP → 上传 build(.7z) 部署。</li>
+<li><strong>DNS 四域名</strong>（客户 DNS 服务器上）：activation/as/images.myovterra.com→Main IP；vpn.myovterra.com→VPN IP；myovterra.myovcloud.com→Main IP。</li>
+<li><strong>验证</strong>：Dashboard 节点状态 + Install 菜单部署状态；失败则 "Download the logs"。</li>
+</ol>
+<p>核心思维：DNS 是激活链路的前置依赖——漏配 DNS，设备永远无法 call-home。</p>
+<hr />
+<h2 id="a1-past-application">A1 — 书中的应用 (Past Application)</h2>
+<h3 id="1-terra-3-vm-c05-p74-91">案例 1: Terra 3-VM 从零安装（c05, p74-91）</h3>
+<ul>
+<li><strong>问题</strong>: 客户要求本地化部署 Terra，从裸 vSphere 环境到可登录管理台。</li>
+<li><strong>方法论的使用</strong>: 按 OVA×3 → 控制台初始化 → WebAdmin(:3000) 四 IP 定义 + SMTP → build(.7z) 上传 → DNS 五条记录的顺序执行。</li>
+<li><strong>结论</strong>: 全程每步有验证点（ip addr、节点校验、Install 状态页）。</li>
+<li><strong>结果</strong>: 集群上线，首次登录 https://myovterra.myovcloud.com，组织自动进入 90 天试用（p110）。</li>
+</ul>
+<h3 id="2-evc-ce26-p75p89">案例 2: EVC 基线不足导致部署失败（ce26, p75/p89）</h3>
+<ul>
+<li><strong>问题</strong>: vCenter 集群 CPU 基线低于 Broadwell（无 AVX/AVX2），build 部署失败。</li>
+<li><strong>方法论的使用</strong>: 核对 CPU 指令集要求 → EVC 基线设 Ice Lake（最低 Broadwell）→ 用 Install 菜单 "Download the logs" 定位。</li>
+<li><strong>结果</strong>: 修正基线后部署成功。</li>
+</ul>
+<hr />
+<h2 id="a2-future-trigger">A2 — 触发场景 (Future Trigger) ★</h2>
+<h3 id="skill">用户会在什么情境下需要这个 skill?</h3>
+<ol>
+<li>售前/安装前环境验收：客户机房只有 Broadwell 基线集群，问能否装 Terra。</li>
+<li>安装中：OVA 已部署，不知道 WebAdmin 入口、4 个 IP 怎么定义、build 从哪上传。</li>
+<li>安装后排障：Install 菜单显示 Failure、3000 端口不通、AP 无法激活——先查 DNS 四域名是否配齐。</li>
+</ol>
+<h3 id="_1">语言信号 (用户的话里出现这些就应激活)</h3>
+<ul>
+<li>"Terra 怎么装 / install OmniVista Terra on-premise"</li>
+<li>"3 台 VM 的规格 / EVC baseline / AVX 指令集"</li>
+<li>"WebAdmin 3000 端口 / build .7z 上传失败 / deployment failed"</li>
+<li>"activation.myovterra.com / myovterra.myovcloud.com 解析"</li>
+</ul>
+<h3 id="skill_1">与相邻 skill 的区别</h3>
+<ul>
+<li>与 <code><a href="ov-license-org-onboarding.html">ov-license-org-onboarding</a></code> 的区别: 那个管 Terra 装好之后的许可证导入与组织开通（.json 许可文件、OmniVista ID）；本 skill 管装到能用。</li>
+<li>与 <code><a href="ov-device-activation-troubleshoot.html">ov-device-activation-troubleshoot</a></code> 的区别: 那个管单台设备激活状态机排障；本 skill 是平台侧地基——若批量设备全部激活失败，先用本 skill 核对 DNS 四域名与端口。</li>
+</ul>
+<hr />
+<h2 id="e-execution">E — 可执行步骤 (Execution)</h2>
+<p>当 skill 被激活后, agent 应按以下步骤执行:</p>
+<ol>
+<li><strong>核对硬件与虚拟化前置</strong></li>
+<li>逐项检查: ESXi≥8、3×VM、8vCPU@3GHz+AVX/AVX2（EVC 基线 Ice Lake/Broadwell）、32GB RAM、SSD≥50MB/s、200GB 系统盘 + 3TB 数据盘。</li>
+<li>完成标准: 每项有明确"满足/不满足"结论；不满足项给出升级建议。</li>
+<li><strong>执行部署序列</strong></li>
+<li>OVA×3 → 控制台初始化（hostname/IP/DNS/ovtx 密码，DNS 须解析 myovterra.myovcloud.com）→ <code>&lt;Node_IP&gt;:3000</code> WebAdmin（admin 账号、General Info、4 IP、SMTP、build .7z）。</li>
+<li>完成标准: Install 菜单状态为 Success。</li>
+<li>判停条件: 若状态为 Failure，立即 "Download the logs" 分析，不要盲目重试。</li>
+<li><strong>配置并验证 DNS 四域名 + 首次登录</strong></li>
+<li>在客户 DNS 配 activation/as→Main、vpn→VPN、images→Main、myovterra.myovcloud.com→Main；nslookup 逐一验证；浏览器登录 https://myovterra.myovcloud.com 看 Dashboard 三节点正常。</li>
+<li>完成标准: 四域名全部解析正确且 Dashboard 节点健康。</li>
+</ol>
+<hr />
+<h2 id="b-boundary">B — 边界 (Boundary) ★</h2>
+<h3 id="skill_2">不要在以下情况使用此 skill</h3>
+<ul>
+<li>Cirrus（公有云）开通：无 VM/DNS 步骤，走 ov-license-org-onboarding。</li>
+<li>平台已上线、个别设备激活卡状态：这是设备侧问题，走 ov-device-activation-troubleshoot。</li>
+<li>Terra 交换机侧出向端口要求（443/80/123/53）属设备网络前提，不在平台安装清单内重复展开。</li>
+</ul>
+<h3 id="_2">作者在书中警告的失败模式</h3>
+<ul>
+<li><strong>EVC 基线低于 Broadwell（ce26）</strong>: 无 AVX/AVX2 则 build 部署必失败；DNS 未预解析四域名导致初始化/激活卡住。</li>
+<li><strong>部署失败不取日志</strong>: 书中明确失败时用 "Download the logs" 取安装日志定位，而非反复重装。</li>
+<li><strong>容量口径（p14/p17）</strong>: Terra 官方上限 2000 台（1600 AP + 400 交换机），架构页标注可至 5000——报价按 2000 口径。</li>
+</ul>
+<h3 id="_3">作者的盲点 / 时代局限</h3>
+<ul>
+<li>只覆盖 VMware ESXi 虚拟化，未提其他 hypervisor 或裸金属；版本号（ESXi 8、AWOS 4.0.7.14）随版本迭代需核对新版 Release Notes。</li>
+</ul>
+<h3 id="_4">容易混淆的邻近方法论</h3>
+<ul>
+<li>Cirrus 的入向端口 9093/30123-30125 不适用于 Terra（激活服务器在本地，只需出向 443/80/123/53）——不要照搬 Cirrus 清单。</li>
+</ul>
+<hr />
+<h2 id="skills-3">相关 skills (阶段 3 填充)</h2>
+<ul>
+<li>composes-with <code><a href="ov-license-org-onboarding.html">ov-license-org-onboarding</a></code>: 本 skill 是整条开局流水线的地基——Terra 装好并验证 DNS 四域名后，紧接许可证导入与组织开通（OmniVista ID / license .json / Activate subscription）；平台未就绪就激活订阅会白白计时（ce06）。</li>
+</ul>
+<hr />
+<h2 id="_5">审计信息</h2>
+<ul>
+<li><strong>验证通过</strong>: V1 ✓ / V2 ✓ / V3 ✓</li>
+<li><strong>测试通过率</strong>: 待测 (详见 test-prompts.json)</li>
+<li><strong>蒸馏时间</strong>: 2026-08-22</li>
+</ul></main></div></body></html>

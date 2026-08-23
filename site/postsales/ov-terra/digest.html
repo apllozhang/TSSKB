@@ -1,0 +1,511 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>精华长文 DIGEST — DT00XTE317 · OmniVista Cirrus / Terra 部署与配置</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE317 · OmniVista Cirrus / Terra 部署与配置</h1>
+<div class="sub">Edition 10 · 478 页 · 云管与本地部署平台</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">平台部署与开通</div>
+<a href="skills/ov-terra-deploy.html">ov-terra-deploy</a>
+<a href="skills/ov-license-org-onboarding.html">ov-license-org-onboarding</a>
+<div class="grp">设备纳管与激活</div>
+<a href="skills/ov-device-activation-troubleshoot.html">ov-device-activation-troubleshoot</a>
+<div class="grp">SSID / 策略 / 认证设计</div>
+<a href="skills/ov-ssid-psk-selection.html">ov-ssid-psk-selection</a>
+<a href="skills/ov-policy-bandwidth-design.html">ov-policy-bandwidth-design</a>
+<a href="skills/ov-wired-auth-config.html">ov-wired-auth-config</a>
+<div class="grp">RF / 漫游 / 安全 / 特殊组网</div>
+<a href="skills/ov-rf-tuning.html">ov-rf-tuning</a>
+<a href="skills/ov-roaming-troubleshoot.html">ov-roaming-troubleshoot</a>
+<a href="skills/ov-wips-rogue-policy.html">ov-wips-rogue-policy</a>
+<a href="skills/ov-mesh-bridge-rap.html">ov-mesh-bridge-rap</a></aside><main><h1>精华长文 DIGEST</h1><h1 id="omnivista-cirrusterra-edition-10-digest">OmniVista Cirrus/Terra 部署与配置 (Edition 10) — 精华 (DIGEST)</h1>
+<blockquote>
+<p>本文由 cangjie-skill 蒸馏生成,只呈现<strong>通过三重验证</strong>的方法论 — 不是 478 页教材的摘要,是筛过水分的精华。
+目标读者: 没读过原书的 ALE 售后/渠道工程师。读完本文即可掌握全书方法论骨架,遇到具体情境再点链接深入对应 skill。
+出品: ALE Training Services (DT00XTE317, OVC 10.4.3 时期) | 全文约 9000 字, 预计阅读 25 分钟</p>
+</blockquote>
+<h2 id="_1">这本书在讲什么</h2>
+<p>这本 478 页的售后培训教材讲的是 ALE OmniVista 云管平台（Cirrus 公有云 / Terra 本地化）从零部署到日常运维的完整生命周期:平台安装、许可证开通、设备纳管、SSID 与策略设计、RF 调优、漫游排障、WIPS 安全、Mesh/RAP 特殊组网。</p>
+<p>它的真正价值不在"操作步骤"本身,而在背后一套贯穿全书的<strong>平台范式</strong>——理解了这四条,所有章节都是同一套思维的不同切面:</p>
+<ol>
+<li><strong>声明式纳管</strong>: 工程师不逐台 CLI 配置设备,而是在平台上"声明"意图(声明序列号、建 AP Group、配 Profile 模板),设备通过 call-home 拉取配置。管理流量(certificate + VPN 隧道)与业务流量(数据面)分离。</li>
+<li><strong>状态机思维</strong>: 设备激活是一条可诊断的状态链,每个失败状态对应明确的故障域与处置动作——排障入口是"先定位卡在哪个状态",而非盲目重启。</li>
+<li><strong>策略分层模型</strong>: SSID(入口) → 认证 → Access Role Profile(角色) → Policy List(规则),一层层收敛用户权限;三层带宽合同有明确的裁决顺序。</li>
+<li><strong>分布式智能</strong>: Stellar 无控制器架构下,DRM 让每个 AP 与邻居共享 RF 上下文自主决策信道/功率;漫游靠 AP 间客户端上下文接力,而非控制器指挥。</li>
+</ol>
+<p>还有一个贯穿性的实用特点: 书中大量给出<strong>可直接引用的推荐参数</strong>(RSSI 判定、最小速率、扫描间隔、门限值),本文末尾整理成速查表。</p>
+<blockquote>
+<p>⚠️ 全书最大同名异义陷阱: 本书中 <strong>ARP = Access Role Profile(网络角色对象)</strong>,与地址解析协议 ARP 无关。读到 ARP 一律按"角色"理解。</p>
+</blockquote>
+<hr />
+<h2 id="platform-onboarding">一、平台部署与开通 (Platform &amp; Onboarding)</h2>
+<p>这部分回答的问题是: <strong>平台从裸环境到"可以开始声明设备"要走过哪些验收关?</strong></p>
+<h3 id="terra-3-vm">Terra 3-VM 部署是一条串行验收链</h3>
+<p>Terra 是本地化 3 节点 Kubernetes 集群,部署严格串行,任何一环不满足后续必失败:</p>
+<ol>
+<li><strong>硬件/虚拟化前置</strong>: ESXi ≥8、3 台 VM、每台 8vCPU@3GHz(<strong>必须支持 AVX/AVX2</strong>;vCenter 集群开 EVC,基线推荐 Ice Lake、最低 Broadwell)、32GB RAM、SSD(≥50MB/s)、系统盘 200GB + 数据盘 3TB。</li>
+<li><strong>每台 VM 初始化</strong>: OVA → 控制台配 hostname/IP/DNS(须能解析 myovterra.myovcloud.com)/ovtx 密码 → <code>ip addr</code> 核对。</li>
+<li><strong>WebAdmin 初始化</strong>(:3000): 建 admin → 节点校验 → 定义 4 个 IP(Main / VPN / UPAM Portal / UPAM Radius)→ SMTP → 上传 build(.7z)。</li>
+<li><strong>DNS 四域名</strong>(客户 DNS 服务器上): activation/as/images.myovterra.com → Main IP;vpn.myovterra.com → VPN IP;myovterra.myovcloud.com → Main IP。</li>
+<li><strong>验证</strong>: Dashboard 三节点健康;失败则 "Download the logs" 定位,<strong>不要盲目重装</strong>。</li>
+</ol>
+<p>核心认知: <strong>DNS 是激活链路的前置依赖</strong>——漏配四域名,设备永远无法 call-home。容量口径: Terra 官方上限 2000 台(1600 AP + 400 交换机),报价按此口径。</p>
+<p>→ 深入: <a href="./ov-terra-deploy/SKILL.md"><code>ov-terra-deploy</code></a></p>
+<h3 id="_2">许可证与组织开通是一条三方流水线</h3>
+<p>许可生效(订购轨道)与组织开通(账户轨道)并行,在"平台导入"处汇合:</p>
+<ul>
+<li><strong>SKU 解码</strong>: <code>平台前缀(OVCX/OVTX)-设备类别(APL/APH/交换机型号)-级别(BAS/BIZ/PRM)-年限(1Y/3Y/5Y,Terra 另有 7Y)</code>。例: OVCX-68-BAS-3Y。低端 AP(AP1x0x/1x1x/1x2x)买 APL,其余 AP 买 APH。</li>
+<li><strong>订购链</strong>: eBuy 下单 → <strong>同步延迟最长 24h(下单后立刻查不到订单是正常现象,不要重复下单)</strong> → Subscription Manager 建订阅(记 Subscription ID / Order ID)。</li>
+<li><strong>平台导入</strong>: Cirrus 用 Subscription ID + Activation Code;Terra 需从 Admin Center 取 OmniVista ID、下载 license file(.json),且<strong>勾选 Activate subscription 即开始计时</strong>——客户环境未就绪就激活,白白烧订阅年限。</li>
+<li><strong>组织与试用</strong>: 选区域(eu/us.manage.ovcirrus.com)→ Partner(MSP)/Customer 账户 → Organization;Cirrus 需手工 Request a trial(预填参数不要改),Terra 建组织自动 90 天试用。</li>
+<li><strong>迁移 OVC4→OVC</strong>: <strong>无自动迁移工具</strong>——先在新平台手工重建全部配置对象,旧平台删光设备(序列号不能双声明,否则 call-home 归属冲突),再批量声明等设备回连。</li>
+</ul>
+<p>一个很实用的账户技巧: 一个邮箱只能属一个 MSP,但可用子地址寻址 <code>MyMail+msp2@MyCompany.com</code> 派生独立账户加入第二个 MSP,激活链接仍发原始邮箱。</p>
+<p>→ 深入: <a href="./ov-license-org-onboarding/SKILL.md"><code>ov-license-org-onboarding</code></a></p>
+<hr />
+<h2 id="device-onboarding-activation">二、设备纳管与激活 (Device Onboarding &amp; Activation)</h2>
+<p>这部分回答的问题是: <strong>设备声明之后为什么不上线?卡住的那个状态在告诉我什么?</strong></p>
+<h3 id="_3">激活状态机: 先定位状态,再按语义排障</h3>
+<p>正常链: <strong>Waiting for first contact → Obtaining Certificate → Registered → (Upgrade) → Assigned → VPN Configuring → Connected to OV → Provisioning → OV Managed</strong>,每个中间态最长约 5 分钟。超过 5 分钟无推进或反复回到同一失败项才判异常。</p>
+<p>七种失败状态处置表:</p>
+<table>
+<thead>
+<tr>
+<th>失败状态</th>
+<th>含义 / 下一步</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Failed To Get Certificate</td>
+<td>查 NTP 时间同步、设备可达性;设备曾被其他平台管理 → 清证书</td>
+</tr>
+<tr>
+<td>Upgrade Failed</td>
+<td>查镜像服务器与软件版本(AWOS ≥4.0.6 / AOS ≥8.9R1)</td>
+</tr>
+<tr>
+<td>Configuring VPN Failed</td>
+<td>查防火墙端口(Cirrus 入向 9093/30123-30125)</td>
+</tr>
+<tr>
+<td>Provisioning Failed</td>
+<td>查下发配置与设备可达性</td>
+</tr>
+<tr>
+<td>Device Validation Failed</td>
+<td>设备验证失败</td>
+</tr>
+<tr>
+<td><strong>Factory Reset Required</strong></td>
+<td>VPN profile 变更过 → <strong>必须恢复出厂,普通重启无效</strong></td>
+</tr>
+<tr>
+<td>Unsupported Device Model</td>
+<td>AP1101/AP1201L/H/HL 不受支持</td>
+</tr>
+</tbody>
+</table>
+<p><strong>前置核查(先于状态机)</strong>: DHCP options 1/3/6/28/42/43(option 43 指向 activation URL;代理环境另加 129-138)、防火墙出向 443/80/123/53、≥1 台 NTP、版本门槛。</p>
+<p><strong>跨平台迁移特例(Cirrus→Terra)</strong>: AP 删 <code>/.ocloud/</code> 下证书文件 + option 43 改指 activation.myovterra.com + <code>firstboot</code>;交换机删 switch/cloud 下 5 个证书文件 + 改 <code>/working/cloudagent.cfg</code> 首行 URL。看到 "Certificate Previously Issued" 就是旧凭据残留的明确信号。</p>
+<p><strong>CLI 工具箱</strong>: AP 侧 <code>ocloud_show</code>;交换机 <code>show cloud-agent status</code> / <code>show cloud-agent vpn status</code>、<code>cloud-agent admin-state disable force</code> 重建 VPN;discovery-interval 默认 30 分钟,重启设备/进程可立即触发。</p>
+<p>批量全挂 → 先查平台(DNS 四域名/build 状态);单台挂 → 走状态机。另注意两个"激活"是不同概念: <strong>订阅激活</strong>(许可计时)≠ <strong>设备激活</strong>(call-home 状态机)。</p>
+<p>→ 深入: <a href="./ov-device-activation-troubleshoot/SKILL.md"><code>ov-device-activation-troubleshoot</code></a></p>
+<hr />
+<h2 id="ssid-ssid-policy-authentication">三、SSID / 策略 / 认证设计 (SSID, Policy &amp; Authentication)</h2>
+<p>这部分回答的问题是: <strong>谁用什么钥匙进门?进门后有多少权限和带宽?</strong> 这三件事分别由 SSID 选型、策略分层、有线认证四步链承担。</p>
+<h3 id="ssid">SSID 设计是三层决策</h3>
+<p><strong>第一层 — Usage 矩阵</strong>(决定向导后续参数模板):</p>
+<table>
+<thead>
+<tr>
+<th>Usage</th>
+<th>安全级别</th>
+<th>Captive Portal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Guest Network</td>
+<td>Open 或 MAC</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>Employee BYOD Network</td>
+<td>802.1X 或 MAC→802.1X</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>Protected Network</td>
+<td>PSK</td>
+<td>N</td>
+</tr>
+<tr>
+<td>Protected for Employees (BYOD)</td>
+<td>PSK→Portal</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>Enterprise Network for Employee</td>
+<td>802.1X</td>
+<td>N</td>
+</tr>
+</tbody>
+</table>
+<p><strong>第二层 — 认证安全阶梯</strong>: Open+Portal(无安全) &lt; MAC(可欺骗、不加密,仅适合打印机/扫描仪等哑设备) &lt; PSK(全网一把钥匙,泄露即全员暴露、无法按人吊销) &lt; 802.1X Enterprise(最强,需服务器+用户库)。选型逻辑 = 设备类型 × 安全需求。</p>
+<p><strong>第三层 — PSK 四变体矩阵</strong>(密钥粒度递进):</p>
+<table>
+<thead>
+<tr>
+<th>变体</th>
+<th>粒度</th>
+<th>关键约束</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>全局 PSK</td>
+<td>全员一把钥匙</td>
+<td>最简单、风险最大,泄露即全员暴露</td>
+</tr>
+<tr>
+<td>DSPSK</td>
+<td>每设备一钥匙(MAC 认证后从 Company Property 库取本机专属密码)</td>
+<td><strong>必须启用 MAC 认证;加密不能选 AUTO_WPA_WPA2;Force 模式 SSID 级无全局 PSK,Prefer 模式可回退全局</strong></td>
+</tr>
+<tr>
+<td>PPSK</td>
+<td>每条密码绑一个预配置 Access Role Profile</td>
+<td>DSPSK 须为 Disable 或 Prefer</td>
+</tr>
+<tr>
+<td>Dynamic PPSK</td>
+<td>每条密码同时绑 VLAN ID + ARP</td>
+<td>Dynamic VLAN Selection 二选一: Priority ARP over VLAN-ID / Priority VLAN-ID over ARP</td>
+</tr>
+</tbody>
+</table>
+<p>经典应用: 打印机→DSPSK,承包商/部门→PPSK 或 Dynamic PPSK——<strong>一套 SSID 按口令分权分 VLAN,避免 SSID 爆炸</strong>。配套: 创建向导三段式(SSID Settings → Network Assignments → Schedule &amp; VLAN Mappings);大网用 VLAN Pooling(≤256 个 VLAN)防单一广播域淹没空口与骨干。</p>
+<p>注意边界: 密钥选型决定的是"进门身份"与落点 VLAN/ARP;进门后的限速与配额是下一个方法论的事,不要混为一谈。</p>
+<p>→ 深入: <a href="./ov-ssid-psk-selection/SKILL.md"><code>ov-ssid-psk-selection</code></a></p>
+<h3 id="_4">策略分层与三层带宽合同</h3>
+<p>权限与带宽由一条<strong>自底向上构建、自顶向下生效</strong>的分层链收敛: SSID(入口) → 认证(UPAM/RADIUS/本地库) → Access Role Profile(角色 = VLAN + 默认 Policy List + 每用户带宽) → Policy List(Accept/Drop、限速、802.1p/DSCP 标记,双向执行)。配置顺序永远是: 先建原子 Policy → 组装 Policy List → 挂到 ARP。</p>
+<p><strong>三层带宽合同裁决顺序</strong>(粗层兜底、细层收敛):</p>
+<ol>
+<li>流量先匹配 Policy List ACL → 命中则按 ACL 限速(每用户每应用,最细);</li>
+<li>未命中 → 看 ARP 是否设每用户带宽;</li>
+<li>再看 SSID 合同 —— <strong>每 AP 每 SSID 全体用户共享,不是每用户限速</strong>(最常被误解的一条,误用即"限速不生效"投诉);</li>
+<li>都没有 → 不限速。</li>
+</ol>
+<p><strong>访客运营体系</strong>: Registration Profile 定义配额(数据 MB + 时长)与耗尽处理(阻断或降速)——<strong>配额与耗尽处理必须成对设计</strong>,只配配额则超量行为不可预期。典型设计: 100MB/4H,超量降速 UP=100kB/s、DOWN=1000kB/s(酒店式"降速不断网")。Service Level(最多 5 个)把 ARP + Policy List + Registration Profile 打包成分级套餐;Guest Operator 供前台批量发号审批。Guest 账户三要素缺一不可: 登录名/密码、过期日期、Service Level。</p>
+<p>→ 深入: <a href="./ov-policy-bandwidth-design/SKILL.md"><code>ov-policy-bandwidth-design</code></a></p>
+<h3 id="_5">有线客户端认证四步链</h3>
+<p>AP 下联口(Eth1)或 OmniSwitch 接入口上做打印机/IP 电话等哑终端的 MAC 准入,是一条固定四步链外加一个前置:</p>
+<ul>
+<li><strong>[前置]</strong> 预配两个 Access Role Profile 并挂到 AP Group: 受限角色(如 ARP_DEFAULT,兜底) + 全权角色(如 ARP_PASS)——<strong>角色先行,否则链路配不完整</strong>。</li>
+<li><strong>1.</strong> AAA Server Profile: 选认证服务器(内置 UPAMRadiusServer)+ 方法(MAC)。</li>
+<li><strong>2.</strong> Access Auth Profile: 启用方法、绑 AAA Profile、设默认角色(受限 ARP)、指派 AP Group 并启用物理口。</li>
+<li><strong>3.</strong> Access Policy: 映射条件 Type=MAC、Source=Local Database、命中角色 ARP_PASS、Web Redirection=None。</li>
+<li><strong>4.</strong> 本地库声明: Company Property 登记客户端 MAC。</li>
+</ul>
+<p>思维: 自下而上配置,身份命中升权、未命中由默认 ARP 兜底。<strong>忘记第 4 步是最高频失误</strong>——客户端永远落受限角色,被误判为"认证不生效"。支持下联口认证的 AP: AP1251/AP1301H/AP136x/AP1311;IoT 自动识别(MAC OUI + DHCP 指纹→自动指派 ARP)是此流程的自动化补充。两个库不要混: 设备纳管"声明序列号"(Device Catalog) vs 终端准入"声明 MAC"(Company Property)。</p>
+<p>→ 深入: <a href="./ov-wired-auth-config/SKILL.md"><code>ov-wired-auth-config</code></a></p>
+<hr />
+<h2 id="rf-rf-roaming-wips-special-topology">四、RF / 漫游 / 安全 / 特殊组网 (RF, Roaming, WIPS &amp; Special Topology)</h2>
+<p>网络跑起来之后,投诉集中在四个方向: 信号差、移动掉线、可疑 AP、没网线的地方要覆盖。四个方法论各管一摊,边界清晰。</p>
+<h3 id="rf-drm">RF 调优: DRM 心智模型 + 可引用参数表</h3>
+<p><strong>DRM(Distributed Radio Management)心智模型</strong>: 无控制器架构下,每个 AP 经空中协议发现邻居、共享 RF 上下文(信道利用率/干扰、每 band 客户端数、功率),各自基于上下文自主做 RF 动作(try/wait/retry),作用域限于邻居 AP。<strong>排障看邻居关系与 RF Profile,不要去找"控制器"</strong>。RF Profile(含国家码)挂 AP Group 或单 AP。</p>
+<p><strong>负载均衡双机制(正交、可独立启用)</strong>: Band Steering 管"频段间"——按客户端数差(阈值 10)引导到 5/6GHz;Dynamic Load Balance 管"AP 间"——各 AP 按负载设应答定时器,并用关联 RSSI 门限拒绝/踢除过弱客户端。信道过载官方定义: 1 分钟平均介质利用率 &gt;70%。</p>
+<p><strong>RSSI 判定表</strong>(每 +1 RSSI = +1dBm;RSSI 10-43 ↔ -86~-53dBm):</p>
+<table>
+<thead>
+<tr>
+<th>RSSI</th>
+<th>dBm</th>
+<th>判定</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10-20</td>
+<td>-86~-76</td>
+<td>差,不建议音视频</td>
+</tr>
+<tr>
+<td>21-28</td>
+<td>-75~-68</td>
+<td>尚可</td>
+</tr>
+<tr>
+<td>≥29</td>
+<td>-67 以上</td>
+<td>推荐</td>
+</tr>
+</tbody>
+</table>
+<p>OV 界面显示<strong>平均值</strong>,AP CLI <code>wlanconfig ath002 list</code> 看瞬时值;把 RSSI 原始值当 dBm 读是常见错误(RSSI 20 实为 -76dBm)。</p>
+<p><strong>同书最易混淆的一对参数</strong>: DLB 关联 RSSI 门限(2.4G=5/5G=10,准入控制,拒弱客户端接入) vs Roaming RSSI 门限(2.4G=10/5G=15,引导切换)——名字相似、数值不同、用途不同。<strong>"静态信号差"走前者(RF 调优),"移动中掉线"走后者(漫游排障)</strong>。</p>
+<p>→ 深入: <a href="./ov-rf-tuning/SKILL.md"><code>ov-rf-tuning</code></a></p>
+<h3 id="_6">漫游排障: 上下文接力 + 三问判定表</h3>
+<p>Stellar 架构下漫游不是平台指令,而是 <strong>AP 间客户端上下文的接力</strong>: 客户端关联时向所有空中邻居发 Add(携带 SSID/MAC/IP/VLAN/ARP/Policy List/Portal 状态),漫游时"新 AP 的 Add 触发旧 AP 的 Del"。接收端丢弃条件: 来源 AP 不属同一 OmniVista,或本 AP 没有该 WLAN 服务——丢弃即被当"新客户端"重认证(表现为漫游后被重定向 Portal)。</p>
+<p><strong>L2/L3 漫游三问判定表</strong>:</p>
+<ol>
+<li>新 AP 有客户端上下文? 无 → 不漫游(新客户端)。</li>
+<li>上下文含相同 WLAN 服务/ARP? 无 → 不漫游。</li>
+<li>上下文 VLAN = 新 AP 上 ARP 映射的 VLAN? 是 → <strong>L2 漫游</strong>(始终启用);否 → <strong>L3 漫游</strong>(home/foreign AP 间 L2 GRE 隧道回原 VLAN,<strong>默认关闭,须按 SSID 显式启用</strong>——漏启用即跨 VLAN 移动掉线/重认证)。</li>
+</ol>
+<p><strong>排障四步</strong>: 判定漫游模式 → Heat Map 查覆盖重叠(无重叠=无漫游;<strong>生成热图需 ≥3 台 AP,少于此无热图是功能限制不是故障</strong>) → 地理相邻但射频互不可见(直角走廊遮挡)→ 两台 AP 互相静态添加 Neighbor AP → 粘性客户端用 Roaming RSSI(2.4G=10/5G=15)+ 802.11k/v 引导(漫游决策由客户端做出,网络侧只能引导)。</p>
+<p><strong>Fast Roaming 前提</strong>: 默认关。OKC 仅限 WPA2/WPA3 <strong>Enterprise</strong>;802.11r 限 WPA2/WPA3(Personal 或 Enterprise)——开放/Portal SSID 上启用无效。SSID 设计期的安全档位直接约束了漫游排障期可用的选项。</p>
+<p>→ 深入: <a href="./ov-roaming-troubleshoot/SKILL.md"><code>ov-roaming-troubleshoot</code></a></p>
+<h3 id="wips">WIPS: 默认宽松、逐级升级的分类决策</h3>
+<p>三分类基线: 空中发现的一切外部 AP(本 OVC 管理的除外)默认归 <strong>Interfering</strong>(仅干扰,不上纲);命中 Rogue Policy 任一条才升级 <strong>Rogue</strong>;手工或按 OUI(默认含 ALE OUI)标记为 <strong>Friendly</strong> 的不再上报。</p>
+<p><strong>Rogue 判定四策略</strong>(任一命中即 Rogue): ① 信号强度超门限(默认 <strong>-70dBm</strong>,范围 -50~-90,调门限即控误报/漏报);② 广播了本网配置的有效 SSID(仿冒/钓鱼);③ SSID 名命中关键字黑名单;④ MAC OUI 命中 Rogue OUI 列表。</p>
+<p>处置: Rogue Containment 默认启用——扫描 AP 向 Rogue 的关联客户端发 de-auth 反制(主动反制,波及邻居网络需客户知情);攻击检测灵敏度分 Custom/High/Medium/Low;Client Blocklist 默认关闭,且<strong>只对"真实无线客户端"的源 MAC 有效</strong>——盲目拉黑 AP MAC/BSSID 无效果。</p>
+<p><strong>前提依赖与代价</strong>: WIPS 硬依赖 AP 背景扫描(默认 20s/50ms);<strong>扫描期间该射频无 802.11 数据</strong>——间隔↑或时长↓ = 漏检↑但性能↑。共同结论: 仅 WIPS 需要时开扫描并保持默认值,高保真检测用专用扫描 AP 或 Voice/Video Awareness。</p>
+<p>一个易踩的交叉陷阱: Auto Mesh root AP 广播的隐藏 SSID "Stellar-MESH"(5GHz)是合法行为,<strong>不是 Rogue/钓鱼</strong>——反制自家 Mesh 前先定性。</p>
+<p>→ 深入: <a href="./ov-wips-rogue-policy/SKILL.md"><code>ov-wips-rogue-policy</code></a></p>
+<h3 id="mesh-bridge-rap">Mesh / Bridge / RAP: 没有网线的三种方案</h3>
+<p><strong>选型决策</strong>: 只需回程替代线缆(隔街楼宇)→ <strong>Bridge</strong>(纯回程,<strong>不能给 WiFi 客户端提供服务</strong>;两端 SSID/Band/Passphrase 必须完全一致);回程+客户端服务兼得(仓储/营地)→ <strong>Mesh</strong>(另需指定 Is Root);把企业网延伸到家庭/分支 → <strong>RAP</strong>。临时展会 4-5 台 AP 直接用 <strong>Auto Mesh</strong>: 接 LAN 的 root AP 自动广播隐藏 SSID "Stellar-MESH"(5GHz),未接 LAN 的 AP 自动加入,免配置。</p>
+<p><strong>Mesh 五项硬限制</strong>(超限拓扑不稳定或无法加入):</p>
+<table>
+<thead>
+<tr>
+<th>限制项</th>
+<th>上限</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>全网 Mesh AP 总数</td>
+<td>≤16</td>
+</tr>
+<tr>
+<td>slave AP 总数</td>
+<td>≤8</td>
+</tr>
+<tr>
+<td>跳数</td>
+<td>≤4</td>
+</tr>
+<tr>
+<td>单跳点对多点</td>
+<td>≤5 AP</td>
+</tr>
+<tr>
+<td>每 AP 广播客户端 SSID</td>
+<td>≤5</td>
+</tr>
+</tbody>
+</table>
+<p>最佳实践: 回程锁 5GHz 且<strong>信道号 &gt;100</strong>(避开常用客户端信道与雷达)。型号注意: AP1101 不兼容 RAP;AP1101/AP1201/AP1201H 桥接不支持 VLAN tagging。</p>
+<p><strong>RAP 三方配置 + 五步上线</strong>: 依赖 OVC(声明序列号、RAP 模式、VPN Server 公网 IP、OV2500 IP、客户端 IP 池)+ ALE VPN Server VM(eth0 公网/eth1 私网,导入 OVC 导出的 VPN 设置)+ OV2500(客户端流量 VPN + AP 配置)——<strong>配置顺序上第 1 方的导出物是第 2 方的导入物,跳步即失败</strong>。运行时五步: AP 凭序列号注册 → OVC 下发 VPN/OV2500 设置 → 建管理 VPN 隧道 → 经隧道从 OV2500 取配置 → 建第二条客户端数据 VPN 隧道(双隧道分离管理与数据面)。排障按五步定位: 卡注册→序列号/云连通(转激活排障);拿不到配置→管理 VPN 与 OV2500;用户不通→第二条隧道。</p>
+<p>另注意区分: Guest Tunneling(GRE 按 ARP 卸载访客流量)是"客户端流量走隧道",RAP 双 VPN 是"AP 回程走隧道"——同为隧道,拓扑与用途不同。</p>
+<p>→ 深入: <a href="./ov-mesh-bridge-rap/SKILL.md"><code>ov-mesh-bridge-rap</code></a></p>
+<hr />
+<h2 id="top-8">陷阱与反例 (全书杀伤力 Top 8)</h2>
+<ol>
+<li><strong>SSID 级带宽合同误当每用户限速</strong>: 它是"每 AP 每 SSID 全体用户共享"——用户互相挤占后投诉"限速不生效",排查时先走三层裁决链。</li>
+<li><strong>VPN profile 变更后只做普通重启</strong>: 本地缓存 VPN 配置无法增量更新,必须恢复出厂;状态显示 Factory Reset Required 时直接走 Reset,不要停在重启尝试。</li>
+<li><strong>DSPSK 硬约束三条全踩</strong>: 没开 MAC 认证、加密选了 AUTO_WPA_WPA2、Force 模式下配全局 PSK——任一条 SSID 行为即异常。</li>
+<li><strong>eBuy 下单后 24h 内查不到订单就重复下单</strong>: 同步延迟最长 24h,是正常现象。</li>
+<li><strong>跨平台迁移不清证书</strong>: "Certificate Previously Issued" 是旧平台凭据残留的明确信号;序列号双声明则 call-home 归属冲突,设备停在 Waiting for first contact。</li>
+<li><strong>关联 RSSI 门限(5/10)与 Roaming RSSI 门限(10/15)混用</strong>: 数值相近、语义不同——前者准入控制,后者引导切换;两个方向设错都能坏(过低粘弱信号/漏检,过高覆盖死角/频繁漫游丢包)。</li>
+<li><strong>L3 Roaming 默认关闭</strong>: 跨 AP Group 不同 VLAN 移动的掉线,九成是忘了按 SSID 显式启用 L3 漫游。</li>
+<li><strong>背景扫描的双刃剑被忽视</strong>: 扫描期间该射频无 802.11 数据——为 WIPS 灵敏度收紧扫描会伤吞吐,关闭扫描即失去 WIPS;保持默认 20s/50ms。</li>
+</ol>
+<h2 id="_7">作者的局限 (读这套材料要打的折扣)</h2>
+<ul>
+<li><strong>培训幻灯片体例</strong>: 大量页面是截图+要点,"步骤背后的为什么"较少,实际操作细节原本依赖课堂演示。</li>
+<li><strong>版本敏感</strong>: 端口、DHCP option、SKU、DNS 域名、5 分钟阈值、90 天试用等均绑定 Edition 10 / OVC 10.4.3,升级后需核对 Release Notes。</li>
+<li><strong>生态混杂</strong>: RAP 模块依赖 OV2500(旧平台),与 Terra 章节并存;WPA3-Personal SAE、外部 RADIUS 字段细节、Mesh 跳数衰减量化均未展开。</li>
+<li><strong>推荐值是培训基线</strong>: 高密/高干扰环境需 site survey 后微调,不宜照抄当红线。</li>
+</ul>
+<hr />
+<h2 id="10">10 步开局路线图</h2>
+<p>按依赖图排序,从叶子到根,一个新项目照此走:</p>
+<ol>
+<li><strong>部署平台</strong> — Terra: 3-VM 硬件验收(EVC/AVX)→ WebAdmin :3000 → build → DNS 四域名;Cirrus 跳过此步。</li>
+<li><strong>开通许可与组织</strong> — 解码 SKU → eBuy → (≤24h) → Subscription Manager → 平台导入(Terra 环境就绪后才 Activate)。</li>
+<li><strong>纳管设备</strong> — 声明序列号 → 等 call-home;卡状态按七种失败状态处置表排障,别盲目重启。</li>
+<li><strong>建 Site 与 AP Group</strong> — Site/Building/Floor + 平面图(为 Heat Map 做 ≥3 AP 的准备);AP Group 是逻辑分组,不依赖物理网络。</li>
+<li><strong>设计 SSID</strong> — 按客户端画像套 Usage 矩阵 → 定认证档位 → 按分钥匙需求选 PSK 粒度;大网上 VLAN Pooling。</li>
+<li><strong>设计策略与带宽</strong> — Policy → Policy List → ARP 自底向上构建;按三层裁决顺序验证;访客配额+耗尽处理成对设计。</li>
+<li><strong>配置有线准入</strong> — 预配两个 ARP 兜底 → AAA Server Profile → Access Auth Profile → Access Policy → Company Property 声明 MAC。</li>
+<li><strong>RF 调优</strong> — RF Profile 按推荐参数表设定(见下表);RSSI 判定表评估覆盖验收。</li>
+<li><strong>漫游与安全加固</strong> — 确认 L3 漫游/Fast Roaming 按 SSID 启用与安全级别匹配;WIPS 按四策略定性外部 AP、开背景扫描。</li>
+<li><strong>特殊场景收尾</strong> — 无布线区域 Mesh/Bridge(核对五项硬限制、回程 5GHz 信道&gt;100);远程办公 RAP 三方配置五步上线。</li>
+</ol>
+<h2 id="ale">ALE 官方推荐参数速查表</h2>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>推荐值</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DLB 关联 RSSI 门限</td>
+<td>2.4G=5 / 5G=10</td>
+<td>准入控制;过低拖累吞吐,过高出覆盖死角</td>
+</tr>
+<tr>
+<td>Roaming RSSI 门限</td>
+<td>2.4G=10 / 5G=15</td>
+<td>引导切换;配合 802.11k/v</td>
+</tr>
+<tr>
+<td>Smart Air Share 最小数据速率</td>
+<td>2.4G=12 / 5G=24 / 6G=24 Mbps</td>
+<td>挡低速客户端</td>
+</tr>
+<tr>
+<td>SNR/信号门限</td>
+<td>低值 10(容纳弱客户端) vs 高值 25(保吞吐)</td>
+<td>按覆盖 vs 吞吐取舍</td>
+</tr>
+<tr>
+<td>背景扫描</td>
+<td>间隔 20s(5-10800s)/ 时长 50ms(50-110ms)</td>
+<td>仅 WIPS 需要时开启</td>
+</tr>
+<tr>
+<td>信道/功率</td>
+<td>Auto 优于静态</td>
+<td>密集部署窄信道宽、稀疏宽信道宽</td>
+</tr>
+<tr>
+<td>Band Steering 客户端数差阈值</td>
+<td>10</td>
+<td>三射频用 Pri-Diff/Sec-Diff</td>
+</tr>
+<tr>
+<td>信道过载判定</td>
+<td>1 分钟平均介质利用率 &gt;70%</td>
+<td>官方定义</td>
+</tr>
+<tr>
+<td>Rogue 信号强度门限</td>
+<td>-70dBm(范围 -50~-90)</td>
+<td>调门限控误报/漏报</td>
+</tr>
+<tr>
+<td>RSSI 质量判定</td>
+<td>10-20 差 / 21-28 尚可 / ≥29 推荐</td>
+<td>+1 RSSI = +1dBm</td>
+</tr>
+<tr>
+<td>Mesh 限制</td>
+<td>≤16 AP / ≤8 slave / ≤4 跳 / 单跳 P2MP ≤5 / 每 AP ≤5 SSID</td>
+<td>回程 5GHz 信道&gt;100</td>
+</tr>
+<tr>
+<td>VLAN Pooling</td>
+<td>≤256 个 VLAN</td>
+<td>防大广播域</td>
+</tr>
+<tr>
+<td>Service Level</td>
+<td>≤5 个</td>
+<td>访客分级套餐上限</td>
+</tr>
+<tr>
+<td>激活状态推进</td>
+<td>每中间态约 5 分钟</td>
+<td>超时或反复同态才判异常</td>
+</tr>
+<tr>
+<td>call-home 间隔(交换机)</td>
+<td>discovery-interval 默认 30 分钟</td>
+<td>重启设备/进程立即触发</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_8">关键术语速查</h2>
+<table>
+<thead>
+<tr>
+<th>术语</th>
+<th>本书的用法</th>
+<th>和常识的差异</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ARP</strong> ⚠️</td>
+<td>Access Role Profile: 网络角色对象(VLAN+Policy List+每用户带宽),策略分层中枢</td>
+<td><strong>与地址解析协议无关</strong>,全书最大陷阱</td>
+</tr>
+<tr>
+<td>DRM</td>
+<td>Distributed Radio Management: AP 间共享 RF 上下文各自决策</td>
+<td>无控制器,排障不要找"控制器"</td>
+</tr>
+<tr>
+<td>Client Context (Add/Del)</td>
+<td>AP 间客户端上下文接力,漫游的载体</td>
+<td>漫游不是平台指令</td>
+</tr>
+<tr>
+<td>Company Property</td>
+<td>UPAM 本地库哑终端账户,DSPSK 与有线 MAC 认证的载体</td>
+<td>与 Device Catalog(设备声明)是两个库</td>
+</tr>
+<tr>
+<td>Rogue / Interfering / Friendly</td>
+<td>WIPS 三分类,命中四策略才升 Rogue</td>
+<td>"看见外部 AP 就抓"是误解</td>
+</tr>
+<tr>
+<td>OV Managed</td>
+<td>激活状态链终点,真正可管理</td>
+<td>"注册成功"≠OV Managed</td>
+</tr>
+</tbody>
+</table>
+<p>完整词典见 <a href="./GLOSSARY.md">GLOSSARY.md</a>; 全部 10 个 skill 索引见 <a href="./INDEX.md">INDEX.md</a>。</p>
+<hr />
+<h2 id="_9">如果只带走三句话</h2>
+<ol>
+<li><strong>一切排障先定位状态/层级</strong>: 设备看激活状态链,带宽看三层裁决链,漫游看三问判定表,WIPS 看四策略定性——平台范式给了每类问题明确的决策入口。</li>
+<li><strong>默认值不可靠,推荐值可抄</strong>: L3 漫游、Fast Roaming、Blocklist、L3 场景的 DNS 都默认关闭;而 RSSI 门限、最小速率、扫描参数、Mesh 限制这些 ALE 推荐值可以直接引用进方案。</li>
+<li><strong>设计期的一个决定,决定排障期能用的工具</strong>: SSID 安全档位决定 Fast Roaming 可用性,PSK 粒度决定能否吊销单把钥匙,DSPSK 的硬约束决定 SSID 能否建起来——先想清楚再点下一步。</li>
+</ol></main></div></body></html>

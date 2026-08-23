@@ -1,0 +1,178 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>aos-multicast — DT00XTE220 · OmniSwitch LAN R8 Bootcamp</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE220 · OmniSwitch LAN R8 Bootcamp</h1>
+<div class="sub">Edition 23 · 1162 页 · 五天全科训练营（开局→L2→路由→织构→安全→组播→运维）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">开局与管理面</div>
+<a href="skills/aos-switch-access-mgmt.html">aos-switch-access-mgmt</a>
+<a href="skills/aos-virtual-chassis.html">aos-virtual-chassis</a>
+<div class="grp">L2 基础与冗余</div>
+<a href="skills/aos-vlan-mvrp.html">aos-vlan-mvrp</a>
+<a href="skills/aos-lag-stp.html">aos-lag-stp</a>
+<div class="grp">安全与策略</div>
+<a href="skills/aos-access-guardian-unp.html">aos-access-guardian-unp</a>
+<a href="skills/aos-l2-security.html">aos-l2-security</a>
+<a href="skills/aos-qos-acl-pbr.html">aos-qos-acl-pbr</a>
+<div class="grp">L3 路由</div>
+<a href="skills/aos-igp-routing.html">aos-igp-routing</a>
+<a href="skills/aos-bgp-vrf.html">aos-bgp-vrf</a>
+<div class="grp">SPB Fabric 与组播</div>
+<a href="skills/aos-spb-fabric.html">aos-spb-fabric</a>
+<a href="skills/aos-multicast.html" class="on">aos-multicast</a>
+<a href="skills/aos-diagnostics-ops.html">aos-diagnostics-ops</a></aside><main><h1>aos-multicast</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: Multicast (p692-761) / Anycast RP (p1031-1040)</p><h1 id="ipms-igmp-pim-sm-anycast-rp">组播体系：IPMS / IGMP / PIM-SM / Anycast RP</h1>
+<h2 id="r-reading">R — 原文 (Reading)</h2>
+<blockquote>
+<p>"If in same VLAN, switch packet — use IPMS forwarding table; If in different VLAN, route packet — use DVMRP/PIM forwarding table" (p706)</p>
+<p>"Calculation steps for selecting the RP: ...best priority (lowest value), Highest Hash value using the group address, the RP address... This feature will only be supported with PIM-SM... SPT must be enabled when supporting Anycast-RP."</p>
+<p>— OmniSwitch LAN R8 Bootcamp Ed23, Multicast/Anycast RP, p746/p749-750, p1035</p>
+</blockquote>
+<hr />
+<h2 id="i-interpretation">I — 方法论骨架 (Interpretation)</h2>
+<p>收到组播包先二分：目的端口与入端口同 VLAN → L2 交换（IPMS/IGMP snooping 转发表）；跨 VLAN → L3 路由（DVMRP/PIM 转发表，改写源 MAC 为路由器口 MAC）。IPMS 通过截获 IGMP query/report 把"按网络跟踪成员"细化为"按端口跟踪成员"硬件转发。</p>
+<p><strong>L2 最小三件套</strong>：全局 <code>ip multicast admin-state enable</code>（可按 VLAN）→ 接服务器的交换机开 <code>querying enable</code>（多台选一台 querier）→ 其余开 <code>querier-forwarding enable</code>。不开 IPMS 时组播在 VLAN 内洪泛。IGMP 默认 v3、查询间隔 125s、router-timeout 90s、TTL 恒 1 不跨路由器。</p>
+<p><strong>限组与体验</strong>：max-group 可按全局/VLAN/端口设，端口级覆盖 VLAN/全局；超限动作 none/drop/replace（换台场景用 replace，新请求替换旧成员）。路由环境为每流缓冲首批组播包（默认 4、最多 10）防加入前首包丢失——治 IPTV 换台黑屏。</p>
+<p><strong>组播路由选型</strong>：一个接口只能跑一个组播路由协议（PIM 或 DVMRP，各限 128 接口）。接收者密集小网用 PIM-DM（flood-prune 每 3 分钟一轮、无 RP）；稀疏用 PIM-SM：显式 join + RP 共享树 + SPT 切换（最后 DR 收到首包即自动 (S,G) join，默认开启）。</p>
+<p><strong>RP 的两套机制</strong>：BSR 自动选举——先选 BSR（C-BSR 比 priority→IP），C-RP 向 BSR 通告，全网为每组算 RP（priority 最小 → (组地址,RP 地址) hash 最大 → IP 最大），不同组天然散到不同 RP 且全网一致；静态 RP（<code>ip pim static-rp</code>）可覆盖 BSR。RP 冗余用 Anycast RP：多台 RP 共享一个 Loopback 地址以主机路由宣告进 IGP，全域所有 PIM 路由器静态指 RP，RP 间独立 Loopback 组 RP set 互相同步 register；失效收敛速度 = IGP 收敛。</p>
+<hr />
+<h2 id="a1-past-application">A1 — 书中的应用 (Past Application)</h2>
+<h3 id="1-pim-sm-216-p447-448-p510-518">案例 1: PIM-SM 四核心实验（216 p447-448, p510-518 背景）</h3>
+<ul>
+<li><strong>问题</strong>: 跨核心/跨 VLAN 分发组播流。</li>
+<li><strong>方法论的使用</strong>: <code>ip load pim</code> → 全局 sparse enable → 接口逐个 <code>ip pim interface</code> → cbsr 各指本机 loopback、C-RP 按组段划分。</li>
+<li><strong>结论</strong>: BSR/RP 声明一次成型，无需逐台指 RP。</li>
+<li><strong>结果</strong>: <code>show ip pim group-map/groute/sgroute</code> 验证 SPT Bit=True、Register State=Pruned，即 RPT→SPT 切换完成（c32）。</li>
+</ul>
+<h3 id="2-anycast-rp-220-p1033-1039">案例 2: Anycast RP 冗余设计（220 p1033-1039）</h3>
+<ul>
+<li><strong>问题</strong>: 单 RP 是组播域单点故障。</li>
+<li><strong>方法论的使用</strong>: 多台 RP 配同一 Anycast Loopback（如 10.10.10.1）宣告进 IGP；<code>ip pim static-rp &lt;组段&gt; 10.10.10.1</code> 必须存在于域内所有 PIM 路由器；RP 间 <code>ip pim anycast-rp &lt;anycast地址&gt; &lt;本机Loopback0&gt;</code> 同步 register。</li>
+<li><strong>结论</strong>: 源/接收者按 IGP 最近路径选 RP，RP 失效收敛 = IGP 收敛。</li>
+<li><strong>结果</strong>: RP 故障无感知切换；约束满足（仅 SM、≤8 台、SPT 开启）（f32/ce32）。</li>
+</ul>
+<hr />
+<h2 id="a2-future-trigger">A2 — 触发场景 (Future Trigger) ★</h2>
+<h3 id="skill">用户会在什么情境下需要这个 skill?</h3>
+<ol>
+<li>IPTV/视频会议部署：VLAN 内按端口下发（IPMS+querier）、端口限频道数、换台黑屏。</li>
+<li>跨 VLAN/跨核心组播路由：PIM-SM 选型、BSR/C-RP 规划、SPT 行为解释。</li>
+<li>RP 可靠性：单 RP 挂了整域断流的担忧，需要 Anycast RP 冗余设计或排障（源注册到一个 RP、接收端查另一个 RP 收不到流）。</li>
+</ol>
+<h3 id="_1">语言信号 (用户的话里出现这些就应激活)</h3>
+<ul>
+<li>"IPMS / IGMP snooping / querier 怎么配"</li>
+<li>"throttling / max-group / 机顶盒限频道"</li>
+<li>"PIM / BSR / candidate-RP / static-rp / SPT 切换"</li>
+<li>"Anycast RP / RP 冗余 / RP 挂了"</li>
+<li>"组播不通 / 洪泛 / 换台黑屏 / 首帧丢失"</li>
+</ul>
+<h3 id="skill_1">与相邻 skill 的区分</h3>
+<ul>
+<li>与 <code><a href="aos-spb-fabric.html">aos-spb-fabric</a></code> 的区别: 本 skill 管组播成员管理与路由（IGMP/PIM/RP）；SPB 骨干里 BUM 怎么复制（head-end/tandem）属 SPB skill。</li>
+<li>与 <code><a href="aos-qos-acl-pbr.html">aos-qos-acl-pbr</a></code> 的区别: 组播流量带宽保障/标记走 QoS skill；加入/剪枝/选 RP 走本 skill。</li>
+</ul>
+<hr />
+<h2 id="e-execution">E — 可执行步骤 (Execution)</h2>
+<p>当 skill 被激活后, agent 应按以下步骤执行:</p>
+<ol>
+<li><strong>判定转发层级</strong></li>
+<li>确认接收者与源是否同 VLAN：同 VLAN → L2 方案（步骤 2）；跨 VLAN → L3 方案（步骤 3）。</li>
+<li>
+<p>完成标准: 明确回答"交换还是路由"并给出对应配置族。</p>
+</li>
+<li>
+<p><strong>L2 组播（IPMS）配置</strong></p>
+</li>
+<li>输出三件套（admin-state enable → 接服务器者 querying enable、其余 querier-forwarding enable）；按需加 throttling（端口级 max-group + replace 动作）与 <code>initial-packet-buffer</code>（默认 4 包）治首帧丢失；验证 <code>show ip multicast group/neighbor/forward</code>。</li>
+<li>完成标准: 采样口不再收到未订阅组、换台无黑屏。</li>
+<li>
+<p>判停条件: 若需跨 VLAN，跳步骤 3。</p>
+</li>
+<li>
+<p><strong>组播路由与 RP 规划</strong></p>
+</li>
+<li>按接收者密度选 DM/SM（DM 仅小密网）；SM 下规划 BSR（cbsr 指本机 loopback）与 C-RP 按组段划分，或全域 static-rp（可覆盖 BSR）；确认 SPT 默认开启；验证 <code>show ip pim interface/neighbor/candidate-rp/cbsr/group-map/groute/sgroute</code>。</li>
+<li>
+<p>完成标准: group-map 显示每组 RP 与设计一致，sgroute 的 SPT Bit=True。</p>
+</li>
+<li>
+<p><strong>RP 冗余核查（如需高可用）</strong></p>
+</li>
+<li>硬约束预检：仅 PIM-SM、静态 RP set ≤8 台、SPT 必须开（ce32）；输出 Anycast Loopback + IGP 主机路由 + 全域 static-rp + RP set 互联配置。</li>
+<li>完成标准: 拔任一 RP 后接收端收敛时间 ≈ IGP 收敛，源注册与成员查询不再同 RP 也不丢流。</li>
+</ol>
+<hr />
+<h2 id="b-boundary">B — 边界 (Boundary) ★</h2>
+<h3 id="skill_2">不要在以下情况使用此 skill</h3>
+<ul>
+<li>SPB 骨干内的 BUM 复制模式选型（head-end/tandem）——属 <code><a href="aos-spb-fabric.html">aos-spb-fabric</a></code>，本 skill 只管到成员管理与 PIM 层。</li>
+<li>组播流量的带宽保障/限速策略——属 <code><a href="aos-qos-acl-pbr.html">aos-qos-acl-pbr</a></code>。</li>
+</ul>
+<h3 id="_2">作者在书中警告的失败模式</h3>
+<ul>
+<li><strong>Anycast RP 硬边界（ce32）</strong>: 在 PIM-DM/BIDIR/SSM 网络里部署不生效；SPT 未启用时注册转发模型不成立；静态配置超 8 台 RP 超限。警告信号：源注册到一台 RP、接收端只查另一台 RP 收不到流。</li>
+<li><strong>接口协议互斥</strong>: 一个接口只能跑 PIM 或 DVMRP 之一，混配直接冲突。</li>
+</ul>
+<h3 id="_3">作者的盲点 / 时代局限</h3>
+<ul>
+<li>教材以 IPv4 PIM-SM 为主，SSM/BIDIR 仅提及不支持 Anycast RP；DVMRP 属旧协议兼容（现网少用），新设计不应选它。</li>
+</ul>
+<h3 id="_4">容易混淆的邻近方法论</h3>
+<ul>
+<li>BSR 自动 RP vs 静态 RP：两者可共存且静态优先；Anycast RP 一定基于静态 RP 地址，不是 BSR 的替代品而是叠加的冗余构造。</li>
+<li>PIM-DM 的 flood-prune 与 L2 洪泛：前者跨网段周期泛洪（3 分钟一轮），后者是未开 IPMS 时的 VLAN 内行为。</li>
+</ul>
+<hr />
+<h2 id="skills">相关 skills</h2>
+<ul>
+<li>depends-on（依赖：先学/先配前者）:</li>
+<li><code><a href="aos-igp-routing.html">aos-igp-routing</a></code>：PIM RPF 依赖单播路由表——IGP 是组播前提</li>
+<li>contrasts-with（对比：易混淆/二选一）:</li>
+<li><code><a href="aos-spb-fabric.html">aos-spb-fabric</a></code>：传统 PIM/IGMP 组播域 vs SPB 内置 IS-IS 组播复制</li>
+<li>composes-with（组合：实际组网搭配使用）:</li>
+<li><code><a href="aos-igp-routing.html">aos-igp-routing</a></code>：IGP 先行，PIM 后建——RPF 邻接沿单播路径</li>
+</ul>
+<hr />
+<h2 id="_5">审计信息</h2>
+<ul>
+<li><strong>验证通过</strong>: V1 ✓ / V2 ✓ / V3 ✓（见 verified.md #11）</li>
+<li><strong>测试通过率</strong>: 待测 (详见 test-prompts.json)</li>
+<li><strong>蒸馏时间</strong>: 2026-08-22</li>
+</ul></main></div></body></html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ov-license-org-onboarding — DT00XTE317 · OmniVista Cirrus / Terra 部署与配置</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE317 · OmniVista Cirrus / Terra 部署与配置</h1>
+<div class="sub">Edition 10 · 478 页 · 云管与本地部署平台</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">平台部署与开通</div>
+<a href="skills/ov-terra-deploy.html">ov-terra-deploy</a>
+<a href="skills/ov-license-org-onboarding.html" class="on">ov-license-org-onboarding</a>
+<div class="grp">设备纳管与激活</div>
+<a href="skills/ov-device-activation-troubleshoot.html">ov-device-activation-troubleshoot</a>
+<div class="grp">SSID / 策略 / 认证设计</div>
+<a href="skills/ov-ssid-psk-selection.html">ov-ssid-psk-selection</a>
+<a href="skills/ov-policy-bandwidth-design.html">ov-policy-bandwidth-design</a>
+<a href="skills/ov-wired-auth-config.html">ov-wired-auth-config</a>
+<div class="grp">RF / 漫游 / 安全 / 特殊组网</div>
+<a href="skills/ov-rf-tuning.html">ov-rf-tuning</a>
+<a href="skills/ov-roaming-troubleshoot.html">ov-roaming-troubleshoot</a>
+<a href="skills/ov-wips-rogue-policy.html">ov-wips-rogue-policy</a>
+<a href="skills/ov-mesh-bridge-rap.html">ov-mesh-bridge-rap</a></aside><main><h1>ov-license-org-onboarding</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: p20-71, 93-118</p><h1 id="ebuy-subscription">许可证与组织开通流程（eBuy → Subscription → 平台导入）</h1>
+<h2 id="r-reading">R — 原文 (Reading)</h2>
+<blockquote>
+<p>"eBuy: License ordering → Subscription manager: Create the subscription → Import of licenses: Order ID, Activation code."
+"OVCX-68-BAS-3Y: License level — BASE: BAS, BUSINESS: BIZ, PREMIUM: PRM; License duration — 1Y/3Y/5Y (Terra 另有 7Y)."</p>
+<p>— ALE Training, Licenses &amp; Subscription / Account &amp; Organization, p23-26, p95</p>
+</blockquote>
+<hr />
+<h2 id="i-interpretation">I — 方法论骨架 (Interpretation)</h2>
+<p>许可生效是一条三方流水线，组织开通是并行轨道，两者在"平台导入"处汇合：</p>
+<ol>
+<li><strong>SKU 解码</strong>：<code>平台(OVCX/OVTX)-设备类别-级别(BAS/BIZ/PRM)-年限(1Y/3Y/5Y/7Y)</code>。低端 AP（AP1x0x/1x1x/1x2x）买 APL，其余 AP 买 APH；交换机按型号（63xx→63…）。</li>
+<li><strong>订购链</strong>：eBuy 下单（Other Services &amp; Items 区输入参考号）→ <strong>同步延迟最长 24h</strong> → Subscription Manager 建 Create a subscription（选数量、客户信息、记 Subscription ID / Order ID）。</li>
+<li><strong>平台导入</strong>：Cirrus 用 Subscription ID + Activation Code；Terra 还需 Admin Center 取 OmniVista ID、下载 license file(.json)，且<strong>勾选 Activate subscription 即开始计时</strong>。</li>
+<li><strong>组织开通</strong>：选区域（eu/us.manage.ovcirrus.com）→ Partner(MSP)/Customer 账户 → Organization（强密码策略）→ 试用期：Cirrus 需 Request a trial period（预填时长/设备数不要改）；Terra 建组织自动 90 天试用。</li>
+<li><strong>迁移 OVC4→OVC</strong>：无自动迁移工具——先在新平台手工重建配置对象，旧平台删光设备（序列号不能双声明），再声明设备等 call-home（最长 30 分钟或重启 AP/cloud-agent）。</li>
+</ol>
+<hr />
+<h2 id="a1-past-application">A1 — 书中的应用 (Past Application)</h2>
+<h3 id="1-cirrus-c01c02-p23-28-p61-67">案例 1: Cirrus 许可订购与导入转正式（c01/c02, p23-28, p61-67）</h3>
+<ul>
+<li><strong>问题</strong>: 新客户要从零开通 Cirrus 并转付费模式。</li>
+<li><strong>方法论的使用</strong>: eBuy 下单 OVCX 参考号 → 24h 后 Subscription Manager 建订阅 → OVC 中 Import licenses（CAPEX Subscription，Subscription ID + Activation Code）→ 选自动/手工分配设备 → Upgrade 弹窗确认转 paid mode。</li>
+<li><strong>结果</strong>: License mode/duration/型号数量验证通过，组织进入付费模式。</li>
+</ul>
+<h3 id="2-mspc03ce03-p32-59-p49">案例 2: 一个邮箱管两个 MSP（c03/ce03, p32-59, p49）</h3>
+<ul>
+<li><strong>问题</strong>: 渠道工程师的公司邮箱已被第一个 MSP 使用，加入第二个 MSP 被拒。</li>
+<li><strong>方法论的使用</strong>: 子地址寻址 MyMail+msp2@MyCompany.com 派生独立账户 ID，激活链接仍发原始邮箱。</li>
+<li><strong>结果</strong>: 同时服务多个 MSP 门户。</li>
+</ul>
+<h3 id="3-ovc4ovc-c04-p68-70">案例 3: OVC4→OVC 迁移（c04, p68-70）</h3>
+<ul>
+<li><strong>问题</strong>: 老版本 OVC4 客户升级 OVC 10，无迁移工具。</li>
+<li><strong>方法论的使用</strong>: 准备阶段手工重建 AP Group/Provisioning/SSID/Access Policy 并比对 → OVC4 删光设备 → OVC 声明（XLSX/CSV 批量）→ 等 call-home。</li>
+<li><strong>结果</strong>: 设备在新平台重新纳管。</li>
+</ul>
+<hr />
+<h2 id="a2-future-trigger">A2 — 触发场景 (Future Trigger) ★</h2>
+<h3 id="skill">用户会在什么情境下需要这个 skill?</h3>
+<ol>
+<li>新客户开通：下单什么 SKU、怎么建订阅、怎么导入许可证并绑定设备。</li>
+<li>试用与转正：代客申请 trial、试用到期转 paid mode；Terra POC 直接建组织（自动 90 天）。</li>
+<li>账户与组织运维：一个邮箱要管两个 MSP、组织 Disassociate/Change MSP、OVC4 迁移项目。</li>
+</ol>
+<h3 id="_1">语言信号 (用户的话里出现这些就应激活)</h3>
+<ul>
+<li>"许可证下单 / license order / eBuy / Subscription Manager / 激活码 Activation Code"</li>
+<li>"OVCX-68-BAS-3Y 是什么意思 / SKU 选错了吗 / APL 还是 APH"</li>
+<li>"申请试用期 / request a trial period / 转正式 paid mode / 导入 .json 许可"</li>
+<li>"一个邮箱加入第二个 MSP / sub-addressing / OVC4 迁移"</li>
+</ul>
+<h3 id="skill_1">与相邻 skill 的区别</h3>
+<ul>
+<li>与 <code><a href="ov-terra-deploy.html">ov-terra-deploy</a></code> 的区别: 那个管 Terra 平台本身的安装；本 skill 管平台装好后的许可与组织开通。</li>
+<li>与 <code><a href="ov-device-activation-troubleshoot.html">ov-device-activation-troubleshoot</a></code> 的区别: 那个管设备激活状态链；本 skill 的迁移步骤只负责"声明序列号 + 等 call-home"。</li>
+</ul>
+<hr />
+<h2 id="e-execution">E — 可执行步骤 (Execution)</h2>
+<p>当 skill 被激活后, agent 应按以下步骤执行:</p>
+<ol>
+<li><strong>解码需求 → 确定 SKU 与数量</strong></li>
+<li>按设备清单映射：低端 AP→APL、其余 AP→APH、交换机按型号代码；级别 BAS/BIZ/PRM 与年限按商务选择。</li>
+<li>完成标准: 输出参考号列表（如 OVCX-APH-BIZ-3Y ×N）并确认平台前缀（Cirrus=OVCX / Terra=OVTX，Terra 可 7Y）。</li>
+<li><strong>走订购与订阅链</strong></li>
+<li>eBuy 下单 → 告知用户最长 24h 同步延迟 → Subscription Manager 建 subscription → 记录 Subscription ID 与 Order ID。</li>
+<li>完成标准: 订阅状态为 "Created / Pending activation"。</li>
+<li>判停条件: 若是 Terra，先确认平台已部署就绪再执行 Activate subscription（一旦激活即计时）。</li>
+<li><strong>平台导入并验证</strong></li>
+<li>Cirrus: Import licenses → CAPEX Subscription → ID+Code → 选设备分配 → Upgrade 转正式。Terra: 取 OmniVista ID → 下载 .json → 上传导入。验证 mode/duration/type/数量；如涉及迁移，执行"重建配置→删旧声明→新声明→等 call-home"。</li>
+<li>完成标准: License 页面字段全部核对无误，设备许可分配到位。</li>
+</ol>
+<hr />
+<h2 id="b-boundary">B — 边界 (Boundary) ★</h2>
+<h3 id="skill_2">不要在以下情况使用此 skill</h3>
+<ul>
+<li>Terra 平台本身没装好（VM/DNS/WebAdmin 问题）→ ov-terra-deploy。</li>
+<li>设备已声明但激活卡在某状态 → ov-device-activation-troubleshoot。</li>
+<li>许可导入后的 SSID/策略配置设计 → 对应业务 skill（如 ov-ssid-psk-selection）。</li>
+</ul>
+<h3 id="_2">作者在书中警告的失败模式</h3>
+<ul>
+<li><strong>24h 同步延迟（ce05）</strong>: eBuy 下单后立刻在 Subscription Manager 找不到订单是正常现象，不要重复下单。</li>
+<li><strong>激活即计时（ce06）</strong>: Terra 在客户环境未就绪时勾选 Activate subscription 白白消耗订阅年限。</li>
+<li><strong>序列号双声明（ce01）</strong>: 迁移期间序列号同时存在于两个平台，call-home 归属冲突，设备停在 "Waiting for first contact"。</li>
+<li><strong>无迁移工具（ce02）</strong>: OVC4→OVC 不继承配置数据库，须手工重建全部对象。</li>
+<li><strong>MSP 移除即失权（ce04）</strong>: Disassociate 后原 MSP 所有用户立即失去该组织访问权，执行前必须评估。</li>
+</ul>
+<h3 id="_3">作者的盲点 / 时代局限</h3>
+<ul>
+<li>SKU 目录、24h 延迟、90 天试用时长、"10.4.3 一个邮箱一个 MSP"均为当前版本行为，升级后可能放宽；建议核对目标版本 Release Notes。</li>
+</ul>
+<h3 id="_4">容易混淆的邻近方法论</h3>
+<ul>
+<li>"激活订阅（Activate subscription）"与"设备激活（Device Activation）"是两个概念——前者是许可计时，后者是 call-home 状态机，排障入口完全不同。</li>
+</ul>
+<hr />
+<h2 id="skills-3">相关 skills (阶段 3 填充)</h2>
+<ul>
+<li>depends-on <code><a href="ov-terra-deploy.html">ov-terra-deploy</a></code>: Terra 场景下许可导入的前提是平台已部署就绪——需先从 Admin Center 取 OmniVista ID、下载 license file；且勾选 Activate subscription 即开始计时，环境未就绪不要激活。</li>
+<li>composes-with <code><a href="ov-device-activation-troubleshoot.html">ov-device-activation-troubleshoot</a></code>: 许可导入/组织开通完成后，设备的实际纳管靠"声明序列号 + 等 call-home"完成；若声明后卡状态，转激活排障 skill（注意"订阅激活"与"设备激活"是两个概念）。</li>
+</ul>
+<hr />
+<h2 id="_5">审计信息</h2>
+<ul>
+<li><strong>验证通过</strong>: V1 ✓ / V2 ✓ / V3 ✓</li>
+<li><strong>测试通过率</strong>: 待测 (详见 test-prompts.json)</li>
+<li><strong>蒸馏时间</strong>: 2026-08-22</li>
+</ul></main></div></body></html>

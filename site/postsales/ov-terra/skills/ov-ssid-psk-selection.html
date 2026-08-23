@@ -1,0 +1,195 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ov-ssid-psk-selection — DT00XTE317 · OmniVista Cirrus / Terra 部署与配置</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE317 · OmniVista Cirrus / Terra 部署与配置</h1>
+<div class="sub">Edition 10 · 478 页 · 云管与本地部署平台</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">平台部署与开通</div>
+<a href="skills/ov-terra-deploy.html">ov-terra-deploy</a>
+<a href="skills/ov-license-org-onboarding.html">ov-license-org-onboarding</a>
+<div class="grp">设备纳管与激活</div>
+<a href="skills/ov-device-activation-troubleshoot.html">ov-device-activation-troubleshoot</a>
+<div class="grp">SSID / 策略 / 认证设计</div>
+<a href="skills/ov-ssid-psk-selection.html" class="on">ov-ssid-psk-selection</a>
+<a href="skills/ov-policy-bandwidth-design.html">ov-policy-bandwidth-design</a>
+<a href="skills/ov-wired-auth-config.html">ov-wired-auth-config</a>
+<div class="grp">RF / 漫游 / 安全 / 特殊组网</div>
+<a href="skills/ov-rf-tuning.html">ov-rf-tuning</a>
+<a href="skills/ov-roaming-troubleshoot.html">ov-roaming-troubleshoot</a>
+<a href="skills/ov-wips-rogue-policy.html">ov-wips-rogue-policy</a>
+<a href="skills/ov-mesh-bridge-rap.html">ov-mesh-bridge-rap</a></aside><main><h1>ov-ssid-psk-selection</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: p212-236</p><h1 id="ssid-psk">SSID 创建与认证/PSK 变体选型</h1>
+<h2 id="r-reading">R — 原文 (Reading)</h2>
+<blockquote>
+<p>"Guest / Open or MAC + Captive Portal；Employee BYOD / 802.1X or MAC followed by 802.1X + Captive Portal；Protected Network / PSK。"
+"Force Device Specific PSK: No global PSK configured... Each entry is linked to a VLAN ID and ARP."</p>
+<p>— ALE Training, SSID Creation, p218, 230-235</p>
+</blockquote>
+<hr />
+<h2 id="i-interpretation">I — 方法论骨架 (Interpretation)</h2>
+<p>SSID 设计是三层决策：先选场景模板，再定安全档位，最后按"分钥匙"需求选 PSK 粒度。</p>
+<p><strong>第一层：SSID Usage 矩阵（p218）</strong> — Usage 决定向导后续展示的参数模板：</p>
+<table>
+<thead>
+<tr>
+<th>Usage</th>
+<th>安全级别</th>
+<th>Captive Portal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Guest Network</td>
+<td>Open 或 MAC</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>Employee BYOD Network</td>
+<td>802.1X 或 MAC→802.1X</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>Protected Network</td>
+<td>PSK</td>
+<td>N</td>
+</tr>
+<tr>
+<td>Protected for Employees (BYOD)</td>
+<td>PSK→Portal</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>Enterprise Network for Employee</td>
+<td>802.1X</td>
+<td>N</td>
+</tr>
+</tbody>
+</table>
+<p><strong>第二层：认证安全阶梯（p215）</strong> — Open+Portal（无安全，任意设备可门户认证）&lt; MAC（可欺骗、无加密，适合打印机/扫描仪）&lt; PSK（易部署但全网共享一把钥匙，泄露即全员暴露）&lt; 802.1X Enterprise（最强、可管理、可扩展，但需服务器+用户库）。选型逻辑：设备类型 × 安全需求共同决定档位。</p>
+<p><strong>第三层：PSK 四变体（p230-235）</strong> — 密钥粒度递进：
+1. <strong>全局 PSK</strong>：所有人共用（最简单，风险最大）。
+2. <strong>DSPSK</strong>：设备先 MAC 认证，从 Company Property 库取本机专属 passphrase。<strong>硬约束</strong>：必须启用 MAC 认证；加密不能选 AUTO_WPA_WPA2；Force 模式 SSID 级无全局 PSK，Prefer 模式可回退全局 PSK。
+3. <strong>PPSK</strong>：多条 passphrase，每条绑定一个预配置 Access Role Profile——用哪条钥匙进哪个角色。<strong>约束</strong>：DSPSK 须为 Disable 或 Prefer。
+4. <strong>Dynamic PPSK</strong>：每条 entry 同时绑 VLAN ID + ARP（同一 ARP 可复用于多个 VLAN，不必每 VLAN 建一个 ARP）；Dynamic VLAN Selection 二选一：Priority ARP over VLAN-ID / Priority VLAN-ID over ARP。</p>
+<p><strong>配套</strong>：创建向导三段式（SSID Settings → Network Assignments → Schedule &amp; VLAN Mappings）；VLAN Pooling 最多 256 个 VLAN，用池化避免单一 VLAN 大广播域。</p>
+<hr />
+<h2 id="a1-past-application">A1 — 书中的应用 (Past Application)</h2>
+<h3 id="1-8021x-ssid-c10-p225-228">案例 1: 员工 802.1X SSID 标准开局（c10, p225-228）</h3>
+<ul>
+<li><strong>问题</strong>: 企业员工 SSID，要求账号接入并按角色落 VLAN。</li>
+<li><strong>方法论的使用</strong>: Usage=Enterprise Network for Employee → Authentication Strategy=UPAMRadiusServer → 内部库建 Employee → Configure Access Role Attributes（ARP + VLAN 20 + QoS/带宽）→ 挂 AP Group 与 VLAN 映射。</li>
+<li><strong>结果</strong>: 员工 802.1X 接入，按 ARP 落 VLAN 20 受带宽约束。</li>
+</ul>
+<h3 id="2-ssid-vlanc11-p229-235">案例 2: 一套 SSID 实现按钥匙分权分 VLAN（c11, p229-235）</h3>
+<ul>
+<li><strong>问题</strong>: 打印机要专用密钥；外部承包商与不同部门要不同权限，不想建一堆 SSID。</li>
+<li><strong>方法论的使用</strong>: 打印机→DSPSK（MAC 认证 + Company Property 绑 MAC 的专属密码，Force 模式）；承包商/部门→PPSK 或 Dynamic PPSK（每条 passphrase 绑 ARP/VLAN，Priority VLAN-ID over ARP）。</li>
+<li><strong>结果</strong>: 一套 SSID 按口令分权分 VLAN，避免 SSID 爆炸。</li>
+</ul>
+<hr />
+<h2 id="a2-future-trigger">A2 — 触发场景 (Future Trigger) ★</h2>
+<h3 id="skill">用户会在什么情境下需要这个 skill?</h3>
+<ol>
+<li>新建 SSID：不知道 Usage 选哪个、Portal 要不要、安全级别怎么定。</li>
+<li>密钥设计：打印机 PSK 要与员工分开、承包商单独一把钥匙、离职吊销一把钥匙不影响他人。</li>
+<li>高密/大网：单一 VLAN 广播域过大，需 VLAN Pooling 设计。</li>
+</ol>
+<h3 id="_1">语言信号 (用户的话里出现这些就应激活)</h3>
+<ul>
+<li>"建 SSID / create SSID / Usage 选 Guest 还是 Protected / 要不要 Captive Portal"</li>
+<li>"PSK 还是 802.1X / WPA3 Personal / 认证安全级别"</li>
+<li>"打印机单独一把钥匙 / DSPSK / PPSK / Dynamic PPSK / 按密码分 VLAN"</li>
+<li>"VLAN pooling / 广播域太大"</li>
+</ul>
+<h3 id="skill_1">与相邻 skill 的区别</h3>
+<ul>
+<li>与 <code><a href="ov-policy-bandwidth-design.html">ov-policy-bandwidth-design</a></code> 的区别: 那个管 ARP/Policy List/带宽合同与配额；本 skill 只决定"谁用什么钥匙进门、进门后落在哪个 ARP/VLAN"。</li>
+<li>与 <code><a href="ov-roaming-troubleshoot.html">ov-roaming-troubleshoot</a></code> 的区别: 本 skill 决定 SSID 的加密/认证，这会约束漫游能力（OKC 仅 Enterprise）——漫游排障到那个 skill 查。</li>
+</ul>
+<hr />
+<h2 id="e-execution">E — 可执行步骤 (Execution)</h2>
+<p>当 skill 被激活后, agent 应按以下步骤执行:</p>
+<ol>
+<li><strong>按客户端画像套 Usage 矩阵</strong></li>
+<li>问清每类终端（访客/员工 BYOD/员工受管/打印机 IoT）→ 匹配 Usage 行，输出安全级别与是否 Portal。</li>
+<li>完成标准: 每类终端有确定的 Usage + 认证方式组合；敏感网络明确不用纯 PSK/MAC（用 802.1X）。</li>
+<li><strong>选 PSK 粒度并核对硬约束</strong></li>
+<li>按需求递进：全员共用→全局 PSK；每设备一钥→DSPSK（MAC 认证必开、禁 AUTO_WPA_WPA2、Force/Prefer 语义）；分组分权→PPSK；再分 VLAN→Dynamic PPSK（选 Priority 仲裁）。</li>
+<li>完成标准: 给出选定变体 + 全部硬约束核对结论（尤其 DSPSK 三条）。</li>
+<li>判停条件: 若客户要求按用户账号/最强安全，跳出 PSK 家族直接推荐 802.1X Enterprise。</li>
+<li><strong>完成向导三段式与 VLAN 设计</strong></li>
+<li>SSID Settings（含认证与默认 VLAN/ARP）→ Network Assignments（Site + AP Group）→ Schedule &amp; VLAN Mappings；大网配 VLAN Pooling（≤256）。</li>
+<li>完成标准: 三段参数齐全，VLAN 映射明确；高密场景广播域已池化。</li>
+</ol>
+<hr />
+<h2 id="b-boundary">B — 边界 (Boundary) ★</h2>
+<h3 id="skill_2">不要在以下情况使用此 skill</h3>
+<ul>
+<li>带宽限速/访客配额/耗尽降速设计 → ov-policy-bandwidth-design。</li>
+<li>已上线 SSID 的漫游断连、信号差 → ov-roaming-troubleshoot / ov-rf-tuning。</li>
+<li>有线端口上的 MAC 认证（AP Eth1/交换机口）→ ov-wired-auth-config。</li>
+</ul>
+<h3 id="_2">作者在书中警告的失败模式</h3>
+<ul>
+<li><strong>DSPSK 用 AUTO_WPA_WPA2（ce11）</strong>: 加密不兼容，SSID 行为异常；Force 模式下配全局 PSK 无效（PSK/PassPhrase 栏仅 Prefer 时有效）。</li>
+<li><strong>低安全认证的固有缺陷（ce12）</strong>: MAC 可仿冒且不加密；共享 PSK 泄露即全员暴露、无法按用户吊销——敏感网络必须 802.1X，MAC 仅用于哑设备。</li>
+<li><strong>单一 VLAN 大广播域（ce13）</strong>: 所有客户端进一个 VLAN 会广播淹没空口与骨干，应 VLAN Pooling（≤256）。</li>
+</ul>
+<h3 id="_3">作者的盲点 / 时代局限</h3>
+<ul>
+<li>安全阶梯基于 WPA2/WPA3 时代；WPA3-Personal SAE、多 PSK（WPA3-Personal 扩展）未展开，高安全 PSK 场景建议核对新版固件能力。</li>
+</ul>
+<h3 id="_4">容易混淆的邻近方法论</h3>
+<ul>
+<li>PPSK 绑的 ARP 决定"进门后的权限"，但限速/配额规则本身不在此配——不要把 Access Role 的带宽设计与密钥选型混为一谈。</li>
+</ul>
+<hr />
+<h2 id="skills-3">相关 skills (阶段 3 填充)</h2>
+<ul>
+<li>composes-with <code><a href="ov-policy-bandwidth-design.html">ov-policy-bandwidth-design</a></code>: 本 skill 决定"谁用什么钥匙进门、落在哪个 ARP/VLAN"；进门后的权限与带宽（Policy List、三层带宽合同、访客配额）由策略 skill 承接——PPSK/Dynamic PPSK 绑定的 ARP 正是两边的交接点。</li>
+<li>composes-with <code><a href="ov-wired-auth-config.html">ov-wired-auth-config</a></code>: 无线 PSK 变体与有线 MAC 认证共享同一套 UPAM/本地库（Company Property）与 ARP 体系——DSPSK 的专属密码库同时是有线 MAC 声明的载体，两边角色设计应统一规划。</li>
+<li>composes-with <code><a href="ov-roaming-troubleshoot.html">ov-roaming-troubleshoot</a></code>: SSID 的加密/认证档位直接约束漫游能力（OKC 仅 Enterprise、802.11r 限 WPA2/WPA3）——设计期选型决定了漫游排障期可用的 Fast Roaming 选项。</li>
+</ul>
+<hr />
+<h2 id="_5">审计信息</h2>
+<ul>
+<li><strong>验证通过</strong>: V1 ✓ / V2 ✓ / V3 ✓</li>
+<li><strong>测试通过率</strong>: 待测 (详见 test-prompts.json)</li>
+<li><strong>蒸馏时间</strong>: 2026-08-22</li>
+</ul></main></div></body></html>

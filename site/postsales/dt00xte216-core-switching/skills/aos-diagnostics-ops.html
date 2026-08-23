@@ -1,0 +1,188 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>aos-diagnostics-ops — DT00XTE216 · OmniSwitch LAN R8 Core Switching</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE216 · OmniSwitch LAN R8 Core Switching</h1>
+<div class="sub">Edition 15 · 724 页 · 核心交换专题（L2/路由/织构/安全/组播；无 Lightning 开局与 AG 深入章节）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">开局与管理面</div>
+<a href="skills/aos-virtual-chassis.html">aos-virtual-chassis</a>
+<div class="grp">L2 基础与冗余</div>
+<a href="skills/aos-vlan-mvrp.html">aos-vlan-mvrp</a>
+<a href="skills/aos-lag-stp.html">aos-lag-stp</a>
+<div class="grp">安全与策略</div>
+<a href="skills/aos-access-guardian-unp.html">aos-access-guardian-unp</a>
+<a href="skills/aos-l2-security.html">aos-l2-security</a>
+<a href="skills/aos-qos-acl-pbr.html">aos-qos-acl-pbr</a>
+<div class="grp">L3 路由</div>
+<a href="skills/aos-igp-routing.html">aos-igp-routing</a>
+<a href="skills/aos-bgp-vrf.html">aos-bgp-vrf</a>
+<div class="grp">SPB Fabric 与组播</div>
+<a href="skills/aos-spb-fabric.html">aos-spb-fabric</a>
+<a href="skills/aos-multicast.html">aos-multicast</a>
+<a href="skills/aos-diagnostics-ops.html" class="on">aos-diagnostics-ops</a></aside><main><h1>aos-diagnostics-ops</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: Diagnostics (p169-222) / SLB &amp; Upgrade (p1041-1070)</p><h1 id="poe-slb">诊断工具箱 / PoE / SLB / 软件升级</h1>
+<h2 id="r-reading">R — 原文 (Reading)</h2>
+<blockquote>
+<p>"swlog appid ospf_0 subapp hello level debug3 … Up to 8 Swlog logs files … Stores 100 most recent commands" (p172-192)</p>
+<p>"Analyse Requirements on the release note / FTP the Upgrade Files to the Switch / Upgrade the image file / Verify the Software Upgrade / Certify the Software Upgrade / Upgrade uboot and/or FPGA if mandatory."</p>
+<p>— OmniSwitch LAN R8 Bootcamp Ed23, Diagnostics &amp; Upgrade, p172-192, p1065-1069</p>
+</blockquote>
+<hr />
+<h2 id="i-interpretation">I — 方法论骨架 (Interpretation)</h2>
+<p>售后排障有固定工具梯队，按"侵入性从低到高"选用：</p>
+<p><strong>日志先行</strong>：swlog 三路输出（console/flash/syslog，syslog 最多 12 台、需 Loopback0 做源），文件默认 1250KB、8 个轮转 + 40 个归档；按 <code>swlog appid &lt;app&gt; subapp &lt;n&gt; level debug3</code> 精确定位子系统（OSPF 邻居不上先看 HELLO 子模块）；Readable Events 用 <code>level event</code> + <code>show log events</code>。command-log 记录最近 100 条命令含用户/IP/结果（启用中不可删），是"谁改了什么"的取证入口。</p>
+<p><strong>流量可视化</strong>：port-mirroring 抓包到分析口（与 monitoring 同口互斥）；port-monitoring 存 Sniffer 格式文件；RMON 探针/告警看计数器；sFlow 三件组装——receiver 指采集器（源地址建议 <code>ip service source-ip Loopback0 sflow</code>）、每接口一个 sampler（采样率）+ 一个 poller（计数器间隔）。<code>show health</code> 看 CPU/内存即时与 1min/1hr/1day 均值。</p>
+<p><strong>PoE</strong>：端口默认 disabled、优先级 low；预算不足先断 low 再 high，critical 保到最后——重要设备（摄像头/话机）设 critical。capacitor-detection 仅用于 legacy 话机且不兼容 802.3af。delayed-start（120-600s）与 FPoE/PPoE 互斥且必须 write memory。</p>
+<p><strong>SLB</strong>：VIP 必须与服务器同网段（proxy-ARP 兜底）；每机 16 cluster、WRR 总权重 ≤32、weight 0 = 备份机（主全挂才接管）；服务器 loopback 装 VIP（Windows weakhost / Linux arp_ignore）；每机 20 个 probe，状态机 Disabled→Discovery→In Service→Retrying→No Answer/Link Down。</p>
+<p><strong>升级六步法</strong>：读 release note（内存/UBoot/FPGA 要求）→ FTP 镜像到 running 目录 → <code>reload from working no rollback-timeout</code> → show version/microcode 验证 → 稳定后 <code>copy running certified</code> 固化 → 按需 <code>update uboot/fpga-cpld</code>。安全网：certify 前出问题可回退原 certified 版本。</p>
+<hr />
+<h2 id="a1-past-application">A1 — 书中的应用 (Past Application)</h2>
+<h3 id="1-ospf-c07">案例 1: OSPF 邻居不上定位（c07）</h3>
+<ul>
+<li><strong>问题</strong>: 邻居起不来但无直观报错。</li>
+<li><strong>方法论的使用</strong>: <code>swlog appid ospf_0 subapp hello level debug3</code> 只调 HELLO 子模块到 debug3，<code>show log swlog | grep ospf</code> 过滤。</li>
+<li><strong>结论</strong>: 分子系统调级别比全局 debug 更快且不冲击 CPU。</li>
+<li><strong>结果</strong>: 日志直接暴露 Hello 参数/网段不匹配点。</li>
+</ul>
+<h3 id="2-c42f05">案例 2: 升级窗口执行（c42/f05）</h3>
+<ul>
+<li><strong>问题</strong>: 生产交换机升级 AOS 版本，要求可回退。</li>
+<li><strong>方法论的使用</strong>: 六步法顺序执行，certify 前保持回退能力；release note 要求时补 <code>update uboot cmm all file ...</code> 与 <code>update fpga-cpld</code>。</li>
+<li><strong>结论</strong>: certified/running 双目录是 AOS 的回退机制核心。</li>
+<li><strong>结果</strong>: 升级后网络稳定，<code>copy running certified</code> 固化；异常场景演示回滚到原 certified 版本。</li>
+</ul>
+<hr />
+<h2 id="a2-future-trigger">A2 — 触发场景 (Future Trigger) ★</h2>
+<h3 id="skill">用户会在什么情境下需要这个 skill?</h3>
+<ol>
+<li>故障排查第一入口：不知道先看什么日志、怎么抓包、怎么查 CPU/内存。</li>
+<li>升级窗口：执行版本升级、uboot/FPGA 刷新，或升级后异常要回退。</li>
+<li>PoE 掉电/预算不足排查、AP/摄像头供电规划；服务器负载均衡（VIP/权重/备份机/健康探测）部署。</li>
+</ol>
+<h3 id="_1">语言信号 (用户的话里出现这些就应激活)</h3>
+<ul>
+<li>"swlog / show log / debug 哪个级别 / command-log"</li>
+<li>"port mirroring / sFlow / RMON / 抓包 / show health CPU 高"</li>
+<li>"升级失败怎么回退 / certified / release note / uboot FPGA"</li>
+<li>"PoE 断电 / 优先级 critical / 功率预算 / delayed-start"</li>
+<li>"SLB / VIP / 负载均衡 / 备份服务器 weight 0"</li>
+</ul>
+<h3 id="skill_1">与相邻 skill 的区分</h3>
+<ul>
+<li>与各协议 skill 的区别: 本 skill 提供"用什么工具看"；日志定位到 OSPF/BGP/SPB 协议本身问题后转 <code><a href="aos-igp-routing.html">aos-igp-routing</a></code>/<code><a href="aos-bgp-vrf.html">aos-bgp-vrf</a></code>/<code><a href="aos-spb-fabric.html">aos-spb-fabric</a></code>。</li>
+<li>与 <code>aos-switch-access-mgmt</code> 的区别: 交换机开局/管理面（账户、WORKING/CERTIFIED 目录概念、管理接入）走该 skill；本 skill 是排障工具、PoE/SLB/升级的操作方法论。</li>
+</ul>
+<hr />
+<h2 id="e-execution">E — 可执行步骤 (Execution)</h2>
+<p>当 skill 被激活后, agent 应按以下步骤执行:</p>
+<ol>
+<li><strong>建立诊断基线</strong></li>
+<li>指引用户收集：<code>show health</code>（CPU/内存趋势）、<code>show log swlog</code> 按子系统过滤、必要时 <code>swlog appid &lt;app&gt; subapp &lt;n&gt; level debug3</code> 精调、<code>show command-log</code> 回溯变更。</li>
+<li>完成标准: 拿到至少一项指向具体子系统/时间点的证据。</li>
+<li>
+<p>判停条件: 若需逐包分析，跳步骤 2。</p>
+</li>
+<li>
+<p><strong>选择流量观测手段</strong></p>
+</li>
+<li>计数器级用 RMON/show 接口计数；采样级用 sFlow（receiver/sampler/poller 三件，源地址 Loopback0）；逐包级用 port-mirroring 到分析口（提醒与 monitoring 同口互斥）。</li>
+<li>
+<p>完成标准: 给出与问题粒度匹配的工具及完整配置片段。</p>
+</li>
+<li>
+<p><strong>PoE/SLB 处置（如属此两类）</strong></p>
+</li>
+<li>PoE：<code>show lanpower slot</code> 核预算 → 重要端口 <code>priority critical</code> → 涉及 delayed-start 时警告 FPoE/PPoE 失效与 write memory（ce36）。SLB：核对 VIP 同网段、WRR 权重 ≤32、备份机 weight 0、probe 配置与状态机。</li>
+<li>
+<p>完成标准: 供电/分发行为可解释且配置满足全部硬约束。</p>
+</li>
+<li>
+<p><strong>升级窗口执行</strong></p>
+</li>
+<li>按六步法输出：release note 核对（内存/uboot/FPGA）→ FTP 上传 → <code>reload from working no rollback-timeout</code> → show version/microcode 验证 → 观察 24h 后 <code>copy running certified</code> → 按需 update uboot/fpga-cpld；明确"certify 之前都可回退"。</li>
+<li>完成标准: 步骤顺序正确、验证命令与回退路径均已给出。</li>
+</ol>
+<hr />
+<h2 id="b-boundary">B — 边界 (Boundary) ★</h2>
+<h3 id="skill_2">不要在以下情况使用此 skill</h3>
+<ul>
+<li>日志已指向具体协议故障（OSPF 邻居、BGP 策略、SPB 服务）——转对应协议 skill，本 skill 只负责"观测到证据"。</li>
+<li>交换机开局/账号/目录结构管理等管理面问题——用 <code>aos-switch-access-mgmt</code>。</li>
+</ul>
+<h3 id="_2">作者在书中警告的失败模式</h3>
+<ul>
+<li><strong>PoE delayed-start 代价（ce36）</strong>: 启用后 FPoE/PPoE 失效（断电不断供能力丢失）、必须先启 lanpower 且忘了 write memory 则重启不生效——对断电需立即恢复的摄像头/门禁是功能性回退。</li>
+<li><strong>端口功能互斥（p107）</strong>: monitoring 与 mirroring 同口禁用；加 LAG 前须清既有 VLAN/镜像配置——报 "please remove other configuration" 时按互斥清单反查。</li>
+<li><strong>升级顺序</strong>: 跳过 release note 直接刷镜像，可能因内存/uboot 不满足而变砖；未验证即 certify 丢失回退能力。</li>
+</ul>
+<h3 id="_3">作者的盲点 / 时代局限</h3>
+<ul>
+<li>工具规格（8 个 swlog 文件、100 条 command-log、12 台 syslog、20 个 probe）随版本演进，现场以对应版本配置指南为准；VC 堆叠场景的 ISSU 升级另有流程（见 c04，不在本 skill 范围）。</li>
+</ul>
+<h3 id="_4">容易混淆的邻近方法论</h3>
+<ul>
+<li>mirroring vs monitoring：前者实时复制到目的口供外接分析；后者把捕获存成 Sniffer 文件。</li>
+<li>running vs certified：reload 从 running 加载，certified 是固化后的出厂级安全网，二者是回退机制的根基。</li>
+</ul>
+<hr />
+<h2 id="skills">相关 skills</h2>
+<ul>
+<li>depends-on（依赖：先学/先配前者）:</li>
+<li><code>aos-switch-access-mgmt</code>：排障前提：管理通道与账户可达（开局是排障的入场券）</li>
+<li>contrasts-with（对比：易混淆/二选一）:</li>
+<li><code>aos-switch-access-mgmt</code>：管理面配置排障 vs 转发面/业务流量排障——工具集不同</li>
+<li>composes-with（组合：实际组网搭配使用）:</li>
+<li><code><a href="aos-vlan-mvrp.html">aos-vlan-mvrp</a></code>：VLAN 间路不通/IP 接口 oper down 用 show vlan/diagnostics 定位</li>
+<li><code><a href="aos-lag-stp.html">aos-lag-stp</a></code>：LAG 成员异常/STP 拓扑震荡用 health monitor + show lag/stp 排查</li>
+<li><code><a href="aos-virtual-chassis.html">aos-virtual-chassis</a></code>：VC 主控切换异常用 VC 健康检查与 CPU/进程监控排查</li>
+<li><code><a href="aos-access-guardian-unp.html">aos-access-guardian-unp</a></code>：认证失败/动态 VLAN 未生效用 session/AAA 诊断命令定位</li>
+<li><code><a href="aos-l2-security.html">aos-l2-security</a></code>：端口被保护端口/防环误伤时用端口诊断与 FM 告警定位</li>
+<li><code><a href="aos-qos-acl-pbr.html">aos-qos-acl-pbr</a></code>：策略不命中/限速异常用 policy/QOS 统计与 counters 验证</li>
+<li><code><a href="aos-igp-routing.html">aos-igp-routing</a></code>：邻居不起来/路由丢失用 show ospf/isis 与 route dump 排查</li>
+<li><code><a href="aos-bgp-vrf.html">aos-bgp-vrf</a></code>：VPNv4 前缀丢失/VRF 路由泄露用 show bgp vpnv4 + VRF 路由表排查</li>
+<li><code><a href="aos-spb-fabric.html">aos-spb-fabric</a></code>：ISID 不通/复制异常用 SPB 专用 show isis spb 与 diagnostics 排查</li>
+<li><code><a href="aos-multicast.html">aos-multicast</a></code>：组播流中断用 IGMP/PIM 状态与 RPF 检查排查</li>
+</ul>
+<hr />
+<h2 id="_5">审计信息</h2>
+<ul>
+<li><strong>验证通过</strong>: V1 ✓ / V2 ✓ / V3 ✓（见 verified.md #12）</li>
+<li><strong>测试通过率</strong>: 待测 (详见 test-prompts.json)</li>
+<li><strong>蒸馏时间</strong>: 2026-08-22</li>
+</ul></main></div></body></html>

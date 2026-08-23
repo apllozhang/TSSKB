@@ -1,0 +1,146 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ov-wired-auth-config — DT00XTE317 · OmniVista Cirrus / Terra 部署与配置</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE317 · OmniVista Cirrus / Terra 部署与配置</h1>
+<div class="sub">Edition 10 · 478 页 · 云管与本地部署平台</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">平台部署与开通</div>
+<a href="skills/ov-terra-deploy.html">ov-terra-deploy</a>
+<a href="skills/ov-license-org-onboarding.html">ov-license-org-onboarding</a>
+<div class="grp">设备纳管与激活</div>
+<a href="skills/ov-device-activation-troubleshoot.html">ov-device-activation-troubleshoot</a>
+<div class="grp">SSID / 策略 / 认证设计</div>
+<a href="skills/ov-ssid-psk-selection.html">ov-ssid-psk-selection</a>
+<a href="skills/ov-policy-bandwidth-design.html">ov-policy-bandwidth-design</a>
+<a href="skills/ov-wired-auth-config.html" class="on">ov-wired-auth-config</a>
+<div class="grp">RF / 漫游 / 安全 / 特殊组网</div>
+<a href="skills/ov-rf-tuning.html">ov-rf-tuning</a>
+<a href="skills/ov-roaming-troubleshoot.html">ov-roaming-troubleshoot</a>
+<a href="skills/ov-wips-rogue-policy.html">ov-wips-rogue-policy</a>
+<a href="skills/ov-mesh-bridge-rap.html">ov-mesh-bridge-rap</a></aside><main><h1>ov-wired-auth-config</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: p446-460 (Wired Client Authentication)</p><h1 id="omnivista">有线客户端认证四步配置 (OmniVista)</h1>
+<h2 id="r-reading">R — 原文 (Reading)</h2>
+<blockquote>
+<p>"[PRE] – Access Role Profiles Preconfigured / 1 – AAA Server Profile Configuration / 2 – Access Auth Profile Configuration / 3 – Access Policy Configuration / 4 – Declare Client MAC address in local database"</p>
+<p>— ALE Training, Wired Client, p451</p>
+</blockquote>
+<h2 id="i-interpretation">I — 方法论骨架 (Interpretation)</h2>
+<p>AP 下联口 / OmniSwitch 接入口上有线客户端(以 MAC 认证为例)的准入是一条四步链，外加一个前置：</p>
+<ul>
+<li><strong>[前置]</strong> 预配两个 Access Role Profile 并应用到 AP Group 或交换机: 受限角色(如 ARP_DEFAULT) + 全权角色(如 ARP_PASS)——角色先行，未声明 MAC 的设备落受限角色兜底。</li>
+<li><strong>1. AAA Server Profile</strong> (Configure &gt; Network Access &gt; Unified Access): 选认证服务器(内置 UPAMRadiusServer) + 认证方法(MAC)。</li>
+<li><strong>2. Access Auth Profile</strong>: 启用认证方法、绑定 AAA Profile、设默认 Access Role(=受限 ARP)、指派 AP Group 并启用物理口(AP 的 Eth1；OmniSwitch 场景则选交换机与接入口)。</li>
+<li><strong>3. Access Policy</strong> (UPAM-NAC &gt; Access Policies): 定义映射——条件 Authentication Type=MAC、Authentication Source=Local Database、命中角色 ARP_PASS、Web Redirection=None。</li>
+<li><strong>4. 本地库声明</strong>: Company Property 中登记客户端 MAC(可附设备信息)，接入验证。</li>
+</ul>
+<p>思维: 自下而上(服务器→端口策略→身份库)，身份命中升权、未命中由默认 ARP 兜底。支持有线认证下联口的 AP: AP1251/AP1301H/AP136x/AP1311；认证方式可 802.1X/MAC/Captive Portal。IoT 设备自动识别(MAC OUI + DHCP 指纹)可按分类自动指派 ARP，作为此流程的自动化补充。</p>
+<h2 id="a1-past-application">A1 — 书中的应用 (Past Application)</h2>
+<h3 id="1-ap-home-ap-eth1-p446-459">案例 1: AP "Home-AP" Eth1 口接打印机 (p446-459)</h3>
+<ul>
+<li><strong>问题</strong>: AP 下联口(Eth1)接入的有线哑终端需准入控制。</li>
+<li><strong>方法论的使用</strong>: 预配 ARP_DEFAULT(受限+限带宽)/ARP_PASS(全访问)挂到 AP Group "My_AP-GROUP1"，再按四步: AAA Server Profile 选 UPAMRadiusServer + MAC → Access Auth Profile 绑定并启用 Eth1、默认角色 ARP_DEFAULT → Access Policy 映射 MAC/本地库 → Company Property 登记 MAC 11:22:33:44:55:66。</li>
+<li><strong>结论</strong>: 未知 MAC 落 ARP_DEFAULT 受限，已声明 MAC 落 ARP_PASS 全访问。</li>
+<li><strong>结果</strong>: 打印机正常受控接入；验证入口 Device Catalog &gt; Wired Ports 与 Analytics &gt; Clients 看有线会话。</li>
+</ul>
+<h2 id="a2-future-trigger">A2 — 触发场景 (Future Trigger) ★</h2>
+<h3 id="skill">用户会在什么情境下需要这个 skill?</h3>
+<ol>
+<li>AP 下联口或 OmniSwitch 接入口要接打印机/IP 电话/摄像头等哑终端，需 MAC 准入与角色控制。</li>
+<li>有线口未知设备要兜底受限(只能访问有限资源)，登记过的设备升全权。</li>
+<li>客户问"哪些 AP 支持下联口认证/有线口能不能做 Portal"。</li>
+</ol>
+<h3 id="_1">语言信号 (用户的话里出现这些就应激活)</h3>
+<ul>
+<li>"AP 下联口 / Eth1 接打印机怎么认证"</li>
+<li>"有线客户端 MAC 认证 / wired client authentication"</li>
+<li>"access auth profile / AAA server profile / access policy 怎么配"</li>
+<li>"在本地库里声明 MAC / company property"</li>
+</ul>
+<h3 id="skill_1">与相邻 skill 的区分</h3>
+<ul>
+<li>与 <code><a href="ov-ssid-psk-selection.html">ov-ssid-psk-selection</a></code> 的区别: 那个是无线 SSID 的认证/密钥选型；本 skill 是有线端口准入的固定四步实操链。</li>
+<li>与 <code><a href="ov-policy-bandwidth-design.html">ov-policy-bandwidth-design</a></code> 的区别: 那个设计 ARP/Policy List 内容与带宽；本 skill 只解决"有线口认证怎么配起来"，角色内容复用即可。</li>
+</ul>
+<h2 id="e-execution">E — 可执行步骤 (Execution)</h2>
+<ol>
+<li><strong>核对前置与硬件</strong>: 确认 AP 型号支持下联口认证(AP1251/AP1301H/AP136x/AP1311)或目标是 OmniSwitch 接入口；确认两个 ARP(受限兜底 + 全权)已建好并挂到 AP Group/交换机。</li>
+<li>完成标准: 说出目标端口所属设备、将启用的物理口、两个 ARP 的名称与用途。</li>
+<li><strong>按四步链输出配置</strong>: ① AAA Server Profile(UPAMRadiusServer + MAC) → ② Access Auth Profile(方法+AAA Profile+默认 ARP+AP Group+物理口) → ③ Access Policy(Type=MAC、Source=Local Database、角色=全权 ARP、Web Redirection=None) → ④ Company Property 登记客户端 MAC。给出各步界面路径。</li>
+<li>判停条件: 若客户要 802.1X/Portal 而非 MAC，调整第①③步的认证方法与重定向字段，链路结构不变。</li>
+<li>完成标准: 四步配置清单完整，含具体对象名与端口。</li>
+<li><strong>验证</strong>: 接入客户端，在 Device Catalog &gt; Wired Ports 看端口/UNP 客户端状态，Analytics &gt; Clients 看有线会话；用一台未声明 MAC 的设备确认落受限角色。</li>
+<li>完成标准: 已声明 MAC 落全权角色、未声明 MAC 落受限角色，两条路径均验证通过。</li>
+</ol>
+<h2 id="b-boundary">B — 边界 (Boundary) ★</h2>
+<h3 id="skill_2">不要在以下情况使用此 skill</h3>
+<ul>
+<li>无线客户端认证/密钥选型 → <code><a href="ov-ssid-psk-selection.html">ov-ssid-psk-selection</a></code>。</li>
+<li>AP/交换机本身激活纳管失败 → <code><a href="ov-device-activation-troubleshoot.html">ov-device-activation-troubleshoot</a></code>。</li>
+<li>IoT 终端自动画像与分类治理(仅 3 页浅述)——本 skill 只在需要"登记 MAC 手工准入"时适用，自动分类需求另行设计。</li>
+</ul>
+<h3 id="_2">作者在书中警告的失败模式</h3>
+<ul>
+<li>跳过前置直接配四步: ARP 未预配/未挂到 AP Group，Access Auth Profile 无默认角色可选，链路配不完整(p451)。</li>
+<li>忘记第 4 步在本地库声明 MAC: 客户端永远落默认受限角色，误判为"认证不生效"。</li>
+<li>MAC 认证固有缺陷: MAC 可仿冒、流量不加密(p215)——敏感有线网段应上 802.1X。</li>
+<li>在不支持下联口的型号(如 AP1101)上期望有线认证——先核对型号清单。</li>
+</ul>
+<h3 id="_3">作者的盲点 / 时代局限</h3>
+<ul>
+<li>培训示例以 MAC + 本地库为主线；外部 RADIUS/LDAP 做有线 802.1X 的字段细节需查版本文档。</li>
+<li>IoT 自动识别(画像→分类→ARP enforcement)书中仅浅述，不能据此承诺完整 NAC 能力。</li>
+</ul>
+<h3 id="_4">容易混淆的邻近方法论</h3>
+<ul>
+<li>设备纳管的"声明序列号"(Device Catalog) vs 客户端的"声明 MAC"(Company Property)——前者管 AP/交换机上线，后者管终端准入，两个库不要混。</li>
+<li>Access Auth Profile(端口认证开关) vs Access Policy(命中后给什么角色)——前者是门，后者是映射。</li>
+</ul>
+<hr />
+<h2 id="skills-3">相关 skills (阶段 3 填充)</h2>
+<ul>
+<li>composes-with <code><a href="ov-ssid-psk-selection.html">ov-ssid-psk-selection</a></code>: 无线与有线准入共享同一套 UPAM 认证服务器与 Access Role Profile 体系；DSPSK 依赖的 Company Property 库同时承载有线 MAC 声明——哑终端无论无线（DSPSK）还是有线（MAC 认证）应统一角色规划。</li>
+<li>composes-with <code><a href="ov-policy-bandwidth-design.html">ov-policy-bandwidth-design</a></code>: 本 skill 只解决"有线口认证链怎么配起来"，四步命中/兜底角色（ARP_DEFAULT/ARP_PASS）的带宽与 Policy List 内容由策略设计 skill 定义。</li>
+</ul>
+<hr />
+<h2 id="_5">审计信息</h2>
+<ul>
+<li><strong>验证通过</strong>: V1 ✓ / V2 ✓ / V3 ✓</li>
+<li><strong>测试通过率</strong>: 待测 (详见 test-prompts.json)</li>
+<li><strong>蒸馏时间</strong>: 2026-08-22</li>
+</ul></main></div></body></html>
