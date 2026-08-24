@@ -329,29 +329,32 @@ def build_course(c):
     book = os.path.join(ROOT, 'books', c['book'])
     skills = [s for _, slugs in c['groups'] for s in slugs]
 
-    def nav(active):
-        items = ['<a href="index.html">🏠 课程首页</a>',
-                 '<a href="digest.html">📖 精华长文 DIGEST</a>',
-                 '<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>',
-                 '<a href="glossary.html">🔤 术语词典</a>',
-                 '<a href="../../index.html">⬅️ 返回培训门户</a>',
-                 '<a href="index.html">──── Skills ────</a>']
+    def nav(active, sub=False):
+        p = '../' if sub else ''
+        items = [f'<a href="{p}index.html">🏠 课程首页</a>',
+                 f'<a href="{p}digest.html">📖 精华长文 DIGEST</a>',
+                 f'<a href="{p}overview.html">📘 教书理解 BOOK_OVERVIEW</a>',
+                 f'<a href="{p}glossary.html">🔤 术语词典</a>',
+                 f'<a href="{p}../../index.html">⬅️ 返回培训门户</a>',
+                 f'<a href="{p}index.html">──── Skills ────</a>']
         for gname, slugs in c['groups']:
             items.append(f'<div class="grp">{html_mod.escape(gname)}</div>')
             for s in slugs:
                 cls = ' class="on"' if s == active else ''
-                items.append(f'<a href="skills/{s}.html"{cls}>{s}</a>')
+                items.append(f'<a href="{p}skills/{s}.html"{cls}>{s}</a>')
         return '\n'.join(items)
 
-    def crumbs(cur=''):
+    def crumbs(cur='', sub=False):
         cat = c['id'].split('/')[0]
         cat_label = {'postsales': '售后', 'presales': '售前', 'manuals': '配置手册'}[cat]
-        bar = f'<nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../{cat}/index.html">{cat_label}</a> › <a href="index.html">{html_mod.escape(c["title"].split(" · ")[0])}</a>'
+        p = '../../../' if sub else '../../'
+        q = '../' if sub else ''
+        bar = f'<nav class="crumbs"><a href="{p}index.html">🏠 培训门户</a> › <a href="{p}{cat}/index.html">{cat_label}</a> › <a href="{q}index.html">{html_mod.escape(c["title"].split(" · ")[0])}</a>'
         if cur:
             bar += f' › <span>{html_mod.escape(cur)}</span>'
         return bar + '</nav>'
 
-    def page(title, body, active='', cur=''):
+    def page(title, body, active='', cur='', sub=False):
         foot = '<div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div>'
         return f"""<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -359,7 +362,7 @@ def build_course(c):
 <style>{CSS}</style></head>
 <body><div class="layout"><aside><h1>{c['title']}</h1>
 <div class="sub">{c['subtitle']}</div>
-{nav(active)}</aside><main>{crumbs(cur)}{body}{foot}</main></div></body></html>"""
+{nav(active, sub)}</aside><main>{crumbs(cur, sub)}{body}{foot}</main></div></body></html>"""
 
     def rel_links(h):
         for s in skills:
@@ -378,13 +381,13 @@ def build_course(c):
         idx = skills.index(slug)
         pn = '<div class="pn">'
         pn += (f'<a href="{skills[idx-1]}.html">⬅ 上一单元：{skills[idx-1]}</a>' if idx > 0
-               else f'<a href="index.html">⬅ 返回课程首页</a>')
+               else f'<a href="../index.html">⬅ 返回课程首页</a>')
         pn += (f'<a class="nxt" href="{skills[idx+1]}.html">下一单元：{skills[idx+1]} ➡</a>' if idx < len(skills)-1
                else f'<a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a>')
         pn += '</div>'
         body_html = f'<h1>{html_mod.escape(zh)}</h1><p class="meta"><span class="badge">SKILL</span> {slug} · 来源页码: {html_mod.escape(chap)}</p>' + h + pn
         with open(os.path.join(sub, 'skills', slug + '.html'), 'w', encoding='utf-8') as f:
-            f.write(page(slug, body_html, slug, cur=zh))
+            f.write(page(slug, body_html, slug, cur=zh, sub=True))
 
     cards = ''
     for gname, slugs in c['groups']:

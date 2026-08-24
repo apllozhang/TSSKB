@@ -61,7 +61,7 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <blockquote>
 <p>本文由 内部整理流程 蒸馏生成，只呈现<strong>通过三重验证</strong>的方法论——不是 1900 页教材的摘要，而是筛过水分的骨架。
 目标读者：没读过原教材、要独立支撑 OmniSwitch (AOS R8) 园区网的售后工程师。
-想深入某个主题时，点小节末尾的 skill 链接；想看全貌，读 <a href="./INDEX.md">INDEX.md</a>；查术语，读 <a href="./GLOSSARY.md">GLOSSARY.md</a>。
+想深入某个主题时，点小节末尾的 skill 链接；想看全貌，读 INDEX.md；查术语，读 GLOSSARY.md。
 来源: OmniSwitch LAN R8 Bootcamp Ed23 + Core Switching Ed15 (ALE DT00XTE220/216) | 全文约 1.9 万字符（含表格），预计阅读 40 分钟</p>
 </blockquote>
 <hr />
@@ -86,7 +86,7 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 - 备份：<code>configuration backup</code>（tar ≤10 份）+ USB（拔前必须 <code>usb disable</code>）。
 - 实验沙箱：<code>mkdir labdir</code> → <code>reload from labdir no rollback-timeout</code>——与 <code>reload all</code>（回安全基线）目的相反。</p>
 <p><strong>高频陷阱</strong>: 未 certify 重启全丢（信号 = CERTIFY NEEDED）；未验证就 certify 不可逆覆盖安全基线；console disable 前不留管理通道只能 RMA。</p>
-<p>→ 深入: <a href="./aos-switch-access-mgmt/SKILL.md"><code>aos-switch-access-mgmt</code></a></p>
+<p>→ 深入: <code>aos-switch-access-mgmt</code></p>
 <h3 id="12-virtual-chassis">1.2 Virtual Chassis（设备级冗余）</h3>
 <p><strong>它解决什么问题</strong>: 多台变一台——设备级故障切换 sub-second、统一管理面、不中断升级（ISSU）。</p>
 <p><strong>决策框架</strong>: VC vs LAG vs DHL 分层选（详见 2.2）；要"设备+链路双冗余"就 VC + 跨成员 LAG。</p>
@@ -96,7 +96,7 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 - ISSU：新目录放 code+vcsetup.cfg+vcboot.cfg → issu 命令 → Slave 按 chassis ID 低→高逐台重启，Master 最后。
 - 一致性硬约束：chassis type、group、hello interval、control VLAN、license 必须一致（<code>show virtual-chassis consistency</code> 带 * 项）。</p>
 <p><strong>高频陷阱</strong>: <code>show running-directory</code> 见 "Flash Between CMMs: NOT SYNCHRONIZED" 即成员 flash 落后（用 flash-synchro）；拓扑缺成员时 write memory 确认 Y 会<strong>永久清除</strong>该成员配置；无 EMP 口机型 VC 内每台都要 USB dongle。</p>
-<p>→ 深入: <a href="./aos-virtual-chassis/SKILL.md"><code>aos-virtual-chassis</code></a></p>
+<p>→ 深入: <code>aos-virtual-chassis</code></p>
 <h3 id="13">1.3 诊断与运维工具箱</h3>
 <p><strong>它解决什么问题</strong>: "排障第一入口看什么"；升级窗口怎么执行/回退；PoE 与 SLB 部署。</p>
 <p><strong>决策框架</strong>: 工具按侵入性从低到高——swlog 日志 → command-log（谁改了什么，最近 100 条）→ RMON/接口计数 → sFlow（receiver/sampler/poller 三件，源地址用 Loopback0）→ port-mirroring 逐包（与 monitoring 同口互斥）。</p>
@@ -106,7 +106,7 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 - SLB：VIP 必须与服务器同网段（proxy-ARP 兜底）；每机 16 cluster；WRR 总权重 ≤32；weight 0 = 备份机（主全挂才接管）。
 - 升级六步法：release note（内存/uboot/FPGA 要求）→ FTP 镜像 → <code>reload from working no rollback-timeout</code> → show version 验证 → 稳定后 certify → 按需 update uboot/fpga-cpld。<strong>certify 之前都可回退</strong>。</p>
 <p><strong>高频陷阱</strong>: 跳过 release note 直接刷镜像可能变砖；镜像会话互斥（"please remove other configuration" 时按互斥清单反查）；日志已指向协议故障后应转对应协议 skill。</p>
-<p>→ 深入: <a href="./aos-diagnostics-ops/SKILL.md"><code>aos-diagnostics-ops</code></a></p>
+<p>→ 深入: <code>aos-diagnostics-ops</code></p>
 <hr />
 <h2 id="l2">二、L2 基础与冗余</h2>
 <p><em>这一组回答："二层怎么通、怎么不出环、断了怎么活。"</em></p>
@@ -118,7 +118,7 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 - VLAN 间路由 = 给 VLAN 绑 IP 接口即自动开转发（第一个为 primary）。
 - MVRP 三前提：STP flat 模式 + 全局 enable + 端口 enable；动态 VLAN 上限默认 256（<code>mvrp maximum-vlan</code>，调小需 disable→enable MVRP）。</p>
 <p><strong>高频陷阱</strong>: 动态 VLAN（type=dyn）本地 <code>no vlan</code> 删不掉且被立即重建——必须先在声明侧删或先禁 MVRP 端口；MVRP 不能配 mirror/unp/VPLS access/stacking user 口；mobile 口不支持静态 802.1Q tag，必须走 UNP mobile-tag。</p>
-<p>→ 深入: <a href="./aos-vlan-mvrp/SKILL.md"><code>aos-vlan-mvrp</code></a></p>
+<p>→ 深入: <code>aos-vlan-mvrp</code></p>
 <h3 id="22-l2-lag-stpmstp-dhl-erp">2.2 L2 冗余三角：LAG / STP(MSTP) / DHL / ERP</h3>
 <p><strong>它解决什么问题</strong>: "双上行该用 STP 还是 LACP 还是 DHL"——接入-核心二层冗余统一选型。</p>
 <p><strong>决策框架（四问）</strong>: 链路冗余？带宽利用率？收敛时间？交换机冗余？
@@ -131,7 +131,7 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 - DHL 硬限制：每机 1 session、仅 2 链路、同一 default VLAN、禁 mobile/802.1x/GVRP/UNI 口、DHL 口自动关 STP（无 TCN）→ <strong>必须显式选 MAC 冲刷</strong>（raw / MVRP enhanced / none——默认 none 有黑洞风险）；pre-emption 默认 30s。
 - ERP：全环恰一个 RPL Owner（常态阻塞 RPL）；WTR 默认 5 分钟；每环 ≤16 节点。</p>
 <p><strong>高频陷阱</strong>: 端口残留 VLAN 配置加不进 linkagg（售后最高频报错，先 <code>no vlan X members port</code>）；1x1 与 MSTP 不能同配，MSTP 用 32-bit path cost（与 16-bit 差 65536 倍）；根桥漂移到接入层老设备；无 RPL 成环风暴、多 RPL 错切流量。</p>
-<p>→ 深入: <a href="./aos-lag-stp/SKILL.md"><code>aos-lag-stp</code></a></p>
+<p>→ 深入: <code>aos-lag-stp</code></p>
 <hr />
 <h2 id="_3">三、安全与策略</h2>
 <p><em>这一组回答："谁能让流量进来（认证），进来的流怎么处理（策略），不问身份时怎么防（L2 防御）。"</em></p>
@@ -142,7 +142,7 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 - RADIUS 下发的 Filter-Id = <strong>UNP 名</strong>（不是 VLAN 名）；默认 retransmit 3 / timeout 2s / auth 1812 / acct 1813。
 - 话机场景：LLDP-MED network-policy TLV 下发 voice VLAN + l2-priority 5 + dscp 46，话机据此打 tag，交换机 mobile-tag profile + trust-tag 分类收流。</p>
 <p><strong>高频陷阱</strong>: 认证禁用/失败时端口<strong>不会关闭</strong>而是回落分类/default profile——"没认证就没策略"是错觉，安全预期必须按兜底 profile 设计；PVLAN 下 UNP 口的 isolated/community 角色由<strong>首个学到的 MAC</strong> 决定，落错永不翻身。</p>
-<p>→ 深入: <a href="./aos-access-guardian-unp/SKILL.md"><code>aos-access-guardian-unp</code></a></p>
+<p>→ 深入: <code>aos-access-guardian-unp</code></p>
 <h3 id="32-consistent-security-l2">3.2 Consistent Security：非认证 L2 防御</h3>
 <p><strong>它解决什么问题</strong>: 不问身份的端口级护栏——防 ARP 欺骗、流氓 DHCP、广播风暴、私接设备、同子网窃听。</p>
 <p><strong>决策框架</strong>: 按攻击面选型——欺骗类走链条（DHCP 信任分级→snooping binding 表→Option-82→IP source filter→DAI），隔离类二选一（MFF vs PVLAN），资源类（flood-limit + LPS），加密类（MACsec）。</p>
@@ -152,7 +152,7 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 - 隔离选型：要 DHCP 网关代理 → MFF（Port Mapping + dynamic proxy ARP + snooping）；纯静态 → PVLAN（先 <code>capability shared-vlan-learning enable</code>；一个 primary 只能 1 个 isolated）。
 - MACsec：先核对端口能力/机型矩阵（6860N 仅 dynamic、VFL 口不支持）+ 免费 site license；动态 SAK 按时间 5–120min 或流量 5–1000GB 先到先换；静态 SA ≤4 key 且两端 sci-tx/rx 交叉。</p>
 <p><strong>高频陷阱</strong>: 服务器口忘 trust → 全网 DHCP 失败；Port Mapping 双向会话的 network 口不能共享；两端 SAK/SCI 不匹配则口 up 不通。</p>
-<p>→ 深入: <a href="./aos-l2-security/SKILL.md"><code>aos-l2-security</code></a></p>
+<p>→ 深入: <code>aos-l2-security</code></p>
 <h3 id="33-qos-acl-pbr">3.3 QoS / ACL / PBR 统一策略引擎</h3>
 <p><strong>它解决什么问题</strong>: 标记、限速、封堵、重定向、策略镜像——AOS 把它们全收敛到一个三段式引擎。</p>
 <p><strong>决策框架</strong>: 一切策略 = <strong>condition（L1–L4 任意组合）→ action（priority/802.1p/DSCP/cir/redirect/mirror/port-disable/disposition）→ rule（precedence + 可选 validity-period 时段）</strong>，端口级修改后必须 <code>qos apply</code> 才生效（revert 撤销 / flush 清空）。</p>
@@ -162,7 +162,7 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 - PBR 旁挂防火墙两段式防环：去程 permanent gateway 指防火墙；<strong>回程 condition 必须加 source port</strong>（防火墙回连口），否则被去程规则反复抓住成环。
 - 保留组：UserPorts 丢源 IP 欺骗可叠加 filter/shutdown spoof|rip|ospf|bgp|bpdu；DropServices 丢指定 TCP/UDP 服务。</p>
 <p><strong>高频陷阱</strong>: 默认不匹配任何 policy 的流是 <strong>ACCEPT</strong>——把 QoS/ACL 当白名单防火墙会落空；不 qos apply 配置停在 pending；策略镜像同时仅 1 会话（普通镜像 4 会话/4 MTP，机型相关）。</p>
-<p>→ 深入: <a href="./aos-qos-acl-pbr/SKILL.md"><code>aos-qos-acl-pbr</code></a></p>
+<p>→ 深入: <code>aos-qos-acl-pbr</code></p>
 <hr />
 <h2 id="l3">四、L3 路由</h2>
 <p><em>这一组回答："三层怎么通、怎么快、怎么隔离。协议是标准的，增量在 AOS CLI、默认值与排障范式。"</em></p>
@@ -179,7 +179,7 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 - IS-IS：DIS 选举=最高优先级→最高 MAC 且<strong>可抢占</strong>（后上线高优先级立即抢走 DIS 触发 LSP 突增）；L1 邻接要求 area-id 相同。
 - VRRP：双核心双 VRID 互为主备做负载分担；track 对象关联上行故障扣优先级（治"网关活着但出口死了"）；<strong>改 priority 前必须先 disable 实例</strong>。</p>
 <p><strong>高频陷阱</strong>: ECMP 最多 4 条且仅 per-flow——单流永远走哈希选定的单链路；RIP invalid ≥ 3×update 硬约束；GR 对 OSPF/IS-IS 默认关闭、BGP 默认开启（升级前检查）；OSPF DR 选举方向（最高优先）与 STP 根桥/VC Master（最低优先）相反。</p>
-<p>→ 深入: <a href="./aos-igp-routing/SKILL.md"><code>aos-igp-routing</code></a></p>
+<p>→ 深入: <code>aos-igp-routing</code></p>
 <h3 id="42-bgp-vrfroute-leak">4.2 BGP 与 VRF/Route Leak</h3>
 <p><strong>它解决什么问题</strong>: 双出口选路控制、IBGP 黑洞、多租户隔离与跨 VRF 共享服务。</p>
 <p><strong>决策框架</strong>: BGP 本质"策略优先于度量"——七级属性瀑布逐级比较，改选路从瀑布顶端找第一个可操纵属性：<strong>LocalPref 高 → AS-Path 短 → Origin（IGP&lt;EGP&lt;Incomplete）→ MED 低 → 下一跳 IGP 度量近 → EBGP 优于 IBGP → 最低 RID</strong>。方向化旋钮：出向引流改 LocalPref（AS 内有效），入向改 MED（只告知相邻 AS、不跨 AS 传递、再通告归零），批量打标用 Community；载体统一为三层组装（原子 list → route-map → 挂 neighbor in/out）。</p>
@@ -187,7 +187,7 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 - IBGP 水平分割：IBGP 学到的路由不传第三个 IBGP 邻居（AS_PATH 在 AS 内不增长）→ full-mesh 或 RR；关同步时用 next-hop-self 补下一跳可达性。
 - VRF：一个 VLAN（及其 IP 接口）同一时刻只属一个 VRF，归属由首个接口决定，VRF 名大小写敏感；跨 VRF/到 GRT 共享必须 Route Leak——源 VRF export route-map 与目标 VRF import route-map <strong>成对</strong>；仅 6860E/N、6900、9900 支持 leak。</p>
 <p><strong>高频陷阱</strong>: "邻居全 Established 却缺前缀"= 水平分割或下一跳不可达；MED 与 LocalPref 方向搞反是最常见错配；本机两 VRF 接口互 ping 不通是<strong>安全设计而非故障</strong>（验证要 ping 对端客户端）；双向泄漏不加 route-map 会成环。</p>
-<p>→ 深入: <a href="./aos-bgp-vrf/SKILL.md"><code>aos-bgp-vrf</code></a></p>
+<p>→ 深入: <code>aos-bgp-vrf</code></p>
 <hr />
 <h2 id="spb-fabric">五、SPB Fabric 与组播</h2>
 <p><em>这一组回答："ALE 的进阶答案——不用 STP 的全活骨干怎么建，组播怎么从 L2 一路做到 RP 冗余。"</em></p>
@@ -202,7 +202,7 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 3. L3 选型：域内用 L3 VPN（复用 IS-IS、路由由 TLV 按 I-SID 自动承载免配路由协议），边界用 VPN Lite（OSPF/BGP 对接外部；不能与 MPLS 直接互通）。</p>
 <p><strong>配套</strong>: BUM 复制三选——Head-end（默认，省资源费带宽）/ Tandem(S,G)（每 I-SID 一棵树）/ Tandem(*,G)（每 BVLAN 共享树）；链路 metric 默认一律 10，调整必须两端同改。Auto-Fabric 七阶段（Auto-VC → 取配置 → Auto-LACP → Auto-Routing → Auto-SPB → Network Profiling(UNP+LBD) → Auto-MVRP 兜底）每阶段"探测-预置-验证-不成立即回退"——解释"端口自己变 LAG/UNP"类工单的钥匙。</p>
 <p><strong>高频陷阱</strong>: 先 enable 再改配置 → 邻接在错误拓扑上计算（"adjacency up 但服务不通"的第一嫌疑）；各 BEB I-SID/BVLAN/SAP encap 不一致导致单通；控制 BVLAN 接口不支持 OSPF/VRRP/ARP；LBD 检到环直接关物理口需人工恢复（不做阻塞-转发状态机）。</p>
-<p>→ 深入: <a href="./aos-spb-fabric/SKILL.md"><code>aos-spb-fabric</code></a></p>
+<p>→ 深入: <code>aos-spb-fabric</code></p>
 <h3 id="52-ipms-igmp-pim-sm-anycast-rp">5.2 组播：IPMS / IGMP / PIM-SM / Anycast RP</h3>
 <p><strong>它解决什么问题</strong>: IPTV/视频会议部署、"换台黑屏"、RP 单点故障。</p>
 <p><strong>决策框架</strong>: 收到组播包先二分——同 VLAN → L2 交换（IPMS，AOS 的 IGMP snooping 实现）；跨 VLAN → L3 路由（PIM/DVMRP 转发表）。L3 再选型：接收者密集小网 → PIM-DM（flood-prune 3 分钟一轮、无 RP）；稀疏 → <strong>PIM-SM</strong>（显式 join + RP 共享树 + SPT 切换默认开启）。</p>
@@ -212,7 +212,7 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 - RP 两套机制：BSR 自动选举（先选 BSR：priority→IP；再为每组算 RP：priority 最小 → (组,RP) hash 最大 → IP 最大，不同组天然散到不同 RP）；静态 RP（<code>ip pim static-rp</code>）可<strong>覆盖</strong> BSR。
 - Anycast RP 冗余：多台 RP 共享一个 Loopback 以主机路由宣告进 IGP，全域静态指该地址，RP 间独立 Loopback 组 RP set 互相同步 register（RFC 4610 PIM 方式，非 MSDP）；失效收敛速度 = IGP 收敛。</p>
 <p><strong>高频陷阱</strong>: Anycast RP 硬边界——<strong>仅 PIM-SM</strong>（DM/BIDIR/SSM 不支持）、静态 RP set ≤8 台、<strong>SPT 必须开启</strong>；一个接口只能跑 PIM 或 DVMRP 之一；警告信号"源注册到一台 RP、接收端只查另一台 RP 收不到流"。</p>
-<p>→ 深入: <a href="./aos-multicast/SKILL.md"><code>aos-multicast</code></a></p>
+<p>→ 深入: <code>aos-multicast</code></p>
 <hr />
 <h2 id="12">12 步学习路线（= 推荐配置/学习顺序）</h2>
 <ol>
@@ -425,7 +425,7 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 </tr>
 </tbody>
 </table>
-<p>完整 28 条词典见 <a href="./GLOSSARY.md">GLOSSARY.md</a>。</p>
+<p>完整 28 条词典见 GLOSSARY.md。</p>
 <hr />
 <h2 id="top-6">陷阱与反例（杀伤力 Top 6）</h2>
 <ol>
