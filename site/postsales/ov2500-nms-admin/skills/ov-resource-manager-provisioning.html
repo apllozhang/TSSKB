@@ -1,0 +1,111 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ov-resource-manager-provisioning — DT00XTE311 · OmniVista 2500 NMS 管理</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE311 · OmniVista 2500 NMS 管理</h1>
+<div class="sub">Edition 09 · 581 页 · 网管平台管理全科（安装/发现/资源/统一接入/PolicyView/隔离）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">平台与安装</div>
+<a href="../skills/ov-va-install-license.html">ov-va-install-license</a>
+<a href="../skills/ov-ha-services-alerting.html">ov-ha-services-alerting</a>
+<a href="../skills/ov-switch-snmp-bootstrap.html">ov-switch-snmp-bootstrap</a>
+<div class="grp">发现与资源</div>
+<a href="../skills/ov-discovery-topology-locator.html">ov-discovery-topology-locator</a>
+<a href="../skills/ov-resource-manager-provisioning.html" class="on">ov-resource-manager-provisioning</a>
+<a href="../skills/ov-cli-scripting-batch.html">ov-cli-scripting-batch</a>
+<div class="grp">策略与监控</div>
+<a href="../skills/ov-unified-access.html">ov-unified-access</a>
+<a href="../skills/ov-policyview-qos.html">ov-policyview-qos</a>
+<a href="../skills/ov-quarantine-manager.html">ov-quarantine-manager</a>
+<a href="../skills/ov-analytics-appvis-iot.html">ov-analytics-appvis-iot</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../postsales/index.html">售后</a> › <a href="../index.html">DT00XTE311</a> › <span>ov-resource-manager-provisioning</span></nav><h1>ov-resource-manager-provisioning</h1><p class="meta"><span class="badge">SKILL</span> ov-resource-manager-provisioning · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>变更前要备份配置、误改后要恢复，或需要把某台设备回滚到"黄金配置"</li>
+<li>需要给一批交换机升级固件（立即或定时），并确认升级真正生效</li>
+<li>新交换机上线希望自动匹配规则推送配置（Template Based Provisioning）</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>Resource Manager 解决"存量设备的配置与固件生命周期"（备份/恢复/升级/清单），Provisioning 解决"新设备的零接触上线"（三阶段状态模型：Factory-default → Bootstrapped → Provisioned）。核心机制是规则匹配：交换机每 5 分钟联系 OV 一次，命中 Rule（序列号/MAC/型号）即推送管理与配置模板。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<ol>
+<li><strong>配置备份</strong>：Configuration → Resource Manager → Backup/Restore → Backup → Backup by Devices → Switch Picker 选设备 → （提示 FTP 认证则 Add FTP Authentication：admin/switch）→ Backup Type=Configuration Only → Backup（&lt;&lt;<PAGE 197-198>&gt;&gt;）</li>
+<li><strong>恢复配置</strong>：Restore → Add/Remove Backup Files → 选文件 → Restore → 确认 Yes（&lt;&lt;<PAGE 199-201>&gt;&gt;）</li>
+<li><strong>镜像升级</strong>：Upgrade Image → Import（<em>.zip）→ Install → 选固件 → Add/Remove Device（OV 只列出兼容该版本的交换机）→ Install Software；完成后 </em><em>SSH 到交换机从 working 目录 reload，重启后执行 Copy Working Certified</em>*（&lt;&lt;<PAGE 203-206>&gt;&gt;）</li>
+<li><strong>定时批量升级</strong>：Discovery → Scheduled Upgrades：可多台同时升级、立即或定时、每台可设不同版本与安装目录；完成后到 Managed Devices 检查安装目录与状态是否 successful（&lt;&lt;<PAGE 124-126>&gt;&gt;）</li>
+<li><strong>Inventory 报表</strong>：Resource Manager → Inventory → Create Report → Select Devices → 选报告类型 → Create → 点链接浏览器打开（&lt;&lt;<PAGE 202>&gt;&gt;）</li>
+<li><strong>Provisioning Rule</strong>：字段含 Serial Number/MAC、Switch Model、Switch Config Template（追加到现有配置）、Value Mapping（动态模板必填）、Mgmt Users Template（默认推送）、Save and Certify；Results 表查看尝试过的交换机（&lt;&lt;<PAGE 461-462>&gt;&gt;）</li>
+<li><strong>Golden Config / 强制下发</strong>：Golden Config 列点 Edit，从最近三次备份中选一并 Apply；"The Force Provisioning Config button is used to push a Provisioning Rule configuration to a matching switch the next time the switch contacts the OmniVista server."（&lt;&lt;<PAGE 466-467>&gt;&gt;）</li>
+</ol>
+<h2 id="a2">A2（进阶应用）</h2>
+<ul>
+<li>动态模板 + 值映射：模板分 Static（无变量）与 Dynamic（带 $VLAN/$PORTS 变量）；动态模板必须建 Value Mappings，由模板+变量值表推导实际下发配置（&lt;&lt;<PAGE 463-464>&gt;&gt;）</li>
+<li>引导方式：DHCP Option 43 Sub-Option 128 指向本地 OV 激活服务器（推荐），或 DNS 把 activation.myovcloud.com 解析到 OV；存量交换机改 cloudagent.cfg 的 Activation Server URL（as-lite.*.ove.local）并 <code>cloud-agent admin-state enable</code>（&lt;&lt;<PAGE 460>&gt;&gt;）</li>
+<li>部署场景矩阵：①Mobile App 离线 ②Mobile App 在线 ③Advanced DHCP+RCL（企业/园区）④仅 Advanced DHCP；场景 1/2 依赖尚未发布的 Mobile App 功能，当前不可实施（&lt;&lt;<PAGE 418/451/415>&gt;&gt;）</li>
+<li>Thin Client 模式：交换机零本地配置（仅 vcboot.cfg 保底网络可达），开机经 activation/call-home 从 OV 取配置；Incremental Template 只在下一次周期 call-home（默认 30 分钟）应用一次（&lt;&lt;<PAGE 75-77>&gt;&gt;）；Rule 可配 Thin Switch Yes/No 与 Desired Switch Config（Template+Incremental/最新备份快照/Golden 快照）（&lt;&lt;<PAGE 76>&gt;&gt;）</li>
+<li>Golden Configuration 审计："Configuration selected from a list of the three most recent switch backups that can be applied to a switch in the event there is an unwanted configuration change"；可周期审计、标记 golden、偏离告警（&lt;&lt;<PAGE 467/417>&gt;&gt;）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>配置备份与恢复（含 FTP 凭据补充）——cases·备份恢复（&lt;&lt;<PAGE 197-201>&gt;&gt;）</li>
+<li>镜像导入升级 + 升级后手工 reload/Copy Working Certified——cases·镜像升级（&lt;&lt;<PAGE 203-206>&gt;&gt;）</li>
+<li>Provisioning Rule 创建与 Golden Config/Force Provision——cases·Provisioning（&lt;&lt;<PAGE 462-467>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（边界与陷阱）</h2>
+<ul>
+<li>升级完成的收尾动作不能漏：需 SSH reload + Copy Working Certified，漏做则升级不生效；实验环境镜像升级节"DO NOT perform this section unless directed by your instructor."（&lt;&lt;<PAGE 203/206>&gt;&gt;）</li>
+<li>备份向导可能因交换机缺 FTP 凭据中断："Click on Add FTP Authentication if prompted."（&lt;&lt;<PAGE 198>&gt;&gt;）</li>
+<li>Thin Client 模式下"All configuration changes should be done in OV 2500"——本地改配置无意义/会被覆盖；且仅 AOS 8.8R1+ 支持（&lt;&lt;<PAGE 75>&gt;&gt;）</li>
+</ul>
+<h2 id="_1">来源</h2>
+<ul>
+<li>frameworks·Provisioning 四场景矩阵（&lt;&lt;<PAGE 414/418/451>&gt;&gt;）、动态模板+值映射（&lt;&lt;<PAGE 463-464>&gt;&gt;）</li>
+<li>principles·Rule 匹配机制（&lt;&lt;<PAGE 461>&gt;&gt;）、Golden Config 审计（&lt;&lt;<PAGE 417/467>&gt;&gt;）、RCL/Bootstrap（&lt;&lt;<PAGE 460>&gt;&gt;）、NaaS 许可状态（&lt;&lt;<PAGE 127>&gt;&gt;）、Thin Client（&lt;&lt;<PAGE 75-77>&gt;&gt;）</li>
+<li>cases·备份恢复/镜像升级/Inventory/Scheduled Upgrades/Provisioning/Thin Client 规则（&lt;&lt;<PAGE 197-206/202/124-126/462-467/76>&gt;&gt;）</li>
+<li>counter-examples·升级环境约束与收尾/FTP 凭据/Thin Client 直改配置（&lt;&lt;<PAGE 203-206/198/75>&gt;&gt;）</li>
+</ul><div class="pn"><a href="ov-discovery-topology-locator.html">⬅ 上一单元：ov-discovery-topology-locator</a><a class="nxt" href="ov-cli-scripting-batch.html">下一单元：ov-cli-scripting-batch ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>voice-over-wlan-deployment — DT00XTE310 · OmniSwitch 接入与 Stellar WLAN Express</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE310 · OmniSwitch 接入与 Stellar WLAN Express</h1>
+<div class="sub">Edition 05 · 1083 页 · 五日交付全科（三部署模式+语音 WLAN+故障排查）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">交换机管理</div>
+<a href="../skills/aos-dual-partition-config-management.html">aos-dual-partition-config-management</a>
+<a href="../skills/poe-management.html">poe-management</a>
+<a href="../skills/vlan-inter-vlan-routing.html">vlan-inter-vlan-routing</a>
+<a href="../skills/switch-high-availability.html">switch-high-availability</a>
+<a href="../skills/qos-acl-access-guardian.html">qos-acl-access-guardian</a>
+<div class="grp">部署模式</div>
+<a href="../skills/stellar-deployment-mode-selection.html">stellar-deployment-mode-selection</a>
+<a href="../skills/wifi-express-operations.html">wifi-express-operations</a>
+<a href="../skills/cirrus-cloud-management.html">cirrus-cloud-management</a>
+<div class="grp">无线与排障</div>
+<a href="../skills/wireless-tech-fundamentals.html">wireless-tech-fundamentals</a>
+<a href="../skills/voice-over-wlan-deployment.html" class="on">voice-over-wlan-deployment</a>
+<a href="../skills/lan-wlan-troubleshooting.html">lan-wlan-troubleshooting</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../postsales/index.html">售后</a> › <a href="../index.html">DT00XTE310</a> › <span>voice-over-wlan-deployment</span></nav><h1>voice-over-wlan-deployment</h1><p class="meta"><span class="badge">SKILL</span> voice-over-wlan-deployment · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>要为 8158s/8168s WLAN 话机或 Rainbow/OTC 软终端规划 Wi-Fi 语音覆盖</li>
+<li>通话出现断续、漫游掉线、单向通话，需要按语音指标门限排障</li>
+<li>需要决定 802.11r/k/v 开不开、2.4G 还是 5G、RAP 还是本部 AP</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>VoWLAN 是"覆盖设计 + QoS + 漫游"三件事：覆盖按 -70dBm 小区交叠 8dB 设计，QoS 把 Voice 映射到 WMM/802.1p 6 / DSCP 46，漫游靠 802.11r/k/v 与 CNCS 上下文判定 L2/L3。语音对延迟、抖动、丢包、重传有硬门限，规划阶段就要算清 AP 密度与每 AP 语音流数。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<ol>
+<li><strong>按五阶段方法论推进</strong>：Prepare → Plan → Design → Implement → Operate（&lt;&lt;<PAGE 252>&gt;&gt;、&lt;&lt;<PAGE 964>&gt;&gt;）：先识别语音与音视频用途，运营阶段持续监控维护。</li>
+<li><strong>Preparation 现场勘测</strong>：Site survey → 分析 RF 环境 → 找干扰源；容量基准：办公区 1 AP / 255 m²、每 AP 平均 20-25 用户（&lt;&lt;<PAGE 253>&gt;&gt;）。</li>
+<li><strong>RF 门限设计</strong>（&lt;&lt;<PAGE 928>&gt;&gt;-&lt;&lt;<PAGE 931>&gt;&gt;）：覆盖要求 RSSI ≥ -70dBm；漫游要求 -62~-64dBm；AP 边界交叠约 8dB；SNR ≥ 25dB、Noise &lt; -92dBm、RSSI &gt; -67dBm。</li>
+<li><strong>QoS 映射</strong>：Voice DSCP 46 → 802.1p 6；Video 40 → 4；BE 0 → 0；Background 8 → 1（&lt;&lt;<PAGE 874>&gt;&gt;、&lt;&lt;<PAGE 932>&gt;&gt;）。话机侧建议 Voice 流量 DSCP 46、Voice 信令 DSCP 26（&lt;&lt;<PAGE 933>&gt;&gt;）。</li>
+<li><strong>容量核算</strong>（&lt;&lt;<PAGE 892>&gt;&gt;）：AP13XX (11ax) 每流 400Kbps、最高 35 条语音流（18 并发 G.711/Opus NB）；AP12XX (11ac) 13Mbps、32 流；Rainbow Audio/Video HD 105Mbps（3Mbps/流）/35 流。</li>
+<li><strong>验收指标</strong>：往返时延 &lt; 250ms、802.11 重传 &lt; 15%、Jitter &lt; 100ms、丢包 &lt; 2%（MOS≈4 / R-value 80-90）（&lt;&lt;<PAGE 933>&gt;&gt;、&lt;&lt;<PAGE 1007>&gt;&gt;-&lt;&lt;<PAGE 1008>&gt;&gt;）。</li>
+</ol>
+<h2 id="a2">A2（进阶应用）</h2>
+<ul>
+<li><strong>漫游机制</strong>：802.11r Fast Transition 先握手换钥再漫游（over-the-air FT 为默认）；802.11k 邻居报告省去全信道扫描；802.11v 由 AP 主动建议漫游目标（&lt;&lt;<PAGE 938>&gt;&gt;-&lt;&lt;<PAGE 940>&gt;&gt;）。漫游类型判定：CNC 表中 VLAN 与目标 AP Access Role VLAN 一致 → L2 漫游，否则 L3（&lt;&lt;<PAGE 917>&gt;&gt;）。</li>
+<li><strong>L3 漫游隧道</strong>：跨子网漫游时新 AP 向 Home AP 建 L2 GRE 隧道，用户 IP 不变且 QoS/ACL 策略保留（&lt;&lt;<PAGE 894>&gt;&gt;、&lt;&lt;<PAGE 843>&gt;&gt;）。</li>
+<li><strong>语音走 5GHz</strong>：2.4GHz 受蓝牙/微波炉/雷达干扰，语音实现可行但不推荐（&lt;&lt;<PAGE 908>&gt;&gt;-&lt;&lt;<PAGE 909>&gt;&gt;、&lt;&lt;<PAGE 913>&gt;&gt;）。</li>
+<li><strong>Mesh 语音限制</strong>：语音 mesh 最多 4 跳/4 方向，到达 mesh 点带宽 /3、每方向 /4，根 AP 约 15 台话机中转上限；Mesh 中 VoIP 只能 Best Effort（11r/PMK 限制）（&lt;&lt;<PAGE 899>&gt;&gt;）。</li>
+<li><strong>RAP 远程话机</strong>：Tunnel 模式全流量走 VPN（AP1201H 加密性能约 100Mbps，本部同型 433Mbps）；Local breakout 本地流量不回传（&lt;&lt;<PAGE 904>&gt;&gt;）。</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>智能手机 EIRP 不对称：手机 5GHz 仅约 11dBm，是 AP 的 1/8 距离短板；降 AP 功率迁就手机会导致 AP 数量暴涨，手机 VoWLAN 只能 Best Effort（&lt;&lt;<PAGE 931>&gt;&gt;）。</li>
+<li>81x8s 话机兼容性：8158s/8168s 当前版本拒绝 AP 的 802.11v 请求，需按终端能力分 SSID（&lt;&lt;<PAGE 940>&gt;&gt;）。</li>
+<li>RAP 三禁区实例：总部勿用 RAP（VPN 隧道约束）、加密带宽约打 2.3 折、同地两台 RAP 间 8168s 不支持切换（&lt;&lt;<PAGE 904>&gt;&gt;）。</li>
+</ul>
+<h2 id="b">B（边界与陷阱）</h2>
+<ul>
+<li><strong>802.11r 兼容性</strong>：不支持 11r 的设备可能无法关联 11r WLAN；ALE 建议为支持 11r/k/v 的设备单设 WLAN（&lt;&lt;<PAGE 938>&gt;&gt;）。</li>
+<li><strong>2.4GHz 信道聚合（HT40）反模式</strong>：仅适合少数 AP 的热点，多 AP 大部署因 3 信道限制自扰（&lt;&lt;<PAGE 908>&gt;&gt;-&lt;&lt;<PAGE 909>&gt;&gt;）；语音勿走 2.4GHz（&lt;&lt;<PAGE 913>&gt;&gt;）。</li>
+<li><strong>RAP 禁区</strong>：总部不建议部署 RAP；同地两台 RAP 间 8168s 无法 handover（&lt;&lt;<PAGE 904>&gt;&gt;）。</li>
+<li>话机 1x1 单天线走视距+分集，MU-MIMO 空间流复用对语音终端帮助有限（&lt;&lt;<PAGE 912>&gt;&gt;）。</li>
+</ul>
+<h2 id="_1">来源</h2>
+<ul>
+<li>frameworks·F3 五阶段方法论（&lt;&lt;<PAGE 252>&gt;&gt;、&lt;&lt;<PAGE 964>&gt;&gt;）</li>
+<li>frameworks·F4 Preparation 工作框架（&lt;&lt;<PAGE 253>&gt;&gt;）</li>
+<li>principles·P4 MU-MIMO 原理（&lt;&lt;<PAGE 912>&gt;&gt;）</li>
+<li>principles·P20 802.11r/k/v（&lt;&lt;<PAGE 938>&gt;&gt;-&lt;&lt;<PAGE 940>&gt;&gt;）</li>
+<li>principles·P21 语音小区 RSSI 门限（&lt;&lt;<PAGE 928>&gt;&gt;-&lt;&lt;<PAGE 931>&gt;&gt;）</li>
+<li>principles·P22 智能手机 EIRP 不对称（&lt;&lt;<PAGE 931>&gt;&gt;）</li>
+<li>principles·P23 WMM/DSCP/802.1p 映射（&lt;&lt;<PAGE 874>&gt;&gt;、&lt;&lt;<PAGE 932>&gt;&gt;-&lt;&lt;<PAGE 933>&gt;&gt;）</li>
+<li>principles·P24 质量门限（&lt;&lt;<PAGE 933>&gt;&gt;、&lt;&lt;<PAGE 1007>&gt;&gt;-&lt;&lt;<PAGE 1008>&gt;&gt;）</li>
+<li>principles·P25 语音 AP 容量基准（&lt;&lt;<PAGE 892>&gt;&gt;）</li>
+<li>principles·P26 Mesh 带宽衰减（&lt;&lt;<PAGE 899>&gt;&gt;）</li>
+<li>principles·P19 L3 漫游 GRE 隧道（&lt;&lt;<PAGE 894>&gt;&gt;、&lt;&lt;<PAGE 843>&gt;&gt;）</li>
+<li>principles·P41 漫游判定逻辑（&lt;&lt;<PAGE 917>&gt;&gt;）</li>
+<li>principles·P42 RAP 两模式（&lt;&lt;<PAGE 904>&gt;&gt;）</li>
+<li>counter-examples·X12 802.11r 兼容性（&lt;&lt;<PAGE 938>&gt;&gt;、&lt;&lt;<PAGE 940>&gt;&gt;）</li>
+<li>counter-examples·X13 RAP 三禁区（&lt;&lt;<PAGE 904>&gt;&gt;）</li>
+<li>counter-examples·X16 2.4GHz 语音反模式（&lt;&lt;<PAGE 908>&gt;&gt;-&lt;&lt;<PAGE 909>&gt;&gt;、&lt;&lt;<PAGE 913>&gt;&gt;）</li>
+</ul><div class="pn"><a href="wireless-tech-fundamentals.html">⬅ 上一单元：wireless-tech-fundamentals</a><a class="nxt" href="lan-wlan-troubleshooting.html">下一单元：lan-wlan-troubleshooting ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

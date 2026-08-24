@@ -1,0 +1,123 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ssid-security-design — DT00XTE301 · SMB LAN & WLAN 安装配置</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE301 · SMB LAN & WLAN 安装配置</h1>
+<div class="sub">Edition 04 · 512 页 · SMB 交付两日课（交换机+Stellar AP+Cirrus 云管全链路）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">开局</div>
+<a href="../skills/switch-first-setup.html">switch-first-setup</a>
+<a href="../skills/aos-config-management.html">aos-config-management</a>
+<div class="grp">有线基础</div>
+<a href="../skills/vlan-port-assignment.html">vlan-port-assignment</a>
+<a href="../skills/poe-power-design.html">poe-power-design</a>
+<a href="../skills/stp-lacp-basics.html">stp-lacp-basics</a>
+<div class="grp">无线与云管</div>
+<a href="../skills/stellar-mode-selection.html">stellar-mode-selection</a>
+<a href="../skills/ssid-security-design.html" class="on">ssid-security-design</a>
+<a href="../skills/guest-access-design.html">guest-access-design</a>
+<a href="../skills/cirrus-onboarding.html">cirrus-onboarding</a>
+<div class="grp">运维</div>
+<a href="../skills/smb-troubleshooting.html">smb-troubleshooting</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../postsales/index.html">售后</a> › <a href="../index.html">DT00XTE301</a> › <span>ssid-security-design</span></nav><h1>ssid-security-design</h1><p class="meta"><span class="badge">SKILL</span> ssid-security-design · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>要按员工/访客两类人群分别建 SSID 并映射到不同 VLAN</li>
+<li>访客需要 Captive Portal 门户认证、访客账号或行为日志审计</li>
+<li>需要 802.1X/外部 RADIUS 企业认证，或 AP 内置 DHCP 分段地址</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>SSID 是用户分流入口：客户端连上 SSID 即自动落入预定义 VLAN，再叠加带宽/优先级/访问范围差异化策略。认证三档：Personal 密码（员工轻量）、Enterprise 802.1X（UPAM 或外部 RADIUS）、Open + Captive Portal（访客，账号/接入码/条款三选一）。Cirrus 侧用 ARP（Access Role Profile）六元组集中描述用户策略，其裁决顺序：外部源 &gt; 内部用户库 &gt; 认证策略 &gt; SSID 默认。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<ol>
+<li>员工 SSID（Express）：WLAN &gt; New &gt; 名称 EmployeesX、Security Personal、密码 superuser &gt; Advanced &gt; VLAN ID 20 &gt; Save；客户端 <code>ifconfig</code> 确认落在 192.168.20.x（C11，&lt;&lt;<PAGE 221>&gt;&gt;–&lt;&lt;<PAGE 224>&gt;&gt;）。</li>
+<li>访客 SSID（Express）：WLAN &gt; New &gt; GuestsX、Security Open、Captive Portal Yes、VLAN 30 &gt; Access &gt; Authentication 选 Account &gt; Add 建访客账号（设起止日期）&gt; 客户端访问任意 non-https URL 触发门户 &gt; 登录后取 192.168.30.x（C12，&lt;&lt;<PAGE 225>&gt;&gt;–&lt;&lt;<PAGE 228>&gt;&gt;）。</li>
+<li>AP 内置 DHCP：AP &gt; 点 AP IP &gt; Network &gt; AP Networks &gt; vlan10 行 Manage 填 IP 192.168.10.3/24 &gt; Service &gt; DHCP &gt; Create（Pool 名、地址范围、网关/DNS）&gt; Action &gt; Bind Network 绑到 vlan（C13，&lt;&lt;<PAGE 229>&gt;&gt;–&lt;&lt;<PAGE 233>&gt;&gt;）。</li>
+<li>外部 RADIUS（Enterprise SSID）：WLAN &gt; New &gt; Security Enterprise &gt; AuthServer 填 RADIUS IP（192.168.1.250）+ AuthSecret &gt; Advanced &gt; VLAN 10 &gt; Save（C16，&lt;&lt;<PAGE 235>&gt;&gt;）。</li>
+<li>访客审计与受限管理：</li>
+<li>Access &gt; Authentication &gt; Client Behavior Tracking，Log To 选 TFTP/SFTP/Syslog 填服务器与周期；日志含时间、客户端 MAC/IP、AP MAC、SSID、ONLINE/OFFLINE（C14，&lt;&lt;<PAGE 233>&gt;&gt;）。</li>
+<li>System &gt; General &gt; Account Management &gt; Operator Enable 设密码，重登选 GuestOperator 只管访客账号（C15，&lt;&lt;<PAGE 234>&gt;&gt;）。</li>
+</ol>
+<h2 id="a2">A2（进阶应用）</h2>
+<ul>
+<li>Cirrus SSID 五步向导（F05，&lt;&lt;<PAGE 365>&gt;&gt;、&lt;&lt;<PAGE 372>&gt;&gt;、&lt;&lt;<PAGE 405>&gt;&gt;、&lt;&lt;<PAGE 413>&gt;&gt;）：通用设置（名称/Usage/频段/加密）→ 认证策略（UPAM/外部 RADIUS/LDAP）→ 访问策略 → 默认 VLAN/隧道 + ACL/QoS → AP Group 指派与排程；Guest 版增加 Guest Access Strategy（门户定制 + 登录方式）。</li>
+<li>ARP 裁决顺序（F06，&lt;&lt;<PAGE 382>&gt;&gt;、&lt;&lt;<PAGE 385>&gt;&gt;）：外部源（RADIUS Filter-ID / LDAP/AD）&gt; 内部用户库 &gt; 认证策略中的 ARP &gt; SSID 默认 ARP（<code>__SSID名</code>）。ARP 六元组 = VLAN / QoS / 防火墙 ACL / L7 应用规则 / 位置 / 时段（P41，&lt;&lt;<PAGE 376>&gt;&gt;）。</li>
+<li>三角色差异化策略（P38，&lt;&lt;<PAGE 217>&gt;&gt;）：Employees = VLAN10 全访问高带宽；Guests = VLAN20 仅 internet 常规带宽低优先级；Phones = VLAN30 话音低带宽高优先级。</li>
+<li>Walled Garden：访客认证前白名单放行指定站点（如酒店官网）（P49，&lt;&lt;<PAGE 235>&gt;&gt;、&lt;&lt;<PAGE 410>&gt;&gt;）。</li>
+<li>MAC 认证可回传 Filter-ID 指定套用的 ARP（glossary·&lt;&lt;<PAGE 384>&gt;&gt;、&lt;&lt;<PAGE 385>&gt;&gt;）。</li>
+<li>GRE Tunnel（Use Tunnel）：SSID 用户经 GRE 隧道集中到远端解封的映射方式（glossary·&lt;&lt;<PAGE 369>&gt;&gt;）。</li>
+<li>DHCP Pool 容量即并发上限：40 个地址 = 最多 40 台同时在线（C13，&lt;&lt;<PAGE 229>&gt;&gt;–&lt;&lt;<PAGE 233>&gt;&gt;）。</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>Employees SSID 密码认证 + VLAN20，客户端落 192.168.20.70-79，网关 192.168.20.7 为交换机 VLAN20 IP 接口（C11，&lt;&lt;<PAGE 221>&gt;&gt;–&lt;&lt;<PAGE 224>&gt;&gt;）。</li>
+<li>Guests SSID 内置 Captive Portal + 访客账号 Guest/superuser，non-https URL 重定向门户（C12，&lt;&lt;<PAGE 225>&gt;&gt;–&lt;&lt;<PAGE 228>&gt;&gt;）。</li>
+<li>UPAM 统一策略认证：内嵌 RADIUS 服务器 + Captive Portal，覆盖 MAC/802.1X/Portal 三类认证（P40，&lt;&lt;<PAGE 367>&gt;&gt;、&lt;&lt;<PAGE 188>&gt;&gt;）。</li>
+</ul>
+<h2 id="b">B（边界与陷阱）</h2>
+<ul>
+<li>Captive Portal 重定向必须访问 non-https URL（如 http://2.2.2.2）；访问 https 站点不触发重定向，Debian 树莓派不会自动弹门户，易误判门户故障（CE11，&lt;&lt;<PAGE 422>&gt;&gt;）。</li>
+<li>访客账号用户名/密码区分大小写（'Guest' ≠ 'guest'），大小写不符是门户登录失败首因（CE12，&lt;&lt;<PAGE 226>&gt;&gt;）。</li>
+<li>SSID→VLAN 是自动预定义映射，规划时先定 VLAN 再建 SSID，避免客户端落错网段（P36，&lt;&lt;<PAGE 215>&gt;&gt;）。</li>
+</ul>
+<h2 id="_1">来源</h2>
+<ul>
+<li>case·Employees SSID 创建（&lt;&lt;<PAGE 221>&gt;&gt;–&lt;&lt;<PAGE 224>&gt;&gt;）</li>
+<li>case·Guests SSID + Captive Portal + 访客账号（&lt;&lt;<PAGE 225>&gt;&gt;–&lt;&lt;<PAGE 228>&gt;&gt;）</li>
+<li>case·AP 内置 DHCP 服务器（&lt;&lt;<PAGE 229>&gt;&gt;–&lt;&lt;<PAGE 233>&gt;&gt;）</li>
+<li>case·访客行为日志（&lt;&lt;<PAGE 233>&gt;&gt;）</li>
+<li>case·GuestOperator 受限账号（&lt;&lt;<PAGE 234>&gt;&gt;）</li>
+<li>case·外部 RADIUS 认证 SSID（&lt;&lt;<PAGE 235>&gt;&gt;）</li>
+<li>framework·SSID 创建向导五步流程（&lt;&lt;<PAGE 365>&gt;&gt;、&lt;&lt;<PAGE 372>&gt;&gt;、&lt;&lt;<PAGE 405>&gt;&gt;、&lt;&lt;<PAGE 413>&gt;&gt;）</li>
+<li>framework·ARP 优先级裁决规则（&lt;&lt;<PAGE 382>&gt;&gt;、&lt;&lt;<PAGE 385>&gt;&gt;）</li>
+<li>principle·SSID→VLAN 自动映射（&lt;&lt;<PAGE 215>&gt;&gt;）</li>
+<li>principle·AP 内置 QoS/ACL 三角色用例（&lt;&lt;<PAGE 217>&gt;&gt;）</li>
+<li>principle·Captive Portal 三种认证方式（&lt;&lt;<PAGE 226>&gt;&gt;）</li>
+<li>counter·门户重定向需 non-https（&lt;&lt;<PAGE 422>&gt;&gt;）</li>
+<li>counter·账号字段区分大小写（&lt;&lt;<PAGE 226>&gt;&gt;）</li>
+</ul><div class="pn"><a href="stellar-mode-selection.html">⬅ 上一单元：stellar-mode-selection</a><a class="nxt" href="guest-access-design.html">下一单元：guest-access-design ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

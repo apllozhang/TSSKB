@@ -1,0 +1,103 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ov-policyview-qos — DT00XTE311 · OmniVista 2500 NMS 管理</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE311 · OmniVista 2500 NMS 管理</h1>
+<div class="sub">Edition 09 · 581 页 · 网管平台管理全科（安装/发现/资源/统一接入/PolicyView/隔离）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">平台与安装</div>
+<a href="../skills/ov-va-install-license.html">ov-va-install-license</a>
+<a href="../skills/ov-ha-services-alerting.html">ov-ha-services-alerting</a>
+<a href="../skills/ov-switch-snmp-bootstrap.html">ov-switch-snmp-bootstrap</a>
+<div class="grp">发现与资源</div>
+<a href="../skills/ov-discovery-topology-locator.html">ov-discovery-topology-locator</a>
+<a href="../skills/ov-resource-manager-provisioning.html">ov-resource-manager-provisioning</a>
+<a href="../skills/ov-cli-scripting-batch.html">ov-cli-scripting-batch</a>
+<div class="grp">策略与监控</div>
+<a href="../skills/ov-unified-access.html">ov-unified-access</a>
+<a href="../skills/ov-policyview-qos.html" class="on">ov-policyview-qos</a>
+<a href="../skills/ov-quarantine-manager.html">ov-quarantine-manager</a>
+<a href="../skills/ov-analytics-appvis-iot.html">ov-analytics-appvis-iot</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../postsales/index.html">售后</a> › <a href="../index.html">DT00XTE311</a> › <span>ov-policyview-qos</span></nav><h1>ov-policyview-qos</h1><p class="meta"><span class="badge">SKILL</span> ov-policyview-qos · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>要给语音/数据流分配差异化优先级（Platinum/Gold/Silver/Bronze）</li>
+<li>需要按 L2/L3/L4 条件做精细策略，比如阻断某网段访问某网段</li>
+<li>策略下发后不确定交换机是怎么拿到策略的（Policy Flow）</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>PolicyView 双模式：OneTouch 面向常见场景（Voice/Data/ACL），"Sets parameters once, Distributed to devices at the same time"；
+Expert Mode 面向复杂策略（含验证机制）。底层架构是 LDAP 策略仓库：策略创建后存入安装时配置的 LDAP 服务器，交换机被通知后自行拉取。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<ol>
+<li><strong>四步法</strong>（&lt;&lt;<PAGE 275>&gt;&gt;）："Create a Policy Condition / Create a Policy Action / Create a Policy Rule / Apply the Policy"</li>
+<li><strong>OneTouch</strong>（&lt;&lt;<PAGE 273/276-278>&gt;&gt;）：三子模式——Voice、Data（Platinum/Gold/Silver/Bronze 优先级）、ACL（Accept/Drop）</li>
+<li><strong>Expert Mode 向导</strong>（&lt;&lt;<PAGE 279-284>&gt;&gt;）：Create Policy（名称/Precedence/高级选项）→ Device Selection → Set Condition（L2 MAC/L3 IP/DSCP/L4/L7）→ Set Action（QoS/Disposition/TCM）→ Validity Period and Review</li>
+<li><strong>下发与确认</strong>：Existing Policies 选策略 → Select Device → "Click on Notify Selected and wait for the Notify Success! Message"（&lt;&lt;<PAGE 293>&gt;&gt;）</li>
+</ol>
+<h2 id="a2">A2（进阶应用）</h2>
+<ul>
+<li>策略归一化（应用侧，&lt;&lt;<PAGE 365-366>&gt;&gt;）："The Policy has to be included in a Policy List. Then, the Policy List is included as part of the Access Role Profile configuration."；Unified Policy 本身 "are part of the Access Role Profile configuration"（&lt;&lt;<PAGE 246>&gt;&gt;）</li>
+<li>SIP Snooping 联动：识别并标记 SIP 及 RTP/RTCP 流（DSCP 字段），计算 Delay/Jitter/RTT/R factor/MOS；OneTouch 媒体模板固定优先级——Voice dscp 46/precedence 50000、Video dscp 34/44000、Other dscp 24/44001（&lt;&lt;<PAGE 438/442>&gt;&gt;）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>Expert Mode 阻断客户端访问 Loopback0 网段：Name=Block_Loopback0_access、Precedence=30001、Device=switch8、Condition：L3 IPs，Source 192.168.80.0/24 → Destination 192.168.200.0/24、Action：QOS + Disposition=DROP、Validity=AllTheTime；验证 ping 192.168.200.# 不通、ping 192.168.100.102 正常——cases·PolicyView Expert（&lt;&lt;<PAGE 290-293>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（边界与陷阱）</h2>
+<ul>
+<li>下发后必须等到 "Notify Success!" 才算确认，没等到就验证会误判（&lt;&lt;<PAGE 293>&gt;&gt;）</li>
+<li>Precedence 数值决定策略优先顺序，实验用 30001，需与现网既有策略序号统筹（&lt;&lt;<PAGE 291>&gt;&gt;）</li>
+<li>策略生效依赖 LDAP 仓库链路：PolicyView 创建 → 存入 Policy Directory Server → Policy Enabled → 交换机从 LDAP 拉取（&lt;&lt;<PAGE 272/286>&gt;&gt;）</li>
+</ul>
+<h2 id="_1">来源</h2>
+<ul>
+<li>frameworks·QoS 四步法（&lt;&lt;<PAGE 275>&gt;&gt;）、双模式框架（&lt;&lt;<PAGE 273-284>&gt;&gt;）、Policy Flow（&lt;&lt;<PAGE 272/286>&gt;&gt;）</li>
+<li>principles·LDAP 仓库架构（&lt;&lt;<PAGE 272/285>&gt;&gt;）、SIP Snooping（&lt;&lt;<PAGE 438/442>&gt;&gt;）</li>
+<li>cases·Expert Mode 阻断实验（&lt;&lt;<PAGE 290-293>&gt;&gt;）</li>
+</ul><div class="pn"><a href="ov-unified-access.html">⬅ 上一单元：ov-unified-access</a><a class="nxt" href="ov-quarantine-manager.html">下一单元：ov-quarantine-manager ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

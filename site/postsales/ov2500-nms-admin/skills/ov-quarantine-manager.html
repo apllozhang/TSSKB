@@ -1,0 +1,111 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ov-quarantine-manager — DT00XTE311 · OmniVista 2500 NMS 管理</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE311 · OmniVista 2500 NMS 管理</h1>
+<div class="sub">Edition 09 · 581 页 · 网管平台管理全科（安装/发现/资源/统一接入/PolicyView/隔离）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">平台与安装</div>
+<a href="../skills/ov-va-install-license.html">ov-va-install-license</a>
+<a href="../skills/ov-ha-services-alerting.html">ov-ha-services-alerting</a>
+<a href="../skills/ov-switch-snmp-bootstrap.html">ov-switch-snmp-bootstrap</a>
+<div class="grp">发现与资源</div>
+<a href="../skills/ov-discovery-topology-locator.html">ov-discovery-topology-locator</a>
+<a href="../skills/ov-resource-manager-provisioning.html">ov-resource-manager-provisioning</a>
+<a href="../skills/ov-cli-scripting-batch.html">ov-cli-scripting-batch</a>
+<div class="grp">策略与监控</div>
+<a href="../skills/ov-unified-access.html">ov-unified-access</a>
+<a href="../skills/ov-policyview-qos.html">ov-policyview-qos</a>
+<a href="../skills/ov-quarantine-manager.html" class="on">ov-quarantine-manager</a>
+<a href="../skills/ov-analytics-appvis-iot.html">ov-analytics-appvis-iot</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../postsales/index.html">售后</a> › <a href="../index.html">DT00XTE311</a> › <span>ov-quarantine-manager</span></nav><h1>ov-quarantine-manager</h1><p class="meta"><span class="badge">SKILL</span> ov-quarantine-manager · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>交换机上报 DoS Trap（Teardrop/Ping of Death/Port Scan）或第三方 IPS/防火墙告警，要自动隔离源设备</li>
+<li>WLAN 出现 Rogue AP/Station 需要处置</li>
+<li>需要理解"进了候选名单"和"被隔离"的区别，避免误判</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>Quarantine Manager 是"检测 → 规则 → 执行 → 响应"闭环：检测来源开放（AOS AlaDosTrap、Syslog、第三方 IPS/IDP、Brick Firewall、OA WLAN Rogue Alert）；
+规则默认全部禁用，需要显式启用；
+执行手段从 VLAN 隔离到端口关断分级；
+三列表模型决定设备命运——Candidates 只是"等管理员决策"，Banned 才是真隔离。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<ol>
+<li><strong>启用内置规则族</strong>（默认全禁用，&lt;&lt;<PAGE 304>&gt;&gt;）：</li>
+<li>Alcatel DOS Trap Rule：Teardrop / Ping of Death / Port Scan</li>
+<li>Fortinet：Anomaly / Signature / Virus（Fortigate 上配 Pass 的项会被忽略）</li>
+<li>OA WLAN：Rogue AP Active / Rogue AP Detected / Station w/ Rogue AP</li>
+<li><strong>自定义规则四要素</strong>（&lt;&lt;<PAGE 305>&gt;&gt;）：名称、描述、触发表达式、提取表达式（取源地址）、动作（入 Candidates 或 Banned）</li>
+<li><strong>执行手段</strong>（&lt;&lt;<PAGE 307/298>&gt;&gt;）：VLAN MAC Rule（<code>vlan 999 &lt;mac_address&gt;</code>）、VLAN DHCP MAC Rule、ACL（condition IP source &lt;&gt; action &lt;&gt;）、IP&lt;-&gt;MAC 绑定、SNMP Set message；第三方交换机可 Port Shutdown，无线侧可 end user block listing</li>
+<li><strong>三列表处置</strong>（&lt;&lt;<PAGE 308-310>&gt;&gt;）：Candidates——流量继续放行，等管理员 Release/Ban/Never-ban；Banned——"it remains quarantined until the Network Administrator manually releases it."；Never Banned——OV 服务器与已发现交换机被隐式加入</li>
+<li><strong>Responder</strong>（&lt;&lt;<PAGE 311>&gt;&gt;）：配置邮件通知（可基于变量拼内容）或让 AQM 在 OV 服务器上执行外部程序/脚本</li>
+</ol>
+<h2 id="a2">A2（进阶应用）</h2>
+<ul>
+<li>遏制与 UNP 体系联动：攻击检测的终端可通过 VLAN/ACL 执行手段与 Unified Access 端口策略组合（参考 &lt;&lt;<PAGE 303-307>&gt;&gt; 框架）</li>
+<li>邮件链路复用全局 SMTP 配置（Administration &gt; Preferences &gt; System Settings &gt; Email），先 Send Test E-mail 验证（&lt;&lt;<PAGE 191>&gt;&gt;）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>内置规则族盘点（AlaDosTrap/Fortinet/OA WLAN）与自定义规则四要素——cases·QM 内置规则（&lt;&lt;<PAGE 304-305>&gt;&gt;）</li>
+<li>QM Responder 邮件变量与外部程序执行——cases·QM Responder（&lt;&lt;<PAGE 311>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（边界与陷阱）</h2>
+<ul>
+<li>"By Default all of the rules are disabled."——以为开了其实没开是最常见错觉（&lt;&lt;<PAGE 304>&gt;&gt;）</li>
+<li>Candidates 语义陷阱："If a device is placed on the Candidates List, traffic to and from that device will continue until the Network Administrator decides what action should take place."（&lt;&lt;<PAGE 308>&gt;&gt;）</li>
+<li>Banned 不会自动解封，必须管理员手动 Release（&lt;&lt;<PAGE 309>&gt;&gt;）</li>
+</ul>
+<h2 id="_1">来源</h2>
+<ul>
+<li>frameworks·检测-规则-执行-Responder 框架（&lt;&lt;<PAGE 303-310>&gt;&gt;）</li>
+<li>principles·遏制执行机制（&lt;&lt;<PAGE 307/298>&gt;&gt;）、三列表语义（&lt;&lt;<PAGE 308-310>&gt;&gt;）</li>
+<li>cases·内置规则族/Responder（&lt;&lt;<PAGE 304-305/311>&gt;&gt;）</li>
+<li>counter-examples·默认禁用/Candidates 语义（&lt;&lt;<PAGE 304/308>&gt;&gt;）</li>
+</ul><div class="pn"><a href="ov-policyview-qos.html">⬅ 上一单元：ov-policyview-qos</a><a class="nxt" href="ov-analytics-appvis-iot.html">下一单元：ov-analytics-appvis-iot ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

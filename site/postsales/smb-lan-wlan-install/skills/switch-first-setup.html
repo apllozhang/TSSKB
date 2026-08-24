@@ -1,0 +1,129 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>switch-first-setup — DT00XTE301 · SMB LAN & WLAN 安装配置</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE301 · SMB LAN & WLAN 安装配置</h1>
+<div class="sub">Edition 04 · 512 页 · SMB 交付两日课（交换机+Stellar AP+Cirrus 云管全链路）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">开局</div>
+<a href="../skills/switch-first-setup.html" class="on">switch-first-setup</a>
+<a href="../skills/aos-config-management.html">aos-config-management</a>
+<div class="grp">有线基础</div>
+<a href="../skills/vlan-port-assignment.html">vlan-port-assignment</a>
+<a href="../skills/poe-power-design.html">poe-power-design</a>
+<a href="../skills/stp-lacp-basics.html">stp-lacp-basics</a>
+<div class="grp">无线与云管</div>
+<a href="../skills/stellar-mode-selection.html">stellar-mode-selection</a>
+<a href="../skills/ssid-security-design.html">ssid-security-design</a>
+<a href="../skills/guest-access-design.html">guest-access-design</a>
+<a href="../skills/cirrus-onboarding.html">cirrus-onboarding</a>
+<div class="grp">运维</div>
+<a href="../skills/smb-troubleshooting.html">smb-troubleshooting</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../postsales/index.html">售后</a> › <a href="../index.html">DT00XTE301</a> › <span>switch-first-setup</span></nav><h1>switch-first-setup</h1><p class="meta"><span class="badge">SKILL</span> switch-first-setup · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>新交换机上电，需要开通端口、配置管理 IP 并保存配置</li>
+<li>需要开启 SSH/HTTP 远程管理或检查会话超时</li>
+<li>多台新交换机开箱，希望 5 分钟内完成单台基础配置（Lightning Config）</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>OmniSwitch 出厂默认凭据是 admin/switch（8.10R4 起强制改密），Console 是最后一道兜底管理通道。各管理通道（Console/Telnet/SSH/HTTP）的认证相互独立，默认 SSH/HTTP 是 deny 状态，必须逐项用 <code>aaa authentication</code> 打开。开箱场景优先走 Lightning Config 向导，CLI 是通用兜底。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<ol>
+<li>Console 连接：串口参数 115200 / 8N1 / 无流控（P12，&lt;&lt;<PAGE 65>&gt;&gt;），Tera Term/Putty 登录 admin/switch（P06，&lt;&lt;<PAGE 60>&gt;&gt;）。</li>
+<li>开通端口：
+   <code>-&gt; interfaces 1/1/6 admin-state enable
+   -&gt; interfaces 1/1/1 admin-state enable</code></li>
+<li>配管理 IP 并验证保存：
+   <code>-&gt; ip interface int_1 address 192.168.1.2/24 vlan 1
+   -&gt; show ip interface
+   -&gt; write memory flash-synchro</code>
+   （C01，&lt;&lt;<PAGE 95>&gt;&gt;–&lt;&lt;<PAGE 96>&gt;&gt;）</li>
+<li>开远程管理：
+   <code>-&gt; aaa authentication ssh local
+   -&gt; aaa authentication http local
+   -&gt; show aaa authentication
+   -&gt; show webview
+   -&gt; show session config   // Inactivity Timer：CLI 45 / HTTP 15 分钟</code>
+   （C05，&lt;&lt;<PAGE 107>&gt;&gt;–&lt;&lt;<PAGE 111>&gt;&gt;）</li>
+<li>Lightning Config 路线（新机开箱）：笔记本设 DHCP → 网线接 port 1 → 上电等 3 分钟 → Chrome 访问 <code>https://192.168.0.1/</code>（本机约获 192.168.0.200）→ admin/switch + 接受自签证书 → RECOMMENDED DEFAULTS → LIGHTNING CONFIG 填 IP/网关 → 改 admin 密码（8 位以上含大小写/数字/特殊字符，勿用 <code>!</code> 或 <code>$</code>）→ 保存为 working（C26，&lt;&lt;<PAGE 481>&gt;&gt;–&lt;&lt;<PAGE 490>&gt;&gt;）。</li>
+</ol>
+<h2 id="a2">A2（进阶应用）</h2>
+<ul>
+<li>Lightning Config 触发有五项前置：仅第 1/2 物理口接客户端、无既有配置、上电后无 DHCP 分配、无 RCL/OmniVista NMS 连接（F07，&lt;&lt;<PAGE 75>&gt;&gt;）；任一不满足则退回常规配置。</li>
+<li>模板批量交付：IMPORT .json 模板 → Lightning Config → SAVE CONFIGURATION（C26，&lt;&lt;<PAGE 481>&gt;&gt;–&lt;&lt;<PAGE 490>&gt;&gt;）。</li>
+<li>多服务器认证链：<code>aaa authentication console server1 [server2...] [local] [exit-on-fail {enable|disable}]</code>；exit-on-fail enable 时只查首台可用服务器，disable 时逐台回退（P08，&lt;&lt;<PAGE 63>&gt;&gt;）。</li>
+<li>会话规格上限：Telnet 6 / FTP 4 / SSH+SFTP 8 / HTTP 4 / 总 20 / SNMP 50（P10，&lt;&lt;<PAGE 67>&gt;&gt;）。</li>
+<li>EMP 带外管理口绕过业务板直连 CMM：<code>ip interface master emp address 172.25.167.203 mask 255.255.255.224</code>；无 EMP 机型可用 USB Ethernet Dongle 等效（P11，&lt;&lt;<PAGE 66>&gt;&gt;）。</li>
+<li>WebView 默认强制 HTTPS/TLS1.2（<code>webview force-ssl enable</code>，P09，&lt;&lt;<PAGE 68>&gt;&gt;–&lt;&lt;<PAGE 69>&gt;&gt;）。</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>首次登录 OS6360 开通 1/1/6（AP 口）与 1/1/1（客户端口），配 192.168.1.2/24 后 <code>show ip interface</code> 验证、<code>write memory flash-synchro</code> 保存（C01，&lt;&lt;<PAGE 95>&gt;&gt;–&lt;&lt;<PAGE 96>&gt;&gt;）。</li>
+<li><code>aaa authentication ssh local</code> 前 SSH 默认被 deny，配置后经 <code>show aaa authentication</code> 确认（C05，&lt;&lt;<PAGE 107>&gt;&gt;–&lt;&lt;<PAGE 109>&gt;&gt;）。</li>
+<li>Lightning Config 全流程含 .json 模板导入（C26，&lt;&lt;<PAGE 481>&gt;&gt;–&lt;&lt;<PAGE 490>&gt;&gt;）。</li>
+</ul>
+<h2 id="b">B（边界与陷阱）</h2>
+<ul>
+<li>Lightning Config 前禁止把新交换机接入网络/互联/接 DHCP 服务器：多台未配置交换机默认都是 192.168.0.1 会 IP 冲突；且"Do NOT skip the Recommended Defaults!"（CE13，&lt;&lt;<PAGE 477>&gt;&gt;、&lt;&lt;<PAGE 486>&gt;&gt;、&lt;&lt;<PAGE 484>&gt;&gt;）。</li>
+<li>教学或托管环境的"默认配置"并非空配置，重置后所有端口 disabled，不通时先 <code>interfaces x admin-state enable</code>（CE01，&lt;&lt;<PAGE 89>&gt;&gt;）。</li>
+<li>密码勿用 <code>!</code> 或 <code>$</code> 字符（C26，&lt;&lt;<PAGE 481>&gt;&gt;–&lt;&lt;<PAGE 490>&gt;&gt;）。</li>
+<li>本地用户库 userTable9 存于 flash/system，最多 64 用户（P06，&lt;&lt;<PAGE 60>&gt;&gt;–&lt;&lt;<PAGE 61>&gt;&gt;）。</li>
+</ul>
+<h2 id="_1">来源</h2>
+<ul>
+<li>case·首次登录并开通 OS6360 端口与管理 IP（&lt;&lt;<PAGE 95>&gt;&gt;–&lt;&lt;<PAGE 96>&gt;&gt;）</li>
+<li>case·开启 SSH/HTTP 远程管理（&lt;&lt;<PAGE 107>&gt;&gt;–&lt;&lt;<PAGE 111>&gt;&gt;）</li>
+<li>case·Lightning Config 完整实操含模板导入（&lt;&lt;<PAGE 481>&gt;&gt;–&lt;&lt;<PAGE 490>&gt;&gt;）</li>
+<li>framework·Lightning Config 触发条件与部署流程（&lt;&lt;<PAGE 75>&gt;&gt;、&lt;&lt;<PAGE 474>&gt;&gt;–&lt;&lt;<PAGE 490>&gt;&gt;）</li>
+<li>principle·默认凭据与强制改密策略（&lt;&lt;<PAGE 60>&gt;&gt;–&lt;&lt;<PAGE 61>&gt;&gt;）</li>
+<li>principle·ASA 认证服务禁用语义（&lt;&lt;<PAGE 58>&gt;&gt;–&lt;&lt;<PAGE 59>&gt;&gt;）</li>
+<li>principle·WebView 安全默认（&lt;&lt;<PAGE 68>&gt;&gt;–&lt;&lt;<PAGE 69>&gt;&gt;）</li>
+<li>counter·Lightning Config 前禁止接入网络（&lt;&lt;<PAGE 477>&gt;&gt;、&lt;&lt;<PAGE 486>&gt;&gt;）</li>
+<li>counter·R-Lab 重置后端口全禁用（&lt;&lt;<PAGE 89>&gt;&gt;）</li>
+</ul><div class="pn"><a href="../index.html">⬅ 返回课程首页</a><a class="nxt" href="aos-config-management.html">下一单元：aos-config-management ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

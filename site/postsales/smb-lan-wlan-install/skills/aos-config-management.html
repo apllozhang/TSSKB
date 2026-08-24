@@ -1,0 +1,135 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>aos-config-management — DT00XTE301 · SMB LAN & WLAN 安装配置</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE301 · SMB LAN & WLAN 安装配置</h1>
+<div class="sub">Edition 04 · 512 页 · SMB 交付两日课（交换机+Stellar AP+Cirrus 云管全链路）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">开局</div>
+<a href="../skills/switch-first-setup.html">switch-first-setup</a>
+<a href="../skills/aos-config-management.html" class="on">aos-config-management</a>
+<div class="grp">有线基础</div>
+<a href="../skills/vlan-port-assignment.html">vlan-port-assignment</a>
+<a href="../skills/poe-power-design.html">poe-power-design</a>
+<a href="../skills/stp-lacp-basics.html">stp-lacp-basics</a>
+<div class="grp">无线与云管</div>
+<a href="../skills/stellar-mode-selection.html">stellar-mode-selection</a>
+<a href="../skills/ssid-security-design.html">ssid-security-design</a>
+<a href="../skills/guest-access-design.html">guest-access-design</a>
+<a href="../skills/cirrus-onboarding.html">cirrus-onboarding</a>
+<div class="grp">运维</div>
+<a href="../skills/smb-troubleshooting.html">smb-troubleshooting</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../postsales/index.html">售后</a> › <a href="../index.html">DT00XTE301</a> › <span>aos-config-management</span></nav><h1>aos-config-management</h1><p class="meta"><span class="badge">SKILL</span> aos-config-management · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>改完配置要保存，或重启后配置意外丢失</li>
+<li>需要在 working / certified / 自建目录之间切换启动目录或验证回滚行为</li>
+<li>需要升级 AOS 镜像（含 uboot/FPGA）或做配置的 USB 备份</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>AOS 的配置管理是"三层目录 + RAM 运行配置"的状态机：certified 是已认证的稳定目录，working 是待验证目录，还可自建 user-defined 目录。运行配置在 RAM 里，不保存就丢；
+<code>reload all</code> 永远从 certified 启动，验证新配置必须用 <code>reload from working no rollback-timeout</code>。升级同理：先升 working、验证无误再 <code>copy running certified</code> 固化。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<ol>
+<li>查看目录与状态：
+   <code>-&gt; ls -l /flash/working          // 或 /flash/certified
+   -&gt; show microcode working | certified | loaded
+   -&gt; show running-directory        // RUNNING / CERTIFY NEEDED / SYNCHRONIZED</code></li>
+<li>修改配置后判断状态：改 RAM（如 <code>vlan 2</code>）后 running-directory 变 NOT SYNCHRONIZED；保存 <code>-&gt; write memory</code>；验证新配置重启用 <code>-&gt; reload from working no rollback-timeout</code>（C07，&lt;&lt;<PAGE 131>&gt;&gt;–&lt;&lt;<PAGE 137>&gt;&gt;）。</li>
+<li>一步保存+认证：<code>-&gt; write memory flash-synchro</code>（= write memory + copy running certified，P16，&lt;&lt;<PAGE 122>&gt;&gt;）。</li>
+<li>自建目录实验：<code>mkdir lab</code> → <code>cp working/*.* lab</code> → <code>reload from lab no rollback-timeout</code> → <code>copy running certified</code> / <code>modify running-directory working</code>（C07，&lt;&lt;<PAGE 131>&gt;&gt;–&lt;&lt;<PAGE 137>&gt;&gt;）。</li>
+<li>USB 自动备份：
+   <code>-&gt; usb enable
+   -&gt; usb backup admin-state enable
+   -&gt; write memory        // 自动同步到 /uflash
+   -&gt; cd /uflash; ls      // 验证 certified/working 目录</code>
+   拔出前必须 <code>usb disable</code>（C08，&lt;&lt;<PAGE 138>&gt;&gt;–&lt;&lt;<PAGE 139>&gt;&gt;）。</li>
+<li>镜像升级七步：读 release note → 下载 → FTP 传到交换机 → 升级镜像 → 验证 → <code>copy running certified</code> 固化 → 按需升 uboot/FPGA（F03，&lt;&lt;<PAGE 465>&gt;&gt;–&lt;&lt;<PAGE 469>&gt;&gt;）：
+   <code>-&gt; update uboot cmm all file u-boot.8.4.1.R03.141.tar.gz
+   -&gt; update fpga-cpld cmm all file fpga_kit_3312
+   -&gt; reload from working no rollback-timeout
+   -&gt; copy running certified
+   -&gt; show running-directory</code>
+   （C25，&lt;&lt;<PAGE 469>&gt;&gt;）</li>
+<li>恢复出厂（仅自有设备）：<code>-&gt; rm /flash/working/vcboot.cfg</code> → <code>-&gt; reload from working no rollback-timeout</code>，约 5 分钟（C04，&lt;&lt;<PAGE 105>&gt;&gt;）。</li>
+</ol>
+<h2 id="a2">A2（进阶应用）</h2>
+<ul>
+<li>冷启动目录选择规则：running 与 certified 内容一致则从 running 启动，不一致回退 certified（P14，&lt;&lt;<PAGE 132>&gt;&gt;）。</li>
+<li>启动序列：U-Boot 引导 → 硬件初始化 → 内存诊断 → 镜像选择 → AOS 拷入 RAM 运行（P13，&lt;&lt;<PAGE 119>&gt;&gt;）。</li>
+<li>Thin Client 模式：本地不存配置，全部从 OV2500 拉取，<code>write memory</code> 可执行但不生效（P18，&lt;&lt;<PAGE 127>&gt;&gt;）。</li>
+<li>USB 备份可设密码加密，且 <code>write memory</code> / <code>copy running certified</code> 触发自动镜像（P17，&lt;&lt;<PAGE 126>&gt;&gt;、&lt;&lt;<PAGE 138>&gt;&gt;）。</li>
+<li>CLI 效率技巧：部分关键字补全（<code>sh vl</code>）、<code>| grep &lt;MAC&gt;</code> 过滤、<code>?</code> 在线帮助（P19，&lt;&lt;<PAGE 128>&gt;&gt;）。</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>目录管理全流程实验：改 VLAN 后状态变 NOT SYNCHRONIZED，经 write memory / reload / copy running certified / modify running-directory 完整走一遍状态机（C07，&lt;&lt;<PAGE 131>&gt;&gt;–&lt;&lt;<PAGE 137>&gt;&gt;）。</li>
+<li>USB 备份启用后 write memory 自动同步，<code>cd /uflash; ls</code> 见到 certified/working（C08，&lt;&lt;<PAGE 138>&gt;&gt;–&lt;&lt;<PAGE 139>&gt;&gt;）。</li>
+<li>AOS 升级命令链 uboot → fpga-cpld → reload → certify（C25，&lt;&lt;<PAGE 469>&gt;&gt;）。</li>
+</ul>
+<h2 id="b">B（边界与陷阱）</h2>
+<ul>
+<li><code>reload all</code> 无条件从 certified 启动，会回退到旧配置；验证新配置必须 <code>reload from working no rollback-timeout</code>（CE03，&lt;&lt;<PAGE 132>&gt;&gt;）。</li>
+<li>RAM 中未 <code>write memory</code> 的修改重启即丢（CE04，&lt;&lt;<PAGE 133>&gt;&gt;）。</li>
+<li>从 certified 目录运行时 <code>write memory</code> 报错 "not permitted"，须先 <code>modify running-directory working</code>（CE05/P15，&lt;&lt;<PAGE 135>&gt;&gt;、&lt;&lt;<PAGE 124>&gt;&gt;）。</li>
+<li>拷贝 working 目录时 boot.md5 报 Permission denied 属正常（自动生成文件），忽略继续（CE21，&lt;&lt;<PAGE 136>&gt;&gt;）。</li>
+<li>教学/托管环境不要做真恢复出厂（<code>rm vcboot.cfg</code> + reload 会破坏预置基线）（CE02，&lt;&lt;<PAGE 105>&gt;&gt;）。</li>
+</ul>
+<h2 id="_1">来源</h2>
+<ul>
+<li>case·目录管理全流程实验（&lt;&lt;<PAGE 131>&gt;&gt;–&lt;&lt;<PAGE 137>&gt;&gt;）</li>
+<li>case·USB 备份与查看 uflash（&lt;&lt;<PAGE 138>&gt;&gt;–&lt;&lt;<PAGE 139>&gt;&gt;）</li>
+<li>case·OS6360 恢复出厂（&lt;&lt;<PAGE 105>&gt;&gt;）</li>
+<li>case·AOS 镜像升级实操命令链（&lt;&lt;<PAGE 469>&gt;&gt;）</li>
+<li>framework·AOS 软件升级七步流程（&lt;&lt;<PAGE 465>&gt;&gt;–&lt;&lt;<PAGE 469>&gt;&gt;）</li>
+<li>framework·Flash 目录与回滚模型（&lt;&lt;<PAGE 118>&gt;&gt;–&lt;&lt;<PAGE 124>&gt;&gt;）</li>
+<li>principle·write memory flash-synchro 组合语义（&lt;&lt;<PAGE 122>&gt;&gt;）</li>
+<li>counter·reload all 回退 certified（&lt;&lt;<PAGE 132>&gt;&gt;）</li>
+<li>counter·未保存配置重启丢失（&lt;&lt;<PAGE 133>&gt;&gt;）</li>
+<li>counter·certified 模式无法保存（&lt;&lt;<PAGE 135>&gt;&gt;）</li>
+</ul><div class="pn"><a href="switch-first-setup.html">⬅ 上一单元：switch-first-setup</a><a class="nxt" href="vlan-port-assignment.html">下一单元：vlan-port-assignment ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

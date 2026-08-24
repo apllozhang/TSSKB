@@ -1,0 +1,126 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>qos-acl-access-guardian — DT00XTE310 · OmniSwitch 接入与 Stellar WLAN Express</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE310 · OmniSwitch 接入与 Stellar WLAN Express</h1>
+<div class="sub">Edition 05 · 1083 页 · 五日交付全科（三部署模式+语音 WLAN+故障排查）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">交换机管理</div>
+<a href="../skills/aos-dual-partition-config-management.html">aos-dual-partition-config-management</a>
+<a href="../skills/poe-management.html">poe-management</a>
+<a href="../skills/vlan-inter-vlan-routing.html">vlan-inter-vlan-routing</a>
+<a href="../skills/switch-high-availability.html">switch-high-availability</a>
+<a href="../skills/qos-acl-access-guardian.html" class="on">qos-acl-access-guardian</a>
+<div class="grp">部署模式</div>
+<a href="../skills/stellar-deployment-mode-selection.html">stellar-deployment-mode-selection</a>
+<a href="../skills/wifi-express-operations.html">wifi-express-operations</a>
+<a href="../skills/cirrus-cloud-management.html">cirrus-cloud-management</a>
+<div class="grp">无线与排障</div>
+<a href="../skills/wireless-tech-fundamentals.html">wireless-tech-fundamentals</a>
+<a href="../skills/voice-over-wlan-deployment.html">voice-over-wlan-deployment</a>
+<a href="../skills/lan-wlan-troubleshooting.html">lan-wlan-troubleshooting</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../postsales/index.html">售后</a> › <a href="../index.html">DT00XTE310</a> › <span>qos-acl-access-guardian</span></nav><h1>qos-acl-access-guardian</h1><p class="meta"><span class="badge">SKILL</span> qos-acl-access-guardian · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>要限制某 VLAN 的带宽或提升其转发优先级</li>
+<li>要求员工网段禁 FTP、外发包禁 HTTP、用户口防环（BPDU guard）</li>
+<li>需要认证后动态分配 VLAN/QoS（802.1X 或 MAC 认证），或话机上电自动进语音 VLAN</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>OmniSwitch 的策略体系是"condition + action + rule"三件套，<code>qos apply</code> 才下发硬件。角色化控制分两层：交换机侧 Access Guardian（UNP 用户网络档案），无线侧 ARP（Access Role Profile）。话机场景用 LLDP-MED Network Policy TLV 自动下发语音 VLAN + L2 priority + DSCP。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<ol>
+<li><strong>QoS 限速</strong>（&lt;&lt;<PAGE 724>&gt;&gt;-&lt;&lt;<PAGE 726>&gt;&gt;）：<code>policy condition client_traffic source vlan 20</code> → <code>policy action priority_5 802.1p 5</code> → <code>policy rule rule1 &lt;condition+action&gt;</code> → <code>qos apply</code> → 大包 ping 触发 Red Packets 验证限速生效。</li>
+<li><strong>ACL 禁协议</strong>（&lt;&lt;<PAGE 749>&gt;&gt;-&lt;&lt;<PAGE 751>&gt;&gt;）：</li>
+<li>
+<p>员工禁 FTP：<code>policy condition ftpfromvlan20 source vlan 20 destination ip-port 20-21 ip-protocol 6</code> + <code>policy action deny disposition deny</code> + <code>precedence 65535</code>；</p>
+</li>
+<li>
+<p>禁外包 HTTP：<code>policy service group http</code> + deny；</p>
+</li>
+<li>用户口防环：<code>policy port group UserPorts 1/1/1-2</code> + <code>qos user-port shutdown bpdu</code>。</li>
+<li><strong>Access Guardian 动态 VLAN</strong>（&lt;&lt;<PAGE 777>&gt;&gt;-&lt;&lt;<PAGE 783>&gt;&gt;）：</li>
+<li>
+<p><code>aaa radius-server my_radius host 192.168.100.102 key alcatel-lucent</code> → <code>aaa device-authentication 802.1x my_radius</code>；</p>
+</li>
+<li>
+<p>建 UNP-employee / UNP-contractor（map vlan 20/30 + qos-policy-list）；</p>
+</li>
+<li><code>unp port 1/1/1 port-type bridge</code> + <code>802.1x-authentication</code> + <code>mac-authentication</code>；</li>
+<li>客户端 802.1X 登录 → <code>show unp user details</code>（Profile Source: Auth-Pass-Server UNP）→ <code>unp user flush port 1/1/1</code> 清会话重测；</li>
+<li>验证 RADIUS：<code>aaa test-radius-server my_radius type authentication user employee password password</code>。</li>
+<li><strong>LLDP-MED 语音下发</strong>（&lt;&lt;<PAGE 787>&gt;&gt;-&lt;&lt;<PAGE 794>&gt;&gt;）：<code>lldp network-policy 1 application voice vlan 151 l2-priority 5 dscp 46</code> → 交换机发 LLDP 帧，话机自动获语音 VLAN/QoS；配合 <code>unp profile 'voip-temp' mobile-tag … lldp med-endpoint ip-phone classification</code>。</li>
+<li><strong>DHCP Relay</strong>（&lt;&lt;<PAGE 669>&gt;&gt;-&lt;&lt;<PAGE 670>&gt;&gt;）：<code>ip dhcp relay destination 192.168.100.102</code> + <code>admin-state enable</code> → <code>show ip dhcp relay statistics</code> 看 Reception/Tx 计数。</li>
+</ol>
+<h2 id="a2">A2（进阶应用）</h2>
+<ul>
+<li><strong>condition/action 能力边界</strong>（&lt;&lt;<PAGE 699>&gt;&gt;）：condition 可达 L1-L4（source port/MAC/VLAN/IP/DSCP/TCP-UDP port）；action 含 disposition accept|drop|deny、priority、bandwidth、mirror、redirect。规则默认 accept 不匹配流量。</li>
+<li><strong>ACL 安全组</strong>（&lt;&lt;<PAGE 739>&gt;&gt;-&lt;&lt;<PAGE 740>&gt;&gt;）：UserPorts 默认用于防端口 IP 欺骗：<code>qos user-port {filter | shutdown} {spoof|bgp|bpdu|rip|ospf|vrrp|…}</code>；DropServices 保留服务组可按服务丢包；port-disable 命中即管理关闭端口。</li>
+<li><strong>UNP 分类规则优先级</strong>：Port/Linkagg &gt; Domain &gt; MAC &gt; MAC-OUI &gt; MAC range &gt; LLDP &gt; Auth-type &gt; IP &gt; VLAN tag（&lt;&lt;<PAGE 506>&gt;&gt;），动态分类排障按此顺序。</li>
+<li><strong>WMM 侧呼应</strong>：Voice DSCP 46 → 802.1p 6，与无线侧 QoS 映射对齐（&lt;&lt;<PAGE 874>&gt;&gt;、&lt;&lt;<PAGE 932>&gt;&gt;）。</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>QoS 组合实战：VLAN 20 流量标记 802.1p 5 + qos apply，大包 ping 出现 Red Packets 证明限速（&lt;&lt;<PAGE 724>&gt;&gt;-&lt;&lt;<PAGE 726>&gt;&gt;）。</li>
+<li>Access Guardian 全流程：RADIUS + 双 UNP 档案 + 802.1X/MAC 认证，show unp user details 确认服务器下发档案（&lt;&lt;<PAGE 777>&gt;&gt;-&lt;&lt;<PAGE 783>&gt;&gt;）。</li>
+<li>DHCP Relay + QoS/ACL/Access Guardian 组合部署（&lt;&lt;<PAGE 669>&gt;&gt;-&lt;&lt;<PAGE 670>&gt;&gt;、&lt;&lt;<PAGE 724>&gt;&gt;-&lt;&lt;<PAGE 783>&gt;&gt;）。</li>
+</ul>
+<h2 id="b">B（边界与陷阱）</h2>
+<ul>
+<li>规则写完必须 <code>qos apply</code> 才进硬件；默认策略 accept 不匹配流量（&lt;&lt;<PAGE 699>&gt;&gt;）。</li>
+<li>UserPorts 防欺骗默认存在，叠加自定义 ACL 时注意 precedence（如 65535）与命中顺序（&lt;&lt;<PAGE 739>&gt;&gt;-&lt;&lt;<PAGE 751>&gt;&gt;）。</li>
+<li>Mobile Tag 仅在移动口（话机口）生效，静态 802.1Q tag 在 mobile 口不支持（&lt;&lt;<PAGE 173>&gt;&gt;、&lt;&lt;<PAGE 793>&gt;&gt;）。</li>
+</ul>
+<h2 id="_1">来源</h2>
+<ul>
+<li>principles·P38 QoS Policy 三件套（&lt;&lt;<PAGE 699>&gt;&gt;）</li>
+<li>principles·P39 ACL 安全组（&lt;&lt;<PAGE 739>&gt;&gt;-&lt;&lt;<PAGE 740>&gt;&gt;）</li>
+<li>principles·P40 LLDP-MED 网络策略 TLV（&lt;&lt;<PAGE 787>&gt;&gt;-&lt;&lt;<PAGE 794>&gt;&gt;）</li>
+<li>principles·P16 UNP 动态 VLAN 分类优先级（&lt;&lt;<PAGE 506>&gt;&gt;）</li>
+<li>cases·C30 DHCP Relay + QoS/ACL/Access Guardian（&lt;&lt;<PAGE 669>&gt;&gt;-&lt;&lt;<PAGE 670>&gt;&gt;、&lt;&lt;<PAGE 724>&gt;&gt;-&lt;&lt;<PAGE 726>&gt;&gt;、&lt;&lt;<PAGE 749>&gt;&gt;-&lt;&lt;<PAGE 751>&gt;&gt;、&lt;&lt;<PAGE 777>&gt;&gt;-&lt;&lt;<PAGE 783>&gt;&gt;）</li>
+</ul><div class="pn"><a href="switch-high-availability.html">⬅ 上一单元：switch-high-availability</a><a class="nxt" href="stellar-deployment-mode-selection.html">下一单元：stellar-deployment-mode-selection ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

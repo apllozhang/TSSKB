@@ -1,0 +1,104 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ov-cli-scripting-batch — DT00XTE311 · OmniVista 2500 NMS 管理</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE311 · OmniVista 2500 NMS 管理</h1>
+<div class="sub">Edition 09 · 581 页 · 网管平台管理全科（安装/发现/资源/统一接入/PolicyView/隔离）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">平台与安装</div>
+<a href="../skills/ov-va-install-license.html">ov-va-install-license</a>
+<a href="../skills/ov-ha-services-alerting.html">ov-ha-services-alerting</a>
+<a href="../skills/ov-switch-snmp-bootstrap.html">ov-switch-snmp-bootstrap</a>
+<div class="grp">发现与资源</div>
+<a href="../skills/ov-discovery-topology-locator.html">ov-discovery-topology-locator</a>
+<a href="../skills/ov-resource-manager-provisioning.html">ov-resource-manager-provisioning</a>
+<a href="../skills/ov-cli-scripting-batch.html" class="on">ov-cli-scripting-batch</a>
+<div class="grp">策略与监控</div>
+<a href="../skills/ov-unified-access.html">ov-unified-access</a>
+<a href="../skills/ov-policyview-qos.html">ov-policyview-qos</a>
+<a href="../skills/ov-quarantine-manager.html">ov-quarantine-manager</a>
+<a href="../skills/ov-analytics-appvis-iot.html">ov-analytics-appvis-iot</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../postsales/index.html">售后</a> › <a href="../index.html">DT00XTE311</a> › <span>ov-cli-scripting-batch</span></nav><h1>ov-cli-scripting-batch</h1><p class="meta"><span class="badge">SKILL</span> ov-cli-scripting-batch · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>同一段配置要在几十台交换机上执行，逐台手敲不现实</li>
+<li>需要周期性（Simple/Cron）执行的运维脚本</li>
+<li>脚本下发后需要核对哪些成功、哪些报语法错误</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>CLI Scripting 把"ASCII 配置可复制粘贴"的 CLI 优势产品化：脚本统一存于 OV，向导式选择目标设备与调度策略，支持用户变量填充，执行结果集中留日志。GUI 批量操作（如 VLAN Manager）与脚本互补——前者靠向导防错，后者靠灵活复用。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<ol>
+<li><strong>查看/创建脚本</strong>：Configuration → CLI Scripting → Scripts：可查看预置脚本的命令内容（&lt;&lt;<PAGE 209-214>&gt;&gt;）</li>
+<li><strong>发送脚本</strong>：Send Script（向导）→ Add/Remove Devices 选交换机 → 立即 Send，或 Next 调度（Periodically + Simple/Cron）→ 填用户变量 → Send Script（&lt;&lt;<PAGE 209-214>&gt;&gt;）</li>
+<li><strong>终端会话</strong>：Terminal 菜单开 Telnet/SSH 会话直连设备（&lt;&lt;<PAGE 209-214>&gt;&gt;）</li>
+<li><strong>查日志</strong>：Logs 菜单查看脚本执行结果（Success/Error/语法错误）（&lt;&lt;<PAGE 209-214>&gt;&gt;）</li>
+<li><strong>VLAN Manager 批量建 VLAN</strong>：Configuration → VLANs → Create VLAN by Devices（VLAN Wizard）：填 VLAN ID → Add/Remove Devices（Add All&gt;&gt;）→ Q Tagged Ports Assignment（逐交换机 Add Port）→ Review → Create；再点 IP interface → "+" 建 IP 接口（Name/IP 192.168.VLAN#.Switch#/Mask/Device）→ Create → 控制台验证（&lt;&lt;<PAGE 180-184>&gt;&gt;）</li>
+</ol>
+<h2 id="a2">A2（进阶应用）</h2>
+<ul>
+<li>升级后收尾也是经 CLI 会话完成：Topology 选中交换机 → CLI Scripting – SSH → 从 working 目录 reload → Copy Working Certified（&lt;&lt;<PAGE 206>&gt;&gt;）</li>
+<li>认证类排查命令可直接经终端执行，如 <code>aaa test-radius-server RADIUS_VM type authentication user employee password password</code>（&lt;&lt;<PAGE 263>&gt;&gt;）</li>
+<li>CLI vs GUI 的选择依据（&lt;&lt;<PAGE 22-24>&gt;&gt;）：CLI 胜在熟练度、脚本化、配置文件跨机复制粘贴；GUI 胜在颜色编码、易发现问题、减少 fat-finger、批量操作</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>创建/发送脚本与查看日志（Success/Error/语法错误分类）——cases·CLI Scripting（&lt;&lt;<PAGE 209-214>&gt;&gt;）</li>
+<li>VLAN Wizard 批量建 VLAN + IP 接口并在控制台验证——cases·VLAN Manager（&lt;&lt;<PAGE 180-184>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（边界与陷阱）</h2>
+<ul>
+<li>脚本日志中的语法错误要逐条处理，Success 不代表语义正确，仍需设备侧验证（结合 <code>show</code> 命令）（&lt;&lt;<PAGE 209-214>&gt;&gt;）</li>
+<li>Shell 方式（Telnet/SSH）取决于 Discovery Profile Advanced 段的 Shell Preference，与设备实际配置一致（&lt;&lt;<PAGE 110-112>&gt;&gt;）</li>
+</ul>
+<h2 id="_1">来源</h2>
+<ul>
+<li>cases·CLI Scripting（&lt;&lt;<PAGE 209-214>&gt;&gt;）、VLAN Manager（&lt;&lt;<PAGE 180-184>&gt;&gt;）</li>
+<li>principles·CLI vs GUI 取舍（&lt;&lt;<PAGE 22-24>&gt;&gt;）</li>
+<li>cases·镜像升级收尾经 CLI SSH（&lt;&lt;<PAGE 206>&gt;&gt;）</li>
+</ul><div class="pn"><a href="ov-resource-manager-provisioning.html">⬅ 上一单元：ov-resource-manager-provisioning</a><a class="nxt" href="ov-unified-access.html">下一单元：ov-unified-access ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>switch-high-availability — DT00XTE310 · OmniSwitch 接入与 Stellar WLAN Express</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE310 · OmniSwitch 接入与 Stellar WLAN Express</h1>
+<div class="sub">Edition 05 · 1083 页 · 五日交付全科（三部署模式+语音 WLAN+故障排查）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">交换机管理</div>
+<a href="../skills/aos-dual-partition-config-management.html">aos-dual-partition-config-management</a>
+<a href="../skills/poe-management.html">poe-management</a>
+<a href="../skills/vlan-inter-vlan-routing.html">vlan-inter-vlan-routing</a>
+<a href="../skills/switch-high-availability.html" class="on">switch-high-availability</a>
+<a href="../skills/qos-acl-access-guardian.html">qos-acl-access-guardian</a>
+<div class="grp">部署模式</div>
+<a href="../skills/stellar-deployment-mode-selection.html">stellar-deployment-mode-selection</a>
+<a href="../skills/wifi-express-operations.html">wifi-express-operations</a>
+<a href="../skills/cirrus-cloud-management.html">cirrus-cloud-management</a>
+<div class="grp">无线与排障</div>
+<a href="../skills/wireless-tech-fundamentals.html">wireless-tech-fundamentals</a>
+<a href="../skills/voice-over-wlan-deployment.html">voice-over-wlan-deployment</a>
+<a href="../skills/lan-wlan-troubleshooting.html">lan-wlan-troubleshooting</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../postsales/index.html">售后</a> › <a href="../index.html">DT00XTE310</a> › <span>switch-high-availability</span></nav><h1>switch-high-availability</h1><p class="meta"><span class="badge">SKILL</span> switch-high-availability · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>两台交换机要堆叠成单逻辑设备（Virtual Chassis）并配置 VFL</li>
+<li>上行带宽不够/单链路故障，要做 LACP 聚合并验证倒换不丢包</li>
+<li>双核心冗余：STP 根桥规划、DHL 双活、VRRP 主备/负载分担</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>高可用是一组可组合的机制：VC 把多台交换机虚拟成一台（免 STP/VRRP、免许可证）；
+LACP 聚合带宽并抗单口故障；
+STP 在冗余路径上阻塞防环，per-VLAN 1x1 模式可分根桥负载分担；
+DHL 用"按 VLAN 划分活跃链路"替代 STP 做双活；
+VRRP 用虚拟 MAC 提供网关冗余。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<ol>
+<li><strong>Virtual Chassis 堆叠</strong>（&lt;&lt;<PAGE 490>&gt;&gt;-&lt;&lt;<PAGE 497>&gt;&gt;）：<code>show chassis</code> 定型号 → A 机 <code>virtual-chassis chassis-group 1</code> + <code>chassis-id 1 configured-chassis-priority 200</code> → <code>write memory</code> + <code>reload from working no rollback-timeout</code> → B 机 <code>chassis-id 1 configured-chassis-id 2</code> + <code>chassis-group 1</code> → 重启 → 双方 <code>virtual-chassis vf-link-mode auto</code> + <code>auto-vf-link-port 1/1/27</code> → <code>interfaces 1/1/27-28 admin-state enable</code> → <code>show virtual-chassis topology</code> → <code>write memory flash-synchro</code> 同步 → <code>show virtual-chassis consistency</code> → <code>ssh-chassis admin@2</code> 访问从机。</li>
+<li><strong>LACP 动态聚合</strong>（&lt;&lt;<PAGE 588>&gt;&gt;-&lt;&lt;<PAGE 594>&gt;&gt;）：双端 <code>linkagg lacp agg 7 size 2 actor admin-key 7</code> → <code>linkagg lacp port 1/1/3 actor admin-key 7</code>（VC 下可跨机箱 1/1/3+2/1/4）→ <code>show linkagg</code> 验证 → <code>vlan 57 members linkagg 7 untagged</code> 设默认 VLAN → ping -t 期间 disable 一个成员口验证不丢包。</li>
+<li><strong>STP 根桥指定</strong>（&lt;&lt;<PAGE 616>&gt;&gt;-&lt;&lt;<PAGE 625>&gt;&gt;）：<code>spantree vlan 20 priority 20000</code> → <code>show spantree vlan 20</code>（Bridge ID=Designated Root）→ <code>show spantree ports blocking</code> 看阻塞口 → 断聚合口验证 RSTP 秒级收敛；1x1 负载分担：6870 VLAN 20 priority 20000、6860 VLAN 30 priority 20000（各管一个 VLAN 当根）。</li>
+<li><strong>DHL Active-Active</strong>（&lt;&lt;<PAGE 640>&gt;&gt;-&lt;&lt;<PAGE 643>&gt;&gt;）：清端口 VLAN 配置 → 建 linkagg 8 → <code>vlan 57 members linkagg 8 untagged</code>、20/30 tagged → <code>dhl 1</code> → <code>dhl 1 linka linkagg 7 linkb linkagg 8</code> → <code>dhl 1 vlan-map linkb 30</code> → <code>dhl 1 admin-state enable</code> → <code>dhl 1 mac-flushing raw</code> → <code>show dhl 1</code> → 断 agg7 验证 VLAN20 转移到 agg8。</li>
+<li><strong>VRRP 主备</strong>（&lt;&lt;<PAGE 684>&gt;&gt;-&lt;&lt;<PAGE 689>&gt;&gt;）：双机各建 int_20/int_30 → <code>ip vrrp 1 interface int_20</code> + <code>address 192.168.20.254</code> + <code>admin-state enable</code> → <code>show ip vrrp statistics</code> 看 Master/Backup → 改优先级先 disable：<code>ip vrrp 1 interface int_20 admin-state disable</code> → <code>priority 150</code> → <code>enable</code> → 重启主机验证 Backup 秒级接管，客户端 ARP 表里 192.168.20.254 的 MAC=00-00-5E-00-01-01。</li>
+</ol>
+<h2 id="a2">A2（进阶应用）</h2>
+<ul>
+<li><strong>VC 进阶</strong>：Master 选举顺序为最高 priority → 最长 uptime（&gt;10min 差）→ 最小 chassis ID → 最小 MAC（&lt;&lt;<PAGE 472>&gt;&gt;）；分裂双检测：out-of-band RCD（走 EMP，原 Slave 关闭全部前面板口防 IP/MAC 冲突）+ in-band VSCP（需上游/下游 helper switch）（&lt;&lt;<PAGE 476>&gt;&gt;-&lt;&lt;<PAGE 477>&gt;&gt;）；ISSU 逐台 slave 从低到高 chassis ID 依次重启升级（&lt;&lt;<PAGE 478>&gt;&gt;）。</li>
+<li><strong>STP 模式</strong>：flat（单实例）/ per-VLAN（OmniSwitch 默认）× STP(802.1d, 50s) / RSTP(802.1w, &lt;1s) / MSTP(802.1s)（&lt;&lt;<PAGE 604>&gt;&gt;）。</li>
+<li><strong>负载分担哈希</strong>：brief 模式不含 UDP/TCP 端口，extended 含之、分流更均匀；6900/6465/6360 默认 brief，其余默认 extended（&lt;&lt;<PAGE 583>&gt;&gt;）。</li>
+<li><strong>LACP 细节</strong>：Dynamic（802.3ad LACPDU 协商）与 Static（仅 OmniSwitch 间）两种；actor admin key 仅本地有效（&lt;&lt;<PAGE 576>&gt;&gt;、&lt;&lt;<PAGE 588>&gt;&gt;）。</li>
+<li><strong>VRRP 负载分担</strong>：双 VRID 各主一个 VLAN（VRID1 主 VLAN20、VRID2 主 VLAN30）；虚拟 MAC 00-00-5E-00-01-{VRID}，组播 224.0.0.18（&lt;&lt;<PAGE 674>&gt;&gt;-&lt;&lt;<PAGE 675>&gt;&gt;）。</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>6360 两台 VC 堆叠 + flash-synchro + ssh-chassis 访问从机（&lt;&lt;<PAGE 490>&gt;&gt;-&lt;&lt;<PAGE 497>&gt;&gt;）。</li>
+<li>LACP linkagg 7 跨 VC 机箱聚合，ping -t 期间 disable 成员口不丢包（&lt;&lt;<PAGE 588>&gt;&gt;-&lt;&lt;<PAGE 594>&gt;&gt;）。</li>
+<li>VRRP 双活：改优先级实现 6870 主 VLAN20 / 6860 主 VLAN30，重启主机 Backup 秒级接管（&lt;&lt;<PAGE 684>&gt;&gt;-&lt;&lt;<PAGE 689>&gt;&gt;）。</li>
+</ul>
+<h2 id="b">B（边界与陷阱）</h2>
+<ul>
+<li><strong>VRRP 改 priority 必须先 disable 实例</strong>，否则不生效（&lt;&lt;<PAGE 689>&gt;&gt; Warning）。</li>
+<li><strong>端口有 VLAN/默认 VLAN 配置时无法加入 linkagg</strong>：报 "Port cannot be added to Linkagg, please remove other configuration on this port"；先 <code>no vlan XX members port …</code> 清干净（&lt;&lt;<PAGE 640>&gt;&gt;）。</li>
+<li><strong>DHL 与 STP 互斥</strong>（DHL 端口自动关 STP）且默认 mac-flushing=none 会保留过期 MAC，生产建议显式 <code>dhl 1 mac-flushing raw</code>（或 mvrp）（&lt;&lt;<PAGE 630>&gt;&gt;、&lt;&lt;<PAGE 642>&gt;&gt;）。</li>
+<li>VC 内无 STP/VRRP（Access-Core 之间），升级走 ISSU（&lt;&lt;<PAGE 468>&gt;&gt;、&lt;&lt;<PAGE 471>&gt;&gt;）。</li>
+</ul>
+<h2 id="_1">来源</h2>
+<ul>
+<li>principles·P27 Virtual Chassis 原理（&lt;&lt;<PAGE 468>&gt;&gt;、&lt;&lt;<PAGE 471>&gt;&gt;-&lt;&lt;<PAGE 472>&gt;&gt;）</li>
+<li>principles·P28 VC 分裂双检测（&lt;&lt;<PAGE 476>&gt;&gt;-&lt;&lt;<PAGE 477>&gt;&gt;）</li>
+<li>principles·P29 ISSU（&lt;&lt;<PAGE 478>&gt;&gt;）</li>
+<li>principles·P30 STP 模式（&lt;&lt;<PAGE 604>&gt;&gt;）</li>
+<li>principles·P31 STP 1x1 负载分担（&lt;&lt;<PAGE 606>&gt;&gt;、&lt;&lt;<PAGE 622>&gt;&gt;）</li>
+<li>principles·P32 LACP（&lt;&lt;<PAGE 576>&gt;&gt;、&lt;&lt;<PAGE 588>&gt;&gt;）</li>
+<li>principles·P33 哈希算法（&lt;&lt;<PAGE 583>&gt;&gt;）</li>
+<li>principles·P34 DHL（&lt;&lt;<PAGE 628>&gt;&gt;-&lt;&lt;<PAGE 630>&gt;&gt;）</li>
+<li>principles·P35 VRRP（&lt;&lt;<PAGE 674>&gt;&gt;-&lt;&lt;<PAGE 675>&gt;&gt;）</li>
+<li>cases·C24/C25/C27/C28/C29（&lt;&lt;<PAGE 490>&gt;&gt;-&lt;&lt;<PAGE 497>&gt;&gt;、&lt;&lt;<PAGE 588>&gt;&gt;-&lt;&lt;<PAGE 594>&gt;&gt;、&lt;&lt;<PAGE 616>&gt;&gt;-&lt;&lt;<PAGE 625>&gt;&gt;、&lt;&lt;<PAGE 640>&gt;&gt;-&lt;&lt;<PAGE 643>&gt;&gt;、&lt;&lt;<PAGE 684>&gt;&gt;-&lt;&lt;<PAGE 689>&gt;&gt;）</li>
+<li>counter-examples·X9/X10/X11（&lt;&lt;<PAGE 689>&gt;&gt;、&lt;&lt;<PAGE 640>&gt;&gt;、&lt;&lt;<PAGE 630>&gt;&gt;、&lt;&lt;<PAGE 642>&gt;&gt;）</li>
+</ul><div class="pn"><a href="vlan-inter-vlan-routing.html">⬅ 上一单元：vlan-inter-vlan-routing</a><a class="nxt" href="qos-acl-access-guardian.html">下一单元：qos-acl-access-guardian ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

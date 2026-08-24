@@ -177,6 +177,34 @@ NEW_COURSES = [
         ('升级评估', ['ov2500-49r2-features-compat', 'ov2500-upgrade-deploy']),
         ('排障库', ['ov2500-known-issues', 'ov2500-danger-traps']),
        ]),
+  dict(id='postsales/smb-lan-wlan-install', book='smb-lan-wlan-install', title='DT00XTE301 · SMB LAN & WLAN 安装配置',
+       subtitle='Edition 04 · 512 页 · SMB 交付两日课（交换机+Stellar AP+Cirrus 云管全链路）',
+       route=['设备开局与管理界面访问', 'PoE/VLAN/STP/LACP 有线基础', 'Stellar 三模式选型与 Wi-Fi 创建',
+              'Cirrus 云管设备申报与员工/访客 SSID', '运维巡检'],
+       groups=[
+        ('开局', ['switch-first-setup', 'aos-config-management']),
+        ('有线基础', ['vlan-port-assignment', 'poe-power-design', 'stp-lacp-basics']),
+        ('无线与云管', ['stellar-mode-selection', 'ssid-security-design', 'guest-access-design', 'cirrus-onboarding']),
+        ('运维', ['smb-troubleshooting']),
+       ]),
+  dict(id='postsales/smb-express-lan-wlan', book='smb-express-lan-wlan', title='DT00XTE310 · OmniSwitch 接入与 Stellar WLAN Express',
+       subtitle='Edition 05 · 1083 页 · 五日交付全科（三部署模式+语音 WLAN+故障排查）',
+       route=['AOS 文件/配置/固件管理', 'PoE/VLAN/VLAN 间路由', 'Stellar 三模式（Express/Enterprise/Cloud）',
+              'Wi-Fi 业务全家桶（员工/访客/VLAN 分配/内置服务）', 'Voice over WLAN 五阶段'],
+       groups=[
+        ('交换机管理', ['aos-dual-partition-config-management', 'poe-management', 'vlan-inter-vlan-routing', 'switch-high-availability', 'qos-acl-access-guardian']),
+        ('部署模式', ['stellar-deployment-mode-selection', 'wifi-express-operations', 'cirrus-cloud-management']),
+        ('无线与排障', ['wireless-tech-fundamentals', 'voice-over-wlan-deployment', 'lan-wlan-troubleshooting']),
+       ]),
+  dict(id='postsales/ov2500-nms-admin', book='ov2500-nms-admin', title='DT00XTE311 · OmniVista 2500 NMS 管理',
+       subtitle='Edition 09 · 581 页 · 网管平台管理全科（安装/发现/资源/统一接入/PolicyView/隔离）',
+       route=['虚机安装与容量规划', 'Discovery 与拓扑/Locator', 'Resource Manager 与 CLI 脚本',
+              'Unified Access 三层策略模型', 'PolicyView QoS 与 Quarantine'],
+       groups=[
+        ('平台与安装', ['ov-va-install-license', 'ov-ha-services-alerting', 'ov-switch-snmp-bootstrap']),
+        ('发现与资源', ['ov-discovery-topology-locator', 'ov-resource-manager-provisioning', 'ov-cli-scripting-batch']),
+        ('策略与监控', ['ov-unified-access', 'ov-policyview-qos', 'ov-quarantine-manager', 'ov-analytics-appvis-iot']),
+       ]),
 ]
 COURSES = NEW_COURSES  # 旧课程(ov-terra/bootcamp/core)保留 site/ 预构建页面，源 books 未随库分发
 _LEGACY = [

@@ -1,0 +1,105 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>精华长文 DIGEST — DT00XTE301 · SMB LAN & WLAN 安装配置</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE301 · SMB LAN & WLAN 安装配置</h1>
+<div class="sub">Edition 04 · 512 页 · SMB 交付两日课（交换机+Stellar AP+Cirrus 云管全链路）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">开局</div>
+<a href="skills/switch-first-setup.html">switch-first-setup</a>
+<a href="skills/aos-config-management.html">aos-config-management</a>
+<div class="grp">有线基础</div>
+<a href="skills/vlan-port-assignment.html">vlan-port-assignment</a>
+<a href="skills/poe-power-design.html">poe-power-design</a>
+<a href="skills/stp-lacp-basics.html">stp-lacp-basics</a>
+<div class="grp">无线与云管</div>
+<a href="skills/stellar-mode-selection.html">stellar-mode-selection</a>
+<a href="skills/ssid-security-design.html">ssid-security-design</a>
+<a href="skills/guest-access-design.html">guest-access-design</a>
+<a href="skills/cirrus-onboarding.html">cirrus-onboarding</a>
+<div class="grp">运维</div>
+<a href="skills/smb-troubleshooting.html">smb-troubleshooting</a></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../postsales/index.html">售后</a> › <a href="index.html">DT00XTE301</a> › <span>精华长文 DIGEST</span></nav><h1>精华长文 DIGEST</h1><h1 id="lan-wlan-installation-configuration-for-smbdigest">《LAN &amp; WLAN Installation &amp; Configuration for SMB》精华digest</h1>
+<p>来源书：DT00XTE301 LAN &amp; WLAN Installation &amp; Configuration for SMB（ALE OmniSwitch + OmniAccess Stellar + OmniVista Cirrus 产品线，SMB 场景安装配置教材）</p>
+<h2 id="_1">一、本书核心知识地图</h2>
+<p>全书沿"设备 → 交换机基础 → 无线 → 云管 → 排障"一条主线展开，可拆为六块：</p>
+<ol>
+<li><strong>产品与选型</strong>：OmniSwitch LAN 家族按"Gig/10G/Hardeded/大型 + 接入-汇聚-核心"两轴定位（&lt;&lt;<PAGE 12>&gt;&gt;–&lt;&lt;<PAGE 13>&gt;&gt;）；Stellar AP 覆盖 Wi-Fi 6/6E/7（&lt;&lt;<PAGE 16>&gt;&gt;–&lt;&lt;<PAGE 18>&gt;&gt;）；Wi-Fi 代际九维对照表（Wi-Fi 6 = 9.6Gbps/WPA3，Wi-Fi 7 = 46Gbps/320MHz/MLO，&lt;&lt;<PAGE 45>&gt;&gt;）。</li>
+<li><strong>交换机基础管理</strong>：默认凭据 admin/switch、Console 115200 8N1（&lt;&lt;<PAGE 60>&gt;&gt;、&lt;&lt;<PAGE 65>&gt;&gt;）、ASA 各管理通道独立认证开关（&lt;&lt;<PAGE 58>&gt;&gt;–&lt;&lt;<PAGE 59>&gt;&gt;）、Lightning Config 开箱 5 分钟交付（&lt;&lt;<PAGE 474>&gt;&gt;–&lt;&lt;<PAGE 490>&gt;&gt;）。</li>
+<li><strong>AOS 配置管理</strong>：working/certified/user-defined 三层目录 + RAM 运行配置的状态机与回滚模型（&lt;&lt;<PAGE 118>&gt;&gt;–&lt;&lt;<PAGE 137>&gt;&gt;）。</li>
+<li><strong>二层/三层组网</strong>：VLAN 划分与 tagged/untagged 分配（&lt;&lt;<PAGE 158>&gt;&gt;–&lt;&lt;<PAGE 175>&gt;&gt;）、PoE 四标准预算（&lt;&lt;<PAGE 147>&gt;&gt;）、STP 防环与 LACP 聚合（&lt;&lt;<PAGE 238>&gt;&gt;–&lt;&lt;<PAGE 260>&gt;&gt;）。</li>
+<li><strong>无线</strong>：Stellar 三部署模式（Express/Enterprise/Cloud）与 AP Group 自动成组、PVM/SVM 选举（&lt;&lt;<PAGE 185>&gt;&gt;–&lt;&lt;<PAGE 268>&gt;&gt;）、SSID→VLAN→认证策略设计（&lt;&lt;<PAGE 215>&gt;&gt;–&lt;&lt;<PAGE 235>&gt;&gt;、&lt;&lt;<PAGE 365>&gt;&gt;–&lt;&lt;<PAGE 425>&gt;&gt;）。</li>
+<li><strong>云管与运维</strong>：OV Cirrus 上线状态机到 OV Managed（&lt;&lt;<PAGE 282>&gt;&gt;–&lt;&lt;<PAGE 360>&gt;&gt;）、许可订阅生命周期（&lt;&lt;<PAGE 295>&gt;&gt;–&lt;&lt;<PAGE 300>&gt;&gt;）、计划升级与支持信息收集（&lt;&lt;<PAGE 451>&gt;&gt;–&lt;&lt;<PAGE 456>&gt;&gt;）。</li>
+</ol>
+<p>对应的 9 个技能单元：switch-first-setup / aos-config-management / vlan-port-assignment / poe-power-design / stp-lacp-basics / stellar-mode-selection / ssid-security-design / guest-access-design / cirrus-onboarding / smb-troubleshooting（排障为横向技能）。</p>
+<h2 id="10">二、最重要的 10 个知识点串讲</h2>
+<p><strong>1. AOS 三层目录状态机——一切配置操作的底层模型。</strong>
+Flash 分 certified（已认证稳定目录）与 working（待验证目录），运行配置在 RAM。<code>write memory flash-synchro</code> = 保存 + 认证同步一步完成（&lt;&lt;<PAGE 122>&gt;&gt;）。三个致命特例：<code>reload all</code> 无条件从 certified 启动（&lt;&lt;<PAGE 132>&gt;&gt;）；未保存的修改重启即丢（&lt;&lt;<PAGE 133>&gt;&gt;）；从 certified 运行时 <code>write memory</code> 直接报错（&lt;&lt;<PAGE 135>&gt;&gt;）。验证新配置永远用 <code>reload from working no rollback-timeout</code>。</p>
+<p><strong>2. Lightning Config——开箱交付的标准路径。</strong>
+五项前置（仅 1/2 口接入、无既有配置、无 DHCP 分配、无 RCL/NMS）满足时，Chrome 访问 https://192.168.0.1 走向导，单台 5 分钟通流量（&lt;&lt;<PAGE 75>&gt;&gt;、&lt;&lt;<PAGE 474>&gt;&gt;–&lt;&lt;<PAGE 490>&gt;&gt;）。红线：配置前禁止接入网络或互联——所有新机默认同 IP 192.168.0.1 必冲突（&lt;&lt;<PAGE 486>&gt;&gt;）。</p>
+<p><strong>3. PoE 预算与优先级断电顺序。</strong>
+四标准：af 15.4W / at 30W / bt Type3 60W / Type4 100W（PD 可用 12.95/25.5/51/71W，&lt;&lt;<PAGE 147>&gt;&gt;）。超预算按 Low → High → Critical 断电，AP 上联口应设 <code>priority critical</code>（&lt;&lt;<PAGE 151>&gt;&gt;）。特性三选：Fast PoE 秒级供电、Perpetual PoE 重启不断电、delayed-start 等系统稳定（但与 FPoE/PPoE 互斥，&lt;&lt;<PAGE 154>&gt;&gt;）。</p>
+<p><strong>4. STP 防环是二层生存底线。</strong>
+OmniSwitch 默认 per-VLAN 模式；RSTP/MSTP 收敛 &lt;1 秒 vs STP 50 秒（&lt;&lt;<PAGE 238>&gt;&gt;）。按 VLAN 调 <code>spantree vlan 20 priority 20000</code> 可让阻塞端口错开，白拿负载分担（&lt;&lt;<PAGE 240>&gt;&gt;）。物理环路未防环会拖垮全网，接线前必须确认 loop avoidance（&lt;&lt;<PAGE 494>&gt;&gt;）。</p>
+<p><strong>5. LACP 优于静态聚合。</strong>
+静态聚合仅 ALE 设备互通；LACP 经 LACPDU 跨厂商协商最优参数（&lt;&lt;<PAGE 252>&gt;&gt;）。<code>hash-control extended</code> 把四层端口纳入哈希、分担更均匀（&lt;&lt;<PAGE 259>&gt;&gt;）；组播默认走聚合主端口，需显式开启 non-ucast 哈希（&lt;&lt;<PAGE 260>&gt;&gt;）。</p>
+<p><strong>6. Stellar 三模式决策树——AP 上电自动选型。</strong>
+DHCP option 138 有 OV2500 地址 → Enterprise；否则联系 Cirrus，MAC/SN 已注册 → Cloud；未注册 → Express 落地（&lt;&lt;<PAGE 198>&gt;&gt;）。规模上限 255 / 4000 / 10000 台对应选型（&lt;&lt;<PAGE 185>&gt;&gt;–&lt;&lt;<PAGE 189>&gt;&gt;）。</p>
+<p><strong>7. AP Group 自动成组与 PVM 选举。</strong>
+同 Group ID + 同 VLAN 即自动成组，出厂 Group ID 100（&lt;&lt;<PAGE 202>&gt;&gt;）；PVM/SVM 先比型号高低再比 MAC 大小（&lt;&lt;<PAGE 203>&gt;&gt;）。两大坑：多台新 AP 默认 IP 都是 192.168.1.254 会冲突（&lt;&lt;<PAGE 101>&gt;&gt;）；AP 入组后本地配置被 PVM 下发的组配置覆盖（&lt;&lt;<PAGE 266>&gt;&gt;）。</p>
+<p><strong>8. SSID→VLAN→认证三级分流。</strong>
+客户端连 SSID 自动落入预定义 VLAN（&lt;&lt;<PAGE 215>&gt;&gt;）；认证三档：Personal 密码、Enterprise 802.1X（UPAM 或外部 RADIUS）、Open + Captive Portal（访客）。用户策略用 ARP（Access Role Profile）六元组描述：VLAN/QoS/防火墙/L7/位置/时段（&lt;&lt;<PAGE 376>&gt;&gt;），裁决顺序外部源 &gt; 内部库 &gt; 认证策略 &gt; SSID 默认（&lt;&lt;<PAGE 382>&gt;&gt;）。三角色基线：员工全访问高带宽、访客仅 internet 低优先级、话机低带宽高优先级（&lt;&lt;<PAGE 217>&gt;&gt;）。</p>
+<p><strong>9. Cirrus 上线 = 设备 call-home + 云侧申报双向握手。</strong>
+前提：交换机 AOS ≥ 8.9R1（OS2360 不行，&lt;&lt;<PAGE 337>&gt;&gt;）、AP AWOS ≥ 4.0.6 且排除 AP1101/AP1201L/H/HL（&lt;&lt;<PAGE 290>&gt;&gt;）、防火墙与 DHCP option 就绪。cloud-agent 默认 30 分钟重试（&lt;&lt;<PAGE 314>&gt;&gt;），状态机走 Registered → … → OV Managed 才算受管（&lt;&lt;<PAGE 309>&gt;&gt;–&lt;&lt;<PAGE 310>&gt;&gt;）。云侧四步：申报 SN → 分组 → 下发配置 → 确认 OV Managed（&lt;&lt;<PAGE 282>&gt;&gt;）。</p>
+<p><strong>10. 分层排障方法论。</strong>
+L2（线缆/VLAN/PoE）→ L3（IP 接口/ping 激活域名）→ 设备侧（getmode/ocloud_show）→ 平台侧（激活日志/认证记录）（&lt;&lt;<PAGE 347>&gt;&gt;–&lt;&lt;<PAGE 360>&gt;&gt;）。无线侧 support 凭据下有 iwconfig / ssudo sta_list / wam_debug sta_list / eag_cli / tcpdump 完整工具链（&lt;&lt;<PAGE 397>&gt;&gt;–&lt;&lt;<PAGE 430>&gt;&gt;）。LED 是最快的物理层判读：AP 绿闪 = 就绪、蓝红闪 = 升级中（&lt;&lt;<PAGE 52>&gt;&gt;）；PoE 口琥珀 = 受电、绿 = 未受电（&lt;&lt;<PAGE 143>&gt;&gt;）。</p>
+<h2 id="_2">三、一句话总结</h2>
+<p>SMB 交付的本质是三条确定性链路：配置链（Lightning Config → working/certified 状态机 → flash-synchro 固化）、供电与链路链（PoE 预算 + critical 优先级 + STP/LACP 防环扩带宽）、管理链（三模式选型 → AP Group 成组 → 按需上 Cirrus 到 OV Managed）；
+排障永远分层走，先怀疑环境默认行为（端口 disabled、non-https 门户、IP 冲突），再怀疑故障。</p>
+<p>（全文约 2600 字，页码均出自 verified.md 已核对条目）</p><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
