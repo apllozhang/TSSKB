@@ -31,6 +31,17 @@ blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 
 hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 .badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
 .badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
 @media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
 </style></head>
 <body><div class="layout"><aside><h1>DT00XTE478 · Stellar WLAN 高级排障</h1>
@@ -52,7 +63,7 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <a href="skills/network-side-trouble.html">network-side-trouble</a>
 <a href="skills/wireless-rf-roaming-trouble.html">wireless-rf-roaming-trouble</a>
 <div class="grp">勘测纠正</div>
-<a href="skills/site-survey-remediation.html">site-survey-remediation</a></aside><main><h1>dot1x-radius-trouble</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="8021x">802.1X 认证失败三段排查法</h1>
+<a href="skills/site-survey-remediation.html">site-survey-remediation</a></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../postsales/index.html">售后</a> › <a href="index.html">DT00XTE478</a> › <span>802.1X 认证失败三段排查法</span></nav><h1>802.1X 认证失败三段排查法</h1><p class="meta"><span class="badge">SKILL</span> dot1x-radius-trouble · 来源页码: </p><h1 id="8021x">802.1X 认证失败三段排查法</h1>
 <h2 id="r">R · 原文引用</h2>
 <blockquote>
 <p>1) On Client side: Check Username and password, Encryption type, Security type/key, Certificate on client (if any). (p88)</p>
@@ -71,11 +82,14 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 - AP 上的参数（IP/端口/共享密钥）与 RADIUS 服务器实际配置一致。<strong>共享密钥不匹配是最常见的静默失败</strong>——两边都"配了"，就是对不上。</p>
 <p><strong>③ 服务器侧七查</strong>：用户数据库中的用户名密码 / 共享密钥 / RADIUS client IP / <strong>RADIUS station IP（=Stellar AP 的地址，必须被登记为合法客户端）</strong> / 证书 / 认证与计费端口 / RADIUS 服务已启用且防火墙放行 1812/1813。</p>
 <h2 id="a1">A1 · 书中案例</h2>
-<p>教材主用例即按此三段展开（p88-90）：客户端侧先排除凭证/证书问题；AP 侧 cat 三份 AAA 配置文件核对绑定链与默认值（1812/1813、timeout 5、retries 2）；服务器侧逐项比对——AP 的地址若未登记为合法 RADIUS 客户端，请求被直接丢弃，客户端侧只能看到超时。</p>
+<p>教材主用例即按此三段展开（p88-90）：客户端侧先排除凭证/证书问题；
+AP 侧 cat 三份 AAA 配置文件核对绑定链与默认值（1812/1813、timeout 5、retries 2）；
+服务器侧逐项比对——AP 的地址若未登记为合法 RADIUS 客户端，请求被直接丢弃，客户端侧只能看到超时。</p>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
 <li>Enterprise/802.1X SSID 认证失败、凭证确认无误仍连不上、认证请求"石沉大海"超时 → 本 skill。</li>
-<li>与 <code><a href="client-connection-trouble.html">client-connection-trouble</a></code> 的区分：那边处理关联层与 IP 层（sta_list、DHCP、掉线）；本 skill 只管 EAP/RADIUS 认证链。判断方法：sta_list 的 AUTH 字段确认走了 802.1X、wam_debug 认证结果失败 → 进本 skill。</li>
+<li>与 <code><a href="client-connection-trouble.html">client-connection-trouble</a></code> 的区分：那边处理关联层与 IP 层（sta_list、DHCP、掉线）；
+本 skill 只管 EAP/RADIUS 认证链。判断方法：sta_list 的 AUTH 字段确认走了 802.1X、wam_debug 认证结果失败 → 进本 skill。</li>
 <li>与 <code><a href="stellar-ap-system-health.html">stellar-ap-system-health</a></code> 门户部分的区分：Captive Portal（eag）认证用那边；802.1X/ MAC 认证失败用本 skill。</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
@@ -93,4 +107,4 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <li>防火墙只放行认证端口不放行计费端口（1813）也会造成部分功能异常，两端口都要查。</li>
 </ul>
 <hr />
-<p>来源条目: f09, ce11, ce12, ce13, p21（术语 g20 RADIUS/AAA, g21 802.1X/EAP）</p></main></div></body></html>
+<p>来源条目: f09 · ce11 · ce12 · ce13 · p21（术语 g20 RADIUS/AAA · g21 802.1X/EAP）</p><div class="pn"><a href="client-connection-trouble.html">⬅ 上一单元：client-connection-trouble</a><a class="nxt" href="network-side-trouble.html">下一单元：network-side-trouble ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

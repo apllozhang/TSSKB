@@ -31,6 +31,17 @@ blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 
 hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 .badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
 .badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
 @media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
 </style></head>
 <body><div class="layout"><aside><h1>DT00XTE221 · OmniSwitch LAN Troubleshooting</h1>
@@ -52,7 +63,7 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <a href="skills/multicast-troubleshooting.html">multicast-troubleshooting</a>
 <div class="grp">工具与 AI 运维</div>
 <a href="skills/app-logging-qos-troubleshooting.html">app-logging-qos-troubleshooting</a>
-<a href="skills/ovna-deployment-teams-bot.html">ovna-deployment-teams-bot</a></aside><main><h1>stp-loop-troubleshooting</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="stp">STP 与桥接环路排障</h1>
+<a href="skills/ovna-deployment-teams-bot.html">ovna-deployment-teams-bot</a></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../postsales/index.html">售后</a> › <a href="index.html">DT00XTE221</a> › <span>STP 与桥接环路排障</span></nav><h1>STP 与桥接环路排障</h1><p class="meta"><span class="badge">SKILL</span> stp-loop-troubleshooting · 来源页码: </p><h1 id="stp">STP 与桥接环路排障</h1>
 <h2 id="r">R · 原文引用</h2>
 <blockquote>
 <p>"Example of checklist recapitulating some of the actions available to troubleshoot stp: 1. Retrieve general information about network topology ... 2. Turn on events to monitor the network" (p173)</p>
@@ -77,7 +88,9 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
 <li>触发：广播风暴、CPU 高 + DoS 告警、MAC 在两端口漂移、链路利用率异常高、STP 拓扑变化计数暴涨、MSTP region 行为异常、DHL 全 blocking。</li>
-<li>区分：单端口 down/错配 → l2-connectivity；VC 成员口/VFL 问题 → virtual-chassis；环路期间管理面不可达必须走 console/EMP（ce01）属本 skill 的前置动作。DoS 统计判读（g40）在本 skill，但真实攻击处置需结合 OVNA（ovna skill）。</li>
+<li>区分：单端口 down/错配 → l2-connectivity；
+VC 成员口/VFL 问题 → virtual-chassis；
+环路期间管理面不可达必须走 console/EMP（ce01）属本 skill 的前置动作。DoS 统计判读（g40）在本 skill，但真实攻击处置需结合 OVNA（ovna skill）。</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
@@ -86,7 +99,9 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <li>执行八步清单（f08）：拓扑 → swlog debug2 + flash-file-size 12500 → MAC 重学核查 → show spantree vlan 全网核对模式/根/阻塞口 → timers/Topology Changes → 端口状态比对 → MAC flapping 三板斧 → MSTP 三致性。</li>
 <li>MAC 漂移确认：<code>swlog appid slNi subapp macmove level debug2</code>；<code>show log swlog | grep MACMOVE</code> 看 INS/DEL 端口交替。</li>
 <li>BPDU 疑似丢失：<code>debug stp bpdu-stats 1 start</code> → <code>debug stp bpdu-stats show 1</code> → stop。</li>
-<li>MSTP 三致性检查：region 名一致；<code>show spantree msti vlan-map</code> 核 VLAN-MSTI 映射；MSTI 内 VLAN 全部在互联链路 tagged（<code>show vlan members</code> 逐链路核端口类型）。</li>
+<li>MSTP 三致性检查：region 名一致；
+<code>show spantree msti vlan-map</code> 核 VLAN-MSTI 映射；
+MSTI 内 VLAN 全部在互联链路 tagged（<code>show vlan members</code> 逐链路核端口类型）。</li>
 <li>DHL：<code>show vlan members</code> 比对两条链路的 untagged VLAN；不一致则 disable 链路两侧 → 统一 native VLAN → enable。</li>
 <li><strong>收尾强制项</strong>：<code>swlog appid slNi subapp macmove level info</code>（及所有调过的 appid）调回 info（ce04）。</li>
 </ol>
@@ -101,4 +116,4 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <li>阻塞口文档是排障前提：平时就要在网络图上标出每个物理环与破环的阻塞口（p20）。</li>
 </ul>
 <hr />
-<p>来源条目: f08, p20, p21, p22, p23, p24, p25, ce01, ce16, ce17, ce19, g15, g16, g17, g18, g20, g21, g40, g41, g42, c04, c05</p></main></div></body></html>
+<p>来源条目: f08 · p20 · p21 · p22 · p23 · p24 · p25 · ce01 · ce16 · ce17 · ce19 · g15 · g16 · g17 · g18 · g20 · g21 · g40 · g41 · g42 · c04 · c05</p><div class="pn"><a href="l2-connectivity-troubleshooting.html">⬅ 上一单元：l2-connectivity-troubleshooting</a><a class="nxt" href="virtual-chassis-troubleshooting.html">下一单元：virtual-chassis-troubleshooting ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

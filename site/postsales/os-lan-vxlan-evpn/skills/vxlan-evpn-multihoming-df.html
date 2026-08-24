@@ -31,6 +31,17 @@ blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 
 hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 .badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
 .badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
 @media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
 </style></head>
 <body><div class="layout"><aside><h1>DT00XTE325 · OmniSwitch LAN VxLAN/EVPN</h1>
@@ -48,7 +59,7 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <a href="skills/vxlan-evpn-service-provisioning.html">vxlan-evpn-service-provisioning</a>
 <a href="skills/vxlan-evpn-multihoming-df.html" class="on">vxlan-evpn-multihoming-df</a>
 <div class="grp">排障</div>
-<a href="skills/vxlan-evpn-bum-troubleshooting.html">vxlan-evpn-bum-troubleshooting</a></aside><main><h1>vxlan-evpn-multihoming-df</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="evpn-dfesi-lacp-etag-df-carving">EVPN 多归属与 DF（ESI / LACP / ETag / DF carving）</h1>
+<a href="skills/vxlan-evpn-bum-troubleshooting.html">vxlan-evpn-bum-troubleshooting</a></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../postsales/index.html">售后</a> › <a href="index.html">DT00XTE325</a> › <span>EVPN 多归属与 DF（ESI / LACP / ETag / DF carving）</span></nav><h1>EVPN 多归属与 DF（ESI / LACP / ETag / DF carving）</h1><p class="meta"><span class="badge">SKILL</span> vxlan-evpn-multihoming-df · 来源页码: </p><h1 id="evpn-dfesi-lacp-etag-df-carving">EVPN 多归属与 DF（ESI / LACP / ETag / DF carving）</h1>
 <h2 id="r">R · 原文引用</h2>
 <blockquote>
 <p>All-active: ...active/active connectivity of multi-homed devices. LAG is required to be configured between the PE switches and the multi-homed CE device. This is to avoid receiving duplicate packets and for loop prevention.（p182；p141 "All-active or Single-active"）</p>
@@ -67,14 +78,18 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 </ol>
 <h2 id="a1">A1 · 书中案例</h2>
 <ul>
-<li>Lab3 动态 LACP 跨设备多归属（p153-156）：两 Leaf 各建 <code>linkagg lacp agg 3 size 2</code> + <code>actor admin-key 3</code>，CE 侧同 agg 挂两口；<code>service access linkagg 3 evpn-ethernet-segment enable</code> 自动生成 ESI 03:2c:fa:a2:a2:f2:ad:00:03:00；<code>service 100 sap linkagg 3:10</code>。切换演练：断 Leaf1 的 1/1/3 后 ES 角色翻转（sw2 变 MH-SA[L-A]）、永久 ping 不中断、MAC 迁到 sw2 的 sap:0/3。</li>
-<li>Lab3 静态 LAG 手工 ESI（p156-158）：<code>linkagg static agg 7 size 2</code> → <code>service access linkagg 7 evpn-ethernet-segment enable esi 01:01:01:02:04</code>（呈现 MH-SA[L-M]）→ <code>service 200 sap linkagg 7:20</code>；client7 经 sap:0/7 学到、对端经 sdp:32768 学到。</li>
+<li>Lab3 动态 LACP 跨设备多归属（p153-156）：两 Leaf 各建 <code>linkagg lacp agg 3 size 2</code> + <code>actor admin-key 3</code>，CE 侧同 agg 挂两口；
+<code>service access linkagg 3 evpn-ethernet-segment enable</code> 自动生成 ESI 03:2c:fa:a2:a2:f2:ad:00:03:00；
+<code>service 100 sap linkagg 3:10</code>。切换演练：断 Leaf1 的 1/1/3 后 ES 角色翻转（sw2 变 MH-SA[L-A]）、永久 ping 不中断、MAC 迁到 sw2 的 sap:0/3。</li>
+<li>Lab3 静态 LAG 手工 ESI（p156-158）：<code>linkagg static agg 7 size 2</code> → <code>service access linkagg 7 evpn-ethernet-segment enable esi 01:01:01:02:04</code>（呈现 MH-SA[L-M]）→ <code>service 200 sap linkagg 7:20</code>；
+client7 经 sap:0/7 学到、对端经 sdp:32768 学到。</li>
 <li>架构指南三视图验证（p200-201）：本地单归属 ES 用 <code>sap-info</code>（PE 列带 * 为 DF）；本地多归属 ES 用 <code>carving-info</code>（EVI 1000→DF 1.1.1.10、EVI 2000→DF 1.1.1.20，mod 分摊效果）；远端 ES 用 <code>aliasing-info</code>（Primary/Backup/Others）。</li>
 </ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
 <li>触发：CE/主机/虚拟化双归接入、ESI 规划、DF 或 BUM 重复泛洪排查、VC vs EVPN MH 选型讨论。</li>
-<li>区分：单归属业务开通 → <code><a href="vxlan-evpn-service-provisioning.html">vxlan-evpn-service-provisioning</a></code>（本 skill 的多归属是在其三部曲上加 LAG/ESI）；BUM 复制机制与 mac mobility 震荡 → <code><a href="vxlan-evpn-bum-troubleshooting.html">vxlan-evpn-bum-troubleshooting</a></code>。</li>
+<li>区分：单归属业务开通 → <code><a href="vxlan-evpn-service-provisioning.html">vxlan-evpn-service-provisioning</a></code>（本 skill 的多归属是在其三部曲上加 LAG/ESI）；
+BUM 复制机制与 mac mobility 震荡 → <code><a href="vxlan-evpn-bum-troubleshooting.html">vxlan-evpn-bum-troubleshooting</a></code>。</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
@@ -94,4 +109,4 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <li>手工 ESI 两端不一致 = 两个不同 ES，DF/aliasing 全部失效且难查。</li>
 </ul>
 <hr />
-<p>来源条目: f08, p07, p16, p17, p19, ce05, ce08, c04, c05, c09, g01, g03, g05, g06, g07</p></main></div></body></html>
+<p>来源条目: f08 · p07 · p16 · p17 · p19 · ce05 · ce08 · c04 · c05 · c09 · g01 · g03 · g05 · g06 · g07</p><div class="pn"><a href="vxlan-evpn-service-provisioning.html">⬅ 上一单元：vxlan-evpn-service-provisioning</a><a class="nxt" href="vxlan-evpn-bum-troubleshooting.html">下一单元：vxlan-evpn-bum-troubleshooting ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

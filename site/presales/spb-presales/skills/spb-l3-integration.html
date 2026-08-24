@@ -31,6 +31,17 @@ blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 
 hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 .badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
 .badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
 @media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
 </style></head>
 <body><div class="layout"><aside><h1>DT00XPS279 · OmniSwitch LAN SPB 售前</h1>
@@ -54,7 +65,7 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <a href="skills/spb-ov2500-delivery.html">spb-ov2500-delivery</a>
 <a href="skills/spb-vs-evpn-mpls-selection.html">spb-vs-evpn-mpls-selection</a>
 <a href="skills/spb-stp-migration-cases.html">spb-stp-migration-cases</a>
-<a href="skills/spb-license-spec-sizing.html">spb-license-spec-sizing</a></aside><main><h1>spb-l3-integration</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="spb">SPB 三层集成选型与配置（三种形态 × 两档路由机制）</h1>
+<a href="skills/spb-license-spec-sizing.html">spb-license-spec-sizing</a></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../presales/index.html">售前</a> › <a href="index.html">DT00XPS279</a> › <span>SPB 三层集成选型与配置（三种形态 × 两档路由机制）</span></nav><h1>SPB 三层集成选型与配置（三种形态 × 两档路由机制）</h1><p class="meta"><span class="badge">SKILL</span> spb-l3-integration · 来源页码: </p><h1 id="spb">SPB 三层集成选型与配置（三种形态 × 两档路由机制）</h1>
 <h2 id="r">R · 原文引用</h2>
 <blockquote>
 <p>"Outline routing: use of two physical loopback ports. One side as an access port for SPB, other side is a bridged port configured for routing only. AOS support: OS6900-X20/X72/T20/Q32, OS6860/E."（p82）</p>
@@ -125,7 +136,8 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 - Service-based inline（最简）：<code>vrf 1 ip interface L3vpn1 address 10.5.1.1/24 service 10</code>。
 - L3 VPN 增量：<code>spb ipvpn bind vrf 1 isid 1000 gateway 10.5.1.1 all-routes</code> + <code>vrf 1 ip export/import ... all-routes</code>。</p>
 <h2 id="a1">A1 · 书中案例</h2>
-<p>p84/87/93-94/96-97 四套 CLI 样例构成完整配置手册：ISID-1000 承载、两 BEB（10.5.1.1/10.5.1.2）、VRF 1 内 192.168.x.0/24 网段互通；同一形态上 VPN-Lite 与 L3 VPN 只差 bind/export/import 三行。</p>
+<p>p84/87/93-94/96-97 四套 CLI 样例构成完整配置手册：ISID-1000 承载、两 BEB（10.5.1.1/10.5.1.2）、VRF 1 内 192.168.x.0/24 网段互通；
+同一形态上 VPN-Lite 与 L3 VPN 只差 bind/export/import 三行。</p>
 <h2 id="a2">A2 · 触发场景</h2>
 <ul>
 <li>标书需要"L3 over SPB"技术方案章节：选形态（按机型与端口预算）+ 选机制（按客户技能与规模）；</li>
@@ -146,4 +158,4 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <li><strong>VPN-Lite 铁律</strong>（ce11）：两 VRF 共享 I-SID、loopback VLAN 复用 → 路由串线、故障极难定位；一律用三列对照表预防。</li>
 </ul>
 <hr />
-<p>来源条目: f14, f15, p26, p27, p28, p29, p30, c04, c05, c06, c07, ce01, ce07, ce11, g14, g17, g19, g25, g38, g39</p></main></div></body></html>
+<p>来源条目: f14 · f15 · p26 · p27 · p28 · p29 · p30 · c04 · c05 · c06 · c07 · ce01 · ce07 · ce11 · g14 · g17 · g19 · g25 · g38 · g39</p><div class="pn"><a href="spb-edge-services.html">⬅ 上一单元：spb-edge-services</a><a class="nxt" href="spb-ov2500-delivery.html">下一单元：spb-ov2500-delivery ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

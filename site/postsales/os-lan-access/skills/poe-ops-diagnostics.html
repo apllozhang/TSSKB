@@ -31,6 +31,17 @@ blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 
 hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 .badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
 .badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
 @media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
 </style></head>
 <body><div class="layout"><aside><h1>DT00XTE215 · OmniSwitch LAN Access Switching</h1>
@@ -52,7 +63,7 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <a href="skills/qos-acl-policy.html">qos-acl-policy</a>
 <a href="skills/access-guardian-unp.html">access-guardian-unp</a>
 <div class="grp">运维</div>
-<a href="skills/poe-ops-diagnostics.html" class="on">poe-ops-diagnostics</a></aside><main><h1>poe-ops-diagnostics</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="poe">PoE 与运维工具：供电 / 日志 / 抓包 / 升级</h1>
+<a href="skills/poe-ops-diagnostics.html" class="on">poe-ops-diagnostics</a></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../postsales/index.html">售后</a> › <a href="index.html">DT00XTE215</a> › <span>PoE 与运维工具：供电 / 日志 / 抓包 / 升级</span></nav><h1>PoE 与运维工具：供电 / 日志 / 抓包 / 升级</h1><p class="meta"><span class="badge">SKILL</span> poe-ops-diagnostics · 来源页码: </p><h1 id="poe">PoE 与运维工具：供电 / 日志 / 抓包 / 升级</h1>
 <h2 id="r">R · 原文引用</h2>
 <p>"-&gt; update uboot cmm all file u-boot.8.4.1.R03.141.tar.gz / -&gt; update fpga-cpld cmm all file fpga_kit_3312 / -&gt; reload from working no rollback-timeout / -&gt; copy running certified. Note: If there are any issues after upgrading the switch can be rolled back to the previous certified version."（p452-456）</p>
 <p>"Switch events can be logged to Switch console / Local text file (Configurable default file size 1250 Kbytes) / Multiple remote devices (syslog) 12 max. Up to 8 Swlog logs files can be stored in the /flash directory."（p161-162）</p>
@@ -65,7 +76,11 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 - <strong>PoE</strong>：af=15.4W / at=30W / bt T3=60W / T4=100W（型号带 P 才支持）；端口优先级 low（默认先断）/high/critical（尽量保电）；FPoE 开机秒级供电、PPoE 重启不断电（均需 FPGA/CPLD 升级）。
 - <strong>升级</strong>：读 release note → 传文件入 running 目录 → reload from working 验证 → copy running certified 固化；必要时先 update uboot / update fpga-cpld。</p>
 <h2 id="a1-lab">A1 · 书中案例（Lab 配置精要）</h2>
-<p>诊断工具 Lab（p187-195，6870-A）：<code>swlog appid all subapp all level event</code> + <code>show log events</code> 输出客户可读事件；<code>command-log enable</code> 后建删 VLAN 用 <code>show command-log</code> 验证审计；<code>port-mirroring 1 source port 1/1/1 destination port 1/1/10</code> + enable；<code>port-monitoring 1 source port 1/1/1 enable</code> + pause/resume/disable，<code>show port-monitoring file</code> 回显；<code>show health</code>、<code>show rmon probes stats 1</code>。</p>
+<p>诊断工具 Lab（p187-195，6870-A）：<code>swlog appid all subapp all level event</code> + <code>show log events</code> 输出客户可读事件；
+<code>command-log enable</code> 后建删 VLAN 用 <code>show command-log</code> 验证审计；
+<code>port-mirroring 1 source port 1/1/1 destination port 1/1/10</code> + enable；
+<code>port-monitoring 1 source port 1/1/1 enable</code> + pause/resume/disable，<code>show port-monitoring file</code> 回显；
+<code>show health</code>、<code>show rmon probes stats 1</code>。</p>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
 <li>"谁改的配置"、"端口流量抓下来看"、CPU/内存异常、供电预算与断电保护、整机软件升级——本 skill。</li>
@@ -85,7 +100,8 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 PoE：
 6. <code>lanpower …</code> 管预算/优先级；延迟上电 delayed-start 120-600 秒（5 的倍数，启用后不支持 FPoE/PPoE，须 write memory 才重启保留）。
 升级：
-7. 读 release note → 传镜像（FTP/SFTP/USB/WebView）→ <code>reload from working no rollback-timeout</code> 验证 → <code>copy running certified</code>；U-Boot/FPGA 先行 <code>update uboot …</code> / <code>update fpga-cpld …</code>。
+7. 读 release note → 传镜像（FTP/SFTP/USB/WebView）→ <code>reload from working no rollback-timeout</code> 验证 → <code>copy running certified</code>；
+U-Boot/FPGA 先行 <code>update uboot …</code> / <code>update fpga-cpld …</code>。
 零配置：
 8. auto-fabric admin-state enable（Auto-VC/RCL 拉配置/Auto-LACP/Auto-SPB 等）。</p>
 <h2 id="b">B · 边界与陷阱</h2>
@@ -98,4 +114,4 @@ PoE：
 <li>RCL/Auto Fabric 拉配置只在 VLAN 1/127 各试 3 次 DHCP，规划零配置网段时别拦这几个 VLAN。</li>
 </ul>
 <hr />
-<p>来源条目: f14, p22, p23, p24, p25, p26, p39, ce08, c05, g34, g35, g37, g38</p></main></div></body></html>
+<p>来源条目: f14 · p22 · p23 · p24 · p25 · p26 · p39 · ce08 · c05 · g34 · g35 · g37 · g38</p><div class="pn"><a href="access-guardian-unp.html">⬅ 上一单元：access-guardian-unp</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

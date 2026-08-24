@@ -31,6 +31,17 @@ blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 
 hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 .badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
 .badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
 @media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
 </style></head>
 <body><div class="layout"><aside><h1>DT00XTE361 · Stellar WLAN Advanced Deployment with OmniVista</h1>
@@ -51,7 +62,7 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <div class="grp">交付与排障</div>
 <a href="skills/stellar-deployment-checklist.html" class="on">stellar-deployment-checklist</a>
 <a href="skills/stellar-troubleshooting-cli.html">stellar-troubleshooting-cli</a>
-<a href="skills/stellar-vowlan.html">stellar-vowlan</a></aside><main><h1>stellar-deployment-checklist</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="checklist">全流程部署综合演练（交付 checklist）与组织清理</h1>
+<a href="skills/stellar-vowlan.html">stellar-vowlan</a></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../postsales/index.html">售后</a> › <a href="index.html">DT00XTE361</a> › <span>全流程部署综合演练（交付 checklist）与组织清理</span></nav><h1>全流程部署综合演练（交付 checklist）与组织清理</h1><p class="meta"><span class="badge">SKILL</span> stellar-deployment-checklist · 来源页码: </p><h1 id="checklist">全流程部署综合演练（交付 checklist）与组织清理</h1>
 <h2 id="r">R · 原文引用</h2>
 <blockquote>
 <p>"The purpose of this exercise is to practice on Stellar Access Points and OmniVista Cirrus by working on a WLAN Stellar installation... You will be in charge to install and configure the network based on the given requirements." (p288)</p>
@@ -70,14 +81,19 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 7. <strong>拓扑变更</strong>：按需把部分 AP 改 Mesh。</p>
 <p>清理是逆向拆除（云管无一键恢复默认）：按创建的反序删——运行任务 → WIPS → AP 组/Provisioning/RF Profile 解绑 → SSID → 策略/角色/门户 → 账号/资产 → Golden Config → 报表 → 阈值重置 → 站点 → 确认设备目录空 → CLI 模板/值映射。</p>
 <h2 id="a1-lab">A1 · 书中案例（Lab 精要）</h2>
-<p>综合演练（p286-299）三个差异化 SSID：EmployeesX（WPA2-Enterprise 802.1X、仅 5GHz、VLAN 20、工作时间调度、按角色封 HTTP）；GuestsX（内部 Captive Portal、限 1Mbit/s、封 SSH/Telnet、VLAN 30、周一至周三调度、账号限时限量）；PrinterX（仅 2.4GHz、最小发射功率、固定信道、WPA2 PSK + 按设备 PSK/DPSK、复用 Employee VLAN）。RF Profile：负载均衡启用、关联门限 -50dBm。监控阈值（p298）：健康 70%、2.4G 利用率 20%（只跑打印机故收紧）、2.4G 客户端健康 90%、可用容量 25%。末段两 AP 建 Mesh（AP1321 为 Root、自定义 SSID、WPA2-Personal）。
+<p>综合演练（p286-299）三个差异化 SSID：EmployeesX（WPA2-Enterprise 802.1X、仅 5GHz、VLAN 20、工作时间调度、按角色封 HTTP）；
+GuestsX（内部 Captive Portal、限 1Mbit/s、封 SSH/Telnet、VLAN 30、周一至周三调度、账号限时限量）；
+PrinterX（仅 2.4GHz、最小发射功率、固定信道、WPA2 PSK + 按设备 PSK/DPSK、复用 Employee VLAN）。RF Profile：负载均衡启用、关联门限 -50dBm。监控阈值（p298）：健康 70%、2.4G 利用率 20%（只跑打印机故收紧）、2.4G 客户端健康 90%、可用容量 25%。末段两 AP 建 Mesh（AP1321 为 Root、自定义 SSID、WPA2-Personal）。
 基础 Lab（p43-73）补充上线细节：reset_PODX 复位 → My Site + Building A/Ground Floor（画约 1200-1300m² 楼层边界）→ 双交换机 + 双 AP 入目录 → 手工配 VLAN 10/20/30 → EmployeesX/GuestsX 映射 My-AP-Group → 树莓派验证（Employee 192.168.20.70-79 / Guest 192.168.30.70-79）。
 清理 Lab（p313-319）：29 步逆向拆除全量配置，清理后设备目录回空、可重新部署。</p>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
 <li>新项目交付或交付前演练验收，需要一份覆盖组织/上线/SSID/安全/运维的 checklist → 本 skill。</li>
 <li>项目下线、换设备、重配网络前要清空云管配置 → 本 skill 清理流程（别去找"一键恢复"，没有）。</li>
-<li>单点深入：SSID 高级选项 → stellar-ssid-advanced；Mesh → stellar-bridge-mesh；阈值业务含义 → stellar-monitoring-ops；上线后故障 → stellar-troubleshooting-cli。</li>
+<li>单点深入：SSID 高级选项 → stellar-ssid-advanced；
+Mesh → stellar-bridge-mesh；
+阈值业务含义 → stellar-monitoring-ops；
+上线后故障 → stellar-troubleshooting-cli。</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <p>交付（照 A1 七段主线逐项打勾）：
@@ -101,4 +117,4 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <li>OS-2360 这类不能上云管的交换机只能手工配置，checklist 里别指望云管纳管它。</li>
 </ul>
 <hr />
-<p>来源条目: f08, f10, c01, c02, c09, c10, ce01, ce02, ce03, ce04, ce13, g32, g33, g34, g36, g37, g38, g39, g40, g56, g57, g58</p></main></div></body></html>
+<p>来源条目: f08 · f10 · c01 · c02 · c09 · c10 · ce01 · ce02 · ce03 · ce04 · ce13 · g32 · g33 · g34 · g36 · g37 · g38 · g39 · g40 · g56 · g57 · g58</p><div class="pn"><a href="stellar-ssid-advanced.html">⬅ 上一单元：stellar-ssid-advanced</a><a class="nxt" href="stellar-troubleshooting-cli.html">下一单元：stellar-troubleshooting-cli ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

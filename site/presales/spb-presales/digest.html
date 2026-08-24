@@ -31,6 +31,17 @@ blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 
 hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 .badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
 .badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
 @media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
 </style></head>
 <body><div class="layout"><aside><h1>DT00XPS279 · OmniSwitch LAN SPB 售前</h1>
@@ -54,7 +65,7 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <a href="skills/spb-ov2500-delivery.html">spb-ov2500-delivery</a>
 <a href="skills/spb-vs-evpn-mpls-selection.html">spb-vs-evpn-mpls-selection</a>
 <a href="skills/spb-stp-migration-cases.html">spb-stp-migration-cases</a>
-<a href="skills/spb-license-spec-sizing.html">spb-license-spec-sizing</a></aside><main><h1>精华长文 DIGEST</h1><h1 id="spb">SPB 售前精华 · 不读全书只看这一篇</h1>
+<a href="skills/spb-license-spec-sizing.html">spb-license-spec-sizing</a></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../presales/index.html">售前</a> › <a href="index.html">DT00XPS279</a> › <span>精华长文 DIGEST</span></nav><h1>精华长文 DIGEST</h1><h1 id="spb">SPB 售前精华 · 不读全书只看这一篇</h1>
 <blockquote>
 <p>目标读者：要见客户、要写方案、要投标答辩的售前工程师。以下内容从 DT00XPS279EN（147 页）蒸馏而来，数字均带页码，可直接引用；引用前记得按最新 AOS 规格书复核（教材 p75 自带免责声明）。</p>
 </blockquote>
@@ -66,11 +77,13 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <hr />
 <h2 id="_1">二、售前攻防十问</h2>
 <p><strong>Q1 客户问"STP 用得好好的，凭什么换？"</strong>
-用 p23 的十维对比页：STP 单树绕根桥、F 到 G 明明相邻却要五跳、一半链路被阻塞浪费、逐跳配置、收敛以秒计；SPB 每台自为根、IS-IS 控最短路径、全链路利用、边缘配置、快速恢复。收尾锚一句可背常数：1000 节点内全链路无阻塞、亚秒级收敛（p1-17/p25）。注意话术精确化：说"核心骨干消除阻塞链路"，别承诺"全网灭 STP"——教材自己的参考设计里接入层上行仍用 STP 或 DHL（p32）。</p>
+用 p23 的十维对比页：STP 单树绕根桥、F 到 G 明明相邻却要五跳、一半链路被阻塞浪费、逐跳配置、收敛以秒计；
+SPB 每台自为根、IS-IS 控最短路径、全链路利用、边缘配置、快速恢复。收尾锚一句可背常数：1000 节点内全链路无阻塞、亚秒级收敛（p1-17/p25）。注意话术精确化：说"核心骨干消除阻塞链路"，别承诺"全网灭 STP"——教材自己的参考设计里接入层上行仍用 STP 或 DHL（p32）。</p>
 <p><strong>Q2 客户问"新协议安不安全？"</strong>
 非 IP 转发论证（p9）：骨干只处理 BMAC，不解析客户 IP 与 MAC，逐项排除 IP 扫描、DOS、中间人。再补一句地址隔离：核心不学客户 MAC，客户侧拓扑对骨干不可见。微分段需求接认证→分类→供给三步流水线讲（p11/p56）。</p>
 <p><strong>Q3 客户或标书要求对比 EVPN/MPLS？</strong>
-直接掏 p134 七维对比表做一页纸：SPB 在部署难度、培训需求、协议开销（仅 IS-IS）、排障速度四维占优；扩展性与弹性承认 EVPN/MPLS 更强。行业矩阵（p138）：园区/视频监控/智能交通选 SPB，大型 DC 选 EVPN，铁路电力等毫秒收敛刚需选 IP-MPLS（MPLS 50ms vs SPB 100ms，p136）。客户指定 EVPN 时不硬顶——三技术同一 AOS 全支持，无厂商锁定。</p>
+直接掏 p134 七维对比表做一页纸：SPB 在部署难度、培训需求、协议开销（仅 IS-IS）、排障速度四维占优；
+扩展性与弹性承认 EVPN/MPLS 更强。行业矩阵（p138）：园区/视频监控/智能交通选 SPB，大型 DC 选 EVPN，铁路电力等毫秒收敛刚需选 IP-MPLS（MPLS 50ms vs SPB 100ms，p136）。客户指定 EVPN 时不硬顶——三技术同一 AOS 全支持，无厂商锁定。</p>
 <p><strong>Q4 "SPB 能跑三层吗？"</strong>
 能，而且是"消灭独立路由层"的论证：BEB 同时当桥和路由器（p78-98）。选型两步走：物理形态三选一（Outline 物理环回线 / 前面板口 inline / service-based 单遍 inline，p82/p92/p95），路由机制两档（VPN-Lite 简版跑静态/OSPF，L3 VPN 全版 IS-IS TLV 传路由，p85）。书中 p84-97 有四套完整 AOS 配置样例可转方案书章节。</p>
 <p><strong>Q5 "现网割接，业务会不会断？"</strong>
@@ -80,7 +93,9 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <p><strong>Q7 "要买 License 吗？"</strong>
 不要。AOS 上 SPB 免许可，OS6860E/6860N/6870/6865/6900/9900 全系支持（p22）。报价页可直接写零软件授权成本。</p>
 <p><strong>Q8 "有成功案例吗？"</strong>
-三个案例按客户行业选用（p114-125）：教育选 Linköping 大学（spine-leaf 改造，"配置管理极其简单"高管证言）；交通选美国 NDOT（路边网络 SPB 到边缘，NOC+光纤环+加固型三层架构）；政务/智慧城市选法国 Metz（80 栋楼、100km 光纤、200 台交换机，STP→SPB 零中断迁移，叙事最完整）。引用规模数字只用书中量化值，Linköping 无数字，勿自行补。</p>
+三个案例按客户行业选用（p114-125）：教育选 Linköping 大学（spine-leaf 改造，"配置管理极其简单"高管证言）；
+交通选美国 NDOT（路边网络 SPB 到边缘，NOC+光纤环+加固型三层架构）；
+政务/智慧城市选法国 Metz（80 栋楼、100km 光纤、200 台交换机，STP→SPB 零中断迁移，叙事最完整）。引用规模数字只用书中量化值，Linköping 无数字，勿自行补。</p>
 <p><strong>Q9 "网络怎么管？"</strong>
 OmniVista 2500 图形化全流程（p99-113）：服务创建向导、L2 Profile、SPB Profile 模板（Tag/I-SID/BVLAN/组播模式一次定义多处套用）、拓扑视图含 LACP 明细。配置分两层工单：Core level（NNI 骨干，一次配好基本不动）与 Access level（UNI 服务，日常增删只在边缘）——与 edge-only 论证互为印证（p73）。</p>
 <p><strong>Q10 "OV2500 和 SPB 怎么配合交付？"</strong>
@@ -170,7 +185,10 @@ OmniVista 2500 图形化全流程（p99-113）：服务创建向导、L2 Profile
 <p><strong>框架二：互操作三承诺 + 双域并行迁移链（f03/f06/p10/p13）</strong>
 回应预算质疑的完整论证链："能共存"（L2/L3/组播协议全清单互操作）→"可分批"（SPB 域与 Legacy 域长期共存，IoT 流量先行）→"可回退"（每步可退）→"不换机"（无需整机更换）。四环扣死，CIO 的割接风险与投资作废两大顾虑一次拆完。落地证据用 Metz 五步施工法（p123）。</p>
 <p><strong>框架三：技术中立防御 + 七维对比拉回主场（f19/f20/p134/p138）</strong>
-当客户被竞品带向 EVPN/MPLS：第一步不硬顶，承认三技术各有主场（ALE 同一 AOS 全支持，OmniFabric，无锁定）；第二步掏七维对比表，SPB 占优的四维（部署/培训/开销/排障）重点标注；第三步用行业矩阵给客户对号入座——园区/城域/IoT 行天然落回 SPB 主场；第四步如实写让位场景（超大 DC→EVPN、毫秒收敛→MPLS），反而建立技术诚信。这张表可直接做投标"技术选型"单页。</p>
+当客户被竞品带向 EVPN/MPLS：第一步不硬顶，承认三技术各有主场（ALE 同一 AOS 全支持，OmniFabric，无锁定）；
+第二步掏七维对比表，SPB 占优的四维（部署/培训/开销/排障）重点标注；
+第三步用行业矩阵给客户对号入座——园区/城域/IoT 行天然落回 SPB 主场；
+第四步如实写让位场景（超大 DC→EVPN、毫秒收敛→MPLS），反而建立技术诚信。这张表可直接做投标"技术选型"单页。</p>
 <hr />
 <h2 id="9-skill">五、学习路径（9 个 skill 的读法）</h2>
 <table>
@@ -242,5 +260,4 @@ OmniVista 2500 图形化全流程（p99-113）：服务创建向导、L2 Profile
 <li><strong>一切规格数字投标前复核最新 AOS 规格书</strong>。教材是 2025-02 Issue 05 快照（AOS R8 时代），多处标 8.10 R3/R4 起；p139 的 P/O 图例书中未定义，引用需核实（ce16）。</li>
 </ul>
 <p>诚信话术的底层逻辑：让位场景如实讲，反而把 SPB 主场（园区/城域/IoT、1000 节点内、STP 改造）衬托得更可信。</p>
-<hr />
-<p><em>由 cangjie-skill 流水线从 DT00XPS279EN 蒸馏生成</em></p></main></div></body></html>
+<hr /><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

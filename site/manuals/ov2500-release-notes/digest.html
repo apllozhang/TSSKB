@@ -31,6 +31,17 @@ blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 
 hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 .badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
 .badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
 @media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
 </style></head>
 <body><div class="layout"><aside><h1>OV2500 4.9R2 · Release Notes</h1>
@@ -46,7 +57,7 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <a href="skills/ov2500-upgrade-deploy.html">ov2500-upgrade-deploy</a>
 <div class="grp">排障库</div>
 <a href="skills/ov2500-known-issues.html">ov2500-known-issues</a>
-<a href="skills/ov2500-danger-traps.html">ov2500-danger-traps</a></aside><main><h1>精华长文 DIGEST</h1><h1 id="digest-ov-2500-nms-49r2">DIGEST · OV 2500 NMS 4.9R2 精华长文（不读全书版）</h1>
+<a href="skills/ov2500-danger-traps.html">ov2500-danger-traps</a></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../manuals/index.html">配置手册</a> › <a href="index.html">OV2500 4.9R2</a> › <span>精华长文 DIGEST</span></nav><h1>精华长文 DIGEST</h1><h1 id="digest-ov-2500-nms-49r2">DIGEST · OV 2500 NMS 4.9R2 精华长文（不读全书版）</h1>
 <blockquote>
 <p>原始文档：ALE《OmniVista 2500 NMS 4.9R2 Release Notes》，2025-10，93 页。本文是升级评估、变更评审、故障排查三件事的"先看这里"入口，页码均指向原书。</p>
 </blockquote>
@@ -90,7 +101,9 @@ U-Boot 和 AOS 升到 8.9R4 及以上后，再降回 8.9R3 并重启，交换机
 8. 有线 CP 认证失败——客户端网络需 DNS 且解析到 OV 辅助 IP（ce28）。
 9. 手机 App 流量绕过 WCF——无解，方案阶段就算 App 豁免（ce38）。
 10. Firefox 大列表卡顿——换 Chrome/Edge，或调 about:config 两个参数（ce57）。</p>
-<p>判读三原则：先查版本组合（大量问题绑定 AOS/AWOS/OV 版本）；区分 bug 与功能边界（改方案而非等修复）；No workaround 条目转为预期管理（估算窗口、告警降噪）。每条带 PR 号，可向 ALE TAC 交叉确认修复版本。</p>
+<p>判读三原则：先查版本组合（大量问题绑定 AOS/AWOS/OV 版本）；
+区分 bug 与功能边界（改方案而非等修复）；
+No workaround 条目转为预期管理（估算窗口、告警降噪）。每条带 PR 号，可向 ALE TAC 交叉确认修复版本。</p>
 <h2 id="_4">五、兼容矩阵要点</h2>
 <ul>
 <li><strong>交换机固件</strong>（p13-14）：OS2260/2360 = 5.2R5-R7；OS6350/6450 = 6.7.2.R06-R08；OS6360/6465/6560/6570M/6860E/6860N/6865 = 8.9R4 / 8.10R2 / 8.10R3；<strong>OS6870 特殊，只有 8.10R2/R3，没有 8.9R4 档</strong>；OS6900-X20/X40/T20/T40/Q32/X72 = 仅 8.9R4；OS9907/9912 = 8.9R4 / 8.10R2 / 8.10R3。Stellar AP 推荐 AWOS 5.0.2。</li>
@@ -99,5 +112,4 @@ U-Boot 和 AOS 升到 8.9R4 及以上后，再降回 8.9R3 并重启，交换机
 <li><strong>新特性依赖</strong>：Enhanced Open 需 AP AWOS 4.0.8+；Blast-RADIUS 交换机侧命令 <code>aaa radius message-authenticator</code> 需 AOS 8.10R2+；Message-Authenticator 响应校验需 AWOS 5.0.2+。</li>
 </ul>
 <p>一句话收束：4.9R2 的升级决策 = 路径判定（4.9R1 直升、其余先上 4.9R1）+ 三大陷阱前置（OS6570M 单向门闩、强口令公告、避开同步期 failover）+ 兼容矩阵过一遍。做完这三件事再动变更单，93 页原书里 90% 的坑已经绕开。</p>
-<hr />
-<p>由 cangjie-skill 流水线从 OV2500 4.9R2 Release Notes 蒸馏生成</p></main></div></body></html>
+<hr /><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

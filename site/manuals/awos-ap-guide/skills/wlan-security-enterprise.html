@@ -31,6 +31,17 @@ blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 
 hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 .badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
 .badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
 @media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
 </style></head>
 <body><div class="layout"><aside><h1>AWOS 5.0.3 · Stellar AP 用户手册</h1>
@@ -48,7 +59,7 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <div class="grp">安全</div>
 <a href="skills/wlan-security-enterprise.html" class="on">wlan-security-enterprise</a>
 <div class="grp">运维</div>
-<a href="skills/ap-ops-upgrade-mesh.html">ap-ops-upgrade-mesh</a></aside><main><h1>wlan-security-enterprise</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="wlan">WLAN 安全与高级认证</h1>
+<a href="skills/ap-ops-upgrade-mesh.html">ap-ops-upgrade-mesh</a></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../manuals/index.html">配置手册</a> › <a href="index.html">AWOS 5.0.3</a> › <span>WLAN 安全与高级认证</span></nav><h1>WLAN 安全与高级认证</h1><p class="meta"><span class="badge">SKILL</span> wlan-security-enterprise · 来源页码: </p><h1 id="wlan">WLAN 安全与高级认证</h1>
 <h2 id="r">R · 原文引用</h2>
 <blockquote>
 <p>Enterprise: Also referred to as 802.1X mode ... requires a RADIUS authentication server. Personal: Also referred to as PSK (pre-shared key) mode ... This key may be entered either as a string of 64 hexadecimal digits, or as a passphrase of 8 to 63 printable ASCII characters. (p59)</p>
@@ -80,8 +91,12 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <li>配 RADIUS：AuthPort 默认 1812、AcctPort 默认 1813；启用 RadSec 后 AuthPort 改 2083。注意 RadSec 仅适用于无线客户端、只支持主 RADIUS 服务器。</li>
 <li>动态 VLAN：在 RADIUS 侧下发三属性——Tunnel-Type (#64)=VLAN、Tunnel-Medium-Type (#65)=802(6)、Tunnel-Private-Group-ID (#81)。</li>
 <li>WPA3/CNSA：先核对机型支持清单；WPA3 Enterprise 选 CNSA 时 PMF 强制 Required（仅支持 PMF 的客户端可接入）。6GHz 只允许 WPA3 与 Enhanced Open。</li>
-<li>HTTPS 管理：HTTP 用 http://AP-IP:8080 免证书；HTTPS 用 https://AP-IP（443），先下载根证书 ALE-OmniAccess-WLAN.CRT 装入浏览器信任库；自定义证书必须用域名 mywifi.al-enterprise.com（登录 URL 不可改）。</li>
-<li>ACL：规则自上而下顺序匹配，无命中默认 Accept（放行）；L3 ACL 支持源/目的 IP + TCP/UDP/ICMP 端口 + 通配符；Apply To EthPort 仅适用 AP1201H/AP1201HL/AP1311/AP1301H 下行口。L2 级 MAC 控制走 Blocklist/Allowlist，802.1p/DSCP 规则在 SSID 的 QoS 里配。</li>
+<li>HTTPS 管理：HTTP 用 http://AP-IP:8080 免证书；
+HTTPS 用 https://AP-IP（443），先下载根证书 ALE-OmniAccess-WLAN.CRT 装入浏览器信任库；
+自定义证书必须用域名 mywifi.al-enterprise.com（登录 URL 不可改）。</li>
+<li>ACL：规则自上而下顺序匹配，无命中默认 Accept（放行）；
+L3 ACL 支持源/目的 IP + TCP/UDP/ICMP 端口 + 通配符；
+Apply To EthPort 仅适用 AP1201H/AP1201HL/AP1311/AP1301H 下行口。L2 级 MAC 控制走 Blocklist/Allowlist，802.1p/DSCP 规则在 SSID 的 QoS 里配。</li>
 <li>wIDS/wIPS 加固（可选）：AP allowlist 信任名单、blocklist（仅 rogue 可入）、Suppress 发 DEAUTH（默认关闭）、Dynamic blocklist 自动拉黑 ad-hoc（默认关闭）。</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
@@ -94,4 +109,4 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <li>关闭 High Efficiency → HE 机型降级 VHT；关闭 EHT → EHT 机型降级 HE。</li>
 </ul>
 <hr />
-<p>来源条目: p16, p17, p26, p28, ce09, g14, g15, g18, g19, g20, g21, g22, g23, g30</p></main></div></body></html>
+<p>来源条目: p16 · p17 · p26 · p28 · ce09 · g14 · g15 · g18 · g19 · g20 · g21 · g22 · g23 · g30</p><div class="pn"><a href="ssid-radio-tuning.html">⬅ 上一单元：ssid-radio-tuning</a><a class="nxt" href="ap-ops-upgrade-mesh.html">下一单元：ap-ops-upgrade-mesh ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

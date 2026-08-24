@@ -31,6 +31,17 @@ blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 
 hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 .badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
 .badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
 @media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
 </style></head>
 <body><div class="layout"><aside><h1>DT00XTE323 · OmniSwitch LAN SPB 实施</h1>
@@ -52,7 +63,7 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <a href="skills/spb-hybrid-etree.html">spb-hybrid-etree</a>
 <div class="grp">自动化与运维</div>
 <a href="skills/unp-dynamic-ov2500.html">unp-dynamic-ov2500</a>
-<a href="skills/spb-oam-troubleshoot.html">spb-oam-troubleshoot</a></aside><main><h1>ip-over-spb</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="ip-over-spb-vrrp-vpn-lite-l3-vpn">IP over SPB 三方案（VRRP 冗余 / VPN-Lite / L3-VPN）</h1>
+<a href="skills/spb-oam-troubleshoot.html">spb-oam-troubleshoot</a></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../postsales/index.html">售后</a> › <a href="index.html">DT00XTE323</a> › <span>IP over SPB 三方案（VRRP 冗余 / VPN-Lite / L3-VPN）</span></nav><h1>IP over SPB 三方案（VRRP 冗余 / VPN-Lite / L3-VPN）</h1><p class="meta"><span class="badge">SKILL</span> ip-over-spb · 来源页码: </p><h1 id="ip-over-spb-vrrp-vpn-lite-l3-vpn">IP over SPB 三方案（VRRP 冗余 / VPN-Lite / L3-VPN）</h1>
 <h2 id="r">R · 原文引用</h2>
 <blockquote>
 <p>"VPN Lite: A VPN Lite L3 Service is created by overlaying a L3 routing protocol on top of the L2 WAN SPB service... L3 VPN: SPB L3 VPN leverages the existing SPB IS-IS instance to carry customer VPN routes without requiring an additional routing protocol such as OSPF. This is accomplished with additional IS-IS TLVs extensions" (p156)</p>
@@ -82,7 +93,8 @@ ECMP（c11，p219）：同一 VRF 绑两个 I-SID（各配服务+接口+bind）�
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
 <li>业务要网关冗余、跨 SPB 路由互通、多 VRF 隔离、等价多路径、老平台（6900-X20 等）无内联路由能力时用本 skill。</li>
-<li>与 <code><a href="spb-l2-service.html">spb-l2-service</a></code> 的区分：本 skill 所有方案的第一步都是建 L2 服务，但一旦 <code>ip interface ... service X</code> 出现即进入本 skill；与 <code><a href="spb-oam-troubleshoot.html">spb-oam-troubleshoot</a></code> 的区分："路由学到没有"的三级表对拍（c10）本 skill 已内含，通用 OAM 归排障 skill。</li>
+<li>与 <code><a href="spb-l2-service.html">spb-l2-service</a></code> 的区分：本 skill 所有方案的第一步都是建 L2 服务，但一旦 <code>ip interface ... service X</code> 出现即进入本 skill；
+与 <code><a href="spb-oam-troubleshoot.html">spb-oam-troubleshoot</a></code> 的区分："路由学到没有"的三级表对拍（c10）本 skill 已内含，通用 OAM 归排障 skill。</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
@@ -91,7 +103,8 @@ ECMP（c11，p219）：同一 VRF 绑两个 I-SID（各配服务+接口+bind）�
 <li>按方案分支：</li>
 <li>VRRP：两台 BEB 各配 <code>.1</code>/<code>.2</code> + 同 VRID 同 <code>.254</code> 虚地址，优先级交叉；<code>show ip vrrp</code> 验证 Master/Backup。</li>
 <li>VPN-Lite：接口上跑 OSPF 五件套或静态路由；<code>show ip ospf interface</code> / <code>show ip routes</code> 验证。</li>
-<li>L3-VPN：四步 bind→export→import→（可选）redist；验证链 <code>show spb ipvpn bind</code> → <code>show ip global-route-table</code> → <code>show spb ipvpn route-table</code> → <code>show ip routes</code>（IMPORT 标记）。</li>
+<li>L3-VPN：四步 bind→export→import→（可选）redist；
+验证链 <code>show spb ipvpn bind</code> → <code>show ip global-route-table</code> → <code>show spb ipvpn route-table</code> → <code>show ip routes</code>（IMPORT 标记）。</li>
 <li>从 VPN-Lite 切 L3-VPN：先 <code>ip ospf admin-state disable</code> 再 bind（避免双路由源，c09）。</li>
 <li>老平台：双口对接回环或单口 <code>interfaces port X loopback</code> + <code>ip interface ... rtr-port port X tagged vlan Y</code>（c18）。</li>
 </ol>
@@ -104,4 +117,4 @@ ECMP（c11，p219）：同一 VRF 绑两个 I-SID（各配服务+接口+bind）�
 <li>VPN-Lite 收敛受协议叠加拖累（IS-IS 先收敛 OSPF 才能收敛，g39），对收敛敏感选 L3-VPN。</li>
 </ul>
 <hr />
-<p>来源条目: f07, f08, p18, p31, p33, c04, c05, c06, c07, c08, c09, c10, c11, c18, ce05, ce06, ce07, ce11, g16, g22, g39, g40</p></main></div></body></html>
+<p>来源条目: f07 · f08 · p18 · p31 · p33 · c04 · c05 · c06 · c07 · c08 · c09 · c10 · c11 · c18 · ce05 · ce06 · ce07 · ce11 · g16 · g22 · g39 · g40</p><div class="pn"><a href="spb-l2-service.html">⬅ 上一单元：spb-l2-service</a><a class="nxt" href="spb-bum-protection.html">下一单元：spb-bum-protection ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

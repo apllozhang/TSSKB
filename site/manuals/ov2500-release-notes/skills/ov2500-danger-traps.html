@@ -31,6 +31,17 @@ blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 
 hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 .badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
 .badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
 @media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
 </style></head>
 <body><div class="layout"><aside><h1>OV2500 4.9R2 · Release Notes</h1>
@@ -46,7 +57,7 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <a href="skills/ov2500-upgrade-deploy.html">ov2500-upgrade-deploy</a>
 <div class="grp">排障库</div>
 <a href="skills/ov2500-known-issues.html">ov2500-known-issues</a>
-<a href="skills/ov2500-danger-traps.html" class="on">ov2500-danger-traps</a></aside><main><h1>ov2500-danger-traps</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="ov-2500-top">OV 2500 危险陷阱 TOP 清单</h1>
+<a href="skills/ov2500-danger-traps.html" class="on">ov2500-danger-traps</a></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../manuals/index.html">配置手册</a> › <a href="index.html">OV2500 4.9R2</a> › <span>OV 2500 危险陷阱 TOP 清单</span></nav><h1>OV 2500 危险陷阱 TOP 清单</h1><p class="meta"><span class="badge">SKILL</span> ov2500-danger-traps · 来源页码: </p><h1 id="ov-2500-top">OV 2500 危险陷阱 TOP 清单</h1>
 <h2 id="r">R · 原文引用</h2>
 <blockquote>
 <p>"If the U-Boot and AOS version is 8.9R4 or above and you downgrade the AOS version to 8.9R3 and reboot the switch, the switch cannot reboot. The 8.9R4 U-Boot only accepts signed images. OS6570M has a signed image; there is no unsigned image. PR# OVE-13356" (p37-38)</p>
@@ -177,7 +188,9 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
 <li>触发：升级变更评审会、回退方案编制、HA 演练预案、安全策略上线前核查、证书/备份 SOP 制定。</li>
-<li>区分：已经出现故障要定位 → <code><a href="ov2500-known-issues.html">ov2500-known-issues</a></code>；查版本/固件兼容 → <code><a href="ov2500-49r2-features-compat.html">ov2500-49r2-features-compat</a></code>；排升级步骤 → <code><a href="ov2500-upgrade-deploy.html">ov2500-upgrade-deploy</a></code>。本 skill 只管"事前一颗雷"清单——后果严重且必须前置规避的条目。</li>
+<li>区分：已经出现故障要定位 → <code><a href="ov2500-known-issues.html">ov2500-known-issues</a></code>；
+查版本/固件兼容 → <code><a href="ov2500-49r2-features-compat.html">ov2500-49r2-features-compat</a></code>；
+排升级步骤 → <code><a href="ov2500-upgrade-deploy.html">ov2500-upgrade-deploy</a></code>。本 skill 只管"事前一颗雷"清单——后果严重且必须前置规避的条目。</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
@@ -196,4 +209,4 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <li>HA 七条安装限制（ce69）属架构设计约束，完整清单见 <code><a href="ov2500-upgrade-deploy.html">ov2500-upgrade-deploy</a></code>。</li>
 </ul>
 <hr />
-<p>来源条目: ce63, ce67, ce51, ce65, ce66, ce21, ce23, ce30, ce52, ce13, ce14, ce15, ce40, ce60, p05；关联 ce69 详见 upgrade-deploy</p></main></div></body></html>
+<p>来源条目: ce63 · ce67 · ce51 · ce65 · ce66 · ce21 · ce23 · ce30 · ce52 · ce13 · ce14 · ce15 · ce40 · ce60 · p05；关联 ce69 详见 upgrade-deploy</p><div class="pn"><a href="ov2500-known-issues.html">⬅ 上一单元：ov2500-known-issues</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

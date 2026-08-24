@@ -31,6 +31,17 @@ blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 
 hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 .badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
 .badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
 @media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
 </style></head>
 <body><div class="layout"><aside><h1>DT00XTE361 · Stellar WLAN Advanced Deployment with OmniVista</h1>
@@ -51,7 +62,7 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <div class="grp">交付与排障</div>
 <a href="skills/stellar-deployment-checklist.html">stellar-deployment-checklist</a>
 <a href="skills/stellar-troubleshooting-cli.html">stellar-troubleshooting-cli</a>
-<a href="skills/stellar-vowlan.html" class="on">stellar-vowlan</a></aside><main><h1>stellar-vowlan</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="vowlan">VoWLAN 语音无线部署五阶段</h1>
+<a href="skills/stellar-vowlan.html" class="on">stellar-vowlan</a></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../postsales/index.html">售后</a> › <a href="index.html">DT00XTE361</a> › <span>VoWLAN 语音无线部署五阶段</span></nav><h1>VoWLAN 语音无线部署五阶段</h1><p class="meta"><span class="badge">SKILL</span> stellar-vowlan · 来源页码: </p><h1 id="vowlan">VoWLAN 语音无线部署五阶段</h1>
 <h2 id="r">R · 原文引用</h2>
 <blockquote>
 <p>"These are the major steps for the deployment of VoWLAN in a WLAN Stellar environment... Prepare / Plan / Design / Implement / Operate." (p306)</p>
@@ -65,9 +76,13 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 3. <strong>Design</strong>：相邻 AP 用非重叠信道；QoS 端到端 WMM 队列标 DSCP/802.1p；可选 DPI 语音管控；语音专用 VLAN；接入交换机千兆端口。
 4. <strong>Implement</strong>：布线、语音服务器、RADIUS/DNS/DHCP、IMS3 批量管话机、话机 SSID 与 OmniVista 配置。
 5. <strong>Operate</strong>：监控语音覆盖（SNR/RF 扫描）、VoIP 审计、性能、勘测（Ekahau/AirMagnet）、专业服务支持。</p>
-<p>量化标准：802.11ac 下客户端 RSSI ≥ -67dBm（wlanconfig 显示值 ≥ 29）、SNR ≥ 25；正确漫游一般要求 -62dBm 或更好。RSSI 换算参考：10≈-86dBm（语音不可用）、20≈-76dBm（上网可用）、29≈-67dBm（语音推荐）、35≈-61dBm（理想）。</p>
+<p>量化标准：802.11ac 下客户端 RSSI ≥ -67dBm（wlanconfig 显示值 ≥ 29）、SNR ≥ 25；
+正确漫游一般要求 -62dBm 或更好。RSSI 换算参考：10≈-86dBm（语音不可用）、20≈-76dBm（上网可用）、29≈-67dBm（语音推荐）、35≈-61dBm（理想）。</p>
 <h2 id="a1-lab">A1 · 书中案例（Lab 精要）</h2>
-<p>教材语音部分为规划方法论章节（p300-311），无独立配置 Lab；可操作锚点：话机侧 NOE/SIP 终端（8118/8128/8158s/8168s）与 Rainbow/OTC 软终端经 IMS3 服务器批量部署管理（p302, p310）；话机支持 Ekahau RTLS 定位；排障时用 ssudo wlanconfig athXX list 直接读客户端 RSSI 值对照 29/-67dBm 门槛（p272-273）。QoS 映射沿用 WMM 推荐表（Voice 5/46-EF），见 stellar-ssid-advanced。</p>
+<p>教材语音部分为规划方法论章节（p300-311），无独立配置 Lab；
+可操作锚点：话机侧 NOE/SIP 终端（8118/8128/8158s/8168s）与 Rainbow/OTC 软终端经 IMS3 服务器批量部署管理（p302, p310）；
+话机支持 Ekahau RTLS 定位；
+排障时用 ssudo wlanconfig athXX list 直接读客户端 RSSI 值对照 29/-67dBm 门槛（p272-273）。QoS 映射沿用 WMM 推荐表（Voice 5/46-EF），见 stellar-ssid-advanced。</p>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
 <li>园区要上无线话机/软终端，需要覆盖与容量规划数字 → 本 skill 直接套常数。</li>
@@ -94,4 +109,4 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <li>QoS 只标无线侧不够，端到端（VLAN/交换机）都要认 EF/5。</li>
 </ul>
 <hr />
-<p>来源条目: f09, p15, p16, g47, g48, g49, g59</p></main></div></body></html>
+<p>来源条目: f09 · p15 · p16 · g47 · g48 · g49 · g59</p><div class="pn"><a href="stellar-troubleshooting-cli.html">⬅ 上一单元：stellar-troubleshooting-cli</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

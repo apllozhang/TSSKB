@@ -31,6 +31,17 @@ blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 
 hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 .badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
 .badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
 @media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
 </style></head>
 <body><div class="layout"><aside><h1>OV2500 4.9R2 · RAP 与 VPN VA 安装</h1>
@@ -47,7 +58,7 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <a href="skills/vpn-va-deploy-capacity.html">vpn-va-deploy-capacity</a>
 <a href="skills/rap-data-tunnel-config.html">rap-data-tunnel-config</a>
 <div class="grp">排障</div>
-<a href="skills/rap-vpn-troubleshooting.html" class="on">rap-vpn-troubleshooting</a></aside><main><h1>rap-vpn-troubleshooting</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="rap">RAP 隧道排障决策树</h1>
+<a href="skills/rap-vpn-troubleshooting.html" class="on">rap-vpn-troubleshooting</a></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../manuals/index.html">配置手册</a> › <a href="index.html">OV2500 4.9R2</a> › <span>RAP 隧道排障决策树</span></nav><h1>RAP 隧道排障决策树</h1><p class="meta"><span class="badge">SKILL</span> rap-vpn-troubleshooting · 来源页码: </p><h1 id="rap">RAP 隧道排障决策树</h1>
 <h2 id="r">R · 原文引用</h2>
 <blockquote>
 <p>"If the AP Management VPN Tunnel is down: Check if tunnel interface was created using command "wg" on VPN VA ... Verify that the AP's IP Address is present in the VPN.conf file ... Verify that the firewall is not blocking traffic in both ways (from outside company, from VPN-VA)." (p81)</p>
@@ -74,7 +85,8 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <ul>
 <li>触发：交付后或变更后出现"AP 离线""隧道起不来""无线连上但拿不到 IP / 上不了内网"，需要按层定位。</li>
 <li>与 <code><a href="vpn-va-deploy-capacity.html">vpn-va-deploy-capacity</a></code> 的区分：部署期的导入/网卡错误在那边（如混杂模式的三项 Accept 配法两边都引用，本 skill 把"混杂模式默认 Reject"作为故障第一嫌疑）。</li>
-<li>与 <code><a href="rap-data-tunnel-config.html">rap-data-tunnel-config</a></code> 的区分：那边是正向配置（设置文件、AP Group 绑定）；本 skill 假设配置已做完，定位哪一环失效——很多故障根因正是那边 B 节列的陷阱（文件没重传、AP Group 没绑）。</li>
+<li>与 <code><a href="rap-data-tunnel-config.html">rap-data-tunnel-config</a></code> 的区分：那边是正向配置（设置文件、AP Group 绑定）；
+本 skill 假设配置已做完，定位哪一环失效——很多故障根因正是那边 B 节列的陷阱（文件没重传、AP Group 没绑）。</li>
 <li>与升级割接相关：若故障发生在 VA 升级后（约 5 分钟窗口），先确认第 4-7 步是否已完成、profile 是否已回导。</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
@@ -82,10 +94,21 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <li>先定层：wg 查管理隧道接口在不在。不在 → 走第 2 步；在 → 跳第 3 步。</li>
 <li>管理隧道 down：确认在 VPN VA 上执行（RAP 不可达时不在此执行）；grep AP 的 IP 是否在导入的 VPN.conf；核对防火墙双向（企业外部↔VPN-VA）。</li>
 <li>隧道 up 但 OV 里没 AP：从 OV ping AP 地址；检查 OV 到 AP wg0 子网的静态路由。</li>
-<li>数据隧道 down：两侧 wg 查接口；AP 上 cat /tmp/config/datavpn.conf 看配置是否推送；确认 Data VPN Server 已绑 AP Group；ifconfig wg1 看 IP 且核对在导入的 Data-VPN.conf 中；防火墙双向。</li>
-<li>双隧道 up、客户端无 DHCP：AP 上 sta_list 查关联与 TUNNELID/FARENDIP；brctl show 确认 ath0x 关联 br-g1；查企业接入交换机 MAC 表；查 DHCP relay（ip helper、dhcp-snooping）。</li>
-<li>客户端不通同网段设备/网关：vSwitch/端口组混杂模式改 Accept；勾了 Override 则 Promiscuous Mode、MAC address changes、Forged transmits 三项全 Accept；端口组继承时确认 vSwitch0。</li>
-<li>仍不明：wg show 对基线（endpoint/keepalive/握手/收发增量）；ip -d link 对 MTU 基线；收集 VA 菜单日志 + OV→Administration→Audit→Collect Support Info 的 RAP 日志。</li>
+<li>数据隧道 down：两侧 wg 查接口；
+AP 上 cat /tmp/config/datavpn.conf 看配置是否推送；
+确认 Data VPN Server 已绑 AP Group；
+ifconfig wg1 看 IP 且核对在导入的 Data-VPN.conf 中；
+防火墙双向。</li>
+<li>双隧道 up、客户端无 DHCP：AP 上 sta_list 查关联与 TUNNELID/FARENDIP；
+brctl show 确认 ath0x 关联 br-g1；
+查企业接入交换机 MAC 表；
+查 DHCP relay（ip helper、dhcp-snooping）。</li>
+<li>客户端不通同网段设备/网关：vSwitch/端口组混杂模式改 Accept；
+勾了 Override 则 Promiscuous Mode、MAC address changes、Forged transmits 三项全 Accept；
+端口组继承时确认 vSwitch0。</li>
+<li>仍不明：wg show 对基线（endpoint/keepalive/握手/收发增量）；
+ip -d link 对 MTU 基线；
+收集 VA 菜单日志 + OV→Administration→Audit→Collect Support Info 的 RAP 日志。</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>
@@ -96,4 +119,4 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <li>DS-Lite ISP 环境下隧道慢/断，先按 TCPMSS/MTU 参数表核对（1352/1300/1376 一组），参数入口见 <code><a href="rap-data-tunnel-config.html">rap-data-tunnel-config</a></code> 第 8 步。</li>
 </ul>
 <hr />
-<p>来源条目: p20, ce06（交叉引用）, p19（升级窗口交叉引用）</p></main></div></body></html>
+<p>来源条目: p20 · ce06（交叉引用） · p19（升级窗口交叉引用）</p><div class="pn"><a href="rap-data-tunnel-config.html">⬅ 上一单元：rap-data-tunnel-config</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

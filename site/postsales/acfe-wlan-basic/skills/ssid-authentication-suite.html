@@ -31,6 +31,17 @@ blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 
 hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 .badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
 .badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
 @media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
 </style></head>
 <body><div class="layout"><aside><h1>DT00XTE360 · ACFE WLAN Basic Deployment with OmniVista</h1>
@@ -54,7 +65,7 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <div class="grp">安全与收尾</div>
 <a href="skills/wips-security-deployment.html">wips-security-deployment</a>
 <a href="skills/site-survey-troubleshooting.html">site-survey-troubleshooting</a>
-<a href="skills/rlab-lab-manual.html">rlab-lab-manual</a></aside><main><h1>ssid-authentication-suite</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="ssid-employee-guest-byod-psk">SSID 全家桶：Employee / Guest / BYOD + PSK 四体系</h1>
+<a href="skills/rlab-lab-manual.html">rlab-lab-manual</a></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../postsales/index.html">售后</a> › <a href="index.html">DT00XTE360</a> › <span>SSID 全家桶：Employee / Guest / BYOD + PSK 四体系</span></nav><h1>SSID 全家桶：Employee / Guest / BYOD + PSK 四体系</h1><p class="meta"><span class="badge">SKILL</span> ssid-authentication-suite · 来源页码: </p><h1 id="ssid-employee-guest-byod-psk">SSID 全家桶：Employee / Guest / BYOD + PSK 四体系</h1>
 <h2 id="r">R · 原文引用</h2>
 <blockquote>
 <p>"SECTION 1 «SSID SETTINGS»: Select the SSID Usage (each usage leads to a predefined template) ... SECTION 2 «NETWORK ASSIGNMENTS»: Apply the SSID to one site, one or multiple AP Groups ... SECTION 3 «SCHEDULE AND VLAN MAPPINGS»: Apply Schedule ... Apply VLAN/Tunnel Mapping: One or multiple VLAN (up to 256), One Guest Tunnel" (p312)</p>
@@ -103,8 +114,12 @@ Open+Captive Portal（无加密、兼容一切，访客）&lt; MAC 认证（可�
 3. PPSK：多条"名称+口令+ARP"条目，用哪条落哪个角色
 4. 动态 PPSK：口令条目直接绑 VLAN ID + ARP（同一 ARP 复用多 VLAN），配 Priority ARP/VLAN-ID 选归属</p>
 <p><strong>5. 三种 SSID 的关键开关</strong>
-- Employee：WPA2_AES + UPAMRadiusServer + Auth Source=Local Database（或外部 RADIUS）+ Web Auth=None；客户端 PEAP/MSCHAPv2；UPAM 常数 1812/1813、重试 2、超时 5s
-- Guest：Captive Portal=YES（OV-UPAM 型）+ Allow All EAPs=Yes + Auth Source=None + Web Auth=Guest；Guest Access Strategy 定登录方式（账号/接入码/条款/自注册+审批）与 Post Portal Enforcement；Guest Tunneling=按 ARP 建 L2 GRE 隧道，可加备份隧道
+- Employee：WPA2_AES + UPAMRadiusServer + Auth Source=Local Database（或外部 RADIUS）+ Web Auth=None；
+客户端 PEAP/MSCHAPv2；
+UPAM 常数 1812/1813、重试 2、超时 5s
+- Guest：Captive Portal=YES（OV-UPAM 型）+ Allow All EAPs=Yes + Auth Source=None + Web Auth=Guest；
+Guest Access Strategy 定登录方式（账号/接入码/条款/自注册+审批）与 Post Portal Enforcement；
+Guest Tunneling=按 ARP 建 L2 GRE 隧道，可加备份隧道
 - BYOD：SSID 级 VLAN=Guest VLAN（预认证沙箱）→ BYOD Strategy 的 Post Portal Enforcement 绑 ARP（内配 Employee VLAN）→ 认证后从 VLAN30 切 VLAN20
 - Express 内嵌版：门户三选一（账号/接入码/条款，大小写敏感）；AP 内置 DHCP 三步：Network 配 IP → 建 Pool → Bind Network 才生效</p>
 <p><strong>6. 客户端接入排障两套命令链（AP CLI，support/aos2016）</strong>
@@ -143,4 +158,4 @@ Open+Captive Portal（无加密、兼容一切，访客）&lt; MAC 认证（可�
 <li>Express 门户账号大小写敏感；访客账号有起止日期，依赖 AP 时间正确。</li>
 </ul>
 <hr />
-<p>来源条目: f10, f11, f12, f13, f23, f28, p18, p19, p20, p21, p33, p34, p35, p36, p37, p38, p39, p40, p41, p42, p43, c05, c06, c13, c14, c15, c16, ce20, ce21, ce22, ce23, ce37 · 术语锚点: g01, g11, g13, g17, g19, g21, g25, g26, g39, g42, g53</p></main></div></body></html>
+<p>来源条目: f10 · f11 · f12 · f13 · f23 · f28 · p18 · p19 · p20 · p21 · p33 · p34 · p35 · p36 · p37 · p38 · p39 · p40 · p41 · p42 · p43 · c05 · c06 · c13 · c14 · c15 · c16 · ce20 · ce21 · ce22 · ce23 · ce37 · 术语锚点: g01 · g11 · g13 · g17 · g19 · g21 · g25 · g26 · g39 · g42 · g53</p><div class="pn"><a href="device-cloud-onboarding.html">⬅ 上一单元：device-cloud-onboarding</a><a class="nxt" href="upam-policy-bandwidth.html">下一单元：upam-policy-bandwidth ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

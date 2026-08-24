@@ -31,6 +31,17 @@ blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 
 hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 .badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
 .badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
 @media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
 </style></head>
 <body><div class="layout"><aside><h1>DT00XTE360 · ACFE WLAN Basic Deployment with OmniVista</h1>
@@ -54,7 +65,7 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <div class="grp">安全与收尾</div>
 <a href="skills/wips-security-deployment.html">wips-security-deployment</a>
 <a href="skills/site-survey-troubleshooting.html">site-survey-troubleshooting</a>
-<a href="skills/rlab-lab-manual.html" class="on">rlab-lab-manual</a></aside><main><h1>rlab-lab-manual</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="r-lab-lab">R-Lab 实操手册与 Lab 案例库索引</h1>
+<a href="skills/rlab-lab-manual.html" class="on">rlab-lab-manual</a></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../postsales/index.html">售后</a> › <a href="index.html">DT00XTE360</a> › <span>R-Lab 实操手册与 Lab 案例库索引</span></nav><h1>R-Lab 实操手册与 Lab 案例库索引</h1><p class="meta"><span class="badge">SKILL</span> rlab-lab-manual · 来源页码: </p><h1 id="r-lab-lab">R-Lab 实操手册与 Lab 案例库索引</h1>
 <h2 id="r">R · 原文引用</h2>
 <blockquote>
 <p>"A web browser is required to connect to the Rlab ... Rlab access URL: https://rdp.al-mydemo.com/ ... Username: Refer to the table below to get the corresponding 'User Account' ... Password: unique per session - sent from our LMS to the Instructor" (p69)</p>
@@ -66,14 +77,18 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <p><strong>1. 环境连接</strong>
 - 入口：https://rdp.al-mydemo.com/，账号形如 stellanpod25a（POD 25-32），密码每期由 LMS 发讲师
 - 拓扑三层：接入 OS-2360/OS-6360（学员配置）→ 汇聚 OS-6870（保留预配置）→ 核心 OS-6900（不管理）；DHCP/AAA 服务器与 pfSense NAT 禁止改动
-- 终端：桌面快捷方式 TeraTerm 开交换机控制台（"Hunting Group Busy"=被占用）；RealVNC 连树莓派 WifiClientX（user/superuser），实验前 "Clean Wireless Networks"；vSphere 开 client5 有线 VM</p>
+- 终端：桌面快捷方式 TeraTerm 开交换机控制台（"Hunting Group Busy"=被占用）；
+RealVNC 连树莓派 WifiClientX（user/superuser），实验前 "Clean Wireless Networks"；
+vSphere 开 client5 有线 VM</p>
 <p><strong>2. 重置流程与常数</strong>
 - 桌面 DT00CTE210 目录双击 Reset_PodX（Cirrus 系列实验前另有 "OmniVista CIRRUS 10" 目录的 reset_PODX）
 - 交换机约 5 分钟、AP 约 1.5-2 分钟；期间严禁对控制台按键
 - 重置后"默认配置"非空：脚本灌特定预配置且<strong>所有端口禁用</strong>，每个 Lab 逐个 enable 要用的端口
 - 树莓派重置：Clean Wireless Networks → Execute</p>
 <p><strong>3. 实验网 IP/DHCP 常数（全部 Lab 的判定基准）</strong>
-VLAN10 管理 192.168.10.70-79 / VLAN20 Employees 192.168.20.70-79 / VLAN30 Guests 192.168.30.70-79；网关 6870 上 .7；DHCP/NAT 服务器 192.168.100.102 与核心 OS6900 不许改。</p>
+VLAN10 管理 192.168.10.70-79 / VLAN20 Employees 192.168.20.70-79 / VLAN30 Guests 192.168.30.70-79；
+网关 6870 上 .7；
+DHCP/NAT 服务器 192.168.100.102 与核心 OS6900 不许改。</p>
 <p><strong>4. Lab → skill 案例库索引</strong></p>
 <table>
 <thead>
@@ -224,4 +239,4 @@ VLAN10 管理 192.168.10.70-79 / VLAN20 Employees 192.168.20.70-79 / VLAN30 Gues
 <li>本书强依赖 R-Lab，无实验环境时 Lab 章节只能读；OV2500 本地管理 GUI 不在本书范围，与售前课（DT00XPS288）概念重叠但视角不同——引用时注意区分（ce40）。</li>
 </ul>
 <hr />
-<p>来源条目: c01, c02, c10, p17, ce09, ce10, ce11, ce12, ce40 · 术语锚点: g51</p></main></div></body></html>
+<p>来源条目: c01 · c02 · c10 · p17 · ce09 · ce10 · ce11 · ce12 · ce40 · 术语锚点: g51</p><div class="pn"><a href="site-survey-troubleshooting.html">⬅ 上一单元：site-survey-troubleshooting</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

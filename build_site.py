@@ -218,9 +218,55 @@ def read(path):
     with open(path, encoding='utf-8') as f:
         return f.read()
 
+import re as _re
+_CIRC = "①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮"
+
+def preprocess(text):
+    # 内部使用：去掉流水线署名描述
+    out = []
+    for ln in text.splitlines():
+        low = ln.lower()
+        if "cangjie" in low:
+            ln = _re.sub(r"[*_`\s]*由\s*cangjie-skill\s*流水线[^*\n]*?蒸馏生成\.?", "", ln, flags=_re.I)
+            ln = _re.sub(r"cangjie-skill\s*流水线", "内部整理流程", ln, flags=_re.I)
+            ln = _re.sub(r"cangjie-skill", "内部整理流程", ln, flags=_re.I)
+            if not ln.strip().strip("*_ `"):
+                continue
+        out.append(ln)
+    text = "\n".join(out)
+    text = text.replace("由 cangjie-skill 流水线蒸馏为", "整理为").replace("蒸馏流水线", "整理流程")
+
+    # 段落拆行：同段挤了多个 **②**/② 小标题时切开
+    def split_para(m):
+        seg = m.group(0)
+        marks = [c for c in _CIRC if ("**" + c) in seg or seg.count(c) >= 2]
+        if seg.count("**") >= 4 and marks:
+            parts = _re.split(r"(?=\**\s*[②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮])", seg)
+            parts = [p.strip() for p in parts if p.strip()]
+            if len(parts) > 1:
+                return "\n\n".join(parts)
+        return seg
+    text = _re.sub(r"^[^\n|>#*-]{60,}$", split_para, text, flags=_re.M)
+
+    # 长段落内"；"枚举换行（表格行/短行不动）
+    def br_semi(m):
+        seg = m.group(0)
+        if "|" in seg or len(seg) < 120:
+            return seg
+        return seg.replace("；", "；\n")
+    text = _re.sub(r"^[^\n|>#*]{100,}$", br_semi, text, flags=_re.M)
+
+    # 来源条目行：改成 · 分隔的 chip 流（配合 CSS 换行更整齐）
+    def src_line(m):
+        toks = _re.split(r"[,，]\s*", m.group(2).strip())
+        toks = [t.strip() for t in toks if t.strip()]
+        return m.group(1) + " · ".join(toks)
+    text = _re.sub(r"^(来源条目[:：]\s*)(.+)$", src_line, text, flags=_re.M)
+    return text
+
 def to_html(text):
     md.reset()
-    return md.convert(text)
+    return md.convert(preprocess(text))
 
 def parse_fm(text):
     m = re.match(r'^---\n(.*?)\n---\n', text, re.S)
@@ -263,6 +309,17 @@ blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 
 hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 .badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
 .badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
 @media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
 """
 
@@ -286,14 +343,23 @@ def build_course(c):
                 items.append(f'<a href="skills/{s}.html"{cls}>{s}</a>')
         return '\n'.join(items)
 
-    def page(title, body, active=''):
+    def crumbs(cur=''):
+        cat = c['id'].split('/')[0]
+        cat_label = {'postsales': '售后', 'presales': '售前', 'manuals': '配置手册'}[cat]
+        bar = f'<nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../{cat}/index.html">{cat_label}</a> › <a href="index.html">{html_mod.escape(c["title"].split(" · ")[0])}</a>'
+        if cur:
+            bar += f' › <span>{html_mod.escape(cur)}</span>'
+        return bar + '</nav>'
+
+    def page(title, body, active='', cur=''):
+        foot = '<div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div>'
         return f"""<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{html_mod.escape(title)} — {c['title']}</title>
 <style>{CSS}</style></head>
 <body><div class="layout"><aside><h1>{c['title']}</h1>
 <div class="sub">{c['subtitle']}</div>
-{nav(active)}</aside><main>{body}</main></div></body></html>"""
+{nav(active)}</aside><main>{crumbs(cur)}{body}{foot}</main></div></body></html>"""
 
     def rel_links(h):
         for s in skills:
@@ -306,9 +372,19 @@ def build_course(c):
         desc_map[slug] = fm.get('description', '')
         chap = fm.get('source_chapter', '')
         h = rel_links(to_html(body))
-        body_html = f'<h1>{slug}</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: {html_mod.escape(chap)}</p>' + h
+        # 中文标题取 H1；prev/next
+        m1 = _re.search(r'^#\s+(.+)$', body, _re.M)
+        zh = m1.group(1).strip() if m1 else slug
+        idx = skills.index(slug)
+        pn = '<div class="pn">'
+        pn += (f'<a href="{skills[idx-1]}.html">⬅ 上一单元：{skills[idx-1]}</a>' if idx > 0
+               else f'<a href="index.html">⬅ 返回课程首页</a>')
+        pn += (f'<a class="nxt" href="{skills[idx+1]}.html">下一单元：{skills[idx+1]} ➡</a>' if idx < len(skills)-1
+               else f'<a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a>')
+        pn += '</div>'
+        body_html = f'<h1>{html_mod.escape(zh)}</h1><p class="meta"><span class="badge">SKILL</span> {slug} · 来源页码: {html_mod.escape(chap)}</p>' + h + pn
         with open(os.path.join(sub, 'skills', slug + '.html'), 'w', encoding='utf-8') as f:
-            f.write(page(slug, body_html, slug))
+            f.write(page(slug, body_html, slug, cur=zh))
 
     cards = ''
     for gname, slugs in c['groups']:
@@ -321,21 +397,21 @@ def build_course(c):
     n = len(skills)
     home = f"""<p><a href="../../index.html">⬅️ 返回培训门户</a></p>
 <h1>{c['title']} · 学习站</h1>
-<p class="meta">教材: <b>{c['subtitle']}</b>。由 cangjie-skill 流水线蒸馏为 {n} 个可执行知识单元：
+<p class="meta">教材: <b>{c['subtitle']}</b>。整理为 {n} 个可执行知识单元：
 每个单元含 原文引用(R) / 方法论骨架(I) / 书中案例(A1) / 触发场景(A2) / 可执行步骤(E) / 边界与陷阱(B)。</p>
 <h2>建议学习路线</h2><ol>{route}</ol>
 <h2>知识单元</h2>{cards}
 <h2>全文阅读</h2>
 <p><a href="digest.html">📖 精华长文 DIGEST</a> · <a href="overview.html">📘 教书理解</a> · <a href="glossary.html">🔤 术语词典</a></p>"""
     with open(os.path.join(sub, 'index.html'), 'w', encoding='utf-8') as f:
-        f.write(page('首页', home))
+        f.write(page('首页', home, cur='首页'))
 
     for src, title, out in [('DIGEST.md', '精华长文 DIGEST', 'digest.html'),
                             ('BOOK_OVERVIEW.md', '教书理解 BOOK_OVERVIEW', 'overview.html'),
                             ('GLOSSARY.md', '术语词典', 'glossary.html')]:
         h = to_html(read(os.path.join(book, src)))
         with open(os.path.join(sub, out), 'w', encoding='utf-8') as f:
-            f.write(page(title, f'<h1>{title}</h1>' + h))
+            f.write(page(title, f'<h1>{title}</h1>' + h, cur=title))
     print('course built:', c['id'], f'({n} skills)')
 
 for c in COURSES:
@@ -449,13 +525,12 @@ main.cover{{max-width:1100px;margin:0 auto;padding:0 32px 60px}}
 <div class="en">Alcatel-Lucent Enterprise</div>
 <h1>ALE Networking 技术培训</h1>
 <p>面向售前、售后与网络工程师的 ALE 网络技术学习门户。
-每一门课程由官方培训教材经 cangjie-skill 流水线蒸馏为可执行的知识单元（框架 · 清单 · 参数表 · 陷阱），
+每一门课程由官方培训教材整理为可执行的知识单元（框架 · 清单 · 参数表 · 陷阱），
 覆盖 部署实施 · 运维排障 · 方案设计 · 安全准入 全生命周期。</p>
 </div>
 {cats_html}
 <h2>关于本站</h2>
-<p class="meta">内容由 AI 蒸馏流水线（cangjie-skill）从 ALE 官方培训教材生成，仅供内部学习使用；
-教材版权归 ALE Training Services 所有。新课程上线流程：上传教材 PDF → 蒸馏流水线 → 自动生成课程子站。</p>
+<p class="meta">内容整理自 ALE 官方培训教材与配置手册，仅供内部学习使用；教材版权归 ALE Training Services 所有，请勿外传。</p>
 </main></body></html>"""
 with open(os.path.join(OUT, 'index.html'), 'w', encoding='utf-8') as f:
     f.write(cover)

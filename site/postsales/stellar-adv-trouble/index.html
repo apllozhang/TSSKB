@@ -31,6 +31,17 @@ blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 
 hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 .badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
 .badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
 @media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
 </style></head>
 <body><div class="layout"><aside><h1>DT00XTE478 · Stellar WLAN 高级排障</h1>
@@ -52,11 +63,11 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <a href="skills/network-side-trouble.html">network-side-trouble</a>
 <a href="skills/wireless-rf-roaming-trouble.html">wireless-rf-roaming-trouble</a>
 <div class="grp">勘测纠正</div>
-<a href="skills/site-survey-remediation.html">site-survey-remediation</a></aside><main><p><a href="../../index.html">⬅️ 返回培训门户</a></p>
+<a href="skills/site-survey-remediation.html">site-survey-remediation</a></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../postsales/index.html">售后</a> › <a href="index.html">DT00XTE478</a> › <span>首页</span></nav><p><a href="../../index.html">⬅️ 返回培训门户</a></p>
 <h1>DT00XTE478 · Stellar WLAN 高级排障 · 学习站</h1>
-<p class="meta">教材: <b>187 页 · 无线排障专题（方法论/工具箱/四层排障/勘测/TKC）</b>。由 cangjie-skill 流水线蒸馏为 8 个可执行知识单元：
+<p class="meta">教材: <b>187 页 · 无线排障专题（方法论/工具箱/四层排障/勘测/TKC）</b>。整理为 8 个可执行知识单元：
 每个单元含 原文引用(R) / 方法论骨架(I) / 书中案例(A1) / 触发场景(A2) / 可执行步骤(E) / 边界与陷阱(B)。</p>
 <h2>建议学习路线</h2><ol><li>排障总方法论：七步流程+三域根因地图</li><li>排障工具箱与基础体检</li><li>客户端连接决策链与 802.1X 排查</li><li>网络侧与漫游 RF 排障</li><li>勘测三步法与五发现五动作</li></ol>
 <h2>知识单元</h2><h2>方法论</h2><div class="cards"><div class="card"><a href="skills/wlan-trouble-methodology.html">wlan-trouble-methodology</a><p>何时用：接手任意 WLAN 故障（连不上/慢/掉线）需要系统化定位时，先用本 skill 定流程、定层、收窄范围，再进各专项 skill。…</p></div></div><h2>工具与体检</h2><div class="cards"><div class="card"><a href="skills/stellar-ap-toolbox.html">stellar-ap-toolbox</a><p>何时用：需要登录 Stellar AP 取证（串口/SSH/Web）、抓有线或空口报文、备份配置离线分析时，用本 skill 拿对参数与命令语法。…</p></div><div class="card"><a href="skills/stellar-ap-system-health.html">stellar-ap-system-health</a><p>何时用：AP 本身可疑——LED 异常、疑似重启、高 CPU/内存、Captive Portal 不弹页、Express 集群异常时，用本 skill 的免登录与命令判读表体检。…</p></div></div><h2>故障域</h2><div class="cards"><div class="card"><a href="skills/client-connection-trouble.html">client-connection-trouble</a><p>何时用：客户端&quot;搜不到/连不上/拿不到 IP/频繁掉线&quot;时，用本 skill 的决策链按序定位根因（含掉线误报判读与 VoWLAN 阈值）。…</p></div><div class="card"><a href="skills/dot1x-radius-trouble.html">dot1x-radius-trouble</a><p>何时用：802.1X/Enterprise SSID 认证失败（凭证对却连不上、认证超时）时，用本 skill 按客户端→AP→RADIUS 三段顺序核对。…</p></div><div class="card"><a href="skills/network-side-trouble.html">network-side-trouble</a><p>何时用：AP 自身拿不到 IP、疑似上游网络（VLAN/DHCP/路由/DNS/syslog）或 AP 要接入 OmniVista 云管上线失败时，用本 skill 分段排查。…</p></div><div class="card"><a href="skills/wireless-rf-roaming-trouble.html">wireless-rf-roaming-trouble</a><p>何时用：SSID/RF 配置没生效、热图异常、客户端漫游失败或邻居 AP 看不见时，用本 skill 核对无线接口、RF profile 落地与邻居表。…</p></div></div><h2>勘测纠正</h2><div class="cards"><div class="card"><a href="skills/site-survey-remediation.html">site-survey-remediation</a><p>何时用：WiFi 整网表现不佳需要现场勘测（选被动/主动/预测）、排查覆盖盲区/干扰/布点问题并落地纠正动作时用本 skill。…</p></div></div>
 <h2>全文阅读</h2>
-<p><a href="digest.html">📖 精华长文 DIGEST</a> · <a href="overview.html">📘 教书理解</a> · <a href="glossary.html">🔤 术语词典</a></p></main></div></body></html>
+<p><a href="digest.html">📖 精华长文 DIGEST</a> · <a href="overview.html">📘 教书理解</a> · <a href="glossary.html">🔤 术语词典</a></p><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

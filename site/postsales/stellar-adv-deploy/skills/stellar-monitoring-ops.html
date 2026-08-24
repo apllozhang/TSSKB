@@ -31,6 +31,17 @@ blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 
 hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 .badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
 .badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
 @media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
 </style></head>
 <body><div class="layout"><aside><h1>DT00XTE361 · Stellar WLAN Advanced Deployment with OmniVista</h1>
@@ -51,7 +62,7 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <div class="grp">交付与排障</div>
 <a href="skills/stellar-deployment-checklist.html">stellar-deployment-checklist</a>
 <a href="skills/stellar-troubleshooting-cli.html">stellar-troubleshooting-cli</a>
-<a href="skills/stellar-vowlan.html">stellar-vowlan</a></aside><main><h1>stellar-monitoring-ops</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="stellar">Stellar 监控告警与设备生命周期运维</h1>
+<a href="skills/stellar-vowlan.html">stellar-vowlan</a></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../postsales/index.html">售后</a> › <a href="index.html">DT00XTE361</a> › <span>Stellar 监控告警与设备生命周期运维</span></nav><h1>Stellar 监控告警与设备生命周期运维</h1><p class="meta"><span class="badge">SKILL</span> stellar-monitoring-ops · 来源页码: </p><h1 id="stellar">Stellar 监控告警与设备生命周期运维</h1>
 <h2 id="r">R · 原文引用</h2>
 <blockquote>
 <p>"Scheduled Upgrades: Creation of scheduled upgrade, Management of scheduled update... Configuration Backups: Start immediate Backup on the selected device... Scope selection: switch, site, floor." (p233)</p>
@@ -68,7 +79,13 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 5. <strong>读图</strong>：拓扑状态色（绿=正常、橙=未知或 warning/major、红=critical、蓝=minor/normal、灰=失联；约 2 秒刷新）；热力图（按站点/AP，最少 3 台 Stellar AP；密度红/黄/绿=高/中/低）。
 6. <strong>报表</strong>：Regular 模板报表与 Analytics Data 报表（选指标/列/范围导出 PDF/CSV），可即时或排程（如周一 8:00 周报，结果邮件自动下发）。</p>
 <h2 id="a1-lab">A1 · 书中案例（Lab 精要）</h2>
-<p>Lab 走读五大运维动作（p250-257）：① 升级计划四步向导只演示不执行（默认 6 小时升级窗口）；② Network Events 浏览三类事件；③ Collect Support Info 从 Uploading 变 Collected 后下载；④ Alerts 顶部汇总+底部 Entry List，新告警红点提示；⑤ 给 AP 下发 setDateTime 命令几分钟后回读结果。监控侧（p183-187）：Clients 仪表盘查树莓派 RSSI/噪声底/吞吐/PHY 速率；Authentication Records 与 Captive Portal Records（看 Auth result 与 Reject Reason）；创建 Analytics Data Report（Wireless Client Sessions、PDF、Last 7 days、Instant），报表邮件自动送达。设备目录与拓扑（p242-249）：Actions 全集（Edit Device/SSH/Web UI/Configuration Management），拓扑悬停看链路类型与楼层，点设备看 7 天 trap。</p>
+<p>Lab 走读五大运维动作（p250-257）：① 升级计划四步向导只演示不执行（默认 6 小时升级窗口）；
+② Network Events 浏览三类事件；
+③ Collect Support Info 从 Uploading 变 Collected 后下载；
+④ Alerts 顶部汇总+底部 Entry List，新告警红点提示；
+⑤ 给 AP 下发 setDateTime 命令几分钟后回读结果。监控侧（p183-187）：Clients 仪表盘查树莓派 RSSI/噪声底/吞吐/PHY 速率；
+Authentication Records 与 Captive Portal Records（看 Auth result 与 Reject Reason）；
+创建 Analytics Data Report（Wireless Client Sessions、PDF、Last 7 days、Instant），报表邮件自动送达。设备目录与拓扑（p242-249）：Actions 全集（Edit Device/SSH/Web UI/Configuration Management），拓扑悬停看链路类型与楼层，点设备看 7 天 trap。</p>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
 <li>网络已交付，要建例行监控（阈值、报表、告警）或做变更（升级、备份）→ 本 skill。</li>
@@ -87,11 +104,12 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>
-<li>升级必然重启且终端断连（默认 6 小时窗口），生产创建计划前必须确认版本确实需要、窗口已批准；训练/演示环境止步于 Review 点 Cancel——原文明确 "Use this section only as a configuration guide, and do not complete this upgrade process."（p252）</li>
+<li>升级必然重启且终端断连（默认 6 小时窗口），生产创建计划前必须确认版本确实需要、窗口已批准；
+训练/演示环境止步于 Review 点 Cancel——原文明确 "Use this section only as a configuration guide, and do not complete this upgrade process."（p252）</li>
 <li>热力图硬性前提：少于 3 台 Stellar AP 无法生成。</li>
 <li>拓扑"红"仍表示连通（只是有 critical 告警），"灰"才是失联，别读反。</li>
 <li>SSH/Web UI 访问 AP 需先在 Provisioning Configuration 启用并设凭据。</li>
 <li>客户端仪表盘里设备名与 IPv4 需几分钟才浮现，别急着判"数据缺失"。</li>
 </ul>
 <hr />
-<p>来源条目: f07, c06, c07, c08, p12, p17, p18, p21, ce12, g35, g41, g42, g43, g44, g45, g46</p></main></div></body></html>
+<p>来源条目: f07 · c06 · c07 · c08 · p12 · p17 · p18 · p21 · ce12 · g35 · g41 · g42 · g43 · g44 · g45 · g46</p><div class="pn"><a href="stellar-qoe-analytics.html">⬅ 上一单元：stellar-qoe-analytics</a><a class="nxt" href="stellar-wired-iot-access.html">下一单元：stellar-wired-iot-access ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

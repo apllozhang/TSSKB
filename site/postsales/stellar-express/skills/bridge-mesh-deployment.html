@@ -31,6 +31,17 @@ blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 
 hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 .badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
 .badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
 @media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
 </style></head>
 <body><div class="layout"><aside><h1>DT00XTE455 · Stellar WLAN Express</h1>
@@ -48,7 +59,7 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <a href="skills/rf-survey-tuning.html">rf-survey-tuning</a>
 <div class="grp">组网与排障</div>
 <a href="skills/bridge-mesh-deployment.html" class="on">bridge-mesh-deployment</a>
-<a href="skills/ap-side-troubleshooting.html">ap-side-troubleshooting</a></aside><main><h1>bridge-mesh-deployment</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="wifi-bridge-mesh">WiFi Bridge / Mesh 特殊组网</h1>
+<a href="skills/ap-side-troubleshooting.html">ap-side-troubleshooting</a></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../postsales/index.html">售后</a> › <a href="index.html">DT00XTE455</a> › <span>WiFi Bridge / Mesh 特殊组网</span></nav><h1>WiFi Bridge / Mesh 特殊组网</h1><p class="meta"><span class="badge">SKILL</span> bridge-mesh-deployment · 来源页码: </p><h1 id="wifi-bridge-mesh">WiFi Bridge / Mesh 特殊组网</h1>
 <h2 id="r">R · 原文引用</h2>
 <blockquote>
 <p>"WIFI BRIDGE PROPERTIES: Cannot provide service (WiFi) to WiFi clients. WIFI MESH PROPERTIES: Can provide service (WiFi) to WiFi clients. * AP1101, AP1201 &amp; AP1201H are not compatible with VLAN tagging over a bridge." (p112)</p>
@@ -66,14 +77,16 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 </ol>
 <h2 id="a1">A1 · 书中案例</h2>
 <ul>
-<li>跨街楼宇 Bridge（p112-113）：无法铺线的两栋楼，根端 SSID=STELLAR-BRIDGE、Band=5GHz、Is Root=Yes、Passphrase=ALCATEL123!；对端同 SSID/同频段/同密码、Is Root=No。可照抄改密码即用。</li>
+<li>跨街楼宇 Bridge（p112-113）：无法铺线的两栋楼，根端 SSID=STELLAR-BRIDGE、Band=5GHz、Is Root=Yes、Passphrase=ALCATEL123!；
+对端同 SSID/同频段/同密码、Is Root=No。可照抄改密码即用。</li>
 <li>营地 Mesh（p112, p114）：根节点与 Mesh 节点各自广播业务 SSID "WIFI GUESTS"（2.4+5GHz、开放加密走 Portal），同时以 "STELLAR-MESH"（5GHz、加密）建回程——业务/回程 SSID 分离的完整写法。</li>
 <li>Auto Mesh 通电即入网（p115）：现场只配一台根，其余 AP 摆位通电自动入网，适合弱电条件差的仓库/营地。</li>
 </ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
 <li>触发：两栋楼间无法布线要打通 LAN、露天/大空间要快速拉开无线覆盖、临时场地建网。</li>
-<li>区分：普通"AP+交换机"的集群上线与分域规划用 <code><a href="express-cluster-onboarding.html">express-cluster-onboarding</a></code>；信号弱/覆盖差但已有有线回程的场景用 <code><a href="rf-survey-tuning.html">rf-survey-tuning</a></code>（补点、调功率），只有回程本身要用无线解决时才用本 skill。识别现场是否走了 Auto Mesh：搜隐藏 SSID "Stellar-MESH"。</li>
+<li>区分：普通"AP+交换机"的集群上线与分域规划用 <code><a href="express-cluster-onboarding.html">express-cluster-onboarding</a></code>；
+信号弱/覆盖差但已有有线回程的场景用 <code><a href="rf-survey-tuning.html">rf-survey-tuning</a></code>（补点、调功率），只有回程本身要用无线解决时才用本 skill。识别现场是否走了 Auto Mesh：搜隐藏 SSID "Stellar-MESH"。</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <p>Bridge 部署：
@@ -94,4 +107,4 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <li>Auto Mesh 的默认参数（隐藏 SSID "Stellar-MESH"/5GHz/非 LAN 即非根）是出厂行为，无需也无法逐台预配置。</li>
 </ul>
 <hr />
-<p>来源条目: f04, f05, p07, p08, p09, p10, c03, c04, c05, ce03, ce04, ce05, g20, g21, g22, g23</p></main></div></body></html>
+<p>来源条目: f04 · f05 · p07 · p08 · p09 · p10 · c03 · c04 · c05 · ce03 · ce04 · ce05 · g20 · g21 · g22 · g23</p><div class="pn"><a href="rf-survey-tuning.html">⬅ 上一单元：rf-survey-tuning</a><a class="nxt" href="ap-side-troubleshooting.html">下一单元：ap-side-troubleshooting ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

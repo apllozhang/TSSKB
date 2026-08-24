@@ -31,6 +31,17 @@ blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 
 hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 .badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
 .badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
 @media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
 </style></head>
 <body><div class="layout"><aside><h1>DT00XTE221 · OmniSwitch LAN Troubleshooting</h1>
@@ -52,7 +63,7 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <a href="skills/multicast-troubleshooting.html">multicast-troubleshooting</a>
 <div class="grp">工具与 AI 运维</div>
 <a href="skills/app-logging-qos-troubleshooting.html">app-logging-qos-troubleshooting</a>
-<a href="skills/ovna-deployment-teams-bot.html">ovna-deployment-teams-bot</a></aside><main><h1>boot-system-troubleshooting</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="_1">启动序列与交换系统排障</h1>
+<a href="skills/ovna-deployment-teams-bot.html">ovna-deployment-teams-bot</a></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../postsales/index.html">售后</a> › <a href="index.html">DT00XTE221</a> › <span>启动序列与交换系统排障</span></nav><h1>启动序列与交换系统排障</h1><p class="meta"><span class="badge">SKILL</span> boot-system-troubleshooting · 来源页码: </p><h1 id="_1">启动序列与交换系统排障</h1>
 <h2 id="r">R · 原文引用</h2>
 <blockquote>
 <p>"Step1. Power cycle the switch ... Break the boot sequence ... 'Hit any key to stop autoboot:' =&gt; setAdminPasswordDefault ... =&gt; boot (6900) / =&gt; reset (6860)" (p76)</p>
@@ -74,11 +85,15 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <li><strong>LED 速查</strong>（p09）：OK 常绿=正常（VC slave）；闪绿=VC master；常琥珀=诊断或 AOS 启动失败。PS 常绿=双电源好；OK+PS 同闪琥珀=缺风扇盘或气流方向不匹配。</li>
 </ol>
 <h2 id="a1-lab">A1 · 书中案例（LAB 故障根因）</h2>
-<p>本 skill 无独立 LAB，但系统层判读是 LAB 全部案例的前置：LAB4 开场先 <code>show system</code> 核对两台日期时间再查 OSPF（c08）；LAB2 中 show health CPU 98% 指向 VLAN 278 环路（c04 根因在 stp-loop skill）。崩溃类故障产物是 PMD 文件（/flash/pmd/，g33），处置方向为收集证据升级 TAC（c11，详见 ovna skill）。</p>
+<p>本 skill 无独立 LAB，但系统层判读是 LAB 全部案例的前置：LAB4 开场先 <code>show system</code> 核对两台日期时间再查 OSPF（c08）；
+LAB2 中 show health CPU 98% 指向 VLAN 278 环路（c04 根因在 stp-loop skill）。崩溃类故障产物是 PMD 文件（/flash/pmd/，g33），处置方向为收集证据升级 TAC（c11，详见 ovna skill）。</p>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
 <li>触发：设备无法启动/密码丢失/USB 恢复；show module 异常；版本升级前门槛核对；CPU 告警；温度/风扇/电源告警；面板灯异常。</li>
-<li>区分：业务口 down 但整机正常 → l2-connectivity；VC 相关的模块/chassis 状态 → virtual-chassis；CPU 高伴随 MAC 漂移/DoS 刷屏 → stp-loop（先查环）；整机崩溃出 PMD → 本 skill 判读 + ovna skill 处置链。</li>
+<li>区分：业务口 down 但整机正常 → l2-connectivity；
+VC 相关的模块/chassis 状态 → virtual-chassis；
+CPU 高伴随 MAC 漂移/DoS 刷屏 → stp-loop（先查环）；
+整机崩溃出 PMD → 本 skill 判读 + ovna skill 处置链。</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
@@ -100,4 +115,4 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <li>show hardware-info 的版本判断必须以目标 AOS 的 release note 为准，不能凭经验。</li>
 </ul>
 <hr />
-<p>来源条目: f04, f05, f06, p04, p05, p06, p07, p08, p09, ce02, ce05, ce09, ce11, g03, g04, g05, g06, g07, g08</p></main></div></body></html>
+<p>来源条目: f04 · f05 · f06 · p04 · p05 · p06 · p07 · p08 · p09 · ce02 · ce05 · ce09 · ce11 · g03 · g04 · g05 · g06 · g07 · g08</p><div class="pn"><a href="lan-troubleshooting-methodology.html">⬅ 上一单元：lan-troubleshooting-methodology</a><a class="nxt" href="l2-connectivity-troubleshooting.html">下一单元：l2-connectivity-troubleshooting ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

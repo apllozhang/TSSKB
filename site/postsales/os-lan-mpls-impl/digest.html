@@ -31,6 +31,17 @@ blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 
 hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 .badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
 .badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
 @media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
 </style></head>
 <body><div class="layout"><aside><h1>DT00XTE324 · OmniSwitch LAN MPLS 实施</h1>
@@ -47,7 +58,7 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <div class="grp">设计与运维</div>
 <a href="skills/mpls-reference-design.html">mpls-reference-design</a>
 <a href="skills/aos-mpls-operating-rules.html">aos-mpls-operating-rules</a>
-<a href="skills/aos-mpls-capability-limits.html">aos-mpls-capability-limits</a></aside><main><h1>精华长文 DIGEST</h1><h1 id="digest-aos-mpls">DIGEST · 一篇读透 AOS MPLS 实施（不读全书版）</h1>
+<a href="skills/aos-mpls-capability-limits.html">aos-mpls-capability-limits</a></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../postsales/index.html">售后</a> › <a href="index.html">DT00XTE324</a> › <span>精华长文 DIGEST</span></nav><h1>精华长文 DIGEST</h1><h1 id="digest-aos-mpls">DIGEST · 一篇读透 AOS MPLS 实施（不读全书版）</h1>
 <blockquote>
 <p>教材：ALE《OmniSwitch LAN MPLS Concepts &amp; Implementation》（DT00XTE324EN，153 页）
 本文是全书精华的读者向浓缩，数字均带页码，可直接回查原书。</p>
@@ -117,7 +128,9 @@ ip bgp neighbor &lt;对端loopback&gt; activate l2vpn-vpls
 ip bgp admin-state enable
 service 2 vpls vplsid 200 signaling bgp ve-id 1 admin-state enable
 </code></pre>
-<p>三个坑：ve-id 每台 PE 必须唯一（Lab 中 sw7=1、sw8=2）；每个邻居都要单独 <code>activate l2vpn-vpls</code>，漏一条该邻居不传 VPLS 路由；SAP 配 <code>:0</code>（untagged）时出口永远 untagged，对端要 tagged 就单通，靠两级 vlan-xlation 对齐（p78 附近案例）。参考设计的 BGP 模板还多一条 <code>ip bgp mpls</code> 全局命令，Lab 3 里没有——照抄规范模板时别漏（p138-139）。</p>
+<p>三个坑：ve-id 每台 PE 必须唯一（Lab 中 sw7=1、sw8=2）；
+每个邻居都要单独 <code>activate l2vpn-vpls</code>，漏一条该邻居不传 VPLS 路由；
+SAP 配 <code>:0</code>（untagged）时出口永远 untagged，对端要 tagged 就单通，靠两级 vlan-xlation 对齐（p78 附近案例）。参考设计的 BGP 模板还多一条 <code>ip bgp mpls</code> 全局命令，Lab 3 里没有——照抄规范模板时别漏（p138-139）。</p>
 <h2 id="p133-146">四、参考设计两场景要点（p133-146）</h2>
 <p><strong>园区模板：</strong> 端到端 MPLS（接入到核心），二/三层架构。</p>
 <p><strong>城域模板：</strong> 三层架构，MPLS 只到核心+汇聚，接入层标准以太交换。</p>
@@ -175,7 +188,8 @@ service 2 vpls vplsid 200 signaling bgp ve-id 1 admin-state enable
 </tr>
 </tbody>
 </table>
-<p>用法：任何方案/标书引用 MPLS 特性，先逐条过这张表；命中硬需求要么换方案要么确认 AOS 后续版本（p118 预告"后续版本可能补充"）。注意这是 8.9R3 首版清单，实际项目要在目标版本上用 <code>show mpls</code> 复核，别把"首版不支持"当永久结论。</p>
+<p>用法：任何方案/标书引用 MPLS 特性，先逐条过这张表；
+命中硬需求要么换方案要么确认 AOS 后续版本（p118 预告"后续版本可能补充"）。注意这是 8.9R3 首版清单，实际项目要在目标版本上用 <code>show mpls</code> 复核，别把"首版不支持"当永久结论。</p>
 <hr />
 <p><strong>一句话收束：</strong> 准入（8.9R3/6860N/许可）→ 十步部署（Loopback0 唯一是底线）→ 信令选型（小网 LDP、大网 BGP 全互联）→ 模板交付（业务只配 LER）→ 命令族谱分层验证 → 售前先过六项禁引清单。</p>
-<p><em>由 cangjie-skill 流水线从 DT00XTE324EN 蒸馏生成。</em></p></main></div></body></html>
+<p>。*</p><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

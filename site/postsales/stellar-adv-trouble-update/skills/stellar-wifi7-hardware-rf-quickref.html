@@ -31,6 +31,17 @@ blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 
 hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 .badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
 .badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
 @media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
 </style></head>
 <body><div class="layout"><aside><h1>DT00XTE378 · Stellar WLAN 高级排障与更新</h1>
@@ -47,7 +58,7 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <div class="grp">云运维</div>
 <a href="skills/stellar-rap-backup-upgrade-ops.html">stellar-rap-backup-upgrade-ops</a>
 <div class="grp">硬件速览</div>
-<a href="skills/stellar-wifi7-hardware-rf-quickref.html" class="on">stellar-wifi7-hardware-rf-quickref</a></aside><main><h1>stellar-wifi7-hardware-rf-quickref</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="rf-wi-fi-7-meshbridge">新硬件与 RF 特性速览：Wi-Fi 7 家族 · 模式规模红线 · 漫游阈值 · Mesh/Bridge</h1>
+<a href="skills/stellar-wifi7-hardware-rf-quickref.html" class="on">stellar-wifi7-hardware-rf-quickref</a></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../postsales/index.html">售后</a> › <a href="index.html">DT00XTE378</a> › <span>新硬件与 RF 特性速览：Wi-Fi 7 家族 · 模式规模红线 · 漫游阈值 · Mesh/Bridge</span></nav><h1>新硬件与 RF 特性速览：Wi-Fi 7 家族 · 模式规模红线 · 漫游阈值 · Mesh/Bridge</h1><p class="meta"><span class="badge">SKILL</span> stellar-wifi7-hardware-rf-quickref · 来源页码: </p><h1 id="rf-wi-fi-7-meshbridge">新硬件与 RF 特性速览：Wi-Fi 7 家族 · 模式规模红线 · 漫游阈值 · Mesh/Bridge</h1>
 <h2 id="r">R · 原文引用</h2>
 <blockquote>
 <p>"AP1511: Tri radio; 2.4GHz radio: 688Mbps (2x2:2SS/EHT40); 5GHz radio: 2.88Gbps (2x2:2SS/EHT160); 6GHz radio: 5.76Gbps (2x2:2SS/EHT320); Up to 32 SSID; 512 clients per AP; 802.3at/bt POE (up to 35W). AP1521: 1 x 1/2.5/5/10GE multi-gigabit uplink; 802.3bt POE (up to 60W)." (p152-153)</p>
@@ -74,7 +85,8 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
 <li>新购选型（要 10G 上联/60W 供电选 1521，成本敏感选 1511）；需要外接天线定向覆盖；Express 还是 Enterprise 的容量测算；粘滞客户端/漫游体验差调阈值；两栋楼无线互联选 Bridge 还是 Mesh。</li>
-<li>与 <code><a href="stellar-enterprise-onboarding.html">stellar-enterprise-onboarding</a></code> / <code><a href="stellar-ssid-policy-advanced.html">stellar-ssid-policy-advanced</a></code> 的区分：那两个管"设备纳管"和"SSID 业务"；本 skill 管选型参数、模式容量、射频调优——设备已在网、配置已下发但体验/覆盖有问题时来查这里。</li>
+<li>与 <code><a href="stellar-enterprise-onboarding.html">stellar-enterprise-onboarding</a></code> / <code><a href="stellar-ssid-policy-advanced.html">stellar-ssid-policy-advanced</a></code> 的区分：那两个管"设备纳管"和"SSID 业务"；
+本 skill 管选型参数、模式容量、射频调优——设备已在网、配置已下发但体验/覆盖有问题时来查这里。</li>
 <li>与 <code><a href="stellar-rap-backup-upgrade-ops.html">stellar-rap-backup-upgrade-ops</a></code> 的区分：Mesh 是本地回程组网，RAP 是跨公网 VPN，两者都延伸覆盖但机制完全不同。</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
@@ -82,10 +94,15 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 1. Wi-Fi 7：AP1511（三射频 2x2，6G EHT320 5.76G，32 SSID/512 客户端，上联 1/2.5/5GE，PoE ≤35W）vs AP1521（同射频，上联 1/2.5/5/10GE + 1GE 下联，802.3bt ≤60W，低功率模式 at 仅 15W）。
 2. 外接天线：型号尾数为 2 才支持（AP1322/1362）；所有 AP 标配内置全向天线；具体天线型号查数据手册天线矩阵。
 3. 兼容红旗清点：AP1101 不支持 RAP/CNSA/DPI/WCF；AP1201H 不支持 DPI/WCF；AP1101/1201/1201H 不支持桥上 VLAN tagging。
-4. 容量：Express 集群 ≤255 AP、每交换机 ≤32、每堆叠 ≤64（堆叠内至少 2 台 AP123X/13xx/14xx/15X1）；Enterprise ≤4000 AP。IPv6 刚性项目：管理面要 IPv6 只能 Express（Enterprise 下 AP 管理/UPAM RADIUS 走 IPv4，客户端侧 IPv6 可用）。</p>
+4. 容量：Express 集群 ≤255 AP、每交换机 ≤32、每堆叠 ≤64（堆叠内至少 2 台 AP123X/13xx/14xx/15X1）；
+Enterprise ≤4000 AP。IPv6 刚性项目：管理面要 IPv6 只能 Express（Enterprise 下 AP 管理/UPAM RADIUS 走 IPv4，客户端侧 IPv6 可用）。</p>
 <p><strong>RF 调优</strong>：
 5. 一切阈值先换算：dBm = RSSI − 96（OV2500 客户端列表显示 dBm，AP RF 设置用 RSSI，两侧比较前必须统一单位）。信号分档：RSSI 29+（约 -67dBm 以上）为推荐，10-19 差（别跑视频语音）。
-6. 漫游：按 home/foreign AP 是否同 VLAN 定二层/三层漫游；开 802.11r（WPA2 下推荐）；OKC 仅 WPA2-Enterprise；Roaming RSSI 阈值从 2.4G=10 / 5G=15 起步，配 11k/11v；直角走廊等射频互不可见的相邻 AP 手动互加 Neighbor AP。
+6. 漫游：按 home/foreign AP 是否同 VLAN 定二层/三层漫游；
+开 802.11r（WPA2 下推荐）；
+OKC 仅 WPA2-Enterprise；
+Roaming RSSI 阈值从 2.4G=10 / 5G=15 起步，配 11k/11v；
+直角走廊等射频互不可见的相邻 AP 手动互加 Neighbor AP。
 7. 阈值不生效/需核验时：AP 侧 cat rfprofile.conf 看实际下发值。</p>
 <p><strong>Mesh/Bridge</strong>：
 8. 核对四条硬限制：≤4 跳、单跳 ≤5 台、全网 ≤16 台、每台 ≤5 个客户端 SSID。
@@ -101,4 +118,4 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <li>BLE Beaconing 默认关闭，配置粒度是 AP Group 不是单台 AP。</li>
 </ul>
 <hr />
-<p>来源条目: p02, p04, p05, p11, p12, p13, p14, p15, p20, c08, ce01, ce08, ce09</p></main></div></body></html>
+<p>来源条目: p02 · p04 · p05 · p11 · p12 · p13 · p14 · p15 · p20 · c08 · ce01 · ce08 · ce09</p><div class="pn"><a href="stellar-rap-backup-upgrade-ops.html">⬅ 上一单元：stellar-rap-backup-upgrade-ops</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

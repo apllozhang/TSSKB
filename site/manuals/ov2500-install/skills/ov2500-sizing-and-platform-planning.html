@@ -31,6 +31,17 @@ blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 
 hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 .badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
 .badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
 @media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
 </style></head>
 <body><div class="layout"><aside><h1>OV2500 4.9R2 · 安装与升级指南</h1>
@@ -47,7 +58,7 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <a href="skills/ov2500-install-on-esxi-hyperv-kvm.html">ov2500-install-on-esxi-hyperv-kvm</a>
 <div class="grp">HA 与升级</div>
 <a href="skills/ov2500-ha-cluster-design-and-conversion.html">ov2500-ha-cluster-design-and-conversion</a>
-<a href="skills/ov2500-upgrade-backup-restore.html">ov2500-upgrade-backup-restore</a></aside><main><h1>ov2500-sizing-and-platform-planning</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="ov2500">OV2500 部署规划与系统配置（四档规模 · 三平台矩阵 · 资源常数）</h1>
+<a href="skills/ov2500-upgrade-backup-restore.html">ov2500-upgrade-backup-restore</a></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../manuals/index.html">配置手册</a> › <a href="index.html">OV2500 4.9R2</a> › <span>OV2500 部署规划与系统配置（四档规模 · 三平台矩阵 · 资源常数）</span></nav><h1>OV2500 部署规划与系统配置（四档规模 · 三平台矩阵 · 资源常数）</h1><p class="meta"><span class="badge">SKILL</span> ov2500-sizing-and-platform-planning · 来源页码: </p><h1 id="ov2500">OV2500 部署规划与系统配置（四档规模 · 三平台矩阵 · 资源常数）</h1>
 <h2 id="r">R · 原文引用</h2>
 <blockquote>
 <p>"Total Number of Managed Devices 500 / 2,000 / 5,000 / 10,000 ... Hypervisor Processor 2.4 GHz, 8 Logical Processors (12 for High/Very High) ... Minimum Reserved OmniVista VA RAM for Standalone 20GB / 36GB / 64GB / 64GB ... Minimum Reserved RAM for HA N/A / 40GB / 64GB / 64GB ... Minimum Storage Read/Write Speed 100 / 150 / 200 / 200 MB/s" (p9)</p>
@@ -142,7 +153,8 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <p>混合换算：High 档 4000 台 Stellar AP 时最多再带 500 台 AOS 交换机；Very High 档 4000 AP 时 AOS 可达 1000 台（HA Very High 1500 台）。</p>
 <p>外部站点白名单（443 端口）：ovrepo.fluentnetworking.com（ALE 中央仓库）、ep1.fluentnetworking.com（AV 签名库）、myfleet.ovcirrus.com（Fleet Supervision）、us.fluentnetworking.com（Call Home）、api.fingerbank.org（设备指纹）、api.bcti.brightcloud.com（网页内容过滤）。不直连互联网必须配代理（VA 菜单 Configure Proxy）。</p>
 <p>端口常数：OV Web 默认 HTTP 80 / HTTPS 443；Captive Portal 默认 8080 / 8443；合法范围均 1024-65535 且不得重复；SSH 2222（cliadmin）、SFTP 22。</p>
-<p>评估许可：生成日起 90 天全功能，单文件含全部设备与服务许可；ALE 门户 lds.al-enterprise.com，Customer ID=99999、Order Number=evaluation、Passcode=omnivista。</p>
+<p>评估许可：生成日起 90 天全功能，单文件含全部设备与服务许可；
+ALE 门户 lds.al-enterprise.com，Customer ID=99999、Order Number=evaluation、Passcode=omnivista。</p>
 <h2 id="a1">A1 · 书中案例</h2>
 <ul>
 <li>只给 VA 分 20GB 内存 → OmniVista 只允许配 Low 档（500 台以下），系统直接拒绝超配档位（p8-9）。</li>
@@ -153,13 +165,17 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <ul>
 <li><strong>用本 skill</strong>：新部署前的容量选型、平台版本核对、CPU/内存/存储/端口/代理/许可规划——即"装之前"的所有决策。</li>
 <li>与 <code><a href="ov2500-install-on-esxi-hyperv-kvm.html">ov2500-install-on-esxi-hyperv-kvm</a></code> 的区分：那一个是"装的时候"三平台逐步操作与初始向导；本 skill 只管决策常数。规格数字不确定时先回本 skill 查表。</li>
-<li>与 <code><a href="ov2500-ha-cluster-design-and-conversion.html">ov2500-ha-cluster-design-and-conversion</a></code> 的区分：HA 拓扑选型（L2/L3）、转换步骤归那一个；本 skill 只提供"HA 必须 Medium 及以上、上限 4000 设备"这个容量门槛。</li>
+<li>与 <code><a href="ov2500-ha-cluster-design-and-conversion.html">ov2500-ha-cluster-design-and-conversion</a></code> 的区分：HA 拓扑选型（L2/L3）、转换步骤归那一个；
+本 skill 只提供"HA 必须 Medium 及以上、上限 4000 设备"这个容量门槛。</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
 <li>统计目标网络设备数（AOS 交换机 + 第三方 + Stellar AP），对照常数表定档位；AP 达 4000 且还需大量 AOS 时按混合换算复核。</li>
 <li>确认 Hypervisor 平台与版本在兼容矩阵内；Hyper-V 场景记录两条禁项（不支持 Live Migration；VM Manager 仅 2012/2012R2/2016）。</li>
-<li>按档位分配资源：2.4GHz CPU、8/12 逻辑核不超配；内存按 Standalone/HA 列配足并在 Hypervisor 中勾选预留（Reservation），CPU Shares 设 High；分区 1 50GB + 分区 2 按档；存储实测读写 ≥100/150/200/200 MB/s。</li>
+<li>按档位分配资源：2.4GHz CPU、8/12 逻辑核不超配；
+内存按 Standalone/HA 列配足并在 Hypervisor 中勾选预留（Reservation），CPU Shares 设 High；
+分区 1 50GB + 分区 2 按档；
+存储实测读写 ≥100/150/200/200 MB/s。</li>
 <li>Intel CPU 检查 AES-NI（SNMPv3 AES 性能依赖）：BIOS 开启且未被 Hypervisor 屏蔽（mask）。</li>
 <li>防火墙放行 6 个域名:443，或规划代理；记录管理端口（默认 80/443/8080/8443，如改须在 1024-65535 内且不重复）。</li>
 <li>试用场景走评估许可流程；正式场景提前在 ALE 门户生成许可文件。</li>
@@ -175,4 +191,4 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <li>云部署（Azure/AWS）不在本册范围。</li>
 </ul>
 <hr />
-<p>来源条目: p01, p02, p03, p04, p05, p06, p22, p23, p30, p31, g16, g21, ce17</p></main></div></body></html>
+<p>来源条目: p01 · p02 · p03 · p04 · p05 · p06 · p22 · p23 · p30 · p31 · g16 · g21 · ce17</p><div class="pn"><a href="index.html">⬅ 返回课程首页</a><a class="nxt" href="ov2500-install-on-esxi-hyperv-kvm.html">下一单元：ov2500-install-on-esxi-hyperv-kvm ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

@@ -31,6 +31,17 @@ blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 
 hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 .badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
 .badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
 @media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
 </style></head>
 <body><div class="layout"><aside><h1>DT00XTE360 · ACFE WLAN Basic Deployment with OmniVista</h1>
@@ -54,7 +65,7 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <div class="grp">安全与收尾</div>
 <a href="skills/wips-security-deployment.html">wips-security-deployment</a>
 <a href="skills/site-survey-troubleshooting.html">site-survey-troubleshooting</a>
-<a href="skills/rlab-lab-manual.html">rlab-lab-manual</a></aside><main><h1>roaming-rap-design</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="rap">漫游设计与 RAP 远程接入</h1>
+<a href="skills/rlab-lab-manual.html">rlab-lab-manual</a></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../postsales/index.html">售后</a> › <a href="index.html">DT00XTE360</a> › <span>漫游设计与 RAP 远程接入</span></nav><h1>漫游设计与 RAP 远程接入</h1><p class="meta"><span class="badge">SKILL</span> roaming-rap-design · 来源页码: </p><h1 id="rap">漫游设计与 RAP 远程接入</h1>
 <h2 id="r">R · 原文引用</h2>
 <blockquote>
 <p>"Check the roaming conditions ... Based on the VLAN ID between the 'home' and 'foreign' AP, select either: Layer 2 Roaming (default) / Layer 3 Roaming ... OKC can be enabled with WPA2/WPA3 Enterprise only; 802.11r (Fast Roaming) can be enabled with WPA/WPA2 encryption only (Personal or Enterprise)" (p489)</p>
@@ -108,7 +119,8 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 - 802.11r（FT，省 RADIUS 重认证）：要求 WPA2/WPA3 加密（Personal 或 Enterprise）
 - 规划顺序：先按 VLAN 选 L2/L3，再按 SSID 安全级别选快漫游协议，最后 Heat Map 分频段核对覆盖重叠。</p>
 <p><strong>4. 粘滞客户端组合拳</strong>
-Roaming RSSI Threshold（范围 0-100；推荐 2.4G=10、5G=15）+ 802.11v（给漫游目标）+ 802.11k（引导到最优 AP）。语义区分：关联阈值管"能不能连"，漫游阈值管"何时该走"。地理相邻但空口互不可见（直角走廊）→ 两台 AP 互加静态 Neighbor AP，上下文改走 LAN。</p>
+Roaming RSSI Threshold（范围 0-100；
+推荐 2.4G=10、5G=15）+ 802.11v（给漫游目标）+ 802.11k（引导到最优 AP）。语义区分：关联阈值管"能不能连"，漫游阈值管"何时该走"。地理相邻但空口互不可见（直角走廊）→ 两台 AP 互加静态 Neighbor AP，上下文改走 LAN。</p>
 <p><strong>5. RAP 五步上线时序</strong>
 预置三段管理面配置后，AP 上电自动：序列号向 Cirrus 注册 → 取回 RAP 模式/VPN 公网地址/客户端池/OV2500 地址 → 建管理 VPN 隧道 → 从 OV2500 拉配置 → 建第二条客户端数据 GRE 隧道。</p>
 <p>管理面三段：
@@ -142,4 +154,4 @@ Roaming RSSI Threshold（范围 0-100；推荐 2.4G=10、5G=15）+ 802.11v（给
 <li>L3 漫游走 GRE 隧道回 home AP，路径长、依赖隧道健康，非必要不制造 VLAN 不一致。</li>
 </ul>
 <hr />
-<p>来源条目: f18, f24, p56, p57, p58, p59, p60, c21, ce28, ce29, ce30, ce31, ce34 · 术语锚点: g28, g29, g31, g02, g03, g04, g44, g32, g14</p></main></div></body></html>
+<p>来源条目: f18 · f24 · p56 · p57 · p58 · p59 · p60 · c21 · ce28 · ce29 · ce30 · ce31 · ce34 · 术语锚点: g28 · g29 · g31 · g02 · g03 · g04 · g44 · g32 · g14</p><div class="pn"><a href="rf-optimization-baseline.html">⬅ 上一单元：rf-optimization-baseline</a><a class="nxt" href="wips-security-deployment.html">下一单元：wips-security-deployment ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

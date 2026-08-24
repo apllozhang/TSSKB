@@ -31,6 +31,17 @@ blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 
 hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 .badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
 .badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
 @media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
 </style></head>
 <body><div class="layout"><aside><h1>OV2500 4.9R2 · 安装与升级指南</h1>
@@ -47,7 +58,7 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <a href="skills/ov2500-install-on-esxi-hyperv-kvm.html" class="on">ov2500-install-on-esxi-hyperv-kvm</a>
 <div class="grp">HA 与升级</div>
 <a href="skills/ov2500-ha-cluster-design-and-conversion.html">ov2500-ha-cluster-design-and-conversion</a>
-<a href="skills/ov2500-upgrade-backup-restore.html">ov2500-upgrade-backup-restore</a></aside><main><h1>ov2500-install-on-esxi-hyperv-kvm</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="ov2500">OV2500 三平台安装部署与装机后基础配置</h1>
+<a href="skills/ov2500-upgrade-backup-restore.html">ov2500-upgrade-backup-restore</a></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../manuals/index.html">配置手册</a> › <a href="index.html">OV2500 4.9R2</a> › <span>OV2500 三平台安装部署与装机后基础配置</span></nav><h1>OV2500 三平台安装部署与装机后基础配置</h1><p class="meta"><span class="badge">SKILL</span> ov2500-install-on-esxi-hyperv-kvm · 来源页码: </p><h1 id="ov2500">OV2500 三平台安装部署与装机后基础配置</h1>
 <h2 id="r">R · 原文引用</h2>
 <blockquote>
 <p>"OV 2500 NMS 4.9R2 is distributed as a Virtual Appliance only... VMware ESXi: 6.5, 6.7 and 7.0.2, 8.0; MS Hyper-V: 2012 R2, 2016, 2019, and 2022; MS Hyper-V on Windows 10 Professional; Linux KVM/Ubuntu 22.04." (p8)</p>
@@ -65,7 +76,8 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <h2 id="a1">A1 · 书中案例</h2>
 <ul>
 <li>新手想一步到位，部署 VA 前就预挂扩容盘——官方明确禁止；须等 OmniVista 配置完成并重启后再从 Hypervisor 加盘（p10）。</li>
-<li>用 Configure Other Network Cards 加第二块网卡做跨子网发现：新网卡误配在主 OV IP 已管理设备的同子网，导致现有设备发不出 trap/报文；且新网卡必须与第一块同型号（eth1 与 eth0 同类型），经新网卡发现的设备 trap station 还要手动指到新网卡 IP（p285）。</li>
+<li>用 Configure Other Network Cards 加第二块网卡做跨子网发现：新网卡误配在主 OV IP 已管理设备的同子网，导致现有设备发不出 trap/报文；
+且新网卡必须与第一块同型号（eth1 与 eth0 同类型），经新网卡发现的设备 trap station 还要手动指到新网卡 IP（p285）。</li>
 <li>内存紧张的中型网络：Watchdog 菜单 Choose Service Profile 选 "2 4 5"（不开 Stellar/UPAM、不开 IoT、不开 sFlow）一次裁掉三类服务（p287）。</li>
 <li>KVM 部署初期：两块系统盘按手册选 VirtIO 总线并设 Discard Mode=unmap（p33）。</li>
 </ul>
@@ -83,8 +95,12 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <li>等 OmniVista 配置完成并重启，之后再从 Hypervisor 添加扩展盘/额外 NIC，回到 VA 菜单继续 Completing the OmniVista Installation。</li>
 <li>首次登录 Web UI（https://&lt;服务器IP&gt;），导入正式或评估许可（评估：lds.al-enterprise.com，99999/evaluation/omnivista，90 天）。</li>
 <li>日常菜单入口：Console 或 SSH 2222 端口 cliadmin 登录 VA 菜单；SFTP 22 端口用于传证书、取备份/日志。</li>
-<li>服务运维用 Watchdog（菜单 3/5）：查全部服务状态；Choose Service Profile 按需裁剪（2-不开 Stellar/UPAM，3-不开应用可视化，4-不开 IoT，5-不开 sFlow，可多选如 "2 4 5"）；可加 1-4096MB swap。注意停 ActiveMQ/Tomcat 会连带关 Web 服务器，需手动恢复。</li>
-<li>改 OV IP（如必要）：记住网络侧不受影响，须手动同步——有线设备重配 sFlow 接收器、policy server、SNMP trap station 并从 Analytics/Policy View QoS/Notification 重推；Stellar AP 重配 DHCP 服务器并在 Unified Access 重应用 WLAN 服务与全局配置；改后不可达就重启服务器。</li>
+<li>服务运维用 Watchdog（菜单 3/5）：查全部服务状态；
+Choose Service Profile 按需裁剪（2-不开 Stellar/UPAM，3-不开应用可视化，4-不开 IoT，5-不开 sFlow，可多选如 "2 4 5"）；
+可加 1-4096MB swap。注意停 ActiveMQ/Tomcat 会连带关 Web 服务器，需手动恢复。</li>
+<li>改 OV IP（如必要）：记住网络侧不受影响，须手动同步——有线设备重配 sFlow 接收器、policy server、SNMP trap station 并从 Analytics/Policy View QoS/Notification 重推；
+Stellar AP 重配 DHCP 服务器并在 Unified Access 重应用 WLAN 服务与全局配置；
+改后不可达就重启服务器。</li>
 <li>标准关机：Watchdog → Stop All Services → VA 菜单 Power Off/Reboot。任何情况下不得直接关宿主机断电。</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
@@ -98,4 +114,4 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <li>直接关宿主机给 VM 断电是数据损坏禁忌；长操作（扩盘等）全程不得对 VM 断电或复位（p8, p292）。</li>
 </ul>
 <hr />
-<p>来源条目: p03, p07(部分), p20, p26, p27, p31, ce02, ce15, ce17, ce18, g01, g02, g13, g14, g15, g19, g20, g22, g23, g25</p></main></div></body></html>
+<p>来源条目: p03 · p07(部分) · p20 · p26 · p27 · p31 · ce02 · ce15 · ce17 · ce18 · g01 · g02 · g13 · g14 · g15 · g19 · g20 · g22 · g23 · g25</p><div class="pn"><a href="ov2500-sizing-and-platform-planning.html">⬅ 上一单元：ov2500-sizing-and-platform-planning</a><a class="nxt" href="ov2500-ha-cluster-design-and-conversion.html">下一单元：ov2500-ha-cluster-design-and-conversion ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

@@ -31,6 +31,17 @@ blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 
 hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 .badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
 .badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
 @media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
 </style></head>
 <body><div class="layout"><aside><h1>DT00XTE325 · OmniSwitch LAN VxLAN/EVPN</h1>
@@ -48,7 +59,7 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <a href="skills/vxlan-evpn-service-provisioning.html" class="on">vxlan-evpn-service-provisioning</a>
 <a href="skills/vxlan-evpn-multihoming-df.html">vxlan-evpn-multihoming-df</a>
 <div class="grp">排障</div>
-<a href="skills/vxlan-evpn-bum-troubleshooting.html">vxlan-evpn-bum-troubleshooting</a></aside><main><h1>vxlan-evpn-service-provisioning</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="l2l3-vni-irb-dag-rd-rt">L2/L3 业务开通（VNI / IRB / DAG / RD-RT / 路由类型总表）</h1>
+<a href="skills/vxlan-evpn-bum-troubleshooting.html">vxlan-evpn-bum-troubleshooting</a></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../postsales/index.html">售后</a> › <a href="index.html">DT00XTE325</a> › <span>L2/L3 业务开通（VNI / IRB / DAG / RD-RT / 路由类型总表）</span></nav><h1>L2/L3 业务开通（VNI / IRB / DAG / RD-RT / 路由类型总表）</h1><p class="meta"><span class="badge">SKILL</span> vxlan-evpn-service-provisioning · 来源页码: </p><h1 id="l2l3-vni-irb-dag-rd-rt">L2/L3 业务开通（VNI / IRB / DAG / RD-RT / 路由类型总表）</h1>
 <h2 id="r">R · 原文引用</h2>
 <blockquote>
 <p><code>-&gt; service access port 1/1/7 evpn-ethernet-segment enable</code>
@@ -77,7 +88,9 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
 <li>触发：新开一条 L2/L3 业务、加 IRB/任播网关、多租户 RD/RT 规划、查"这条路由是什么类型/为什么没导入"。</li>
-<li>区分：底座与 BGP 会话 → <code><a href="vxlan-evpn-underlay-bgp-design.html">vxlan-evpn-underlay-bgp-design</a></code>；CE 双归/LAG/DF → <code><a href="vxlan-evpn-multihoming-df.html">vxlan-evpn-multihoming-df</a></code>；ARP 抑制/BUM/mac mobility/排障 → <code><a href="vxlan-evpn-bum-troubleshooting.html">vxlan-evpn-bum-troubleshooting</a></code>。本 skill 管"业务怎么开、参数怎么定"。</li>
+<li>区分：底座与 BGP 会话 → <code><a href="vxlan-evpn-underlay-bgp-design.html">vxlan-evpn-underlay-bgp-design</a></code>；
+CE 双归/LAG/DF → <code><a href="vxlan-evpn-multihoming-df.html">vxlan-evpn-multihoming-df</a></code>；
+ARP 抑制/BUM/mac mobility/排障 → <code><a href="vxlan-evpn-bum-troubleshooting.html">vxlan-evpn-bum-troubleshooting</a></code>。本 skill 管"业务怎么开、参数怎么定"。</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
@@ -96,4 +109,4 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <li>对远端 ES 执行 <code>sap-info</code> 会报 "Not supported for Remote ES"，本地/远端命令选择见 multihoming skill。</li>
 </ul>
 <hr />
-<p>来源条目: f04, f05, p06, p08, p09, p11, p12, p13, ce01, ce07, c02, c03, c07, c08, g04, g08, g09, g11, g12, g14, g18, g20, g21, g22</p></main></div></body></html>
+<p>来源条目: f04 · f05 · p06 · p08 · p09 · p11 · p12 · p13 · ce01 · ce07 · c02 · c03 · c07 · c08 · g04 · g08 · g09 · g11 · g12 · g14 · g18 · g20 · g21 · g22</p><div class="pn"><a href="vxlan-evpn-underlay-bgp-design.html">⬅ 上一单元：vxlan-evpn-underlay-bgp-design</a><a class="nxt" href="vxlan-evpn-multihoming-df.html">下一单元：vxlan-evpn-multihoming-df ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

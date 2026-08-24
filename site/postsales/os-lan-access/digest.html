@@ -31,6 +31,17 @@ blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 
 hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 .badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
 .badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
 @media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
 </style></head>
 <body><div class="layout"><aside><h1>DT00XTE215 · OmniSwitch LAN Access Switching</h1>
@@ -52,7 +63,7 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <a href="skills/qos-acl-policy.html">qos-acl-policy</a>
 <a href="skills/access-guardian-unp.html">access-guardian-unp</a>
 <div class="grp">运维</div>
-<a href="skills/poe-ops-diagnostics.html">poe-ops-diagnostics</a></aside><main><h1>精华长文 DIGEST</h1><h1 id="digest-omniswitch-lan-access-switching">DIGEST · OmniSwitch LAN Access Switching 精华长文</h1>
+<a href="skills/poe-ops-diagnostics.html">poe-ops-diagnostics</a></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../postsales/index.html">售后</a> › <a href="index.html">DT00XTE215</a> › <span>精华长文 DIGEST</span></nav><h1>精华长文 DIGEST</h1><h1 id="digest-omniswitch-lan-access-switching">DIGEST · OmniSwitch LAN Access Switching 精华长文</h1>
 <blockquote>
 <p>目标读者：不读全书、只要能用的新工程师。教材 DT00XTE215EN（ALE 售后 Newcomers 路径，500 页，3 天课）。本文按"概念 → 配置模型 → 速查 → Lab → 路径 → 避坑"组织，数字均带原书页码。</p>
 </blockquote>
@@ -65,7 +76,9 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <li><strong>DHL（Dynamic Dual Homing Link，动态双归属）</strong>：接入交换机双上行两台核心，不用 STP 阻塞就能防环——每个 VLAN 只在一条链路转发，故障时整体切换（p257-259）。这是 ALE 接入层替代"STP+VRRP"组合的招牌方案。</li>
 </ul>
 <p>其余概念与业界通用：VLAN/802.1Q trunk、LACP 聚合、STP/RSTP、VRRP、DHCP Relay、QoS/ACL、PoE——但命令语法和默认值各有 AOS 特色，见第三节速查表。</p>
-<p>管理接入第一课：默认账户 admin/switch，本地用户库 userTable9 存 /flash/system，上限 64 用户；8.10R4 起强制改默认密码（p38-39）。带外管理走 EMP 口；无 EMP 的 6360/6465/6560 用 USB-Ethernet dongle 等效（switch-management-access skill）。</p>
+<p>管理接入第一课：默认账户 admin/switch，本地用户库 userTable9 存 /flash/system，上限 64 用户；
+8.10R4 起强制改默认密码（p38-39）。带外管理走 EMP 口；
+无 EMP 的 6360/6465/6560 用 USB-Ethernet dongle 等效（switch-management-access skill）。</p>
 <h2 id="aos-certified-working-boot">二、AOS 配置管理模型：certified / working / boot 三目录（重点讲透）</h2>
 <p><strong>这一节是全书最值钱的一页。</strong> 大量新手事故不是配错命令，是没搞清"我的配置存在哪、重启后会怎样"。</p>
 <h3 id="21-ram">2.1 三个目录 + 一个 RAM</h3>
@@ -319,5 +332,4 @@ write memory flash-synchro    # 一步做两件事（VC 场景同步到所有成
 <li><strong>AAA 的 exit-on-fail 语义反直觉</strong>：enable 是"只用第一台可用服务器"，disable 才是逐台 fail-through——多 RADIUS 容灾场景要 disable（p41）。</li>
 <li><strong>DHL 回切等 30 秒</strong>（pre-emption 默认值），别误判故障；monitoring 与 mirroring 不能落同一物理口，抓包前先规划口的角色。</li>
 </ol>
-<hr />
-<p><em>由 cangjie-skill 流水线从 DT00XTE215EN 蒸馏生成</em></p></main></div></body></html>
+<hr /><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

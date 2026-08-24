@@ -31,6 +31,17 @@ blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 
 hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 .badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
 .badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
 @media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
 </style></head>
 <body><div class="layout"><aside><h1>DT00XTE215 · OmniSwitch LAN Access Switching</h1>
@@ -52,7 +63,7 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <a href="skills/qos-acl-policy.html">qos-acl-policy</a>
 <a href="skills/access-guardian-unp.html">access-guardian-unp</a>
 <div class="grp">运维</div>
-<a href="skills/poe-ops-diagnostics.html">poe-ops-diagnostics</a></aside><main><h1>virtual-chassis-deployment</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="virtual-chassis">Virtual Chassis 部署与运维</h1>
+<a href="skills/poe-ops-diagnostics.html">poe-ops-diagnostics</a></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../postsales/index.html">售后</a> › <a href="index.html">DT00XTE215</a> › <span>Virtual Chassis 部署与运维</span></nav><h1>Virtual Chassis 部署与运维</h1><p class="meta"><span class="badge">SKILL</span> virtual-chassis-deployment · 来源页码: </p><h1 id="virtual-chassis">Virtual Chassis 部署与运维</h1>
 <h2 id="r">R · 原文引用</h2>
 <p>"Assign a Chassis ID / Assign a Chassis Group ID and a Priority / Configure VFL link &amp; ports - Automatic or static / Restart Chassis to Virtual-Chassis Directory. Assign a Chassis Group number: Must be the same on all the switches belonging to the Virtual Chassis. Define a Priority: Between 0 to 255, switch with the highest priority is elected Master."（p105-107）</p>
 <p>"Master/Slave election based on virtual chassis protocol (ISIS-VC): Highest chassis priority value / Longest chassis uptime (if difference in uptime &gt;10 mn) / Smallest Chassis ID value / Smallest chassis MAC address"（p95）</p>
@@ -65,7 +76,12 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 - <strong>脑裂防护两条路</strong>：带外 RCD（EMP 口互发通告，split 时前 slave 关全部用户口、状态 Split-Topology）；带内 VCSP（成员各出一口到 helper 交换机组成 VCSP LAG）。
 - <strong>ISSU</strong>：新代码放独立目录 → issu 命令分发 → 按 chassis ID 从小到大逐台重启。</p>
 <h2 id="a1-lab">A1 · 书中案例（Lab 配置精要）</h2>
-<p>6360 双机 Lab（p112-122）：A 端 <code>virtual-chassis chassis-group 1</code> + <code>chassis-id 1 configured-chassis-priority 200</code>；B 端 <code>configured-chassis-id 2</code>；<code>virtual-chassis vf-link-mode auto</code> + <code>auto-vf-link-port 1/1/27</code>（P10 型号用 1/1/11）；<code>interfaces 1/1/27-28 admin-state enable</code>；write memory 后各 reload（priority/chassis-id 改动必须重启生效；B 端 write memory 弹 "Chassis 1 missing! Configuration associated with missing chassis will be erased permanently! Confirm (Y/N)" 警告）。监控：show virtual-chassis topology（"+"=未保存）、show virtual-chassis vf-link member-port、show virtual-chassis consistency、<code>ssh-chassis admin@2</code> 跳到从机。</p>
+<p>6360 双机 Lab（p112-122）：A 端 <code>virtual-chassis chassis-group 1</code> + <code>chassis-id 1 configured-chassis-priority 200</code>；
+B 端 <code>configured-chassis-id 2</code>；
+<code>virtual-chassis vf-link-mode auto</code> + <code>auto-vf-link-port 1/1/27</code>（P10 型号用 1/1/11）；
+<code>interfaces 1/1/27-28 admin-state enable</code>；
+write memory 后各 reload（priority/chassis-id 改动必须重启生效；
+B 端 write memory 弹 "Chassis 1 missing! Configuration associated with missing chassis will be erased permanently! Confirm (Y/N)" 警告）。监控：show virtual-chassis topology（"+"=未保存）、show virtual-chassis vf-link member-port、show virtual-chassis consistency、<code>ssh-chassis admin@2</code> 跳到从机。</p>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
 <li>接入层多机合一管理、跨机箱端口聚合、免 STP/VRRP——本 skill。</li>
@@ -91,4 +107,4 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <li>master 故障只影响自身，slave 流量不受损；但 VFL 全断而无 RCD/VCSP 会双活冒 IP/MAC。</li>
 </ul>
 <hr />
-<p>来源条目: f03, f04, f05, p13, p14, p15, p16, p17, ce04, ce07, c03, g08, g09, g10, g11, g12, g13, g40</p></main></div></body></html>
+<p>来源条目: f03 · f04 · f05 · p13 · p14 · p15 · p16 · p17 · ce04 · ce07 · c03 · g08 · g09 · g10 · g11 · g12 · g13 · g40</p><div class="pn"><a href="switch-management-access.html">⬅ 上一单元：switch-management-access</a><a class="nxt" href="vlan-link-redundancy.html">下一单元：vlan-link-redundancy ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

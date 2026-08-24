@@ -31,6 +31,17 @@ blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 
 hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 .badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
 .badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
 @media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
 </style></head>
 <body><div class="layout"><aside><h1>DT00XTE323 · OmniSwitch LAN SPB 实施</h1>
@@ -52,7 +63,7 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <a href="skills/spb-hybrid-etree.html">spb-hybrid-etree</a>
 <div class="grp">自动化与运维</div>
 <a href="skills/unp-dynamic-ov2500.html">unp-dynamic-ov2500</a>
-<a href="skills/spb-oam-troubleshoot.html">spb-oam-troubleshoot</a></aside><main><h1>spb-bum-protection</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="bum-lbd-overload">BUM 组播与接入保护（三模式 / LBD / Overload）</h1>
+<a href="skills/spb-oam-troubleshoot.html">spb-oam-troubleshoot</a></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../postsales/index.html">售后</a> › <a href="index.html">DT00XTE323</a> › <span>BUM 组播与接入保护（三模式 / LBD / Overload）</span></nav><h1>BUM 组播与接入保护（三模式 / LBD / Overload）</h1><p class="meta"><span class="badge">SKILL</span> spb-bum-protection · 来源页码: </p><h1 id="bum-lbd-overload">BUM 组播与接入保护（三模式 / LBD / Overload）</h1>
 <h2 id="r">R · 原文引用</h2>
 <blockquote>
 <p>"SPBM supports two BUM traffic distribution methods for replicating and forwarding multicast frames • Head-End (native mode) • Tandem (optimized)" (p138-141；Head-End 为默认，入口 BEB 按对端单播 B-MAC 逐份复制)</p>
@@ -80,11 +91,14 @@ loopback-detection service-access port 1/1/3 enable
 service l2profile Drop-GVRP GVRP drop
 service access port 1/1/3 l2profile Drop-GVRP
 </code></pre>
-<p>人为环路故障模型（ce14，p131）：Sw8 增 SAP 1/1/4:2 + Sw5 tag VLAN2 并行口 + <code>spantree vlan 2 admin-state disable</code> → Client5 MAC 在 Sw7/Sw8 双侧漂移、ping 中断；随后 LBD 自动 shutdown 环路口恢复。</p>
+<p>人为环路故障模型（ce14，p131）：Sw8 增 SAP 1/1/4:2 + Sw5 tag VLAN2 并行口 + <code>spantree vlan 2 admin-state disable</code> → Client5 MAC 在 Sw7/Sw8 双侧漂移、ping 中断；
+随后 LBD 自动 shutdown 环路口恢复。</p>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
 <li>组播流量大要优化复制、ARP/DHCP 泛洪要抑制、接入口可能成环、核心要下电维护先引流时用本 skill。</li>
-<li>与 <code><a href="spb-backbone-deploy.html">spb-backbone-deploy</a></code> 的区分：metric/ECT 选路调优归骨干 skill，本 skill 管 BUM 复制与环路防护；与 <code><a href="spb-access-ring-redundancy.html">spb-access-ring-redundancy</a></code> 的区分：DHL/ERP 是双上联的成套冗余方案，LBD 是兜底检测——教材实验里 LBD 用在无冗余方案的并行路径上；与 <code><a href="spb-oam-troubleshoot.html">spb-oam-troubleshoot</a></code> 的区分：本 skill 是预防性配置，连通性验证（mac-ping/SAA）归 OAM。</li>
+<li>与 <code><a href="spb-backbone-deploy.html">spb-backbone-deploy</a></code> 的区分：metric/ECT 选路调优归骨干 skill，本 skill 管 BUM 复制与环路防护；
+与 <code><a href="spb-access-ring-redundancy.html">spb-access-ring-redundancy</a></code> 的区分：DHL/ERP 是双上联的成套冗余方案，LBD 是兜底检测——教材实验里 LBD 用在无冗余方案的并行路径上；
+与 <code><a href="spb-oam-troubleshoot.html">spb-oam-troubleshoot</a></code> 的区分：本 skill 是预防性配置，连通性验证（mac-ping/SAA）归 OAM。</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
@@ -103,4 +117,4 @@ service access port 1/1/3 l2profile Drop-GVRP
 <li>tandem 模式全网同 BVLAN 必须一致，混配会异常（p15）。</li>
 </ul>
 <hr />
-<p>来源条目: f09, p12, p14, p15, p16, p17, c03, ce03, ce04, ce14, g06, g17, g23, g35, g36</p></main></div></body></html>
+<p>来源条目: f09 · p12 · p14 · p15 · p16 · p17 · c03 · ce03 · ce04 · ce14 · g06 · g17 · g23 · g35 · g36</p><div class="pn"><a href="ip-over-spb.html">⬅ 上一单元：ip-over-spb</a><a class="nxt" href="spb-access-ring-redundancy.html">下一单元：spb-access-ring-redundancy ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

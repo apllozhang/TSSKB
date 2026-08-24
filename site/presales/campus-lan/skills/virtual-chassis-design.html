@@ -31,6 +31,17 @@ blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 
 hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 .badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
 .badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
 @media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
 </style></head>
 <body><div class="layout"><aside><h1>DT00XPS281 · Campus LAN 售前</h1>
@@ -56,7 +67,7 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <a href="skills/license-wwpl-pricing.html">license-wwpl-pricing</a>
 <div class="grp">安全与垂直</div>
 <a href="skills/security-unified-access.html">security-unified-access</a>
-<a href="skills/video-surveillance-design.html">video-surveillance-design</a></aside><main><h1>virtual-chassis-design</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="vc">虚拟机箱（VC）堆叠设计</h1>
+<a href="skills/video-surveillance-design.html">video-surveillance-design</a></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../presales/index.html">售前</a> › <a href="index.html">DT00XPS281</a> › <span>虚拟机箱（VC）堆叠设计</span></nav><h1>虚拟机箱（VC）堆叠设计</h1><p class="meta"><span class="badge">SKILL</span> virtual-chassis-design · 来源页码: </p><h1 id="vc">虚拟机箱（VC）堆叠设计</h1>
 <h2 id="r">R · 原文引用</h2>
 <blockquote>
 <p>"STACKING / VIRTUAL CHASSIS TOPOLOGIES — 8 x OmniSwitch [6465] T/P6/P12/P28 models; 4 x OS6465; 6 x OS6900-X/T/V/C; 2 x OS9907; 4 x OS6360 … OS6560/E OS6860E<em> OS6865</em> OS6570M OS6860N OS6870 (up to 8, ring)" (p59)</p>
@@ -107,7 +118,9 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <p><strong>两大阵营</strong>：9900/6900 阵营静态/自动 chassis-id（9900 强制静态，每台写 vcsetup.cfg）；其余阵营自动分配、2-8 台环形。默认 VFL 口号速查：6560/E 24 口型 29-30、48 口型 53-54；6465-P28 27/28；6360 11/12（10 口）、27/28（24 口）、51/52（48 口）。</p>
 <p><strong>主从选举四级判据</strong>：优先级 → uptime（差 &gt;10 分钟才算）→ 最小 chassis ID → 最小 MAC。规划主备时把目标 master 的优先级配高即可。</p>
 <p><strong>防脑裂双机制（方案必预置其一）</strong>：
-- 带外 RCD：走 EMP 口；选址顺序先 NVRAM 的 CMM IP、再 chassis EMP IP；无 EMP 口机型（6360/6560 等）须加 USB 转 Ethernet 适配器，仅支持 ASIX 8817 与 RealTek RTL8153。
+- 带外 RCD：走 EMP 口；
+选址顺序先 NVRAM 的 CMM IP、再 chassis EMP IP；
+无 EMP 口机型（6360/6560 等）须加 USB 转 Ethernet 适配器，仅支持 ASIX 8817 与 RealTek RTL8153。
 - 带内 VCSP：借上/下游 helper 交换机，建议每个 VC 成员出一个口加入 VCSP LAG。分裂后非 Master 子 VC 进 Protection 模式关闭全部用户口（保留 LAG/VFL 口）。</p>
 <h2 id="a1">A1 · 书中案例</h2>
 <p>c09（p309）：8×OS6860N 组 VC（100m 内远程堆叠，VFL 20/40/100G），384 千兆口或 192 多千兆口、95W PoE 供 Wi-Fi 6/7 AP，4×25G LACP 上联 OS6900 核心。c15（p79）：OS6870 中型核心 + 各楼宇接入机经 10/25/40/100G 链路做远程 VC 跨楼堆叠成单一管理实体。</p>
@@ -133,4 +146,4 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <li>网管许可不吃 VC 的账：每台成员单独计 license（见 license skill ce15）。</li>
 </ul>
 <hr />
-<p>来源条目: p07, p08, p09, p10, p11, c09, c15, ce01, ce02, ce05, g35, g43, g44, g45</p></main></div></body></html>
+<p>来源条目: p07 · p08 · p09 · p10 · p11 · c09 · c15 · ce01 · ce02 · ce05 · g35 · g43 · g44 · g45</p><div class="pn"><a href="campus-design-tiering-and-ha.html">⬅ 上一单元：campus-design-tiering-and-ha</a><a class="nxt" href="dhl-erp-ring-protection.html">下一单元：dhl-erp-ring-protection ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

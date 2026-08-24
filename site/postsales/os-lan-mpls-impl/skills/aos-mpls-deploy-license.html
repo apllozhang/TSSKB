@@ -31,6 +31,17 @@ blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 
 hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 .badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
 .badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
 @media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
 </style></head>
 <body><div class="layout"><aside><h1>DT00XTE324 · OmniSwitch LAN MPLS 实施</h1>
@@ -47,7 +58,7 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <div class="grp">设计与运维</div>
 <a href="skills/mpls-reference-design.html">mpls-reference-design</a>
 <a href="skills/aos-mpls-operating-rules.html">aos-mpls-operating-rules</a>
-<a href="skills/aos-mpls-capability-limits.html">aos-mpls-capability-limits</a></aside><main><h1>aos-mpls-deploy-license</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="aos-mpls">AOS MPLS 部署流程与许可管理（十步法）</h1>
+<a href="skills/aos-mpls-capability-limits.html">aos-mpls-capability-limits</a></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../postsales/index.html">售后</a> › <a href="index.html">DT00XTE324</a> › <span>AOS MPLS 部署流程与许可管理（十步法）</span></nav><h1>AOS MPLS 部署流程与许可管理（十步法）</h1><p class="meta"><span class="badge">SKILL</span> aos-mpls-deploy-license · 来源页码: </p><h1 id="aos-mpls">AOS MPLS 部署流程与许可管理（十步法）</h1>
 <h2 id="r">R · 原文引用</h2>
 <blockquote>
 <p>"Step 1: Install MPLS Package / Step 2: IP Interface Creation. / Step 3: Setup Routing for the interfaces using OSPF. / Step 4: Load LDP protocol. / Step 5: Enable MPLS/LDP on the interface / Step 6: Configure VPLS service"（p58-65）</p>
@@ -68,12 +79,17 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 - 节点许可（Node-based）：绑定单个 MPLS 节点，不绑硬件序列号/MAC</p>
 <p>版本准入：首版支持 AOS 8.9R3，平台仅 OmniSwitch 6860N。</p>
 <h2 id="a1">A1 · 书中案例</h2>
-<p>Lab 1（p83-96）：四台 OS6860 环形骨干。互联 VLAN 70/79/80/89/90（mtu-ip 4094），每台 Loopback0=192.168.254.{7-10}；OSPF area 0.0.0.0 接口 type point-to-point；SILOS 许可服务器 listen-port 8883，各交换机 <code>license client site-id Master server-ip ...</code>；<code>mpls load ldp</code> 后逐接口 <code>mpls ldp interface "int_79" admin-state enable</code>。初始四台 show license-server info 均 NO LICENSE，接入 SILOS 后拿到 15/23 天 DEMO 许可。</p>
+<p>Lab 1（p83-96）：四台 OS6860 环形骨干。互联 VLAN 70/79/80/89/90（mtu-ip 4094），每台 Loopback0=192.168.254.{7-10}；
+OSPF area 0.0.0.0 接口 type point-to-point；
+SILOS 许可服务器 listen-port 8883，各交换机 <code>license client site-id Master server-ip ...</code>；
+<code>mpls load ldp</code> 后逐接口 <code>mpls ldp interface "int_79" admin-state enable</code>。初始四台 show license-server info 均 NO LICENSE，接入 SILOS 后拿到 15/23 天 DEMO 许可。</p>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
 <li>新项目在 OmniSwitch 上开 MPLS：本 skill 给出前置与顺序骨架。</li>
 <li>已部署网络 MPLS 突发全网失效：先查许可（ce01 路径），再查配置。</li>
-<li>区分：骨干就绪后叠加 VPLS 服务的 CLI 细节归 <code><a href="vpls-signaling-ldp-vs-bgp.html">vpls-signaling-ldp-vs-bgp</a></code>；标准化项目模板归 <code><a href="mpls-reference-design.html">mpls-reference-design</a></code>；LDP 行为规则解读归 <code><a href="aos-mpls-operating-rules.html">aos-mpls-operating-rules</a></code>。</li>
+<li>区分：骨干就绪后叠加 VPLS 服务的 CLI 细节归 <code><a href="vpls-signaling-ldp-vs-bgp.html">vpls-signaling-ldp-vs-bgp</a></code>；
+标准化项目模板归 <code><a href="mpls-reference-design.html">mpls-reference-design</a></code>；
+LDP 行为规则解读归 <code><a href="aos-mpls-operating-rules.html">aos-mpls-operating-rules</a></code>。</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
@@ -94,4 +110,4 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <li>客户超 4 台节点时需买多份站点许可或改节点许可（ALE Licensing Portal 操作）。</li>
 </ul>
 <hr />
-<p>来源条目: f01, p01, p02, p03, c01, ce01, ce02</p></main></div></body></html>
+<p>来源条目: f01 · p01 · p02 · p03 · c01 · ce01 · ce02</p><div class="pn"><a href="index.html">⬅ 返回课程首页</a><a class="nxt" href="vpls-signaling-ldp-vs-bgp.html">下一单元：vpls-signaling-ldp-vs-bgp ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

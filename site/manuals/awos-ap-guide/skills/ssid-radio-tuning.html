@@ -31,6 +31,17 @@ blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 
 hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 .badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
 .badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
 @media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
 </style></head>
 <body><div class="layout"><aside><h1>AWOS 5.0.3 · Stellar AP 用户手册</h1>
@@ -48,7 +59,7 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <div class="grp">安全</div>
 <a href="skills/wlan-security-enterprise.html">wlan-security-enterprise</a>
 <div class="grp">运维</div>
-<a href="skills/ap-ops-upgrade-mesh.html">ap-ops-upgrade-mesh</a></aside><main><h1>ssid-radio-tuning</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="ssid">SSID 射频调优与内置服务</h1>
+<a href="skills/ap-ops-upgrade-mesh.html">ap-ops-upgrade-mesh</a></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../manuals/index.html">配置手册</a> › <a href="index.html">AWOS 5.0.3</a> › <span>SSID 射频调优与内置服务</span></nav><h1>SSID 射频调优与内置服务</h1><p class="meta"><span class="badge">SKILL</span> ssid-radio-tuning · 来源页码: </p><h1 id="ssid">SSID 射频调优与内置服务</h1>
 <h2 id="r">R · 原文引用</h2>
 <blockquote>
 <p>By default, the working channel and transmitting power are automatically managed by Radio Dynamic Adjustment™ (RDA) technology. ... If you want to set the channel and power values for an AP manually, you need to disable the ACS/APC function on the AP. ... In manual mode the AP transmit power can be adjusted in 1 dB increments. (p40-41)</p>
@@ -77,7 +88,10 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <ol>
 <li>盘点默认值：Beacon 100ms（60-500 可调）、CSA 默认启用（计数 1-10）、Short GI 启用、DTIM=1、UAPSD 启用、后台扫描 20s（5s-3h）。</li>
 <li>手动指定信道/功率：先在该 AP 上关闭 ACS/APC → 两个频段分别设 → 功率按 1 dB 步进。160MHz 仅静态、仅 5G/6G、仅支持机型（AP1451/AP1431/AP1411/AP132X/AP136X/AP1351）。</li>
-<li>高密优化：开 RSSI Threshold 配推荐值；开 Roaming RSSI 配推荐值并确认 802.11k/v；Band Steering 保持默认 Prefer 5G，双频强制上 5G 才用 Force 5G；Load Balance 默认已开（密度阈值 10、利用率 70%）。</li>
+<li>高密优化：开 RSSI Threshold 配推荐值；
+开 Roaming RSSI 配推荐值并确认 802.11k/v；
+Band Steering 保持默认 Prefer 5G，双频强制上 5G 才用 Force 5G；
+Load Balance 默认已开（密度阈值 10、利用率 70%）。</li>
 <li>速率准入：2.4G 最低 12 Mbps、5G/6G 最低 24 Mbps；管理帧速率避开 2.4G Beacon 的 9/18 Mbps（会自动改用 11/24）与 5G 的 9 Mbps（自动改 12）。</li>
 <li>客户端管理：空闲超时关闭时固定 600s，开启可配 60-12000s；每 BSSID 最大客户端 1-256，默认 64；健康度 Best&gt;30 / Good 15~30 / Fair&lt;15；监控刷新默认 30s（30/60/120 可选）。</li>
 <li>AP 侧 DHCP（Service → DHCP）：租约默认 24h；DHCP 池只能绑定配了静态 IP 的 Network，且 VLAN 须先映射到 SSID 才出现。</li>
@@ -95,4 +109,4 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <li>Voice/Video Awareness 与 Airtime Fairness 默认关闭。</li>
 </ul>
 <hr />
-<p>来源条目: p10, p11, p12, p13, p14, p15, p18, p19, p23, p25, ce07, ce08, ce12, ce14, g11, g12, g13, g16, g17, g24, g25, g26, g27, g28, g29, g36</p></main></div></body></html>
+<p>来源条目: p10 · p11 · p12 · p13 · p14 · p15 · p18 · p19 · p23 · p25 · ce07 · ce08 · ce12 · ce14 · g11 · g12 · g13 · g16 · g17 · g24 · g25 · g26 · g27 · g28 · g29 · g36</p><div class="pn"><a href="cluster-bootstrap-pvm.html">⬅ 上一单元：cluster-bootstrap-pvm</a><a class="nxt" href="wlan-security-enterprise.html">下一单元：wlan-security-enterprise ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

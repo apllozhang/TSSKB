@@ -31,6 +31,17 @@ blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 
 hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 .badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
 .badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
 @media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
 </style></head>
 <body><div class="layout"><aside><h1>OV2500 4.9R2 · RAP 与 VPN VA 安装</h1>
@@ -47,7 +58,7 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <a href="skills/vpn-va-deploy-capacity.html">vpn-va-deploy-capacity</a>
 <a href="skills/rap-data-tunnel-config.html" class="on">rap-data-tunnel-config</a>
 <div class="grp">排障</div>
-<a href="skills/rap-vpn-troubleshooting.html">rap-vpn-troubleshooting</a></aside><main><h1>rap-data-tunnel-config</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="ssid-local-breakout">数据隧道配置：设置文件、SSID 与 Local Breakout</h1>
+<a href="skills/rap-vpn-troubleshooting.html">rap-vpn-troubleshooting</a></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../manuals/index.html">配置手册</a> › <a href="index.html">OV2500 4.9R2</a> › <span>数据隧道配置：设置文件、SSID 与 Local Breakout</span></nav><h1>数据隧道配置：设置文件、SSID 与 Local Breakout</h1><p class="meta"><span class="badge">SKILL</span> rap-data-tunnel-config · 来源页码: </p><h1 id="ssid-local-breakout">数据隧道配置：设置文件、SSID 与 Local Breakout</h1>
 <h2 id="r">R · 原文引用</h2>
 <blockquote>
 <p>"SFTP the VPN Settings File (e.g., LAB4.conf) to the vpn_profile Directory (/opt/OmniVista_2500_NMS/data/vpn_conf/vpn_profile) on the VPN VA. ... Important Note: Do not change the name of the VPN Settings file. ... Any time you modify VPN settings you must generate a New VPN Settings File and FTP the file to the VPN Server." (p62-63)</p>
@@ -67,9 +78,13 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <h2 id="a1">A1 · 书中案例</h2>
 <ul>
 <li>设置文件样例：LAB4.conf 内含全部 RAP 对端的 WireGuard PublicKey 与 AllowedIPs（如 10.180.2.7/32），按 VPN Settings Name 命名。</li>
-<li>五步链样例：Data VPN Server 参数 Name/公网 IP/Port/VPN IP（与客户端池同网段）/Client Pool；导出文件含 192.168.1.2/32 样例；最终 RAP↔VPN Server 间建立 L2GRE 隧道承载员工数据流量。</li>
+<li>五步链样例：Data VPN Server 参数 Name/公网 IP/Port/VPN IP（与客户端池同网段）/Client Pool；
+导出文件含 192.168.1.2/32 样例；
+最终 RAP↔VPN Server 间建立 L2GRE 隧道承载员工数据流量。</li>
 <li>路由累积样例：SSID1 用 T1 配路由 A/B、SSID2 用 T2 配 C/D，则 A/B/C/D 对两个 SSID 都生效。</li>
-<li>Local Breakout DNS 故障样例（p83-84）：AP 双 DNS 随机选用致 OVC 掉线；客户端 DNS 192.168.10.177 命中 192.168.10.0/24 路由被送进隧道变慢；解法统一为配正确的总部 DNS。</li>
+<li>Local Breakout DNS 故障样例（p83-84）：AP 双 DNS 随机选用致 OVC 掉线；
+客户端 DNS 192.168.10.177 命中 192.168.10.0/24 路由被送进隧道变慢；
+解法统一为配正确的总部 DNS。</li>
 <li>1201H 下行口隧道化：Tunnel Profile → Access Role Profile（Map to VLAN and Tunnel）→ Access Auth Profile，应用到 AP/AP Group。</li>
 </ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
@@ -86,9 +101,13 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <li>绑 AP Group：Network→AP Registration→AP Group 编辑并绑定 Data VPN Server（必做）。</li>
 <li>导出设置文件：AP 加入 Device Catalog 即可 Export VPN Settings（无需等 Registered）；SFTP 到 /opt/OmniVista_2500_NMS/data/vpn_conf/vpn_profile，<strong>不改名</strong>。</li>
 <li>配 VPN Endpoint：挂设置文件到服务；管理隧道接口选 None，数据隧道选无 IP 的 eth2；Apply Configuration Changes。</li>
-<li>配隧道 SSID：Use Tunnel 勾选、Tunnel ID=0、选 Data VPN Server profile、Allowed Band=All、WPA3_AES、Support of Entropy 禁用；RADIUS 认证（如 UPAMRadiusServer）；关联 AP Group 后 OV2500 自动推送。交换机侧 VLAN：AOS 8.x <code>vlan [n] member port [p] tagged/untagged</code>；AOS 6.x <code>vlan [n] 802.1q [p]</code> / <code>vlan [n] port default [p]</code>。</li>
+<li>配隧道 SSID：Use Tunnel 勾选、Tunnel ID=0、选 Data VPN Server profile、Allowed Band=All、WPA3_AES、Support of Entropy 禁用；
+RADIUS 认证（如 UPAMRadiusServer）；
+关联 AP Group 后 OV2500 自动推送。交换机侧 VLAN：AOS 8.x <code>vlan [n] member port [p] tagged/untagged</code>；
+AOS 6.x <code>vlan [n] 802.1q [p]</code> / <code>vlan [n] port default [p]</code>。</li>
 <li>开 Local Breakout（如需）：确认 Tunnel ID=0 且隧道内仅一个 VLAN 开启；配静态路由避开三红线（见 B）。</li>
-<li>DS-Lite 调参（如需）：管理 TCPMSS 1380/1352、数据 TCPMSS 1380/1300、MTU 1500/1546/1376；入口分别为 Freemium VPN Servers、Data VPN Server、WLAN→SSIDs 界面。</li>
+<li>DS-Lite 调参（如需）：管理 TCPMSS 1380/1352、数据 TCPMSS 1380/1300、MTU 1500/1546/1376；
+入口分别为 Freemium VPN Servers、Data VPN Server、WLAN→SSIDs 界面。</li>
 <li>下行口认证（如需）：确认 Premium/Business 账号 → Tunnel Profile → Access Role Profile → Access Auth Profile 应用到 AP/AP Group（最多 Eth1-Eth3 三口）。</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
@@ -101,4 +120,4 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 <li>下行口认证仅 Premium/Business 账号、仅 AP1201H/1201HL/AP1311；组内不支持的 AP/端口自动忽略（p75）。</li>
 </ul>
 <hr />
-<p>来源条目: p12, p13, p14, p15, p16, p17, p18, ce04, ce07, ce10, g07, g08, g09, g15, g18, g19, g20</p></main></div></body></html>
+<p>来源条目: p12 · p13 · p14 · p15 · p16 · p17 · p18 · ce04 · ce07 · ce10 · g07 · g08 · g09 · g15 · g18 · g19 · g20</p><div class="pn"><a href="vpn-va-deploy-capacity.html">⬅ 上一单元：vpn-va-deploy-capacity</a><a class="nxt" href="rap-vpn-troubleshooting.html">下一单元：rap-vpn-troubleshooting ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
