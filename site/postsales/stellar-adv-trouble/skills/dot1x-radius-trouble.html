@@ -1,0 +1,96 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>dot1x-radius-trouble — DT00XTE478 · Stellar WLAN 高级排障</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE478 · Stellar WLAN 高级排障</h1>
+<div class="sub">187 页 · 无线排障专题（方法论/工具箱/四层排障/勘测/TKC）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">方法论</div>
+<a href="skills/wlan-trouble-methodology.html">wlan-trouble-methodology</a>
+<div class="grp">工具与体检</div>
+<a href="skills/stellar-ap-toolbox.html">stellar-ap-toolbox</a>
+<a href="skills/stellar-ap-system-health.html">stellar-ap-system-health</a>
+<div class="grp">故障域</div>
+<a href="skills/client-connection-trouble.html">client-connection-trouble</a>
+<a href="skills/dot1x-radius-trouble.html" class="on">dot1x-radius-trouble</a>
+<a href="skills/network-side-trouble.html">network-side-trouble</a>
+<a href="skills/wireless-rf-roaming-trouble.html">wireless-rf-roaming-trouble</a>
+<div class="grp">勘测纠正</div>
+<a href="skills/site-survey-remediation.html">site-survey-remediation</a></aside><main><h1>dot1x-radius-trouble</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="8021x">802.1X 认证失败三段排查法</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>1) On Client side: Check Username and password, Encryption type, Security type/key, Certificate on client (if any). (p88)</p>
+<p>2) On AP side: Correct Radius server attached to the SSID? Compare Radius configuration to Radius server: IP and ports, Shared Secret key. (p89)</p>
+<p>3) On Radius server side: Compare Radius configuration and database to client and AP configuration: Username/password, Shared Secret, Radius client IP, Radius station IP (IP address of the Stellar AP), Certificate, Radius service enabled? Firewall allows authentication and accounts ports? (p90)</p>
+<p>cat /var/config/AAA_server.conf - "accountingPort":1813, "retries":2, "ipAddress":"10.130.5.250", "type":"Radius", "timeout":5, "authenticationPort":1812, "secret":"...". cat /var/config/wlanservice.conf - "securityLevel":"Enterprise", "encryptionType":"wpa2-aes", "aaaProfile":"employee0". (p89)</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<p><strong>三段顺序（链路上三个可断点，任何一环不匹配都表现为"连不上"）</strong></p>
+<pre><code>① 客户端侧（四查）→ ② AP 侧（两查）→ ③ RADIUS 服务器侧（七查）
+</code></pre>
+<p><strong>① 客户端四查</strong>：用户名密码 / 加密类型 / 安全类型与密钥 / 客户端证书（如部署）。任何一处与 SSID 配置不符都在 EAP 早期失败，表现与"网络故障"一样——先排除低级错误再往下游走。</p>
+<p><strong>② AP 侧两查</strong>：
+- SSID 是否绑定了正确的 RADIUS 服务器。三份配置文件的绑定链：
+  <code>wlanservice.conf</code>（securityLevel=Enterprise、encryptionType=wpa2-aes、aaaProfile=employee0）→ <code>AAA_profile.conf</code>（primaryServer）→ <code>AAA_server.conf</code>（IP、authPort 1812、acctPort 1813、secret、timeout 5、retries 2）。
+- AP 上的参数（IP/端口/共享密钥）与 RADIUS 服务器实际配置一致。<strong>共享密钥不匹配是最常见的静默失败</strong>——两边都"配了"，就是对不上。</p>
+<p><strong>③ 服务器侧七查</strong>：用户数据库中的用户名密码 / 共享密钥 / RADIUS client IP / <strong>RADIUS station IP（=Stellar AP 的地址，必须被登记为合法客户端）</strong> / 证书 / 认证与计费端口 / RADIUS 服务已启用且防火墙放行 1812/1813。</p>
+<h2 id="a1">A1 · 书中案例</h2>
+<p>教材主用例即按此三段展开（p88-90）：客户端侧先排除凭证/证书问题；AP 侧 cat 三份 AAA 配置文件核对绑定链与默认值（1812/1813、timeout 5、retries 2）；服务器侧逐项比对——AP 的地址若未登记为合法 RADIUS 客户端，请求被直接丢弃，客户端侧只能看到超时。</p>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>Enterprise/802.1X SSID 认证失败、凭证确认无误仍连不上、认证请求"石沉大海"超时 → 本 skill。</li>
+<li>与 <code><a href="client-connection-trouble.html">client-connection-trouble</a></code> 的区分：那边处理关联层与 IP 层（sta_list、DHCP、掉线）；本 skill 只管 EAP/RADIUS 认证链。判断方法：sta_list 的 AUTH 字段确认走了 802.1X、wam_debug 认证结果失败 → 进本 skill。</li>
+<li>与 <code><a href="stellar-ap-system-health.html">stellar-ap-system-health</a></code> 门户部分的区分：Captive Portal（eag）认证用那边；802.1X/ MAC 认证失败用本 skill。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>客户端四查：核对录入的用户名密码、加密类型、安全类型/密钥、证书。</li>
+<li>AP 侧：依次 <code>cat /var/config/wlanservice.conf</code>、<code>/var/config/AAA_profile.conf</code>、<code>/var/config/AAA_server.conf</code>，确认 SSID → profile → server 绑定链正确、端口 1812/1813、secret 与服务器一致。</li>
+<li>服务器侧按七查清单逐项比对，重点是 Radius station IP 必须包含这台 AP 的地址、防火墙放行认证与计费端口、RADIUS 服务状态。</li>
+<li>仍失败：AP 上 <code>ssudo tcpdump -i br-wan port 1812 or port 1813</code> 看请求是否发出、有无响应（配合 stellar-ap-toolbox）。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li>共享密钥不匹配是静默失败：不报错、只见超时，核对时逐字符比。</li>
+<li>Radius station IP 要填 <strong>Stellar AP 的地址</strong>，不是客户端或 OmniVista 的地址——教材单独强调的核对点。</li>
+<li>顺序纪律：先客户端低级错误、再 AP、最后服务器；跳段排查容易把客户端配错当成服务器故障。</li>
+<li>防火墙只放行认证端口不放行计费端口（1813）也会造成部分功能异常，两端口都要查。</li>
+</ul>
+<hr />
+<p>来源条目: f09, ce11, ce12, ce13, p21（术语 g20 RADIUS/AAA, g21 802.1X/EAP）</p></main></div></body></html>

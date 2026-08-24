@@ -1,0 +1,279 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>术语词典 — AWOS 5.0.3 · Stellar AP 用户手册</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>AWOS 5.0.3 · Stellar AP 用户手册</h1>
+<div class="sub">128 页 · AP 本地管理配置手册（Express 模式 GUI 全参考）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">开局</div>
+<a href="skills/cluster-bootstrap-pvm.html">cluster-bootstrap-pvm</a>
+<div class="grp">业务</div>
+<a href="skills/ssid-radio-tuning.html">ssid-radio-tuning</a>
+<div class="grp">安全</div>
+<a href="skills/wlan-security-enterprise.html">wlan-security-enterprise</a>
+<div class="grp">运维</div>
+<a href="skills/ap-ops-upgrade-mesh.html">ap-ops-upgrade-mesh</a></aside><main><h1>术语词典</h1><h1 id="glossary">术语词典 GLOSSARY</h1>
+<table>
+<thead>
+<tr>
+<th>术语</th>
+<th>全称</th>
+<th>出处</th>
+<th>定义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>AWOS</strong></td>
+<td>Alcatel-Lucent Enterprise Wireless OS</td>
+<td>p1</td>
+<td>| OmniAccess Stellar AP 的固件/操作系统，本手册对应 AWOS 5.0.3 版本（2025 年 9 月，060966-00 Rev. A）。版本号还影响兼容性判断，例如 AWOS4.0.0 及之前版本的 AP 默认不允许加入组（MQTT 兼容开关控制）。</td>
+</tr>
+<tr>
+<td><strong>Express 模式</strong></td>
+<td>Wi-Fi Express Mode</td>
+<td>p8</td>
+<td>| Stellar AP 的本地集群管理模式，即本手册覆盖的模式：AP 自组成组、通过内置 Web GUI（Dashboard）完成配置与监控。与 Enterprise 模式（由 OmniVista On-Premise 统一管理）相对，切换到 Enterprise 模式需指定 OV 服务器地址且 AP 会重启。</td>
+</tr>
+<tr>
+<td><strong>AP Group / Cluster</strong></td>
+<td>AP 群组/集群</td>
+<td>p13</td>
+<td>| 具有相同 cluster ID 且位于同一 VLAN 的一组 Stellar AP，组内基于组播通信，最多 255 台。组内自动选举 PVM 和 SVM，整组共享一份配置文件。无 OV 管理时各组独立、组间不漫游。</td>
+</tr>
+<tr>
+<td><strong>PVM</strong></td>
+<td>Primary Virtual Manager</td>
+<td>p13</td>
+<td>| AP 组的主管理虚拟角色，由组内按机型优先级和 MAC 地址选举产生，承担配置同步、用量统计、固件升级、Portal 服务等职责；组管理 IP（GMIP）配置在 PVM 上。PVM 故障时 SVM 自动接替，成员 AP 和无线用户业务不中断。</td>
+</tr>
+<tr>
+<td><strong>SVM</strong></td>
+<td>Secondary Virtual Manager</td>
+<td>p13</td>
+<td>| AP 组的备份管理角色，选举规则与 PVM 相同（同优先级中 MAC 次高者当选）。PVM 无响应时自动升级为 PVM；替换 PVM 硬件前也应先把 SVM 升为 PVM。</td>
+</tr>
+<tr>
+<td><strong>GMIP</strong></td>
+<td>Group Management IP</td>
+<td>p31-32</td>
+<td>| AP 组管理虚拟 IP，默认 10.0.0.1，配置在 PVM 上。用于规避 AP 从 DHCP 动态取址导致管理地址漂移的问题，可通过 http://GMIP:8080 有线或无线访问整组管理界面；建议取 AP 所在网段的空闲 IP，并保证从管理终端可路由。</td>
+</tr>
+<tr>
+<td><strong>mywifi-xxxx</strong></td>
+<td>Pre-defined SSID</td>
+<td>p13</td>
+<td>| AP 组默认广播的预置 SSID，xxxx 为 PVM MAC 地址的最后两个字节。连接它可访问 http://mywifi.al-enterprise.com:8080 进入初始化向导；向导完成后该 SSID 自动删除。相关域名 mywifi.al-enterprise.com 同时是内置 HTTPS 证书的固定域名。</td>
+</tr>
+<tr>
+<td><strong>初始化向导</strong></td>
+<td>Initializing Wizard</td>
+<td>p14-17</td>
+<td>| 首次开局向导，共五步：欢迎页、修改管理员密码（默认 admin）、选国家码与时区（仅 -RW 机型）、创建新 WLAN、完成确认。向导阶段不能配 VLAN；全程需保持终端连在 mywifi-xxxx 上。</td>
+</tr>
+<tr>
+<td><strong>ZTP</strong></td>
+<td>Zero Touch Provisioning</td>
+<td>p11</td>
+<td>| 零接触开通。手册场景 2：AP 从 ALE OXO 服务器获取 IP、下载固件与配置文件，自动重启成组并生效三个 WLAN，全程无需手工逐台配置。</td>
+</tr>
+<tr>
+<td><strong>OXO</strong></td>
+<td>ALE OXO Server</td>
+<td>p11</td>
+<td>| ALE 的 OXO 服务器，在 ZTP 场景中为 AP 分配 IP 地址并下发固件与配置文件，是 AP 组开局的上游自动化节点。</td>
+</tr>
+<tr>
+<td><strong>RDA</strong></td>
+<td>Radio Dynamic Adjustment</td>
+<td>p40-41</td>
+<td>| ALE 的射频动态调整技术（商标 ™），根据周围无线环境自动调整工作信道与发射功率，包含 ACS（自动选信道）与 APC（自动功率控制）两个功能，默认启用。依赖后台扫描开启；手动指定信道/功率前必须关闭 ACS/APC。</td>
+</tr>
+<tr>
+<td><strong>ACS</strong></td>
+<td>Auto Channel Selection</td>
+<td>p41</td>
+<td>| 自动信道选择，RDA 的组成部分，默认开启并周期性执行。开启 Client Aware 时不为有客户端的 AP 换信道（雷达检测等高优先级事件除外）；ACS 不会选用 160MHz 信道。</td>
+</tr>
+<tr>
+<td><strong>APC</strong></td>
+<td>Auto Power Control</td>
+<td>p41</td>
+<td>| 自动功率控制，与 ACS 同属 RDA，动态调整 AP 发射功率。关闭后进入手动模式，功率按 1 dB 步进设置，且 2.4G/5G 两个频段都要分别配置。</td>
+</tr>
+<tr>
+<td><strong>wIDS/wIPS</strong></td>
+<td>Wireless Intrusion Detection/Prevention System</td>
+<td>p42-45</td>
+<td>| 无线入侵检测/防御系统。通过后台扫描发现外部未知 AP（干扰 AP 与 rogue AP），支持 AP allowlist（信任名单）、AP blocklist（仅 rogue 可入）、Suppress（向 rogue 的客户端发 DEAUTH，默认关闭）与 Dynamic blocklist（自动拉黑 ad-hoc 设备，默认关闭）。</td>
+</tr>
+<tr>
+<td><strong>干扰 AP / Rogue AP</strong></td>
+<td>Interfering AP / Rogue AP</td>
+<td>p42</td>
+<td>| 干扰 AP 指出现在无线环境但未接入有线网络的外部 AP，仅构成潜在射频干扰、不算直接安全威胁。Rogue AP 指未经授权插入网络有线侧的外部 AP，或广播与 AP 组相同 SSID 的外部 AP，被视为安全威胁，可加入 blocklist 阻止其伪装客户端接入。</td>
+</tr>
+<tr>
+<td><strong>Captive Portal</strong></td>
+<td>强制门户认证</td>
+<td>p59, p92-97</td>
+<td>| 开放网络上的 Web 认证机制：用户浏览任意网站时弹出 Portal 页，输入账号密码、访问码或勾选使用条款后放行。Stellar 支持内置/外部 Portal 服务器、自定义 Splash 页、Walled Garden、Portal allowlist、用户行为日志（TFTP/SFTP/Syslog，1/2/4 小时周期）。</td>
+</tr>
+<tr>
+<td><strong>Walled Garden</strong></td>
+<td>认证前白名单园区</td>
+<td>p54</td>
+<td>| captive portal 场景下的网络资源控制机制：把允许的域名或 IP 加入 Walled Garden 后，客户端在通过 Portal 认证之前即可访问这些资源（如酒店官网）。要放行某资源必须预先知道其 IP 或域名。</td>
+</tr>
+<tr>
+<td><strong>Dynamic VLAN</strong></td>
+<td>RADIUS 动态 VLAN 分配</td>
+<td>p62</td>
+<td>| Enterprise WLAN 下按 RADIUS 下发属性把客户端划入不同 VLAN 的功能。Express 模式支持 RFC-2868 三属性：Tunnel-Type (IETF #64)=VLAN、Tunnel-Medium-Type (IETF #65)=802(6)、Tunnel-Private-Group-ID (IETF #81)。</td>
+</tr>
+<tr>
+<td><strong>RadSec</strong></td>
+<td>RADIUS over TLS</td>
+<td>p62</td>
+<td>| 用 TLS 隧道安全传输 RADIUS 认证与计费数据的协议。启用后 AuthPort 须改为 2083（或映射 RadSec 服务器的值）；该特性仅适用于无线客户端，且只支持主 RADIUS 服务器，不支持 secondary。</td>
+</tr>
+<tr>
+<td><strong>PMF</strong></td>
+<td>Protected Management Frames (IEEE 802.11w)</td>
+<td>p62</td>
+<td>| 管理帧保护标准，为管理帧提供机密性保护。可选 Disabled/Optional/Required 三态；WPA3 Enterprise 选 CNSA 时 PMF 强制为 Required（仅支持 PMF 的客户端可接入）。</td>
+</tr>
+<tr>
+<td><strong>CNSA</strong></td>
+<td>Commercial National Security Algorithm Suite</td>
+<td>p62, p92</td>
+<td>| 美国商用国家安全算法套件。WPA3-Enterprise 192 位安全套件与 CNSA 对齐，常见于政务、国防、金融等高安全网络。注意机型限制：AP1101 全频段、AP1201H/AP1201L 的 2.4G 不支持，配置后静默回退 WPA2。</td>
+</tr>
+<tr>
+<td><strong>Enhanced Open / OWE</strong></td>
+<td>Opportunistic Wireless Encryption</td>
+<td>p71</td>
+<td>| 开放网络的增强加密：客户端与 WLAN 在接入过程中做 Diffie-Hellman 密钥交换并用 4 次握手生成成对密钥，防止明文被嗅探。Transition 模式下同一虚拟 AP 同时广播传统 Open SSID（2.4/5G）与 Enhanced Open SSID（2.4/5/6G）。6GHz 网络只允许 WPA3 与 Enhanced Open。</td>
+</tr>
+<tr>
+<td><strong>MLO</strong></td>
+<td>Multi-Link Operation</td>
+<td>p63</td>
+<td>| Wi-Fi 7 的关键特性，允许设备同时使用多个频段（2.4G/5G/6G）聚合传输以提升速率与效率。MLO 生效依赖对应射频开启且 EHT（802.11be）已启用；MLO 客户端的 MAC 栏显示 MLD 地址，附着频段按 6GHz&gt;5GHz&gt;2.4GHz 优先显示。</td>
+</tr>
+<tr>
+<td><strong>EHT / HE / VHT</strong></td>
+<td>Extremely High / High / Very High Throughput</td>
+<td>p42</td>
+<td>| 分别对应 802.11be（Wi-Fi 7）、802.11ax（Wi-Fi 6）、802.11ac 的 PHY 模式。关闭 High Efficiency 时 HE 能力的 AP 降级到 VHT；关闭 Extremely High Throughput 时 EHT 能力的 AP 降级到 HE。</td>
+</tr>
+<tr>
+<td><strong>Band Steering</strong></td>
+<td>频段引导</td>
+<td>p46-47</td>
+<td>| 把双频客户端引导到 5GHz 的特性，默认启用。Prefer 5G 模式基于信道利用率和客户端密度柔性引导（5G 忙时可回 2.4G）；Force 5G 模式强制双频终端只能上 5G（仅支持 2.4G 的终端不受限）。可按客户端排除（Exclude）。</td>
+</tr>
+<tr>
+<td><strong>Airtime Fairness</strong></td>
+<td>空口时间公平</td>
+<td>p47</td>
+<td>| 让所有客户端（包括低速传统客户端）均等分享无线传输时间片的优化特性，默认禁用。配套特性还有 Load Balance（默认启用，客户端密度阈值 10、信道利用率阈值 70%）、RSSI Threshold、Roaming RSSI（配合 802.11k/v）。</td>
+</tr>
+<tr>
+<td><strong>RSSI</strong></td>
+<td>Received Signal Strength Indication</td>
+<td>p26</td>
+<td>| 接收信号强度指示，客户端窗口中取值 0~99。Client Health 分级依据：信号强度 &gt;30 为 Best、15~30 为 Good、&lt;15 为 Fair。wIDS/wIPS 还用 RSSI 估算未知 AP 距离：&gt; -20dBm 最近、-45~-20dBm 近、-70~-45dBm 远、&lt; -70dBm 最远。</td>
+</tr>
+<tr>
+<td><strong>WMM</strong></td>
+<td>Wi-Fi Multimedia (IEEE 802.11e)</td>
+<td>p74</td>
+<td>| Wi-Fi 联盟基于 802.11e 的 QoS 认证，按四个接入类别排队：voice (AC_VO)、video (AC_VI)、best effort (AC_BE)、background (AC_BK)。Stellar AP 上可编辑 DSCP/802.1p 值与 WMM 优先级的映射关系（Modify WLAN QoS）。</td>
+</tr>
+<tr>
+<td><strong>DTIM</strong></td>
+<td>Delivery Traffic Indication Map</td>
+<td>p65</td>
+<td>| Beacon 中的 DTIM 周期参数，决定 AP 向省电模式客户端投递缓存广播/组播帧的频率。默认 1（每个 Beacon 都检查缓存数据）；调大可增强终端省电效果。</td>
+</tr>
+<tr>
+<td><strong>UAPSD</strong></td>
+<td>Unscheduled Automatic Power Save Delivery</td>
+<td>p64</td>
+<td>| 802.11e 的非调度自动省电交付机制，可延长 Wi-Fi 终端电池续航，默认启用。相关漫游加速特性 OKC（Opportunistic Key Caching）复用缓存的 PMK 避免完整 802.1X 认证，实现快速漫游。</td>
+</tr>
+<tr>
+<td><strong>Out-of-box MESH</strong></td>
+<td>开箱即连 Mesh</td>
+<td>p103</td>
+<td>| 出厂配置的 AP 在无有线 uplink 上电时，自动用内置 SSID "Stellar-MESH"（2.4G 频段）建立 Mesh 链路的特性，管理员只需指定根节点。AP 一旦接过有线 uplink 即被永久禁用，只有恢复出厂才能找回。Regular MESH 则需逐台登录 AP UI 手工配置。</td>
+</tr>
+<tr>
+<td><strong>Wireless Bridge</strong></td>
+<td>点对点无线网桥</td>
+<td>p105</td>
+<td>| 通过无线接口连接不同楼宇/局域网的点对点网桥，替代昂贵专线与光纤。与 MESH 的关键区别：网桥 AP 只提供桥接链路、不能服务无线客户端；且 AP1201/AP1201L/AP1201H/AP1201HL 不支持带 VLAN 标签的桥接报文，不推荐做网桥。</td>
+</tr>
+<tr>
+<td><strong>PMD</strong></td>
+<td>Post Mortem Dump</td>
+<td>p99</td>
+<td>| AP 致命崩溃后的故障诊断机制，用于定位 core dump 与异常指针的根因。启用并配置后，AP 关键进程崩溃时立即把 PMD 文件发送到指定 TFTP 服务器；默认向外发送是关闭的。</td>
+</tr>
+<tr>
+<td><strong>DHCP Option 138 / Option 43</strong></td>
+<td>DHCP 选项 138/43</td>
+<td>p24</td>
+<td>| AP 切换到 Enterprise 模式（OmniVista On-Premise 管理）时，可通过这两个 DHCP 选项在 AP 启动阶段自动获取 OV 服务器地址，也可静态指定 OV 服务器地址。相关：组内还可通过 "Contact to Cloud" 周期性联系 OmniVista Cirrus 云管（默认启用）。</td>
+</tr>
+<tr>
+<td><strong>LACP / 双上行</strong></td>
+<td>Link Aggregation Control Protocol</td>
+<td>p14</td>
+<td>| AP1230 系列、AP1311、AP1301、AP1351、AP1331、AP1411、AP1431、AP1451 支持双上行并在启动时与上游交换机自动建立 LACP 链路聚合。供电模式分 PoE Redundancy（单口供电）与 PoE Sharing（两口同时供电，AP1351/AP1451 为 Class 7、要求 IEEE 802.3bt 交换机）。</td>
+</tr>
+<tr>
+<td><strong>Scanning Mode</strong></td>
+<td>AP 扫描模式</td>
+<td>p110</td>
+<td>| AP UI 里用于查看 RF Environment 数据的专用模式，分 One Time（持续 5 分钟后自动恢复）与 Always（持续扫描、拒绝客户端接入）两种。无扫描射频的机型进入该模式会中断常规 Wi-Fi 服务；AP1451 的 6GHz 服务会中断。</td>
+</tr>
+</tbody>
+</table></main></div></body></html>

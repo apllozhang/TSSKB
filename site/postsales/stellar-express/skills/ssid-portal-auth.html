@@ -1,0 +1,98 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ssid-portal-auth — DT00XTE455 · Stellar WLAN Express</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE455 · Stellar WLAN Express</h1>
+<div class="sub">Edition 07 · 183 页 · 免云管小微交付专题（集群/SSID/Bridge-Mesh/15 排障案例）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">开局</div>
+<a href="skills/express-cluster-onboarding.html">express-cluster-onboarding</a>
+<div class="grp">业务与射频</div>
+<a href="skills/ssid-portal-auth.html" class="on">ssid-portal-auth</a>
+<a href="skills/rf-survey-tuning.html">rf-survey-tuning</a>
+<div class="grp">组网与排障</div>
+<a href="skills/bridge-mesh-deployment.html">bridge-mesh-deployment</a>
+<a href="skills/ap-side-troubleshooting.html">ap-side-troubleshooting</a></aside><main><h1>ssid-portal-auth</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="ssid-portal">SSID 业务与内置服务（Portal / 认证 / 账户）</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>"User Side: Whether the username and password are correct... AP Side: Check the WLAN's configuration. Whether it is reachable between AP and RADIUS Server using 'tools-ping' on the web page. Server Side: Check the RADIUS Server Client configuration, such as the shared key, RADIUS client IP or IP range, authentication port, certificate." (p140-141)</p>
+<p>"If guest portal cannot pop up after connecting to the 'Guest' SSID (open &amp; portal), check the following: Whether the Captive Portal function in the WLAN is enabled... Check if the client MAC address is in the white list or if the client IP is in the walled garden list. Check if the client enters https URL. If so, enter a http URL because the https redirect for captive portal web page is not yet supported." (p142-143)</p>
+<p>"Check if the valid period of the user account has expired. If so, the user account is invalid and shall disappear from the account list." (p151)</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<p>Express 的业务层围绕"SSID + 认证模式 + 内置服务"三条线：</p>
+<ol>
+<li><strong>认证模式选型</strong>：员工网走 802.1X/WPA2（内置用户数据库或外接 RADIUS）；访客网走开放加密 + Captive Portal（门户认证）。AP 本地还内置 DHCP/DNS/NAT 与防火墙规则，无外部基础设施也能放号出网。</li>
+<li><strong>802.1X 失败三侧法</strong>：用户侧（账号密码、终端认证类型匹配）→ AP 侧（WLAN 配置、tools-ping 验 AP 到 RADIUS 连通性）→ 服务器侧（共享密钥、client IP/网段、认证端口、证书），三方各自排干净再对报文。</li>
+<li><strong>Portal 不弹页四查</strong>：Portal 功能开关 → 认证开关 → 白名单/walled garden 命中 → https URL 限制；仍不弹用 <code>ps | grep eag</code> 查 EAG 进程。</li>
+<li><strong>连接类排障递进</strong>：密码 → blocklist 黑名单 → MaxClients 容量 → 终端残留记录 → wam 进程。</li>
+</ol>
+<h2 id="a1">A1 · 书中案例</h2>
+<ul>
+<li>802.1X 排障（Case 5）：先验账号密码与终端认证类型，再在 Web 用 tools-ping 验 AP→RADIUS 连通，最后核 RADIUS 服务器的 client 配置四项（shared key/IP/端口/证书），必要时两侧抓包对报文（p140-141）。</li>
+<li>Portal 不弹页（Case 6）：四查之后仍不弹，Console 执行 <code>ps | grep eag</code> 确认门户重定向模块存活（p142-143）。</li>
+<li>连不上 AP/集群（Case 8）：密码核对 → Web 上查 blocklist 点红叉移除 → 看在线数是否顶到 MaxClients、顶到就调参 → 清终端保存的 WLAN 记录 → <code>ps | grep wam</code> 查 ath 端口进程，缺失用 <code>wam -P /var/run/wifi-athXX.pid -B /var/run/wam-athXX.conf</code> 重建，再不行 <code>cat /proc/kes_syslog | grep &lt;clientMAC&gt;</code> 跟踪（p148-150）。</li>
+</ul>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>触发：部署员工/访客 SSID、访客反映"连上了但不出登录页"、802.1X 认证失败、老用户正常新用户连不上、访客账户"消失"。</li>
+<li>区分：<strong>AP 本身</strong>上电/IP/入组故障用 <code><a href="ap-side-troubleshooting.html">ap-side-troubleshooting</a></code>；吞吐差、信号弱等射频问题用 <code><a href="rf-survey-tuning.html">rf-survey-tuning</a></code>；本 skill 只管业务层——认证、门户、账户、客户端接入策略。客户端能关联但拿不到 IP 属 VLAN/DHCP 链路问题，归 <code><a href="ap-side-troubleshooting.html">ap-side-troubleshooting</a></code>（Case 7 抓包定位法）。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<p>员工 SSID + 802.1X：
+1. WLAN 配置认证 802.1X，指向内置用户数据库或外部 RADIUS。
+2. 验证路径：终端实连 → Web 界面 tools-ping RADIUS → 核服务器 client 四项。
+3. 失败时按三侧顺序排查（用户→AP→服务器），最后 tcpdump 抓发往 RadiusIP 的报文看交互。</p>
+<p>访客 SSID + Portal：
+4. 建 Guest SSID（开放加密），启用 Captive Portal 功能与认证开关。
+5. 建访客账户：设足够有效期（GuestOperator 受限角色可供前台自助开户，看不到全局配置）。
+6. 弹页排障四查 + <code>ps | grep eag</code>；日志用 <code>cat /var/log/eag.log</code>。</p>
+<p>连接类问题：
+7. 按序：密码 → blocklist 移除 → MaxClients 调大 → 清终端记录 → wam 进程查/重建 → kes_syslog 跟踪。
+8. 主动利用白名单/walled garden 给打印机、POS 等哑设备开免认证通道。</p>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li><strong>https 不重定向</strong>：内置 Portal 不支持 https 跳转（版本限制）。访客默认打开 https 首页会"永远不弹页"，引导手动输 http 网址（如 http://neverssl.com）。</li>
+<li><strong>白名单/walled garden 命中即不弹页</strong>——这是设计行为不是故障，排障先核这两个清单。</li>
+<li><strong>访客账户过期即从账户列表消失</strong>：现场表现"昨天能上今天失败、列表查无此人"，易误判为被删号。排障顺序：账号密码 → 有效期 → EAG 进程。</li>
+<li><strong>MaxClients 顶满拒新连接</strong>：表现"老用户正常、新用户连不上"，与密码错误/黑名单易混淆；高密场景（会议室/大堂）上线前按容量预算调参。</li>
+<li>Express 无 UPAM（网管级统一策略认证），对应能力由内置数据库 + 内置/外部门户替代。</li>
+</ul>
+<hr />
+<p>来源条目: c09, c10, c12, ce06, ce07, ce13, ce14, g10, g11, g12, g29</p></main></div></body></html>

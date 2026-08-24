@@ -1,0 +1,133 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>network-side-trouble — DT00XTE478 · Stellar WLAN 高级排障</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE478 · Stellar WLAN 高级排障</h1>
+<div class="sub">187 页 · 无线排障专题（方法论/工具箱/四层排障/勘测/TKC）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">方法论</div>
+<a href="skills/wlan-trouble-methodology.html">wlan-trouble-methodology</a>
+<div class="grp">工具与体检</div>
+<a href="skills/stellar-ap-toolbox.html">stellar-ap-toolbox</a>
+<a href="skills/stellar-ap-system-health.html">stellar-ap-system-health</a>
+<div class="grp">故障域</div>
+<a href="skills/client-connection-trouble.html">client-connection-trouble</a>
+<a href="skills/dot1x-radius-trouble.html">dot1x-radius-trouble</a>
+<a href="skills/network-side-trouble.html" class="on">network-side-trouble</a>
+<a href="skills/wireless-rf-roaming-trouble.html">wireless-rf-roaming-trouble</a>
+<div class="grp">勘测纠正</div>
+<a href="skills/site-survey-remediation.html">site-survey-remediation</a></aside><main><h1>network-side-trouble</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="ap">网络侧排障：AP 取址 · 连通性 · 服务器 · 云管前置</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>1) IP address assignment? Static or DHCP? How to set the IP assignment to DHCP: Reset AP to factory default. Log in to AP web UI and set the IP address mode to DHCP. cat /etc/config/network - option proto 'dhcp'. DHCP assignment. (p99)</p>
+<p>Capture and analyze DHCP packets on the uplink port. Check network connection between AP and DHCP server when no answer is received. Check that DHCP server sends at least DHCP-NAK packet for out-of-pool request. (p100)</p>
+<p>ifconfig br-wan - Check the IP address and mask of the LAN interface. Traffic exchanged between the AP and the network? - Sent/Received packets. route -n - What is the gateway of the default route? Is it the correct default route? ssudo ping 10.130.5.50 - The Stellar AP can ping the OmniVista server. (p94-95)</p>
+<p>Open Firewall ports: 9093, 30123, 30124, 30125. And to allow outbound traffic from local network: 443, 80, 123, 53. Enable DHCP standard options: 1, 2, 6, 28, 42, 43. Software version: AWOS 4.0.6 GA or higher (Cirrus) / AWOS 4.0.7.14 or higher (Terra). (p170, p179)</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<p><strong>AP 拿不到 IP 两步法</strong></p>
+<ol>
+<li>查分配模式：<code>cat /etc/config/network</code> 看 wan 接口 <code>option proto</code> 是 dhcp 还是 static。切回 DHCP 两条路：恢复出厂默认，或登录 AP Web UI 改 IP 地址模式。</li>
+<li>上联口抓包（DHCP-NAK 判据）：</li>
+<li>正常：Discover → Offer → Request → ACK 全流程。</li>
+<li>完全无回应 → 查 AP 与 DHCP 服务器之间的连通性。</li>
+<li><strong>健康服务器对池外请求至少回 DHCP-NAK；连 NAK 都没有 = 报文根本没到服务器（链路/VLAN/中继问题），而非地址池问题。</strong></li>
+</ol>
+<p><strong>连通性四命令（AP 视角分段）</strong></p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>判读</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ifconfig br-wan</code></td>
+<td>IP/掩码；RX/TX 报文计数判断与网络有无流量</td>
+</tr>
+<tr>
+<td><code>route -n</code></td>
+<td>默认路由网关是否正确</td>
+</tr>
+<tr>
+<td><code>ssudo ping &lt;目标&gt;</code></td>
+<td>逐个测：网关 → NTP/DHCP/DNS 服务器 → 防火墙 → OmniVista</td>
+</tr>
+<tr>
+<td><code>ssudo traceroute &lt;目标&gt;</code></td>
+<td>流量实际路径，是否先送网关、路由是否需调整</td>
+</tr>
+</tbody>
+</table>
+<p><strong>时间/DNS 三件套</strong>：<code>cat /etc/resolv.conf</code>（DNS 与搜索域）→ <code>cat /tmp/TZ</code>（时区，错则日志整体偏移）→ <code>cat /proc/kes_syslog | grep ntp</code>（确认完成过 NTP 同步）。</p>
+<p><strong>syslog 不上报三步验证</strong>（分别排除配置错/进程挂/网络不通）：
+1. <code>cat /var/config/syslog.conf</code>：log_remote=1、log_ip/log_port（默认 514）正确。
+2. <code>ps | grep logread</code>：<code>/sbin/logread -f -r &lt;IP&gt; &lt;port&gt;</code> 进程在跑。
+3. <code>logger -p emerg "Just for test!"</code> 实测，服务器端是否收到。</p>
+<p><strong>OmniVista 云管/本地管上线前置（硬门槛）</strong>：防火墙开 9093、30123-30125；放行出向 443/80/123/53；DHCP 选项 1/2/6/28/42/43（代理另加 129-133、138）；至少 1 台 NTP；AWOS 版本 Cirrus ≥4.0.6 GA、Terra ≥4.0.7.14；AP1101、AP1201L/H/HL 不受支持。</p>
+<h2 id="a1">A1 · 书中案例</h2>
+<ul>
+<li>全书主案例的网络侧成因（p11-18）：OmniVista 里 SSID 映射 VLAN 10、接入交换机 Building_A 配 VLAN 20，tagged 不一致 → 认证后拿不到正确子网，全员连不上 Employee SSID。Resolution：更新交换机 tagged VLAN ID=20。</li>
+<li>ce15 的 NAK 判据：教材要求"至少应回 DHCP-NAK"，把"地址池问题"与"路径不通"一刀分开（p100）。</li>
+</ul>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>AP 本身起不来网（拿不到 IP、ping 不通网管）→ 本 skill；客户端拿不到 IP（AP 正常）→ <code><a href="client-connection-trouble.html">client-connection-trouble</a></code>。</li>
+<li>AP 换到云管后不上线/不上报 → 本 skill 的前置参数清单 + syslog 三步。</li>
+<li>SSID 的 VLAN 映射与交换机 tagged VLAN 核对（ce01 型问题）→ 本 skill；无线侧 SSID/射频配置 → <code><a href="wireless-rf-roaming-trouble.html">wireless-rf-roaming-trouble</a></code>。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>AP 无地址：<code>cat /etc/config/network</code> 查 proto → 不对则改回 DHCP（出厂重置或 Web UI）。</li>
+<li>仍无地址：上联口 <code>tcpdump</code> 抓 DHCP，按 NAK 判据分流：无 NAK → 查中间链路/VLAN/中继；有 Offer 不 ACK → 查地址池。</li>
+<li>有地址但不通：ifconfig br-wan → route -n → ssudo ping 逐跳（网关/NTP/DNS/OmniVista）→ ssudo traceroute 看路径。</li>
+<li>日志缺失：syslog 三步（配置 → logread 进程 → logger 实测）。</li>
+<li>云管上线失败：核对防火墙端口组、出向端口、DHCP 选项、NTP、AWOS 版本与不支持型号清单。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li>"连 NAK 都没有"最容易被误判为地址池耗尽——NAK 判据说明是路径不通。</li>
+<li>proto=static 模式下抓包只能看到徒劳的请求，确认模式是抓包前提。</li>
+<li>时区错但 NTP 同步正常时，日志时间仍整体偏移（教材示例 /tmp/TZ=UTC+08 标注 Wrong time zone），跨设备对齐前必查 /tmp/TZ。</li>
+<li>云管前置里 AP1101/AP1201L/H/HL 硬件就不支持，先查型号再查配置。</li>
+<li>ce01 教训：全员连不上而 AP 本身正常，优先怀疑接入交换机侧 VLAN，别先动无线配置。</li>
+</ul>
+<hr />
+<p>来源条目: p22, p24, p25, p26, ce01, ce14, ce15, ce16（术语 g05 br-wan, g12 OmniVista Cirrus, g13 OmniVista Terra, g22 DHCP-NAK）</p></main></div></body></html>

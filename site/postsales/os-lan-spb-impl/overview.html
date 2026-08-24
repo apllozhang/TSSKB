@@ -1,0 +1,72 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>教书理解 BOOK_OVERVIEW — DT00XTE323 · OmniSwitch LAN SPB 实施</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE323 · OmniSwitch LAN SPB 实施</h1>
+<div class="sub">Edition 12 · 367 页 · SPB 交付配置手册（骨干→L2→L3→自动化，10 Lab CLI 全录）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">骨干与 L2</div>
+<a href="skills/spb-backbone-deploy.html">spb-backbone-deploy</a>
+<a href="skills/spb-l2-service.html">spb-l2-service</a>
+<div class="grp">L3 集成</div>
+<a href="skills/ip-over-spb.html">ip-over-spb</a>
+<div class="grp">保护与冗余</div>
+<a href="skills/spb-bum-protection.html">spb-bum-protection</a>
+<a href="skills/spb-access-ring-redundancy.html">spb-access-ring-redundancy</a>
+<a href="skills/spb-hybrid-etree.html">spb-hybrid-etree</a>
+<div class="grp">自动化与运维</div>
+<a href="skills/unp-dynamic-ov2500.html">unp-dynamic-ov2500</a>
+<a href="skills/spb-oam-troubleshoot.html">spb-oam-troubleshoot</a></aside><main><h1>教书理解 BOOK_OVERVIEW</h1><h1 id="book_overview-omniswitch-lan-spb-concepts-implementation-dt00xte323en">BOOK_OVERVIEW · OmniSwitch LAN SPB Concepts &amp; Implementation (DT00XTE323EN)</h1>
+<blockquote>
+<p>教材: ALE Training Services · 367 页 · 售后 Experienced 路径（3 天实操课）
+定位: SPB 售前书的<strong>实施版</strong>——同一技术体系从"讲卖点"变为"配出来"：骨干部署→L2/L3 服务→高级特性→动态服务→OV2500 编排</p>
+</blockquote>
+<h2 id="_1">一、结构</h2>
+<ol>
+<li><strong>DAY 1</strong> (p3-151): OmniFabric/Why SPB 复习 → Mac-in-Mac/控制面/数据面 → <strong>Lab：SPB-M 骨干部署、L2 服务、协议分析与保护</strong> → BUM 流量与排障</li>
+<li><strong>DAY 2</strong> (p152-258): IP over SPB 三部曲（IP Routing 冗余 / VPN-Lite / L3-VPN，各配 Lab）→ <strong>SPB 高级配置</strong>（Lab）</li>
+<li><strong>DAY 3</strong> (p259-344): <strong>动态服务</strong>（UNP SPB Dynamic SAP，Lab）→ <strong>OV2500 SPB 编排</strong>（Lab）→ 混合接入与 E-Tree 服务（Lab）→ 成功案例</li>
+<li><strong>附录</strong>: 老硬件上的 SPB 路由概念</li>
+</ol>
+<h2 id="_2">二、解释</h2>
+<p>课程主线 = SPB 交付生命周期：Day1 打骨干（BCB/BEB/BVLAN/IS-IS）、Day2 加路由（VPN-Lite/L3VPN 配置对拍）、Day3 上自动化（UNP 动态 SAP/OV2500 编排/E-Tree）。与售前书的章节一一对应但全部落到 AOS CLI 和 OV2500 操作。</p>
+<h2 id="_3">三、批判</h2>
+<p>与售前 SPB 书理论重叠约 40%（实施视角增值在 Lab 步骤与配置细节）；3 天节奏紧凑、Lab 环境不可复现时价值减半。</p>
+<h2 id="_4">四、应用</h2>
+<p>SPB 交付工程师的配置手册：从零搭 SPB 骨干到 L3VPN 到动态服务的全 CLI 流程；排障章（BUM/协议分析）独立可用。</p></main></div></body></html>

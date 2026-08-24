@@ -1,0 +1,304 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>精华长文 DIGEST — DT00XTE360 · ACFE WLAN Basic Deployment with OmniVista</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE360 · ACFE WLAN Basic Deployment with OmniVista</h1>
+<div class="sub">Edition 04 · 585 页 · Stellar+Cirrus 云管交付实操（AP 生命周期全流程，5 天带 Lab）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">开局与云管</div>
+<a href="skills/express-mode-bootstrap.html">express-mode-bootstrap</a>
+<a href="skills/cirrus-license-org-lifecycle.html">cirrus-license-org-lifecycle</a>
+<a href="skills/device-cloud-onboarding.html">device-cloud-onboarding</a>
+<div class="grp">SSID 与策略</div>
+<a href="skills/ssid-authentication-suite.html">ssid-authentication-suite</a>
+<a href="skills/upam-policy-bandwidth.html">upam-policy-bandwidth</a>
+<div class="grp">RF 与漫游</div>
+<a href="skills/rf-optimization-baseline.html">rf-optimization-baseline</a>
+<a href="skills/roaming-rap-design.html">roaming-rap-design</a>
+<div class="grp">安全与收尾</div>
+<a href="skills/wips-security-deployment.html">wips-security-deployment</a>
+<a href="skills/site-survey-troubleshooting.html">site-survey-troubleshooting</a>
+<a href="skills/rlab-lab-manual.html">rlab-lab-manual</a></aside><main><h1>精华长文 DIGEST</h1><h1 id="digest-acfe-wlan-stellar-ap">DIGEST · ACFE WLAN 基础部署精华——一台 Stellar AP 从开箱到运营的全生命周期</h1>
+<blockquote>
+<p>教材：DT00XTE360EN Edition 04（ALE 培训服务，2025-11，585 页，5 天实验课）
+本文是"不读全书、只看精华"的交付工程师版速读。数字后括注页码，可直接对照原书。</p>
+</blockquote>
+<hr />
+<h2 id="_1">一、一页看懂这门课</h2>
+<p>这门课回答一个问题：<strong>一台 OmniAccess Stellar AP 从纸箱里拿出来，到成为一个可运营的园区无线网的一份子，中间每一步怎么做。</strong></p>
+<p>完整生命周期是：上电 → 判定管理模式（Enterprise/Cloud/Express，p100）→ 网络前置准备（PoE/VLAN/DHCP，p25）→ 云管开通（License/组织，p173）→ 设备 Onboarding 上云（p261）→ 建 SSID（员工/访客/BYOD，p312）→ 策略与带宽管控（p408）→ RF 优化（p451）→ 漫游与远程接入（p476/p499）→ WIPS 安全防护（p514）→ 勘测验收（p526）→ 最后是组织清理回退（p544）。</p>
+<p>课程主线用 OmniVista Cirrus 云管（OV2500 本地管不在此课）。每章配远程实验室（R-Lab），是边讲边做的工程师手册，尤其适合当交付 SOP 素材库用。</p>
+<p>一个贯穿全书的架构认知是<strong>三平面模型</strong>：管理平面（网管/Cirrus，管理流量恒 untagged）、控制平面（每台 AP 的空口邻居发现）、数据平面（AP 本地终结，按 SSID 恒 tagged 上行，纯二层、无隧道回网管，路由交给 LAN）。端口规划和排障都从这个模型推。</p>
+<hr />
+<h2 id="10-skill">二、交付主线七阶段（串起 10 个 skill）</h2>
+<ol>
+<li><strong>模式判定</strong>：AP 上电三级判定——DHCP offer 带 option 138（OV2500 地址）→ Enterprise；无 138 但序列号已在 Cirrus 登记 → Cloud；都不满足 → Express 默认广播 mywifi-ABCD（p100）。反向用就是模式规划。→ <code>express-mode-bootstrap</code></li>
+<li><strong>网络前置</strong>：PoE trunk（Native=管理 VLAN，SSID VLAN 全 tagged）、每个 VLAN 的 DHCP 作用域、DNS、三层路由、按型号核对供电等级（p25）。Express 集群上限 255 台、选举先比型号再比 MAC（p11）。</li>
+<li><strong>Cirrus 组织</strong>：eBuy 下单（品号 OVCX-系列-级别-年限-类别）→ Subscription Manager 建订阅（<strong>最长 24h 延迟</strong>，p175）→ 组织内 Import Licenses → 指派设备（p173）。账号层级 MSP &gt; Organization &gt; Site &gt; Building &gt; Floor。→ <code>cirrus-license-org-lifecycle</code></li>
+<li><strong>设备 Onboarding</strong>：交换机侧二选一（手动 VLAN 分类 vs UNP+LLDP 自动分类，p284）→ 取序列号声明 → 建AP Group + Provisioning（四必填：Name/Site/RF Profile/Timezone）→ 等激活状态机走到 OV Managed，每个中间态正常 ≤5 分钟（p261）。→ <code>device-cloud-onboarding</code></li>
+<li><strong>SSID 全家桶</strong>：三段式创建——SSID Settings（Usage 模板套认证模型）→ Network Assignments（Site + AP Group）→ Schedule &amp; VLAN Mappings（p312）。Employee=802.1X，Guest=门户+可选隧道，BYOD=先落 Guest VLAN、门户认证后切 Employee VLAN（p391）。→ <code>ssid-authentication-suite</code></li>
+<li><strong>策略与 RF</strong>：Unified Policy 按 Condition → Action → Group → 挂 SSID 的固定顺序（p413）；带宽三层落点执行序为策略 &gt; 角色 &gt; SSID（p408）。RF Profile 走"创建 → 绑 Provisioning → QoE 验证 → 回 Default"闭环（p463）。→ <code>upam-policy-bandwidth</code> + <code>rf-optimization-baseline</code></li>
+<li><strong>安全与验收</strong>：WIPS 三分类（Interfering/Rogue/Friendly）+ Rogue 四条件 + Containment（p514-515）；勘测三步法拿图 → 观察 → 纠正（p537-540）；漫游按三条件判定 L2/L3（p476）；RAP 五步双隧道上线（p499）。→ <code>wips-security-deployment</code> + <code>site-survey-troubleshooting</code> + <code>roaming-rap-design</code></li>
+</ol>
+<p><code>rlab-lab-manual</code> 是横向工具：管实验环境连接重置，并把 15 个 Lab 索引到上述各 skill。</p>
+<hr />
+<h2 id="_2">三、开局检查清单（可直接照抄）</h2>
+<p><strong>上电前逐项打勾：</strong></p>
+<ul>
+<li>[ ] PoE：端口供电等级满足型号（AP1311 严禁 af 下开 PSE/USB；AP1230 需 at 60W；AP1351 需 bt；<code>show lanpower</code> 核对）</li>
+<li>[ ] 端口：AP 口为 trunk，Native/untagged=管理 VLAN，全部 SSID VLAN tagged（管理 VLAN 没 untagged 到 AP 口是最常见根因）</li>
+<li>[ ] DHCP：管理 VLAN + 全部 SSID VLAN 各建作用域；Enterprise 模式管理作用域加 option 138（isc-dhcp-server 需先声明 <code>option ovwma code 138 = ip-address;</code> 并按 vendor-class 前 4 字节 "HAP." 匹配，p33）</li>
+<li>[ ] DNS：覆盖全部管理/SSID 子网</li>
+<li>[ ] 路由：所有 VLAN 有三层接口</li>
+<li>[ ] 云管防火墙：入向放行 9093 / 30123 / 30124 / 30125；出向放行 443 / 80 / 123 / 53；至少 1 台 NTP</li>
+<li>[ ] 版本盘点：AP 固件 AWOS 4.0.6 GA+；AP1101/AP1201L/H/HL 与 AOS release 5 交换机不被 Cirrus 支持</li>
+<li>[ ] License 至少提前一天下单（24h 延迟红线，p175）</li>
+</ul>
+<hr />
+<h2 id="ssid">四、SSID 认证与密钥体系速查表</h2>
+<p><strong>认证选型（信任从低到高）</strong>：Open+门户 &lt; MAC（可伪造）&lt; PSK &lt; 802.1X。产品级组合：哑设备用 DSPSK/PPSK，人员用 802.1X（ce21）。</p>
+<table>
+<thead>
+<tr>
+<th>SSID 类型</th>
+<th>认证模型</th>
+<th>关键开关</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Employee</td>
+<td>WPA2_AES + 802.1X</td>
+<td>UPAMRadiusServer、RADIUS 1812/1813、重试 2 超时 5s</td>
+</tr>
+<tr>
+<td>Guest</td>
+<td>Open/MAC + Captive Portal</td>
+<td>Portal=YES、Allow All EAPs=Yes、可按 ARP 建 L2 GRE 隧道</td>
+</tr>
+<tr>
+<td>BYOD</td>
+<td>802.1X/MAC + BYOD 门户</td>
+<td>SSID 级 VLAN=Guest（预认证沙箱）→ Post Portal Enforcement 绑 ARP 切 Employee VLAN（p391）</td>
+</tr>
+<tr>
+<td>Protected</td>
+<td>PSK（+可选门户）</td>
+<td>见下四级</td>
+</tr>
+</tbody>
+</table>
+<p><strong>PSK 四级密钥体系（p326-330，运维粒度递进）</strong>：</p>
+<ol>
+<li>全局 PSK：一钥全员</li>
+<li>DSPSK：按 MAC 发专属口令（Force=取消全局口令，Prefer=保留兜底；与 AUTO_WPA_WPA2 互斥）</li>
+<li>PPSK：多条"口令+角色"，用哪条落哪个 ARP</li>
+<li>动态 PPSK：口令直接绑 VLAN ID + ARP，配 Priority 定归属</li>
+</ol>
+<hr />
+<h2 id="rf-p445-451">五、RF 优化参数基线表（官方推荐值照抄，p445-451）</h2>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>推荐值/状态</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Band Steering</td>
+<td>Enable</td>
+<td>前提双频覆盖对等；5G 覆盖弱时禁用（p459）</td>
+</tr>
+<tr>
+<td>关联 RSSI/SNR 阈值</td>
+<td>低 10 / 高 25 二选一</td>
+<td>10 收弱终端拉低吞吐；25 拒弱终端保吞吐（p451）</td>
+</tr>
+<tr>
+<td>关联 RSSI（负载均衡版）</td>
+<td>2.4G=5、5G=10</td>
+<td>p445</td>
+</tr>
+<tr>
+<td>Dynamic Load Balance</td>
+<td>Enable</td>
+<td>—</td>
+</tr>
+<tr>
+<td>背景扫描</td>
+<td>Enable（WIPS 依赖）；间隔 20s / 时长 50ms 保持默认</td>
+<td>范围 5-10800s / 50-110ms（p448）</td>
+</tr>
+<tr>
+<td>Voice/Video Awareness</td>
+<td>Enable</td>
+<td>检测 SIP/H.323 跳过扫描</td>
+</tr>
+<tr>
+<td>SGI</td>
+<td>Enable（约 +11% 速率）</td>
+<td>环境差时关</td>
+</tr>
+<tr>
+<td>信道/功率</td>
+<td>Auto（ACS/APC）</td>
+<td>优于静态</td>
+</tr>
+<tr>
+<td>信道宽度</td>
+<td>默认；密集=窄、稀疏=宽</td>
+<td>2.4G 默认 20；5G 默认 40</td>
+</tr>
+<tr>
+<td>功率范围</td>
+<td>3-23 dBm（或 Auto）</td>
+<td>—</td>
+</tr>
+<tr>
+<td>最小数据速率</td>
+<td>2.4G=12、5G=24、6G=24 Mbps</td>
+<td>—</td>
+</tr>
+<tr>
+<td>频段引导差值阈值</td>
+<td>10（5G 与 2.4G 客户端数差）</td>
+<td>—</td>
+</tr>
+<tr>
+<td>漫游 RSSI 阈值</td>
+<td>2.4G=10、5G=15</td>
+<td>关联阈值管"能不能连"，漫游阈值管"何时该走"</td>
+</tr>
+</tbody>
+</table>
+<p>RSSI 判读：dBm = RSSI − 96；RSSI&lt;20（约 −76dBm 以下）Bad 不宜音视频，&gt;30 为 Desired。</p>
+<hr />
+<h2 id="10-skill-5">六、学习路径（10 个 skill 对应 5 天课程节奏）</h2>
+<table>
+<thead>
+<tr>
+<th>天</th>
+<th>顺序</th>
+<th>Skill</th>
+<th>对应书内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Day1 上午</td>
+<td>1</td>
+<td>rlab-lab-manual</td>
+<td>c01-c02 连接与重置（p69-80）</td>
+</tr>
+<tr>
+<td>Day1</td>
+<td>2</td>
+<td>express-mode-bootstrap</td>
+<td>c03-c04/c08 模式判定+前置（p100-129/p33）</td>
+</tr>
+<tr>
+<td>Day1 下午</td>
+<td>3</td>
+<td>cirrus-license-org-lifecycle</td>
+<td>c09 许可与组织（p169-238）</td>
+</tr>
+<tr>
+<td>Day1</td>
+<td>4</td>
+<td>device-cloud-onboarding</td>
+<td>c10-c12 上云（p241-306）</td>
+</tr>
+<tr>
+<td>Day1 末-Day2</td>
+<td>5</td>
+<td>ssid-authentication-suite</td>
+<td>c13-c16 三种 SSID+PSK 四级（p312-395）</td>
+</tr>
+<tr>
+<td>Day2</td>
+<td>6</td>
+<td>upam-policy-bandwidth</td>
+<td>c17/c23 策略与账号（p408-434）</td>
+</tr>
+<tr>
+<td>Day2</td>
+<td>7</td>
+<td>rf-optimization-baseline</td>
+<td>c18 RF 管理（p445-466）</td>
+</tr>
+<tr>
+<td>Day2</td>
+<td>8</td>
+<td>roaming-rap-design</td>
+<td>漫游章节 + c21 RAP（p476-572）</td>
+</tr>
+<tr>
+<td>Day2</td>
+<td>9</td>
+<td>wips-security-deployment</td>
+<td>c19 WIPS（p514-525）</td>
+</tr>
+<tr>
+<td>Day2</td>
+<td>10</td>
+<td>site-survey-troubleshooting + 清理</td>
+<td>c22 勘测（p526-540）+ c20 清理（p544-547）</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="top10">七、交付陷阱 TOP10</h2>
+<ol>
+<li><strong>模式切换丢配置</strong>：Express → Enterprise/Cloud 无配置迁移，集群配置全丢；切换前导出全部 SSID/密码/VLAN/Portal 账号，按"重新开局"排期（ce01）。</li>
+<li><strong>255 上限</strong>：Express 单组上限 255 台 AP，&gt;64 台必须做弹性设计（每台 OmniSwitch ≤32 AP、每堆叠 ≤64，p11）。</li>
+<li><strong>国家码射频全关</strong>：AP 向导里国家码选错（或漏选），射频按法规全关、一个 SSID 都发不出来——Express 开局向导里改密/国家/建 SSID 一步都不能漏（c03/p108-119）。</li>
+<li><strong>option 138 配错/序列号未声明 → AP 静默落 Express</strong>：不报错，直接广播 mywifi-XXXX，还可能与已有集群意外成组；用 <code>getmode</code> 排查（ce02）。</li>
+<li><strong>License 24h 延迟</strong>：交付当天下单必卡现场；eBuy 订单最长 24h 才出现在 Subscription Manager（p175，ce06）。</li>
+<li><strong>删 Site 是级联删除</strong>：楼宇、楼层与设备归属连带删除，纳管关系丢失（ce36）；且云上无一键恢复，清理必须按依赖逆序拆 25 步（p544-547）。</li>
+<li><strong>关联 RSSI 阈值设高于客户端信号 = 全网拒联</strong>：隐蔽全局故障；实验里设 90 后客户端立即无法关联（c18/p456-466），变更后必看 QoE 并准备回 Default RF Profile（ce25）。</li>
+<li><strong>WIPS 遏制杀伤半径</strong>：de-auth 反制会波及邻居合法网络，参数过宽等于持续攻击别人；教材明令"未经指示不要改参数"（p523，ce32）。Friendly 一票豁免绝对有效，名单要定期复核。</li>
+<li><strong>Band Steering 默认关有原因</strong>：5G 覆盖弱/有洞时把终端逼进弱信号区；覆盖问题回勘测解决，不要用参数硬扛（p459，ce24）。</li>
+<li><strong>UNP 自动分类的安全盲区</strong>：AP 不过 802.1X，仿冒 AP 的 tagged 流量照样进内网 VLAN；高安全环境补 ACL/WIPS（p291，ce17）。另记："Factory Reset Required" 表示 VPN profile 变更过，唯一解是现场恢复出厂（ce14）。</li>
+</ol>
+<hr />
+<blockquote>
+<p>本文由 cangjie-skill 流水线从 DT00XTE360EN 蒸馏生成。</p>
+</blockquote></main></div></body></html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>management-mode-selection — DT00XPS288 · OmniAccess Stellar WLAN 售前</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XPS288 · OmniAccess Stellar WLAN 售前</h1>
+<div class="sub">Edition 28 · 273 页 · 无线售前全科（AP 矩阵/三管理模式/License 三体系/用例/VoWLAN）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">选型与模式</div>
+<a href="skills/ap-selection-matrix.html">ap-selection-matrix</a>
+<a href="skills/management-mode-selection.html" class="on">management-mode-selection</a>
+<div class="grp">商务与报价</div>
+<a href="skills/license-quotation.html">license-quotation</a>
+<div class="grp">用例与语音</div>
+<a href="skills/industry-use-cases.html">industry-use-cases</a>
+<a href="skills/vowlan-deployment.html">vowlan-deployment</a>
+<div class="grp">场景与增值</div>
+<a href="skills/rf-scenario-baseline.html">rf-scenario-baseline</a>
+<a href="skills/network-advisor-aiops.html">network-advisor-aiops</a>
+<a href="skills/special-topologies.html">special-topologies</a></aside><main><h1>management-mode-selection</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="express-express-ov2500-cirrus">三种管理模式选型与 Express 集群工程（Express / OV2500 / Cirrus）</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>"NETWORK MANAGEMENT MODES - OVERVIEW: Wi-Fi Express Standalone mode; Wi-Fi Enterprise - In Premise - Managed mode with OmniVista 2500 NMS; Wi-Fi Cloud - Cloud based - Managed mode with OmniVista Cirrus NMS. Move from Express to Enterprise/Cloud when/if needed."（p41）</p>
+<p>"A Group can not contain more than 255 APs. The 256th AP is not taken into account. Will stay in 'joining' mode."（p46）</p>
+<p>"AP is managed when Registration succeeds: AP is Trusted, AP is Licensed, Country Code matches RF profile CC. AP is unmanaged when Registration fails … Configuration not applied, All Radios are off."（p68）</p>
+<p>"Migration from existing Express to Enterprise mode: load the new software. Add option 138 in the DHCP server … Perform a factory reset/reboot. No configuration migration, AP 'cluster' configuration is lost."（p66）</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<p>决策两变量：<strong>网络规模</strong>（小→中→大）× <strong>管理偏好</strong>（免管 / 本地部署 / 云订阅）。</p>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>Express</th>
+<th>Enterprise（OV2500 本地）</th>
+<th>Cloud（Cirrus）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>面向</td>
+<td>SMB</td>
+<td>中大型/安全敏感</td>
+<td>各规模、多分支</td>
+</tr>
+<tr>
+<td>License</td>
+<td>免、送 5 个永久</td>
+<td>永久买断</td>
+<td>订阅</td>
+</tr>
+<tr>
+<td>容量红线</td>
+<td>255 AP/集群；&gt;64 台需冗余</td>
+<td>4000 AP / 100K 客户端</td>
+<td>4000 AP / 100K 客户端</td>
+</tr>
+<tr>
+<td>成长路径</td>
+<td>可迁 Enterprise/Cloud（配置不迁移）</td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p>Express 集群规则：同 VLAN 多 AP 启动时按"最高型号 + 最高 MAC"选 PVM，MAC 次高为 SVM；默认管理 SSID <code>mywifi-0102</code>；每台 OmniSwitch ≤32 AP、每堆叠 ≤64 台且至少 2 台可任 PVM/SVM。</p>
+<p>模式判定开关：DHCP 有无 Option 138（OV 服务器地址）——出厂即 Express，模式首次启动固化，切换须恢复出厂。</p>
+<p>AP 纳管三条件（与门）：Trusted（默认需手动 Trust，导入/手工创建视为可信）+ Licensed + 国家码与 RF Profile 一致；任一失败即 Unmanaged、射频全关。</p>
+<h2 id="a1">A1 · 书中案例</h2>
+<ul>
+<li>文理学院换 Ubiquiti：BP 用 OmniVista Cirrus 远程运维监管（c04）。</li>
+<li>大学 600 AP 演进：一期 AP1321 + OV Cirrus 云管（c03）。</li>
+</ul>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>触发：客户说"我只要简单 WiFi"（→Express，5 免费 License 起步）；合规要求本地部署（→OV2500）；多分支连锁（→Cirrus）。以及"AP 上线但没信号"排障、Express 扩容卡 joining、Express→Enterprise 割接方案。</li>
+<li>区分：本 skill 管"模式怎么选、怎么迁、怎么排障"；License 报价与 part number 去 <code><a href="license-quotation.html">license-quotation</a></code>；具体 RF/场景配置去 <code><a href="rf-scenario-baseline.html">rf-scenario-baseline</a></code>。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>问规模与偏好 → 套三选一表；SMB 首推 Express（零软件成本起步）。</li>
+<li>Express 容量校核：AP 数 ≤255？超则拆多 Group-ID/多 VLAN 或转 Enterprise/Cloud。</li>
+<li>冗余设计：集群 &gt;64 台时每堆叠放 ≥2 台可任 PVM/SVM 的机型。</li>
+<li>割接方案（Express→Enterprise）：Web 加载新软件 → DHCP 加 Option 138 → 恢复出厂重启 → 配置重建；单独报实施工作量与停机窗口。</li>
+<li>排障"上线不上班"：查 License 数量 → 查 Trust 动作 → 查国家码/区域码匹配。</li>
+<li>连锁客户有固件升级诉求：提前说明 Express 远程不能升镜像，建议转 Enterprise/Cloud。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li>第 256 台静默卡 joining 不报错（ce05）。</li>
+<li>"Easy conversion"话术与配置丢失现实冲突：迁移时集群配置全部丢失（ce06）。</li>
+<li>Express 远程管理不支持 AP 组镜像升级（ce07）。</li>
+<li>Enterprise 管理面仅 IPv4、AP 无 IPv6 管理接口（Express 反而支持 v6）；纯 v6 管理客户别硬应标（ce16）。</li>
+<li>批量开局"全部没信号"根因常是默认手动 Trust 未点（ce08）。</li>
+</ul>
+<hr />
+<p>来源条目: f02, f03, f04, f05, p03, p04, p05, p06, ce05, ce06, ce07, ce08, ce16；glossary: Stellar Express、Stellar Enterprise (On-Premise)、Stellar Enterprise Cloud、DHCP Option 138、PVM/SVM、Controller-less Architecture、OmniVista 2500、HA</p></main></div></body></html>

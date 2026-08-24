@@ -1,0 +1,181 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>rf-scenario-baseline — DT00XPS288 · OmniAccess Stellar WLAN 售前</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XPS288 · OmniAccess Stellar WLAN 售前</h1>
+<div class="sub">Edition 28 · 273 页 · 无线售前全科（AP 矩阵/三管理模式/License 三体系/用例/VoWLAN）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">选型与模式</div>
+<a href="skills/ap-selection-matrix.html">ap-selection-matrix</a>
+<a href="skills/management-mode-selection.html">management-mode-selection</a>
+<div class="grp">商务与报价</div>
+<a href="skills/license-quotation.html">license-quotation</a>
+<div class="grp">用例与语音</div>
+<a href="skills/industry-use-cases.html">industry-use-cases</a>
+<a href="skills/vowlan-deployment.html">vowlan-deployment</a>
+<div class="grp">场景与增值</div>
+<a href="skills/rf-scenario-baseline.html" class="on">rf-scenario-baseline</a>
+<a href="skills/network-advisor-aiops.html">network-advisor-aiops</a>
+<a href="skills/special-topologies.html">special-topologies</a></aside><main><h1>rf-scenario-baseline</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="rf">RF 与场景化配置基线（客房 / 场馆 / 会议室 / 户外）</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>"AP quantity = M/2+N+(M+N)*5%. Explanation: M: number of rooms with normal walls. N: number of rooms with load-bearing wall. 5%: represents the redundant backup. Example: 20 rooms M, 10 rooms N • AP quantity = 21,5. Rounded up to 22 AP1301H."（p243）</p>
+<p>"Load-bearing wall signal attenuation = 30 dBm. Worst case: 5GHz signal in area in the room without AP = -80 dBm → No access; 2.4GHz = -70 dBm → Extremely poor. AP installation: 1 access point per room."（p245）</p>
+<p>"Venue capacity: 1500. Estimated concurrent users: less the 50% → Around 750 active users … Number of APs: 8-10."（p249）</p>
+<p>"Small room 40-60 AP1231/1321 1; Medium room 80-120 AP1231/1321 2; Lecture hall / Conference room 160-200 AP1231/1321 4."（p258）</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<p>每个场景给"数量估算 + 推荐配置基线"两件套，配置表同构"特性→推荐值→理由"，精髓是<strong>同一特性在不同场景取值相反且有据</strong>。</p>
+<p><strong>数量估算：</strong></p>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>估算规则</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>客房/病房（AP1301H）</td>
+<td><strong>M/2 + N + (M+N)×5%</strong>，向上取整；普通墙 15dB 可隔房装，承重墙 30dB 必须一房一台</td>
+</tr>
+<tr>
+<td>高密场馆</td>
+<td>容量 × 并发率（约 50%）→ 750 并发 ≈ 8-10 台三射频 AP1231/1321；2.4G 只用 1/6/11、部分 AP 关 2.4G</td>
+</tr>
+<tr>
+<td>会议室</td>
+<td>40-60 客户端→1 台；80-120→2 台；160-200→4 台（并发 100%、每端 ≥2Mbps）</td>
+</tr>
+<tr>
+<td>户外</td>
+<td>并发按 20% 估；AP1361（-40~+65°C）约 6-8 台/200 并发；开阔区抱杆装最高点、802.3at PoE</td>
+</tr>
+</tbody>
+</table>
+<p><strong>配置基线对照（核心差异）：</strong></p>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>客房 (p247)</th>
+<th>场馆 (p252)</th>
+<th>会议室 (p261)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RSSI 门限</td>
+<td>2.4G=20 / 5G=15</td>
+<td>30 / 30</td>
+<td>30 / 30</td>
+</tr>
+<tr>
+<td>ACS</td>
+<td>开</td>
+<td><strong>关</strong>（手动锁信道）</td>
+<td>开</td>
+</tr>
+<tr>
+<td>功率</td>
+<td>APC 关、手动</td>
+<td>≤15dBm</td>
+<td>≤10dBm</td>
+</tr>
+<tr>
+<td>信道带宽</td>
+<td>HT20/HT20</td>
+<td>HT20/<strong>HT40</strong></td>
+<td>HT20/<strong>HT80</strong></td>
+</tr>
+<tr>
+<td>强制 5G</td>
+<td>引导开</td>
+<td>引导+强制开</td>
+<td>引导+强制开</td>
+</tr>
+<tr>
+<td>限速</td>
+<td>2/4Mbps</td>
+<td>2/4Mbps</td>
+<td>2/4Mbps</td>
+</tr>
+<tr>
+<td>BG-S / Load Balance</td>
+<td>关 / 开</td>
+<td>关 / 开</td>
+<td>关 / 开</td>
+</tr>
+<tr>
+<td>GI</td>
+<td>—</td>
+<td>Wi-Fi5=0.8us / Wi-Fi6=1.6us</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p>安装规范三件套：壁挂 ≥1.5 米、避开电视/金属柜遮挡、不可装承重墙侧面；场馆吊顶优先（屋顶 ≤5 米）、房间宽 ≤30 米可壁挂。</p>
+<h2 id="a1">A1 · 书中案例</h2>
+<ul>
+<li>客房公式完整实例：20 普通 + 10 承重 = 22 台 AP1301H + 配置基线（c18）。</li>
+<li>酒店装后审计：信道重叠靠缩信道宽度整改（ce17）。</li>
+<li>场馆 AP1231 三射频 + 2.5G 上联 + OS6560（802.3bt）防有线瓶颈（c09/p31）。</li>
+</ul>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>触发：出 AP 数量与配置初稿、答"配置怎么定的"质疑、做交付验收 checklist、承重墙报价分档。</li>
+<li>区分：语音场景常数去 <code><a href="vowlan-deployment.html">vowlan-deployment</a></code>；机型选谁去 <code><a href="ap-selection-matrix.html">ap-selection-matrix</a></code>；本 skill 管"多少台、怎么配"。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>判场景类型（客房/场馆/会议室/户外），套对应估算规则出数量。</li>
+<li>客房先做墙体分级勘察：逐层标注承重墙，按公式分档报价（普通墙/承重墙两套数量）。</li>
+<li>按基线表生成场景配置（RSSI/ACS/APC/带宽/限速）。</li>
+<li>把装后审计（Ekahau）写进交付标准。</li>
+<li>验收按"特性→推荐值→理由"表逐项核对。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li>不区分墙体按"隔房一台"报低价：承重墙楼栋 AP 用量翻倍、预算工期双爆（ce19）。</li>
+<li>教材 p243 将 AP1301H 误标 802.11ac，以 p17（Wi-Fi 6）为准（ce23）。</li>
+<li>基线表是"性能优先"：关 BG-S 后 WIPS/APC/快速漫游/Voice-Video awareness 连带失效；有安全/语音诉求须换开 BG-S 的配置档；客房 ATF 关闭是为保护无 AP 房间体验（ce22）。</li>
+<li>高密同质环境默认信道宽度同频干扰严重，主动预配窄信道（客房 HT20）。</li>
+</ul>
+<hr />
+<p>来源条目: f20, f21, p29, p30, p31, p32, p33, p34, c02, c09, c18, ce17, ce19, ce22, ce23；glossary: Smart Load Balancing、Access Guardian、WIPS/wIDS</p></main></div></body></html>

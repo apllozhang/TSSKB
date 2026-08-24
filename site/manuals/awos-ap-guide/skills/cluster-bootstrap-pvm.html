@@ -1,0 +1,101 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>cluster-bootstrap-pvm — AWOS 5.0.3 · Stellar AP 用户手册</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>AWOS 5.0.3 · Stellar AP 用户手册</h1>
+<div class="sub">128 页 · AP 本地管理配置手册（Express 模式 GUI 全参考）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">开局</div>
+<a href="skills/cluster-bootstrap-pvm.html" class="on">cluster-bootstrap-pvm</a>
+<div class="grp">业务</div>
+<a href="skills/ssid-radio-tuning.html">ssid-radio-tuning</a>
+<div class="grp">安全</div>
+<a href="skills/wlan-security-enterprise.html">wlan-security-enterprise</a>
+<div class="grp">运维</div>
+<a href="skills/ap-ops-upgrade-mesh.html">ap-ops-upgrade-mesh</a></aside><main><h1>cluster-bootstrap-pvm</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="express-pvm">Express 集群开局与 PVM 选举</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>The ALE WLAN solution is based on a cluster architecture. A maximum of 255 APs are supported in one AP cluster/group. All APs have the same cluster ID that uniquely defines the AP group and all APs have to be in the same VLAN because the communication between group members is based on multicast. (p13)</p>
+<p>By default, the AP group will advertise the pre-defined SSID 'mywifi-xxxx' and you can connect to 'mywifi-xxxx' to browse the AP group GUI through http://mywifi.al-enterprise.com:8080 to the initializing wizard. After you complete Using the Initializing Wizard, the SSID 'mywifi-xxxx' will be deleted. (p13)</p>
+<p>PVM/SVM election priority: AP1451&gt;AP1351&gt;AP1431/AP1331&gt;AP1521&gt;AP1320/AP1360&gt;AP1511/AP1411&gt;AP1311/AP1301&gt;AP1301H&gt;AP1220/AP1230/AP1251/AP1201&gt;... Among the APs with same priority, the one with highest MAC address will be selected as PVM. (p18)</p>
+<p>Group Management IP - A virtual IP address for AP group management, default is 10.0.0.1 ... Group ID - Identification of the AP group, default is 100. ... you can manage the AP group via accessing the URL: http://GMIP:8080 by wired or wireless. (p31-32)</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<p>开局三部曲：<strong>物理接入 → 初始化向导 → 组管理入口固化</strong>。</p>
+<ol>
+<li>组网前提先行核对：同 VLAN、同 cluster ID（默认 100）、≤255 台（低端机型当 PVM 时 ≤32 台）。</li>
+<li>一次只上一台 AP 完成向导，再逐台加入同步。</li>
+<li>向导后用 GMIP（默认 10.0.0.1）替代漂移的 DHCP 地址做长期管理入口。</li>
+<li>PVM/SVM 由机型优先级链 + MAC 最大者自动选举，可预判、也可手动 "Update to PVM" 干预。</li>
+</ol>
+<h2 id="a1">A1 · 书中案例</h2>
+<ul>
+<li>无 DHCP 场景：AP 默认 IP 192.168.1.254；笔记本直连，配 192.168.1.100/24、网关 192.168.1.254、DNS 指向 192.168.1.254，访问 http://192.168.1.254:8080。</li>
+<li>弹性配比：每 64 台 AP 网段至少放 4 台中高端机型；扩到 255 台需集群内至少 16 台同档（AP12XX/13XX/14XX/15XX 任一档）。</li>
+<li>ZTP 场景：AP 从 ALE OXO 服务器取 IP、下载固件与配置，自动重启成组。</li>
+</ul>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>触发：新装机房/楼宇首次上电开局；PVM 归属预判；换 PVM 硬件；DHCP 故障导致全组失联的应急。</li>
+<li>区分：只调 SSID/射频/Portal 参数 → 用 <code><a href="ssid-radio-tuning.html">ssid-radio-tuning</a></code>；配 802.1X/RadSec/证书 → 用 <code><a href="wlan-security-enterprise.html">wlan-security-enterprise</a></code>；备份/升级/扩组/Mesh → 用 <code><a href="ap-ops-upgrade-mesh.html">ap-ops-upgrade-mesh</a></code>。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>核对组网前提：全部 AP 同 VLAN、同 cluster ID（默认 100）、机型容量满足 255/32 分级。</li>
+<li>按机型优先级链预判 PVM；混入 AP1201 时若被选为 PVM，手动把 AP1220/1230/1251 提升为 PVM。</li>
+<li>单台 AP 上电，终端连预置 SSID <code>mywifi-xxxx</code>，访问 http://mywifi.al-enterprise.com:8080（或 http://AP-IP:8080）。</li>
+<li>走完五步向导：改管理员密码（默认 admin）→ 国家码/时区（-RW 机型）→ 建 WLAN。全程终端不得离开 mywifi-xxxx。</li>
+<li>向导完成后补 VLAN 映射（向导阶段不可配，走 "Modify Your WLAN"）。</li>
+<li>规划 GMIP：从 AP 网段选空闲 IP（默认 10.0.0.1），确保管理终端可路由，此后统一用 http://GMIP:8080 管理。</li>
+<li>改密清单：Web Administrator/Viewer/GuestOperator + CLI root 与 support（root 凭据由 AP 生成、仅客户持有）。</li>
+<li>逐台插入其余 AP 等待配置同步。</li>
+<li>双上行机型：上游交换机确认 LACP；AP1351/AP1451 Class 7 需 802.3bt 交换机 + PoE 固件 3.XX。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li><strong>多台同时首上电各自成组</strong>：一次只接一台（Note 3-2）。</li>
+<li><strong>向导中断</strong>：终端中途切网导致向导失败；完成后 mywifi-xxxx 自动删除，无线管理须改连向导新建的 WLAN。</li>
+<li><strong>VLAN 两段式</strong>：向导不能配 VLAN，规划时必须留出向导后补配步骤。</li>
+<li><strong>DHCP 失效灾难模式</strong>：AP 重启时 DHCP 不可达 → 全组回退 192.168.1.254，同广播域 IP 冲突、各自成 PVM。先修 DHCP，别逐台手工处理。</li>
+<li><strong>GUI 上限</strong>：每台 AP 最多 3 个并发 GUI 连接；浏览器基线 Chrome 102+/Firefox 100+/Edge 92+。</li>
+<li><strong>低端 PVM 容量</strong>：AP1101/AP1201H/AP1201L/AP1201HL 当 PVM → 集群上限跌到 32 台。</li>
+<li><strong>锁定策略</strong>：默认 3 次失败登录锁 1 分钟。</li>
+</ul>
+<hr />
+<p>来源条目: p01, p02, p03, p04, p05, p06, p07, p08, p27, ce01, ce02, ce03, ce04, ce05, ce06, g01, g02, g03, g04, g05, g06, g07, g08, g09, g10, g35</p></main></div></body></html>

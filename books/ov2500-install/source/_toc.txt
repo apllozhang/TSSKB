@@ -1,0 +1,237 @@
+OmniVista 2500 NMS 4.9R2 Installation and Upgrade Guide .... p6
+  Installing OmniVista 2500 NMS 4.9R2 .... p8
+    Required Minimum System Configurations .... p9
+    Standalone and High-Availability Installations .... p11
+    Deploying OmniVista on a Virtual Appliance .... p11
+      Deploying the Virtual Appliance on VMware ESXi .... p11
+      Deploying the Virtual Appliance on Hyper-V .... p19
+      Deploying the Virtual Appliance on Linux KVM/Ubuntu 22.04 .... p24
+    Completing the OmniVista Installation .... p34
+  Converting to a High-Availability Installation .... p40
+    Layer 2 Configuration .... p43
+      Converting Node 1 to Cluster Mode .... p43
+      Joining Node 2 to the Cluster .... p49
+      Verifying the Conversion .... p51
+      Logging into the OmniVista UI .... p52
+    Layer 3 Configuration .... p53
+      Converting Node 1 to Cluster Mode .... p53
+      Joining Node 2 to the Cluster .... p56
+      Verifying the Conversion .... p58
+      Logging into the OmniVista UI .... p59
+  Upgrading from 4.9R1 to 4.9R2 .... p60
+    Upgrading from 4.9R1 Standalone to 4.9R2 Standalone .... p60
+      Launching the OmniVista UI .... p65
+    Upgrading from 4.9R1 HA to 4.9R2 HA .... p66
+      L2 High-Availability Upgrade Workflow .... p67
+        Upgrade the Active and Standby Nodes (ov1 and ov2) from 4.9R1 to 4.9R2 .... p67
+          Verify the Cluster Status .... p67
+          Enable Maintenance Mode on the Active Node (ov1) .... p68
+          Connect to the Standby Node (ov2) and Upgrade the Node to 4.9R2 .... p69
+          Connect to the ov1 Node and Upgrade the Node to 4.9R2 .... p75
+          Verify the Upgrade .... p81
+      Launching the OmniVista UI .... p82
+      L3 High-Availability Upgrade Workflow .... p82
+        Configure Global Settings in the OmniVista UI .... p83
+        Upgrade the Active and Standby Nodes (ov1 and ov2) from 4.9R1 to 4.9R2 .... p83
+          Verify the Cluster Status .... p84
+          Enable Maintenance Mode on the Active Node (ov1) .... p84
+          Connect to the Standby Node (ov2) and Upgrade the Node to 4.9R2 .... p85
+          Connect to the ov1 Node and Upgrade the Node to 4.9R2 .... p91
+          Verify the Upgrade .... p98
+      Launching the OmniVista UI .... p99
+  Upgrading from 4.8R2 to 4.9R1 .... p100
+    Upgrading from 4.8R2 Standalone to 4.9R1 Standalone .... p100
+      Launching the OmniVista UI .... p105
+    Upgrading from 4.8R2 HA to 4.9R1 HA .... p105
+      High-Availability Upgrade Workflow .... p106
+        Upgrade the Active and Standby Nodes (ov1 and ov2) from 4.8R2 to 4.9R1 .... p107
+          Verify the Cluster Status .... p107
+          Enable Maintenance Mode on the Active Node (ov1) .... p107
+          Connect to the Standby Node (ov2) and Upgrade the Node to 4.9R1 .... p108
+          Connect to the Active Node (ov1) and Upgrade the Node to 4.9R1 .... p115
+          Verify the Upgrade .... p120
+      Launching the OmniVista UI .... p120
+  Upgrading from 4.8R1 to 4.8R2 .... p121
+    Upgrading from 4.8R1 Standalone to 4.8R2 Standalone .... p121
+      Launching the OmniVista UI .... p126
+    Upgrading from 4.8R1 HA to 4.8R2 HA .... p127
+      High-Availability Upgrade Workflow .... p128
+        Upgrade the Active and Standby Nodes (ov1 and ov2) from 4.8R1 to 4.8R2 .... p128
+          Verify the Cluster Status .... p128
+          Enable Maintenance Mode on the Active Node (ov1) .... p129
+          Connect to the Standby Node (ov2) and Upgrade the Node to 4.8R2 .... p130
+          Connect to the Active Node (ov1) and Upgrade the Node to 4.8R2 .... p136
+          Verify the Upgrade .... p142
+      Launching the OmniVista UI .... p142
+  Upgrading from 4.7R1 to 4.7R1 Patch 2 to 4.8R1 .... p143
+    Upgrading from 4.7R1 Standalone to 4.7R1 Patch 2 Standalone to 4.8R1 Standalone .... p143
+      Standalone Upgrade Workflow .... p144
+        Upgrading from 4.7R1 to 4.7R1 Patch 2 .... p145
+        Upgrade from 4.7R1 Patch 2 to 4.8R1 .... p149
+      Launching the OmniVista UI .... p153
+    Upgrading from 4.7R1 HA to 4.7R1 Patch 2 to 4.8R1 HA .... p153
+      High-Availability Upgrade Workflow .... p154
+        Upgrade the Active and Standby Nodes (OV-1 and OV-2) from 4.7R1 to 4.7R1 Patch 2 .... p156
+          Verify the Cluster Status .... p156
+          Enable Maintenance Mode on the Active Node (OV-1) .... p156
+          Connect to the Standby Node (OV-2) and Upgrade the Node to 4.7R1 Patch 2 .... p157
+          Connect to the Active Node (OV-1) and upgrade the node to 4.7R1 Patch 2 .... p160
+          Disable Maintenance Mode on the Active Node .... p161
+          Verify the Upgrade .... p162
+        Upgrade the Active and Standby Nodes (OV-1 and OV-2) from 4.7R1 Patch 2 to 4.8R1 .... p163
+          Verify the Cluster Status .... p163
+          Enable Maintenance Mode on the Active Node (OV-1) .... p163
+          Connect to the Standby Node (OV-2) and Upgrade the Node to 4.8R1 .... p164
+          Connect to the Active Node (OV-1) and Upgrade the Node to 4.8R1 .... p170
+          Verify the Upgrade .... p176
+      Launching the OmniVista UI .... p176
+  Upgrading from 4.6R2 to 4.7R1 .... p177
+    Upgrading from 4.6R2 Standalone to 4.7R1 Standalone .... p177
+      Launching the OmniVista UI .... p182
+    Upgrading from 4.6R2 HA to 4.7R1 HA .... p183
+      High-Availability Upgrade Workflow .... p184
+        Enable Maintenance Mode on the Active Node .... p184
+        Upgrade the Active Node to 4.7R1 .... p185
+        Upgrade the Standby Node to 4.7R1 .... p189
+        Disable Maintenance Mode on the Active Node .... p192
+        Verify the Upgrade .... p194
+      Launching the OmniVista UI .... p194
+  Upgrading from 4.6R1 to 4.6R2 .... p195
+    Upgrading from 4.6R1 Standalone to 4.6R2 Standalone .... p195
+      Launching the OmniVista UI .... p200
+    Upgrading from 4.6R1 HA to 4.6R2 HA .... p200
+      High-Availability Upgrade Workflow .... p202
+        Enable Maintenance Mode on the Active Node .... p202
+        Upgrade the Active Node to 4.6R2 .... p203
+        Upgrade the Standby Node to 4.6R2 .... p207
+        Disable Maintenance Mode on the Active Node .... p210
+        Verify the Upgrade .... p211
+      Launching the OmniVista UI .... p212
+  Upgrading from 4.5R3 to 4.6R1 .... p212
+    Upgrading from 4.5R3 Standalone to 4.6R1 Standalone .... p212
+      Launching the OmniVista UI .... p217
+    Upgrading from 4.5R3 HA to 4.6R1 HA .... p217
+      High-Availability Upgrade Workflow .... p218
+        Enable Maintenance Mode on the Active Node .... p219
+        Upgrade the Active Node to 4.6R1 .... p220
+        Upgrade the Standby Node to 4.6R1 .... p223
+        Disable Maintenance Mode on the Active Node .... p227
+        Verify the Upgrade .... p228
+      Launching the OmniVista UI .... p229
+  Upgrading from 4.5R2 to 4.5R3 .... p229
+    Upgrading from 4.5R2 Standalone to 4.5R3 Standalone .... p229
+      Launching the OmniVista UI .... p234
+    Upgrading from 4.5R2 HA to 4.5R3HA .... p234
+      High-Availability Upgrade Workflow .... p235
+        Enable Maintenance Mode on the Active Node .... p235
+        Upgrade the Active Node to 4.5R3 .... p237
+        Upgrade the Standby Node to 4.5R3 .... p240
+        Disable Maintenance Mode on the Active Node .... p244
+        Verify the Upgrade .... p245
+      Launching the OmniVista UI .... p246
+  Upgrading from 4.5R1 to 4.5R2 .... p246
+    Upgrading from 4.5R1 Standalone to 4.5R2 Standalone .... p246
+      Launching the OmniVista UI .... p251
+    Upgrading from 4.5R1 HA to 4.5R2 HA .... p252
+      High-Availability Upgrade Workflow .... p253
+        Enable Maintenance Mode on the Active Node .... p253
+        Upgrade the Active Node to the Latest 4.5R1 Patch .... p255
+        Upgrade the Standby Node to the Latest 4.5R1 Patch .... p258
+        Disable Maintenance Mode on the Active Node .... p260
+        Enable Maintenance Mode on the Active Node .... p262
+        Upgrade the Active Node to 4.5R2 .... p263
+        Upgrade the Standby Node to 4.5R2 .... p267
+        Disable Maintenance Mode on the Active Node .... p270
+        Verify the Upgrade .... p271
+      Launching the OmniVista UI .... p271
+Appendix A – Using the Virtual Appliance Menu .... p272
+  Help .... p273
+  Configure the Virtual Appliance .... p273
+    Help .... p274
+    Display Current Configuration .... p274
+    Configure IPs and Ports .... p274
+    Configure Default Gateway .... p276
+    Configure Hostname .... p276
+    Configure DNS Server .... p277
+    Configure Timezone .... p277
+    Configure Route .... p278
+    Configure Network Size .... p279
+      Extending the Data Partition .... p280
+    Configure Keyboard Layout .... p280
+    Update OmniVista Web Server SSL Certificate .... p282
+    Enable/Disable AP SSL Authentication .... p283
+    Enable/Disable Admin SSH .... p283
+    Configure NTP Client .... p283
+    Configure Proxy .... p284
+    Change Screen Resolution .... p284
+    Configure the Other Network Cards .... p285
+    Exit .... p286
+  Run Watchdog Command .... p286
+  Upgrade/Backup/Restore VA .... p287
+  Change Password .... p290
+  Logging .... p290
+  Login Authentication Server .... p291
+  Power Off .... p292
+  Reboot .... p292
+  Advanced Mode .... p292
+  Set Up Optional Tools .... p293
+  Convert to Cluster .... p293
+  Join Cluster .... p294
+  Troubleshoot .... p294
+  Log Out .... p294
+Appendix B – Using the HA Virtual Appliance Menu .... p295
+  Help .... p296
+  Show OV Cluster Status .... p296
+  Configure Cluster .... p296
+    Help .... p297
+    Display Cluster Configuration .... p297
+    Configure Cluster IP .... p298
+    Configure Captive Portal Virtual IP .... p298
+    Configure Captive Portal Virtual IPv6 .... p299
+    Configure Additional OV Web Virtual IP .... p299
+    Remove Peer Node From Cluster .... p299
+    Configure OV Web Ports .... p300
+    Configure Portal Web Ports .... p300
+    Configure OV SSL Certificate .... p300
+    Enable/Disable AP SSL Authentication .... p301
+    Configure FTP Password .... p301
+    Configure Login Authentication Server .... p301
+    Preferred Active Node .... p302
+    Manual Failover .... p302
+    Cluster Error Check .... p302
+    Configure Peer Node’s Information .... p303
+    Enable Maintenance Mode .... p303
+    Exit .... p303
+  Configure Current Node .... p303
+    Help .... p304
+    Display Current Node Configuration .... p304
+    Configure Default Gateway .... p305
+    Configure DNS Server .... p306
+    Configure Timezone .... p306
+    Configure Route .... p307
+    Configure Keyboard Layout .... p308
+    Configure NTP Client .... p309
+    Configure Proxy .... p310
+    Change Screen Resolution .... p310
+    Configure “cliadmin” Password .... p311
+    Configure “root” Secret Text .... p311
+    Enable/Disable Admin SSH .... p311
+    Configure Mongodb Password .... p311
+    Configure IPs and Ports .... p311
+    Configure Hostname .... p312
+    Extend Data Partitions .... p312
+      Extending the Data Partition .... p312
+    Configure Network Size .... p314
+    Troubleshoot .... p314
+    Configure Another NIC(s) .... p314
+    Configure “admin” Password for UI .... p315
+    Exit .... p315
+  Run Watchdog Command .... p315
+  Upgrade/Backup/Restore VA .... p316
+  Logging .... p319
+  Set Up Optional Tools .... p320
+  Advanced Mode .... p320
+  Power Off .... p321
+  Reboot .... p321
+  Log Out .... p322
+Appendix C – Generating an Evaluation License .... p323

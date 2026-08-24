@@ -1,0 +1,92 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ov2500-49r2-features-compat — OV2500 4.9R2 · Release Notes</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>OV2500 4.9R2 · Release Notes</h1>
+<div class="sub">93 页 · 新特性/兼容矩阵/升级路径 + 63 条已知问题排障库</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">升级评估</div>
+<a href="skills/ov2500-49r2-features-compat.html" class="on">ov2500-49r2-features-compat</a>
+<a href="skills/ov2500-upgrade-deploy.html">ov2500-upgrade-deploy</a>
+<div class="grp">排障库</div>
+<a href="skills/ov2500-known-issues.html">ov2500-known-issues</a>
+<a href="skills/ov2500-danger-traps.html">ov2500-danger-traps</a></aside><main><h1>ov2500-49r2-features-compat</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="ov-2500-49r2">OV 2500 4.9R2 新特性与兼容矩阵</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>"OmniVista 2500 NMS 4.9R2 is installed as a Virtual Appliance, and can be deployed on the following hypervisors: Vmware ESXi 6.5, 6.7. 7.0.2, 8.0; MS Hyper-V: 2012 R2, 2016, 2019, and 2022; MS Hyper-V on Windows 10 Professional; Linux KVM/Ubuntu 22.04" (p5)</p>
+<p>"The following new switch models are now supported: OS6870 ... AOS 8.9R4 MR ... AOS 8.10R2 ... AOS 8.10R3 ... AWOS 5.0.2 – OmniVista 2500 NMS now supports AWOS 5.0.2 on all previously supported Stellar APs." (p6)</p>
+<p>"A new Require Message Authenticator flag is now available to specify whether to check RADIUS packets for the Message-Authenticator attribute ... resolves CVE-2024-3596 (#Blast-RADIUS)" (p8-9)</p>
+<p>"The VM Manager (VMM) application is supported on Hyper-V 2012, 2012 R2, and 2016. VMM is not supported on Hyper-V 2019 or higher ... Dynamic VLAN configuration is not supported on OS2260 and OS2360 switches" (p10-13)</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<p>评估 4.9R2 是否适合现网，按"平台 → 固件矩阵 → 新特性价值 → 功能边界"四步走：</p>
+<ol>
+<li><strong>平台核对</strong>：现有 hypervisor 是否在支持列表（ESXi 6.5-8.0 / Hyper-V 2012R2-2022 / Win10 Pro Hyper-V / KVM Ubuntu 22.04）。OV 只以虚拟设备（VA）形态交付，没有物理机安装。</li>
+<li><strong>认证固件矩阵</strong>（p13-14）：OS2260/2360=5.2R5-R7；OS6350/6450=6.7.2.R06-R08；OS6360/6465/6560/6570M/6860E/6860N/6865=8.9R4/8.10R2/8.10R3；OS6870=仅 8.10R2/R3（无 8.9R4）；OS6900-X20/X40/T20/T40/Q32/X72=仅 8.9R4；OS9907/9912=8.9R4/8.10R2/8.10R3。Stellar AP 推荐 AWOS 5.0.2。</li>
+<li><strong>新特性清单</strong>：密码有效期策略 + CLI 管理员找回（p7）、SNMPv3 全量加密组合（p7）、Enhanced Open 过渡模式（p7）、6GHz Backward Compatibility（p7-8）、Blast-RADIUS 防护（p8-9）、Oracle Linux 8.10 + 10 项 CVE（p9）。</li>
+<li><strong>功能边界</strong>：逐条核对"不支持清单"，再决定方案。</li>
+</ol>
+<h2 id="a1">A1 · 书中案例</h2>
+<ul>
+<li>OS6870 新接入但有边界：OV 不能做 CPLD 升级；Application Monitoring 需 AOS 8.10R3+；Application Enforcement 本版不支持 (p03)。</li>
+<li>Blast-RADIUS 三场景：UPAM 做 RADIUS 服务器时 OmniSwitch 默认不带 Message-Authenticator，须在交换机执行 <code>aaa radius message-authenticator</code>（AOS 8.10R2+）(p09)。</li>
+<li>PALM 下线：依赖 PALM 的流程迁移到 Fleet Supervision（myfleet.ovcirrus.com）(p04)。</li>
+</ul>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>触发：版本选型、升级前能力评估、"4.9R2 支不支持某机型/功能"、安全合规清单（CVE）核对。</li>
+<li>区分：只关心升级步骤与顺序 → 用 <code><a href="ov2500-upgrade-deploy.html">ov2500-upgrade-deploy</a></code>；遇到具体故障现象排障 → 用 <code><a href="ov2500-known-issues.html">ov2500-known-issues</a></code>；升级高危风险评审 → 用 <code><a href="ov2500-danger-traps.html">ov2500-danger-traps</a></code>。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>列出现网 hypervisor，对照 p5 支持列表；不在列表内则 4.9R2 无法部署。</li>
+<li>导出现网设备型号 × 固件版本表，对照 p13-14 认证矩阵，标出"不认证"组合。</li>
+<li>核对新特性依赖：Enhanced Open 需 AP AWOS 4.0.8+；Blast-RADIUS CLI 命令需交换机 AOS 8.10R2+；Message-Authenticator 响应校验需 AWOS 5.0.2+。</li>
+<li>过功能边界清单：VMM 仅 Hyper-V 2012/2012R2/2016 英文版、无 VLAN 配置；OS2260/2360 无动态 VLAN；IoT Enforcement 仅 OS6560-P48Z16 部件号 904044-90；WCF/DPI 的 AP 排除表（AP1101/AP1201H/L/HL、AP15XX；AP132x/136x 签名包 ≥3.6.11，AP1301/H/1311 ≥3.8.3）。</li>
+<li>第三方纳管：Cisco/Extreme 需在 Discovery 手工提供 OID 映射 mib-2；CLI Scripting 不能下发到 Stellar AP/第三方设备。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li>6GHz SSID 开 Backward Compatibility 后与 MLO 互斥：MLO Band 含 6GHz 时该选项自动禁用 (p08)。</li>
+<li>密码有效期策略对新用户立即生效，老用户要等下次改密 (p05)；升级后强口令会被自动开启（见 danger-traps，ce67）。</li>
+<li>OS6870 认证矩阵与其他 8.x 机型不同：没有 8.9R4 档位。</li>
+<li>浏览器仅 Chrome/Firefox/Edge；IE 已弃用 (p18)。</li>
+</ul>
+<hr />
+<p>来源条目: p01, p02, p03, p04, p05, p06, p07, p08, p09, p10, p18, p20, ce64, ce70, ce71, ce72, ce73, g01, g02, g03, g04, g05, g09, g10, g11, g12</p></main></div></body></html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>spb-license-spec-sizing — DT00XPS279 · OmniSwitch LAN SPB 售前</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XPS279 · OmniSwitch LAN SPB 售前</h1>
+<div class="sub">Issue 05 · 147 页 · SPB 技术推销课（卖点弹药/架构/L3 服务/案例/三技术对比）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">售前攻防</div>
+<a href="skills/spb-presales-battlecard.html">spb-presales-battlecard</a>
+<a href="skills/spb-micro-segmentation.html">spb-micro-segmentation</a>
+<div class="grp">架构与设计</div>
+<a href="skills/spb-topology-isis-design.html">spb-topology-isis-design</a>
+<div class="grp">边缘与服务</div>
+<a href="skills/spb-edge-services.html">spb-edge-services</a>
+<div class="grp">L3 集成</div>
+<a href="skills/spb-l3-integration.html">spb-l3-integration</a>
+<div class="grp">交付与选型</div>
+<a href="skills/spb-ov2500-delivery.html">spb-ov2500-delivery</a>
+<a href="skills/spb-vs-evpn-mpls-selection.html">spb-vs-evpn-mpls-selection</a>
+<a href="skills/spb-stp-migration-cases.html">spb-stp-migration-cases</a>
+<a href="skills/spb-license-spec-sizing.html" class="on">spb-license-spec-sizing</a></aside><main><h1>spb-license-spec-sizing</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="spb-sizing">SPB 许可与机型规格 Sizing 手册</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>"AOS support: OS6860E, OS6860N, OS6870, OS6865, OS6900, OS9900. No license."（p22）</p>
+<p>"Maximum number of BVLANs: 16 (4 is recommended). Maximum number of IS-IS adjacencies: 70 / 128. Maximum number of I-SIDs: 2K / 8K / 1K. Maximum number of SAPs: 2K / 8K. Please refer to latest « AOS Specifications Guide » for up-to-date figures."（p75）</p>
+<p>"OmniSwitch 6900: SPB P, VxLAN P/P, MPLS P. OmniSwitch 6870: SPB P, VxLAN P/P<em>, MPLS O</em>*. * Supported starting with 8.10 R3/R4. ** HW ready."（p139）</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<p><strong>① 许可规则（p02）</strong>：SPB 在 AOS 上 <strong>No license</strong>（零许可成本），全系主流机型支持——报价时可直说无额外软件授权费。</p>
+<p><strong>② 容量规格矩阵（p24/c13，按机型）</strong></p>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>OS6860/6860N/6865</th>
+<th>OS6900 多数子型</th>
+<th>OS6900 X/T24C2</th>
+<th>OS9900</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BVLAN</td>
+<td>16（推荐 4）</td>
+<td>16</td>
+<td>16</td>
+<td>16</td>
+</tr>
+<tr>
+<td>IS-IS 邻接/接口</td>
+<td>70</td>
+<td>128</td>
+<td>128</td>
+<td>128</td>
+</tr>
+<tr>
+<td>I-SID</td>
+<td>2K</td>
+<td>8K</td>
+<td>2K</td>
+<td><strong>1K</strong></td>
+</tr>
+<tr>
+<td>SAP</td>
+<td>2K</td>
+<td>8K</td>
+<td>8K</td>
+<td>8K</td>
+</tr>
+<tr>
+<td>每 I-SID VLAN/SVLAN</td>
+<td>2K</td>
+<td>4K</td>
+<td>4K</td>
+<td>4K</td>
+</tr>
+</tbody>
+</table>
+<p>ECT 算法 ID 16 个（1-16 任选分配给 BVLAN）。</p>
+<p><strong>③ OmniFabric 技术支持矩阵（c14，P/O 标记）</strong>：核对每机型 SPB / VxLAN-VxLAN EVPN / MPLS 三项支持等级——OS6900 三项全 P；OS6860N、OS6900 的 MPLS 为 P；6870 与 9900 的 VxLAN EVPN 自 8.10 R3/R4 起平台支持（P<em>）；6860E 的 VxLAN/MPLS 为 O；6570M SPB 为 O（HW ready，O</em>*）。</p>
+<p><strong>④ 时效纪律（ce16）</strong>：所有数字是 2025-02 Issue 05（AOS R8 时代）快照，p75 自带"以最新 AOS Specifications Guide 为准"免责声明。</p>
+<h2 id="a1">A1 · 书中案例</h2>
+<p>p75 规格表覆盖六族机型，是报价前 sizing 的硬指标来源；p139 矩阵脚注（<em>/8.10 R3/R4、</em>*/HW ready）演示了如何读版本依赖；L3 能力行（IP over SPBM：VPN-Lite/L3 VPN、VRF-to-ISID 映射）与三形态机型清单联动（见 L3 集成 skill）。</p>
+<h2 id="a2">A2 · 触发场景</h2>
+<ul>
+<li>BoM/报价阶段：核对机型容量是否满足设计（mesh 度、服务数、接入数）；</li>
+<li>答复"SPB 要不要买许可"；</li>
+<li>混合织物方案核对机型三技术支持组合。
+与相邻 skill 区分：三技术整体选型逻辑走 <code><a href="spb-vs-evpn-mpls-selection.html">spb-vs-evpn-mpls-selection</a></code>；本 skill 只管"这台机器到底支持多少、要不要钱"。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>设计参数四项对表：节点 mesh 度 vs IS-IS 邻接上限（70/128）、业务总数 vs I-SID 上限（1K-8K）、接入点数 vs SAP 上限、路径分担数 vs BVLAN 16/推荐 4。</li>
+<li>混合方案逐型号查 OmniFabric 矩阵，标出版本依赖脚注（8.10 R3/R4、HW ready）。</li>
+<li>报价页写明 SPB 零许可，并在方案脚注声明"规格以最新 AOS Specifications Guide 为准"。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li><strong>邻接数档位按机型分布</strong>（ce08）：全 mesh 核心只算带宽不算控制面会邻接建不满；OS9900 的 I-SID 反而只有 1K，高端不等于每项都高。</li>
+<li><strong>细分列对应存疑</strong>（verified.md 遗留项）：p75 表中 IS-IS 邻接 70/128 按机型（OS6860N 归哪档）在 PDF 文本流中无法精确判定，按型号引用细分数字前必须对原书表格核对。</li>
+<li><strong>数字时效</strong>（ce16）：教材自带免责声明，下单与投标前一律用最新 AOS 规格书复核；p139 的 P/O 图例书中未定义（推测 P=平台级、O=可选/需授权），引用需核实。</li>
+<li>p75 的"IP over SPBM"行只标 IPv4，IPv6 支持范围待确认（见 L3 集成 skill 的 ce07）。</li>
+</ul>
+<hr />
+<p>来源条目: p02, p24, c13, c14, ce08, ce16</p></main></div></body></html>

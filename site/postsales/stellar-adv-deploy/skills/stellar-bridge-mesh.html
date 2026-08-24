@@ -1,0 +1,99 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>stellar-bridge-mesh — DT00XTE361 · Stellar WLAN Advanced Deployment with OmniVista</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE361 · Stellar WLAN Advanced Deployment with OmniVista</h1>
+<div class="sub">Edition 02 · 330 页 · Cirrus 云管进阶（QoE 分析/监控运维/IoT/全流程演练）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">可观测性</div>
+<a href="skills/stellar-qoe-analytics.html">stellar-qoe-analytics</a>
+<a href="skills/stellar-monitoring-ops.html">stellar-monitoring-ops</a>
+<div class="grp">接入进阶</div>
+<a href="skills/stellar-wired-iot-access.html">stellar-wired-iot-access</a>
+<a href="skills/stellar-bridge-mesh.html" class="on">stellar-bridge-mesh</a>
+<a href="skills/stellar-ssid-advanced.html">stellar-ssid-advanced</a>
+<div class="grp">交付与排障</div>
+<a href="skills/stellar-deployment-checklist.html">stellar-deployment-checklist</a>
+<a href="skills/stellar-troubleshooting-cli.html">stellar-troubleshooting-cli</a>
+<a href="skills/stellar-vowlan.html">stellar-vowlan</a></aside><main><h1>stellar-bridge-mesh</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="bridge-wifi-mesh">Bridge 点对点桥接与 WiFi Mesh 组网</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>"SSID ... Must be the same on both APs; Band ... Must be the same on both APs; Passphrase ... Must be the same on both APs." (p114-115)</p>
+<p>"UP TO 8 SLAVE APS; UP TO 4 HOPS; UP TO 5 APS IN A SINGLE HOP IN A PEER TO MULTI PEER CONNECTION; UP TO 16 APS IN THE MESH NETWORK; ALL APS CAN BROADCAST UP TO 5 SSIDS FOR CLIENTS. WIFI MESH – BEST PRACTICE: BAND: 5 GHZ; CHANNEL &gt; 100." (p114-115)</p>
+<p>"In the Device Catalog section, select the AP that will be part of the Mesh or Bridge configuration and go to Actions &gt; Edit Device &gt; Mesh/Bridge Configuration." (p118)</p>
+<p>"* AP1101, AP1201 &amp; AP1201H are not compatible with VLAN tagging over a bridge." (p113)</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<ul>
+<li><strong>Bridge</strong>：点对点无线桥接替代物理布线；可用 VLAN 分隔桥上流量，但不能向 Wi-Fi 客户端提供服务。</li>
+<li><strong>Mesh</strong>：Root AP 接 LAN、Repeater 无线回传；可多 Root；Mesh 链路上仍可对客户端广播 SSID（每 AP 最多 5 个）。</li>
+<li><strong>建链三要素</strong>：SSID、频段、密码两端必须完全一致——这是能不能建链的第一判据。</li>
+<li><strong>容量红线</strong>：全网 ≤16 AP、每 Root ≤8 从 AP、≤4 跳、单跳点对多点 ≤5 AP。</li>
+<li><strong>最佳实践</strong>：回传用 5GHz、信道选 100 以上（避开常用客户端信道）。</li>
+<li><strong>Auto Mesh</strong>：免配置快速组网——接 LAN 且设为 Root 的 AP 广播隐藏 SSID "Stellar-MESH"（5GHz），未接 LAN 的 AP 自动入网。</li>
+</ul>
+<h2 id="a1-lab">A1 · 书中案例（Lab 精要）</h2>
+<p>Lab（p117-121）：Device Catalog 选中 AP → Actions &gt; Edit Device &gt; Mesh/Bridge Configuration → 填模式/频段/SSID/密钥管理与密码（Mesh 多一个 Is Root 选项）→ 保存后两端生效。监控：Mesh Topology 列表显示每台 AP 的 MAC、角色（Root/Repeater）、Level、BSSID、频段、SSID 与 Parent Address（即上游 Root AP 的 MAC），用于确认拓扑按预期成链。Auto Mesh（p116）演示免配置组网。综合演练末段（p299）把两台 AP 改成 Mesh：AP1321 为 Root、自定义 Mesh SSID、WPA2-Personal。</p>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>跨楼宇/厂房拉线困难，需要无线桥或回传组网 → 本 skill。</li>
+<li>常规室内覆盖部署（AP 全部有线上联）→ stellar-deployment-checklist。</li>
+<li>Mesh 建不起来或链路不稳：先查本 skill 三要素与容量红线，再考虑射频环境（低功率陷阱见 stellar-troubleshooting-cli 的 ce07）。</li>
+<li>桥上要多 VLAN 隔离 → 注意选型限制（见 B）。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>选型确认：需要桥上 VLAN 打标时避开 AP1101/AP1201/AP1201H。</li>
+<li>核对规模：对照容量红线（16/8/4/5）确认 AP 数与跳数可行。</li>
+<li>Device Catalog 选参与 AP → Actions &gt; Edit Device &gt; Mesh/Bridge Configuration。</li>
+<li>填参数：模式（Bridge 或 Mesh）、频段（建议 5GHz、信道&gt;100）、SSID、密钥管理、密码；Mesh 指定 Is Root。两端三要素逐项核对一致。</li>
+<li>保存后到 Mesh Topology 看角色与 Parent Address，确认成链。</li>
+<li>（可选）快速部署场景用 Auto Mesh：一台接 LAN 设 Root，其余开机自动入网。</li>
+<li>验证业务：Repeater 侧关联客户端，确认能拿到正确 VLAN 的 IP。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li>三要素不一致是最常见建链失败原因，逐字核对（含大小写与隐藏空格）。</li>
+<li>超容量红线（如 5 跳、17 台 AP）无解，只能加 Root 或改有线回传。</li>
+<li>AP1101/AP1201/AP1201H 桥接不支持 VLAN 打标，选型阶段就要排除。</li>
+<li>Bridge 模式不给 Wi-Fi 客户端提供服务，想同时放客户端要用 Mesh 或另配。</li>
+<li>Mesh 回传信道选 100 以下是实践禁忌：会和客户端业务信道互相干扰。</li>
+</ul>
+<hr />
+<p>来源条目: f06, c04, p09, p10, ce10, g28, g29, g30, g31</p></main></div></body></html>

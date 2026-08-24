@@ -1,0 +1,103 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>l3-routing-vrrp-troubleshooting — DT00XTE221 · OmniSwitch LAN Troubleshooting</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE221 · OmniSwitch LAN Troubleshooting</h1>
+<div class="sub">587 页 · 有线排障全科（方法论/启动/系统/L2/VC/STP/L3/组播/OVNA）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">方法论与系统</div>
+<a href="skills/lan-troubleshooting-methodology.html">lan-troubleshooting-methodology</a>
+<a href="skills/boot-system-troubleshooting.html">boot-system-troubleshooting</a>
+<div class="grp">故障域</div>
+<a href="skills/l2-connectivity-troubleshooting.html">l2-connectivity-troubleshooting</a>
+<a href="skills/stp-loop-troubleshooting.html">stp-loop-troubleshooting</a>
+<a href="skills/virtual-chassis-troubleshooting.html">virtual-chassis-troubleshooting</a>
+<a href="skills/l3-routing-vrrp-troubleshooting.html" class="on">l3-routing-vrrp-troubleshooting</a>
+<a href="skills/multicast-troubleshooting.html">multicast-troubleshooting</a>
+<div class="grp">工具与 AI 运维</div>
+<a href="skills/app-logging-qos-troubleshooting.html">app-logging-qos-troubleshooting</a>
+<a href="skills/ovna-deployment-teams-bot.html">ovna-deployment-teams-bot</a></aside><main><h1>l3-routing-vrrp-troubleshooting</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="vrrp">三层路由与 VRRP 排障</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>"Basic IP troubleshooting Methodology: Local host configuration OK? -&gt; Switch configuration OK? -&gt; Server configuration OK? -&gt; Can you connect using IP addresses?" (p209)</p>
+<p>"Example: SW1 &amp; SW2 are not in FULL state! Modify the log level to have the maximum verbosity: SW1 -&gt; swlog appid ospf_0 subapp all level debug3 ... Check the Hello Interval on both switches" (p246)</p>
+<p>"Skew_Time: (256 - Priority)/256 ... Master_Down_Interval: (3 * Advertisement_Interval) + Skew_time. When a host sends an ARP request ... the Master Router must respond using the Virtual MAC Address" (p250)</p>
+<p>"Tx Server: Total Count = 0"（DHCP 中继没有向服务器转发，p227）</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<ol>
+<li><strong>IP 排障决策树</strong>（f10）：本机配置 OK? → 交换机配置/ACL OK? → IP 地址/子网/网关/路由/ARP OK? → 服务器配置 OK? → 用 IP 直连验证。命令族：show ip traffic/interface/routes/route-pref/redist/access-list/router database/protocols/router-id + ping/traceroute。</li>
+<li><strong>丢包定位双工具</strong>（f11/p26）：① QoS 计数策略——policy condition（source ip + icmptype 8 请求 / icmptype 0 回复）→ action → rule 加 log → qos apply；show active policy rule 看 Packets/Bytes、show qos log 看命中明细；路径两端部署对比计数找丢包段（上游有计数下游没有=丢在这段）。② 出向流量用 port-monitoring 抓包（策略只匹配 ingress）。</li>
+<li><strong>DHCP 中继判据</strong>（p27）：show ip dhcp relay statistics——Reception From Client 在涨=请求到达中继；Tx Server Total Count=0=中继没向服务器转发（目的地配错或服务器不可达）；Forw Delay/Max Hops/Invalid Gateway 违规计数定位报文合法性。抓包级：debug ip packet protocol udp start timeout 60，看 UDP 67,67 与 67,68 的 R/S 行。</li>
+<li><strong>OSPF 流程</strong>（f12）：show ip ospf neighbor 看状态 → show ip ospf interface 核参数（Hello/Dead、认证、Area ID、MTU、掩码、DR/BDR）→ 两台 <code>swlog appid ospf_0 subapp all level debug3</code> → show log swlog | grep ospf_0 读丢弃原因 → 对症修复 → 验证 Full + 路由回来 → <strong>调回 info</strong>。典型错配（p238）：timer、认证、区域、Area 类型、掩码。日志样例直读（p30）："oversized LSA ... size 3588 &gt; limit 1452"=查 MTU；"invalid helloInterval 10"=对齐 timer；"pktKey = alcatell, intfKey = alcatel"=改 auth-key。</li>
+<li><strong>RIP 检查点</strong>（p28）：物理 up；路由两侧存在；掩码正确；VLAN Forwarding 标志；v1/v2 兼容（RIP-2 收 RIP-1 请求回 RIP-1 响应；只发 v2 时对 RIP-1 不响应）；认证 auth-type/auth-key 一致。show ip rip interface/peer/routes（A=Active/H=Holddown/G=Garbage）。</li>
+<li><strong>VRRP 三角核对</strong>（f14）：show ip vrrp（Admin Status/VRID/虚拟 IP/Priority/Preempt/通告间隔两台一致）↔ show ip vrrp statistics（Checksum/Version/VRID 三错误计数；Master/Backup/Initialize 状态）↔ show configuration snapshot vrrp 逐行比对。机制（p31/g25）：Skew_Time=(256-P)/256；Master_Down=3×Adv+Skew；Master 必须以虚拟 MAC 00-00-5E-00-01-<VRID> 应答 ARP。深挖 swlog appid vrrp_0 subapp all level debug3。</li>
+</ol>
+<h2 id="a1-lab">A1 · 书中案例（LAB 故障根因）</h2>
+<ul>
+<li><strong>c06（LAB3 案例2，p223-227）</strong>：四客户端 DHCP 拿不到地址。Reception From Client 计数在涨但对 172.168.100.102 的 Tx Server=0——<strong>目的地地址本身就是错的</strong>（172 vs 192 一字之差）。修复：no 掉错误 destination → <code>ip dhcp relay destination 192.168.100.102</code> → 复查计数重新累计。</li>
+<li><strong>c07（LAB4 案例1，p278-284）</strong>：VRRP 三连错——sw7 VRID2 没 admin-state enable；sw8 虚拟 IP 配成 .154（应为 .254）导致 VRID Errors=41 两台互认非法报文；重建时报 "At least one IP address must be associated" 根因是 int_30 接口本身 DOWN。判据：VRID Errors&gt;0 优先怀疑虚拟 IP/VRID 不匹配；Initialize 状态优先查接口与 admin-state。</li>
+<li><strong>c08（LAB4 案例2，p279-289）</strong>：路由表 22→17 条。debug3 日志直接给答案：第一层 auth-key alcatell vs alcatel（一字母之差）；修完 "Not solve, check if there is not another problem"——第二层 hello-interval 20 vs 10。修完复测路由回 22 条、日志调回 info。</li>
+<li><strong>c09（LAB4 案例3）</strong>：单播通组播不通 → 见 multicast skill。</li>
+</ul>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>触发：跨网段不通、丢包需定位段、DHCP 中继失效、OSPF/RIP 邻居 Init/2-Way 卡住或路由消失、VRRP 双 Master/Initialize/VRID Errors、ECMP 退化为单路径。</li>
+<li>区分：同网段二层问题 → l2-connectivity；组播不通但单播通 → multicast；丢包计数/抓包工具的 QoS 命令细节 → app-logging-qos skill；DoS invalid ip 刷屏指向 VRRP 虚拟 MAC 时是环路 → stp-loop（ce19）。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>走 f10 决策树隔离端点/交换机/服务器，配 show ip routes + ping/traceroute。</li>
+<li>丢包定位：路径两端部署相同计数策略（icmptype 8 与 0 各一条）→ qos apply → 对比 show active policy rule 计数 → 出向或大包用 port-monitoring 抓包。</li>
+<li>DHCP：show configuration snapshot ip-dhcp-relay → show ip dhcp relay statistics 核 Tx Server → 必要时 debug ip packet protocol udp start timeout 60。</li>
+<li>OSPF：show ip ospf neighbor → show ip ospf interface（两端对比 Hello/Dead/认证/Area/MTU）→ swlog appid ospf_0 subapp all level debug3 → grep ospf_0 读日志直给的差异值 → 修复 → 复测 Full + 路由数回基线 → 调回 info。</li>
+<li>RIP：show ip rip interface 核 Send/Receive-Version 与 AuthType → show ip rip peer/routes。</li>
+<li>VRRP：三角核对（vrrp / statistics / configuration snapshot vrrp）→ VRID Errors&gt;0 逐行比对虚拟 IP → Initialize 状态先 show ip interface 查接口 → 修复后核 Become Master 与 Adv. Rcvd 计数增长。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li><strong>ce20</strong>：多错叠加是常态，每修一层必须复测（邻居 Full + 路由数回基线）才能收工。</li>
+<li><strong>ce15</strong>：VRRP 虚拟 IP 抄错一位表现为对端 VRID Errors 刷屏，新手易误判为攻击/bug；重建 VRID 报 "at least one IP address" 错误时先查接口是否 DOWN。</li>
+<li><strong>ce13</strong>：QoS 策略只匹配 ingress，统计/镜像出向流量永远 0 命中——出向改用 port-monitoring。</li>
+<li>debug 级日志用完必须调回 info（ce04）。</li>
+<li>同 VRID 通告间隔必须全网一致；Master 用物理 MAC 应答 ARP 即配置异常（p31）。</li>
+<li>ECMP 双路径退化为单路径是 OSPF 邻居故障的可视信号（g38），show ip routes 里 + 标记消失即警。</li>
+</ul>
+<hr />
+<p>来源条目: f10, f11, f12, f14, p26, p27, p28, p29, p30, p31, ce13, ce15, ce20, g25, g26, g27, g38, g39, c06, c07, c08</p></main></div></body></html>

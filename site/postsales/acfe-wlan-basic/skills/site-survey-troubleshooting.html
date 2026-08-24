@@ -1,0 +1,135 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>site-survey-troubleshooting — DT00XTE360 · ACFE WLAN Basic Deployment with OmniVista</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE360 · ACFE WLAN Basic Deployment with OmniVista</h1>
+<div class="sub">Edition 04 · 585 页 · Stellar+Cirrus 云管交付实操（AP 生命周期全流程，5 天带 Lab）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">开局与云管</div>
+<a href="skills/express-mode-bootstrap.html">express-mode-bootstrap</a>
+<a href="skills/cirrus-license-org-lifecycle.html">cirrus-license-org-lifecycle</a>
+<a href="skills/device-cloud-onboarding.html">device-cloud-onboarding</a>
+<div class="grp">SSID 与策略</div>
+<a href="skills/ssid-authentication-suite.html">ssid-authentication-suite</a>
+<a href="skills/upam-policy-bandwidth.html">upam-policy-bandwidth</a>
+<div class="grp">RF 与漫游</div>
+<a href="skills/rf-optimization-baseline.html">rf-optimization-baseline</a>
+<a href="skills/roaming-rap-design.html">roaming-rap-design</a>
+<div class="grp">安全与收尾</div>
+<a href="skills/wips-security-deployment.html">wips-security-deployment</a>
+<a href="skills/site-survey-troubleshooting.html" class="on">site-survey-troubleshooting</a>
+<a href="skills/rlab-lab-manual.html">rlab-lab-manual</a></aside><main><h1>site-survey-troubleshooting</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="_1">勘测与现场排障三步法</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>"Passive: Listen WLAN traffic; No authentication and 802.11 association; All frequencies are scanned ... Active: Associate survey tool to (multiple) access point; Measure packets loss, retransmission, physical rates ... Predictive: Simulation tool; Import site plan &amp; RF characteristics of objects" (p529)</p>
+<p>"Step 1 – Get the floor plans: Identify potential issues: obstacles, walls, ceiling height … Step 2 – Site Survey observation: Identify Access Point model: same as original design? Identify RF overlap … Identify areas with no radio coverage … Step 3 – Corrective actions: Change Access Point model … Rework RF wireless design … Improve AP placement" (p537-540)</p>
+<p>"Signal degrades when going through: Concrete (walls), Wood (doors), Metal (cabinet, shelves…), Steel (building structure), Glass &amp; Mirrors, Brick (fireplace), Water (liquid: fish tank; vapor: bathroom)" (p533)</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<p><strong>1. 勘测类型选型矩阵（按项目阶段）</strong></p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>做法</th>
+<th>测什么</th>
+<th>适用阶段</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Predictive</td>
+<td>仿真：导入平面图+材质衰减建模，自动摆 AP</td>
+<td>覆盖预测</td>
+<td>新建网/换网前规划</td>
+</tr>
+<tr>
+<td>Passive</td>
+<td>只听不发（不关联不认证），扫全频段</td>
+<td>AP 发现、信号强度、噪声</td>
+<td>部署后射频体检/干扰</td>
+</tr>
+<tr>
+<td>Active</td>
+<td>勘测终端实际关联 AP</td>
+<td>被动指标+丢包、重传、物理速率</td>
+<td>部署后客户端性能评估</td>
+</tr>
+</tbody>
+</table>
+<p>排障项目用被动+主动组合。工具：Ekahau Site Survey（Windows）、WiFi Analyzer（Android）。
+判读标尺（ALE）：dBm=RSSI−96；约 RSSI&lt;20（−76dBm 以下）Bad 不宜音视频；&gt;30 为 Desired。</p>
+<p><strong>2. 四类信号杀手（归因清单）</strong>
+1. AP 摆位：正对墙/柱自己挡自己——障碍物两侧各放一台
+2. 材质衰减：混凝土/木门/金属柜架/钢结构/玻璃镜面/砖/水体；实例：4 米穿 1-4 面墙 RSSI 掉到 −70dBm，不够 VoWLAN
+3. 天线选错：定向=小扇区、全向=整圆，按覆盖形状选（外置天线 AP 型号尾数带 2，如 AP1322）
+4. 同频/邻频干扰：吞吐下降、丢包、数据损坏——换信道</p>
+<p><strong>3. 现场三步法 SOP</strong>
+- Step 0：定义问题（Where/When/Who/How 圈定范围与测试点）
+- Step 1：拿平面图——标障碍物、需求区域（按优先级分级）、现有 AP 位置
+- Step 2：实地观察五项——AP 型号与设计一致？AP 间 RF 重叠/同邻频干扰？覆盖空洞（AP 掉线/缺位）？发射功率是默认还是改过（默认 17dBm）？安装位置是否别扭？
+- Step 3：纠正措施——换 AP 型号 / 改功率信道 / 收窄信道宽度 / 砍低速率逼终端贴近 AP / 挪 AP 或新增</p>
+<h2 id="a1-lab">A1 · 书中案例（Lab 步骤精要）</h2>
+<ul>
+<li><strong>c22/p526-540</strong>：课程演示全流程——Predictive+Passive 组合开局 → Ekahau 被动勘测热图分析 → 按四类根因定位（摆位/材质/天线/干扰）→ 三步法出整改（含修改单 AP 发射功率、新增 Stellar AP、挪 AP 三个用例）→ 热图复验：干扰消除、盲区消除、RSSI 回推荐区间。</li>
+</ul>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>"Wi-Fi 慢/掉线/有死角"类投诉上门处理，或新建网前的勘测规划时用。</li>
+<li><strong>区分</strong>：参数层调优（阈值/负载均衡/扫描）→ <code><a href="rf-optimization-baseline.html">rf-optimization-baseline</a></code>；漫游切换问题 → <code><a href="roaming-rap-design.html">roaming-rap-design</a></code>；认证连不上（有信号但进门失败）→ <code><a href="ssid-authentication-suite.html">ssid-authentication-suite</a></code> 的 CLI 链；本 skill 管"物理层与覆盖层的现场归因"。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>Step 0 用四问把模糊投诉收敛成可测问题与测试点。</li>
+<li>按项目阶段选勘测类型（新建=Predictive；体检=Passive；性能=Active；排障=组合）。</li>
+<li>拿平面图标注：障碍、需求区域分级、AP 位置。</li>
+<li>实地按五项观察清单逐项核对（型号/重叠/盲区/功率/位置）。</li>
+<li>归因到四类杀手之一，出对应纠正措施。</li>
+<li>复验：热图/实测 RSSI 回到 Desired 区间（参考 −65 以上理想、低于 −80 不宜音视频）。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li>覆盖问题不要用 RF 参数硬扛：Band Steering/负载均衡都假设覆盖对等，根因在覆盖就得改布放（与 rf skill 的陷阱互证）。</li>
+<li>"部分设备连不上"先查是否拿到 IP（DHCP 池满类似无线故障），再查无线层。</li>
+<li>发射功率默认 17dBm，覆盖不足可加大，但加大功率也会放大同频干扰——与信道规划联动。</li>
+<li>砍低速率会牺牲边缘弱终端体验，用于高密度场景逼终端贴近 AP，边缘覆盖区慎用。</li>
+<li>天线类型错配在覆盖图上表现为"形状不对"的盲区，换天线前先核对定向/全向与型号尾数规则。</li>
+</ul>
+<hr />
+<p>来源条目: f20, f21, f23, p64, c22, ce39 · 术语锚点: g36, g06, g40, g20, g47</p></main></div></body></html>

@@ -1,0 +1,307 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>术语词典 — DT00XTE323 · OmniSwitch LAN SPB 实施</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE323 · OmniSwitch LAN SPB 实施</h1>
+<div class="sub">Edition 12 · 367 页 · SPB 交付配置手册（骨干→L2→L3→自动化，10 Lab CLI 全录）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">骨干与 L2</div>
+<a href="skills/spb-backbone-deploy.html">spb-backbone-deploy</a>
+<a href="skills/spb-l2-service.html">spb-l2-service</a>
+<div class="grp">L3 集成</div>
+<a href="skills/ip-over-spb.html">ip-over-spb</a>
+<div class="grp">保护与冗余</div>
+<a href="skills/spb-bum-protection.html">spb-bum-protection</a>
+<a href="skills/spb-access-ring-redundancy.html">spb-access-ring-redundancy</a>
+<a href="skills/spb-hybrid-etree.html">spb-hybrid-etree</a>
+<div class="grp">自动化与运维</div>
+<a href="skills/unp-dynamic-ov2500.html">unp-dynamic-ov2500</a>
+<a href="skills/spb-oam-troubleshoot.html">spb-oam-troubleshoot</a></aside><main><h1>术语词典</h1><h1 id="glossary">术语词典 GLOSSARY</h1>
+<table>
+<thead>
+<tr>
+<th>术语</th>
+<th>全称</th>
+<th>出处</th>
+<th>定义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>AOS</strong></td>
+<td>Alcatel-Lucent OmniSwitch Operating System</td>
+<td>p9, p26, p30</td>
+<td>| OmniSwitch 统一网络操作系统；OmniFabric 的核心卖点之一是 SPB、EVPN、MPLS 三种织物技术同跑一个 AOS（p30"All Technology fabric under the same Operating System - AOS"）。 实施视角：全部课程命令（spb/service/unp/erp 系）都是 AOS CLI；IS-IS 在系统启动时自动加载，无需像 OSPF 那样 ip load（p84 Note）。</td>
+</tr>
+<tr>
+<td><strong>B-MAC</strong></td>
+<td>Backbone MAC Address</td>
+<td>p56, p69, p79</td>
+<td>| 每台 SPB 桥的唯一桥 MAC（=System Base MAC），IS-IS 以 SYS-ID 形式通告；BEB 用自己的 B-MAC 做封装源地址，BCB 只按 B-MAC 头转发。 实施用法：show spb isis info 取本端与对端 B-MAC；mac-ping dst-mac <B-MAC> vlan <BVLAN> 验证转发；ERP 过 SPB 时 spb-remote-system 填对端 BEB 的 B-MAC。</td>
+</tr>
+<tr>
+<td><strong>BCB</strong></td>
+<td>Backbone Core Bridge</td>
+<td>p56, p62</td>
+<td>| SPB 骨干核心桥：只感知 B-MAC 头做转发，不感知任何服务（"BCB is unaware of services"），只学 BEB 地址、跑 IS-IS SPB 选路与 PBB 数据面。 实施要点：服务/SAP/UNP 一律不配在 BCB 上；两层拓扑里可以没有 BCB（BEB 直连全互联，p61），三层拓扑里 BCB 居核心、BEB 居汇聚。</td>
+</tr>
+<tr>
+<td><strong>BEB</strong></td>
+<td>Backbone Edge Bridge</td>
+<td>p56, p61</td>
+<td>| SPB 边缘桥：服务终结点，做 VLAN→I-SID 映射、SAP 接入、IS-IS MAC 学习、PBB 封装/解封；所有 L2/L3 服务与 UNP 动态功能都只在 BEB 上配。 冗余靠 VC 双机或双 BEB + LACP（p61）。Lab 拓扑中 OS6860/6870 做 BEB，OS6900 可 BEB 可 BCB。</td>
+</tr>
+<tr>
+<td><strong>B-VID / B-TAG</strong></td>
+<td>Backbone VLAN ID / Backbone TAG (802.1ah)</td>
+<td>p58</td>
+<td>| 802.1ah 封装外层标签（Ethertype 802.1ad 承载）中的骨干 VLAN ID，决定帧在骨干里走哪棵最短路径树（对应 BVLAN）。 与 I-SID 分工：B-VID 选路，I-SID 选服务。show spb isis unicast-table bvlan X 按其逐个查看转发表。</td>
+</tr>
+<tr>
+<td><strong>BUM</strong></td>
+<td>Broadcast, Unknown-unicast, Multicast</td>
+<td>p138</td>
+<td>| 广播/未知单播/组播流量（ARP、DHCP/Boot-P 等）的统称。SPBM 用 Head-End（默认）或 Tandem（S,G / *,G）两种方式复制分发。 实施要点：不开 IPMS 时 BUM 无差别泛洪到所有 SAP/SDP；模式配置见 service spb X multicast-mode 与 spb isis bvlan N tandem-multicast-mode。</td>
+</tr>
+<tr>
+<td><strong>BVLAN</strong></td>
+<td>Backbone VLAN</td>
+<td>p56, p66</td>
+<td>| 承载 SPB 控制与封装流量的特殊 VLAN：无 STP、不学客户源 MAC、不泛洪；每 BVLAN 独立算 SPT；AOS 最多 16 个。 创建：spb bvlan N（可加 ect-id）；教材惯例 2000/2001/2002（Lab）或 4001-4004（理论示例）。控制 BVLAN 专载 IS-IS 报文并可挂带内管理 IP。</td>
+</tr>
+<tr>
+<td><strong>Control BVLAN</strong></td>
+<td>Control Backbone VLAN</td>
+<td>p66, p67</td>
+<td>| 承载 IS-IS 控制 PDU 的 BVLAN（单标签），用 spb isis control-bvlan N 指定，只能在协议禁用时更改。 支持挂 IP 接口做带内管理（ip interface "spb-mgmt" ... vlan N），ISIS-SPB 直接通告该子网并做 MAC-IP 映射免 ARP；OV2500 纳管即依赖它（Lab 用 172.30.1.0/24 vlan 2000）。ERP 场景下 ERP 服务 VLAN 的 SPB 服务必须建在控制 BVLAN 上（p242）。</td>
+</tr>
+<tr>
+<td><strong>C-VID / C-TAG</strong></td>
+<td>Customer VLAN ID / Tag (802.1Q)</td>
+<td>p56, p58</td>
+<td>| 客户原始 VLAN 标签（802.1Q）。SAP 按 C-VID（或 QinQ 双标签、untagged、all）识别客户流量并归入 I-SID 服务；客户帧整体被封装进 MAC-in-MAC，骨干不感知其内容。 实施语法：sap port 1/1/3:2（C-VID 2）、:0（untag）、:30.32（QinQ）、:all。</td>
+</tr>
+<tr>
+<td><strong>DHL</strong></td>
+<td>Dual-Home Link</td>
+<td>p250</td>
+<td>| AOS 接入交换机特性：不跑 STP 实现核心-边缘快速倒换。每机一个 DHL 会话、两条 link（物理口或 linkagg）、VLAN 池双挂 + vlan-map 指定每链路服务的 VLAN，切换时 mac-flushing raw 清 MAC。 Lab 用法：Sw3 经 linkA（1/1/7→Sw7）/linkB（1/1/8→Sw8）双上联，VLAN 40 定向 linkB；与 SPB 服务/VRRP 组合做接入冗余。</td>
+</tr>
+<tr>
+<td><strong>DIS</strong></td>
+<td>Designated Intermediate System</td>
+<td>p228</td>
+<td>| multi-access 共享网上的伪节点代表：负责 LSDB 同步与 LSP 泛洪，所有最短路径都经 DIS。选举取接口优先级最高者（默认 64，同分取最高 B-MAC）；无备份，重选约 3 秒。 实施命令：spb isis interface port X type multi-access priority 90；查看 show spb isis interfaces port X 的 Desg IS 字段。</td>
+</tr>
+<tr>
+<td><strong>Dynamic SAP</strong></td>
+<td>UNP 动态业务接入点</td>
+<td>p262, p263</td>
+<td>| 由 UNP 服务 profile 自动创建的 SAP：终端经认证（MAC/802.1x）或分类命中 profile 后，系统按 profile 参数（VLAN tag→I-SID→BVLAN）自动建 SAP 并转发。配 unp port X port-type access 后生效，show 中 SAP Type 显示 Dynamic、带 * 号。 与静态 SAP（service spb X sap ...）相对；仅动态 SAP 支持 multi-untag-sap；隔离用户重定向补救不被支持（p262 星号注）。</td>
+</tr>
+<tr>
+<td><strong>E-LAN / E-LINE / E-TREE</strong></td>
+<td>Ethernet LAN / Line / Tree 服务模型</td>
+<td>p54, p94, p318</td>
+<td>| 三种以太业务形态：E-LAN=多点任意互通（SPB 默认）；E-LINE=点对点（伪线，service X ... pseudo-wire enable）；E-TREE=有根多点、Leaf 间隔离（service X ... e-tree enable）。 AOS 原生三者都支持（p54"Supports E-LINE/E-LAN/E-TREE"）。</td>
+</tr>
+<tr>
+<td><strong>ECT</strong></td>
+<td>Equal Cost Tree (Algorithm)</td>
+<td>p70</td>
+<td>| 等价树算法：16 个预定义算法（ECT 1-16），每个 BVLAN 对应一个（建 BVLAN 时自动按序分配或手工 spb isis bvlan N ect-id X）。metric 与跳数都相同时用 ECT 掩码对 BridgeID 逐字节 XOR 打破平局，单播组播同算法保证对称。 ECT1(0x00) 取最小 BridgeID、ECT2(0xFF) 取最大，依此交错实现 BVLAN 间负载分担。</td>
+</tr>
+<tr>
+<td><strong>ERP</strong></td>
+<td>Ethernet Ring Protection (G.8032)</td>
+<td>p239, p243</td>
+<td>| 以太环保护协议：RPL owner 阻塞环上一口防环，故障时快速倒换，恢复后按 wait-to-restore-timer 重新阻塞。可与 SPB 互操作——环经 BEB 的 SAP 端口延伸过 SPB 云，控制帧走控制 I-SID，BEB 不能做 RPL 节点。 命令族：erp-ring N port1/port2 service-vlan V level L（L 为 MEG 维护等级，Lab 用 1）、rpl-node、sap-neighbor、access-tagged ... spb-remote-system <BMAC>、erp-ring N enable。</td>
+</tr>
+<tr>
+<td><strong>GRT / GRM / IPRM</strong></td>
+<td>Global Routing Table / Global Route Manager / IP Route Manager</td>
+<td>p188, p190</td>
+<td>| L3-VPN 的路由汇聚三层组件：每个 VRF 内 IPRM（IP 路由管理器）管理 RIB/FIB；VRF 路由经 export 进入 GRT（全局路由表，ISIS-SPB IPVPN 路由表），SPB-ISIS 用 IPVPN TLV 跨骨干分发；GRM 统筹 VRF↔I-SID 的双向进出，对端再经 import 从 GRT 取回 VRF。 查看：show ip global-route-table（isid/vrf 两类来源）、show spb ipvpn route-table（含源桥 B-MAC）。</td>
+</tr>
+<tr>
+<td><strong>Head-End Replication</strong></td>
+<td>头端复制（BUM 分发模式，默认）</td>
+<td>p139</td>
+<td>| 入口 BEB 对每个远端有同 I-SID 的 BEB 复制一份、用对端单播 B-MAC 封装发送；组播走单播树和同一张 FDB。适合兴趣社区稀疏、组播带宽低的场景。 show service X 显示 Multicast-Mode: Headend；伪线服务强制此模式。</td>
+</tr>
+<tr>
+<td><strong>Hybrid Access Port</strong></td>
+<td>混合接入端口</td>
+<td>p315, p316</td>
+<td>| AOS 8.9.R03 起，一个端口同时做桥端口（默认 VLAN+tag VLAN 走 VLAN 域）与业务接入口（SAP VLAN tag 流量走服务域）。 命令：service access port X hybrid enable|disable。适合聚合交换机下联口：SAP 流量进 SPB 服务、常规流量本地桥接。</td>
+</tr>
+<tr>
+<td><strong>I-SID</strong></td>
+<td>Backbone Service Instance Identifier</td>
+<td>p56, p92</td>
+<td>| 24 位骨干服务实例标识，标识一个 MAC-in-MAC 服务实例，全网必须一致（service 号才可本机不同）。一个 I-SID 只绑一个 BVLAN；容量 1024 I-SID/BVLAN。 配置：service spb <svc> isid <isid> bvlan <vid>；UNP 动态服务按 10,000,000+域ID×10,000+(VLAN mod 512) 公式生成。</td>
+</tr>
+<tr>
+<td><strong>IS-IS SPB (SPB-ISIS)</strong></td>
+<td>SPB 控制面协议</td>
+<td>p69, p71</td>
+<td>| IEEE IS-IS SPB 扩展：承载拓扑发现（IIH，控制 MAC 01:80:c2:00:00:14）、邻接、SPF/ECT 计算、I-SID 成员通告（T/R 位）、L3-VPN IPVPN TLV 路由。 实施三步：spb isis interface port X [type p2p|multi-access]、spb isis admin-state enable、metric/priority 可调。IS-IS 在 AOS 开机自动加载。</td>
+</tr>
+<tr>
+<td><strong>L2 Profile</strong></td>
+<td>Layer 2 Control Frame Profile</td>
+<td>p115, p116</td>
+<td>| 定义 access 口上各类控制帧（STP/802.1X/802.1AB LLDP/802.3AD LACP/GVRP/AMAP/MVRP）的处理动作：tunnel（封装穿越骨干）/peer（与对端按协议交互，LACP 即此档）/drop（无条件丢弃）。 静态口默认 def-access-profile，UNP 动态口默认 unp-def-access-profile；自定义 service l2profile <name> <proto> <action> 后挂 service access port X l2profile。</td>
+</tr>
+<tr>
+<td><strong>L3-VPN (SPB)</strong></td>
+<td>SPB L3-VPN（IS-IS IPVPN TLV 方式）</td>
+<td>p186, p187</td>
+<td>| 复用 SPB IS-IS 实例、经 IPVPN TLV 携带 VRF 路由的 L3 VPN，无需另跑 OSPF/BGP；概念对标 BGP-L3VPN over MPLS，1 VRF↔1 I-SID 映射。 配置核心：spb ipvpn bind vrf <v> isid <i> gateway <ip> {all-routes|route-map} + vrf export/import + 可选 redist 泄漏。</td>
+</tr>
+<tr>
+<td><strong>LBD</strong></td>
+<td>Loopback Detection</td>
+<td>p120, p121</td>
+<td>| 接入口自动环路检测：周期发私有组播帧（D-MAC 0x01-20-DA-02-01-71），检测到环路即 shutdown 端口+trap+日志，可定时/手工恢复；不需要 STP。 命令：loopback-detection enable（全局）、loopback-detection service access port X enable、show loopback-detection [statistics] port X。裁决：关较高 BridgeID 侧端口/同机较高 PortID 口；linkagg 上任一成员成环全组关闭。</td>
+</tr>
+<tr>
+<td><strong>mac-ping</strong></td>
+<td>SPB 专用 MAC 层 ping</td>
+<td>p147</td>
+<td>| AOS 私有 OAM：按目的 B-MAC+BVLAN 验证 SPB 转发面连通与时延（微秒级）。每包超时固定 1 秒；目标不能是广播/组播/空 MAC。 语法：mac-ping dst-mac <mac> vlan <vid> [priority|drop-eligible|count|interval|size|isid-check]。</td>
+</tr>
+<tr>
+<td><strong>NNI / UNI</strong></td>
+<td>Network-to-Network Interface / User-to-Network Interface</td>
+<td>p65, p91</td>
+<td>| SPB 术语里的两类接口：NNI=网络侧接口（SPB network port，跑 IS-IS、承载 BVLAN/PBB 封装，对应 SDP 方向）；UNI=用户侧接口（access port，挂 SAP，客户流量入口）。 配置框架图（p65/89）即按"Control Plane (NNI ports)"与"Data Plane (UNI ports)"分层。</td>
+</tr>
+<tr>
+<td><strong>OmniFabric</strong></td>
+<td>ALE 多技术网络织物</td>
+<td>p26, p30</td>
+<td>| ALE 的多技术织物品牌：单一 AOS 上集成 SPB/MPLS/EVPN，主打零信任架构下端到端安全、IT/OT 融合、内置 IoT 自动检测分段。SPB 定位园区/DC/IoT，EVPN 定位 DC，MPLS 定位运营商与关键业务（p31 矩阵）。 实施课开场用它回答"何时选 SPB"。</td>
+</tr>
+<tr>
+<td><strong>OmniVista 2500 (OV2500)</strong></td>
+<td>ALE 网管系统</td>
+<td>p290, p296</td>
+<td>| ALE NMS：经 SNMP 纳管交换机后可做 SPB 服务开通（SPB Profile：Tag Value/ISID/BVLAN/VLAN Translation/Multicast Mode）、SAP/SDP 监控、SPB 网络拓扑呈现（Topology→SPB Network→Poll Latest Data，可按 BVLAN 查看）。 SPB Profile 可映射 Access Role Profile，终端认证/分类命中后自动建 SAP。</td>
+</tr>
+<tr>
+<td><strong>Overload</strong></td>
+<td>IS-IS 过载状态机制</td>
+<td>p130</td>
+<td>| IS-IS 通告"本节点接近/超出能力"的位：邻居看到后把穿越流量改道（直连目的地除外）。可人为触发用于维护引流（spb isis overload timeout N）或开机保护（spb isis overload-on-boot [timeout]）。 资源不足时系统也会自动进入该状态。</td>
+</tr>
+<tr>
+<td><strong>Persistent SAP</strong></td>
+<td>持久 SAP（不老化）</td>
+<td>p272, p273</td>
+<td>| 经 unp port X profile <name> 静态指派 profile 生成的 SAP：不随设备 MAC 老化而撤销，直到显式移除；适合静默设备（无声终端、传感器）与需要常通的业务。 每 UNP 口最多挂 8 个 SPB 服务 profile。配套属性 mac-mobility（unp profile <name> mac-mobility，需全局 unp mac-mobility）：SAP 支持_MAC 移动不老化，专用于 VRRP 主备通告持续传递，只对映射 SPB 服务的 profile 有效。</td>
+</tr>
+<tr>
+<td><strong>Pseudo-wire</strong></td>
+<td>SPB 点对点透明电路</td>
+<td>p94, p95</td>
+<td>| SPB 上的 E-LINE 服务：两 SAP 间透明转发，自动关 MAC 学习、强制 head-end 组播、无泛洪复制。可在同一机箱本地两 SAP 之间或跨 SPB 网两 SAP 之间。 命令：service <id> spb isid <i> bvlan <v> pseudo-wire enable [remote-node <BMAC>]。</td>
+</tr>
+<tr>
+<td><strong>RPL</strong></td>
+<td>Ring Protection Link</td>
+<td>p243, p256</td>
+<td>| ERP 环的被阻塞保护链路及其 owner 节点：erp-ring N rpl-node port X 声明，wait-to-restore-timer 控制故障恢复后重新阻塞的等待。约束：BEB 不能做 RPL 节点、RPL 口不能在 SPB 网内或做 SAP neighbor。</td>
+</tr>
+<tr>
+<td><strong>SAA</strong></td>
+<td>Service Assurance Agent</td>
+<td>p148, p149</td>
+<td>| AOS 主动探测代理：saa spb auto-start 自动为每个发现的 BVLAN-B-MAC 对建 mac-ping 会话（LAG 目的遍历所有成员链路），默认 1 分钟/轮、5 包、RTT 阈值 500us、抖动 100us；历史统计写 /flash/network/saa.xml。 查看 show saa spb / show saa statistics aggregate。</td>
+</tr>
+<tr>
+<td><strong>SDP</strong></td>
+<td>Service Distribution Point</td>
+<td>p91</td>
+<td>| NNI 侧子接口概念：两 BEB 间自动动态建立的 802.1ah 逻辑隧道（B-MAC+BVLAN 组合），远端客户 MAC 绑定在其上；SPB 里自动配置无需手工建。 查看 show service sdp spb / show service sdp <id>；FDB 里远端 MAC 显示 sdp:<id>:<isid>。ERP 场景下有专门的 SDP ERP port。</td>
+</tr>
+<tr>
+<td><strong>SAP</strong></td>
+<td>Service Access Point</td>
+<td>p91, p97</td>
+<td>| UNI 侧子接口：access 端口+封装标识（VLAN/QinQ/untag/all）唯一确定，客户流量进出服务的点；只能建在 access 口（静态或 UNP 动态）。本地客户 MAC 绑定在 SAP 上。 静态命令：service spb <svc> sap port <p>:<encap> [admin-state enable] [stats enable]；查看 show service spb <id> sap ...。CoS 分类也只在 SAP 边缘完成（p118）。</td>
+</tr>
+<tr>
+<td><strong>SPSourceID</strong></td>
+<td>SPB 源节点短标识</td>
+<td>p142</td>
+<td>| 20 位短型节点 ID（由系统自动派生，show spb isis info 可见，如 04-77-7d）。用于编码 tandem 组播组 B-MAC（翻转进组地址前 3 字节）与 I-SID（24 位，编码进末 3 字节）。</td>
+</tr>
+<tr>
+<td><strong>Tandem Replication (S,G / *,G)</strong></td>
+<td>中继复制模式</td>
+<td>p140, p141</td>
+<td>| BUM 的中继复制两型：S,G=每 I-SID 每源建源特定组播树（带宽效率高，show spb isis multicast-table 按源显示组地址）；*,G=每 BVLAN 一棵共享树、最低 Bridge ID 节点为根（资源最省，组地址 01:1e:83:... 形式）。 配置：spb isis bvlan N tandem-multicast-mode {sgmode|gmode}；BVLAN 内所有 I-SID 共用。</td>
+</tr>
+<tr>
+<td><strong>UNP</strong></td>
+<td>Universal Network Profile</td>
+<td>p261, p264</td>
+<td>| AOS 统一网络档案：把端口类型、认证（MAC/802.1x/captive-portal/kerberos）、分类规则（MAC/IP/VLAN 七级优先）、服务映射（service-type spb tag-value ... isid ... bvlan ...）打包成 profile，终端上线自动归档并生成动态 SAP。 配置骨架：unp profile <name> → map service-type spb ... → unp port X port-type access [802.1x|mac authentication] → aaa radius-server/device-authentication。</td>
+</tr>
+<tr>
+<td><strong>vlan-xlation</strong></td>
+<td>VLAN Translation（出向 VLAN 改写）</td>
+<td>p100</td>
+<td>| UNI 出口把客户 VLAN tag 改写为另一 CVLAN 的特性，用于两端 CVLAN 编号不一致的服务对接；服务级与 access 口级均可配，默认 disable。 特殊行为：服务绑定 IP 接口后被隐式启用（Y (Auto)）且锁定不可改（p163）。</td>
+</tr>
+<tr>
+<td><strong>VPN-Lite (IP-VPN Lite)</strong></td>
+<td>IP-VPN Lite over SPB</td>
+<td>p156, p173</td>
+<td>| 在 L2 SPB 服务之上叠加常规路由协议（OSPF/BGP/静态）实现的 L3 VPN：SPB 充当物理媒体，VRF 的路由协议邻接穿越 PBB 网建立；每 VRF 每 BEB 需一个路由协议实例，收敛受协议叠加拖累（IS-IS 先收敛 OSPF 才能收敛）。 配置见 p176/p180 Lab：vrf 1 ip interface ... service 10 + ospf 五件套或静态路由。两个 VRF 不能共享同一 I-SID（p175）。</td>
+</tr>
+<tr>
+<td><strong>VRRP</strong></td>
+<td>Virtual Router Redundancy Protocol</td>
+<td>p169, p221</td>
+<td>| 虚拟路由冗余协议，SPB 场景的标准网关冗余手段：两台 BEB 对同一服务各建内联 IP 接口（.1/.2），配同一 VRID 与 .254 虚地址，优先级交叉实现主备/分担；VRRP 通告可穿越 PBB 网（VPN-Lite 回环口，p175）。 命令三件套：ip vrrp <vrid> interface <if> priority N / address <vip> / admin-state enable；验证 show ip vrrp [statistics]。UNP 动态 SAP 场景需持久 SAP+mac-mobility 保住通告通路（p273）。</td>
+</tr>
+</tbody>
+</table></main></div></body></html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>wips-security-deployment — DT00XTE360 · ACFE WLAN Basic Deployment with OmniVista</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE360 · ACFE WLAN Basic Deployment with OmniVista</h1>
+<div class="sub">Edition 04 · 585 页 · Stellar+Cirrus 云管交付实操（AP 生命周期全流程，5 天带 Lab）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">开局与云管</div>
+<a href="skills/express-mode-bootstrap.html">express-mode-bootstrap</a>
+<a href="skills/cirrus-license-org-lifecycle.html">cirrus-license-org-lifecycle</a>
+<a href="skills/device-cloud-onboarding.html">device-cloud-onboarding</a>
+<div class="grp">SSID 与策略</div>
+<a href="skills/ssid-authentication-suite.html">ssid-authentication-suite</a>
+<a href="skills/upam-policy-bandwidth.html">upam-policy-bandwidth</a>
+<div class="grp">RF 与漫游</div>
+<a href="skills/rf-optimization-baseline.html">rf-optimization-baseline</a>
+<a href="skills/roaming-rap-design.html">roaming-rap-design</a>
+<div class="grp">安全与收尾</div>
+<a href="skills/wips-security-deployment.html" class="on">wips-security-deployment</a>
+<a href="skills/site-survey-troubleshooting.html">site-survey-troubleshooting</a>
+<a href="skills/rlab-lab-manual.html">rlab-lab-manual</a></aside><main><h1>wips-security-deployment</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="wips">WIPS 无线入侵防护部署</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>"Interfering AP: Any other APs discovered over the air ... APs managed by the same OVC 10 are excluded. Rogue AP: Based on the Rogue AP Policy ... Rogue AP Containment – enabled by default. The scanning Stellar AP sends de-auth request to all clients associated to the rogue AP. Friendly AP ... can be set as Friendly AP manually" (p514)</p>
+<p>"Signal Strength Threshold: Default –70 dbm; Range -50 to -90 dbm. Detect Valid SSID: The detected foreign AP is broadcasting a SSID that is configured in OmniVista Cirrus ... Detect Rogue SSID Keyword ... Rogue OUI" (p515)</p>
+<p>"Do not modify the parameters, unless instructed to. Actions applied to Rogue AP can have big consequences to other wireless networks. ... your Stellar Access Point sends a de-authentication packet to the Wi-Fi clients associated to rogue Access Points." (p523)</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<p><strong>1. 三分类框架</strong></p>
+<table>
+<thead>
+<tr>
+<th>类</th>
+<th>来源</th>
+<th>处置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Interfering</td>
+<td>空口发现的默认分类（本 OVC 管理的除外）</td>
+<td>仅记录</td>
+</tr>
+<tr>
+<td>Rogue</td>
+<td>命中 Rogue AP Policy 任一条件</td>
+<td>Containment：扫描 AP 向其客户端发 de-auth（默认开）</td>
+</tr>
+<tr>
+<td>Friendly</td>
+<td>人工添加</td>
+<td>永不判 Rogue；Friendly OUI 默认含 ALE OUI，可追加</td>
+</tr>
+</tbody>
+</table>
+<p><strong>2. Rogue 判定四条件</strong>
+1. Signal Strength Threshold：信号强于阈值（默认 -70dBm，范围 -50~-90；实验界面默认 Disabled）
+2. Detect Valid SSID：广播了我方 Cirrus 里配置的合法 SSID（默认启用）
+3. Detect Rogue SSID Keyword：SSID 名含黑名单关键词
+4. Rogue OUI：MAC OUI 匹配</p>
+<p><strong>3. 攻击检测与黑名单</strong>
+- 无线攻击检测默认开启，分 AP 攻击/客户端攻击，级别 Custom/High/Medium/Low
+- Client Blocklist Policy 默认禁用；开启后触发条件 60 秒内认证失败 10 次拉黑，老化 1 天
+- 局限：攻击源 MAC 可能是 AP/BSSID/伪造网卡 MAC，只有真实无线客户端 MAC 拉黑才有意义</p>
+<p><strong>4. 前提与副作用</strong>
+- WIPS 全局作用于 OV 管理的全部 AP，且依赖背景扫描开启（见 rf-optimization-baseline 的扫描/性能权衡）
+- 每 AP 每 SSID 双频各一个 BSSID：干扰列表中同一 AP 会出现多条，加 Friendly 时按 OUI 全选</p>
+<h2 id="a1-lab">A1 · 书中案例（Lab 步骤精要）</h2>
+<ul>
+<li><strong>c19/p521-525</strong>：策略总览（四条件默认值核对）→ Interfering AP 标签搜相邻学员 SSID "EmployeesX"，按 OUI dc:08:56 勾选全部条目 → Action &gt; Add to Friendly → 勾 Detect Rogue SSID Keyword 填 EmployeesX 验证：这些 AP 仍不进 Rogue 标签、客户端连接正常、WIPS Analytics 无 Rogue Detected/DeAuth 记录——证明 Friendly 一票豁免。</li>
+</ul>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>客户要求无线入侵检测、发现陌生 AP 要分类处置、或已发生 rogue/攻击事件要做遏制时用。</li>
+<li><strong>区分</strong>：UNP/认证层面的仿冒 AP 准入盲区 → <code><a href="device-cloud-onboarding.html">device-cloud-onboarding</a></code>（B 节）与 <code><a href="ssid-authentication-suite.html">ssid-authentication-suite</a></code>；本 skill 管"空口侧的检测与反制"。扫描参数的性能代价 → <code><a href="rf-optimization-baseline.html">rf-optimization-baseline</a></code>。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>确认背景扫描开启（WIPS 必要条件）。</li>
+<li>保持默认策略起步：Detect Valid SSID=Enabled、阈值条件 Disabled、Containment=Enabled。</li>
+<li>盘点周边合法外部 AP（邻居公司、其他 POD），逐批加 Friendly（按 OUI 全选双频 BSSID）。</li>
+<li>需要收紧时逐条加条件（关键字/OUI/阈值），每次评估反制半径后再应用。</li>
+<li>开启攻击检测分级（按环境选 High/Medium/Low）；Blocklist 按需开并知晓触发常数（10 次/60s、老化 1 天）。</li>
+<li>监控：Network &gt; Analytics &gt; WIPS Analytics（Access Points / Clients 两标签）。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li>Rogue 反制杀伤半径大：de-auth 会波及邻居网络，参数过宽=持续攻击合法 AP，引发投诉甚至法律风险；教材明令"未经指示不要改参数"（ce32）。</li>
+<li>Friendly 一票豁免绝对有效——连 Rogue 关键字命中都不判；名单要定期复核（ce32 验证）。</li>
+<li>黑名单拉的是源 MAC，未必是真实客户端，不是万能措施（ce33）。</li>
+<li>同一 AP 多 BSSID 重复条目，加 Friendly 漏勾某个 BSSID 仍会被判 Rogue。</li>
+<li>关掉背景扫描=WIPS 失明；扫描调优去 RF skill。</li>
+</ul>
+<hr />
+<p>来源条目: f19, p61, p62, p63, c19, ce32, ce33 · 术语锚点: g55, g46, g24, g27</p></main></div></body></html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>cirrus-license-org-lifecycle — DT00XTE360 · ACFE WLAN Basic Deployment with OmniVista</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE360 · ACFE WLAN Basic Deployment with OmniVista</h1>
+<div class="sub">Edition 04 · 585 页 · Stellar+Cirrus 云管交付实操（AP 生命周期全流程，5 天带 Lab）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">开局与云管</div>
+<a href="skills/express-mode-bootstrap.html">express-mode-bootstrap</a>
+<a href="skills/cirrus-license-org-lifecycle.html" class="on">cirrus-license-org-lifecycle</a>
+<a href="skills/device-cloud-onboarding.html">device-cloud-onboarding</a>
+<div class="grp">SSID 与策略</div>
+<a href="skills/ssid-authentication-suite.html">ssid-authentication-suite</a>
+<a href="skills/upam-policy-bandwidth.html">upam-policy-bandwidth</a>
+<div class="grp">RF 与漫游</div>
+<a href="skills/rf-optimization-baseline.html">rf-optimization-baseline</a>
+<a href="skills/roaming-rap-design.html">roaming-rap-design</a>
+<div class="grp">安全与收尾</div>
+<a href="skills/wips-security-deployment.html">wips-security-deployment</a>
+<a href="skills/site-survey-troubleshooting.html">site-survey-troubleshooting</a>
+<a href="skills/rlab-lab-manual.html">rlab-lab-manual</a></aside><main><h1>cirrus-license-org-lifecycle</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="cirrus-license">Cirrus 云管账号组织与 License 生命周期（含清理回退）</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>"Subscription manager: Create the subscription; Lifecycle operations: Renewal, Add-on, Extension, Transfer, ... OmniVista CIRRUS: Import of licenses (Order ID, Activation code). Alcatel-Lucent Enterprise eBuy: License ordering" (p173)</p>
+<p>"Note: The licenses purchased in eBuy can take up to 24h before coming up in Subscription Manager." (p175)</p>
+<p>"In OVC 10.4.3, a unique account (linked to a mail address) can only be assigned to one MSP portal. If a user want access to multiple MSP portals, he must use different mail addresses: Or using the sub-addressing method for his email" (p198)</p>
+<p>"As OmniVista Cirrus is cloud-based, it is not possible to revert the configuration back to the default parameters with one click." (p544)</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<p><strong>1. License 生命周期（横跨三系统）</strong></p>
+<pre><code>eBuy 下单（品号 OVCX-系列-级别-年限-类别）
+  → Subscription Manager 建订阅（记 Subscription ID + Activation Code）  [最长延迟 24h]
+  → Cirrus 组织内 License Management &gt; Import Licenses（选 CAPEX，填 ID+激活码）
+  → 指派设备（自动/手工）→ 确认升级付费模式 → 核验模式/时长/数量
+</code></pre>
+<p>品号编码：级别 BAS/BIZ/PRM；年限 1Y/3Y/5Y；类别 APL（低端 AP1x0x/1x1x/1x2x）/APH（其余 AP）/63/64/65/68/69/99（OmniSwitch 系列）。</p>
+<p><strong>2. 账号与组织层级</strong>
+- 层级：MSP 门户 &gt; Organization &gt; Site &gt; Building &gt; Floor
+- 账号分 Customer/Partner；MSP 级权限 Admin/Viewer/Limited
+- 一邮箱（=一账号）只能绑一个 MSP 门户；多 MSP 用子地址 MyMail+tag@company.com 派生（激活邮件仍发原地址）
+- 区域入口：https://eu.manage.ovcirrus.com / https://us.manage.ovcirrus.com；密码 14-100 位含大小写+数字+特殊字符、不得含邮箱串
+- 组织可在 MSP 间迁移（Change MSP）或脱离（Disassociate——脱离后该 MSP 全部用户立即失访）</p>
+<p><strong>3. 网络前提（云开通前核查）</strong>
+- 防火墙入向：9093 / 30123 / 30124 / 30125；出向放行 443 / 80 / 123 / 53
+- DHCP 标准选项 1,3,6,28,42,43（代理场景加 129-133、138）
+- 至少 1 台 NTP；AP 固件 AWOS 4.0.6 GA+，AP1101/AP1201L/H/HL 不支持；交换机 AOS 8.9R1+（release 5 不支持）</p>
+<p><strong>4. OVC4 → OVC 迁移</strong>
+1. 在新 OVC 手工重建 AP Group/SSID/策略并比对
+2. OVC4 Device Catalog 删除全部设备（序列号禁止双登记）
+3. 新 OVC 重新声明（手工或 XLSX/CSV 模板）
+4. 等下次 Call Home：AP 最长 30 分钟（或重启 AP）；交换机重启 cloud-agent</p>
+<p><strong>5. 组织清理（无一键恢复，按依赖逆序拆）</strong>
+任务/备份 → WIPS 复位 → AP 摘回 default device group → AP Group 换回默认 Provisioning 后删组 → 删 Provisioning（RF Profile 先改回 Default）→ 删 RF Profile → SSID → 统一策略/服务端口/BYOD/Guest 策略/门户模板/ARP/账号/报表 → 站点（级联删楼宇楼层与设备归属）→ 确认 Device Catalog 为空。</p>
+<h2 id="a1-lab">A1 · 书中案例（Lab 步骤精要）</h2>
+<ul>
+<li><strong>c09/p169-238</strong>：eBuy 下单 OVCX-68-BAS-3Y → MyPortal &gt; Subscription Manager 建 CAPEX 订阅 → eu.manage.ovcirrus.com 注册（子地址技巧）→ Create Organization + Request trial period（ALE 联系人/是否 RAP/Partner CRD ID）→ Import Licenses（Subscription ID + Activation Code）→ 选设备分配 → Upgrade → 验证许可模式/时长/数量。</li>
+<li><strong>c20/p542-547</strong>：25 步组织清理全清单，即上文逆序拆除 SOP 的完整实操版。</li>
+</ul>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>新客户开通 Cirrus、下单导入订阅、规划多 MSP/多组织账号结构时用。</li>
+<li>换设备/搬场/重配网络需要"清空重来"、或从 OVC4 迁移时用。</li>
+<li><strong>区分</strong>：账号许可就绪后要把交换机/AP 真正上云 → <code><a href="device-cloud-onboarding.html">device-cloud-onboarding</a></code>；本 skill 管的是"平台侧的商业与组织生命周期"，不碰设备激活。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>至少提前一天在 eBuy 下单（24h 延迟红线），核对品号级别/年限/类别。</li>
+<li>Subscription Manager 建订阅，记录 Subscription ID 与 Activation Code。</li>
+<li>网络侧按前提清单开防火墙端口、NTP、DHCP options，盘点设备型号/版本。</li>
+<li>Cirrus 建组织（试用地填 ALE 联系人）→ 导入许可 → 指派设备 → 核验。</li>
+<li>多 MSP 工程师账号用子地址派生注册。</li>
+<li>清理/迁移时严格按依赖逆序执行；删除类操作前确认客户自有管理员可登录、Site 下设备已迁走。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li><strong>24h 延迟</strong>：交付当天下单会卡现场（ce06）。</li>
+<li>序列号禁止 OVC4/OVC 双登记，旧云不删新云注册不上（ce05）。</li>
+<li>Disassociate 全员失访；Delete Organization 丢整个管理面，教材明令禁止在培训组织上执行（ce08）。</li>
+<li>删 Site 是级联操作：楼宇楼层与设备归属连带删除，设备纳管关系丢失（ce36）。</li>
+<li>云上无一键恢复，删除顺序错了会报错；搭建环境时就记录创建对象清单，拆除逆序执行（ce35）。</li>
+<li>前提清单任一缺失都表现为"Call Home 失败/不上线"，型号/版本/防火墙/NTP 任一不行都卡（ce04）。</li>
+</ul>
+<hr />
+<p>来源条目: f25, f26, p22, p23, p24, p25, p26, c09, c20, ce04, ce05, ce06, ce07, ce08, ce35, ce36 · 术语锚点: g30, g33, g35, g48</p></main></div></body></html>

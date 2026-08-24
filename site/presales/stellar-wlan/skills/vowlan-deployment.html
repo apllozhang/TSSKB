@@ -1,0 +1,129 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>vowlan-deployment — DT00XPS288 · OmniAccess Stellar WLAN 售前</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XPS288 · OmniAccess Stellar WLAN 售前</h1>
+<div class="sub">Edition 28 · 273 页 · 无线售前全科（AP 矩阵/三管理模式/License 三体系/用例/VoWLAN）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">选型与模式</div>
+<a href="skills/ap-selection-matrix.html">ap-selection-matrix</a>
+<a href="skills/management-mode-selection.html">management-mode-selection</a>
+<div class="grp">商务与报价</div>
+<a href="skills/license-quotation.html">license-quotation</a>
+<div class="grp">用例与语音</div>
+<a href="skills/industry-use-cases.html">industry-use-cases</a>
+<a href="skills/vowlan-deployment.html" class="on">vowlan-deployment</a>
+<div class="grp">场景与增值</div>
+<a href="skills/rf-scenario-baseline.html">rf-scenario-baseline</a>
+<a href="skills/network-advisor-aiops.html">network-advisor-aiops</a>
+<a href="skills/special-topologies.html">special-topologies</a></aside><main><h1>vowlan-deployment</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="vowlan">VoWLAN 语音部署（容量常数 + 五步法 + 终端门槛）</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>"VOICE OVER WLAN DEPLOYMENT STEPS: Identify the Voice usages … Prepare / Plan / Design / Implement / Operate."（p206）</p>
+<p>"Requirements for Voice: 1 access point / 255 m². Number of users per AP – Average of 20-25 users."（p207）</p>
+<p>"RF Management • 5GHz prefered (robust, best performance) • Capacity planning • 20 to 25 clients per APs, providing 36 Mbps user throughput • Generally a -62dBm RSSI (or better) is required to ensure a correct roaming."（p208）</p>
+<p>"Roaming assistance with 802.11r/k/v protocols • iOS 8 and above • Samsung Galaxy S7 minimum • S9 minimum for 802.11v. Voice over WLAN quality may vary depending on the hardware/Operating System."（p203）</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<p><strong>五步部署法</strong>（每步有输入输出物，可当 WBS）：</p>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>动作</th>
+<th>输出物</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prepare (p207)</td>
+<td>站点勘察、RF 环境分析、算 AP 数量布点</td>
+<td>AP 布点图</td>
+</tr>
+<tr>
+<td>Plan (p208)</td>
+<td>语音业务/安全级别/射频策略/漫游策略</td>
+<td>规划书</td>
+</tr>
+<tr>
+<td>Design (p209)</td>
+<td>非重叠信道、WMM QoS、DSCP/802.1p 打标贯穿无线-边缘-核心、语音专用 VLAN、可选 DPI 语音管控</td>
+<td>设计文档</td>
+</tr>
+<tr>
+<td>Implement (p210)</td>
+<td>布线、RADIUS/DNS/DHCP/IMS3、模板化下发话机</td>
+<td>配置模板</td>
+</tr>
+<tr>
+<td>Operate (p211)</td>
+<td>SNR 监控、VoIP 审计、Ekahau 复测</td>
+<td>运维报告</td>
+</tr>
+</tbody>
+</table>
+<p><strong>容量常数（可背底牌）</strong>：1 AP / 255 m²；20-25 并发语音用户/AP；36 Mbps 用户吞吐；漫游阈值 RSSI ≥ -62dBm；5GHz 优先；能力相近终端规划专用 SSID；前台等关键位置做 AP 冗余。</p>
+<p><strong>漫游协议适配矩阵</strong>：OKC 仅 WPA2-Enterprise；802.11r 适用 Personal + Enterprise。跨 AP Group L3 漫游走 CTX 上下文同步。</p>
+<p><strong>终端盘点</strong>：专用话机 8118/8128/8158s/8168s（Ascom，NOE+SIP，8168s 工业级，OT8168s/OT8128 支持 Ekahau RTLS）+ IMS3 批量部署服务器；软终端 Rainbow UCaaS / OXO-OXE 集成 / 非 ALE 软电话——门槛 iOS 8+、三星 S7+、11v 需 S9+。</p>
+<h2 id="a1">A1 · 书中案例</h2>
+<ul>
+<li>千床医院 VoWLAN：保留 OXE 话机、AP1321 覆盖、双认证（c01）。</li>
+<li>渡轮/酒店计划在 Wi-Fi 上承载 Rainbow VoIP（c02/c05）。</li>
+</ul>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>触发：客户要上无线语音/无绳话机；没有勘察数据被追问"AP 数怎么算的"；BYOD 软电话质量扯皮。</li>
+<li>区分：本 skill 管语音专属常数与五步法；一般数据场景（客房/场馆/会议室）的数量与配置去 <code><a href="rf-scenario-baseline.html">rf-scenario-baseline</a></code>；RTLS 定位细节去 <code><a href="special-topologies.html">special-topologies</a></code>。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>盘终端：专用话机（8118 系列）还是软终端（列机型/OS 清单，标 11r/k/v 支持）。</li>
+<li>快速估量：面积 ÷ 255 m² 得 AP 下限；用户数 ÷ 20-25 校核；按 36Mbps/用户核带宽。</li>
+<li>设计：5GHz 优先 + 专用 SSID + WMM/DSCP 端到端打标 + 语音 VLAN；认证方式套漫游矩阵（Personal→11r）。</li>
+<li>关键区域（前台/护士站）冗余覆盖。</li>
+<li>验收：按 -62dBm 漫游阈值 Ekahau 复测，VoIP 审计进交付标准。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li>OKC/11r 选错认证方式漫游必卡：Personal 场景写 OKC 不受支持；部分老终端反而不支持 11r，必要时分 SSID 隔离（ce12）。</li>
+<li>软终端质量随终端硬件/OS 浮动——方案加"终端准入清单"，旧终端不承诺语音体验，先划清责任（ce20）。</li>
+<li>所有 Stellar AP 支持语音，但 AP 须升到最新版本（p204）。</li>
+</ul>
+<hr />
+<p>来源条目: f14, f15, p26, p27, p28, p08, c01, c11, ce12, ce20；glossary: VoWLAN、802.11r/k/v、Rainbow、RTLS、WIPS/wIDS</p></main></div></body></html>

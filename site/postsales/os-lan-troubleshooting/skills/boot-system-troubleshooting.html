@@ -1,0 +1,103 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>boot-system-troubleshooting — DT00XTE221 · OmniSwitch LAN Troubleshooting</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE221 · OmniSwitch LAN Troubleshooting</h1>
+<div class="sub">587 页 · 有线排障全科（方法论/启动/系统/L2/VC/STP/L3/组播/OVNA）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">方法论与系统</div>
+<a href="skills/lan-troubleshooting-methodology.html">lan-troubleshooting-methodology</a>
+<a href="skills/boot-system-troubleshooting.html" class="on">boot-system-troubleshooting</a>
+<div class="grp">故障域</div>
+<a href="skills/l2-connectivity-troubleshooting.html">l2-connectivity-troubleshooting</a>
+<a href="skills/stp-loop-troubleshooting.html">stp-loop-troubleshooting</a>
+<a href="skills/virtual-chassis-troubleshooting.html">virtual-chassis-troubleshooting</a>
+<a href="skills/l3-routing-vrrp-troubleshooting.html">l3-routing-vrrp-troubleshooting</a>
+<a href="skills/multicast-troubleshooting.html">multicast-troubleshooting</a>
+<div class="grp">工具与 AI 运维</div>
+<a href="skills/app-logging-qos-troubleshooting.html">app-logging-qos-troubleshooting</a>
+<a href="skills/ovna-deployment-teams-bot.html">ovna-deployment-teams-bot</a></aside><main><h1>boot-system-troubleshooting</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="_1">启动序列与交换系统排障</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>"Step1. Power cycle the switch ... Break the boot sequence ... 'Hit any key to stop autoboot:' =&gt; setAdminPasswordDefault ... =&gt; boot (6900) / =&gt; reset (6860)" (p76)</p>
+<p>"The operational status can be DOWN while the power status is ON, indicating a possible software issue -&gt; show module status ... -&gt; show module long" (p100)</p>
+<p>"Note: AOS must be upgraded prior to performing an FPGA/CPLD or U-boot upgrade." (p102)</p>
+<p>"The most common causes for high CPU utilization: An abnormal process ... AOS is under a DoS attack. Too many frames or packets are trapped to CPU. Use the commands 'top' and 'ps' in the maintenance shell" (p110-111)</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<ol>
+<li><strong>启动机制双路径</strong>：U-Boot 机型（6360/6560/6860）——硬件初始化→内存诊断→按 bootfile 环境变量选镜像→AOS 入 RAM（g07）；ONIE 机型（OS6860N/6900）——启动菜单选 ALE OS certified 或 ONIE（含 Install/Rescue/DIAG）（g08）。闪存双目录 certified/working 是回滚基础（g06）。</li>
+<li><strong>系统层命令链</strong>（f05）：show system（版本/uptime/时间）→ show chassis / show cmm → show running-directory + show microcode [loaded|certified] → show module status / show module long → show hardware-info（U-Boot/FPGA/CPLD/CPU/RAM，对照 release note）→ show health → show transceivers / show powersupply / show fan / show temperature → 面板 LED 判读。</li>
+<li><strong>判读判据</strong>：</li>
+<li>POWER ON + operational DOWN = 软件问题优先怀疑，不是硬件返修（p05/ce05）。</li>
+<li>短 uptime = 刚发生过重启，重要线索（p04）。</li>
+<li>show system 的 Date&amp;Time 是日志对时前提，NTP 环境用 ntp client admin-state enable（p04）。</li>
+<li>U-Boot/FPGA 有最低版本门槛，先升 AOS 再升 FPGA/CPLD/U-Boot（p06/ce09 铁律）。</li>
+<li><strong>高 CPU 四大根因</strong>（p07）：异常进程（死循环=软件缺陷）、网络规模设计不当、DoS 攻击、消息/上 CPU 报文过多（大量日志、MAC 学习、环流量）。流程（f06）：show health 确认水位（1min/1h/1day）→ show health slot/port 隔离到 NI 或端口 → su 维护 shell 用 top（N/M/P/T 排序、-b -d）/ ps -T 定位进程 → 联系 ALE 支持，不自行杀进程。</li>
+<li><strong>温度双阈值</strong>（p08）：Warning 发 trap；Danger 所有 NI 模块关断且需手动 boot 恢复。</li>
+<li><strong>LED 速查</strong>（p09）：OK 常绿=正常（VC slave）；闪绿=VC master；常琥珀=诊断或 AOS 启动失败。PS 常绿=双电源好；OK+PS 同闪琥珀=缺风扇盘或气流方向不匹配。</li>
+</ol>
+<h2 id="a1-lab">A1 · 书中案例（LAB 故障根因）</h2>
+<p>本 skill 无独立 LAB，但系统层判读是 LAB 全部案例的前置：LAB4 开场先 <code>show system</code> 核对两台日期时间再查 OSPF（c08）；LAB2 中 show health CPU 98% 指向 VLAN 278 环路（c04 根因在 stp-loop skill）。崩溃类故障产物是 PMD 文件（/flash/pmd/，g33），处置方向为收集证据升级 TAC（c11，详见 ovna skill）。</p>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>触发：设备无法启动/密码丢失/USB 恢复；show module 异常；版本升级前门槛核对；CPU 告警；温度/风扇/电源告警；面板灯异常。</li>
+<li>区分：业务口 down 但整机正常 → l2-connectivity；VC 相关的模块/chassis 状态 → virtual-chassis；CPU 高伴随 MAC 漂移/DoS 刷屏 → stp-loop（先查环）；整机崩溃出 PMD → 本 skill 判读 + ovna skill 处置链。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li><strong>密码恢复（U-Boot 机型）</strong>：断电重启 → "Hit any key to stop autoboot:" 打断 → <code>setAdminPasswordDefault</code> → <code>boot</code>（6900）或 <code>reset</code>（6860，或等 90 秒）。</li>
+<li><strong>密码恢复（ONIE 机型，仅限 console）</strong>：重启选 ONIE → DIAG 模式 → <code>blkid</code> 找分区 → <code>cd /mnt/ssd5/system</code> → <code>rm userTable8</code> → <code>reboot</code> → <code>modify running working</code> 后从 certified 重启。</li>
+<li><strong>USB 恢复 CMM</strong>：Trescue.img 与交换机目录结构放 U 盘根目录 → 打断启动 → <code>run rescue</code>（重格闪存约 10 分钟）→ 验证 certified/working 微码。ONIE USB 恢复：<code>blkid</code> → <code>mount /dev/sda1</code> → cp 镜像到 /var/tmp → <code>onie-nos-install</code>。</li>
+<li><strong>改启动目录</strong>：u-boot 下 <code>setenv bootfile working/Uos.img</code> → <code>saveenv</code> → <code>run bootcmd</code>。</li>
+<li><strong>系统体检命令链</strong>：show system → show chassis/show cmm → show running-directory/show microcode loaded → show module status/long → show hardware-info（对照 release note）→ show health → show temperature/powersupply/fan/transceivers。</li>
+<li><strong>升级顺序</strong>：先 AOS → 再 <code>update uboot cmm all file ...</code> / <code>update fpga-cpld cmm all file ...</code>。</li>
+<li><strong>高 CPU</strong>：show health [all cpu] → show health slot <c/s> → su 进维护 shell（top / ps -T）→ 联系 TAC 获取处置流程，用完立即 exit。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li><strong>ce11</strong>：ONIE 密码恢复只能从 console 做，网管侧做不了。</li>
+<li><strong>ce02</strong>：su 维护 shell 不是后门，只在技术支持指导下用；动作限定只读观察，找到可疑进程后联系 ALE，不自行杀。</li>
+<li><strong>ce05</strong>：POWER ON + DOWN ≠ 硬件故障，先走软件侧排查（show microcode loaded、版本核对）。</li>
+<li><strong>ce09</strong>：升级顺序颠倒（先 U-Boot/FPGA 后 AOS）会出问题，铁律不可违反。</li>
+<li>温度到 Danger 阈值后所有 NI 关断，需手动 boot 恢复（p08）。</li>
+<li>show hardware-info 的版本判断必须以目标 AOS 的 release note 为准，不能凭经验。</li>
+</ul>
+<hr />
+<p>来源条目: f04, f05, f06, p04, p05, p06, p07, p08, p09, ce02, ce05, ce09, ce11, g03, g04, g05, g06, g07, g08</p></main></div></body></html>

@@ -1,0 +1,314 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>精华长文 DIGEST — DT00XTE478 · Stellar WLAN 高级排障</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE478 · Stellar WLAN 高级排障</h1>
+<div class="sub">187 页 · 无线排障专题（方法论/工具箱/四层排障/勘测/TKC）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">方法论</div>
+<a href="skills/wlan-trouble-methodology.html">wlan-trouble-methodology</a>
+<div class="grp">工具与体检</div>
+<a href="skills/stellar-ap-toolbox.html">stellar-ap-toolbox</a>
+<a href="skills/stellar-ap-system-health.html">stellar-ap-system-health</a>
+<div class="grp">故障域</div>
+<a href="skills/client-connection-trouble.html">client-connection-trouble</a>
+<a href="skills/dot1x-radius-trouble.html">dot1x-radius-trouble</a>
+<a href="skills/network-side-trouble.html">network-side-trouble</a>
+<a href="skills/wireless-rf-roaming-trouble.html">wireless-rf-roaming-trouble</a>
+<div class="grp">勘测纠正</div>
+<a href="skills/site-survey-remediation.html">site-survey-remediation</a></aside><main><h1>精华长文 DIGEST</h1><h1 id="digest-stellar-wlan">DIGEST · Stellar WLAN 高级排障精华（不读全书版）</h1>
+<blockquote>
+<p>目标读者：接手 Stellar Wi-Fi 故障的一线工程师。看完这一篇，能按流程定层、按表敲命令、按阈值下判断。页码对应教材 DT00XTE478EN（187 页）。</p>
+</blockquote>
+<h2 id="_1">一、一页看懂无线排障</h2>
+<p>这本书讲的是"Wi-Fi 怎么修"，核心就两件东西：<strong>七步流程</strong>和<strong>三域根因地图</strong>（p3-18）。</p>
+<p><strong>七步流程</strong>（带一条回退规则）：</p>
+<ol>
+<li><strong>Identify 识别</strong>——先问问题、收信息，确认问题真实存在</li>
+<li><strong>Locate 定位</strong>——绑定物理空间和具体设备，用 OSI 模型定层</li>
+<li><strong>Isolate 隔离</strong>——锁定具体层、设备、位置、驱动版本</li>
+<li><strong>Re-Create 复现</strong>——在自有环境重建；<strong>复现不了就回第 1 步重新提问</strong>（p10）</li>
+<li><strong>Solve 解决</strong>——制定并实施方案</li>
+<li><strong>Verify 验证</strong>——充分测试确认修复有效，让客户用日常业务（Rainbow、语音、邮件）跑</li>
+<li><strong>Document 记录</strong>——问题描述/拓扑/固件版本/诊断/解决方案五字段归档，沉淀 TKC（p13-14）</li>
+</ol>
+<p><strong>三域根因地图</strong>——排障前扫一遍，保证不漏层（p5-8）：</p>
+<table>
+<thead>
+<tr>
+<th>域</th>
+<th>检查要素</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>无线侧</td>
+<td>终端技能/驱动、射频能力、802.1X 配置文件、漫游算法、RSSI/SNR 覆盖、AP 配置与固件</td>
+</tr>
+<tr>
+<td>本地网络侧</td>
+<td>PoE/布放、交换机 VLAN/QoS、防火墙 ACL、DHCP（租期/地址池/选项）、DNS、RADIUS/LDAP/AD</td>
+</tr>
+<tr>
+<td>互联网侧</td>
+<td>出口带宽、抖动时延、外部 DNS、外部门户——不在你管控内，先划出去再排</td>
+</tr>
+</tbody>
+</table>
+<p>配套的<strong>访谈四问</strong>逐级收窄（p17）：所有用户都受影响？（排除个别终端）→ 固定位置还是全楼？（排除全局配置）→ 都挂同一接入交换机下？（指向 SSID 或交换机配置）→ 同位置其他 SSID 正常？（锁定单个 SSID 的 VLAN/配置）。</p>
+<p>全书主案例（p11-18）就是这么破的：全员连不上 Employee SSID，访谈锁定范围后比对配置——OmniVista 里 SSID 映射 VLAN 10，接入交换机配的是 VLAN 20，tagged 不一致。改交换机 VLAN 解决。教训：<strong>全员连不上而 AP 本身正常，优先怀疑交换机侧 VLAN，别先动无线配置。</strong></p>
+<p>动手前还有一条纪律：全网先对齐 NTP（p22）。教材演示过无 NTP 的代价——AP 日志和 OmniVista 时间差五天，时间线对不上，关联分析全部作废。</p>
+<h2 id="_2">二、排障决策树总图</h2>
+<pre><code>接手故障
+├─ 先对时（NTP）→ 访谈四问 → 三域扫一遍 → OSI 从低层往高层定层
+│
+├─ AP 整体不对劲（灯不对/疑似重启/高 CPU/门户不弹页）
+│   → 查基础层：LED 判读（免登录）→ showsysinfo/showver/getmode
+│     → date → uptime → 日志找重启原因 → top/ps 查进程 → eag_cli 查门户
+│
+├─ SSID 没广播 / RF 配置疑似没生效 / 换位置掉线（漫游）
+│   → 查无线层：iwconfig 看 athXYY 接口与 BSSID
+│     → cat /tmp/config/rfprofile.conf 比对落地
+│     → adme show 查邻居表（RSSI&lt;20=差）→ wam.log 搜 roaming-start/success
+│
+├─ 单个客户端连不上 / 没地址 / 频繁掉线
+│   → 查客户端层：sta_list 六字段 → wam_debug 看认证 JSON
+│     → 没地址：双端抓 DHCP 四步 → 查 VLANID 与 Final_role
+│     → 掉线：iwlist txpower → rfprofile 阈值 → grep disassoc reason（reason 8=负载均衡，结案）
+│     → 802.1X 认证失败：客户端四查 → AP 三份 AAA 配置文件 → RADIUS 服务器七查
+│
+├─ AP 自己拿不到 IP / ping 不通网管 / 日志不上报
+│   → 查网络层：cat /etc/config/network 查 proto
+│     → 上联口抓 DHCP（NAK 判据）→ ifconfig br-wan → route -n → ping 逐跳 → traceroute
+│     → syslog 三步：syslog.conf → ps grep logread → logger 实测
+│
+└─ 整网/整区域表现不佳（覆盖/干扰/布点）
+    → 勘测：被动+主动组合 → 三步法 → 五发现五动作
+</code></pre>
+<p>分层口诀：<strong>先低层后高层</strong>（p38-102）。一上来怀疑认证/DNS，实际是 PoE/VLAN 底层问题，是最常见的弯路。</p>
+<h2 id="_3">三、必背命令与阈值速查表</h2>
+<p><strong>登录通道（p23-26）</strong></p>
+<table>
+<thead>
+<tr>
+<th>通道</th>
+<th>参数</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>串口</td>
+<td>115200 / 8 数据位 / 1 停止位 / 无校验 / 无流控</td>
+<td>没 IP 时唯一入口</td>
+</tr>
+<tr>
+<td>SSH</td>
+<td><code>/var/config/public_group.conf</code> 里 <code>ssh_connect=1</code></td>
+<td>support 账号；实验室默认密码 aos2016，生产以 AP Group 自定义为准</td>
+</tr>
+<tr>
+<td>Web UI</td>
+<td><code>https://&lt;AP_IP&gt;</code> 或 <code>http://&lt;AP_IP&gt;:8080</code></td>
+<td>云管模式先在 Cirrus 开 "AP web"</td>
+</tr>
+</tbody>
+</table>
+<p><strong>CLI 工具箱</strong></p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ssudo sta_list</code></td>
+<td>客户端 VLANID/IPv4/OnlineTime/RX/TX/AUTH/Final_role 六字段（p78）</td>
+</tr>
+<tr>
+<td><code>ssudo wam_debug sta_list</code></td>
+<td>认证 JSON：assignedVLAN / macAuthResult / CPAuthResult</td>
+</tr>
+<tr>
+<td><code>wlanconfig athXX list</code></td>
+<td>RSSI/SNR/终端能力</td>
+</tr>
+<tr>
+<td><code>iwconfig</code> / <code>iwlist athXXX channel\|txpower</code></td>
+<td>接口与 BSSID / 实际信道与功率</td>
+</tr>
+<tr>
+<td><code>cat /proc/kes_syslog \| grep &lt;MAC&gt;</code></td>
+<td>disassoc reason 判读（reason 8=负载均衡，p80）</td>
+</tr>
+<tr>
+<td><code>cat /tmp/config/rfprofile.conf</code></td>
+<td>RF 配置落地比对（p63-69）</td>
+</tr>
+<tr>
+<td><code>adme show</code></td>
+<td>邻居表：channel/rssi/txpower，RSSI&lt;20 判差（p69, p96）</td>
+</tr>
+<tr>
+<td><code>ssudo tcpdump -i br-wan -w x.pcap &lt;过滤&gt;</code></td>
+<td>有线抓包（注意接口是 br-wan，不是 eth0，p30）</td>
+</tr>
+<tr>
+<td><code>eag_cli show user all</code></td>
+<td>门户认证表项（p55）</td>
+</tr>
+<tr>
+<td><code>showsysinfo / showver / getmode / show_cluster</code></td>
+<td>国家码/版本/管理模式/集群</td>
+</tr>
+</tbody>
+</table>
+<p><strong>RSSI-SNR 判读（Stellar 正值刻度，dBm = RSSI − 96）</strong></p>
+<table>
+<thead>
+<tr>
+<th>RSSI 值</th>
+<th>换算</th>
+<th>判定</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10</td>
+<td>−86dBm</td>
+<td>差，语音/实时应用不可用</td>
+</tr>
+<tr>
+<td>29</td>
+<td>−67dBm</td>
+<td>语音推荐下限（硬指标：RSSI≥29 且 SNR≥25）</td>
+</tr>
+<tr>
+<td>43</td>
+<td>−53dBm</td>
+<td>完美</td>
+</tr>
+<tr>
+<td>&lt;20（邻居表）</td>
+<td>—</td>
+<td>差信号，漫游病灶（p69）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>端口与协议清单（p89-90, p170, p179）</strong></p>
+<table>
+<thead>
+<tr>
+<th>用途</th>
+<th>端口/选项</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RADIUS 认证/计费</td>
+<td>1812 / 1813（timeout 5、retries 2）</td>
+</tr>
+<tr>
+<td>OmniVista 云管防火墙入向</td>
+<td>9093、30123-30125</td>
+</tr>
+<tr>
+<td>出向放行</td>
+<td>443、80、123（NTP）、53（DNS）</td>
+</tr>
+<tr>
+<td>DHCP 标准选项</td>
+<td>1、2、6、28、42、43（代理另加 129-133、138）</td>
+</tr>
+<tr>
+<td>syslog</td>
+<td>默认 514</td>
+</tr>
+</tbody>
+</table>
+<p>空口抓包硬上限 <strong>10MB / 5 分钟</strong>（p31），规划过滤条件按此预算。</p>
+<h2 id="_4">四、十大高频故障根因清单</h2>
+<ol>
+<li><strong>交换机 tagged VLAN 与 SSID 映射不一致</strong>（p11-18）——全员连不上而 AP 正常，先查这里。</li>
+<li><strong>Final_role 滤掉 DHCP</strong>（p84）——最隐蔽的"永远拿不到 IP"：报文路径全正常，角色里没放行 DHCP。</li>
+<li><strong>AP 发射功率被压到最小</strong>（p85-86）——<code>iwlist txpower</code> 见 3dBm（1mW）+ RSSI 16，去 RF profile 调大。</li>
+<li><strong>signalStrengthThreshold 过高</strong>（p87）——阈值 70（约 −26dBm）时正常信号也被踢，功率再对也掉线。</li>
+<li><strong>RADIUS 共享密钥不匹配</strong>（p89）——静默失败：不报错、只见超时，逐字符比。</li>
+<li><strong>RADIUS station IP 未登记 AP 地址</strong>（p90）——请求被服务器直接丢，客户端只见超时。</li>
+<li><strong>国家码不兼容导致搜不到 SSID</strong>（p82）——showsysinfo 查国家码，不匹配就在 RF profile 手动指定兼容信道。</li>
+<li><strong>untagged↔tagged VLAN 之间不漫游</strong>（p69）——产品限制，信号再好也漫不过去；同 SSID 各 AP 的 VLAN 封装必须一致。</li>
+<li><strong>地理邻居互相看不见</strong>（p70）——直角走廊等建筑阻挡；两台 AP <strong>对称</strong>静态互加邻居，上下文改走 LAN。</li>
+<li><strong>同频/邻频干扰</strong>（p112）——吞吐下降、丢包、数据损坏三症状，换信道；用 Ekahau/WiFi Analyzer 定位重叠。</li>
+</ol>
+<p>另有两条"别误判"：reason 8 掉线是系统负载均衡行为，不按故障修（p80）；AP 拿不到地址时"连 DHCP-NAK 都没有"说明报文根本没到服务器（链路/VLAN/中继问题），别当地址池耗尽（p100）。</p>
+<h2 id="_5">五、勘测三步法与五发现五动作</h2>
+<p>三类勘测按阶段选（p106-107）：部署前用<strong>预测</strong>（仿真摆 AP）；部署后用<strong>被动</strong>（只听不关联，测信号与噪声）查 RF、用<strong>主动</strong>（真实关联，测丢包/重传/物理速率）查性能；排障时被动+主动组合。</p>
+<p><strong>现场三步法</strong>（p114-117）：</p>
+<ol>
+<li><strong>拿图纸</strong>——标障碍物/墙体/层高、优先覆盖区、AP 位置</li>
+<li><strong>勘测观察五项</strong>——AP 型号与原设计一致？RF 重叠干扰？无覆盖区？发射功率还是默认值？位置别扭？</li>
+<li><strong>纠正动作五类</strong>——换 AP 型号 / 重做 RF 设计 / 收窄信道宽度 / <strong>移除低数据速率</strong>（逼终端贴近好 AP，常被忽略）/ 改善布放</li>
+</ol>
+<p>材料衰减要有敬畏（p110）：4 米穿 1-4 面墙 RSSI 就掉到 −70dBm——上网够、语音不够（语音要 −67dBm 以上）。衰减大户：混凝土墙、金属柜、钢结构、玻璃镜、砖体、水。天线装反（定向进开放区、全向进走廊）会造出"一半没信号、一半过剩"，盲区先查天线。</p>
+<h2 id="8-skill">六、学习路径（8 个 skill 的顺序）</h2>
+<ol>
+<li><strong>wlan-trouble-methodology</strong>——总纲：七步流程、三域地图、访谈四问。任何故障先过这里。</li>
+<li><strong>stellar-ap-toolbox</strong>——取证手段：串口/SSH/Web 登录、tcpdump 与空口抓包、配置备份。</li>
+<li><strong>stellar-ap-system-health</strong>——基础层：LED、系统、进程、门户（eag）、Express 集群。</li>
+<li><strong>wireless-rf-roaming-trouble</strong>——无线层：athXYY 接口、RF profile 落地、邻居表、漫游验证。</li>
+<li><strong>client-connection-trouble</strong>——客户端层：搜不到/连不上/没地址/掉线四条决策链。</li>
+<li><strong>dot1x-radius-trouble</strong>——认证专项：客户端→AP→RADIUS 三段十三查。</li>
+<li><strong>network-side-trouble</strong>——网络层：AP 取址、连通性、syslog、云管上线前置。</li>
+<li><strong>site-survey-remediation</strong>——收口：整网表现不佳时的勘测与整改。</li>
+</ol>
+<p>前两个是通用底座，中间四个按 OSI 分层对应症状，最后一个是面状问题的收口。</p>
+<h2 id="tac-tkc">七、边界提醒：何时升级 TAC / TKC 怎么用</h2>
+<p><strong>TKC 检索三分支</strong>（p127-130）：疑似已知问题时查 TKC——同版本直接看 Resolution；案例版本更旧，可能已被新 build 修复；<strong>套用任何用例前必须亲自重复其诊断步骤且结论一致</strong>，否则换用例或联系技术支持创建新用例。</p>
+<p><strong>该开票升级 TAC 的信号</strong>：</p>
+<ul>
+<li>进程列表出现 X（Dead）/ Z（Zombie）堆积——软件问题，附进程列表上报，别反复重启掩盖（p51-53）</li>
+<li>高 CPU 疑似进程死循环（软件缺陷）（p52）</li>
+<li>出现两个 cluster_mgt 线程（一运行一睡眠）——产品特定异常信号（p59）</li>
+<li>自有环境复现失败、访谈再收窄也无果——回流程第 1 步；仍无进展即建新 TKC 用例</li>
+</ul>
+<p>配置备份 pub-config.tar 是工单标准共享材料（p33），开票前先备好。</p>
+<hr />
+<p>由 cangjie-skill 流水线从 DT00XTE478EN 蒸馏生成。</p></main></div></body></html>

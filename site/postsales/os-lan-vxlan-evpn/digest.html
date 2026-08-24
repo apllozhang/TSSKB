@@ -1,0 +1,176 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>精华长文 DIGEST — DT00XTE325 · OmniSwitch LAN VxLAN/EVPN</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE325 · OmniSwitch LAN VxLAN/EVPN</h1>
+<div class="sub">Edition 01 · 213 页 · 五步配置法 + 三 Lab + EVPN 架构指南</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">总纲与底座</div>
+<a href="skills/vxlan-evpn-five-step-architecture.html">vxlan-evpn-five-step-architecture</a>
+<a href="skills/vxlan-evpn-underlay-bgp-design.html">vxlan-evpn-underlay-bgp-design</a>
+<div class="grp">业务与多归属</div>
+<a href="skills/vxlan-evpn-service-provisioning.html">vxlan-evpn-service-provisioning</a>
+<a href="skills/vxlan-evpn-multihoming-df.html">vxlan-evpn-multihoming-df</a>
+<div class="grp">排障</div>
+<a href="skills/vxlan-evpn-bum-troubleshooting.html">vxlan-evpn-bum-troubleshooting</a></aside><main><h1>精华长文 DIGEST</h1><h1 id="digest-omniswitch-vxlanevpn">DIGEST · OmniSwitch VxLAN/EVPN 实施精华（不读全书版）</h1>
+<blockquote>
+<p>原书：ALE Training Services《VxLAN/EVPN》（DT00XTE325EN），213 页，AOS 售后 Experienced 路径 1 天实操课。本文只保留"拿去就能用"的部分，数字均带原书页码。</p>
+</blockquote>
+<h2 id="vxlanevpn">一、一页看懂 VxLAN/EVPN 实施</h2>
+<p>AOS 教 VxLAN/EVPN 有一套独有的<strong>五步配置法</strong>（p59，同一张步骤图在 p59/p62/p66/p68 逐段展开，贯穿 p59-149）：</p>
+<ol>
+<li><strong>Underlay</strong>——L3 路由底座（OSPF/eBGP，Loopback0 互通）</li>
+<li><strong>Overlay</strong>——MP-BGP EVPN 会话（全网同 AS、iBGP、可选 RR）</li>
+<li><strong>Service Access</strong>——接入口/聚合口启用以太网段（ESI）</li>
+<li><strong>Service</strong>——EVPN-VXLAN 业务实例化（VNI 虚拟桥）</li>
+<li><strong>SAP</strong>——业务接入点绑定 VLAN</li>
+</ol>
+<p>为什么值得迁？传统 DC 四痛点（p164/167）：STP 冗余链路被阻塞浪费资源、12 位 VLAN 上限 4096、运维复杂、静态首跳网关导致流量绕行（traffic tromboning）。VXLAN 用 MAC-in-UDP + 24 位 VNI（16M 网络）解决数据面；裸 VXLAN 仍靠 flood-and-learn，MP-BGP EVPN 补上主动式控制面。</p>
+<p>AOS 实现模型四件套（p184-185）：全端口 ESI 实例化、ESI+ETag 粒度路由、RD/RT 自动生成、on-demand 按需导入（BGP RIB 全网分发，只有被查找的目的才进硬件 FDB）。</p>
+<h2 id="cli">二、五步主线（配 CLI 要点）</h2>
+<p><strong>第一步：Underlay（p60/p80/p186）</strong>
+一切从 Loopback0 开始——VTEP 身份、OSPF router-id、BGP router-id、update-source 四合一。推荐组合 <strong>OSPF underlay + iBGP overlay</strong>（p186）。OSPF 收敛参数包六条：单区域、互联口 point-to-point（免 DR 等待）、BFD 200ms（<code>ip bfd transmit 200 / receive 200 / echo-interval 200</code>）、<code>spf-timer delay 0 / hold 0</code>、ECMP、MTU 预留 50 字节 VXLAN 头。若用 BGP underlay 必须 eBGP：Spine 共享一个 AS、每台 Leaf 唯一 AS（p60）。</p>
+<p><strong>第二步：Overlay（p84）</strong>
+四条命令起 EVPN：<code>ip load bgp</code> → <code>ip bgp autonomous-system 65000</code>（全网同 AS）→ <code>ip bgp address-family evpn</code> → 对每个对端 Loopback 配 <code>neighbor &lt;ip&gt; remote-as 65000 update-source Loopback0 activate-evpn admin-state enable</code>。<code>activate-evpn</code> 是逐邻居开关，漏一条该邻居就不交换 EVPN 路由。规模化上 RR（p132/136）：N 台 Leaf 全互联要 N(N-1)/2 条会话（10 台=45 条），惯例 Spine 兼任 RR，配 <code>cluster-id</code> + <code>route-reflector-client</code>，冗余用单集群双 RR。</p>
+<p><strong>第三、四、五步：业务三部曲（p67/p69/p71）</strong></p>
+<pre><code>service access port 1/1/7 evpn-ethernet-segment enable
+service 100 vxlan vnid 1000 bgp-evpn enable
+service 100 sap port 1/1/7:10
+</code></pre>
+<p>对端 Leaf 重复同样三条。映射惯例：service 100 ↔ EVI/VNI 1000 ↔ ETag 10。三层叠加（非对称 IRB + DAG，p99/p105/p109）：每业务挂 <code>ip interface</code> 地址 + <code>ip anycast-gateway-mac auto</code>（自动生成 00:00:5E:00:01:XX）+ <code>anycast-gateway-address 192.168.x.254</code>。非对称 IRB 硬前提：每个 EVI 在<strong>所有</strong>交换机（含 Spine）实例化——Spine 用 dummy 口占位，这是最常见翻车点（p105）。</p>
+<p><strong>多归属</strong>（在三部曲上加 LAG/ESI，p141-158）：动态 LACP 口 <code>service access linkagg 3 evpn-ethernet-segment enable</code> 自动生成 ESI（<code>03:&lt;CE-MAC&gt;:ff:&lt;Key-Id&gt;</code>）；静态 LAG 例外，必须手工补 <code>esi &lt;10字节&gt;</code>，两端一致全网唯一（p156）。DF 选举默认 service carving：<strong>DF = EVI mod N</strong>（N=候选 PE 数），默认抢占式（p182-183）。</p>
+<p><strong>BUM</strong>：EVPN 下用 RT3 IMET 自动发现远端 VTEP 建头端复制（HER）列表（p41）；8.10R1 仅支持 HER（p180）。Proxy ARP 默认启用（p110/124），PE 收 ARP 先查本地缓存，命中代答、未命中才泛洪。</p>
+<h2 id="_1">三、参数速查表</h2>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>值</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>VXLAN UDP 端口</td>
+<td>4789</td>
+<td>架构章</td>
+</tr>
+<tr>
+<td>VXLAN 头开销</td>
+<td>50 字节（underlay MTU 必须预留）</td>
+<td>p186</td>
+</tr>
+<tr>
+<td>业务默认 MTU / VPN IP-MTU</td>
+<td>9194 / 1500</td>
+<td>p67</td>
+</tr>
+<tr>
+<td>VNI 长度</td>
+<td>24 bit，约 16M 网络</td>
+<td>p167</td>
+</tr>
+<tr>
+<td>RD 公式</td>
+<td>SystemIP:EVI（基于 Loopback0）</td>
+<td>p148</td>
+</tr>
+<tr>
+<td>RT 公式</td>
+<td>target:AS:EVI</td>
+<td>p148</td>
+</tr>
+<tr>
+<td>ES-Import RT</td>
+<td>从 ESI 自动编码，加在 RT4</td>
+<td>p148</td>
+</tr>
+<tr>
+<td>ESI 编码</td>
+<td>物理口 <code>03:端口MAC:ff:ff:ff</code>；LACP 口 <code>03:CE-MAC:ff:Key-Id</code></td>
+<td>p142/p184</td>
+</tr>
+<tr>
+<td>DF 算法</td>
+<td>EVI mod N，默认抢占</td>
+<td>p182-183</td>
+</tr>
+<tr>
+<td>Anycast 虚拟 MAC</td>
+<td>00:00:5E:00:01:XX（XX=VRF 级虚拟路由器 ID）</td>
+<td>p99</td>
+</tr>
+<tr>
+<td>BFD 默认包</td>
+<td>transmit/receive/echo 均 200ms</td>
+<td>p80</td>
+</tr>
+</tbody>
+</table>
+<p><strong>RT 类型总表</strong>（p148 章节与架构指南）：RT1 以太网 AD（aliasing/备份路径/水平分割/批量撤销；RT1A per-ES ETag=0xFFFFFFFF，RT1B per-EVI）；RT2 MAC/IP（主机可达+ARP 抑制）；RT3 IMET（VTEP 发现+BUM 复制）；RT4 ES（同 ES 发现+DF 选举）；RT5 IP 前缀（RFC 9136）；RT6-8 SMET/IGMP-MLD（RFC 9251）。基础通告主要用 RT1-RT4。</p>
+<h2 id="lab">四、Lab 实施精要</h2>
+<ul>
+<li><strong>Lab1 四节点底座</strong>（p78-86）：Spine Loopback 1.1.1.10/11、Leaf 1.1.1.1/2；互联 VLAN 101/102/110/111/112 子网 172.16.1xy.0/24；验证链 <code>sh ip ospf neighbor</code> 全 Full → <code>sh ip routes</code> 双等价路径 → <code>show ip bgp neighbors</code> established + evpn advertised。</li>
+<li><strong>Lab2 双业务+三层</strong>（p102-117）：service 100/200（VNI 1000/2000）共用口 1/1/7，SAP <code>1/1/7:10</code> 与 <code>1/1/7:20</code>；三层每 Leaf 挂 ip interface（Leaf1=.1、Leaf2=.2）+ anycast .254。验证五连：<code>show service evpn</code> → <code>ethernet-segment</code> → <code>debug evpn show bgp route-type rt3</code>（4 条 IMET）→ <code>&lt;esi&gt; sap-info</code> → <code>evi 1000 tunnel-ports</code>（动态 SDP 32768 建到远端 1.1.1.2）。注意 p113 教材笔误：client 9/10 网关原文误写 192.168.30.254，应为 192.168.20.254，照抄必不通。</li>
+<li><strong>Lab3 跨设备多归属</strong>（p153-158）：两 Leaf 各建 <code>linkagg lacp agg 3 size 2</code> + <code>actor admin-key 3</code>，CE 侧同 agg 挂两口，自动 ESI 03:2c:fa:a2:a2:f2:ad:00:03:00；切换演练断 Leaf1 成员口，ES 角色翻转、ping 不中断、MAC 迁到对端 sap。静态 LAG 用 <code>linkagg static agg 7</code> + 手工 ESI。验证三视图：本地单归属 <code>sap-info</code>（* = DF）、本地多归属 <code>carving-info</code>、远端 <code>aliasing-info</code>（p200-201）。</li>
+</ul>
+<h2 id="5-skill">五、学习路径（5 个 skill 顺序）</h2>
+<ol>
+<li><code>vxlan-evpn-five-step-architecture</code>——总路线、迁移论证、版本边界（先建立框架）</li>
+<li><code>vxlan-evpn-underlay-bgp-design</code>——底座与 BGP/RR（先让 Loopback 可达、会话建立）</li>
+<li><code>vxlan-evpn-service-provisioning</code>——L2/L3 业务、IRB/DAG、RD/RT（再开业务）</li>
+<li><code>vxlan-evpn-multihoming-df</code>——双归/ESI/DF（业务可靠接入）</li>
+<li><code>vxlan-evpn-bum-troubleshooting</code>——BUM/ARP 抑制/排障分层（最后学转发面行为与排障）</li>
+</ol>
+<p>排障统一分层（课堂验证链，p64-74）：ES → service → SAP → RT3 → MAC → SDP 隧道 → Proxy ARP → 端到端 ping，逐层核对。</p>
+<h2 id="810r1">六、版本边界与陷阱（8.10R1）</h2>
+<p>EVPN 首版 <strong>8.10R1、仅 OS6900</strong>，四项不支持（p173/p179/p180/p182 逐条命中）：<strong>RT5、对称 IRB、tandem 组播复制、all-active 多归属</strong>。客户需求命中任一项就改方案或核对目标版本 release notes（培训环境为 8.10R2，能力随 release 滚动放开）。</p>
+<p>高频陷阱清单：</p>
+<ul>
+<li><strong>Spine 漏配业务</strong>：非对称 IRB 要求全 PE 全业务实例化，Spine 忘配 dummy 口则 IRB 路由上下文不完整。</li>
+<li><strong><code>activate-evpn</code> 漏一条</strong>：该邻居只建普通 BGP 会话，不交换 EVPN 路由。</li>
+<li><strong>MTU 隐性丢包</strong>：不预留 50 字节会出现大帧静默丢、小包正常。</li>
+<li><strong>on-demand 模型</strong>：<code>sh mac-learning evpn-vxlan</code> 表项少于 BGP RT2 路由数是正常现象（p184/p117），拿 <code>debug evpn show bgp route-type rt2</code> 对比，别拿硬件 FDB 数当路由健康指标。</li>
+<li><strong>Proxy ARP 空表 ≠ 故障</strong>：表项会老化（p203），先两端互 ping 造流量再回查。</li>
+<li><strong>静态 LAG 漏配 esi</strong>：ES 无法标识，多归属整个不成立；手工 ESI 两端不一致 = 两个 ES，DF/aliasing 全失效且难查。</li>
+<li><strong>远端 ES 命令报错</strong>：sap-info/carving-info 仅限本地 ES，远端用 aliasing-info（p200-201）。</li>
+<li><strong>MAC 震荡防护</strong>：<code>mac-mobility loop-protection</code> 须配在所有 Leaf，漏一台该 Leaf 仍会被打爆；根因（ES 网环路或主机重 MAC）要另查。</li>
+</ul>
+<hr />
+<p><em>由 cangjie-skill 流水线从 DT00XTE325EN 蒸馏生成</em></p></main></div></body></html>

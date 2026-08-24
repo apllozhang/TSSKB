@@ -1,0 +1,103 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ovna-deployment-teams-bot — DT00XTE221 · OmniSwitch LAN Troubleshooting</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE221 · OmniSwitch LAN Troubleshooting</h1>
+<div class="sub">587 页 · 有线排障全科（方法论/启动/系统/L2/VC/STP/L3/组播/OVNA）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">方法论与系统</div>
+<a href="skills/lan-troubleshooting-methodology.html">lan-troubleshooting-methodology</a>
+<a href="skills/boot-system-troubleshooting.html">boot-system-troubleshooting</a>
+<div class="grp">故障域</div>
+<a href="skills/l2-connectivity-troubleshooting.html">l2-connectivity-troubleshooting</a>
+<a href="skills/stp-loop-troubleshooting.html">stp-loop-troubleshooting</a>
+<a href="skills/virtual-chassis-troubleshooting.html">virtual-chassis-troubleshooting</a>
+<a href="skills/l3-routing-vrrp-troubleshooting.html">l3-routing-vrrp-troubleshooting</a>
+<a href="skills/multicast-troubleshooting.html">multicast-troubleshooting</a>
+<div class="grp">工具与 AI 运维</div>
+<a href="skills/app-logging-qos-troubleshooting.html">app-logging-qos-troubleshooting</a>
+<a href="skills/ovna-deployment-teams-bot.html" class="on">ovna-deployment-teams-bot</a></aside><main><h1>ovna-deployment-teams-bot</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="network-advisorovna-teams-bot">Network Advisor（OVNA）部署与 Teams Bot 对接</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>"Step by Steps: Step 1 - System Requirements ... Step 2 - Package Installation ... Step 3 - OVNA Configuration. $ sudo dpkg -i ale-ovna.deb ... $ sudo ale-ovna install" (p346)</p>
+<p>"Each time a new device of type Switch is added, the application will push the following commands to the switch: -&gt; swlog output socket <ip_address> 10514 vrf-name <vrf> -&gt; interfaces ddm enable ... -&gt; interfaces ddm-trap enable" (p333)</p>
+<p>"Phase 1 of 4: Creating the Entra App and Teams Bot ... Phase 4 of 4: Enable Graph API authorizations" (p406)</p>
+<p>"The logger command provides an easy way to add log entries from the command line to the switch to make tests. logger -t swlogd ipni dos WARN: VRF 0: DoS type ping overload from ..." (p380)</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<ol>
+<li><strong>部署三步</strong>（f15/p39）：系统要求（四核/8GB/50GB，200 台内；1000 台 120GB、2000 台 210GB；Ubuntu 22.04 / Debian 11/12 / RHEL 9.3；端口 TCP 80/443、UDP+TCP 10514、TCP 6514 TLS、TCP 22；<strong>必须可上外网</strong>）→ 包安装（Debian 系 dpkg -i ale-ovna.deb，RHEL 系 rpm -ivh 且先 systemctl disable firewalld --now；再 ale-ovna install）→ Web 向导（https://<IP> → New to OVNA：公司信息 → 2FA → 时区 → 通知渠道 → OmniVista 同步 → 许可 30 天试用）。</li>
+<li><strong>纳管与处置闭环</strong>（f16）：Add device 后自动推送三条命令（syslog 指向 10514、ddm enable、ddm-trap enable，show swlog 应出现 Log Device 2）。处置链：设备 syslog → 模式匹配 → 通知（Rainbow 气泡/Teams 频道，含设备/MAC/端口与修复建议）→ 用户选处置动作 → OVNA 经 SSH 执行 → 结果回传 → Anomaly History 留档。多 IP 设备先 <code>ip service source-ip loopback0 swlog</code> 固定源。</li>
+<li><strong>Teams Bot 四阶段</strong>（f17，须在装 OVNA <strong>前</strong>完成）：① 建 Entra 应用与 Bot（dev.teams.microsoft.com → Bot Management → New bot → 公网可达 endpoint https://.../msteams 默认端口 10510 → Client secret <strong>只显示一次</strong> → 记 Bot ID）；② 建 Teams 应用并挂 Bot（Personal+Team scope）→ Publish → Download app package；③ 取 Application (client) ID 与 Directory (tenant) ID；④ 加 Graph API 权限（Team.ReadBasic.All、Channel.Create、Group.ReadWrite.All 等）并 Grant admin consent。</li>
+<li><strong>许可与门槛</strong>（p39）：纳管需 AOS 8.7.R2+（OS6xxx/9xxx）；OS2xxx 需 5.2.R1+。许可按设备 IP 计（NETAD-SWITCH/AP-1Y/3Y/5Y），试用 5 交换机+5 AP，激活即倒计时。</li>
+<li><strong>异常对象模型</strong>（g34-g36/g37）：预置异常类别（环路/端口 flap/DDoS/风暴/VC takeover/OSPF-BGP 状态变化/电源 POE/IP 重复/高 CPU/SFP 阈值等）；可自建自定义异常；Anomaly History 供行为模式分析。三类处置动词：Disable Port（执行变更）/ Collect Logs（取证）/ Acknowledge（仅确认）。</li>
+<li><strong>无损演练</strong>（p40）：su 维护 shell 用 Linux logger 注入符合异常模式的日志（DoS ping overload / PMD generated），即可走完检测→通知→处置→留档全链路，不必制造真实故障。前置：与 OVNA/外网连通 + NTP 对时。</li>
+</ol>
+<h2 id="a1-lab">A1 · 书中案例（LAB 故障根因）</h2>
+<ul>
+<li><strong>c10（LAB5 用例1，p380-382）</strong>：logger 注入 DoS ping overload → syslog 到 OVNA 命中 DDoS 模式 → Rainbow 通知带处置选项 → 选 Disable Port → OVNA SSH 下发 <code>interfaces port 1/1/1 admin-state disable</code>（交换机 CLI log 可见 result: SUCCESS）→ Anomaly History 留档。完整闭环样板。</li>
+<li><strong>c11（LAB5 用例2，p383）</strong>：注入 "PMD generated at /flash/pmd/..." → 处置方向是收集日志与 PMD 文件并联系 ALE 支持——崩溃类异常不提供网络侧自愈动作，转向取证与升级 TAC（PMD 见 g33）。</li>
+<li><strong>c12（LAB5 用例3，p384）</strong>：禁用 linkagg 成员口 → 日志因果链：portMgrNi LINKSTS DOWN → linkAggNi "Convergence port down" + LACP Sync Out（partner:Out actor:In）→ linkAggCmm 端口离开 agg 17 → OVNA LinkAgg Down 异常。人工排障 linkagg 时对读此因果链。</li>
+<li><strong>c13（LAB5 用例4，p385）</strong>：错误用户名登录 → CUSTLOG "Authentication failure detected: user admin" → 无破坏性动作，Acknowledge 即可——三类处置动词最轻一级示例。</li>
+</ul>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>触发：部署/升级 OVNA、纳管设备后收不到告警、配 Teams/Rainbow 通知、演练告警闭环、告警处置选型。</li>
+<li>区分：<strong>告警只反映现象，根因还在各协议 skill</strong>——DoS 告警判环在 stp-loop、OSPF 告警判读在 l3；本 skill 解决"工具链部署与处置动作"层面。syslog 调级/检索手法在 app-logging-qos skill。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>部署前：若要 Teams 通知，先完成四阶段（f17）拿到 Bot ID/Client ID/Tenant ID 与 app package。</li>
+<li>装机：确认外网可达 → dpkg/rpm 安装 →（RHEL）disable firewalld → <code>ale-ovna install</code>（交互选 IP/代理/TLS）。</li>
+<li>Web 向导：管理员信息 → 2FA → 时区 → 通知渠道（Rainbow Bubble 或 Teams + SMTP）→ 许可激活。</li>
+<li>纳管：Device Management → Add device（IP/SSH 凭据）；多 IP 设备先在交换机 <code>ip service source-ip loopback0 swlog</code>；show swlog 验证 Log Device 2 出现、show log swlog 验证 syslog 外发。</li>
+<li>演练：su 进维护 shell → logger -t swlogd 注入目标异常日志 → show log swlog |grep 验证 → 在气泡/频道收通知并选处置 → 交换机 show interfaces status 验证动作生效 → Anomaly History 核对留档。</li>
+<li>升级：ale-ovna update（跨版本先装新包；小版本加 -c）。迁移：备份 → 新机安装 → 导入 → 补配置 → 导许可。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li>Teams 四阶段必须在装 OVNA 前做完，产出的 ID 在 OVNA 安装向导中要用（f17）。</li>
+<li>Client secret 只显示一次，错过只能重建（与 VC write memory 警告同属"不可逆操作"类，ce18 类比）。</li>
+<li>无外网访问装不了（k3s 与镜像下载依赖互联网），隔离网环境需评估代理方案。</li>
+<li>崩溃类（PMD）异常没有一键修复动作，正确处置是收集证据升级 TAC（c11）。</li>
+<li>注入测试日志前提是 NTP 对时，否则通知与日志时间对不上（p40）。</li>
+<li>端口镜像/监控与六类不镜像流量的边界见 app-logging-qos skill（ce14）；DDoS 告警先判环再谈攻击（ce19，stp skill）。</li>
+</ul>
+<hr />
+<p>来源条目: f15, f16, f17, p39, p40, c10, c11, c12, c13, g33, g34, g35, g36, g37</p></main></div></body></html>

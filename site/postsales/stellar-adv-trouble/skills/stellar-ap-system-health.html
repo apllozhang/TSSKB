@@ -1,0 +1,162 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>stellar-ap-system-health — DT00XTE478 · Stellar WLAN 高级排障</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE478 · Stellar WLAN 高级排障</h1>
+<div class="sub">187 页 · 无线排障专题（方法论/工具箱/四层排障/勘测/TKC）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">方法论</div>
+<a href="skills/wlan-trouble-methodology.html">wlan-trouble-methodology</a>
+<div class="grp">工具与体检</div>
+<a href="skills/stellar-ap-toolbox.html">stellar-ap-toolbox</a>
+<a href="skills/stellar-ap-system-health.html" class="on">stellar-ap-system-health</a>
+<div class="grp">故障域</div>
+<a href="skills/client-connection-trouble.html">client-connection-trouble</a>
+<a href="skills/dot1x-radius-trouble.html">dot1x-radius-trouble</a>
+<a href="skills/network-side-trouble.html">network-side-trouble</a>
+<a href="skills/wireless-rf-roaming-trouble.html">wireless-rf-roaming-trouble</a>
+<div class="grp">勘测纠正</div>
+<a href="skills/site-survey-remediation.html">site-survey-remediation</a></aside><main><h1>stellar-ap-system-health</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="stellar-ap-led">Stellar AP 基础层排障：LED · 系统 · 进程 · 门户 · 集群</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>Flashing Green: System Running, Default SSID broadcasted. Solid Green: System Running, Single band working. Solid Blue: System Running, Dual band working. Flashing Blue &amp; Red: OS upgrading. Solid Red: System startup. AP1251/AP1360: 7 LEDs - SYS ON: Power On - System Running; ENET0/1 Solid: Ethernet Link UP; 5G/2.4G Solid: SSID created and running; PSE ON: PSE Enabled. (p41-44)</p>
+<p>High CPU utilization - Impact performances of the Stellar AP: speed, features not working as intended. Process Status - OK: R (Running), S (Interruptible Sleep); Issue: X (Dead) and Z (Zombie process). Too many Zombie processes will consume large portion of memory. Share these processes with the Technical Support when opening a ticket. (p51-53)</p>
+<p>eag_cli show user all - ID, UserName, UserIP, UserMAC, SessionTime, OutputFlow, InputFlow, AuthType, ESSID. Check List: Is the client authenticated on the Captive Portal? For how long is the client connected? Does the client send/receive data to the network? (p55)</p>
+<p>Check the "cluster" process on the AP - Are both processes running? Two existing "cluster_mgt" threads indicates abnormal behavior (one running, one sleeping). (p59)</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<p><strong>LED 免登录第一道体检表（单三色 LED 家族 AP12XX/13XX/14XX/15X1）</strong></p>
+<table>
+<thead>
+<tr>
+<th>状态</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>闪绿</td>
+<td>运行中，默认 SSID 广播中</td>
+</tr>
+<tr>
+<td>纯绿</td>
+<td>运行中，仅单频段工作</td>
+</tr>
+<tr>
+<td>纯蓝</td>
+<td>运行中，双频工作</td>
+</tr>
+<tr>
+<td>蓝红闪</td>
+<td>固件升级中</td>
+</tr>
+<tr>
+<td>蓝/红/绿三色闪</td>
+<td>AP 定位模式</td>
+</tr>
+<tr>
+<td>纯红</td>
+<td>系统启动中</td>
+</tr>
+</tbody>
+</table>
+<p>AP1251/AP1360 用 7 颗独立 LED：SYS（常亮=运行/闪烁=加载升级）、2.4G/5G（SSID 创建运行）、ENET0/1（链路 up）、SFP、PSE（PoE 供电）。AP1201H 的 PoE 灯：橙常亮=受电在线、橙闪=离线、灭=PSE 禁用。</p>
+<p><strong>系统四命令</strong></p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>看什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>showsysinfo</td>
+<td>SN/型号/MAC/<strong>国家码</strong>/软硬件版本</td>
+</tr>
+<tr>
+<td>showver</td>
+<td>精确构建版本（如 3.0.7.20）</td>
+</tr>
+<tr>
+<td>getmode</td>
+<td>CLUSTER=Express / OV=Cloud / OVNG</td>
+</tr>
+<tr>
+<td>show_cluster</td>
+<td>集群成员（MAC/IP/角色/版本）+ OmniVista 服务器 IP（云模式用 getovinfo）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>进程健康判定</strong>：top 按 %CPU 找元凶、看全局内存；ps 看状态列——<strong>R/S 正常，X（Dead）/Z（Zombie）异常</strong>；僵尸进程堆积吃内存。开票必附进程列表。</p>
+<p><strong>高 CPU 四根因</strong>：异常进程 / 进程死循环（疑软件缺陷）/ 过量日志与跟踪引发的计算 / DoS 攻击。</p>
+<p><strong>重启核查顺序纪律</strong>：先 <code>date</code>（对时，时间不可信则日志定位无意义）→ <code>uptime</code>（判断是否计划外重启）→ 才去日志收集包按对齐后时间戳找重启原因。</p>
+<p><strong>Captive Portal 三查</strong>：<code>eag_cli show user all</code> 核对——是否已认证（有无表项）、连了多久（SessionTime）、有无收发数据（OutputFlow/InputFlow 全零=认证后不通）；再看 <code>cat /var/log/eag.log</code> 三阶段痕迹定位卡点。</p>
+<p><strong>Express 集群三查</strong>：<code>cluster_mgt -x show=self / show=pvc</code>（PVC 选出且角色正确、状态 RUN）→ <code>show_cluster</code>（成员齐全）→ <code>ps | grep cluster</code>（cluster_mgt 与 cluster_cor 各一个；<strong>出现两个 cluster_mgt 线程=异常</strong>）。</p>
+<h2 id="a1">A1 · 书中案例</h2>
+<ul>
+<li>教材示例 <code>/usr/sbin/drm</code> 占 81% CPU，即 top 定位元凶后随工单上报的典型（p52）。</li>
+<li>eag.log 三阶段：客户端首联 IP 未知（userip 0.0.0.0）→ 获取 IP → 发出 PortalRedirect。<strong>卡在 IP 未知阶段 = DHCP 未完成，先查地址获取而非门户本身</strong>（p56）。</li>
+<li>p50 重启核查：uptime 远小于部署时长即发生过非计划重启，先对时再翻日志。</li>
+</ul>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>症状是"AP 整体不对劲"（灯不对、疑似重启、变慢、功能失灵）→ 本 skill；症状是"单个客户端连不上/掉线"→ <code><a href="client-connection-trouble.html">client-connection-trouble</a></code>。</li>
+<li>门户相关：用户 complaining 转不出认证页 → 本 skill 的 eag 部分；802.1X 认证失败（无门户）→ <code><a href="dot1x-radius-trouble.html">dot1x-radius-trouble</a></code>。</li>
+<li>LED 显示纯红（启动中）长时间不变化 → 硬件/启动问题，本 skill 优先；LED 正常但 AP 不上线 → <code><a href="network-side-trouble.html">network-side-trouble</a></code>。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>到场先看 LED，按表判读单双频/升级/启动状态，免登录定性。</li>
+<li>SSH/串口进 CLI（见 stellar-ap-toolbox），跑 showsysinfo / showver / getmode / show_cluster，核对国家码与版本与预期一致。</li>
+<li>怀疑重启：date → uptime → 日志收集包按时间戳找原因。</li>
+<li>性能异常：top 找元凶进程（记 PID/命令名/%CPU）→ ps 查状态列扫 X/Z → 记录后随工单上报，勿自行 kill 系统进程。</li>
+<li>门户故障：eag_cli show user all 三查 → cat /var/log/eag.log 定位三阶段卡点 → 卡在 IP 未知转 <code><a href="client-connection-trouble.html">client-connection-trouble</a></code> 的 DHCP 排查。</li>
+<li>Express 集群异常：三查依次执行，两个 cluster_mgt 线程即判异常。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li>跳过 date/uptime 对时直接翻日志找重启原因——时间线错位，结论不可信。</li>
+<li>僵尸进程属软件问题（父进程未回收子进程），正确动作是上报工单附进程列表，不是反复重启掩盖。</li>
+<li>"过量日志/跟踪开启"引发计算型高 CPU 这一根因容易被忽略——排查时检查是否开了 debug/trace。</li>
+<li>双 cluster_mgt 线程（一运行一睡眠）是产品特定的异常信号，别当成正常冗余。</li>
+<li>LED 表只覆盖教材所列型号；其他型号先查对应快速指南。</li>
+</ul>
+<hr />
+<p>来源条目: p06, p08, p09, p10, p11, p12, ce17, ce18, ce20, ce22, ce23（术语 g09 PVC, g10 Cluster, g11 getmode 三态, g16 Captive Portal, g17 eag, g23 PoE/PSE, g33 僵尸进程）</p></main></div></body></html>

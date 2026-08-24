@@ -1,0 +1,94 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>spb-ov2500-delivery — DT00XPS279 · OmniSwitch LAN SPB 售前</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XPS279 · OmniSwitch LAN SPB 售前</h1>
+<div class="sub">Issue 05 · 147 页 · SPB 技术推销课（卖点弹药/架构/L3 服务/案例/三技术对比）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">售前攻防</div>
+<a href="skills/spb-presales-battlecard.html">spb-presales-battlecard</a>
+<a href="skills/spb-micro-segmentation.html">spb-micro-segmentation</a>
+<div class="grp">架构与设计</div>
+<a href="skills/spb-topology-isis-design.html">spb-topology-isis-design</a>
+<div class="grp">边缘与服务</div>
+<a href="skills/spb-edge-services.html">spb-edge-services</a>
+<div class="grp">L3 集成</div>
+<a href="skills/spb-l3-integration.html">spb-l3-integration</a>
+<div class="grp">交付与选型</div>
+<a href="skills/spb-ov2500-delivery.html" class="on">spb-ov2500-delivery</a>
+<a href="skills/spb-vs-evpn-mpls-selection.html">spb-vs-evpn-mpls-selection</a>
+<a href="skills/spb-stp-migration-cases.html">spb-stp-migration-cases</a>
+<a href="skills/spb-license-spec-sizing.html">spb-license-spec-sizing</a></aside><main><h1>spb-ov2500-delivery</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="omnivista-2500">OmniVista 2500 服务交付与配置分层</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>"SPB - SERVICE CREATION: Basic — Select/edit/add devices; UNP Profiling (Optional Steps); Advanced (if required); Service - Creation."（p104）</p>
+<p>"Control Plane (NNI ports) SPB Core level, On BEB + BCB. Data Plane (UNI ports) SPB Access level, Only on BEB. Services: UNP Access Port, UNP Profiles, Access Port SAP, Pseudo-wire, Service. L2 Profiles (optional), Loopback Detection (LBD) (optional)."（p73）</p>
+<p>"ISID - A service instance identifier... The valid range is 256 - 16777214. Tag Value - If the traffic is untagged, the SAP is created with 0 as the encapsulation value (for example, 1/12:0)."（p109）</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<p><strong>① AOS 配置两层分单法（f13）</strong>：把 SPB 配置拆成两张独立工单——
+- <strong>SPB Core level</strong>（NNI 口，BEB+BCB 都配）：IS-IS 接口、BVLAN、Control BVLAN 等骨干控制面，一次配好基本不动；
+- <strong>SPB Access level</strong>（仅 BEB）：静态/动态 SAP、UNP profile、伪线、服务，以及可选的 L2 Profile 与 LBD，日常增删只发生在这里。</p>
+<p><strong>② OV2500 服务创建向导（f16）</strong>：Basic 选设备 → UNP Profiling（可选）→ Advanced（按需）→ 创建。要点是"必选项最小化、可选项显式分层"，管理员不必一次面对全部参数。</p>
+<p><strong>③ 四大功能分区（p100）</strong>：服务配置（Service Configuration）/ L2 Profiles / 全局设置（先选交换机）/ OneTouch 模式。</p>
+<p><strong>④ SPB Profile 模板（p109/p32）</strong>：Tag/ISID/BVLAN/组播模式/VLAN 翻译一次定义多处套用。参数规则：<strong>I-SID 有效范围 256-16777214</strong>（避开 0-255 保留段）；untagged 流量 SAP 封装值记 0（如 1/12:0）；BVLAN 必须填已存在的骨干 VLAN。</p>
+<p><strong>⑤ 监控面</strong>：设备/SAP/SDP 三级信息表（SDP ID 由 OV2500 动态生成）、SPB 拓扑视图含 LACP 链路明细；服务参数含 Mcast Mode（Headend/Tandem）、VLAN Translation、VPN MTU 等。</p>
+<h2 id="a1">A1 · 书中案例</h2>
+<p>p100-112 全流程 GUI 演示：Global Settings 选交换机 → 创建服务（Tunnel ID/Service ID/BVLAN/Mcast Mode 等字段）→ 创建 L2 Profile（控制帧 Tunnel/Drop/Peer 三态选择）→ 服务监控三级表 → SPB Profile 模板 → 拓扑视图。售前话术落点："边缘只配一次、核心零触碰（No-touch core），GUI 全流程可视化"。</p>
+<h2 id="a2">A2 · 触发场景</h2>
+<ul>
+<li>POC 或交付演示：用 OV2500 向客户展示 SPB 服务从创建到监控的全路径；</li>
+<li>实施方案排配置工作量：按 Core/Access 两张工单表分工；</li>
+<li>规划 SPB Profile 模板参数（I-SID 取值避开保留段）。
+与相邻 skill 区分：控制帧三态、组播模式等参数的业务含义见 <code><a href="spb-edge-services.html">spb-edge-services</a></code>；UNP 微分段机制见 <code><a href="spb-micro-segmentation.html">spb-micro-segmentation</a></code>；本 skill 只管"怎么配、在哪儿配、怎么演示"。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>排配置工单：先排 Core level 清单（骨干一次成型），再排 Access level 清单（服务随需增删），与 edge-only 论证互为印证。</li>
+<li>建 SPB Profile 模板：定 Tag Value、I-SID（256-16777214）、BVLAN、组播模式、VLAN 翻译，多处复用。</li>
+<li>演示路径：Global Settings 选设备 → 服务创建向导（Basic/可选 UNP/按需 Advanced）→ 拓扑视图看 SAP/SDP/LACP 状态收尾。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li>OV2500 章节是 GUI 导览，无故障排查深度（售后归 DT00WTE323 课程），勿拿它承诺排障能力。</li>
+<li>I-SID 取值避开 0-255 保留段；untagged SAP 记 0 是工具表示法，别当真实 VLAN 规划。</li>
+<li>书中界面字段是 2025-02 快照，实际版本字段名与默认值以现场 OV2500 版本为准。</li>
+</ul>
+<hr />
+<p>来源条目: f13, f16, p32, c12, g24</p></main></div></body></html>

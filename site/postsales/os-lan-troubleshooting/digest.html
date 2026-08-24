@@ -1,0 +1,249 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>精华长文 DIGEST — DT00XTE221 · OmniSwitch LAN Troubleshooting</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE221 · OmniSwitch LAN Troubleshooting</h1>
+<div class="sub">587 页 · 有线排障全科（方法论/启动/系统/L2/VC/STP/L3/组播/OVNA）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">方法论与系统</div>
+<a href="skills/lan-troubleshooting-methodology.html">lan-troubleshooting-methodology</a>
+<a href="skills/boot-system-troubleshooting.html">boot-system-troubleshooting</a>
+<div class="grp">故障域</div>
+<a href="skills/l2-connectivity-troubleshooting.html">l2-connectivity-troubleshooting</a>
+<a href="skills/stp-loop-troubleshooting.html">stp-loop-troubleshooting</a>
+<a href="skills/virtual-chassis-troubleshooting.html">virtual-chassis-troubleshooting</a>
+<a href="skills/l3-routing-vrrp-troubleshooting.html">l3-routing-vrrp-troubleshooting</a>
+<a href="skills/multicast-troubleshooting.html">multicast-troubleshooting</a>
+<div class="grp">工具与 AI 运维</div>
+<a href="skills/app-logging-qos-troubleshooting.html">app-logging-qos-troubleshooting</a>
+<a href="skills/ovna-deployment-teams-bot.html">ovna-deployment-teams-bot</a></aside><main><h1>精华长文 DIGEST</h1><h1 id="digest-omniswitch">DIGEST · OmniSwitch 有线排障精华（不读全书、只看精华）</h1>
+<blockquote>
+<p>目标读者：拿到故障单要立刻动手的网工。本文浓缩 587 页教材（DT00XTE221EN）+ 9 个排障 skill 的判据、命令与红线，数字与命令均带原书页码。</p>
+</blockquote>
+<h2 id="_1">一、一页看懂有线排障</h2>
+<p><strong>七步主流程</strong>（p52）：Identify 收集症状 → Re-Create 复现 → Isolate 隔离 → Locate 定位（用 OSI 定到层/设备/物理位置）→ Solve 修复 → Verify 验证（复测回基线才算修好）→ Document 记录并保存变更。不可复现就回到第一步继续追问，不许跳去"修复"。</p>
+<p><strong>OSI 六种切入法</strong>（p57-58）：Bottom-Up（物理层往上，硬件线缆线索，慢而稳）、Top-Down（应用往下，软件导向）、Divide and Conquer（中间层二分，复杂新问题首选）、Follow the path（沿数据路径走）、Spot the differences（对比正常/异常设备配置差异）、Move the problem（组件换位观察）。</p>
+<p><strong>TKC 先查库再动手</strong>（p24-31）：ALE 官方知识库，Partner Portal / My Portal 进入，检索框直接写自然语言；用例结构固定为 Case Description（拓扑/场景/环境/诊断）+ Resolution（配置/热补丁/固件升级）。版本相关故障（如 VC 重载后 linkagg 保持 DOWN、UNP 用户卡 In progress）往往一条检索直接命中修复版本（p132）。第二渠道是 Spacewalkers 开放社区（www.spacewalkers.com）。开 eService Request 前按 p54 备齐拓扑、版本、日志、已做动作，信息不全会被打回。</p>
+<p>排障前提是九类文档基线（p53）；缺了就用 <code>show lldp remote-system</code>、<code>show vlan members</code>、<code>show linkagg port</code> 重建拓扑。</p>
+<h2 id="skill">二、故障域路由图（现象 → skill 分流）</h2>
+<table>
+<thead>
+<tr>
+<th>故障现象</th>
+<th>分流判据</th>
+<th>去 skill</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>任意故障，刚开始</td>
+<td>先定方法、先查 TKC</td>
+<td>lan-troubleshooting-methodology</td>
+</tr>
+<tr>
+<td>无法启动/密码丢/模块 DOWN/CPU 高/温度告警</td>
+<td>整机或系统级，POWER ON + operational DOWN = 先怀疑软件（p100）</td>
+<td>boot-system-troubleshooting</td>
+</tr>
+<tr>
+<td>同网段 ping 不通、端口 down、VLAN/端口类型错配、ARP 不解析</td>
+<td>单段二层路径问题</td>
+<td>l2-connectivity-troubleshooting</td>
+</tr>
+<tr>
+<td>MAC 漂移、广播风暴、CPU 98% + DoS invalid ip 刷屏（源 MAC 00:00:5e）</td>
+<td>是环不是攻击，先查环（p199）</td>
+<td>stp-loop-troubleshooting</td>
+</tr>
+<tr>
+<td>多台同时异常、VFL 不 up、NOK 码、vcsetup.cfg 报错</td>
+<td>先 <code>show virtual-chassis topology</code> 判断 VC 层</td>
+<td>virtual-chassis-troubleshooting</td>
+</tr>
+<tr>
+<td>跨网段不通、DHCP 拿不到地址、OSPF/RIP 邻居卡 Init、VRRP VRID Errors</td>
+<td>三层路由与网关冗余</td>
+<td>l3-routing-vrrp-troubleshooting</td>
+</tr>
+<tr>
+<td>单播通、组播不通</td>
+<td>PIM 未在路径某接口启用或 RPF 不通（p280）</td>
+<td>multicast-troubleshooting</td>
+</tr>
+<tr>
+<td>要读/调日志、QoS 计数找丢包段、抓包、802.1X 认证失败</td>
+<td>工具层，服务所有协议排障</td>
+<td>app-logging-qos-troubleshooting</td>
+</tr>
+<tr>
+<td>部署 AI 运维、纳管告警、Teams Bot、处置闭环</td>
+<td>工具链层面；根因仍回各协议 skill</td>
+<td>ovna-deployment-teams-bot</td>
+</tr>
+</tbody>
+</table>
+<p>两条跨域口诀：CPU 高 + DoS 刷屏先查环（环路把管理面打挂时必须走 console/EMP，p199）；组播不通先 traceroute 单播路径——RPF 依赖单播路由，单播不通先修单播。</p>
+<h2 id="_2">三、命令速查表</h2>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>命令</th>
+<th>页码/判读</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>系统体检入口</td>
+<td>show system → show chassis/cmm → show running-directory → show module status/long → show hardware-info → show health</td>
+<td>p04；短 uptime = 刚重启过，重要线索</td>
+</tr>
+<tr>
+<td>CPU 水位与隔离</td>
+<td>show health [all cpu] → show health slot <c/s> → su 维护 shell 用 top/ps -T</td>
+<td>p110-111；四大根因：异常进程/规模设计不当/DoS/上 CPU 报文过多</td>
+</tr>
+<tr>
+<td>端口判读</td>
+<td>show interfaces（Error Frames/CRC 两次采样、Collision、Last Time Link Changed）</td>
+<td>p10；全双工下 Collision 涨 = 对端被强制半双工</td>
+</tr>
+<tr>
+<td>VLAN 三要素</td>
+<td>show vlan member</td>
+<td>p124；端口在正确 VLAN、端口类型匹配（default/qtagged）、STP 状态 forwarding</td>
+</tr>
+<tr>
+<td>ARP 五步</td>
+<td>show mac-learning port → show ip interface vlan → show arp → 终端 arp -a</td>
+<td>p127-128</td>
+</tr>
+<tr>
+<td>日志检索</td>
+<td>show log swlog |grep <appid> [timestamp …] [reverse]</td>
+<td>p17；三板斧 grep/时间戳/reverse</td>
+</tr>
+<tr>
+<td>日志调级</td>
+<td>swlog appid ospf_0 subapp all level debug3 → <strong>排障后必须调回 info</strong></td>
+<td>p151/p246；OSPF 子应用：14=HELLO 15=AUTH 16=STATE</td>
+</tr>
+<tr>
+<td>MAC 漂移</td>
+<td>show mac-learning mac-address <mac>（执行两次）；swlog appid slNi subapp macmove level debug2 → |grep MACMOVE</td>
+<td>p181；"flapped 3655 times" 即实锤</td>
+</tr>
+<tr>
+<td>BPDU 统计</td>
+<td>debug stp bpdu-stats &lt;实例&gt; start/show/stop</td>
+<td>p23；某口只 tx 无 rx = 单向链路</td>
+</tr>
+<tr>
+<td>VC 四层</td>
+<td>show virtual-chassis topology → consistency → cat vcsetup.cfg → debug show virtual-chassis status</td>
+<td>p162；NOK_08 没配 VFL 口、NOK_14 VFL 未全 up、NOK_17 四分钟没发现对等体（p195）</td>
+</tr>
+<tr>
+<td>丢包定位</td>
+<td>policy condition source ip + icmptype 8/0 → rule … log → qos apply → show active policy rule / show qos log</td>
+<td>p214；两端部署对比计数找丢包段</td>
+</tr>
+<tr>
+<td>OSPF 邻居</td>
+<td>show ip ospf neighbor → show ip ospf interface → swlog … level debug3 → |grep ospf_0</td>
+<td>p246；日志直接给差异值（helloInterval、pktKey）</td>
+</tr>
+<tr>
+<td>DHCP 中继</td>
+<td>show ip dhcp relay statistics</td>
+<td>p227；Tx Server Total Count = 0 = 中继没转发</td>
+</tr>
+<tr>
+<td>VRRP 三角</td>
+<td>show ip vrrp ↔ show ip vrrp statistics ↔ show configuration snapshot vrrp</td>
+<td>p250；VRID Errors&gt;0 优先查虚拟 IP/VRID 不匹配</td>
+</tr>
+<tr>
+<td>组播</td>
+<td>show ip multicast [group/forward/source] → show ip pim interface/neighbor/sgroute</td>
+<td>p257；沿单播路径逐口核 PIM enabled</td>
+</tr>
+<tr>
+<td>抓包</td>
+<td>port-monitoring 1 source port &lt;口&gt; capture-type full enable file /flash/capture.cap</td>
+<td>六类流量设计上抓不到：LACP/LLDP/802.1X/OAM/L3 控制报文/GARP</td>
+</tr>
+</tbody>
+</table>
+<h2 id="lab">四、五大 LAB 根因复盘</h2>
+<ul>
+<li><strong>LAB1（L2 连通）</strong>：Client10 认证后 ping 不通 Client5，三层根因叠加——端口 1/1/1 被禁用（inactive）、6860-B 的 vlan 30 IP 接口未启用、UNP 会话卡 In progress 需 <code>unp user flush port 1/1/1</code>。教训：认证 OK 不等于路径通（p140-143）。</li>
+<li><strong>LAB2（VC + STP）</strong>：案例 1——6360 两台各自成 Master，vcsetup.cfg.1.err 直指 <code>vf-link-mode static</code> 在 stackport 平台不支持、member-port 编号与 chassis-id 不符；改 auto 后 write memory 弹 "Chassis 2 missing … erased permanently" 警告需停下确认（p191-198）。案例 2——CPU 98% + DoS invalid ip 刷屏，真根因是 VLAN 278 STP 被 OFF，两端口成环把自己的 VRRP 通告环回收；修复路径：禁端口 → <code>spantree Vlan 278 admin-state enable</code> → 恢复（p199-203）。</li>
+<li><strong>LAB3（L3 + DHL）</strong>：案例 1——DHL 双链路全 dhl-blocking，根因两条链路 native VLAN 不一致（vlan 57 一边 tagged 一边 untagged）（p223-226）。案例 2——DHCP 拿不到地址，Tx Server = 0，中继目的地 172.168.100.102 抄错（应为 192）（p223-227）。</li>
+<li><strong>LAB4（路由协议/组播）</strong>：VRRP 三连错——VRID2 没 enable、虚拟 IP .154 应为 .254、接口 DOWN 导致 Initialize（p278-284）；OSPF 双层错——auth-key 一字母之差（alcatell/alcatel）叠 hello-interval 20 vs 10，debug3 日志直给答案，修一层复测再挖下一层，路由数 22→17→22 回基线（p279-289）；组播案例——单播通组播不通，路径上 6900-A 的 int_217 没启用 PIM，join 到不了源侧（p280-292）。</li>
+<li><strong>LAB5（Network Advisor）</strong>：su 维护 shell 用 <code>logger -t swlogd</code> 注入 DoS/PMD 日志，走完检测→通知→处置→留档闭环；DoS 选 Disable Port 由 OVNA 经 SSH 下发，PMD 崩溃类只取证升级 TAC，登录失败 Acknowledge 即可（p380-385）。</li>
+</ul>
+<h2 id="_3">五、高可用排障专题</h2>
+<p><strong>STP 环路八步清单</strong>：① 取逻辑+物理拓扑；② 开监控（swlog 调 debug2 + <code>swlog output flash-file-size 12500</code>）；③ 核 MAC 反复 flush/重学；④ 收集全网 STP 配置（同一模式/根桥/阻塞口位置）；⑤ 核定时器与 Topology Changes（快速递增 = 设备无法就根桥达成一致，BPDU 可能被丢，p180）；⑥ 本应阻塞的口变转发只有两大原因——原转发链路物理故障、根桥 BPDU 被丢；⑦ MAC flapping 三板斧；⑧ MSTP 三致性（region 名/ VLAN-MSTI 映射/互联链路全 tagged，p184）。应急止血：优先禁用"本应阻塞"的端口。</p>
+<p><strong>VC 四层递进</strong>：topology（角色/状态）→ consistency（带星号项必一致：Chassis Type/Chas ID/Group/Hello Interval/Control Vlan/License）→ 逐台 cat vcsetup.cfg（看 .err 文件的行号与原因）→ debug status 按 L0-L8 定位 NOK 码。脑裂防护：VFL 双断时 RCD（带外，走 EMP）与 VCSP（带内）检测分裂，非 Master 侧自动进 Protection 模式关闭全部用户口——这是设计行为，先恢复 VFL 再谈业务。</p>
+<h2 id="9-skill">六、学习路径（9 个 skill 顺序）</h2>
+<ol>
+<li>lan-troubleshooting-methodology（总纲：七步法 + OSI 六法 + TKC）</li>
+<li>boot-system-troubleshooting（系统层判读，一切 LAB 的前置）</li>
+<li>l2-connectivity-troubleshooting（物理→配置→ARP 三层走法）</li>
+<li>app-logging-qos-troubleshooting（swlog/QoS/抓包工具层）</li>
+<li>stp-loop-troubleshooting（环路八步 + DHL）</li>
+<li>virtual-chassis-troubleshooting（VC 四层 + NOK 码）</li>
+<li>l3-routing-vrrp-troubleshooting（OSPF/RIP/VRRP/DHCP）</li>
+<li>multicast-troubleshooting（IPMS/DVMRP/PIM 分层）</li>
+<li>ovna-deployment-teams-bot（AI 运维闭环，工具链收口）</li>
+</ol>
+<p>先方法、再系统、再二层、再工具、再逐协议上探、最后运维平台——与原书三天课程结构一致（DAY1 p3-143 / DAY2 p144-227 / DAY3 p228-385）。</p>
+<h2 id="_4">七、排障红线</h2>
+<ul>
+<li><strong>先占 console</strong>：环路风暴把 Telnet/SSH 全打挂，不占 console 口就只能干等；EMP 是带外兜底（ce01）。</li>
+<li><strong>su 维护 shell 慎用</strong>：不是后门，只在技术支持指导下进；动作限定只读观察（top/ps），找到可疑进程联系 ALE，绝不自行杀进程，用完立即 exit（ce02）。</li>
+<li><strong>write memory 警告必须停下</strong>：VC 变更/半拆状态下弹 "Chassis N missing … erased permanently"，随手按 Y = 缺失机箱配置永久删除（ce18）。同类不可逆：Teams Bot 的 Client secret 只显示一次。</li>
+<li><strong>debug 用完调回 info</strong>：debug 级日志持续高速写 flash，本身制造高 CPU/日志风暴次生故障——<code>swlog appid … level info</code> 收尾要写进 SOP（ce04）；<code>debug ip packet</code> 必须带过滤维度（ip-address/protocol/timeout 60）并尽快 stop（ce03）。</li>
+<li><strong>不调 STP 定时器</strong>：唯二可调的是桥优先级与端口 cost/priority（ce17）；升级顺序铁律——先 AOS 再 U-Boot/FPGA/CPLD，颠倒会出问题（ce09）。</li>
+<li><strong>clear arp-cache 触发全网重学</strong>：高峰期在核心上执行会短暂中断，选维护窗口（ce10）。</li>
+<li><strong>ONIE 密码恢复只能从 console 做</strong>，网管侧做不了（ce11）。</li>
+</ul>
+<hr />
+<p>由 cangjie-skill 流水线从 DT00XTE221EN 蒸馏生成。</p></main></div></body></html>

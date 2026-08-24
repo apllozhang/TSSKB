@@ -1,0 +1,105 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>spb-oam-troubleshoot — DT00XTE323 · OmniSwitch LAN SPB 实施</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE323 · OmniSwitch LAN SPB 实施</h1>
+<div class="sub">Edition 12 · 367 页 · SPB 交付配置手册（骨干→L2→L3→自动化，10 Lab CLI 全录）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">骨干与 L2</div>
+<a href="skills/spb-backbone-deploy.html">spb-backbone-deploy</a>
+<a href="skills/spb-l2-service.html">spb-l2-service</a>
+<div class="grp">L3 集成</div>
+<a href="skills/ip-over-spb.html">ip-over-spb</a>
+<div class="grp">保护与冗余</div>
+<a href="skills/spb-bum-protection.html">spb-bum-protection</a>
+<a href="skills/spb-access-ring-redundancy.html">spb-access-ring-redundancy</a>
+<a href="skills/spb-hybrid-etree.html">spb-hybrid-etree</a>
+<div class="grp">自动化与运维</div>
+<a href="skills/unp-dynamic-ov2500.html">unp-dynamic-ov2500</a>
+<a href="skills/spb-oam-troubleshoot.html" class="on">spb-oam-troubleshoot</a></aside><main><h1>spb-oam-troubleshoot</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="spb-oam-mac-ping-saa">SPB OAM 排障命令手册（mac-ping / SAA / 验证链）</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>"Mac-ping: Proprietary ping — The timeout for each ping request packet is 1 sec. (not configurable) -&gt; sw2-&gt; mac-ping dst-mac e8:e7:32:a4:77:7d vlan 4015 Reply from E8:E7:32:A4:77:7D - 1/1/5 : bytes=64 seq=1 time=109us" (p147)</p>
+<p>"-&gt; saa spb auto-start ... SAA sessions are created for each VLAN/MAC pairing. If the destination MAC is on a link aggregation group, SAA traverse all paths of the Linkaggs" (p147/148)</p>
+<p>"SPB creation parameters: Auto-create: Enabled, Auto-start: Enabled, Interval(minutes): 1, Jitter Threshold (us): 100, RTT Threshold (us): 500, Payload-Size (bytes): 32, Num-pkts: 5, Inter-pkt-delay: 1000, Keep: Disabled" (p150)</p>
+<p>"• Destination MAC cannot be a broadcast, multicast, or NULL address" (p147)</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<ol>
+<li><strong>两层排障法</strong>（f12）：第一层 mac-ping 点测（先 <code>show spb isis info</code> 拿对端 B-MAC，再按 BVLAN 测连通与时延）；第二层 SAA 持续探测（自动为每个 BVLAN/B-MAC 对建会话，分钟级统计 RTT/Jitter，写 /flash/network/saa.xml）。</li>
+<li><strong>IS-IS 逐层验证链</strong>（f04）：配置（bvlans/vlan id）→ 接口（interface）→ 邻接（adjacency）→ 节点状态（info）→ 转发表（unicast-table）→ 路径（spf）→ 数据库（database/nodes），自底向上收敛故障层。</li>
+<li><strong>前后对拍法</strong>：故障切换/调优实验用 <code>show spb isis unicast-table</code> 前后对比确认换路（教材 p127-128 即此用法）。</li>
+<li><strong>三层表对拍查路由</strong>（L3 场景，源自 c10）：<code>show spb ipvpn route-table</code> → <code>show ip global-route-table</code> → <code>show ip routes</code>（IMPORT 标记）。</li>
+</ol>
+<h2 id="a1-lab">A1 · 书中案例（Lab 配置序列精要）</h2>
+<p>mac-ping 实测（p147）：</p>
+<pre><code>show spb isis info                          ! 取对端 B-MAC
+mac-ping dst-mac e8:e7:32:a4:77:7d vlan 4015
+! 可选: priority|drop-eligible|count|interval|size|isid-check
+</code></pre>
+<p>SAA 部署与查看（p147-150）：</p>
+<pre><code>saa spb auto-start
+show saa spb
+show saa statistics aggregate               ! RTT/Jitter min/avg/max + 丢包
+</code></pre>
+<p>验证链示例（p85）：<code>show spb isis bvlans</code> / <code>show spb isis interface</code> / <code>show spb isis adjacency detail</code> / <code>show spb isis info</code> / <code>show spb isis unicast-table bvlan 2000</code> / <code>show spb isis spf bvlan 2000 [bmac &lt;BMAC&gt;]</code> / <code>show spb isis database [lsp-id]</code> / <code>show spb isis nodes</code>。</p>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>部署后验收（逐对测通）、长期监控（阈值告警）、故障定位（邻接/转发/路径哪层断）时用本 skill。</li>
+<li>与 <code><a href="spb-backbone-deploy.html">spb-backbone-deploy</a></code> 的区分：那个 skill 管"配上去"，本 skill 管"测出来"；验证链命令在部署 skill 的 E 步骤里被引用，完整用法与限制集中在此。</li>
+<li>L3VPN 的"路由学到没有"三级表对拍模板归 <code><a href="ip-over-spb.html">ip-over-spb</a></code>（c10），本 skill 补充通用 OAM 工具。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>点测连通：<code>show spb isis info</code> 取对端 B-MAC → <code>mac-ping dst-mac &lt;BMAC&gt; vlan &lt;BVLAN&gt;</code>，看 reply 的出接口与 time。</li>
+<li>持续监控：<code>saa spb auto-start</code> → <code>show saa statistics aggregate</code> 看 RTT/Jitter/丢包；阈值默认 RTT 500us / Jitter 100us。</li>
+<li>故障分层：按 f04 验证链从 bvlans 往 nodes 逐层执行，第一层异常处即故障域（如 adjacency 不 UP 查接口/物理，unicast-table 缺项查 IS-IS 通告）。</li>
+<li>换路确认：操作（断口/metric/overload）前后各抓一次 <code>show spb isis unicast-table bvlan X</code> 对拍。</li>
+<li>组播路径：用 <code>show spb isis multicast-table</code> 查表（不能用 mac-ping）。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li><strong>mac-ping 目标不能是广播/组播/空地址</strong>（p26/ce10）：必须先取对端单播 B-MAC；tandem 组播树地址 ping 不了。</li>
+<li><strong>每包超时固定 1 秒不可配</strong>（p26/ce10）：时延基线注意此粒度。</li>
+<li>SAA 对 LAG 目的会遍历所有成员链路（f12）——聚合链路的每条路径都被覆盖，统计里会看到多条路径的结果。</li>
+<li>SAA 默认参数（p27）：1 分钟/轮、5 包、包间隔 1000us、载荷 32 字节；历史文件 /flash/network/saa.xml（文件名/周期可配）。</li>
+<li>服务层验证另有 <code>show spb isis services</code> / <code>show service sdp spb</code> / <code>show mac-learning domain spb</code>（归 <code><a href="spb-l2-service.html">spb-l2-service</a></code>）。</li>
+</ul>
+<hr />
+<p>来源条目: f04, f12, p26, p27, ce10, g24, g32</p></main></div></body></html>

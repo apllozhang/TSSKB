@@ -1,0 +1,93 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>vxlan-evpn-underlay-bgp-design — DT00XTE325 · OmniSwitch LAN VxLAN/EVPN</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE325 · OmniSwitch LAN VxLAN/EVPN</h1>
+<div class="sub">Edition 01 · 213 页 · 五步配置法 + 三 Lab + EVPN 架构指南</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">总纲与底座</div>
+<a href="skills/vxlan-evpn-five-step-architecture.html">vxlan-evpn-five-step-architecture</a>
+<a href="skills/vxlan-evpn-underlay-bgp-design.html" class="on">vxlan-evpn-underlay-bgp-design</a>
+<div class="grp">业务与多归属</div>
+<a href="skills/vxlan-evpn-service-provisioning.html">vxlan-evpn-service-provisioning</a>
+<a href="skills/vxlan-evpn-multihoming-df.html">vxlan-evpn-multihoming-df</a>
+<div class="grp">排障</div>
+<a href="skills/vxlan-evpn-bum-troubleshooting.html">vxlan-evpn-bum-troubleshooting</a></aside><main><h1>vxlan-evpn-underlay-bgp-design</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="underlay-bgp-overlayrr-loopback0-ospf-ebgp-ibgp-rr">Underlay 与 BGP Overlay/RR 设计（Loopback0 / OSPF / eBGP / iBGP / RR）</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>Layer 3 protocols: ISIS, OSPF, BGP. Spine and Leaf are identified by the Loopback0 interface. Support for ECMP... For BGP underlay use eBGP. Spine nodes share a single AS. Each Leaf node has unique AS.（p60）</p>
+<p>Use a single-area OSPF configuration to limit the SPF flooding domain. Use point-to-point OSPF network type... This eliminates DR election wait times. Using BFD for fast-convergence... Set OSPF SPF delay and hold timers to 0.（p80；p186 补 ECMP 与 MTU 预留 50 字节）</p>
+<p>Overlay 配置四步：Load and enable BGP. Set the ASN to be the same for all the switches. / Enable the EVPN advertisements... / Configure the iBGP peering sessions with the loopback interfaces. Set the "update-source" as the loopback interface. / Activate EVPN capability for each peer.（p84；CLI：ip load bgp / ip bgp autonomous-system 65000 / ip bgp address-family evpn / neighbor 1.1.1.10 remote-as 65000 + update-source Loopback0 + activate-evpn）</p>
+<p>Without Route Reflectors, N Leafs require N*(N-1)/2 sessions... having 10 routers will result in 45 peerings. Usually, spine switches can be used route reflectors.（p132/p136）</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<ol>
+<li><strong>身份原则</strong>：一切从 Loopback0 开始——VTEP 身份、OSPF router-id、BGP router-id、update-source 四合一复用同一 Loopback0 地址。</li>
+<li><strong>Underlay 选型</strong>：ISIS/OSPF/BGP 三选一，课程与架构指南推荐组合为 <strong>OSPF underlay + iBGP overlay</strong>（p186 原文推荐句）。若用 BGP underlay 必须 eBGP，AS 规划=所有 Spine 共享一个 AS、每台 Leaf 唯一 AS（overlay 则全网同 AS 65000，两者别混）。</li>
+<li><strong>OSPF 收敛参数包六条</strong>：单区域；互联口 router VLAN 口 + 网络类型 point-to-point（免 DR 等待）；BFD 毫秒检测（transmit/receive/echo-interval 均 200 + <code>ip ospf bfd-state enable</code>）；<code>spf-timer delay 0 / hold 0</code>；ECMP 多路径；MTU 预留 VXLAN 头 50 字节。设计指南加强版：<code>debug ip ospf set subsecond 1 / bfdsubsecond 1</code>。</li>
+<li><strong>Overlay 五要素</strong>：全网同一 ASN；<code>ip bgp address-family evpn</code>（AFI=25/SAFI=70）；邻居=对端 Loopback0；update-source Loopback0；逐邻居 <code>activate-evpn</code>（漏一条就不交换 EVPN NLRI）。</li>
+<li><strong>RR 扩展</strong>：会话数 N(N-1)/2 不可持续 → Leaf 只与 RR 建会话；RR 专属命令 <code>ip bgp client-to-client reflection</code>、<code>ip bgp cluster-id &lt;id&gt;</code>、<code>neighbor &lt;ip&gt; route-reflector-client</code>；实践惯例 Spine 兼任 RR，冗余用单集群双 RR。</li>
+</ol>
+<h2 id="a1">A1 · 书中案例</h2>
+<ul>
+<li>Lab1 四节点底座（p78-86）：Loopback 取值 Spine-1/2=1.1.1.10/11、Leaf-1/2=1.1.1.1/2；互联 VLAN 110(S-S)/101/102/111/112，子网 172.16.1xy.0/24，端口号对称；验证链 <code>sh ip ospf neighbor</code> 全 Full → <code>sh ip routes</code> 看 Leaf 双等价路径 → <code>show ip bgp neighbors</code> established + evpn advertised。</li>
+<li>架构指南 6 节点参考设计（p187-197）：Spine=1.1.1.1/2、Leaf=1.1.1.10/20/30/40；互联口挂聚合口（如 port 1/1/50A tagged）；6 台全互联 iBGP EVPN（每台 5 邻居），全量 established。</li>
+</ul>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>触发：新建 fabric 底座、BGP EVPN 会话起不来、underlay 收敛调优、Spine 规模化改造上 RR。</li>
+<li>区分：底座通了以后开业务/开网关 → <code><a href="vxlan-evpn-service-provisioning.html">vxlan-evpn-service-provisioning</a></code>；整体路线与版本边界 → <code><a href="vxlan-evpn-five-step-architecture.html">vxlan-evpn-five-step-architecture</a></code>。本 skill 只管"让 Loopback 之间路由可达、EVPN 会话建立"这一层。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>每台配 <code>ip interface "Loopback0" address &lt;x.x.x.x&gt;</code>，同地址设 OSPF/BGP router-id。</li>
+<li>逐链路建 router VLAN 口（<code>ip interface "vl101" address 172.16.101.10/24 vlan 101 rtr-port port 1/1/27 tagged</code>）。</li>
+<li>全局 <code>ip bfd transmit 200 / receive 200 / echo-interval 200</code>；接口 <code>ip ospf interface "vl101" type point-to-point / bfd-state enable</code>；全局 <code>ip ospf spf-timer delay 0 / hold 0</code>。</li>
+<li>Overlay：<code>ip load bgp</code> → <code>ip bgp autonomous-system 65000</code> → <code>ip bgp address-family evpn</code> → 对每个对端 Loopback <code>neighbor &lt;ip&gt; remote-as 65000 / update-source Loopback0 / activate-evpn / admin-state enable</code> → 全局 <code>ip bgp admin-state enable</code>。
+5.（规模化）在 Spine 上配 cluster-id 与 route-reflector-client，Leaf 改为只与 RR 建会话。</li>
+<li>验证：<code>sh ip ospf neighbor</code> 全 Full；<code>sh ip routes</code> 等价路径；<code>show ip bgp neighbors</code> Oper=established 且 Activate evpn=enabled、Neighbor evpn=advertised。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li>eBGP underlay 与 iBGP overlay 的 AS 规则相反（underlay：Spine 同 AS/Leaf 各异；overlay：全网同 AS），迁移或混合场景最容易配反。</li>
+<li><code>activate-evpn</code> 是逐邻居开关，漏一条该邻居只建普通 BGP 会话、不交换 EVPN 路由。</li>
+<li>MTU 是隐性杀手：underlay 不预留 50 字节 VXLAN 头会出现大帧静默丢包、小包正常的现象。</li>
+</ul>
+<hr />
+<p>来源条目: f02, f03, f07, p02, p03, p04, p05, c01, c06, g15, g16, g19</p></main></div></body></html>

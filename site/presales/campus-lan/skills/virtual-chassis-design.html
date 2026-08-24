@@ -1,0 +1,136 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>virtual-chassis-design — DT00XPS281 · Campus LAN 售前</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XPS281 · Campus LAN 售前</h1>
+<div class="sub">Edition 29 · 480 页 · 园区网售前全科（特性→网管→选型→License→产品组合）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">设计与高可用</div>
+<a href="skills/campus-design-tiering-and-ha.html">campus-design-tiering-and-ha</a>
+<a href="skills/virtual-chassis-design.html" class="on">virtual-chassis-design</a>
+<a href="skills/dhl-erp-ring-protection.html">dhl-erp-ring-protection</a>
+<div class="grp">机型与架构</div>
+<a href="skills/omniswitch-model-selection.html">omniswitch-model-selection</a>
+<a href="skills/campus-reference-architectures.html">campus-reference-architectures</a>
+<div class="grp">织物与自动化</div>
+<a href="skills/spb-vxlan-core-fabric.html">spb-vxlan-core-fabric</a>
+<a href="skills/ifab-zero-touch-automation.html">ifab-zero-touch-automation</a>
+<div class="grp">网管与商务</div>
+<a href="skills/nms-platform-and-network-advisor.html">nms-platform-and-network-advisor</a>
+<a href="skills/license-wwpl-pricing.html">license-wwpl-pricing</a>
+<div class="grp">安全与垂直</div>
+<a href="skills/security-unified-access.html">security-unified-access</a>
+<a href="skills/video-surveillance-design.html">video-surveillance-design</a></aside><main><h1>virtual-chassis-design</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="vc">虚拟机箱（VC）堆叠设计</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>"STACKING / VIRTUAL CHASSIS TOPOLOGIES — 8 x OmniSwitch [6465] T/P6/P12/P28 models; 4 x OS6465; 6 x OS6900-X/T/V/C; 2 x OS9907; 4 x OS6360 … OS6560/E OS6860E<em> OS6865</em> OS6570M OS6860N OS6870 (up to 8, ring)" (p59)</p>
+<p>"Master/Slave election based on virtual chassis protocol (ISIS-VC): Highest chassis priority value; Longest chassis uptime (if difference in uptime &gt;10 mn); Smallest Chassis ID value; Smallest chassis MAC address" (p66)</p>
+<p>"Failures on VFL links cause potential MAC/IP duplication. 2 mechanisms: Out of Band: EMP Remote Chassis Detection (RCD); In Band: VC Split Protocol. … One sub-VC assumes 'MASTER' status &amp; other 'Protection' status … Shuts off all user ports" (p71-74)</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<p><strong>VC 台数规则（免 license）</strong></p>
+<table>
+<thead>
+<tr>
+<th>机型</th>
+<th>最大台数 / 拓扑</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OS6900 家族</td>
+<td>6 台 mesh</td>
+</tr>
+<tr>
+<td>OS9907</td>
+<td>2 台（chassis-id 必须静态配）</td>
+</tr>
+<tr>
+<td>OS6920</td>
+<td>初版 2 台（roadmap 4）</td>
+</tr>
+<tr>
+<td>OS6360（24/48 口型）</td>
+<td>4 台（10/P10 型不做 VC）</td>
+</tr>
+<tr>
+<td>OS6465</td>
+<td>4 台（p59 另标 8 台，矛盾需注版）</td>
+</tr>
+<tr>
+<td>OS6575 P12/U28</td>
+<td>4 台</td>
+</tr>
+<tr>
+<td>6560/E、6860E、6865、6570M、6860N、6870</td>
+<td>8 台环形（专用 VFL 口）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>VFL 硬规则</strong>：单 trunk 按机型最多 16 成员口；速率不可混；6860N 与 6870 不可同 VC（6860/6860E/6865 可混）；6860N 100G VFL 远程必须暗光纤；9900 VFL：10G 用 CMM QSFP 40G→10G 分支、100G 用 CMM2 QSFP28；6920-D32 最多 8 口、50-400G。</p>
+<p><strong>两大阵营</strong>：9900/6900 阵营静态/自动 chassis-id（9900 强制静态，每台写 vcsetup.cfg）；其余阵营自动分配、2-8 台环形。默认 VFL 口号速查：6560/E 24 口型 29-30、48 口型 53-54；6465-P28 27/28；6360 11/12（10 口）、27/28（24 口）、51/52（48 口）。</p>
+<p><strong>主从选举四级判据</strong>：优先级 → uptime（差 &gt;10 分钟才算）→ 最小 chassis ID → 最小 MAC。规划主备时把目标 master 的优先级配高即可。</p>
+<p><strong>防脑裂双机制（方案必预置其一）</strong>：
+- 带外 RCD：走 EMP 口；选址顺序先 NVRAM 的 CMM IP、再 chassis EMP IP；无 EMP 口机型（6360/6560 等）须加 USB 转 Ethernet 适配器，仅支持 ASIX 8817 与 RealTek RTL8153。
+- 带内 VCSP：借上/下游 helper 交换机，建议每个 VC 成员出一个口加入 VCSP LAG。分裂后非 Master 子 VC 进 Protection 模式关闭全部用户口（保留 LAG/VFL 口）。</p>
+<h2 id="a1">A1 · 书中案例</h2>
+<p>c09（p309）：8×OS6860N 组 VC（100m 内远程堆叠，VFL 20/40/100G），384 千兆口或 192 多千兆口、95W PoE 供 Wi-Fi 6/7 AP，4×25G LACP 上联 OS6900 核心。c15（p79）：OS6870 中型核心 + 各楼宇接入机经 10/25/40/100G 链路做远程 VC 跨楼堆叠成单一管理实体。</p>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>触发：客户要"多台当一台管"、跨楼宇远程堆叠、或高密度接入边缘（8 台 VC）；售前防守"堆叠不如机箱"。</li>
+<li>区分：本 skill 管 <strong>VC/VFL 机制与台数设计</strong>；"要不要选 VC 这个路线"的高可用对比在 <code><a href="campus-design-tiering-and-ha.html">campus-design-tiering-and-ha</a></code>；具体机型容量在 <code><a href="omniswitch-model-selection.html">omniswitch-model-selection</a></code>；auto-VC 开箱自动组网行为在 <code><a href="ifab-zero-touch-automation.html">ifab-zero-touch-automation</a></code>。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>按机型查台数上限与拓扑（mesh 还是 ring），确认家族可否混插。</li>
+<li>规划 VFL：同速率、专用口或指定口、按跨堆叠流量定成员口数；远程堆叠选对光模块（6860N 100G 用暗光纤）。</li>
+<li>定主备：目标 master 配最高优先级；9900 阵营逐台写 vcsetup.cfg 静态 chassis-id。</li>
+<li>预置防脑裂：有 EMP 口走 RCD；无 EMP 口加 USB 适配器（ASIX 8817/RTL8153）或改 VCSP + helper LAG。</li>
+<li>输出 VC 设计页：台数/拓扑/VFL 口与速率/主备优先级/防裂机制，交 BOM（适配器别漏）。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li>ce01：脑裂是 VC 最大单点风险——VFL 全断则 MAC/IP 双主，未预置 RCD/VCSP 即裸奔。</li>
+<li>ce02：无 EMP 机型做 RCD 必须自购指定型号 USB 适配器，售前最易漏配的小物件。</li>
+<li>ce05：VFL 速率混用不成立；6860N+6870 混 VC 不成立；6860N 100G VFL 走波分会不通。</li>
+<li>p07 矛盾标注：p59 对 6465 同时标 8 台与 4 台（p22 称 4 台），引用需注版并按 datasheet 复核。</li>
+<li>网管许可不吃 VC 的账：每台成员单独计 license（见 license skill ce15）。</li>
+</ul>
+<hr />
+<p>来源条目: p07, p08, p09, p10, p11, c09, c15, ce01, ce02, ce05, g35, g43, g44, g45</p></main></div></body></html>

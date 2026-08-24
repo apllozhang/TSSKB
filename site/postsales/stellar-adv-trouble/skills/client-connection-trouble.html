@@ -1,0 +1,178 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>client-connection-trouble — DT00XTE478 · Stellar WLAN 高级排障</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE478 · Stellar WLAN 高级排障</h1>
+<div class="sub">187 页 · 无线排障专题（方法论/工具箱/四层排障/勘测/TKC）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">方法论</div>
+<a href="skills/wlan-trouble-methodology.html">wlan-trouble-methodology</a>
+<div class="grp">工具与体检</div>
+<a href="skills/stellar-ap-toolbox.html">stellar-ap-toolbox</a>
+<a href="skills/stellar-ap-system-health.html">stellar-ap-system-health</a>
+<div class="grp">故障域</div>
+<a href="skills/client-connection-trouble.html" class="on">client-connection-trouble</a>
+<a href="skills/dot1x-radius-trouble.html">dot1x-radius-trouble</a>
+<a href="skills/network-side-trouble.html">network-side-trouble</a>
+<a href="skills/wireless-rf-roaming-trouble.html">wireless-rf-roaming-trouble</a>
+<div class="grp">勘测纠正</div>
+<a href="skills/site-survey-remediation.html">site-survey-remediation</a></aside><main><h1>client-connection-trouble</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="_1">客户端连接排障决策链：看不到 · 连不上 · 没地址 · 掉线</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>1) Is the SSID broadcasted by the AP? 2) Which radio does the client support? Compatible with the SSID broadcasted? 3) Country Code of the AP? Supported by the client? Wrong country code: Set manually a compatible channel on the AP in RF profile. (p82)</p>
+<p>2) Client assigned to the correct VLAN? Client supposed to get an IP in the scope of the VLAN 20? Does the Final_role filter DHCP traffic? (p84)</p>
+<p>1) AP transmit power is too low? iwlist ath11 txpower - Current Tx-Power=3 dBm (1 mW). Transmit power set to minimum value. wlanconfig ath11 list - RSSI 16... Bad signal quality. High probability of disconnection. Increase AP transmit power in RF profile. (p85-86)</p>
+<p>[MLME] [ieee80211_recv_disassoc] Received Disassoc with reason 8 (OS moved the client to another AP using non-aggressive load balance), recv rssi 63, min rssi 55, max rssi 64. (p80)</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<p><strong>决策链总图</strong></p>
+<pre><code>症状 → 第一命令 → 分支
+搜不到 SSID   → iwconfig          → ① SSID 没广播（BSSID 无 MAC）？② 频段不兼容？③ 国家码不兼容？
+关联成功没 IP → 双端抓包 + sta_list → ① DHCP 报文路径丢包？② VLAN 分错？③ Final_role 滤掉 DHCP？
+频繁掉线     → iwlist txpower + kes_syslog → ① 功率被压最小？② 踢除阈值过高？③ 被踢 or 失联？④ reason 8 误报？
+慢/语音差     → wlanconfig list    → RSSI/SNR 对照 VoWLAN 阈值
+</code></pre>
+<p><strong>核心命令判读表</strong></p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>字段</th>
+<th>判读</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ssudo sta_list</code></td>
+<td>VLANID/IPv4</td>
+<td>是否落在正确 VLAN/子网</td>
+</tr>
+<tr>
+<td></td>
+<td>OnlineTime</td>
+<td>频繁清零=反复掉线</td>
+</tr>
+<tr>
+<td></td>
+<td>RX/TX</td>
+<td>全零=关联后不通</td>
+</tr>
+<tr>
+<td></td>
+<td>AUTH / Final_role</td>
+<td>认证方式与访问角色是否正确</td>
+</tr>
+<tr>
+<td><code>ssudo wam_debug sta_list</code></td>
+<td>JSON</td>
+<td>assignedVLAN / macAuthResult / CPAuthResult / redirectURLFromMACAuth——认证到底成没成、角色对不对</td>
+</tr>
+<tr>
+<td><code>wlanconfig athXX list</code></td>
+<td>RSSI/MINRSSI/MAXRSSI/SNR</td>
+<td>对照阈值表；HT/VHT 能力</td>
+</tr>
+<tr>
+<td><code>cat /proc/kes_syslog \| grep &lt;MAC&gt;</code></td>
+<td>disassoc reason</td>
+<td>reason 8=负载均衡搬客户端，非故障</td>
+</tr>
+</tbody>
+</table>
+<p><strong>VoWLAN 阈值（Stellar 正值刻度，dBm = RSSI 值 − 96）</strong></p>
+<table>
+<thead>
+<tr>
+<th>RSSI 值</th>
+<th>换算</th>
+<th>判定</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10</td>
+<td>−86dBm</td>
+<td>差，丢包过多，语音/实时应用不可用</td>
+</tr>
+<tr>
+<td>29</td>
+<td>−67dBm</td>
+<td>语音与实时应用推荐下限（802.11ac VoWLAN 硬指标：RSSI≥29 且 SNR≥25）</td>
+</tr>
+<tr>
+<td>43</td>
+<td>−53dBm</td>
+<td>完美</td>
+</tr>
+</tbody>
+</table>
+<p><strong>拿不到 IP 两分支</strong>：① 客户端 Wireshark + AP tcpdump 双端比对 DHCP 四步——AP 侧收不到 Discover=无线段丢失；AP 有 Discover 而服务器无响应=上游问题。② 报文路径正常则查 sta_list 的 VLANID 是否正确、Final_role 是否把 DHCP 流量过滤（隐蔽根因：角色不含 DHCP 放行 → 永远拿不到地址）。</p>
+<p><strong>掉线四分支</strong>：① <code>iwlist athXX txpower</code> 显示最小档（如 3dBm/1mW）+ 客户端 RSSI 16 → RF profile 调大功率。② rfprofile.conf 的 <code>signalStrengthThreshold</code> 过高（如 70，约 −26dBm）→ 正常信号也被踢，调低。③ 兜底空口抓包 + 日志看有无 AP 主动 disassoc/deauth，区分"被踢"与"失联"。④ reason 8 = 系统负载均衡行为，不按故障处理。</p>
+<h2 id="a1">A1 · 书中案例</h2>
+<ul>
+<li>ce09：Current Tx-Power=3dBm（1mW）+ RSSI 16，日志判读"信号质量差、断连概率高"，在 RF profile 调大功率解决（p85-86）。</li>
+<li>ce10：signalStrengthThreshold:70 → "Threshold too high. Decrease the value."（p87）。</li>
+<li>ce21：reason 8 日志原文带 recv rssi 63 / min 55 / max 64，可复核掉线瞬间信号（p80）。</li>
+<li><code>cat /proc/kes_syslog | grep tid</code> 的 <code>[TID_DHCP_PROTOCOL] ip/hostname/ostype:[iOS]</code> 行可识别终端 OS 与主机名（p78）。</li>
+</ul>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>用户报"连不上/总掉线/慢"→ 本 skill。</li>
+<li>症状是 802.1X 认证失败（提示凭证/认证错误）→ <code><a href="dot1x-radius-trouble.html">dot1x-radius-trouble</a></code>；Captive Portal 不弹页 → <code><a href="stellar-ap-system-health.html">stellar-ap-system-health</a></code> 的 eag 部分。</li>
+<li>掉线原因指向漫游切换（换位置掉线）→ <code><a href="wireless-rf-roaming-trouble.html">wireless-rf-roaming-trouble</a></code>。</li>
+<li>客户端侧确认正常、怀疑上游 → <code><a href="network-side-trouble.html">network-side-trouble</a></code>。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>搜不到 SSID：iwconfig 查该 SSID 的 BSSID 是否存在（无 MAC=未广播）→ 核对客户端支持频段 → showsysinfo 查国家码；国家码不匹配时在 RF profile 手动指定双方兼容信道。</li>
+<li>连不上先跑 <code>ssudo sta_list</code> 六字段核对，再 <code>wam_debug sta_list</code> 看认证 JSON。</li>
+<li>没地址：双端抓包比对 DHCP 四步 → 正常则查 VLANID 与 Final_role 是否滤 DHCP。</li>
+<li>掉线：iwlist txpower → wlanconfig list 看 RSSI → cat /tmp/config/rfprofile.conf 查 signalStrengthThreshold → grep 客户端 MAC 读 disassoc reason（reason 8 直接结案为负载均衡）。</li>
+<li>慢/语音差：wlanconfig list 的 RSSI/SNR 对照阈值表，低于 29/25 即覆盖不达标。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li><strong>reason 8 误报</strong>：负载均衡搬客户端是系统行为，别当射频故障修；先 grep reason 再行动。</li>
+<li>Stellar RSSI 是正值刻度，直接当 dBm 读会全错（换算 dBm = RSSI − 96）。</li>
+<li>Final_role 滤掉 DHCP 是最隐蔽的"永远拿不到 IP"根因，报文路径排查正常时必查此项。</li>
+<li>信号阈值过高（70）时功率再正常也掉线——先查配置再动硬件。</li>
+<li>802.1X 的客户端侧凭证错误表现与网络故障一模一样，先做四项自查再怀疑网络。</li>
+</ul>
+<hr />
+<p>来源条目: p16, p17, p18, p19, p20, ce02, ce07, ce08, ce09, ce10, ce21（术语 g01 RSSI, g02 SNR, g03 BSSID, g31 Access Role Profile/Final_role）</p></main></div></body></html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>rap-vpn-mode-registration — OV2500 4.9R2 · RAP 与 VPN VA 安装</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>OV2500 4.9R2 · RAP 与 VPN VA 安装</h1>
+<div class="sub">84 页 · 远程 AP 安全回连方案部署</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">规划</div>
+<a href="skills/rap-vpn-mode-registration.html" class="on">rap-vpn-mode-registration</a>
+<div class="grp">部署与配置</div>
+<a href="skills/vpn-va-deploy-capacity.html">vpn-va-deploy-capacity</a>
+<a href="skills/rap-data-tunnel-config.html">rap-data-tunnel-config</a>
+<div class="grp">排障</div>
+<a href="skills/rap-vpn-troubleshooting.html">rap-vpn-troubleshooting</a></aside><main><h1>rap-vpn-mode-registration</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="rap-vpn">RAP VPN 模式选型与注册规划</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>"A Remote Access Point (RAP) is an AP with a management tunnel and a data tunnel to a remote OmniVista Enterprise (OVE) Server. An OmniVista Cirrus (OVC) Managed AP is technically not considered a RAP since there are no Management VPN Server details to be configured. An OVC managed AP already uses an OpenVPN connection for Management communications with a VPN Server in the OVC Cloud infrastructure. However, it is possible that an OVC Managed AP might need a Data VPN Tunnel to a VPN Server in the Enterprise." (p4)</p>
+<p>"1. The first connection, out-of-the-box, is to the OVC Device Registration Server. It retrieves the setup parameters for RAP including the OVE IP to which it will connect. 2. The keys and parameters are exported to the RAP VPN Server at corporate HQ. 3. The RAP then establishes a Wireguard VPN tunnel over which it connects to be managed by OVE." (p4)</p>
+<p>"ESXi versions 6.5, 6.7, 7.0.2, 8.0 are supported (ESXi 5.5 is not supported). Hyper-V 2016, 2019, and 2022. Supported Stellar RAP version is AWOS 5.0.2 and higher. RAP VPN VA version 4.9.2.2." (p5)</p>
+<p>"Server's VPN IP - The VPN Server's Private IP address within the virtual network (must be in the same network as the client pool). ... Client VPN IP Address Pool - The range of addresses available to assign to Remote APs." (p10-11)</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<ol>
+<li><strong>第一道分岔——管理模式决定隧道数量</strong>：AP 由企业本地 OVE 管理 → 真 RAP，需管理隧道（WireGuard）+ 数据隧道两条 VPN；AP 由 OVC 云管理 → 技术上不算 RAP，管理通道走 OVC 云内 OpenVPN，仅在数据流量需回传总部时才另建 Data VPN。</li>
+<li><strong>可达性判断</strong>：本地 AP 经 DHCP option 138 拿到 OV 地址直接管理；远程站点 AP 对企业 OV 不可直达，连接与管理通信必须走 VPN 隧道。</li>
+<li><strong>版本前置核对</strong>（任何一项不满足即返工）：ESXi 6.5/6.7/7.0.2/8.0（5.5 排除）；Hyper-V 2016/2019/2022；AWOS 5.0.2+；VPN VA 4.9.2.2（与 OV2500 4.9R2、OVC 4.9.2 认证配套）；另支持 Ubuntu 22.04 LTS + KVM。</li>
+<li><strong>注册顺序约束</strong>：先建 OmniVista Cirrus Freemium 账号 → 先确定 VPN Server 四参数再往 Device Catalog 加 AP → 加 AP 时预置 VPN VA 公网 IP / OVE 内网 IP / Security Keys。</li>
+<li><strong>四个 VPN Server 参数语义</strong>：Public IP = 公网出口；Port = 公网端口；VPN IP = 虚拟网络私网 IP，必须与客户端池同网段；Client VPN IP Pool = 分给 RAP 的地址段。</li>
+</ol>
+<h2 id="a1">A1 · 书中案例</h2>
+<ul>
+<li>OVE 模式五步：开箱首连 OVC Device Registration Server 取回 RAP 参数（含 OVE IP）→ 密钥导出到总部 RAP VPN Server → 建 WireGuard 管理隧道接受 OVE 管理 → OVE 上配 Data VPN 隧道并导密钥 → 数据隧道承载业务。</li>
+<li>OVC 模式四步：开箱首连注册服务器确认 → AP 建 OpenVPN 连接由 OVC 管理 → OVC 配 Data VPN 隧道并导出密钥到总部 → 隧道承载业务。</li>
+<li>Device Catalog 加 AP 时要填"第 3 步才部署"的 VPN Server 信息——先定 Server 再开工，否则顺序颠倒隧道建不起来。</li>
+<li>CSV 批量导入：模板中 RAP 字段必须为 TRUE 才携带 VpnSettingName。</li>
+</ul>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>触发：客户要做居家办公/分支 AP 回连方案，问"选哪种模式""要不要 Management VPN Server""AP 怎么注册"；或在老 hypervisor 上规划部署前核对版本。</li>
+<li>与 <code><a href="vpn-va-deploy-capacity.html">vpn-va-deploy-capacity</a></code> 的区分：本 skill 只做<strong>选型与注册规划</strong>（纸面设计 + Device Catalog 操作）；选定模式后虚拟机怎么装、网卡怎么配、给多少资源，转部署 skill。</li>
+<li>与 <code><a href="rap-data-tunnel-config.html">rap-data-tunnel-config</a></code> 的区分：本 skill 不碰隧道 SSID、Data VPN Server 界面配置与设置文件导出。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>判断管理模式：远程 AP 归 OVE 管 → 规划两条隧道（WireGuard 管理 + L2GRE 数据）；归 OVC 管 → 规划零或一条隧道（仅数据回传时建 Data VPN）。</li>
+<li>核对版本矩阵：ESXi 6.5/6.7/7.0.2/8.0 或 Hyper-V 2016/2019/2022 或 Ubuntu 22.04+KVM；AWOS ≥5.0.2；VPN VA 4.9.2.2 配 OV2500 4.9R2 / OVC 4.9.2。</li>
+<li>注册 registration.ovcirrus.com 建 Freemium 账号（验证邮件来自 noreply@ovcirrus.com，正文含设备 OS 下载链接）。</li>
+<li>先定 VPN Server 四参数（Public IP / Port / VPN IP 与客户端池同网段 / Client Pool），再到 Network→Inventory→Device Catalog 加 AP 并预置 Security Keys；首次 VPN Settings 用 Create New，后续 AP 用 Choose Existing 复用。</li>
+<li>批量场景：下载 CSV 模板，确认 RAP 列 = TRUE 后导入。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li><strong>ESXi 5.5 明确不支持</strong>（ce01）——老环境迁移前先升级 hypervisor。</li>
+<li><strong>AWOS 版本文档内三处口径打架</strong>：前置条件 5.0.2+（p5-6）、Freemium 邮件写 5.0.1（p7）、SSID 界面写 4.0.1（p71，疑笔误）；交付按最严的 5.0.2+ 核对（ce11）。</li>
+<li><strong>CSV 里 RAP 列 FALSE/留空</strong>：导入看似成功但 AP 不带隧道配置（ce12）。</li>
+<li>OVC 管理的 AP 不配 Management VPN Server——别照 RAP 流程多配一条管理隧道。</li>
+</ul>
+<hr />
+<p>来源条目: p01, p02, p03, p04, ce01, ce11, ce12, g01, g02, g03, g05, g06, g10, g11, g12, g13, g14</p></main></div></body></html>

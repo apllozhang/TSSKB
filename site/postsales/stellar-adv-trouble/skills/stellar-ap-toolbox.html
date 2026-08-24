@@ -1,0 +1,125 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>stellar-ap-toolbox — DT00XTE478 · Stellar WLAN 高级排障</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE478 · Stellar WLAN 高级排障</h1>
+<div class="sub">187 页 · 无线排障专题（方法论/工具箱/四层排障/勘测/TKC）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">方法论</div>
+<a href="skills/wlan-trouble-methodology.html">wlan-trouble-methodology</a>
+<div class="grp">工具与体检</div>
+<a href="skills/stellar-ap-toolbox.html" class="on">stellar-ap-toolbox</a>
+<a href="skills/stellar-ap-system-health.html">stellar-ap-system-health</a>
+<div class="grp">故障域</div>
+<a href="skills/client-connection-trouble.html">client-connection-trouble</a>
+<a href="skills/dot1x-radius-trouble.html">dot1x-radius-trouble</a>
+<a href="skills/network-side-trouble.html">network-side-trouble</a>
+<a href="skills/wireless-rf-roaming-trouble.html">wireless-rf-roaming-trouble</a>
+<div class="grp">勘测纠正</div>
+<a href="skills/site-survey-remediation.html">site-survey-remediation</a></aside><main><h1>stellar-ap-toolbox</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="stellar-ap">Stellar AP 排障工具箱：登录通道 · 抓包 · 配置备份</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>Console: Speed 115 200, Data bits 8, Stop bits 1, Parity None, Flow ctrl None. File: /var/config/public_group.conf - ssh_connect = 1 (SSH enabled), ssh_connect = 0 (SSH disabled). Login to the AP web UI: https://<AP_IP> or http://<AP_IP>:8080. In OmniVista Cirrus - Enable "AP web" in the Provisioning Configuration List. (p23-26)</p>
+<p>Step 1 - CLI connection to the AP with "support" account. ssudo tcpdump -i br-wan -w testcapture.pcap udp port 53. You are listening to the interface br-wan - which is the wired interface - connecting the Stellar AP to the network. Step 2 - Transfer the captured file on your PC/laptop (SFTP tool, WinSCP). Step 3 - Open and read the file with Wireshark. (p30)</p>
+<p>Step 2 - In RF Environment, select the Radio to capture. Click on Start Capture. Select the Channel. Enter the TFTP server where the capture will be sent. Option: Filter the capture (MAC, Frame type). Warning: Capture file limited to 10MB or 5min of capture. (p31)</p>
+<p>Backup the configuration of one or multiple Stellar AP. Used to re-create the issue. Shared with the technical support. Download the file "pub-config.tar" locally. "Restore All Configuration" using the .tar file. Extract the config-pub.tar file. Check the configuration offline. (p33)</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<p><strong>三通道登录参数表</strong></p>
+<table>
+<thead>
+<tr>
+<th>通道</th>
+<th>参数/开关</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>串口控制台</td>
+<td>115200 波特 / 8 数据位 / 1 停止位 / 无校验 / 无流控</td>
+<td>设备没 IP 时的唯一入口</td>
+</tr>
+<tr>
+<td>SSH</td>
+<td>/var/config/public_group.conf 中 <code>ssh_connect=1</code> 启用、0 禁用</td>
+<td>Enterprise 模式需在 AP Group 激活 SSH 并自定义密码；CLI 凭据 support / aos2016（实验室默认）</td>
+</tr>
+<tr>
+<td>Web UI</td>
+<td><code>https://&lt;AP_IP&gt;</code> 或 <code>http://&lt;AP_IP&gt;:8080</code></td>
+<td>云管理模式必须先在 OmniVista Cirrus 的 Provisioning Configuration 里开启 "AP web"</td>
+</tr>
+</tbody>
+</table>
+<p><strong>抓包路径二选一</strong></p>
+<ul>
+<li>有线侧（DHCP/DNS/RADIUS）：<code>ssudo tcpdump -i br-wan -w testcapture.pcap &lt;过滤式&gt;</code>，br-wan 是 AP 有线桥接口；SFTP（WinSCP）回传 → Wireshark 分析。</li>
+<li>空口侧（关联/认证/被踢）：集群 Web UI → 选 AP → RF Environment → 选射频 → Start Capture → 指定信道 + TFTP 服务器，可选 MAC/帧类型过滤。<strong>硬上限 10MB 或 5 分钟</strong>，规划过滤条件要按此预算。</li>
+</ul>
+<p><strong>配置备份双用途</strong>：集群 Web UI → AP 窗口 → Backup All Configuration → 下载 pub-config.tar。用途一：自有环境 Restore All Configuration 复现故障；用途二：解包 config-pub.tar 离线逐项核对；同时是技术支持工单的标准共享材料。</p>
+<h2 id="a1">A1 · 书中案例</h2>
+<ul>
+<li>tcpdump 示例用 DNS 过滤（<code>udp port 53</code>）演示三步流程，抓 DHCP/RADIUS 换过滤式即可（p30）。</li>
+<li>Air Capture 云模式同流程：先在 Cirrus 开 AP Web，再登录 AP Web UI 操作（p31-32）。</li>
+<li>配置备份是 p12 复现法四类采集清单中 "Stellar AP 配置备份" 一项的标准件（p33）。</li>
+</ul>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>需要"看到报文"才能定性的故障：DHCP 不下发、认证无响应、疑似被踢（比对 disassoc/deauth）。</li>
+<li>与 <code><a href="network-side-trouble.html">network-side-trouble</a></code> 的区分：那边是"查连通性与配置核对"，本 skill 是"取证工具本身的参数与用法"。</li>
+<li>与 <code><a href="client-connection-trouble.html">client-connection-trouble</a></code> 的区分：那边是客户端症状决策链；本 skill 提供其依赖的 tcpdump/Air Capture 手段。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>选登录通道：无 IP 走串口（115200 8N1）；有 IP 走 SSH（确认 ssh_connect=1）或 Web（云模式先开 AP web）。</li>
+<li>CLI 用 support 账号登录（默认密码 aos2016；生产环境 Enterprise 模式自定义密码）。</li>
+<li>有线抓包：<code>ssudo tcpdump -i br-wan -w &lt;文件&gt;.pcap &lt;过滤&gt;</code>；WinSCP 回传；Wireshark 打开。</li>
+<li>空口抓包：Web UI → RF Environment → Start Capture → 信道 + TFTP + 过滤；预算控制在 10MB/5min 内。</li>
+<li>备份配置：Backup All Configuration → pub-config.tar；需要时解包 config-pub.tar 离线比对。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li>云管理模式下 Web UI 登不上，十有八九是没在 Cirrus 开 "AP web"，先查开关再怀疑网络。</li>
+<li>tcpdump 默认接口不是 eth0，Stellar 的有线桥接口叫 <strong>br-wan</strong>，抓错接口什么都看不到（客户端侧抓 DHCP 时教材另用 <code>tcpdump -i eth0 -s0</code>）。</li>
+<li>Air Capture 超过 10MB/5min 自动停止，不加过滤容易浪费预算在无关流量上。</li>
+<li>aos2016 只是训练环境默认密码，生产环境以 AP Group 自定义密码为准，别拿它当通用后门。</li>
+</ul>
+<hr />
+<p>来源条目: p02, p03, p04, p05, p07, p01（术语 g05 br-wan, g28 Air Capture, g30 Wireshark, g17 eag, g12 OmniVista Cirrus）</p></main></div></body></html>

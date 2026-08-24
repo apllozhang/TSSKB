@@ -1,0 +1,199 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ov2500-danger-traps — OV2500 4.9R2 · Release Notes</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>OV2500 4.9R2 · Release Notes</h1>
+<div class="sub">93 页 · 新特性/兼容矩阵/升级路径 + 63 条已知问题排障库</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">升级评估</div>
+<a href="skills/ov2500-49r2-features-compat.html">ov2500-49r2-features-compat</a>
+<a href="skills/ov2500-upgrade-deploy.html">ov2500-upgrade-deploy</a>
+<div class="grp">排障库</div>
+<a href="skills/ov2500-known-issues.html">ov2500-known-issues</a>
+<a href="skills/ov2500-danger-traps.html" class="on">ov2500-danger-traps</a></aside><main><h1>ov2500-danger-traps</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="ov-2500-top">OV 2500 危险陷阱 TOP 清单</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>"If the U-Boot and AOS version is 8.9R4 or above and you downgrade the AOS version to 8.9R3 and reboot the switch, the switch cannot reboot. The 8.9R4 U-Boot only accepts signed images. OS6570M has a signed image; there is no unsigned image. PR# OVE-13356" (p37-38)</p>
+<p>"If you disable the Enforce Strong Password setting in OmniVista 4.9R1, then upgrade to release 4.9R2 ... The Enforce Strong Password setting is automatically enabled. OmniVista logs you out and requires you to change your password. PR# OVE-13859" (p38-39)</p>
+<p>"Since the failover interrupts the data sync, the Standby Node will not come up as the Active Node because it does not have the latest data ... On the HA Virtual Appliance Menu select 3 – Configure Cluster, then select 14 – Cluster Error Check. PR# OVE-1629" (p35)</p>
+<p>"When a user configured a Layer 3 Destination IP address Unified Policy to 'Drop' traffic with the Reflexive option, some packets were not dropped. Workaround: Do not turn on the Reflexive option. PR# OVE-10083" (p28)</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<p>按"损失类型"把陷阱分四类，升级/变更评审时逐类过一遍：</p>
+<ol>
+<li><strong>不可逆门闩</strong>（升上去就回不来）：签名校验、单向升级链。</li>
+<li><strong>大面积锁死</strong>（用户层面集体受影响）：强制改密、认证依赖连锁故障。</li>
+<li><strong>集群脑裂/数据丢失</strong>：同步期 failover、备份不完整。</li>
+<li><strong>安全静默失效</strong>（策略看似生效实际漏防）：漏丢包、授权残留、过滤绕过。</li>
+</ol>
+<p>判读原则：这类条目的共同特征是"事后恢复代价远高于事前一条检查"，所以全部前置到变更评审，排障时遇到优先怀疑。</p>
+<h2 id="a1-top">A1 · 书中案例（TOP 陷阱表）</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>陷阱</th>
+<th>触发动作</th>
+<th>后果</th>
+<th>前置措施</th>
+<th>id</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>OS6570M 签名门闩</td>
+<td>U-Boot/AOS 升到 8.9R4+ 后降回 8.9R3 并重启</td>
+<td>交换机无法重启（变砖），无签名镜像可救</td>
+<td>升级评审必查"能否回退"；OS6570M 一旦过 8.9R4 即单向</td>
+<td>ce63</td>
+</tr>
+<tr>
+<td>2</td>
+<td>升级后强口令自动启用</td>
+<td>4.9R1 关闭强口令 → 升 4.9R2</td>
+<td>全员强制登出改密</td>
+<td>升级公告必发项，预告所有用户</td>
+<td>ce67</td>
+</tr>
+<tr>
+<td>3</td>
+<td>HA 同步期 failover</td>
+<td>节点数据同步中发生切换</td>
+<td>备节点缺最新数据无法升主</td>
+<td>变更窗口避开同步期；已发生则 SSH 备节点 → VA 菜单 3 Configure Cluster → 14 Cluster Error Check</td>
+<td>ce51</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Reflexive 漏丢包</td>
+<td>Drop 策略叠加 Reflexive 选项</td>
+<td>部分报文未拦截，安全放行漏洞</td>
+<td>安全阻断类策略禁用 Reflexive</td>
+<td>ce21</td>
+</tr>
+<tr>
+<td>5</td>
+<td>认证授权残留</td>
+<td>客户端认证成功后再失败</td>
+<td>交换机保留成功时的 Access Role Profile，账号失效权限不撤</td>
+<td>AP 侧升 AWOS 5.0.1+；交换机侧无解，审计时注意</td>
+<td>ce23</td>
+</tr>
+<tr>
+<td>6</td>
+<td>LDAPS 停服带崩 RADIUS</td>
+<td>LDAPS 服务器关停</td>
+<td>freeradius 崩且无法重启</td>
+<td>LDAP 维护窗口前预警；或先在 UPAM 禁用 LDAP/AD</td>
+<td>ce30</td>
+</tr>
+<tr>
+<td>7</td>
+<td>带口令私钥证书锁死 Web</td>
+<td>导入私钥加密的 SSL 证书</td>
+<td>Nginx 起不来，重启 VM 无效</td>
+<td>证书 SOP 硬规则：私钥不得加密</td>
+<td>ce52</td>
+</tr>
+<tr>
+<td>8</td>
+<td>U-Boot 文件名/双文件陷阱</td>
+<td>文件名缺点号；OS9907/9912 混装 NI 模块</td>
+<td>U-Boot 升级失败或不工作</td>
+<td>改名 u-boot.5.2.R03.3.tar.gz；Denverton（CMM2/CNI-U20）与 Rangeley（CMM1/其余）分两次各用对应文件</td>
+<td>ce14, ce15</td>
+</tr>
+<tr>
+<td>9</td>
+<td>拔线 failover 后原主自动重启</td>
+<td>HA 演练拔主节点网线再回接</td>
+<td>原主节点重连时自动重启（双节点随后正常）</td>
+<td>演练预期管理，勿当二次故障</td>
+<td>ce65</td>
+</tr>
+<tr>
+<td>10</td>
+<td>HA 升级同步警告</td>
+<td>HA 4.9R1→4.9R2 升级中</td>
+<td>提示"数据未完全同步"</td>
+<td>升完 Standby 等足够时间让服务全起再升 Active</td>
+<td>ce66</td>
+</tr>
+<tr>
+<td>11</td>
+<td>VMware Flexible NIC 升级失败</td>
+<td>Flexible NIC 的 VA 升 4.8R1</td>
+<td>升级失败</td>
+<td>换网卡类型重配 IP</td>
+<td>ce60</td>
+</tr>
+<tr>
+<td>12</td>
+<td>备份丢 SSH Key/用户表</td>
+<td>OS6900 AOS 8.3.1 全量备份</td>
+<td>恢复后管理凭据缺失</td>
+<td>恢复演练必含手工补这两项</td>
+<td>ce13</td>
+</tr>
+</tbody>
+</table>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>触发：升级变更评审会、回退方案编制、HA 演练预案、安全策略上线前核查、证书/备份 SOP 制定。</li>
+<li>区分：已经出现故障要定位 → <code><a href="ov2500-known-issues.html">ov2500-known-issues</a></code>；查版本/固件兼容 → <code><a href="ov2500-49r2-features-compat.html">ov2500-49r2-features-compat</a></code>；排升级步骤 → <code><a href="ov2500-upgrade-deploy.html">ov2500-upgrade-deploy</a></code>。本 skill 只管"事前一颗雷"清单——后果严重且必须前置规避的条目。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>升级评审时打印 TOP 陷阱表，逐条问"本次变更是否触及该触发动作"。</li>
+<li>涉及交换机固件升级的，先列机型×当前版本×目标版本，凡 OS6570M 过 8.9R4 标记"不可回退"并在变更单注明。</li>
+<li>OV 升级公告模板固定包含：升级后强口令自动启用、全员将被迫改密（ce67）。</li>
+<li>HA 变更窗口检查项：不在数据同步期做 failover（ce51）；升完 Standby 等服务全起再升 Active（ce66）；演练后复查 WCF 状态（ce40）。</li>
+<li>证书替换前核验私钥未加密；LDAPS 维护前预警 freeradius 连锁故障。</li>
+<li>安全阻断策略上线前核对 Reflexive 选项未开启；权限审计把"认证失败后授权残留"列入检查项。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li>ce63 的单向门闩只影响 OS6570M（唯一只有签名镜像的机型）；其余机型 8.9R4+ U-Boot 虽只认签名镜像，但仍存在非签名镜像可用。</li>
+<li>ce67 是版本行为（4.9R1→4.9R2 触发），不是可配置关闭的选项；密码有效期策略本身（p05）对新老用户生效时点不同，别混为一谈。</li>
+<li>ce23 交换机侧无 workaround，只能靠 AP 升级 + 审计补偿，不要承诺"账号禁用立即生效"。</li>
+<li>HA 七条安装限制（ce69）属架构设计约束，完整清单见 <code><a href="ov2500-upgrade-deploy.html">ov2500-upgrade-deploy</a></code>。</li>
+</ul>
+<hr />
+<p>来源条目: ce63, ce67, ce51, ce65, ce66, ce21, ce23, ce30, ce52, ce13, ce14, ce15, ce40, ce60, p05；关联 ce69 详见 upgrade-deploy</p></main></div></body></html>

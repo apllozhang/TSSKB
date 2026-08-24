@@ -1,0 +1,121 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>video-surveillance-design — DT00XPS281 · Campus LAN 售前</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XPS281 · Campus LAN 售前</h1>
+<div class="sub">Edition 29 · 480 页 · 园区网售前全科（特性→网管→选型→License→产品组合）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">设计与高可用</div>
+<a href="skills/campus-design-tiering-and-ha.html">campus-design-tiering-and-ha</a>
+<a href="skills/virtual-chassis-design.html">virtual-chassis-design</a>
+<a href="skills/dhl-erp-ring-protection.html">dhl-erp-ring-protection</a>
+<div class="grp">机型与架构</div>
+<a href="skills/omniswitch-model-selection.html">omniswitch-model-selection</a>
+<a href="skills/campus-reference-architectures.html">campus-reference-architectures</a>
+<div class="grp">织物与自动化</div>
+<a href="skills/spb-vxlan-core-fabric.html">spb-vxlan-core-fabric</a>
+<a href="skills/ifab-zero-touch-automation.html">ifab-zero-touch-automation</a>
+<div class="grp">网管与商务</div>
+<a href="skills/nms-platform-and-network-advisor.html">nms-platform-and-network-advisor</a>
+<a href="skills/license-wwpl-pricing.html">license-wwpl-pricing</a>
+<div class="grp">安全与垂直</div>
+<a href="skills/security-unified-access.html">security-unified-access</a>
+<a href="skills/video-surveillance-design.html" class="on">video-surveillance-design</a></aside><main><h1>video-surveillance-design</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="milestone-vms">视频监控网络方案（Milestone VMS + 插件）</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>"SURVEILLANCE NETWORK CONCEPTUAL DESIGN — IP CAMERAS / PAN TILT ZOOM CAMERAS / DETECTORS / EDGE STORAGE / 360 CAMERAS / AUDIO … SMART WALL / SMART CLIENT OPERATIONS / DMZ / FIREWALL / WEB CLIENT / USERS … MILESTONE VMS &amp; PLUGINS — STORAGE / EVENT / NETWORK MANAGEMENT / SQL SERVERS — SPB" (p465)</p>
+<p>"Add an OmniSwitch to the Management client … Port – reset, power reset, LPS lock-unlock, PoE priority. Test camera status and reset if needed with one click. Set PoE priority on a per camera basis ensuring critical devices remain powered if the power budget is exceeded" (p463-464)</p>
+<p>"SWITCHES SUPPORTED — OS6360-P10/A, OS6360-P24 PH/X, OS6360-P48 PH/X, OS6465-P6 P12 H-P12, OS6465-P28, OS6465T-P12, OS6560-P24 X4/Z8/Z24, OS6560-P48 X4/Z16, OS6860E P24/P48/Z8, OS6860N P24/P48 Z/M, OS6865-P16X" (p466)</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<p><strong>概念模板四段分层</strong>（画图底稿）：</p>
+<table>
+<thead>
+<tr>
+<th>段</th>
+<th>组成</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>前端</td>
+<td>IP/PTZ/360 摄像机、探测器、边缘存储、音频</td>
+</tr>
+<tr>
+<td>承载</td>
+<td>交换机接入 + SPB 分段隔离骨干</td>
+</tr>
+<tr>
+<td>后端</td>
+<td>Milestone VMS：Management Client（管理）+ Smart Client（操作）+ Event/SQL/存储服务器 + Smart Wall 电视墙</td>
+</tr>
+<tr>
+<td>边界</td>
+<td>DMZ + 防火墙，Web Client 远程访问</td>
+</tr>
+</tbody>
+</table>
+<p><strong>插件双端能力</strong>：
+- Management Client（管理员侧）：交换机增删、端口信息查询、端口/电源复位、LPS 端口锁定、PoE 优先级。
+- Smart Client（值班操作员侧）：端口表看摄像头上下线与 PoE 消耗、一键测试/复位摄像头、逐摄像头设 PoE 优先级（预算超限时保关键设备供电）、查交换机型号/版本/IP/位置/温度。
+- 价值主张：交换机 + 摄像机管理一家集成，不在两套系统间切换——把网络从"哑管道"提升为 VMS 内可运维组件。</p>
+<p><strong>支持机型清单（11 个 PoE 机型合规对照）</strong>：OS6360-P10/A、P24/P48 PH/X；OS6465-P6/P12/H-P12/P28、6465T-P12；OS6560-P24 X4/Z8/Z24、P48 X4/Z16；OS6860E P24/P48/Z8；OS6860N P24/P48 Z/M；OS6865-P16X（坚固型）。方案由 ALE（交换机+插件软件）与 Milestone 两部分组成。</p>
+<h2 id="a1">A1 · 书中案例</h2>
+<p>c16（p465）完整概念设计图；c17（p463-464）插件功能实例；c18（p466）支持机型清单——三页合起来即一个可投标的安防网络分册骨架。</p>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>触发：接安防/弱电集成项目，需画监控网络图、选接入交换机、演示 VMS 内管交换机。</li>
+<li>区分：本 skill 管<strong>视频监控垂直方案</strong>；通用准入安全（摄像头作为哑终端的画像治理）在 <code><a href="security-unified-access.html">security-unified-access</a></code>；骨干用 SPB 的机制设计在 <code><a href="spb-vxlan-core-fabric.html">spb-vxlan-core-fabric</a></code>；PoE 预算常数在 <code><a href="omniswitch-model-selection.html">omniswitch-model-selection</a></code>。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>盘前端：摄像机类型/数量/码率，估带宽与 PoE 预算。</li>
+<li>按支持机型清单选接入交换机（全部须为清单内 PoE 机型），核对 PoE 预算。</li>
+<li>按四段模板画图：前端→SPB 承载→Milestone 后端→DMZ 远程访问。</li>
+<li>配置逐摄像头 PoE 优先级策略，关键点位设高优先级。</li>
+<li>演示脚本：Smart Client 内一键复位摄像头 + 端口锁定，展示与竞品"两套系统"的差异。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li>教材视频监控章节较薄（p457-473）：无与 Genetec 等其他物理安防平台对接细节，ONVIF 相关口径书中未展开（g30 为待确认项），投标前以 ALE 视频监控方案页核实。</li>
+<li>插件只支持清单内 11 个机型——选型越界即合规失败。</li>
+<li>组播优化依托 SPB（IP Multicast Optimization），承载网设计须先满足 SPB 机型门槛。</li>
+</ul>
+<hr />
+<p>来源条目: f29, c16, c17, c18, g21, g26, g30, g46</p></main></div></body></html>

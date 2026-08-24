@@ -1,0 +1,104 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>stp-loop-troubleshooting — DT00XTE221 · OmniSwitch LAN Troubleshooting</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE221 · OmniSwitch LAN Troubleshooting</h1>
+<div class="sub">587 页 · 有线排障全科（方法论/启动/系统/L2/VC/STP/L3/组播/OVNA）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">方法论与系统</div>
+<a href="skills/lan-troubleshooting-methodology.html">lan-troubleshooting-methodology</a>
+<a href="skills/boot-system-troubleshooting.html">boot-system-troubleshooting</a>
+<div class="grp">故障域</div>
+<a href="skills/l2-connectivity-troubleshooting.html">l2-connectivity-troubleshooting</a>
+<a href="skills/stp-loop-troubleshooting.html" class="on">stp-loop-troubleshooting</a>
+<a href="skills/virtual-chassis-troubleshooting.html">virtual-chassis-troubleshooting</a>
+<a href="skills/l3-routing-vrrp-troubleshooting.html">l3-routing-vrrp-troubleshooting</a>
+<a href="skills/multicast-troubleshooting.html">multicast-troubleshooting</a>
+<div class="grp">工具与 AI 运维</div>
+<a href="skills/app-logging-qos-troubleshooting.html">app-logging-qos-troubleshooting</a>
+<a href="skills/ovna-deployment-teams-bot.html">ovna-deployment-teams-bot</a></aside><main><h1>stp-loop-troubleshooting</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="stp">STP 与桥接环路排障</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>"Example of checklist recapitulating some of the actions available to troubleshoot stp: 1. Retrieve general information about network topology ... 2. Turn on events to monitor the network" (p173)</p>
+<p>"If ports that should be in a blocking state are now forwarding, there are two likely causes: A physical failure in a link that was previously forwarding. BPDUs from the root are being dropped." (p180)</p>
+<p>"MAC address flapping is mostly caused by a layer 2 loop in the network (which are not detected by STP). The command 'show mac-learning mac-address <mac>' show if the MAC address is flapping between two ports. ... port 1/1/4 has flapped 3655 times" (p181)</p>
+<p>"All VLANs within an MSTI must be tagged on all interswitch links otherwise MSTP becomes unpredictable ... All switches participating in the same region must have an identical MSTP configuration." (p184)</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<ol>
+<li><strong>环路八步清单</strong>（f08）：① 取拓扑（逻辑 VLAN/广播域 + 物理互连端口）；② 开监控——swlog 提到 debug2（portMgrCmm/intfCmm/VlanMgrCmm/portMgrNi/VlanMgrNi）+ <code>swlog output flash-file-size 12500</code>；③ 核 MAC 反复 flush/重学；④ 收集 STP 配置——全网同一模式（1x1/FLAT/MSTP）、根桥位置、非默认 cost/priority、阻塞口位置（show spantree / show spantree vlan）；⑤ 核定时器/根 ID/根端口——timers 跨链路必须一致，Topology Changes 快速递增 = 设备无法就根桥达成一致（BPDU 可能被丢）；⑥ 本应阻塞的口变转发的两大原因（p20）；⑦ MAC flapping 三板斧（p22）；⑧ MSTP 专项三致性。应急止血：优先禁用"本应阻塞"的端口。</li>
+<li><strong>MAC flapping 检测三板斧</strong>（p22）：show mac-learning mac-address <mac> 执行两次看出端口切换；show interfaces | grep Number 找 Status Change 大数值端口；show interfaces | grep Last + show system 对时。深挖：<code>swlog appid slNi subapp macmove level debug2</code> → show log swlog | grep MACMOVE。</li>
+<li><strong>BPDU 收发统计</strong>（p23）：debug stp bpdu-stats &lt;实例&gt; start → show → stop；某端口只 tx 无 rx = 单向链路或对端不发。</li>
+<li><strong>设计期防故障九原则</strong>（p24）：priority 明确定根；记录每个 VLAN 哪些口该阻塞；尽量少阻塞口；<strong>不调 STP 定时器</strong>（只许动桥优先级与端口 cost/priority）；不用 VLAN 1；修剪 VLAN；配 Loop Guard/UDLD/LBD/Root Guard/qos user-port filter bpdu；尽量依赖 L3；单个阻塞口误转发可瘫痪大半个网络。</li>
+<li><strong>DHL（双归属链路）判据</strong>（g21/c05）：两条链路 native（untagged）VLAN 必须一致才能配对做 VLAN 分担；状态 forwarding/dhl-blocking 属正常分担，双双 blocking = native VLAN 不一致。</li>
+<li><strong>协议背景</strong>（g15-g17）：STP/RSTP/MSTP 与 flat/per-VLAN 模式；TCN 每 1-4 分钟一次 = 频繁拓扑变化，追查从哪个 VLAN/端口进来；SPB（g41）与 ERPv2（g42）是替代性 L2 冗余方案（无 STP 阻塞）。</li>
+</ol>
+<h2 id="a1-lab">A1 · 书中案例（LAB 故障根因）</h2>
+<ul>
+<li><strong>c04（LAB2 案例2，p199-203）</strong>：6860-B 刷 "DoS type invalid ip ... to 224.0.0.18"、CPU 98%、访问迟缓。真根因：6870-A 上 VLAN 278 STP 状态 OFF，端口 1/1/15、1/1/16 直连成 L2 环，本机 VRRP 通告（源 MAC 00:00:5e:00:01:02）被环回从错误端口收回触发 invalid-ip 告警。修复：先禁两端口 → spantree Vlan 278 admin-state enable → 端口放回 vlan 1 重新 enable → 日志调回 info。判别口诀：DoS invalid ip 刷屏 + CPU 高 + 源 MAC 是 00:00:5e → 先查环，不当攻击处置（ce19）。</li>
+<li><strong>c05（LAB3 案例1，p223-226）</strong>：6360 两条 DHL 链路所有相关 VLAN 全 dhl-blocking。排查发现 6860-B 侧 vlan 57 在链路 A tagged、在链路 B untagged——两条 DHL 链路 native VLAN 不一致。修复：统一 <code>vlan 57 members linkagg 8 untagged</code> 后恢复分担。判据：DHL 排障先核两条链路 native VLAN 一致性。</li>
+</ul>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>触发：广播风暴、CPU 高 + DoS 告警、MAC 在两端口漂移、链路利用率异常高、STP 拓扑变化计数暴涨、MSTP region 行为异常、DHL 全 blocking。</li>
+<li>区分：单端口 down/错配 → l2-connectivity；VC 成员口/VFL 问题 → virtual-chassis；环路期间管理面不可达必须走 console/EMP（ce01）属本 skill 的前置动作。DoS 统计判读（g40）在本 skill，但真实攻击处置需结合 OVNA（ovna skill）。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>环路疑似时：<strong>先占住 console 口</strong>（Telnet/SSH 大概率不可用；远程经 EMP IP SSH 兜底）。</li>
+<li>应急止血：<code>interfaces &lt;本应阻塞端口&gt; admin-state disable</code>。</li>
+<li>执行八步清单（f08）：拓扑 → swlog debug2 + flash-file-size 12500 → MAC 重学核查 → show spantree vlan 全网核对模式/根/阻塞口 → timers/Topology Changes → 端口状态比对 → MAC flapping 三板斧 → MSTP 三致性。</li>
+<li>MAC 漂移确认：<code>swlog appid slNi subapp macmove level debug2</code>；<code>show log swlog | grep MACMOVE</code> 看 INS/DEL 端口交替。</li>
+<li>BPDU 疑似丢失：<code>debug stp bpdu-stats 1 start</code> → <code>debug stp bpdu-stats show 1</code> → stop。</li>
+<li>MSTP 三致性检查：region 名一致；<code>show spantree msti vlan-map</code> 核 VLAN-MSTI 映射；MSTI 内 VLAN 全部在互联链路 tagged（<code>show vlan members</code> 逐链路核端口类型）。</li>
+<li>DHL：<code>show vlan members</code> 比对两条链路的 untagged VLAN；不一致则 disable 链路两侧 → 统一 native VLAN → enable。</li>
+<li><strong>收尾强制项</strong>：<code>swlog appid slNi subapp macmove level info</code>（及所有调过的 appid）调回 info（ce04）。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li><strong>ce01</strong>：环路风暴把管理面打挂，不占 console 就只能干等；EMP 是带外兜底。</li>
+<li><strong>ce19</strong>：DoS invalid ip + CPU 高 + 00:00:5e 源 MAC → 是环不是攻击，先开 MACMOVE 日志查漂移。</li>
+<li><strong>ce17</strong>：随手调 STP 定时器"优化收敛"会影响直径与稳定性；唯二可调的是桥优先级与端口 cost/priority。</li>
+<li><strong>ce16</strong>：MSTI 的 VLAN 没在互联链路 tagged，后果是"MSTP 行为不可预测"而非报错——比直接故障更难查。</li>
+<li>debug stp bpdu-stats 输出量大，限定实例、尽快 stop。</li>
+<li>Auto Fabric 开启时 spantree 模式被强制 flat（p178 附注），核对模式前先确认该开关。</li>
+<li>阻塞口文档是排障前提：平时就要在网络图上标出每个物理环与破环的阻塞口（p20）。</li>
+</ul>
+<hr />
+<p>来源条目: f08, p20, p21, p22, p23, p24, p25, ce01, ce16, ce17, ce19, g15, g16, g17, g18, g20, g21, g40, g41, g42, c04, c05</p></main></div></body></html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>stellar-ssid-advanced — DT00XTE361 · Stellar WLAN Advanced Deployment with OmniVista</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE361 · Stellar WLAN Advanced Deployment with OmniVista</h1>
+<div class="sub">Edition 02 · 330 页 · Cirrus 云管进阶（QoE 分析/监控运维/IoT/全流程演练）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">可观测性</div>
+<a href="skills/stellar-qoe-analytics.html">stellar-qoe-analytics</a>
+<a href="skills/stellar-monitoring-ops.html">stellar-monitoring-ops</a>
+<div class="grp">接入进阶</div>
+<a href="skills/stellar-wired-iot-access.html">stellar-wired-iot-access</a>
+<a href="skills/stellar-bridge-mesh.html">stellar-bridge-mesh</a>
+<a href="skills/stellar-ssid-advanced.html" class="on">stellar-ssid-advanced</a>
+<div class="grp">交付与排障</div>
+<a href="skills/stellar-deployment-checklist.html">stellar-deployment-checklist</a>
+<a href="skills/stellar-troubleshooting-cli.html">stellar-troubleshooting-cli</a>
+<a href="skills/stellar-vowlan.html">stellar-vowlan</a></aside><main><h1>stellar-ssid-advanced</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="wlan-qos">WLAN 高级选项：QoS、密钥轮换、广播优化与访客门户</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>"Recommended Settings: Best Effort 0/0; Background 2/18-AF21; Voice 5/46-EF; Video 4/34-AF41." (p81)</p>
+<p>"Rotate the keys periodically to avoid key cracking. Default period: 15 min – Range 1 min – 24 hours." (p78)</p>
+<p>"Upper limit of multicast optimization: Multicast Based Channel Utilization: default value 90%; Number of Clients: default value 6." (p79)</p>
+<p>"Networks with WiFi4EU SSID use an HTTPS Captive Portal. Session timeout should be configurable up to 12 hours." (p82)</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<p>SSID 高级选项四组参数：
+1. <strong>QoS（WMM/DSCP/802.1p）</strong>：WMM 四队列推荐映射——Voice 5/46(EF)、Video 4/34(AF41)、Best Effort 0/0、Background 2/18(AF21)；上下行可分别标记（示例上行：Voice 46、Video 32、BE 0、BG 8）。
+2. <strong>安全</strong>：GTK/广播密钥周期轮换防破解（默认 15 分钟，1 分钟-24 小时，仅 Enterprise SSID）；客户端隔离（同 AP 同 SSID 内互访阻断，访客常用）。
+3. <strong>广播/组播优化</strong>：Broadcast Filter All（除 DHCP/ARP 全丢）/ Broadcast Filter ARP（广播 ARP 转单播）；组播优化把组播转单播（PTK 加密、更高速率），但有两个自动停用上限——组播信道利用率 90%、高吞吐客户端数 6。
+4. <strong>访客与公众 Wi-Fi</strong>：OV-UPAM Captive Portal + Guest Access Strategy + 门户模板；Walled Garden 白名单（认证前可访问域名）；社交登录（Facebook WiFi/Google）；WiFi4EU SSID 必须 HTTPS 门户、会话超时可配至 12 小时；Hotspot 2.0（Passpoint，基于 802.11u 与 EAP-SIM/AKA）。SSID 级带宽契约（Bandwidth Contract）与按用户的 Bandwidth Control 区分。
+另：访客流量可选隧道集中出口——SSID 的 VLAN/Tunnel Mapping 选 Tunnel（Tunnel ID + TTS IP），由远端 OS6860-GTTS 终结。</p>
+<h2 id="a1-lab">A1 · 书中案例（Lab 精要）</h2>
+<p>基础 Lab（p70-71）配 GuestsX：SSID 选 OV-UPAM Captive Portal 类型，绑 Guest Access Strategy 与门户模板，VLAN 30；树莓派验证 Guest 拿 192.168.30.70-79。综合演练（p293-295）进阶用法：GuestsX 内部门户+限 1Mbit/s+封 SSH/Telnet+客户端隔离+周一至周三调度+账号限时限量；打印机 SSID 用 WPA2 PSK + 按设备 PSK（DPSK，按 MAC 各配专属 passphrase）。</p>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>SSID 骨架（加密、VLAN、调度）已会配，要调优 QoS 标记、组播行为、访客体验 → 本 skill。</li>
+<li>从零搭建整套多 SSID 交付 → stellar-deployment-checklist。</li>
+<li>门户打不开/访客认证失败排障（先查 IP 再查门户）→ stellar-troubleshooting-cli。</li>
+<li>语音 SSID 的专门规划（36Mbps/用户、802.11r/k/v）→ stellar-vowlan。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>QoS：在 SSID 高级选项按推荐表配 WMM→802.1p/DSCP 映射（Voice 5/46、Video 4/34、BE 0/0、BG 2/18），上下行分开标。</li>
+<li>安全：Enterprise SSID 开广播密钥轮换（默认 15 分钟即可）；访客 SSID 开客户端隔离。</li>
+<li>优化：按需开 Broadcast Filter ARP/All；开组播优化前记住 90%/6 两个自动停用上限，避免误判"优化失效"。</li>
+<li>访客：Guest SSID &gt; Guest Access Strategy 选 OV-UPAM 门户，配门户模板、Walled Garden、会话时长与带宽限制；需要社交登录则启用对应选项。</li>
+<li>公共场馆：WiFi4EU SSID 用 HTTPS 门户且超时可配至 12 小时；无缝公众漫游考虑 Hotspot 2.0。</li>
+<li>限速：区分 SSID 级 Bandwidth Contract（整射频共享）与按用户 Bandwidth Control。</li>
+<li>访客集中出口：需要统一审计/出口时把 SSID 映射从 VLAN 改为 Tunnel（Tunnel ID + TTS IP）。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li>组播优化"突然失效"多为自动停用（信道利用率达 90% 或 6 个高吞吐客户端），是设计行为而非故障。</li>
+<li>密钥轮换仅 Enterprise 类型 SSID 可用，PSK SSID 没有。</li>
+<li>WiFi4EU 的 12 小时超时是合规硬要求，只给 4 小时会不达标。</li>
+<li>Guest Tunnel（TTS/GTTT）附录原文（p320-322）字体编码损坏，隧道终结侧细节以可读片段整理，落地前待对照原版 PDF 确认。</li>
+</ul>
+<hr />
+<p>来源条目: p05, p06, p07, p08, g13, g14, g15, g16, g17, g18, g19, g20, g21, g22, g23, g24, g50, g60</p></main></div></body></html>

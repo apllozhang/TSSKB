@@ -1,0 +1,97 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>multicast-troubleshooting — DT00XTE221 · OmniSwitch LAN Troubleshooting</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE221 · OmniSwitch LAN Troubleshooting</h1>
+<div class="sub">587 页 · 有线排障全科（方法论/启动/系统/L2/VC/STP/L3/组播/OVNA）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">方法论与系统</div>
+<a href="skills/lan-troubleshooting-methodology.html">lan-troubleshooting-methodology</a>
+<a href="skills/boot-system-troubleshooting.html">boot-system-troubleshooting</a>
+<div class="grp">故障域</div>
+<a href="skills/l2-connectivity-troubleshooting.html">l2-connectivity-troubleshooting</a>
+<a href="skills/stp-loop-troubleshooting.html">stp-loop-troubleshooting</a>
+<a href="skills/virtual-chassis-troubleshooting.html">virtual-chassis-troubleshooting</a>
+<a href="skills/l3-routing-vrrp-troubleshooting.html">l3-routing-vrrp-troubleshooting</a>
+<a href="skills/multicast-troubleshooting.html" class="on">multicast-troubleshooting</a>
+<div class="grp">工具与 AI 运维</div>
+<a href="skills/app-logging-qos-troubleshooting.html">app-logging-qos-troubleshooting</a>
+<a href="skills/ovna-deployment-teams-bot.html">ovna-deployment-teams-bot</a></aside><main><h1>multicast-troubleshooting</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="l2-ipms-dvmrp-pim">组播排障（L2 IPMS → DVMRP → PIM 分层）</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>"-&gt; show ip multicast ... -&gt; show ip multicast group ... -&gt; show ip multicast forward ... swlog appid dvmrp_0 subapp ipmrm level ... swlog appid pim_0 subapp hello level" (p257)</p>
+<p>"There should be 1 dedicated querier in the network ... Querier-forwarding should be enabled only on switches located between multicast sources and the querier ... Zapping should be enabled only on edge devices ... IGMP messages must be sent with TTL equal 1" (p258)</p>
+<p>"If there are multiple DVMRP routers on a subnet ... One of the routers will be selected as the designated forwarder for each source/group pair ... Election by: Lowest metric, As tie breaker, lowest IP address" (p265)</p>
+<p>"Client 1 can ping client 9 but multicast traffic is not routed to client 9 ... It sends the stream on Multicast group 231.1.1.1" (p280)</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<ol>
+<li><strong>分层排查</strong>（f13）：L2/IPMS 层（show ip multicast 全局开关 / group 组注册成员 / forward 转发表 / source 源表；debug ip packet show-multicast on board ni &lt;#&gt; 看 IGMP 查询收发）→ DVMRP 层（show ip dvmrp [neighbor/route/prune/interface/nexthop]；swlog appid dvmrp_0 subapp routes|ipmrm level debug3）→ PIM 层（show ip pim [neighbor/candidate-rp/interface/group-map/sgroute/notifications]；debug 按 subapp 细分：hello/boot-strap/crp/sm-join-prune）。</li>
+<li><strong>L2 设计五规则</strong>（p32）：全网只 1 个 querier；querier-forwarding 只在源与 querier 之间的交换机上启用；zapping 只在边缘设备；proxying 可全网；IGMP 报文 TTL 必须 1。监测：show ip multicast 看 Status/Querying/Proxying/Spoofing/Zapping/Robustness=2/Query Interval=125s，show interfaces flood rate。</li>
+<li><strong>DVMRP DF 选举</strong>（p33）：同网段多台 DVMRP 按（源,组）对选唯一转发者——先比最低 metric，平手比最低 IP。收不到流时从源到接收端走一遍组播路径，debug 看 tDvmrp::Lookup S,G、A new (S,G) entry、Forward 判转发向量是否建立；show ip mroute 看上游邻居。</li>
+<li><strong>PIM-SM 命令分工</strong>（p34/g28）：show ip pim（全局，Keepalive=210s）；neighbor（Hello 30s、J/P 60s）；candidate-rp（参选 RP 组范围与优先级）；interface（DR 选举）；group-map（组→RP 映射）；sgroute（(S,G) 表与 RPF 接口）；notifications（邻居丢失/非法 Register/非法 J-P）。RPF 跟随单播路由表。</li>
+</ol>
+<h2 id="a1-lab">A1 · 书中案例（LAB 故障根因）</h2>
+<ul>
+<li><strong>c09（LAB4 案例3，p280-292）</strong>：Client1（监控摄像头源，组 231.1.1.1）发流，Client9 收不到；单播互 ping 正常。排查：从 6360-A traceroute 192.168.110.50 确认单播路径经 192.168.57.7→172.16.17.1（PIM-SM 的 RPF/join 沿单播路径走）；show ip pim interface 逐台核——6870-A 五个口 PIM enabled，而 6900-A 路径上的 int_217 没启用 PIM，join 到不了源侧。修复：<code>ip pim interface int_217</code>，发流验证。方法沉淀：组播不通先 traceroute 单播路径，再沿路径逐接口核 PIM 使能状态。</li>
+</ul>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>触发：组播流不通或断流、IGMP 加组/离开异常、频道切换问题、PIM 邻居丢失、RP/BSR 选举异常、组播引起广播洪泛。</li>
+<li>区分：<strong>单播也不通 → l3-routing-vrrp</strong>（先修单播，RPF 依赖单播路由）；纯 L2 同网段组播泛洪 → 本 skill 的 IPMS 层；组播风暴引发 CPU 高/环路 → 先按 stp-loop 查环。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>先验证单播路径通（ping/traceroute 到源），不通先修单播。</li>
+<li>L2 层：show ip multicast 核全局开关与 querier 位置 → show ip multicast group 核接收端加组 → show ip multicast forward/source 核转发表 → 按五规则核查设计（querier 唯一、forwarding 位置、zapping 边缘、TTL=1）。</li>
+<li>需要看 IGMP 报文：debug ip packet show-multicast on board ni &lt;#&gt;。</li>
+<li>DVMRP 环境：show ip dvmrp neighbor/route/prune → swlog appid dvmrp_0 subapp routes level debug3 看转发向量与 DF 选举。</li>
+<li>PIM 环境：traceroute 单播路径 → 沿路径逐台 show ip pim interface 核 PIM enabled 与 DR → show ip pim neighbor / candidate-rp / group-map 核 RP 可达 → show ip pim sgroute 核 (S,G) 与 RPF 接口 → 需要时按 subapp（hello/boot-strap/crp/sm-join-prune）分别调 debug3。</li>
+<li>修复后源发流、接收端验证，<strong>日志调回 info</strong>。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li>"单播通组播不通"几乎总是 PIM 未在路径某接口启用或 RPF 不通（c09），逐跳核 show ip pim interface 比全局 debug 更快。</li>
+<li>多 querier 不会报错而是选举+其余 inactive，浪费且易错——设计期就核（p32）。</li>
+<li>IGMP 报文 TTL 必须为 1；跨网段送达失败常因中间设备转发了 TTL=1 报文或改了 TTL。</li>
+<li>querier-forwarding 配错位置（不在源与 querier 之间）是隐性断流源。</li>
+<li>debug 分区很细，先明确查哪层（hello=邻居、boot-strap/crp=RP 选举、sm-join-prune=加入剪枝）再调级，用完回 info。</li>
+</ul>
+<hr />
+<p>来源条目: f13, p32, p33, p34, g28, g29, g30, c09</p></main></div></body></html>

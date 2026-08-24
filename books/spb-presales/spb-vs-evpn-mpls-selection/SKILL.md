@@ -1,0 +1,73 @@
+---
+name: spb-vs-evpn-mpls-selection
+description: 客户或标书要对比 SPB/EVPN/MPLS 三种织物技术选型时，用七维对比表+行业用例矩阵+混合架构样例直接产出选型结论。
+source_book: DT00XPS279EN SPB Presales
+---
+
+# SPB vs EVPN vs MPLS 技术选型对比
+
+## R · 原文引用
+
+> "Main use case: SPB — Datacenter, Campus, IoT Networks; EVPN — Datacenter; MPLS — Service Provider & Mission critical networks. Ease of deployment: Simple to Moderate / Moderate to complex / Moderate to complex. Training needed: Low to Moderate / Moderate to High / High. Protocol Overhead: Low, IS-IS only / Moderate, BGP & VXLAN/MPLS / High, LDP, RSVP, BGP. Troubleshooting: Simple & Fast / Intermediate time / Complex & Slow."（p134）
+
+> "MPLS: Highly scalable, Core, backbone, Convergence: 50 ms, Complex, Cost: $$$. SPB: Scalable, Access, core, backbone, Convergence: 100 ms, Cost: $$."（p136）
+
+> "Large-data center: Scalability → EVPN. Rail, E&U: Very low convergence-times → IP-MPLS. MANs/Smart City → SPB/IP-MPLS* (* When IP-MPLS is mandatory in the tender)."（p138）
+
+## I · 方法论骨架
+
+**① 七维定位对比表（f19/p33，可直接做投标"技术选型"一页纸）**
+
+| 维度 | SPB | EVPN | MPLS |
+|---|---|---|---|
+| 主用场景 | DC+园区+IoT | 数据中心 | 运营商与任务关键网 |
+| 扩展性 | Large | Large-Very large | Large-Very large |
+| 弹性 | High | High | Very High |
+| 部署难度 | 简单-中等 | 中等-复杂 | 中等-复杂 |
+| 培训需求 | 低-中 | 中-高 | 高 |
+| 协议开销 | 低（仅 IS-IS） | 中（BGP+VXLAN/MPLS） | 高（LDP,RSVP,BGP） |
+| 排障 | 简单快速 | 中等 | 复杂缓慢 |
+
+可背常数（p34）：**MPLS 50ms/$$$ vs SPB 100ms/$$**；SPB 覆盖接入到核心骨干，MPLS 一般不下接入。话术锚点：SPB 胜在简、轻、快。
+
+**② 行业用例矩阵（f20/p35/c08，选型三要素：行业 + 运维团队画像 + 规模阈值 1000）**
+
+| 行业 | 关键问题 | 推荐 |
+|---|---|---|
+| 视频监控 / 赌场（视频+运营） | 规模<1000、懂视频的团队、组播多 | SPB（简单性） |
+| 园区网 | 团队职责覆盖 LAN/WLAN/FW | SPB |
+| ITS 智能交通 | 户外部署 | SPB + 加固型设备 |
+| 大型数据中心 | 扩展性 | EVPN |
+| 铁路/电力 E&U | 极低收敛时间 | IP-MPLS |
+| 城域/智慧城市 | 扩展+流量控制 | SPB / IP-MPLS（**仅标书强制时上 MPLS**） |
+
+**③ 技术中立防御**：客户指定 EVPN/MPLS 时不硬顶——三技术同一 AOS 全支持（OmniFabric），无厂商锁定；再用对比表把默认选项拉回 SPB 主场（园区/城域/IoT）。
+
+**④ 组合架构样例**：分区布局"园区 SPB / 数据中心 EVPN / 城域 MPLS"（p131）；混合 Fabric 样例（c10）：双 DC（OS9900/OS6900）+ 主园区 + 分支，骨干 SPB+MPLS 混合承载；EVPN-VXLAN 样例（c11）：EVI/VNI、ESI 多归属、DF 选举、IRB。
+
+## A1 · 书中案例
+
+p134 一张表直接成单页输出；p136 样例架构图带设备清单与量化参数；p137 EVPN Fabric 图含 EVI/ESI/DF/IRB 术语速查，向 DC 客户展示组合能力；p139 OmniFabric 机型支持矩阵（OS6900 三项全 P；6870/9900 的 VxLAN EVPN 自 8.10 R3/R4 起支持）。
+
+## A2 · 触发场景
+
+- 客户问"SPB 和 EVPN/MPLS 怎么选"、标书含三技术对比章节；
+- 客户被竞品带向 EVPN/MPLS，需要技术中立防御话术；
+- 按行业快速给推荐技术、核对 BoM 机型的三技术支持组合。
+与相邻 skill 区分：单讲"为什么 SPB"的攻防话术走 `spb-presales-battlecard`；机型容量规格 sizing 走 `spb-license-spec-sizing`。
+
+## E · 可执行步骤
+
+1. 按行业用例矩阵定位客户所在行，读出推荐技术与判据（团队画像 + 规模 + 特殊诉求）。
+2. 产出七维对比一页纸，SPB 占优四维（部署/培训/开销/排障）重点标注，让位场景（超大 DC→EVPN、毫秒收敛→MPLS）如实写。
+3. BoM 阶段逐型号核对 OmniFabric 支持矩阵（注意 P/O/8.10 R3/R4/HW ready 脚注）。
+
+## B · 边界与陷阱
+
+- **规模边界**（ce06）：SPB 设计规模 1000 节点，超大规模 DC 应标会被 scalability 一票否决——主动切 EVPN 叙事，同一 AOS 双支持。
+- **收敛让位**（ce13）：SPB 100ms 拼不过 MPLS 50ms；轨交/电力毫秒刚需场景主动报 IP-MPLS；SPB 话术定位为"对比 STP 秒级的代差提升"。
+- **数据时效**（ce16）：对比数字、支持矩阵均为 2025-02 Issue 05 快照（AOS R8 时代，多处标 8.10 R3/R4 起、HW ready），P/O 图例书中未定义；投标前用最新 AOS 规格书复核。
+- VXLAN 与 SPB 非二选一：VXLAN 可作 SPB 节点间 NNI 传输垫层。
+
+---
+来源条目: f19, f20, p33, p34, p35, c08, c09, c10, c11, ce06, ce13, g13, g22, g23, g40

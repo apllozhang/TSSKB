@@ -1,0 +1,114 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>unp-dynamic-ov2500 — DT00XTE323 · OmniSwitch LAN SPB 实施</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE323 · OmniSwitch LAN SPB 实施</h1>
+<div class="sub">Edition 12 · 367 页 · SPB 交付配置手册（骨干→L2→L3→自动化，10 Lab CLI 全录）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">骨干与 L2</div>
+<a href="skills/spb-backbone-deploy.html">spb-backbone-deploy</a>
+<a href="skills/spb-l2-service.html">spb-l2-service</a>
+<div class="grp">L3 集成</div>
+<a href="skills/ip-over-spb.html">ip-over-spb</a>
+<div class="grp">保护与冗余</div>
+<a href="skills/spb-bum-protection.html">spb-bum-protection</a>
+<a href="skills/spb-access-ring-redundancy.html">spb-access-ring-redundancy</a>
+<a href="skills/spb-hybrid-etree.html">spb-hybrid-etree</a>
+<div class="grp">自动化与运维</div>
+<a href="skills/unp-dynamic-ov2500.html" class="on">unp-dynamic-ov2500</a>
+<a href="skills/spb-oam-troubleshoot.html">spb-oam-troubleshoot</a></aside><main><h1>unp-dynamic-ov2500</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="unp-ov2500">UNP 动态服务与 OV2500 编排</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>"Traffic received on UNP access ports that is not assigned to a configured service profile is assigned to the System Default service profile. Default I-SID number Calculation: 10,000,000 + (Domain ID * 10,000) + (Vlan Tag % 512). Default SPB Service ID number Calculation: Service ID number: 32768 incremented by 1... Default BVLAN number to use: BVLAN index (Calculated I-SID number %8)" (p274/275)</p>
+<p>"UNP Port classification rule precedence 1. – MAC address + VLAN tag 2. – MAC address 3. – MAC address range + VLAN tag 4. – MAC address range 5. – IP address + VLAN tag 6. – IP address 7. – VLAN tag" (p267)</p>
+<p>"-&gt; aaa authentication snmp local -&gt; user snmpuser password "Superuser=1" read-write all no auth -&gt; snmp security no-security -&gt; snmp community-map public user snmpuser enable -&gt; snmp station 192.168.100.107 snmpuser v2 enable" (p309；注：用户名禁用 admin/diag/user)</p>
+<p>"Use Case: Silent Device -&gt; unp profile silent map service-type spb tag-value 100 isid 1004 bvlan 4002 -&gt; unp port 5/1/1 profile silent -&gt; unp profile silent mac-mobility. A persistent SAP does not age out ... Up to eight SPB service profiles per UNP port" (p272/273)</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<ol>
+<li><strong>UNP 决策流</strong>（f10）：UNP 口流量 → 分类规则命中 → 按 profile 建 SAP；未命中且开启动态服务 → 按 System Default 公式自动建 I-SID/Service/BVLAN。</li>
+<li><strong>三个确定性公式</strong>（p20）：I-SID = 10,000,000 + 域ID×10,000 + (VLAN tag mod 512)；Service ID 从 32768 递增；BVLAN = I-SID mod 8 做索引取已建 BVLAN。基数/模数可用 <code>unp system-default service-base/service-mod</code> 调。</li>
+<li><strong>七级分类优先序</strong>（p19）：MAC+VLAN &gt; MAC &gt; MAC段+VLAN &gt; MAC段 &gt; IP+VLAN &gt; IP &gt; VLAN tag。</li>
+<li><strong>持久 SAP 保静默设备与 VRRP</strong>（p22）：静态指派 profile 生成不老化 SAP（每口最多 8 个服务 profile）；mac-mobility 保 VRRP 主备通告不中断。</li>
+<li><strong>OV2500 上线五步</strong>（f11）：快照开机 → EVAL License → 交换机侧 SNMP → 按控制 BVLAN 网段发现 → 拓扑 Poll Latest Data。</li>
+</ol>
+<h2 id="a1-lab">A1 · 书中案例（Lab 配置序列精要）</h2>
+<p>Lab8 UNP 三场景（c15，p279/281/286）：</p>
+<pre><code>! 场景1 动态服务
+unp port 1/1/1 port-type access
+unp system-default service-base 1000
+! 场景2 802.1x
+service 4005 spb isid 4005 bvlan 2002 description Training stats enable vlan-xlation enable
+unp profile UNP-employee
+unp profile UNP-employee map service-type static tag-value 0 service-id 4005
+aaa radius-server AAA host 192.168.100.102 key alcatel-lucent
+aaa device-authentication 802.1x AAA
+! 场景3 静默设备（持久 SAP）
+unp profile unp-profile-silent map service-type spb tag-value 90 isid 1111 bvlan 2007 vlan-xlation
+unp port 1/1/4 profile unp-profile-silent
+unp classification mac-address &quot;@mac Silent-A&quot; profile1 unp-profile-silent
+</code></pre>
+<p>Lab9 OV2500（c16，p304/306/309）：带内管理 <code>ip interface "spb-mgmt" address 172.30.1.x/24 vlan 2000</code> → SNMP 六条（见 R）→ OV 侧 OV-init 快照 + EVAL-OV2500 License（90 天）→ <code>Discover New Devices (172.30.1.1-8)</code> → <code>Topology → SPB Network → Poll Latest Data</code>。</p>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>终端上线自动归服务、802.1x/MAC 认证分流、打印机类静默设备、VRRP 通告要过 UNP 口、网管要图形化开通/监控 SPB 时用本 skill。</li>
+<li>与 <code><a href="spb-l2-service.html">spb-l2-service</a></code> 的区分：静态 SAP 手工建归 L2 服务 skill，本 skill 是 profile 驱动的动态 SAP；与 <code><a href="spb-hybrid-etree.html">spb-hybrid-etree</a></code> 的区分：UNP profile 的 e-tree 选项是本 skill 的动态形态补充。</li>
+<li>OV2500 纳管前提是 <code><a href="spb-backbone-deploy.html">spb-backbone-deploy</a></code> 里的控制 BVLAN 带内管理已就绪。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>规划编号：确定域 ID 与 VLAN tag 空间，用公式预演 I-SID/BVLAN（如 VLAN 412 → I-SID 10,000,412）；多租户冲突则调 service-base/service-mod。</li>
+<li>建服务 profile：<code>unp profile &lt;name&gt;</code> + <code>map service-type spb tag-value &lt;t&gt; isid &lt;i&gt; bvlan &lt;b&gt;</code>。</li>
+<li>声明 UNP 口：<code>unp port &lt;p&gt; port-type access</code>，按需加 <code>802.1x-authentication</code> 或静态 profile 指派。</li>
+<li>配分类规则（按七级优先序设计）：<code>unp classification {mac-address|mac-range|ip-address|vlan-tag} ... profile1 &lt;name&gt;</code>。</li>
+<li>RADIUS 联动：<code>aaa radius-server</code> + <code>aaa device-authentication 802.1x AAA</code>，<code>aaa test-radius-server</code> 单测。</li>
+<li>静默/VRRP 场景：静态 profile + <code>unp profile &lt;name&gt; mac-mobility</code>（先全局 <code>unp mac-mobility</code>）。</li>
+<li>OV2500：快照开机改密 → 生成导入 EVAL License → 交换机 SNMP 六条 → Range List 发现 → 拓扑轮询；验证 <code>show service spb</code>（Dynamic * 标记）、<code>show unp user [details]</code>。</li>
+<li>关闭自动建服务：<code>unp port &lt;p&gt; dynamic-service none</code>。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li><strong>SNMP 用户名禁用 admin/diag/user</strong>（ce12/p35）：建号失败先查保留字；<code>snmp community-map mode enable</code> 别漏。</li>
+<li><strong>UNP 隔离用户不能重定向补救</strong>（ce13/p34）：NAC 合规整改设计要绕开 Quarantine Manager 重定向。</li>
+<li><strong>multi-untag-sap 平台限制</strong>（p21）：仅 UNP 动态 SAP 且仅 6860N/6900 系列新平台支持。</li>
+<li>每口最多 8 个 SPB 服务 profile（p22）；动态创建的服务默认 head-end 组播、vlan-xlation 使能（p20）。</li>
+<li>分类优先序意味着 vlan-tag 兜底规则会吞掉所有未命中流量，精确规则要排在其语义之前生效（p19）。</li>
+</ul>
+<hr />
+<p>来源条目: f10, f11, p19, p20, p21, p22, p34, p35, c15, c16, ce12, ce13, g12, g27, g29, g37</p></main></div></body></html>

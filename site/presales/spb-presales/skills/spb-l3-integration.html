@@ -1,0 +1,149 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>spb-l3-integration — DT00XPS279 · OmniSwitch LAN SPB 售前</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XPS279 · OmniSwitch LAN SPB 售前</h1>
+<div class="sub">Issue 05 · 147 页 · SPB 技术推销课（卖点弹药/架构/L3 服务/案例/三技术对比）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">售前攻防</div>
+<a href="skills/spb-presales-battlecard.html">spb-presales-battlecard</a>
+<a href="skills/spb-micro-segmentation.html">spb-micro-segmentation</a>
+<div class="grp">架构与设计</div>
+<a href="skills/spb-topology-isis-design.html">spb-topology-isis-design</a>
+<div class="grp">边缘与服务</div>
+<a href="skills/spb-edge-services.html">spb-edge-services</a>
+<div class="grp">L3 集成</div>
+<a href="skills/spb-l3-integration.html" class="on">spb-l3-integration</a>
+<div class="grp">交付与选型</div>
+<a href="skills/spb-ov2500-delivery.html">spb-ov2500-delivery</a>
+<a href="skills/spb-vs-evpn-mpls-selection.html">spb-vs-evpn-mpls-selection</a>
+<a href="skills/spb-stp-migration-cases.html">spb-stp-migration-cases</a>
+<a href="skills/spb-license-spec-sizing.html">spb-license-spec-sizing</a></aside><main><h1>spb-l3-integration</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="spb">SPB 三层集成选型与配置（三种形态 × 两档路由机制）</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>"Outline routing: use of two physical loopback ports. One side as an access port for SPB, other side is a bridged port configured for routing only. AOS support: OS6900-X20/X72/T20/Q32, OS6860/E."（p82）</p>
+<p>"VLAN ports support all standard features — Preferred method for L3 VPN designs. SAP Ports are locally limited in support of edge features such as port-QoS, LPS, DHCP Snooping, STP etc."（p83）</p>
+<p>"VPN Lite: Routing L3 traffic over a L2 SPBM backbone network. Run routing protocols on L3VPN IP interfaces. SPB acts more like a physical media."（p85）</p>
+<p>"Service based inline routing: No physical loopback cable required, No dedicated front-panel ports. IP service-based interface configured through software for single-pass in-line routing... Both an IPv4 and IPv6 interface can be assigned to the same SPB service as long as both are in the same VRF instance."（p95）</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<p>两步选型：<strong>先选物理形态（f14），再选路由机制（f15）</strong>。</p>
+<p><strong>① 物理形态三选一（f14/p26/p29/p30）</strong></p>
+<table>
+<thead>
+<tr>
+<th>形态</th>
+<th>端口代价</th>
+<th>支持机型</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Outline 物理环回线</td>
+<td>消耗两个物理口+线缆</td>
+<td>OS6900-X20/X72/T20/Q32、OS6860/E（最广）</td>
+<td>通用兜底；端点终结在 VLAN UNI 是 L3 VPN 首选（p27）</td>
+</tr>
+<tr>
+<td>前面板口 inline</td>
+<td>占前面板口（软件 loopback 模式，带宽取自该口）</td>
+<td><strong>仅 OS6900-V72 / C32</strong></td>
+<td>免外部线缆</td>
+</tr>
+<tr>
+<td>Service-based 单遍 inline</td>
+<td>零端口，纯软件</td>
+<td>OS6860N/6870/6900-X,T 系列/OS9900（最广的新方案）</td>
+<td>IP 接口直接绑 SPB service</td>
+</tr>
+</tbody>
+</table>
+<p><strong>② 路由机制两档（f15）</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>VPN-Lite（简版）</th>
+<th>L3 VPN（全版）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>原理</td>
+<td>SPB 当物理媒介，VRF 间跑静态/OSPF（VRRP 可冗余）</td>
+<td>路由经 IS-IS SPB TLV 直接跨骨干分发，ISID-per-VRF</td>
+</tr>
+<tr>
+<td>适用</td>
+<td>客户会 OSPF、规模小、要简单</td>
+<td>MPLS 式自动路由分发、多 VRF 大规模</td>
+</tr>
+</tbody>
+</table>
+<p><strong>③ VPN-Lite 六条守则（p28/ce11）</strong>：每 VRF 环回路由侧单 IP 接口绑专用 VLAN（他口不用）；一 VRF 可多 IP 接口对应多 I-SID，但<strong>两 VRF 不得共享同一 I-SID</strong>；对侧 SAP 用同 VLAN 号绑同 I-SID；VRRP 可按接口配（hello 穿 PBB）；可全静态路由。硬件约束：IPv4/IPv6 同绑一 SPB 业务须同一 VRF 实例（p30）。</p>
+<p><strong>④ 配置模板（c04-c07）</strong>
+- Outline：<code>vlan 500</code> + <code>spb bvlan 4001</code> + <code>service spb 10 isid 1000</code> + <code>service spb 10 sap port 1/1/24:500</code> + <code>vrf 1 ip interface L3vpn1 vlan 500 address 10.5.1.1/24</code>。
+- VPN-Lite 路由：<code>vrf 1 ip static-route 192.168.3.0/24 gateway 10.5.1.2</code> 或 <code>vrf 1 ip load ospf</code> + area 0.0.0.0。
+- 前面板 inline：<code>interfaces port 1/1/18 loopback</code> + <code>ip interface L3vpn1 ... rtr-port port 1/1/18 tagged vlan 200</code>。
+- Service-based inline（最简）：<code>vrf 1 ip interface L3vpn1 address 10.5.1.1/24 service 10</code>。
+- L3 VPN 增量：<code>spb ipvpn bind vrf 1 isid 1000 gateway 10.5.1.1 all-routes</code> + <code>vrf 1 ip export/import ... all-routes</code>。</p>
+<h2 id="a1">A1 · 书中案例</h2>
+<p>p84/87/93-94/96-97 四套 CLI 样例构成完整配置手册：ISID-1000 承载、两 BEB（10.5.1.1/10.5.1.2）、VRF 1 内 192.168.x.0/24 网段互通；同一形态上 VPN-Lite 与 L3 VPN 只差 bind/export/import 三行。</p>
+<h2 id="a2">A2 · 触发场景</h2>
+<ul>
+<li>标书需要"L3 over SPB"技术方案章节：选形态（按机型与端口预算）+ 选机制（按客户技能与规模）；</li>
+<li>写或审 AOS 三层集成配置（直接套四套模板）；</li>
+<li>客户问"BEB 能不能同时当桥和路由器"（能——消灭独立路由层的论证）。
+与相邻 skill 区分：选 EVPN 还是 SPB 做整体织物走 <code><a href="spb-vs-evpn-mpls-selection.html">spb-vs-evpn-mpls-selection</a></code>；机型规格总表走 <code><a href="spb-license-spec-sizing.html">spb-license-spec-sizing</a></code>。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>按机型矩阵定形态：核对客户 BoM 机型在 p82/92/95 三张清单的归属（投资前逐型号核对，含 IPv6 支持待确认项）。</li>
+<li>按团队画像定机制：客户熟悉 OSPF/静态路由且 VRF 少 → VPN-Lite；要多 VRF 大规模自动分发 → L3 VPN。</li>
+<li>建三列对照表（VRF–VLAN–I-SID）做配置前校验，套用对应 CLI 模板，L3 VPN 追加 bind/export/import 三行。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li><strong>SAP 口边缘特性受限</strong>（ce01）：终结在 SPB SAP UNI 时 port-QoS/LPS/DHCP Snooping/STP 支持有限，部署后期才发现会返工；首选 VLAN UNI 设计（"VLAN ports support all standard features"）。</li>
+<li><strong>机型矩阵不齐</strong>（ce07）：前面板 inline 仅 OS6900-V72/C32；service-based inline 仅 p95 清单型号；老/低端机只能 Outline 还要搭物理端口。p75 规格表只标 IPv4，IPv6 支持范围引用前必须核对最新 AOS 规格书。</li>
+<li><strong>VPN-Lite 铁律</strong>（ce11）：两 VRF 共享 I-SID、loopback VLAN 复用 → 路由串线、故障极难定位；一律用三列对照表预防。</li>
+</ul>
+<hr />
+<p>来源条目: f14, f15, p26, p27, p28, p29, p30, c04, c05, c06, c07, ce01, ce07, ce11, g14, g17, g19, g25, g38, g39</p></main></div></body></html>

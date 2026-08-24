@@ -1,0 +1,105 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>app-logging-qos-troubleshooting — DT00XTE221 · OmniSwitch LAN Troubleshooting</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE221 · OmniSwitch LAN Troubleshooting</h1>
+<div class="sub">587 页 · 有线排障全科（方法论/启动/系统/L2/VC/STP/L3/组播/OVNA）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">方法论与系统</div>
+<a href="skills/lan-troubleshooting-methodology.html">lan-troubleshooting-methodology</a>
+<a href="skills/boot-system-troubleshooting.html">boot-system-troubleshooting</a>
+<div class="grp">故障域</div>
+<a href="skills/l2-connectivity-troubleshooting.html">l2-connectivity-troubleshooting</a>
+<a href="skills/stp-loop-troubleshooting.html">stp-loop-troubleshooting</a>
+<a href="skills/virtual-chassis-troubleshooting.html">virtual-chassis-troubleshooting</a>
+<a href="skills/l3-routing-vrrp-troubleshooting.html">l3-routing-vrrp-troubleshooting</a>
+<a href="skills/multicast-troubleshooting.html">multicast-troubleshooting</a>
+<div class="grp">工具与 AI 运维</div>
+<a href="skills/app-logging-qos-troubleshooting.html" class="on">app-logging-qos-troubleshooting</a>
+<a href="skills/ovna-deployment-teams-bot.html">ovna-deployment-teams-bot</a></aside><main><h1>app-logging-qos-troubleshooting</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="swlog-qos-unp">应用与日志排障（swlog / QoS / 镜像 / UNP）</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>"Switch events can be logged to Switch console, Local text file (Configurable default file size 1250 Kbytes - R8), Multiple remote devices (syslog) 12 max - R8, Loopback0 have to be configured -&gt; swlog output socket ipaddr 168.23.9.100" (p146)</p>
+<p>"Default severity level is info. The numeric equivalent for info is 6 ... swlog appid ospf_0 subapp all level 8 ... or swlog appid ospf_0 subapp hello level debug3" (p151)</p>
+<p>"policy condition cond1 source ip 192.168.8.10 icmptype 8 / policy rule rule1 condition cond1 action action1 log / qos apply" (p214)</p>
+<p>"aaa test-radius-server <server_name> type authentication user <username> password <password> method pap ... Access-Accept from <server_IP_address> Port 1812 Time: 212 ms ... Filter-ID = employee" (p309)</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<ol>
+<li><strong>swlog 架构</strong>（p15/g19）：三目的地——console、本地 flash（R8 默认 1250KB/文件，swlog output flash-file-size 12500 可改；/flash/swlog_chassis1~.6 共 8 个滚动文件 + swlog_archive 40 个归档）、远程 syslog（最多 12 台，需 Loopback0 源）。show swlog 看状态与 90% 覆盖告警阈值。</li>
+<li><strong>调级机制</strong>（p16）：默认全局 info（=6）。<code>swlog appid &lt;appid&gt; subapp &lt;all|子应用|编号&gt; level &lt;级别&gt;</code> 按应用单独调级。OSPF 子应用编号表：3=RECV 4=SEND 5=FLOOD 6=SPF 7=LSDB 13=DBEXCH 14=HELLO 15=AUTH 16=STATE 28=AUTOCONFIG 等（p151/p244）。<strong>排障后必须调回 info</strong>。</li>
+<li><strong>日志检索三板斧</strong>（p17）：grep（show log swlog |grep ospf，可级联）；时间戳（timestamp mm/dd/yyyy hh:mm:ss，前提 show system 核对时钟）；reverse（最新在前）。可读事件层：swlog appid all subapp all level event + show log events 输出 CUSTLOG 格式。</li>
+<li><strong>QoS 生命周期四命令</strong>（p35）：qos apply（生效并写 flash）/ qos revert（删未 apply 的）/ qos flush（清全部待定）/ qos reset（恢复默认）。监测：show active policy rule（命中计数）、show qos log（命中明细，上限 10000 行）、qos log level 1-8（默认 5）。</li>
+<li><strong>镜像工具边界</strong>（p37/ce14）：RPM 专用镜像 VLAN 不能捎带业务流量；六类流量设计上不被镜像——LACP、LLDP、802.1X、OAM、L3 控制报文、GARP；"抓不到"不等于"不存在"。策略镜像同时只支持 1 会话；端口镜像与端口监控不能同端口。</li>
+<li><strong>UNP/802.1X 认证排障</strong>（p36/g23/g24）：RADIUS 连通性测试先行（aaa test-radius-server）；随后 show unp user（Active/In progress）→ show unp port/profile map/classification → show aaa/captive-portal/quarantine。Access Guardian 框架四块：认证/分类/角色访问/限制阻断。</li>
+<li><strong>源地址固定</strong>（p38）：多 IP 设备用 <code>ip service source-ip loopback0 swlog</code> 等命令把 syslog/radius/snmp/ssh 等应用发包源固定，防火墙/ACL 场景防丢包，OVNA 纳管时必须与登记 IP 一致。</li>
+</ol>
+<h2 id="a1-lab">A1 · 书中案例（LAB 故障根因）</h2>
+<ul>
+<li><strong>ce04（LAB2/LAB4 收尾实证）</strong>：LAB4 专门列出收尾命令 swlog appid ospf_0 subapp all level info，LAB2 同样收尾——不调回 debug 级日志持续高速写 flash，本身就制造高 CPU/日志风暴次生故障。</li>
+<li><strong>ce12/g23（RADIUS 假阴性）</strong>：aaa test-radius-server 失败就断定服务器坏——测试工具只支持 MD5/PAP，服务器侧可能未开放这两个方法。</li>
+<li>TKC 案例 N2（c01，方法论 skill）：UNP 用户卡 "In progress" 是已知缺陷形态，LAB1 用 <code>unp user flush port &lt;口&gt;</code> 清理（另见 c02 的 l2 skill）。</li>
+</ul>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>触发：任何需要看日志/调日志级的排障（本 skill 是全书的工具层）；丢包计数验证；需要抓包取证；802.1X/UNP 认证失败；syslog 发不出去。</li>
+<li>区分：本 skill 提供<strong>工具</strong>，各协议 skill（stp/l3/multicast）提供<strong>判读对象</strong>——读 OSPF 日志的语义在 l3 skill，调级与检索手法在本 skill。QoS 计数找丢包段的完整流程在 l3-routing-vrrp skill。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>排障前：show system 核对时钟 → show swlog 确认日志输出目的地。</li>
+<li>检索：show log swlog |grep <appid> [timestamp ...] [reverse]；要人可读事件用 level event + show log events。</li>
+<li>调级：<code>swlog appid &lt;appid&gt; subapp &lt;subapp&gt; level debug2|debug3</code> → 复现 → 检索 → <strong><code>... level info</code> 收尾</strong>（写进 SOP）。</li>
+<li>丢包计数：policy condition（source ip + icmptype）→ policy action → policy rule ... log → qos apply → show active policy rule / show qos log；改配置后 clear qos log 清旧日志。</li>
+<li>抓包：<code>port-monitoring 1 source port &lt;口&gt; capture-type full enable file /flash/capture.cap</code> → FTP 取回 Wireshark 分析 → <code>no port-monitoring 1</code>。远程用 RPM 专用 VLAN。</li>
+<li>认证排障：<code>aaa test-radius-server &lt;srv&gt; type authentication user &lt;u&gt; password &lt;p&gt; method pap</code> → show unp user → show unp port/profile/classification → 服务器侧日志佐证。</li>
+<li>固定源地址：<code>ip service source-ip loopback0 swlog</code>，show ip service source-ip 核对各应用绑定。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li><strong>ce04</strong>：debug 级忘记调回 info 是最高频收尾遗漏，会制造次生故障。</li>
+<li><strong>ce03</strong>：debug ip packet 必须带过滤维度并尽快 stop。</li>
+<li><strong>ce12</strong>：RADIUS 测试失败先怀疑方法不匹配（MD5/PAP 前提），再怀疑服务器。</li>
+<li><strong>ce13</strong>：QoS 策略只匹配 ingress，出向分析改用 port-monitoring。</li>
+<li><strong>ce14</strong>：RPM VLAN 不得复用；六类控制流量抓不到是设计行为。</li>
+<li>qos apply 前配置不生效——改完策略没 apply 是"配置没起作用"的头号原因（p35）。</li>
+<li>syslog 上限 12 台且必须配 Loopback0（p15）。</li>
+</ul>
+<hr />
+<p>来源条目: p15, p16, p17, p35, p36, p37, p38, ce03, ce04, ce12, ce14, g19, g23, g24, g31, g32, g40</p></main></div></body></html>

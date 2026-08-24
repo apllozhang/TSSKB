@@ -1,0 +1,104 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>qos-acl-policy — DT00XTE215 · OmniSwitch LAN Access Switching</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE215 · OmniSwitch LAN Access Switching</h1>
+<div class="sub">Edition 19 · 500 页 · 接入层基础全科（三目录模型/VC/VLAN/LACP/STP/DHL/QoS/AG）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">管理面</div>
+<a href="skills/aos-config-management.html">aos-config-management</a>
+<a href="skills/switch-management-access.html">switch-management-access</a>
+<div class="grp">转发面</div>
+<a href="skills/virtual-chassis-deployment.html">virtual-chassis-deployment</a>
+<a href="skills/vlan-link-redundancy.html">vlan-link-redundancy</a>
+<div class="grp">策略面</div>
+<a href="skills/ip-services-basic.html">ip-services-basic</a>
+<a href="skills/qos-acl-policy.html" class="on">qos-acl-policy</a>
+<a href="skills/access-guardian-unp.html">access-guardian-unp</a>
+<div class="grp">运维</div>
+<a href="skills/poe-ops-diagnostics.html">poe-ops-diagnostics</a></aside><main><h1>qos-acl-policy</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="qos-acl">QoS 与 ACL：统一策略引擎</h1>
+<h2 id="r">R · 原文引用</h2>
+<p>"policy condition client_traffic source vlan 20 / policy action priority_5 802.1p 5 / policy rule rule1 condition client_traffic action priority_5 / qos apply. A policy (or a policy rule) is made up of: 1. a condition 2. an action"（p317-328）</p>
+<p>"By default, QoS is enabled on the switch... disposition Default: Accept. By default, the port default values for 802.1p and ToS/DSCP are 0... By default, switched ports are untrusted."（p318-326）</p>
+<p>"The global setting is active immediately; however, modifying a port configuration requires qos apply to activate the change."（p346）</p>
+<h2 id="i">I · 方法论骨架</h2>
+<p>AOS 的 QoS 与 ACL 共用一套三元组策略引擎：
+- <strong>condition</strong>（匹配）：L1-L4——端口/MAC/VLAN/IP/ip-port/ip-protocol/DSCP/服务组等；可用 policy group（port/mac/network/service）复用。
+- <strong>action</strong>（动作）：priority / maximum bandwidth / 802.1p 标记 / redirect / mirror / disposition（accept|drop|deny）等。
+- <strong>rule</strong>（组装）：condition + action + 可选 precedence/log/count/trap；最后 <strong>qos apply</strong> 下发硬件。
+- 默认值：QoS 默认启用；端口 802.1p/DSCP 默认 0、默认 untrusted（流量按 default 值重标）；未命中任何规则的流默认 accept。
+- 出口调度：QSP 队列模板（QSP1=8 严格优先级、QSP2=1 EF+7SP）→ QSI 端口实例。
+- 保留组 UserPorts / DropServices：用户口入组即防源 IP 欺骗 + 丢弃高危服务端口，免写规则。</p>
+<h2 id="a1-lab">A1 · 书中案例（Lab 配置精要）</h2>
+<ul>
+<li><strong>QoS Lab（p344-350）</strong>：qos flush 复位 → <code>qos port 1/1/1 default 802.1p 7</code> 给未打标流量最高优先级 → <code>qos port 1/1/1 trusted</code> + qos apply（trusted 保留原标记）。策略限速：condition(source vlan 20) + action(802.1p 5 + maximum bandwidth 100k) + rule → qos apply → show active policy rule 看命中计数；大包 <code>ping -l 65000</code> 触发 TCM 三色丢弃（Red 包出现）。排障用 policy rule log + show qos log。</li>
+<li><strong>ACL Lab（p369-374）</strong>：员工 VLAN20 禁 FTP、承包商 VLAN30 禁 HTTP。L2 拒绝：condition source mac + action disposition deny；FTP：condition <code>source vlan 20 destination ip-port 20-21 ip-protocol 6</code>；HTTP：5 条 policy service（80/8080/8000/443/4343）组成 service group 入条件。收尾：<code>policy port group Userports 1/1/1-2</code> 防源 IP 欺骗、<code>qos user-port shutdown bpdu</code> 使用户口收 STP 帧即关闭。</li>
+</ul>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>限速、标记优先级、按 MAC/IP/协议/端口封流量、把流量引流到指定下一跳（PBR permanent gateway）——本 skill。</li>
+<li>端口抓包/镜像（port-mirroring 抓物理口）→ poe-ops-diagnostics；按流量条件做镜像（RPM 策略镜像）在本 skill。</li>
+<li>IP 话机自动优先级（alaPhones）在本 skill；话机 VLAN/策略下发（LLDP-MED/UNP）→ access-guardian-unp。</li>
+<li>按 VLAN 的基础转发/聚合 → vlan-link-redundancy。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>清场：<code>qos flush</code>（清策略）/ <code>qos reset</code>（回默认）。</li>
+<li>端口级：<code>qos port &lt;口&gt; default 802.1p N</code>；trusted 口 <code>qos port &lt;口&gt; trusted</code>。</li>
+<li>策略三元组：</li>
+<li><code>policy condition &lt;名&gt; &lt;匹配字段&gt; &lt;值&gt;</code></li>
+<li><code>policy action &lt;名&gt; &lt;动作&gt; [&lt;参数&gt;]</code></li>
+<li><code>policy rule &lt;名&gt; condition &lt;c&gt; action &lt;a&gt; [precedence N] [log]</code></li>
+<li><strong><code>qos apply</code></strong>（不 apply 不生效）。</li>
+<li>验证：<code>show active policy rule</code>（命中计数）/ <code>show qos log</code>。</li>
+<li>ACL 化使用：action 加 <code>disposition drop|deny</code>；服务组 <code>policy service group &lt;名&gt; from cli &lt;s1…s5&gt;</code>。</li>
+<li>防欺骗加固：<code>policy port group UserPorts &lt;口段&gt;</code> + <code>qos user-port shutdown bpdu</code>。</li>
+<li>PBR：action <code>permanent gateway ip &lt;下一跳&gt;</code>，条件加 source port 防回流环路。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li><strong>不 qos apply 不生效</strong>：端口级修改与所有 policy rule 都要 apply 才下发硬件；show active policy rule 里看不到 = 没 apply 或被 disable。</li>
+<li>端口默认 untrusted：不 trusted 的口流量统一按 default 值（默认 0）重标，已有标记会被抹掉。</li>
+<li>IP 话机自动优先级默认开（alaPhones MAC 组给 priority 5），可用 qos no phones 关、qos phones priority N 改；与手工话机策略可能叠加，先确认。</li>
+<li>UserPorts 组的策略对路由流量自动生效，规划时别误伤上联口。</li>
+<li>PBR 仅 6570M/6860/6865/6900/9900 支持。</li>
+<li>策略镜像（RPM）镜像 VLAN 内不许跑别的流量，控制包（LACP/LLDP/802.1x）不被镜像。</li>
+</ul>
+<hr />
+<p>来源条目: f12, p37, p38, ce09, c12, c13, g28, g29, g30, g31, g32, g33</p></main></div></body></html>

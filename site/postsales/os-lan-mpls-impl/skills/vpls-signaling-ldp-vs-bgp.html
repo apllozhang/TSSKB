@@ -1,0 +1,109 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>vpls-signaling-ldp-vs-bgp — DT00XTE324 · OmniSwitch LAN MPLS 实施</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE324 · OmniSwitch LAN MPLS 实施</h1>
+<div class="sub">Edition 02 · 153 页 · MPLS/VPLS 实施精要（三 Lab CLI + 参考设计 + 能力边界）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">部署与信令</div>
+<a href="skills/aos-mpls-deploy-license.html">aos-mpls-deploy-license</a>
+<a href="skills/vpls-signaling-ldp-vs-bgp.html" class="on">vpls-signaling-ldp-vs-bgp</a>
+<div class="grp">设计与运维</div>
+<a href="skills/mpls-reference-design.html">mpls-reference-design</a>
+<a href="skills/aos-mpls-operating-rules.html">aos-mpls-operating-rules</a>
+<a href="skills/aos-mpls-capability-limits.html">aos-mpls-capability-limits</a></aside><main><h1>vpls-signaling-ldp-vs-bgp</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="vpls-ldp-vs-bgp">VPLS 双信令实施：LDP vs BGP 选型与配置序列</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>"Step 7: Create a static SDP and trigger a message to LDP to establish a target peer with the far-end IP address / Step 8: Create a binding of an SDP to the service (VPLS) and trigger a message to mpls CMM to establish a VC label / Step 9: Configure access ports and create SAP on the access port for MPLS-VPLS"（p67-70）</p>
+<p>"With auto-discovery, there is no need to configure each VPLS router with all remote endpoints of VPLS tunnels"（p72）</p>
+<p>"Since these services are usually configured for a single AS, using MP-BGP will require either a full-mesh of peerings between LERs, or using Route Reflectors (RR). The use of RR in the BGP signaled VPLS network is not currently supported in AOS implementation."（p132-133）</p>
+<p>"ip bgp autonomous-system 65724 / ip bgp address-family l2vpn-vpls / ip bgp neighbor 192.168.254.8 remote-as 65724 / ip bgp neighbor 192.168.254.8 update-source Loopback0 / ip bgp neighbor 192.168.254.8 activate l2vpn-vpls"（p74, p110）</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<p>选型决策（f04 + ce07）：
+- LDP 信令（T-LDP）：配置简单，无自动发现——n 台 PE 需 n(n-1)/2 条伪线、每端 n-1 条 SDP；新增站点要改所有旧站点。3-4 站点以内可选。
+- BGP 信令：自动发现+信令一步完成，扩容只加邻居；但 AOS 不支持 RR，IBGP 邻居仍须全互联。
+- 分界线：多站点/会持续扩容选 BGP；少量站点、想省 BGP 运维选 LDP。</p>
+<p>LDP 信令四步（f02）：建服务 → 静态 SDP 互指对端 loopback（触发 T-LDP 定向会话）→ bind-sdp 协商 VC 标签 → access port + SAP 接入。</p>
+<p>BGP 信令路径（f03）：<code>ip load bgp</code> → AS 号 + address-family l2vpn-vpls + 全互联邻居（五要素：同 AS / 对端 loopback / update-source Loopback0 / 每邻居 activate l2vpn-vpls / admin-state enable）→ <code>service N vpls vplsid X signaling bgp ve-id Y</code>，无需手工 SDP，BGP 自动生成绑定（显示为 sdp:32768:x）。</p>
+<h2 id="a1">A1 · 书中案例</h2>
+<ul>
+<li>Lab 2（p97-105，LDP）：sw7/sw8 各建服务 2/3（vplsid 200/300），SDP 78 互指对端 192.168.254.x，bind-sdp 后 SAP <code>1/1/3:2</code>；跨站点 VLAN 对不齐时补两级 vlan-xlation 恢复。验证：<code>show mac-learning domain vpls</code> 看到远端 MAC 从 sdp: 接口学到；P 节点 sw9/sw10 该表为空。</li>
+<li>Lab 3（p106-114，BGP）：恢复 Lab 1 备份后，sw7/sw8 配 IBGP（AS 65724），服务定义换 <code>signaling bgp</code>，sw7 全部 ve-id 1、sw8 ve-id 2；MAC 表远端接口显示 sdp:32768:2/3。</li>
+<li>SDP 复用（p78）：一服务绑多 SDP（<code>service 1 bind-sdp 20 30</code> 一次绑两条）；一条 SDP 被多服务复用（同一对 PE 多个 VPLS 共一条 T-LDP 会话）。</li>
+<li>实验环境：R-Lab POD（8 交换机 + 10 VM，p16-19），6860-A/B 即 sw7/sw8，RDP 接入 rdp.al-mydemo.com。</li>
+</ul>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>已有 MPLS 骨干，要开通二层 VPN 业务：本 skill。</li>
+<li>售前被问"多点 VPLS 用哪种信令"：本 skill 的选型框架 + <code><a href="aos-mpls-capability-limits.html">aos-mpls-capability-limits</a></code> 的不支持清单。</li>
+<li>区分：骨干/许可前置归 <code><a href="aos-mpls-deploy-license.html">aos-mpls-deploy-license</a></code>；项目级标准化模板（rtr-port/BFD 写法）归 <code><a href="mpls-reference-design.html">mpls-reference-design</a></code>；Split Horizon、标签栈等运行规则解读归 <code><a href="aos-mpls-operating-rules.html">aos-mpls-operating-rules</a></code>。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<p>LDP 路线（两端 PE 对称）：</p>
+<pre><code>service 2 vpls vplsid 200 signaling ldp admin-state enable
+service sdp 78 vpls far-end 192.168.254.8        # 对端互指
+service 2 bind-sdp 78
+service access port 1/1/3
+service 2 sap port 1/1/3:2
+service 2 vlan-xlation enable                     # 需要转换时
+service access port 1/1/3 vlan-xlation enable     # 先端口级再服务级
+</code></pre>
+<p>验证：<code>show mac-learning domain vpls</code>（sap: 与 sdp: 两类接口 MAC）。</p>
+<p>BGP 路线（每台 PE）：</p>
+<pre><code>ip load bgp
+ip bgp autonomous-system 65724
+ip bgp address-family l2vpn-vpls
+ip bgp neighbor &lt;对端loopback&gt; remote-as 65724
+ip bgp neighbor &lt;对端loopback&gt; update-source Loopback0
+ip bgp neighbor &lt;对端loopback&gt; activate l2vpn-vpls
+ip bgp admin-state enable
+service 2 vpls vplsid 200 signaling bgp ve-id 1 admin-state enable
+</code></pre>
+<p>验证：<code>show ip bgp neighbors</code>（established + Activate L2VPN vpls = enabled）、<code>show ip bgp l2vpn-vpls</code>。</p>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li>ce07：LDP-VPLS 配置量按全网状增长，n(n-1)/2 条伪线；新站点要改所有旧站点。</li>
+<li>AOS 无 RR（f04）：BGP 路线必须 IBGP 全互联，规模上限受邻居数限制。</li>
+<li>ce08：SAP 配成 <code>:0</code>（untagged）时出口流量永远 untagged，不会替客户打标签——对端期望 tagged 就会单通，靠两级 vlan-xlation 对齐。</li>
+<li>ve-id 必须每台 PE 唯一（Lab 中 sw7=1、sw8=2）。</li>
+<li>每个邻居都要单独 <code>activate l2vpn-vpls</code>，漏一条该邻居不传 VPLS 路由。</li>
+</ul>
+<hr />
+<p>来源条目: f02, f03, f04, p16, p17, c02, c03, c04, c07, ce07, ce08</p></main></div></body></html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>spb-access-ring-redundancy — DT00XTE323 · OmniSwitch LAN SPB 实施</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE323 · OmniSwitch LAN SPB 实施</h1>
+<div class="sub">Edition 12 · 367 页 · SPB 交付配置手册（骨干→L2→L3→自动化，10 Lab CLI 全录）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">骨干与 L2</div>
+<a href="skills/spb-backbone-deploy.html">spb-backbone-deploy</a>
+<a href="skills/spb-l2-service.html">spb-l2-service</a>
+<div class="grp">L3 集成</div>
+<a href="skills/ip-over-spb.html">ip-over-spb</a>
+<div class="grp">保护与冗余</div>
+<a href="skills/spb-bum-protection.html">spb-bum-protection</a>
+<a href="skills/spb-access-ring-redundancy.html" class="on">spb-access-ring-redundancy</a>
+<a href="skills/spb-hybrid-etree.html">spb-hybrid-etree</a>
+<div class="grp">自动化与运维</div>
+<a href="skills/unp-dynamic-ov2500.html">unp-dynamic-ov2500</a>
+<a href="skills/spb-oam-troubleshoot.html">spb-oam-troubleshoot</a></aside><main><h1>spb-access-ring-redundancy</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="multi-access-dhl-erp">接入冗余与环保护（Multi-Access / DHL / ERP）</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>"-&gt; erp-ring ring_id port1 {chassis/slot/port | linkagg agg_id} port2 {...} service-vlan vlan_id level level_num -&gt; erp-ring ring_id rpl-node {...} -&gt; erp-ring ring_id sap-neighbor {...} -&gt; erp-ring ring_id port1 ... access-tagged ... spb-remote-system switch_mac_address service-vlan vlan_id level level_num -&gt; erp-ring ring_id enable" (p243)</p>
+<p>"The Dual-Home Link (DHL) is an AOS feature on access switches. DHL provides fast failover between core and edge switches without implementing Spanning Tree. A DHL Active-Active configuration consists of: A DHL session. Only one session per switch is allowed. Two DHL links... A VLAN-to-link mapping that specifies which of the VLANs each DHL link will service." (p250)</p>
+<p>"-&gt; spb isis interface port 2/1 type multi-access -&gt; spb isis interface linkagg 5 priority 90 — Default: 64. DIS: Highest interface priority; Tiebreaker: highest @BMAC ... No DIS backup; New DIS election without significant disruption (3s)" (p229)</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<p>三种接入冗余/共享形态，按场景选：
+1. <strong>DHL</strong>（p29）：接入交换机双上联两台 BEB，不跑 STP；每机仅一个会话，linkA/linkB + vlan-map 定向 VLAN；切换时 <code>mac-flushing raw</code>。
+2. <strong>ERP（G.8032）</strong>（f13）：环网经 BEB SAP 口延伸过 SPB 云。分工：环内节点配 port1/port2 + service-vlan + MEG level，RPL owner 加 rpl-node 与 wait-to-restore-timer，靠 BEB 的节点配 sap-neighbor；BEB 侧建服务/SAP 并用 <code>access-tagged ... spb-remote-system &lt;对端 B-MAC&gt;</code> 把环另一端接过 SPB。
+3. <strong>Multi-Access 共享网</strong>（p13）：跨共享 LAN/微波 PMP/跨 SPB 域时，接口从默认 P2P 改 <code>type multi-access</code>，DIS 选举按优先级（默认 64）定、同分取最高 B-MAC，重选约 3 秒；同一台机可混配 P2P 与 multi-access。</p>
+<h2 id="a1-lab">A1 · 书中案例（Lab 配置序列精要）</h2>
+<p>Lab7b DHL 双归属（c13，p250）：</p>
+<pre><code>! Sw3（接入）
+dhl 1
+dhl 1 linka port 1/1/7 linkb port 1/1/8
+dhl 1 vlan-map linkb 40
+dhl 1 mac-flushing raw
+dhl 1 admin-state enable
+! BEB 侧服务 + SAP，核心侧内联网关 + VRRP 交叉优先级
+service spb 4003 isid 4003 bvlan 2002 description Finance admin-state enable
+service spb 4003 sap port 1/1/7:30 admin-state enable stats enable
+ip vrrp 30 interface L3vpnvlan30 priority 200 / address 192.168.30.254 / admin-state enable
+</code></pre>
+<p>Lab7c ERP 环过 SPB（c14，p256）：环内 <code>erp-ring 1 port1 1/1/3 port2 1/1/27 service-vlan 1000 level 1</code> + <code>rpl-node port 1/1/27</code> + <code>wait-to-restore-timer 1</code> + <code>sap-neighbor port 1/1/3</code>；BEB 侧同口挂三 SAP（1000 控制 / 30 / 40 业务）+ <code>erp-ring 1 port1 access-tagged 1/1/3 spb-remote-system &lt;BMAC&gt; service-vlan 1000 level 1</code>。
+Lab7a 共享网（c12，p246）：先 disable 原 P2P 口，再 <code>spb isis interface port 1/1/3 type multi-access</code>（Sw7 加 <code>priority 127</code> 抢 DIS）；验证 <code>show spb isis adjacency</code>（一口多邻接）；附完整回滚序列。</p>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>接入交换机要双上联免 STP、现网 ERP 环要跨 SPB 机房延伸、BEB 间经运营商共享以太网/微波互联时用本 skill。</li>
+<li>与 <code><a href="spb-bum-protection.html">spb-bum-protection</a></code> 的区分：LBD 只检测封口不成方案，DHL/ERP 是带倒换的成套冗余；与 <code><a href="spb-backbone-deploy.html">spb-backbone-deploy</a></code> 的区分：multi-access 是骨干接口形态的改造（P2P→共享），但成套 Lab 场景（含回滚）集中在本 skill。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li><strong>DHL 部署</strong>：接入机 <code>dhl 1</code> → 指定 linka/linkb（物理口或 linkagg）→ <code>vlan-map</code> 把定向 VLAN 绑到指定链路 → <code>mac-flushing raw</code> → <code>admin-state enable</code>；<code>show dhl 1</code> 看 Active Vlans 分配。</li>
+<li><strong>ERP 部署</strong>：环内节点按 A1 模板配 ring/rpl/sap-neighbor；BEB 侧建服务（ERP 控制 VLAN 的服务必须建在<strong>控制 BVLAN</strong> 上）+ 三类 SAP + spb-remote-system 形式；<code>show erp</code> / <code>show erp statistics</code> 验证，断纤看 RPL 阻塞恢复与 WTR 计时。</li>
+<li><strong>Multi-Access 改造</strong>：disable 原 P2P 骨干口 → 各机出线到共享网 → <code>type multi-access</code>（需要控制 DIS 则加 priority）→ 验证一口多邻接；保留回滚序列（<code>no spb isis interface port X</code> + 原口重新 enable）。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li><strong>ERP/SPB 六条铁律</strong>（p23/ce08）：每 SVLAN 最多 2 个 ERP 型 NNI 关联；环不能建在 802.1q tag 口或 STP 型 NNI 上；BEB 不能做 RPL 节点；RPL 口不能在 SPB 网内也不能做 SAP neighbor；ERP 服务 VLAN 的 SPB 服务必须配在控制 BVLAN；多环共存时各环 VLAN 范围（含服务 VLAN）互斥、服务 ID 不跨环。</li>
+<li>DHL 每交换机只允许一个会话（p29）；VLAN 池需同时 tag 到两条链路。</li>
+<li>multi-access 无 DIS 备份，重选 3 秒（p13）；改 SAP 后需 disable/enable 端口重启分类（c13）。</li>
+<li>spb-remote-system 填的是对端 BEB 的 B-MAC（<code>show spb isis info</code> 获取）。</li>
+</ul>
+<hr />
+<p>来源条目: f13, p13, p23, p29, c12, c13, c14, ce08, g10, g11, g15, g31</p></main></div></body></html>

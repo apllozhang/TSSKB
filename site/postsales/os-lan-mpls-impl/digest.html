@@ -1,0 +1,181 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>精华长文 DIGEST — DT00XTE324 · OmniSwitch LAN MPLS 实施</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE324 · OmniSwitch LAN MPLS 实施</h1>
+<div class="sub">Edition 02 · 153 页 · MPLS/VPLS 实施精要（三 Lab CLI + 参考设计 + 能力边界）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">部署与信令</div>
+<a href="skills/aos-mpls-deploy-license.html">aos-mpls-deploy-license</a>
+<a href="skills/vpls-signaling-ldp-vs-bgp.html">vpls-signaling-ldp-vs-bgp</a>
+<div class="grp">设计与运维</div>
+<a href="skills/mpls-reference-design.html">mpls-reference-design</a>
+<a href="skills/aos-mpls-operating-rules.html">aos-mpls-operating-rules</a>
+<a href="skills/aos-mpls-capability-limits.html">aos-mpls-capability-limits</a></aside><main><h1>精华长文 DIGEST</h1><h1 id="digest-aos-mpls">DIGEST · 一篇读透 AOS MPLS 实施（不读全书版）</h1>
+<blockquote>
+<p>教材：ALE《OmniSwitch LAN MPLS Concepts &amp; Implementation》（DT00XTE324EN，153 页）
+本文是全书精华的读者向浓缩，数字均带页码，可直接回查原书。</p>
+</blockquote>
+<h2 id="aos-mpls">一、一页看懂 AOS MPLS</h2>
+<p><strong>什么时候在 OmniSwitch 上用 MPLS？</strong> 两个典型场景（p133-134）：一是中小园区，二/三层架构里 IP/MPLS 从接入直达核心，端到端跑 VPN 业务；二是城域以太（智能城市类项目），三层架构中 MPLS 域收敛到核心+汇聚，接入层保持标准以太交换。定位是"面向企业与城域客户的高性价比方案"。</p>
+<p><strong>和 SPB/EVPN 的分工：</strong> 教材口径很直接——AOS 的 IP/MPLS 首版只覆盖 L2 VPN（VPLS），L3 VPN（VPRN）不在本册（BOOK_OVERVIEW 批判部分）；需要二层多点互通、且已有 OSPF underlay 的网络，VPLS 是可选项。纯园区新建二层扁平化需求，SPB/EVPN 仍是主线；MPLS 更适合城域/多业务分域的场景。</p>
+<p><strong>硬性准入（p59, p118）：</strong> AOS ≥ 8.9R3，平台仅 OmniSwitch 6860N。MPLS 是独立 Debian 包（uosn-mpls-v1.deb），装在 /flash/working/pkg 后用 pkgmgr 安装——只装包不够，LDP/BGP 还要分别 <code>mpls load ldp</code> / <code>ip load bgp</code> 才加载。</p>
+<h2 id="p58-70">二、部署十步主线（p58-70）</h2>
+<p>顺序固定，不可乱序：</p>
+<ol>
+<li>全网装 MPLS 包：<code>pkgmgr install uosn-mpls-v1.deb</code></li>
+<li>创建互联 VLAN 与 IP 接口（Lab 中 VLAN 70/79/80/89/90，mtu-ip 4094，p83-96）</li>
+<li>配 OSPF underlay，<strong>每台必配 Loopback0</strong>——OmniSwitch 特有：Loopback0 即系统 IP，兼作 LSR ID，全网必须唯一，否则"行为不可预测"（p125 原文加粗）</li>
+<li>安装许可（SILOS 服务器 + SWLIC 客户端）：状态为 permanent 或未过期 demo 才使能；无效时 MPLS 被<strong>临时禁用</strong>——配置还在但功能停摆，排障入口是 <code>sh license-info</code> 而非查配置（p92）</li>
+<li><code>mpls load ldp</code> + 全局/接口两级使能</li>
+<li>建 VPLS 服务（7-9 步：SDP → bind-sdp → SAP，见下节）</li>
+<li>验证 + <code>write memory flash-synchro</code> 备份</li>
+</ol>
+<p>许可两类（p118 附近）：站点许可浮动共享，1 份最多覆盖 4 节点（1 节点可以是 8 台以内虚拟机箱）；节点许可绑单个 MPLS 节点。客户超 4 台就得加买或改节点许可。</p>
+<h2 id="vpls-ldp-vs-bgp">三、VPLS 双信令选型：LDP vs BGP</h2>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>LDP 信令（T-LDP）</th>
+<th>BGP 信令</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>自动发现</td>
+<td>无，手工 SDP 互指</td>
+<td>有，"无需逐台配远端"（p72）</td>
+</tr>
+<tr>
+<td>伪线数量</td>
+<td>n 台 PE 要 n(n-1)/2 条，新站点要改所有旧站点</td>
+<td>IBGP 邻居也须全互联（AOS 无 RR，p132-133）</td>
+</tr>
+<tr>
+<td>扩容</td>
+<td>改全部旧站点</td>
+<td>只加邻居</td>
+</tr>
+<tr>
+<td>适用</td>
+<td>3-4 站点以内、省 BGP 运维</td>
+<td>多站点、持续扩容</td>
+</tr>
+</tbody>
+</table>
+<p><strong>LDP 配置骨架</strong>（两端对称，p97-105）：</p>
+<pre><code>service 2 vpls vplsid 200 signaling ldp admin-state enable
+service sdp 78 vpls far-end 192.168.254.8
+service 2 bind-sdp 78
+service access port 1/1/3
+service 2 sap port 1/1/3:2
+</code></pre>
+<p><strong>BGP 配置骨架</strong>（每台 PE，p74, p110）：</p>
+<pre><code>ip load bgp
+ip bgp autonomous-system 65724
+ip bgp address-family l2vpn-vpls
+ip bgp neighbor &lt;对端loopback&gt; remote-as 65724
+ip bgp neighbor &lt;对端loopback&gt; update-source Loopback0
+ip bgp neighbor &lt;对端loopback&gt; activate l2vpn-vpls
+ip bgp admin-state enable
+service 2 vpls vplsid 200 signaling bgp ve-id 1 admin-state enable
+</code></pre>
+<p>三个坑：ve-id 每台 PE 必须唯一（Lab 中 sw7=1、sw8=2）；每个邻居都要单独 <code>activate l2vpn-vpls</code>，漏一条该邻居不传 VPLS 路由；SAP 配 <code>:0</code>（untagged）时出口永远 untagged，对端要 tagged 就单通，靠两级 vlan-xlation 对齐（p78 附近案例）。参考设计的 BGP 模板还多一条 <code>ip bgp mpls</code> 全局命令，Lab 3 里没有——照抄规范模板时别漏（p138-139）。</p>
+<h2 id="p133-146">四、参考设计两场景要点（p133-146）</h2>
+<p><strong>园区模板：</strong> 端到端 MPLS（接入到核心），二/三层架构。</p>
+<p><strong>城域模板：</strong> 三层架构，MPLS 只到核心+汇聚，接入层标准以太交换。</p>
+<p><strong>最佳实践七条（p136）：</strong> OSPF/IS-IS underlay；每台 /32 loopback 进 IGP 且兼 Router-ID；IGP 网络类型 point-to-point；用路由接口（<code>rtr-port tagged</code>）；启用 BFD（注意是全局 <code>ip bfd admin-state enable</code> + OSPF 接口 <code>bfd-state enable</code> 两级，只配一边不生效）；P2P 链路用 /31（教材示例为可读性用 /24，交付按 /31）。</p>
+<p><strong>配置落地铁律：</strong> service/sap/sdp 只配在 PE/LER 上，P 节点零 service 配置（Lab 中 P 节点 sw9/sw10 的 mac-learning 表为空即直接证据）。</p>
+<h2 id="p139-145">五、验证命令手册（按层次下钻，p139-145）</h2>
+<ol>
+<li>包/许可：<code>show pkgmgr</code>、<code>show license-server usage/info</code>、<code>sh license-info</code></li>
+<li>MPLS 全局：<code>show mpls</code></li>
+<li>标签表：<code>show mpls ftn-table</code>（入向 PUSH）、<code>show mpls ilm-table</code>（入标签 SWAP/POP）、<code>show mpls forwarding-table</code>（Out-Label=3 即直连+PHP，属正常）</li>
+<li>LDP：<code>show mpls ldp session</code>（双邻居 OPERATIONAL，模式默认 DU+ILD+LLR）、<code>show mpls ldp neighbor</code>（LDP ID 为 loopback:0 即 per-platform）</li>
+<li>业务：<code>show mpls vpls-mesh</code>、<code>show service vpls|sdp|bind-sdp</code></li>
+<li>BGP：<code>show ip bgp neighbors</code>（established + L2VPN vpls enabled）、<code>show ip bgp l2vpn-vpls path</code>（含 VE-ID/LabelBase）</li>
+<li>MAC：<code>show mac-learning domain vpls</code>——应同时看到 <code>sap:</code>（本端）与 <code>sdp:</code>（远端）接口的 MAC</li>
+</ol>
+<h2 id="aos-p127-133">六、AOS 能力边界：六项不支持（售前禁引核对，p127-133）</h2>
+<table>
+<thead>
+<tr>
+<th>不支持</th>
+<th>影响</th>
+<th>替代</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RSVP-TE</td>
+<td>无流量工程/带宽预留</td>
+<td>只能 LDP 隧道走 IGP 最优路径</td>
+</tr>
+<tr>
+<td>显式 NULL</td>
+<td>PHP 时 EXP 无法保留</td>
+<td>无直接替代</td>
+</tr>
+<tr>
+<td>QoS over EXP</td>
+<td>EXP 不承载 QoS</td>
+<td>QoS 落 IP DSCP</td>
+</tr>
+<tr>
+<td>MPLS TTL 操作</td>
+<td>traceroute 暴露骨干跳数</td>
+<td>无</td>
+</tr>
+<tr>
+<td>VPWS</td>
+<td>无点对点二层专线</td>
+<td>两点 VPLS 模拟 E-Pipe</td>
+</tr>
+<tr>
+<td>BGP VPLS 的 RR</td>
+<td>邻居不能收敛到反射器</td>
+<td>IBGP 全互联</td>
+</tr>
+</tbody>
+</table>
+<p>用法：任何方案/标书引用 MPLS 特性，先逐条过这张表；命中硬需求要么换方案要么确认 AOS 后续版本（p118 预告"后续版本可能补充"）。注意这是 8.9R3 首版清单，实际项目要在目标版本上用 <code>show mpls</code> 复核，别把"首版不支持"当永久结论。</p>
+<hr />
+<p><strong>一句话收束：</strong> 准入（8.9R3/6860N/许可）→ 十步部署（Loopback0 唯一是底线）→ 信令选型（小网 LDP、大网 BGP 全互联）→ 模板交付（业务只配 LER）→ 命令族谱分层验证 → 售前先过六项禁引清单。</p>
+<p><em>由 cangjie-skill 流水线从 DT00XTE324EN 蒸馏生成。</em></p></main></div></body></html>

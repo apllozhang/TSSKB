@@ -1,0 +1,172 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>campus-design-tiering-and-ha — DT00XPS281 · Campus LAN 售前</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XPS281 · Campus LAN 售前</h1>
+<div class="sub">Edition 29 · 480 页 · 园区网售前全科（特性→网管→选型→License→产品组合）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">设计与高可用</div>
+<a href="skills/campus-design-tiering-and-ha.html" class="on">campus-design-tiering-and-ha</a>
+<a href="skills/virtual-chassis-design.html">virtual-chassis-design</a>
+<a href="skills/dhl-erp-ring-protection.html">dhl-erp-ring-protection</a>
+<div class="grp">机型与架构</div>
+<a href="skills/omniswitch-model-selection.html">omniswitch-model-selection</a>
+<a href="skills/campus-reference-architectures.html">campus-reference-architectures</a>
+<div class="grp">织物与自动化</div>
+<a href="skills/spb-vxlan-core-fabric.html">spb-vxlan-core-fabric</a>
+<a href="skills/ifab-zero-touch-automation.html">ifab-zero-touch-automation</a>
+<div class="grp">网管与商务</div>
+<a href="skills/nms-platform-and-network-advisor.html">nms-platform-and-network-advisor</a>
+<a href="skills/license-wwpl-pricing.html">license-wwpl-pricing</a>
+<div class="grp">安全与垂直</div>
+<a href="skills/security-unified-access.html">security-unified-access</a>
+<a href="skills/video-surveillance-design.html">video-surveillance-design</a></aside><main><h1>campus-design-tiering-and-ha</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="_1">园区网分层设计法与高可用方案横比</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>"LAN OMNISWITCH HIERARCHICAL LAYERING DESIGN APPROACH — Network Topology: Shared / Ring / Star / Tree / Spine &amp; Leaf / POD / Mesh; Network Architecture: Access–Aggregation–Core, 2-tier, 3-tier" (p288)</p>
+<p>"TWO-TIER MODEL: High-throughput • High Density • Lowest-Latency • Faultless with low and predictable latency • 1.5 to 6µs • Access and distribution layers merging. THREE-TIER MODEL: Scalable Segmentation • Low-latency (&gt;12µs)" (p289-291)</p>
+<p>"HIGH AVAILABILITY DESIGN SUMMARY — Redundancy solution ACTIVE-ACTIVE L2: VIRTUAL CHASSIS (VC) preferred — Link redundancy / 100% Bandwidth / Switch redundancy / Unified Management / Unified L2/L3. STP: 50% Bandwidth … DHL Active-Active: 100% Bandwidth … ERP: Scalability … SPB: 100% Links UP / Traffic isolation" (p129)</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<p>设计流程第一刀是二维定位法：<strong>架构轴</strong>（2-tier vs 3-tier）× <strong>拓扑轴</strong>（Star/Tree/Ring/Mesh/Spine-Leaf/POD），两轴交点即架构草图。</p>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>两层（接入+核心）</th>
+<th>三层（接入+汇聚+核心）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>时延</td>
+<td>1.5-6µs，无阻塞</td>
+<td>&gt;12µs</td>
+</tr>
+<tr>
+<td>速率路径</td>
+<td>接入 100M-10G；上联/核心 10G→50G→100G</td>
+<td>接入 100M-10G；汇聚 1G→25G；核心 10G→100G</td>
+</tr>
+<tr>
+<td>适合</td>
+<td>高吞吐高密度、管理点少、接入汇聚合并</td>
+<td>可扩展分段、中等密度、多楼宇</td>
+</tr>
+</tbody>
+</table>
+<p>高可用六方案横比（同一坐标系）：</p>
+<table>
+<thead>
+<tr>
+<th>方案</th>
+<th>带宽利用率</th>
+<th>交换机冗余</th>
+<th>统一管理</th>
+<th>定位</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>VC（官方 preferred）</strong></td>
+<td>100%</td>
+<td>有</td>
+<td>有</td>
+<td>L2 主主首选</td>
+</tr>
+<tr>
+<td>STP</td>
+<td>50%</td>
+<td>无</td>
+<td>无</td>
+<td>兜底</td>
+</tr>
+<tr>
+<td>LACP</td>
+<td>100%</td>
+<td>无</td>
+<td>无</td>
+<td>纯链路聚合</td>
+</tr>
+<tr>
+<td>DHL Active-Active</td>
+<td>100%</td>
+<td>有</td>
+<td>无</td>
+<td>接入双归（不堆叠也能双活）</td>
+</tr>
+<tr>
+<td>ERP 环网</td>
+<td>100%</td>
+<td>有</td>
+<td>无</td>
+<td>环拓扑可扩展</td>
+</tr>
+<tr>
+<td>SPB</td>
+<td>100% 全链路 UP</td>
+<td>—</td>
+<td>无</td>
+<td>核心层方案，流量隔离</td>
+</tr>
+</tbody>
+</table>
+<h2 id="a1">A1 · 书中案例</h2>
+<p>c07（p307）：校园网两层/三层选型总图——两层网边缘 OS6360/6465/6560-E 千兆 PoE 接入 + OS6860N/6870 VC 或 DHL 直连核心；三层网 OS6560/E 做汇聚、OS6900/6870/9900 做核心，骨干 10/40G，并按端口速率与供电等级逐层标注机型。</p>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>触发：客户给平面图/需求清单，要求 15 分钟出架构草图；或客户提出可靠性指标（收敛时间、双活）问选哪种冗余技术。</li>
+<li>区分：本 skill 只回答"架构形态 + 冗余技术路线"两问；<strong>具体选哪台机型</strong>走 <code><a href="omniswitch-model-selection.html">omniswitch-model-selection</a></code>；<strong>落成可投标的架构模板</strong>（紧凑核心/环网/密集核心等）走 <code><a href="campus-reference-architectures.html">campus-reference-architectures</a></code>；环网技术细节走 <code><a href="dhl-erp-ring-protection.html">dhl-erp-ring-protection</a></code>。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>过需求十维自检（可扩展/可靠/成本/可管理/易实施/排障等，p287），问客户"最在乎哪三条"。</li>
+<li>判层数：单楼宇或要求最低时延→两层；多楼宇、分段扩展→三层。</li>
+<li>选拓扑：光纤星型→Star/Mesh；光纤环形→Ring（ERP）；数据中心→Spine-Leaf/POD。</li>
+<li>按上表定冗余技术：L2 双活默认推 VC；客户拒绝堆叠则 DHL；环资源则 ERP；多租户核心则 SPB。</li>
+<li>产出：一张架构草图 + 一句话技术路线（"两层 + VC + DHL 接入"这类），交机型选型 skill 续作。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li>"最低时延 1.5-6µs"是两层模型的理论量级，实际还受链路与机型影响，投标写 SLA 前实测。</li>
+<li>SPB 收敛约 300ms，达不到电信级 50ms（时敏场景用 ERPv2，见 dhl-erp-ring-protection skill 的 ce07）。</li>
+<li>各方案对比表是 Ed29 口径，版本迭代后以最新 release notes 复核。</li>
+</ul>
+<hr />
+<p>来源条目: f02, f06, p22, p43, c07</p></main></div></body></html>

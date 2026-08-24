@@ -1,0 +1,96 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>vxlan-evpn-bum-troubleshooting — DT00XTE325 · OmniSwitch LAN VxLAN/EVPN</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE325 · OmniSwitch LAN VxLAN/EVPN</h1>
+<div class="sub">Edition 01 · 213 页 · 五步配置法 + 三 Lab + EVPN 架构指南</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">总纲与底座</div>
+<a href="skills/vxlan-evpn-five-step-architecture.html">vxlan-evpn-five-step-architecture</a>
+<a href="skills/vxlan-evpn-underlay-bgp-design.html">vxlan-evpn-underlay-bgp-design</a>
+<div class="grp">业务与多归属</div>
+<a href="skills/vxlan-evpn-service-provisioning.html">vxlan-evpn-service-provisioning</a>
+<a href="skills/vxlan-evpn-multihoming-df.html">vxlan-evpn-multihoming-df</a>
+<div class="grp">排障</div>
+<a href="skills/vxlan-evpn-bum-troubleshooting.html" class="on">vxlan-evpn-bum-troubleshooting</a></aside><main><h1>vxlan-evpn-bum-troubleshooting</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="bum-mac-mobility-her-proxy-arp">BUM 复制、MAC Mobility 与故障排查（HER / Proxy ARP / 验证命令链）</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>Head end replication: One copy of each frame is sent to each known remote VTEP with a unicast IP header. Requires that the VTEP know of all the IPs of the remote VTEPs participating in a VNI, or they will not receive any traffic.（p41；p180 "Only ingress (head-end) replication is supported in the initial release 8.10R1"）</p>
+<p>Enabling the proxy ARP will check for the local proxy-ARP cache and generates an ARP reply if target IP is found, otherwise those ARP requests will be flooded... By default, Proxy ARP is enabled for an EVPN enabled service.（p110/124；p203 "In case Proxy ARP Table is empty, it has probably timed out"）</p>
+<p>When the host moves..., it sends a new R-T2 with the MAC mobility extended community with an incremented sequence number of 1... the PEs retain the R-T2 with the highest sequence number.（p127/177）</p>
+<p>If a CE MAC address is constantly moving between two different Ethernet segments... This is called MAC duplications... leads to degradation of the EVPN network performance.（p177）</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<ol>
+<li><strong>BUM 两机制</strong>：①头端复制 HER——入端 VTEP 给每个已知远端 VTEP 逐份单播，EVPN 下用 RT3 IMET 自动发现建 ingress replication list；②Tandem 组播——标准 IP 组播，AOS 网关用 PIM-BIDIR（RFC 5015 双向共享树），每 VNI 一个组播组。<strong>8.10R1 EVPN 仅支持 HER</strong>。ARP/BOOTP/DHCP 都按 BUM 处理。</li>
+<li><strong>控制面 MAC 学习三步</strong>（p121-123）：ARP 广播→入 PE 泛洪+本地学源 MAC→RT2（仅 MAC，或 snooping 到 IP 后 MAC+IP）经 RR 转发全网→应答单播返回。全程无数据面泛洪学习。</li>
+<li><strong>Proxy ARP/ARP 抑制</strong>：PE 收 ARP 先查本地 proxy-ARP 缓存，命中代答、未命中才泛洪；默认启用。四默认参数：arp-suppression=complete、flood-unknown-unicast-suppression=discard、unicast-forward=disable、arp-probe=enable。表项来源：ARP/GARP、DHCP snooping、IPv6 ND、静态。</li>
+<li><strong>MAC mobility</strong>：RT2 带 mobility 扩展团体，序列号首通告=0，移动后+1，各 PE 保留最高序列号、亚秒收敛。</li>
+<li><strong>MAC duplication 防护</strong>：MAC 在两 ES 反复横跳（根因：ES 网环路或两主机重号）→ RT2 无休止通告/撤销拖垮控制面。全局 <code>service bgp-evpn mac-mobility loop-protection</code>（retry-time/threshold/timeout），达阈值 hold-down，<strong>须配在所有 Leaf</strong>。</li>
+<li><strong>排障分层顺序</strong>（沿用课堂验证链）：ES→service→SAP→RT3→MAC→SDP 隧道→Proxy ARP→端到端 ping。</li>
+</ol>
+<h2 id="a1">A1 · 书中案例</h2>
+<ul>
+<li>Proxy ARP 排障（p203/110/113-114）：<code>sh ip evpn proxy-arp evi 1000</code> 初始 Total count: 0，两主机互 ping 后出现 192.168.10.50↔bc:24:11:dd:29:a9 等表项——空表先造流量再回查，仍空才往 RT2 携带 IP、snooping 方向查。</li>
+<li>HER silent failure（p41）：裸 VXLAN（无 EVPN）场景，本端 VTEP 漏学一台远端 VTEP IP，该 VTEP 收不到该 VNI 任何泛洪流量（未知单播/广播/组播全静默丢弃，表现为"部分方向不通"）——排障优先核对 VTEP 对等列表完整性；EVPN 下这正是 RT3 的价值。</li>
+<li>MAC 表双通道（p73/116）：<code>sh mac-learning evpn-vxlan</code> 本地 MAC 挂 sap:1/1/7，远端 MAC 挂 sdp:32768——确认控制面学习链是否闭环。</li>
+</ul>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>触发：广播/未知单播不通、ARP 代答异常、主机迁移后不通、MAC 震荡告警、BUM 复制方式选型（HER vs 组播）。</li>
+<li>区分：不通的根因在业务/网关配置 → <code><a href="vxlan-evpn-service-provisioning.html">vxlan-evpn-service-provisioning</a></code>（先核 dummy 口、网关笔误）；根因在多归属/DF → <code><a href="vxlan-evpn-multihoming-df.html">vxlan-evpn-multihoming-df</a></code>；底座路由/BGP → <code><a href="vxlan-evpn-underlay-bgp-design.html">vxlan-evpn-underlay-bgp-design</a></code>。本 skill 管"转发平面的 BUM 行为与控制面学习链排障"。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>按层核对：<code>show service evpn</code>（业务 Up）→ <code>debug evpn show bgp route-type rt3</code>（双方互见对端 Loopback）→ <code>sh mac-learning evpn-vxlan</code>（sap/sdp 双侧表项）→ <code>sh service evpn evi &lt;id&gt; tunnel-ports</code>（SDP 32768 建到远端）。</li>
+<li>ARP 类故障：先两端互 ping 造流量 → <code>sh ip evpn proxy-arp evi &lt;id&gt;</code> 回查 → <code>show service &lt;id&gt; proxy-arp config</code> 核四参数 → 仍空查 RT2 是否带 IP（<code>debug evpn show bgp route-type rt2</code>）。</li>
+<li>防震荡：所有 Leaf 全局配 <code>service bgp-evpn mac-mobility loop-protection enable retry-time &lt;s&gt; threshold &lt;n&gt; timeout &lt;s&gt;</code>。</li>
+<li>HER 规模评估：远端 VTEP 数 ×每 VNI 复制份数估带宽；需要组播承载时核对版本（8.10R1 不支持 tandem）。</li>
+<li>端到端验证：同子网 ping + 跨子网 ping + <code>sh ip evpn proxy-arp summary</code> 统计。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li><strong>Proxy ARP 空表 ≠ 故障</strong>：表项会老化，先造流量再下结论。</li>
+<li><strong>MAC duplication 根因二分</strong>：先查 ES 网络后门环路，再查两主机是否真配了相同 MAC；loop-protection 只是把伤害 hold-down，不解决环路本身。</li>
+<li>loop-protection 漏配一台 Leaf，该 Leaf 仍会被震荡路由打爆——必须全网 Leaf 一致配置。</li>
+<li>裸 VXLAN（无 EVPN 控制面）下 HER 漏学 VTEP 是静默失败，无告警无日志，只能靠对等列表核对发现。</li>
+<li>BUM 组播方案（PIM-BIDIR、每 VNI 一组）在 8.10R1 EVPN 上不可用，别写进当前版本交付方案。</li>
+</ul>
+<hr />
+<p>来源条目: f06, p10, p14, p15, ce03, ce04, ce09, g02, g13, g17, g23</p></main></div></body></html>

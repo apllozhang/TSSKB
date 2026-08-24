@@ -1,0 +1,277 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>术语词典 — DT00XTE478 · Stellar WLAN 高级排障</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE478 · Stellar WLAN 高级排障</h1>
+<div class="sub">187 页 · 无线排障专题（方法论/工具箱/四层排障/勘测/TKC）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">方法论</div>
+<a href="skills/wlan-trouble-methodology.html">wlan-trouble-methodology</a>
+<div class="grp">工具与体检</div>
+<a href="skills/stellar-ap-toolbox.html">stellar-ap-toolbox</a>
+<a href="skills/stellar-ap-system-health.html">stellar-ap-system-health</a>
+<div class="grp">故障域</div>
+<a href="skills/client-connection-trouble.html">client-connection-trouble</a>
+<a href="skills/dot1x-radius-trouble.html">dot1x-radius-trouble</a>
+<a href="skills/network-side-trouble.html">network-side-trouble</a>
+<a href="skills/wireless-rf-roaming-trouble.html">wireless-rf-roaming-trouble</a>
+<div class="grp">勘测纠正</div>
+<a href="skills/site-survey-remediation.html">site-survey-remediation</a></aside><main><h1>术语词典</h1><h1 id="glossary">术语词典 GLOSSARY</h1>
+<table>
+<thead>
+<tr>
+<th>术语</th>
+<th>全称</th>
+<th>出处</th>
+<th>定义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>RSSI</strong></td>
+<td>Received Signal Strength Indicator（接收信号强度指示）</td>
+<td>p78-79</td>
+<td>| 衡量客户端或 AP 收到的信号强度。Stellar 采用正值刻度，与 dBm 固定换算（dBm = RSSI 值 - 96）：RSSI 10=-86dBm（差，丢包过多，语音/实时应用不可用）、RSSI 29=-67dBm（语音与实时应用推荐下限）、RSSI 43=-53dBm（完美）。判定口径：邻居 AP 的 RSSI&lt;20 即差信号。wlanconfig athXX list 输出 RSSI/MINRSSI/MAXRSSI 三个值。</td>
+</tr>
+<tr>
+<td><strong>SNR</strong></td>
+<td>Signal-to-Noise Ratio（信噪比）</td>
+<td>p78</td>
+<td>| 信号强度与噪声电平之比，衡量数据传输质量。教材口径：802.11ac 的 VoWLAN（无线语音）部署要求 SNR ≥ 25；信噪比过高恶化时数据传输劣化。wlanconfig athXX list 与 iwconfig 输出中都有 SNR/Noise level 字段。</td>
+</tr>
+<tr>
+<td><strong>BSSID</strong></td>
+<td>Basic Service Set Identifier</td>
+<td>p63</td>
+<td>| 单个 AP 射频上某个 SSID 的 MAC 标识。iwconfig 输出的"Access Point"一栏即 BSSID；若该栏没有 MAC 地址，说明这个 SSID 根本没有在对应射频上广播出来——这是排障检查清单里的关键判据。</td>
+</tr>
+<tr>
+<td><strong>athXYY 接口命名</strong></td>
+<td>Stellar AP 无线接口命名规则</td>
+<td>p63</td>
+<td>| Stellar AP 无线接口名的编码规则：第一位 X 表示频段（0=2.4GHz、1=5GHz、2=6GHz），后两位 YY 是 SSID 编号（1-16）。如 ath001=2.4GHz 上的 1 号 SSID，ath102=5GHz 上的 2 号 SSID。掌握规则后可从接口名直接反推频段与 SSID，选择正确的接口执行 iwlist/wlanconfig。</td>
+</tr>
+<tr>
+<td><strong>br-wan</strong></td>
+<td>AP 有线网络接口</td>
+<td>p30, p94</td>
+<td>| Stellar AP 连接有线网络的桥接接口。tcpdump 抓有线侧流量时用 -i br-wan 指定；ifconfig br-wan 查看 AP 自身 IP/掩码与 RX/TX 计数。与之对照，eth0 也用于上联抓包（tcpdump -i eth0），athXX 系列是无线接口。</td>
+</tr>
+<tr>
+<td><strong>Band Steering</strong></td>
+<td>频段引导</td>
+<td>p64</td>
+<td>| RF profile 全局参数之一：把支持 5GHz 的终端引导到 5GHz 频段，为只支持 2.4GHz 的老设备留出空口。rfprofile.conf 中 bandSteering=enable/disable，另有 bandSteeringForce5g 强制选项。排障时核对实际下发值与配置是否一致。</td>
+</tr>
+<tr>
+<td><strong>Load Balance</strong></td>
+<td>AP 负载均衡</td>
+<td>p64, p80</td>
+<td>| RF profile 全局参数：在 AP 之间均衡客户端数量。日志中"Received Disassoc with reason 8 (OS moved the client to another AP using non-aggressive load balance)"即负载均衡主动搬移客户端的表现，属系统正常行为而非故障。</td>
+</tr>
+<tr>
+<td><strong>Air Time Fairness</strong></td>
+<td>空口时间公平</td>
+<td>p64</td>
+<td>| RF profile 全局参数（airtimeFairnessAt2G/At5G）：限制慢速终端占用过多空口发送时间，保障整体公平。排障时作为 rfprofile.conf 核对项之一。</td>
+</tr>
+<tr>
+<td><strong>PVC</strong></td>
+<td>Primary Virtual Controller（主虚拟控制器）</td>
+<td>p58</td>
+<td>| Express 模式集群中被选为主控制器的 Stellar AP，承载集群配置管理。用 cluster_mgt -x show=self / show=pvc 查询本机角色与集群 PVC（role=PVC、status=RUN）。排障要确认 PVC 存在且是否本该是它。</td>
+</tr>
+<tr>
+<td><strong>Cluster（集群）</strong></td>
+<td>Stellar AP Express 模式集群</td>
+<td>p48, p57-59</td>
+<td>| Express（无网管）模式下 Stellar AP 自组成的管理单元，成员共享配置。show_cluster 列出全部成员（MAC/IP/prio/state/role/version/model）及 OmniVista 服务器 IP；集群健康靠三查：PVC 身份、成员齐全、cluster_mgt/cluster_cor 进程各一。</td>
+</tr>
+<tr>
+<td><strong>getmode 三态</strong></td>
+<td>Express / Cloud / OVNG 管理模式</td>
+<td>p48</td>
+<td>| getmode 命令返回 AP 的管理模式：CLUSTER=Express 模式（本地集群）、OV=Cloud 模式（OmniVista 云管，可用 getovinfo 查网管 IP）、OVNG 为另一云网管形态。排障第一步先确认模式，因为不同模式的日志收集路径（Express 走集群 Web UI，云模式要先在 Cirrus 开 AP Web）不同。</td>
+</tr>
+<tr>
+<td><strong>OmniVista Cirrus</strong></td>
+<td>ALE 云管平台</td>
+<td>p166-170</td>
+<td>| SaaS 模式的云端统一网管，管理 Stellar AP 与 OmniSwitch，含 WLAN 管理、UPAM、Wi-Fi QoE 分析、WIDS/WIPS 等能力，规模最高约 12000 台设备（10000 AP + 2000 交换机）。接管 AP 的网络前置：防火墙开 9093/30123-30125、放行出向 443/80/123/53、DHCP 选项 1/2/6/28/42/43（代理另加 129-133/138）、至少一台 NTP、AWOS 4.0.6 GA+（AP1101、AP1201L/H/HL 除外）。</td>
+</tr>
+<tr>
+<td><strong>OmniVista Terra</strong></td>
+<td>ALE 本地部署网管平台</td>
+<td>p174-179</td>
+<td>| 与 Cirrus 功能对等的客户自托管（on-premises）网管，跑在虚拟化集群（VMware/Kubernetes）上，单租户、支持 Active-Active L3 高可用，规模约 2000 台设备（1600 AP + 400 交换机，架构页标注最高可到 5000）。前置要求 AWOS 4.0.7.14+，出向放行 443/80/123/53，DHCP 选项要求与 Cirrus 相同。</td>
+</tr>
+<tr>
+<td><strong>TKC</strong></td>
+<td>Technical Knowledge Center（技术知识中心）</td>
+<td>p119-130</td>
+<td>| ALE 官方知识库，经 MyPortal（myportal.al-enterprise.com）访问。文章类型分 Alert（已知问题通告）、How To/General Information（配置指南）、Solve My Issue（排障用例）、Technical Communications（指导书）。排障用法：按故障描述检索用例，比对版本构建号，亲自复现诊断步骤后套用 Resolution；解决不了就据此新建用例。</td>
+</tr>
+<tr>
+<td><strong>UPAM</strong></td>
+<td>用户门户与接入管理（Unified Portal &amp; Access Management）</td>
+<td>p56, p166</td>
+<td>| OmniVista 中负责认证门户的组件，Captive Portal 的重定向 URL 即指向 UPAM 服务（日志中形如 ov2500-upam-cportal.al-enterprise.com:443/portal_UI/.../login.html）。排门户问题时从 eag.log 的 PortalRedirect 行核对 URL 是否正确可达。</td>
+</tr>
+<tr>
+<td><strong>Captive Portal</strong></td>
+<td>强制认证门户</td>
+<td>p54-56</td>
+<td>| 要求客户端完成 Web 认证后才能上网的机制（AuthType=PORTAL）。排障入口：eag_cli show user all 查认证状态、会话时长与流量；eag.log 看三阶段——首联 IP 未知（无法发重定向）→ 获取客户端 IP → 发出 PortalRedirect。认证成功后由 CPAuthResult 与 ARFromCPAuth 决定访问角色。</td>
+</tr>
+<tr>
+<td><strong>eag 进程</strong></td>
+<td>Captive Portal 后台进程</td>
+<td>p55-56</td>
+<td>| Stellar AP 上与 Captive Portal 相关的进程（eag_cli、eag_stamsg、eag_redir 等模块）。门户用户表与重定向逻辑都在 eag 内，日志位于 /var/log/eag.log，是门户类故障的唯一权威日志源。</td>
+</tr>
+<tr>
+<td><strong>WAM</strong></td>
+<td>无线接入管理模块</td>
+<td>p71, p77</td>
+<td>| AP 上管理无线客户端的软件模块。排障两处用到：日志收集包里的 wam.log（搜"L3 roaming-start""L3 roaming-success""L2 roaming-success"验证漫游）；命令 ssudo wam_debug sta_list 输出每客户端 JSON 详情（assignedVLAN、各认证来源结果、Access Role、重定向 URL）。</td>
+</tr>
+<tr>
+<td><strong>adme</strong></td>
+<td>AP 邻居发现表</td>
+<td>p69, p96</td>
+<td>| adme show 列出本 AP 看到的邻居 AP：MAC、IP、ov_ip、radioid（0=2.4GHz、1=5GHz）、channel、rssi、txpower。漫游排障的核心表：邻居看不到或 RSSI&lt;20 即差信号，都会造成漫游失败/客户端掉线；地理相邻却不在表里时需静态添加邻居。</td>
+</tr>
+<tr>
+<td><strong>RADIUS / AAA</strong></td>
+<td>远程认证拨入用户服务</td>
+<td>p89</td>
+<td>| 802.1X 的后台认证服务器。AP 侧配置文件 AAA_server.conf 的关键字段：ipAddress、authenticationPort（默认 1812）、accountingPort（默认 1813）、secret（共享密钥）、timeout=5、retries=2。绑定链路：wlanservice.conf 的 aaaProfile → AAA_profile.conf 的 primaryServer → AAA_server.conf。三层任一断裂即认证失败。</td>
+</tr>
+<tr>
+<td><strong>802.1X / EAP</strong></td>
+<td>基于端口的网络接入认证</td>
+<td>p6, p88-90</td>
+<td>| 企业级无线认证体系（securityLevel=Enterprise），链路为 客户端-Stellar AP-RADIUS 服务器三段。排障按三段法：客户端侧（凭据/加密/证书）→ AP 侧（服务器绑定与参数一致性）→ 服务器侧（数据库/密钥/NAS IP/端口/服务/防火墙）。sta_list 中 AUTH=802.1X，wam_debug 中看 ARFrom8021xAuth。</td>
+</tr>
+<tr>
+<td><strong>DHCP-NAK</strong></td>
+<td>DHCP 拒绝报文</td>
+<td>p100</td>
+<td>| DHCP 服务器对"请求地址不在地址池内"的合法拒绝应答。排障判据：健康服务器至少应回 NAK；客户端请求发出后连 NAK 都收不到，说明报文未抵达服务器（链路/VLAN/中继问题），而非地址池配置问题。</td>
+</tr>
+<tr>
+<td><strong>PoE / PSE</strong></td>
+<td>以太网供电 / 供电设备</td>
+<td>p42, p155</td>
+<td>| AP 的供电方式（802.3af/at/bt 按型号）。AP1201H 自带 PSE 下联口可为受电设备供电，其 PoE LED：橙常亮=受电设备在线、橙闪=离线、灭=PSE 禁用。交换机不带 PoE 时可用 PoE injector（midspan）或电源适配器，兼容型号查 AP 数据手册。</td>
+</tr>
+<tr>
+<td><strong>同频/邻频干扰</strong></td>
+<td>Co-channel / Adjacent Channel Interference</td>
+<td>p112</td>
+<td>| 同频干扰指多台 AP 工作在同一信道互相争用；邻频干扰指相邻信道频谱重叠造成的干扰。症状三联：吞吐下降、丢包、数据损坏。处置：更换 AP 信道（配合收窄信道宽度）。勘测时用 Ekahau/WiFi Analyzer 的信道视图定位。</td>
+</tr>
+<tr>
+<td><strong>三类勘测</strong></td>
+<td>Passive / Active / Predictive Site Survey</td>
+<td>p106-107</td>
+<td>| 被动勘测：只监听不关联，扫全频段，发现 AP、测信号与噪声，用于部署后的射频分析；主动勘测：勘测工具真实关联 AP，额外测丢包/重传/物理速率，用于客户端性能分析；预测勘测：导入平面图与材料射频特性做仿真放点，不做实地测量，用于部署前规划。</td>
+</tr>
+<tr>
+<td><strong>Heat Map（热图）</strong></td>
+<td>覆盖热图</td>
+<td>p67-68</td>
+<td>| OmniVista 里按频段展示信号覆盖的图。生成前提是该频段存在无线接口（即有 WLAN 配置）；某频段没有热图，先 iwconfig 查有无对应 athXX 接口、再查该频段是否配置了 WLAN 服务。勘测工具 Ekahau 也输出自己的热图。</td>
+</tr>
+<tr>
+<td><strong>L2 / L3 Roaming</strong></td>
+<td>二层/三层漫游</td>
+<td>p71</td>
+<td>| 客户端在 AP 间移动保持连接的两种形态：L2 漫游为同子网内切换，L3 漫游跨子网（需客户端上下文在 AP 间传递）。验证方法：AP 日志收集包的 wam.log 中搜"L2 roaming-success""L3 roaming-start""L3 roaming-success"。VLAN tag 不一致、邻居不可见都会让漫游失败。</td>
+</tr>
+<tr>
+<td><strong>Air Capture</strong></td>
+<td>空口抓包</td>
+<td>p31-32</td>
+<td>| 让 Stellar AP 作为抓包器捕获选定信道的周围无线流量：AP Web UI 的 RF Environment 选射频，指定信道与 TFTP 接收服务器，可按 MAC/帧类型过滤，文件上限 10MB 或 5 分钟，结果用 Wireshark 打开。与有线侧 tcpdump 相对，用于分析关联/认证/漫游的空口交互。</td>
+</tr>
+<tr>
+<td><strong>Ekahau</strong></td>
+<td>Ekahau Site Survey</td>
+<td>p109-116</td>
+<td>| Windows 平台的现场勘测工具（教材的被动勘测实操工具），用于绘制覆盖热图、识别同频/邻频干扰、发现覆盖盲区。配合平面图使用：先标障碍物与 AP 位置，再实测信号，输出指导纠正动作。</td>
+</tr>
+<tr>
+<td><strong>Wireshark</strong></td>
+<td>开源报文分析工具</td>
+<td>p30, p35</td>
+<td>| 教材指定的报文分析工具，两类输入：AP tcpdump 产生的有线抓包（分析 DHCP、DNS、Stellar 网络协议）与 Air Capture 产生的无线抓包（分析 EAP、AD/LDAP、RTP、DSCP 等客户端协议），也支持网卡实时抓包。</td>
+</tr>
+<tr>
+<td><strong>Access Role Profile / Final_role</strong></td>
+<td>访问角色档案</td>
+<td>p75, p77</td>
+<td>| 按认证结果分配给客户端的策略档案，sta_list 的 Final_role 列与 wam_debug 的 assignedAR 字段。三种来源：MAC 认证（ARFromMACAuth）、802.1X（ARFrom8021xAuth）、Captive Portal（ARFromCPAuth）。角色里若过滤掉 DHCP 流量，客户端将拿不到 IP——隐蔽的断网根因。</td>
+</tr>
+<tr>
+<td><strong>NTP</strong></td>
+<td>网络时间协议</td>
+<td>p22, p97</td>
+<td>| 排障的第一前提：AP、OmniVista、接入交换机必须同步到同一 NTP 服务器，否则各设备日志时间戳错位、无法关联分析。核查命令：date（系统时间）、cat /proc/kes_syslog | grep ntp（同步事件，如"time was synced from pool.ntp.org"）、cat /tmp/TZ（时区）。OmniVista Cirrus/Terra 接管也要求至少配置一台 NTP（防火墙放行 123）。</td>
+</tr>
+<tr>
+<td><strong>僵尸进程</strong></td>
+<td>Zombie Process（Z 状态）</td>
+<td>p53</td>
+<td>| 已退出但未被父进程回收的进程，ps 状态列为 Z；X（Dead）同为异常。僵尸进程堆积会消耗大量内存拖垮 AP。R（运行）与 S（可中断睡眠）为正常状态。</td>
+</tr>
+<tr>
+<td><strong>Monitor Mode</strong></td>
+<td>网卡监听模式</td>
+<td>p36</td>
+<td>| 无线网卡捕获空口帧所需的工作模式。用 PC/笔记本自做无线抓包（建议超过 5 分钟）时：Windows 需要支持 monitor mode 的 WiFi 网卡，MacBook 原生支持。配合 WiFi Analyzer（Android/Windows 的 RF 环境分析：SSID 功率、SNR、密度、信道）构成第三方勘测工具组。</td>
+</tr>
+<tr>
+<td><strong>Wi-Fi 代际</strong></td>
+<td>Wi-Fi 4/5/6/6E/7（802.11n/ac/ax/be）</td>
+<td>p162</td>
+<td>| 教材对照表：Wi-Fi 4（2007，802.11n，1.2Gbps）、Wi-Fi 5（2013，ac，3.5Gbps）、Wi-Fi 6（2019，ax，9.6Gbps，OFDMA/TWT，WPA3）、Wi-Fi 6E（2021，增加 6GHz）、Wi-Fi 7（2024，be，46Gbps，320MHz 信道、4096-QAM、MLO 多链路操作、16x16 MU-MIMO）。Stellar 产品线 AP12xx（Wi-Fi 5）→AP13xx（Wi-Fi 6）→AP14xx（6E）→AP15xx（Wi-Fi 7）与之对应，排障时须注意客户端与 AP 的代际/频段兼容性。</td>
+</tr>
+</tbody>
+</table></main></div></body></html>

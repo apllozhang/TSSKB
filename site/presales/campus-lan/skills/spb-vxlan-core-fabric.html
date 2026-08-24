@@ -1,0 +1,124 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>spb-vxlan-core-fabric — DT00XPS281 · Campus LAN 售前</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XPS281 · Campus LAN 售前</h1>
+<div class="sub">Edition 29 · 480 页 · 园区网售前全科（特性→网管→选型→License→产品组合）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">设计与高可用</div>
+<a href="skills/campus-design-tiering-and-ha.html">campus-design-tiering-and-ha</a>
+<a href="skills/virtual-chassis-design.html">virtual-chassis-design</a>
+<a href="skills/dhl-erp-ring-protection.html">dhl-erp-ring-protection</a>
+<div class="grp">机型与架构</div>
+<a href="skills/omniswitch-model-selection.html">omniswitch-model-selection</a>
+<a href="skills/campus-reference-architectures.html">campus-reference-architectures</a>
+<div class="grp">织物与自动化</div>
+<a href="skills/spb-vxlan-core-fabric.html" class="on">spb-vxlan-core-fabric</a>
+<a href="skills/ifab-zero-touch-automation.html">ifab-zero-touch-automation</a>
+<div class="grp">网管与商务</div>
+<a href="skills/nms-platform-and-network-advisor.html">nms-platform-and-network-advisor</a>
+<a href="skills/license-wwpl-pricing.html">license-wwpl-pricing</a>
+<div class="grp">安全与垂直</div>
+<a href="skills/security-unified-access.html">security-unified-access</a>
+<a href="skills/video-surveillance-design.html">video-surveillance-design</a></aside><main><h1>spb-vxlan-core-fabric</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="spbvxlan">SPB/VXLAN 核心织构与多租户设计</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>"SPB DEPLOYMENT IN LAN NETWORK — Core, Backbone Core Bridge (BCB): Learns BEB addresses, IS-IS SPB for paths, PBB for data plane, L3 routing. Aggregation, Backbone edge bridge (BEB): VLAN to I-SID, IS-IS for MAC learning … Access: IEEE 802.1Q VLAN on uplinks, STP towards BEB" (p100)</p>
+<p>"ENTERPRISE SPB LAN CORE — MPLS styled service architecture; VLAN extensibility across campus / No STP / Faster, easier to deploy; Service Virtualization (ISID) for departmental isolation; Enabling multi-tenancy … L3 inter-departmental routed control with VPN-lite or L3-VPN; VXLAN support for DCI" (p319)</p>
+<p>"VXLAN: UDP port 4789 by default • 50 bytes of overhead • 24 bit VXLAN Identifier • 16 M logical networks … one multicast group is used per VNI (PIM-BIDIR)" (p107, p118)</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<p><strong>SPB 三层角色分工（改造成本可控的关键：接入免 SPB）</strong></p>
+<table>
+<thead>
+<tr>
+<th>层</th>
+<th>角色</th>
+<th>职责</th>
+<th>机型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>接入</td>
+<td>普通 802.1Q</td>
+<td>VLAN 上联，向 BEB 跑 STP</td>
+<td>任意（6360/6465/6560E）</td>
+</tr>
+<tr>
+<td>汇聚</td>
+<td>BEB</td>
+<td>VLAN→I-SID 映射、边缘 MAC 学习、环回检测</td>
+<td>6860N/6870/6900/9900</td>
+</tr>
+<tr>
+<td>核心</td>
+<td>BCB</td>
+<td>只学 BEB 的 B-MAC、IS-IS 算路、L3 路由</td>
+<td>6900/9900</td>
+</tr>
+</tbody>
+</table>
+<p>SPB 卖点常数：收敛约 <strong>300ms</strong>；单域最多 <strong>1000 节点</strong>；全链路 UP 无 STP；流量对称同径；MAC-in-MAC 地址隔离。BVLAN 管"走哪条路"，I-SID 管"属于哪个业务"（部门/租户隔离：一人一个 I-SID 即私有 VPN）。</p>
+<p><strong>SPB 上 L3 路由两种机制</strong>：①IP-VPN Lite——BEB 上 VRF 接口跑路由协议，VRF 靠 I-SID 打通；②L3/IP-VPN——VRF 路由经 ISIS-SPB TLV 发布，ISIS-SPB 充当 IGP，VPN 接口免跑路由协议。共同点：核心/汇聚无需额外 IGP。</p>
+<p><strong>VXLAN 常数</strong>：RFC 7348、UDP 4789、开销 50 字节、24bit VNI（1600 万逻辑网）；VTEP 用 Loopback0 标识，硬件 VTEP 机型 6860N/6870/6900/9900，全系可透传。BUM 两种转发：Head-End 复制（须知道 VNI 内全部远端 VTEP IP）与 Tandem 组播（PIM-BIDIR，每 VNI 一个组播组）。VXLAN-L3 两种交付：VPN-Lite（无 EVPN 控制面）vs L3VPN（BGP EVPN），8.10R1/R2 起交付于 6900/6870。</p>
+<h2 id="a1">A1 · 书中案例</h2>
+<p>c14（p319）：企业 SPB LAN 核心——核心 6860N/6865/6870/6900/9900 组 SPB，按部门 Admin/Staff/Agent 分 I-SID 隔离，VLAN 跨园区透明扩展、免 STP，部门间走 VPN-lite/L3-VPN，DCI 用 VXLAN；接入仍 6360/6465/6560-E 普通 VLAN。</p>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>触发：多部门强隔离/多校区/租户化的政企园区；客户或设计院点名 EVPN/VXLAN 需要应标话术；数据中心互联。</li>
+<li>区分：本 skill 管 <strong>SPB/VXLAN 机制与角色设计</strong>；"SPB 园区核心"整体模板在 <code><a href="campus-reference-architectures.html">campus-reference-architectures</a></code>；EVPN over I-SID 与 VXLAN EVPN 的路线取舍在本 skill 内答。时敏 50ms 场景不在 SPB 职责内（走 <code><a href="dhl-erp-ring-protection.html">dhl-erp-ring-protection</a></code>）。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>盘隔离需求：列部门/租户清单，一户一 I-SID；规划少量 BVLAN（如 1001/1002），业务扩张只加 I-SID。</li>
+<li>按角色分工表逐层指定机型：BEB/BCB 用 SPB 机型，接入层保留现网。</li>
+<li>定 L3 机制：VPN-Lite（简单，接口跑路由协议）vs L3/IP-VPN（ISIS-SPB 当 IGP，免配接口路由）。</li>
+<li>客户认 EVPN 时：接入网/园区推"SPB 达到同样效果更简单"；数据中心/DCI 走 VXLAN EVPN（6900/6870），选 Head-End 或 Tandem BUM 模式。</li>
+<li>输出：角色分工图 + I-SID 分配表 + 路由机制说明，写进方案分册。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li>SPB 收敛 ~300ms，达不到电信级 50ms（ce07，见 dhl-erp skill）——别拿 SPB 应时敏 SLA。</li>
+<li>SPB 机型门槛：6560/E 需许可、6570M/6575 自 8.10R4 起；入门机型（6360/6465）无 SPB，只能做接入。</li>
+<li>VXLAN Head-End 复制漏登记任一远端 VTEP IP，该站点静默丢广播/未知单播（部分站点 ARP 学不到、时通时断），难排查。</li>
+<li>对抗话术有边界：竞品 EVPN 已在客户侧扎根时，改推 VXLAN EVPN 路线比硬拗 SPB 更稳。</li>
+</ul>
+<hr />
+<p>来源条目: f11, f12, p17, p18, p19, p20, p21, p44, c14, g06, g07, g08, g16, g17, g38, g39, g40, g47, g48, g49</p></main></div></body></html>

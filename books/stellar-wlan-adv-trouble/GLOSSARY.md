@@ -1,0 +1,39 @@
+# 术语词典 GLOSSARY
+
+| 术语 | 全称 | 出处 | 定义 |
+|---|---|---|---|
+| **RSSI** | Received Signal Strength Indicator（接收信号强度指示） | p78-79 | \| 衡量客户端或 AP 收到的信号强度。Stellar 采用正值刻度，与 dBm 固定换算（dBm = RSSI 值 - 96）：RSSI 10=-86dBm（差，丢包过多，语音/实时应用不可用）、RSSI 29=-67dBm（语音与实时应用推荐下限）、RSSI 43=-53dBm（完美）。判定口径：邻居 AP 的 RSSI<20 即差信号。wlanconfig athXX list 输出 RSSI/MINRSSI/MAXRSSI 三个值。 |
+| **SNR** | Signal-to-Noise Ratio（信噪比） | p78 | \| 信号强度与噪声电平之比，衡量数据传输质量。教材口径：802.11ac 的 VoWLAN（无线语音）部署要求 SNR ≥ 25；信噪比过高恶化时数据传输劣化。wlanconfig athXX list 与 iwconfig 输出中都有 SNR/Noise level 字段。 |
+| **BSSID** | Basic Service Set Identifier | p63 | \| 单个 AP 射频上某个 SSID 的 MAC 标识。iwconfig 输出的"Access Point"一栏即 BSSID；若该栏没有 MAC 地址，说明这个 SSID 根本没有在对应射频上广播出来——这是排障检查清单里的关键判据。 |
+| **athXYY 接口命名** | Stellar AP 无线接口命名规则 | p63 | \| Stellar AP 无线接口名的编码规则：第一位 X 表示频段（0=2.4GHz、1=5GHz、2=6GHz），后两位 YY 是 SSID 编号（1-16）。如 ath001=2.4GHz 上的 1 号 SSID，ath102=5GHz 上的 2 号 SSID。掌握规则后可从接口名直接反推频段与 SSID，选择正确的接口执行 iwlist/wlanconfig。 |
+| **br-wan** | AP 有线网络接口 | p30, p94 | \| Stellar AP 连接有线网络的桥接接口。tcpdump 抓有线侧流量时用 -i br-wan 指定；ifconfig br-wan 查看 AP 自身 IP/掩码与 RX/TX 计数。与之对照，eth0 也用于上联抓包（tcpdump -i eth0），athXX 系列是无线接口。 |
+| **Band Steering** | 频段引导 | p64 | \| RF profile 全局参数之一：把支持 5GHz 的终端引导到 5GHz 频段，为只支持 2.4GHz 的老设备留出空口。rfprofile.conf 中 bandSteering=enable/disable，另有 bandSteeringForce5g 强制选项。排障时核对实际下发值与配置是否一致。 |
+| **Load Balance** | AP 负载均衡 | p64, p80 | \| RF profile 全局参数：在 AP 之间均衡客户端数量。日志中"Received Disassoc with reason 8 (OS moved the client to another AP using non-aggressive load balance)"即负载均衡主动搬移客户端的表现，属系统正常行为而非故障。 |
+| **Air Time Fairness** | 空口时间公平 | p64 | \| RF profile 全局参数（airtimeFairnessAt2G/At5G）：限制慢速终端占用过多空口发送时间，保障整体公平。排障时作为 rfprofile.conf 核对项之一。 |
+| **PVC** | Primary Virtual Controller（主虚拟控制器） | p58 | \| Express 模式集群中被选为主控制器的 Stellar AP，承载集群配置管理。用 cluster_mgt -x show=self / show=pvc 查询本机角色与集群 PVC（role=PVC、status=RUN）。排障要确认 PVC 存在且是否本该是它。 |
+| **Cluster（集群）** | Stellar AP Express 模式集群 | p48, p57-59 | \| Express（无网管）模式下 Stellar AP 自组成的管理单元，成员共享配置。show_cluster 列出全部成员（MAC/IP/prio/state/role/version/model）及 OmniVista 服务器 IP；集群健康靠三查：PVC 身份、成员齐全、cluster_mgt/cluster_cor 进程各一。 |
+| **getmode 三态** | Express / Cloud / OVNG 管理模式 | p48 | \| getmode 命令返回 AP 的管理模式：CLUSTER=Express 模式（本地集群）、OV=Cloud 模式（OmniVista 云管，可用 getovinfo 查网管 IP）、OVNG 为另一云网管形态。排障第一步先确认模式，因为不同模式的日志收集路径（Express 走集群 Web UI，云模式要先在 Cirrus 开 AP Web）不同。 |
+| **OmniVista Cirrus** | ALE 云管平台 | p166-170 | \| SaaS 模式的云端统一网管，管理 Stellar AP 与 OmniSwitch，含 WLAN 管理、UPAM、Wi-Fi QoE 分析、WIDS/WIPS 等能力，规模最高约 12000 台设备（10000 AP + 2000 交换机）。接管 AP 的网络前置：防火墙开 9093/30123-30125、放行出向 443/80/123/53、DHCP 选项 1/2/6/28/42/43（代理另加 129-133/138）、至少一台 NTP、AWOS 4.0.6 GA+（AP1101、AP1201L/H/HL 除外）。 |
+| **OmniVista Terra** | ALE 本地部署网管平台 | p174-179 | \| 与 Cirrus 功能对等的客户自托管（on-premises）网管，跑在虚拟化集群（VMware/Kubernetes）上，单租户、支持 Active-Active L3 高可用，规模约 2000 台设备（1600 AP + 400 交换机，架构页标注最高可到 5000）。前置要求 AWOS 4.0.7.14+，出向放行 443/80/123/53，DHCP 选项要求与 Cirrus 相同。 |
+| **TKC** | Technical Knowledge Center（技术知识中心） | p119-130 | \| ALE 官方知识库，经 MyPortal（myportal.al-enterprise.com）访问。文章类型分 Alert（已知问题通告）、How To/General Information（配置指南）、Solve My Issue（排障用例）、Technical Communications（指导书）。排障用法：按故障描述检索用例，比对版本构建号，亲自复现诊断步骤后套用 Resolution；解决不了就据此新建用例。 |
+| **UPAM** | 用户门户与接入管理（Unified Portal & Access Management） | p56, p166 | \| OmniVista 中负责认证门户的组件，Captive Portal 的重定向 URL 即指向 UPAM 服务（日志中形如 ov2500-upam-cportal.al-enterprise.com:443/portal_UI/.../login.html）。排门户问题时从 eag.log 的 PortalRedirect 行核对 URL 是否正确可达。 |
+| **Captive Portal** | 强制认证门户 | p54-56 | \| 要求客户端完成 Web 认证后才能上网的机制（AuthType=PORTAL）。排障入口：eag_cli show user all 查认证状态、会话时长与流量；eag.log 看三阶段——首联 IP 未知（无法发重定向）→ 获取客户端 IP → 发出 PortalRedirect。认证成功后由 CPAuthResult 与 ARFromCPAuth 决定访问角色。 |
+| **eag 进程** | Captive Portal 后台进程 | p55-56 | \| Stellar AP 上与 Captive Portal 相关的进程（eag_cli、eag_stamsg、eag_redir 等模块）。门户用户表与重定向逻辑都在 eag 内，日志位于 /var/log/eag.log，是门户类故障的唯一权威日志源。 |
+| **WAM** | 无线接入管理模块 | p71, p77 | \| AP 上管理无线客户端的软件模块。排障两处用到：日志收集包里的 wam.log（搜"L3 roaming-start""L3 roaming-success""L2 roaming-success"验证漫游）；命令 ssudo wam_debug sta_list 输出每客户端 JSON 详情（assignedVLAN、各认证来源结果、Access Role、重定向 URL）。 |
+| **adme** | AP 邻居发现表 | p69, p96 | \| adme show 列出本 AP 看到的邻居 AP：MAC、IP、ov_ip、radioid（0=2.4GHz、1=5GHz）、channel、rssi、txpower。漫游排障的核心表：邻居看不到或 RSSI<20 即差信号，都会造成漫游失败/客户端掉线；地理相邻却不在表里时需静态添加邻居。 |
+| **RADIUS / AAA** | 远程认证拨入用户服务 | p89 | \| 802.1X 的后台认证服务器。AP 侧配置文件 AAA_server.conf 的关键字段：ipAddress、authenticationPort（默认 1812）、accountingPort（默认 1813）、secret（共享密钥）、timeout=5、retries=2。绑定链路：wlanservice.conf 的 aaaProfile → AAA_profile.conf 的 primaryServer → AAA_server.conf。三层任一断裂即认证失败。 |
+| **802.1X / EAP** | 基于端口的网络接入认证 | p6, p88-90 | \| 企业级无线认证体系（securityLevel=Enterprise），链路为 客户端-Stellar AP-RADIUS 服务器三段。排障按三段法：客户端侧（凭据/加密/证书）→ AP 侧（服务器绑定与参数一致性）→ 服务器侧（数据库/密钥/NAS IP/端口/服务/防火墙）。sta_list 中 AUTH=802.1X，wam_debug 中看 ARFrom8021xAuth。 |
+| **DHCP-NAK** | DHCP 拒绝报文 | p100 | \| DHCP 服务器对"请求地址不在地址池内"的合法拒绝应答。排障判据：健康服务器至少应回 NAK；客户端请求发出后连 NAK 都收不到，说明报文未抵达服务器（链路/VLAN/中继问题），而非地址池配置问题。 |
+| **PoE / PSE** | 以太网供电 / 供电设备 | p42, p155 | \| AP 的供电方式（802.3af/at/bt 按型号）。AP1201H 自带 PSE 下联口可为受电设备供电，其 PoE LED：橙常亮=受电设备在线、橙闪=离线、灭=PSE 禁用。交换机不带 PoE 时可用 PoE injector（midspan）或电源适配器，兼容型号查 AP 数据手册。 |
+| **同频/邻频干扰** | Co-channel / Adjacent Channel Interference | p112 | \| 同频干扰指多台 AP 工作在同一信道互相争用；邻频干扰指相邻信道频谱重叠造成的干扰。症状三联：吞吐下降、丢包、数据损坏。处置：更换 AP 信道（配合收窄信道宽度）。勘测时用 Ekahau/WiFi Analyzer 的信道视图定位。 |
+| **三类勘测** | Passive / Active / Predictive Site Survey | p106-107 | \| 被动勘测：只监听不关联，扫全频段，发现 AP、测信号与噪声，用于部署后的射频分析；主动勘测：勘测工具真实关联 AP，额外测丢包/重传/物理速率，用于客户端性能分析；预测勘测：导入平面图与材料射频特性做仿真放点，不做实地测量，用于部署前规划。 |
+| **Heat Map（热图）** | 覆盖热图 | p67-68 | \| OmniVista 里按频段展示信号覆盖的图。生成前提是该频段存在无线接口（即有 WLAN 配置）；某频段没有热图，先 iwconfig 查有无对应 athXX 接口、再查该频段是否配置了 WLAN 服务。勘测工具 Ekahau 也输出自己的热图。 |
+| **L2 / L3 Roaming** | 二层/三层漫游 | p71 | \| 客户端在 AP 间移动保持连接的两种形态：L2 漫游为同子网内切换，L3 漫游跨子网（需客户端上下文在 AP 间传递）。验证方法：AP 日志收集包的 wam.log 中搜"L2 roaming-success""L3 roaming-start""L3 roaming-success"。VLAN tag 不一致、邻居不可见都会让漫游失败。 |
+| **Air Capture** | 空口抓包 | p31-32 | \| 让 Stellar AP 作为抓包器捕获选定信道的周围无线流量：AP Web UI 的 RF Environment 选射频，指定信道与 TFTP 接收服务器，可按 MAC/帧类型过滤，文件上限 10MB 或 5 分钟，结果用 Wireshark 打开。与有线侧 tcpdump 相对，用于分析关联/认证/漫游的空口交互。 |
+| **Ekahau** | Ekahau Site Survey | p109-116 | \| Windows 平台的现场勘测工具（教材的被动勘测实操工具），用于绘制覆盖热图、识别同频/邻频干扰、发现覆盖盲区。配合平面图使用：先标障碍物与 AP 位置，再实测信号，输出指导纠正动作。 |
+| **Wireshark** | 开源报文分析工具 | p30, p35 | \| 教材指定的报文分析工具，两类输入：AP tcpdump 产生的有线抓包（分析 DHCP、DNS、Stellar 网络协议）与 Air Capture 产生的无线抓包（分析 EAP、AD/LDAP、RTP、DSCP 等客户端协议），也支持网卡实时抓包。 |
+| **Access Role Profile / Final_role** | 访问角色档案 | p75, p77 | \| 按认证结果分配给客户端的策略档案，sta_list 的 Final_role 列与 wam_debug 的 assignedAR 字段。三种来源：MAC 认证（ARFromMACAuth）、802.1X（ARFrom8021xAuth）、Captive Portal（ARFromCPAuth）。角色里若过滤掉 DHCP 流量，客户端将拿不到 IP——隐蔽的断网根因。 |
+| **NTP** | 网络时间协议 | p22, p97 | \| 排障的第一前提：AP、OmniVista、接入交换机必须同步到同一 NTP 服务器，否则各设备日志时间戳错位、无法关联分析。核查命令：date（系统时间）、cat /proc/kes_syslog \| grep ntp（同步事件，如"time was synced from pool.ntp.org"）、cat /tmp/TZ（时区）。OmniVista Cirrus/Terra 接管也要求至少配置一台 NTP（防火墙放行 123）。 |
+| **僵尸进程** | Zombie Process（Z 状态） | p53 | \| 已退出但未被父进程回收的进程，ps 状态列为 Z；X（Dead）同为异常。僵尸进程堆积会消耗大量内存拖垮 AP。R（运行）与 S（可中断睡眠）为正常状态。 |
+| **Monitor Mode** | 网卡监听模式 | p36 | \| 无线网卡捕获空口帧所需的工作模式。用 PC/笔记本自做无线抓包（建议超过 5 分钟）时：Windows 需要支持 monitor mode 的 WiFi 网卡，MacBook 原生支持。配合 WiFi Analyzer（Android/Windows 的 RF 环境分析：SSID 功率、SNR、密度、信道）构成第三方勘测工具组。 |
+| **Wi-Fi 代际** | Wi-Fi 4/5/6/6E/7（802.11n/ac/ax/be） | p162 | \| 教材对照表：Wi-Fi 4（2007，802.11n，1.2Gbps）、Wi-Fi 5（2013，ac，3.5Gbps）、Wi-Fi 6（2019，ax，9.6Gbps，OFDMA/TWT，WPA3）、Wi-Fi 6E（2021，增加 6GHz）、Wi-Fi 7（2024，be，46Gbps，320MHz 信道、4096-QAM、MLO 多链路操作、16x16 MU-MIMO）。Stellar 产品线 AP12xx（Wi-Fi 5）→AP13xx（Wi-Fi 6）→AP14xx（6E）→AP15xx（Wi-Fi 7）与之对应，排障时须注意客户端与 AP 的代际/频段兼容性。 |

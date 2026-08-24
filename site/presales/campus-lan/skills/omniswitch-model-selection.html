@@ -1,0 +1,211 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>omniswitch-model-selection — DT00XPS281 · Campus LAN 售前</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XPS281 · Campus LAN 售前</h1>
+<div class="sub">Edition 29 · 480 页 · 园区网售前全科（特性→网管→选型→License→产品组合）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">设计与高可用</div>
+<a href="skills/campus-design-tiering-and-ha.html">campus-design-tiering-and-ha</a>
+<a href="skills/virtual-chassis-design.html">virtual-chassis-design</a>
+<a href="skills/dhl-erp-ring-protection.html">dhl-erp-ring-protection</a>
+<div class="grp">机型与架构</div>
+<a href="skills/omniswitch-model-selection.html" class="on">omniswitch-model-selection</a>
+<a href="skills/campus-reference-architectures.html">campus-reference-architectures</a>
+<div class="grp">织物与自动化</div>
+<a href="skills/spb-vxlan-core-fabric.html">spb-vxlan-core-fabric</a>
+<a href="skills/ifab-zero-touch-automation.html">ifab-zero-touch-automation</a>
+<div class="grp">网管与商务</div>
+<a href="skills/nms-platform-and-network-advisor.html">nms-platform-and-network-advisor</a>
+<a href="skills/license-wwpl-pricing.html">license-wwpl-pricing</a>
+<div class="grp">安全与垂直</div>
+<a href="skills/security-unified-access.html">security-unified-access</a>
+<a href="skills/video-surveillance-design.html">video-surveillance-design</a></aside><main><h1>omniswitch-model-selection</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="omniswitch">OmniSwitch 机型选型决策表与容量常数库</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>"OMNISWITCH SELECTION NETWORK LAYER BASED — Model Layer: OS6360 OS6465 OS6560/E OS6570M OS6575 OS6860N OS6870 OS6900 OS9900. User Access: Yes Yes Yes Yes Yes Yes Yes No Yes; Distribution: No No Yes Yes Yes Yes Yes Yes Yes; Core: No No No No No Yes Yes Yes Yes" (p300)</p>
+<p>"OMNISWITCH SELECTION FOR CAMPUS DESIGN — Availability: Virtual Chassis / ISSU / Hot swap power supply; Layer 2: SPB / DHL Active-Active / ERPv2; Layer 3: Basic / Advanced / VRF / Multicast; User network Profile / Fanless / Metro Ethernet / MPLS / Remote VC. ** License based feature" (p301)</p>
+<p>"POSITIONING IN THE STACKABLE PORTFOLIO — Gig / Small / Gig w/ 10G / Hardened / Large: OmniSwitch 2260/2360 Value AOS L2 WebSmart; 6360 Value AOS L2+ GE; 6560/E AOS Advanced L3 licensed; 6570M AOS L3+ Metro Ethernet; 6860N Advanced AOS L3 GE; 6870 AOS Advanced L3" (p357)</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<p>选型三张表 + 常数库，按序使用：</p>
+<p><strong>表 1 · 层级定位（Yes/No 铁律，p300）</strong></p>
+<table>
+<thead>
+<tr>
+<th>机型</th>
+<th>用户接入</th>
+<th>汇聚</th>
+<th>核心/DC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OS6360 / OS6465</td>
+<td>Yes</td>
+<td>No</td>
+<td>No</td>
+</tr>
+<tr>
+<td>OS6560/E / OS6570M / OS6575</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+<tr>
+<td>OS6860N / OS6870</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>OS6900</td>
+<td><strong>No</strong></td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>OS9900</td>
+<td>Yes（配 GNI 板）</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+<p><strong>表 2 · 功能矩阵要点（p301，</strong> = 需 license）<strong>：VC 除 OS2260 外全系；ISSU 仅 6360-24/48 及以上（2260/2360/6465/6560E 无）；SPB 从 6560/E（</strong>）起步；MPLS 仅 6860N/6870/6900（**）；热插拔电源从 6360-24/48 起。DHL 行 6570M/6900/9900 标 No（与 p54 矛盾，需注版）。</p>
+<p><strong>表 3 · 组合定位（p357）</strong>：小型便宜→2260/2360/6360；多千兆 Wi-Fi→6560E/6860N；Metro→6570M；高规格→6870；加固→6465/6865/6575。</p>
+<p><strong>容量常数（选型背参数）</strong></p>
+<table>
+<thead>
+<tr>
+<th>机型</th>
+<th>转发 Mpps</th>
+<th>容量</th>
+<th>MAC 表</th>
+<th>路由表</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OS6360</td>
+<td>208</td>
+<td>140G</td>
+<td>16K</td>
+<td>64</td>
+</tr>
+<tr>
+<td>OS6465</td>
+<td>131</td>
+<td>176G</td>
+<td>16K</td>
+<td>32</td>
+</tr>
+<tr>
+<td>OS6560E</td>
+<td>241</td>
+<td>324G</td>
+<td>16K</td>
+<td>2K</td>
+</tr>
+<tr>
+<td>OS6570M</td>
+<td>210</td>
+<td>60/168G</td>
+<td>32K</td>
+<td>16K</td>
+</tr>
+<tr>
+<td>OS6860N</td>
+<td>758.9</td>
+<td>1.02T</td>
+<td>64K</td>
+<td>144K</td>
+</tr>
+<tr>
+<td>OS6870</td>
+<td>1488</td>
+<td>2T</td>
+<td>128K</td>
+<td>312K</td>
+</tr>
+<tr>
+<td>OS6900</td>
+<td>2000</td>
+<td>6.4T</td>
+<td>228K</td>
+<td>128K</td>
+</tr>
+<tr>
+<td>OS9900</td>
+<td>15118/30950</td>
+<td>25.6/51.2T</td>
+<td>128K</td>
+<td>128K</td>
+</tr>
+</tbody>
+</table>
+<p>入门对比：OS2260 无堆叠/80.4Mpps/2 条静态路由；OS2360 可堆叠/133.9Mpps/32 条/10G 上联。<strong>两者均不在美国销售。</strong></p>
+<p><strong>VC vs 物理机箱（6×6900 vs 9907/9912，p303）</strong>：VC 胜初期投资（按需扩容）、6U 机架、1G/10G 各 432 口、ACL 4K；机箱胜时延（单跳）、重启仅数据面、PoE 75/30W、40/100G 密度与全冗余。</p>
+<p><strong>9900 平台常数</strong>：9907 = 7 槽/25.6Tbps/10800W PoE/11RU/双机 VC；9912 = 12 槽/51.2Tbps/7920W/17.25RU（VC 属 roadmap）。供电：AC240V 3000W、AC120V 1200W、DC 2500W；GNI-P48/XNI-P48Z16 前 8 口 75W、其余 40 口 30W。</p>
+<p><strong>PoE 预算速查</strong>：OS6360-P10 120W/P24 200W 优化/P48 390W 优化/PH24·P24X·P48X 390-780W 满配；OS6865 随电源块数与电压（48V 单块 100-140W、双块 280-300W）；6900-C32E 128×10G/128×25G/32×100G、&lt;600ns；6920-D32 400G 级、&lt;500ns；6870 单芯片 1.88-2Tbps、95W/口、8 台 VC 任意混搭。OS6465 PROFINET Class B 认证，但仅 VC of 1（单机）支持。</p>
+<h2 id="a1">A1 · 书中案例</h2>
+<p>c04（p303）：6×6900 VC 对比 9907/9912 的量化竞标弹药（端口数 432 vs 288/480、重启面、PoE）。c19-c25（p12-25）：各产品家族明星机型页——9900 机箱、6900/6920 固定核心、6870/6860N 多千兆双雄、6865/6575 坚固型、6570M/6465 城域与紧凑加固、6560/E 价值多千兆、6360/2260/2360 入门。</p>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>触发：招标硬条款逐条映射到功能矩阵行取"全满足列"；或"这个需求报哪个家族"的快速问答。</li>
+<li>区分：本 skill 管<strong>选哪台机器</strong>；架构怎么搭走 <code><a href="campus-design-tiering-and-ha.html">campus-design-tiering-and-ha</a></code>；套模板出图走 <code><a href="campus-reference-architectures.html">campus-reference-architectures</a></code>；堆叠设计细节走 <code><a href="virtual-chassis-design.html">virtual-chassis-design</a></code>；带 ** 项的许可报价走 <code><a href="license-wwpl-pricing.html">license-wwpl-pricing</a></code>。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>先过层级定位表：确定设备落在接入/汇聚/核心/DC 哪层，划出候选集。</li>
+<li>把招标硬条款逐条映射到功能矩阵行，取"全满足列"；带 ** 的项记下待补 license 行。</li>
+<li>按组合定位图缩小家族，用容量常数表核对 Mpps/表项/PoE 预算是否够。</li>
+<li>核心层做 VC vs 机箱对比，按预算与扩容节奏定形态。</li>
+<li>查供货分级与美国市场限制（2260/2360 不在美售），产出候选机型清单 + 风险标注。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li><strong>教材原文矛盾（引用需注版 Ed29）</strong>：p301 矩阵 9900 MPLS 标 No，p443/444 写 9907/9912 "MACsec, 1588v2 &amp; MPLS support"（ce09）；p54 "DHL 除 9900 全支持" vs p301 矩阵 6900/9900 均 No（ce08 相关）。冲突时以最新 datasheet/release notes 为准。</li>
+<li>Roadmap 陷阱（ce14）：6870 的 MPLS/SPB-MS/50G、9912 的 VC 均为"硬件就绪软件未交付"，带星号特性不可承诺。</li>
+<li>ce08 典型错配：6360/6465 承诺 SPB、6900 放接入层、给 2260 上堆叠、给 6465/6560 承诺 ISSU。</li>
+<li>ce16：美国项目 BOM 屏蔽 OS2260/2360。</li>
+<li>容量数据基于 Ed29 时点，投标前对最新 WWPL/datasheet。</li>
+</ul>
+<hr />
+<p>来源条目: f03, f04, f05, f28, p02, p03, p04, p05, p06, p32, p33, p34, p35, p36, p37, p38, p45, c04, c19, c20, c21, c22, c23, c24, c25, ce08, ce09, ce14, ce16, g10, g19, g22, g23, g31, g32, g33</p></main></div></body></html>

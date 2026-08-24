@@ -1,0 +1,112 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>stellar-troubleshooting-cli — DT00XTE361 · Stellar WLAN Advanced Deployment with OmniVista</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE361 · Stellar WLAN Advanced Deployment with OmniVista</h1>
+<div class="sub">Edition 02 · 330 页 · Cirrus 云管进阶（QoE 分析/监控运维/IoT/全流程演练）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">可观测性</div>
+<a href="skills/stellar-qoe-analytics.html">stellar-qoe-analytics</a>
+<a href="skills/stellar-monitoring-ops.html">stellar-monitoring-ops</a>
+<div class="grp">接入进阶</div>
+<a href="skills/stellar-wired-iot-access.html">stellar-wired-iot-access</a>
+<a href="skills/stellar-bridge-mesh.html">stellar-bridge-mesh</a>
+<a href="skills/stellar-ssid-advanced.html">stellar-ssid-advanced</a>
+<div class="grp">交付与排障</div>
+<a href="skills/stellar-deployment-checklist.html">stellar-deployment-checklist</a>
+<a href="skills/stellar-troubleshooting-cli.html" class="on">stellar-troubleshooting-cli</a>
+<a href="skills/stellar-vowlan.html">stellar-vowlan</a></aside><main><h1>stellar-troubleshooting-cli</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="stellar-ap-cli">Stellar AP 进阶排障 CLI 清单</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>"Check wireless configuration — Check List: SSID broadcasted on the selected radio(s)? Transmission Power as selected in the RF profile? Encryption activated? BSSID is present?" (p260)</p>
+<p>"REASONS FOR ROAMING FAILURE: APs must be seen as neighbors; No Roaming from an untagged VLAN to a tagged VLAN; RSSI too low between source AP and destination AP." (p264)</p>
+<p>"Client first connection to the Captive Portal. Client IP address unknown. Redirection URL can not be sent. ... Client IP address retrieved. Stellar AP sends redirection URL to the client." (p220)</p>
+<p>"ssudo tcpdump –i br-wan -w test-capture.pcap udp port 53 ... All the traffic exchanged between the AP and the access switch is going through this interface." (p238)</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<p>排障前置铁律：<strong>先 NTP 全网同步</strong>（AP、OmniVista、交换机同一台 NTP），否则跨设备日志时间戳对不上。
+接入手段：SSH（企业/云管模式需先在 AP 组 Provisioning 里启用并设密码）或串口（115200 8N1，无校验无流控；默认账号 support/aos2016）。
+按层检查：
+1. <strong>无线配置</strong>：iwconfig 看 SSID 是否在目标射频广播、功率与 RF Profile 一致、加密开启、BSSID 存在。接口命名 athXYY：X=0/1/2 对应 2.4/5/6GHz，YY=SSID 编号（ath001=2.4G 的 1 号 SSID）。
+2. <strong>RF 配置</strong>：cat /tmp/config/rfprofile.conf 对照 Band Steering/Load Balance/扫描/国家码/信道/功率/门限。
+3. <strong>客户端</strong>：ssudo sta_list（第一命令——VLAN/IP/时长/收发计数/认证方式/Final_role）；cat /proc/kes_syslog 看 DHCP 与关联；ssudo wlanconfig athXX list 看 RSSI/SNR（RSSI 值 29≈-67dBm、20≈-76dBm、10≈-86dBm）。
+4. <strong>漫游</strong>：adme show 看邻居与 RSSI；wam.log 搜 L2/L3 roaming-start/success。漫游失败三判据：邻居互相可见；untagged/tagged VLAN 间不能漫游；源/目标 AP 间 RSSI 过低。
+5. <strong>门户</strong>：eag_cli show user all；/var/log/eag.log——首连 IP 为 0.0.0.0 发不出重定向是正常时序，先查 IP 再查门户。
+6. <strong>抓包</strong>：有线侧 ssudo tcpdump -i br-wan（AP 与接入交换机全部流量走 br-wan），pcap 经 SFTP 取出用 Wireshark；空口抓包在 Provisioning 启 "AP web" → RF Environment 选信道过滤，文件送 TFTP。
+7. <strong>系统</strong>：top 看单进程 %CPU（案例 drm 81% 为死循环/软件问题）；ps 看 R/S 正常、X(Dead)/Z(Zombie) 异常——僵尸进程吃内存；date/uptime 核对 NTP 与意外重启。</p>
+<h2 id="a1-lab">A1 · 书中案例（Lab 精要）</h2>
+<p>四个排障用例（p276-284、p214-217）：
+- <strong>看不到 SSID</strong> 三问：SSID 是否真在该射频广播（iwconfig）？客户端射频与 SSID 频段兼容？AP 国家码被客户端支持？国家码错误的规避法：RF Profile 里手工指定一个双方兼容的信道，无需改国家码。
+- <strong>拿不到 IP</strong>：客户端 Wireshark + AP tcpdump 双侧抓 DHCP 看丢在哪侧，sta_list 核对 VLAN 与 Final_role 是否过滤 DHCP。
+- <strong>频繁掉线</strong>：iwlist txpower 查功率（案例 Tx-Power=3dBm 压到最小，RSSI 16/SNR 30 临近掉线）；RF Profile 的 signalStrengthThreshold 案例设 70，低于门限的客户端被主动踢——下调；空口抓包看去关联/去认证帧。
+- <strong>802.1X 失败</strong>三段对照：客户端（账号/加密/证书）↔ AP（AAA_server.conf 的 IP/端口/共享密钥、wlanservice.conf 绑定的 aaaProfile）↔ RADIUS 服务器（用户库、共享密钥、NAS IP、防火墙放行 1812/1813）。
+- <strong>高 CPU/僵尸进程</strong>：top 定位异常进程（81% 的 drm）→ 收集进程清单开票，不要只重启了事。</p>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>现象明确（看不到 SSID、拿不到 IP、掉线、802.1X 失败、漫游断、门户打不开、CPU 高）→ 本 skill 对应用例。</li>
+<li>还不知道问题在哪、要从体验指标入手 → stellar-qoe-analytics。</li>
+<li>只想远程下发命令或收集日志包 → stellar-monitoring-ops。</li>
+<li>语音掉话/单通等语音质量问题 → stellar-vowlan（RSSI/SNR 标准更严）。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>前置：确认 NTP 全网同步；确认有 SSH（Provisioning 已启用）或串口参数 115200 8N1。</li>
+<li>iwconfig 核对 SSID/功率/加密/BSSID；用 athXYY 规则定位目标接口。</li>
+<li>cat /tmp/config/rfprofile.conf 对照 RF 设计（重点：信道、功率、signalStrengthThreshold、国家码）。</li>
+<li>ssudo sta_list 看目标终端的 VLAN/IP/Final_role；kes_syslog 按 MAC 过滤关联与 DHCP 日志。</li>
+<li>按现象分支：</li>
+<li>漫游问题 → adme show 邻居表 + 三判据逐条过 + wam.log 搜 roaming-success；</li>
+<li>门户问题 → eag.log/eag_cli，先确认客户端已拿到 IP；</li>
+<li>DHCP 问题 → br-wan tcpdump + 客户端侧 Wireshark 双侧对照；</li>
+<li>802.1X 问题 → 客户端/AP 配置文件/RADIUS 三段对照。</li>
+<li>仍不明：空口抓包（AP Web &gt; RF Environment，&gt;5 分钟）或系统层 top/ps 查异常进程。</li>
+<li>产出：进程清单、pcap、syslog 片段打包，配合 Collect Support Info 交技术支持。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li>untagged 与 tagged VLAN 之间不能漫游：同一 SSID 多 AP 部署必须统一打标方式，这类失败是静默的。</li>
+<li>signalStrengthThreshold 设得过高会主动踢弱信号客户端（案例 70），"频繁掉线"别只盯功率。</li>
+<li>低功率部署（如打印机紧邻 AP）是特例，通用覆盖照搬 3dBm 必掉线。</li>
+<li>门户首连 IP 未知发不出重定向是正常时序，不是门户故障；先查 IP（DHCP/VLAN/Final_role 过滤）。</li>
+<li>国家码不匹配表现为"看不见 SSID"，现象与根因错位；规避靠指定兼容信道。</li>
+<li>僵尸/Dead 进程累积吃内存，发现后开票附进程清单，不要只重启。</li>
+<li>演练环境踩坑：交换机重启阶段按键会进 Miniboot（排障重启时同样适用）。</li>
+</ul>
+<hr />
+<p>来源条目: f11, c11, c12, c13, p13, p14, p20, p22, p23, p24, ce01, ce05, ce06, ce07, ce08, ce09, ce11, g51, g52, g53, g54, g55, g56</p></main></div></body></html>

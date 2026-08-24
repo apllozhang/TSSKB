@@ -1,0 +1,110 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>spb-backbone-deploy — DT00XTE323 · OmniSwitch LAN SPB 实施</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE323 · OmniSwitch LAN SPB 实施</h1>
+<div class="sub">Edition 12 · 367 页 · SPB 交付配置手册（骨干→L2→L3→自动化，10 Lab CLI 全录）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">骨干与 L2</div>
+<a href="skills/spb-backbone-deploy.html" class="on">spb-backbone-deploy</a>
+<a href="skills/spb-l2-service.html">spb-l2-service</a>
+<div class="grp">L3 集成</div>
+<a href="skills/ip-over-spb.html">ip-over-spb</a>
+<div class="grp">保护与冗余</div>
+<a href="skills/spb-bum-protection.html">spb-bum-protection</a>
+<a href="skills/spb-access-ring-redundancy.html">spb-access-ring-redundancy</a>
+<a href="skills/spb-hybrid-etree.html">spb-hybrid-etree</a>
+<div class="grp">自动化与运维</div>
+<a href="skills/unp-dynamic-ov2500.html">unp-dynamic-ov2500</a>
+<a href="skills/spb-oam-troubleshoot.html">spb-oam-troubleshoot</a></aside><main><h1>spb-backbone-deploy</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="spb-bvlan-ect-is-is">SPB 骨干部署与拓扑设计（BVLAN / ECT / IS-IS）</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>"Backbone configuration entails the following tasks: Creating one or more BVLANs with their associated ECT-IDs... Defining the control BVLAN; Defining one or more SPB IS-IS interfaces; Enabling the SPB IS-IS protocol" (p83)</p>
+<p>"BVLAN configuration and ECT algorithm assignment must match on each SPB bridge to ensure proper ISIS-SPB neighbour discovery and shortest path calculations throughout the backbone SPB network. When creating multiple BVLANs for each node, it is best practice to use different ECT algorithm for each BVLAN to maximize the traffic distribution." (p83)</p>
+<p>"SPB DESIGN TWO-TIER TOPOLOGY — Core Switch: No need for BCB nodes; Backbone edge bridge (BEB) role; BEB nodes in partial or full mesh topology... Redundancy achieved through BEB nodes made of two or more physical chassis in VC topology. Access Switch: 802.1Q VLAN on LAG; STP or DHL towards BEB." (p61；三层设计见 p62：BCB 居核心只学 B-MAC，BEB 做汇聚)</p>
+<p>"SPB: Main use case Datacenter, Campus, IoT Networks; Scalability Large; Ease of deployment Simple to Moderate; Protocol Overhead Low — IS-IS only; Troubleshooting Simple &amp; Fast." (p31 选型矩阵；p33：MPLS 收敛 50ms/成本 $$$，SPB 收敛 100ms/成本 $$)</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<ol>
+<li><strong>职责分层</strong>（f01）：控制面（BVLAN + IS-IS + NNI 口）配在 BEB 与 BCB；数据面（access 口 + SAP）只配在 BEB。BCB 永不感知服务。</li>
+<li><strong>拓扑选型</strong>（f06）：小网两层——BEB 全互联，无需 BCB，冗余靠 VC 双机；大网三层——BCB 居核心，BEB 做汇聚，冗余靠双 BCB。</li>
+<li><strong>路径选优三级序</strong>（p05）：metric 低者优先 → 跳数少者优先 → ECT 平局裁决；两侧 metric 不一致取最大值（p06）。</li>
+<li><strong>部署四步</strong>（f02）：建 BVLAN（含 ECT）→ 定控制 BVLAN → 配 IS-IS 接口 → 全局启用 IS-IS。</li>
+<li><strong>带内管理</strong>（p32）：控制 BVLAN 上挂 IP 接口，ISIS-SPB 直接通告路由并做 MAC-IP 映射（免 ARP）。</li>
+</ol>
+<h2 id="a1-lab">A1 · 书中案例（Lab 配置序列精要）</h2>
+<p>Lab1 骨干从零部署（c01，p83，每节点执行）：</p>
+<pre><code>spb bvlan 2000
+spb isis bvlan 2000 ect-id 1
+spb bvlan 2001
+spb isis bvlan 2001 ect-id 2
+spb bvlan 2002
+spb isis bvlan 2002 ect-id 3
+spb isis admin-state disable
+spb isis control-bvlan 2000
+spb isis interface port 1/1/5-6
+spb isis interface port 1/1/25
+interface port 1/1/5-6 admin-state enable
+spb isis admin-state enable
+</code></pre>
+<p>带内管理三件套（p67）：<code>spb isis control-bvlan 4001</code> → <code>ip interface "spb-mgmt" address 172.30.1.1/24 vlan 4001</code> → 出域用静态路由或 <code>ip redist &lt;ospf&gt; into spb-mgmt</code> 双向重分发。</p>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>新建 SPB 网、扩骨干节点、改路径代价、规划 BVLAN/ECT 编号时用本 skill。</li>
+<li>与 <code><a href="spb-l2-service.html">spb-l2-service</a></code> 的区分：本 skill 只管骨干可达（B-MAC 层），不碰 VLAN/SAP/客户业务；与 <code><a href="spb-oam-troubleshoot.html">spb-oam-troubleshoot</a></code> 的区分：本 skill 是"配"，排障命令链的完整用法归 OAM skill。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>定拓扑：估规模，小网两层（BEB 互联）或大网三层（引入 BCB）。</li>
+<li>规划 BVLAN：≤16 个，每 BVLAN 不同 ECT-ID（如 2000/ect1、2001/ect2、2002/ect3），控制 BVLAN 单独一个。</li>
+<li>每节点执行 f02 四步命令序列（见 A1）。</li>
+<li>启用后按 f04 验证链自底向上检查：<code>show spb isis bvlans</code> → <code>interface</code> → <code>adjacency</code> → <code>info</code> → <code>unicast-table bvlan X</code> → <code>spf bvlan X</code> → <code>database</code>/<code>nodes</code>。</li>
+<li>配控制 BVLAN 带内管理 IP（为后续 OV2500 纳管铺路）。</li>
+<li>调路径：两端同步改 <code>spb isis interface port X metric N</code>（默认 10），改完看 <code>show spb isis spf</code>，做完两端同步恢复。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li><strong>控制 BVLAN 只能在协议禁用时改</strong>（ce01）：改不动先查 <code>spb isis admin-state</code> 是否 enable；正确顺序 disable → 改 → enable。</li>
+<li><strong>BVLAN 自动禁 STP、不学客户 MAC、不泛洪</strong>（p01/p03）：别指望 STP 在骨干做环保护。</li>
+<li><strong>metric 单侧降级行不通</strong>（ce02）：一侧 10 一侧 40 时按 40 算整条链路；引流必须两端同步改。</li>
+<li>BVLAN/ECT 指派全网必须一致（p02），否则邻居发现与 SPF 异常。</li>
+<li>IS-IS 开机自动加载，无需 <code>ip load</code>（g01）；接口默认 metric 10、Hello 9s×3（p28）。</li>
+</ul>
+<hr />
+<p>来源条目: f01, f02, f05, f06, p01, p02, p03, p04, p05, p06, p28, p32, c01, ce01, ce02, g01, g02, g03, g04, g05, g07, g08, g14, g20, g25, g26, g28</p></main></div></body></html>

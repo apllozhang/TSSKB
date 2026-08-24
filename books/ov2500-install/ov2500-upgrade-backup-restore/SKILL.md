@@ -1,0 +1,75 @@
+---
+name: ov2500-upgrade-backup-restore
+description: 何时用：规划/执行 OV2500 逐级升级到 4.9R2、HA 滚动升级、快照备份恢复及磁盘扩容时。
+source_book: OV2500 4.9R2 Installation and Upgrade Guide
+---
+
+# OV2500 升级路径、HA 滚动升级、快照备份与磁盘扩容
+
+## R · 原文引用
+
+> "If you are using release 4.7R1: 1. Upgrade to the 4.7R1 Patch 2 release. 2. Upgrade to 4.8R1. 3. Upgrade to 4.8R2. 4. Upgrade to 4.9R1... 5. Upgrade to 4.9R2." (p6-7)
+
+> "You must perform the OmniVista upgrade directly from the VM Console. If you access OmniVista remotely using an SSH client, upgrading the installation can result in incomplete upgrades... The upgrade can take anywhere from 1 to 4 hours depending on network speed, network size, and database size." (p60-61)
+
+> "1. Enable Maintenance Mode on the Active Node (ov1) 2. Connect to the Standby Node and upgrade the node to 4.9R2 3. When the Standby Node upgrade is complete, do a reboot and failover... 4. Connect to the previous Active Node (ov1) and upgrade the node to 4.9R2... After this upgrade process is complete, the Active Node at the beginning of the process is no longer the Active Node. This is a perfectly normal state." (p67)
+
+> "You can only perform a restore using a backup from the same release... OmniVista will not allow you to perform a restore using a backup from a previous release." (p289)
+
+## I · 方法论骨架
+
+**升级总纲**：定起点 → 查升级矩阵算跳数 → 备份+快照 → 逐级升 → 每级验证 → 后置动作。升级矩阵（唯一路径，从 VA 菜单执行）：
+4.5R1→4.5R2→4.5R3→4.6R1→4.6R2→4.7R1→4.7R1 Patch 2→4.8R1→4.8R2→4.9R1→4.9R2（起点越新步数越少）。
+
+**停机窗口**（报审批用）：
+- Standalone：全程不可管理 1-4 小时（自启用维护模式起算）；已部署网络不受影响，唯一例外是 UPAM 认证的 Switch/AP 新客户端无法入网。
+- HA：管理功能持续可用，仅 failover 阶段中断约 5-10 分钟。
+- 老流程例外：4.7R1→Patch 2 的 HA 升级是全程完全停机。
+
+**HA 滚动升级标准流程（4.8R1 及以后）**：确认 Data Sync "Up to Date" → Active 节点启用维护模式（一次启用双节点生效）→ 先升 Standby → 完成后立即重启并 failover → 新 Active 服务全起后升原 Active → 验证。角色互换属正常（如需还原可手动 failover，再停 5-10 分钟）。
+
+**快照与备份**：升级/转换前删全部旧快照→拍新快照→操作→验证通过→立即删除快照。长期备份走 VA 菜单内置备份（保留 1-30 天/默认 7，份数 1-30/默认 5，可定时），恢复仅限同版本备份文件。
+
+**扩容**：只许加新虚拟盘（Hypervisor 侧），不支持改现有盘；独立走 Configure Network Size - Extend Data Partition，HA 走 Configure Current Node - Extend Partitions（两节点都做，前置维护模式）。
+
+## A1 · 书中案例
+
+- 4.9R1→4.9R2 的菜单陷阱：必须先进 "3 - To New Release" 立刻 "0 - Exit"（刷新补丁索引），再选 "2 - To 4.9R1" 让系统检测到 4.9R2 包提示升级；直接在 To New Release 里选 "Upgrade to 4.9R2" 或跳过刷新都会失败——官方原文 "DO NOT SKIP THIS STEP FOR ANY REASON"（p62）。
+- 4.7R1 GA 想直上 4.8R1：矩阵强制先打 4.7R1 Patch 2，且该补丁不在默认仓库——须建自定义仓库 PatchRepo（URL ovrepo.fluentnetworking.com/ov/patch，不带 https:// 前缀）并启用，装完切回 ALE Central Repo 再升 4.8R1（p143, p146）。
+- HA 升级新旧流程重启时机相反：老流程（≤4.7R1 Patch2 及 4.5/4.6Rx）Standby 升完提示重启要忍住，两台都升完一起重启；新流程（≥4.8R1）Standby 升完必须立即按 r 重启 failover，屏幕黄色 WARNING 此时应忽略（p155-160, p167）。
+- 升级窗口内 UI "可用" 就当正常使用：Standby 升级阶段做的配置变更（认证记录、SNMP trap、设备 up/down）全部丢失——窗口内冻结一切变更（p69）。
+- KVM 扩盘：新盘必须 SATA 总线（VirtIO 不识别），且 KVM 只从第三块盘开始识别——标准 workaround 是先加两块 1KB 占位 SATA 盘再加真正的 disk3，占位盘永远别删（p280）。
+
+## A2 · 触发场景（含与相邻 skill 的区分）
+
+- **用本 skill**：任何"把 OV2500 升到 4.9R2"的规划与执行、HA 集群滚动升级、升级前后快照/备份、内置备份策略与恢复、数据盘扩容。
+- 与 `ov2500-ha-cluster-design-and-conversion` 的区分：建集群、L2/L3 选型、集群日常运维在那一单元；这里是"给已有集群做升级/扩盘"的操作 SOP（含维护模式、重启时机等升级特有陷阱）。
+- 与 `ov2500-sizing-and-platform-planning` 的区分：那一边是装机前的容量决策；本 skill 处理存量系统因升级引起的资源变化（如 4.6R2 内存上调、>256 AP 重应用内存）。
+- 旧于 4.5R1 的系统：不做逐级升级，改走"备份→全新安装→重导配置"（历史统计丢失，可先从旧系统导出）。
+
+## E · 可执行步骤
+
+1. **定路径**：记录当前 Build 号，对照升级矩阵列出剩余跳数；旧于 4.5R1 则切换为"备份+全新安装"方案。
+2. **前置检查**：HA 确认 Data Sync "Up to Date"；从 4.6R1/4.5Rx 升 4.6R2+ 前先关机扩内存（Standalone Medium 36GB / HA 40GB）；网络可达 ALE Central Repo 或已配代理。
+3. **保护动作**：VA 菜单做一次内置备份；删除全部旧 VM 快照，拍新快照。
+4. **执行环境**：全程 VM Console（Hypervisor 控制台），禁止 SSH（确需则配 keepalive）；HA 转换同理。升级选项必须选 "2 - Download and Upgrade"（选项 4 不受支持；离线仓库场景例外，Download and Upgrade 是唯一方式）。
+5. **逐级升级**：每级完成后验证——Watchdog 全服务 Running、Build 号正确、能登录 Web GUI——再进下一级。4.7R1 Patch 2 一级记得 PatchRepo 建仓/切回；4.9R1→4.9R2 一级执行 "3 - To New Release → 0 - Exit → 2 - To 4.9R1" 特殊序列。
+6. **HA 按"先 Standby"新流程**（≥4.8R1）：Active 启维护模式（一次双节点）→ 升 Standby → 立即重启 failover → 等新 Active 全服务起来 → 升原 Active。窗口内冻结一切配置变更；Standby 升完出现的"请禁用维护模式"提醒不要立即执行，等两节点都完成。
+7. **后置动作**：>256 台 Stellar AP 时重应用 VA 内存设置（Configure Network Size 重选同档位并重启 Watchdog）；拍新快照删旧快照；按需刷 Stellar AP 固件（Resource Manager - Upgrade Image）。
+8. **扩盘（需扩容时）**：停服务→备份/快照→VA 菜单关机→Hypervisor 加新虚拟盘（KVM：SATA 总线+占位盘 workaround）→开机→VA 菜单 Extend Data Partition（HA 两节点都做，全程不断电）。
+9. **备份常态化**：配置保留天数（1-30，默认 7）与份数（1-30，默认 5），按需 Backup Now 或定时；恢复前确认目标机与备份同版本，跨系统恢复需先改目标机 IP/端口与来源机一致，恢复后再改回。
+
+## B · 边界与陷阱
+
+- 升级只能逐级、只能从 VA 菜单，没有跨版本直升；SSH 升级 = 升级不完整（漏"按回车"交互）（p60）。
+- 快照是"一次性保险"不是备份：拖着旧快照跑、升级后长期保留快照都会持续拖累性能（p8）。
+- 恢复只认**同版本**备份文件，跨版本一律拒绝（p289）；HA 备份 4.5R1 起才支持。
+- 升级菜单选项 4（Upgrade from downloaded package）在线场景不受支持（p63）。
+- 新旧 HA 流程重启时机相反，照老文档做新升级（或反之）是最常见事故源（p155-167）。
+- 维护模式单点启用双节点生效，但 Standby 升完不要急着禁用（p68, p188）。
+- Standby 升级阶段的用户配置变更会丢，原 Active 阶段的会保留（p69, p76）。
+- 扩容不支持改现有盘，只能加新盘（p10, p65）；KVM 只识别 SATA 新盘且从第三块起（p280）。
+- 升级期间严禁关宿主机断电；先停服务再关机（p8, p292）。
+
+---
+来源条目: p07, p09, p10, p11, p12, p13, p14, p15, p25, p28, p29, ce01, ce03, ce04, ce05, ce06, ce07, ce08, ce09, ce10, g17, g18, g24

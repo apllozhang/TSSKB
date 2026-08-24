@@ -1,0 +1,146 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ssid-authentication-suite — DT00XTE360 · ACFE WLAN Basic Deployment with OmniVista</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE360 · ACFE WLAN Basic Deployment with OmniVista</h1>
+<div class="sub">Edition 04 · 585 页 · Stellar+Cirrus 云管交付实操（AP 生命周期全流程，5 天带 Lab）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">开局与云管</div>
+<a href="skills/express-mode-bootstrap.html">express-mode-bootstrap</a>
+<a href="skills/cirrus-license-org-lifecycle.html">cirrus-license-org-lifecycle</a>
+<a href="skills/device-cloud-onboarding.html">device-cloud-onboarding</a>
+<div class="grp">SSID 与策略</div>
+<a href="skills/ssid-authentication-suite.html" class="on">ssid-authentication-suite</a>
+<a href="skills/upam-policy-bandwidth.html">upam-policy-bandwidth</a>
+<div class="grp">RF 与漫游</div>
+<a href="skills/rf-optimization-baseline.html">rf-optimization-baseline</a>
+<a href="skills/roaming-rap-design.html">roaming-rap-design</a>
+<div class="grp">安全与收尾</div>
+<a href="skills/wips-security-deployment.html">wips-security-deployment</a>
+<a href="skills/site-survey-troubleshooting.html">site-survey-troubleshooting</a>
+<a href="skills/rlab-lab-manual.html">rlab-lab-manual</a></aside><main><h1>ssid-authentication-suite</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="ssid-employee-guest-byod-psk">SSID 全家桶：Employee / Guest / BYOD + PSK 四体系</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>"SECTION 1 «SSID SETTINGS»: Select the SSID Usage (each usage leads to a predefined template) ... SECTION 2 «NETWORK ASSIGNMENTS»: Apply the SSID to one site, one or multiple AP Groups ... SECTION 3 «SCHEDULE AND VLAN MAPPINGS»: Apply Schedule ... Apply VLAN/Tunnel Mapping: One or multiple VLAN (up to 256), One Guest Tunnel" (p312)</p>
+<p>"The BYOD employee device will be placed first in the Guest VLAN (pre-authentication). Once authenticated via a Captive Portal, it will be moved to the Employee VLAN (post-authentication)." (p391)</p>
+<p>"Device Specific PSK: Option enabled; Device performs MAC authentication; a specific PSK pass phrase is assigned to the MAC address ... Dynamic Private Group PSK: A user uses one passphrase from the list, and is assigned to the corresponding VLAN ID and ARP." (p326-330)</p>
+<p>"Encryption AUTO_WPA_WPA2 is NOT supported (with Device Specific PSK); PSK/PassPhrase: only active with 'Prefer Device Specific PSK'" (p327)</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<p><strong>1. 认证选型（信任梯度从低到高）</strong>
+Open+Captive Portal（无加密、兼容一切，访客）&lt; MAC 认证（可伪造、无加密，仅哑终端）&lt; PSK（简单但全员共钥）&lt; 802.1X（最强、可管理可扩展，需 RADIUS）。产品级组合：哑设备用 DSPSK/PPSK，人员用 802.1X。</p>
+<p><strong>2. Usage 模板映射（Cirrus 选 Usage 即套模板）</strong></p>
+<table>
+<thead>
+<tr>
+<th>Usage</th>
+<th>安全模型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Guest Network</td>
+<td>Open 或 MAC + 门户</td>
+</tr>
+<tr>
+<td>Employee BYOD Network</td>
+<td>802.1X 或 MAC + BYOD 门户</td>
+</tr>
+<tr>
+<td>Enterprise Network for Employees</td>
+<td>802.1X</td>
+</tr>
+<tr>
+<td>Protected Network</td>
+<td>PSK（+可选门户）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>3. 三段式创建流程（所有 SSID 复用）</strong>
+1. SSID Settings：Profile 名/广播名/Usage/认证策略/默认 VLAN/可选 ACL-QoS
+2. Network Assignments：选 Site + 一个或多个 AP Group
+3. Schedule &amp; VLAN Mappings：按组设调度 + 映射（单 VLAN / VLAN 池 ≤256 避免大广播域 / Guest 隧道）
+前置顺序固定：先建 VLAN 与三层接口再回来映射。</p>
+<p><strong>4. PSK 密钥体系四级选型（运维粒度递进）</strong>
+1. 全局 PSK：一钥全员
+2. DSPSK：MAC 认证 + Company Property 库按 MAC 发专属口令；Force=取消全局口令，Prefer=保留兜底
+3. PPSK：多条"名称+口令+ARP"条目，用哪条落哪个角色
+4. 动态 PPSK：口令条目直接绑 VLAN ID + ARP（同一 ARP 复用多 VLAN），配 Priority ARP/VLAN-ID 选归属</p>
+<p><strong>5. 三种 SSID 的关键开关</strong>
+- Employee：WPA2_AES + UPAMRadiusServer + Auth Source=Local Database（或外部 RADIUS）+ Web Auth=None；客户端 PEAP/MSCHAPv2；UPAM 常数 1812/1813、重试 2、超时 5s
+- Guest：Captive Portal=YES（OV-UPAM 型）+ Allow All EAPs=Yes + Auth Source=None + Web Auth=Guest；Guest Access Strategy 定登录方式（账号/接入码/条款/自注册+审批）与 Post Portal Enforcement；Guest Tunneling=按 ARP 建 L2 GRE 隧道，可加备份隧道
+- BYOD：SSID 级 VLAN=Guest VLAN（预认证沙箱）→ BYOD Strategy 的 Post Portal Enforcement 绑 ARP（内配 Employee VLAN）→ 认证后从 VLAN30 切 VLAN20
+- Express 内嵌版：门户三选一（账号/接入码/条款，大小写敏感）；AP 内置 DHCP 三步：Network 配 IP → 建 Pool → Bind Network 才生效</p>
+<p><strong>6. 客户端接入排障两套命令链（AP CLI，support/aos2016）</strong>
+- 802.1X：<code>iwconfig</code> / <code>iwlist channel|txpower|bitrate</code> → <code>ssudo sta_list</code>、<code>ssudo wlanconfig athX list</code>、<code>ssudo wam_debug sta_list</code>（JSON 含 VLAN/ARP/各阶段认证结果）→ <code>cat /proc/kes_syslog | grep &lt;MAC&gt;</code> → 核对 <code>/var/config/wlanservice.conf</code>、<code>AAA_profile.conf</code>、<code>AAA_server.conf</code> → <code>tcpdump -i br-wan -s 0 host &lt;radiusIP&gt;</code>
+- 门户：<code>date</code>（账号有效期）→ <code>cat /etc/resolv.conf</code>（DNS 必需）→ <code>ps | grep eag</code> → <code>eag_cli show user all</code> / <code>eag_cli kick user index N</code> → <code>tail -f /tmp/log/eag.log</code></p>
+<h2 id="a1-lab">A1 · 书中案例（Lab 步骤精要）</h2>
+<ul>
+<li><strong>c13/p332-347</strong>：VLAN20 建好并 tagged → IP 接口 int_employees 192.168.20.7/24（IP Forward）→ SSID EmployeesX（Enterprise/802.1X/WPA2_AES）→ 建 Employee 账号 → VLAN 映射 20 → 树莓派 PEAP 连接拿 20.x → Authentication Records + Clients 监控 → 全套 CLI 排障。</li>
+<li><strong>c15/p372-388</strong>：VLAN30 + int_guests → GuestsX（Guest Network + OV-UPAM Portal + Allow All EAPs）→ 建 Guests_OVX 策略 + 门户模板（Login By Username&amp;Password）→ 连接后开 http://2.2.2.2 触发重定向 → Kick Off 练习 → eag 排障链。</li>
+<li><strong>c16/p389-395</strong>：BYODX → My_BYOD_Strategy → Post Portal 建 ARP Employee_BYODX（VLAN 20）→ SSID 级映射 VLAN30 → 认证后 Clients 里 VLAN 变 20。</li>
+<li><strong>c14/p324-330</strong>：PSK 四方案逐屏配置样例（含 Priority VLAN-ID over ARP 语义验证）。</li>
+<li><strong>c05/c06/p144-157</strong>：Express 版员工/访客 SSID + AP 内置 DHCP（40 地址池=40 并发）。</li>
+</ul>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>要为员工/访客/自带设备开通无线接入、按设备类型选认证与密钥体系、客户端连不上做认证侧排障时用。</li>
+<li><strong>区分</strong>：只做模式/网络底座 → <code><a href="express-mode-bootstrap.html">express-mode-bootstrap</a></code>；设备上云 → <code><a href="device-cloud-onboarding.html">device-cloud-onboarding</a></code>；认证后的限权/限速/配额 → <code><a href="upam-policy-bandwidth.html">upam-policy-bandwidth</a></code>；本 skill 管"身份如何进门"。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>按终端类型沿信任梯度选认证；Cirrus 上用 Usage 模板起步。</li>
+<li>先建 VLAN + 三层接口（2360 等 R5 交换机控制台手配）。</li>
+<li>三段式建 SSID，按身份类型设关键开关（见骨架 5）。</li>
+<li>PSK 场景按运维粒度选级：设备级 DSPSK、组级 PPSK、按 VLAN 隔离选动态 PPSK；DSPSK 统一 WPA2/WPA3 明确加密。</li>
+<li>建 RADIUS 认证源（内嵌 UPAMRadiusServer 或外部），账号配好有效期。</li>
+<li>验证：客户端拿对应 VLAN 地址；Authentication Records / Captive Portal Records / Clients 三张表核对。</li>
+<li>连不上按两套 CLI 链排查（骨架 6）。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li>DSPSK 与 AUTO_WPA_WPA2 互斥；全局 PSK 字段仅 Prefer 模式可填（ce20）。</li>
+<li>MAC/共享 PSK 安全弱点：MAC 可伪造、共钥泄露即全网失守且无法按人撤销——哑设备用 DSPSK/PPSK，人员用 802.1X（ce21）。</li>
+<li>门户排障三查：AP 时间（date）、DNS（resolv.conf）、必须访问非 https URL 才触发重定向；树莓派/Debian 不会自动弹浏览器（ce22）。</li>
+<li>802.1X 失败先查三个 .conf（UPAM 地址/密钥由云下发，Provisioning 未生效时 AP 配置为空而界面看不出），最后 tcpdump 抓 RADIUS（ce23）。</li>
+<li>AP 内置 DHCP 池=并发上限（40 地址=40 台），"部分新设备连不上"先查 IP 再查无线（ce37）。</li>
+<li>Express 门户账号大小写敏感；访客账号有起止日期，依赖 AP 时间正确。</li>
+</ul>
+<hr />
+<p>来源条目: f10, f11, f12, f13, f23, f28, p18, p19, p20, p21, p33, p34, p35, p36, p37, p38, p39, p40, p41, p42, p43, c05, c06, c13, c14, c15, c16, ce20, ce21, ce22, ce23, ce37 · 术语锚点: g01, g11, g13, g17, g19, g21, g25, g26, g39, g42, g53</p></main></div></body></html>

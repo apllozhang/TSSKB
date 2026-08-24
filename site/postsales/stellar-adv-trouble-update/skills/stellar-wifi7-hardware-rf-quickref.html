@@ -1,0 +1,104 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>stellar-wifi7-hardware-rf-quickref — DT00XTE378 · Stellar WLAN 高级排障与更新</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE378 · Stellar WLAN 高级排障与更新</h1>
+<div class="sub">488 页 · 排障篇同 T478 + Features Update 增量（新硬件/云运维/升级迁移）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">上线与业务</div>
+<a href="skills/stellar-enterprise-onboarding.html">stellar-enterprise-onboarding</a>
+<a href="skills/stellar-ssid-policy-advanced.html">stellar-ssid-policy-advanced</a>
+<div class="grp">云运维</div>
+<a href="skills/stellar-rap-backup-upgrade-ops.html">stellar-rap-backup-upgrade-ops</a>
+<div class="grp">硬件速览</div>
+<a href="skills/stellar-wifi7-hardware-rf-quickref.html" class="on">stellar-wifi7-hardware-rf-quickref</a></aside><main><h1>stellar-wifi7-hardware-rf-quickref</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="rf-wi-fi-7-meshbridge">新硬件与 RF 特性速览：Wi-Fi 7 家族 · 模式规模红线 · 漫游阈值 · Mesh/Bridge</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>"AP1511: Tri radio; 2.4GHz radio: 688Mbps (2x2:2SS/EHT40); 5GHz radio: 2.88Gbps (2x2:2SS/EHT160); 6GHz radio: 5.76Gbps (2x2:2SS/EHT320); Up to 32 SSID; 512 clients per AP; 802.3at/bt POE (up to 35W). AP1521: 1 x 1/2.5/5/10GE multi-gigabit uplink; 802.3bt POE (up to 60W)." (p152-153)</p>
+<p>"Self configured AP cluster, up to 255 APs... Max Up to 32 APs per OmniSwitch; Max Up to 64 APs per stack; Minimum 2xAP123X, AP13xx, 14xx or 15X1 in each Stack. Up to 4000 APs." (p169-176)</p>
+<p>"(p365) To convert the RSSI value to dBm you just need to subtract 96 to the RSSI value. -18 dBm = 78. (p186) RSSI 10 = -86 dBm; RSSI 20 = -76; RSSI 30 = -66." (p186, p365)</p>
+<p>"WIFI MESH – LIMITATIONS: UP TO 4 HOPS; UP TO 5 APS IN A SINGLE HOP...; UP TO 16 APS IN THE MESH NETWORK; ALL APS CAN BROADCAST UP TO 5 SSIDS FOR CLIENTS." (p399-401)</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<p>四组速查知识：</p>
+<ol>
+<li><strong>硬件选型</strong>：Wi-Fi 7 双雄（1511 入门 / 1521 中档）规格对比；外接天线判定规则；Mesh/Bridge 兼容红旗；DPI/WCF 排除型号。</li>
+<li><strong>模式与规模</strong>：Express（自组集群 255 AP，单交换机 32 / 单堆叠 64，每堆叠至少 2 台高端型号当 PVM/SVM）/ Enterprise（OV2500，4000 AP）/ Cloud（Cirrus）；IPv6 支持深度差异（Express 全栈，Enterprise 管理面仅 IPv4）。</li>
+<li><strong>RF 参数</strong>：RSSI↔dBm 换算（dBm = RSSI − 96）；漫游特性与安全级别绑定（OKC 仅 WPA2-Enterprise，11r 推荐且 WPA2 可用）；Roaming RSSI 阈值推荐 2.4G=10 / 5G=15。</li>
+<li><strong>Mesh/Bridge</strong>：硬限制四条 + 最佳实践（回程 5/6GHz、信道 &gt;100）；Bridge 是"无线网线"不服务客户端、单 Root；Mesh 可多 Root 可服务客户端。</li>
+</ol>
+<h2 id="a1-lab">A1 · 书中案例（Lab 精要）</h2>
+<ul>
+<li><strong>c08 RF Profile 阈值实验</strong>：客户端信号 -18dBm（RSSI 78），把 Association RSSI Threshold 设为 90，AP 直接忽略其关联请求（任何 SSID 都连不上）；切回默认 Profile 恢复。核验命令：<code>cat /tmp/config/rfprofile.conf</code> 看 signalStrengthThreshold / roamingSignalStrengthThreshold 实际下发值；客户端 RSSI 用 <code>wlanconfig ath102 list</code>。</li>
+<li><strong>ce01 Band Steering 默认关闭的设计权衡</strong>：假设双频同覆盖；5G 有覆盖洞时设备仍被赶去差频段，Force 5GHz 更无退路。对策：双频同覆盖设计，或 Exclude MAC OUI 排除扫描枪/MIPT 话机等设备。</li>
+<li><strong>ce08 漫游撞后台扫描</strong>：新 AP 正在后台扫描会打断实时业务；语音有感知豁免（检测到呼叫自动停扫），视频会议等其他实时流量无豁免。对策：敏感区域关 Background Scanning，或设专职扫描 AP。</li>
+<li><strong>ce09 Roaming 阈值两头是坑</strong>：太低→客户端粘着弱 AP；太高→漫游过度丢包。从推荐值起步小幅调。</li>
+<li><strong>p13 BLE Beaconing</strong>：AP1230/13xx 内置 BLE 可做信标，按 AP Group 配置（默认关，iBeacon 模式，UUID/Major/Minor），配合 AeroScout RTLS 做资产定位。</li>
+</ul>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>新购选型（要 10G 上联/60W 供电选 1521，成本敏感选 1511）；需要外接天线定向覆盖；Express 还是 Enterprise 的容量测算；粘滞客户端/漫游体验差调阈值；两栋楼无线互联选 Bridge 还是 Mesh。</li>
+<li>与 <code><a href="stellar-enterprise-onboarding.html">stellar-enterprise-onboarding</a></code> / <code><a href="stellar-ssid-policy-advanced.html">stellar-ssid-policy-advanced</a></code> 的区分：那两个管"设备纳管"和"SSID 业务"；本 skill 管选型参数、模式容量、射频调优——设备已在网、配置已下发但体验/覆盖有问题时来查这里。</li>
+<li>与 <code><a href="stellar-rap-backup-upgrade-ops.html">stellar-rap-backup-upgrade-ops</a></code> 的区分：Mesh 是本地回程组网，RAP 是跨公网 VPN，两者都延伸覆盖但机制完全不同。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<p><strong>选型速查</strong>：
+1. Wi-Fi 7：AP1511（三射频 2x2，6G EHT320 5.76G，32 SSID/512 客户端，上联 1/2.5/5GE，PoE ≤35W）vs AP1521（同射频，上联 1/2.5/5/10GE + 1GE 下联，802.3bt ≤60W，低功率模式 at 仅 15W）。
+2. 外接天线：型号尾数为 2 才支持（AP1322/1362）；所有 AP 标配内置全向天线；具体天线型号查数据手册天线矩阵。
+3. 兼容红旗清点：AP1101 不支持 RAP/CNSA/DPI/WCF；AP1201H 不支持 DPI/WCF；AP1101/1201/1201H 不支持桥上 VLAN tagging。
+4. 容量：Express 集群 ≤255 AP、每交换机 ≤32、每堆叠 ≤64（堆叠内至少 2 台 AP123X/13xx/14xx/15X1）；Enterprise ≤4000 AP。IPv6 刚性项目：管理面要 IPv6 只能 Express（Enterprise 下 AP 管理/UPAM RADIUS 走 IPv4，客户端侧 IPv6 可用）。</p>
+<p><strong>RF 调优</strong>：
+5. 一切阈值先换算：dBm = RSSI − 96（OV2500 客户端列表显示 dBm，AP RF 设置用 RSSI，两侧比较前必须统一单位）。信号分档：RSSI 29+（约 -67dBm 以上）为推荐，10-19 差（别跑视频语音）。
+6. 漫游：按 home/foreign AP 是否同 VLAN 定二层/三层漫游；开 802.11r（WPA2 下推荐）；OKC 仅 WPA2-Enterprise；Roaming RSSI 阈值从 2.4G=10 / 5G=15 起步，配 11k/11v；直角走廊等射频互不可见的相邻 AP 手动互加 Neighbor AP。
+7. 阈值不生效/需核验时：AP 侧 cat rfprofile.conf 看实际下发值。</p>
+<p><strong>Mesh/Bridge</strong>：
+8. 核对四条硬限制：≤4 跳、单跳 ≤5 台、全网 ≤16 台、每台 ≤5 个客户端 SSID。
+9. 回程用 5GHz（或 6GHz）、信道 &gt;100；两端 SSID/频段/Passphrase 一致；Bridge 恰 1 台 Root，Mesh 可多 Root。
+10. Auto Mesh：有线侧 Mesh Root 广播隐藏 SSID "Stellar-MESH"（5GHz），无网线 AP 自动以非 Root 入网。</p>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li><strong>Band Steering 默认关闭是设计决策不是疏忽</strong>：5G 覆盖弱时开了反而有害；Force 5GHz 让客户端无退路。</li>
+<li><strong>阈值单位混用是 RF 调优第一大坑</strong>：-18dBm 对应 RSSI 78，要挡住它阈值需 ≥78（教材用 90）。</li>
+<li><strong>漫游与安全级别绑定</strong>：WPA3-Enterprise 下 OKC/11r 的可用性按教材以 WPA2 表述为准，升级 SSID 安全级别时回查漫游特性。</li>
+<li><strong>语音感知豁免只覆盖语音</strong>：视频会议等其他实时流量会被后台扫描打断。</li>
+<li><strong>Mesh 16 台/4 跳是硬红线</strong>，超规模用 RAP 或有线回程解决。</li>
+<li>BLE Beaconing 默认关闭，配置粒度是 AP Group 不是单台 AP。</li>
+</ul>
+<hr />
+<p>来源条目: p02, p04, p05, p11, p12, p13, p14, p15, p20, c08, ce01, ce08, ce09</p></main></div></body></html>

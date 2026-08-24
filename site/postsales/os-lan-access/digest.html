@@ -1,0 +1,323 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>精华长文 DIGEST — DT00XTE215 · OmniSwitch LAN Access Switching</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE215 · OmniSwitch LAN Access Switching</h1>
+<div class="sub">Edition 19 · 500 页 · 接入层基础全科（三目录模型/VC/VLAN/LACP/STP/DHL/QoS/AG）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">管理面</div>
+<a href="skills/aos-config-management.html">aos-config-management</a>
+<a href="skills/switch-management-access.html">switch-management-access</a>
+<div class="grp">转发面</div>
+<a href="skills/virtual-chassis-deployment.html">virtual-chassis-deployment</a>
+<a href="skills/vlan-link-redundancy.html">vlan-link-redundancy</a>
+<div class="grp">策略面</div>
+<a href="skills/ip-services-basic.html">ip-services-basic</a>
+<a href="skills/qos-acl-policy.html">qos-acl-policy</a>
+<a href="skills/access-guardian-unp.html">access-guardian-unp</a>
+<div class="grp">运维</div>
+<a href="skills/poe-ops-diagnostics.html">poe-ops-diagnostics</a></aside><main><h1>精华长文 DIGEST</h1><h1 id="digest-omniswitch-lan-access-switching">DIGEST · OmniSwitch LAN Access Switching 精华长文</h1>
+<blockquote>
+<p>目标读者：不读全书、只要能用的新工程师。教材 DT00XTE215EN（ALE 售后 Newcomers 路径，500 页，3 天课）。本文按"概念 → 配置模型 → 速查 → Lab → 路径 → 避坑"组织，数字均带原书页码。</p>
+</blockquote>
+<hr />
+<h2 id="aos">一、一页看懂接入层基础（AOS 特有概念地图）</h2>
+<p>把 OmniSwitch AOS R8 和你熟悉的思科 IOS 对照着记，有三样东西是 ALE 独有的，先立住概念再动手：</p>
+<ul>
+<li><strong>目录式配置</strong>：没有单一 startup-config，配置和镜像一起放在 certified / working / user-defined 目录里（详见第二节）。这是 AOS 与所有主流网络 OS 拉开差距的地方。</li>
+<li><strong>Virtual Chassis（VC，虚拟机箱）</strong>：多台交换机经 VFL 链路互联后呈现为一台逻辑设备——单管理 IP、跨机箱端口聚合、免 STP/VRRP、免许可（p95）。两台核心"组 VC"和"配 VRRP"是两条不同的路，别混。</li>
+<li><strong>DHL（Dynamic Dual Homing Link，动态双归属）</strong>：接入交换机双上行两台核心，不用 STP 阻塞就能防环——每个 VLAN 只在一条链路转发，故障时整体切换（p257-259）。这是 ALE 接入层替代"STP+VRRP"组合的招牌方案。</li>
+</ul>
+<p>其余概念与业界通用：VLAN/802.1Q trunk、LACP 聚合、STP/RSTP、VRRP、DHCP Relay、QoS/ACL、PoE——但命令语法和默认值各有 AOS 特色，见第三节速查表。</p>
+<p>管理接入第一课：默认账户 admin/switch，本地用户库 userTable9 存 /flash/system，上限 64 用户；8.10R4 起强制改默认密码（p38-39）。带外管理走 EMP 口；无 EMP 的 6360/6465/6560 用 USB-Ethernet dongle 等效（switch-management-access skill）。</p>
+<h2 id="aos-certified-working-boot">二、AOS 配置管理模型：certified / working / boot 三目录（重点讲透）</h2>
+<p><strong>这一节是全书最值钱的一页。</strong> 大量新手事故不是配错命令，是没搞清"我的配置存在哪、重启后会怎样"。</p>
+<h3 id="21-ram">2.1 三个目录 + 一个 RAM</h3>
+<ul>
+<li><strong>certified</strong>：认证基线。冷启动时的保底目录。</li>
+<li><strong>working</strong>：测试暂存区。新镜像、试验配置先放这。</li>
+<li><strong>user-defined</strong>：用户自建目录，可多套（如 lab、issu_dir）。</li>
+<li><strong>running configuration（RAM）</strong>：当前实际生效的配置 = 启动目录内容 + 你敲了还没保存的改动。<strong>改动立即生效，但断电即丢</strong>（p69-71）。</li>
+</ul>
+<p>每个目录都是三件套：AOS 镜像 + vcboot.cfg（启动配置）+ vcsetup.cfg（VC 参数）。镜像按型号命名（6360=Nos.img，6900 V72/C32=kaos.img），拷目录时不可混用。</p>
+<h3 id="22-p70-71">2.2 保存语义三层楼（p70-71）</h3>
+<pre><code>write memory                  # RAM → running 目录（只保到当前运行目录）
+copy running certified        # 固化为认证基线
+write memory flash-synchro    # 一步做两件事（VC 场景同步到所有成员）
+</code></pre>
+<p>判断当前状态用 <code>show running-directory</code>，三个结果：NOT SYNCHRONIZED（有未保存改动）→ CERTIFY NEEDED（写了 working 没固化）→ CERTIFIED（干净）。</p>
+<h3 id="23-p81">2.3 回滚即重启（p81）</h3>
+<p>冷启动时交换机比较 running 目录与 certified 的"镜像+vcboot.cfg"：
+- 内容不同 → 自动从 certified 启动（自动回滚）；
+- 内容相同 → 从 running 目录启动。</p>
+<p>VC 场景下 flash-synchro 会把镜像+配置同步到所有 slave 的 certified（p95-99）。</p>
+<h3 id="24-p452-456">2.4 升级流程（p452-456）</h3>
+<p>读 release note → 传新镜像入 running 目录 → <code>reload from working no rollback-timeout</code> 验证 → 观察无误 → <code>copy running certified</code> 固化。固化前出问题随时回滚旧 certified。必要时先 <code>update uboot</code> / <code>update fpga-cpld</code>。</p>
+<h2 id="_1">三、功能速查表</h2>
+<table>
+<thead>
+<tr>
+<th>功能</th>
+<th>关键命令</th>
+<th>关键参数与默认值</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>VC 部署</td>
+<td><code>virtual-chassis chassis-group N</code></td>
+<td>priority 0-255，最大者为 master；选举链：priority → uptime(差&gt;10分钟才比) → chassis ID → MAC；chassis-id/priority 改动须 reload 生效</td>
+<td>p95-107</td>
+</tr>
+<tr>
+<td>LACP</td>
+<td><code>linkagg lacp agg N size X actor admin-key K</code></td>
+<td>admin-key 仅本地有效，不必等于组号；静态聚合仅限 OmniSwitch 之间，对接第三方必须 LACP；单边配好显示 DOWN 属正常</td>
+<td>p201-217</td>
+</tr>
+<tr>
+<td>STP</td>
+<td><code>spantree vlan N priority 20000</code></td>
+<td>模式 flat/per-vlan（默认 per-vlan）；bridge priority 默认 32768 越小越优；STP 收敛 50s，RSTP &lt;1s；路径成本 16bit：1G=4、10G=2</td>
+<td>p227-248</td>
+</tr>
+<tr>
+<td>DHL</td>
+<td><code>dhl 1 linka linkagg A linkb linkagg B</code></td>
+<td>每机仅 1 会话 2 链路；回切 pre-emption timer 默认 30s（0-600 可配）；DHL 口 STP 自动禁用</td>
+<td>p257-266</td>
+</tr>
+<tr>
+<td>VRRP</td>
+<td><code>ip vrrp 1 interface int_20 address &lt;虚IP&gt;</code></td>
+<td>priority 默认 100，大者为 master；虚拟 MAC 00-00-5E-00-01-{VRID}；<strong>运行中改优先级无效，必须先 disable → 改 → enable</strong></td>
+<td>p297-312</td>
+</tr>
+<tr>
+<td>DHCP Relay</td>
+<td><code>ip dhcp relay destination &lt;IP&gt;</code></td>
+<td>global 与 per-interface 互斥；默认关闭；默认跳数 16，Opt82 格式 Base MAC</td>
+<td>p275-293</td>
+</tr>
+<tr>
+<td>QoS</td>
+<td><code>policy condition/action/rule</code> + <code>qos apply</code></td>
+<td>QoS 默认启用；端口 802.1p/DSCP 默认 0、默认 untrusted；未命中规则默认 accept；<strong>不 qos apply 不生效</strong></td>
+<td>p317-346</td>
+</tr>
+<tr>
+<td>ACL</td>
+<td>同上引擎，action 加 <code>disposition deny</code></td>
+<td>UserPorts 组入组即防源 IP 欺骗；PBR 仅 6570M/6860/6865/6900/9900 支持</td>
+<td>p369-374</td>
+</tr>
+<tr>
+<td>PoE</td>
+<td><code>lanpower …</code></td>
+<td>af=15.4W / at=30W / bt T3=60W / T4=100W；端口优先级默认 low，critical 尽量保电</td>
+<td>p434-441</td>
+</tr>
+</tbody>
+</table>
+<h2 id="lab-15-lab">四、Lab 精要索引（15 个 Lab 一句话）</h2>
+<table>
+<thead>
+<tr>
+<th>Lab</th>
+<th>页码</th>
+<th>一句话摘要</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>远程访问</td>
+<td>p54-63</td>
+<td>验证 AAA 认证链、SSH/WebView 登录、改会话超时并保存</td>
+</tr>
+<tr>
+<td>目录全流程</td>
+<td>p79-88</td>
+<td>建 VLAN 只存 RAM → reload all 全丢 → reload from working 找回 → 自建 lab 目录 → 固化</td>
+</tr>
+<tr>
+<td>Virtual Chassis</td>
+<td>p112-122</td>
+<td>6360 双机组 VC：chassis-group/priority/VFL auto 口，重启生效后看拓扑</td>
+</tr>
+<tr>
+<td>LACP 基础</td>
+<td>p209-217</td>
+<td>跨 VC 机箱建 4 口聚合，单边配好 DOWN 属正常，拔链路演练</td>
+</tr>
+<tr>
+<td>LACP 故障</td>
+<td>p209-217</td>
+<td>disable 成员口，验证单链路存活与流量不中断</td>
+</tr>
+<tr>
+<td>802.1Q trunk</td>
+<td>p218-224</td>
+<td>一口同载 tagged 20/30 + untagged 58，跨 VLAN ping 验证</td>
+</tr>
+<tr>
+<td>STP 根桥</td>
+<td>p238-248</td>
+<td>priority 20000 定根，看 ROOT/ALT/BLK，VLAN20/30 分根做负载分担</td>
+</tr>
+<tr>
+<td>DHL</td>
+<td>p261-266</td>
+<td>linkA/linkB 双聚合，禁 A 验证无缝切换，恢复等 30s 回切</td>
+</tr>
+<tr>
+<td>DHCP Relay</td>
+<td>p289-293</td>
+<td>两核心配 relay 指向 DHCP 服务器，客户端自动获取后看计数</td>
+</tr>
+<tr>
+<td>VRRP</td>
+<td>p305-312</td>
+<td>双 VRID 主备分担，改优先级三步法，重启 Master 演示秒级接管</td>
+</tr>
+<tr>
+<td>诊断工具</td>
+<td>p187-195</td>
+<td>swlog 调级、command-log 审计、port-mirroring/monitoring 抓包、show health</td>
+</tr>
+<tr>
+<td>QoS</td>
+<td>p344-350</td>
+<td>未打标流量给 802.1p 7，VLAN20 限速 100k，大包触发三色丢弃</td>
+</tr>
+<tr>
+<td>ACL</td>
+<td>p369-374</td>
+<td>VLAN20 禁 FTP、VLAN30 禁 HTTP，收尾挂 UserPorts 防欺骗</td>
+</tr>
+<tr>
+<td>动态 VLAN</td>
+<td>p144-157</td>
+<td>UNP 按 MAC 分类自动入 VLAN 40，flush 触发重分类</td>
+</tr>
+<tr>
+<td>Access Guardian</td>
+<td>p397-406</td>
+<td>RADIUS + 802.1X/MAC 认证，employee/contractor 各进各 VLAN，LLDP 看邻居（p422-426）</td>
+</tr>
+</tbody>
+</table>
+<h2 id="8-skill-3">五、学习路径（8 个 skill 对应 3 天课）</h2>
+<p>按依赖关系顺序学，每个 skill 就是一个知识块：</p>
+<table>
+<thead>
+<tr>
+<th>序</th>
+<th>Skill</th>
+<th>对应课程日</th>
+<th>前置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>switch-management-access（登录/AAA/开局）</td>
+<td>DAY 1</td>
+<td>无</td>
+</tr>
+<tr>
+<td>2</td>
+<td>aos-config-management（三目录/保存/回滚）</td>
+<td>DAY 1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>3</td>
+<td>virtual-chassis-deployment（VC 堆叠）</td>
+<td>DAY 1</td>
+<td>2</td>
+</tr>
+<tr>
+<td>4</td>
+<td>vlan-link-redundancy（VLAN/LACP/STP/DHL）</td>
+<td>DAY 1-2</td>
+<td>2</td>
+</tr>
+<tr>
+<td>5</td>
+<td>poe-ops-diagnostics（日志/抓包/PoE/升级）</td>
+<td>DAY 2</td>
+<td>2</td>
+</tr>
+<tr>
+<td>6</td>
+<td>ip-services-basic（IP 接口/DHCP/VRRP）</td>
+<td>DAY 2</td>
+<td>4</td>
+</tr>
+<tr>
+<td>7</td>
+<td>qos-acl-policy（QoS/ACL 统一策略引擎）</td>
+<td>DAY 3</td>
+<td>4</td>
+</tr>
+<tr>
+<td>8</td>
+<td>access-guardian-unp（UNP/准入/LLDP）</td>
+<td>DAY 3</td>
+<td>4、7</td>
+</tr>
+</tbody>
+</table>
+<p>节奏建议：DAY 1 把 1-3 吃透（管理面+配置模型+堆叠是地基），DAY 2 走 4-6（L2/L3 转发面），DAY 3 收 7-8（策略与安全面）。每个 skill 都有 Lab，动手比看文档重要。</p>
+<h2 id="b">六、新人常踩的坑（B 节精华）</h2>
+<ol>
+<li><strong>reload all 恒从 certified 启动</strong>，与 running 目录内容无关（p81/83/85 三处大写 Warning）。想验证 working/user 目录的配置必须 <code>reload from working no rollback-timeout</code>，用错命令试验配置直接蒸发。</li>
+<li><strong>certified 运行模式下 write memory 直接报错</strong>（"Write memory is not permitted when switch is running in certified mode"），目录间也移不了文件——先 reload from working 切回来。</li>
+<li><strong>RAM 未保存改动断电即丢</strong>：改动生效 ≠ 已保存。working 与 certified 一致时重启直接回滚，Lab 里建的 VLAN 2/3/99 全失（p79-88 演示过一遍）。</li>
+<li><strong>VC 里 write memory 弹 "Chassis 1 missing! … erased permanently" 确认框</strong>：拓扑变化时按 Y 会永久清除缺失机箱的配置段，看懂再按（p112-122）。priority/chassis-id 改完必须 reload 才生效，别以为配了 200 就完事。</li>
+<li><strong>VLAN 1 删不掉</strong>，只能停用/移端口，清理脚本要把它剔除；<strong>VLAN 无活动成员时 IP 接口 DOWN 且不进路由宣告</strong>——排障先 show vlan members 再查路由。</li>
+<li><strong>端口带 VLAN 成员身份加不进 linkagg</strong>（报 "Port cannot be added to Linkagg"）：先 <code>no vlan N members port …</code> 清干净再入组。</li>
+<li><strong>VRRP 运行中改优先级无效</strong>：必须 disable → priority → enable 三步（教材大写 Warning，p305-312）。</li>
+<li><strong>QoS 不 qos apply 不下发硬件</strong>；端口默认 untrusted 会把已有标记抹成 0——要保留原始标记先 <code>qos port &lt;口&gt; trusted</code>。</li>
+<li><strong>AAA 的 exit-on-fail 语义反直觉</strong>：enable 是"只用第一台可用服务器"，disable 才是逐台 fail-through——多 RADIUS 容灾场景要 disable（p41）。</li>
+<li><strong>DHL 回切等 30 秒</strong>（pre-emption 默认值），别误判故障；monitoring 与 mirroring 不能落同一物理口，抓包前先规划口的角色。</li>
+</ol>
+<hr />
+<p><em>由 cangjie-skill 流水线从 DT00XTE215EN 蒸馏生成</em></p></main></div></body></html>

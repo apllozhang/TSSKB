@@ -1,0 +1,95 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>rap-remote-deployment — DT00XTE368 · Stellar WLAN Enterprise Basic</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE368 · Stellar WLAN Enterprise Basic</h1>
+<div class="sub">Edition 14 · 515 页 · 无线理论 + OV2500 企业模式实操二合一</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">理论与勘测</div>
+<a href="skills/wlan-theory-fundamentals.html">wlan-theory-fundamentals</a>
+<a href="skills/site-survey-ekahau.html">site-survey-ekahau</a>
+<div class="grp">开局与业务</div>
+<a href="skills/enterprise-mode-onboarding.html">enterprise-mode-onboarding</a>
+<a href="skills/employee-ssid-8021x.html">employee-ssid-8021x</a>
+<a href="skills/upam-guest-access.html">upam-guest-access</a>
+<div class="grp">漫游与远程</div>
+<a href="skills/roaming-l2-l3.html">roaming-l2-l3</a>
+<a href="skills/rap-remote-deployment.html" class="on">rap-remote-deployment</a></aside><main><h1>rap-remote-deployment</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="rap-cirrus-vpn-server">RAP 远程部署（Cirrus + VPN Server）</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>"1 – Stellar Access Point Startup &amp; Registration. [PRE] – Settings to be Entered by the Administrator. 2 - VPN &amp; OmniVista 2500 Settings Retrieval. 3 - VPN Tunnel (Management Traffic) Establishment. 4 – Configuration Settings Retrieval. 5 – VPN Tunnel (Clients Traffic) &amp; Client Connection." (p439)</p>
+<p>"RAP = Remote Access Point. Goal: Extend the corporate network to remote site(s)... Equipment: OmniVista Cirrus 4 (Freemium with OV2500 / Premium) + ALE VPN Server + Stellar AP (AP1101 not compatible)." (p429-430)</p>
+<p>"Click on Export VPN Settings -&gt; download <VPN Server name>.conf... Transfer the .conf file in /opt/OmniVista_2500_NMS/data/vpn_conf/vpn_profile... In the Data VPN Setting, select the Data VPN Server(s)... Select Use Tunnel; Enter the Tunnel ID (must be 0)." (p467-497)</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<ol>
+<li><strong>三件套</strong>：Cirrus 4（Freemium 配 OV2500 / Premium 全云）+ ALE VPN Server 虚机 + Stellar AP（AP1101 不兼容）。</li>
+<li><strong>双隧道模型</strong>：管理 VPN（AP↔VPN Server，传 OV2500 管理流量）+ 数据 VPN（L2GRE，传客户端流量回公司网段）。</li>
+<li><strong>五步上线</strong>：[PRE] 管理员预录序列号/MAC、VPN 参数、OV2500 地址 → AP 上电自动连 Cirrus 按 MAC 识别 → 下发参数建管理隧道 → 经隧道从 OV2500 拉配置 → 建第二条数据隧道、远程用户接入企业 SSID。</li>
+<li><strong>SSID 侧开关</strong>：Default VLAN/Network 选 Use Tunnel + Tunnel ID=0 + 指定 Data VPN Server。</li>
+</ol>
+<h2 id="a1-lab">A1 · 书中案例（Lab 精要）</h2>
+<p>c10（p467-497）完整流程：Cirrus 4（registration.ovcirrus.com）Inventory &gt; Device Catalog 录序列号/MAC 并勾 Is this a Remote AP=YES；配管理 VPN（公网 IP:6550、Server VPN IP 192.168.0.1、客户端池 192.168.0.2-20、OV2500 IP），Export VPN Settings 导出 .conf；ALE VPN Server 虚机（OVF 部署）设双网卡（eth0 公网/eth1 私网），FileZilla 把 .conf 传到 /opt/OmniVista_2500_NMS/data/vpn_conf/vpn_profile，建 vpn_mgmt 服务导入 endpoint，Apply 后重启 AP，Maintenance &gt; VPN Status 应见 peer 握手；OV2500 虚机加默认路由（192.168.0.0/24 网关 10.130.5.251）；再建数据 VPN（10.7.0.61、客户端池 10.7.0.55-60、端口 6551 绑 eth2），AP Group 的 Data VPN Setting 选中；建 EmployeesX 时选 Use Tunnel、Tunnel ID=0。验证：远程客户端连 EmployeesX 过 802.1X，拿到员工网段地址。</p>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>分支/门店/展会/居家需要广播企业 SSID 且流量回总部——用本 skill。</li>
+<li>站点内 AP 常规上线（局域网内 OV2500 可达）——转 enterprise-mode-onboarding。</li>
+<li>L3 漫游的 GRE 隧道是 home/foreign AP 之间，与本 skill 的 VPN 隧道不同机制，勿混。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>确认 AP 型号非 AP1101；读尾部标签取序列号/MAC。</li>
+<li>Cirrus 4 录入设备并勾 Remote AP；配置管理 VPN 参数并 Export VPN Settings 导出 .conf（务必保存好）。</li>
+<li>部署 ALE VPN Server 虚机：控制台设 admin 密码、公网/私网 IP、网关/DNS，开 SSH。</li>
+<li>把 .conf 传入 /opt/OmniVista_2500_NMS/data/vpn_conf/vpn_profile，建 vpn_mgmt 服务（绑公网 IP:6550）并导入 VPN endpoint，Apply 后重启 AP。</li>
+<li>OV2500 虚机菜单加去程路由；AP REGISTRATION 选国家码后 RAP 出现在 Managed AP。</li>
+<li>建 Data VPN Server（Server IP + 客户端池），导出 .conf 同样导入 VPN 服务器（vpn_data、端口 6551、绑 eth2）。</li>
+<li>AP Group 的 Data VPN Setting 选中数据 VPN；SSID 的 Default VLAN/Network 选 Use Tunnel、Tunnel ID=0，下发。</li>
+<li>验证：远程客户端过 802.1X 拿到企业网段地址，VPN Status 有 peer 与握手记录。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li>AP1101 不兼容 RAP。</li>
+<li>Tunnel ID 必须填 0。</li>
+<li>.conf 文件丢失只能重新导出——导出后立即备份。</li>
+<li>Freemium 方案含 OV2500 环节（配置经本地 OV 下发），Premium 少这一步，方案选型影响步骤数。</li>
+<li>远程站点若有本地出口需求，用 Local Breakout + VLAN 标签区分本地与回传业务。</li>
+</ul>
+<hr />
+<p>来源条目: f15, c10, g42, g43</p></main></div></body></html>

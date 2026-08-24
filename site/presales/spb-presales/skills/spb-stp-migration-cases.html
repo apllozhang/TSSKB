@@ -1,0 +1,126 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>spb-stp-migration-cases — DT00XPS279 · OmniSwitch LAN SPB 售前</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XPS279 · OmniSwitch LAN SPB 售前</h1>
+<div class="sub">Issue 05 · 147 页 · SPB 技术推销课（卖点弹药/架构/L3 服务/案例/三技术对比）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">售前攻防</div>
+<a href="skills/spb-presales-battlecard.html">spb-presales-battlecard</a>
+<a href="skills/spb-micro-segmentation.html">spb-micro-segmentation</a>
+<div class="grp">架构与设计</div>
+<a href="skills/spb-topology-isis-design.html">spb-topology-isis-design</a>
+<div class="grp">边缘与服务</div>
+<a href="skills/spb-edge-services.html">spb-edge-services</a>
+<div class="grp">L3 集成</div>
+<a href="skills/spb-l3-integration.html">spb-l3-integration</a>
+<div class="grp">交付与选型</div>
+<a href="skills/spb-ov2500-delivery.html">spb-ov2500-delivery</a>
+<a href="skills/spb-vs-evpn-mpls-selection.html">spb-vs-evpn-mpls-selection</a>
+<a href="skills/spb-stp-migration-cases.html" class="on">spb-stp-migration-cases</a>
+<a href="skills/spb-license-spec-sizing.html">spb-license-spec-sizing</a></aside><main><h1>spb-stp-migration-cases</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="spb">SPB 迁移方法论与成功案例弹药库</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>"IT CAN RUN IN PARALLEL WITH YOUR CURRENT DESIGN — SPB Domain (HVAC, Security), Legacy Domain (Desktop, Telephony), Phased migration."（p13）</p>
+<p>"Loops without SPBs are controlled by unique and independent STP instances. BEBs adjoining two loops are configured with two STP instances in Root Bridge and Next Best Root. A point-to-point SPB service is dedicated to transporting STP control... Several BVLANs will be included to allow several active paths to be maintained."（p123）</p>
+<p>"KEY HIGHLIGHTS: No service disruption during the transition; All links are used; Replacement of Spanning Tree protocols; Configuration of SPB access services at the edge only."（p124）</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<p><strong>① 双域并行分阶段迁移框架（f06）</strong>：网络划分为 SPB 域与 Legacy 域长期共存，按业务逐批搬迁（先 HVAC/安防等 IoT 流量，后桌面/语音），每步可回退——消除割接风险顾虑。与互操作三承诺构成"能共存 → 可分批"完整论证链。</p>
+<p><strong>② STP→SPB 无中断施工法（f17/p36，Metz 工程细则）</strong>：
+1. 核心网先全部 SPB 化（该区域不再有 L2 环）；
+2. 未迁移接入环各自跑独立 STP 实例自治防环；
+3. 横跨两环的 BEB 配双 STP 实例（Root Bridge + Next Best Root）受控桥接；
+4. 专门建一条点对点 SPB 服务传输 STP 控制帧；
+5. 取消 transit VLAN（SPB 按服务映射），部署多 BVLAN 维持多条活跃路径。</p>
+<p><strong>③ 案例论证三段式（f18）</strong>：背景量化 → 痛点编号 → 收益分组（对应客户质疑）。三个案例各有侧重：</p>
+<table>
+<thead>
+<tr>
+<th>案例</th>
+<th>行业</th>
+<th>规模量化</th>
+<th>弹药点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Linköping 大学（c01）</td>
+<td>教育</td>
+<td>书中未给型号/规模数字</td>
+<td>spine-leaf 改造 + 具名高管证言（"incredibly simple to configure and manage"）</td>
+</tr>
+<tr>
+<td>美国 NDOT（c02）</td>
+<td>交通</td>
+<td>三层架构：NOC（OV2500）/光纤环 OS6900/加固 OS6860E、OS6865</td>
+<td>路边网络企业级化、SPB to the edge、MTTR 下降</td>
+</tr>
+<tr>
+<td>法国 Metz（c03）</td>
+<td>政务/智慧城市</td>
+<td>80 栋楼、100km 自有光纤、200 交换机、100 AP、万级设备 L2</td>
+<td>迁移零中断 + 痛点全清单（transit VLAN/集中 VRRP/大广播域）</td>
+</tr>
+</tbody>
+</table>
+<h2 id="a1">A1 · 书中案例</h2>
+<p>Metz 是全书最完整叙事（p120-124）：p121 背景（都会区与市政厅共享 IT）、p122 五条编号痛点、p123 施工架构（即上方五步）、p124 收益归四组——带宽与稳定、时延与弹性、配置与监控简化、简单低影响迁移。NDOT（p118-119）是同模板的交通行业变体。</p>
+<h2 id="a2">A2 · 触发场景</h2>
+<ul>
+<li>客户担心"换网 = 割接风险"，需要分阶段迁移论证；</li>
+<li>现网是 STP 多环环境，要出无中断迁移施工细则；</li>
+<li>投标需要行业对标案例（教育/交通/政务任选其一做背书页）。
+与相邻 skill 区分：只讲卖点不管迁移走 <code><a href="spb-presales-battlecard.html">spb-presales-battlecard</a></code>；选 EVPN/MPLS 走 <code><a href="spb-vs-evpn-mpls-selection.html">spb-vs-evpn-mpls-selection</a></code>；LBD/控制帧处置细节走 <code><a href="spb-edge-services.html">spb-edge-services</a></code>。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>迁移方案按双域并行框架写：SPB 域与 Legacy 域共存图 + 分批搬迁顺序表（IoT 流量先行）。</li>
+<li>现网含多环时套 Metz 五步施工法，明确"SPB 区域无环、遗留区域 STP 自治、交界点受控桥接、服务级搬迁"。</li>
+<li>案例背书按三段式模板选最贴近行业的案例改写，引用规模数字只用书中量化值，勿自行补数。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li><strong>"替代 STP"≠全网灭 STP</strong>（ce14）：教材自己的参考设计里接入交换机上行仍用 STP 或 DHL；Metz 迁移期还专门传 STP 控制。话术精确化为"核心/骨干消除阻塞链路、全链路利用"，否则验收时被质疑承诺兑现度。</li>
+<li>Linköping 案例书中无设备型号与规模数字，引用时勿编造。</li>
+<li>三个案例均为早期欧洲/北美公共部门项目，缺超大规模场景佐证；面向大 DC 客户勿硬套。</li>
+<li>DHL 是书中出现但未展开的叫法，向客户解释时标注来源待确认。</li>
+</ul>
+<hr />
+<p>来源条目: f06, f17, f18, p36, c01, c02, c03, ce14, g09</p></main></div></body></html>

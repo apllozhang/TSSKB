@@ -1,0 +1,176 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>精华长文 DIGEST — DT00XTE361 · Stellar WLAN Advanced Deployment with OmniVista</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE361 · Stellar WLAN Advanced Deployment with OmniVista</h1>
+<div class="sub">Edition 02 · 330 页 · Cirrus 云管进阶（QoE 分析/监控运维/IoT/全流程演练）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">可观测性</div>
+<a href="skills/stellar-qoe-analytics.html">stellar-qoe-analytics</a>
+<a href="skills/stellar-monitoring-ops.html">stellar-monitoring-ops</a>
+<div class="grp">接入进阶</div>
+<a href="skills/stellar-wired-iot-access.html">stellar-wired-iot-access</a>
+<a href="skills/stellar-bridge-mesh.html">stellar-bridge-mesh</a>
+<a href="skills/stellar-ssid-advanced.html">stellar-ssid-advanced</a>
+<div class="grp">交付与排障</div>
+<a href="skills/stellar-deployment-checklist.html">stellar-deployment-checklist</a>
+<a href="skills/stellar-troubleshooting-cli.html">stellar-troubleshooting-cli</a>
+<a href="skills/stellar-vowlan.html">stellar-vowlan</a></aside><main><h1>精华长文 DIGEST</h1><h1 id="digest-stellar-wlan-dt00xte361en">DIGEST · Stellar WLAN 进阶部署与云管运维（DT00XTE361EN）精华版</h1>
+<blockquote>
+<p>不读全书、只看精华。这是 ALE 培训教材 OmniAccess Stellar WLAN Advanced Deployment with OmniVista（330 页）的蒸馏长文：QoE 六指标、云管运维四件套、有线/IoT 接入、全流程交付清单、CLI 排障速查，一次读完即可上手。</p>
+</blockquote>
+<h2 id="_1">一、一页看懂这门课</h2>
+<p>这本教材（DT00XTE361EN）是 T360（Stellar WLAN 基础部署）的进阶续集，面向售后新人，讲 Cirrus 云管环境下的三件事：</p>
+<ol>
+<li><strong>高级功能</strong>（DAY 1 前半，p3-121）：SSID 高级选项（QoS/密钥轮换/广播组播优化/访客门户）、有线客户端 MAC 认证、IoT 设备识别、Bridge 点对点桥接与 Mesh 无线回传。</li>
+<li><strong>可观测性</strong>（p125-187）：QoE Analytics、网络分析、客户端分析三层仪表盘——这是 Cirrus 的卖点，也是交付后的运维抓手。</li>
+<li><strong>运维与排障</strong>（DAY 2，p258-319）：监控告警、设备生命周期（升级/备份/支持信息）、进阶 CLI 排障、全流程部署综合演练、VoWLAN 规划、组织清理。</li>
+</ol>
+<p>一句话主线：<strong>云管环境下的可观测性与运维</strong>。分析告诉你问题在哪，监控让问题主动找你，CLI 排障把问题钉死在设备层，综合演练把 T360+T361 的全部技能串成一条可复用的交付流程。</p>
+<h2 id="qoe">二、QoE 分析六指标详解</h2>
+<p>QoE（体验质量）从终端视角回答"用户体验好不好"。Cirrus 提供六个监控指标（p158）：</p>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>含义</th>
+<th>阈值范围</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Successful Connects</td>
+<td>成功连接数</td>
+<td>计数器，无阈值</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Time To Connect</td>
+<td>关联/授权/DHCP/Portal 四阶段总耗时</td>
+<td>2-20s</td>
+<td>2s</td>
+</tr>
+<tr>
+<td>Roaming</td>
+<td>漫游成功率</td>
+<td>0.2-2s</td>
+<td>0.2s</td>
+</tr>
+<tr>
+<td>Coverage</td>
+<td>信号高于阈值的时间占比</td>
+<td>-90 ~ -55dBm</td>
+<td>-66dBm</td>
+</tr>
+<tr>
+<td>Available Capacity</td>
+<td>RF 信道可用时间占比</td>
+<td>10%-50%</td>
+<td>10%</td>
+</tr>
+<tr>
+<td>Device Uptime</td>
+<td>设备在线率</td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p>工作流（p156-163）：Network &gt; Analytics &gt; QoE → Filters 选站点与时间范围（建议先 Last 7 days）→ Summary 圈定异常指标 → 点 More details 看失败分类器（DHCP、Association、Weak Signal、上下行不对称、Wi-Fi 干扰等），按连接模式/设备类型/OS/SSID 的失败会话明细定位原因。</p>
+<p>配套两层：<strong>网络分析</strong>（p138）看信道分布与利用率、AP/交换机 CPU/内存/闪存健康；<strong>客户端分析</strong>（p147）看连接曲线、频段/AP 分布、吞吐，判断要不要加 AP。三个坑：失败分类器要有失败样本才显示，时间窗太短会"看不到问题"；交换机只有 Device Uptime 一项 QoE 指标；阈值按站点配置，多站点不能一刀切。</p>
+<h2 id="_2">三、云管运维四件套</h2>
+<p>设备进入运维期后，日常抓手就四样（p233-257）：</p>
+<ol>
+<li><strong>监控</strong>：拓扑状态色扫一遍——绿=正常、橙=未知或 warning/major、红=critical（但连通仍在）、灰=失联（别把红读成断网）；Network Events 按 AP/Switch/QoE 三类 trap 浏览、按 Severity 过滤、逐条 Acknowledge。</li>
+<li><strong>热力图</strong>：按站点/AP 生成，硬性前提<strong>至少 3 台 Stellar AP</strong>（p177）；密度红/黄/绿对应高/中/低，用来核对覆盖与客户端分布。</li>
+<li><strong>设备目录</strong>（Device Catalog）：所有 Actions 的入口——Edit Device、SSH/Web UI（需先在 Provisioning 启用并设凭据）、Configuration Management、下发排障命令（Device Troubleshooting）、Collect Support Info 收日志包（AP 为 tar.gz 快照；交换机 swlog/cfg/Tech Support 分 L2/L3/Engineering 层级）。</li>
+<li><strong>升级与备份</strong>：升级四步向导（Schedule Setting → 选设备 → 定版本 → Review），默认 6 小时窗口——<strong>升级等于重启、终端必断连</strong>，必须纳入变更通知；配置备份可含安全文件，按交换机/站点/楼层排程。再加报表排程（如周一 8:00 周报，邮件自动送达）。</li>
+</ol>
+<p>这四件套把整套 skill 串起来：监控发现问题 → QoE 分析定位 → 设备目录取证/下命令 → 仍不明确才登 AP 走 CLI；而升级备份和报表是例行动作。</p>
+<h2 id="iot">四、有线与 IoT 接入要点</h2>
+<p><strong>有线客户端 MAC 认证</strong>（p89-98）：哑终端（打印机/摄像头/POS）接 AP 有线口（如 Eth1）做准入。认证链四步：AAA Server Profile（内置 UPAMRadiusServer，用途选 MAC）→ Access Auth Profile（方法 MAC、默认角色 ARP_DEFAULT 受限+限带宽、应用到 AP 组与端口）→ Access Policy（认证源 Local Database、通过角色 ARP_PASS）→ 本地数据库录入 MAC。验证看 Device Catalog &gt; Wired Ports 与 Analytics &gt; Clients。</p>
+<p><strong>IoT 双识别</strong>（p103）：MAC OUI（厂商前缀）+ DHCP 指纹（option 55 参数请求列表 + option 60 厂商标识）；识别分类可绑定 Access Role Profile 自动强制。两个坑：静态 IP 哑终端不发 DHCP，只能靠 OUI；误分类绑定强制会直接断业务，先小范围验证。</p>
+<p><strong>Mesh/Bridge</strong>（p113-121）：跨楼无线桥接或回传组网。建链三要素——SSID、频段、密码两端完全一致；容量红线：全网 ≤16 AP、每 Root ≤8 从 AP、≤4 跳、单跳点对多点 ≤5 AP；回传用 5GHz、信道选 100 以上。AP1101/AP1201/AP1201H 桥上不支持 VLAN 打标，选型就要排除。</p>
+<h2 id="checklist">五、全流程部署演练清单（当交付 checklist 用）</h2>
+<p>综合演练 Lab（p286-299）把全书技能串成七段主线，交付照此打勾：</p>
+<ol>
+<li><strong>复位与连通验证</strong>：复位设备，ping DHCP 服务器与外网。</li>
+<li><strong>组织建模</strong>：Organization &gt; Site（含预留站点）&gt; Building &gt; Floor，楼层挂平面图；设备必须归属站点。</li>
+<li><strong>设备上线</strong>：show chassis 取序列号逐台入目录，等 OV Managed 状态；非云管型号（如 OS-2360）只能手工配。</li>
+<li><strong>WLAN</strong>：三个差异化 SSID——EmployeesX（WPA2-Enterprise 802.1X、仅 5GHz、VLAN 20、按角色封 HTTP）、GuestsX（内部门户、限 1Mbit/s、客户端隔离、VLAN 30、账号限时限量）、PrinterX（仅 2.4GHz、最小功率、固定信道、DPSK 按设备 PSK）；RF Profile 开 Band Steering/Load Balance、关联门限 -50dBm。</li>
+<li><strong>安全</strong>：WIPS 流氓 AP 分类规则（同 SSID 名+指定 MAC OUI）、认证失败黑名单（5 次/分钟）、关闭 AP SSH/Web 管理。</li>
+<li><strong>运维</strong>：Golden Config、配置备份、VLAN 模板变量化、标签、周报排程、场景化阈值（健康 70%、2.4G 利用率 20%、客户端健康 90%、可用容量 25%）。</li>
+<li><strong>拓扑变更</strong>：按需把两台 AP 改 Mesh（AP1321 为 Root、WPA2-Personal），全量回归验证。</li>
+</ol>
+<p><strong>清理是逆向拆除</strong>（p313-319）：云管没有一键恢复默认（p315 明说），按创建反序删——运行任务 → WIPS → AP 组/Profile 解绑（删不掉先把引用改回 Default）→ SSID → 策略/门户 → 账号 → Golden Config → 报表 → 阈值 → 站点 → 确认设备目录空。误删 Organization 不可恢复。</p>
+<h2 id="cli">六、CLI 排障速查</h2>
+<p>前置铁律：<strong>先 NTP 全网同步</strong>，否则跨设备日志对不上时间戳。接入：SSH（Provisioning 启用）或串口 115200 8N1（support/aos2016）。四大用例（p260-284）：</p>
+<table>
+<thead>
+<tr>
+<th>用例</th>
+<th>命令与判据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>看不到 SSID</td>
+<td><code>iwconfig</code> 三问：SSID 在目标射频广播？频段兼容？国家码被客户端支持？（国家码错可在 RF Profile 手工指定兼容信道规避）接口 athXYY：X=0/1/2 对应 2.4/5/6GHz</td>
+</tr>
+<tr>
+<td>拿不到 IP</td>
+<td><code>ssudo sta_list</code> 核对 VLAN/Final_role；<code>ssudo tcpdump -i br-wan -w test.pcap udp port 53</code> 双侧对照 DHCP 丢在哪侧</td>
+</tr>
+<tr>
+<td>频繁掉线</td>
+<td><code>iwlist txpower</code>（案例压到 3dBm）；查 rfprofile.conf 的 signalStrengthThreshold（案例 70 过高主动踢弱信号客户端）；空口抓包看去关联帧</td>
+</tr>
+<tr>
+<td>802.1X 失败</td>
+<td>客户端（账号/证书）↔ AP（AAA_server.conf 的 IP/端口/共享密钥）↔ RADIUS（用户库/NAS IP/1812、1813 放行）三段对照</td>
+</tr>
+</tbody>
+</table>
+<p>漫游失败三判据（p264）：AP 互为邻居、untagged 与 tagged VLAN 之间<strong>不能</strong>漫游（静默失败）、源/目标 AP 间 RSSI 过低。用 <code>adme show</code> 看邻居、wam.log 搜 roaming。RSSI 读数换算：29≈-67dBm、20≈-76dBm、10≈-86dBm。</p>
+<h2 id="_3">七、学习路径与陷阱</h2>
+<p><strong>路径</strong>：先过 SSID 高级选项与有线/IoT 接入（配得进去）→ 再学 QoE/网络/客户端三层分析（看得懂）→ 然后监控四件套（管得住）→ 最后 CLI 排障与综合演练（修得了、交付得出）；VoWLAN 五阶段（Prepare/Plan/Design/Implement/Operate，p306）作为专项规划方法，需要时直接套常数：1 AP/255m²、每 AP 20-25 用户保 36Mbps、802.11ac 语音门槛 RSSI ≥ -67dBm（读数 ≥29）且 SNR ≥ 25、漫游重叠带按 -62dBm 留余量。</p>
+<p><strong>高频陷阱清单</strong>：升级必重启且终端断连；少于 3 台 AP 无热力图；组播优化"失效"多为自动停用（信道利用率 90% 或 6 个高吞吐客户端，是设计行为）；密钥轮换仅 Enterprise SSID 可用；门户首连 IP 为 0.0.0.0 发不出重定向是正常时序，先查 IP 再查门户；僵尸进程累积吃内存，发现后开票附进程清单别只重启；交换机重启阶段按键会掉进 Miniboot；语音标准（-67dBm）别错用到数据场景，会过度建设。</p>
+<hr />
+<p><em>由 cangjie-skill 流水线从 DT00XTE361EN 蒸馏生成。</em></p></main></div></body></html>

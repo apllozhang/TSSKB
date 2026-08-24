@@ -1,0 +1,104 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>stellar-deployment-checklist — DT00XTE361 · Stellar WLAN Advanced Deployment with OmniVista</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE361 · Stellar WLAN Advanced Deployment with OmniVista</h1>
+<div class="sub">Edition 02 · 330 页 · Cirrus 云管进阶（QoE 分析/监控运维/IoT/全流程演练）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">可观测性</div>
+<a href="skills/stellar-qoe-analytics.html">stellar-qoe-analytics</a>
+<a href="skills/stellar-monitoring-ops.html">stellar-monitoring-ops</a>
+<div class="grp">接入进阶</div>
+<a href="skills/stellar-wired-iot-access.html">stellar-wired-iot-access</a>
+<a href="skills/stellar-bridge-mesh.html">stellar-bridge-mesh</a>
+<a href="skills/stellar-ssid-advanced.html">stellar-ssid-advanced</a>
+<div class="grp">交付与排障</div>
+<a href="skills/stellar-deployment-checklist.html" class="on">stellar-deployment-checklist</a>
+<a href="skills/stellar-troubleshooting-cli.html">stellar-troubleshooting-cli</a>
+<a href="skills/stellar-vowlan.html">stellar-vowlan</a></aside><main><h1>stellar-deployment-checklist</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="checklist">全流程部署综合演练（交付 checklist）与组织清理</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>"The purpose of this exercise is to practice on Stellar Access Points and OmniVista Cirrus by working on a WLAN Stellar installation... You will be in charge to install and configure the network based on the given requirements." (p288)</p>
+<p>"As OmniVista Cirrus 10 is cloud-based, it is not possible to revert the configuration back to the default parameters with one click." (p315)</p>
+<p>"The AP Group can only be deleted if no custom provisioning configuration is assigned. ... If you get an error while trying to delete it, Edit this profile and set the RF profile parameter with 'Default RF Profile'." (p316)</p>
+<p>"This topology contains: clients, Stellar Access points, OmniSwitches, servers and an OmniVista Cirrus. It simulates a three-tier end user topology (Access, Aggregation and Core)." (p35)</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<p>交付七段主线（创建顺序）：
+1. <strong>复位与连通验证</strong>（ping DHCP 服务器/外网）；
+2. <strong>组织建模</strong>：Organization &gt; Site（含预留站点）&gt; Building &gt; Floor，楼层挂平面图；设备必须归属站点；
+3. <strong>设备上线</strong>：show chassis 取序列号逐台入 Device Catalog，走 Waiting for first Contact → Connected to OV → Provisioning → OV Managed（约 2 分钟；交换机 cloud-agent admin-state restart 加速，AP 可 ssudo firstboot -y + reboot 触发）；不能上云管的型号（OS-2360）只能手工配；
+4. <strong>WLAN</strong>：多 SSID 差异化设计（见 A1）；RF Profile 开 Band Steering/Load Balance、关联门限；
+5. <strong>安全</strong>：WIPS 流氓 AP 分类规则（同 SSID 名 + 指定 MAC OUI）、认证失败黑名单（5 次/分钟）、访客客户端隔离、AP 关闭 SSH/Web 管理；
+6. <strong>运维</strong>：Golden Config、配置备份、VLAN 模板（IP 用变量）、标签、支持信息收集、周报排程、场景化监控阈值；
+7. <strong>拓扑变更</strong>：按需把部分 AP 改 Mesh。</p>
+<p>清理是逆向拆除（云管无一键恢复默认）：按创建的反序删——运行任务 → WIPS → AP 组/Provisioning/RF Profile 解绑 → SSID → 策略/角色/门户 → 账号/资产 → Golden Config → 报表 → 阈值重置 → 站点 → 确认设备目录空 → CLI 模板/值映射。</p>
+<h2 id="a1-lab">A1 · 书中案例（Lab 精要）</h2>
+<p>综合演练（p286-299）三个差异化 SSID：EmployeesX（WPA2-Enterprise 802.1X、仅 5GHz、VLAN 20、工作时间调度、按角色封 HTTP）；GuestsX（内部 Captive Portal、限 1Mbit/s、封 SSH/Telnet、VLAN 30、周一至周三调度、账号限时限量）；PrinterX（仅 2.4GHz、最小发射功率、固定信道、WPA2 PSK + 按设备 PSK/DPSK、复用 Employee VLAN）。RF Profile：负载均衡启用、关联门限 -50dBm。监控阈值（p298）：健康 70%、2.4G 利用率 20%（只跑打印机故收紧）、2.4G 客户端健康 90%、可用容量 25%。末段两 AP 建 Mesh（AP1321 为 Root、自定义 SSID、WPA2-Personal）。
+基础 Lab（p43-73）补充上线细节：reset_PODX 复位 → My Site + Building A/Ground Floor（画约 1200-1300m² 楼层边界）→ 双交换机 + 双 AP 入目录 → 手工配 VLAN 10/20/30 → EmployeesX/GuestsX 映射 My-AP-Group → 树莓派验证（Employee 192.168.20.70-79 / Guest 192.168.30.70-79）。
+清理 Lab（p313-319）：29 步逆向拆除全量配置，清理后设备目录回空、可重新部署。</p>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>新项目交付或交付前演练验收，需要一份覆盖组织/上线/SSID/安全/运维的 checklist → 本 skill。</li>
+<li>项目下线、换设备、重配网络前要清空云管配置 → 本 skill 清理流程（别去找"一键恢复"，没有）。</li>
+<li>单点深入：SSID 高级选项 → stellar-ssid-advanced；Mesh → stellar-bridge-mesh；阈值业务含义 → stellar-monitoring-ops；上线后故障 → stellar-troubleshooting-cli。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<p>交付（照 A1 七段主线逐项打勾）：
+1. 复位设备，ping 验证到 DHCP/外网连通。
+2. 建组织层级与站点（含预留），导入楼层平面图。
+3. 设备逐台录序列号上线，确认到 OV Managed；非云管型号手工配并记录。
+4. 配 VLAN/IP，按设计建差异化 SSID（认证/频段/VLAN/调度/限速逐项对表），映射 AP 组。
+5. 配 RF Profile（Band Steering、Load Balance、门限）并验证关联。
+6. 配 WIPS 分类规则、黑名单、访客隔离、关闭 AP 管理面。
+7. 立 Golden Config、备份计划、变量化 VLAN 模板、标签、周报、场景化阈值。
+8. 按需改造 Mesh，全量回归验证。</p>
+<p>清理（逆向，每步确认删除成功再走下一步）：
+1. 删运行任务（升级计划/备份/排障命令）→ 2. 重置 WIPS → 3. AP 回 default device group、AP 组回 Default Provisioning → 4. 删自定义 AP 组/Provisioning/RF Profile（报错先把引用改回 Default）→ 5. 删 SSID → 6. 删策略/角色/门户 → 7. 删账号/注册 Profile/公司资产 → 8. 取消 Golden Config → 9. 删报表/支持信息 → 10. 重置分析阈值 → 11. 删站点（连带楼栋楼层）→ 12. 确认设备目录为空 → 13. 删 CLI 模板与值映射。</p>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li>云管没有一键恢复默认；删除全部要手工逆向，漏一步就留下孤儿配置。</li>
+<li>删除有依赖顺序：AP 组挂着自定义 Provisioning 删不掉；Provisioning 引用自定义 RF Profile 也删不掉——先改回 Default 再删（逆着创建顺序操作）。</li>
+<li>误删组织（MSP Portal 上对 Organization 点 Delete）不可恢复，连带站点、设备与全部配置。</li>
+<li>复位脚本运行中交换机重启阶段不能按任何键，否则掉进 Miniboot 且重启中断。</li>
+<li>实验环境边界：核心 OS-6900、汇聚 OS-6870 预置配置与 DHCP/NAT 服务器不得改删（改删断云管连通）；树莓派有线网卡绝不能动（远程桌面走有线）。</li>
+<li>OS-2360 这类不能上云管的交换机只能手工配置，checklist 里别指望云管纳管它。</li>
+</ul>
+<hr />
+<p>来源条目: f08, f10, c01, c02, c09, c10, ce01, ce02, ce03, ce04, ce13, g32, g33, g34, g36, g37, g38, g39, g40, g56, g57, g58</p></main></div></body></html>

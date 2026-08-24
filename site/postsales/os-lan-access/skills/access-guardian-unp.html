@@ -1,0 +1,106 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>access-guardian-unp — DT00XTE215 · OmniSwitch LAN Access Switching</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE215 · OmniSwitch LAN Access Switching</h1>
+<div class="sub">Edition 19 · 500 页 · 接入层基础全科（三目录模型/VC/VLAN/LACP/STP/DHL/QoS/AG）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">管理面</div>
+<a href="skills/aos-config-management.html">aos-config-management</a>
+<a href="skills/switch-management-access.html">switch-management-access</a>
+<div class="grp">转发面</div>
+<a href="skills/virtual-chassis-deployment.html">virtual-chassis-deployment</a>
+<a href="skills/vlan-link-redundancy.html">vlan-link-redundancy</a>
+<div class="grp">策略面</div>
+<a href="skills/ip-services-basic.html">ip-services-basic</a>
+<a href="skills/qos-acl-policy.html">qos-acl-policy</a>
+<a href="skills/access-guardian-unp.html" class="on">access-guardian-unp</a>
+<div class="grp">运维</div>
+<a href="skills/poe-ops-diagnostics.html">poe-ops-diagnostics</a></aside><main><h1>access-guardian-unp</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="unp-access-guardian-lldp">接入安全与准入：UNP / Access Guardian / LLDP</h1>
+<h2 id="r">R · 原文引用</h2>
+<p>"-&gt; aaa radius-server my_radius host 192.168.100.102 key alcatel-lucent / -&gt; aaa authentication 802.1x my_radius / -&gt; unp profile corporate / -&gt; unp profile corporate map vlan 20 / -&gt; unp port 1/1/1 port-type bridge / -&gt; unp port 1/1/1 default-profile def_unp"（p389）</p>
+<p>"UNP Port classification rules: 1. Port/Linkagg 2. Domain 3. MAC address 4. MAC-OUI 5. MAC address range 6. LLDP 7. Auth-type 8. IP address 9. VLAN tag. Precedence: Extended rule &gt; Binding Rule &gt; Simple Rule"（p129-132）</p>
+<p>"IEEE 802.1AB - Link Layer Discovery Protocol (LLDP) / L2 discovery protocol / Enabled by default on the OmniSwitches. LLDP is configured at port level (or NI or chassis), but not at linkagg level."（p409/423）</p>
+<h2 id="i">I · 方法论骨架</h2>
+<ul>
+<li><strong>UNP（User Network Profile）</strong>：一个 profile 聚合 VLAN 映射 + QoS/ACL 策略列表 + 位置/时段策略；由分类规则或 RADIUS Filter-Id 命中后套到端口上的用户。分类规则 9 级次序匹配（Port/Linkagg 最先、VLAN tag 最后），组合优先级 Extended &gt; Binding &gt; Simple。</li>
+<li><strong>Access Guardian</strong> = UNP + 802.1X/MAC 认证：端口自动识别 supplicant（802.1X）与非 supplicant（MAC），RADIUS 以 Filter-Id 返回 profile 名自动套用；服务器不可达走 auth-server-down profile。</li>
+<li><strong>LLDP</strong>（802.1AB）默认收发双开，TLV 交换邻居信息；LLDP-MED 面向话机（Network Policy TLV 下发 VLAN+L2 优先级+DSCP）。配置层级只有端口/槽位/整机。</li>
+</ul>
+<h2 id="a1-lab">A1 · 书中案例（Lab 配置精要）</h2>
+<ul>
+<li><strong>Access Guardian 完整流（p397-406）</strong>：<code>aaa radius-server my_radius host 192.168.100.102 key alcatel-lucent</code> + <code>aaa device-authentication 802.1x my_radius</code> + <code>aaa accounting mac my_radius</code>；ACL 规则装 <code>policy list deny_employees type unp enable</code>；<code>unp profile UNP-employee qos-policy-list deny_employees</code> + <code>map vlan 20</code>（contractor→vlan 30）；端口 <code>unp port 1/1/1 802.1x-authentication</code> + <code>mac-authentication</code>。客户端启 PEAP-MSCHAPv2 后 <code>unp user flush port 1/1/1</code> 重认证：employee 进 VLAN20+角色、contractor 进 VLAN30；RADIUS 无条目则 Status=Block。<code>aaa test-radius-server my_radius type authentication user …</code> 独立验证服务器。</li>
+<li><strong>动态 VLAN（p133/p144-157）</strong>：<code>unp profile employee</code> + <code>map vlan 40</code> → <code>unp classification mac-address 00:50:56:90:ee:0a profile1 employee</code> → <code>unp port 2/1/1 port-type bridge</code> → <code>unp user flush port 2/1/1</code> → show unp user 见端口自动进 VLAN 40（unpUntag）。</li>
+<li><strong>LLDP（p422-426）</strong>：<code>lldp port 1/1/3 notification enable</code> + <code>tlv management port-description enable</code>；chassis 级开 system-name/system-description/management-address；show lldp remote-system 对比开 TLV 前后（System Name 从 (null) 变 Pod20sw7）。</li>
+</ul>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>端到端口按人/设备身份动态分 VLAN、上准入认证、邻居发现/话机策略下发——本 skill。</li>
+<li>静态划 VLAN/trunk（不按身份）→ vlan-link-redundancy。</li>
+<li>认证后的 ACL/QoS 规则本体语法 → qos-acl-policy（本 skill 管"挂到 profile"这层）。</li>
+<li>管理员登录交换机的 AAA（ASA）→ switch-management-access。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<p>动态 VLAN（免认证）：
+1. 建 VLAN（vlan 20）。
+2. <code>unp profile &lt;名&gt;</code> → <code>unp profile &lt;名&gt; map vlan 20</code>。
+3. 兜底：<code>unp profile def_unp</code> + map vlan 10。
+4. <code>unp classification-rule &lt;规则&gt; mac-address-range &lt;起&gt; &lt;止&gt;</code>（或 MAC/OUI/IP/LLDP 等）+ <code>… profile1 &lt;名&gt;</code>。
+5. <code>unp port &lt;口&gt; port-type bridge</code> + <code>unp port &lt;口&gt; default-profile def_unp</code>。
+6. <code>unp user flush port &lt;口&gt;</code> → <code>show unp user</code> 验证。
+Access Guardian：
+1. 声明 RADIUS：aaa radius-server …；挂认证：aaa authentication 802.1x / aaa device-authentication 802.1x、aaa accounting mac。
+2. 建 VLAN + UNP profile（map vlan、可挂 qos-policy-list/location-policy）。
+3. 端口 port-type bridge + 802.1x-authentication / mac-authentication + default-profile（兜底）。
+4. 可选 port-template 批量下发认证参数与 pass-alternate profile。
+5. 验证：aaa test-radius-server → unp user flush → show unp user [status|details]。
+LLDP：
+1. <code>lldp port &lt;口&gt; notification enable</code>；按需开管理 TLV（system-name/management-address 等，chassis 级）。
+2. <code>show lldp remote-system</code> / <code>show lldp statistics</code> 验证。</p>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li><strong>LLDP 不能配在 linkagg 级</strong>：只能端口/槽位/整机，聚合口要逐成员口配。</li>
+<li>分类规则组合优先级固定（Extended &gt; Binding &gt; Simple），规则次序 Port 最先、VLAN tag 最后——诊断"为什么命中了别的 profile"按此链查。</li>
+<li>RADIUS 无 MAC 条目时用户直接 Block，不是超时重试；先 aaa test-radius-server 定位。</li>
+<li>认证关闭或失败时 UNP 分类规则直接作用于端口流量（default-profile 兜底别忘配，否则端口行为漂移）。</li>
+<li>Mobile Tag：普通 802.1Q 只能配固定端口，mobile 口收 tagged 流需 UNP profile mobile-tag。</li>
+<li>unp user flush 是重分类/重认证的触发器，改完规则不 flush 看不到变化。</li>
+</ul>
+<hr />
+<p>来源条目: f07, f13, p21, p40, c14, c15, ce14, g18, g19, g21, g36</p></main></div></body></html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ap-ops-upgrade-mesh — AWOS 5.0.3 · Stellar AP 用户手册</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>AWOS 5.0.3 · Stellar AP 用户手册</h1>
+<div class="sub">128 页 · AP 本地管理配置手册（Express 模式 GUI 全参考）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">开局</div>
+<a href="skills/cluster-bootstrap-pvm.html">cluster-bootstrap-pvm</a>
+<div class="grp">业务</div>
+<a href="skills/ssid-radio-tuning.html">ssid-radio-tuning</a>
+<div class="grp">安全</div>
+<a href="skills/wlan-security-enterprise.html">wlan-security-enterprise</a>
+<div class="grp">运维</div>
+<a href="skills/ap-ops-upgrade-mesh.html" class="on">ap-ops-upgrade-mesh</a></aside><main><h1>ap-ops-upgrade-mesh</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="mesh">运维、扩组与 MESH 部署</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>All configuration settings (clear, backup or restore) will be applied to the entire group. There is no need to select specific APs to apply configuration settings. The entire group of APs have one configuration file. (p78)</p>
+<p>To replace the current PVM: Upgrade the SVM to the PVM before disconnecting the old PVM. ... Method two: Setup up different group IDs ... Method three: Deploy Stellar AP with ALE OmniVista and scale up to 4000 AP in one network. (p86)</p>
+<p>By default, Stellar AP with factory configuration powered up without wired uplink will try to establish MESH link automatically with build-in configuration (MESH SSID [Stellar-MESH] and password on 2.4G band). The out-of-box will be permanently disabled once the AP ever connected to wired uplink. (p103)</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<p>运维三原则：<strong>整组一份配置 → 变更前备份 → 变更按操作顺序</strong>。</p>
+<ol>
+<li>任何 clear/backup/restore 均整组生效，无需选 AP；配完即导出备份。</li>
+<li>换 PVM 必须先升 SVM 再拆旧机；扩组三法按规模选（子网划分 / 不同 group ID / OmniVista 4000 台）。</li>
+<li>Mesh/桥接是硬件延伸：开箱 Mesh 免配置但有不可逆条件；桥接有机型红线。</li>
+</ol>
+<h2 id="a1">A1 · 书中案例</h2>
+<ul>
+<li>超 255 台的单网：改用 OmniVista 管理，单网可扩到 4000 台 AP。</li>
+<li>楼宇间互联：Wireless Bridge 替代专线/光纤——但只能选支持 VLAN 标签桥接的中高端机型。</li>
+<li>故障取证：PMD（Post Mortem Dump）在 AP 关键进程崩溃时把 core dump 自动发 TFTP 服务器（默认发送关闭，需先启用配置）。</li>
+</ul>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>触发：上线后固化配置基线；版本升级窗口；替换故障 AP；规模超单组上限；无布线区域做 Mesh 覆盖；崩溃取证。</li>
+<li>区分：开局向导与 PVM 选举规则 → <code><a href="cluster-bootstrap-pvm.html">cluster-bootstrap-pvm</a></code>（本文只讲"换 PVM 的操作顺序"）；射频/Portal 日常调参 → <code><a href="ssid-radio-tuning.html">ssid-radio-tuning</a></code>；转 OV 管理的加密与账户 → <code><a href="wlan-security-enterprise.html">wlan-security-enterprise</a></code>。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>备份基线：完成全部配置后立即在 Web UI 导出整组配置文件（单台 AP 固件升级约 5 分钟，留足窗口）。</li>
+<li>升级流程：整组升级 → 完成后清浏览器 Cookies 与 Cache（官方强烈建议，否则旧资源导致界面异常）。</li>
+<li>日志与时间：组内 AP 每 15 分钟 NTP 同步；Syslog 默认级别 Notice（0-7，含更低级别）；单 AP 本地日志 1MB FIFO 滚动。SNMPv3 认证固定 sha、加密固定 aes128。</li>
+<li>换 PVM：先把 SVM 升级为 PVM（AP Window "Update to PVM"）再断开旧 PVM；换 SVM/成员可直接换，不影响其他 AP 用户。新增 AP 前确保 PVM 不处于 Down 状态。</li>
+<li>扩组三法：a) 按交换机端口默认 VLAN 划不同子网；b) 每组配不同 group ID；c) 转 OmniVista 管理扩到 4000 台。转 OV On-Premise 可用 DHCP Option 138/43 自动下发 OV 服务器地址，转换后 AP 会重启注册（留变更窗口）。</li>
+<li>Out-of-box MESH：新 AP 不接有线直接上电 → 自动用内置 SSID "Stellar-MESH"（2.4G）建链，管理员只需指定根节点。Mesh 链路根到叶必须同频段；组播速率默认 24 Mbps。</li>
+<li>Wireless Bridge：按需部署点对点网桥；桥接 AP 不服务无线客户端（与 MESH 不同）。</li>
+<li>崩溃取证：预先启用 PMD 并指定 TFTP 服务器。</li>
+<li>扫描数据采集：需要 RF Environment 数据时让 AP 进扫描模式——One Time（5 分钟自动恢复）或 Always（拒绝接入）。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li><strong>Out-of-box MESH 不可逆</strong>：AP 一旦接过有线 uplink 即永久禁用，只有恢复出厂才能找回。Regular MESH 需逐台登录 AP UI 手工配置。</li>
+<li><strong>低端机型桥接红线</strong>：AP1201/AP1201L/AP1201H/AP1201HL 不支持带 VLAN 标签的桥接报文，不做无线网桥；确需用联系 ALE 支持。</li>
+<li><strong>组间不漫游</strong>：无 OmniVista 时各 AP 组独立管理、组间不漫游——多组方案要放在漫游边界清晰的位置。</li>
+<li><strong>升级后浏览器缓存</strong>：界面异常先清 Cookies/Cache 再报障。</li>
+<li><strong>扫描模式服务中断机型差异</strong>：无扫描射频机型全客户端掉线；AP1451 仅 6GHz 中断。</li>
+<li>组内 "Contact to Cloud"（联系 OmniVista Cirrus）默认启用；AWOS 4.0.0 及之前版本的 AP 默认不允许入组（MQTT 兼容开关控制）。</li>
+</ul>
+<hr />
+<p>来源条目: p09, p20, p21, p22, p24, ce10, ce11, ce13, g31, g32, g33, g34</p></main></div></body></html>

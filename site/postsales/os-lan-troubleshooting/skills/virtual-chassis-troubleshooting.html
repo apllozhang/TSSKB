@@ -1,0 +1,100 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>virtual-chassis-troubleshooting — DT00XTE221 · OmniSwitch LAN Troubleshooting</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE221 · OmniSwitch LAN Troubleshooting</h1>
+<div class="sub">587 页 · 有线排障全科（方法论/启动/系统/L2/VC/STP/L3/组播/OVNA）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">方法论与系统</div>
+<a href="skills/lan-troubleshooting-methodology.html">lan-troubleshooting-methodology</a>
+<a href="skills/boot-system-troubleshooting.html">boot-system-troubleshooting</a>
+<div class="grp">故障域</div>
+<a href="skills/l2-connectivity-troubleshooting.html">l2-connectivity-troubleshooting</a>
+<a href="skills/stp-loop-troubleshooting.html">stp-loop-troubleshooting</a>
+<a href="skills/virtual-chassis-troubleshooting.html" class="on">virtual-chassis-troubleshooting</a>
+<a href="skills/l3-routing-vrrp-troubleshooting.html">l3-routing-vrrp-troubleshooting</a>
+<a href="skills/multicast-troubleshooting.html">multicast-troubleshooting</a>
+<div class="grp">工具与 AI 运维</div>
+<a href="skills/app-logging-qos-troubleshooting.html">app-logging-qos-troubleshooting</a>
+<a href="skills/ovna-deployment-teams-bot.html">ovna-deployment-teams-bot</a></aside><main><h1>virtual-chassis-troubleshooting</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="virtual-chassis">Virtual Chassis（虚拟机箱）排障</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>"-&gt; show virtual-chassis topology ... -&gt; show virtual-chassis consistency ... -&gt; cat vcsetup.cfg ... -&gt; debug show virtual-chassis status" (p162)</p>
+<p>"Upon boot-up, a switch will read its local vcsetup.cfg file and attempt to connect to the other neighbor switches ... they will discover the topology, elect a Master ... All Slaves, if they do not have a local copy of vcboot.cfg, or if their local copy does not match ... will download the vcboot.cfg from the Master chassis and reboot" (p161)</p>
+<p>"NOK_08: There are no virtual-fabric member ports configured on this switch ... NOK_17: The virtual-chassis manager protocol did not discover any peer switch within the discovery time window (i.e. 4 minutes)" (p195)</p>
+<p>"WARNING - Virtual chassis topology change detected. Chassis 2 missing! Configuration associated with missing chassis will be erased permanently! Confirm to continue (Y/N)" (p197)</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<ol>
+<li><strong>四层递进排障</strong>（f09）：① show virtual-chassis topology（角色/运行状态/Chassis ID/Priority/Group）→ ② show virtual-chassis consistency（核带星号必一致项：Chassis Type、Chas ID、Group、Hello Interval、Control Vlan、License）→ ③ 逐台 cat vcsetup.cfg 比对（chassis-id、vf-link-mode、member-port、chassis-group、EMP 地址）→ ④ debug show virtual-chassis status 按 L0-L8 层级定位失败层，对照 NOK 码。辅助：show virtual-chassis vf-link、debug show virtual-chassis connection、/flash 下 vcsetup.cfg.*.err 错误文件（含解析失败的行号与原因）。</li>
+<li><strong>启动与同步机制</strong>（p18）：开机读本地 vcsetup.cfg → VFL 连邻居 → 交换参数、发现拓扑、选举 Master → slave 的 vcboot.cfg 缺失或不一致时从 Master 下载并以它重启。Auto-VC：出厂新机无 vcsetup.cfg 时对 auto VFL 端口自动检测、自动分 VFL ID/chassis-id 并建组。</li>
+<li><strong>NOK 码速查</strong>（p19）：NOK_08=没配 VFL 成员口；NOK_09=成员口没 operationally up；NOK_14=配置的 VFL 链路未全部 up（必须全 up 才 OK）；NOK_17=4 分钟发现窗口内没发现对等体（无对端/VFL 不通/VCM 协议包不通）。</li>
+<li><strong>脑裂防护</strong>（g13）：VFL 双断导致重复 MAC/IP 两套 Master。RCD（带外，经 EMP 口）与 VCSP（带内，需 helper 交换机）检测分裂；检测到后非 Master 侧自动进 Protection 模式关闭所有用户口。堆叠平台对应 SSP。EMP 管理口双重价值：带外访问 + RCD 承载（g12）。</li>
+<li><strong>背景参数</strong>（g10/g11/g14）：规模上限按机型（8×OS6560、4×OS6360、6×OS6900、2×OS9900）；Master 选举：最高优先级 → 最长 uptime（差&gt;10 分钟）→ 最小 chassis ID → 最小 MAC；VFL 内部以 LACP 聚合，速率不可混用；ISSU 按 Chassis ID 顺序逐台升级后 Master takeover。</li>
+</ol>
+<h2 id="a1-lab">A1 · 书中案例（LAB 故障根因）</h2>
+<ul>
+<li><strong>c03（LAB2 案例1，p191-198）</strong>：6360 两台组 VC 不工作。show virtual-chassis topology 各自成 Master 单机；debug status 报 NOK_08/09/14/17 链；cat vcsetup.cfg.1.err 给出确切原因——A 台 "vf-link-mode static" 在 stackport 平台不支持；B 台同样的 static 错误外加 member-port 3/1/27 与本机 chassis-id 2 不一致（应为 2/1/27）。修复：A 台改 <code>virtual-chassis vf-link-mode auto</code> → write memory（chassis 2 missing 警告确认）→ B 台重写 vcsetup.cfg（auto + auto-vf-link-port 2/1/27、2/1/28）→ reload from working no rollback-timeout → 验证 1=Master/2=Slave Running。</li>
+</ul>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>触发：VC 建不起来、成员机箱掉线、VFL 口不 up、debug status 出 NOK 码、vcsetup.cfg 报错、ISSU/升级后 VC 异常、疑似脑裂。</li>
+<li>区分：单业务口 down → l2-connectivity；整机模块 DOWN/微码问题 → boot-system；VC 内链路聚合成员口 down 的日志因果链见 ovna skill 的 c12。VC 故障常表现为"多台同时异常"，先 show virtual-chassis topology 判断是不是 VC 层问题。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>show virtual-chassis topology：确认每台角色与运行状态（是否各自成 Master）。</li>
+<li>show virtual-chassis consistency：核对带星号参数是否一致。</li>
+<li>逐台 <code>cat /flash/working/vcsetup.cfg</code> 比对关键行；检查 /flash 下是否有 vcsetup.cfg.*.err 文件——有则直接按文件中的 ERROR 行定位。</li>
+<li><code>debug show virtual-chassis status</code> 按 L0-L8 看哪层 NOK，对照 NOK 码表：NOK_08 查 <code>show virtual-chassis vf-link member-port | grep "&lt;chassis-id&gt;/"</code>；NOK_09 加查 show interfaces port；NOK_17 查对端是否存在与 VFL 连通性。</li>
+<li>修复 vcsetup.cfg：用 CLI 生成或严格按模板；member-port 必须以本机 chassis-id 开头；改完 cat 复核再 reload from working。</li>
+<li>怀疑脑裂：查 EMP 上 RCD 通告 / VCSP helper 配置；Protection 模式的子 VC 用户口全关是设计行为，先恢复 VFL 再恢复业务。</li>
+<li>变更后 write memory 遇 "Chassis N missing ... erased permanently" 警告：停下确认拓扑变化是否预期再 Y。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li><strong>ce07</strong>：stackport 平台（6360 等）不支持 vf-link-mode static，配置直接解析报错；必须 auto + auto-vf-link-port。</li>
+<li><strong>ce08</strong>：VFL member-port 第一段必须等于本机 chassis-id——从其他配置复制粘贴后忘改编号是典型错。</li>
+<li><strong>ce06</strong>：手工编辑 vcsetup.cfg 越界会进 error mode，前面板所有用户口（含 VFL 成员口）保持 disabled，表现为整机瘫；文件内 [SAVED INFO] 区绝对不动。</li>
+<li><strong>ce18</strong>：VC 变更/半拆状态 write memory 弹 chassis missing 警告随手确认 Y → 缺失机箱配置被永久删除。</li>
+<li>VFL 链路速率不可混用（p515）；多条 VFL 链路必须全部 up 才报 OK（NOK_14 判读）。</li>
+<li>无 EMP 机型组 VC 需指定管理 VLAN+IP 接口替代 EMP 做 RCD（p534）。</li>
+</ul>
+<hr />
+<p>来源条目: f09, p18, p19, ce06, ce07, ce08, ce18, g09, g10, g11, g12, g13, g14, c03</p></main></div></body></html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>roaming-l2-l3 — DT00XTE368 · Stellar WLAN Enterprise Basic</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE368 · Stellar WLAN Enterprise Basic</h1>
+<div class="sub">Edition 14 · 515 页 · 无线理论 + OV2500 企业模式实操二合一</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">理论与勘测</div>
+<a href="skills/wlan-theory-fundamentals.html">wlan-theory-fundamentals</a>
+<a href="skills/site-survey-ekahau.html">site-survey-ekahau</a>
+<div class="grp">开局与业务</div>
+<a href="skills/enterprise-mode-onboarding.html">enterprise-mode-onboarding</a>
+<a href="skills/employee-ssid-8021x.html">employee-ssid-8021x</a>
+<a href="skills/upam-guest-access.html">upam-guest-access</a>
+<div class="grp">漫游与远程</div>
+<a href="skills/roaming-l2-l3.html" class="on">roaming-l2-l3</a>
+<a href="skills/rap-remote-deployment.html">rap-remote-deployment</a></aside><main><h1>roaming-l2-l3</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="l2">L2 移动性与漫游</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>"Client context exists on the new AP? No: No Roaming, new client. Yes: WLAN service and Access Role Profile exist in the Client Context on the new AP? No: No Roaming. Yes: Client Context VLAN ID = VLAN ID mapped to the Access Role Profile on the new AP? Yes: L2 Roaming; No: L3 Roaming." (p412)</p>
+<p>"L2 Roaming always enabled. L3 Roaming disabled by default... OKC can be enabled with WPA2/WPA3 Enterprise only. 802.11r (Fast Roaming) can be enabled with WPA2/WPA3 encryption only." (p407/414)</p>
+<p>"Recommended value for 2.4GHz: RSSI = 10. Recommended value for 5GHz: RSSI = 15... If the RSSI threshold is too low, the client remains on a low signal strength site. If too high, the client roams too much that could result to packet loss." (p424)</p>
+<p>"In some cases, Stellar APs are geographical neighbors but can't see each other (i.e: radio waves blocked by corridor with right angles...). The client context can't be shared. No roaming. Solution: On both AP, add statically the neighbor Stellar AP." (p423)</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<ol>
+<li><strong>漫游判定树</strong>：新 AP 有 Client Context 且含对应 WLAN Service/Access Role → VLAN 一致走 L2（默认开），不一致走 L3（默认关，GRE 隧道）；上下文缺失=按新客户端重新接入。</li>
+<li><strong>Client Context 是原材料</strong>：SSID/VLAN/角色/策略 + 快速漫游密钥缓存（PMKSA、FT R0/R1）随 Add/Del 消息在 AP 间共享。</li>
+<li><strong>漫游设计四查</strong>：模式（VLAN 定 L2/L3）→ 覆盖（Heat Map 按频段核重叠）→ 邻居（互不可见则配静态 Neighbor AP）→ 粘性终端（RSSI 阈值 + 802.11k/11v）。</li>
+<li><strong>快速漫游约束</strong>：OKC 仅 WPA2/WPA3 Enterprise；802.11r 需 WPA2/WPA3 加密（Personal/Enterprise 均可）；开错组合直接配不上。</li>
+</ol>
+<h2 id="a1-lab">A1 · 书中案例（Lab 精要）</h2>
+<p>教材配"走到直角走廊必掉线"案例：两台 AP 地理相邻但电波互不可见，客户端上下文无法共享、漫游不发生——在两台 AP 上互配静态 Neighbor AP 后上下文改走 LAN 共享，漫游恢复。背景扫描冲突案例：漫游到正在做背景扫描的 AP 时实时业务被打断（语音除外，AP 语音感知会暂停扫描），解法为关背景扫描或加装专用扫描 AP。</p>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>"移动中掉线""固定区域必断""终端粘弱信号 AP""频繁切换丢包"——用本 skill。</li>
+<li>覆盖本身有空洞（不走动也差）——先回 site-survey-ekahau 三步法；L3 漫游/隧道涉及分支回传——与 rap-remote-deployment 的 GRE 条目区分（L3 漫游隧道在 home/foreign AP 之间，RAP 隧道在 AP 与总部 VPN Server 之间）。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>确认漫游模式：按 home/foreign AP 的 VLAN 映射选 L2（默认）或 L3（Advanced WLAN Service 开启）。</li>
+<li>核安全级别与快速漫游组合：Enterprise SSID 开 OKC；WPA2/WPA3 加密 SSID 可开 802.11r（按 SSID）。</li>
+<li>用 OV2500 Heat Map 按 2.4/5/6 GHz 分别确认 AP 间信号重叠——无重叠无漫游。</li>
+<li>怀疑互不可见：两台 AP 上互配静态 Neighbor AP（两边都要配）。</li>
+<li>治理粘性终端：RF Profile 设 Roaming RSSI Threshold（起点 2.4G=10、5G=15，范围 0-100），配合 802.11k/11v 引导。</li>
+<li>高实时业务网络设计期决策：关背景扫描或部署专用扫描 AP。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li>RSSI 阈值双向失败：太低=粘弱信号不切换；太高=频繁切换丢包。症状对号："信号差不断线"查偏低，"频繁掉线"查偏高。</li>
+<li>漫游决定权在终端，网络侧只能引导（11k/11v + 阈值）。</li>
+<li>L3 漫游默认关闭，忘了开会出现跨 VLAN 移动按新客户端处理（IP 变、会话断）。</li>
+<li>Express 模式漫游仅限同集群内 L2。</li>
+<li>背景扫描只对语音豁免，视频会议/流媒体会被打断。</li>
+</ul>
+<hr />
+<p>来源条目: f13, f14, p31, p32, ce11, ce12, ce13, g39, g40, g41</p></main></div></body></html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>campus-reference-architectures — DT00XPS281 · Campus LAN 售前</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XPS281 · Campus LAN 售前</h1>
+<div class="sub">Edition 29 · 480 页 · 园区网售前全科（特性→网管→选型→License→产品组合）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">设计与高可用</div>
+<a href="skills/campus-design-tiering-and-ha.html">campus-design-tiering-and-ha</a>
+<a href="skills/virtual-chassis-design.html">virtual-chassis-design</a>
+<a href="skills/dhl-erp-ring-protection.html">dhl-erp-ring-protection</a>
+<div class="grp">机型与架构</div>
+<a href="skills/omniswitch-model-selection.html">omniswitch-model-selection</a>
+<a href="skills/campus-reference-architectures.html" class="on">campus-reference-architectures</a>
+<div class="grp">织物与自动化</div>
+<a href="skills/spb-vxlan-core-fabric.html">spb-vxlan-core-fabric</a>
+<a href="skills/ifab-zero-touch-automation.html">ifab-zero-touch-automation</a>
+<div class="grp">网管与商务</div>
+<a href="skills/nms-platform-and-network-advisor.html">nms-platform-and-network-advisor</a>
+<a href="skills/license-wwpl-pricing.html">license-wwpl-pricing</a>
+<div class="grp">安全与垂直</div>
+<a href="skills/security-unified-access.html">security-unified-access</a>
+<a href="skills/video-surveillance-design.html">video-surveillance-design</a></aside><main><h1>campus-reference-architectures</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="_1">园区参考架构模板库（含垂直行业案例）</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>"OMNISWITCH COMPACT CORE NETWORK — Network virtualized using Virtual Chassis (VC) for simplified two-layer architecture; Fully redundant and resilient; UNP for NAC security and QoS; Server farm dual home connected directly to network core with LAG" (p314)</p>
+<p>"OMNISWITCH 10/40 GIGE DISTRIBUTED RING NETWORK — Network virtualized using ERPv2; Simplified two-layer architecture; Dual Home Link (DHL) at the access; 10 GigE links from the network core to Server farm" (p316)</p>
+<p>"SMB solution — Short installation and set-up time with zero-touch configuration … Fully integrated and lab tested, single vendor, plug and play solution (IP Network + Wi-Fi + Voice + Mobility)" (p305)</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<p>四大园区模板 + 垂直案例，按判定信号选模板再改端口出 BOM：</p>
+<table>
+<thead>
+<tr>
+<th>模板</th>
+<th>判定信号</th>
+<th>核心</th>
+<th>接入</th>
+<th>变体</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SMB 一体化（f07/c05/c06）</td>
+<td>20-100 用户、无 IT</td>
+<td>6360/6560 + Stellar AP + OmniPCX</td>
+<td>6360-P10/P24/P48</td>
+<td>OXO Purple 20 分钟零接触装机</td>
+</tr>
+<tr>
+<td>紧凑核心（f08/c11）</td>
+<td>单楼宇/紧凑园区、要冗余少管理点</td>
+<td>6870 或 6860N 组 VC（10/25G）</td>
+<td>6560/E PoE+</td>
+<td>高配：核心 6900 + 6860N/6870 接入</td>
+</tr>
+<tr>
+<td>分布式环网（f09/c12）</td>
+<td>多楼宇、光纤成环、双路星型贵</td>
+<td>6900（ERPv2 环 10/40G）</td>
+<td>6870/6860N/6560E/6360 + DHL</td>
+<td>服务器 10G 直挂核心</td>
+</tr>
+<tr>
+<td>密集核心（f10/c13）</td>
+<td>用户高度集中于个别楼宇、超大网</td>
+<td>9900（10/40/100G）</td>
+<td>6860N 多千兆 PoE+</td>
+<td>低配：6900 核心 + 6870 汇聚</td>
+</tr>
+<tr>
+<td>多千兆无线边缘（c08/c09）</td>
+<td>Wi-Fi 6/6E/7 AP 空口 &gt;1G</td>
+<td>6900，4×25G LACP</td>
+<td>6560E-P24Z8/P24Z24/E-P48Z16 或 8×6860N VC（384 千兆/192 多千兆口、95W）</td>
+<td>CAT5e/6 布线即可</td>
+</tr>
+<tr>
+<td>双核心两层/三层（c10）</td>
+<td>中大型政企、最大冗余</td>
+<td>9900 双核心（或 6900 SPB-M 核心+BEB）</td>
+<td>6360/6465/6560E/6860N/6870</td>
+<td>10G LAG / DHL</td>
+</tr>
+</tbody>
+</table>
+<p>垂直行业案例：城域商业管理服务（c01：10G 环 6860N 汇聚 + 6465-P28 双归 IP/MPLS，opt82/ARP 检查/802.1ad/SPB/EVPN over I-SID 特性清单）；住宅 Triple-Play（c02：6560/E 接入 + 组播 TV VLAN）；数据中心 POD（c03：6×6900 Mesh，服务器 1/10G L2、POD 间 10/40/100G L2/L3）。</p>
+<h2 id="a1">A1 · 书中案例</h2>
+<p>见上表括注（c01-c03、c05、c06、c08、c10-c13），全部为书中 p296-319 的官方架构页，可直接改写为方案分册章节。</p>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>触发：需求清单到手要 30 分钟出架构图与机型 BOM 框架；投标技术分册要参考架构章节。</li>
+<li>区分：本 skill 是<strong>成品模板库</strong>（拿来改端口就用）；先做架构分层决策与高可用选型走 <code><a href="campus-design-tiering-and-ha.html">campus-design-tiering-and-ha</a></code>；模板里用到的 VC/ERP/SPB 机制细节分别走 <code><a href="virtual-chassis-design.html">virtual-chassis-design</a></code>、<code><a href="dhl-erp-ring-protection.html">dhl-erp-ring-protection</a></code>、<code><a href="spb-vxlan-core-fabric.html">spb-vxlan-core-fabric</a></code>；视频监控垂直方案独立在 <code><a href="video-surveillance-design.html">video-surveillance-design</a></code>。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>按判定信号选模板（楼宇分布/光纤形态/用户密度/无线需求）。</li>
+<li>数端口：按信息点数选接入机型与口数，套模板高/低配变体。</li>
+<li>核对模板附带卖点（VC 统一管理、DHL 双活、UNP 安全、零接触），写进方案亮点段。</li>
+<li>改图：替换机型型号与端口数，输出架构图 + 分层 BOM 骨架。</li>
+<li>服务器区/数据中心按模板接 LAG 双归或 POD 形态。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li>模板机型组合基于 Ed29 产品线，换代后按最新产品组合等价替换。</li>
+<li>c12 环网模板的 50ms 承诺须满足 ERP 前提条件（见 dhl-erp skill）。</li>
+<li>c01/c02 城域案例涉 Metro 特性多为许可制，BOM 补许可行（见 license skill）。</li>
+<li>模板不回答"为什么选这个架构"——答辩前先过分层设计法的决策依据。</li>
+</ul>
+<hr />
+<p>来源条目: f07, f08, f09, f10, c01, c02, c03, c05, c06, c08, c10, c11, c12, c13, g03</p></main></div></body></html>

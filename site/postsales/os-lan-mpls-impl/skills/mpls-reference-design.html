@@ -1,0 +1,105 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>mpls-reference-design — DT00XTE324 · OmniSwitch LAN MPLS 实施</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE324 · OmniSwitch LAN MPLS 实施</h1>
+<div class="sub">Edition 02 · 153 页 · MPLS/VPLS 实施精要（三 Lab CLI + 参考设计 + 能力边界）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">部署与信令</div>
+<a href="skills/aos-mpls-deploy-license.html">aos-mpls-deploy-license</a>
+<a href="skills/vpls-signaling-ldp-vs-bgp.html">vpls-signaling-ldp-vs-bgp</a>
+<div class="grp">设计与运维</div>
+<a href="skills/mpls-reference-design.html" class="on">mpls-reference-design</a>
+<a href="skills/aos-mpls-operating-rules.html">aos-mpls-operating-rules</a>
+<a href="skills/aos-mpls-capability-limits.html">aos-mpls-capability-limits</a></aside><main><h1>mpls-reference-design</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="aos-mpls">AOS MPLS 参考设计与最佳实践（场景模板 + 配置规范 + 验证命令）</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>"Enterprise Campus Networks: A two or three-tier architecture for a small and medium campus networks is best suited. It will provide VPN services end-to-end and IP/MPLS will be implemented from the access to the core layer. / Metro Ethernet Networks (Smart City): ... IP/MPLS network can be configured at the core and distribution layers of a three-tier network architecture. At the access layer, ethernet standard switching will be configured."（p133-134）</p>
+<p>"Configure IGP (OSPF/IS-IS) as an underlay in your network / Configure a (/32) loopback interface on each switch ... / Configure the OSPF/IS-IS network type as point-to-point ... / Use routed interfaces / Use Bidirectional Forwarding Detection (BFD) for fast detection and convergence / Consider using /31 contiguous (/31) addresses for point-to-point links"（p136）</p>
+<p>"-&gt; ip interface IFtoR2 address 10.1.2.1/24 vlan 12 rtr-port port 1/1/1 tagged / -&gt; service sdp 102 vpls far-end 1.1.1.6 / -&gt; service 1 bind-sdp 102 103"（p136-138）</p>
+<p>"# Use this command to display FTN (FEC-To-NHLF) table information. -&gt; show mpls ftn-table / # Use this command to view Incoming label mapping (ILM) table entries. -&gt; show mpls ilm-table"（p139-145）</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<p>两个经验证的架构模板（f06）：
+1. 中小园区：二/三层架构，IP/MPLS 从接入层直达核心层，端到端 VPN 业务。
+2. 城域以太（智能城市等）：三层架构，MPLS 域收敛到核心+汇聚，接入层保持标准以太交换。
+定位：面向企业与城域客户的高性价比方案。</p>
+<p>最佳实践七条（p04）：OSPF/IS-IS underlay；每台 /32 loopback 宣告进 IGP；loopback 兼作 Router-ID 且全网唯一；互联链路网络类型 point-to-point；用路由接口（routed interface）；启用 BFD；P2P 链路建议 /31 地址。</p>
+<p>规范配置与 Lab 的差异：互联用 <code>rtr-port tagged</code> 路由口、BFD 全局 <code>ip bfd admin-state enable</code> + OSPF 接口 <code>bfd-state enable</code> 两级、一条 <code>bind-sdp 102 103</code> 绑多 SDP、业务配置只落在建全网状伪线的 PE/LER。</p>
+<p>验证命令族谱（p18）：包/许可 → MPLS 全局/接口 → 标签表 → LDP → 业务 → BGP → MAC，按层次下钻。</p>
+<h2 id="a1">A1 · 书中案例</h2>
+<ul>
+<li>LDP 规范样例（c05，p136-138，R1 视角）：Loopback0=1.1.1.1/32（兼 router-id），SDP 102/103 指向 1.1.1.6/1.1.1.7，<code>service 1 sap port 1/1/4:0</code>，一次绑两条 SDP。</li>
+<li>BGP 规范样例（c06，p138-139）：标准序列多了 <code>ip bgp mpls</code> 全局命令（Lab 3 中没有），其余同 Lab 3；同样只配在 R1/R6/R7。</li>
+<li>验证命令族谱（p18）：<code>show pkgmgr</code>、<code>show license-server usage</code>、<code>show mpls</code>、<code>show mpls ftn-table</code>（入向 PUSH 视角）、<code>show mpls ilm-table</code>（入标签 SWAP/POP）、<code>show mpls forwarding-table</code>、<code>show mpls vpls-mesh</code>、<code>show mpls ldp session [tx-labels/rx-labels]</code>、<code>show service [vpls|sdp|bind-sdp]</code>、<code>show ip bgp l2vpn-vpls [path]</code>（path 含 VE-ID/VBO/VBS/LabelBase）、<code>show mac-learning domain vpls</code>。</li>
+</ul>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>售前写方案书选架构模板、界定 MPLS 域边界：本 skill。</li>
+<li>交付时直接抄标准化配置（比 Lab 更规范）：本 skill 的 c05/c06 模板。</li>
+<li>运维排障需要命令清单：本 skill 的验证命令族谱。</li>
+<li>区分：从零部署的前置流程与许可归 <code><a href="aos-mpls-deploy-license.html">aos-mpls-deploy-license</a></code>；信令选型逻辑归 <code><a href="vpls-signaling-ldp-vs-bgp.html">vpls-signaling-ldp-vs-bgp</a></code>；本 skill 偏"模板与规范"，出方案/写配置基线时优先用。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>按客户类型套模板：园区→端到端 MPLS；城域→MPLS 只到核心+汇聚，接入标准交换。</li>
+<li>基线配置（每台）：</li>
+</ol>
+<pre><code>ip interface Loopback0 address 1.1.1.1/32
+ip router router-id 1.1.1.1
+ip interface IFtoR2 address 10.1.2.1/24 vlan 12 rtr-port port 1/1/1 tagged
+ip ospf interface IFtoR2 type point-to-point
+ip bfd admin-state enable
+pkgmgr install uosn-mpls-v1.deb
+mpls ldp interface IFtoR2 admin-state enable
+</code></pre>
+<ol>
+<li>VPLS 侧按信令选型叠加 c05（LDP：SDP+bind-sdp）或 c06（BGP：含 <code>ip bgp mpls</code>）模板。</li>
+<li>验证按族谱层次下钻：许可/包 → <code>show mpls</code> → 标签表 → LDP 会话 → <code>show service</code> → BGP → MAC 表。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li>教材示例互联地址实际用 /24（可读性取舍），最佳实践推荐 /31——交付按 /31，教学示例勿照抄。</li>
+<li>最佳实践的 BFD 是全局+OSPF 接口两级使能，只配一边不生效。</li>
+<li>BGP 规范样例的 <code>ip bgp mpls</code> 是参考设计独有命令，Lab 3 未出现，照抄 c06 时别漏。</li>
+<li>业务配置只落 PE/LER：P 节点（样例中 R2-R5）零 service 配置，别过度配置。</li>
+<li>能力边界（RSVP/VPWS/RR 等六项不支持）见 <code><a href="aos-mpls-capability-limits.html">aos-mpls-capability-limits</a></code>，方案书引用特性前先核对该清单。</li>
+</ul>
+<hr />
+<p>来源条目: f06, p04, p18, c05, c06</p></main></div></body></html>

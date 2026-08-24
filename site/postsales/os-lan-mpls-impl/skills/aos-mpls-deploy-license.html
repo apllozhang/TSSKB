@@ -1,0 +1,97 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>aos-mpls-deploy-license — DT00XTE324 · OmniSwitch LAN MPLS 实施</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE324 · OmniSwitch LAN MPLS 实施</h1>
+<div class="sub">Edition 02 · 153 页 · MPLS/VPLS 实施精要（三 Lab CLI + 参考设计 + 能力边界）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">部署与信令</div>
+<a href="skills/aos-mpls-deploy-license.html" class="on">aos-mpls-deploy-license</a>
+<a href="skills/vpls-signaling-ldp-vs-bgp.html">vpls-signaling-ldp-vs-bgp</a>
+<div class="grp">设计与运维</div>
+<a href="skills/mpls-reference-design.html">mpls-reference-design</a>
+<a href="skills/aos-mpls-operating-rules.html">aos-mpls-operating-rules</a>
+<a href="skills/aos-mpls-capability-limits.html">aos-mpls-capability-limits</a></aside><main><h1>aos-mpls-deploy-license</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="aos-mpls">AOS MPLS 部署流程与许可管理（十步法）</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>"Step 1: Install MPLS Package / Step 2: IP Interface Creation. / Step 3: Setup Routing for the interfaces using OSPF. / Step 4: Load LDP protocol. / Step 5: Enable MPLS/LDP on the interface / Step 6: Configure VPLS service"（p58-65）</p>
+<p>"A Loopback0 interface that will serve as the system IP address to identify the router as an MPLS router. This requirement is specific to the OmniSwitch."（p58）</p>
+<p>"IP/MPLS first supported release is 8.9R3 and supported on the OmniSwitch 6860N platform. ... MPLS is packaged into a Debian package which can be installed on the switch."（p59, p118）</p>
+<p>"MPLS will be enabled only if it receives the license status as 'permanent' or 'demo' license not yet expired. And temporarily disables the feature if the license status is invalid (no-license) or 'demo' license expire."（p92）</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<p>十步固定次序（不可乱序）：
+1. 全网安装 MPLS Debian 包：<code>pkgmgr install uosn-mpls-v1.deb</code>（包先拷到 /flash/working/pkg）
+2. 创建互联 VLAN 与 IP 接口
+3. 配 OSPF underlay，含每台交换机 Loopback0（OmniSwitch 特有：Loopback0 即系统 IP）
+4. 安装许可（SILOS 服务器 + SWLIC 客户端）
+5. <code>mpls load ldp</code> + 全局/接口两级使能 MPLS/LDP
+6. 建 VPLS 服务（7-10：SDP/bind-sdp/SAP/验证，见 vpls-signaling-ldp-vs-bgp skill）</p>
+<p>许可两类选型：
+- 站点许可（Site-based）：浮动共享，1 份覆盖最多 4 个网络节点；一个节点可以是独立交换机或最多 8 台的虚拟机箱（VC）
+- 节点许可（Node-based）：绑定单个 MPLS 节点，不绑硬件序列号/MAC</p>
+<p>版本准入：首版支持 AOS 8.9R3，平台仅 OmniSwitch 6860N。</p>
+<h2 id="a1">A1 · 书中案例</h2>
+<p>Lab 1（p83-96）：四台 OS6860 环形骨干。互联 VLAN 70/79/80/89/90（mtu-ip 4094），每台 Loopback0=192.168.254.{7-10}；OSPF area 0.0.0.0 接口 type point-to-point；SILOS 许可服务器 listen-port 8883，各交换机 <code>license client site-id Master server-ip ...</code>；<code>mpls load ldp</code> 后逐接口 <code>mpls ldp interface "int_79" admin-state enable</code>。初始四台 show license-server info 均 NO LICENSE，接入 SILOS 后拿到 15/23 天 DEMO 许可。</p>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>新项目在 OmniSwitch 上开 MPLS：本 skill 给出前置与顺序骨架。</li>
+<li>已部署网络 MPLS 突发全网失效：先查许可（ce01 路径），再查配置。</li>
+<li>区分：骨干就绪后叠加 VPLS 服务的 CLI 细节归 <code><a href="vpls-signaling-ldp-vs-bgp.html">vpls-signaling-ldp-vs-bgp</a></code>；标准化项目模板归 <code><a href="mpls-reference-design.html">mpls-reference-design</a></code>；LDP 行为规则解读归 <code><a href="aos-mpls-operating-rules.html">aos-mpls-operating-rules</a></code>。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>软硬件准入核对：AOS ≥ 8.9R3、平台 OS6860N（p118）</li>
+<li>规划 loopback 段（如 192.168.254.0/24），核查全网唯一</li>
+<li>拷包 → <code>pkgmgr install uosn-mpls-v1.deb</code> → <code>pkgmgr verify</code> → <code>show pkgmgr</code> 确认</li>
+<li>建 VLAN/IP 接口，配 OSPF，确认 <code>sh ip routes</code> 全学到、LER 间全可达</li>
+<li>配 SILOS/SWLIC 许可：<code>show license-server usage/info</code>、<code>sh license-info</code> 确认 permanent 或未过期 demo、Connection Status=Connected</li>
+<li><code>mpls load ldp</code> → <code>mpls ldp admin-state enable</code> → 逐接口 <code>mpls interface ... enable</code> + <code>mpls ldp interface ... enable</code></li>
+<li>验证：<code>show mpls ldp session</code> 双邻居 OPERATIONAL</li>
+<li><code>write memory flash-synchro</code>，备份 vcboot.cfg/vcsetup.cfg</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li>ce01：许可无效（no-license）或 demo 过期时 MPLS 被<strong>临时禁用</strong>——配置还在但功能停摆，排障入口是 <code>sh license-info</code> 而非配置检查。</li>
+<li>ce02：LSR ID（loopback）在 MPLS 域内不唯一会导致 "unpredictable behavior"（p125 加粗），上线清单必含唯一性核查。</li>
+<li>只装包不够：LDP/BGP 模块还需分别 <code>mpls load ldp</code> / <code>ip load bgp</code> 才加载。</li>
+<li>客户超 4 台节点时需买多份站点许可或改节点许可（ALE Licensing Portal 操作）。</li>
+</ul>
+<hr />
+<p>来源条目: f01, p01, p02, p03, c01, ce01, ce02</p></main></div></body></html>

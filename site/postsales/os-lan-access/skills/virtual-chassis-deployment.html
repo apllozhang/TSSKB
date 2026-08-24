@@ -1,0 +1,94 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>virtual-chassis-deployment — DT00XTE215 · OmniSwitch LAN Access Switching</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE215 · OmniSwitch LAN Access Switching</h1>
+<div class="sub">Edition 19 · 500 页 · 接入层基础全科（三目录模型/VC/VLAN/LACP/STP/DHL/QoS/AG）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">管理面</div>
+<a href="skills/aos-config-management.html">aos-config-management</a>
+<a href="skills/switch-management-access.html">switch-management-access</a>
+<div class="grp">转发面</div>
+<a href="skills/virtual-chassis-deployment.html" class="on">virtual-chassis-deployment</a>
+<a href="skills/vlan-link-redundancy.html">vlan-link-redundancy</a>
+<div class="grp">策略面</div>
+<a href="skills/ip-services-basic.html">ip-services-basic</a>
+<a href="skills/qos-acl-policy.html">qos-acl-policy</a>
+<a href="skills/access-guardian-unp.html">access-guardian-unp</a>
+<div class="grp">运维</div>
+<a href="skills/poe-ops-diagnostics.html">poe-ops-diagnostics</a></aside><main><h1>virtual-chassis-deployment</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="virtual-chassis">Virtual Chassis 部署与运维</h1>
+<h2 id="r">R · 原文引用</h2>
+<p>"Assign a Chassis ID / Assign a Chassis Group ID and a Priority / Configure VFL link &amp; ports - Automatic or static / Restart Chassis to Virtual-Chassis Directory. Assign a Chassis Group number: Must be the same on all the switches belonging to the Virtual Chassis. Define a Priority: Between 0 to 255, switch with the highest priority is elected Master."（p105-107）</p>
+<p>"Master/Slave election based on virtual chassis protocol (ISIS-VC): Highest chassis priority value / Longest chassis uptime (if difference in uptime &gt;10 mn) / Smallest Chassis ID value / Smallest chassis MAC address"（p95）</p>
+<p>"The former Slave chassis will shutdown all its front-panel user ports to prevent duplicate IP and chassis MAC addresses in the network."（p99-100）</p>
+<h2 id="i">I · 方法论骨架</h2>
+<p>VC = 多台交换机经 VFL 互联后呈现为单一逻辑设备（单管理点、免 STP/VRRP、免许可）。核心骨架：
+- <strong>静态部署五步</strong>：唯一 chassis ID → 相同 chassis-group + priority（0-255 预定 master）→ VFL（auto 端口自动检测 / static 显式建 VFL ID 挂口）→ write memory → 从含 vcsetup.cfg 的目录 reload。
+- <strong>选举链</strong>（ISIS-VC）：priority 最大 → uptime 最长（差 &gt;10 分钟才比）→ chassis ID 最小 → MAC 最小。固定 master 就显式调大 priority。
+- <strong>同步</strong>：配置只存 master；<code>write memory flash-synchro</code> 或 <code>copy running certified</code> 把镜像+配置同步到所有 slave 的 certified（show running-directory 看 SYNCHRONIZED）。
+- <strong>脑裂防护两条路</strong>：带外 RCD（EMP 口互发通告，split 时前 slave 关全部用户口、状态 Split-Topology）；带内 VCSP（成员各出一口到 helper 交换机组成 VCSP LAG）。
+- <strong>ISSU</strong>：新代码放独立目录 → issu 命令分发 → 按 chassis ID 从小到大逐台重启。</p>
+<h2 id="a1-lab">A1 · 书中案例（Lab 配置精要）</h2>
+<p>6360 双机 Lab（p112-122）：A 端 <code>virtual-chassis chassis-group 1</code> + <code>chassis-id 1 configured-chassis-priority 200</code>；B 端 <code>configured-chassis-id 2</code>；<code>virtual-chassis vf-link-mode auto</code> + <code>auto-vf-link-port 1/1/27</code>（P10 型号用 1/1/11）；<code>interfaces 1/1/27-28 admin-state enable</code>；write memory 后各 reload（priority/chassis-id 改动必须重启生效；B 端 write memory 弹 "Chassis 1 missing! Configuration associated with missing chassis will be erased permanently! Confirm (Y/N)" 警告）。监控：show virtual-chassis topology（"+"=未保存）、show virtual-chassis vf-link member-port、show virtual-chassis consistency、<code>ssh-chassis admin@2</code> 跳到从机。</p>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>接入层多机合一管理、跨机箱端口聚合、免 STP/VRRP——本 skill。</li>
+<li>只是两台核心做网关冗余（不组堆叠）→ ip-services-basic 的 VRRP。</li>
+<li>单机目录保存/回滚语义 → aos-config-management（flash-synchro 的 VC 扩展语义在本 skill）。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>规划：chassis ID 全 VC 唯一；chassis-group 全员相同；master 候选 priority 调大（如 200）。</li>
+<li>选 VFL 模式：auto（两端均须 auto 候选口；6360-24 用 27/28、6360-48 用 51/52、6900 X/T 每槽最后 5 口、9900 仅静态）或 static（vf-link ID + 成员口）。</li>
+<li>逐台：virtual-chassis chassis-group N → chassis-id X configured-chassis-priority P → vf-link 配置 → 激活端口 → write memory → reload。</li>
+<li>验证：show virtual-chassis topology / consistency；ssh-chassis 登成员。</li>
+<li>配置同步：write memory flash-synchro。</li>
+<li>ISSU 升级：上传新代码+vcsetup.cfg+vcboot.cfg 到 issu_dir → issu 命令 → 等待按 chassis ID 升序逐台重启。</li>
+<li>启用脑裂防护：带外确认 EMP/RCD；带内 <code>virtual-chassis split-protection [helper] admin-state/linkagg</code>。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li><strong>priority / chassis-id 改动须 reload 才生效</strong>：配 200 后 Oper Pri 仍 100，Lab 环境留 4-5 分钟重启窗口。</li>
+<li><strong>VC 中 write memory 的清除警告</strong>：拓扑变化（成员缺失/chassis-id 改动）时确认 Y 会永久清除缺失机箱的配置段，看懂再按。</li>
+<li><strong>新 master 不让位</strong>：原 master 回归不重选，以 slave 身份回归（MAC retention 恒开）——属预期行为不是故障。</li>
+<li>slave 收到新镜像/配置后须重启才生效。</li>
+<li>master 故障只影响自身，slave 流量不受损；但 VFL 全断而无 RCD/VCSP 会双活冒 IP/MAC。</li>
+</ul>
+<hr />
+<p>来源条目: f03, f04, f05, p13, p14, p15, p16, p17, ce04, ce07, c03, g08, g09, g10, g11, g12, g13, g40</p></main></div></body></html>

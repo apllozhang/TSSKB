@@ -1,0 +1,153 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>spb-edge-services — DT00XPS279 · OmniSwitch LAN SPB 售前</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XPS279 · OmniSwitch LAN SPB 售前</h1>
+<div class="sub">Issue 05 · 147 页 · SPB 技术推销课（卖点弹药/架构/L3 服务/案例/三技术对比）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">售前攻防</div>
+<a href="skills/spb-presales-battlecard.html">spb-presales-battlecard</a>
+<a href="skills/spb-micro-segmentation.html">spb-micro-segmentation</a>
+<div class="grp">架构与设计</div>
+<a href="skills/spb-topology-isis-design.html">spb-topology-isis-design</a>
+<div class="grp">边缘与服务</div>
+<a href="skills/spb-edge-services.html" class="on">spb-edge-services</a>
+<div class="grp">L3 集成</div>
+<a href="skills/spb-l3-integration.html">spb-l3-integration</a>
+<div class="grp">交付与选型</div>
+<a href="skills/spb-ov2500-delivery.html">spb-ov2500-delivery</a>
+<a href="skills/spb-vs-evpn-mpls-selection.html">spb-vs-evpn-mpls-selection</a>
+<a href="skills/spb-stp-migration-cases.html">spb-stp-migration-cases</a>
+<a href="skills/spb-license-spec-sizing.html">spb-license-spec-sizing</a></aside><main><h1>spb-edge-services</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="spb-sap-qos">SPB 边缘服务面设计（SAP / QoS / 组播 / 防环）</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>"SAPs can only be created on access interfaces... Different encapsulation types on the same access port: Untagged, Tagged, QinQ. Multiple services for one CVLAN or one service for multiple CVLANs."（p54-55）</p>
+<p>"L2 Protocol Default Treatment: STP Tunnel; 802.1X Drop; 802.1AB Drop; 802.3AD Peer; GVRP Tunnel; AMAP Drop; MVRP Tunnel. Peer: interact with the peer switch. Drop: discards unconditionally. Tunnel: control packet encapsulated across the SPB network."（p63）</p>
+<p>"Traffic is classified at the SAP level... No further classification within the SPB backbone due to MAC-in-MAC encapsulation. Trusted SAPs: Tagged traffic priority derived from tags. Untrusted SAPs: Set the CoS marking to a user-defined value."（p64）</p>
+<p>"SPB supports two BUM traffic distribution methods: Head-End (native mode); Tandem (optimized). Head-End: one copy of each packet is sent to each BEB where the ISID exists. Tandem (S,G): more bandwidth-efficient."（p65-69）</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<p><strong>① SAP 创建与封装（p16/p17）</strong>
+- 硬约束：SAP 只能建在 access 角色接口（物理口或 LAG）。
+- 同一口可混用 Untagged / Tagged / QinQ；映射弹性：一 CVLAN 多服务，或多 CVLAN 合一服务。
+- 动态 SAP 由 UNP profile 认证派生（见微分段 skill）。</p>
+<p><strong>② L2 控制帧三态处置（f10/p19）</strong></p>
+<table>
+<thead>
+<tr>
+<th>协议</th>
+<th>默认</th>
+<th>三态含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>STP / GVRP / MVRP</td>
+<td>Tunnel</td>
+<td>封装透传过 SPB，两端无感知</td>
+</tr>
+<tr>
+<td>802.3AD (LACP)</td>
+<td>Peer</td>
+<td>边缘与对端正常交互协议</td>
+</tr>
+<tr>
+<td>802.1X / 802.1AB (LLDP) / AMAP</td>
+<td>Drop</td>
+<td>无条件丢弃</td>
+</tr>
+</tbody>
+</table>
+<p>设计法：每个 SAP 关联 L2 Profile，按"该协议应透传/拦截/终结"逐项决策。</p>
+<p><strong>③ 边缘 QoS 决策矩阵（f11/p20）</strong>：分类只在 SAP 入口一次，骨干因 Mac-in-MAC 零再分类。Trusted 沿用报文标签 CoS（untagged 用端口默认优先级）；Untrusted 由管理员强制改写。特例：经 Tunnel 透传的 L2 控制 BPDU 恒定最高优先级。</p>
+<p><strong>④ BUM 组播复制模式（f12/p21/p22）</strong></p>
+<table>
+<thead>
+<tr>
+<th>模式</th>
+<th>机制</th>
+<th>判据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Head-End（默认）</td>
+<td>入口 BEB 对每个远端 BEB 各复制一份、走单播树</td>
+<td>接收端稀疏、组播带宽低</td>
+</tr>
+<tr>
+<td>Tandem (S,G)</td>
+<td>每 I-SID 每源建源树（组 BMAC）</td>
+<td>带宽敏感，省带宽</td>
+</tr>
+<tr>
+<td>Tandem (*,G)</td>
+<td>每 BVLAN 共享树、最低 BridgeID 作根</td>
+<td>资源敏感，省表项</td>
+</tr>
+</tbody>
+</table>
+<p>第三维度：服务级 IGMP snooping 开启后只复制给有 IGMP 客户端的 SAP/SDP。</p>
+<p><strong>⑤ E-LINE 伪线特性（p15）</strong>：两 SAP 间透明电路、SAP 不学源 MAC、组播固定 Head-End、无洪泛复制。<strong>⑥ LBD 环路检测（p23）</strong>：无需 STP，周期发探测帧；判定：同机关最高 PortID 口，跨机关最高 BridgeID 机上的口；动作：shutdown/Trap/日志/定时或手工恢复。</p>
+<h2 id="a1">A1 · 书中案例</h2>
+<p>p55 示例：VLAN 10/20/30/31/32 分别映射 Service 1000/2000/3000，演示同口多封装混用；p67-68 演示 IP 组播优化开/关前后 BUM 洪泛范围差异；p65 表明 Head-End 是 AOS 原生默认，视频类业务必须显式改 Tandem。</p>
+<h2 id="a2">A2 · 触发场景</h2>
+<ul>
+<li>做 SPB 业务接入设计：SAP 封装规划、遗留控制协议透传决策、边缘 QoS 定型；</li>
+<li>视频监控/IPTV 等组播密集业务的复制模式选型；</li>
+<li>排障"链路通但 802.1X/LLDP 认证或邻接建不起来"（默认 Drop 所致）；</li>
+<li>混合组网开局防环清单（LBD）。
+与相邻 skill 区分：骨干拓扑/BVLAN/ECT 走 <code><a href="spb-topology-isis-design.html">spb-topology-isis-design</a></code>；L3 路由叠加走 <code><a href="spb-l3-integration.html">spb-l3-integration</a></code>；机型容量上限走 <code><a href="spb-license-spec-sizing.html">spb-license-spec-sizing</a></code>。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>逐 SAP 列三张表：封装（Untagged/Tagged/QinQ + VLAN 映射）、控制帧处置（Tunnel/Drop/Peer）、QoS 信任模式（Trusted/Untrusted + CoS）。</li>
+<li>按业务选 BUM 模式：两点透明互联用 E-LINE；稀疏组播 Head-End + IGMP snooping；密集组播 Tandem（带宽紧选 S,G、表项紧选 *,G）。</li>
+<li>开局启用 LBD（桥口+业务接入口），配自动恢复定时器与告警，列入标准开局清单。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li><strong>默认 Drop 静默吞包</strong>（ce10）：802.1X/LLDP/AMAP 默认丢弃，远端设备互联时表现为"链路通但协议不通"；需跨 SPB 传 STP 控制时学 Metz 做法——专门建一条点对点 SPB 服务承载。</li>
+<li><strong>骨干不能二次 QoS 分类</strong>（ce09）：入口标记混乱 = 全网 QoS 失真且核心无法补救；接入侧先统一 802.1p 规范再上 SPB。</li>
+<li><strong>Head-End 带宽放大</strong>（ce04）：接收者多或组播流量大的 I-SID 用 Head-End 会随节点数线性放大，视频类直接打爆骨干；且不开 IGMP snooping 时 IP 组播洪泛所有 SAP/SDP。</li>
+<li><strong>伪线不是普通交换口</strong>（ce12）：E-LINE 不学源 MAC、无 Tandem 选项，依赖源 MAC 学习的统计/定位手段失效；要完整 L2 行为改用 E-LAN。</li>
+<li>BVLAN 无 STP 兜底，不开 LBD 遇外部物理环即广播风暴（ce15）。</li>
+</ul>
+<hr />
+<p>来源条目: f10, f11, f12, p15, p16, p17, p19, p20, p21, p22, p23, ce04, ce09, ce10, ce12, g03, g08, g11, g15, g16, g20, g28, g29, g33, g34, g37</p></main></div></body></html>

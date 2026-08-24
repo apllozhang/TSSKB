@@ -1,0 +1,263 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>精华长文 DIGEST — AWOS 5.0.3 · Stellar AP 用户手册</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>AWOS 5.0.3 · Stellar AP 用户手册</h1>
+<div class="sub">128 页 · AP 本地管理配置手册（Express 模式 GUI 全参考）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">开局</div>
+<a href="skills/cluster-bootstrap-pvm.html">cluster-bootstrap-pvm</a>
+<div class="grp">业务</div>
+<a href="skills/ssid-radio-tuning.html">ssid-radio-tuning</a>
+<div class="grp">安全</div>
+<a href="skills/wlan-security-enterprise.html">wlan-security-enterprise</a>
+<div class="grp">运维</div>
+<a href="skills/ap-ops-upgrade-mesh.html">ap-ops-upgrade-mesh</a></aside><main><h1>精华长文 DIGEST</h1><h1 id="digest-awos-503-stellar-ap">DIGEST · AWOS 5.0.3 Stellar AP 本地管理精华</h1>
+<blockquote>
+<p>面向读者：没有云管（Cirrus/OV2500）、要直接用 AP 内置 Web 界面开局的网络工程师。数字均标注原书页码。</p>
+</blockquote>
+<h2 id="awos">一、一页看懂 AWOS 本地管理</h2>
+<p>Stellar AP 的 AWOS 固件支持 Express 模式：AP 自己组成集群，内置 Web GUI 完成全部开局与运维（p13）。选本地 GUI 的三种典型情况：</p>
+<ol>
+<li><strong>没有网管平台</strong>——纯 Express 模式交付，Web 界面就是唯一入口。</li>
+<li><strong>应急排障</strong>——断网/云管不可达时，直连 AP 或走 GMIP 改配置。</li>
+<li><strong>ZTP 场景排障</strong>——AP 从 OXO 服务器取配置（p9-12），出错时回到本地向导重来。</li>
+</ol>
+<p>前提牢记三条（p13）：同集群最多 <strong>255 台</strong>、所有 AP 必须在<strong>同一 VLAN</strong>（组内通信走组播）、整组共用一个 cluster ID。有 OmniVista 时单网可扩到 4000 台（p86）。</p>
+<h2 id="_1">二、开局十分钟</h2>
+<ol>
+<li><strong>接一台、只接一台</strong>：多台同时首上电会各自成组（p13 附近）。</li>
+<li>终端连预置 SSID <code>mywifi-xxxx</code>，访问 <code>http://mywifi.al-enterprise.com:8080</code> 进初始化向导；无 DHCP 时 AP 默认 IP 192.168.1.254，笔记本配 192.168.1.100/24 直连（p13）。</li>
+<li>走五步向导：改管理员密码（默认 admin）→ 国家码/时区 → 建 WLAN。中途终端不得切网，完成后 <code>mywifi-xxxx</code> 自动删除。</li>
+<li><strong>VLAN 向导里配不了</strong>，必须向导后在 "Modify Your WLAN" 补配。</li>
+<li><strong>PVM 选举</strong>按机型优先级链自动选出（p18）：AP1451 &gt; AP1351 &gt; AP1431/1331 &gt; AP1521 &gt; AP1320/1360 &gt; …；同优先级比 MAC 最大者。低端机当 PVM 会把集群上限拖到 32 台（AP1101/AP1201H/L/HL），混装时手动 "Update to PVM" 提升。</li>
+<li>向导后统一走 <strong>GMIP（默认 10.0.0.1）:8080</strong> 做长期管理入口，不追漂移的 DHCP 地址（p31-32）。</li>
+</ol>
+<h2 id="_2">三、常用参数默认值速查表</h2>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>参数</th>
+<th>默认值（可调范围）</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>管理</td>
+<td>AP 兜底 IP</td>
+<td>192.168.1.254</td>
+<td>p13</td>
+</tr>
+<tr>
+<td>管理</td>
+<td>组管理 IP / Group ID</td>
+<td>10.0.0.1 / 100</td>
+<td>p31-32</td>
+</tr>
+<tr>
+<td>管理</td>
+<td>Web 端口</td>
+<td>HTTP 8080 / HTTPS 443</td>
+<td>p59+</td>
+</tr>
+<tr>
+<td>管理</td>
+<td>登录锁定</td>
+<td>3 次失败锁 1 分钟</td>
+<td>开局章</td>
+</tr>
+<tr>
+<td>射频</td>
+<td>信道/功率</td>
+<td>RDA（ACS+APC）自动；手动功率 1 dB 步进</td>
+<td>p40-41</td>
+</tr>
+<tr>
+<td>射频</td>
+<td>Beacon 间隔</td>
+<td>100 ms（60-500）</td>
+<td>p40+</td>
+</tr>
+<tr>
+<td>射频</td>
+<td>DTIM / Short GI / UAPSD</td>
+<td>1 / 启用 / 启用</td>
+<td>p40+</td>
+</tr>
+<tr>
+<td>射频</td>
+<td>后台扫描</td>
+<td>20 s（5s-3h）</td>
+<td>p40+</td>
+</tr>
+<tr>
+<td>负载</td>
+<td>Band Steering</td>
+<td>启用，Prefer 5G</td>
+<td>p46</td>
+</tr>
+<tr>
+<td>负载</td>
+<td>Load Balance 阈值</td>
+<td>客户端密度 10；利用率 2.4G/5G 各 70%</td>
+<td>p46-47</td>
+</tr>
+<tr>
+<td>高密</td>
+<td>RSSI Threshold</td>
+<td>推荐 2.4G=5、5G=10、6G=10</td>
+<td>p46-47</td>
+</tr>
+<tr>
+<td>高密</td>
+<td>Roaming RSSI</td>
+<td>推荐 2.4G=10、5G=15、6G=15</td>
+<td>p46-47</td>
+</tr>
+<tr>
+<td>客户端</td>
+<td>每 BSSID 上限</td>
+<td>64（1-256）</td>
+<td>p40+</td>
+</tr>
+<tr>
+<td>速率准入</td>
+<td>最低速率</td>
+<td>2.4G 12 Mbps、5G/6G 24 Mbps</td>
+<td>p40+</td>
+</tr>
+<tr>
+<td>认证</td>
+<td>RADIUS AuthPort/AcctPort</td>
+<td>1812 / 1813；RadSec 改 2083</td>
+<td>p62-63</td>
+</tr>
+<tr>
+<td>PSK</td>
+<td>口令格式</td>
+<td>64 位十六进制 或 8-63 个 ASCII</td>
+<td>p59</td>
+</tr>
+<tr>
+<td>内置 Portal</td>
+<td>本地账户上限</td>
+<td>2000</td>
+<td>p50</td>
+</tr>
+<tr>
+<td>AP 侧 DHCP</td>
+<td>租约</td>
+<td>24 小时</td>
+<td>p50+</td>
+</tr>
+<tr>
+<td>日志</td>
+<td>Syslog 级别</td>
+<td>Notice；本地日志 1MB FIFO</td>
+<td>p78+</td>
+</tr>
+<tr>
+<td>Mesh</td>
+<td>组播速率</td>
+<td>24 Mbps</td>
+<td>p103</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_3">四、安全加固清单</h2>
+<ul>
+<li><strong>必改默认凭据</strong>：Web 管理员默认 admin；同时改 Viewer/GuestOperator，以及 CLI 的 root 与 support 账户（root 凭据由 AP 生成、仅客户持有）。</li>
+<li><strong>WPA3</strong>：6GHz 只允许 WPA3 与 Enhanced Open；WPA3-Enterprise CNSA（Suite B 192 位）会强制 PMF Required（p62）。</li>
+<li><strong>CNSA 静默回退</strong>：不支持的机型配 CNSA 不报错、直接降回 WPA2——高安全场景逐机型核对（p62）。</li>
+<li><strong>HTTPS 证书</strong>：先装入根证书 ALE-OmniAccess-WLAN.CRT；自定义证书的 CN 必须是 <code>mywifi.al-enterprise.com</code>，登录 URL 不可改。</li>
+<li><strong>动态 VLAN</strong>：RADIUS 下发 Tunnel-Type(64)=VLAN、Tunnel-Medium-Type(65)=802(6)、Tunnel-Private-Group-ID(81)。</li>
+<li><strong>wIPS</strong>：Suppress 发 DEAUTH 默认关闭，按需开启；SNMPv3 固定 sha/aes128。</li>
+</ul>
+<h2 id="_4">五、运维与升级要点</h2>
+<ul>
+<li><strong>整组一份配置</strong>：clear/backup/restore 均整组生效，无需选单台（p78）。配完立即导出备份。</li>
+<li>升级：单台约 5 分钟留窗口；<strong>升级完成后清浏览器 Cookies 与 Cache</strong>，否则旧资源导致界面异常。</li>
+<li><strong>换 PVM 顺序不能反</strong>：先把 SVM 升为 PVM，再断旧机；新增 AP 前 PVM 不能处于 Down。</li>
+<li>扩组三法（p86）：划不同子网 / 配不同 group ID / 转 OmniVista（DHCP Option 138/43 自动下发，转换后 AP 重启注册）。</li>
+<li>崩溃取证：预先启用 PMD 并指定 TFTP 服务器（默认关闭）。</li>
+</ul>
+<h2 id="_5">六、机型例外与限制速查</h2>
+<table>
+<thead>
+<tr>
+<th>机型</th>
+<th>不支持/受限</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AP1101</td>
+<td>全频段不支持 WPA3 CNSA</td>
+</tr>
+<tr>
+<td>AP1201H / AP1201L</td>
+<td>2.4G 不支持 CNSA</td>
+</tr>
+<tr>
+<td>AP1201/1201L/1201H/1201HL</td>
+<td>不支持带 VLAN 标签的无线桥接，不做网桥</td>
+</tr>
+<tr>
+<td>AP1101/1201H/1201L/1201HL</td>
+<td>当 PVM 时集群上限跌到 32 台</td>
+</tr>
+<tr>
+<td>AP1311 / AP1301</td>
+<td>不支持 160MHz</td>
+</tr>
+<tr>
+<td>AP1451 等</td>
+<td>160MHz 仅 5G/6G 静态配置，ACS 不选 160MHz</td>
+</tr>
+<tr>
+<td>无扫描射频机型</td>
+<td>进扫描模式断全部客户端；AP1451 仅 6GHz 中断</td>
+</tr>
+</tbody>
+</table>
+<p>另两条易踩坑：Out-of-box Mesh（内置 SSID "Stellar-MESH"，2.4G）<strong>一旦接过有线 uplink 即永久禁用</strong>，只有恢复出厂能找回（p103）；组间不漫游，多组边界要规划在漫游不敏感的位置。</p>
+<hr />
+<p><em>由 cangjie-skill 流水线从 AWOS 5.0.3 User Guide 蒸馏生成。</em></p></main></div></body></html>

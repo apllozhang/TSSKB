@@ -1,0 +1,95 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>aos-mpls-operating-rules — DT00XTE324 · OmniSwitch LAN MPLS 实施</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE324 · OmniSwitch LAN MPLS 实施</h1>
+<div class="sub">Edition 02 · 153 页 · MPLS/VPLS 实施精要（三 Lab CLI + 参考设计 + 能力边界）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">部署与信令</div>
+<a href="skills/aos-mpls-deploy-license.html">aos-mpls-deploy-license</a>
+<a href="skills/vpls-signaling-ldp-vs-bgp.html">vpls-signaling-ldp-vs-bgp</a>
+<div class="grp">设计与运维</div>
+<a href="skills/mpls-reference-design.html">mpls-reference-design</a>
+<a href="skills/aos-mpls-operating-rules.html" class="on">aos-mpls-operating-rules</a>
+<a href="skills/aos-mpls-capability-limits.html">aos-mpls-capability-limits</a></aside><main><h1>aos-mpls-operating-rules</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="aos-mpls-ldp-sap-sdp">AOS MPLS 运行原理与服务模型（标签规则 / LDP 行为 / SAP-SDP）</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>"Service Access Point (SAP): A UNI-side logical port which binds a physical port and spcific customer traffic types to a service. ... Service Distribution Point (SDP): An NNI-side logical port which binds a service to a far-end router over which MPLS encapsulated packets are distributed."（p131，OCR 拼写原样）</p>
+<p>"Any directly connected route is allocated the special label Implicit NULL, i.e. 3. Any other route is allocated a label starting at 16 ... Labels from 0 to 15 are in fact special labels reserved in RFC 3032."（p100, p122）</p>
+<p>"In a VPN implementation, the top label is the transport label and the bottom label is the service label. This is implemented through label stacking, which is sorted in a Last-In, First-Out (LIFO) fashion."（p38, p123）</p>
+<p>"A PE must never send a packet on a PW if that packet has been received from a PW. ... The fact that there is always a full mesh of PWs between the PE devices ensures that every destination within the VPLS will be reached."（p133）</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<p>服务模型（f05 + p14）：一个 MPLS 服务=一个 VPN/租户，只建在 LER 上；LER 四组件——SAP（UNI 侧，绑物理口+客户流量类型，可复用）、SDP（NNI 侧，绑远端）、服务隧道（FEC=vplsid）、传输隧道（FEC=loopback）。VPLS 的 PE 须按实例做 MAC 学习/桥接/复制。</p>
+<p>标签规则（p05）：直连路由=隐式 NULL(3)；其他从 16 起（AOS 配置 16~1048575）；0-15 为 RFC 3032 保留。标签仅本地唯一，不同 LSR 可重号。</p>
+<p>双层标签栈（p13）：栈顶=传输标签，栈底=服务标签；iLER 先压服务再压传输，中间 LSR 只 swap 传输标签，eLER 依次弹出。多数厂商栈深 4-6。</p>
+<p>LDP 行为（p08-p10）：AOS 默认 DU+ILD+LLR；hold-time 两端取较小值、接口级覆盖全局；多链路单会话属正常，LDP ID=loopback:标签空间（:0 为 per-platform）。</p>
+<p>PHP（p12）：eLER 发隐式 NULL 让倒数第二跳弹传输标签，省一次查表——Lab 中直连网段 Out-Label=3 即此。</p>
+<h2 id="a1">A1 · 书中案例</h2>
+<ul>
+<li>Lab 1 输出解读（c01）：forwarding-table 直连网段 Out-Label=3（impl-null/PHP），远端 loopback 是 52480+ 的标签；等价路径两条带 + 标记（ECMP）。</li>
+<li>Lab 2 输出解读（c02/p14）：<code>show mac-learning domain vpls</code> 在 sw7 看到 <code>sap:1/1/3:2</code> 与 <code>sdp:78:2</code> 两类接口 MAC；P 节点 sw9/sw10 该表为空——服务只存在 LER 的直接证据。</li>
+<li>LDP 会话输出（p10）：<code>show mpls ldp neighbor</code> 显示 192.168.254.10:0，即 per-platform 标签空间；<code>show mpls ldp session</code> 显示 Advertisement mode=Downstream Unsolicited、Label retention=Liberal（p08）。</li>
+<li>定时器实测（p09）：Hello 5s / Hold 15s / Targeted Hello 15s / Targeted Hold 45s / Keepalive 10s 超时 30s，Graceful Restart 使能。</li>
+</ul>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>拿到 show mpls/ldp/mac-learning 输出要判断"正常还是故障"：本 skill。</li>
+<li>设计/讲解阶段要弄清 SAP/SDP/双层隧道为什么这么配：本 skill 的模型。</li>
+<li>区分：怎么把服务配出来（CLI 序列）归 <code><a href="vpls-signaling-ldp-vs-bgp.html">vpls-signaling-ldp-vs-bgp</a></code>；部署顺序与许可归 <code><a href="aos-mpls-deploy-license.html">aos-mpls-deploy-license</a></code>；排障命令用哪条归 <code><a href="mpls-reference-design.html">mpls-reference-design</a></code> 的命令族谱。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>读 forwarding-table：Out-Label=3 → 直连+PHP；16+ 大标签 → 远端 FEC，正常。</li>
+<li>读 LDP 邻居：LDP ID 为 loopback:0 属 per-platform；两 LSR 间只有一个会话（多物理链路）属正常。</li>
+<li>调 hold-time：两端同时改（取小者生效），需要区分接口时用接口级覆盖全局。</li>
+<li>判断配置落点：先列出哪些 PE 是 LER；service/sap/sdp 只配 LER，P 节点零 service 配置。</li>
+<li>验证 VPLS 转发：<code>show mac-learning domain vpls</code> 应同时出现 sap:（本端）与 sdp:（远端）接口 MAC。</li>
+<li>互通排障：标签逐跳核对传输标签 swap 路径，两端核对服务标签（vplsid 一致）。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li>ce03：PHP 弹顶层标签时 EXP 位一并丢失；标准解法显式 NULL 在 AOS 不支持——QoS 承诺只能落在 DSCP，不能落在 EXP。</li>
+<li>ce04：LDP 使能范围例外——LER 上朝向 CE 的接口<strong>不能</strong>使能 LDP，业务走 SAP 接入。</li>
+<li>ce06：LDP Graceful Restart（RFC 3478）只对计划内接管（手工 takeover）有效，CMM 意外故障或链路 down 时无效——高可用话术要区分这两种场景。</li>
+<li>ce02：loopback 不唯一 → 行为不可预测，读会话输出前先核查全网唯一。</li>
+<li>与异厂商互通时核对 LDP 模式（AOS 默认 DU/ILD/LLR），模式不匹配会话起不来。</li>
+</ul>
+<hr />
+<p>来源条目: f05, p05, p08, p09, p10, p12, p13, p14, p15, c01, ce02, ce03, ce04, ce06</p></main></div></body></html>

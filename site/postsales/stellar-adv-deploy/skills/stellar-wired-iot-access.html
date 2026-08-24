@@ -1,0 +1,92 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>stellar-wired-iot-access — DT00XTE361 · Stellar WLAN Advanced Deployment with OmniVista</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE361 · Stellar WLAN Advanced Deployment with OmniVista</h1>
+<div class="sub">Edition 02 · 330 页 · Cirrus 云管进阶（QoE 分析/监控运维/IoT/全流程演练）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">可观测性</div>
+<a href="skills/stellar-qoe-analytics.html">stellar-qoe-analytics</a>
+<a href="skills/stellar-monitoring-ops.html">stellar-monitoring-ops</a>
+<div class="grp">接入进阶</div>
+<a href="skills/stellar-wired-iot-access.html" class="on">stellar-wired-iot-access</a>
+<a href="skills/stellar-bridge-mesh.html">stellar-bridge-mesh</a>
+<a href="skills/stellar-ssid-advanced.html">stellar-ssid-advanced</a>
+<div class="grp">交付与排障</div>
+<a href="skills/stellar-deployment-checklist.html">stellar-deployment-checklist</a>
+<a href="skills/stellar-troubleshooting-cli.html">stellar-troubleshooting-cli</a>
+<a href="skills/stellar-vowlan.html">stellar-vowlan</a></aside><main><h1>stellar-wired-iot-access</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="mac-iot">有线客户端 MAC 认证与 IoT 设备双识别</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>"2 – Access Auth Profile Configuration; 1 – AAA Server Profile Configuration; [PRE] – Access Role Profiles Preconfigured; 3 – Access Policy Configuration; 4 – Declare Client MAC address in local database." (p90)</p>
+<p>"MAC OUI: allows devices to be recognized by identifying their MAC addresses. DHCP FingerPrinting... DHCP option 55 (the parameter request list) and option 60 (the vendor identifier)." (p103)</p>
+<p>"In this example: MAC Authentication; Stellar AP port: Ethernet1. AP « Home-AP »" (p90)</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<p>两条主线：
+1. <strong>有线客户端 MAC 认证</strong>（AP 或 OmniSwitch 有线口）：访问角色（Access Role Profile，ARP）是策略落点——ARP_DEFAULT（受限+限带宽）为默认角色、ARP_PASS（全通）为认证通过角色；认证链 = AAA Server Profile（内置 UPAMRadiusServer，用途选 MAC）→ Access Auth Profile（方法 MAC、绑定 AP 组/端口）→ Access Policy（映射条件 Authentication Type=MAC、认证源 Local Database、角色 ARP_PASS）→ 本地数据库录 MAC。
+2. <strong>IoT 设备识别与强制</strong>：两招识别——MAC OUI（厂商前缀）+ DHCP 指纹（option 55 参数请求列表 + option 60 厂商标识）；识别结果归入预置或自定义分类，分类可绑定 Access Role Profile 做强制（Enforcement）；未知类型可向 Device Profile 服务查询。</p>
+<h2 id="a1-lab">A1 · 书中案例（Lab 精要）</h2>
+<p>Lab（p89-98）在 AP "Home-AP" 的 Eth1 口做 MAC 认证：预置两个角色 → 配 AAA Server Profile 指向 UPAMRadiusServer → Access Auth Profile 应用到 AP 组并启用端口 Eth1 → Access Policy 匹配 MAC/Local Database/ARP_PASS/Web 重定向 None → 在 Accounts &gt; Company Property 录入客户端 MAC 11:22:33:44:55:66 → 接上有线客户端验证。监控：Device Catalog &gt; Wired Ports 看端口与 UNP 客户端；Analytics &gt; Clients 看在线/历史有线会话（时间窗最近 1 小时到 1 个月）。</p>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>打印机/摄像头/POS 等哑终端要接 AP 有线口或交换机口做准入 → 本 skill MAC 认证流程。</li>
+<li>要让云管"认得出"终端类型并按类型限速/限权（如 IoT 设备自动套受限角色）→ 本 skill IoT 识别部分。</li>
+<li>无线终端的身份认证（802.1X/Captive Portal）属于 SSID 策略 → stellar-ssid-advanced；802.1X 失败排障 → stellar-troubleshooting-cli。</li>
+<li>注意：Access Role Profile（访问角色）与地址解析协议 ARP 同名缩写，本书语境里指访问角色。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>预置角色：创建 ARP_DEFAULT（受限 ACL+限带宽）与 ARP_PASS（全通）。</li>
+<li>配 AAA：Configure &gt; Network Access &gt; Unified Access，AAA Server Profile 指向 UPAMRadiusServer，用途选 MAC。</li>
+<li>配认证：Access Auth Profile——认证方法 MAC、选 AAA Profile、默认角色 ARP_DEFAULT，应用到 AP 组并启用目标端口（Eth1）；交换机则选接入端口。</li>
+<li>配策略：Access Policy——映射条件 Authentication Type = MAC、认证源 Local Database、角色 ARP_PASS、Web 重定向 None。</li>
+<li>录终端：Accounts &gt; Company Property 把客户端 MAC（如 11:22:33:44:55:66）录入本地数据库。</li>
+<li>验证：接上有线客户端，Wired Ports / Analytics &gt; Clients 查看会话与角色。</li>
+<li>IoT 侧：在 OmniVista 开启设备画像，按 MAC OUI + DHCP 指纹核对识别分类，把分类绑定到目标 Access Role Profile 实现自动强制。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li>角色顺序别配反：未认证终端落在 ARP_DEFAULT，认证通过才升到 ARP_PASS；默认角色给了全通就失去准入意义。</li>
+<li>DHCP 指纹依赖终端发 DHCP：静态 IP 的哑终端只能靠 MAC OUI 识别。</li>
+<li>MAC 认证可被 MAC 仿冒，安全要求高的场景应升级到 802.1X。</li>
+<li>IoT 分类绑定 ARP 强制后策略即时生效，误分类（如把正常终端归入受限类）会直接断业务，先小范围验证。</li>
+</ul>
+<hr />
+<p>来源条目: f05, c03, p11, g09, g10, g11, g12, g25, g26, g27</p></main></div></body></html>

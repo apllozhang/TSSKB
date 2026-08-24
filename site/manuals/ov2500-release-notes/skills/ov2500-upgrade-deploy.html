@@ -1,0 +1,97 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ov2500-upgrade-deploy — OV2500 4.9R2 · Release Notes</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>OV2500 4.9R2 · Release Notes</h1>
+<div class="sub">93 页 · 新特性/兼容矩阵/升级路径 + 63 条已知问题排障库</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">升级评估</div>
+<a href="skills/ov2500-49r2-features-compat.html">ov2500-49r2-features-compat</a>
+<a href="skills/ov2500-upgrade-deploy.html" class="on">ov2500-upgrade-deploy</a>
+<div class="grp">排障库</div>
+<a href="skills/ov2500-known-issues.html">ov2500-known-issues</a>
+<a href="skills/ov2500-danger-traps.html">ov2500-danger-traps</a></aside><main><h1>ov2500-upgrade-deploy</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="ov-2500">OV 2500 升级路径与部署规则</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>"you can only directly upgrade to OV 2500 NMS 4.9R2 from OV 2500 NMS 4.9R1 ... Upgrading an OV 2500 NMS from 4.9R1 to 4.9R2 automatically includes a required upgrade to a 4.9R1 Patch 1 ... ensure that the 4.9R1 upgrade to 4.9R1 Patch 1 occurs first, before the upgrade to 4.9R2." (p9, p15-16)</p>
+<p>"The HA upgrade procedure requires first updating the Standby node then updating the Active node ... An L3 HA cluster is supported only with a fresh HA installation; you cannot convert an L2 HA cluster to an L3 HA cluster" (p15, p19-20)</p>
+<p>"Total Number of Managed Devices 500 / 2,000 / 5,000 / 10,000 ... Minimum Reserved OmniVista VA RAM for Standalone 20GB / 36GB / 64GB / 64GB ... The High-Availability Feature supports up to 4,000 devices." (p17-19)</p>
+<p>"First upgrade to OV 2500 NMS 4.9R2; then upgrade your Stellar APs to 5.0.2 ... when upgrading Stellar APs in a Mesh Network, you must upgrade them starting from the last node and proceeding hop-by-hop. You cannot use OmniVista Resource Manager for the upgrade" (p14, p19)</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<p>升级项目分六个工作包，按序推进：</p>
+<ol>
+<li><strong>路径判定</strong>（p11）：只有 4.9R1 能直升 4.9R2；老版本先升 4.9R1。4.7R1 出发的完整链：4.7R1 Patch 2 → 4.8R1 → 4.8R2 → 4.9R1 → 4.9R2（五步）。4.9R1→4.9R2 用全新工作流，自动先打 4.9R1 Patch 1，严格按 Installation and Upgrade Guide 操作。</li>
+<li><strong>HA 顺序</strong>（p12）：先 Standby 后 Active。升完 Standby 等所有服务起来再升 Active（ce66 同步警告的解法）。</li>
+<li><strong>容量选型</strong>（p13）：四档 Low/Medium/High/Very High——设备 500/2000/5000/10000；AP 上限 500/2000/4000/4000；单机 RAM 20/36/64/64GB，HA 40/64/64GB；磁盘 HDD1:50GB + HDD2:512/1024/2048/2048GB。硬规则：HA ≤4000 台且须 Medium 以上。</li>
+<li><strong>首次部署六规则</strong>（p14）：配置并重启前不加新磁盘；RAM 不超宿主机可用；预留 RAM；CPU Shares=High；超 500 台用 VA 菜单扩 HDD2；SNMPv3+AES 建议 Intel AES-NI。</li>
+<li><strong>网络准备</strong>（p16）：放行五个外联域名（ovrepo/ep1/us.fluentnetworking.com、api.fingerbank.org、api.bcti.brightcloud.com）；关键端口：SNMP 161/162、MQTT 1883、RADIUS 1812/1813（转发 1814/1815）、CoA 3799、VMM 135+49152-65535、HA 节点间 TCP 8000/7801/2224 + UDP 5405、cliadmin SSH 2222。无直连外网必须配代理。</li>
+<li><strong>设备侧升级</strong>（p15）：先升 OV 4.9R2，再升 Stellar AP 到 AWOS 5.0.2；Mesh 网络从最末节点逐跳升级，用 AP Web GUI 而非 Resource Manager。</li>
+</ol>
+<h2 id="a1">A1 · 书中案例</h2>
+<ul>
+<li>单机转 HA：4.9R2 单机由 4.3R2 或更新 Standalone 升级而来才可转 HA；由 4.3R1 升级来的不行（ce69）。</li>
+<li>KVM 扩容盘检测不到前两块：disk1/disk2 各给 1KB 占位，容量给 disk3，占位盘不许删（ce61）。</li>
+<li>VMware Flexible NIC 升 4.8R1 失败：换网卡类型重配 IP 再升（ce60）。</li>
+<li>许可三档：Starter 免费 30 台不过期；Evaluation 免费 60 台 90 天；Production 全功能，上限 10000 设备 / 4000 AP / 5000 VM（p17）。</li>
+</ul>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>触发：制定升级方案、变更窗口排期、新装 VA、扩容、HA 架构设计、License 采购决策。</li>
+<li>区分：只查"某机型固件配不配" → 用 <code><a href="ov2500-49r2-features-compat.html">ov2500-49r2-features-compat</a></code>；升级中/后出现故障 → 用 <code><a href="ov2500-known-issues.html">ov2500-known-issues</a></code>；升级风险评审（不可降级、强制改密等）→ 用 <code><a href="ov2500-danger-traps.html">ov2500-danger-traps</a></code>。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>确认当前 OV 版本，套用路径规则得出升级步骤数；写变更计划时把 4.9R1 Patch 1 列为独立步骤。</li>
+<li>HA 环境：先备份点，先升 Standby → 验证服务全起 → 再升 Active → 验证 → 复查 WCF 状态（升级+failover 组合会致 WCF 失效，重启 WMA，ce40）。</li>
+<li>按设备数选规模档，核对 RAM/磁盘/CPU 与 HA 上限；HA 主机名 ≤15 字符且不用大写。</li>
+<li>首次部署按六规则执行；KVM 环境按占位盘操作法扩容。</li>
+<li>防火墙按端口表与五域名放行；纯内网配代理（注意：运行后改系统端口会断代理外联，改回 Proxy 端口，ce53）。</li>
+<li>升 AP：全网 AWOS 5.0.2，Mesh 逐跳、Web GUI 操作。</li>
+<li>升级完成后：验证 Watchdog 已启动（启动排障第一步，p18）、默认凭据 admin/switch 会强制改密（p19）。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li>HA 七条硬限制（ce69）：L3 无集群 IP；4.3R1 链不能转 HA；建集群后不能改 IP/主机名；主机名禁大写；不做内存同步；重同步期间禁 failover；L2 不能转 L3。</li>
+<li>老路径历史坑：4.4R2→4.5R1/4.5R1→4.5R2 必须选 "Download and Upgrade"，"Download Only" 会失败（ce56）。</li>
+<li>备份完整性：OS6900 AOS 8.3.1 全量备份丢 SSH Key 与 User Table，恢复后要手工补（ce13）。</li>
+<li>L3 HA failover 后 Top N 采集断档属已知问题，报表预期要设好（ce62）。</li>
+</ul>
+<hr />
+<p>来源条目: p11, p12, p13, p14, p15, p16, p17, p18, p19, ce13, ce40, ce53, ce56, ce58, ce60, ce61, ce62, ce66, ce69, g02, g07, g14, g15</p></main></div></body></html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>spb-presales-battlecard — DT00XPS279 · OmniSwitch LAN SPB 售前</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XPS279 · OmniSwitch LAN SPB 售前</h1>
+<div class="sub">Issue 05 · 147 页 · SPB 技术推销课（卖点弹药/架构/L3 服务/案例/三技术对比）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">售前攻防</div>
+<a href="skills/spb-presales-battlecard.html" class="on">spb-presales-battlecard</a>
+<a href="skills/spb-micro-segmentation.html">spb-micro-segmentation</a>
+<div class="grp">架构与设计</div>
+<a href="skills/spb-topology-isis-design.html">spb-topology-isis-design</a>
+<div class="grp">边缘与服务</div>
+<a href="skills/spb-edge-services.html">spb-edge-services</a>
+<div class="grp">L3 集成</div>
+<a href="skills/spb-l3-integration.html">spb-l3-integration</a>
+<div class="grp">交付与选型</div>
+<a href="skills/spb-ov2500-delivery.html">spb-ov2500-delivery</a>
+<a href="skills/spb-vs-evpn-mpls-selection.html">spb-vs-evpn-mpls-selection</a>
+<a href="skills/spb-stp-migration-cases.html">spb-stp-migration-cases</a>
+<a href="skills/spb-license-spec-sizing.html">spb-license-spec-sizing</a></aside><main><h1>spb-presales-battlecard</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="spb-why-spb">SPB 售前攻防弹药库（Why SPB）</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>"IT'S AN ALL-IN-ONE SWISS-KNIFE SOLUTION — Spanning Tree replacement / Multi-tenancy / Micro-segmentation / IoT. Campus; Data Centre: intra and inter-DC fabric, any to any, fast convergence; WAN: MPLS-like L2/L3 VPN Services. One Solution — Reduce the complexity of managing multiple technologies."（p7）</p>
+<p>"IT'S NOT IP-BASED =&gt; IT'S MORE SECURE. x Scanning x DOS x Man-in-the-middle. Not vulnerable to IP-based attacks."（p9）</p>
+<p>"IT'S INTEROPERABLE AND BACKWARDS COMPATIBLE. L2: 802.1Q, Q-in-Q, LACP; L3: OSPF, IS-IS, BGP; Multicast: PIM SM/DM/BIDIR/SSM. ✓ Investment protection ✓ Phased migration ✓ No forklift upgrade."（p10）</p>
+<p>"Spanning Tree: a single tree, traffic always passes through the Root bridge; F to G requires five hops and it is right next to G; lots of blocked path, wasted bandwidth; hop by hop configuration; high convergence times. SPB: each switch is its own Root Bridge with symmetrical trees, controlled by IS-IS, traffic flows the shortest path, address isolation through Mac-in-Mac, no loops, fast recovery."（p23）</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<p>四组弹药构成完整的售前攻防线，按客户质疑对号入座：</p>
+<table>
+<thead>
+<tr>
+<th>客户质疑</th>
+<th>弹药组</th>
+<th>核心论点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>"多场景要多种技术，太复杂"</td>
+<td>瑞士军刀定位（f01）</td>
+<td>一套 SPB 横跨园区/DC/WAN，四种用途（STP 替换/多租户/微分段/IoT）</td>
+</tr>
+<tr>
+<td>"新协议安不安全"</td>
+<td>非 IP 转发论证（f02）</td>
+<td>核心只认 BMAC 非 IP，逐项排除 IP 扫描/DOS/中间人</td>
+</tr>
+<tr>
+<td>"现网投资会不会作废"</td>
+<td>互操作三承诺（f03/p04）</td>
+<td>L2/L3/组播协议清单 → 投资保护/分阶段迁移/无需整机更换</td>
+</tr>
+<tr>
+<td>"运维成本降在哪"</td>
+<td>简化四支柱（f05/p03）</td>
+<td>自动化三件套 + edge-only 零触碰核心 + 单协议 IS-IS 管 L2+L3/IPv4+IPv6</td>
+</tr>
+<tr>
+<td>"凭什么换掉 STP"</td>
+<td>STP 十维对比（f07）</td>
+<td>九条罪状 ↔ SPB 优势一一映射，F-to-G 五跳反例做实</td>
+</tr>
+</tbody>
+</table>
+<p>可背常数（p01/p25）：<strong>1000 节点规模、突破 4096 VLAN 限制、亚秒收敛（约 100ms）、1000 节点内全链路无阻塞</strong>；SPB 还可跑在 VPLS/微波/VXLAN/IPVPN 之上（跨域组网卖点）。</p>
+<p>术语支撑：AOS（三技术同一 OS 的中立根基）、SPB/SPB-M（标书互联必写区分）、Mac-in-Mac/PBB（"三个老标准组合"降心理门槛）、B-MAC（地址隔离机制）、STP（反派索引）、VC（双机核心+LACP 免 STP 接入答案）。</p>
+<h2 id="a1">A1 · 书中案例</h2>
+<p>p23 对比页是全书攻防核心：左栏列 STP 九条罪（单树绕根桥、F 到 G 相邻也要五跳、阻塞浪费带宽、逐跳配置、链路利用率低、无最短路径、广播低效、扩展性差、收敛慢），右栏 SPB 逐条对应（每台交换机自为根、IS-IS 控制、最短路径、Mac-in-Mac 地址隔离、网状拓扑、无环、快速恢复）。p76 Key Takeaway 再用弹性/安全/可管理三类归纳收尾。</p>
+<h2 id="a2">A2 · 触发场景</h2>
+<ul>
+<li>客户开场问"SPB 是什么、为什么要换"；</li>
+<li>投标答辩"平滑演进 / 投资保护"章节组织话术；</li>
+<li>CIO/运维主管质疑安全性、迁移风险、运维成本时。
+与相邻 skill 区分：与 EVPN/MPLS 的正面对比选型走 <code><a href="spb-vs-evpn-mpls-selection.html">spb-vs-evpn-mpls-selection</a></code>；具体微分段落地走 <code><a href="spb-micro-segmentation.html">spb-micro-segmentation</a></code>；迁移施工细节走 <code><a href="spb-stp-migration-cases.html">spb-stp-migration-cases</a></code>。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>开场用瑞士军刀矩阵定总命题："一个方案覆盖园区/DC/WAN，不必为每个场景引入不同织物技术"。</li>
+<li>按客户角色选弹药组：安全质疑→非 IP 论证；预算质疑→四支柱降本；投资质疑→互操作三承诺；现状是 STP→十维对比+F-to-G 五跳反例。</li>
+<li>每组弹药落到一条可背常数收尾（1000 节点 / 突破 4096 / 亚秒收敛 / ~100ms 重收敛）。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li>话术精确化：说"替换 STP"指核心骨干消除阻塞链路，接入层与 legacy 域仍可能保留 STP/DHL/LBD（详见迁移 skill 的 ce14），不可承诺"全网灭 STP"。</li>
+<li>~100ms 收敛对轨交/电力等毫秒级刚需场景不占优，勿拿 SPB 硬碰（ce13 归选型 skill）。</li>
+<li>规模超 1000 节点或超大型 DC 主动让位 EVPN，勿超界应标。</li>
+<li>免许可、全系支持等规格数字引用前按最新 AOS 规格书复核（时效纪律见 spec skill 的 ce16）。</li>
+</ul>
+<hr />
+<p>来源条目: f01, f02, f03, f05, f07, p01, p03, p04, p25, g01, g02, g21, g26, g30, g31, g32, g36</p></main></div></body></html>

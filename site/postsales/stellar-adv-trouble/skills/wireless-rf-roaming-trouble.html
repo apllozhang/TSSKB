@@ -1,0 +1,108 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>wireless-rf-roaming-trouble — DT00XTE478 · Stellar WLAN 高级排障</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE478 · Stellar WLAN 高级排障</h1>
+<div class="sub">187 页 · 无线排障专题（方法论/工具箱/四层排障/勘测/TKC）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">方法论</div>
+<a href="skills/wlan-trouble-methodology.html">wlan-trouble-methodology</a>
+<div class="grp">工具与体检</div>
+<a href="skills/stellar-ap-toolbox.html">stellar-ap-toolbox</a>
+<a href="skills/stellar-ap-system-health.html">stellar-ap-system-health</a>
+<div class="grp">故障域</div>
+<a href="skills/client-connection-trouble.html">client-connection-trouble</a>
+<a href="skills/dot1x-radius-trouble.html">dot1x-radius-trouble</a>
+<a href="skills/network-side-trouble.html">network-side-trouble</a>
+<a href="skills/wireless-rf-roaming-trouble.html" class="on">wireless-rf-roaming-trouble</a>
+<div class="grp">勘测纠正</div>
+<a href="skills/site-survey-remediation.html">site-survey-remediation</a></aside><main><h1>wireless-rf-roaming-trouble</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="rf-profile">无线层与漫游排障：接口 · RF profile · 邻居 · 漫游验证</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>Check List: SSID broadcasted on the selected radio(s)? Transmission Power as selected in the RF profile? Encryption activated? BSSID is present? If there is no MAC address for "Access Point", the SSID is not broadcasted. athXYY: X = 0: 2.4GHz Radio, X = 1: 5GHz Radio, X = 2: 6GHz Radio, Y = [1...16]: SSID ID. (p63)</p>
+<p>Reasons for roaming failure: APs must be seen as neighbors. No Roaming from an untagged VLAN to a tagged VLAN. RSSI too low between source AP and destination AP. (p69)</p>
+<p>In some cases, Stellar APs are geographical neighbors but can't see each other (i.e: radio waves blocked by corridor with right angles,...). Solution: On both AP, add statically the neighbor Stellar AP from the list of known AP. The client context can be shared through the LAN and the client can roam. (p70)</p>
+<p>adme show - mac, ip, ov_ip, state, name, version, radiocnt, radioid, channel, rssi, txpower. If a geographic neighbor: Is not seen, move it closer or increase it's transmission power. Is seen with a weak power signal (RSSI), move it or increase it's transmission power. RSSI &lt; 20 is considered bad signal. (p69, p96)</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<p><strong>无线接口核对（iwconfig + athXYY 命名）</strong></p>
+<p>接口名自带语义：athXYY 中 X=频段（0=2.4GHz、1=5GHz、2=6GHz），YY=SSID 编号 1-16（ath001=2.4GHz 的 1 号 SSID，ath102=5GHz 的 2 号 SSID）。核对四项：SSID 是否在选定射频广播、发射功率是否等于 RF profile 值、加密是否开启、<strong>BSSID 是否存在——Access Point 栏无 MAC 地址 = 该 SSID 根本没广播</strong>。</p>
+<p><strong>RF profile 落地核对</strong>（<code>cat /tmp/config/rfprofile.conf</code>，与网管侧配置逐项比对）</p>
+<ul>
+<li>全局项：bandSteering、LoadBalance、scanning、countryCode、Air Time Fairness</li>
+<li>每射频项：信道 AUTO/手动、channelWidth（如 20）、powerSetting、signalStrengthThreshold、roamingSignalStrengthThreshold</li>
+<li>实际信道与功率验证：<code>iwlist athXXX channel</code>（当前信道）+ <code>iwlist athXXX txpower</code>（档位 0/5/7/9/11/13/15/17dBm 及当前值）</li>
+</ul>
+<p><strong>邻居表判读</strong>（<code>adme show</code>，radioid 0=2.4G、1=5G 分频段评估）</p>
+<ul>
+<li>同 OmniVista/同集群管理的 AP 应出现在表里。</li>
+<li>地理邻居<strong>看不到</strong>或 <strong>RSSI &lt; 20</strong>（差信号）→ 漫游病灶。处置二选一：挪近 AP 或调大其发射功率。（参考：RSSI 79=极好近邻，15=差。）</li>
+</ul>
+<p><strong>漫游失败三根因</strong>：① 源/目标 AP 互不为邻居；② 两 AP 间 RSSI 过低；③ <strong>untagged VLAN 与 tagged VLAN 之间不漫游</strong>（产品限制，保证同 SSID 各 AP 的 VLAN 封装一致）。</p>
+<p><strong>漫游成功验证</strong>：AP 日志收集包 wam.log 搜 <code>L3 roaming-start</code> / <code>L3 roaming-success</code> / <code>L2 roaming-success</code>——只有 start 无 success=漫游发起后失败；都搜不到=漫游根本没触发（回查邻居/信号/VLAN）。</p>
+<h2 id="a1">A1 · 书中案例</h2>
+<ul>
+<li>直角走廊阻挡（p70）：两台 AP 地理相邻但射频互相看不见，客户端上下文无法空口共享 → 漫游失败。解法：两台 AP 对称静态添加对方为已知邻居（Device Catalog &gt; Action &gt; View &gt; Neighbor APs &gt; Manage neighbor），上下文改走 LAN 传递。</li>
+<li>热图生成不了（p67-68）：OmniVista 无 2.4GHz 热图，根因是 WLAN 配置只建在 5GHz 射频——无 SSID 即无接口即无热图，先 iwconfig 确认接口存在。</li>
+</ul>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>症状是"换位置/走动时掉线、漫游不衔接"→ 本 skill；静止状态掉线 → <code><a href="client-connection-trouble.html">client-connection-trouble</a></code>（功率/阈值/reason 8）。</li>
+<li>症状是"SSID 没广播出来/RF 配置疑似没下发"→ 本 skill；客户端搜不到但别人正常（国家码问题）→ <code><a href="client-connection-trouble.html">client-connection-trouble</a></code>。</li>
+<li>大范围覆盖差/干扰问题需要勘测与整改 → <code><a href="site-survey-remediation.html">site-survey-remediation</a></code>；本 skill 只管单点配置与邻居关系。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>iwconfig 列接口，按 athXYY 解码频段与 SSID，核对四项清单（重点 BSSID 有无 MAC）。</li>
+<li><code>cat /tmp/config/rfprofile.conf</code> 与网管配置逐项比对（全局五项 + 每射频五项）。</li>
+<li><code>iwlist athXXX channel</code> / <code>iwlist athXXX txpower</code> 确认实际信道与功率档位。</li>
+<li><code>adme show</code> 查邻居表：地理邻居缺失或 RSSI&lt;20 → 挪近或加大功率；射频被建筑结构阻挡 → 双侧对称静态添加邻居。</li>
+<li>核对同 SSID 各 AP 的 VLAN 封装方式一致（tagged/untagged 不混用）。</li>
+<li>wam.log 搜三类漫游关键字定性：有 start 无 success / 完全没有 / success。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li><strong>untagged↔tagged 不漫游是产品限制</strong>，信号再好也漫不过去，配置一致性是前置。</li>
+<li>BSSID 缺失（Access Point 栏无 MAC）= SSID 未广播，先解决广播再谈其他。</li>
+<li>静态添加邻居必须<strong>两台 AP 对称互加</strong>，只加一边不生效。</li>
+<li>热图缺失先查该频段有没有 WLAN 配置/接口，别先怪 OmniVista。</li>
+<li>邻居 RSSI&lt;20 的阈值判据按频段分别看（radioid 0 与 1），2.4G 好 5G 差是常态。</li>
+</ul>
+<hr />
+<p>来源条目: p13, p14, p15, p23, ce03, ce04, ce05, ce06, ce24（术语 g04 athXYY, g06 Band Steering, g19 adme, g26 Heat Map, g27 L2/L3 Roaming）</p></main></div></body></html>

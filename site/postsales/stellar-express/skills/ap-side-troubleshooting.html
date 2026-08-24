@@ -1,0 +1,102 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ap-side-troubleshooting — DT00XTE455 · Stellar WLAN Express</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE455 · Stellar WLAN Express</h1>
+<div class="sub">Edition 07 · 183 页 · 免云管小微交付专题（集群/SSID/Bridge-Mesh/15 排障案例）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">开局</div>
+<a href="skills/express-cluster-onboarding.html">express-cluster-onboarding</a>
+<div class="grp">业务与射频</div>
+<a href="skills/ssid-portal-auth.html">ssid-portal-auth</a>
+<a href="skills/rf-survey-tuning.html">rf-survey-tuning</a>
+<div class="grp">组网与排障</div>
+<a href="skills/bridge-mesh-deployment.html">bridge-mesh-deployment</a>
+<a href="skills/ap-side-troubleshooting.html" class="on">ap-side-troubleshooting</a></aside><main><h1>ap-side-troubleshooting</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="ap">AP 侧与链路排障案例库（三域分类）</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>"AP TROUBLESHOOTING - CASE 1: AP can't be powered up. CASE 2: AP fails to get an IP address from the DHCP server. CASE 4: AP can't join a cluster. CLIENT TROUBLESHOOTING - CASE 7: Client can't get an IP. PERFORMANCE TROUBLESHOOTING - CASE 11: Low throughput/latency. CASE 13: AP not supplied with PoE." (p126-160)</p>
+<p>"Step 1: Connect to the AP, using the web GUI with the default IP address 192.168.1.254. Step 2: If you can't access the AP using the web GUI, access the AP using the console. Baud Rate: 115200. Step 3: use 'ssudo tcpdump –i br-wan –s0 –w X.pcap' commands to capture the DHCP messages." (p129-132)</p>
+<p>"Check that the cluster ID value is similar on the AP and on the PVM. Use the command 'cluster_mgt –x show=self'... If the AP is in 'joining' state, it must be joined manually. Check if the cluster has already reached the maximum number of APs allowed (32/64/255 APs depending on the AP models)." (p136-138)</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<p>排障章 15 案按故障对象分三域，<strong>接单先归域再套案例</strong>，每案固定"现象→分步检查→命令验证"：</p>
+<ul>
+<li><strong>AP 侧域</strong>：无法上电（LED 判读）、DHCP 拿不到 IP（三步递进救援）、ping 不通/Web 打不开、入不了集群（四查）。</li>
+<li><strong>客户端侧域</strong>：拿不到 IP（抓包定位 VLAN/信道错配）、连不上 AP/集群（黑名单/MaxClients，见 ssid-portal-auth skill）、认证与 Portal（见 ssid-portal-auth skill）。</li>
+<li><strong>性能侧域</strong>：低吞吐/高时延五查（见 rf-survey-tuning skill）、AP 端口报错三板斧、PoE 不供电五查。</li>
+</ul>
+<p>通用救援梯度：<strong>Web（默认 IP 192.168.1.254）→ Console（115200-8-N-1）→ tcpdump 抓包（/tmp 存 pcap，tftp 上送 Wireshark）</strong>。集群通信判据：端口 32767 = PVM 下发报文，32768 = AP→PVM 报文。</p>
+<h2 id="a1">A1 · 书中案例</h2>
+<ul>
+<li><strong>Case 1 AP 不上电</strong>（p128）：LED 全灭查电源（基准 12W/802.3at/48V DC，双源 DC 优先）；LED 非绿按九态表判读：蓝常亮=已上电、绿常亮=加载系统、闪=网络异常或未建 SSID、红蓝交替=升级中、三灯交替=定位模式。</li>
+<li><strong>Case 2 DHCP 拿不到 IP</strong>（p129-132）：三步递进——默认 IP 直连 Web 改回 DHCP 模式 → Console 查 <code>cat /etc/config/network</code> 的 option proto（残留 static 是经典根因）→ tcpdump 抓 DHCP 报文，正常应见 Discover-Offer-Request-ACK 完整四步。</li>
+<li><strong>Case 4 入不了集群</strong>（p136-138）：四查——cluster ID 与 PVM 一致（<code>cluster_mgt -x show=self</code>）→ 同网段 + tcpdump 抓 32767 验 PVM 报文可达 → joining 状态需在 PVM Web 手工批准 → 集群是否达型号组合上限（32/64/255）+ 抓 32768 确认 AP 有在发。</li>
+<li><strong>Case 7 客户端拿不到 IP</strong>（p144-147）：抓 DHCP 报文分三类——同一报文反复重发=VLAN ID 配错；终端没发=查终端静态残留；发了 AP 收不到=空中抓 beacon 比对信道与配置是否一致。</li>
+<li><strong>Case 11/12 性能与端口</strong>（p155-156）：低吞吐五查（详见 rf-survey-tuning）；端口三板斧=换线缆、<code>ifconfig br-wan</code> 确认有 IP、<code>ethtool eth0</code> 查协商。</li>
+<li><strong>Case 13 PoE 不供电</strong>（p157）：五查=交换机 PoE 开关 → 线长换 100m 内短线 → 水晶头不达标整根换 → 交换机不合 802.3af/at 换机 → 对调正常 AP 验证。</li>
+</ul>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>触发：工单"AP 灯不亮/失联/进不了集群""客户端连上了没网""端口报错""PoE 不供电"。</li>
+<li>区分：这是<strong>故障处置</strong>入口——归域后部分案例会路由出去：认证/Portal/黑名单类归 <code><a href="ssid-portal-auth.html">ssid-portal-auth</a></code>；覆盖弱/吞吐低的射频侧五查归 <code><a href="rf-survey-tuning.html">rf-survey-tuning</a></code>；集群规划与 255 上限的<strong>设计层</strong>归 <code><a href="express-cluster-onboarding.html">express-cluster-onboarding</a></code>。本 skill 管单体与链路层的"救活"，不管优化与规划。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<p>通用救援梯度：
+1. Web 直连默认 IP <strong>192.168.1.254</strong>（PC 配同网段）。
+2. Web 不通走 Console：<strong>115200-8-N-1</strong>，先核线缆再怀疑设备。
+3. 仍不通 <code>cd /tmp</code> 后 <code>tcpdump -i br-wan -s 0 -w X.pcap</code> 抓包，tftp 上送 Wireshark 分析。</p>
+<p>按域套案例：
+4. 不上电：LED 判读 → 电源三参数（12W/48V DC/DC 优先）→ PoE 五查。
+5. 拿不到 IP：三步递进 + 检查 <code>option proto</code> 残留 static。
+6. 入不了集群：四查（cluster ID → 子网/32767 → joining 手工批准 → 上限/32768）。
+7. 客户端无 IP：抓包三分法（VLAN/终端残留/信道错配 beacon 比对）。
+8. 端口报错：换线 → ifconfig br-wan → ethtool eth0。</p>
+<p>Console 常用命令速查：lighttpd（Web 进程，<code>ps | grep lighttpd</code>，<code>/etc/init.d/lighttpd start</code> 重建）、wam（无线接入管理，按 athXX 端口）、<code>athstats -i wifi0/1</code>（PHY 错误）、<code>wlanconfig athXX list</code>（连接帧与信号）、sfe（会话跟踪）。</p>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li><strong>option proto 残留 static</strong>：改过静态地址的设备入新网不发 DHCP 请求——用 ifconfig br-wan 读出现地址借道 Web 改回 DHCP；入网前先恢复。</li>
+<li><strong>joining 卡死先数集群规模</strong>：可能是 255 上限静默撞墙（设计问题），也可能是需 PVM 手工批准（操作问题），勿混。</li>
+<li>集群上限随在网型号组合浮动（32/64/255），排障勿默认 255。</li>
+<li>32767/32768 两端口是跨防火墙部署的必放行项，也是判断"谁没说话"的分向器：32767 无包=收不到 PVM 消息查网络；32768 无包=AP 没在发，重启 AP。</li>
+<li>引用校注：p157 原文 "802.3af or 802.3af" 为教材笔误，应为 af/at，引用时保留校注。</li>
+<li>tcpdump 命令原文为 "ssudo"，实际使用 sudo。</li>
+</ul>
+<hr />
+<p>来源条目: f09, c06, c07, c08, c11, c13, p12, p13, ce09, ce15, g34</p></main></div></body></html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>site-survey-ekahau — DT00XTE368 · Stellar WLAN Enterprise Basic</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE368 · Stellar WLAN Enterprise Basic</h1>
+<div class="sub">Edition 14 · 515 页 · 无线理论 + OV2500 企业模式实操二合一</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">理论与勘测</div>
+<a href="skills/wlan-theory-fundamentals.html">wlan-theory-fundamentals</a>
+<a href="skills/site-survey-ekahau.html" class="on">site-survey-ekahau</a>
+<div class="grp">开局与业务</div>
+<a href="skills/enterprise-mode-onboarding.html">enterprise-mode-onboarding</a>
+<a href="skills/employee-ssid-8021x.html">employee-ssid-8021x</a>
+<a href="skills/upam-guest-access.html">upam-guest-access</a>
+<div class="grp">漫游与远程</div>
+<a href="skills/roaming-l2-l3.html">roaming-l2-l3</a>
+<a href="skills/rap-remote-deployment.html">rap-remote-deployment</a></aside><main><h1>site-survey-ekahau</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="ekahau">站点勘测方法（Ekahau 全流程）</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>"SITE SURVEY TASKS: PLAN &gt; VALIDATE &gt; MONITOR &gt; TROUBLESHOOT. PLAN: PREPARATION &amp; REQUIREMENTS, PREDICTIVE SITE SURVEY. VALIDATE: PRE-DEPLOYMENT SITE SURVEY, INSTALLATION AND CONFIGURATION, POST-DEPLOYMENT SITE SURVEY. MONITOR/TROUBLESHOOT: SPECTRUM ANALYSIS, PACKET ANALYSIS, PERIODIC CHECK-UPS, CONTINUOUS MONITORING." (p85)</p>
+<p>"Predictive Survey / Virtual Survey: Uses variables: Building materials, Square footage, Number of wireless users, Applications, Access point models..." (p110-121)</p>
+<p>"The site survey is a snapshot in time. The more snapshots you have the better you can understand the environment." (p133)</p>
+<p>"Metal absorb Wi-Fi signals. Elevators block Wi-Fi signals to a great extent... Tinted glass and window film have metal in them so expect a drop in signal strength." (p136)</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<ol>
+<li><strong>四阶段任务地图</strong>：PLAN（需求+预测勘测）→ VALIDATE（预部署勘测→安装配置→后部署勘测）→ MONITOR/TROUBLESHOOT（频谱/抓包/巡检/持续监控）。</li>
+<li><strong>勘测五型选型</strong>：预测（软件仿真，无需到场）/ 被动（只听不关联，测 RSSI/SNR/干扰）/ 主动（关联入网，测丢包/RTT/漫游）/ 吞吐（吞吐+抖动）/ 频谱（检测一切 RF 源与占空比）。</li>
+<li><strong>预测七步</strong>：导入楼层图→WOW 标比例画墙（赋 dB 衰减）→导入设置→Area 圈区设终端→Auto-Planner 自动摆 AP（可调型号/功率/信道带宽/双 5GHz/最低速率/频段引导等）→复核调参重跑→出报告。</li>
+<li><strong>现场排障三步</strong>：平面图定位（障碍/优先区/AP 落点）→实测五查（AP 型号、同频/邻频、覆盖空洞、功率、布放）→五类纠正（换型号/重做 RF/收窄信道/删低速率/改善布放）。</li>
+</ol>
+<h2 id="a1-lab">A1 · 书中案例（Lab 精要）</h2>
+<ul>
+<li>预部署 Stop-and-Go（p126）：AP 装三脚架通电，Ekahau 走测点击采样，一个点位测完 Freeze 该 AP 再搬站，多点位拼整层热图。</li>
+<li>后部署主动勘测（p127-128）：网内装 ePerf 吞吐服务器，Continuous Survey 匀速走测，采集认证/关联/丢包/RTT/吞吐，加注覆盖空洞与天线朝向后出报告，留作性能基线。</li>
+</ul>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>新建/改造 WLAN 前做设计、部署后做验收、客户投诉"WiFi 差"——用本 skill。</li>
+<li>纯理论解释（为什么 6 GHz 快）——转 wlan-theory-fundamentals；AP 已定位到注册/配置问题——转 enterprise-mode-onboarding；漫游类"固定区域掉线"——转 roaming-l2-l3。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>按四阶段把项目工作项列表，确认不漏"后部署验证"与"持续监控"环节。</li>
+<li>预测勘测：按七步执行，画墙时用标准衰减值——砖墙 10 dB、混凝土 12 dB、石膏板 3 dB、室内窗 1 dB、钢质防火门 13/19 dB、卷帘门 11 dB（保守口径：门全关）。</li>
+<li>AP 布放：天线初始垂直朝向；AP 与墙面等距、尽量居中、高于所有障碍物；长走廊用半定向；远离热源暴晒。</li>
+<li>现场干扰对照：2.4G 查微波炉/无绳电话/荧光灯/蓝牙；5G 查雷达/卫星/户外桥接；金属货架、电梯井、镀膜玻璃按屏蔽体处理（电梯覆盖放井顶/井底/轿厢内）。</li>
+<li>排障走三步法，五查先行再选五类纠正措施之一。</li>
+<li>交付勘测报告时写明"时间快照"局限性，建议周期性复测。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li>勘测预测不了未来的使用模式/扩容/外部干扰——别承诺"测一次管五年"。</li>
+<li>无线网络禁止 Over provisioning：信道数是硬上限，堆 AP 会自干扰；容量不足重做 RF 设计。</li>
+<li>勘测复现不了大规模并发负载，也建议不了天线朝向——天线方向图必须人工调试验证。</li>
+<li>"勘测全绿、用户吐槽"优先查并发负载与天线朝向两个盲区。</li>
+</ul>
+<hr />
+<p>来源条目: f01, f02, f03, f04, f05, p13, p14, p15, p35, ce02, ce03, ce04, ce05, g19, g20</p></main></div></body></html>

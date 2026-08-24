@@ -1,0 +1,158 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>wlan-trouble-methodology — DT00XTE478 · Stellar WLAN 高级排障</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE478 · Stellar WLAN 高级排障</h1>
+<div class="sub">187 页 · 无线排障专题（方法论/工具箱/四层排障/勘测/TKC）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">方法论</div>
+<a href="skills/wlan-trouble-methodology.html" class="on">wlan-trouble-methodology</a>
+<div class="grp">工具与体检</div>
+<a href="skills/stellar-ap-toolbox.html">stellar-ap-toolbox</a>
+<a href="skills/stellar-ap-system-health.html">stellar-ap-system-health</a>
+<div class="grp">故障域</div>
+<a href="skills/client-connection-trouble.html">client-connection-trouble</a>
+<a href="skills/dot1x-radius-trouble.html">dot1x-radius-trouble</a>
+<a href="skills/network-side-trouble.html">network-side-trouble</a>
+<a href="skills/wireless-rf-roaming-trouble.html">wireless-rf-roaming-trouble</a>
+<div class="grp">勘测纠正</div>
+<a href="skills/site-survey-remediation.html">site-survey-remediation</a></aside><main><h1>wlan-trouble-methodology</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="wlan">WLAN 排障总方法论：七步流程 · 三域根因地图 · 访谈四问</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>Identify: Determine if problem exists, Ask questions &amp; collect infos. Locate: Tied to physical space, Tied to specific devices, Use OSI model to define layer. Isolate: Identify OSI Layer, Specific devices, Specific locations, Driver versions. Re-Create: If you can't recreate this issue, return to step one and ask more questions. Solve: Formulate &amp; Implement plans. Verify: Extensive testing to confirm and verify the solution did indeed solve the issue. Document: Document initial issues, processes, diagnostics &amp; resolutions. (p10)</p>
+<p>Wireless: End User, Wi-Fi Device, Client, RF Medium, Stellar AP. Local Network: LAN, Switch, Firewall &amp; WAN Router, Servers (DHCP Configuration, Lease duration, Address Pool scope, DHCP options; DNS; 802.1X/RADIUS; LDAP/AD). Internet: Bandwidth Throttling, Jitter, Latency, External DNS, External Captive Portal - Issues independent from the network administrator. (p5-8)</p>
+<p>Same behavior for all users? Yes - The issue is not related to a specific device/hardware. In the same section of the building - Not a global OmniVista configuration issue. The impacted clients are all associated to the Stellar APs connected to the same access switch? Yes - The issue might come from the SSID configuration or the access switch configuration. Same issue on other SSIDs in the same location? No, only the connection to the Employee SSID is impacted. (p17)</p>
+<p>Test the solution in your environment. Apply the correction in the customer environment. Document the troubleshooting case: Issue description, Topology, Firmware versions, Diagnostic, Resolution. Follow the case - Check that the solution is permanent - No side effects due to the resolution. (p13-14)</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<p><strong>七步流程（含回退规则）</strong></p>
+<ol>
+<li><strong>Identify 识别</strong>：问问题、收集信息，确认问题真实存在</li>
+<li><strong>Locate 定位</strong>：绑定物理空间、具体设备，用 OSI 模型定层</li>
+<li><strong>Isolate 隔离</strong>：锁定 OSI 层、具体设备、具体位置、驱动版本</li>
+<li><strong>Re-Create 复现</strong>：在自有环境重建；<strong>无法复现 → 回到第 1 步重新提问</strong>（核心回退规则）</li>
+<li><strong>Solve 解决</strong>：制定并实施方案（驱动/配置/设计变更）</li>
+<li><strong>Verify 验证</strong>：充分测试确认修复有效</li>
+<li><strong>Document 记录</strong>：记录问题、过程、诊断、解决方案，沉淀到 ALE TKC 知识库</li>
+</ol>
+<p><strong>三域根因地图（排障前扫一遍，保证不漏层）</strong></p>
+<table>
+<thead>
+<tr>
+<th>域</th>
+<th>检查要素</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>无线侧</td>
+<td>终端用户技能/设备开关、驱动、射频能力、802.1X 配置文件、最低速率要求、漫游算法、关联/认证/加密/上层协议、RF 介质（RSSI/SNR/覆盖）、AP 配置与固件</td>
+</tr>
+<tr>
+<td>本地网络侧</td>
+<td>PoE/天线/布放/物理层、交换机 VLAN/端口速率/QoS、防火墙 ACL/NAT/限速、DHCP（租期/地址池/选项）、DNS、RADIUS/LDAP/AD 服务器群</td>
+</tr>
+<tr>
+<td>互联网侧</td>
+<td>出口带宽、抖动时延、外部 DNS、外部门户——<strong>不在网络管理员管控内</strong>，先划出去再排</td>
+</tr>
+</tbody>
+</table>
+<p><strong>访谈四问（逐级收窄，每个答案决定下一问方向）</strong></p>
+<table>
+<thead>
+<tr>
+<th>问</th>
+<th>答案 → 推断 → 下一步</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. 所有用户都受影响？</td>
+<td>是 → 排除个别终端硬件问题</td>
+</tr>
+<tr>
+<td>2. 固定位置还是全楼？</td>
+<td>固定区域 → 排除全局 OmniVista 配置问题</td>
+</tr>
+<tr>
+<td>3. 都挂在同一台接入交换机下？</td>
+<td>是 → 指向 SSID 配置或该交换机配置</td>
+</tr>
+<tr>
+<td>4. 同位置其他 SSID 正常？</td>
+<td>只影响单个 SSID → 锁定该 SSID 的 VLAN/配置</td>
+</tr>
+</tbody>
+</table>
+<p><strong>定层后导航（先低层后高层）</strong></p>
+<ul>
+<li>基础层（AP 硬件/系统/门户/集群）→ <code><a href="stellar-ap-system-health.html">stellar-ap-system-health</a></code></li>
+<li>无线层（SSID/RF/热图/漫游）→ <code><a href="wireless-rf-roaming-trouble.html">wireless-rf-roaming-trouble</a></code></li>
+<li>客户端层（关联/取址/掉线/认证）→ <code><a href="client-connection-trouble.html">client-connection-trouble</a></code>、<code><a href="dot1x-radius-trouble.html">dot1x-radius-trouble</a></code></li>
+<li>网络层（AP 取址/连通/邻居/服务器）→ <code><a href="network-side-trouble.html">network-side-trouble</a></code></li>
+</ul>
+<h2 id="a1">A1 · 书中案例</h2>
+<p>主案例（p11-18）：整栋楼客户端登不进 Employee SSID。访谈四问锁定范围后取 AP 日志与交换机配置比对：OmniVista 里 SSID 映射 VLAN 10，接入交换机 Building_A 上配的是 VLAN 20，tagged VLAN 不一致导致认证后拿不到正确子网。Resolution：更新交换机 tagged VLAN ID=20。教训：<strong>全员连不上而 AP 本身正常 → 优先怀疑交换机侧 VLAN</strong>。</p>
+<p>复现法案例（p12）：向客户采集四类配置——接入交换机 vcboot.cfg、OmniVista 组织配置、Stellar AP 配置备份、服务器配置备份——在自有环境 1:1 重建拓扑后重现问题，排除客户描述偏差与隐藏根因。</p>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>任何故障刚接手、还不知道从哪查起时，<strong>必先走本 skill</strong>。</li>
+<li>与专项 skill 的区分：本 skill 只负责"怎么问、怎么定层、怎么收窄、怎么收尾"；具体命令与阈值在四个分层 skill 与工具箱 skill 中。已明确是某层问题的直接进对应 skill。</li>
+<li>TKC 检索：当故障疑似已知问题时，按"版本比对三分支"查 TKC——同版本看 Resolution；案例版本更旧则可能已被新 build 修复；套用前<strong>必须亲自重复诊断步骤且结论一致</strong>，否则换用例或联系技术支持创建新用例（p127-130）。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>排障前置：确认全网（AP、OmniVista、接入交换机）同步到同一 NTP 服务器，否则多设备日志无法对齐成时间线（p22）。</li>
+<li>执行访谈四问，写下每一问的答案与推断。</li>
+<li>对照三域根因地图列出嫌疑项，按 OSI 从低层到高层排序。</li>
+<li>需要复现时按四类配置清单采集（vcboot.cfg / OmniVista 组织 / AP 备份 / 服务器备份），自有环境重建并复现；复现失败回第 2 步重新提问。</li>
+<li>制定方案 → 先自有环境测试 → 应用到客户环境 → 让客户用日常业务（Rainbow、语音、邮件）验证稳定性。</li>
+<li>关单标准：方案永久有效且无副作用；记录五字段（问题描述/拓扑/固件版本/诊断/解决方案），沉淀 TKC。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li><strong>无 NTP 的代价</strong>：教材演示 Error 10 事件，AP 日志显示 10/11/2019 08:15:30，OmniVista 与交换机显示 15/11/2019 13:15:30，相差五天，关联分析直接失效。跳过对时直接翻日志是第一大弯路。</li>
+<li>一上来就怀疑高层（认证/DNS）而实际是 PoE/VLAN 底层问题——先低层后高层。</li>
+<li>复现失败时不要硬造解释，规则明确要求回第一步重新提问。</li>
+<li>修复后不做客户真实业务验证就关单，副作用无从发现。</li>
+<li>本 skill 不含具体命令；阈值与命令判读见各分层 skill。</li>
+</ul>
+<hr />
+<p>来源条目: f01, f02, f03, f04, f05, f08, f10, ce01, ce19, p01（术语 g10 Cluster, g12/g13 OmniVista, g14 TKC, g31 Final_role, g32 NTP）</p></main></div></body></html>

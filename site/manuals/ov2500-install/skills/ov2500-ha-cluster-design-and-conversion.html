@@ -1,0 +1,104 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ov2500-ha-cluster-design-and-conversion — OV2500 4.9R2 · 安装与升级指南</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>OV2500 4.9R2 · 安装与升级指南</h1>
+<div class="sub">326 页 · 网管平台部署手册（三平台/HA/升级链）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">规划</div>
+<a href="skills/ov2500-sizing-and-platform-planning.html">ov2500-sizing-and-platform-planning</a>
+<div class="grp">安装</div>
+<a href="skills/ov2500-install-on-esxi-hyperv-kvm.html">ov2500-install-on-esxi-hyperv-kvm</a>
+<div class="grp">HA 与升级</div>
+<a href="skills/ov2500-ha-cluster-design-and-conversion.html" class="on">ov2500-ha-cluster-design-and-conversion</a>
+<a href="skills/ov2500-upgrade-backup-restore.html">ov2500-upgrade-backup-restore</a></aside><main><h1>ov2500-ha-cluster-design-and-conversion</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="ov2500-ha-l2l3">OV2500 HA 集群：L2/L3 选型、转换与集群运维</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>"Layer 2 Configuration - In a Layer 2 HA Configuration, both OmniVista Server VMs must be on the same subnet. In this configuration, you configure a virtual Cluster IP address... Layer 3 Configuration - In a Layer 3 HA Configuration the OmniVista Server VMs are on different subnets, with a unique IP address for each server." (p41)</p>
+<p>"You can convert a 4.9R2 Standalone Installation to a 4.9R2 HA Installation if the 4.9R2 Standalone installation was upgraded from a 4.3R2 or newer Standalone Installation. You cannot convert... if... upgraded from a 4.3R1 Standalone Installation. Converting an L2 HA installation to an L3 HA installation is not supported. Only a fresh L3 HA installation is supported." (p40-41)</p>
+<p>"The recommended network bandwidth is 1Gbps. The recommended network latency is 1ms." (p42)</p>
+<p>"Enter 17 and press Enter to change the IP address and Hostname (maximum of 15 characters) of the Peer Node. It is not recommended to re-configure the Peer Node once a cluster is initialized. If you change the configuration, you must take a backup of OmniVista and contact Customer Support to re-configure the Cluster." (p303)</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<ol>
+<li><strong>资格校验</strong>：HA License 已导入？规格 ≥Medium、设备 ≤4000？来源版本：全新 4.9R2 Standalone 或自 ≥4.3R2 升级而来（4.3R1 来源不能转）。</li>
+<li><strong>拓扑选型</strong>（一锤定音，L2 不能改 L3）：</li>
+<li><strong>L2</strong>：两节点同子网 + 虚拟 Cluster IP。设备零改动（把原 Standalone IP 腾出来当 Cluster IP 是最佳实践）。功能完整。</li>
+<li><strong>L3</strong>：两节点跨子网、各有独立 IP。设备须能同时连两节点；须配 Preferred Node（cliadmin）；受限：设备回连类功能（sFlow、Policy 对 AOS）不支持、IoT 需 failover 后重应用、Syslog 需外部服务器、DNS/Provisioning 需重配、Captive Portal 被禁用；L3 冗余仅 AP13XX+（AWOS 5.0+）。</li>
+<li><strong>地址与命名规划</strong>：Node1/Node2 物理 IP；L2 专属 OV 虚拟 IP、可选 Captive Portal 虚拟 IP 与附加 OV Web 虚拟 IP（须与对应静态 IP 同子网）；主机名 ≤15 字符全小写（ov1 非 OV1）。</li>
+<li><strong>转换执行</strong>：Node 1 菜单 12 Convert to Cluster → Node 2 菜单 13 Join Cluster（输 Node 1 物理 IP 与 cliadmin 密码）。</li>
+<li><strong>集群运维铁律</strong>：操作前看 Show OV Cluster Status，Data Sync 必须 "Up to Date"；集群级操作只在 Active 节点做。</li>
+</ol>
+<h2 id="a1">A1 · 书中案例</h2>
+<ul>
+<li>已有 Standalone（IP 10.1.1.10）转 L2 HA：转换 Node 1 时给它分配新物理 IP，把 10.1.1.10 腾出来作 Cluster IP——全网设备不用改地址（p21, p40）。</li>
+<li>转换向导中手痒改了已有 Captive Portal 配置——结果所有 Captive Portal 相关设备配置（含 Unified Profile 的 Global Settings）全部要手动重配；正确做法是保持原配置直接回车（p46）。</li>
+<li>Standby 节点巡检发现 upam、nginx 服务 "Stopped"——这是预期行为不是故障，别急着"修复"（p52）。</li>
+<li>L3 failover 后界面显示 AP down 长达 5-10 分钟——AP 实际仍在线，只是在与新节点重建会话，误判会导致无谓重启设备（p42）。</li>
+</ul>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li><strong>用本 skill</strong>：客户要求网管高可用、单机要改双机、或集群已建需日常运维/节点替换/failover 排障。</li>
+<li>与 <code><a href="ov2500-upgrade-backup-restore.html">ov2500-upgrade-backup-restore</a></code> 的区分：<strong>升级</strong>一个已存在的 HA 集群（维护模式、先升 Standby、重启时机）归升级单元；本 skill 管"建集群"和"平时管集群"。扩盘（HA 两节点 Extend Partitions）也在升级单元的存储部分。</li>
+<li>与 <code><a href="ov2500-sizing-and-platform-planning.html">ov2500-sizing-and-platform-planning</a></code> 的区分：那一边只给容量门槛（≥Medium、≤4000 设备）；选型落地的全部细节在本 skill。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>前置校验：导入 HA License；确认规格 ≥Medium、设备数 ≤4000、来源版本 ≥4.3R2（全新 4.9R2 安装亦可）。</li>
+<li>选拓扑：能同子网就选 L2（设备零改动、功能全）；必须跨子网才选 L3，并逐项核对 L3 功能受限清单与 AP 型号门槛（AP13XX+ / AWOS 5.0+），确认 Captive Portal 被禁可接受。</li>
+<li>网络基线：节点间带宽 1Gbps、延迟 1ms；宿主机网卡驱动最新（Hyper-V Broadcom b57nd60a.sys ≥16.8；VMware Tg3-3.133d.v55.1-101300361+）。</li>
+<li>规划地址清单：两节点物理 IP；L2 的 Cluster IP（建议用原 Standalone IP）及可选虚拟 IP；主机名（≤15 字符小写）。</li>
+<li>备份 + 快照后执行转换：Node 1 菜单 12 Convert to Cluster（Captive Portal 已配置则保持默认回车）；Node 2 菜单 13 Join Cluster。转换全程在 Console 做，禁止 SSH。</li>
+<li>验证：Show OV Cluster Status 确认 Data Sync "Up to Date"、集群状态正常；L3 集群注意 Active 由系统随机指派，确认谁是 Active。健康判据：Active 全服务 Running；Standby 除 upam/nginx（及自定义 RADIUS 证书时的 ovradius）外全 Running。</li>
+<li>日常运维：任何配置/升级/扩盘前先确认 "Up to Date"（同步中严禁操作）；集群级参数（Cluster IP、Manual Failover、Maintenance Mode、Preferred Active Node）只在 Active 节点改。</li>
+<li>节点故障替换：Remove Peer Node From Cluster（仅 Active 可发）后该节点即报废不可复用——只能新起 VM、扩数据分区到与旧节点一致后 Join Cluster。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li><strong>L2 不能转 L3</strong>，L3 只能全新搭建（仅有的例外：全新 4.9R1 Standalone 加第二节点组 L3；4.8R2 升 4.9R1 后转 L3）。</li>
+<li>4.3R1 升级来源的 Standalone 不能转 HA（p40-41）。</li>
+<li>集群初始化后<strong>不要</strong>改 Peer Node 信息或本节点 IP/端口——必须先备份并联系客服重配集群（p303）；改 Cluster IP/虚拟 IP/端口是支持的（仅 Active 节点，同子网）。</li>
+<li>被移除节点保留 HA 菜单、无法加入其他集群，视同报废（p299）。</li>
+<li>Data Sync 显示百分比（同步中）时在该节点做配置，变更可能被覆盖/分叉（p296）。</li>
+<li>L3 功能受限清单见方法论第 2 步；L3 必须配 Preferred Active Node（默认不设，p302）。</li>
+<li>L3 failover 后 AP 假 down 5-10 分钟是正常窗口（p42）；L3 升级 ov1 前必须停 ovactivemq（详见升级单元 g26 场景）。</li>
+<li>HA 安装的备份/恢复自 4.5R1 起才支持。</li>
+</ul>
+<hr />
+<p>来源条目: p02, p15, p16, p17, p18, p19, p20, p21, p24, ce11, ce12, ce13, ce14, ce16, g03, g04, g05, g06, g07, g08, g09, g10, g11, g12, g26, g27, g28</p></main></div></body></html>

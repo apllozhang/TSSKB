@@ -1,0 +1,95 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>spb-micro-segmentation — DT00XPS279 · OmniSwitch LAN SPB 售前</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XPS279 · OmniSwitch LAN SPB 售前</h1>
+<div class="sub">Issue 05 · 147 页 · SPB 技术推销课（卖点弹药/架构/L3 服务/案例/三技术对比）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">售前攻防</div>
+<a href="skills/spb-presales-battlecard.html">spb-presales-battlecard</a>
+<a href="skills/spb-micro-segmentation.html" class="on">spb-micro-segmentation</a>
+<div class="grp">架构与设计</div>
+<a href="skills/spb-topology-isis-design.html">spb-topology-isis-design</a>
+<div class="grp">边缘与服务</div>
+<a href="skills/spb-edge-services.html">spb-edge-services</a>
+<div class="grp">L3 集成</div>
+<a href="skills/spb-l3-integration.html">spb-l3-integration</a>
+<div class="grp">交付与选型</div>
+<a href="skills/spb-ov2500-delivery.html">spb-ov2500-delivery</a>
+<a href="skills/spb-vs-evpn-mpls-selection.html">spb-vs-evpn-mpls-selection</a>
+<a href="skills/spb-stp-migration-cases.html">spb-stp-migration-cases</a>
+<a href="skills/spb-license-spec-sizing.html">spb-license-spec-sizing</a></aside><main><h1>spb-micro-segmentation</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="spb">SPB 宏/微分段落地法（零信任三步流水线）</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>"MACRO AND MICRO-SEGMENTATION — ✓ Authenticate ✓ Classify ✓ Provision — Users; ✓ Authenticate ✓ Classify ✓ Provision — HVAC; ✓ Zero-trust framework; ✓ Software-defined segmentation."（p11）</p>
+<p>"Dynamic SAPs supported from UNP service profiles. Device assignment to an SPB service profile. Automatic SAP creation... MAC auth? 802.1x auth? Classification Rules?"（p56）</p>
+<p>"Services stretch and contract as needed. Policy and identity driven. Reduced attack surface."（p15-17）</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<p>把"零信任"从概念落到三步可执行流水线，对每类接入对象（用户、暖通 HVAC 等 IoT 设备）统一执行：</p>
+<pre><code>认证（MAC 认证 / 802.1x） → 分类（分类规则） → 供给（SPB service profile 自动下发）
+</code></pre>
+<ul>
+<li><strong>宏分段</strong>：粗粒度隔离（I-SID 级，一个服务实例一个隔离域）；</li>
+<li><strong>微分段</strong>：细粒度策略（profile 内含 VLAN Tag→I-SID→BVLAN 映射、组播模式、VLAN 转换、ACL/QoS 策略表）；</li>
+<li><strong>动态 SAP</strong>（p18）：设备认证通过后被指派到 SPB 业务 profile，SAP 自动创建——分段边界随身份动态建立，不需手工配端口。</li>
+</ul>
+<p>三卖点话术：服务按需伸缩（stretch and contract）、策略与身份驱动、攻击面收敛。</p>
+<h2 id="a1">A1 · 书中案例</h2>
+<p>p15-17 用同一校园场景连续三页演示动态弹性：体育场/宿舍/图书馆/STEM 实验室/教职工/学生各属不同分段，一个 STEM PROJECT 临时把跨楼宇成员拉进同一专用服务，项目结束服务自动收缩。p11 配官方演示视频（youtu.be/IttOgoATWpY，主题即认证-分类-供给三步）。</p>
+<h2 id="a2">A2 · 触发场景</h2>
+<ul>
+<li>教育/园区客户问"微分段具体怎么落地、IoT 怎么管"；</li>
+<li>需要一个零信任入门故事脚本打动非技术决策人时。
+与相邻 skill 区分：只讲"为什么换 SPB"的总体卖点走 <code><a href="spb-presales-battlecard.html">spb-presales-battlecard</a></code>；SAP 封装/组播等数据面细节走 <code><a href="spb-edge-services.html">spb-edge-services</a></code>；OV2500 上配置 UNP Profiling 的操作走 <code><a href="spb-ov2500-delivery.html">spb-ov2500-delivery</a></code>。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>盘点接入对象类型（用户终端、打印机、HVAC/摄像头等 IoT），每类画一行"认证方式 → 分类规则 → 目标 service profile"。</li>
+<li>用 STEM 项目场景讲弹性价值：临时业务拉专服务、结束自动收缩、全程策略驱动。</li>
+<li>演示路径：UNP profile 认证派生动态 SAP（或经 OV2500 的 UNP Profiling 向导），展示攻击面收敛。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li>分段粒度靠 I-SID（24 位，千万级空间）承载，不要用 BVLAN 做业务/分段维度（BVLAN 全网仅 16 个、推荐 4 个——见拓扑 skill 的 ce05）。</li>
+<li>动态 SAP 依赖端侧认证方式：无 supplicant 的 IoT 设备走 MAC 认证，有 supplicant 的终端走 802.1x，方案里要逐类写清。</li>
+<li>教材只给了场景与机制，具体 profile 字段与策略表以现网 AOS 版本文档为准。</li>
+</ul>
+<hr />
+<p>来源条目: f04, p18, c15, g35</p></main></div></body></html>

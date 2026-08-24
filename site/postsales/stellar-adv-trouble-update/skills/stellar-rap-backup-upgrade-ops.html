@@ -1,0 +1,107 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>stellar-rap-backup-upgrade-ops — DT00XTE378 · Stellar WLAN 高级排障与更新</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE378 · Stellar WLAN 高级排障与更新</h1>
+<div class="sub">488 页 · 排障篇同 T478 + Features Update 增量（新硬件/云运维/升级迁移）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">上线与业务</div>
+<a href="skills/stellar-enterprise-onboarding.html">stellar-enterprise-onboarding</a>
+<a href="skills/stellar-ssid-policy-advanced.html">stellar-ssid-policy-advanced</a>
+<div class="grp">云运维</div>
+<a href="skills/stellar-rap-backup-upgrade-ops.html" class="on">stellar-rap-backup-upgrade-ops</a>
+<div class="grp">硬件速览</div>
+<a href="skills/stellar-wifi7-hardware-rf-quickref.html">stellar-wifi7-hardware-rf-quickref</a></aside><main><h1>stellar-rap-backup-upgrade-ops</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="rap-ap-cirrus">RAP 与运维：远程 AP 双流程 · Cirrus 云管 · 备份/恢复/升级 · 监控告警</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>"Freemium: Self Registration, Free of charge... Premium: All OV CIRRUS capabilities... Max amount of licenses: 5000... 1 license per Access Point; 50xGuest and 50xBYOD licenses included per AP license." (p409-411)</p>
+<p>"1 – Stellar Access Point Startup &amp; Registration; 2 - VPN &amp; OmniVista 2500 Settings Retrieval; 3 - VPN Tunnel (Management Traffic) Establishment; 4 – Configuration Settings Retrieval; 5 - VPN Tunnel (Clients Traffic) &amp; Client Connection." (p384-390)</p>
+<p>"The configuration files are transferred in the WORKING and CERTIFIED folders but are NOT applied on the RUNNING configuration... launch the following command: reload from working no rollback-timeout." (p429)</p>
+<p>"It is not possible to perform a restore on a Stellar AP, as most of the configuration is pushed when the Access Points is inserted in an AP Group." (p430)</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<p>四块运维能力：</p>
+<ol>
+<li><strong>RAP 双模式选型</strong>：Premium（只靠 Cirrus，全配置在云，四步上线）/ Freemium（Cirrus 只当引路人 + 本地 OV2500，五步双隧道：管理隧道连 OV2500，数据隧道 L2GRE 承载客户端流量）。两者都需公司侧部署 ALE VPN Server 虚机（OVF 从 BPWS 下载）；Freemium 的 VPN Server 要三块网卡（公网/管理/数据）。</li>
+<li><strong>Cirrus 上云三查</strong>：版本底线（AOS 8.4.1.R03+〔6560/6860N/6865/6870/6900〕、6.7.2.R03+〔6350/6450〕、5.1R1+〔2260/2360〕；AWOS 3.0.2+ 全部 AP）→ 账号模式（Freemium 免费受限可升 Premium；单实例 5000 设备/4000 AP）→ 注册流程（入 Catalog → 激活 → 赋许可 → 预配置）。</li>
+<li><strong>备份-恢复-升级三段</strong>：Save All 存 Running（交换机另 Copy to Certified）→ Resource Manager 备份（By Devices=交换机需 FTP；By AP Group=Stellar 唯一方式；类型 Configuration Only/Full/Images Only，可调度）→ 恢复仅对 AOS 有效且必须 reload from working；升级走 Upgrade Image 或单台 AP Web。</li>
+<li><strong>监控闭环</strong>：Topology 状态语义 + Trap Responder 按严重级别发邮件；Heat Map/Floor Plan 做 RF 现状与规划。</li>
+</ol>
+<h2 id="a1-lab">A1 · 书中案例（Lab 精要）</h2>
+<ul>
+<li><strong>c09 RAP Freemium 全流程</strong>：Cirrus Device Catalog 凭序列号+MAC 声明并勾 Is this a Remote AP，配管理 VPN（公网 IP:6550、客户端池、OV2500 IP），导出 .conf 传到 VPN Server <code>/opt/OmniVista_2500_NMS/data/vpn_conf/vpn_profile</code>，建 vpn_mgmt 服务绑端点；OV2500 加默认路由（网关=VPN Server 私网 IP）后 AP 进 Managed。数据 VPN 第二条（vpn_data，端口 6551，L2GRE，绑 eth2）；SSID 的 Default VLAN 选 <strong>Use Tunnel（Tunnel ID 必须为 0）</strong>。</li>
+<li><strong>c10 备份恢复</strong>：故意建临时 VLAN 70-80 再恢复——Result 显示 SUCCESS 但 VLAN 仍在，需 <code>reload from working no rollback-timeout</code>（约 3 分钟）+ VLAN Manager Poll 刷新。</li>
+<li><strong>c11 告警</strong>：Trap Responder 规则（Agent=AP Group、severity=Critical、发邮件，主题可用 $TrapAgent$ 变量）+ System Settings 配 SMTP；重启 AP 人为制造 Critical 验证送达。</li>
+<li><strong>c12 规划</strong>：Heat Map 画 5 米标尺线 + WallsHeavy 描墙 + 拖 AP 看真实覆盖；Floor Plan Auto Deployment（质量/型号/功率输入）算法自动布点。</li>
+</ul>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>分支/家庭办公把公司网延伸出去（RAP）；存量网络上云评估（版本+许可盘点）；变更前备份与固件升级；告警邮件体系搭建。</li>
+<li>与 <code><a href="stellar-enterprise-onboarding.html">stellar-enterprise-onboarding</a></code> 的区分：那本 skill 是本地 OV2500 纳管常规 AP；本 skill 的 AP 远在公网另一侧、靠 VPN 隧道回公司，且含云管 Cirrus 事项。</li>
+<li>与 <code><a href="stellar-ssid-policy-advanced.html">stellar-ssid-policy-advanced</a></code> 的区分：SSID 常规配置在那边；本 skill 只涉及 RAP 场景下 SSID 的 Use Tunnel 特殊项。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<p><strong>RAP Freemium 部署</strong>：
+1. 前置核对：AP 非 AP1101（不支持 RAP）；VPN Server VA 三网卡（公网/管理/数据）。
+2. Cirrus 建 Freemium 账号，Catalog 声明 AP（序列号+MAC，勾 Remote AP），配管理 VPN 参数，导出 .conf。
+3. .conf 上传 VPN Server 指定目录，建 vpn_mgmt 服务（Layer 3 VPN）绑端点，Apply。
+4. 重启 AP，Maintenance &gt; VPN Status 见 peer 握手即通；OV2500 加 192.168.0.0/24 路由指向 VPN Server。
+5. 建数据 VPN（L2GRE）第二个 .conf 导入 eth2 端点；AP Group 指定 Data VPN。
+6. SSID 的 Default VLAN/Network 选 Use Tunnel（Tunnel ID=0 + 选 VPN Server）。</p>
+<p><strong>Cirrus 注册</strong>：
+7. 盘点版本（对照四条底线，低于先本地升级）；Freemium 一次性激活；Premium 逐台赋许可 + 预配置。
+8. 卡 Waiting For First Contact：AOS 停云代理 <code>cloud-agent admin-state disable force</code> 或重启；Stellar AP 开机约 20 秒按 [f] 进 failsafe 做 firstboot。</p>
+<p><strong>备份/升级/监控</strong>：
+9. 变更前铃铛 Save All；Resource Manager 备份（交换机按设备+FTP，AP 按 AP Group）。
+10. 恢复后必跟 <code>reload from working no rollback-timeout</code>，变更窗口预留 3 分钟以上。
+11. 升级：.zip 原包直接 Import（自动解压）→ 选型号 → 选设备/AP 组 → Install；或单台 AP 走 Web（AP Group 开 AP Web）。
+12. 告警：Trap Responder 建规则 + System Settings 配 SMTP 并发测试邮件。</p>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li><strong>AP1101 不兼容 RAP</strong>，远程站点选型避开。</li>
+<li><strong>Freemium vs Premium 是账号组合决定架构</strong>：Freemium 必须配本地 OV2500；Premium 全在云。</li>
+<li><strong>Restore 显示成功 ≠ 生效</strong>：文件只落 WORKING/CERTIFIED，必须 reload（ce04）。</li>
+<li><strong>固件包是 WinZip 自解压格式，切勿手动解压</strong>，OV 导入时自动解包（ce05）。</li>
+<li><strong>Stellar AP 不能 Restore</strong>：配置来自 AP Group 下推；备份文件用于离线分析/给技术支持；"恢复"AP 的实际路径是修 AP Group 或恢复出厂重新入组（reset 6 秒 / <code>ssudo firstboot -y</code>）（ce10）。</li>
+<li><strong>按地图备份不含 AP</strong>：地图里混有 AP 也不备份，AP 只能按 AP Group 备份（p19）。</li>
+<li>Tunnel ID 必须 0；Cirrus 卡激活先查版本底线。</li>
+<li>Premium 每 AP 许可附送 50 Guest + 50 BYOD 门户账号，容量规划别漏算。</li>
+</ul>
+<hr />
+<p>来源条目: f05, f06, f07, f08, p16, p17, p18, p19, c09, c10, c11, c12, ce04, ce05, ce10</p></main></div></body></html>

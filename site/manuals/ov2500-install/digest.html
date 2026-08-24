@@ -1,0 +1,156 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>精华长文 DIGEST — OV2500 4.9R2 · 安装与升级指南</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>OV2500 4.9R2 · 安装与升级指南</h1>
+<div class="sub">326 页 · 网管平台部署手册（三平台/HA/升级链）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">规划</div>
+<a href="skills/ov2500-sizing-and-platform-planning.html">ov2500-sizing-and-platform-planning</a>
+<div class="grp">安装</div>
+<a href="skills/ov2500-install-on-esxi-hyperv-kvm.html">ov2500-install-on-esxi-hyperv-kvm</a>
+<div class="grp">HA 与升级</div>
+<a href="skills/ov2500-ha-cluster-design-and-conversion.html">ov2500-ha-cluster-design-and-conversion</a>
+<a href="skills/ov2500-upgrade-backup-restore.html">ov2500-upgrade-backup-restore</a></aside><main><h1>精华长文 DIGEST</h1><h1 id="ov2500-49r2">OV2500 4.9R2 部署精华：不读全书，先看这一篇</h1>
+<blockquote>
+<p>目标读者：要交付、改造或升级 OmniVista 2500 网管平台的工程师。数字全部带页码，出处为 OV2500 4.9R2 Installation and Upgrade Guide（326 页）。</p>
+</blockquote>
+<h2 id="ov2500">一、一页看懂 OV2500 部署</h2>
+<p><strong>交付形态只有一种</strong>：4.9R2 以虚拟设备（VA，Virtual Appliance）发布，没有 Windows/Linux 裸机安装器，客户坚持物理机部署无解，只能上 Hypervisor（p8）。支持三平台：VMware ESXi 6.5/6.7/7.0.2/8.0、Microsoft Hyper-V 2012R2-2022（含 Win10 专业版）、Linux KVM（Ubuntu 22.04）（p8）。</p>
+<p>规模四档（p9），装之前先把档位定死——系统会按 VA 实际资源拒绝超配，分了 20GB 内存就只能选 Low 档（p8-9）：</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>Low</th>
+<th>Medium</th>
+<th>High</th>
+<th>Very High</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>管理设备总数</td>
+<td>500</td>
+<td>2,000</td>
+<td>5,000</td>
+<td>10,000</td>
+</tr>
+<tr>
+<td>Stellar AP 上限</td>
+<td>500</td>
+<td>2,000</td>
+<td>4,000</td>
+<td>4,000</td>
+</tr>
+<tr>
+<td>逻辑处理器（2.4GHz）</td>
+<td>8</td>
+<td>8</td>
+<td>12</td>
+<td>12</td>
+</tr>
+<tr>
+<td>内存 Standalone / HA</td>
+<td>20GB / 不支持</td>
+<td>36GB / 40GB</td>
+<td>64GB / 64GB</td>
+<td>64GB / 64GB</td>
+</tr>
+<tr>
+<td>数据分区（分区1固定50GB）</td>
+<td>512GB</td>
+<td>1TB</td>
+<td>2TB</td>
+<td>2TB</td>
+</tr>
+<tr>
+<td>存储读写速度</td>
+<td>100</td>
+<td>150</td>
+<td>200</td>
+<td>200 MB/s</td>
+</tr>
+</tbody>
+</table>
+<p>资源三条硬规矩：内存不超宿主机实余量且必须预留（Reservation）、CPU Shares 设 High、逻辑核不超档位推荐值（p10）。另需放行 6 个外部域名的 443 端口（或配代理），评估许可在 lds.al-enterprise.com 用 99999/evaluation/omnivista 生成，90 天全功能（p22-23）。</p>
+<h2 id="_1">二、安装主线：部署 → 向导 → 首检</h2>
+<ol>
+<li><strong>导 VA</strong>：按平台取包（ESXi 用 OVF+VMDK，KVM 用 qcow2 双盘），部署 VM 但<strong>不要提前挂扩展盘</strong>——必须等 OmniVista 配置完并重启后再加（p10）。KVM 系统盘选 VirtIO 总线并设 Discard=unmap（p33）。</li>
+<li><strong>初始向导</strong>（VM Console）：设 Technical Support Code 密码 → 设 cliadmin 密码（<strong>丢失无法找回，只能重装</strong>）→ 主机名（≤15 字符小写）→ 三个 IP（OV / Captive Portal / 附加 Web，推荐各自独立子网+独立网卡）→ NTP。</li>
+<li><strong>首检</strong>：重启后加盘/加网卡；首次登录 https://&lt;服务器IP&gt; 导入许可；Watchdog 里确认全部服务 Running。日常菜单入口：Console 或 SSH 2222 端口 cliadmin，SFTP 22 传证书和备份（p272）。</li>
+</ol>
+<h2 id="ha">三、HA 双集群要点</h2>
+<ul>
+<li><strong>资格</strong>：HA License 已导入、规格 ≥Medium、设备 ≤4000；来源必须是全新 4.9R2 或从 ≥4.3R2 升级而来（4.3R1 来源不能转，p40-41）。</li>
+<li><strong>L2 还是 L3（一锤定音）</strong>：L2 两节点同子网+虚拟 Cluster IP，设备零改动、功能完整；L3 跨子网，受限一串——sFlow、AOS Policy、Captive Portal 不支持，IoT 需重应用，Syslog 需外部服务器，L3 冗余仅 AP13XX+（AWOS 5.0+），且必须配 Preferred Node（p41-42）。<strong>L2 不能转 L3，L3 只能全新搭建</strong>（p40-41）。能同子网就选 L2；最佳实践是把原 Standalone IP 腾出来当 Cluster IP（p21, p40）。</li>
+<li><strong>转换步骤</strong>：备份+快照后，Node1 菜单 12 Convert to Cluster → Node2 菜单 13 Join Cluster，全程 Console 做、禁止 SSH；转换向导里已配置的 Captive Portal 保持默认回车，别改（p46）。网络基线：节点间 1Gbps 带宽、1ms 延迟（p42）。</li>
+<li><strong>脑裂防护/日常铁律</strong>：任何操作前看 Show OV Cluster Status，Data Sync 必须 "Up to Date"（显示百分比=同步中，此时做配置变更可能被覆盖分叉，p296）；集群级操作只在 Active 节点做；集群初始化后不要改 Peer Node 信息，要改先备份再联系客服（p303）；被 Remove 的节点视同报废不可复用（p299）。Standby 节点上 upam、nginx 显示 Stopped 是预期行为，不是故障（p52）。</li>
+</ul>
+<h2 id="_2">四、升级路径速查</h2>
+<ul>
+<li><strong>升级链（唯一路径，逐级走）</strong>：4.5R1→4.5R2→4.5R3→4.6R1→4.6R2→4.7R1→4.7R1 Patch 2→4.8R1→4.8R2→4.9R1→4.9R2（p6-7）。旧于 4.5R1 不升级，改"备份+全新安装+重导配置"。</li>
+<li><strong>停机窗口（报审批用）</strong>：Standalone 全程不可管理 1-4 小时（p60-61）；HA 管理持续可用，仅 failover 中断约 5-10 分钟；例外是 4.7R1→Patch 2 的 HA 升级全程停机。</li>
+<li><strong>HA 滚动升级（≥4.8R1 新流程）</strong>：确认同步 Up to Date → Active 启维护模式（一次启用双节点生效）→ <strong>先升 Standby</strong> → 升完立即重启并 failover（此时屏幕黄色 WARNING 要忽略）→ 新 Active 服务全起后升原 Active → 验证（p67）。角色互换是正常状态。老流程（≤4.7R1 Patch2）重启时机相反：Standby 升完忍住不重启，两台都升完一起重启——新旧文档混用是最常见事故源（p155-167）。</li>
+<li><strong>快照时机</strong>：升级/转换前删全部旧快照→拍新快照→操作→验证通过→立即删快照。快照是一次性保险，不是备份；拖着旧快照跑会持续拖累性能（p8）。内置备份保留 1-30 天（默认 7）、份数 1-30（默认 5），恢复只认<strong>同版本</strong>备份文件（p289）。</li>
+<li><strong>两个菜单陷阱</strong>：4.7R1 Patch 2 不在默认仓库，须建 PatchRepo 自定义仓（URL 不带 https:// 前缀，p143, p146）；4.9R1→4.9R2 必须执行 "3 - To New Release → 0 - Exit → 2 - To 4.9R1" 特殊序列，官方原文 "DO NOT SKIP THIS STEP FOR ANY REASON"（p62）。</li>
+</ul>
+<h2 id="18">五、运维红线清单（18 条）</h2>
+<ol>
+<li>没有裸机安装器，只支持三平台 Hypervisor（p8）。</li>
+<li>首装禁止预挂扩展盘；不支持改既有虚拟盘容量（p10）。</li>
+<li>cliadmin / Technical Support Code 密码丢失无法找回，只能重装。</li>
+<li>内存超配宿主机、不预留内存、逻辑核超档位——官方明示的性能事故来源（p10）。</li>
+<li>Hyper-V 不支持 Live Migration；VM Manager 仅支持 2012/2012R2/2016（p19）。</li>
+<li>改 OV IP 不动网络侧：sFlow 接收器、policy server、SNMP trap、Stellar 的 DHCP 与 WLAN 配置全要手动重推（p276）。</li>
+<li>升级/HA 转换全程 VM Console，SSH 升级=升级不完整（p60）。</li>
+<li>升级只能逐级，没有跨版本直升；升级菜单选项 4 在线场景不受支持（p63）。</li>
+<li>Low 档不支持 HA；HA 上限 4000 设备、必须 Medium 及以上（p11）。</li>
+<li>L2 不能转 L3；4.3R1 来源的 Standalone 不能转 HA（p40-41）。</li>
+<li>Data Sync 同步中（显示百分比）严禁做配置变更（p296）。</li>
+<li>集群初始化后改 Peer Node 信息必须先备份并联系客服（p303）；被移除节点报废不可复用（p299）。</li>
+<li>HA 滚动升级窗口内冻结一切配置变更——Standby 升级阶段的变更会丢（p69）。</li>
+<li>恢复只认同版本备份；HA 备份 4.5R1 起才支持（p289）。</li>
+<li>快照用完即删，不做长期备份（p8）。</li>
+<li>扩容只能加新盘；KVM 新盘必须 SATA 总线且只从第三块起识别——先加两块 1KB 占位盘且永远别删（p280）。</li>
+<li>关机必须 Watchdog → Stop All Services → VA 菜单 Power Off；直接关宿主机断电是数据损坏禁忌（p292）。</li>
+<li>L3 failover 后 AP 假 down 5-10 分钟是正常窗口，别误判去重启设备（p42）。</li>
+</ol>
+<hr />
+<p><em>由 cangjie-skill 流水线从 OV2500 4.9R2 Installation and Upgrade Guide 蒸馏生成</em></p></main></div></body></html>

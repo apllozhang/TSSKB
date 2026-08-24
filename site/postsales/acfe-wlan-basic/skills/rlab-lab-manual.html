@@ -1,0 +1,227 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>rlab-lab-manual — DT00XTE360 · ACFE WLAN Basic Deployment with OmniVista</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE360 · ACFE WLAN Basic Deployment with OmniVista</h1>
+<div class="sub">Edition 04 · 585 页 · Stellar+Cirrus 云管交付实操（AP 生命周期全流程，5 天带 Lab）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">开局与云管</div>
+<a href="skills/express-mode-bootstrap.html">express-mode-bootstrap</a>
+<a href="skills/cirrus-license-org-lifecycle.html">cirrus-license-org-lifecycle</a>
+<a href="skills/device-cloud-onboarding.html">device-cloud-onboarding</a>
+<div class="grp">SSID 与策略</div>
+<a href="skills/ssid-authentication-suite.html">ssid-authentication-suite</a>
+<a href="skills/upam-policy-bandwidth.html">upam-policy-bandwidth</a>
+<div class="grp">RF 与漫游</div>
+<a href="skills/rf-optimization-baseline.html">rf-optimization-baseline</a>
+<a href="skills/roaming-rap-design.html">roaming-rap-design</a>
+<div class="grp">安全与收尾</div>
+<a href="skills/wips-security-deployment.html">wips-security-deployment</a>
+<a href="skills/site-survey-troubleshooting.html">site-survey-troubleshooting</a>
+<a href="skills/rlab-lab-manual.html" class="on">rlab-lab-manual</a></aside><main><h1>rlab-lab-manual</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="r-lab-lab">R-Lab 实操手册与 Lab 案例库索引</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>"A web browser is required to connect to the Rlab ... Rlab access URL: https://rdp.al-mydemo.com/ ... Username: Refer to the table below to get the corresponding 'User Account' ... Password: unique per session - sent from our LMS to the Instructor" (p69)</p>
+<p>"Reset all the R-Lab's equipment by using the Reset_PodX script (X = R-Lab Number) ... The reinitialization process takes around 5 minutes (OmniSwitch) ... around 1min30 - 2min (OmniAccess Stellar Access Point)" (p77)</p>
+<p>"WARNING: THE OMNISWITCH SWITCHES DEFAULT CONFIGURATION IS NOT AN EMPTY CONFIGURATION! ... A SPECIFIC CONFIGURATION IS APPLIED TO THE SWITCHES; ALL THE INTERFACES ARE DISABLED. DURING THE NEXT LABS, IT WILL BE ASKED TO ENABLE THE INTERFACES THAT YOU WILL USE." (p80)</p>
+<p>"Never touch the Ethernet card (configuration or disconnection), because it is from the wired network that you can join the raspberry pi desktop." (p75)</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<p><strong>1. 环境连接</strong>
+- 入口：https://rdp.al-mydemo.com/，账号形如 stellanpod25a（POD 25-32），密码每期由 LMS 发讲师
+- 拓扑三层：接入 OS-2360/OS-6360（学员配置）→ 汇聚 OS-6870（保留预配置）→ 核心 OS-6900（不管理）；DHCP/AAA 服务器与 pfSense NAT 禁止改动
+- 终端：桌面快捷方式 TeraTerm 开交换机控制台（"Hunting Group Busy"=被占用）；RealVNC 连树莓派 WifiClientX（user/superuser），实验前 "Clean Wireless Networks"；vSphere 开 client5 有线 VM</p>
+<p><strong>2. 重置流程与常数</strong>
+- 桌面 DT00CTE210 目录双击 Reset_PodX（Cirrus 系列实验前另有 "OmniVista CIRRUS 10" 目录的 reset_PODX）
+- 交换机约 5 分钟、AP 约 1.5-2 分钟；期间严禁对控制台按键
+- 重置后"默认配置"非空：脚本灌特定预配置且<strong>所有端口禁用</strong>，每个 Lab 逐个 enable 要用的端口
+- 树莓派重置：Clean Wireless Networks → Execute</p>
+<p><strong>3. 实验网 IP/DHCP 常数（全部 Lab 的判定基准）</strong>
+VLAN10 管理 192.168.10.70-79 / VLAN20 Employees 192.168.20.70-79 / VLAN30 Guests 192.168.30.70-79；网关 6870 上 .7；DHCP/NAT 服务器 192.168.100.102 与核心 OS6900 不许改。</p>
+<p><strong>4. Lab → skill 案例库索引</strong></p>
+<table>
+<thead>
+<tr>
+<th>Lab</th>
+<th>页</th>
+<th>内容</th>
+<th>详细所在 skill</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>c03/c04 设备启动/PoE-VLAN-DHCP</td>
+<td>p108-129</td>
+<td>控制台+向导+端口</td>
+<td><a href="express-mode-bootstrap.html">express-mode-bootstrap</a></td>
+</tr>
+<tr>
+<td>c05/c06/c07 Express SSID/内置 DHCP/日志</td>
+<td>p144-160</td>
+<td>SMB 无网管开局</td>
+<td><a href="ssid-authentication-suite.html">ssid-authentication-suite</a></td>
+</tr>
+<tr>
+<td>c08 isc-dhcp option 138</td>
+<td>p33</td>
+<td>DHCP 样例</td>
+<td><a href="express-mode-bootstrap.html">express-mode-bootstrap</a></td>
+</tr>
+<tr>
+<td>c09 许可订阅全流程</td>
+<td>p169-238</td>
+<td>eBuy→导入</td>
+<td><a href="cirrus-license-org-lifecycle.html">cirrus-license-org-lifecycle</a></td>
+</tr>
+<tr>
+<td>c10 Cirrus 预配置重置</td>
+<td>p238-240</td>
+<td>本 skill</td>
+<td>—</td>
+</tr>
+<tr>
+<td>c11 环境创建+交换机上云</td>
+<td>p241-253</td>
+<td>Site/激活</td>
+<td><a href="device-cloud-onboarding.html">device-cloud-onboarding</a></td>
+</tr>
+<tr>
+<td>c12 AP 上云+Group</td>
+<td>p293-306</td>
+<td>声明/Provisioning</td>
+<td><a href="device-cloud-onboarding.html">device-cloud-onboarding</a></td>
+</tr>
+<tr>
+<td>c13 Employee SSID(802.1X)</td>
+<td>p332-347</td>
+<td>全链+排障</td>
+<td><a href="ssid-authentication-suite.html">ssid-authentication-suite</a></td>
+</tr>
+<tr>
+<td>c14 PSK 四方案</td>
+<td>p324-330</td>
+<td>逐屏样例</td>
+<td><a href="ssid-authentication-suite.html">ssid-authentication-suite</a></td>
+</tr>
+<tr>
+<td>c15 Guest SSID+踢下线</td>
+<td>p372-388</td>
+<td>门户+eag</td>
+<td><a href="ssid-authentication-suite.html">ssid-authentication-suite</a></td>
+</tr>
+<tr>
+<td>c16 BYOD SSID</td>
+<td>p389-395</td>
+<td>双 VLAN 切换</td>
+<td><a href="ssid-authentication-suite.html">ssid-authentication-suite</a></td>
+</tr>
+<tr>
+<td>c17 Unified Policy</td>
+<td>p411-416</td>
+<td>Block_SSH</td>
+<td><a href="upam-policy-bandwidth.html">upam-policy-bandwidth</a></td>
+</tr>
+<tr>
+<td>c18 RF 管理</td>
+<td>p456-466</td>
+<td>RSSI 阈值实验</td>
+<td><a href="rf-optimization-baseline.html">rf-optimization-baseline</a></td>
+</tr>
+<tr>
+<td>c19 WIPS</td>
+<td>p521-525</td>
+<td>分类+Friendly</td>
+<td><a href="wips-security-deployment.html">wips-security-deployment</a></td>
+</tr>
+<tr>
+<td>c20 组织清理 25 步</td>
+<td>p542-547</td>
+<td>逆序拆除</td>
+<td><a href="cirrus-license-org-lifecycle.html">cirrus-license-org-lifecycle</a></td>
+</tr>
+<tr>
+<td>c21 RAP 部署</td>
+<td>p549-572</td>
+<td>双隧道全流程</td>
+<td><a href="roaming-rap-design.html">roaming-rap-design</a></td>
+</tr>
+<tr>
+<td>c22 勘测方法论</td>
+<td>p526-540</td>
+<td>三步法</td>
+<td><a href="site-survey-troubleshooting.html">site-survey-troubleshooting</a></td>
+</tr>
+<tr>
+<td>c23 账号与配额</td>
+<td>p417-434</td>
+<td>配额触发</td>
+<td><a href="upam-policy-bandwidth.html">upam-policy-bandwidth</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="a1-lab">A1 · 书中案例（Lab 步骤精要）</h2>
+<ul>
+<li><strong>c01/p69-75</strong>：浏览器连 RDP → POD 账号登录 → 认识拓扑与 TeraTerm/VNC/vSphere 三类入口。</li>
+<li><strong>c02/p77-80</strong>：Reset_PodX 重置全设备（等待常数）→ 树莓派清网络 → 后续 Lab 逐口 enable。</li>
+<li><strong>c10/p238-240</strong>：reset_PODX 后连通性验证——三台交换机 ping 192.168.100.102 与 www.google.com；AP1301 控制台 <code>ssudo ping</code> 同验；AP1321 此时 ping 不通属预期。</li>
+</ul>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>要实际操练本书内容、连接或重置 R-Lab、或查找"某个 Lab 在书里哪几页/归哪个 skill"时用。</li>
+<li><strong>区分</strong>：各 Lab 的技术内容本身已在对应业务 skill 的 A1 节精要化；本 skill 只管实验环境操作与索引。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>拿到 POD 号与会话密码 → rdp.al-mydemo.com 登录。</li>
+<li>按实验阶段选对重置脚本（DT00CTE210 的 Reset_PodX / OmniVista CIRRUS 10 的 reset_PODX），跑完等足时长。</li>
+<li>重置后逐个启用要用的端口（1/1/6 AP 口、1/1/1 客户端口等）。</li>
+<li>树莓派 Clean Wireless Networks，保留以太网卡不动。</li>
+<li>实验判定一律对照 VLAN10/20/30 的 .70-.79 地址池。</li>
+<li>需要某 Lab 详细步骤时按索引表跳转对应 skill 的 A1 节。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li>重置脚本加载的默认配置非空且端口全禁——"设备不通"先查端口是否启用（ce09）。</li>
+<li>重启阶段对控制台按一次回车就落 Miniboot，中断整个重置（ce10）。</li>
+<li>不要对 R-Lab 交换机执行真恢复出厂（rm vcboot.cfg + reload）——会破坏 POD 专用预配置，后续实验全挂（ce11）。</li>
+<li>树莓派以太网卡是 VNC 生命线，只动 wlan 接口（ce12）。</li>
+<li>本书强依赖 R-Lab，无实验环境时 Lab 章节只能读；OV2500 本地管理 GUI 不在本书范围，与售前课（DT00XPS288）概念重叠但视角不同——引用时注意区分（ce40）。</li>
+</ul>
+<hr />
+<p>来源条目: c01, c02, c10, p17, ce09, ce10, ce11, ce12, ce40 · 术语锚点: g51</p></main></div></body></html>

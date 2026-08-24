@@ -1,0 +1,97 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>switch-management-access — DT00XTE215 · OmniSwitch LAN Access Switching</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE215 · OmniSwitch LAN Access Switching</h1>
+<div class="sub">Edition 19 · 500 页 · 接入层基础全科（三目录模型/VC/VLAN/LACP/STP/DHL/QoS/AG）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">管理面</div>
+<a href="skills/aos-config-management.html">aos-config-management</a>
+<a href="skills/switch-management-access.html" class="on">switch-management-access</a>
+<div class="grp">转发面</div>
+<a href="skills/virtual-chassis-deployment.html">virtual-chassis-deployment</a>
+<a href="skills/vlan-link-redundancy.html">vlan-link-redundancy</a>
+<div class="grp">策略面</div>
+<a href="skills/ip-services-basic.html">ip-services-basic</a>
+<a href="skills/qos-acl-policy.html">qos-acl-policy</a>
+<a href="skills/access-guardian-unp.html">access-guardian-unp</a>
+<div class="grp">运维</div>
+<a href="skills/poe-ops-diagnostics.html">poe-ops-diagnostics</a></aside><main><h1>switch-management-access</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="aaa">交换机管理接入：登录 / AAA / 用户库 / 开局</h1>
+<h2 id="r">R · 原文引用</h2>
+<p>"The Local userDB file is named userTable9. Path: flash/system directory. By default: 2 users 'admin and default'. Login: admin Password: switch. Up to 64 users can be configured... Beginning in 8.10R4 changing the default password will be mandatory."（p38-39）</p>
+<p>"aaa authentication {console | telnet | ftp | http | snmp | ssh | default} server1 [server2...] [local] [exit-on-fail {enable | disable}]"（p41）</p>
+<p>"The easy configuration process (Lightning configuration) starts if: Only first or second physical port connected with the client, no other ports connected / No prior switch configuration exist / No DHCP address assignment occurs after boot up."（p51）</p>
+<p>"Completion: Recognize partial keywords... Eg: sh vl for show vlan. Built-in Filtering: -&gt; show vlans | more / -&gt; show mac-learning | grep 00:20:da:55:56:76."（p77）</p>
+<h2 id="i">I · 方法论骨架</h2>
+<ul>
+<li><strong>首次登录</strong>：默认 admin/switch（另有 default 账户）；本地用户库 userTable9 存 /flash/system，上限 64 用户，权限按命令域/族划分。8.10R3 起提示改默认密码、8.10R4 强制。</li>
+<li><strong>ASA（管理面准入）</strong>：按 console/telnet/ftp/http/snmp/ssh/default 七类服务分别指定认证链（RADIUS/LDAP/local 排队）；exit-on-fail enable=只用第一台可用服务器，disable=逐台 fail-through。</li>
+<li><strong>会话规格</strong>：Telnet 6 / FTP 4 / SSH+SFTP 8 / HTTP 4，五类合计（含 console）20，SNMP 50——规划带外管理规模按此。</li>
+<li><strong>WebView</strong>：内置 Web 管理，R8 强制 SSL（webview force-ssl enable 默认）；仅单机视图。</li>
+<li><strong>Lightning 开局</strong>：仅当"只连 1/1/1-2、无配置、无 DHCP、无 RCL/NMS"四条件同时满足才进 Quick Config 向导（默认 VLAN1 192.168.0.1/24）；首次 write memory 后默认 IP 失效。</li>
+<li><strong>CLI 行规</strong>：sh vl 式缩写、|more/grep/egrep/sort 管道、? 帮助、history；目录操作沿用 Unix（pwd/cd/mkdir/cp/rm）。</li>
+</ul>
+<h2 id="a1-lab">A1 · 书中案例（Lab 配置精要）</h2>
+<p>远程访问 Lab（p54-63）：先 <code>show aaa authentication</code> 确认 SSH/HTTP 用本地库（若 denied 用 <code>aaa authentication ssh local</code>）；Tera Term SSH 登录（admin/switch）；改不活动超时 <code>session cli timeout 60</code> 并 write memory；WebView（https://管理IP）在 Security&gt;ASA 改 CLI/HTTP 超时，Layer2&gt;VLAN 建 VLAN 59（Student）再删，CLI 用 show vlan 双向验证。</p>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>怎么登上交换机、谁来能登、开局向导、管理会话数够不够——本 skill。</li>
+<li>端口上终端用户的 802.1X/MAC 准入（Access Guardian）→ access-guardian-unp；本 skill 只管"管理员→交换机"方向。</li>
+<li>登录后的配置保存/目录 → aos-config-management。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>首登：admin/switch；8.10R4 前主动改密码（user password-refresh 可强制下次刷新）。</li>
+<li>核对/配置认证链：<code>show aaa authentication</code> → <code>aaa authentication ssh|http|default &lt;srv1&gt; [&lt;srv2&gt;] [local] [exit-on-fail …]</code>；拒绝 HTTP 管理：<code>no aaa authentication http</code>。</li>
+<li>会话参数：<code>session cli timeout &lt;秒&gt;</code>；write memory 保存。</li>
+<li>远程访问：SSH（首选）/ WebView（https，R8 强制 SSL）。</li>
+<li>带外：EMP 口直连 CMM（无 EMP 的 6360/6465/6560 用 USB-Ethernet dongle 等效）；VC 场景配 master EMP 地址。</li>
+<li>新机开局：满足四条件走 Lightning Quick Config（https://192.168.0.1），完成即 write memory 固化。</li>
+<li>CLI 提效：缩写（sh vl）、管道过滤、? 帮助。</li>
+</ol>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li>默认口令 admin/switch 在 8.10R4 起强制修改，自动化脚本别写死。</li>
+<li>exit-on-fail 语义反直觉：enable 是"只用第一台可用"，disable 才是逐台尝试（fail-through）——多 RADIUS 容灾场景要 disable。</li>
+<li>Lightning 触发条件四个全满足才进；曾 write memory 过的机器不再有默认 IP。</li>
+<li>WebView 仅单机视图，VC/多机管理需 OmniVista（Thin Client 模式下配置全部在 OV 2500，本地 write memory 不落盘）。</li>
+<li>会话总数 20（含 console），SNMP 50，监控平台接入数按此规划。</li>
+</ul>
+<hr />
+<p>来源条目: p01, p09, p10, p11, p12, c01, g06, g07, g14, g15, g16, g17</p></main></div></body></html>

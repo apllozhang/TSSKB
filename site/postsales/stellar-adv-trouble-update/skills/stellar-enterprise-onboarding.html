@@ -1,0 +1,100 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>stellar-enterprise-onboarding — DT00XTE378 · Stellar WLAN 高级排障与更新</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE378 · Stellar WLAN 高级排障与更新</h1>
+<div class="sub">488 页 · 排障篇同 T478 + Features Update 增量（新硬件/云运维/升级迁移）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">上线与业务</div>
+<a href="skills/stellar-enterprise-onboarding.html" class="on">stellar-enterprise-onboarding</a>
+<a href="skills/stellar-ssid-policy-advanced.html">stellar-ssid-policy-advanced</a>
+<div class="grp">云运维</div>
+<a href="skills/stellar-rap-backup-upgrade-ops.html">stellar-rap-backup-upgrade-ops</a>
+<div class="grp">硬件速览</div>
+<a href="skills/stellar-wifi7-hardware-rf-quickref.html">stellar-wifi7-hardware-rf-quickref</a></aside><main><h1>stellar-enterprise-onboarding</h1><p class="meta"><span class="badge">SKILL</span> 来源页码: </p><h1 id="enterprise-ap-ap-group">Enterprise 设备上线工作流：交换机发现 + AP 云注册 + AP Group 纳管</h1>
+<h2 id="r">R · 原文引用</h2>
+<blockquote>
+<p>"The Stellar Access Points that we are going to use during this training need to: Receive an IP Address from the DHCP Server &gt; IP DHCP Relay; Forward the Wi-Fi clients traffic to a default route &gt; Static route; Have the switch interface where they are connected enabled; Receive power from the OmniSwitches &gt; The Power over Ethernet (PoE) feature must be enabled." (p213)</p>
+<p>"The DHCP Server will then send a DHCP Offer with the option 138 (IP address of the OmniVista 2500). Once this option received, the Stellar Access Point will work in Enterprise mode." (p224-239)</p>
+<p>"OS6870, OS6360, OS2360: -&gt; user snmpuserv3 read-write all password \"Superuser=1\" sha+des -&gt; snmp station 10.130.5.5X 162 snmpuserv3 v3 enable" (p213-223)</p>
+<p>"Warning: DO NOT CHOOSE THE COUNTRY CODE USA, JAPAN OR ISRAEL AS THE STELLAR ACCESS POINTS USED IN THE REMOTE LAB ARE NOT COMPATIBLE WITH THESE COUNTRY CODES." (p231)</p>
+</blockquote>
+<h2 id="i">I · 方法论骨架</h2>
+<p>四层递进，每层可独立验证后再进下一层：</p>
+<ol>
+<li><strong>网络层就绪</strong>：Backbone VLAN 互联管理设备（交换机/OV2500/DHCP），每台交换机配三层 IP 接口，互 ping 验证。</li>
+<li><strong>管理通道（交换机）</strong>：全网配 SNMPv3 → OV2500 建同参数 Discovery Profile → 按 IP 段发现。</li>
+<li><strong>AP 上线链路</strong>：AP 管理 VLAN → DHCP relay（Offer 带 option 138 = OV2500 地址）→ 静态路由 → 端口启用 + PoE 上电。</li>
+<li><strong>纳管</strong>：AP 从 Unmanaged 列表改 Trust 状态 → 加入 AP Group（OV2500 只按 AP Group 管理 AP，配置对组内全部 AP 生效）。</li>
+</ol>
+<h2 id="a1-lab">A1 · 书中案例（Lab 精要）</h2>
+<ul>
+<li><strong>c01 交换机发现</strong>：三台 OmniSwitch 各建 snmpuserv3（SHA+DES），trap 指向 OV2500:162；OV2500 侧 Profile 参数 Timeout 5000/Retry 3，按三个 IP 段 Discover Now。</li>
+<li><strong>c02 AP 云上线</strong>：VLAN Manager 一次给三台交换机建 VLAN 40（default 口 + Q-tag 级联）；核心 6870 配 DHCP relay 与静态路由；<code>lanpower slot 1/1 service stop/start</code> 重启 PoE 逼 AP 注册；Windows DHCP 服务器预定义 Code 138（IP Address 类型）填 OV2500 地址。</li>
+<li><strong>ce02 国家码坑</strong>：OV2500 首次 AP Registration 选国家码决定信道与功率；教材 AP 与 USA/JAPAN/ISRAEL 区域码不兼容，选错则"设备完好却拒绝工作"。</li>
+<li><strong>ce03 评估许可坑</strong>：文件导入与密钥手填二选一（Don't do both）；密钥方式只贴 key 部分，整行复制必失败。</li>
+</ul>
+<h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
+<ul>
+<li>新站点部署 / 存量网络纳管 OV2500、AP 不出现在网管、发现失败排障。</li>
+<li>与 <code><a href="stellar-ssid-policy-advanced.html">stellar-ssid-policy-advanced</a></code> 的区分：本 skill 管"设备进网管"，SSID/认证/策略在设备纳管之后才做。</li>
+<li>与 <code><a href="stellar-rap-backup-upgrade-ops.html">stellar-rap-backup-upgrade-ops</a></code> 的区分：那两个是云管（Cirrus）与远程 AP（RAP）场景；本 skill 只管本地 OV2500 Enterprise 模式。</li>
+</ul>
+<h2 id="e">E · 可执行步骤</h2>
+<ol>
+<li>建 Backbone VLAN，各交换机配 IP 接口，双向 ping 通。</li>
+<li>交换机 CLI：<code>user snmpuserv3 read-write all password &lt;pwd&gt; sha+des</code>；<code>snmp station &lt;OV2500 IP&gt; 162 snmpuserv3 v3 enable</code>。</li>
+<li>OV2500：NETWORK &gt; DISCOVERY &gt; Managed Devices &gt; Discover New Devices，Discovery Profile 与交换机侧参数一致。</li>
+<li>建 AP 管理 VLAN；核心交换机配 <code>ip dhcp relay destination &lt;DHCP IP&gt;</code> + admin-state enable + 静态路由。</li>
+<li>DHCP 服务器预定义 option 138 = OV2500 IP。</li>
+<li>启用 AP 端口，<code>lanpower</code> stop/start 让 AP 重启注册。</li>
+<li>OV2500 选国家码（务必与 AP 硬件销售区域匹配）与时区；Unmanaged 列表 → Change to Trust Status。</li>
+<li>建 AP Group，把 AP Change Group 入组，配置随组下发。</li>
+</ol>
+<p>AP 不上线排障分层：二层 <code>show interfaces</code> / <code>show vlan members port</code> → 三层 <code>show ip interface</code>、OV2500 虚机菜单查 IP → AP 串口（support 账号）<code>getmode</code>（是否 OV 模式）/<code>getovinfo</code>（OV 地址）/tcpdump 抓 DHCP Offer 验 option 138/43 → <code>show lanpower</code> 查供电。</p>
+<h2 id="b">B · 边界与陷阱</h2>
+<ul>
+<li><strong>OV2500 只认 AP Group</strong>：不进组的 AP 不受配置管理，一切"配了不生效"先确认 AP 在组里。</li>
+<li><strong>国家码 = 区域合规</strong>：跨境调拨/二手设备，出厂区域与网管国家码不一致会假死；先查标签/序列号。</li>
+<li><strong>评估许可两种导入二选一</strong>；密钥只贴键值不贴整行。</li>
+<li>option 138 是 ALE 私有引导方式，DHCP 服务器不做预定义则 AP 永远拿不到 OV2500 地址。</li>
+<li>本 skill 不覆盖 IPv6 管理面：Enterprise 模式下 AP 管理只走 IPv4（见 <code><a href="stellar-wifi7-hardware-rf-quickref.html">stellar-wifi7-hardware-rf-quickref</a></code> 的模式差异条目）。</li>
+</ul>
+<hr />
+<p>来源条目: f02, c01, c02, ce02, ce03</p></main></div></body></html>
