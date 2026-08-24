@@ -1,0 +1,111 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>learned-port-security — DT00XTE216 · OmniSwitch LAN R8 Core Switching</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE216 · OmniSwitch LAN R8 Core Switching</h1>
+<div class="sub">Edition 15 · 724 页 · 核心交换专题（新流水线重制版：ERP/MACsec/PVLAN/MSTP/安全/OSPF/组播/BGP/SPB）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">二层专题</div>
+<a href="../skills/erp-ring-protection.html">erp-ring-protection</a>
+<a href="../skills/macsec-link-encryption.html">macsec-link-encryption</a>
+<a href="../skills/private-vlan-isolation.html">private-vlan-isolation</a>
+<a href="../skills/mstp-load-sharing.html">mstp-load-sharing</a>
+<a href="../skills/mvrp-dynamic-vlan.html">mvrp-dynamic-vlan</a>
+<div class="grp">安全</div>
+<a href="../skills/arp-dos-defense.html">arp-dos-defense</a>
+<a href="../skills/learned-port-security.html" class="on">learned-port-security</a>
+<div class="grp">三层路由</div>
+<a href="../skills/ip-routing-fundamentals.html">ip-routing-fundamentals</a>
+<a href="../skills/ospf-area-redistribution.html">ospf-area-redistribution</a>
+<a href="../skills/bgp-vrf-leak.html">bgp-vrf-leak</a>
+<div class="grp">Fabric 与组播</div>
+<a href="../skills/spb-fabric.html">spb-fabric</a>
+<a href="../skills/multicast-pim.html">multicast-pim</a>
+<div class="grp">运维</div>
+<a href="../skills/switch-platform-ops.html">switch-platform-ops</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../postsales/index.html">售后</a> › <a href="../index.html">DT00XTE216</a> › <span>learned-port-security</span></nav><h1>learned-port-security</h1><p class="meta"><span class="badge">SKILL</span> learned-port-security · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>接入端口要锁定为"一台终端一个口"，防止私接交换机/AP</li>
+<li>出现非授权 MAC 需要自动过滤或直接关闭端口</li>
+<li>端口接了交换机导致 LPS 误过滤 LLDP/STP/IP 多 MAC，需要排查</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>LPS 通过"限学多少 MAC（maximum）+ 学习窗口 + 违例动作（restrict 只拦违例源 / shutdown 整口）"三重控制接入安全，convert-to-static 把当前学到的 MAC 固化实现设备绑定。学习期被截获的报文由 pkt-relay 重注入，正常业务不中断；
+违例默认 300s 自动恢复、最多自动恢复 10 次。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<ol>
+<li>最小模板一次成型：<code>port-security port 1/1/1 admin-state enable / maximum 1 / violation shutdown / convert-to-static enable</code>（&lt;&lt;<PAGE 193>&gt;&gt;）</li>
+<li>验证：<code>show port-security</code>（默认 maximum 1、violation RESTRICT、max-filtering 5，最多可学 100 MAC/口）（&lt;&lt;<PAGE 207>&gt;&gt;）</li>
+<li>固化设备：先让流量把 MAC 学上来，再 <code>port-security port 1/1/8 convert-to-static</code>（&lt;&lt;<PAGE 208>&gt;&gt;）</li>
+<li>违例处置：<code>violation shutdown</code> + <code>max-filtering 0</code> → 再学即端口关闭；<code>show violation</code> 查看，<code>violation port 1/1/8 recovery-time 30</code> 修改恢复时间（默认 300），<code>clear violation port 1/1/8</code> 手工恢复（&lt;&lt;<PAGE 209>&gt;&gt;-&lt;&lt;<PAGE 210>&gt;&gt;）</li>
+</ol>
+<h2 id="a2">A2（进阶应用）</h2>
+<ul>
+<li>三阶段演进实验路径：限 1 MAC 观察 filtering → convert-to-static 固定 → shutdown+max-filtering 0 硬关（&lt;&lt;<PAGE 207>&gt;&gt;-&lt;&lt;<PAGE 210>&gt;&gt;）</li>
+<li>对端是交换机时：LLDP/STP 用一个 MAC、L3 用另一个 MAC，多个源 MAC 会挤占学习额度导致误过滤——先关协议再 flush mac-learning 后重学（&lt;&lt;<PAGE 206>&gt;&gt;）</li>
+<li>命令权限纳入 security 域管理（同 MACsec，见 p82）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>C-16 三阶段实验：restrict 过滤 → convert-to-static 固化 → shutdown 关闭 + recovery-time 调整与 clear violation 手工恢复，含关 STP/LLDP 排除干扰（&lt;&lt;<PAGE 207>&gt;&gt;-&lt;&lt;<PAGE 210>&gt;&gt;）</li>
+<li>C-17 标准绑定模板（maximum 1 + shutdown + convert-to-static）（&lt;&lt;<PAGE 193>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（边界与陷阱）</h2>
+<ul>
+<li>LPS 不支持链路聚合端口（Not supported on Link Aggregate ports）（&lt;&lt;<PAGE 190>&gt;&gt;）</li>
+<li>convert-to-static 必须在设备 MAC 已学到之后执行，先发流量再固化（&lt;&lt;<PAGE 208>&gt;&gt;）</li>
+<li>对端交换机自身多 MAC（LLDP/STP/L3 各一个）会触发 restrict 误过滤（&lt;&lt;<PAGE 206>&gt;&gt;-&lt;&lt;<PAGE 207>&gt;&gt;）</li>
+</ul>
+<h2 id="_1">来源</h2>
+<ul>
+<li>framework·F-09 LPS 配置四步法与违例决策（&lt;&lt;<PAGE 190>&gt;&gt;-&lt;&lt;<PAGE 193>&gt;&gt;）</li>
+<li>principle·P-32 学习控制与违例（&lt;&lt;<PAGE 190>&gt;&gt;、&lt;&lt;<PAGE 191>&gt;&gt;、&lt;&lt;<PAGE 207>&gt;&gt;）</li>
+<li>principle·P-33 自动恢复与 pkt-relay（&lt;&lt;<PAGE 196>&gt;&gt;、&lt;&lt;<PAGE 209>&gt;&gt;）</li>
+<li>case·C-16/C-17；counter·X-11/X-12</li>
+</ul><div class="pn"><a href="arp-dos-defense.html">⬅ 上一单元：arp-dos-defense</a><a class="nxt" href="ip-routing-fundamentals.html">下一单元：ip-routing-fundamentals ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

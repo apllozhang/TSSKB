@@ -31,632 +31,656 @@ blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 
 hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 .badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
 .badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
 @media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
 </style></head>
 <body><div class="layout"><aside><h1>DT00XTE216 · OmniSwitch LAN R8 Core Switching</h1>
-<div class="sub">Edition 15 · 724 页 · 核心交换专题（L2/路由/织构/安全/组播；无 Lightning 开局与 AG 深入章节）</div>
+<div class="sub">Edition 15 · 724 页 · 核心交换专题（新流水线重制版：ERP/MACsec/PVLAN/MSTP/安全/OSPF/组播/BGP/SPB）</div>
 <a href="index.html">🏠 课程首页</a>
 <a href="digest.html">📖 精华长文 DIGEST</a>
 <a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
 <a href="glossary.html">🔤 术语词典</a>
 <a href="../../index.html">⬅️ 返回培训门户</a>
 <a href="index.html">──── Skills ────</a>
-<div class="grp">开局与管理面</div>
-<a href="skills/aos-virtual-chassis.html">aos-virtual-chassis</a>
-<div class="grp">L2 基础与冗余</div>
-<a href="skills/aos-vlan-mvrp.html">aos-vlan-mvrp</a>
-<a href="skills/aos-lag-stp.html">aos-lag-stp</a>
-<div class="grp">安全与策略</div>
-<a href="skills/aos-access-guardian-unp.html">aos-access-guardian-unp</a>
-<a href="skills/aos-l2-security.html">aos-l2-security</a>
-<a href="skills/aos-qos-acl-pbr.html">aos-qos-acl-pbr</a>
-<div class="grp">L3 路由</div>
-<a href="skills/aos-igp-routing.html">aos-igp-routing</a>
-<a href="skills/aos-bgp-vrf.html">aos-bgp-vrf</a>
-<div class="grp">SPB Fabric 与组播</div>
-<a href="skills/aos-spb-fabric.html">aos-spb-fabric</a>
-<a href="skills/aos-multicast.html">aos-multicast</a>
-<a href="skills/aos-diagnostics-ops.html">aos-diagnostics-ops</a></aside><main><h1>术语词典</h1><h1 id="ale-omniswitch-aos-r8-glossary">ALE OmniSwitch AOS R8 — 术语词典 (GLOSSARY)</h1>
+<div class="grp">二层专题</div>
+<a href="skills/erp-ring-protection.html">erp-ring-protection</a>
+<a href="skills/macsec-link-encryption.html">macsec-link-encryption</a>
+<a href="skills/private-vlan-isolation.html">private-vlan-isolation</a>
+<a href="skills/mstp-load-sharing.html">mstp-load-sharing</a>
+<a href="skills/mvrp-dynamic-vlan.html">mvrp-dynamic-vlan</a>
+<div class="grp">安全</div>
+<a href="skills/arp-dos-defense.html">arp-dos-defense</a>
+<a href="skills/learned-port-security.html">learned-port-security</a>
+<div class="grp">三层路由</div>
+<a href="skills/ip-routing-fundamentals.html">ip-routing-fundamentals</a>
+<a href="skills/ospf-area-redistribution.html">ospf-area-redistribution</a>
+<a href="skills/bgp-vrf-leak.html">bgp-vrf-leak</a>
+<div class="grp">Fabric 与组播</div>
+<a href="skills/spb-fabric.html">spb-fabric</a>
+<a href="skills/multicast-pim.html">multicast-pim</a>
+<div class="grp">运维</div>
+<a href="skills/switch-platform-ops.html">switch-platform-ops</a></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../postsales/index.html">售后</a> › <a href="index.html">DT00XTE216</a> › <span>术语词典</span></nav><h1>术语词典</h1><h1 id="omniswitch-lan-core-switching-ed15">术语表（OmniSwitch LAN Core Switching Ed15）</h1>
 <blockquote>
-<p>来源：OmniSwitch LAN R8 Bootcamp Ed23（<code>source_220.txt</code>，页码为 PDF 页）。
-共 <strong>28</strong> 个主条目（另有 3 个子变体 g02a/g02b/g24b 附属于主条目）。
-术语是 <strong>AOS R8 语境下的作者用法</strong>，与通用网络术语或 Cisco 用法可能不同——
-每条的 <code>key_distinction</code> 字段给出"与 Cisco 用法差异"提示，<code>related</code> 字段给出与其他术语的关系。</p>
+<p>从 verified.md glossary 候选整理，按专题分组，页码为原书首现/核心页。</p>
 </blockquote>
-<h2 id="_1">目录</h2>
-<ul>
-<li><code>g01</code> WORKING / CERTIFIED / RUNNING 目录</li>
-<li><code>g02</code> VC (Virtual Chassis)</li>
-<li><code>g03</code> VFL</li>
-<li><code>g02a</code> ISSU</li>
-<li><code>g02b</code> Split Chassis（RCD / VCSP）</li>
-<li><code>g04</code> UNP (User Network Profile)</li>
-<li><code>g05</code> Access Guardian</li>
-<li><code>g06</code> SPB-M</li>
-<li><code>g07</code> I-SID</li>
-<li><code>g08</code> B-VLAN (BVLAN)</li>
-<li><code>g09</code> SAP</li>
-<li><code>g10</code> IP-VPN Lite</li>
-<li><code>g11</code> Auto-Fabric / Intelligent Fabric (iFab)</li>
-<li><code>g12</code> MSTP 区域 / MSTI / CIST</li>
-<li><code>g13</code> MVRP</li>
-<li><code>g14</code> DHL</li>
-<li><code>g15</code> ERP / RPL / RPL Owner</li>
-<li><code>g17</code> Route Map</li>
-<li><code>g20</code> VRF / VRF Route Leak</li>
-<li><code>g18</code> PIM-SM / RP / BSR / SPT switchover</li>
-<li><code>g19</code> Anycast RP</li>
-<li><code>g21</code> IPMS</li>
-<li><code>g22</code> SLB / VIP / WRR</li>
-<li><code>g23</code> MFF</li>
-<li><code>g24</code> LPS</li>
-<li><code>g25</code> DAI / DHCP Snooping / Option 82</li>
-<li><code>g24b</code> Private VLAN（Promiscuous/Isolated/Community）</li>
-<li><code>g16</code> mac-move</li>
-<li><code>g29</code> Lightning Config</li>
-<li><code>g27</code> EMP</li>
-<li><code>g28</code> Consistent AOS Network Security</li>
-</ul>
-<hr />
-<pre><code class="language-yaml">- id: g01
-  term: WORKING / CERTIFIED / RUNNING 目录
-  full_name: Working Directory / Certified Directory / Running Configuration
-  type: term
-  source_chapter: Managing Files/Directories, p81–83, p92
-  author_definition: |
-    &quot;The working directory is a holding place for new files. Files in the working directory must be tested.&quot;
-    &quot;The certified directory contains files that have been certified by an authorized user as the default files.&quot;
-    &quot;Running configuration (RAM): current operating configuration of the switch retrieved from the running
-    directory in addition to any configuration changes made by the user.&quot;
-  key_distinction: |
-    ≠ 一般交换机的单一 startup-config —— AOS 有两级 flash 目录 + RAM 三态：
-    WORKING(待验证) / CERTIFIED(已认证的默认启动文件) / RUNNING(RAM 当前)。
-    `reload` 默认从 CERTIFIED 启动（天然回滚机制）；`reload from working no rollback-timeout` 才从 WORKING 启动。
-    `write memory` 只同步 RAM→WORKING；`write memory flash-synchro` = write memory + copy running certified（三态全同步）。
-  why_it_matters: |
-    所有配置/升级类 skill 的基础。若沿用 Cisco 的 copy run start 直觉，会漏掉认证( certify )
-    与回滚语义，导致升级失败后无法回退。
-  related: [g02a-issu, g29-lightning]
-  tags: [term, core-concept, aos-specific]
-
-- id: g02
-  term: VC (Virtual Chassis)
-  full_name: Virtual Chassis
-  type: term
-  source_chapter: Virtual Chassis, p102–115
-  author_definition: |
-    &quot;Virtual Chassis = Group of switches which appears as a single router or bridge.
-     Single Point of management; Single Logical Switch; No STP/VRRP between Access and Core switches;
-     Upgrade via ISSU; No license needed.&quot;
-  key_distinction: |
-    ≠ 通用&quot;堆叠&quot;：VC 拓扑由私有 ISIS-VC 协议维护（TLV 通告能力/编号、等价路径确定性打破 ala SPBM）。
-    Master/Slave 选举顺序：最高 chassis priority → 最长 uptime(差&gt;10min) → 最小 Chassis ID → 最小 MAC。
-    Takeover 后 &quot;MAC retention is always enabled&quot;，原 Master 回来不重新选举。
-    机型限制：如 OS6900 最多 6 台、OS6360 最多 8 台（见 p104–105 支持表）。
-  why_it_matters: |
-    VC 是 ALE 接入/核心互联的默认形态；售后排障必须理解 Master 选举、同步(reboot required after a slave update)
-    与 split chassis 行为。
-  related: [g03-vfl, g02a-issu, g02b-split, g26-auto-fabric]
-  tags: [term, core-concept, aos-specific]
-
-- id: g03
-  term: VFL
-  full_name: Virtual Fabric Link
-  type: term
-  source_chapter: Virtual Chassis, p103–105, p110
-  author_definition: |
-    VC 成员间的互联链路/堆叠口。&quot;Switches inter-connected via dedicated or optional SFP+, QSFP ports;
-    Mesh or Ring topology.&quot; Auto VFL 端口：&quot;Automatically detect whether an auto VFL port can become VFL;
-    Dynamically assign VFL ID…; Both ends of the link must be auto VFL ports.&quot;
-  key_distinction: |
-    ≠ 通用堆叠线：VFL 速率与可用端口因机型差异巨大（OS6465 2×1G、OS6560 20G 专用口、OS6870 2×40/100/200G QSFP56）。
-    auto VFL 有默认 eligible 端口集（如 OS6360-24 为 27/28 口），且仅在出厂首启无 vcsetup.cfg 时自动运行。
-  why_it_matters: |
-    &quot;VFL&quot; 在 VC 相关 skill 中高频出现；误当通用词会导致端口规划与故障定位错误。
-  related: [g02-vc, g26-auto-fabric]
-  tags: [term, aos-specific]
-
-- id: g02a
-  term: ISSU
-  full_name: In Service Software Upgrade
-  type: term
-  source_chapter: Virtual Chassis, p113
-  author_definition: |
-    &quot;Used to upgrade the software on a VC with minimal network disruption. Each element is upgraded
-    individually.&quot; 步骤：上传新代码/vcsetup.cfg/vcboot.cfg 到新目录(如 issu_dir) → 专用 issu 命令 →
-    文件复制到所有 Slave → Slave 按 chassis ID 从低到高逐台从 ISSU 目录重启。
-  key_distinction: |
-    ≠ 单机软件升级；ISSU 是 VC 级别的逐成员滚动升级，Master(ID=1) 最后受影响。VC 的核心卖点之一。
-  why_it_matters: |
-    升级类 skill 的核心流程；漏掉 vcsetup.cfg/vcboot.cfg 同步会导致成员启动不一致。
-  related: [g01-directories, g02-vc]
-  tags: [term, aos-specific]
-
-- id: g02b
-  term: Split Chassis（RCD / VCSP）
-  full_name: VC Split Chassis / Remote Chassis Detection / VC Split Protocol
-  type: term
-  source_chapter: Virtual Chassis, p111–112
-  author_definition: |
-    &quot;Failures on VFL links cause potential MAC/IP duplication.&quot; 两个机制：
-    Out of Band：EMP 上的 RCD 协议；In Band：VC Split Protocol（需上/下游 helper switch，VCSP LAG）。
-    检测到 split 后：&quot;The former Slave chassis will shutdown all its front-panel user ports… chassis status
-    modified from Running to Split-Topology&quot;，VFL 恢复后原 Slave 重启并以 Slave 角色重新加入。
-  key_distinction: |
-    ≠ 双活：AOS 的处理是&quot;伪 Master 关闭所有用户口&quot;牺牲可用性换唯一性。RCD 依赖 EMP 管理网可达。
-  why_it_matters: |
-    &quot;VC 脑裂&quot;是售后最严重的故障场景之一；排障 skill 必须知道 RCD/VCSP 两种检测路径与恢复行为。
-  related: [g02-vc, g03-vfl]
-  tags: [term, aos-specific, troubleshooting]
-
-- id: g04
-  term: UNP (User Network Profile)
-  full_name: User Network Profile（课件 p643 亦写作 Universal Network Profile）
-  type: term
-  source_chapter: Access Guardian, p142–155, p642–662
-  author_definition: |
-    端口用户画像机制：UNP profile = VLAN ID + Policy List(ACL/QoS) + Location/Period 有效性条件。
-    &quot;Role Based Access Control with UNP; Auto-sensing, multi-client authentication on a port.&quot;
-    配置套路：`unp port 1/1/1 port-type bridge` + `802.1x-authentication`/`mac-authentication` →
-    `unp profile X map vlan N` → 分类规则(binding rules) → Radius Filter-ID 返回 UNP 名。
-    选择顺序(p646)：认证通过→Filter-ID 指定 UNP；无认证/失败→Classification Rules 匹配→否则 Default UNP；
-    服务器超时→Timeout UNP；非法→Block。
-  key_distinction: |
-    ≠ Cisco 动态 VLAN：UNP 是 profile 而不仅是 VLAN 映射，还携带 ACL/QoS/时间/位置策略；
-    未启认证的端口也能靠分类规则（如 MAC OUI）落到非默认 profile —— 这是 AOS 特有的&quot;多客户端自动感知&quot;。
-    p1001 警告：SAP 上多 VLAN 复用同一 I-SID 会引发 mac-move，建议一个 access VLAN 一个 SAP+I-SID。
-  why_it_matters: |
-    &quot;UNP&quot; 是接入认证/动态 VLAN 类 skill 的骨架词；不区分 profile/分类规则/默认 UNP 三层会导致配置顺序错误。
-  related: [g05-access-guardian, g16-mac-move]
-  tags: [term, core-concept, aos-specific]
-
-- id: g05
-  term: Access Guardian
-  full_name: Access Guardian（AOS 的 802.1X/MAC 认证框架）
-  type: term
-  source_chapter: Access Guardian, p642–662
-  author_definition: |
-    AOS 对接入认证的统称：端口(UNP port-type bridge) + UNP profile + 分类规则/policy + Port-Templates +
-    Authentication server(Radius)。认证方式 &quot;MAC-based (non-supplicant) or 802.1x-based (supplicant)&quot;。
-    非_supplicant 流程：交换机截获帧，用源 MAC 作 login/password 构造 Radius 请求。
-  key_distinction: |
-    ≠ 通用&quot;网络准入&quot;：Access Guardian 是 ALE 产品名，配置对象是 `unp` 命令族而非 `dot1x` 命令族；
-    Radius 下发 Filter-ID=UNP 名（不是 VLAN 名）。
-  why_it_matters: |
-    售后最常见求助场景；skill 必须按 AOS 命令体系（unp …）而非 IEEE 术语来组织。
-  related: [g04-unp]
-  tags: [term, core-concept, aos-specific]
-
-- id: g06
-  term: SPB-M
-  full_name: Shortest Path Bridging MAC mode（IEEE 802.1aq）
-  type: term
-  source_chapter: SPB-M, p912–936
-  author_definition: |
-    &quot;All network links are used with no loops; Spanning Tree Protocol replacement; Uses the shortest path
-    end to end; 100's ms convergence times; Address isolation through mac-in-mac.&quot;
-    控制面 = IS-IS L1（&quot;ISIS-SPB control packets populate SPB-M bridging/forwarding tables&quot;），
-    数据面 = MAC-in-MAC(PBB, 802.1ah)。边缘学 MAC、核心只看 BMAC。
-  key_distinction: |
-    ≠ IEEE 标准泛论：书中 SPB-M 是 ALE 园区方案核心（iFab），叠加宏/微分段、IP-VPN lite、L3 VPN。
-    组件角色：BEB(Backbone Edge Bridge, 服务终结/边缘学MAC) vs BCB(Backbone Core Bridge, &quot;unaware of
-    services, forwarding only by looking at BMAC header&quot;)。
-  why_it_matters: |
-    ALE 特色、外部资料少；所有织构类 skill 的根基。与 STP/MSTP skill 的对比论证也以此为准。
-  related: [g07-isid, g08-bvlan, g09-sap, g10-vpn-lite, g26-auto-fabric]
-  tags: [term, core-concept, aos-specific]
-
-- id: g07
-  term: I-SID
-  full_name: Service Instance Identifier（I-SID = Service ID）
-  type: term
-  source_chapter: SPB-M, p918–920
-  author_definition: |
-    &quot;Backbone services instance identifier; Identifies a MAC-in-MAC service instance; Used to identify and
-    transmit any virtualized traffic in an encapsulated SPB-M frame; Delivers service abstraction.&quot;
-    Service = &quot;A flooding domain for customer traffic&quot;。
-  key_distinction: |
-    ≠ VLAN：I-SID 标识的是&quot;服务实例&quot;（宏分段单位），一个 I-SID 可横跨多台 BEB、绑定多个 SAP；
-    VLAN 只是客户侧 C-VID。p1001：多个 VLAN 映到同一 I-SID 会导致边缘 mac-move，建议 1 VLAN : 1 SAP+I-SID。
-  why_it_matters: |
-    微分段/IP-VPN lite 都以 I-SID 为单位；术语混淆会直接导致服务规划错误。
-  related: [g06-spb, g08-bvlan, g09-sap, g16-mac-move]
-  tags: [term, core-concept, aos-specific]
-
-- id: g08
-  term: B-VLAN (BVLAN)
-  full_name: Backbone VLAN（B-VID = Backbone VID）
-  type: term
-  source_chapter: SPB-M, p918–919
-  author_definition: |
-    &quot;Special VLAN provides the physical path and propagation of network control; Expansion of Layer 2
-    Ethernet domains; No source @mac learning of Customer data traffic; Each B-VLAN calculates its own
-    Shortest Path Tree.&quot; 封装栈：Payload/C-VID(802.1q) → I-SID + B-VID(802.1ad) → BMAC(802.1ah)。
-  key_distinction: |
-    ≠ 业务 VLAN：B-VLAN 是&quot;隧道标识/路径计算单位&quot;（与 ECT 等价树相关，用于 B-VLAN 间的流量工程分散），
-    不承载客户 MAC 学习；客户 VLAN 是 CVLAN。
-  why_it_matters: |
-    SPB 配置第一步就是 spb bvlan；与 I-SID 的层级关系必须分清。
-  related: [g06-spb, g07-isid]
-  tags: [term, aos-specific]
-
-- id: g09
-  term: SAP
-  full_name: Service Access Point（SPB 语境）
-  type: term
-  source_chapter: SPB-M, p919–920
-  author_definition: |
-    &quot;Used to specify what type of CVLAN traffic is allowed to enter/exit from/to the SPB network;
-    Associate a traffic to a SPB service based on Vlan-TAG.&quot; 配套 SDP（Service Distribution Point）=
-    &quot;Far-End Node (Unicast SDP) or group of far-end nodes (Multicast SDP)&quot;。
-  key_distinction: |
-    ≠ SDP 语境的其它含义；SAP 在 SPB-M 中只存在于 BEB 上，定义&quot;C-VID → I-SID&quot;的入出口；
-    同一 SAP 上复用多 VLAN 到一个 I-SID 会触发 mac-move（p1001）。
-  why_it_matters: |
-    SPB 服务配置的最小单位；skill 中&quot;创建服务&quot;即创建 SAP↔I-SID 关联。
-  related: [g06-spb, g07-isid, g16-mac-move]
-  tags: [term, aos-specific]
-
-- id: g10
-  term: IP-VPN Lite
-  full_name: IP-VPN Lite over SPB-M
-  type: term
-  source_chapter: SPB-M, p925–927
-  author_definition: |
-    &quot;Routing L3 traffic over a L2 SPBM backbone network.&quot; AOS 支持两种机制：IP-VPN Lite 与
-    L3/IP-VPN(VRF)。与完整 L3VPN 的区别：不需要 MPLS，直接用 I-SID 承载 VRF 间的 L3 流量。
-  key_distinction: |
-    ≠ MPLS L3VPN：Lite 版本无标签栈，靠 SPB 服务+VRF 实例完成路由隔离；是 SPB&quot;服务框架&quot;的一部分。
-  why_it_matters: |
-    园区多租户/分段设计的关键选项；与 VRF 条目联动。
-  related: [g06-spb, g07-isid, g20-vrf]
-  tags: [term, aos-specific]
-
-- id: g11
-  term: Auto-Fabric / Intelligent Fabric (iFab)
-  full_name: Intelligent Fabric：Auto-VC、Auto-LACP、Auto-Routing、Auto-SPB、Auto-MVRP、Auto-Network Profiling
-  type: term
-  source_chapter: Intelligent Fabric, p1013–1030
-  author_definition: |
-    &quot;Plug-n-Play Zero Touch Deployment&quot;：首次启动时 1-Auto-VC(同族设备自动成VC) 2-自动远程配置下载
-    3-Auto-LACP 4-Auto-Routing(发现 OSPF/IS-IS，&quot;IP interface must exist; Neighbor relationship must
-    establish… If not established configuration deleted &amp; disabled&quot;) 5-Auto-SPB Fabric(发现 SPB 邻居)
-    6-Auto-Network Profiling(环路检测/端口画像) 7-Auto-MVRP(VLAN 传播)。
-    启动时提示 &quot;Do you want to disable auto-configurations on this switch [Y/N]?&quot;，默认 N=启用。
-  key_distinction: |
-    ≠ 通用 intent-based：Auto-* 每项都有&quot;预定义默认值+失败即回退删除&quot;的保守语义；
-    auto-VC 依赖 boot.cfg/vcsetup.cfg 不存在 + 有效 Advanced/Demo license。
-  why_it_matters: |
-    &quot;fabric&quot; 在书中特指这组自动化协议族；售后判断&quot;为什么端口自动变成 VFL/LACP&quot;必须回到这套机制。
-  related: [g02-vc, g03-vfl, g06-spb, g13-mvrp]
-  tags: [term, core-concept, aos-specific]
-
-- id: g12
-  term: MSTP 区域 / MSTI / CIST
-  full_name: Multiple Spanning Tree Protocol Region / MST Instance / Common and Internal Spanning Tree
-  type: term
-  source_chapter: MSTP, p287–305
-  author_definition: |
-    &quot;A MSTP region is: A collection of switches; Sharing the same view of physical topology; Partitioning
-    into the same set of logical topologies. MSTP Region seen as one switch for the rest of the world.&quot;
-    MSTI = VLAN→实例的映射单位；&quot;If a VLAN is not mapped to any MSTI, it is associated to the MSTI 0 (aka IST)&quot;；
-    区域间靠 CST/CIST 交互。`spantree [cist | msti id | vlan id] …`。
-  key_distinction: |
-    作者把 CIST/MSTI/CST 当&quot;REMINDER&quot;讲——假设读者已有标准 MSTP 知识，增量只在 AOS CLI
-    （cist 关键字、restricted-role 等）。同一 region 需同名+同 revision+同 VLAN 映射。
-  why_it_matters: |
-    二层排障 skill 中 STP/MSTP 是基础；AOS 用 `spantree cist` 而非 `spanning-tree` 命令族。
-  related: [g06-spb]
-  tags: [term, protocol]
-
-- id: g13
-  term: MVRP
-  full_name: Multiple VLAN Registration Protocol
-  type: term
-  source_chapter: MVRP, p317–324
-  author_definition: |
-    IEEE 802.1ak 动态 VLAN 注册/传播：&quot;Enable VLAN propagation with MVRP&quot;（Auto-Fabric 第 7 步）；
-    拓扑变化时 &quot;Flushing of learnt attributes during topology change&quot;（p318）。
-  key_distinction: |
-    ≈ GVRP 的继任者；在 AOS 语境中常与 Auto-MVRP 绑定，作为 SPB/VC 环境下 VLAN 动态跟随的手段，
-    而非手工逐 trunk 放 VLAN。
-  why_it_matters: |
-    动态 VLAN 类 skill 与 iFab skill 共用此概念。
-  related: [g11-auto-fabric]
-  tags: [term, protocol]
-
-- id: g14
-  term: DHL
-  full_name: Dual-Home Links（Dual-Home Link）
-  type: term
-  source_chapter: Dual-Home Links, p377–388
-  author_definition: |
-    &quot;High availability feature; Provides fast failover between Core/Aggregation and Access switches
-    without using STP. DHL Active-Active splits VLANs between two active links; The forwarding status of
-    each VLAN is modified by DHL to prevent network loops and maintain connectivity to the core when one
-    of the links [fails].&quot; 配套 MAC 冲刷：`mac-learning flush vlan N port … dynamic`（p373）。
-  key_distinction: |
-    ≠ 普通 dual-homing：DHL 按 VLAN 拆分双上行（LinkA/LinkB VLANs），故障时全 VLAN 收敛到剩余链路；
-    是 STP 的替代而非叠加。
-  why_it_matters: |
-    ALE 接入层高可用特色；与 STP/VRRP/VC 分别覆盖不同故障域，排障 skill 需按层级选择。
-  related: [g15-erp, g12-mstp]
-  tags: [term, aos-specific]
-
-- id: g15
-  term: ERP / RPL / RPL Owner
-  full_name: Ethernet Ring Protection (ERPv2, G.8032) / Ring Protection Link / RPL Owner / R-APS
-  type: term
-  source_chapter: Ethernet Ring Protection, p819–833
-  author_definition: |
-    &quot;Protection switching mechanism; Maintains a loop-free topology in a ring; Fast recovery times
-    (~50 ms); Dedicated Protocol APS; AOS OmniSwitch supports ERPv2; Works on single and multiple
-    independent and laddered rings.&quot;
-    &quot;Ring Protection Link (RPL): Link between 2 ring switches that is blocked to prevent a loop in the ring;
-    RPL Owner: Switch hosting the RPL Port, blocks traffic on the RPL Port during normal ring operations.&quot;
-    R-APS 消息：SF(Signal Fail)/NR(No Request)；Service VLAN 传 R-APS，Protected VLAN 受 ERP 控制转发状态。
-  key_distinction: |
-    RPL ≠ &quot;Resilient Packet Loop&quot; 等其它含义；RPL Owner 是逻辑角色非物理位置。
-    laddered rings（主环+子环）是 AOS 支持的重点拓扑。
-  why_it_matters: |
-    环网排障（SF/NR 状态机、RPL 阻塞口判断）必须用这套术语。
-  related: [g14-dhl]
-  tags: [term, protocol]
-
-- id: g17
-  term: Route Map
-  full_name: Route Map（redistribution 用）
-  type: term
-  source_chapter: Route Redistribution &amp; Route Map, p474–476, p498–510；BGP p865–901
-  author_definition: |
-    &quot;A Route Map is composed of: Action (permit/deny); Route map name; Sequence number; Match (criteria
-    that a route must match); Set (modify route information before being redistributed; applied if all the
-    route-map criteria is met and the action permits).&quot;
-    重分发两步：STEP 1 建 Route Map → STEP 2 `redistribute` 源协议到目的协议（&quot;Redistribution configured &gt;
-    Router becomes ASBR&quot;）。
-  key_distinction: |
-    语义同 Cisco route-map，但 AOS CLI 布局不同（`ip route-map …`，策略条件/动作分离）；书中强调
-    permit/deny 作用于&quot;是否重分发&quot;，而非 packet 过滤。
-  why_it_matters: |
-    OSPF/BGP/VRF leak 所有策略类 skill 的公共构件；match/set 与 ACL 的分工要写清。
-  related: [g20-vrf, g18-pim]
-  tags: [term, protocol]
-
-- id: g20
-  term: VRF / VRF Route Leak
-  full_name: Virtual Routing and Forwarding / Route Leak
-  type: term
-  source_chapter: VRF, p769–780
-  author_definition: |
-    &quot;Multiple routing instances within the same physical switch; Multiple instances of IP routing
-    protocols… on the same physical switch; Ability to use duplicate IP addresses across VRF instances;
-    Separate IP routing domains for customer networks.&quot;
-    管理面细节：`vrf-name Mgmt`（AAA/Radius 等管理流量可绑定 VRF，p44, p420）；
-    Route Leak = 有选择地在 VRF 间/与全局表互泄路由。
-  key_distinction: |
-    ≠ 仅 MPLS-VPN 语境的 VRF：AOS 上 VRF 是轻量本机多实例（配合 IP-VPN Lite over SPB）；
-    Mgmt-VRF 会让&quot;ping 通但管理不通&quot;类排障变得反直觉。
-  why_it_matters: |
-    多租户/管理隔离 skill 的核心；leak 配置错误是最常见事故点。
-  related: [g10-vpn-lite, g17-route-map]
-  tags: [term, core-concept, protocol]
-
-- id: g18
-  term: PIM-SM / RP / BSR / SPT switchover
-  full_name: Protocol Independent Multicast – Sparse Mode / Rendezvous Point / Bootstrap Router / Shortest Path Tree
-  type: term
-  source_chapter: PIM, p740–761
-  author_definition: |
-    &quot;Rendezvous Point (RP): Common forwarding router for a shared distribution tree; Each group has a RP.&quot;
-    RP 静态配置 &quot;Or dynamically through a Bootstrap router; When the primary RP goes down, bootstrap
-    protocol can select an alternate RP; A Candidate Rendezvous Point (C-RP) sends periodic C-RP
-    advertisements to the BSR.&quot;（C-BSR = &quot;Eligible to become a BSR&quot;，p749）
-    SPT 切换：&quot;The switchover is initiated automatically by the last DR; SPT status is enabled by default&quot;
-    （last-hop 发 (S,G) join → 沿 RPT 发 prune → Register-Stop，p747–748）。
-    DR：每网段一个，&quot;sends join messages to RP&quot;，选举=最高优先级→最高 IP（p745）。
-  key_distinction: |
-    标准协议内容，但书中强调 AOS 默认值（SPT 默认开启）与监控命令（`show ip multicast forward`）。
-  why_it_matters: |
-    组播类 skill 的主干；RP 发现方式（静态 vs BSR）决定故障域。
-  related: [g19-anycast-rp, g21-ipms]
-  tags: [term, protocol]
-
-- id: g19
-  term: Anycast RP
-  full_name: Anycast-RP Using PIM（RFC 4610）
-  type: term
-  source_chapter: Anycast RP, p1031–1040
-  author_definition: |
-    &quot;Provide fast convergence when a PIM rendezvous point (RP) router fails and RP load-sharing.&quot;
-    &quot;Uses a single statically defined RP address (set on a Loopback interface); The RP routers share this
-    Loopback unicast IP address announced as a host address; Senders and Receivers exchange messages with
-    the nearest RP (determined by the Unicast routing table/IGP); In case of a failure, the convergence
-    is the same as the IGP.&quot;
-    限制：&quot;Only supported with PIM-SM, not PIM-DM/BIDIR/SSM; Maximum of 8 Anycast RP routers configured
-    statically; SPT must be enabled.&quot;（p1035）
-  key_distinction: |
-    ≠ MSDP 方式的 Anycast RP：ALE 用 RFC 4610 的 PIM Register 封装在 RP 间同步源信息。
-  why_it_matters: |
-    RP 冗余设计的推荐方案；硬性限制（仅 SM、≤8 台、需 SPT）是配置评审 checklist。
-  related: [g18-pim]
-  tags: [term, protocol]
-
-- id: g21
-  term: IPMS
-  full_name: IP Multicast Switching
-  type: term
-  source_chapter: Multicast, p692–721
-  author_definition: |
-    AOS 的 L2 组播交换实现（IGMP snooping 类）：按端口/VLAN 控制 IGMP，支持 IGMP Relay/Throttling、
-    IPv6 组播（MLD）；在 QoS 端口能力表中以 &quot;IPMS Filtering&quot; 作为一个匹配层级（p589）。
-  key_distinction: |
-    AOS 专有缩写：书中说&quot;IPMS&quot;即 L2 组播（snooping+中继），不是三层 PIM。
-  why_it_matters: |
-    组播 skill 中 L2/L3 分层的起点；不认识该缩写会误读特性矩阵。
-  related: [g18-pim]
-  tags: [term, aos-specific]
-
-- id: g22
-  term: SLB / VIP / WRR
-  full_name: Server Load Balancing / Virtual IP / Weighted Round Robin
-  type: term
-  source_chapter: SLB, p1040–1062
-  author_definition: |
-    &quot;Method to logically manage a group of physical servers as one large virtual server (SLB cluster);
-    Cluster is identified and accessed at layer 3 by using a Virtual IP (VIP) address or a QoS policy
-    condition.&quot;
-    VIP：&quot;Must be an address in the same subnet as the servers; SLB cluster automatically creates a
-    proxy ARP for the VIP with the switch's MAC address.&quot;
-    分发算法：默认 &quot;Round-robin based on IPSA, SLB-VIP and a random generated number of the SLB-MAC&quot;；
-    可选 WRR：&quot;distributes traffic according to the relative weight… Aggregate weight of all servers
-    should not exceed 32&quot;。
-    约束：&quot;All servers must be part of the same VLAN/subnet&quot;，服务器以 loopback 挂 VIP；支持健康探测 probe。
-  key_distinction: |
-    ≠ 独立负载均衡器：SLB 是交换机内嵌的线速(L3/L4, IPSA/IPDA 对哈希)特性，最多 16 cluster/switch。
-  why_it_matters: |
-    数据中心接入类 skill 的特色功能；权重总和≤32、同子网约束是配置红线。
-  related: []
-  tags: [term, aos-specific]
-
-- id: g23
-  term: MFF
-  full_name: MAC Forced Forwarding（RFC 4562）
-  type: term
-  source_chapter: Consistent Network Security, p347–352
-  author_definition: |
-    Port Mapping 特性的子机制：把同端口组的&quot;用户口&quot;流量强制转发到&quot;网络口&quot;（如
-    `port-mapping 1 user-port 1/1/1-2 network-port linkagg 8`），用户之间二层隔离，
-    类似 PVLAN 的隔离语义，但以端口映射方式实现；可与 DHCP snooping、本地 proxy ARP 联动（p351）。
-  key_distinction: |
-    ≠ 通用&quot;端口隔离&quot;：MFF 是 AOS Consistent Security 特性名，配置入口是 port-mapping 命令族；
-    和 Private VLAN 是两种并存的隔离手段。
-  why_it_matters: |
-    L2 安全 skill 中与 PVLAN 二选一的方案；术语混用会导致查错命令。
-  related: [g24-lps, g25-dai, g24b-pvlan]
-  tags: [term, aos-specific]
-
-- id: g24
-  term: LPS
-  full_name: Learned Port Security
-  type: term
-  source_chapter: Consistent Network Security, p355–363
-  author_definition: |
-    &quot;Mechanism for controlling network device access on one or more switch ports&quot;——基于已学习 MAC 的
-    端口安全（锁定/告警学习到的地址），区别于静态 MAC 声明。
-  key_distinction: |
-    &quot;Learned&quot;是关键词：按运行中动态学到的 MAC 施加安全策略，而非预配置地址表。
-  why_it_matters: |
-    L2 安全 skill 中防私接设备的常用手段；与 MFF/风暴控制同属 Consistent Security 命名空间。
-  related: [g23-mff]
-  tags: [term, aos-specific]
-
-- id: g25
-  term: DAI / DHCP Snooping / Option 82
-  full_name: Dynamic ARP Inspection / DHCP Snooping / DHCP Option 82
-  type: term
-  source_chapter: DHCP Security, p556–574
-  author_definition: |
-    &quot;Dynamic ARP Inspection (DAI) serves as a security feature for validating the authenticity of ARP
-    packets in a network.&quot;（p573）——基于 DHCP Snooping 绑定表校验 ARP；
-    DHCP Snooping 可 &quot;Globally, per VLAN or per port&quot; 启用（p566），配 UDP Relay/Option 82 提供接入位置信息。
-  key_distinction: |
-    标准特性，但 AOS 中 DAI 的合法性来源=snooping 绑定表，二者必须配套讲解；snooping 粒度（全局/VLAN/端口）
-    是 AOS 特有表述。
-  why_it_matters: |
-    接入安全 skill 的高频组合拳；漏配 snooping 直接导致 DAI 误杀。
-  related: [g23-mff, g24-lps]
-  tags: [term, protocol]
-
-- id: g24b
-  term: Private VLAN（Promiscuous/Isolated/Community）
-  full_name: Private VLAN
-  type: term
-  source_chapter: Private VLAN, p847–857
-  author_definition: |
-    AOS 实现 PVLAN 的端口角色体系（promiscuous 主口、isolated/community 隔离/团体口），
-    可与 UNP 端口组合（UNP profile 映射 PVLAN 角色）。
-  key_distinction: |
-    与 MFF 并存的另一套隔离方案：PVLAN 按 VLAN+端口角色，MFF 按 port-mapping user/network 口。
-  why_it_matters: |
-    隔离方案选型时二者对照出现。
-  related: [g23-mff, g04-unp]
-  tags: [term, protocol]
-
-- id: g16
-  term: mac-move
-  full_name: MAC move（SPB 边缘 MAC 抖动）
-  type: term
-  source_chapter: SPB How-To 附录, p1001
-  author_definition: |
-    &quot;[MACs] be constantly learned, re-learned and flushed. This is known as a 'mac-move' and should be
-    avoided to maintain stability. To avoid mac-move, we strongly recommend mapping different VLANs to
-    different SPB services (ISIDs). This will require one SAP and ISID per access VLAN.&quot;
-  key_distinction: |
-    ≠ 一般意义的 MAC 漂移告警：书中特指同一 SAP 上多 VLAN 复用同一 I-SID 造成的边缘 MAC 反复学习/冲刷。
-  why_it_matters: |
-    SPB 服务规划的第一红线（1 VLAN : 1 SAP + 1 I-SID）；织构类 skill 的 Boundary 内容。
-  related: [g07-isid, g09-sap]
-  tags: [term, core-concept, aos-specific]
-
-- id: g29
-  term: Lightning Config
-  full_name: Lightning Configuration
-  type: term
-  source_chapter: Managing the Switch, p61–63, p1121–1145
-  author_definition: |
-    内置快速开局向导：&quot;The switch starts with default IP address, VLAN 1, lightning-config interface,
-    IP 192.168.0.1/24&quot;；&quot;Access from user copper ports 1/1/1-2, no need to get a console cable&quot;。
-    触发条件（p63）：&quot;Only first or second physical port connected with the client, no other ports
-    connected&quot; 等首启检测；完成后可认证保存配置。
-  key_distinction: |
-    ≠ 通用 Web 管理页：它是首启一次性向导（最小可行配置+认证），与 Auto-Fabric 同属&quot;零触摸&quot;开局路径。
-  why_it_matters: |
-    新设备开局 skill 的入口；误把 lightning-config 接口当业务口是常见新手错误。
-  related: [g26-auto-fabric, g01-directories]
-  tags: [term, aos-specific]
-
-- id: g27
-  term: EMP
-  full_name: Ethernet Management Port
-  type: term
-  source_chapter: Managing the Switch, p36–50；VC p111
-  author_definition: |
-    带外管理口：独立于数据平面的管理网络接口，可挂管理 ACL/策略（&quot;It enables policy-based routing
-    on the EMP ports… empacl policy-list type&quot;，p50/p437）；VC split 时承载 RCD 协议
-    （&quot;RCD use… Chassis EMP IP address&quot;，p111）。
-  key_distinction: |
-    ≠ 普通业务口：管理流量（Radius/Tacacs/SNMP 等）可经 `vrf-name Mgmt` 绑定；
-    EMP 也是 out-of-band 脑裂检测的物理载体。
-  why_it_matters: |
-    管理面加固与 VC split 排障都依赖 EMP；地址规划错误会让 RCD 失效。
-  related: [g02b-split, g20-vrf]
-  tags: [term, aos-specific]
-
-- id: g28
-  term: Consistent AOS Network Security
-  full_name: Consistent AOS Network Security（特性集合品牌名）
-  type: term
-  source_chapter: AOS Network Security, p331–363
-  author_definition: |
-    AOS 打包的一组 L2 安全特性的总称：DoS 防护（ip filter）、UDP Relay（`ip udp relay port/service …`）、
-    ARP 防御/检测、Port Mapping、MAC Forced Forwarding、风暴控制、Learned Port Security、
-    Authentication Trap Mode 等。
-  key_distinction: |
-    &quot;Consistent&quot;强调这些特性跨机型行为一致——既是营销主张也是排障预期；
-    下游引用&quot;端口安全/防 ARP 欺骗&quot;时应落到该集合内的具体特性名。
-  why_it_matters: |
-    L2 安全 skill 的目录结构来源；避免与后续 Access Guardian/UNP（用户认证）混淆边界。
-  related: [g23-mff, g24-lps, g25-dai, g05-access-guardian]
-  tags: [term, aos-specific, umbrella]
-</code></pre>
-<h2 id="_2">关系速览</h2>
-<ul>
-<li><strong>开局链</strong>: Lightning Config / Auto-Fabric → WORKING/CERTIFIED 目录体系 → VC(VFL) + ISSU</li>
-<li><strong>认证链</strong>: Access Guardian → UNP profile → Filter-ID / Classification Rules → Policy List(ACL/QoS)</li>
-<li><strong>织构链</strong>: SPB-M(IS-IS) → B-VLAN/ECT → I-SID(服务) → SAP/SDP → IP-VPN Lite/VRF → mac-move 红线</li>
-<li><strong>冗余链</strong>: VC(设备级) / VRRP(网关级) / DHL(链路级) / ERP+RPL(环网级)</li>
-<li><strong>组播链</strong>: IPMS/IGMP(L2) → PIM-SM/RP(BSR)(L3) → Anycast RP(冗余) → SPT switchover</li>
-<li><strong>策略链</strong>: Route Map → 重分发(ASBR) → BGP 属性 → VRF Route Leak</li>
-<li><strong>安全链</strong>: Consistent Security(MFF/LPS/风暴控制) → DHCP Snooping+DAI → Private VLAN → MACsec</li>
-</ul>
-<p><strong>术语总数：28 条</strong></p></main></div></body></html>
+<h2 id="erp">ERP 环网</h2>
+<table>
+<thead>
+<tr>
+<th>术语</th>
+<th>解释</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ERP (Ethernet Ring Protection)</td>
+<td>以太网环网保护协议，环内防环并实现约 50ms 快速故障恢复</td>
+<td>&lt;&lt;<PAGE 37>&gt;&gt;</td>
+</tr>
+<tr>
+<td>RPL (Ring Protection Link)</td>
+<td>环保护链路，环内正常状态下被阻塞以防环路的那条链路</td>
+<td>&lt;&lt;<PAGE 38>&gt;&gt;</td>
+</tr>
+<tr>
+<td>RPL Owner</td>
+<td>持有 RPL 端口的交换机，负责稳态阻塞/故障时解阻塞 RPL 口</td>
+<td>&lt;&lt;<PAGE 38>&gt;&gt;</td>
+</tr>
+<tr>
+<td>R-APS message</td>
+<td>环自动保护倒换消息，在 Service VLAN 内传递</td>
+<td>&lt;&lt;<PAGE 38>&gt;&gt;</td>
+</tr>
+<tr>
+<td>SF (Signal Fail)</td>
+<td>R-APS 消息类型，检测到链路/节点故障时宣告</td>
+<td>&lt;&lt;<PAGE 38>&gt;&gt;</td>
+</tr>
+<tr>
+<td>NR / RB (No Request / RPL Blocked)</td>
+<td>无请求消息及 RPL 已阻塞标记，恢复完成时由 RPL Owner 发出</td>
+<td>&lt;&lt;<PAGE 40>&gt;&gt;</td>
+</tr>
+<tr>
+<td>WTR (Wait To Restore) timer</td>
+<td>等待恢复定时器，默认 5 分钟，防链路抖动引发反复倒换</td>
+<td>&lt;&lt;<PAGE 42>&gt;&gt;</td>
+</tr>
+<tr>
+<td>Guard Timer</td>
+<td>守护定时器（默认 50 厘秒），丢弃过期 R-APS 防误倒换</td>
+<td>&lt;&lt;<PAGE 56>&gt;&gt;</td>
+</tr>
+<tr>
+<td>Service VLAN</td>
+<td>环级 VLAN，承载 R-APS 消息和 ETH CCM</td>
+<td>&lt;&lt;<PAGE 38>&gt;&gt;</td>
+</tr>
+<tr>
+<td>Protected VLAN</td>
+<td>加入 ERP 环、转发状态由 ERP 决定的业务 VLAN</td>
+<td>&lt;&lt;<PAGE 38>&gt;&gt;</td>
+</tr>
+<tr>
+<td>MEG Level</td>
+<td>ERP 管理实体组级别 0-7，环内所有交换机必须一致</td>
+<td>&lt;&lt;<PAGE 47>&gt;&gt;</td>
+</tr>
+<tr>
+<td>Laddered / Subtending Ring</td>
+<td>主环+子环的梯形结构，子环借主环虚通道闭合</td>
+<td>&lt;&lt;<PAGE 43>&gt;&gt;</td>
+</tr>
+</tbody>
+</table>
+<h2 id="macsec">MACsec</h2>
+<table>
+<thead>
+<tr>
+<th>术语</th>
+<th>解释</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MACsec (IEEE 802.1AE)</td>
+<td>二层链路加密与认证标准，点到点保护直连节点间流量</td>
+<td>&lt;&lt;<PAGE 67>&gt;&gt;</td>
+</tr>
+<tr>
+<td>SecTag</td>
+<td>MACsec 报文头（8/16 字节），含密钥信息、包号与安全通道标识（EtherType 0x88E5）</td>
+<td>&lt;&lt;<PAGE 68>&gt;&gt;</td>
+</tr>
+<tr>
+<td>ICV (Integrity Check Value)</td>
+<td>GCM-AES 生成的 16 字节完整性校验值</td>
+<td>&lt;&lt;<PAGE 68>&gt;&gt;</td>
+</tr>
+<tr>
+<td>SCI (Secure Channel Identifier)</td>
+<td>安全通道标识，收发通道各一，需与对端交叉匹配</td>
+<td>&lt;&lt;<PAGE 69>&gt;&gt;</td>
+</tr>
+<tr>
+<td>SAK (Secure Association Key)</td>
+<td>安全关联密钥，加密数据平面流量</td>
+<td>&lt;&lt;<PAGE 69>&gt;&gt;</td>
+</tr>
+<tr>
+<td>Key-chain</td>
+<td>密钥链，聚合多个 security key 供 sci-tx/sci-rx 引用</td>
+<td>&lt;&lt;<PAGE 69>&gt;&gt;</td>
+</tr>
+<tr>
+<td>Static SA Mode</td>
+<td>手工配置最多 4 把 SA 密钥的交换机间静态模式</td>
+<td>&lt;&lt;<PAGE 75>&gt;&gt;</td>
+</tr>
+<tr>
+<td>MKA (MACsec Key Agreement)</td>
+<td>IEEE 802.1X-2010 密钥协商协议，动态生成 SAK</td>
+<td>&lt;&lt;<PAGE 76>&gt;&gt;</td>
+</tr>
+<tr>
+<td>CAK (Connectivity Association Key)</td>
+<td>连接关联密钥，保护 MKA 控制平面；EAP 模式经 RADIUS VSAs 下发</td>
+<td>&lt;&lt;<PAGE 76>&gt;&gt;</td>
+</tr>
+<tr>
+<td>Key rotation</td>
+<td>SAK 轮换，按会话时长（5-120 分钟）或流量（5-1000GB）先到先换</td>
+<td>&lt;&lt;<PAGE 77>&gt;&gt;</td>
+</tr>
+</tbody>
+</table>
+<h2 id="private-vlan-mstp-mvrp">Private VLAN / MSTP / MVRP</h2>
+<table>
+<thead>
+<tr>
+<th>术语</th>
+<th>解释</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Private VLAN (PVLAN)</td>
+<td>在单广播域内划分子域实现二层隔离的特性</td>
+<td>&lt;&lt;<PAGE 98>&gt;&gt;</td>
+</tr>
+<tr>
+<td>Primary / Secondary VLAN</td>
+<td>PVLAN 主 VLAN（对外）与从 VLAN（isolated/community 两类）</td>
+<td>&lt;&lt;<PAGE 99>&gt;&gt;</td>
+</tr>
+<tr>
+<td>Isolated VLAN</td>
+<td>隔离型二级 VLAN，成员间二层完全不通，仅到 promiscuous 口；每 Primary 仅一个</td>
+<td>&lt;&lt;<PAGE 99>&gt;&gt;、&lt;&lt;<PAGE 109>&gt;&gt;</td>
+</tr>
+<tr>
+<td>Community VLAN</td>
+<td>社区型二级 VLAN，同社区可互通、跨社区不通</td>
+<td>&lt;&lt;<PAGE 99>&gt;&gt;</td>
+</tr>
+<tr>
+<td>Promiscuous port</td>
+<td>混杂端口，属 Primary VLAN，可与所有端口通信</td>
+<td>&lt;&lt;<PAGE 100>&gt;&gt;</td>
+</tr>
+<tr>
+<td>PVLAN ISL</td>
+<td>跨交换机延伸 PVLAN 域的级联口，同时承载主/从 VLAN</td>
+<td>&lt;&lt;<PAGE 100>&gt;&gt;</td>
+</tr>
+<tr>
+<td>MSTP (IEEE 802.1s)</td>
+<td>多生成树协议，多 VLAN 映射到少量实例</td>
+<td>&lt;&lt;<PAGE 115>&gt;&gt;</td>
+</tr>
+<tr>
+<td>MSTI (MST Instance)</td>
+<td>多生成树实例（最多 16 个），VLAN 按需映射</td>
+<td>&lt;&lt;<PAGE 116>&gt;&gt;</td>
+</tr>
+<tr>
+<td>CIST / IST</td>
+<td>公共与内部生成树（实例 0），未映射 VLAN 默认归属，承载全部实例 BPDU</td>
+<td>&lt;&lt;<PAGE 115>&gt;&gt;、&lt;&lt;<PAGE 118>&gt;&gt;</td>
+</tr>
+<tr>
+<td>MST Region</td>
+<td>多生成树区域，name+revision+VLAN 映射三要素一致才同域</td>
+<td>&lt;&lt;<PAGE 117>&gt;&gt;</td>
+</tr>
+<tr>
+<td>Flat / per-vlan (1x1) mode</td>
+<td>单树 flat 模式（MSTP/MVRP 前置）与每 VLAN 一树模式，二者互斥</td>
+<td>&lt;&lt;<PAGE 122>&gt;&gt;、&lt;&lt;<PAGE 143>&gt;&gt;</td>
+</tr>
+<tr>
+<td>MVRP (IEEE 802.1ak)</td>
+<td>多 VLAN 注册协议，跨桥接网动态传播 VLAN 成员（近似 GVRP）</td>
+<td>&lt;&lt;<PAGE 152>&gt;&gt;</td>
+</tr>
+<tr>
+<td>Registrar / Applicant mode</td>
+<td>MVRP 端口注册模式（normal/fixed/forbidden）与申请者模式</td>
+<td>&lt;&lt;<PAGE 154>&gt;&gt;、&lt;&lt;<PAGE 155>&gt;&gt;</td>
+</tr>
+<tr>
+<td>Dynamic VLAN (dyn)</td>
+<td>由 MVRP 自动学习创建的 VLAN，不建 IP 接口、不映射 MSTI</td>
+<td>&lt;&lt;<PAGE 162>&gt;&gt;、&lt;&lt;<PAGE 163>&gt;&gt;</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_1">网络安全</h2>
+<table>
+<thead>
+<tr>
+<th>术语</th>
+<th>解释</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DoS Filtering</td>
+<td>交换机内置 DoS 攻击过滤（PoD/SYN/Land/Teardrop/ICMP&gt;100pps 等）</td>
+<td>&lt;&lt;<PAGE 168>&gt;&gt;</td>
+</tr>
+<tr>
+<td>UDP Relay</td>
+<td>通用 UDP 端口中继，按服务端口转发到指定 VLAN/IP</td>
+<td>&lt;&lt;<PAGE 170>&gt;&gt;</td>
+</tr>
+<tr>
+<td>ARP Poisoning Detection</td>
+<td>ARP 欺骗检测，识别未请求应答/伪造请求，restricted-address 每接口最多 2 个</td>
+<td>&lt;&lt;<PAGE 176>&gt;&gt;、&lt;&lt;<PAGE 177>&gt;&gt;</td>
+</tr>
+<tr>
+<td>Local Proxy ARP</td>
+<td>本地代理 ARP，per-VLAN 用路由口 MAC 应答所有请求</td>
+<td>&lt;&lt;<PAGE 179>&gt;&gt;</td>
+</tr>
+<tr>
+<td>ARP filter</td>
+<td>ARP 过滤，按 sender/target 与 allow/block 控制代理应答</td>
+<td>&lt;&lt;<PAGE 180>&gt;&gt;</td>
+</tr>
+<tr>
+<td>Port Mapping</td>
+<td>端口映射会话，user 口彼此隔离仅经 network 口通信，最多 8 会话</td>
+<td>&lt;&lt;<PAGE 182>&gt;&gt;</td>
+</tr>
+<tr>
+<td>MFF (MAC Forced Forwarding, RFC 4562)</td>
+<td>MAC 强制转发，同子网主机 ARP 一律指向网关（DHCP snooping+port mapping+动态代理 ARP）</td>
+<td>&lt;&lt;<PAGE 185>&gt;&gt;</td>
+</tr>
+<tr>
+<td>Storm Control (flood-limit)</td>
+<td>风暴控制，按 bcast/mcast/uucast 限速（pps/mbps/cap%），违例 shutdown/trap</td>
+<td>&lt;&lt;<PAGE 188>&gt;&gt;</td>
+</tr>
+<tr>
+<td>LPS (Learned Port Security)</td>
+<td>学习型端口安全：限 MAC 数量/学习窗/违例 restrict 或 shutdown；不支持聚合口</td>
+<td>&lt;&lt;<PAGE 190>&gt;&gt;</td>
+</tr>
+<tr>
+<td>convert-to-static</td>
+<td>将端口已学动态 MAC 固化为静态，锁定当前设备</td>
+<td>&lt;&lt;<PAGE 193>&gt;&gt;</td>
+</tr>
+<tr>
+<td>pkt-relay</td>
+<td>LPS 报文中继，学习期被截获报文重注入转发路径</td>
+<td>&lt;&lt;<PAGE 196>&gt;&gt;</td>
+</tr>
+</tbody>
+</table>
+<h2 id="ip-ospf">IP 路由 / OSPF</h2>
+<table>
+<thead>
+<tr>
+<th>术语</th>
+<th>解释</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Loopback0</td>
+<td>环回接口，管理/协议标识用，RIP/OSPF 自动通告（BGP 不）</td>
+<td>&lt;&lt;<PAGE 216>&gt;&gt;</td>
+</tr>
+<tr>
+<td>Recursive static route (follows)</td>
+<td>递归静态路由，下一跳跟随某目标主机路由动态解析</td>
+<td>&lt;&lt;<PAGE 224>&gt;&gt;</td>
+</tr>
+<tr>
+<td>RIP</td>
+<td>距离矢量协议，跳数度量，16 跳不可达，UDP 520，更新 30s/失效 180s</td>
+<td>&lt;&lt;<PAGE 227>&gt;&gt;</td>
+</tr>
+<tr>
+<td>Router database / route-pref</td>
+<td>路由数据库与协议优先级（Local 1/Static 2/OSPF 110/RIP 120/EBGP 190…）</td>
+<td>&lt;&lt;<PAGE 223>&gt;&gt;、&lt;&lt;<PAGE 299>&gt;&gt;</td>
+</tr>
+<tr>
+<td>Router ID</td>
+<td>OSPF 路由器标识：手工指定 &gt; Loopback0 &gt; 最高接口 IP</td>
+<td>&lt;&lt;<PAGE 240>&gt;&gt;</td>
+</tr>
+<tr>
+<td>DR / BDR / DROther</td>
+<td>指定/备份指定路由器（优先级+RouterID 选举）与普通路由器；组播 224.0.0.5/224.0.0.6</td>
+<td>&lt;&lt;<PAGE 242>&gt;&gt;</td>
+</tr>
+<tr>
+<td>DBD / LSR / LSU / LSAck</td>
+<td>OSPF 数据库描述/请求/更新/确认包，邻接同步四件套</td>
+<td>&lt;&lt;<PAGE 245>&gt;&gt;、&lt;&lt;<PAGE 246>&gt;&gt;</td>
+</tr>
+<tr>
+<td>LSA Type 1/2</td>
+<td>路由器 LSA（每路由器域内泛洪）与网络 LSA（DR 生成）</td>
+<td>&lt;&lt;<PAGE 260>&gt;&gt;、&lt;&lt;<PAGE 261>&gt;&gt;</td>
+</tr>
+<tr>
+<td>LSA Type 3 (Summary)</td>
+<td>汇总 LSA，ABR 生成跨区域通告网段；也承载区域路由汇总</td>
+<td>&lt;&lt;<PAGE 262>&gt;&gt;、&lt;&lt;<PAGE 286>&gt;&gt;</td>
+</tr>
+<tr>
+<td>LSA Type 4 (Summary ASBR)</td>
+<td>ASBR 汇总 LSA，ABR 通告到 ASBR 的位置</td>
+<td>&lt;&lt;<PAGE 264>&gt;&gt;</td>
+</tr>
+<tr>
+<td>LSA Type 5 (External)</td>
+<td>外部 LSA，ASBR 重分发的域外路由；外部聚合由 ASBR 完成</td>
+<td>&lt;&lt;<PAGE 263>&gt;&gt;、&lt;&lt;<PAGE 287>&gt;&gt;</td>
+</tr>
+<tr>
+<td>LSA Type 7 (NSSA)</td>
+<td>NSSA 外部 LSA，ABR 转换为 Type 5 出域</td>
+<td>&lt;&lt;<PAGE 265>&gt;&gt;</td>
+</tr>
+<tr>
+<td>ABR / ASBR / BB / IR</td>
+<td>区域边界路由器（汇总）/自治系统边界路由器（重分发）/骨干/内部路由器</td>
+<td>&lt;&lt;<PAGE 256>&gt;&gt;-&lt;&lt;<PAGE 258>&gt;&gt;</td>
+</tr>
+<tr>
+<td>Stub / Totally Stubby Area</td>
+<td>末梢区域（拒 Type4/5，ABR 注入 Type3 默认路由）/完全末梢（再拒 Type3）</td>
+<td>&lt;&lt;<PAGE 268>&gt;&gt;、&lt;&lt;<PAGE 269>&gt;&gt;</td>
+</tr>
+<tr>
+<td>NSSA</td>
+<td>非纯末梢区域，允许 ASBR 用 Type7 引入外部路由</td>
+<td>&lt;&lt;<PAGE 270>&gt;&gt;</td>
+</tr>
+<tr>
+<td>ECMP</td>
+<td>等价多路径，按流负载分担，AOS 最多 4 条，不支持逐包</td>
+<td>&lt;&lt;<PAGE 285>&gt;&gt;</td>
+</tr>
+<tr>
+<td>Virtual Link / Transit Area</td>
+<td>虚链路与穿越区域，跨非骨干区延伸 Area 0</td>
+<td>&lt;&lt;<PAGE 289>&gt;&gt;</td>
+</tr>
+<tr>
+<td>Graceful Restart (Grace LSA)</td>
+<td>平滑重启，重启期间邻居维持邻接避免全网 SPF；OSPF/ISIS 默认关、BGP 默认开</td>
+<td>&lt;&lt;<PAGE 361>&gt;&gt;、&lt;&lt;<PAGE 363>&gt;&gt;</td>
+</tr>
+<tr>
+<td>Route Map (action/match/set)</td>
+<td>路由图：动作+匹配+修改，重分发过滤核心；序列自上而下命中即停</td>
+<td>&lt;&lt;<PAGE 300>&gt;&gt;、&lt;&lt;<PAGE 304>&gt;&gt;</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_2">组播</h2>
+<table>
+<thead>
+<tr>
+<th>术语</th>
+<th>解释</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Class D / 01:00:5E</td>
+<td>组播地址 224.0.0.0-239.255.255.255，IP 低 23 位映射组播 MAC</td>
+<td>&lt;&lt;<PAGE 375>&gt;&gt;</td>
+</tr>
+<tr>
+<td>IPMS (IP Multicast Switching)</td>
+<td>IP 组播交换，硬件 IGMP 侦听按端口转发</td>
+<td>&lt;&lt;<PAGE 377>&gt;&gt;</td>
+</tr>
+<tr>
+<td>IGMP (v1/v2/v3)</td>
+<td>因特网组管理协议；v2 加 Leave/特定组查询，v3 加源过滤；TTL=1 本地段协议</td>
+<td>&lt;&lt;<PAGE 381>&gt;&gt;、&lt;&lt;<PAGE 382>&gt;&gt;</td>
+</tr>
+<tr>
+<td>IGMP Querier / querier-forwarding</td>
+<td>查询器（每 LAN 一个）与查询器转发（组播定向到查询器交换机）</td>
+<td>&lt;&lt;<PAGE 380>&gt;&gt;、&lt;&lt;<PAGE 389>&gt;&gt;</td>
+</tr>
+<tr>
+<td>IGMP Throttling (max-group)</td>
+<td>每端口/VLAN/全局限制学习组数，动作 none/drop/replace</td>
+<td>&lt;&lt;<PAGE 396>&gt;&gt;</td>
+</tr>
+<tr>
+<td>RPF (Reverse Path Forwarding)</td>
+<td>逆向路径转发校验，只在指向源的接口收包</td>
+<td>&lt;&lt;<PAGE 413>&gt;&gt;、&lt;&lt;<PAGE 426>&gt;&gt;</td>
+</tr>
+<tr>
+<td>PIM-SM / PIM-DM</td>
+<td>稀疏模式（显式加入+RP 共享树）/密集模式（泛洪-剪枝 3 分钟循环、无 RP）</td>
+<td>&lt;&lt;<PAGE 426>&gt;&gt;、&lt;&lt;<PAGE 434>&gt;&gt;</td>
+</tr>
+<tr>
+<td>RP (Rendezvous Point)</td>
+<td>汇聚点，共享树根，源以 Register 单播封装发往</td>
+<td>&lt;&lt;<PAGE 428>&gt;&gt;</td>
+</tr>
+<tr>
+<td>RPT / SPT switchover</td>
+<td>共享树/最短路径树；末跳 DR 收到首包后自动发起 SPT 切换</td>
+<td>&lt;&lt;<PAGE 428>&gt;&gt;-&lt;&lt;<PAGE 430>&gt;&gt;</td>
+</tr>
+<tr>
+<td>BSR / C-RP</td>
+<td>自举路由器/候选 RP 的动态 RP 发现机制（优先级→hash→IP 选 RP）</td>
+<td>&lt;&lt;<PAGE 431>&gt;&gt;、&lt;&lt;<PAGE 432>&gt;&gt;</td>
+</tr>
+<tr>
+<td>Anycast RP (RFC 4610)</td>
+<td>多 RP 共享任播 Loopback 地址实现负载分担与 IGP 级快速切换；仅 PIM-SM、最多 8 台</td>
+<td>&lt;&lt;<PAGE 643>&gt;&gt;-&lt;&lt;<PAGE 645>&gt;&gt;</td>
+</tr>
+</tbody>
+</table>
+<h2 id="vrf-bgp">VRF / BGP</h2>
+<table>
+<thead>
+<tr>
+<th>术语</th>
+<th>解释</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>VRF</td>
+<td>虚拟路由转发，一台物理交换机多路由实例、地址可重叠；VLAN 只能归属一个 VRF</td>
+<td>&lt;&lt;<PAGE 453>&gt;&gt;、&lt;&lt;<PAGE 460>&gt;&gt;</td>
+</tr>
+<tr>
+<td>GRT / VRF Route Leak</td>
+<td>全局路由表及经 route-map 的 VRF 间路由导入导出</td>
+<td>&lt;&lt;<PAGE 461>&gt;&gt;</td>
+</tr>
+<tr>
+<td>BGP-4 (RFC 4271)</td>
+<td>边界网关协议，AS 间路径矢量协议，TCP 179</td>
+<td>&lt;&lt;<PAGE 476>&gt;&gt;</td>
+</tr>
+<tr>
+<td>IBGP / EBGP</td>
+<td>AS 内/AS 间 BGP 邻居关系；IBGP 学的路由不再传给其他 IBGP 邻居（水平分割）</td>
+<td>&lt;&lt;<PAGE 478>&gt;&gt;、&lt;&lt;<PAGE 501>&gt;&gt;</td>
+</tr>
+<tr>
+<td>AS-PATH / Next-HOP / Origin</td>
+<td>BGP 必选属性：AS 列表/下一跳/来源（IGP&gt;EGP&gt;Incomplete）</td>
+<td>&lt;&lt;<PAGE 484>&gt;&gt;-&lt;&lt;<PAGE 487>&gt;&gt;</td>
+</tr>
+<tr>
+<td>Local Preference / MED</td>
+<td>选出口偏好（越高越优）与入流量入口建议（越低越优、仅两 AS 间传递）</td>
+<td>&lt;&lt;<PAGE 488>&gt;&gt;、&lt;&lt;<PAGE 491>&gt;&gt;</td>
+</tr>
+<tr>
+<td>Community (NO-EXPORT/NO-ADVERTISE)</td>
+<td>路由打标分组属性，控制通告范围</td>
+<td>&lt;&lt;<PAGE 494>&gt;&gt;、&lt;&lt;<PAGE 496>&gt;&gt;</td>
+</tr>
+<tr>
+<td>BGP synchronization</td>
+<td>同步：IBGP 学的路由须 IGP 可达才通告给 EBGP</td>
+<td>&lt;&lt;<PAGE 502>&gt;&gt;</td>
+</tr>
+</tbody>
+</table>
+<h2 id="spb-ifab">SPB / iFab / 平台</h2>
+<table>
+<thead>
+<tr>
+<th>术语</th>
+<th>解释</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SPB / SPB-M (IEEE 802.1aq)</td>
+<td>最短路径桥接（MAC-in-MAC 变体），IS-IS 控制平面，全链路可用</td>
+<td>&lt;&lt;<PAGE 523>&gt;&gt;、&lt;&lt;<PAGE 525>&gt;&gt;</td>
+</tr>
+<tr>
+<td>PBB (IEEE 802.1ah)</td>
+<td>运营商骨干桥接，MAC-in-MAC 封装（Ethertype 0x88E7）</td>
+<td>&lt;&lt;<PAGE 526>&gt;&gt;、&lt;&lt;<PAGE 567>&gt;&gt;</td>
+</tr>
+<tr>
+<td>BEB / BCB</td>
+<td>骨干边缘桥（封装/解封装、终结服务）/骨干核心桥（仅按 BMAC 转发、不学客户 MAC）</td>
+<td>&lt;&lt;<PAGE 527>&gt;&gt;</td>
+</tr>
+<tr>
+<td>BVLAN (B-VID)</td>
+<td>骨干 VLAN，承载控制与服务流量，最多 16 个；其上无 STP</td>
+<td>&lt;&lt;<PAGE 527>&gt;&gt;、&lt;&lt;<PAGE 569>&gt;&gt;</td>
+</tr>
+<tr>
+<td>I-SID</td>
+<td>24 位服务实例标识，区分租户/VPN，可达 16M</td>
+<td>&lt;&lt;<PAGE 527>&gt;&gt;、&lt;&lt;<PAGE 565>&gt;&gt;</td>
+</tr>
+<tr>
+<td>ECT / ECT-ID</td>
+<td>等价树及编号，用于各 BVLAN 建 SPT 时的 tie-break 分流</td>
+<td>&lt;&lt;<PAGE 569>&gt;&gt;</td>
+</tr>
+<tr>
+<td>SAP / SDP</td>
+<td>服务接入点（物理口+封装值绑定服务）/服务分发点（通向远端 BEB，自动创建）</td>
+<td>&lt;&lt;<PAGE 527>&gt;&gt;、&lt;&lt;<PAGE 572>&gt;&gt;</td>
+</tr>
+<tr>
+<td>Head-End / Tandem replication</td>
+<td>SPB BUM 复制模式：头端多单播复制（默认）/串联按组播 FDB 分叉复制</td>
+<td>&lt;&lt;<PAGE 539>&gt;&gt;、&lt;&lt;<PAGE 573>&gt;&gt;</td>
+</tr>
+<tr>
+<td>VPN Lite / L3 VPN (SPB)</td>
+<td>SPB 上叠跑 OSPF/BGP 的边界方案 / IS-IS TLV 携带 VRF 路由的域内方案</td>
+<td>&lt;&lt;<PAGE 534>&gt;&gt;、&lt;&lt;<PAGE 536>&gt;&gt;、&lt;&lt;<PAGE 592>&gt;&gt;</td>
+</tr>
+<tr>
+<td>LBD (Loopback Detection)</td>
+<td>环回检测，发探测帧防接入层环路，检测到即关闭端口</td>
+<td>&lt;&lt;<PAGE 609>&gt;&gt;</td>
+</tr>
+<tr>
+<td>iFab (Auto-VC/RCD/LACP/Routing/SPB/Profiling/MVRP)</td>
+<td>出厂默认七阶段零触摸自动化家族；失败自动回退</td>
+<td>&lt;&lt;<PAGE 624>&gt;&gt;</td>
+</tr>
+<tr>
+<td>DIS / Pseudo node</td>
+<td>IS-IS 指定中间系统/伪节点（对应 OSPF DR，可抢占；Hello 9s，DIS 3s）</td>
+<td>&lt;&lt;<PAGE 689>&gt;&gt;、&lt;&lt;<PAGE 690>&gt;&gt;</td>
+</tr>
+<tr>
+<td>NSAP (Area/System-ID/NSEL)</td>
+<td>IS-IS 的 OSI 地址结构，本地管理 AFI=49，最小 8 字节</td>
+<td>&lt;&lt;<PAGE 686>&gt;&gt;</td>
+</tr>
+<tr>
+<td>DHL (Dual-Home Link)</td>
+<td>双归链路，无 STP/LAG 的接入-核心快速倒换冗余</td>
+<td>&lt;&lt;<PAGE 318>&gt;&gt;、&lt;&lt;<PAGE 607>&gt;&gt;</td>
+</tr>
+<tr>
+<td>Virtual Chassis (VC) / VFL</td>
+<td>虚拟机箱/虚拟机箱链路，多台堆叠为一逻辑设备</td>
+<td>&lt;&lt;<PAGE 134>&gt;&gt;</td>
+</tr>
+<tr>
+<td>SLB / VIP / WRR</td>
+<td>服务器负载均衡：集群虚拟 IP（代理 ARP 应答）与加权轮询（权重 0 备份、总权重≤32）</td>
+<td>&lt;&lt;<PAGE 653>&gt;&gt;-&lt;&lt;<PAGE 656>&gt;&gt;</td>
+</tr>
+<tr>
+<td>write memory flash-synchro</td>
+<td>保存配置并同步备份 Flash 的 AOS 命令</td>
+<td>&lt;&lt;<PAGE 112>&gt;&gt;</td>
+</tr>
+<tr>
+<td>working / certified directory</td>
+<td>AOS 双镜像目录，reload from working/certified 支持升级回滚</td>
+<td>&lt;&lt;<PAGE 53>&gt;&gt;、&lt;&lt;<PAGE 680>&gt;&gt;</td>
+</tr>
+</tbody>
+</table><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>terra-3vm-deployment — DT00XTE317 · OmniVista Cirrus / Terra 部署与配置</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE317 · OmniVista Cirrus / Terra 部署与配置</h1>
+<div class="sub">Edition 10 · 478 页 · 云管与本地部署平台（新流水线重制版，全文可溯源）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">平台与账号</div>
+<a href="../skills/platform-selection-prereqs.html">platform-selection-prereqs</a>
+<a href="../skills/account-org-system.html">account-org-system</a>
+<div class="grp">部署与许可</div>
+<a href="../skills/terra-3vm-deployment.html" class="on">terra-3vm-deployment</a>
+<a href="../skills/license-and-trial.html">license-and-trial</a>
+<div class="grp">设备纳管</div>
+<a href="../skills/ap-onboarding.html">ap-onboarding</a>
+<a href="../skills/switch-onboarding.html">switch-onboarding</a>
+<div class="grp">业务与运维</div>
+<a href="../skills/wired-switch-config.html">wired-switch-config</a>
+<a href="../skills/wireless-service-delivery.html">wireless-service-delivery</a>
+<a href="../skills/rf-roaming-optimization.html">rf-roaming-optimization</a>
+<a href="../skills/monitoring-operations.html">monitoring-operations</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../postsales/index.html">售后</a> › <a href="../index.html">DT00XTE317</a> › <span>terra-3vm-deployment</span></nav><h1>terra-3vm-deployment</h1><p class="meta"><span class="badge">SKILL</span> terra-3vm-deployment · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>客户采购了 Terra，需要在其 VMware 环境部署 3-VM 集群</li>
+<li>部署 build 后 Dashboard 上 Pod 状态异常，需要定位</li>
+<li>部署前核对 ESXi/CPU/RAM/磁盘等硬件门槛</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>Terra 是 3 台 VM 组成的 Kubernetes 集群（Active-Active 高可用），部署分四层：①虚拟化资源（硬性 CPU 指令集要求）→ ②OVA + 控制台网络初始化 → ③WebAdmin（端口 3000）首设与 build 上传 → ④DNS 四域名解析。每一步都有明确的验证命令和失败取证入口。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<ol>
+<li><strong>硬件与环境核对</strong>（&lt;&lt;<PAGE 75>&gt;&gt;）：</li>
+<li>3 台 VM；ESXi 最低 8.0；每台 8 vCPU @3GHz、RAM 32GB、SSD（≥50MB/s）、System Disk 200GB、Data Disk 3TB</li>
+<li>CPU 必须支持 AVX/AVX2；vCenter 集群需开 EVC，基线推荐 Ice Lake，最低 Broadwell</li>
+<li><strong>部署 OVA</strong>：下载 OmniVista Terra OVA 与 build (.7z)，部署时输入 Name、选 NIC card，上电（&lt;&lt;<PAGE 76>&gt;&gt;&lt;&lt;<PAGE 77>&gt;&gt;）。</li>
+<li><strong>控制台初始化</strong>（每节点）：键盘布局 → hostname（如 ovtx-100）→ IP/掩码/网关/主备 DNS（必须能解析 myovterra.myovcloud.com）→ ovtx 用户密码 → 应用配置重启 → <code>ip addr</code> 验证；第 2/3 节点换 hostname/IP 重复（&lt;&lt;<PAGE 78>&gt;&gt;&lt;&lt;<PAGE 79>&gt;&gt;&lt;&lt;<PAGE 80>&gt;&gt;）。</li>
+<li><strong>WebAdmin 首次设置</strong>：浏览器访问 <code>&lt;Node_IP&gt;:3000</code> → 创建 admin 账号 → General Info（Email/Company/Country/Timezone/预期 AP 与交换机数量）→ 输入第 2/3 节点 IP 并确认可达 → 定义 4 个 IP（Main / VPN / UPAM Captive Portal / UPAM Radius）→ SMTP（示例 smtp.gmail.com:465，TLS/StartTLS + SMTP 认证）（&lt;&lt;<PAGE 82>&gt;&gt;&lt;&lt;<PAGE 83>&gt;&gt;&lt;&lt;<PAGE 84>&gt;&gt;&lt;&lt;<PAGE 85>&gt;&gt;&lt;&lt;<PAGE 86>&gt;&gt;）。</li>
+<li><strong>部署 Build</strong>：选 build release file (.7z) 上传 → Done → Confirm the deployment；完成后刷新 admin center 看 Dashboard 的 Nodes 与 Pods 状态（&lt;&lt;<PAGE 87>&gt;&gt;&lt;&lt;<PAGE 88>&gt;&gt;&lt;&lt;<PAGE 89>&gt;&gt;）。</li>
+<li><strong>配置 DNS 四域名</strong>（在客户 DNS 服务器，如 Windows DNS）（&lt;&lt;<PAGE 90>&gt;&gt;）：</li>
+<li>activation.myovterra.com / as.myovterra.com → Main IP（activation server）</li>
+<li>vpn.myovterra.com → VPN IP</li>
+<li>images.myovterra.com → Main IP（Image Server）</li>
+<li>myovterra.myovcloud.com → Main IP（主 URL）</li>
+<li><strong>首次登录</strong>：以 myovterra.myovcloud.com 登录（&lt;&lt;<PAGE 91>&gt;&gt;）。</li>
+</ol>
+<h2 id="a2">A2（进阶应用）</h2>
+<ul>
+<li>Terra 组织创建后自动激活 90 天 Trial（&lt;&lt;<PAGE 110>&gt;&gt;），可边试用边完成生产 License 导入。</li>
+<li>高层架构：VMware 多服务器高可用（Active-Active L3）、Kubernetes 集群、VM×3、VPN Server/Load balancer、Kafka/MQTT、HTTPS（&lt;&lt;<PAGE 17>&gt;&gt;）。</li>
+<li>部署失败时在 Install 菜单看状态（Success/Failure/In Progress），点 "Download the logs" 取安装日志（&lt;&lt;<PAGE 89>&gt;&gt;）。</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li><strong>案例 1</strong>：vCenter 集群 EVC 基线设为低于 Broadwell 的老基线，Terra 部署失败——CPU AVX/AVX2 指令集不满足；改基线为 Ice Lake（或最低 Broadwell）后成功（&lt;&lt;<PAGE 75>&gt;&gt;）。</li>
+<li><strong>案例 2</strong>：节点 DNS 无法解析 myovterra.myovcloud.com，控制台配置卡住——配置 DNS 前必须确保解析可行（&lt;&lt;<PAGE 78>&gt;&gt;）。</li>
+</ul>
+<h2 id="b">B（边界与陷阱）</h2>
+<ul>
+<li><strong>EVC 基线禁区</strong>：低于 Broadwell 的基线必失败（&lt;&lt;<PAGE 75>&gt;&gt;）。</li>
+<li><strong>不要靠猜排障</strong>：部署失败先 Download the logs 取证，不要盲目重部署（&lt;&lt;<PAGE 89>&gt;&gt;）。</li>
+</ul>
+<h2 id="_1">来源</h2>
+<ul>
+<li>frameworks·Terra 3-VM 部署全流程（&lt;&lt;<PAGE 76>&gt;&gt;&lt;&lt;<PAGE 77>&gt;&gt;&lt;&lt;<PAGE 78>&gt;&gt;&lt;&lt;<PAGE 79>&gt;&gt;&lt;&lt;<PAGE 80>&gt;&gt;&lt;&lt;<PAGE 82>&gt;&gt;&lt;&lt;<PAGE 83>&gt;&gt;&lt;&lt;<PAGE 84>&gt;&gt;&lt;&lt;<PAGE 87>&gt;&gt;&lt;&lt;<PAGE 90>&gt;&gt;&lt;&lt;<PAGE 91>&gt;&gt;）</li>
+<li>principles·Terra 高层架构 3-VM Kubernetes（&lt;&lt;<PAGE 17>&gt;&gt;&lt;&lt;<PAGE 75>&gt;&gt;）</li>
+<li>principles·Terra VM 硬件要求（&lt;&lt;<PAGE 75>&gt;&gt;）</li>
+<li>principles·Terra DNS 四域名映射（&lt;&lt;<PAGE 90>&gt;&gt;）</li>
+<li>cases·Terra 部署 VM OVA 与控制台初始化（&lt;&lt;<PAGE 76>&gt;&gt;&lt;&lt;<PAGE 77>&gt;&gt;&lt;&lt;<PAGE 78>&gt;&gt;&lt;&lt;<PAGE 79>&gt;&gt;&lt;&lt;<PAGE 80>&gt;&gt;）</li>
+<li>cases·WebAdmin 首次设置（&lt;&lt;<PAGE 82>&gt;&gt;&lt;&lt;<PAGE 83>&gt;&gt;&lt;&lt;<PAGE 84>&gt;&gt;&lt;&lt;<PAGE 85>&gt;&gt;&lt;&lt;<PAGE 86>&gt;&gt;）</li>
+<li>cases·Terra Build 部署与状态检查（&lt;&lt;<PAGE 87>&gt;&gt;&lt;&lt;<PAGE 88>&gt;&gt;&lt;&lt;<PAGE 89>&gt;&gt;）</li>
+<li>cases·Terra DNS 配置（&lt;&lt;<PAGE 90>&gt;&gt;&lt;&lt;<PAGE 91>&gt;&gt;）</li>
+<li>counter-examples·CPU AVX/AVX2 与 EVC 基线陷阱（&lt;&lt;<PAGE 75>&gt;&gt;）</li>
+<li>counter-examples·部署失败时的取证路径（&lt;&lt;<PAGE 89>&gt;&gt;）</li>
+</ul><div class="pn"><a href="account-org-system.html">⬅ 上一单元：account-org-system</a><a class="nxt" href="license-and-trial.html">下一单元：license-and-trial ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

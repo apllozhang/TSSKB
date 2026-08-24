@@ -1,0 +1,115 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>bgp-vrf-leak — DT00XTE216 · OmniSwitch LAN R8 Core Switching</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE216 · OmniSwitch LAN R8 Core Switching</h1>
+<div class="sub">Edition 15 · 724 页 · 核心交换专题（新流水线重制版：ERP/MACsec/PVLAN/MSTP/安全/OSPF/组播/BGP/SPB）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">二层专题</div>
+<a href="../skills/erp-ring-protection.html">erp-ring-protection</a>
+<a href="../skills/macsec-link-encryption.html">macsec-link-encryption</a>
+<a href="../skills/private-vlan-isolation.html">private-vlan-isolation</a>
+<a href="../skills/mstp-load-sharing.html">mstp-load-sharing</a>
+<a href="../skills/mvrp-dynamic-vlan.html">mvrp-dynamic-vlan</a>
+<div class="grp">安全</div>
+<a href="../skills/arp-dos-defense.html">arp-dos-defense</a>
+<a href="../skills/learned-port-security.html">learned-port-security</a>
+<div class="grp">三层路由</div>
+<a href="../skills/ip-routing-fundamentals.html">ip-routing-fundamentals</a>
+<a href="../skills/ospf-area-redistribution.html">ospf-area-redistribution</a>
+<a href="../skills/bgp-vrf-leak.html" class="on">bgp-vrf-leak</a>
+<div class="grp">Fabric 与组播</div>
+<a href="../skills/spb-fabric.html">spb-fabric</a>
+<a href="../skills/multicast-pim.html">multicast-pim</a>
+<div class="grp">运维</div>
+<a href="../skills/switch-platform-ops.html">switch-platform-ops</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../postsales/index.html">售后</a> › <a href="../index.html">DT00XTE216</a> › <span>bgp-vrf-leak</span></nav><h1>bgp-vrf-leak</h1><p class="meta"><span class="badge">SKILL</span> bgp-vrf-leak · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>两个自治系统（AS）各自跑 IGP，需要在边界交换路由</li>
+<li>多租户/多业务要共用一台交换机但路由表隔离、地址可重叠</li>
+<li>部分租户间需要受控互访（VRF Route Leak）</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>BGP 是路径矢量协议（TCP 179），靠属性而非单纯度量选路：Local Pref 选出口、AS-Path 防环、MED 引导入流量、Community 控制通告范围。VRF 在一台物理设备上切出多张路由表，隔离是默认、互通是例外——跨 VRF 流量必须经 GRT（全局路由表）以 route-map 为过滤器中转。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<ol>
+<li>eBGP 基础：<code>ip load bgp</code> → <code>ip bgp autonomous-system 100</code> → <code>ip bgp neighbor 192.168.12.2 remote-as 200</code> → <code>admin-state enable</code> → <code>ip bgp admin-state enable</code>；注入本 AS 路由：<code>ip route-map switch1bgp sequence-number 10 action permit</code> + <code>ip redist ospf into bgp route-map switch1bgp</code> + <code>ip redist local into bgp ...</code>（&lt;&lt;<PAGE 512>&gt;&gt;-&lt;&lt;<PAGE 517>&gt;&gt;）</li>
+<li>邻居加固：<code>ip bgp neighbor 100.10.1.1 update-source Loopback0</code> / <code>ebgp-multihop</code>；<code>ip bgp neighbor &lt;ip&gt; md5 key</code> + <code>status enable</code>；<code>show ip bgp neighbors</code>（Oper state: estab）（&lt;&lt;<PAGE 499>&gt;&gt;-&lt;&lt;<PAGE 500>&gt;&gt;）</li>
+<li>策略：aspath-list/community-list/prefix-list 定义匹配 → route-map 组合 → <code>ip bgp neighbor &lt;ip&gt; route-map &lt;name&gt; in|out</code>（&lt;&lt;<PAGE 505>&gt;&gt;-&lt;&lt;<PAGE 508>&gt;&gt;）</li>
+<li>VRF 创建：<code>vrf create ipone</code> → <code>ip interface int_190 address 192.168.190.1/24 vlan 190</code>（&lt;&lt;<PAGE 466>&gt;&gt;）</li>
+<li>路由泄漏：源 VRF <code>ip route-map "vlan190" sequence-number 50 action permit / match ip-address 192.168.190.0/24 redist-control all-subnets permit</code> + <code>ip export route-map vlan190</code>；目标 VRF <code>ip import vrf iptwo route-map vlan200</code>；验证 <code>show ip global-route-table</code>；default↔VRF 用 <code>ip import vrf default all-routes</code>（&lt;&lt;<PAGE 468>&gt;&gt;-&lt;&lt;<PAGE 470>&gt;&gt;）</li>
+</ol>
+<h2 id="a2">A2（进阶应用）</h2>
+<ul>
+<li>选路次序对照：Highest Local Pref → Shortest AS-Path → lowest Origin（IGP&gt;EGP&gt;Incomplete）→ Lowest MED → Closer Next-Hop → EBGP&gt;IBGP&gt;IGP → Lowest RID（&lt;&lt;<PAGE 497>&gt;&gt;）</li>
+<li>属性作用域：Local Pref 选出口（越高越优）；MED 仅两 AS 间传递（越低越优，默认 0）；Community NO-EXPORT/NO-ADVERTISE 控制通告范围（&lt;&lt;<PAGE 488>&gt;&gt;、&lt;&lt;<PAGE 492>&gt;&gt;、&lt;&lt;<PAGE 496>&gt;&gt;）</li>
+<li>IBGP 水平分割：IBGP 学的路由不再传给其他 IBGP 邻居（全互联需求的根因）；同步：IBGP 路由须 IGP 可达才通告给 EBGP（&lt;&lt;<PAGE 501>&gt;&gt;、&lt;&lt;<PAGE 502>&gt;&gt;）</li>
+<li>VRF 归属规则：一个 VLAN/IP 接口同一时间只能属于一个 VRF，一个 VRF 可挂多个 VLAN；跨 VRF 复用同 VLAN 号不支持（&lt;&lt;<PAGE 460>&gt;&gt;）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>C-33 eBGP 双 AS 互联：AS100/AS200 各跑 OSPF，BGP 重分发 OSPF+local 路由后对端路由表出现 EBGP 路由（&lt;&lt;<PAGE 512>&gt;&gt;-&lt;&lt;<PAGE 517>&gt;&gt;）</li>
+<li>C-32 双 VRF 隔离/泄漏：默认互 ping 失败 → route-map export/import 后 GRT 出现两侧条目（&lt;&lt;<PAGE 466>&gt;&gt;-&lt;&lt;<PAGE 470>&gt;&gt;）</li>
+<li>C-34 基于 Loopback0 建邻居 + MD5（&lt;&lt;<PAGE 499>&gt;&gt;-&lt;&lt;<PAGE 500>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（边界与陷阱）</h2>
+<ul>
+<li>VLAN 只能归属一个 VRF，重复 VLAN 号跨 VRF 不支持（&lt;&lt;<PAGE 460>&gt;&gt;）</li>
+<li>即使路由已泄漏，交换机本机跨 VRF 接口互 ping 也不通（安全设计），连通性验证只能从客户端侧做（&lt;&lt;<PAGE 467>&gt;&gt;-&lt;&lt;<PAGE 468>&gt;&gt;）</li>
+</ul>
+<h2 id="_1">来源</h2>
+<ul>
+<li>framework·F-13 VRF 部署与泄漏框架（&lt;&lt;<PAGE 458>&gt;&gt;-&lt;&lt;<PAGE 462>&gt;&gt;、&lt;&lt;<PAGE 468>&gt;&gt;-&lt;&lt;<PAGE 470>&gt;&gt;）</li>
+<li>framework·F-14 BGP 邻居策略匹配流程（&lt;&lt;<PAGE 505>&gt;&gt;-&lt;&lt;<PAGE 508>&gt;&gt;）</li>
+<li>principle·P-58 VRF 隔离与 VLAN 绑定（&lt;&lt;<PAGE 453>&gt;&gt;、&lt;&lt;<PAGE 460>&gt;&gt;）</li>
+<li>principle·P-59 BGP 选路次序（&lt;&lt;<PAGE 480>&gt;&gt;、&lt;&lt;<PAGE 497>&gt;&gt;）</li>
+<li>principle·P-60 属性分类与语义（&lt;&lt;<PAGE 482>&gt;&gt;-&lt;&lt;<PAGE 494>&gt;&gt;）</li>
+<li>principle·P-61 IBGP 水平分割与同步（&lt;&lt;<PAGE 501>&gt;&gt;、&lt;&lt;<PAGE 502>&gt;&gt;）</li>
+<li>case·C-32/C-33/C-34；counter·X-22/X-23</li>
+</ul><div class="pn"><a href="ospf-area-redistribution.html">⬅ 上一单元：ospf-area-redistribution</a><a class="nxt" href="spb-fabric.html">下一单元：spb-fabric ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

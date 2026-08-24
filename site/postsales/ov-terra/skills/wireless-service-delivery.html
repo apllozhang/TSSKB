@@ -1,0 +1,130 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>wireless-service-delivery — DT00XTE317 · OmniVista Cirrus / Terra 部署与配置</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE317 · OmniVista Cirrus / Terra 部署与配置</h1>
+<div class="sub">Edition 10 · 478 页 · 云管与本地部署平台（新流水线重制版，全文可溯源）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">平台与账号</div>
+<a href="../skills/platform-selection-prereqs.html">platform-selection-prereqs</a>
+<a href="../skills/account-org-system.html">account-org-system</a>
+<div class="grp">部署与许可</div>
+<a href="../skills/terra-3vm-deployment.html">terra-3vm-deployment</a>
+<a href="../skills/license-and-trial.html">license-and-trial</a>
+<div class="grp">设备纳管</div>
+<a href="../skills/ap-onboarding.html">ap-onboarding</a>
+<a href="../skills/switch-onboarding.html">switch-onboarding</a>
+<div class="grp">业务与运维</div>
+<a href="../skills/wired-switch-config.html">wired-switch-config</a>
+<a href="../skills/wireless-service-delivery.html" class="on">wireless-service-delivery</a>
+<a href="../skills/rf-roaming-optimization.html">rf-roaming-optimization</a>
+<a href="../skills/monitoring-operations.html">monitoring-operations</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../postsales/index.html">售后</a> › <a href="../index.html">DT00XTE317</a> › <span>wireless-service-delivery</span></nav><h1>wireless-service-delivery</h1><p class="meta"><span class="badge">SKILL</span> wireless-service-delivery · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>无线项目开局：建站点楼层、AP Group、Provisioning Configuration</li>
+<li>需要下发 Employee / Guest / BYOD SSID</li>
+<li>需要定制访客门户、配置访客账号运营（Guest Operator）与配额策略</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>无线配置的承载模型是"AP Group + Provisioning Configuration"：所有 AP 从其所属 AP Group 绑定的 Provisioning Configuration 取配置，SSID/RF Profile/模板均按 AP Group 管理而非物理网络。SSID 创建是向导式的，先选 Usage 预设模板（Guest/Employee/BYOD），再走认证策略 → Access Role → 网络分配。认证安全等级从 Open+CP 到 802.1X 递增，PSK 体系（DSPSK/PPSK/Dynamic PGPSK）是中间档的精细化工具。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<ol>
+<li><strong>建站点与楼层</strong>：创建 Site → Configure buildings and floors → 楼层平面图校准（Scale up/down / Rotate / Move / Move and calibrate the plan）（&lt;&lt;<PAGE 124>&gt;&gt;&lt;&lt;<PAGE 125>&gt;&gt;&lt;&lt;<PAGE 126>&gt;&gt;&lt;&lt;<PAGE 127>&gt;&gt;&lt;&lt;<PAGE 128>&gt;&gt;）。</li>
+<li><strong>建 AP Group + Provisioning Configuration</strong>：</li>
+<li>创建 AP Group（与物理网络无关，每组最多 20000 AP，可混型号）（&lt;&lt;<PAGE 152>&gt;&gt;）</li>
+<li>创建 Provisioning Configuration：必填 Name / Site / RF Profile / Timezone；另含 SSH Login、AP Web、证书、SNMP、IoT Radio、Syslog（最多4）等分节（&lt;&lt;<PAGE 153>&gt;&gt;&lt;&lt;<PAGE 154>&gt;&gt;&lt;&lt;<PAGE 155>&gt;&gt;&lt;&lt;<PAGE 156>&gt;&gt;）</li>
+<li><strong>Employee SSID（802.1X 示例）</strong>：Usage 选 "Enterprise Network for Employee" → Encryption → Authentication Strategy 用 UPAMRadiusServer + 内部库建 Employee → Configure Access Role Attributes（VLAN ID: Employee(20)，可加 ACL/QoS 如 Full-Access、10Mbit/s）→ Network Assignment 选 Site + AP Group(s) → Schedule / VLAN Mapping 加 VLAN 完成（&lt;&lt;<PAGE 225>&gt;&gt;&lt;&lt;<PAGE 226>&gt;&gt;&lt;&lt;<PAGE 227>&gt;&gt;&lt;&lt;<PAGE 228>&gt;&gt;）。</li>
+<li><strong>Guest SSID + UPAM Guest 策略</strong>：Usage "Guest Network" → 激活 Captive Portal 选项 → Authentication Strategy 选 RADIUS server → 用 UPAM 内部 RADIUS 则创建 Guest account → Guest Access Strategy 定义登录方式与 Post Portal enforcement → 给 Guest SSID 分配 VLAN（&lt;&lt;<PAGE 249>&gt;&gt;）。</li>
+<li><strong>Captive Portal 定制</strong>：可定制 Background Image、Login Background Color、Image Logo、Login Button 以贴合公司品牌；完成后点 apply the changes to the Devices（&lt;&lt;<PAGE 258>&gt;&gt;&lt;&lt;<PAGE 259>&gt;&gt;）。</li>
+<li><strong>访客运营</strong>：Guest Operator 门户账号可创建访客账号、审批自注册请求；门户内 Manage Guests / Create Guest Account/Access Code / Import from XLSX or CSV / 审批自注册（&lt;&lt;<PAGE 287>&gt;&gt;&lt;&lt;<PAGE 288>&gt;&gt;）。</li>
+</ol>
+<h2 id="a2">A2（进阶应用）</h2>
+<ul>
+<li><strong>认证安全等级模型</strong>：Open+CP（无安全）→ MAC 认证（可伪造、无加密）→ WPA2/WPA3 Personal PSK（共享密钥）→ WPA2/WPA3 Enterprise 802.1X（最强）（&lt;&lt;<PAGE 215>&gt;&gt;）。</li>
+<li><strong>PSK 体系三件套</strong>（&lt;&lt;<PAGE 231>&gt;&gt;&lt;&lt;<PAGE 233>&gt;&gt;&lt;&lt;<PAGE 234>&gt;&gt;&lt;&lt;<PAGE 235>&gt;&gt;）：</li>
+<li>DSPSK：公司属性数据库按 MAC 分配专属 passphrase（Force/Prefer 两档）</li>
+<li>PPSK：多个 passphrase 各绑一个 ARP</li>
+<li>Dynamic Private Group PSK：条目同时绑 VLAN ID 与 ARP，免为每个 VLAN 建 ARP</li>
+<li><strong>VLAN Pooling</strong>：一个 SSID 分配最多 256 个 VLAN，避免单一大广播域（&lt;&lt;<PAGE 224>&gt;&gt;）。</li>
+<li><strong>Guest Tunneling</strong>：按 ARP 从 AP 到交换机/路由器建 L2 GRE 隧道（跨 L2/L3 网络），OmniSwitch 自动向 AP IP 建隧道简化部署，可加 GRE Backup tunnel 冗余（&lt;&lt;<PAGE 256>&gt;&gt;）。</li>
+<li><strong>带宽控制三层模型</strong>：SSID 级（per SSID per AP 共享）→ ARP 级（per user）→ Policy List ACL/QoS 规则级；判定顺序：匹配 ACL 按规则限速，否则按 ARP，再否则按 SSID；Policy List 双向执行（&lt;&lt;<PAGE 268>&gt;&gt;&lt;&lt;<PAGE 269>&gt;&gt;&lt;&lt;<PAGE 264>&gt;&gt;）。</li>
+<li><strong>访客配额</strong>：Service Level 绑定 ARP+Policy List+注册 Profile+有效期+删除策略（最多 5 个）；Registration Profile 定义 Data Quota（MB）与 Time Quota（小时/天），耗尽处理为 Block for remaining Duration（可加重定向 URL）或降速（kB/s）（&lt;&lt;<PAGE 282>&gt;&gt;&lt;&lt;<PAGE 283>&gt;&gt;&lt;&lt;<PAGE 284>&gt;&gt;）。</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li><strong>案例 1</strong>：企业员工网：SSID 用 Enterprise Usage + UPAMRadiusServer 内部库，Access Role Attributes 里 VLAN ID=Employee(20)，叠加 Full-Access ACL 与 10Mbit/s 限速，Network Assignment 指定 Site 与 AP Group（&lt;&lt;<PAGE 225>&gt;&gt;&lt;&lt;<PAGE 226>&gt;&gt;&lt;&lt;<PAGE 227>&gt;&gt;&lt;&lt;<PAGE 228>&gt;&gt;）。</li>
+<li><strong>案例 2</strong>：前台自助发访客账号：给前台开 Guest Operator 账号，其经 Guest Operator Login URL 登录门户，Create Guest Account/Access Code 或批量 Import from XLSX/CSV，并审批访客自注册（&lt;&lt;<PAGE 287>&gt;&gt;&lt;&lt;<PAGE 288>&gt;&gt;）。</li>
+<li><strong>案例 3</strong>：访客流量与企业流量隔离：Guest SSID 按 ARP 建 L2 GRE 隧道引到出口交换机，另加备份隧道保冗余（&lt;&lt;<PAGE 256>&gt;&gt;）。</li>
+</ul>
+<h2 id="b">B（边界与陷阱）</h2>
+<ul>
+<li><strong>DSPSK 加密限制</strong>：AUTO_WPA_WPA2 加密不支持 DSPSK；PSK/PassPhrase 仅在 'Prefer Device Specific PSK' 时激活，需 Device Specific PSK: Enabled（&lt;&lt;<PAGE 232>&gt;&gt;）。</li>
+<li><strong>Provisioning Configuration 四必填</strong>：Name / Site / RF Profile / Timezone 缺一不可（&lt;&lt;<PAGE 154>&gt;&gt;）。</li>
+</ul>
+<h2 id="_1">来源</h2>
+<ul>
+<li>cases·创建站点与楼层（&lt;&lt;<PAGE 124>&gt;&gt;~&lt;&lt;<PAGE 128>&gt;&gt;）</li>
+<li>cases·创建 AP Group 与 Provisioning Configuration（&lt;&lt;<PAGE 153>&gt;&gt;&lt;&lt;<PAGE 155>&gt;&gt;&lt;&lt;<PAGE 156>&gt;&gt;）</li>
+<li>cases·802.1X SSID 配置示例（&lt;&lt;<PAGE 225>&gt;&gt;&lt;&lt;<PAGE 226>&gt;&gt;&lt;&lt;<PAGE 227>&gt;&gt;&lt;&lt;<PAGE 228>&gt;&gt;）</li>
+<li>cases·Guest SSID + UPAM Guest 策略配置（&lt;&lt;<PAGE 249>&gt;&gt;）</li>
+<li>cases·Captive Portal 定制（&lt;&lt;<PAGE 258>&gt;&gt;&lt;&lt;<PAGE 259>&gt;&gt;）</li>
+<li>cases·Guest Operator 门户操作（&lt;&lt;<PAGE 287>&gt;&gt;&lt;&lt;<PAGE 288>&gt;&gt;）</li>
+<li>frameworks·AP Group + Provisioning Configuration 配置下发模型（&lt;&lt;<PAGE 152>&gt;&gt;&lt;&lt;<PAGE 153>&gt;&gt;&lt;&lt;<PAGE 154>&gt;&gt;）</li>
+<li>principles·AP Group 概念与规模（&lt;&lt;<PAGE 152>&gt;&gt;）</li>
+<li>principles·Provisioning Configuration 必填四要素（&lt;&lt;<PAGE 154>&gt;&gt;）</li>
+<li>principles·SSID Usage 预定义模板模型（&lt;&lt;<PAGE 214>&gt;&gt;&lt;&lt;<PAGE 218>&gt;&gt;）</li>
+<li>principles·认证安全等级模型（&lt;&lt;<PAGE 215>&gt;&gt;）</li>
+<li>principles·DSPSK/PPSK/Dynamic PGPSK 原理（&lt;&lt;<PAGE 231>&gt;&gt;&lt;&lt;<PAGE 233>&gt;&gt;&lt;&lt;<PAGE 234>&gt;&gt;&lt;&lt;<PAGE 235>&gt;&gt;）</li>
+<li>principles·Guest Tunneling L2 GRE（&lt;&lt;<PAGE 256>&gt;&gt;）</li>
+<li>principles·带宽控制三层模型（&lt;&lt;<PAGE 268>&gt;&gt;&lt;&lt;<PAGE 269>&gt;&gt;）</li>
+<li>principles·Policy List 双向执行（&lt;&lt;<PAGE 264>&gt;&gt;）</li>
+<li>principles·Registration Profile 配额与耗尽处理（&lt;&lt;<PAGE 283>&gt;&gt;&lt;&lt;<PAGE 284>&gt;&gt;）</li>
+<li>principles·VLAN Pooling 原理（&lt;&lt;<PAGE 224>&gt;&gt;）</li>
+<li>counter-examples·DSPSK 不支持 AUTO_WPA_WPA2（&lt;&lt;<PAGE 232>&gt;&gt;）</li>
+</ul><div class="pn"><a href="wired-switch-config.html">⬅ 上一单元：wired-switch-config</a><a class="nxt" href="rf-roaming-optimization.html">下一单元：rf-roaming-optimization ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

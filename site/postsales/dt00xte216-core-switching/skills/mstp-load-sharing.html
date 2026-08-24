@@ -1,0 +1,113 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>mstp-load-sharing — DT00XTE216 · OmniSwitch LAN R8 Core Switching</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE216 · OmniSwitch LAN R8 Core Switching</h1>
+<div class="sub">Edition 15 · 724 页 · 核心交换专题（新流水线重制版：ERP/MACsec/PVLAN/MSTP/安全/OSPF/组播/BGP/SPB）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">二层专题</div>
+<a href="../skills/erp-ring-protection.html">erp-ring-protection</a>
+<a href="../skills/macsec-link-encryption.html">macsec-link-encryption</a>
+<a href="../skills/private-vlan-isolation.html">private-vlan-isolation</a>
+<a href="../skills/mstp-load-sharing.html" class="on">mstp-load-sharing</a>
+<a href="../skills/mvrp-dynamic-vlan.html">mvrp-dynamic-vlan</a>
+<div class="grp">安全</div>
+<a href="../skills/arp-dos-defense.html">arp-dos-defense</a>
+<a href="../skills/learned-port-security.html">learned-port-security</a>
+<div class="grp">三层路由</div>
+<a href="../skills/ip-routing-fundamentals.html">ip-routing-fundamentals</a>
+<a href="../skills/ospf-area-redistribution.html">ospf-area-redistribution</a>
+<a href="../skills/bgp-vrf-leak.html">bgp-vrf-leak</a>
+<div class="grp">Fabric 与组播</div>
+<a href="../skills/spb-fabric.html">spb-fabric</a>
+<a href="../skills/multicast-pim.html">multicast-pim</a>
+<div class="grp">运维</div>
+<a href="../skills/switch-platform-ops.html">switch-platform-ops</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../postsales/index.html">售后</a> › <a href="../index.html">DT00XTE216</a> › <span>mstp-load-sharing</span></nav><h1>mstp-load-sharing</h1><p class="meta"><span class="badge">SKILL</span> mstp-load-sharing · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>大量 VLAN 需要生成树，1x1 per-VLAN 模式开销过大，要收敛到少量实例</li>
+<li>双核心/三核心拓扑希望不同 VLAN 组走不同链路（负载分担）</li>
+<li>排查"交换机不同域/实例行为不一致"的 MST Region 配置问题</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>MSTP（802.1s）把多个 VLAN 映射到至多 16 个 MSTI，用 CIST（实例 0）承载全部实例的单一 BPDU。同域三要素是 region name、revision level、VLAN-to-MSTI 映射，必须完全一致；
+对外整个 region 表现为一台交换机。负载分担的本质是让不同 MSTI 选不同根桥（差异化优先级）。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<ol>
+<li>切模式：<code>spantree mode flat</code> → <code>spantree mst region name lab_region</code> → <code>spantree mst region revision-level 1</code> → <code>spantree protocol mstp</code>（&lt;&lt;<PAGE 141>&gt;&gt;）</li>
+<li>建实例并映射 VLAN：<code>spantree msti 1</code> / <code>spantree msti 2</code> + <code>spantree msti 1 vlan 20</code> / <code>spantree msti 2 vlan 30</code>（&lt;&lt;<PAGE 143>&gt;&gt;）</li>
+<li>验证：<code>show spantree msti vlan-map</code>（如 CIST: 1-19,21-29,31-4094）（&lt;&lt;<PAGE 143>&gt;&gt;）</li>
+<li>负载分担：<code>spantree msti 1 priority 16384</code>（sw7）/ <code>spantree msti 2 priority 16384</code>（sw8），或官方示例 <code>spantree cist priority 4096 / msti 1 priority 4096 / msti 2 priority 8192</code> + 端口级 <code>spantree msti 1 1/1/1 priority 1</code>（&lt;&lt;<PAGE 146>&gt;&gt;、&lt;&lt;<PAGE 128>&gt;&gt;）</li>
+<li>回退：<code>spantree mode per-vlan</code> + <code>no spantree mst region name</code> + <code>no spantree msti 1/2</code>（&lt;&lt;<PAGE 149>&gt;&gt;）</li>
+</ol>
+<h2 id="a2">A2（进阶应用）</h2>
+<ul>
+<li>三交换机分担：A/B/C 各在一个 MSTI 上 priority 4096 做根；<code>show spantree mst port</code> 显示 DESG FORW / ALT BLK 角色分配（&lt;&lt;<PAGE 130>&gt;&gt;、&lt;&lt;<PAGE 129>&gt;&gt;）</li>
+<li>开销与桥 ID 语义：MST 用 32 位路径开销（对比 802.1d/w 的 16 位）；bridge priority = 配置值 + MSTI 号（32768+1=32769）（&lt;&lt;<PAGE 142>&gt;&gt;、&lt;&lt;<PAGE 148>&gt;&gt;）</li>
+<li>未映射 VLAN 自动归属 MSTI 0（IST）；hop count 最大 40、默认 20（&lt;&lt;<PAGE 116>&gt;&gt;、&lt;&lt;<PAGE 118>&gt;&gt;）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>C-10 6360 虚拟机箱 + MST 域 + 双实例负载分担全生命周期含验证与还原（&lt;&lt;<PAGE 141>&gt;&gt;-&lt;&lt;<PAGE 149>&gt;&gt;）</li>
+<li>C-12 三交换机流量分担，<code>show spantree mst port</code> 输出 DESG FORW / ALT BLK（&lt;&lt;<PAGE 130>&gt;&gt;、&lt;&lt;<PAGE 129>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（边界与陷阱）</h2>
+<ul>
+<li>1x1 与 MSTP 不能共存，必须先 <code>spantree mode flat</code>；实验后记得还原 per-vlan（&lt;&lt;<PAGE 143>&gt;&gt;、&lt;&lt;<PAGE 149>&gt;&gt;）</li>
+<li>优先级必须是 4096 的倍数（8192、12288…61440），随意填值不生效（&lt;&lt;<PAGE 146>&gt;&gt;）</li>
+</ul>
+<h2 id="_1">来源</h2>
+<ul>
+<li>framework·F-08 MSTP 配置六步法（&lt;&lt;<PAGE 121>&gt;&gt;-&lt;&lt;<PAGE 126>&gt;&gt;）</li>
+<li>principle·P-16 Region 三要素（&lt;&lt;<PAGE 117>&gt;&gt;、&lt;&lt;<PAGE 123>&gt;&gt;）</li>
+<li>principle·P-17 MSTI/CIST 关系（&lt;&lt;<PAGE 116>&gt;&gt;、&lt;&lt;<PAGE 118>&gt;&gt;、&lt;&lt;<PAGE 119>&gt;&gt;）</li>
+<li>principle·P-18 32 位开销与优先级语义（&lt;&lt;<PAGE 142>&gt;&gt;、&lt;&lt;<PAGE 148>&gt;&gt;）</li>
+<li>principle·P-19 负载分担设计（&lt;&lt;<PAGE 126>&gt;&gt;、&lt;&lt;<PAGE 130>&gt;&gt;）</li>
+<li>case·C-10/C-11/C-12；counter·X-08/X-09</li>
+</ul><div class="pn"><a href="private-vlan-isolation.html">⬅ 上一单元：private-vlan-isolation</a><a class="nxt" href="mvrp-dynamic-vlan.html">下一单元：mvrp-dynamic-vlan ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ap-onboarding — DT00XTE317 · OmniVista Cirrus / Terra 部署与配置</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE317 · OmniVista Cirrus / Terra 部署与配置</h1>
+<div class="sub">Edition 10 · 478 页 · 云管与本地部署平台（新流水线重制版，全文可溯源）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">平台与账号</div>
+<a href="../skills/platform-selection-prereqs.html">platform-selection-prereqs</a>
+<a href="../skills/account-org-system.html">account-org-system</a>
+<div class="grp">部署与许可</div>
+<a href="../skills/terra-3vm-deployment.html">terra-3vm-deployment</a>
+<a href="../skills/license-and-trial.html">license-and-trial</a>
+<div class="grp">设备纳管</div>
+<a href="../skills/ap-onboarding.html" class="on">ap-onboarding</a>
+<a href="../skills/switch-onboarding.html">switch-onboarding</a>
+<div class="grp">业务与运维</div>
+<a href="../skills/wired-switch-config.html">wired-switch-config</a>
+<a href="../skills/wireless-service-delivery.html">wireless-service-delivery</a>
+<a href="../skills/rf-roaming-optimization.html">rf-roaming-optimization</a>
+<a href="../skills/monitoring-operations.html">monitoring-operations</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../postsales/index.html">售后</a> › <a href="../index.html">DT00XTE317</a> › <span>ap-onboarding</span></nav><h1>ap-onboarding</h1><p class="meta"><span class="badge">SKILL</span> ap-onboarding · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>新购 Stellar AP 需要批量宣告进平台并确认到达 OV Managed 状态</li>
+<li>AP 激活卡在中间状态或报错，需要排查</li>
+<li>从 OmniVista Cirrus 4 迁移到 OVC，或从 Cirrus 切到 Terra</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>AP Onboarding 的本质是"宣告 + 激活状态机"：Device Catalog 跟踪设备从 Registered 一路到 OV Managed 终态（正常链最长 5 分钟）。激活的核心原理是平台为设备签发数字证书并建立安全 VPN 通道，因此曾归属其他平台的残留证书是激活失败的头号根源。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<ol>
+<li><strong>Terra 前置三步</strong>（Cirrus 不需要）（&lt;&lt;<PAGE 141>&gt;&gt;）：</li>
+<li>曾由 Cirrus 管理的 AP 删证书：<code>&gt; rm -rf /.ocloud/callhome_hash.json /.ocloud/certificateFile.cert /.ocloud/cloudCaChain.pem /.ocloud/privateKey.key /.ocloud/csr.csr /.ocloud/publicKey.key ./privateKey.key.dec</code></li>
+<li>DHCP option 43 指向 activation.myovterra.com，并重启 DHCP 服务</li>
+<li>AP 上执行 <code>firstboot</code> + <code>reboot</code></li>
+<li><strong>宣告设备</strong>：单台宣告，或用 XLSX/CSV 模板批量宣告（"Import and declare multiple Stellar Access Points in a single file"，&lt;&lt;<PAGE 142>&gt;&gt;&lt;&lt;<PAGE 143>&gt;&gt;&lt;&lt;<PAGE 144>&gt;&gt;）。</li>
+<li><strong>跟踪激活状态</strong>：Device Catalog 看 Activation Status，正常链最长 5 分钟；排障看 Activation Log；AP CLI 用 <code>&gt; ocloud_show</code>（&lt;&lt;<PAGE 146>&gt;&gt;&lt;&lt;<PAGE 148>&gt;&gt;&lt;&lt;<PAGE 150>&gt;&gt;）。</li>
+<li><strong>确认终态</strong>：OV Managed = Device is ready for full management（&lt;&lt;<PAGE 147>&gt;&gt;）。</li>
+</ol>
+<h2 id="a2">A2（进阶应用）</h2>
+<ul>
+<li><strong>激活状态机</strong>（排障地图）：Registered → Obtaining Certificate → Upgrade/Upgrading → Assigned → VPN Configuring → Connected to OV → OV Managed（&lt;&lt;<PAGE 146>&gt;&gt;&lt;&lt;<PAGE 147>&gt;&gt;&lt;&lt;<PAGE 166>&gt;&gt;&lt;&lt;<PAGE 167>&gt;&gt;）。</li>
+<li><strong>OVC4 → OVC 迁移</strong>：先在新平台手工重建 AP Group/Provisioning/SSID/Access Policy 并与 OVC4 核对配置 → 从 OVC4 Device Catalog 删除所有设备 → 新平台添加并等 Call Home（AP 最长 30 分钟，或重启设备加速）（&lt;&lt;<PAGE 69>&gt;&gt;&lt;&lt;<PAGE 70>&gt;&gt;）。</li>
+<li>AP CLI 查看云代理状态：<code>ocloud_show</code>（&lt;&lt;<PAGE 150>&gt;&gt;）。</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li><strong>案例 1</strong>：二手/退库 AP 接入 Terra 后激活反复失败——AP 曾被 Cirrus 管理，/.ocloud/ 下残留云证书导致激活异常；删证书 + DHCP option 43 + firstboot/reboot 三步后恢复（&lt;&lt;<PAGE 141>&gt;&gt;）。</li>
+<li><strong>案例 2</strong>：OVC4 直接 onboard 到 OVC 冲突——设备序列号不能同时存在于两个平台，必须先在 OVC4 删除全部设备（&lt;&lt;<PAGE 70>&gt;&gt;）。</li>
+</ul>
+<h2 id="b">B（边界与陷阱）</h2>
+<ul>
+<li><strong>序列号唯一性</strong>：同一设备不能同时声明在 OVC4 和 OVC，旧平台必须先删（&lt;&lt;<PAGE 70>&gt;&gt;）。</li>
+<li><strong>OVC4→OVC 无自动迁移工具</strong>：AP Group/Provisioning/SSID/Access Policy 全部手工重建核对（&lt;&lt;<PAGE 69>&gt;&gt;）。</li>
+<li><strong>激活失败状态族</strong>：Failed To Get Certificate / Upgrade Failed / Configuring VPN Failed / Provisioning Failed / Device Validation Failed / Factory Reset Required；其中 "Provisioning Failed" = 设备无法处理供给配置或平台无法发现设备；"Unsupported Device Model" = 平台不支持该设备（&lt;&lt;<PAGE 146>&gt;&gt;&lt;&lt;<PAGE 147>&gt;&gt;）。</li>
+<li><strong>VPN profile 变更必恢复出厂</strong>："Factory Reset required: The VPN profile was changed/updated."（&lt;&lt;<PAGE 147>&gt;&gt;）。</li>
+<li><strong>不支持型号</strong>：AP1101、AP1201L/H/HL（&lt;&lt;<PAGE 9>&gt;&gt;&lt;&lt;<PAGE 18>&gt;&gt;&lt;&lt;<PAGE 140>&gt;&gt;）。</li>
+</ul>
+<h2 id="_1">来源</h2>
+<ul>
+<li>frameworks·Stellar AP Onboarding 流程（&lt;&lt;<PAGE 141>&gt;&gt;&lt;&lt;<PAGE 142>&gt;&gt;&lt;&lt;<PAGE 143>&gt;&gt;&lt;&lt;<PAGE 144>&gt;&gt;）</li>
+<li>frameworks·OVC4 → OV Cirrus 迁移流程（&lt;&lt;<PAGE 69>&gt;&gt;&lt;&lt;<PAGE 70>&gt;&gt;）</li>
+<li>principles·Device Catalog 激活状态机（&lt;&lt;<PAGE 146>&gt;&gt;&lt;&lt;<PAGE 147>&gt;&gt;&lt;&lt;<PAGE 166>&gt;&gt;&lt;&lt;<PAGE 167>&gt;&gt;）</li>
+<li>principles·激活失败状态集合（&lt;&lt;<PAGE 146>&gt;&gt;&lt;&lt;<PAGE 147>&gt;&gt;）</li>
+<li>principles·证书与 VPN 通道的激活原理（&lt;&lt;<PAGE 147>&gt;&gt;）</li>
+<li>cases·Stellar AP 单台/批量宣告（&lt;&lt;<PAGE 142>&gt;&gt;&lt;&lt;<PAGE 143>&gt;&gt;&lt;&lt;<PAGE 144>&gt;&gt;）</li>
+<li>cases·AP 查看激活状态与日志（含 AP CLI）（&lt;&lt;<PAGE 146>&gt;&gt;&lt;&lt;<PAGE 148>&gt;&gt;&lt;&lt;<PAGE 150>&gt;&gt;）</li>
+<li>counter-examples·曾被 Cirrus 管理的 AP 接入 Terra 前必须清除证书（&lt;&lt;<PAGE 141>&gt;&gt;）</li>
+<li>counter-examples·设备序列号不能同时存在于 OVC4 与 OVC（&lt;&lt;<PAGE 70>&gt;&gt;）</li>
+<li>counter-examples·OVC4→OVC 无自动迁移工具（&lt;&lt;<PAGE 69>&gt;&gt;）</li>
+<li>counter-examples·激活失败状态族与排查入口（&lt;&lt;<PAGE 146>&gt;&gt;&lt;&lt;<PAGE 147>&gt;&gt;）</li>
+<li>counter-examples·VPN profile 变更后设备需恢复出厂（&lt;&lt;<PAGE 147>&gt;&gt;）</li>
+<li>counter-examples·不支持的 AP 型号（&lt;&lt;<PAGE 9>&gt;&gt;&lt;&lt;<PAGE 18>&gt;&gt;&lt;&lt;<PAGE 140>&gt;&gt;）</li>
+</ul><div class="pn"><a href="license-and-trial.html">⬅ 上一单元：license-and-trial</a><a class="nxt" href="switch-onboarding.html">下一单元：switch-onboarding ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

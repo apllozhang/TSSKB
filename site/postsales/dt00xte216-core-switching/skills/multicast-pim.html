@@ -1,0 +1,122 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>multicast-pim — DT00XTE216 · OmniSwitch LAN R8 Core Switching</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE216 · OmniSwitch LAN R8 Core Switching</h1>
+<div class="sub">Edition 15 · 724 页 · 核心交换专题（新流水线重制版：ERP/MACsec/PVLAN/MSTP/安全/OSPF/组播/BGP/SPB）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">二层专题</div>
+<a href="../skills/erp-ring-protection.html">erp-ring-protection</a>
+<a href="../skills/macsec-link-encryption.html">macsec-link-encryption</a>
+<a href="../skills/private-vlan-isolation.html">private-vlan-isolation</a>
+<a href="../skills/mstp-load-sharing.html">mstp-load-sharing</a>
+<a href="../skills/mvrp-dynamic-vlan.html">mvrp-dynamic-vlan</a>
+<div class="grp">安全</div>
+<a href="../skills/arp-dos-defense.html">arp-dos-defense</a>
+<a href="../skills/learned-port-security.html">learned-port-security</a>
+<div class="grp">三层路由</div>
+<a href="../skills/ip-routing-fundamentals.html">ip-routing-fundamentals</a>
+<a href="../skills/ospf-area-redistribution.html">ospf-area-redistribution</a>
+<a href="../skills/bgp-vrf-leak.html">bgp-vrf-leak</a>
+<div class="grp">Fabric 与组播</div>
+<a href="../skills/spb-fabric.html">spb-fabric</a>
+<a href="../skills/multicast-pim.html" class="on">multicast-pim</a>
+<div class="grp">运维</div>
+<a href="../skills/switch-platform-ops.html">switch-platform-ops</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../postsales/index.html">售后</a> › <a href="../index.html">DT00XTE216</a> › <span>multicast-pim</span></nav><h1>multicast-pim</h1><p class="meta"><span class="badge">SKILL</span> multicast-pim · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>视频/IPTV 流量在 VLAN 内泛洪，需要 IGMP 侦听按端口转发</li>
+<li>跨 VLAN/跨网段组播，要选 DVMRP、PIM-SM 还是 PIM-DM，要设计 RP</li>
+<li>RP 单点故障风险大，需要 RP 冗余与负载分担（Anycast RP）</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>组播分两层解：同 VLAN 内由 IPMS（硬件 IGMP 侦听）解决"只发给加入的端口"；
+跨网段才需要组播路由协议做 RPF 校验和树构建。PIM-SM 用显式加入 + RP 共享树（RPT），末跳 DR 收到首包后自动发起 SPT 切换获得最优路径；
+RP 是可用性与性能的关键点，BSR 做动态发现，Anycast RP（RFC 4610）用共享 Loopback 任播地址做到 IGP 级快速切换。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<ol>
+<li>二层 IPMS：<code>ip multicast admin-state enable</code>（全网）+ 服务器侧 <code>ip multicast querying enable</code> + 其余 <code>ip multicast querier-forwarding enable</code>；验证 <code>show ip multicast group/forward</code> 精确到组地址的端口表项（&lt;&lt;<PAGE 405>&gt;&gt;-&lt;&lt;<PAGE 409>&gt;&gt;）</li>
+<li>PIM-SM：<code>ip load pim</code> + <code>ip pim sparse admin-state enable</code>（全网）→ <code>ip pim interface int_217 ...</code> → <code>ip pim cbsr 192.168.110.1</code> → <code>ip pim candidate-rp 192.168.110.1 231.1.1.0/24</code>（分组 RP）；验证 <code>show ip pim neighbor / group-map / sgroute</code>（&lt;&lt;<PAGE 447>&gt;&gt;-&lt;&lt;<PAGE 449>&gt;&gt;）</li>
+<li>Anycast RP：RP1/RP2 均配 <code>ip interface "Loopback1" address 10.10.10.1</code>；全网所有 PIM 路由器（含非 RP）<code>ip pim static-rp 231.0.0.0/8 10.10.10.1</code>；各 RP 上 <code>ip pim anycast-rp 10.10.10.1 &lt;自身 Loopback0&gt;</code> + 指向对端（&lt;&lt;<PAGE 648>&gt;&gt;-&lt;&lt;<PAGE 649>&gt;&gt;）</li>
+<li>DVMRP（小规模备选）：<code>ip load dvmrp</code> → <code>ip dvmrp interface &lt;name&gt;</code> → <code>ip dvmrp admin-state enable</code> → <code>write memory</code>（&lt;&lt;<PAGE 419>&gt;&gt;）</li>
+</ol>
+<h2 id="a2">A2（进阶应用）</h2>
+<ul>
+<li>IGMP Throttling：per-port 限制覆盖 VLAN 与全局，动作 none/drop/replace（&lt;&lt;<PAGE 396>&gt;&gt;）</li>
+<li>IGMP 版本：v1 基础查询/报告；v2 加 Leave、特定组查询（Fast Leave）；v3 加源过滤（Explicit Host Tracking）；TTL=1 本地段协议，查询发 224.0.0.1、Leave 发 224.0.0.2（&lt;&lt;<PAGE 381>&gt;&gt;-&lt;&lt;<PAGE 382>&gt;&gt;）</li>
+<li>BSR 选 RP 算法：优先级（最小）→ hash（组地址+RP 地址）→ 最高 IP（&lt;&lt;<PAGE 431>&gt;&gt;-&lt;&lt;<PAGE 432>&gt;&gt;）</li>
+<li>PIM-DM：泛洪-剪枝 3 分钟循环、无 RP，适合接收者密集网络（&lt;&lt;<PAGE 434>&gt;&gt;-&lt;&lt;<PAGE 435>&gt;&gt;）</li>
+<li>DVMRP：RPF 校验 + flood/prune/graft，prune 超时 7200s（&lt;&lt;<PAGE 413>&gt;&gt;、&lt;&lt;<PAGE 416>&gt;&gt;-&lt;&lt;<PAGE 417>&gt;&gt;）</li>
+<li>Anycast RP 边界：仅 PIM-SM、最多 8 台、须启用 SPT（&lt;&lt;<PAGE 645>&gt;&gt;）</li>
+<li>地址基础：Class D 224.0.0.0-239.255.255.255，IP 低 23 位映射 01:00:5E 组播 MAC；知名组如 224.0.0.5/6（OSPF）、224.0.0.13（PIM）、224.0.0.18（VRRP）（&lt;&lt;<PAGE 375>&gt;&gt;）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>C-28 IPMS 开关对比：关闭时组播帧泛洪全 VLAN，开启后 <code>show ip multicast group/forward</code> 精确到 231.1.1.5 的端口级表项（&lt;&lt;<PAGE 405>&gt;&gt;-&lt;&lt;<PAGE 409>&gt;&gt;）</li>
+<li>C-30 PIM-SM 全网配置：BSR 域内多 RP 分组，<code>show ip pim group-map</code> 学到 6 条 RP、<code>sgroute</code> 显示 (S,G) 建立（&lt;&lt;<PAGE 447>&gt;&gt;-&lt;&lt;<PAGE 449>&gt;&gt;）</li>
+<li>C-31 Anycast RP：Loopback1 共享地址 + static-rp 全域下发 + anycast-rp 互指（&lt;&lt;<PAGE 648>&gt;&gt;-&lt;&lt;<PAGE 649>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（边界与陷阱）</h2>
+<ul>
+<li>每接口仅能运行一个组播协议，DVMRP 与 PIM 二选一（&lt;&lt;<PAGE 419>&gt;&gt;）</li>
+<li>Anycast RP 的 static-rp 必须配置在全域所有 PIM 路由器（含非 RP 节点），漏配则部分节点找不到 RP（&lt;&lt;<PAGE 648>&gt;&gt;）</li>
+</ul>
+<h2 id="_1">来源</h2>
+<ul>
+<li>principle·P-49 组播地址映射（&lt;&lt;<PAGE 375>&gt;&gt;）</li>
+<li>principle·P-50 IGMP 版本演进（&lt;&lt;<PAGE 381>&gt;&gt;、&lt;&lt;<PAGE 382>&gt;&gt;）</li>
+<li>principle·P-51 IPMS 分工（&lt;&lt;<PAGE 377>&gt;&gt;、&lt;&lt;<PAGE 385>&gt;&gt;、&lt;&lt;<PAGE 386>&gt;&gt;）</li>
+<li>principle·P-52 IGMP Throttling（&lt;&lt;<PAGE 396>&gt;&gt;）</li>
+<li>principle·P-53 DVMRP（&lt;&lt;<PAGE 413>&gt;&gt;-&lt;&lt;<PAGE 417>&gt;&gt;）</li>
+<li>principle·P-54 PIM-SM RPT/SPT（&lt;&lt;<PAGE 426>&gt;&gt;-&lt;&lt;<PAGE 430>&gt;&gt;）</li>
+<li>principle·P-55 BSR/C-RP（&lt;&lt;<PAGE 431>&gt;&gt;、&lt;&lt;<PAGE 432>&gt;&gt;）</li>
+<li>principle·P-56 PIM-DM（&lt;&lt;<PAGE 434>&gt;&gt;、&lt;&lt;<PAGE 435>&gt;&gt;）</li>
+<li>principle·P-57 Anycast RP（&lt;&lt;<PAGE 643>&gt;&gt;-&lt;&lt;<PAGE 645>&gt;&gt;）</li>
+<li>case·C-28/C-29/C-30/C-31</li>
+</ul><div class="pn"><a href="spb-fabric.html">⬅ 上一单元：spb-fabric</a><a class="nxt" href="switch-platform-ops.html">下一单元：switch-platform-ops ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

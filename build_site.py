@@ -205,6 +205,27 @@ NEW_COURSES = [
         ('发现与资源', ['ov-discovery-topology-locator', 'ov-resource-manager-provisioning', 'ov-cli-scripting-batch']),
         ('策略与监控', ['ov-unified-access', 'ov-policyview-qos', 'ov-quarantine-manager', 'ov-analytics-appvis-iot']),
        ]),
+  dict(id='postsales/ov-terra', book='ov-terra-deploy', title='DT00XTE317 · OmniVista Cirrus / Terra 部署与配置',
+       subtitle='Edition 10 · 478 页 · 云管与本地部署平台（新流水线重制版，全文可溯源）',
+       route=['平台选型与网络前置条件', 'Partner/MSP/Customer 三级账号与组织体系', 'Terra 3-VM K8s 部署链',
+              'License 与 Trial 转正', 'AP/交换机 Onboarding 与激活排障', '无线下发/有线配置/RF 优化/监控运维'],
+       groups=[
+        ('平台与账号', ['platform-selection-prereqs', 'account-org-system']),
+        ('部署与许可', ['terra-3vm-deployment', 'license-and-trial']),
+        ('设备纳管', ['ap-onboarding', 'switch-onboarding']),
+        ('业务与运维', ['wired-switch-config', 'wireless-service-delivery', 'rf-roaming-optimization', 'monitoring-operations']),
+       ]),
+  dict(id='postsales/dt00xte216-core-switching', book='os-lan-core-switching-v2', title='DT00XTE216 · OmniSwitch LAN R8 Core Switching',
+       subtitle='Edition 15 · 724 页 · 核心交换专题（新流水线重制版：ERP/MACsec/PVLAN/MSTP/安全/OSPF/组播/BGP/SPB）',
+       route=['ERP 环网保护与 MACsec 链路加密', 'Private VLAN/MSTP/MVRP 二层专题', 'ARP/DoS 防御与端口安全',
+              'OSPF 区域设计与路由重分发', '组播/BGP/VRF/SPB Fabric', '平台运维'],
+       groups=[
+        ('二层专题', ['erp-ring-protection', 'macsec-link-encryption', 'private-vlan-isolation', 'mstp-load-sharing', 'mvrp-dynamic-vlan']),
+        ('安全', ['arp-dos-defense', 'learned-port-security']),
+        ('三层路由', ['ip-routing-fundamentals', 'ospf-area-redistribution', 'bgp-vrf-leak']),
+        ('Fabric 与组播', ['spb-fabric', 'multicast-pim']),
+        ('运维', ['switch-platform-ops']),
+       ]),
 ]
 COURSES = NEW_COURSES  # 旧课程(ov-terra/bootcamp/core)保留 site/ 预构建页面，源 books 未随库分发
 _LEGACY = [

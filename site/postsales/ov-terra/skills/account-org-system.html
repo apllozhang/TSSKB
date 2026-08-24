@@ -1,0 +1,116 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>account-org-system — DT00XTE317 · OmniVista Cirrus / Terra 部署与配置</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE317 · OmniVista Cirrus / Terra 部署与配置</h1>
+<div class="sub">Edition 10 · 478 页 · 云管与本地部署平台（新流水线重制版，全文可溯源）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">平台与账号</div>
+<a href="../skills/platform-selection-prereqs.html">platform-selection-prereqs</a>
+<a href="../skills/account-org-system.html" class="on">account-org-system</a>
+<div class="grp">部署与许可</div>
+<a href="../skills/terra-3vm-deployment.html">terra-3vm-deployment</a>
+<a href="../skills/license-and-trial.html">license-and-trial</a>
+<div class="grp">设备纳管</div>
+<a href="../skills/ap-onboarding.html">ap-onboarding</a>
+<a href="../skills/switch-onboarding.html">switch-onboarding</a>
+<div class="grp">业务与运维</div>
+<a href="../skills/wired-switch-config.html">wired-switch-config</a>
+<a href="../skills/wireless-service-delivery.html">wireless-service-delivery</a>
+<a href="../skills/rf-roaming-optimization.html">rf-roaming-optimization</a>
+<a href="../skills/monitoring-operations.html">monitoring-operations</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../postsales/index.html">售后</a> › <a href="../index.html">DT00XTE317</a> › <span>account-org-system</span></nav><h1>account-org-system</h1><p class="meta"><span class="badge">SKILL</span> account-org-system · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>首次接入 Cirrus，需要注册账号并创建组织</li>
+<li>需要给客户或团队成员分配 Admin/Viewer/Limited 权限（单个或批量邀请）</li>
+<li>组织需要更换 MSP 或脱离当前 MSP</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>Cirrus 是三级账号体系：Partner 账号创建后即为 MSP 级用户，可创建/配置组织并邀请用户；
+Customer 账号挂接组织但不关联 MSP；
+组织是管理租户单元（一家企业或实体，含多个站点）。一个邮箱在 OVC 10.4.3 中只能绑定一个 MSP 门户，多 MSP 访问要用子地址技巧。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<ol>
+<li><strong>创建账号（选区域 URL）</strong>：</li>
+<li>访问 https://eu.manage.ovcirrus.com/ 或 https://us.manage.ovcirrus.com/，选 Americas / Asia Pacific / EMEA</li>
+<li>填 First/Last Name、E-mail、Country，创建 Customer 或 Partner 账号（&lt;&lt;<PAGE 33>&gt;&gt;&lt;&lt;<PAGE 34>&gt;&gt;&lt;&lt;<PAGE 35>&gt;&gt;）</li>
+<li><strong>密码与激活</strong>：按安全要求定义密码（可自动生成强密码），创建后经激活邮件激活（&lt;&lt;<PAGE 38>&gt;&gt;&lt;&lt;<PAGE 40>&gt;&gt;）。</li>
+<li><strong>Partner 账号 MSP 关联三选一</strong>：不挂 MSP / 加入既有 MSP / 自建 MSP（&lt;&lt;<PAGE 39>&gt;&gt;）。</li>
+<li><strong>Customer 账号两种交付</strong>：邀请 Partner 邮箱访问组织，或直接创建客户凭据（开箱即用账号）（&lt;&lt;<PAGE 43>&gt;&gt;&lt;&lt;<PAGE 45>&gt;&gt;）。</li>
+<li><strong>创建组织</strong>："Click here to create your organization"，填 Organization Name、Security Policy（推荐强密码）、Country and timezone（&lt;&lt;<PAGE 51>&gt;&gt;&lt;&lt;<PAGE 52>&gt;&gt;）。</li>
+<li><strong>邀请用户</strong>：组织级用户权限可 Globally 或 Per organization 设置（Admin/Viewer/Limited），支持批量邀请用户列表（&lt;&lt;<PAGE 131>&gt;&gt;&lt;&lt;<PAGE 132>&gt;&gt;&lt;&lt;<PAGE 133>&gt;&gt;&lt;&lt;<PAGE 134>&gt;&gt;&lt;&lt;<PAGE 135>&gt;&gt;）。</li>
+<li><strong>组织迁移 MSP</strong>：Actions &gt; Change MSP，输入目标 MSP 管理员邮箱（&lt;&lt;<PAGE 60>&gt;&gt;）。</li>
+</ol>
+<h2 id="a2">A2（进阶应用）</h2>
+<ul>
+<li>MSP 级用户权限同样是 Admin/Viewer/Limited 三档（&lt;&lt;<PAGE 50>&gt;&gt;）。</li>
+<li>多 MSP 访问用子地址：MyMail+sub@MyCompany.com；注意激活链接仍发到原始邮箱（&lt;&lt;<PAGE 49>&gt;&gt;）。</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li><strong>案例 1</strong>：某伙伴同时服务两个客户 MSP，用同一邮箱注册第二个门户被拒——OVC 10.4.3 一个邮箱只能绑一个 MSP 门户，改用子地址 MyMail+sub@MyCompany.com 解决（&lt;&lt;<PAGE 49>&gt;&gt;）。</li>
+<li><strong>案例 2</strong>：客户组织从伙伴 MSP 脱离（Actions &gt; Disassociate）后，该 MSP 内所有用户立即失去对组织的访问（&lt;&lt;<PAGE 59>&gt;&gt;）。</li>
+</ul>
+<h2 id="b">B（边界与陷阱）</h2>
+<ul>
+<li><strong>单邮箱单 MSP</strong>：需多 MSP 访问必须用不同邮箱或子地址（&lt;&lt;<PAGE 49>&gt;&gt;）。</li>
+<li><strong>脱离 MSP 不可逆的访问损失</strong>：MSP 内所有用户立即失去访问，操作前必须确认（&lt;&lt;<PAGE 59>&gt;&gt;）。</li>
+</ul>
+<h2 id="_1">来源</h2>
+<ul>
+<li>frameworks·三级账号体系 Partner/MSP/Customer（&lt;&lt;<PAGE 50>&gt;&gt;）</li>
+<li>frameworks·Partner 账号 MSP 挂接三选项（&lt;&lt;<PAGE 39>&gt;&gt;）</li>
+<li>frameworks·Customer 账号两种交付方式（&lt;&lt;<PAGE 43>&gt;&gt;&lt;&lt;<PAGE 45>&gt;&gt;）</li>
+<li>frameworks·组织在 MSP 间迁移与脱离（&lt;&lt;<PAGE 59>&gt;&gt;&lt;&lt;<PAGE 60>&gt;&gt;）</li>
+<li>cases·Cirrus 账号创建（&lt;&lt;<PAGE 33>&gt;&gt;&lt;&lt;<PAGE 34>&gt;&gt;&lt;&lt;<PAGE 35>&gt;&gt;）</li>
+<li>cases·邀请组织级用户（&lt;&lt;<PAGE 131>&gt;&gt;&lt;&lt;<PAGE 132>&gt;&gt;&lt;&lt;<PAGE 133>&gt;&gt;&lt;&lt;<PAGE 134>&gt;&gt;&lt;&lt;<PAGE 135>&gt;&gt;）</li>
+<li>counter-examples·一个邮箱只能绑定一个 MSP 门户（&lt;&lt;<PAGE 49>&gt;&gt;）</li>
+<li>counter-examples·组织脱离 MSP 后 MSP 用户立即失去访问（&lt;&lt;<PAGE 59>&gt;&gt;）</li>
+<li>principles·MSP 级用户三种权限（&lt;&lt;<PAGE 50>&gt;&gt;&lt;&lt;<PAGE 130>&gt;&gt;）</li>
+</ul><div class="pn"><a href="platform-selection-prereqs.html">⬅ 上一单元：platform-selection-prereqs</a><a class="nxt" href="terra-3vm-deployment.html">下一单元：terra-3vm-deployment ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

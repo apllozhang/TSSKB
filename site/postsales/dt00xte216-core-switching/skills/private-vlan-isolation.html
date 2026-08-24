@@ -1,0 +1,112 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>private-vlan-isolation — DT00XTE216 · OmniSwitch LAN R8 Core Switching</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE216 · OmniSwitch LAN R8 Core Switching</h1>
+<div class="sub">Edition 15 · 724 页 · 核心交换专题（新流水线重制版：ERP/MACsec/PVLAN/MSTP/安全/OSPF/组播/BGP/SPB）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">二层专题</div>
+<a href="../skills/erp-ring-protection.html">erp-ring-protection</a>
+<a href="../skills/macsec-link-encryption.html">macsec-link-encryption</a>
+<a href="../skills/private-vlan-isolation.html" class="on">private-vlan-isolation</a>
+<a href="../skills/mstp-load-sharing.html">mstp-load-sharing</a>
+<a href="../skills/mvrp-dynamic-vlan.html">mvrp-dynamic-vlan</a>
+<div class="grp">安全</div>
+<a href="../skills/arp-dos-defense.html">arp-dos-defense</a>
+<a href="../skills/learned-port-security.html">learned-port-security</a>
+<div class="grp">三层路由</div>
+<a href="../skills/ip-routing-fundamentals.html">ip-routing-fundamentals</a>
+<a href="../skills/ospf-area-redistribution.html">ospf-area-redistribution</a>
+<a href="../skills/bgp-vrf-leak.html">bgp-vrf-leak</a>
+<div class="grp">Fabric 与组播</div>
+<a href="../skills/spb-fabric.html">spb-fabric</a>
+<a href="../skills/multicast-pim.html">multicast-pim</a>
+<div class="grp">运维</div>
+<a href="../skills/switch-platform-ops.html">switch-platform-ops</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../postsales/index.html">售后</a> › <a href="../index.html">DT00XTE216</a> › <span>private-vlan-isolation</span></nav><h1>private-vlan-isolation</h1><p class="meta"><span class="badge">SKILL</span> private-vlan-isolation · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>同一 VLAN 内要求部分主机互不通（如访客网、机房托管区隔离）</li>
+<li>需要 community 组内互通、组间隔离的多租户二层设计</li>
+<li>PVLAN 域要跨多台交换机延伸</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>Private VLAN 把一个广播域切成多个子域：Primary VLAN 对外，Secondary VLAN 分 isolated（成员间二层完全不通）与 community（组内通、组间不通）。转发模型上，出向流量经 Primary VLAN 转发，未授权的二级 VLAN 间流量被丢弃；
+所有 secondary 的 MAC 实际学在 primary VLAN 上。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<ol>
+<li>定义主/从 VLAN：<code>pvlan 100 admin-state enable</code> / <code>pvlan 100 secondary 101 type community</code> / <code>pvlan 100 secondary 103 type isolated</code>（&lt;&lt;<PAGE 103>&gt;&gt;）</li>
+<li>加成员端口：<code>pvlan 100 members port 1/1/20 untagged</code>（&lt;&lt;<PAGE 103>&gt;&gt;）</li>
+<li>验证：<code>show pvlan mapping</code>、<code>show pvlan members</code>（port-type: promiscuous/community/isolated）、<code>show mac-learning</code>（全部学在 VLAN 100）（&lt;&lt;<PAGE 103>&gt;&gt;）</li>
+<li>跨交换机：ISL 口 <code>pvlan 100 members linkagg 1 isl</code>，可先用 <code>linkagg lacp agg 1 size 2...</code> 建聚合承载（&lt;&lt;<PAGE 105>&gt;&gt;）</li>
+<li>删除顺序：先清成员（<code>no pvlan 252 members port ...</code>、<code>no pvlan 250 members linkagg ...</code>）再 <code>no pvlan 250</code>；收尾 <code>write memory flash-synchro</code>（&lt;&lt;<PAGE 112>&gt;&gt;）</li>
+</ol>
+<h2 id="a2">A2（进阶应用）</h2>
+<ul>
+<li>端口四角色：promiscuous（属 primary，全通）/ isolated（仅到 promiscuous）/ community（限本社区）/ ISL（跨交换机承载主+从全部流量）（&lt;&lt;<PAGE 100>&gt;&gt;）</li>
+<li>UNP 端口运行时按首个学到的 MAC 的 VLAN 分类决定 isolated/community 角色；若首 MAC 落在非 PVLAN 的标准 VLAN，则无法指定角色（&lt;&lt;<PAGE 106>&gt;&gt;）</li>
+<li>需要多组互不相通的用户时用多个 community，因为一个 Primary 只能有一个 Isolated VLAN（&lt;&lt;<PAGE 109>&gt;&gt;）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>C-07 双交换机部署：<code>pvlan 250 members linkagg 78 isl</code>，端口改入 community 251 后 Client7 ping Client8 成功，改入 isolated 252 后 ping 失败（&lt;&lt;<PAGE 110>&gt;&gt;-&lt;&lt;<PAGE 112>&gt;&gt;）</li>
+<li>C-08 域内配置示例：<code>show mac-learning</code> 证明 secondary 的 MAC 学在 VLAN 100（&lt;&lt;<PAGE 103>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（边界与陷阱）</h2>
+<ul>
+<li>一个 Primary VLAN 只能有一个 Isolated VLAN（&lt;&lt;<PAGE 109>&gt;&gt;）</li>
+<li>直接删 primary 前必须清理成员引用，否则删不掉（&lt;&lt;<PAGE 112>&gt;&gt;）</li>
+</ul>
+<h2 id="_1">来源</h2>
+<ul>
+<li>principle·P-12 域模型（&lt;&lt;<PAGE 98>&gt;&gt;、&lt;&lt;<PAGE 99>&gt;&gt;、&lt;&lt;<PAGE 109>&gt;&gt;）</li>
+<li>principle·P-13 四类端口角色（&lt;&lt;<PAGE 100>&gt;&gt;）</li>
+<li>principle·P-14 二层透传规则（&lt;&lt;<PAGE 104>&gt;&gt;）</li>
+<li>principle·P-15 UNP 运行时角色（&lt;&lt;<PAGE 106>&gt;&gt;）</li>
+<li>case·C-07/C-08/C-09；counter·X-19/X-20</li>
+</ul><div class="pn"><a href="macsec-link-encryption.html">⬅ 上一单元：macsec-link-encryption</a><a class="nxt" href="mstp-load-sharing.html">下一单元：mstp-load-sharing ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

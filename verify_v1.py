@@ -31,7 +31,7 @@ def check_book(base):
         if cat == "glossary":
             entries = re.split(r"\n(?=\d+\.\s+\*\*)", text)
         else:
-            entries = re.split(r"\n(?=## |\d+\.\s+\S)", text)
+            entries = re.split(r"\n(?=## |### |\d+\.\s+\S)", text)
         results = []
         for e in entries:
             if not e.strip() or e.startswith("# "): continue

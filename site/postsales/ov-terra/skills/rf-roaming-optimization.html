@@ -1,0 +1,134 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>rf-roaming-optimization — DT00XTE317 · OmniVista Cirrus / Terra 部署与配置</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE317 · OmniVista Cirrus / Terra 部署与配置</h1>
+<div class="sub">Edition 10 · 478 页 · 云管与本地部署平台（新流水线重制版，全文可溯源）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">平台与账号</div>
+<a href="../skills/platform-selection-prereqs.html">platform-selection-prereqs</a>
+<a href="../skills/account-org-system.html">account-org-system</a>
+<div class="grp">部署与许可</div>
+<a href="../skills/terra-3vm-deployment.html">terra-3vm-deployment</a>
+<a href="../skills/license-and-trial.html">license-and-trial</a>
+<div class="grp">设备纳管</div>
+<a href="../skills/ap-onboarding.html">ap-onboarding</a>
+<a href="../skills/switch-onboarding.html">switch-onboarding</a>
+<div class="grp">业务与运维</div>
+<a href="../skills/wired-switch-config.html">wired-switch-config</a>
+<a href="../skills/wireless-service-delivery.html">wireless-service-delivery</a>
+<a href="../skills/rf-roaming-optimization.html" class="on">rf-roaming-optimization</a>
+<a href="../skills/monitoring-operations.html">monitoring-operations</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../postsales/index.html">售后</a> › <a href="../index.html">DT00XTE317</a> › <span>rf-roaming-optimization</span></nav><h1>rf-roaming-optimization</h1><p class="meta"><span class="badge">SKILL</span> rf-roaming-optimization · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>客户抱怨 Wi-Fi 信号好但体验差（漫游丢包、粘滞客户端）</li>
+<li>需要 WIPS 入侵防护或 Rogue AP 反制</li>
+<li>两地不便布线，需要 Mesh/Bridge 回程，或部署远程 AP（RAP）</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>Stellar 射频管理是全分布式的（DRM）：每个 AP 空口发现邻居、LAN 上共享 RF 上下文、自主做射频决策，不依赖 AP Group 或管理 VLAN。漫游分 L2/L3，判定依据是 home/foreign AP 间的客户端 VLAN 是否一致，L3 漫游靠 L2 GRE 隧道。优化工作的核心抓手是 RF Profile 参数（Band Steering、DLB、扫描、Roaming RSSI 阈值）与 802.11k/v 引导。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<ol>
+<li><strong>RF Profile 配置</strong>（应用于 AP Group 或 AP 级）：国家码、Smart Load Balance、扫描、信道/功率设置（&lt;&lt;<PAGE 366>&gt;&gt;&lt;&lt;<PAGE 367>&gt;&gt;）。</li>
+<li><strong>负载均衡</strong>：</li>
+<li>Band Steering：引导客户端到 5G/6GHz，推荐 RSSI 门限 2.4G=5、5G=10（&lt;&lt;<PAGE 370>&gt;&gt;）</li>
+<li>Dynamic Load Balance：信道平均介质利用率 1 分钟超 70% 判为 Overloaded；相邻 AP 各自基于负载设 timer，新客户端被引导至最轻负载 AP（&lt;&lt;<PAGE 371>&gt;&gt;&lt;&lt;<PAGE 372>&gt;&gt;）</li>
+<li><strong>背景扫描</strong>：默认间隔 20s（范围 5-10800s）、时长 50ms（范围 50-110ms）；WIPS 必需扫描；支持 Dedicated AP scanning mode 与 Voice/Video Awareness（检测 SIP/H.323 绕过扫描）（&lt;&lt;<PAGE 373>&gt;&gt;）。</li>
+<li><strong>漫游优化</strong>：</li>
+<li>Sticky Client Avoidance：802.11v（BSS Transition Management）+ 802.11k + Roaming RSSI 阈值；推荐 2.4GHz RSSI=10、5GHz RSSI=15（&lt;&lt;<PAGE 404>&gt;&gt;&lt;&lt;<PAGE 416>&gt;&gt;）</li>
+<li>RSSI 对照：OV 上是平均值、AP 上是瞬时值；RSSI 10≈-86dBm（Bad）… 25≈-71dBm（Desired and recommended）；AP CLI <code>wlanconfig ath002 list</code>，-24dBm=72 RSSI（&lt;&lt;<PAGE 378>&gt;&gt;&lt;&lt;<PAGE 379>&gt;&gt;）</li>
+<li><strong>WIPS</strong>：分类 Interfering（任何空口发现的其他 AP）/ Rogue（按 Rogue AP Policy 判定）/ Friendly；Rogue AP Containment 默认启用，向 Rogue AP 的客户端发 de-auth；Rogue 判定策略含 Signal Strength Threshold（默认 -70dBm，范围 -50~-90）、Detect Valid SSID、Rogue SSID Keyword、Rogue OUI（&lt;&lt;<PAGE 384>&gt;&gt;&lt;&lt;<PAGE 385>&gt;&gt;）。</li>
+<li><strong>Mesh/Bridge 配置</strong>：Device Catalog 选 AP → Actions &gt; Edit Device &gt; Mesh/Bridge Configuration；Mesh 监控显示拓扑、Root 角色与 Repeater 的 Parent Address（Root AP 的 MAC）（&lt;&lt;<PAGE 442>&gt;&gt;&lt;&lt;<PAGE 443>&gt;&gt;&lt;&lt;<PAGE 444>&gt;&gt;）。</li>
+</ol>
+<h2 id="a2">A2（进阶应用）</h2>
+<ul>
+<li><strong>漫游判定</strong>：L2 或 L3 按客户端在 home/foreign AP 间 VLAN 选择：无上下文→新客户端；上下文 + WLAN/ARP 匹配 + VLAN 匹配→L2；VLAN 不匹配→L3（基于 L2 GRE 隧道）。L2 漫游始终启用，L3 默认禁用（&lt;&lt;<PAGE 394>&gt;&gt;&lt;&lt;<PAGE 400>&gt;&gt;）。</li>
+<li><strong>客户端上下文共享</strong>：客户端关联时 AP 向所有空口相邻 AP 发 Add 消息，漫游时旧 AP 收到新 AP 的 Add 后触发 Del；上下文含 VLAN ID/ARP/Policy List/PMKSA cache；与 AP Group、管理 VLAN 无关（&lt;&lt;<PAGE 397>&gt;&gt;&lt;&lt;<PAGE 399>&gt;&gt;）。</li>
+<li><strong>Mesh 拓扑限制</strong>：最多 8 台 slave AP、4 跳、单跳最多 5 AP、全网最多 16 AP；所有 AP 可广播最多 5 个 SSID；最佳实践 BAND 5GHz、CHANNEL &gt;100（&lt;&lt;<PAGE 439>&gt;&gt;）。Auto Mesh：LAN 上的 root AP 广播隐藏 SSID "Stellar-MESH"（5GHz），未连 LAN 的 AP 自动以 non-root 加入（&lt;&lt;<PAGE 440>&gt;&gt;）。</li>
+<li><strong>RAP（远程 AP）五步开通</strong>：[PRE] 管理员预录入（OV Cirrus：序列号/RAP 模式/VPN Server 公网 IP/OV2500 IP/VPN Client IP；VPN Server：公网/私网 IP/密钥；OV2500：AP 设置）→ ① AP 启动按序列号注册 → ② OV Cirrus 下发 VPN 与 OV2500 参数 → ③ 建管理流量 VPN 隧道 → ④ 从 OV2500 取配置（SSID/射频）→ ⑤ 第二条 VPN（客户端流量）+ 客户端接入。配置三块：配 OV Cirrus、部署 ALE VPN Server VM（eth0 公网/eth1 私网，导入 VPN 设置）、配 OV2500（&lt;&lt;<PAGE 423>&gt;&gt;~&lt;&lt;<PAGE 429>&gt;&gt;&lt;&lt;<PAGE 432>&gt;&gt;）。</li>
+<li><strong>Smart Air Share</strong>：SSID 级最低速率控制，2.4G 建议 12、5G/6G 建议 24，提升 802.11a/n 客户端体验（&lt;&lt;<PAGE 369>&gt;&gt;）。</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li><strong>案例 1</strong>：走廊直角墙阻挡，两台地理相邻的 AP 互相看不见，客户端上下文无法共享、无法漫游——在 AP Registration &gt; Access Point 视图给两台 AP 手工互加 Neighbor AP（两端都要加）后恢复（&lt;&lt;<PAGE 415>&gt;&gt;）。</li>
+<li><strong>案例 2</strong>：Roaming RSSI 阈值设太低，客户端滞留在弱信号 AP；设太高则频繁漫游丢包——按推荐值（2.4G=10、5G=15）回调（&lt;&lt;<PAGE 416>&gt;&gt;）。</li>
+<li><strong>案例 3</strong>：仓库不便布线，用 Mesh 回程：root AP 广播 Stellar-MESH 隐藏 SSID，其余 AP 自动入网，全网 16 AP 内、4 跳内规划（&lt;&lt;<PAGE 439>&gt;&gt;&lt;&lt;<PAGE 440>&gt;&gt;）。</li>
+</ul>
+<h2 id="b">B（边界与陷阱）</h2>
+<ul>
+<li><strong>Fast Roaming 加密限制</strong>：OKC（802.11k）仅 WPA2/WPA3 Enterprise；802.11r 仅 WPA2/WPA3 加密（Personal 或 Enterprise）；未启用 Fast Roaming 则走标准漫游（&lt;&lt;<PAGE 395>&gt;&gt;&lt;&lt;<PAGE 402>&gt;&gt;）。</li>
+<li><strong>WIPS Client Blocklist 局限</strong>：默认禁用；攻击者源 MAC 可以是 AP MAC/BSSID/网卡 MAC，拉黑仅当源 MAC 是真实无线客户端时才有意义（&lt;&lt;<PAGE 387>&gt;&gt;）。</li>
+<li><strong>扫描的安全/性能权衡</strong>：扫描期间无线客户端无 802.11 数据；扫描间隔更高或时长更低→入侵更难检出但客户端性能更好（&lt;&lt;<PAGE 373>&gt;&gt;&lt;&lt;<PAGE 376>&gt;&gt;）。</li>
+<li><strong>RSSI Bad 区间</strong>：不建议跑音视频应用（&lt;&lt;<PAGE 379>&gt;&gt;）。</li>
+<li><strong>Bridge 模式 VLAN tagging 兼容性</strong>：AP1101、AP1201、AP1201H 不兼容 Bridge 上的 VLAN tagging（&lt;&lt;<PAGE 437>&gt;&gt;）。</li>
+<li><strong>AP1101 不支持 RAP</strong>（&lt;&lt;<PAGE 421>&gt;&gt;）。</li>
+</ul>
+<h2 id="_1">来源</h2>
+<ul>
+<li>principles·DRM 分布式射频管理架构（&lt;&lt;<PAGE 364>&gt;&gt;&lt;&lt;<PAGE 365>&gt;&gt;）</li>
+<li>principles·Smart Load Balance（&lt;&lt;<PAGE 370>&gt;&gt;&lt;&lt;<PAGE 371>&gt;&gt;&lt;&lt;<PAGE 372>&gt;&gt;）</li>
+<li>principles·背景扫描机制与参数（&lt;&lt;<PAGE 373>&gt;&gt;）</li>
+<li>principles·RSSI 定义与数值对照（&lt;&lt;<PAGE 378>&gt;&gt;&lt;&lt;<PAGE 379>&gt;&gt;）</li>
+<li>principles·WIPS 分类 Interfering/Rogue/Friendly（&lt;&lt;<PAGE 384>&gt;&gt;&lt;&lt;<PAGE 385>&gt;&gt;）</li>
+<li>principles·漫游判定条件 L2/L3（&lt;&lt;<PAGE 400>&gt;&gt;&lt;&lt;<PAGE 394>&gt;&gt;）</li>
+<li>principles·客户端上下文共享机制（&lt;&lt;<PAGE 397>&gt;&gt;&lt;&lt;<PAGE 399>&gt;&gt;）</li>
+<li>principles·Fast Roaming 条件限制（&lt;&lt;<PAGE 395>&gt;&gt;&lt;&lt;<PAGE 402>&gt;&gt;）</li>
+<li>principles·Sticky Client Avoidance 与 Roaming RSSI 阈值（&lt;&lt;<PAGE 404>&gt;&gt;&lt;&lt;<PAGE 416>&gt;&gt;）</li>
+<li>principles·Mesh 拓扑限制（&lt;&lt;<PAGE 439>&gt;&gt;）</li>
+<li>principles·Auto Mesh 机制（&lt;&lt;<PAGE 440>&gt;&gt;）</li>
+<li>frameworks·RAP 远程 AP 五步开通序列（&lt;&lt;<PAGE 423>&gt;&gt;~&lt;&lt;<PAGE 432>&gt;&gt;）</li>
+<li>cases·Mesh/Bridge 配置操作路径（&lt;&lt;<PAGE 442>&gt;&gt;&lt;&lt;<PAGE 443>&gt;&gt;&lt;&lt;<PAGE 444>&gt;&gt;）</li>
+<li>counter-examples·地理相邻互相看不见的 AP（&lt;&lt;<PAGE 415>&gt;&gt;）</li>
+<li>counter-examples·Roaming RSSI 阈值设错的两类后果（&lt;&lt;<PAGE 416>&gt;&gt;）</li>
+<li>counter-examples·Fast Roaming / OKC 加密限制（&lt;&lt;<PAGE 395>&gt;&gt;&lt;&lt;<PAGE 402>&gt;&gt;）</li>
+<li>counter-examples·WIPS Client Blocklist 局限（&lt;&lt;<PAGE 387>&gt;&gt;）</li>
+<li>counter-examples·扫描参数安全/性能权衡（&lt;&lt;<PAGE 373>&gt;&gt;&lt;&lt;<PAGE 376>&gt;&gt;）</li>
+<li>counter-examples·RSSI Bad 区间不建议音视频（&lt;&lt;<PAGE 379>&gt;&gt;）</li>
+<li>counter-examples·Bridge 模式 VLAN tagging 兼容性（&lt;&lt;<PAGE 437>&gt;&gt;）</li>
+</ul><div class="pn"><a href="wireless-service-delivery.html">⬅ 上一单元：wireless-service-delivery</a><a class="nxt" href="monitoring-operations.html">下一单元：monitoring-operations ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

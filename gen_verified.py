@@ -16,7 +16,7 @@ DROP = {
 def split_entries(text, cat):
     if cat == "glossary":
         return re.split(r"\n(?=\d+\.\s+\*\*)", text)
-    return re.split(r"\n(?=## |\d+\.\s+\S)", text)
+    return re.split(r"\n(?=## |### |\d+\.\s+\S)", text)
 
 def gen(slug):
     bdir = Path(f"D:/Claude code/TSSKB/books/{slug}")
@@ -34,8 +34,11 @@ def gen(slug):
             stats[cat] = [len(split_entries(text, cat)) - (1 if text.startswith('# ') else 0), 0]
             continue
         text = f.read_text(encoding="utf-8")
+        if cat in rep and rep[cat]:
+            rs = [r for r in rep[cat]]
+        else:
+            rs = []
         entries = split_entries(text, cat)
-        rs = [r for r in rep[cat]]  # 报告条目顺序=entries顺序（去掉标题块）
         # 对齐：entries[0] 可能是标题头
         eidx = 0
         if entries and not re.search(r"<<<PAGE \d+>>>", entries[0]):

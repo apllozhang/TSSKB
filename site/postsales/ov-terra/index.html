@@ -31,34 +31,45 @@ blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 
 hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 .badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
 .badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
 @media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
 </style></head>
 <body><div class="layout"><aside><h1>DT00XTE317 · OmniVista Cirrus / Terra 部署与配置</h1>
-<div class="sub">Edition 10 · 478 页 · 云管与本地部署平台</div>
+<div class="sub">Edition 10 · 478 页 · 云管与本地部署平台（新流水线重制版，全文可溯源）</div>
 <a href="index.html">🏠 课程首页</a>
 <a href="digest.html">📖 精华长文 DIGEST</a>
 <a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
 <a href="glossary.html">🔤 术语词典</a>
 <a href="../../index.html">⬅️ 返回培训门户</a>
 <a href="index.html">──── Skills ────</a>
-<div class="grp">平台部署与开通</div>
-<a href="skills/ov-terra-deploy.html">ov-terra-deploy</a>
-<a href="skills/ov-license-org-onboarding.html">ov-license-org-onboarding</a>
-<div class="grp">设备纳管与激活</div>
-<a href="skills/ov-device-activation-troubleshoot.html">ov-device-activation-troubleshoot</a>
-<div class="grp">SSID / 策略 / 认证设计</div>
-<a href="skills/ov-ssid-psk-selection.html">ov-ssid-psk-selection</a>
-<a href="skills/ov-policy-bandwidth-design.html">ov-policy-bandwidth-design</a>
-<a href="skills/ov-wired-auth-config.html">ov-wired-auth-config</a>
-<div class="grp">RF / 漫游 / 安全 / 特殊组网</div>
-<a href="skills/ov-rf-tuning.html">ov-rf-tuning</a>
-<a href="skills/ov-roaming-troubleshoot.html">ov-roaming-troubleshoot</a>
-<a href="skills/ov-wips-rogue-policy.html">ov-wips-rogue-policy</a>
-<a href="skills/ov-mesh-bridge-rap.html">ov-mesh-bridge-rap</a></aside><main><p><a href="../../index.html">⬅️ 返回培训门户</a></p>
+<div class="grp">平台与账号</div>
+<a href="skills/platform-selection-prereqs.html">platform-selection-prereqs</a>
+<a href="skills/account-org-system.html">account-org-system</a>
+<div class="grp">部署与许可</div>
+<a href="skills/terra-3vm-deployment.html">terra-3vm-deployment</a>
+<a href="skills/license-and-trial.html">license-and-trial</a>
+<div class="grp">设备纳管</div>
+<a href="skills/ap-onboarding.html">ap-onboarding</a>
+<a href="skills/switch-onboarding.html">switch-onboarding</a>
+<div class="grp">业务与运维</div>
+<a href="skills/wired-switch-config.html">wired-switch-config</a>
+<a href="skills/wireless-service-delivery.html">wireless-service-delivery</a>
+<a href="skills/rf-roaming-optimization.html">rf-roaming-optimization</a>
+<a href="skills/monitoring-operations.html">monitoring-operations</a></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../postsales/index.html">售后</a> › <a href="index.html">DT00XTE317</a> › <span>首页</span></nav><p><a href="../../index.html">⬅️ 返回培训门户</a></p>
 <h1>DT00XTE317 · OmniVista Cirrus / Terra 部署与配置 · 学习站</h1>
-<p class="meta">教材: <b>Edition 10 · 478 页 · 云管与本地部署平台</b>。整理为 10 个可执行知识单元：
+<p class="meta">教材: <b>Edition 10 · 478 页 · 云管与本地部署平台（新流水线重制版，全文可溯源）</b>。整理为 10 个可执行知识单元：
 每个单元含 原文引用(R) / 方法论骨架(I) / 书中案例(A1) / 触发场景(A2) / 可执行步骤(E) / 边界与陷阱(B)。</p>
-<h2>建议学习路线</h2><ol><li>许可证与组织开通→Terra 3-VM 部署</li><li>设备纳管与激活排障</li><li>SSID 选型→策略带宽→有线认证</li><li>RF 调优→漫游排障</li><li>WIPS 安全→Mesh/Bridge/RAP</li></ol>
-<h2>知识单元</h2><h2>平台部署与开通</h2><div class="cards"><div class="card"><a href="skills/ov-terra-deploy.html">ov-terra-deploy</a><p>|…</p></div><div class="card"><a href="skills/ov-license-org-onboarding.html">ov-license-org-onboarding</a><p>|…</p></div></div><h2>设备纳管与激活</h2><div class="cards"><div class="card"><a href="skills/ov-device-activation-troubleshoot.html">ov-device-activation-troubleshoot</a><p>|…</p></div></div><h2>SSID / 策略 / 认证设计</h2><div class="cards"><div class="card"><a href="skills/ov-ssid-psk-selection.html">ov-ssid-psk-selection</a><p>|…</p></div><div class="card"><a href="skills/ov-policy-bandwidth-design.html">ov-policy-bandwidth-design</a><p>|…</p></div><div class="card"><a href="skills/ov-wired-auth-config.html">ov-wired-auth-config</a><p>|…</p></div></div><h2>RF / 漫游 / 安全 / 特殊组网</h2><div class="cards"><div class="card"><a href="skills/ov-rf-tuning.html">ov-rf-tuning</a><p>|…</p></div><div class="card"><a href="skills/ov-roaming-troubleshoot.html">ov-roaming-troubleshoot</a><p>|…</p></div><div class="card"><a href="skills/ov-wips-rogue-policy.html">ov-wips-rogue-policy</a><p>|…</p></div><div class="card"><a href="skills/ov-mesh-bridge-rap.html">ov-mesh-bridge-rap</a><p>|…</p></div></div>
+<h2>建议学习路线</h2><ol><li>平台选型与网络前置条件</li><li>Partner/MSP/Customer 三级账号与组织体系</li><li>Terra 3-VM K8s 部署链</li><li>License 与 Trial 转正</li><li>AP/交换机 Onboarding 与激活排障</li><li>无线下发/有线配置/RF 优化/监控运维</li></ol>
+<h2>知识单元</h2><h2>平台与账号</h2><div class="cards"><div class="card"><a href="skills/platform-selection-prereqs.html">platform-selection-prereqs</a><p>当需要在 OmniVista Cirrus（SaaS）与 OmniVista Terra（本地部署）之间做选型，或部署前核对容量、防火墙端口、设备软件版本要求时使用。…</p></div><div class="card"><a href="skills/account-org-system.html">account-org-system</a><p>当需要创建 Cirrus 账号（Partner/Customer）、创建组织、配置用户权限，或管理组织在 MSP 间的迁移/脱离时使用。…</p></div></div><h2>部署与许可</h2><div class="cards"><div class="card"><a href="skills/terra-3vm-deployment.html">terra-3vm-deployment</a><p>当需要从零部署 OmniVista Terra 本地集群（OVA 部署、控制台初始化、WebAdmin 首设、Build 部署、DNS 配置）时使用。…</p></div><div class="card"><a href="skills/license-and-trial.html">license-and-trial</a><p>当需要申请 Trial、eBuy 下单 License、Subscription Manager 创建订阅、或在 Cirrus/Terra 中导入订阅完成试用转正时使用。…</p></div></div><h2>设备纳管</h2><div class="cards"><div class="card"><a href="skills/ap-onboarding.html">ap-onboarding</a><p>当需要把 Stellar AP 宣告（declare）进 Cirrus/Terra、排查激活失败状态、或从 OVC4/Cirrus 迁移设备到新平台时使用。…</p></div><div class="card"><a href="skills/switch-onboarding.html">switch-onboarding</a><p>当需要把 OmniSwitch 交换机接入 Cirrus/Terra（含从 Cirrus 切换到 Terra 的证书清理与激活 URL 修改）、用 cloud-agent CLI 排查时使用。…</p></div></div><h2>业务与运维</h2><div class="cards"><div class="card"><a href="skills/wired-switch-config.html">wired-switch-config</a><p>当需要对已纳管交换机做 CLI 模板化配置（Initial/Incremental）、建 VLAN/IP Interface（L2/L3）、配置有线客户端 MAC 认证或 Golden Configuration 合规审计时使用。…</p></div><div class="card"><a href="skills/wireless-service-delivery.html">wireless-service-delivery</a><p>当需要创建站点/楼层、AP Group 与 Provisioning Configuration、配置 SSID（Employee 802.1X / Guest / PSK 多种认证）、Guest 门户与 Captive Portal 定制时使用。…</p></div><div class="card"><a href="skills/rf-roaming-optimization.html">rf-roaming-optimization</a><p>当需要调优 RF Profile（负载均衡/扫描/信道）、排查漫游问题（L2/L3、Fast Roaming、Sticky Client）、部署 WIPS，或配置 Mesh/Bridge/RAP 无线回程时使用。…</p></div><div class="card"><a href="skills/monitoring-operations.html">monitoring-operations</a><p>当需要日常运维 OmniVista 管理的网络：QoE 分析、Heat Map、软件升级计划、备份管理、设备排障与支持信息收集时使用。…</p></div></div>
 <h2>全文阅读</h2>
-<p><a href="digest.html">📖 精华长文 DIGEST</a> · <a href="overview.html">📘 教书理解</a> · <a href="glossary.html">🔤 术语词典</a></p></main></div></body></html>
+<p><a href="digest.html">📖 精华长文 DIGEST</a> · <a href="overview.html">📘 教书理解</a> · <a href="glossary.html">🔤 术语词典</a></p><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

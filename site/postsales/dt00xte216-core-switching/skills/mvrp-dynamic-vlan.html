@@ -1,0 +1,112 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>mvrp-dynamic-vlan — DT00XTE216 · OmniSwitch LAN R8 Core Switching</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE216 · OmniSwitch LAN R8 Core Switching</h1>
+<div class="sub">Edition 15 · 724 页 · 核心交换专题（新流水线重制版：ERP/MACsec/PVLAN/MSTP/安全/OSPF/组播/BGP/SPB）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">二层专题</div>
+<a href="../skills/erp-ring-protection.html">erp-ring-protection</a>
+<a href="../skills/macsec-link-encryption.html">macsec-link-encryption</a>
+<a href="../skills/private-vlan-isolation.html">private-vlan-isolation</a>
+<a href="../skills/mstp-load-sharing.html">mstp-load-sharing</a>
+<a href="../skills/mvrp-dynamic-vlan.html" class="on">mvrp-dynamic-vlan</a>
+<div class="grp">安全</div>
+<a href="../skills/arp-dos-defense.html">arp-dos-defense</a>
+<a href="../skills/learned-port-security.html">learned-port-security</a>
+<div class="grp">三层路由</div>
+<a href="../skills/ip-routing-fundamentals.html">ip-routing-fundamentals</a>
+<a href="../skills/ospf-area-redistribution.html">ospf-area-redistribution</a>
+<a href="../skills/bgp-vrf-leak.html">bgp-vrf-leak</a>
+<div class="grp">Fabric 与组播</div>
+<a href="../skills/spb-fabric.html">spb-fabric</a>
+<a href="../skills/multicast-pim.html">multicast-pim</a>
+<div class="grp">运维</div>
+<a href="../skills/switch-platform-ops.html">switch-platform-ops</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../postsales/index.html">售后</a> › <a href="../index.html">DT00XTE216</a> › <span>mvrp-dynamic-vlan</span></nav><h1>mvrp-dynamic-vlan</h1><p class="meta"><span class="badge">SKILL</span> mvrp-dynamic-vlan · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>VLAN 数量多、变更频繁，手工在每台上行口打 tagged 维护成本高</li>
+<li>需要限制动态 VLAN 规模或控制端口注册行为（fixed/forbidden）</li>
+<li>动态 VLAN 删除报错、MVRP 与 MSTP/IP 接口配合出现疑问</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>MVRP（802.1ak）基于 STP 拓扑在桥接网内传播动态 VLAN 注册：一个 PDU 携带端口全部 4094 个 VLAN 状态，拓扑变化时只对受影响 VLAN 重新声明。它只解决二层连通——动态 VLAN 不建 IP 接口、不映射 MSTI，L3 和生成树负载分担要手工补配。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<ol>
+<li>前置：<code>spantree mode flat</code>（MVRP 仅支持 flat 模式）</li>
+<li>全局与端口启用：<code>mvrp enable</code> + <code>mvrp linkagg 7 enable</code> / <code>mvrp port 2/1/3 enable</code>（&lt;&lt;<PAGE 160>&gt;&gt;）</li>
+<li>可选限流：<code>mvrp maximum-vlan 150</code>（默认动态 VLAN 上限 256）（&lt;&lt;<PAGE 161>&gt;&gt;）</li>
+<li>验证：源端建 VLAN 40 后，下游 <code>show vlan</code> 出现 <code>40 dyn</code>，<code>show vlan 40 members</code> 端口为 dynamic tagged（&lt;&lt;<PAGE 162>&gt;&gt;）</li>
+<li>回退：<code>mvrp ... disable</code> 后动态 VLAN 消失；<code>spantree mode per-vlan</code>（&lt;&lt;<PAGE 163>&gt;&gt;）</li>
+</ol>
+<h2 id="a2">A2（进阶应用）</h2>
+<ul>
+<li>注册模式：<code>mvrp {port|linkagg} registration {normal|fixed|forbidden}</code>；applicant 模式（participant/non-participant/active）决定是否随 STP 状态主动声明（&lt;&lt;<PAGE 154>&gt;&gt;、&lt;&lt;<PAGE 155>&gt;&gt;）</li>
+<li>四定时器：join/leave/leaveall/periodic，实测默认 Join 600、Leave 1800、LeaveAll 30000、Periodic 1（&lt;&lt;<PAGE 156>&gt;&gt;、&lt;&lt;<PAGE 162>&gt;&gt;）</li>
+<li>端口类型限制：只能配在 fixed、802.1Q 和 aggregate 口，不能配 mirror/unp/VPLS Access/VLAN Stacking User 口（&lt;&lt;<PAGE 160>&gt;&gt;）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>C-13 动态 VLAN 全生命周期：6360 建 VLAN 40 → 6870/6860 <code>show vlan</code> 出现 <code>40 dyn</code> → 删除报错 → 禁用 MVRP 后消失（&lt;&lt;<PAGE 160>&gt;&gt;-&lt;&lt;<PAGE 164>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（边界与陷阱）</h2>
+<ul>
+<li>动态 VLAN 删不掉：<code>no vlan 40</code> 报 "ERROR: Dynamic vlan 40 cannot be deleted"——必须先在源端删 VLAN 或禁用 MVRP，否则被自动重建（&lt;&lt;<PAGE 163>&gt;&gt;）</li>
+<li>动态 VLAN 不建 IP 接口、不映射 MSTI，L3/MSTP 需手工补配（&lt;&lt;<PAGE 163>&gt;&gt;）</li>
+<li>新的 maximum-vlan 若小于当前已学动态 VLAN 数，须禁用再启用 MVRP 才生效（&lt;&lt;<PAGE 161>&gt;&gt;）</li>
+<li>MVRP 仅支持 STP flat 模式（&lt;&lt;<PAGE 154>&gt;&gt;）</li>
+</ul>
+<h2 id="_1">来源</h2>
+<ul>
+<li>principle·P-20 协议原理与报文模型（&lt;&lt;<PAGE 152>&gt;&gt;、&lt;&lt;<PAGE 153>&gt;&gt;）</li>
+<li>principle·P-21 注册/申请者模式（&lt;&lt;<PAGE 154>&gt;&gt;、&lt;&lt;<PAGE 155>&gt;&gt;）</li>
+<li>principle·P-22 动态 VLAN 生命周期（&lt;&lt;<PAGE 161>&gt;&gt;-&lt;&lt;<PAGE 163>&gt;&gt;）</li>
+<li>principle·P-23 四定时器（&lt;&lt;<PAGE 156>&gt;&gt;、&lt;&lt;<PAGE 162>&gt;&gt;）</li>
+<li>case·C-13；counter·X-05/X-06/X-07</li>
+</ul><div class="pn"><a href="mstp-load-sharing.html">⬅ 上一单元：mstp-load-sharing</a><a class="nxt" href="arp-dos-defense.html">下一单元：arp-dos-defense ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

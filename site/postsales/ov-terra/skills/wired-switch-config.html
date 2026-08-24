@@ -1,0 +1,119 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>wired-switch-config — DT00XTE317 · OmniVista Cirrus / Terra 部署与配置</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE317 · OmniVista Cirrus / Terra 部署与配置</h1>
+<div class="sub">Edition 10 · 478 页 · 云管与本地部署平台（新流水线重制版，全文可溯源）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">平台与账号</div>
+<a href="../skills/platform-selection-prereqs.html">platform-selection-prereqs</a>
+<a href="../skills/account-org-system.html">account-org-system</a>
+<div class="grp">部署与许可</div>
+<a href="../skills/terra-3vm-deployment.html">terra-3vm-deployment</a>
+<a href="../skills/license-and-trial.html">license-and-trial</a>
+<div class="grp">设备纳管</div>
+<a href="../skills/ap-onboarding.html">ap-onboarding</a>
+<a href="../skills/switch-onboarding.html">switch-onboarding</a>
+<div class="grp">业务与运维</div>
+<a href="../skills/wired-switch-config.html" class="on">wired-switch-config</a>
+<a href="../skills/wireless-service-delivery.html">wireless-service-delivery</a>
+<a href="../skills/rf-roaming-optimization.html">rf-roaming-optimization</a>
+<a href="../skills/monitoring-operations.html">monitoring-operations</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../postsales/index.html">售后</a> › <a href="../index.html">DT00XTE317</a> › <span>wired-switch-config</span></nav><h1>wired-switch-config</h1><p class="meta"><span class="badge">SKILL</span> wired-switch-config · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>交换机批量上线，需要标准化初始配置（Initial 模板 + Value Mappings）</li>
+<li>需要给特定站点/单机追加配置（Incremental 模板）</li>
+<li>需要建 VLAN、IP Interface，或给有线客户端做 MAC 认证</li>
+<li>需要交换机配置合规审计（Golden Configuration）</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>有线配置下发有两条模型：①模板化——Initial 模板在设备变 managed 前应用，Incremental 模板对已纳管交换机增量应用，变量经 Value Mappings 映射；
+②对象化——VLAN Manager 管 L2、IP Interface 管 L3，均以"创建对象 + 选择交换机"的方式下发。Golden Configuration 提供基准备份与偏离审计。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<ol>
+<li><strong>CLI 模板化配置</strong>：</li>
+<li>Initial 模板：在设备 onboarding 时的 "Initial Configuration" 应用（设备变 managed 前）（&lt;&lt;<PAGE 174>&gt;&gt;）</li>
+<li>Value Mappings：将模板变量映射到值（&lt;&lt;<PAGE 175>&gt;&gt;）</li>
+<li>Incremental 模板：Save and Assign 或 Actions &gt; Assign → Step1 选站点/单机 → Step2 选 Value mapping（&lt;&lt;<PAGE 176>&gt;&gt;&lt;&lt;<PAGE 177>&gt;&gt;&lt;&lt;<PAGE 178>&gt;&gt;&lt;&lt;<PAGE 179>&gt;&gt;&lt;&lt;<PAGE 180>&gt;&gt;）</li>
+<li><strong>L2：创建 VLAN</strong>（VLAN Manager）：VLAN IDs、Default VLAN ID、Default Ports Template（VLAN 在默认端口 untagged）、Q Tagged Ports Template、Switch selection；可顺带配 Spanning Tree（Summary/Bridge/Port）与 IP Router（&lt;&lt;<PAGE 182>&gt;&gt;&lt;&lt;<PAGE 183>&gt;&gt;&lt;&lt;<PAGE 184>&gt;&gt;）</li>
+<li><strong>L3：创建 IP Interface</strong>：IP interface name、IP Address/Mask、Device type（Unbound/EMP/VLAN/Tunnel…）、VRF IP、Enable/Disable（Admin State、IP Forward、Local Proxy ARP、Primary Interface）、Switch selection（&lt;&lt;<PAGE 187>&gt;&gt;&lt;&lt;<PAGE 188>&gt;&gt;）</li>
+<li><strong>有线客户端 MAC 认证四步</strong>（路径 Configure &gt; Network Access &gt; Unified Access / UPAM-NAC / Accounts）（&lt;&lt;<PAGE 451>&gt;&gt;~&lt;&lt;<PAGE 456>&gt;&gt;）：</li>
+<li>[PRE] 预配 ARP_DEFAULT / ARP_PASS</li>
+<li>① AAA Server Profile（UPAMRadiusServer, MAC）</li>
+<li>② Access Auth Profile（MAC 方法 + AAA Profile + 默认 ARP + AP Group + 端口 Eth1）</li>
+<li>③ Access Policy（Auth Type=MAC, Local-Database, ARP_PASS，无重定向）</li>
+<li>④ 本地数据库建 MAC 条目（Company Property）</li>
+<li><strong>Golden Configuration 合规审计</strong>：以备份作为基准，交换机配置意外变更可用于恢复；Status 为 Compliant 表示无偏离；支持周期审计与即时审计（&lt;&lt;<PAGE 195>&gt;&gt;&lt;&lt;<PAGE 196>&gt;&gt;&lt;&lt;<PAGE 351>&gt;&gt;）</li>
+</ol>
+<h2 id="a2">A2（进阶应用）</h2>
+<ul>
+<li>模板 + Value Mappings 实现多站点差异化：一套模板，每站点一套映射值（&lt;&lt;<PAGE 175>&gt;&gt;）。</li>
+<li>IoT 设备识别（Device Profiling）：基于 MAC OUI 与 DHCP 指纹（option 55 参数请求列表 / option 60 厂商标识）分类，再按设备类别映射 ARP 执行 Enforcement（&lt;&lt;<PAGE 464>&gt;&gt;&lt;&lt;<PAGE 465>&gt;&gt;）。</li>
+<li>UNP（Unified Network Policy）：OmniSwitch 上的统一网络策略，可在有线客户端/port 视图应用（&lt;&lt;<PAGE 193>&gt;&gt;&lt;&lt;<PAGE 313>&gt;&gt;）。</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li><strong>案例 1</strong>：多站点 rollout，同一份 Initial 模板配多套 Value Mappings，onboarding 时自动注入站点差异参数（&lt;&lt;<PAGE 174>&gt;&gt;&lt;&lt;<PAGE 175>&gt;&gt;）。</li>
+<li><strong>案例 2</strong>：打印机等哑终端接交换机 Eth1 需要认证，走 UPAM 内置 MAC 认证服务器 + 本地 MAC 数据库（ARP_PASS），四步完成（&lt;&lt;<PAGE 451>&gt;&gt;~&lt;&lt;<PAGE 456>&gt;&gt;）。</li>
+</ul>
+<h2 id="b">B（边界与陷阱）</h2>
+<ul>
+<li>Initial 与 Incremental 应用时机不同：Initial 只在设备变 managed 前的 onboarding 环节生效，错过就要用 Incremental（&lt;&lt;<PAGE 174>&gt;&gt;）。</li>
+<li>审计基准更新要及时：Golden Configuration 偏离即 Non-Compliant，计划内变更后需刷新基准（&lt;&lt;<PAGE 195>&gt;&gt;&lt;&lt;<PAGE 196>&gt;&gt;）。</li>
+</ul>
+<h2 id="_1">来源</h2>
+<ul>
+<li>cases·CLI 模板化配置 Initial/Incremental（&lt;&lt;<PAGE 174>&gt;&gt;~&lt;&lt;<PAGE 180>&gt;&gt;）</li>
+<li>cases·VLAN Manager 创建 VLAN（&lt;&lt;<PAGE 182>&gt;&gt;&lt;&lt;<PAGE 183>&gt;&gt;&lt;&lt;<PAGE 184>&gt;&gt;）</li>
+<li>cases·创建 IP Interface（&lt;&lt;<PAGE 187>&gt;&gt;&lt;&lt;<PAGE 188>&gt;&gt;）</li>
+<li>frameworks·有线客户端 MAC 认证四步配置流程（&lt;&lt;<PAGE 451>&gt;&gt;~&lt;&lt;<PAGE 456>&gt;&gt;）</li>
+<li>principles·Golden Configuration 合规检查（&lt;&lt;<PAGE 195>&gt;&gt;&lt;&lt;<PAGE 196>&gt;&gt;&lt;&lt;<PAGE 351>&gt;&gt;）</li>
+<li>principles·IoT 设备识别原理（&lt;&lt;<PAGE 464>&gt;&gt;&lt;&lt;<PAGE 465>&gt;&gt;）</li>
+<li>glossary·UNP（&lt;&lt;<PAGE 193>&gt;&gt;&lt;&lt;<PAGE 313>&gt;&gt;）</li>
+</ul><div class="pn"><a href="switch-onboarding.html">⬅ 上一单元：switch-onboarding</a><a class="nxt" href="wireless-service-delivery.html">下一单元：wireless-service-delivery ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

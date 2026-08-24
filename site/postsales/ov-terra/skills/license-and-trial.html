@@ -1,0 +1,117 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>license-and-trial — DT00XTE317 · OmniVista Cirrus / Terra 部署与配置</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE317 · OmniVista Cirrus / Terra 部署与配置</h1>
+<div class="sub">Edition 10 · 478 页 · 云管与本地部署平台（新流水线重制版，全文可溯源）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">平台与账号</div>
+<a href="../skills/platform-selection-prereqs.html">platform-selection-prereqs</a>
+<a href="../skills/account-org-system.html">account-org-system</a>
+<div class="grp">部署与许可</div>
+<a href="../skills/terra-3vm-deployment.html">terra-3vm-deployment</a>
+<a href="../skills/license-and-trial.html" class="on">license-and-trial</a>
+<div class="grp">设备纳管</div>
+<a href="../skills/ap-onboarding.html">ap-onboarding</a>
+<a href="../skills/switch-onboarding.html">switch-onboarding</a>
+<div class="grp">业务与运维</div>
+<a href="../skills/wired-switch-config.html">wired-switch-config</a>
+<a href="../skills/wireless-service-delivery.html">wireless-service-delivery</a>
+<a href="../skills/rf-roaming-optimization.html">rf-roaming-optimization</a>
+<a href="../skills/monitoring-operations.html">monitoring-operations</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../postsales/index.html">售后</a> › <a href="../index.html">DT00XTE317</a> › <span>license-and-trial</span></nav><h1>license-and-trial</h1><p class="meta"><span class="badge">SKILL</span> license-and-trial · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>新建组织没有 License，需要申请 Trial 试用期</li>
+<li>Trial 到期前需要转正式（paid mode）订阅</li>
+<li>eBuy 下单后 License 找不到，或需要导出/激活订阅</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>License 链路是三段式：eBuy 下单 → Subscription Manager 建订阅 → OV 实例（Cirrus/Terra）导入。License SKU 编码自带等级/年限/品类信息。Terra 与 Cirrus 的导入差异在于 Terra 需额外下载 license 文件 (.json)。注意两个时间陷阱：eBuy 下单后订阅最长延迟 24 小时出现；
+勾选 "Activate subscription" 即开始订阅倒计时。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<ol>
+<li><strong>申请 Trial</strong>：建组织后点 "Request a trial period for this organization"（&lt;&lt;<PAGE 53>&gt;&gt;）；表单必填 ALE 销售/CSM/KAM 联系人，不知道则用通用值 "My-ALE-Contact / MyALEContact@al-enterprise.com"；Partner Name 与 CRD ID 从 eBuy 复制；预填的时长与设备数量无特殊原因不要改（&lt;&lt;<PAGE 54>&gt;&gt;）；审批通过后发起人收邮件通知，组织状态更新（&lt;&lt;<PAGE 55>&gt;&gt;）。Terra 组织则是自动激活 90 天 Trial（&lt;&lt;<PAGE 110>&gt;&gt;）。</li>
+<li><strong>eBuy 下单</strong>：https://ebuy.businesspartner.al-enterprise.com/（或 MyPortal: Other Quick Links &gt; eBuy）→ 新建购物车选 "Other Services &amp; Items Section" → 输入 license reference 与数量 → 填 Order Entry（PO、requested date）并 validate（&lt;&lt;<PAGE 25>&gt;&gt;&lt;&lt;<PAGE 97>&gt;&gt;）。</li>
+<li>SKU 编码：如 OVCX-68-BAS-3Y = 等级 BASE(BAS)/BUSINESS(BIZ)/PREMIUM(PRM) + 年限 1Y/3Y/5Y（Terra 另有 7Y）+ 品类（APL=低端 AP1x0x/1x1x/1x2x，或 APH/63/64/65/68/69/99）（&lt;&lt;<PAGE 23>&gt;&gt;&lt;&lt;<PAGE 95>&gt;&gt;）</li>
+<li><strong>Subscription Manager 建订阅</strong>：MyPortal: Installed Base &gt; eLicensing Management &gt; OVC Subscription Manager → 选 offer → "Your purchased license" → Action "Create a subscription" → 选数量、填客户信息、同意条款 → 记录 Subscription reference；状态到 "Created / Pending activation from OVC UI" 后展开记录 Subscription 和 Order ID（&lt;&lt;<PAGE 26>&gt;&gt;&lt;&lt;<PAGE 27>&gt;&gt;&lt;&lt;<PAGE 28>&gt;&gt;）。</li>
+<li><strong>Cirrus 导入（Trial 转正）</strong>：License Management &gt; import licenses &gt; CAPEX Subscription → 输入 Subscription ID + Activation Code → 同意条款 → Import Subscription → 步骤2选自动/手动设备分配 → 步骤3 review + upgrade → Proceed 确认 paid mode → 验证 License mode / Duration / Type / 型号数量（&lt;&lt;<PAGE 62>&gt;&gt;&lt;&lt;<PAGE 63>&gt;&gt;&lt;&lt;<PAGE 64>&gt;&gt;&lt;&lt;<PAGE 65>&gt;&gt;&lt;&lt;<PAGE 66>&gt;&gt;&lt;&lt;<PAGE 67>&gt;&gt;）。</li>
+<li><strong>Terra 导入（多一步下载文件）</strong>：Admin Center 右上角取 OmniVista ID → 在 Subscription Manager 选 "Download Licenses / Activate subscription"（同时下载 license 文件）→ 导入时输入 Subscription ID + Activation Code + License file (.json) → 同意条款 &gt; Import &gt; 选设备分配 &gt; upgrade &gt; Proceed → 验证同上（&lt;&lt;<PAGE 100>&gt;&gt;&lt;&lt;<PAGE 101>&gt;&gt;&lt;&lt;<PAGE 113>&gt;&gt;&lt;&lt;<PAGE 114>&gt;&gt;&lt;&lt;<PAGE 115>&gt;&gt;&lt;&lt;<PAGE 116>&gt;&gt;&lt;&lt;<PAGE 117>&gt;&gt;）。</li>
+</ol>
+<h2 id="a2">A2（进阶应用）</h2>
+<ul>
+<li>Subscription Manager 支持续订、增购、延期、转移等订阅全生命周期管理（&lt;&lt;<PAGE 24>&gt;&gt;&lt;&lt;<PAGE 26>&gt;&gt;）。</li>
+<li>Terra 场景利用自动 90 天 Trial 窗口完成部署验证，再导入正式订阅转 paid mode（&lt;&lt;<PAGE 110>&gt;&gt;&lt;&lt;<PAGE 66>&gt;&gt;）。</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li><strong>案例 1</strong>：伙伴在 eBuy 下单后立刻到 Subscription Manager 建订阅，列表里空无一物——License 最长 24 小时后才出现，等待即可（&lt;&lt;<PAGE 26>&gt;&gt;&lt;&lt;<PAGE 98>&gt;&gt;）。</li>
+<li><strong>案例 2</strong>：Terra 管理员在导入前"顺手"勾了 Activate subscription，订阅期白白开始倒计时——应等真正上线再激活（&lt;&lt;<PAGE 101>&gt;&gt;）。</li>
+</ul>
+<h2 id="b">B（边界与陷阱）</h2>
+<ul>
+<li><strong>24 小时延迟</strong>：eBuy 下单后订阅最长 24h 才出现在 Subscription Manager（&lt;&lt;<PAGE 26>&gt;&gt;&lt;&lt;<PAGE 98>&gt;&gt;）。</li>
+<li><strong>激活即倒计时</strong>：勾选 "Activate subscription" 立刻开始扣订阅期，不要提前激活（&lt;&lt;<PAGE 101>&gt;&gt;）。</li>
+<li><strong>Terra 别忘了 license 文件</strong>：只有 ID+激活码不够，必须同时下载并导入 .json 文件（&lt;&lt;<PAGE 100>&gt;&gt;&lt;&lt;<PAGE 114>&gt;&gt;）。</li>
+</ul>
+<h2 id="_1">来源</h2>
+<ul>
+<li>frameworks·组织创建与 Trial 试用期申请流程（&lt;&lt;<PAGE 51>&gt;&gt;&lt;&lt;<PAGE 52>&gt;&gt;&lt;&lt;<PAGE 53>&gt;&gt;&lt;&lt;<PAGE 54>&gt;&gt;&lt;&lt;<PAGE 55>&gt;&gt;）</li>
+<li>frameworks·Trial 转正（转订阅）流程（&lt;&lt;<PAGE 62>&gt;&gt;~&lt;&lt;<PAGE 67>&gt;&gt;）</li>
+<li>frameworks·License 订购→订阅生成→导入三段流程（&lt;&lt;<PAGE 24>&gt;&gt;&lt;&lt;<PAGE 25>&gt;&gt;&lt;&lt;<PAGE 26>&gt;&gt;&lt;&lt;<PAGE 27>&gt;&gt;&lt;&lt;<PAGE 28>&gt;&gt;）</li>
+<li>frameworks·Terra 侧 License 激活流程（&lt;&lt;<PAGE 100>&gt;&gt;&lt;&lt;<PAGE 101>&gt;&gt;&lt;&lt;<PAGE 114>&gt;&gt;）</li>
+<li>principles·License SKU 编码模型（&lt;&lt;<PAGE 23>&gt;&gt;&lt;&lt;<PAGE 95>&gt;&gt;）</li>
+<li>principles·Terra 组织自动 90 天 Trial（&lt;&lt;<PAGE 110>&gt;&gt;）</li>
+<li>cases·Trial 申请表单填写（&lt;&lt;<PAGE 54>&gt;&gt;）</li>
+<li>cases·eBuy 下单 License（&lt;&lt;<PAGE 25>&gt;&gt;&lt;&lt;<PAGE 97>&gt;&gt;）</li>
+<li>cases·Subscription Manager 创建订阅（&lt;&lt;<PAGE 26>&gt;&gt;&lt;&lt;<PAGE 27>&gt;&gt;&lt;&lt;<PAGE 28>&gt;&gt;）</li>
+<li>cases·Cirrus 导入订阅（&lt;&lt;<PAGE 62>&gt;&gt;~&lt;&lt;<PAGE 67>&gt;&gt;）</li>
+<li>cases·Terra License 下载与导入（&lt;&lt;<PAGE 101>&gt;&gt;&lt;&lt;<PAGE 113>&gt;&gt;&lt;&lt;<PAGE 114>&gt;&gt;&lt;&lt;<PAGE 115>&gt;&gt;&lt;&lt;<PAGE 116>&gt;&gt;&lt;&lt;<PAGE 117>&gt;&gt;）</li>
+<li>counter-examples·eBuy 购买后订阅最长延迟 24 小时（&lt;&lt;<PAGE 26>&gt;&gt;&lt;&lt;<PAGE 98>&gt;&gt;）</li>
+<li>counter-examples·Activate subscription 即开始倒计时（&lt;&lt;<PAGE 101>&gt;&gt;）</li>
+</ul><div class="pn"><a href="terra-3vm-deployment.html">⬅ 上一单元：terra-3vm-deployment</a><a class="nxt" href="ap-onboarding.html">下一单元：ap-onboarding ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

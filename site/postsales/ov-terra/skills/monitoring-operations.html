@@ -1,0 +1,112 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>monitoring-operations — DT00XTE317 · OmniVista Cirrus / Terra 部署与配置</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE317 · OmniVista Cirrus / Terra 部署与配置</h1>
+<div class="sub">Edition 10 · 478 页 · 云管与本地部署平台（新流水线重制版，全文可溯源）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">平台与账号</div>
+<a href="../skills/platform-selection-prereqs.html">platform-selection-prereqs</a>
+<a href="../skills/account-org-system.html">account-org-system</a>
+<div class="grp">部署与许可</div>
+<a href="../skills/terra-3vm-deployment.html">terra-3vm-deployment</a>
+<a href="../skills/license-and-trial.html">license-and-trial</a>
+<div class="grp">设备纳管</div>
+<a href="../skills/ap-onboarding.html">ap-onboarding</a>
+<a href="../skills/switch-onboarding.html">switch-onboarding</a>
+<div class="grp">业务与运维</div>
+<a href="../skills/wired-switch-config.html">wired-switch-config</a>
+<a href="../skills/wireless-service-delivery.html">wireless-service-delivery</a>
+<a href="../skills/rf-roaming-optimization.html">rf-roaming-optimization</a>
+<a href="../skills/monitoring-operations.html" class="on">monitoring-operations</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../postsales/index.html">售后</a> › <a href="../index.html">DT00XTE317</a> › <span>monitoring-operations</span></nav><h1>monitoring-operations</h1><p class="meta"><span class="badge">SKILL</span> monitoring-operations · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>客户抱怨无线体验差，需要 QoE 指标定位（连接失败原因、弱信号、信道利用率）</li>
+<li>需要规划 AP/交换机软件批量升级窗口</li>
+<li>需要配置定期备份、给 TAC 收集支持信息、远程重启/重置设备</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>运维的三个抓手：①体验度量——QoE Analytics 用连接/漫游/信号/信道指标及失败原因量化体验，Heat Map 可视化覆盖；
+②变更管理——Scheduled Upgrade 分窗口分批升级，Golden Configuration 周期审计配置合规；
+③故障处置——Ping/Reboot/Reset、support info 收集、activation log 排查构成标准动作集。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<ol>
+<li><strong>QoE 分析</strong>：看连接时间/漫游时间（失败原因分类 Association/Authorization/DHCP/Portal）、平均 RSSI（Weak Signal/Asymmetry）、信道利用率（干扰/客户端数）、设备平均 uptime（&lt;&lt;<PAGE 296>&gt;&gt;&lt;&lt;<PAGE 297>&gt;&gt;）。</li>
+<li><strong>Heat Map</strong>：按站点/AP 展示覆盖与客户端密度（红高/黄中/绿低）（&lt;&lt;<PAGE 337>&gt;&gt;）。</li>
+<li><strong>软件升级计划</strong>：Set occurrence、starting and end date → Select Site / AP Group(s) / Access Point → Software version（全 AP Group 统一或按组）→ Review and Create Upgrade Schedule；管理操作 Execute/Activate/Deactivate/Edit/Delete（&lt;&lt;<PAGE 356>&gt;&gt;&lt;&lt;<PAGE 357>&gt;&gt;）。</li>
+<li><strong>备份管理</strong>：Create an Instant Backup（Security files 可选）；Scheduled Backups，Scope 可选 switch/site/floor；文件管理 View/Download/Delete（&lt;&lt;<PAGE 355>&gt;&gt;）。</li>
+<li><strong>Golden Configuration 审计</strong>：周期审计与即时审计，无偏离则 Compliant（&lt;&lt;<PAGE 195>&gt;&gt;&lt;&lt;<PAGE 196>&gt;&gt;&lt;&lt;<PAGE 351>&gt;&gt;）。</li>
+<li><strong>设备排障</strong>：Ping Device（及 From device）、Reboot Device、Reset Device（仅 AP）、Collect support info、Troubleshoot device、View activation log；AP 下载 tar.gz 快照（配置+日志），交换机选 Swlog/Cfg/Tech-support 文件下载 tar.gz（&lt;&lt;<PAGE 348>&gt;&gt;&lt;&lt;<PAGE 358>&gt;&gt;&lt;&lt;<PAGE 359>&gt;&gt;）。</li>
+</ol>
+<h2 id="a2">A2（进阶应用）</h2>
+<ul>
+<li>升级窗口设计：per AP Group 指定不同版本，实现灰度升级（&lt;&lt;<PAGE 357>&gt;&gt;）。</li>
+<li>排障组合拳：QoE 定位问题域（如 Authorization 失败）→ Heat Map 确认位置 → Collect support info / tar.gz 快照取证（&lt;&lt;<PAGE 296>&gt;&gt;&lt;&lt;<PAGE 337>&gt;&gt;&lt;&lt;<PAGE 358>&gt;&gt;）。</li>
+<li>激活类问题看 Activation Log 与状态机（Device Catalog，&lt;&lt;<PAGE 146>&gt;&gt;&lt;&lt;<PAGE 147>&gt;&gt;）。</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li><strong>案例 1</strong>：用户反馈"连不上 Wi-Fi"，QoE Analytics 失败原因显示 Authorization 阶段失败——问题在认证服务器/凭证而非射频（&lt;&lt;<PAGE 296>&gt;&gt;&lt;&lt;<PAGE 297>&gt;&gt;）。</li>
+<li><strong>案例 2</strong>：批量升级 500 台 AP：建 Upgrade Schedule，先升级试点 AP Group，确认后再全量 Execute（&lt;&lt;<PAGE 356>&gt;&gt;&lt;&lt;<PAGE 357>&gt;&gt;）。</li>
+<li><strong>案例 3</strong>：开 Case 前 TAC 要日志：AP 侧 Collect support info 下载 tar.gz 快照（配置+日志）；交换机侧选 Swlog/Cfg/Tech-support 打包 tar.gz（&lt;&lt;<PAGE 358>&gt;&gt;&lt;&lt;<PAGE 359>&gt;&gt;）。</li>
+</ul>
+<h2 id="b">B（边界与陷阱）</h2>
+<ul>
+<li><strong>Heat Map 最低 3 AP</strong>：少于 3 台 Stellar AP 无法生成热图（&lt;&lt;<PAGE 337>&gt;&gt;）。</li>
+<li><strong>Reset 仅限 AP</strong>：Reset Device 不适用于交换机（&lt;&lt;<PAGE 358>&gt;&gt;）。</li>
+</ul>
+<h2 id="_1">来源</h2>
+<ul>
+<li>principles·QoE 分析指标与失败原因分类（&lt;&lt;<PAGE 296>&gt;&gt;&lt;&lt;<PAGE 297>&gt;&gt;）</li>
+<li>principles·Golden Configuration 合规检查（&lt;&lt;<PAGE 195>&gt;&gt;&lt;&lt;<PAGE 196>&gt;&gt;&lt;&lt;<PAGE 351>&gt;&gt;）</li>
+<li>cases·软件升级计划（&lt;&lt;<PAGE 356>&gt;&gt;&lt;&lt;<PAGE 357>&gt;&gt;）</li>
+<li>cases·备份管理（&lt;&lt;<PAGE 355>&gt;&gt;）</li>
+<li>cases·设备排障与支持信息收集（&lt;&lt;<PAGE 348>&gt;&gt;&lt;&lt;<PAGE 358>&gt;&gt;&lt;&lt;<PAGE 359>&gt;&gt;）</li>
+<li>counter-examples·Heat Map 至少需要 3 个 AP（&lt;&lt;<PAGE 337>&gt;&gt;）</li>
+</ul><div class="pn"><a href="rf-roaming-optimization.html">⬅ 上一单元：rf-roaming-optimization</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

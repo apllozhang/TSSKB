@@ -1,0 +1,122 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>arp-dos-defense — DT00XTE216 · OmniSwitch LAN R8 Core Switching</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE216 · OmniSwitch LAN R8 Core Switching</h1>
+<div class="sub">Edition 15 · 724 页 · 核心交换专题（新流水线重制版：ERP/MACsec/PVLAN/MSTP/安全/OSPF/组播/BGP/SPB）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">二层专题</div>
+<a href="../skills/erp-ring-protection.html">erp-ring-protection</a>
+<a href="../skills/macsec-link-encryption.html">macsec-link-encryption</a>
+<a href="../skills/private-vlan-isolation.html">private-vlan-isolation</a>
+<a href="../skills/mstp-load-sharing.html">mstp-load-sharing</a>
+<a href="../skills/mvrp-dynamic-vlan.html">mvrp-dynamic-vlan</a>
+<div class="grp">安全</div>
+<a href="../skills/arp-dos-defense.html" class="on">arp-dos-defense</a>
+<a href="../skills/learned-port-security.html">learned-port-security</a>
+<div class="grp">三层路由</div>
+<a href="../skills/ip-routing-fundamentals.html">ip-routing-fundamentals</a>
+<a href="../skills/ospf-area-redistribution.html">ospf-area-redistribution</a>
+<a href="../skills/bgp-vrf-leak.html">bgp-vrf-leak</a>
+<div class="grp">Fabric 与组播</div>
+<a href="../skills/spb-fabric.html">spb-fabric</a>
+<a href="../skills/multicast-pim.html">multicast-pim</a>
+<div class="grp">运维</div>
+<a href="../skills/switch-platform-ops.html">switch-platform-ops</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../postsales/index.html">售后</a> › <a href="../index.html">DT00XTE216</a> › <span>arp-dos-defense</span></nav><h1>arp-dos-defense</h1><p class="meta"><span class="badge">SKILL</span> arp-dos-defense · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>接入网出现 ARP 欺骗、网关被冒充，需要检测与过滤手段</li>
+<li>CPU 利用率异常升高，怀疑 ARP 泛洪/DoS 攻击</li>
+<li>运营商式小区/宿舍网要求用户彼此二层隔离、流量强制上行网关</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>AOS 交换机把二层安全做成一组可叠加的小特性：DoS Filtering 内置攻击指纹与速率检测；
+ARP 防御只认可自己发起请求的应答并主动探测受限地址；
+Port Mapping 用会话隔离 user 口；
+MFF（RFC 4562）借 DHCP ACK 里的网关 IP 把同子网 ARP 一律应答为网关 MAC，强制所有流量过网关。各特性粒度小、可组合，按威胁面逐项启用。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<ol>
+<li>DoS 检测：<code>ip dos ...</code> 体系覆盖 PoD/SYN/Land/Teardrop/Bonk/Boink/Pepsi、无效 IP、组播 IP/MAC 不匹配、ICMP&gt;100pps 判攻击、ARP 限速到 CPU（&lt;&lt;<PAGE 168>&gt;&gt;）</li>
+<li>ARP 欺骗检测：<code>ip dos arp-poison restricted-address</code>（每 IP 接口最多 2 个受限地址，交换机对其主动发探测请求；只接受自己发起请求对应的应答）（&lt;&lt;<PAGE 176>&gt;&gt;、&lt;&lt;<PAGE 177>&gt;&gt;）</li>
+<li>本地代理 ARP + 过滤：Local Proxy ARP per-VLAN 用路由口 MAC 应答所有请求；<code>arp filter</code> 按 sender/target allow/block 控制代理应答范围（&lt;&lt;<PAGE 179>&gt;&gt;、&lt;&lt;<PAGE 180>&gt;&gt;）</li>
+<li>Port Mapping 会话：<code>port-mapping 1 user-port 1/1/1 network-port linkagg 7</code> + <code>port-mapping 1 enable</code>，user 口彼此隔离仅经 network 口通信（最多 8 会话）；<code>show port-mapping status</code>（&lt;&lt;<PAGE 182>&gt;&gt;、&lt;&lt;<PAGE 202>&gt;&gt;）</li>
+<li>MFF 三件套：<code>port-mapping 1 user-port 1/1/1-2 network-port linkagg 8</code> + <code>port-mapping 1 dynamic-proxy-arp enable</code> + <code>dhcp-snooping vlan 20 admin-state enable</code> + <code>port-mapping 1 enable</code>（&lt;&lt;<PAGE 186>&gt;&gt;）</li>
+<li>风暴控制：<code>flood-limit {bcast|mcast|uucast|all} rate {pps|mbps|cap%} [low-threshold] action {shutdown|trap|default}</code>（&lt;&lt;<PAGE 188>&gt;&gt;、&lt;&lt;<PAGE 397>&gt;&gt;）</li>
+</ol>
+<h2 id="a2">A2（进阶应用）</h2>
+<ul>
+<li>未解析下一跳丢弃：ARP 解析期间建 drop-entry 去重，12 次×5s 后超时，保护 CPU（&lt;&lt;<PAGE 175>&gt;&gt;）</li>
+<li>ARP 表项：动态默认 300s 老化；<code>arp &lt;ip&gt; &lt;mac&gt; [alias]</code> 做静态/代理（&lt;&lt;<PAGE 178>&gt;&gt;）</li>
+<li>UDP Relay：<code>ip udp relay port &lt;num&gt;</code> + <code>ip udp relay service {tftp|tacacs|ntp...} vlan &lt;id&gt; address &lt;ip&gt;</code>；<code>show ip udp relay statistics</code>（&lt;&lt;<PAGE 170>&gt;&gt;-&lt;&lt;<PAGE 171>&gt;&gt;）</li>
+<li>SNMP 认证 trap 三模式：<code>snmp authentication-trap mode {standard|private|both}</code>，private 的 alaAuthenticationFailure 带客户端 IP（&lt;&lt;<PAGE 173>&gt;&gt;）</li>
+<li>单向会话的 network 口可与其他单向会话共享，但不能与双向会话共享（&lt;&lt;<PAGE 199>&gt;&gt;）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>C-14 双向会话实验：port-mapping 1 走 linkagg 7、port-mapping 2 走 2/1/3，client 只能 ping 到各自 network 口对端；复用已占端口报错（&lt;&lt;<PAGE 202>&gt;&gt;）</li>
+<li>C-15 MFF 三件套配置，<code>show port-mapping status</code> 显示 Direction: bi、DPA Status: enable（&lt;&lt;<PAGE 186>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（边界与陷阱）</h2>
+<ul>
+<li>一个 user 端口只能属于一个 Port Mapping 会话，跨会话复用直接报 "ERROR: port user already part of an existing PMAP session"（&lt;&lt;<PAGE 202>&gt;&gt;）</li>
+<li>restricted-address 每 IP 接口最多 2 个地址（&lt;&lt;<PAGE 177>&gt;&gt;）</li>
+</ul>
+<h2 id="_1">来源</h2>
+<ul>
+<li>principle·P-24 DoS 检测清单（&lt;&lt;<PAGE 168>&gt;&gt;）</li>
+<li>principle·P-25 未解析下一跳丢弃（&lt;&lt;<PAGE 175>&gt;&gt;）</li>
+<li>principle·P-26 ARP 欺骗检测（&lt;&lt;<PAGE 176>&gt;&gt;、&lt;&lt;<PAGE 177>&gt;&gt;）</li>
+<li>principle·P-27 本地代理 ARP 与过滤（&lt;&lt;<PAGE 179>&gt;&gt;、&lt;&lt;<PAGE 180>&gt;&gt;）</li>
+<li>principle·P-28 ARP 表项属性（&lt;&lt;<PAGE 178>&gt;&gt;）</li>
+<li>principle·P-29 Port Mapping 语义（&lt;&lt;<PAGE 182>&gt;&gt;、&lt;&lt;<PAGE 199>&gt;&gt;）</li>
+<li>principle·P-30 MFF（&lt;&lt;<PAGE 185>&gt;&gt;、&lt;&lt;<PAGE 186>&gt;&gt;）</li>
+<li>principle·P-31 风暴控制（&lt;&lt;<PAGE 188>&gt;&gt;、&lt;&lt;<PAGE 397>&gt;&gt;）</li>
+<li>principle·P-34 SNMP trap 三模式（&lt;&lt;<PAGE 173>&gt;&gt;）</li>
+<li>case·C-14/C-15/C-18；counter·X-10</li>
+</ul><div class="pn"><a href="mvrp-dynamic-vlan.html">⬅ 上一单元：mvrp-dynamic-vlan</a><a class="nxt" href="learned-port-security.html">下一单元：learned-port-security ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

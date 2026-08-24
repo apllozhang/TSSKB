@@ -1,0 +1,117 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ospf-area-redistribution — DT00XTE216 · OmniSwitch LAN R8 Core Switching</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE216 · OmniSwitch LAN R8 Core Switching</h1>
+<div class="sub">Edition 15 · 724 页 · 核心交换专题（新流水线重制版：ERP/MACsec/PVLAN/MSTP/安全/OSPF/组播/BGP/SPB）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">二层专题</div>
+<a href="../skills/erp-ring-protection.html">erp-ring-protection</a>
+<a href="../skills/macsec-link-encryption.html">macsec-link-encryption</a>
+<a href="../skills/private-vlan-isolation.html">private-vlan-isolation</a>
+<a href="../skills/mstp-load-sharing.html">mstp-load-sharing</a>
+<a href="../skills/mvrp-dynamic-vlan.html">mvrp-dynamic-vlan</a>
+<div class="grp">安全</div>
+<a href="../skills/arp-dos-defense.html">arp-dos-defense</a>
+<a href="../skills/learned-port-security.html">learned-port-security</a>
+<div class="grp">三层路由</div>
+<a href="../skills/ip-routing-fundamentals.html">ip-routing-fundamentals</a>
+<a href="../skills/ospf-area-redistribution.html" class="on">ospf-area-redistribution</a>
+<a href="../skills/bgp-vrf-leak.html">bgp-vrf-leak</a>
+<div class="grp">Fabric 与组播</div>
+<a href="../skills/spb-fabric.html">spb-fabric</a>
+<a href="../skills/multicast-pim.html">multicast-pim</a>
+<div class="grp">运维</div>
+<a href="../skills/switch-platform-ops.html">switch-platform-ops</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../postsales/index.html">售后</a> › <a href="../index.html">DT00XTE216</a> › <span>ospf-area-redistribution</span></nav><h1>ospf-area-redistribution</h1><p class="meta"><span class="badge">SKILL</span> ospf-area-redistribution · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>园区/骨干要划分 OSPF 区域，纠结 Standard/Stub/Totally Stubby/NSSA 选型</li>
+<li>区域无法直连 Area 0，需要 Virtual Link</li>
+<li>直连/静态路由要注入 OSPF（重分发 + route-map），或邻居起不来要排障</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>OSPF 分区的收益是减少 LSA 传播量：区域类型决定允许进入的 LSA 集合（Stub 拒 Type5 注默认路由，Totally Stubby 再拒 Type3，NSSA 用 Type7 引外部路由）。重分发的通用范式是"先 route-map 后 redist"：route-map 序列自上而下、命中即停，执行 <code>ip redist</code> 的路由器即成为 ASBR。邻居建立的前提是 hello/dead/area/认证参数完全一致。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<ol>
+<li>七步法（&lt;&lt;<PAGE 275>&gt;&gt;-&lt;&lt;<PAGE 280>&gt;&gt;）：①配 router-id（<code>ip interface Loopback0 address 192.168.254.1</code> → <code>ip router router-id 192.168.254.1</code>）②<code>ip load ospf</code> ③<code>ip ospf area 0.0.0.0</code> ④指定区域类型 ⑤<code>ip ospf interface int_217</code> ⑥<code>ip ospf interface int_217 area 0.0.0.0</code> ⑦<code>admin-state enable</code> → <code>ip ospf admin-state enable</code>（&lt;&lt;<PAGE 325>&gt;&gt;-&lt;&lt;<PAGE 330>&gt;&gt;）</li>
+<li>验证三步：<code>show ip ospf</code>（# of Full State Nbrs）、<code>show ip ospf lsdb</code>（rtr/net LSA）、<code>show ip ospf interface</code>（DR/BDR）（&lt;&lt;<PAGE 325>&gt;&gt;-&lt;&lt;<PAGE 330>&gt;&gt;）</li>
+<li>多区域+虚链路：<code>ip ospf area 1.1.1.1</code> + 接口入域；两端配 <code>ip ospf virtual-link 1.1.1.1 192.168.254.2</code>（对端 router-id）；<code>show ip ospf virtual-link</code>（State P2P/Full, up）（&lt;&lt;<PAGE 332>&gt;&gt;-&lt;&lt;<PAGE 339>&gt;&gt;）</li>
+<li>重分发：<code>ip route-map localIntoOspf sequence-number 10 action permit / match ip-address 192.168.120.0/24 permit</code> → <code>ip redist local into ospf route-map localIntoOspf admin-state enable</code>（默认路由 match 0.0.0.0/0）；验证 <code>show ip ospf routes</code> 出现 AS-Ext (E2)（&lt;&lt;<PAGE 347>&gt;&gt;-&lt;&lt;<PAGE 352>&gt;&gt;）</li>
+<li>认证：Simple <code>auth-type simple</code> + <code>auth-key alcatel</code>；MD5 <code>auth-type md5</code> + <code>md5 1</code> + <code>md5 1 key alcatel</code>，双端一致（&lt;&lt;<PAGE 353>&gt;&gt;-&lt;&lt;<PAGE 354>&gt;&gt;）</li>
+<li>Stub：<code>ip ospf area 4.4.4.4 type stub</code>（双端一致），区域內路由表只剩 Intra/Inter + ABR 注入的 Inter 默认路由（&lt;&lt;<PAGE 355>&gt;&gt;-&lt;&lt;<PAGE 356>&gt;&gt;）</li>
+</ol>
+<h2 id="a2">A2（进阶应用）</h2>
+<ul>
+<li>邻居排障：<code>swlog appid ospf_0 subapp all level debug3</code> + <code>show log swlog | grep ospf_0</code>，可抓到 "HELLO ... discarded ... invalid helloInterval" 类证据（&lt;&lt;<PAGE 292>&gt;&gt;-&lt;&lt;<PAGE 294>&gt;&gt;）</li>
+<li>LSA 速查：Type1 每路由器域内泛洪 / Type2 DR 生成 / Type3 ABR 汇总（域内路由在 ABR 做 summarization）/ Type4 通告 ASBR 位置 / Type5 ASBR 外部（外部路由在 ASBR 做 aggregation）/ Type7 NSSA 专用由 ABR 转 Type5 出域（&lt;&lt;<PAGE 260>&gt;&gt;-&lt;&lt;<PAGE 267>&gt;&gt;、&lt;&lt;<PAGE 286>&gt;&gt;-&lt;&lt;<PAGE 287>&gt;&gt;）</li>
+<li>ECMP：等价路径最多 4 条、按流分担、不支持逐包（&lt;&lt;<PAGE 285>&gt;&gt;）</li>
+<li>Graceful Restart：重启期间邻居维持邻接避免全网 SPF；OSPF/ISIS 默认关、BGP 默认开（&lt;&lt;<PAGE 359>&gt;&gt;-&lt;&lt;<PAGE 363>&gt;&gt;）</li>
+<li>route-map 组合逻辑：同序列多 match 为 AND，同 match 多值为 OR（&lt;&lt;<PAGE 305>&gt;&gt;）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>C-22 两个独立骨干经 transit area 用虚链路互联，<code>show ip ospf virtual-link</code> State P2P/Full（&lt;&lt;<PAGE 332>&gt;&gt;-&lt;&lt;<PAGE 339>&gt;&gt;）</li>
+<li>C-23 local/static 两类重分发，E2 路由识别（&lt;&lt;<PAGE 347>&gt;&gt;-&lt;&lt;<PAGE 352>&gt;&gt;）</li>
+<li>C-26 swlog 日志分级定位 Hello interval 不匹配（本端 20 对端 10），改一致后 Full（&lt;&lt;<PAGE 292>&gt;&gt;-&lt;&lt;<PAGE 294>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（边界与陷阱）</h2>
+<ul>
+<li>单端先开认证会立刻丢邻居（"Auth type 1 mismatch!"），生产开认证需两端窗口期内同步（&lt;&lt;<PAGE 353>&gt;&gt;）</li>
+<li>Hello interval 等邻居参数不一致导致无法 Full，用 swlog debug 定位（&lt;&lt;<PAGE 293>&gt;&gt;-&lt;&lt;<PAGE 294>&gt;&gt;）</li>
+<li>Stub 区域两端 area type 必须一致，一端 stub 一端 normal 邻居起不来；stub 内看不到外部路由（&lt;&lt;<PAGE 355>&gt;&gt;-&lt;&lt;<PAGE 356>&gt;&gt;）</li>
+<li>route-map 命中 deny 序列即停止且不重分发该路由（&lt;&lt;<PAGE 304>&gt;&gt;）</li>
+</ul>
+<h2 id="_1">来源</h2>
+<ul>
+<li>framework·F-05 Area 设计决策框架（&lt;&lt;<PAGE 253>&gt;&gt;-&lt;&lt;<PAGE 254>&gt;&gt;、&lt;&lt;<PAGE 267>&gt;&gt;-&lt;&lt;<PAGE 270>&gt;&gt;）</li>
+<li>framework·F-06 配置七步法（&lt;&lt;<PAGE 275>&gt;&gt;-&lt;&lt;<PAGE 280>&gt;&gt;）</li>
+<li>framework·F-07 重分发两步法（&lt;&lt;<PAGE 272>&gt;&gt;-&lt;&lt;<PAGE 273>&gt;&gt;、&lt;&lt;<PAGE 300>&gt;&gt;）</li>
+<li>principle·P-39/P-40/P-41/P-42/P-43/P-44/P-45/P-46/P-47/P-48（&lt;&lt;<PAGE 240>&gt;&gt;-&lt;&lt;<PAGE 305>&gt;&gt;、&lt;&lt;<PAGE 359>&gt;&gt;-&lt;&lt;<PAGE 363>&gt;&gt;）</li>
+<li>case·C-21/C-22/C-23/C-24/C-25/C-26；counter·X-14/X-15/X-16</li>
+</ul><div class="pn"><a href="ip-routing-fundamentals.html">⬅ 上一单元：ip-routing-fundamentals</a><a class="nxt" href="bgp-vrf-leak.html">下一单元：bgp-vrf-leak ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

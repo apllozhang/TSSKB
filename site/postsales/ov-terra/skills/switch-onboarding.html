@@ -1,0 +1,116 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>switch-onboarding — DT00XTE317 · OmniVista Cirrus / Terra 部署与配置</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE317 · OmniVista Cirrus / Terra 部署与配置</h1>
+<div class="sub">Edition 10 · 478 页 · 云管与本地部署平台（新流水线重制版，全文可溯源）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">平台与账号</div>
+<a href="../skills/platform-selection-prereqs.html">platform-selection-prereqs</a>
+<a href="../skills/account-org-system.html">account-org-system</a>
+<div class="grp">部署与许可</div>
+<a href="../skills/terra-3vm-deployment.html">terra-3vm-deployment</a>
+<a href="../skills/license-and-trial.html">license-and-trial</a>
+<div class="grp">设备纳管</div>
+<a href="../skills/ap-onboarding.html">ap-onboarding</a>
+<a href="../skills/switch-onboarding.html" class="on">switch-onboarding</a>
+<div class="grp">业务与运维</div>
+<a href="../skills/wired-switch-config.html">wired-switch-config</a>
+<a href="../skills/wireless-service-delivery.html">wireless-service-delivery</a>
+<a href="../skills/rf-roaming-optimization.html">rf-roaming-optimization</a>
+<a href="../skills/monitoring-operations.html">monitoring-operations</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../postsales/index.html">售后</a> › <a href="../index.html">DT00XTE317</a> › <span>switch-onboarding</span></nav><h1>switch-onboarding</h1><p class="meta"><span class="badge">SKILL</span> switch-onboarding · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>OmniSwitch 需要宣告进平台并确认 DeviceManaged 状态</li>
+<li>交换机从 Cirrus 平台切换到 Terra</li>
+<li>交换机 VPN 通道异常需要重建，或需要调整发现间隔</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>交换机通过内置的 cloud-agent 进程与平台对接：宣告后经 Activation Server 获取证书、建 VPN 通道，最终 Device State = DeviceManaged。发现机制默认 30 分钟一次（Call Home），重激活的本质是重启 cloud-agent 进程或重启设备。切换平台时必须删旧证书并改 cloudagent.cfg 中的激活 URL。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<ol>
+<li><strong>Terra 前置两步</strong>（&lt;&lt;<PAGE 161>&gt;&gt;）：</li>
+<li>删证书：<code>cd switch/cloud</code> → <code>rm -f client.crt cloudCAchain.pem csr.crt private.key public.key</code></li>
+<li>编辑 /working/cloudagent.cfg，修改首行 "Activation Server URL: activation.myovterra.com"
+   （注：同一套流程适用于 Cirrus 与 Terra 两个平台的 OmniSwitch onboarding，&lt;&lt;<PAGE 164>&gt;&gt;）</li>
+<li><strong>宣告设备</strong>：单台宣告，或用 XLSX/CSV 模板批量（&lt;&lt;<PAGE 164>&gt;&gt;）。</li>
+<li><strong>状态与排障 CLI</strong>（&lt;&lt;<PAGE 171>&gt;&gt;&lt;&lt;<PAGE 172>&gt;&gt;）：</li>
+<li><code>cloud-agent admin-state enable/disable</code>（默认 enable）</li>
+<li><code>cloud-agent admin-state disable force</code> —— 重建 VPN</li>
+<li><code>cloud-agent discovery-interval</code>（默认 30 分钟）</li>
+<li><code>show cloud-agent status</code>：看 Activation Server State（期望 completeOK）、Device State（期望 DeviceManaged）</li>
+<li><code>show cloud-agent vpn status</code>：示例输出 Activation Server: activation.ovng.myovcloud.com:443、VPN Server: vpnb.ovng.myovcloud.com:443</li>
+<li><strong>重激活</strong>：重启 cloud-agent 进程，或手动重启设备（&lt;&lt;<PAGE 170>&gt;&gt;）。</li>
+</ol>
+<h2 id="a2">A2（进阶应用）</h2>
+<ul>
+<li>迁移等不及 30 分钟 Call Home 周期时，重启设备或 cloud-agent 立即触发（&lt;&lt;<PAGE 69>&gt;&gt;）。</li>
+<li>激活失败状态族（与 AP 共用）：Failed To Get Certificate / Upgrade Failed / Configuring VPN Failed / Provisioning Failed / Device Validation Failed / Factory Reset Required（&lt;&lt;<PAGE 146>&gt;&gt;&lt;&lt;<PAGE 147>&gt;&gt;）。</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li><strong>案例 1</strong>：客户从 Cirrus 整体切换 Terra，交换机 onboard 后无反应——cloudagent.cfg 首行仍是旧 Activation Server URL，且 switch/cloud 下残留旧证书；删证书 + 改 URL 后恢复（&lt;&lt;<PAGE 161>&gt;&gt;）。</li>
+<li><strong>案例 2</strong>：<code>show cloud-agent status</code> 显示 VPN 异常，执行 <code>cloud-agent admin-state disable force</code> 强制重建 VPN 后恢复（&lt;&lt;<PAGE 171>&gt;&gt;）。</li>
+</ul>
+<h2 id="b">B（边界与陷阱）</h2>
+<ul>
+<li><strong>切平台必清证书 + 必改 URL</strong>：只做其中一步都不够，残留证书或旧激活 URL 都会导致激活异常（&lt;&lt;<PAGE 161>&gt;&gt;）。</li>
+<li><strong>发现周期错觉</strong>：默认 30 分钟 Call Home，"宣告后没动静"可能只是在等周期，可重启进程加速（&lt;&lt;<PAGE 171>&gt;&gt;&lt;&lt;<PAGE 69>&gt;&gt;）。</li>
+<li><strong>VPN profile 变更需恢复出厂</strong>（&lt;&lt;<PAGE 147>&gt;&gt;）。</li>
+</ul>
+<h2 id="_1">来源</h2>
+<ul>
+<li>frameworks·OmniSwitch Onboarding 流程（&lt;&lt;<PAGE 161>&gt;&gt;&lt;&lt;<PAGE 162>&gt;&gt;&lt;&lt;<PAGE 163>&gt;&gt;&lt;&lt;<PAGE 164>&gt;&gt;）</li>
+<li>principles·交换机激活 cloud-agent 机制（&lt;&lt;<PAGE 170>&gt;&gt;&lt;&lt;<PAGE 171>&gt;&gt;&lt;&lt;<PAGE 172>&gt;&gt;）</li>
+<li>cases·交换机 cloud-agent CLI 操作集（&lt;&lt;<PAGE 171>&gt;&gt;&lt;&lt;<PAGE 172>&gt;&gt;）</li>
+<li>cases·交换机重激活操作（&lt;&lt;<PAGE 170>&gt;&gt;）</li>
+<li>counter-examples·交换机切 Terra 需改 cloudagent.cfg 激活 URL 并删证书（&lt;&lt;<PAGE 161>&gt;&gt;）</li>
+<li>counter-examples·激活失败状态族与排查入口（&lt;&lt;<PAGE 146>&gt;&gt;&lt;&lt;<PAGE 147>&gt;&gt;）</li>
+<li>counter-examples·VPN profile 变更后设备需恢复出厂（&lt;&lt;<PAGE 147>&gt;&gt;）</li>
+</ul><div class="pn"><a href="ap-onboarding.html">⬅ 上一单元：ap-onboarding</a><a class="nxt" href="wired-switch-config.html">下一单元：wired-switch-config ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

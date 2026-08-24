@@ -1,0 +1,115 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ip-routing-fundamentals — DT00XTE216 · OmniSwitch LAN R8 Core Switching</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE216 · OmniSwitch LAN R8 Core Switching</h1>
+<div class="sub">Edition 15 · 724 页 · 核心交换专题（新流水线重制版：ERP/MACsec/PVLAN/MSTP/安全/OSPF/组播/BGP/SPB）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">二层专题</div>
+<a href="../skills/erp-ring-protection.html">erp-ring-protection</a>
+<a href="../skills/macsec-link-encryption.html">macsec-link-encryption</a>
+<a href="../skills/private-vlan-isolation.html">private-vlan-isolation</a>
+<a href="../skills/mstp-load-sharing.html">mstp-load-sharing</a>
+<a href="../skills/mvrp-dynamic-vlan.html">mvrp-dynamic-vlan</a>
+<div class="grp">安全</div>
+<a href="../skills/arp-dos-defense.html">arp-dos-defense</a>
+<a href="../skills/learned-port-security.html">learned-port-security</a>
+<div class="grp">三层路由</div>
+<a href="../skills/ip-routing-fundamentals.html" class="on">ip-routing-fundamentals</a>
+<a href="../skills/ospf-area-redistribution.html">ospf-area-redistribution</a>
+<a href="../skills/bgp-vrf-leak.html">bgp-vrf-leak</a>
+<div class="grp">Fabric 与组播</div>
+<a href="../skills/spb-fabric.html">spb-fabric</a>
+<a href="../skills/multicast-pim.html">multicast-pim</a>
+<div class="grp">运维</div>
+<a href="../skills/switch-platform-ops.html">switch-platform-ops</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../postsales/index.html">售后</a> › <a href="../index.html">DT00XTE216</a> › <span>ip-routing-fundamentals</span></nav><h1>ip-routing-fundamentals</h1><p class="meta"><span class="badge">SKILL</span> ip-routing-fundamentals · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>交换机要上默认路由/备份路由，或下一跳不固定需要递归静态路由</li>
+<li>小型网络仍跑 RIP，直连/静态路由不通告需要重分发</li>
+<li>需要判断多协议共存时 RIB 的选路次序</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>AOS 的路由世界观是"路由数据库（router database）+ 协议优先级（route-pref）"：Local 1 / Static 2 / OSPF 110 / ISIS-L1 115 / ISIS-L2 118 / RIP 120 / EBGP 190 / IBGP 200 / Import 210。Loopback0 是全网稳定的身份地址（router-id、BGP peering、PIM RP 等），RIP/OSPF 自动通告它而 BGP 不会。静态路由的递归形式（follows）让下一跳跟随另一条路由动态解析。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<ol>
+<li>静态与默认路由：<code>ip static-route 134.1.21.0/24 gateway 10.1.1.1</code> / <code>ip static-route 0.0.0.0/0 gateway 10.1.1.1</code>；双默认路由用 metric 1 与 metric 2 互备；<code>show ip router database</code> 可见 inactive 备份（&lt;&lt;<PAGE 222>&gt;&gt;-&lt;&lt;<PAGE 223>&gt;&gt;）</li>
+<li>递归路由：<code>ip static-route 172.30.0.0/16 follows 2.2.2.2 metric 1</code>（&lt;&lt;<PAGE 225>&gt;&gt;）</li>
+<li>RIP 最小配置：<code>ip load rip</code> → <code>ip rip interface &lt;if&gt; admin-state enable</code> → <code>ip rip admin-state enable</code>（&lt;&lt;<PAGE 228>&gt;&gt;）</li>
+<li>RIP 重分发：<code>ip route-map rip_1 sequence-number 50 action permit / match ip-address 0.0.0.0/0</code> + <code>ip redist local into rip route-map rip_1 admin-state enable</code>（static 同理）（&lt;&lt;<PAGE 228>&gt;&gt;）</li>
+<li>IS-IS 最小配置：<code>ip load isis</code> → <code>ip isis admin-state enable</code> → <code>ip isis area-id 49.0001</code> → <code>ip isis activate-ipv4</code> → <code>ip isis vlan 5</code> → <code>ip isis vlan 5 address-family v4</code> → <code>ip isis vlan 5 admin-state enable</code>；<code>show ip isis adjacency/route/spf</code>（&lt;&lt;<PAGE 697>&gt;&gt;-&lt;&lt;<PAGE 698>&gt;&gt;）</li>
+</ol>
+<h2 id="a2">A2（进阶应用）</h2>
+<ul>
+<li>RIP 四定时器：Update 30（1..120）/ Invalid 180（3..360）/ Garbage 120（0..180）/ Hold-down 0（0..120）；约束 update ≤ invalid/3、invalid ≥ 3×update（&lt;&lt;<PAGE 231>&gt;&gt;）</li>
+<li>RIP 16 跳不可达、网络直径最大 15（&lt;&lt;<PAGE 227>&gt;&gt;）</li>
+<li>优先级可改：<code>ip route-pref BGP 8</code>（&lt;&lt;<PAGE 503>&gt;&gt;）</li>
+<li>IS-IS NSAP 结构（Area-ID/System-ID/NSEL），本地管理 AFI=49；DIS 类似 OSPF DR 但可抢占，Hello 9s（DIS 3s），按优先级+MAC 选举（&lt;&lt;<PAGE 686>&gt;&gt;、&lt;&lt;<PAGE 689>&gt;&gt;-&lt;&lt;<PAGE 690>&gt;&gt;、&lt;&lt;<PAGE 694>&gt;&gt;）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>C-19 双默认路由 metric 互备，database 中 inactive 展示（&lt;&lt;<PAGE 222>&gt;&gt;-&lt;&lt;<PAGE 223>&gt;&gt;）</li>
+<li>C-20 RIP 最小配置与 local/static 重分发（&lt;&lt;<PAGE 228>&gt;&gt;）</li>
+<li>C-39 IS-IS 单区域启用模板（&lt;&lt;<PAGE 697>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（边界与陷阱）</h2>
+<ul>
+<li>RIP 默认只通告学到的 RIP 路由和 Loopback0，local/static 路由必须重分发，漏配即路由缺失（&lt;&lt;<PAGE 228>&gt;&gt;）</li>
+<li>递归静态路由的网关随 follow 目标路由变化而漂移，设计时要确保 follow 目标稳定防环路（&lt;&lt;<PAGE 225>&gt;&gt;）</li>
+<li>Loopback0 被 RIP/OSPF 自动通告但 BGP 不通告（&lt;&lt;<PAGE 216>&gt;&gt;）</li>
+</ul>
+<h2 id="_1">来源</h2>
+<ul>
+<li>principle·P-35 IP 接口与 Loopback0（&lt;&lt;<PAGE 214>&gt;&gt;、&lt;&lt;<PAGE 216>&gt;&gt;）</li>
+<li>principle·P-36 递归静态路由（&lt;&lt;<PAGE 224>&gt;&gt;、&lt;&lt;<PAGE 225>&gt;&gt;）</li>
+<li>principle·P-37 RIP 规格与定时器（&lt;&lt;<PAGE 227>&gt;&gt;、&lt;&lt;<PAGE 231>&gt;&gt;、&lt;&lt;<PAGE 232>&gt;&gt;）</li>
+<li>principle·P-38 路由协议优先级（&lt;&lt;<PAGE 299>&gt;&gt;、&lt;&lt;<PAGE 503>&gt;&gt;）</li>
+<li>principle·P-66 IS-IS NSAP 与 DIS（&lt;&lt;<PAGE 686>&gt;&gt;-&lt;&lt;<PAGE 694>&gt;&gt;）</li>
+<li>case·C-19/C-20/C-39；counter·X-17/X-18</li>
+</ul><div class="pn"><a href="learned-port-security.html">⬅ 上一单元：learned-port-security</a><a class="nxt" href="ospf-area-redistribution.html">下一单元：ospf-area-redistribution ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
