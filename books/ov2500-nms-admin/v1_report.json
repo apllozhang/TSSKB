@@ -1,0 +1,425 @@
+{
+ "cases": [
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "1. 部署 Virtual Appliance（vSphere OVF 全流程）"
+  },
+  {
+   "h": 0.61,
+   "ok": true,
+   "head": "3. 生成并安装 Evaluation License（lds.al-enterprise.com）"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "4. AOS 交换机 SNMP 准备（六台交换机逐台执行）"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "11. 告警声音配置"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "14. Inventory 报表生成"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "18. Control Panel / Watchdog 与 Scheduler History"
+  },
+  {
+   "h": 0.87,
+   "ok": true,
+   "head": "19. Unified Access 全流程实验（RADIUS + AAA Profile + UNP + 802.1X 客户端）"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "21. Quarantine Manager 内置规则族（AlaDosTrap/Fortinet/OA WLAN）"
+  },
+  {
+   "h": 0.88,
+   "ok": true,
+   "head": "22. QM Responder（邮件/外部程序）"
+  },
+  {
+   "h": 0.95,
+   "ok": true,
+   "head": "24. Switch User Account（UPAM 代管交换机账号）"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "25. SSH/Telnet 到未纳管新设备（4.3R2+）"
+  },
+  {
+   "h": 0.48,
+   "ok": true,
+   "head": "26. Application Visibility 配置实验（OS6860-B 监控+封禁社交/游戏应用）"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "32. Provisioning Rule 创建与 Golden Config / Force Provision"
+  },
+  {
+   "h": 0.96,
+   "ok": true,
+   "head": "33. Thin Client 配置规则属性"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "34. 交换机侧初始配置恢复命令（Lab 环境重建）"
+  }
+ ],
+ "counter-examples": [
+  {
+   "h": 0.93,
+   "ok": true,
+   "head": "1. 许可安装二选一陷阱：License 文件与 License Keys 不可同时使用"
+  },
+  {
+   "h": 0.93,
+   "ok": true,
+   "head": "2. License Key 粘贴整行的反例（会把许可名一起粘进去）"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "3. 默认状态下交换机不能被 OV 管理（必须先配 SNMP）"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "4. 路由表缺 Loopback0 → 实验环境直接失败（需联系培训师）"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "5. 无可用快照 → 无法恢复 OV 初始配置"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "6. 默认密码未改即无法继续 / 装完许可文件未删的隐患"
+  },
+  {
+   "h": 0.9,
+   "ok": true,
+   "head": "7. 误勾 Enable Fleet Supervision"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "8. HA 缺失时的业务中断反例（UPAM 认证停摆）"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "9. 容量规划反例：High 档带 4000 AP 时交换机上限骤降"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "10. Trap 邮件Responder 不含 Normal 级别的配置注意点"
+  },
+  {
+   "h": 0.79,
+   "ok": true,
+   "head": "11. VLAN 802.1X 客户端认证页签不可见的排查反例"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "12. 重新认证前未清 UNP 用户状态 → 残留会话干扰结果"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "13. Client 拿不到 DHCP 地址的排障边界"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "14. UNP 命名不一致 → RADIUS 返回值匹配失败"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "15. 签名 Profile / 统计 Profile 的\"一机一档\"限制"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "16. \"NO DATA AVAILABLE\" 并非故障——数据生成时延"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "17. 自定义数据 3 个月上限与滚动覆盖"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "18. 应用端口映射导入会覆盖现有映射"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "19. QM 内置规则默认全部禁用（以为开了其实没开）"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "20. Candidates List 设备流量不被阻断的语义陷阱"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "21. Control Panel 误停服务的课堂警告"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "22. 镜像升级实验的环境约束与升级后手动动作"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "23. Thin Client 模式下直接改交换机配置的反例"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "24. IoT 仅 IPv4 限制"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "26. 备份交换机 FTP 凭据缺失会中断备份向导"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "27. Check Service Stats 警告弹窗的处理"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "28. 远程实验室音频/剪贴板限制"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "30. Sizing 环境变量影响实际容量"
+  }
+ ],
+ "frameworks": [
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "1. Unified Access 三层策略模型（AAA Server Profile → Access Role Profile → Ac"
+  },
+  {
+   "h": 0.95,
+   "ok": true,
+   "head": "2. 用户角色导向访问策略（User Role Oriented Access Policy：Employee/Guest Profile "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "3. PolicyView QoS 规则配置四步法（Condition → Action → Rule → Apply）"
+  },
+  {
+   "h": 0.95,
+   "ok": true,
+   "head": "4. PolicyView 双模式框架（OneTouch vs Expert Mode）"
+  },
+  {
+   "h": 0.85,
+   "ok": true,
+   "head": "5. Policy Flow（LDAP 策略仓库驱动的策略下发流程）"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "7. OV2500 容量规划（Sizing）决策框架：Network Size 四档"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "8. Virtual Appliance 安装部署序列框架"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "10. Quarantine Manager 攻击检测与遏制框架（Detection → Rules → Enforcement → Res"
+  },
+  {
+   "h": 0.53,
+   "ok": true,
+   "head": "11. Template Based Provisioning 部署场景决策框架（4 场景矩阵）"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "14. Analytics 报表体系框架（Visibility vs Availability；Profile 先行）"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "15. Access Classification 回退分类规则框架（认证不可用时按规则定 Profile）"
+  }
+ ],
+ "principles": [
+  {
+   "h": 0.88,
+   "ok": true,
+   "head": "1. OV2500 纯虚机形态原理（Virtual Appliance = Linux OS + OV 应用，无独立安装器）"
+  },
+  {
+   "h": 0.96,
+   "ok": true,
+   "head": "2. 高可用（HA）双实例原理：Main/Standby 常驻、状态同步、故障接管"
+  },
+  {
+   "h": 0.89,
+   "ok": true,
+   "head": "3. 无 HA 的后果原理（为什么需要 HA）"
+  },
+  {
+   "h": 0.9,
+   "ok": true,
+   "head": "4. Watchdog 服务管理原理"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "5. OV System Health / 会话管理原理"
+  },
+  {
+   "h": 0.95,
+   "ok": true,
+   "head": "6. Thin Client OmniSwitch 原理（交换机零本地配置，配置存于 OV2500）"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "7. SNMP 安全级别矩阵（snmp security 各档接受哪些请求）"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "8. SNMP source address / Loopback0 管理寻址原理"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "9. NMS 组件模型（SNMP/sFlow/MIB/Traps/RMON 代理体系）"
+  },
+  {
+   "h": 0.96,
+   "ok": true,
+   "head": "11. 双因素认证（2FA/TOTP）原理"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "12. Quarantine Manager 遏制执行机制（VLAN/ACL/端口/黑名单）"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "13. Quarantine 三列表语义（Candidates/Banned/Never Banned）"
+  },
+  {
+   "h": 0.94,
+   "ok": true,
+   "head": "15. Locator 定位原理（Live vs Historical；MAC/IP/授权用户三键）"
+  },
+  {
+   "h": 0.91,
+   "ok": true,
+   "head": "16. Discovery 链路发现机制（AMAP/LLDP + 手工链路）"
+  },
+  {
+   "h": 0.9,
+   "ok": true,
+   "head": "19. sFlow 采样分析原理（Analytics 数据面）"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "20. 采样率定义"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "21. Top N Ports 趋势预测原理（机器学习）"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "22. Applications Management 双模式原理（Range-Based vs Enumerated）"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "25. IoT 设备画像原理（MAC OUI + DHCP 指纹）"
+  },
+  {
+   "h": 0.95,
+   "ok": true,
+   "head": "26. IoT 执法（Enforcement）与豁免原理"
+  },
+  {
+   "h": 0.95,
+   "ok": true,
+   "head": "27. 统计采集与视图分离原理（Collection Profile vs View Profile）"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "28. SIP Snooping 原理（DSCP 标记 + 语音质量度量）"
+  },
+  {
+   "h": 0.96,
+   "ok": true,
+   "head": "30. Provisioning Rule 匹配机制（序列号/MAC/型号 + 5 分钟轮询）"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "31. Golden Configuration 审计原理"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "32. RCL/Bootstrap 引导原理（DHCP Option 43 Sub-option 128 / DNS 别名）"
+  },
+  {
+   "h": 0.94,
+   "ok": true,
+   "head": "33. NaaS 设备许可状态模型"
+  },
+  {
+   "h": 0.76,
+   "ok": true,
+   "head": "34. VM Manager / UNP-VLAN 联动原理"
+  },
+  {
+   "h": 0.93,
+   "ok": true,
+   "head": "35. Captive Portal Profile/Domain Policy 分层原理"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "36. Access Auth Profile 端口行为细节（Port Bounce / Bypass / Failure Policy）"
+  }
+ ]
+}
