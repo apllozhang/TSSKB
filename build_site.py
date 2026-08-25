@@ -571,7 +571,7 @@ def build_course(c):
 
     def crumbs(cur='', sub=False):
         cat = c['id'].split('/')[0]
-        cat_label = {'postsales': '售后', 'presales': '售前', 'manuals': '配置手册', 'aos': 'AOS 软件手册', 'hardware': '硬件手册', 'brochures': '产品彩页'}[cat]
+        cat_label = {'postsales': '售后', 'presales': '售前', 'manuals': 'OV2500 配置手册', 'aos': 'AOS 软件手册', 'hardware': '硬件手册', 'brochures': '产品彩页'}[cat]
         p = '../../../' if sub else '../../'
         q = '../' if sub else ''
         bar = f'<nav class="crumbs"><a href="{p}index.html">🏠 培训门户</a> › <a href="{p}{cat}/index.html">{cat_label}</a> › <a href="{q}index.html">{html_mod.escape(c["title"].split(" · ")[0])}</a>'
@@ -668,7 +668,7 @@ def build_category(dirname, label):
         f.write(page)
     print('category built:', dirname)
 
-for dirname, label in [('postsales', '售后 · Postsales'), ('presales', '售前 · Presales'), ('manuals', '配置手册 · Manuals'), ('aos', 'AOS 软件手册 · Software Guides'), ('hardware', '硬件手册 · Hardware Guides'), ('brochures', '产品彩页 · Product Datasheets')]:
+for dirname, label in [('postsales', '售后 · Postsales'), ('presales', '售前 · Presales'), ('manuals', 'OV2500 配置手册 · Manuals'), ('aos', 'AOS 软件手册 · Software Guides'), ('hardware', '硬件手册 · Hardware Guides'), ('brochures', '产品彩页 · Product Datasheets')]:
     build_category(dirname, label)
 
 # ============ 门户封面 ============
@@ -678,7 +678,7 @@ CATALOG = [
         ('DT00XPS279 · OmniSwitch LAN SPB 售前', 'Issue 05 · 147 页 · 9 个知识单元 · 卖点弹药 / L3 集成 / 三技术对比', 'presales/spb-presales/index.html'),
         ('DT00XPS281 · Campus LAN 售前', 'Edition 29 · 480 页 · 11 个知识单元 · 分层设计 / 机型选型 / WWPL 报价 / 参考架构库', 'presales/campus-lan/index.html'),
         ('DT00XPS288 · OmniAccess Stellar WLAN 售前', 'Edition 28 · 273 页 · 8 个知识单元 · AP 矩阵 / 三管理模式 / License 三体系 / 七大用例', 'presales/stellar-wlan/index.html'),
-        ('SD-WAN / SASE 方案', 'Alestra 与云网融合场景', None),
+        ('SD-WAN / SASE 方案', '零信任与云网融合', None),
     ]),
     ('售后 · Postsales', '#f59e0b', [
         ('DT00XTE360 · ACFE WLAN Basic Deployment with OmniVista', 'Edition 04 · 585 页 · 10 个知识单元 · AP 生命周期交付 / SSID 全家桶 / WIPS', 'postsales/acfe-wlan-basic/index.html'),
@@ -700,8 +700,7 @@ CATALOG = [
         ('DT00XTE311 · OmniVista 2500 NMS 管理', 'Edition 09 · 581 页 · 10 个知识单元 · 安装 / 发现 / 资源 / 统一接入 / 隔离', 'postsales/ov2500-nms-admin/index.html'),
         ('Stellar WLAN 实施与优化', 'AP 部署、RF 规划、无线排障', None),
     ]),
-    ('配置手册 · Manuals', '#22d3ee', [
-        ('AWOS 5.0.3 · Stellar AP 用户手册', '128 页 · 4 个知识单元 · 集群开局 / 射频调优 / 安全 / 运维升级', 'manuals/awos-ap-guide/index.html'),
+    ('OV2500 配置手册 · Manuals', '#22d3ee', [
         ('OV2500 4.9R2 · 安装与升级指南', '326 页 · 4 个知识单元 · 四档规模 / 三平台 / HA / 升级链', 'manuals/ov2500-install/index.html'),
         ('OV2500 4.9R2 · RAP 与 VPN VA 安装', '84 页 · 4 个知识单元 · VPN 模式 / VA 容量 / 隧道排障', 'manuals/ov2500-rap-vpn/index.html'),
         ('OV2500 4.9R2 · Release Notes', '93 页 · 4 个知识单元 · 升级评估 / 63 条已知问题排障库 / 危险陷阱', 'manuals/ov2500-release-notes/index.html'),
@@ -734,6 +733,7 @@ CATALOG = [
         ('OmniSwitch · 官方数据表', '15 份 158 页 · OS2260-OS9900 全系选型速查', 'brochures/omniswitch/index.html'),
     ]),
     ('无线网络 · WLAN', '#a78bfa', [
+        ('AWOS 5.0.3 · Stellar AP 用户手册', '128 页 · 4 个知识单元 · 集群开局 / 射频调优 / 安全 / 运维升级', 'manuals/awos-ap-guide/index.html'),
         ('WiFi 6 / 6E / 7 技术基础', '标准演进、OFDMA、多链路操作', None),
         ('Stellar AP 产品与组网', 'Mesh / Bridge / RAP 特殊组网', None),
     ]),
@@ -741,7 +741,7 @@ CATALOG = [
         ('OmniSwitch R8 体系结构', 'VC 虚拟机箱、SPB / MPLS、UNP', None),
         ('AOS CLI 进阶', '脚本化配置与自动化运维', None),
     ]),
-    ('网络管理 · Management', '#f472b6', [
+    ('云网管 · Cloud base Management', '#f472b6', [
         ('OmniVista 2500 / Cirrus / Terra', '三大管理平台定位与选型', None),
         ('QoE 与网络分析', '体验质量度量与根因分析', None),
     ]),
@@ -782,9 +782,9 @@ main.cover{{max-width:1100px;margin:0 auto;padding:0 32px 60px}}
 <div class="hero">
 <div class="en">Alcatel-Lucent Enterprise</div>
 <h1>ALE Networking 技术培训</h1>
-<p>面向售前、售后与网络工程师的 ALE 网络技术学习门户。
-每一门课程由官方培训教材整理为可执行的知识单元（框架 · 清单 · 参数表 · 陷阱），
-覆盖 部署实施 · 运维排障 · 方案设计 · 安全准入 全生命周期。</p>
+<p>面向售前、售后工程师的 ALE 网络技术学习门户。</p>
+<p>基于官方彩页、技术手册、培训教材整理。</p>
+<p>涵盖 部署实施 · 运维排障 · 方案设计 · 安全准入 全生命周期。</p>
 </div>
 {cats_html}
 <h2>关于本站</h2>
