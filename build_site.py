@@ -387,6 +387,28 @@ NEW_COURSES = [
         ('安装与电源', ['os9900-install-power']),
         ('运维排障', ['os9900-ops-troubleshoot']),
        ]),
+  dict(id='brochures/nms', book='bp-nms-brochures', title='ALE 网管与安全 · 官方彩页',
+       subtitle='2026-08 快照 · 5 份 23 页 · OmniVista 双形态/订阅/Fleet/Milestone/Advisor',
+       route=['Cirrus/Terra 双形态选型', '订阅与维保边界', 'Fleet Supervision 免费切入点', 'Advisor 与 Smart Tool'],
+       groups=[
+        ('平台与订阅', ['bp-nms-platform-selection', 'bp-nms-subscription-license']),
+        ('方案与工具', ['bp-nms-fleet-milestone', 'bp-nms-advisor-smarttool']),
+       ]),
+  dict(id='brochures/stellar-ap', book='bp-stellar-ap-datasheets', title='OmniAccess Stellar WLAN · 官方数据表',
+       subtitle='2026-08 快照 · 14 份 128 页 · AP1261-AP1570 全系选型速查',
+       route=['Wi-Fi 7 旗舰（1540/1561/1570）', 'Wi-Fi 6/6E 中端矩阵', '特殊用途 AP', '平台规模配套'],
+       groups=[
+        ('代际选型', ['bp-ap-wifi7-flagship', 'bp-ap-wifi6-midrange']),
+        ('场景与平台', ['bp-ap-special-purpose', 'bp-ap-platform-scale']),
+       ]),
+  dict(id='brochures/omniswitch', book='bp-omniswitch-datasheets', title='OmniSwitch · 官方数据表',
+       subtitle='2026-08 快照 · 15 份 158 页 · OS2260-OS9900 全系选型速查',
+       route=['接入层九系列', '汇聚核心六系列', '许可制特性与陷阱', '6870 三 fabric 与定位'],
+       groups=[
+        ('接入选型', ['bp-sw-access-selection']),
+        ('汇聚核心', ['bp-sw-aggregation-core']),
+        ('许可与织构', ['bp-sw-license-features', 'bp-sw-fabric-positioning']),
+       ]),
 ]
 COURSES = NEW_COURSES  # 旧课程(ov-terra/bootcamp/core)保留 site/ 预构建页面，源 books 未随库分发
 _LEGACY = [
@@ -545,7 +567,7 @@ def build_course(c):
 
     def crumbs(cur='', sub=False):
         cat = c['id'].split('/')[0]
-        cat_label = {'postsales': '售后', 'presales': '售前', 'manuals': '配置手册', 'aos': 'AOS 软件手册', 'hardware': '硬件手册'}[cat]
+        cat_label = {'postsales': '售后', 'presales': '售前', 'manuals': '配置手册', 'aos': 'AOS 软件手册', 'hardware': '硬件手册', 'brochures': '产品彩页'}[cat]
         p = '../../../' if sub else '../../'
         q = '../' if sub else ''
         bar = f'<nav class="crumbs"><a href="{p}index.html">🏠 培训门户</a> › <a href="{p}{cat}/index.html">{cat_label}</a> › <a href="{q}index.html">{html_mod.escape(c["title"].split(" · ")[0])}</a>'
@@ -642,7 +664,7 @@ def build_category(dirname, label):
         f.write(page)
     print('category built:', dirname)
 
-for dirname, label in [('postsales', '售后 · Postsales'), ('presales', '售前 · Presales'), ('manuals', '配置手册 · Manuals'), ('aos', 'AOS 软件手册 · Software Guides'), ('hardware', '硬件手册 · Hardware Guides')]:
+for dirname, label in [('postsales', '售后 · Postsales'), ('presales', '售前 · Presales'), ('manuals', '配置手册 · Manuals'), ('aos', 'AOS 软件手册 · Software Guides'), ('hardware', '硬件手册 · Hardware Guides'), ('brochures', '产品彩页 · Product Datasheets')]:
     build_category(dirname, label)
 
 # ============ 门户封面 ============
@@ -701,6 +723,11 @@ CATALOG = [
         ('OmniSwitch 6870', 'Rev D · 85 页 · 九机型 · QSFP56 200G / 允许混插扩容', 'hardware/os6870/index.html'),
         ('OmniSwitch 6900', 'Rev C · 90 页 · 模块化机箱 · 端口组锁速 / QSFP-DD 十二态', 'hardware/os6900/index.html'),
         ('OmniSwitch 9900', 'Rev S · 74 页 · 核心机箱 · 9907/9912 / CMM-CFM / N+1', 'hardware/os9900/index.html'),
+    ]),
+    ('产品彩页 · Product Datasheets', '#fb923c', [
+        ('ALE 网管与安全 · 官方彩页', '5 份 23 页 · OmniVista 双形态 / 订阅 / Fleet / Milestone / Advisor', 'brochures/nms/index.html'),
+        ('OmniAccess Stellar WLAN · 官方数据表', '14 份 128 页 · AP1261-AP1570 全系选型速查', 'brochures/stellar-ap/index.html'),
+        ('OmniSwitch · 官方数据表', '15 份 158 页 · OS2260-OS9900 全系选型速查', 'brochures/omniswitch/index.html'),
     ]),
     ('无线网络 · WLAN', '#a78bfa', [
         ('WiFi 6 / 6E / 7 技术基础', '标准演进、OFDMA、多链路操作', None),

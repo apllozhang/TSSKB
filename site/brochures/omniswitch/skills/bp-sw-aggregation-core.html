@@ -1,0 +1,165 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>bp-sw-aggregation-core — OmniSwitch · 官方数据表</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>OmniSwitch · 官方数据表</h1>
+<div class="sub">2026-08 快照 · 15 份 158 页 · OS2260-OS9900 全系选型速查</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">接入选型</div>
+<a href="../skills/bp-sw-access-selection.html">bp-sw-access-selection</a>
+<div class="grp">汇聚核心</div>
+<a href="../skills/bp-sw-aggregation-core.html" class="on">bp-sw-aggregation-core</a>
+<div class="grp">许可与织构</div>
+<a href="../skills/bp-sw-license-features.html">bp-sw-license-features</a>
+<a href="../skills/bp-sw-fabric-positioning.html">bp-sw-fabric-positioning</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../brochures/index.html">产品彩页</a> › <a href="../index.html">OmniSwitch</a> › <span>bp-sw-aggregation-core</span></nav><h1>bp-sw-aggregation-core</h1><p class="meta"><span class="badge">SKILL</span> bp-sw-aggregation-core · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>接入旗舰/汇聚：6860（95W+200G 堆叠）vs 6870（OmniFabric 高端）</li>
+<li>核心层：固定 6900 vs 模块化 9900 取舍；线卡扩容投资保护</li>
+<li>AI/GPU 集群与 RoCEv2 存储无损网络：6920-D32</li>
+<li>医院/生产网不中断升级：ISSU 与 CMM 虚拟机化写进技术条款</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>高性能线三层（F1）：6860 是接入旗舰（95W PoE + 200G 堆叠 + SPB/VxLAN/MPLS 全 fabric，PoE 预算天花板 3.4kW，P11/P12）；
+6870 是 OmniFabric 高端接入（premium 95W/advanced 60W 分档，256bit MACsec 全端口）；
+6900 是固定核心（1RU 6.4Tb/s、VC 6 台）；
+6920-D32 是 400G AI/HPC（12.8Tb/s、RoCEv2+PFC 无损）；
+9900 是模块化旗舰（OS9907 10800W PoE、线卡混插扩容、CMM 虚拟机化升级不掉线）。加密认 E 后缀：6900 只有 X48E/C32E 全口 MACsec（C5/X9）。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<ol>
+<li>定层级：接入旗舰/移动与 IoT 密集 → 6860；
+要三 fabric 合一 + AI 遥测 → 6870；
+中型园区/DC ToR → 6900；
+大型园区要 GbE 密度+PoE 核心 → 9900；
+GPU/存储无损 → 6920-D32</li>
+<li>核对 PoE 预算与口位：6860N 双 BPXL 3390W（仅 230VAC）；9900 PoE 线卡仅前 8 口 75W——高功率 AP 映射指定口段（C11）</li>
+<li>核对加密：全口 MACsec 认 6860/6870 全系、6900 的 X48E/C32E</li>
+<li>不中断升级：6900 VC 1+N 冗余+ISSU、9900 CMM 虚拟机化、6370 ISSU</li>
+<li>6920 场景确认：单一型号 D32 无接入能力，接入层另配（X13）</li>
+</ol>
+<h2 id="a2">A2（选型速查表）</h2>
+<table>
+<thead>
+<tr>
+<th>系列</th>
+<th>定位</th>
+<th>关键规格</th>
+<th>PoE/加密</th>
+<th>堆叠/VC</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OS6860（E/N）</td>
+<td>接入旗舰</td>
+<td>N 型 95W+10G 多千兆+SFP28 25G；E 型 60/75W；premium 模块化上联 4x10G~1x100G</td>
+<td>3.4kW 天花板；全系 MACsec</td>
+<td>200G 堆叠；E 型 40G QSFP+</td>
+<td>&lt;&lt;<PAGE 82-85>&gt;&gt;</td>
+</tr>
+<tr>
+<td>OS6865</td>
+<td>工业 L3 旗舰</td>
+<td>-40~74°C，SPB-M VPN，1588v2，auto-fabric</td>
+<td>每型 4 口 75W</td>
+<td>专用 20G VC 口（U28X）</td>
+<td>&lt;&lt;<PAGE 99>&gt;&gt;</td>
+</tr>
+<tr>
+<td>OS6870（premium/advanced）</td>
+<td>OmniFabric 高端接入</td>
+<td>premium：24x10G/48x5G 多千兆、上联 2x100G 或 6x25/50G（50G 需许可）；advanced：2.5G/60W、固定 2x100G VFL</td>
+<td>全端口 256bit MACsec；premium 95W</td>
+<td>100G（adv）/200G（premium/U32）</td>
+<td>&lt;&lt;<PAGE 110-111>&gt;&gt;</td>
+</tr>
+<tr>
+<td>OS6900</td>
+<td>固定核心/DC</td>
+<td>1RU 6.4Tb/s，最高 128x10G/80x25G/32x100G</td>
+<td>仅 X48E/C32E 全口 MACsec</td>
+<td>VC 6 台+ISSU</td>
+<td>&lt;&lt;<PAGE 125-127>&gt;&gt;</td>
+</tr>
+<tr>
+<td>OS6920-D32</td>
+<td>400G AI/HPC</td>
+<td>32x400G QSFP-DD，12.8Tb/s，RoCEv2+PFC 无损；Azure Local 认证</td>
+<td>无 PoE</td>
+<td>无 VC</td>
+<td>&lt;&lt;<PAGE 138-139>&gt;&gt;</td>
+</tr>
+<tr>
+<td>OS9900（9907/9912）</td>
+<td>模块化机箱</td>
+<td>9907 11RU：288 GbE/240 SFP+/108 QSFP28；9912 17.25RU；线卡扩容投资保护</td>
+<td>10800W/7920W；PoE 线卡前 8 口 75W+40 口 30W</td>
+<td>双机箱 VC（960x10G 未来支持）</td>
+<td>&lt;&lt;<PAGE 145-147>&gt;&gt;</td>
+</tr>
+</tbody>
+</table>
+<h2 id="e">E（选型决策案例）</h2>
+<ul>
+<li>核心选择：中型园区/DC ToR 用 6900（1RU 6.4T）；大型园区要 GbE 密度+PoE 核心用 9900（288 GbE+10800W，线卡后续扩容）（C3，&lt;&lt;<PAGE 125>&gt;&gt;/&lt;&lt;<PAGE 145>&gt;&gt;/&lt;&lt;<PAGE 147>&gt;&gt;）</li>
+<li>GPU 集群/RoCEv2 存储：6920-D32 32x400G 可拆分灵活配 spine/super-spine/border-leaf，Azure Local 混云认证是差异化（C4，&lt;&lt;<PAGE 138>&gt;&gt;）</li>
+<li>需要加密的校园/DC 上行：认准 E 后缀与 256bit——6900 只有 X48E/C32E；6870 升级到 256bit 且含用户口（C5，&lt;&lt;<PAGE 127>&gt;&gt;/&lt;&lt;<PAGE 111>&gt;&gt;）</li>
+<li>医院/生产网：6900 虚拟机箱+ISSU、9900 CMM 虚拟机化，业务连续写进技术条款（C10，&lt;&lt;<PAGE 127>&gt;&gt;/&lt;&lt;<PAGE 146>&gt;&gt;/&lt;&lt;<PAGE 24>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（反例与坑）</h2>
+<ul>
+<li>6900 非 E 型号（V48/X24/T24/C32）无全口 MACsec，加密需求认准 X48E/C32E（X9，&lt;&lt;<PAGE 127>&gt;&gt;）</li>
+<li>9900 双机箱 VC 960 口规格属"未来支持"，尚未交付（X10，&lt;&lt;<PAGE 147>&gt;&gt;）</li>
+<li>9900 PoE 线卡仅前 8 口 75W/线卡 1800W，核心直连大功率 AP 要算口位（X11，&lt;&lt;<PAGE 147>&gt;&gt;）</li>
+<li>6860N 3390W 最高预算仅 230VAC 下可达，115V 站点达不到（X20/X22，&lt;&lt;<PAGE 84>&gt;&gt;/&lt;&lt;<PAGE 85>&gt;&gt;）</li>
+<li>6870 按捆绑包（bundle ##）下单，需确认包内电源/许可内容（X21，&lt;&lt;<PAGE 112>&gt;&gt;）</li>
+<li>6920 单一型号 D32、无 GbE/PoE 接入能力，接入层必须另配（X13，&lt;&lt;<PAGE 138>&gt;&gt;）</li>
+</ul>
+<p>来源：bp-omniswitch-datasheets verified.md（C3/C4/C5/C10/C11/X9-X13/X20-X22/F1/P11-P14/P19-P24）</p><div class="pn"><a href="bp-sw-access-selection.html">⬅ 上一单元：bp-sw-access-selection</a><a class="nxt" href="bp-sw-license-features.html">下一单元：bp-sw-license-features ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

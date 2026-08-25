@@ -1,0 +1,17 @@
+# 文档页码映射
+
+- DOC 1 omniswitch_2260: p1-7 (7p)
+- DOC 2 omniswitch_2360: p8-14 (7p)
+- DOC 3 omniswitch_6360: p15-23 (9p)
+- DOC 4 omniswitch_6370: p24-35 (12p)
+- DOC 5 omniswitch_6465: p36-46 (11p)
+- DOC 6 omniswitch_6465t: p47-53 (7p)
+- DOC 7 omniswitch_6560_e: p54-63 (10p)
+- DOC 8 omniswitch_6570m: p64-72 (9p)
+- DOC 9 omniswitch_6575: p73-81 (9p)
+- DOC 10 omniswitch_6860: p82-98 (17p)
+- DOC 11 omniswitch_6865: p99-109 (11p)
+- DOC 12 omniswitch_6870: p110-124 (15p)
+- DOC 13 omniswitch_6900: p125-137 (13p)
+- DOC 14 omniswitch_6920: p138-144 (7p)
+- DOC 15 omniswitch_9900: p145-158 (14p)
