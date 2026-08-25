@@ -1,0 +1,101 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>os6360-model-ports — OmniSwitch 6360 Hardware Guide</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>OmniSwitch 6360 Hardware Guide</h1>
+<div class="sub">Rev J · 83 页 · 入门千兆接入（10 机型/内置电源/PoE 三环）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">机型与端口</div>
+<a href="../skills/os6360-model-ports.html" class="on">os6360-model-ports</a>
+<div class="grp">安装与电源</div>
+<a href="../skills/os6360-install-power.html">os6360-install-power</a>
+<div class="grp">运维排障</div>
+<a href="../skills/os6360-ops-troubleshoot.html">os6360-ops-troubleshoot</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../hardware/index.html">硬件手册</a> › <a href="../index.html">OmniSwitch 6360 Hardware Guide</a> › <span>os6360-model-ports</span></nav><h1>os6360-model-ports</h1><p class="meta"><span class="badge">SKILL</span> os6360-model-ports · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>拿到 OS6360-P48X/PH24 之类型号名，要快速解码端口构成、PoE 能力与上联形态</li>
+<li>选型时在 10/24/48 口 × 非 PoE/PoE/多千兆 PoE 之间比选，核对 PoE 预算（120-760W）</li>
+<li>确认 combo 口两种介质二选一、SFP+ 口怎么在 1G 上行/10G/VFL 之间切换</li>
+<li>判断某机型是否无风扇、内置电源 wattage 多少、H 后缀"可升级 10G"是什么意思</li>
+<li>规划 Virtual Chassis（VC）时核对 VC LED 语义与机型角色</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>6360 家族选型三轴矩阵（F1，&lt;&lt;<PAGE 13>&gt;&gt;/&lt;&lt;<PAGE 60>&gt;&gt;）：轴一=下行口数（10/24/48），轴二=PoE 能力（无 → P=802.3at → PX=2×多千兆 bt 口+950W 电源），轴三=上行升级（X/H 后缀 combo 口可软件升 10G）。家族命名解码（P1）：<code>-10/-24/-48</code> 非 PoE；<code>P*</code>=802.3at PoE；<code>P*X</code>=2 个多千兆 802.3bt 口（47-48）+大电源；<code>PH*</code>=combo 口可软件升级 10G（"Upgradeable to 10G"）。上行口三段式结构（P2，&lt;&lt;<PAGE 13>&gt;&gt;）：全家族统一为"2×RJ45/SFP combo + 2×SFP+ 软件可配口"，SFP+ 口可在"1G SFP 上行"与"10G SFP+ 上行或 VFL"两种角色间软件切换。电源全部内置不可热换，wattage 随 PoE 递增（30→950W，P5）。无风扇分级（P4）：-10/P10/24/P24/48 无风扇；P24X/PH24/P48X/PH48 大功率 PoE 机型带风扇。</p>
+<h2 id="a1">A1（决策框架）</h2>
+<ol>
+<li><strong>先定下行口数</strong>：10 口（半宽机箱、独享壁挂能力）/24 口/48 口三档（F1，&lt;&lt;<PAGE 13>&gt;&gt;）</li>
+<li><strong>再按 PD 总功率选 PoE 档</strong>：预算与内置电源一一对应——P10=120W、P24=180W、P24X/PH24=380W、P48=350W、P48X/PH48=760W（P26，&lt;&lt;<PAGE 60>&gt;&gt;）</li>
+<li><strong>最后定上联档</strong>：要 10G 上联选 X/H 机型；H 后缀 combo 口可软件升级 10G（P1，&lt;&lt;<PAGE 14>&gt;&gt;）</li>
+<li><strong>多千兆 AP 场景</strong>：P48X/PH48 的 47-48 口为 2.5G 802.3bt 口，接 Wi-Fi6 AP（&lt;&lt;<PAGE 42>&gt;&gt;）</li>
+<li><strong>堆叠需求</strong>：VC 通过 SFP+ 软件可配口建链，VC LED 闪绿=Master/闪琥珀=Slave、闪烁次数即节点 ID（P13，&lt;&lt;<PAGE 45>&gt;&gt;）</li>
+</ol>
+<h2 id="a2">A2（操作步骤）</h2>
+<ul>
+<li><strong>机型速查</strong>：对照 Ch1 机型总表（&lt;&lt;<PAGE 13-15>&gt;&gt;）与 Ch3 逐机型面板图/规格表（&lt;&lt;<PAGE 26-45>&gt;&gt;）</li>
+<li><strong>combo 口使用</strong>：RJ45 与 SFP/SFP+ 共享口对（25-26/49-50），两种介质二选一（&lt;&lt;<PAGE 30>&gt;&gt;）</li>
+<li><strong>SFP+ 软件可配口切换</strong>：在 1G SFP 上行与 10G SFP+/VFL 角色间软件切换（P2，&lt;&lt;<PAGE 13>&gt;&gt;）</li>
+<li><strong>VFL 部署</strong>：SFP+ 口配为 VFL（Virtual Fabric Link）第二角色，端口 LED 琥珀色指示 VFL（P14，&lt;&lt;<PAGE 46>&gt;&gt;）</li>
+<li><strong>VC 规划</strong>：VC 配置参考 Switch Management Guide（C1，&lt;&lt;<PAGE 17>&gt;&gt;）；用 VC LED 判断本机角色与节点 ID（&lt;&lt;<PAGE 45>&gt;&gt;）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>10 口机型独享半宽机箱+壁挂（OS6360-WALL-MNT，C10，&lt;&lt;<PAGE 54>&gt;&gt;）</li>
+<li>P48X 面板：46 口 at + 2 口多千兆 bt（2.5G）+ 10G combo，950W 电源/760W 预算（&lt;&lt;<PAGE 42>&gt;&gt;）</li>
+<li>P10A-US 靠 PN 区分的变体（904324-90，X1，&lt;&lt;<PAGE 28>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（反例/坑）</h2>
+<ul>
+<li><strong>本机型注意</strong>：OS6360-P10A-US（PN 904324-90）不支持 Fast/Perpetual PoE——面板丝印与其他 P10 相同，只能靠 PN 区分（X1，&lt;&lt;<PAGE 28>&gt;&gt;/&lt;&lt;<PAGE 63>&gt;&gt;）</li>
+<li>SFP+ 软件可配口的 10G 能力仅 X/H 机型具备，普通 P 机型 SFP+ 口只有 1G SFP 上行或 VFL（P1/P2，&lt;&lt;<PAGE 13>&gt;&gt;）</li>
+<li>combo 口 RJ45 与 SFP 是同一口位的两种介质，不能同时用（&lt;&lt;<PAGE 30>&gt;&gt;）</li>
+<li>电源全部内置不可热换、不可扩——预算选型在购机时一次定死（P5，&lt;&lt;<PAGE 26-44>&gt;&gt;）</li>
+<li>6360 无 VC 专用堆叠口，VC 建在 SFP+ 可配口上，占用上联资源（&lt;&lt;<PAGE 13>&gt;&gt;）</li>
+</ul>
+<h2 id="_1">来源</h2>
+<p>OmniSwitch 6360 Hardware Users Guide Ch1 机型总表（&lt;&lt;<PAGE 13-16>&gt;&gt;）、Ch3 逐机型面板与规格（&lt;&lt;<PAGE 25-57>&gt;&gt;）。条目来源：principles P1-P5/P13/P14；cases C1/C10；counter-examples X1；frameworks F1；glossary 10 机型逐条。</p><div class="pn"><a href="../index.html">⬅ 返回课程首页</a><a class="nxt" href="os6360-install-power.html">下一单元：os6360-install-power ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

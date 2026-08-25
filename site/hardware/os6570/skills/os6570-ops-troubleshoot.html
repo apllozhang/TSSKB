@@ -1,0 +1,101 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>os6570-ops-troubleshoot — OmniSwitch 6570M Hardware Guide</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>OmniSwitch 6570M Hardware Guide</h1>
+<div class="sub">Rev G · 59 页 · 千兆接入（12/12D/U28/半宽并装）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">机型与端口</div>
+<a href="../skills/os6570-model-ports.html">os6570-model-ports</a>
+<div class="grp">安装与电源</div>
+<a href="../skills/os6570-install-power.html">os6570-install-power</a>
+<div class="grp">运维排障</div>
+<a href="../skills/os6570-ops-troubleshoot.html" class="on">os6570-ops-troubleshoot</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../hardware/index.html">硬件手册</a> › <a href="../index.html">OmniSwitch 6570M Hardware Guide</a> › <span>os6570-ops-troubleshoot</span></nav><h1>os6570-ops-troubleshoot</h1><p class="meta"><span class="badge">SKILL</span> os6570-ops-troubleshoot · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>失电通告建设：Dying Gasp 三通道（SNMP trap/Syslog/802.3ah OAM PDU）配置</li>
+<li>日常巡检：show module / show temperature 硬件巡检与温度阈值判读</li>
+<li>LED 诊断：OK/VC/PS1/PS2 系统灯与 150W 电源六态灯排障</li>
+<li>温度超限处置：Warning trap / Danger 关机恢复</li>
+<li>首次登录与安全红线：aaa 解锁、锂电池返厂、激光/ESD 警告</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>高可用双支柱框架（F3，&lt;&lt;<PAGE 12>&gt;&gt;/&lt;&lt;<PAGE 35>&gt;&gt;/&lt;&lt;<PAGE 46>&gt;&gt;/&lt;&lt;<PAGE 47>&gt;&gt;）：供电侧=电源冗余+独立电路+Dying Gasp 三通道通告；运行侧=温度双阈值固化+LED 三层+show 巡检。DG 三通道语义（P28，&lt;&lt;<PAGE 46>&gt;&gt;/&lt;&lt;<PAGE 47>&gt;&gt;）：SNMP trap（前 3 站，含槽号/主备电源类型/失效时间）+Syslog"Dying Gasp Power Failure Event Occurred"（前 3 服务器）+4 个 802.3ah OAM Information PDU（Dying Gasp 位置位）；PDU 按端口优先级"上联口优先"发送（P29）。温度双阈值固化不可改（P12/X3）：Warning 发 trap 业务不停；Danger 自动关机且必须手动重启（X4）。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<ol>
+<li>巡检三步：show module 查槽位→show temperature 查五列（Current/Range/Danger/Thresh/Status）→UNDER THRESHOLD 即正常（C14/P13，&lt;&lt;<PAGE 45>&gt;&gt;）</li>
+<li>温度超限分诊（C15，&lt;&lt;<PAGE 45>&gt;&gt;/&lt;&lt;<PAGE 46>&gt;&gt;）：Warning=查气流遮挡+查室温；Danger=已关机，先处理诱因再手动重启</li>
+<li>DG 接收端建设（C17）：snmp station 配 SNMP 站+swlog output socket 加 Syslog 服务器，各前 3 目标生效</li>
+<li>DG 触发三场景预防（P30，&lt;&lt;<PAGE 46>&gt;&gt;）：唯一电源失效/主备先后失效/后备主先后失效——每电源接独立电源源</li>
+<li>LED 三层诊断（P26，&lt;&lt;<PAGE 27>&gt;&gt;）：OK 灯（稳绿 OK/闪绿进行中/稳琥珀失败）→VC 灯（角色与 unit 号）→PS 灯（U28 三态/12 口两态）</li>
+</ol>
+<h2 id="a2">A2（操作步骤）</h2>
+<ul>
+<li><strong>DG OAM 配置</strong>：efm-oam admin-state enable→efm-oam port 1/1/23-24 admin-state enable→efm-oam port 1/1/23-24 propagate-events dying-gasp enable（C16，&lt;&lt;<PAGE 47>&gt;&gt;）</li>
+<li><strong>DG 告警接收配置</strong>：snmp station+swlog output socket（C17，&lt;&lt;<PAGE 46>&gt;&gt;/&lt;&lt;<PAGE 47>&gt;&gt;）</li>
+<li><strong>首次登录六步</strong>：console（9600-8N1，DCE）→admin/switch→aaa authentication 解锁会话→password 改密→system timezone/contact 等→show system→write memory（C2，&lt;&lt;<PAGE 16>&gt;&gt;-&lt;&lt;<PAGE 19>&gt;&gt;）</li>
+<li><strong>150W 电源六态灯判读</strong>：稳绿=正常/闪绿=待机可接管/闪红=本舱无 AC 邻舱有电/闪绿红=告警/稳红=故障/灭=全机无输入（P19，&lt;&lt;<PAGE 38>&gt;&gt;/&lt;&lt;<PAGE 39>&gt;&gt;）</li>
+<li><strong>EMP 带外管理</strong>：对交换机用直通线、对计算机用交叉线（P35，&lt;&lt;<PAGE 16>&gt;&gt;）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>DG 三通道完整配置与上联口 PDU 优先（C16/C17/P28/P29，&lt;&lt;<PAGE 46>&gt;&gt;/&lt;&lt;<PAGE 47>&gt;&gt;）</li>
+<li>温度 Warning/Danger 双阈值处置流程（C15，&lt;&lt;<PAGE 45>&gt;&gt;/&lt;&lt;<PAGE 46>&gt;&gt;）</li>
+<li>12/12D 与 U28 阈值分化排障：12 口机 85/88°C vs U28 69/74°C——光口机热预算更紧（P9，&lt;&lt;<PAGE 22>&gt;&gt;/&lt;&lt;<PAGE 24>&gt;&gt;/&lt;&lt;<PAGE 26>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（反例与坑）</h2>
+<ul>
+<li>阈值固化不可改（Warning/Danger 均出厂设定）；Danger 关机不会自动恢复，须手动重启（X3/X4，&lt;&lt;<PAGE 45>&gt;&gt;/&lt;&lt;<PAGE 46>&gt;&gt;）</li>
+<li>aaa authentication 一次只能指定一类会话；密码覆盖受限，忘记密码恢复困难（X5/X6，&lt;&lt;<PAGE 18>&gt;&gt;）</li>
+<li>锂电池更换须返厂 ALE，错换有爆炸风险（X22，&lt;&lt;<PAGE 58>&gt;&gt;）</li>
+<li>Class 1M 激光开盖勿用光学仪器直视；空光口勿直视并加盖（X23/X24，&lt;&lt;<PAGE 54>&gt;&gt;/&lt;&lt;<PAGE 55>&gt;&gt;）</li>
+<li>雷暴禁作业；运行中勿触背板与电源舱；搬运前断全部电源（X16/X17/X18，&lt;&lt;<PAGE 55>&gt;&gt;-&lt;&lt;<PAGE 56>&gt;&gt;）</li>
+<li>ESD 防护强制，操作组件前消除人体静电（X21，&lt;&lt;<PAGE 57>&gt;&gt;）</li>
+</ul>
+<p>来源：OmniSwitch 6570M Hardware Users Guide（Ch2-Ch3+附录 A，p16-58）</p><div class="pn"><a href="os6570-install-power.html">⬅ 上一单元：os6570-install-power</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

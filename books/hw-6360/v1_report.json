@@ -1,0 +1,819 @@
+{
+ "cases": [
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C1** 安装前工具清单：接地腕带、Phillips 螺丝刀、平口螺丝刀；VC 配置另行参考 Switch Management G"
+  },
+  {
+   "h": "n/a",
+   "ok": true
+  },
+  {
+   "h": "n/a",
+   "ok": true
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C4** 上电流程：接好网线/管理线→电源线插入易达的接地插座→自动上电启动；多电源时各线\"rapid succession\"（数秒"
+  },
+  {
+   "h": 0.91,
+   "ok": true,
+   "head": "- **C5** 首次登录六步流程：console 连接→admin/switch 登录→`aaa authentication defau"
+  },
+  {
+   "h": 0.0,
+   "ok": false,
+   "head": "- **C6** 机架安装流程（全宽 24/48 口）：双人作业→一人抬机对准机架孔位→第二人先穿每侧法兰底部螺丝并拧紧→再上顶部螺丝全部紧"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C7** 机架法兰安装流程：弹簧夹拨到 out（脱开）位→tab 插入机箱槽→按压法兰至\"CLICK\"锁入 in 位→附赠螺丝固定→"
+  },
+  {
+   "h": "n/a",
+   "ok": true
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C9** 半宽机型机架安装流程（OS6360-RM-19-L L 支架套件）：长短托架可左右互换装于机箱前部两侧→法兰孔对机架孔→先"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **C10** 壁挂安装流程（仅 10/P10，OS6360-WALL-MNT）：两侧前部装朝下托架→后部再装两个朝下托架→双人定位并在"
+  },
+  {
+   "h": "n/a",
+   "ok": true
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **C12** 机箱 supplemental 接地流程：后板 lug 无漆区装 Panduit LCD8-10A-L 接地耳→8AWG"
+  },
+  {
+   "h": 0.92,
+   "ok": true,
+   "head": "- **C13** 硬件状态巡检流程：`show module`/`show module long` 看槽位→`show temperat"
+  },
+  {
+   "h": 0.91,
+   "ok": true,
+   "head": "- **C14** PoE 首次激活流程：`show powersupply` 确认电源 UP→`lanpower slot 2/1 ser"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C15** PoE 关断两级操作：单口 `lanpower port 1/1/12 admin-state disable`；整槽 "
+  },
+  {
+   "h": 0.83,
+   "ok": true,
+   "head": "- **C16** 端口功率限额调整案例：`lanpower port 1/1/24 power 3000` 把 24 口上限压到 3000"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **C17** 槽级预算调整案例：`lanpower slot 3/1 maxpower 400` 把 3/1 槽上限设 400W；下调"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C18** 端口优先级配置案例：`lanpower port 1/1/6 priority critical` 把 6 口设为最高级"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C19** Class 检测启用流程：`lanpower slot class-detection`（默认关）开启严格按类限功率——"
+  },
+  {
+   "h": 0.71,
+   "ok": true,
+   "head": "- **C20** 802.3bt/4pair 使能流程：`lanpower 4pair` 开 4 对 60/75/95W（PoH）；`la"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C21** 电容检测启用（legacy 话机专用）：`lanpower slot 3/1 capacitor-detection e"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C22** Guard Band 拒载处置案例：余 50W、新 PD 只需 4W 但口上限 75W 被拒载→`lanpower po"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C23** Priority Disconnect 开关流程：默认启用；`lanpower slot 2/1 priority-di"
+  },
+  {
+   "h": 0.57,
+   "ok": true,
+   "head": "- **C24** PoE 运行监控流程：`show lanpower 1` 输出逐口 Maximum/Actual Used/Status"
+  }
+ ],
+ "counter-examples": [
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X1** 特定 PN 不支持 Fast/Perpetual PoE：\"The OmniSwitch 6360-P10 model ("
+  },
+  {
+   "h": 0.88,
+   "ok": true,
+   "head": "- **X2** 无实时时钟，重启时间不准：\"The OS6360 does not contain a real-time clock. "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X3** Danger 温度阈值用户不可改：\"The Danger threshold is factory-set and can"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X4** 电容检测不符 IEEE，仅限 legacy 话机：\"The capacitive detection method sho"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X5** admin-state 不能用于首次激活 PoE：\"You cannot use the lanpower port ad"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X6** Class 检测开启会全槽复位：\"Enabling class detection will reset all PoE "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X7** Fast PoE 的 LLDP 盲区：\"LLDP-based PoE devices will not function "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X8** Perpetual PoE 也有断电场景：\"The power to the PD devices will be int"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X9** aaa authentication 一次只能解锁一类会话：\"You cannot specify more than o"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X10** 密码覆盖受限：\"overriding configured passwords on an OmniSwitch is "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X11** 禁用延长线：\"Do not use extension cords.\"；非 ALE 电源线须自行确认满足电源最低电气要求"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X12** 网线室外禁令：\"Never install exposed network cables outdoors. Insta"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X13** 雷暴作业禁令：\"To avoid a shock hazard, do not connect or disconnec"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X14** 盲板必须常装：\"Because they regulate airflow and help protect inter"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X15** 气流遮挡可致整机故障：\"Restricted airflow can cause your switch to over"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X16** 桌面摆放姿势限制：\"Never attempt to operate a switch while it is plac"
+  },
+  {
+   "h": 0.92,
+   "ok": true,
+   "head": "- **X17** 壁挂紧固件自备且须承重达标：\"Wall fasteners are not provided with your swi"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X18** 违反电涌防护建议可能失保：\"Failure to follow the above recommendations co"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X19** ESD 腕带强制：\"Because electrostatic discharge (ESD) can damage s"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X20** 激光辐射勿直视：\"CLASS 1M LASER RADIATION WHEN OPEN. DO NOT VIEW DIR"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X21** 运行中勿触背板/电源舱：\"keep your hands and fingers out of power supply"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X22** 接地红线：电源线必须接正确接地的插座，所连设备同样；DC/DC 电源地线必须接大地（EMC/EMI）<<<PAGE 80"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X23** 锂电池更换风险：\"Hay un peligro de la explosión si la batería del li"
+  },
+  {
+   "h": 0.86,
+   "ok": true,
+   "head": "- **X24** Class A 数字设备不得用于住宅：\"Operation of this equipment in a residen"
+  },
+  {
+   "h": 0.91,
+   "ok": true,
+   "head": "- **X25** 受限访问场所：\"This equipment should be installed in a location res"
+  }
+ ],
+ "frameworks": [
+  {
+   "h": 0.43,
+   "ok": true,
+   "head": "- **F1** 6360 家族选型三轴矩阵：轴一=下行口数（10/24/48）；轴二=PoE 能力（无 → P=802.3at → PX="
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **F2** PoE 供电三环体系：外环=预算（slot maxpower/port power 上限 + Guard Band 拒载："
+  },
+  {
+   "h": 0.36,
+   "ok": true,
+   "head": "- **F3** 硬件健康监控三层框架：物理层=面板 LED（OK/VC/PWR 三系统灯 + 端口灯颜色分 PoE/VFL）；传感层=自动"
+  }
+ ],
+ "glossary": [
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **OS6360-10**：10 口非 PoE 半宽 1U（10×RJ45+2×SFP，30W 内置电源，无风扇）<<<PAGE 13>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **OS6360-P10**：8 口 802.3at PoE + 2 口非 PoE + 2×SFP，165W 内置电源，PoE 预算 1"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **OS6360-P10A-US**：PN 904324-90 的 P10 变体，不支持 Fast/Perpetual PoE（丝印相同"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **OS6360-24**：24×RJ45 非 PoE + 2 combo + 2×SFP+，65W 内置电源，无风扇 <<<PAGE "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **OS6360-P24**：24 口 802.3at PoE 机型，260W 电源，PoE 预算 180W，无风扇 <<<PAGE 1"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **OS6360-P24X**：24 口 at + 2×SFP+ combo，550W 电源，PoE 预算 380W，带风扇 <<<PA"
+  },
+  {
+   "h": 0.83,
+   "ok": true,
+   "head": "- **OS6360-PH24**：P24X 同级但 combo 口可软件升级 10G（\"Upgradeable to 10G\"），550W"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **OS6360-48**：48×RJ45 非 PoE + 2 combo + 2×SFP+，120W 内置电源 <<<PAGE 14>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **OS6360-P48**：48 口 802.3at PoE，550W 电源，PoE 预算 350W <<<PAGE 14>>>/<<"
+  },
+  {
+   "h": 0.83,
+   "ok": true,
+   "head": "- **OS6360-P48X**：46 口 at + 2 口多千兆 802.3bt（2.5G）+ 10G combo，950W 电源，Po"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **OS6360-PH48**：P48X 同级且 combo 口可升级 10G，950W 电源/760W 预算 <<<PAGE 15>>"
+  },
+  {
+   "h": 0.25,
+   "ok": false,
+   "head": "- **Combo 口**：RJ45 与 SFP/SFP+ 共享的上联口对（25-26/49-50），两种介质二选一 <<<PAGE 30>"
+  },
+  {
+   "h": 0.33,
+   "ok": false,
+   "head": "- **VFL 口**：SFP+ 软件可配口的第二角色（Virtual Fabric Link），端口 LED 琥珀色指示 <<<PAGE "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **SFP+ software configurable ports**：可在 1G SFP 上行与 10G SFP+/VFL 之间软件"
+  },
+  {
+   "h": 0.86,
+   "ok": true,
+   "head": "- **Chassis Grounding Lug**：后面板接地耳，配 Panduit LCD8-10A-L、8AWG 铜线、30-60 "
+  },
+  {
+   "h": 0.83,
+   "ok": true,
+   "head": "- **Tmra（Maximum Rated Ambient Temperature）**：最大额定环境温度（全家族 0-45°C），机架内"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Chassis vs Ambient Temperature**：机箱温度=内置传感器读数（阈值判断用），环境温度≈室温，前者通常更"
+  },
+  {
+   "h": "n/a",
+   "ok": true
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **VC LED**：闪绿=VC Master、闪琥珀=Slave，闪烁次数即节点 ID；灭=关机或非 VC 成员 <<<PAGE 45"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **PWR LED**：绿=12V 主电正常；稳琥珀=12V 故障；闪琥珀=54V/PoE 故障；灭=电源不在位 <<<PAGE 45>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Blank Cover Panel**：空槽盲板，箭头朝上安装；调节气流并保护内部元件，须常装 <<<PAGE 47>>>/<<<P"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **Rack Mount Flange**：免工具卡扣式机架法兰（弹簧夹 out/in 位 + \"CLICK\" 锁定 + 螺丝固定）<<"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **OS6360-RM-19-L**：半宽机型 19\" 机架 L 支架套件 <<<PAGE 52>>>"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **OS6360-WALL-MNT**：10/P10 壁挂套件（四托架朝下，紧固件自备）<<<PAGE 53>>>/<<<PAGE 54"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Rubber feet**：桌面安装用四只橡胶脚垫（包装内附）<<<PAGE 51>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Relay Rack**：中继机架，需按机架厂商规范安装固定 <<<PAGE 49>>>/<<<PAGE 52>>>"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **PoE（Power over Ethernet）**：通过以太网口在线供电，PoL/Inline Power 为同义词 <<<PAG"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **PD（Powered Device）**：受电设备（IP 话机/AP/摄像头等），以太网缆为唯一电源 <<<PAGE 58>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **PSE（Power Source Equipment）**：供电设备，负责检测 PD、分级、按需供电与回收 <<<PAGE 58>>"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **PoE Budget**：整机 PoE 功率预算，按机型 120-760W <<<PAGE 60>>>"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **PoE Class Detection**：PD 分级检测（Class 0-8：15.4/4.0/7.0/15.4/30/45/60"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **802.3bt**：bt 标准（Class 5-8，双 Type），`lanpower 8023bt` 使能 <<<PAGE 62>"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **4pair（PoH）**：4 对供电模式，支持 60/75/95W 每口，`lanpower 4pair` 使能 <<<PAGE 6"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **Fast PoE**：上电数秒即供电（PoE 默认态固化于 FPGA、配置存控制器 EEPROM），不等 AOS 启动完成 <<<P"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Perpetual PoE**：软重启/重载期间 PD 供电不间断（MCU 固件升级除外）<<<PAGE 63>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Guard Band**：保护带拒载机制——剩余预算低于端口上限或 PD 类最大值即拒绝新 PD <<<PAGE 65>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Priority Disconnect**：预算不足时按端口优先级+物理端口号裁决新 PD 供电资格的机制（默认启用）<<<PAGE"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **Port Priority**：端口优先级 low（默认）/high/critical 三级 <<<PAGE 64>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Capacitor Detection**：电容检测法，仅供 legacy IP 话机、不符 IEEE，默认禁用 <<<PAGE 6"
+  },
+  {
+   "h": 0.86,
+   "ok": true,
+   "head": "- **2pair 模式标记**：show lanpower 输出端口 maxpower 后缀 `*` 表示 4pair 口运行在 2pai"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **show module / show module long**：查看槽位基本/详细信息 <<<PAGE 55>>>/<<<PAGE"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **show temperature**：查看温度传感器 Current/Range/Danger/Thresh/Status <<<P"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **show powersupply**：查看电源类型与状态（Total Power/Type/Status/Location）<<<P"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **show lanpower slot**：查看逐口 PoE 状态与槽预算 <<<PAGE 61>>>/<<<PAGE 68>>>"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **lanpower slot service**：slot 级 PoE 启停（start/stop），首次激活必用 <<<PAGE 6"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **lanpower port admin-state**：端口级 PoE 使能/禁用（仅复活已断电口，不能首次激活）<<<PAGE 6"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **lanpower port power**：设置端口最大功率（mW）<<<PAGE 63>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **lanpower slot maxpower**：设置槽级最大功率（W）<<<PAGE 64>>>"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **lanpower port priority**：设置端口优先级（low/high/critical）<<<PAGE 64>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **lanpower slot priority-disconnect**：启用/禁用优先级断电 <<<PAGE 66>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **lanpower slot class-detection**：启用分级检测（复位全 PoE 口）<<<PAGE 62>>>"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **aaa authentication**：解锁会话类型（default local 全解；telnet/http/ftp 单类）<<"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **write memory**：保存配置 <<<PAGE 24>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **system timezone / system time / system date**：时区/DST、时间、日期设置 <<<PA"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **system contact / system name / system location**：管理联系人/系统名/位置 <<<P"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **show system**：查看当前系统配置改动 <<<PAGE 24>>>"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **CDE（Cable Discharge Event）**：线缆静电放电事件，Cat5e/6/6a 布线接端口前应先对地放电 <<<P"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **ESD / Wrist Strap**：静电放电与防静电腕带（触件前必须消除人身与周围静电）<<<PAGE 81>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Class 1M Laser**：开盖时 1M 类激光辐射，勿用光学仪器直视 <<<PAGE 77>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Restricted Access Location**：受限访问场所（钥匙/安保限服务人员进入）<<<PAGE 81>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **WEEE**：欧盟废弃电子电气设备指令，产品报废需单独回收处理 <<<PAGE 70>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **RoHS**：有害物质限制（中/台罗表）<<<PAGE 71>>>/<<<PAGE 72>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **California Proposition 65**：加州 65 号提案铅暴露警告 <<<PAGE 73>>>"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **Hi-Pot Test**：耐压测试（所有以太网口 2250V DC）<<<PAGE 75>>>"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **Class A 数字设备**：FCC/VCCI/BSMI Class A，仅限商业环境，住宅使用可能产生干扰 <<<PAGE 75>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Hot-Swapping**：不断电增删更换部件的能力 <<<PAGE 15>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Hardware Monitoring**：内置传感器自动监控 + LED 视觉状态 + 用户 show 命令三层 <<<PAGE "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Trap**：超阈值等错误事件自动发送并打印到控制台的消息 <<<PAGE 15>>>/<<<PAGE 56>>>"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **Warning / Danger Threshold**：温度警告阈值（发 trap 不停机）/危险阈值（自动关机、不可配）<<<P"
+  },
+  {
+   "h": "n/a",
+   "ok": true
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **STP/UTP**：屏蔽/非屏蔽双绞线；室外或近交流线路建议 STP Cat5e+ <<<PAGE 18>>>"
+  }
+ ],
+ "principles": [
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **P1** 家族命名解码：10 个 1U 固定配置机型按\"口数 + PoE 前缀 + 上行特性\"展开——`-10/-24/-48` 非"
+  },
+  {
+   "h": 0.88,
+   "ok": true,
+   "head": "- **P2** 上行口三段式结构：全家族统一为\"2× RJ45/SFP(combo) + 2× SFP+ 软件可配口\"，SFP+ 口可在\""
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **P3** 10 口机型为半宽机箱（8.5 in 宽），24/48 口机型为全宽 19\"（17.3 in）；10 口机型端口分区为 8"
+  },
+  {
+   "h": 0.33,
+   "ok": false,
+   "head": "- **P4** 无风扇设计分级：OS6360-10/P10/24/P24/48 为 Fan less（无风扇）；P24X/PH24/P48"
+  },
+  {
+   "h": 0.54,
+   "ok": true,
+   "head": "- **P5** 电源全部内置不可热换：单一 Internal AC Power Supply，wattage 随 PoE 能力递增——30"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P6** 三大可用性支柱：Hot-Swapping（不断电增删部件）、Hardware Monitoring（内置传感器自动监控，超"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **P7** 全家族统一环境包络：工作温度 0-45°C（Tmra）、存储 -40~70°C、湿度 5%-95% 无凝结、电压 100-"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P8** chassis 与 ambient 温度语义区分：\"Chassis temperature refers to the s"
+  },
+  {
+   "h": 0.0,
+   "ok": false,
+   "head": "- **P9** 待机功耗阶梯：-10/P10=13W、-24/P24=21W、P24X/PH24=34W、-48=46W、P48=47W、"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **P10** 气流间隙三向要求：前面 6 in、后面 6 in、左右各 2 in，顶底免间隙：\"No clearance is nec"
+  },
+  {
+   "h": 0.94,
+   "ok": true,
+   "head": "- **P11** 电涌防护五条军规：①全链路等电位接地（接地电阻 ≤0.01Ω）；②室外/近交流线路用 STP Cat5e 以上；③室外铜"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P12** 电源线纪律：每电源一个接地插座；ALE 电源线 2m 长、UL 认证（IEC 62368-1），禁止延长线：\"Do no"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **P13** 三颗系统 LED 语义：OK（绿=诊断/启动正常，闪绿=进行中，琥珀=系统/风扇/温度故障）；VC（闪绿=Master，"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P14** 端口 LED 用颜色区分 PoE 状态：RJ45 口绿=非 PoE 链路（闪=有活动），琥珀=PoE 链路（闪=有活动）"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P15** 前面板 Class 1M 激光警示固定出现于每机型：\"CAUTION - CLASS 1 M LASER RADIATI"
+  },
+  {
+   "h": "n/a",
+   "ok": true
+  },
+  {
+   "h": 0.92,
+   "ok": true,
+   "head": "- **P17** 机架安装五大考量（IEC 机架纪律）：Elevated Operating Ambient（封闭机架内温度高于室温，按 "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P18** 盲板气流机制：空槽位不装盲板会迫使气流改道、加重电源风扇负担并暴露内部敏感元件：\"If your switch is n"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P19** 机架法兰免工具卡扣：弹簧夹置 out 位→插 tab 入槽→按压至\"CLICK\"入 in 位→附赠螺丝固定，两侧对称安装"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P20** 壁挂仅限 10/P10 半宽机型（OS6360-WALL-MNT 套件），四托架朝下安装、建议机箱侧立面板朝侧：\"it "
+  },
+  {
+   "h": 0.83,
+   "ok": true,
+   "head": "- **P21** 机箱接地规范：后板 lug 用 Panduit LCD8-10A-L、8AWG 铜导线、扭矩 30-60 in-lb，作"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P22** 双人搬运纪律贯穿全书：机架安装、壁挂安装均明确\"Two people are required\"<<<PAGE 48>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P23** 温度双阈值机制：Warning 阈值超限→发 trap 但业务继续（应立即查气流/室温）；Danger 阈值超限→交换机"
+  },
+  {
+   "h": 0.88,
+   "ok": true,
+   "head": "- **P24** 硬件监控三板斧命令：`show module`（槽位基本信息）、`show module long`（详情）、`show"
+  },
+  {
+   "h": 0.33,
+   "ok": false,
+   "head": "- **P25** PoE 标准栈：802.3/802.3af/802.3at/802.3bt；每口功率范围 at 口 3000-30000"
+  },
+  {
+   "h": 0.71,
+   "ok": true,
+   "head": "- **P26** PoE 预算-机型对应表：P10=120W、P24=180W、P24X/PH24=380W、P48=350W、P48X/"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P27** PoE 激活两级模型：软件层默认 administratively enabled，但物理供电子系统必须逐 slot 用"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **P28** 4pair/bt 使能链：`lanpower 4pair` 开 60/75/95W（802.3at 4 对 + PoH）"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P29** Class 检测默认关：不开启也供电（按预算），严格按类限功率需 `lanpower slot class-detect"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **P30** Fast PoE 机制：PoE 子系统默认态固化进 FPGA 镜像、PoE 配置存于控制器 EEPROM，上电数秒即可供"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P31** Perpetual PoE 机制：软重启/重载期间对 PD 供电不间断；同样依赖 FPGA/CPLD；但 PoE 控制器"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P32** 端口/槽最大功率语义：`lanpower port power`/`lanpower slot maxpower` 只设"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P33** 三级端口优先级：low（默认，先断）/high（次保）/critical（尽量保），`lanpower port pri"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P34** Guard Band 拒载机制：新 PD 上线时若剩余预算 < 端口最大功率或 PD 类最大值，则拒绝供电——即使该 P"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P35** Priority Disconnect 裁决规则（预算不足时新 PD 去留）：①禁用→一律拒绝新 PD；②启用+同级→按"
+  },
+  {
+   "h": 0.86,
+   "ok": true,
+   "head": "- **P36** 911/UPS 供电纪律：带 IP 话机的 PoE 交换机应始终保持电源冗余并接 UPS：\"operational po"
+  },
+  {
+   "h": 0.4,
+   "ok": true,
+   "head": "- **P37** 首次登录六步闭环：console 登录（admin/switch）→解锁会话类型→改密→设时区/时间→可选参数（cont"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P38** 会话解锁安全模型：出厂仅 console 可用，Telnet/FTP/WebView/SNMP 全锁死，需 `aaa a"
+  },
+  {
+   "h": "n/a",
+   "ok": true
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **P40** 控制台固定参数：9600 波特、无校验、8 数据位、1 停止位，DCE 连接 <<<PAGE 20>>>"
+  }
+ ]
+}

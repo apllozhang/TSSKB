@@ -1,0 +1,909 @@
+{
+ "cases": [
+  {
+   "h": 0.0,
+   "ok": false,
+   "head": "- **C1** 开箱清单：机箱（含按订单电源）、盲板、机架托架、国别电源线、橡胶桌脚、附赠螺丝与防静电袋；尽量靠近安装位开箱；空箱最重 7"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C2** 上电流程：全部电源线插入易触及接地插座（禁延长线）→ 自动上电；多电源纪律——\"be sure to plug in ea"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **C3** 首次登录七步（比接入交换机多一步 EMP 设 IP）：console 登录（admin/switch）→ 设 EMP IP"
+  },
+  {
+   "h": 0.89,
+   "ok": true,
+   "head": "- **C4** EMP 设 IP：先 console 连接 → `ip interface emp address 168.22.2.12"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C5** 解锁会话类型：全部 `aaa authentication default local`；单个 `aaa authenti"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C6** 改密码四步：admin 登录 → `password` 回车 → 输新密码 → 再输一次；实时保存、重启保留 <<<PAG"
+  },
+  {
+   "h": 0.95,
+   "ok": true,
+   "head": "- **C7** 时间与可选项：`system timezone`/`system daylight-savings-time`（默认 UT"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C8** 机架安装八步（双人+后支撑）：①预标记孔位 ②左右侧装 slot rails ③一人抬起法兰贴平机架立柱 ④孔位对齐 ⑤第"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C9** 中装（Mid-Mount）流程：①拆前法兰与侧 slot rails ②法兰装到机箱中部螺纹孔 ③预标记机架孔 ④抬起使中"
+  },
+  {
+   "h": "n/a",
+   "ok": true
+  },
+  {
+   "h": 0.83,
+   "ok": true,
+   "head": "- **C11** 装电源三步：①电源插座朝右、手柄竖直方向滑入 ②后滑至 securely seated 接背板——\"the lock t"
+  },
+  {
+   "h": "n/a",
+   "ok": true
+  },
+  {
+   "h": 0.71,
+   "ok": true,
+   "head": "- **C13** DC 线缆连接（V/X 系）：连接器插入电源接口至\"clicks firmly into place\"；另一端三根 12"
+  },
+  {
+   "h": 0.86,
+   "ok": true,
+   "head": "- **C14** OS6920 DC 环形端子：电源不附带线缆，按规格自制——电源端子 8AWG（孔径 4.3mm 等 9 项尺寸）、接地"
+  },
+  {
+   "h": 0.86,
+   "ok": true,
+   "head": "- **C15** 机箱接地：后部 paint-free 双螺纹孔装 Panduit LCD8-10A-L lug + 10-32 3/8\""
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C16** 风扇托盘更换四步（限时 60 秒内完成）：①松开 captive 螺丝 ②直拉出托盘 ③新托盘直插至背板连接器 ④左右两"
+  },
+  {
+   "h": 0.89,
+   "ok": true,
+   "head": "- **C17** 硬件监控四命令：`show module` / `show module long` / `show temperatu"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C18** 温度告警处置：Warning→查气流阻塞/室温/`show fan` 风扇状态；Danger→查气流阻塞或方向失配/室温"
+  },
+  {
+   "h": "n/a",
+   "ok": true
+  }
+ ],
+ "counter-examples": [
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X1** 气流方向必须一致：\"The airflow direction of the power supplies and fan"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X2** 气流失配循环重启：\"Eventually the mismatched configuration will cause "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X3** 端口组速率不可混（V72）：\"The OS6900-V72 doesn't support a mix of 10G an"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X4** 端口组速率不可混（X48C4E/V48C8）：\"Ports within a port group must all ru"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X5** DAC 与 QSFP 混插禁令（T48C6/X48C6）：\"Mixing Direct-attached cables ("
+  },
+  {
+   "h": 0.91,
+   "ok": true,
+   "head": "- **X6** OS6920 后→前气流温度降额：后→前气流 Tmra 仅 0-35°C（前→后为 0-45°C）：\"The instal"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X7** 气流阻塞后果：\"Restricted airflow can cause your switch to overheat,"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X8** 两代电源不可混：\"Do not mix OS6900-V72/C32/C32E/X48C4E/V48C8 power su"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X9** AC+DC 混插允许（正面对照）：\"Mixing an AC and DC power supply in the sam"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X10** 拆电源先断源：\"When removing a power supply, first disconnect the p"
+  },
+  {
+   "h": "n/a",
+   "ok": true
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X12** OS6920 AC 低压输入降额：100-127V 时 12V 输出仅 83.33A（220-240V 为 125A）；"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X13** DC 过流与线规（OS6920）：\"The branch circuit overcurrent protection "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X14** DC 源必须在受限场所：\"The power source must be installed in a restric"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X15** DC 地线 EMC 强制：\"For EMC/EMI, each DC/DC power supply requires "
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **X16** IEC 60945 场景专用线缆：X48C6+OS6900X-BPD-F 需 IEC 60945 认证时必须用 OS-D"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X17** 禁用延长线：\"each supplied AC power cord is 2 meters (approx. 6.5 "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X18** 多电源快速上电：\"be sure to plug in each power supply in rapid succe"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X19** 电涌违规范即失保：\"Failure to follow the above recommendations could "
+  },
+  {
+   "h": 0.93,
+   "ok": true,
+   "head": "- **X20** CDE 静电放电风险：\"Category 5e, Category 6, and Category 6a cables "
+  },
+  {
+   "h": 0.9,
+   "ok": true,
+   "head": "- **X21** 风扇托盘必装：\"The fan tray is a required component. Never attempt "
+  },
+  {
+   "h": 0.9,
+   "ok": true,
+   "head": "- **X22** 60 秒更换窗口：\"The switch should not run without a fan tray more "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X23** 风扇型号不可乱装：\"Do not attempt to install incompatible fan models "
+  },
+  {
+   "h": 0.97,
+   "ok": true,
+   "head": "- **X24** 仅前法兰安装禁令：\"Never rack mount OS6900 switches using only the fr"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X25** 后支撑强制：\"Because of the overall chassis depth, additional supp"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X26** 禁止倒放/侧放：\"Chassis must be placed 'right side up.' Never attem"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X27** 盲板必须常装：\"Because they regulate airflow and help protect inter"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X28** 机架螺丝自备：\"Alcatel-Lucent does not provide rack-mount screws. U"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X29** 专业安装者要求：\"Alcatel-Lucent switches must be installed by a prof"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X30** 预留口未激活（C32E/V48C8/OS6920）：\"SFP+ ports (Ports 33-34 - 1G/10G)"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X31** 双 EMP 口仅一个可用（T48C6/X48C6）：\"Only top port is functional.\" <<<"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X32** EMP 远程访问前置条件：\"Although you have configured the EMP with vali"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X33** Danger 阈值不可配置：\"The danger threshold is factory-set and canno"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X34** 运行中勿触电源槽/背板：\"To reduce the risk of electrical shock, keep yo"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X35** 多电源检修全断电：\"Your switch is equipped with multiple power suppli"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X36** 雷暴作业禁令：\"To avoid a shock hazard, do not connect or disconnec"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X37** Class 1M 激光警告：\"CLASS 1M LASER RADIATION WHEN OPEN. DO NOT VI"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X38** 不可见激光辐射：\"Lasers emit invisible radiation from the aperture o"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X39** 锂电池规格与处置：CR1220 型（适用 X48C6/T48C6/X48C4E/V48C8）；\"There is dan"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X40** 室外裸线禁令：\"Never install exposed network cables outdoors.\" <<<P"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X41** Class A 住宅禁用：\"To avoid electromagnetic interference, this pr"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X42** FCC 擅改失权：\"Changes and modifications made to the equipment wi"
+  },
+  {
+   "h": 0.83,
+   "ok": true,
+   "head": "- **X43** 接地 lug 规范强制：Panduit LCD8-10A-L + 10-32 3/8\" 螺丝 + 8AWG，扭矩 30-"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X44** 密码丢失后果：\"Be sure to remember or securely record all new passw"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X45** ESD 纪律：\"you must follow proper procedures to eliminate ESD f"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X46** 受限场所要求：\"This equipment should be installed in a location tha"
+  }
+ ],
+ "frameworks": [
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **F1** 6900 十机型选型矩阵（介质 × 下行密度 × 上行）："
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **F2** 气流方向\"三件套一致性\"框架（6900 部署第一课）："
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **F3** 深机箱机架安装三方案决策树："
+  },
+  {
+   "h": 0.11,
+   "ok": false,
+   "head": "- **F4** 电源体系两阵营对照框架（选型/备件防错）："
+  }
+ ],
+ "glossary": [
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **OS6900-V72**：48×SFP28(10/25G)+6×QSFP28 机型，深度 51.5cm，188/400W <<<PA"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **OS6900-C32**：32×QSFP28(100G) 机型，145/543W <<<PAGE 12>>>/<<<PAGE 30>"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **OS6900-C32E**：32×QSFP28+2×SFP+（33/34 口 Not currently functional），1"
+  },
+  {
+   "h": 0.6,
+   "ok": true,
+   "head": "- **OS6900-T48C6**：48×1G/10GBaseT+6×QSFP28 机型；52/53 口 DAC 与 QSFP 不可混插 "
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **OS6900-X48C6**：48×SFP+ +6×QSFP28 机型，114/392W <<<PAGE 12>>>/<<<PAGE"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **OS6900-X48C4E**：40×SFP+ +8×SFP28+6×QSFP28 机型，端口组 41-48 分 2 组锁速 <<<"
+  },
+  {
+   "h": 0.6,
+   "ok": true,
+   "head": "- **OS6900-V48C8**：48×SFP28+8×QSFP28+2×SFP+（57/58 未启用），226/532W，端口组编号非"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **OS6900-T24C2**：24×10GBaseT+2×SFP+ +2×QSFP28 机型，91/209W <<<PAGE 12>"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **OS6900-X24C2**：24×SFP+ +2×SFP+ +2×QSFP28 机型，75/197W <<<PAGE 12>>>/"
+  },
+  {
+   "h": 0.6,
+   "ok": true,
+   "head": "- **OS6920-D32**：32×QSFP-DD(400G)+1×SFP+（未启用）机型，深 59cm，最高 1400W；后→前气流限"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **ToR（Top-of-Rack）**：数据中心机柜顶交换机部署模式，6900 家族第二定位 <<<PAGE 12>>>"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **QSFP-DD**：400G 双密度四通道光模块接口（支持 400G/2X200G/4X100G，向下兼容 QSFP56/28/+）"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **QSFP28**：100G 光模块口（4X10G/40G/4X25G/100G）<<<PAGE 28>>>等"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **SFP28**：25G 光模块口（1G/10G/25G）<<<PAGE 28>>>等"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **端口组（Port Group）**：4 口一组的速率锁定单元（V72/X48C4E/V48C8），组内 10G 与 25G 不可混 "
+  },
+  {
+   "h": 0.33,
+   "ok": false,
+   "head": "- **Splitter 功能**：T48C6/X48C6 的 51/54 口支持分支（一拆四）功能 <<<PAGE 34>>>/<<<PA"
+  },
+  {
+   "h": 0.2,
+   "ok": false,
+   "head": "- **DAC（Direct-attached Cable）**：直连铜缆；T48C6/X48C6 52/53 口与 QSFP 光模块不可混"
+  },
+  {
+   "h": 0.33,
+   "ok": false,
+   "head": "- **OS6900C-BP-F / -R**：650W AC 电源（12V/52.9A），V 系机型用，F=前→后/R=后→前 <<<PA"
+  },
+  {
+   "h": 0.33,
+   "ok": false,
+   "head": "- **OS6900X-BP-F / -R**：400W AC 电源（12V/33.34A），X 系机型用 <<<PAGE 61>>>"
+  },
+  {
+   "h": 0.33,
+   "ok": false,
+   "head": "- **OS6900C-BPD-F / -R**：650W DC 电源（36-72VDC 输入），V 系用 <<<PAGE 62>>>"
+  },
+  {
+   "h": 0.33,
+   "ok": false,
+   "head": "- **OS6900X-BPD-F / -R**：200/400W DC 电源（-20~-75VDC 两档输出），X 系用 <<<PAGE "
+  },
+  {
+   "h": 0.43,
+   "ok": true,
+   "head": "- **OS6920-BP-F / -R**：1500W AC 电源（100-127V/12A 或 220-240V/8A；hold tim"
+  },
+  {
+   "h": 0.25,
+   "ok": false,
+   "head": "- **OS6920-BPD-F / -R**：1600W DC 电源（-40~-75V/50A，12V/133.33A），DC 端子+接地"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **1+1 冗余（1+1 Redundant）**：双电源热插拔冗余，第二电源为 standby 角色 <<<PAGE 12>>>/<<"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Lock Tab（锁片）**：电源就位\"咔哒\"锁定/按压释放机构 <<<PAGE 67>>>等"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **5VSB**：电源待机输出（5V standby）<<<PAGE 60>>>等"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **OS-DNV-DC-PWR**：IEC 60945 认证 DC 线缆（双磁环），X48C6+BPD-F 船用认证场景必备 <<<PA"
+  },
+  {
+   "h": 0.6,
+   "ok": true,
+   "head": "- **环形端子（Ring Terminal）**：OS6920 DC 电源接线端子（电源 8AWG/接地 6AWG，规格九项尺寸）<<<P"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **CBN / Isolated DC Return（DC-I）**：共同联结网络 / 隔离式 DC 回流 <<<PAGE 66>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **风扇托盘（Fan Tray）**：机箱后部 5/6 个独立热插拔风扇模块，主温控部件 <<<PAGE 28>>>等/<<<PAGE "
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **OS6900V-FT-F/R**：V72/C32/C32E/X48C4E 风扇托盘（F/R=气流方向）<<<PAGE 70>>>"
+  },
+  {
+   "h": 0.0,
+   "ok": false,
+   "head": "- **OS6900-T48C6/X48C6-FT-F/R**：T/X 系风扇托盘（拇指螺丝在右上）<<<PAGE 70>>>"
+  },
+  {
+   "h": 0.0,
+   "ok": false,
+   "head": "- **OS6900-V48C8-FT-F/R / OS6920-FT-F/R**：V48C8 / OS6920 专用风扇托盘 <<<PAG"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **前→后气流（Front-to-Rear）**：顶部前进风、后部排风；部件标准色 <<<PAGE 51>>>/<<<PAGE 52>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **后→前气流（Rear-to-Front）**：后部进风、前顶排风；部件紫色标识 <<<PAGE 51>>>/<<<PAGE 52>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **气流失配（Airflow Mismatch）**：电源与风扇方向不一致引发的告警-重启机制 <<<PAGE 50>>>/<<<PAG"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **紫色编码（Purple Color Coding）**：后→前部件的防差错颜色标识 <<<PAGE 52>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **滑入式支撑（Slide-in Braces）**：深机箱机架安装的强制后支撑件 <<<PAGE 54>>>/<<<PAGE 55>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **中装法兰（Mid-Mount Flanges）**：装于机箱中部螺纹孔的替代安装方式 <<<PAGE 56>>>"
+  },
+  {
+   "h": 0.0,
+   "ok": false,
+   "head": "- **PS1/PS2 LED**：绿=正常、琥珀=错误、灭=不在位 <<<PAGE 48>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Diag LED**：绿=正常、琥珀=自检故障 <<<PAGE 48>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Fan LED**：绿=正常、琥珀=错误（任一风扇意外停转即转琥珀并发 trap）<<<PAGE 48>>>/<<<PAGE 75>"
+  },
+  {
+   "h": "n/a",
+   "ok": true
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **QSFP-DD LED 色表**：青=400G、紫=200G、蓝=100G、橙=40G、红=端口故障等 12 态 <<<PAGE 4"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **show module / show module long**：槽位基本/详细信息命令 <<<PAGE 74>>>"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **show temperature**：温度与 Warning/Danger 阈值状态命令 <<<PAGE 74>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **show fan**：风扇托盘状态命令 <<<PAGE 75>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Warning 阈值**：可查/可配温度告警阈值，超限发 trap 业务继续 <<<PAGE 75>>>"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **Danger 阈值**：出厂固化，超限自动关机须手动启动 <<<PAGE 75>>>"
+  },
+  {
+   "h": 0.83,
+   "ok": true,
+   "head": "- **EMP（Ethernet Management Port）**：RJ45 10/100/1000 带外管理口；默认 192.168."
+  },
+  {
+   "h": "n/a",
+   "ok": true
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **ip interface emp**：改 EMP IP 地址命令 <<<PAGE 22>>>"
+  },
+  {
+   "h": 0.0,
+   "ok": false,
+   "head": "- **admin/switch**：出厂默认账号/密码 <<<PAGE 21>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **aaa authentication**：解锁会话类型命令族 <<<PAGE 23>>>"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **115200-8N1 + rollover**：console 默认参数与线缆类型 <<<PAGE 18>>>"
+  },
+  {
+   "h": 0.33,
+   "ok": false,
+   "head": "- **XON/XOFF**：软件流控（console 无 RTS/CTS 硬件握手）<<<PAGE 76>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Reset 按钮**：前面板系统重启按钮 <<<PAGE 28>>>等"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **RCL（Remote Configuration Load）**：远程配置加载（详见 Switch Management Guide"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **show system / write memory**：查看系统信息 / 保存配置 <<<PAGE 25>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **system location**：设置交换机物理位置 <<<PAGE 24>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **UL 60950-1 / IEC 60950-1**：IT 设备安全标准（第二版）<<<PAGE 82>>>"
+  },
+  {
+   "h": 0.0,
+   "ok": false,
+   "head": "- **EN 60825-1/-2**：激光产品安全标准 <<<PAGE 82>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **FCC Part 15 Class A / CISPR 22**：Class A 电磁干扰限值 <<<PAGE 82>>>/<<<P"
+  },
+  {
+   "h": 0.0,
+   "ok": false,
+   "head": "- **ETS 300 019**：环境试验标准（存储 1.1/运输 2.3/固定使用 3.1）<<<PAGE 83>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Class 1M Laser**：1M 级激光辐射、勿用光学仪器直视 <<<PAGE 84>>>"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **CR1220**：机箱 RTC 锂电池型号（X48C6/T48C6/X48C4E/V48C8）<<<PAGE 81>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **UN3091**：设备内含锂金属电池的运输分类（不得入生活垃圾）<<<PAGE 80>>>"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **Prop 65 / WEEE / RoHS**：加州 65 号 / 欧盟回收 / 有害物质限制 <<<PAGE 78>>>-<<<P"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **CDE（Cable Discharge Event）**：线缆静电放电事件；接线前对地放电 <<<PAGE 15>>>"
+  },
+  {
+   "h": "n/a",
+   "ok": true
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **受限场所（Restricted Access Location）**：仅持钥匙/安保措施的维护人员可进入 <<<PAGE 88>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Tmra**：最大额定环境温度（封闭机架内按此折减）<<<PAGE 49>>>"
+  }
+ ],
+ "principles": [
+  {
+   "h": 0.92,
+   "ok": true,
+   "head": "- **P1** 定位双栖：汇聚层 + 数据中心机柜顶：\"The OmniSwitch 6900 (OS6900) is a family "
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **P2** 命名解码三轴：介质前缀（T=10GBaseT/X=SFP+/V=SFP28/D=QSFP-DD）+ 下行口数（48/24/"
+  },
+  {
+   "h": 0.24,
+   "ok": false,
+   "head": "- **P3** 十机型端口谱系：V72=48×SFP28+6×100G；C32=32×100G；C32E=32×100G+2×SFP+；T"
+  },
+  {
+   "h": 0.88,
+   "ok": true,
+   "head": "- **P4** OS6920-D32 单口多形态：QSFP-DD 口支持 400G/2X200G/4X100G，向下兼容 QSFP56(2"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **P5** 全家族统一管理接口三件套：RJ45 10/100/1000 EMP 带外管理口 + console（USB 或 RJ45 "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P6** 端口组速率约束机制：V72/X48C4E/V48C8 的 SFP28 口按 4 口一组锁定速率——\"Ports withi"
+  },
+  {
+   "h": 0.25,
+   "ok": false,
+   "head": "- **P7** 全家族统一环境包络：Tmra 0-45°C、存储 -40~70°C、湿度 5%-95%；例外——OS6920 后→前气流限"
+  },
+  {
+   "h": 0.29,
+   "ok": false,
+   "head": "- **P8** 机箱深度三档：T48C6/X48C6/T24C2/X24C2 为 47.3cm；V72/C32/C32E/X48C4E/V"
+  },
+  {
+   "h": 0.11,
+   "ok": false,
+   "head": "- **P9** 功耗谱系：桌面级 X24C2=75/197W → 中档 T48C6=139/315W → 高档 V48C8=226/532"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P10** chassis vs ambient 温度语义 + 机型差异：\"Due to different airflow cha"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P11** 1+1 电源冗余模型：\"OS6900 switches provide 1+1 redundant hot-swappa"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P12** 热插拔三件：电源、光模块、风扇托盘——\"The following hardware components can be"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P13** 三大可用性支柱：Power Supply Redundancy、Hot-Swapping、Hardware Monito"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P14** 双向气流架构：\"The switch supports both Front-to-Rear and Rear-to-F"
+  },
+  {
+   "h": 0.83,
+   "ok": true,
+   "head": "- **P15** 气流失配三段式后果：错误+trap 显示 → 若启动时检测到则 OK/PS LED 绿琥珀交替闪、GRN 闪绿且\"the"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P16** 紫色防差错编码：\"To help users avoid mismatched fan trays and power "
+  },
+  {
+   "h": "n/a",
+   "ok": true
+  },
+  {
+   "h": 0.95,
+   "ok": true,
+   "head": "- **P18** 盲板气流机制：\"When blank cover panels are missing, air does not ta"
+  },
+  {
+   "h": 0.1,
+   "ok": false,
+   "head": "- **P19** 六型电源两代阵营：V 系（650W AC/DC，配 V72/C32/C32E/X48C4E/V48C8）与 X 系（40"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P20** 电源混插两条规则：\"Do not mix OS6900-V72/C32/C32E/X48C4E/V48C8 power "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P21** 无总开关设计：\"Connecting an installed power supply to a power sour"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P22** OS6920 电源双压输入：AC 1500W 在 100-127V 输出 12V/83.33A、220-240V 输出 "
+  },
+  {
+   "h": 0.0,
+   "ok": false,
+   "head": "- **P23** 电源 LED 三态（全家族统一）：稳绿=正常供电、稳红=电源故障、灭=无 AC/DC 输入 <<<PAGE 60>>>-"
+  },
+  {
+   "h": 0.83,
+   "ok": true,
+   "head": "- **P24** DC 供电纪律（OS6920 级）：接地 -40~-75V SELV 源；分支过流保护 50A；6AWG 铜导体；现场布"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P25** IEC 60945 认证线缆：OS6900-X48C6 配 OS6900X-BPD-F 且需 IEC 60945（船用）"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P26** 冗余 AC 分电路原则：\"It is recommended that each AC outlet resides o"
+  },
+  {
+   "h": 0.0,
+   "ok": false,
+   "head": "- **P27** 多风扇托盘架构：机箱后部 5 或 6 个独立风扇托盘（V72/C32/C32E/X48C4E/V48C8/OS6920 "
+  },
+  {
+   "h": 0.9,
+   "ok": true,
+   "head": "- **P28** 风扇托盘必装件：\"The fan tray is a required component. Never attempt"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P29** 风扇托盘分气流方向型号（F/R 后缀）且随机型专用：\"Do not attempt to install incompa"
+  },
+  {
+   "h": 0.9,
+   "ok": true,
+   "head": "- **P30** 60 秒更换窗口：\"The switch should not run without a fan tray more "
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **P31** 系统 LED 五组：PS1/PS2（绿/琥珀/灭）；Diag（绿=正常/琥珀=自检故障）；Fan（绿/琥珀）；LOC（闪"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P32** 端口速率 LED 分色：RJ45/SFP+（琥珀=1G、绿=10G）；SFP28（绿=25G、琥珀=10G、1G）；QS"
+  },
+  {
+   "h": 0.55,
+   "ok": true,
+   "head": "- **P33** QSFP-DD 十二态色表：青=400G、紫=200G、蓝=100G、橙=40G、紫/绿=2X200G、蓝/绿=2X10"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P34** 温度双阈值机制：Warning 超限→发 trap 业务继续（查气流阻塞/室温/风扇状态 `show fan`）；Dan"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P35** 风扇自动监控：\"If any of the switch's fans unexpectedly shuts down,"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P36** 硬件监控命令族：`show module` / `show module long` / `show temperatu"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P37** EMP 线缆类型规则：EMP 接交换机用直通线（straight-through）、接计算机/工作站用交叉线（cross"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P38** EMP 默认带外地址：IP 192.168.1.1 / 掩码 255.255.255.0；改址用 `ip interfa"
+  },
+  {
+   "h": 0.89,
+   "ok": true,
+   "head": "- **P39** console 流控机制：\"No hardware handshaking (RTS, CTS) is used. In"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **P40** 电涌防护军规五条：全设备等电位接地（≤0.01Ω）；室外/近交流线路用 STP Cat5e+；室外铜口串接浪涌保护器；防"
+  }
+ ]
+}

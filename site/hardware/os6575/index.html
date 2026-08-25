@@ -1,0 +1,67 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>首页 — OmniSwitch 6575 Hardware Guide</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>OmniSwitch 6575 Hardware Guide</h1>
+<div class="sub">Rev A · 86 页 · 工业无风扇（M12 连接器/温度阶梯预算/Alarm Relay）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">机型与端口</div>
+<a href="skills/os6575-model-ports.html">os6575-model-ports</a>
+<div class="grp">安装与电源</div>
+<a href="skills/os6575-install-power.html">os6575-install-power</a>
+<div class="grp">运维排障</div>
+<a href="skills/os6575-ops-troubleshoot.html">os6575-ops-troubleshoot</a></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../hardware/index.html">硬件手册</a> › <a href="index.html">OmniSwitch 6575 Hardware Guide</a> › <span>首页</span></nav><p><a href="../../index.html">⬅️ 返回培训门户</a></p>
+<h1>OmniSwitch 6575 Hardware Guide · 学习站</h1>
+<p class="meta">教材: <b>Rev A · 86 页 · 工业无风扇（M12 连接器/温度阶梯预算/Alarm Relay）</b>。整理为 3 个可执行知识单元：
+每个单元含 原文引用(R) / 方法论骨架(I) / 书中案例(A1) / 触发场景(A2) / 可执行步骤(E) / 边界与陷阱(B)。</p>
+<h2>建议学习路线</h2><ol><li>P12/U28/MP16 形态选型</li><li>四款电源与 ROJ 接线</li><li>告警继电器与 Port Bypass</li></ol>
+<h2>知识单元</h2><h2>机型与端口</h2><div class="cards"><div class="card"><a href="skills/os6575-model-ports.html">os6575-model-ports</a><p>需要在 OS6575-P12/U28/MP16 三机型间按安装形态选型、解码 M12 D-code/X-code 与 M23 防水连接器、规划 Uplink/VFL 堆叠口与 MP16 四段端口阵列（at/bt/Bypass）、核对输入电压域与 PoE 等级时使用。…</p></div></div><h2>安装与电源</h2><div class="cards"><div class="card"><a href="skills/os6575-install-power.html">os6575-install-power</a><p>需要安装 OS6575（U28 前装/后装、P12 DIN 导轨、MP16 壁装）、选配 4 款电源（BPNS/BPNSX/BPR/BPRD）、ROJ 剥线端子接线（线色+力矩）、powersupply type 手动声明、按温度阶梯核对 PoE 预算与接地时使用。…</p></div></div><h2>运维排障</h2><div class="cards"><div class="card"><a href="skills/os6575-ops-troubleshoot.html">os6575-ops-troubleshoot</a><p>需要配置 OS6575 Alarm Relay 干接点告警（in/out/event 映射与 VC 同步）、Dying Gasp 接收端、lanpower PoE 全流程（slot service/优先级/Guard Band/Priority Disconnect）、show 巡检与 LED 诊断…</p></div></div>
+<h2>全文阅读</h2>
+<p><a href="digest.html">📖 精华长文 DIGEST</a> · <a href="overview.html">📘 教书理解</a> · <a href="glossary.html">🔤 术语词典</a></p><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

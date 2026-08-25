@@ -1,0 +1,101 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>os6465-model-ports — OmniSwitch 6465 Hardware Guide</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>OmniSwitch 6465 Hardware Guide</h1>
+<div class="sub">Rev V · 99 页 · 工业加固（宽温三档/DIN-DNV 安装/告警继电器）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">机型与端口</div>
+<a href="../skills/os6465-model-ports.html" class="on">os6465-model-ports</a>
+<div class="grp">安装与电源</div>
+<a href="../skills/os6465-install-power.html">os6465-install-power</a>
+<div class="grp">运维排障</div>
+<a href="../skills/os6465-ops-troubleshoot.html">os6465-ops-troubleshoot</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../hardware/index.html">硬件手册</a> › <a href="../index.html">OmniSwitch 6465 Hardware Guide</a> › <span>os6465-model-ports</span></nav><h1>os6465-model-ports</h1><p class="meta"><span class="badge">SKILL</span> os6465-model-ports · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>工厂导轨/车载/路侧部署，要判断选工业线还是 T 运输线机型</li>
+<li>解码 OS6465-P12(ENH-240)、OS6465T-P12 等型号的端口构成与 60W 口位</li>
+<li>确认哪些口支持 802.3bt 60W（奇数口/1-8 口）、哪些只有 at 30W</li>
+<li>判断某机型是否有 10G 上联（仅 P28）、DIN 导轨还是 1U 机架形态</li>
+<li>核对工业认证范围（T 机型不含工业认证）</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>6465 双线家族选型框架（F1，&lt;&lt;<PAGE 12>&gt;&gt;/&lt;&lt;<PAGE 74>&gt;&gt;）：工业线（P6/P12/ENH-240=无风扇 DIN 导轨、-40~75°C、奇数口 60W bt；P28=1U 机架 24 口+4×SFP+、双可热换电源）／运输线（T-12/T-P12=半宽、内置电源、风扇 45°C 自启、-10~60°C、无工业认证）。60W/bt 口位规律（P2）：P6/P12 奇数编号 RJ45 口支持 60W/802.3bt，偶数口 30W；P28 为口 1-8 支持 60W/bt。上行口分档（P3）：P6=2×SFP、P12=4×SFP、T=2 combo+2×SFP、P28=2×SFP+4×SFP+——仅 P28 有 10G。ENH-240 变体机制（P4）：同 P12 面板但输入扩至 20-60Vdc/10A、50-57V 时 240W PoE，面板标注"ENH-240"。</p>
+<h2 id="a1">A1（决策框架）</h2>
+<ol>
+<li><strong>场景定线</strong>：工厂导轨/宽温 → 工业线（-40~75°C 无风扇）；车载/交通 → T 线（宽温但风扇 45°C 自启、无工业认证）（F1，&lt;&lt;<PAGE 12>&gt;&gt;）</li>
+<li><strong>PoE 口位核算</strong>：按奇数口规则数 60W 口数；P28 按口 1-8；预算 P6=45W/P12=150W/ENH-240=240W/P28 双电源最高 285W（P2/P9/P10）</li>
+<li><strong>上联选档</strong>：要 10G 只有 P28 的 4×SFP+；其余最多 1G SFP（P3，&lt;&lt;<PAGE 31>&gt;&gt;）</li>
+<li><strong>供电形态</strong>：宽压 DC 24-60V 端子式（工业线）vs 内置电源（T 线）；ENH-240 扩展 20-60Vdc/10A（P4）</li>
+<li><strong>认证核对</strong>：工业认证（ISA/IEC 60068/DNV/EN 50121/NEMA TS-2）仅工业线适用（X7，&lt;&lt;<PAGE 12>&gt;&gt;/&lt;&lt;<PAGE 90>&gt;&gt;）</li>
+</ol>
+<h2 id="a2">A2（操作步骤）</h2>
+<ul>
+<li><strong>机型速查</strong>：Ch1 总表（&lt;&lt;<PAGE 12>&gt;&gt;）+ Ch3 逐机型面板（&lt;&lt;<PAGE 22-36>&gt;&gt;）</li>
+<li><strong>奇数口 60W 规划</strong>：高耗 PD（PTZ 摄像头/大功率 AP）接奇数口（P6/P12）或 1-8 口（P28）（P2，&lt;&lt;<PAGE 12>&gt;&gt;/&lt;&lt;<PAGE 22>&gt;&gt;）</li>
+<li><strong>温度档预算核对</strong>：≤60°C 全额（45/150/240W）、60-70°C 降额需 100 CFM、70-75°C 停 PoE（P9，&lt;&lt;<PAGE 74>&gt;&gt;）</li>
+<li><strong>P28 预算按电源组合查</strong>：单 AC/DC@48V=112W、双 AC/双 DC@48V=285W、含 DC@24V 组合=205W（P10，&lt;&lt;<PAGE 74>&gt;&gt;）</li>
+<li><strong>DNV 部署核对</strong>：装 DNV 电源罩后环境上限 75°C→55°C（P11，&lt;&lt;<PAGE 32>&gt;&gt;）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>ENH-240 用 BPN 75W 电源跑 PoE 需 AOS ≥8.9R2（X4，&lt;&lt;<PAGE 53>&gt;&gt;）</li>
+<li>T 机型风扇 45°C 自启，风扇开时环境上限 60°C、关时 45°C（P12，&lt;&lt;<PAGE 34>&gt;&gt;/&lt;&lt;<PAGE 36>&gt;&gt;）</li>
+<li>P28 唯一支持电源负载分担，其余机型双电源仅冗余（P5，&lt;&lt;<PAGE 13>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（反例/坑）</h2>
+<ul>
+<li><strong>本机型注意</strong>：T 机型宽温但"do not meet the Industrial Compliance Requirements"——要工业认证的场合不能选 T 线（X7，&lt;&lt;<PAGE 12>&gt;&gt;/&lt;&lt;<PAGE 90>&gt;&gt;）</li>
+<li>奇数口 60W 规则仅适用 P6/P12；P28 是口 1-8——跨书套用口位规律会接错（P2，&lt;&lt;<PAGE 12>&gt;&gt;/&lt;&lt;<PAGE 31>&gt;&gt;）</li>
+<li>ENH-240 的 240W 预算前提是输入 50-57V；24V 输入仅保系统（P4/P9）</li>
+<li>仅 P28 有 10G 上联，P6/P12/T 全系 1G 上联封顶（P3）</li>
+<li>BPNX 480W 电源无工业认证且标签可能误标 48V/10A（实际 54.5VDC/8.8A）（X3，&lt;&lt;<PAGE 51>&gt;&gt;）</li>
+</ul>
+<h2 id="_1">来源</h2>
+<p>OmniSwitch 6465 Hardware Users Guide Ch1 机型总表（&lt;&lt;<PAGE 12-13>&gt;&gt;）、Ch3 逐机型面板与规格（&lt;&lt;<PAGE 21-36>&gt;&gt;）、Ch4 PoE 预算表（&lt;&lt;<PAGE 74>&gt;&gt;）。条目来源：principles P1-P4/P9-P12；cases C8；counter-examples X3/X4/X7/X8；frameworks F1。</p><div class="pn"><a href="../index.html">⬅ 返回课程首页</a><a class="nxt" href="os6465-install-power.html">下一单元：os6465-install-power ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>os6865-install-power — OmniSwitch 6865 Hardware Guide</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>OmniSwitch 6865 Hardware Guide</h1>
+<div class="sub">Rev Y · 76 页 · 加固型（无风扇宽温/五形态安装/军规 DC 极性）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">机型与端口</div>
+<a href="../skills/os6865-model-ports.html">os6865-model-ports</a>
+<div class="grp">安装与电源</div>
+<a href="../skills/os6865-install-power.html" class="on">os6865-install-power</a>
+<div class="grp">运维排障</div>
+<a href="../skills/os6865-ops-troubleshoot.html">os6865-ops-troubleshoot</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../hardware/index.html">硬件手册</a> › <a href="../index.html">OmniSwitch 6865 Hardware Guide</a> › <span>os6865-install-power</span></nav><h1>os6865-install-power</h1><p class="meta"><span class="badge">SKILL</span> os6865-install-power · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>加固场景安装形态决策：机架/桌面/DIN 导轨/墙装/DNV 船用五选一</li>
+<li>电源托盘组装：侧装（机架）vs 后装（桌面）与 DB-15 连接</li>
+<li>DC 供电接线：-24V/-48V 三线接入与极性核对；15A/12AWG 前提</li>
+<li>高温机房 PoE 预算按"电源×温度"降额表规划（65°C 腰斩）</li>
+<li>DNV 全架/半架船用套件安装与 55°C 降额核对</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>6865 供电拓扑为"外置托盘 + DB-15 电缆"（P5，&lt;&lt;<PAGE 19>&gt;&gt;）：1 主 + 1 备两电源装托盘经 DB-15 接机箱，非内置槽位。加固部署走"环境-电源-PoE 预算"三环校验（F2）：环境环定气流与间隙档；电源环选 AC BP 180W 或 DC BP-D（-24V 输入预算再低 20-40W）；PoE 环按电源组合×温度档（60/65/74°C）查表（双 BP@60°C=300W、@65°C=150W，P25，&lt;&lt;<PAGE 56>&gt;&gt;/&lt;&lt;<PAGE 57>&gt;&gt;）。三环铁律：任何一环升档（更热/更少电源/更大 PD）都要重查另两环。上电纪律：全部电源与电源-机箱电缆装完才接电源（X12，&lt;&lt;<PAGE 19>&gt;&gt;）；无总开关，插线即开机（P16）。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<ol>
+<li>安装形态决策树（F3）：机架（侧装托盘；
+U28X 加 REAR-MNT）→桌面（后装托盘+桌脚，散热片面朝外）→DIN 导轨（工业柜；
+垂直装仅限不可燃表面）→墙装（自备螺丝验强度）→DNV 船用（FRCK 全架/HRCK 半架+电源盖，温度限 55°C）</li>
+<li>电源选型：AC=OS6865-BP 180W；DC=OS6865-BP-D 180W/140W（-20~-28V 或 -36~-72V 输入）；最多 2 个、双电必须分电路分源（P15/X30，&lt;&lt;<PAGE 49>&gt;&gt;/&lt;&lt;<PAGE 50>&gt;&gt;）</li>
+<li>高温预算核对：按三变量模型（电源数量×类型×温度档）查表，高温按降额后预算规划（P25，X31）</li>
+<li>安全前提：拆装电源必先断源（X11）；ESD 腕带有效前提=电源已装机箱且接接地插座（X35，&lt;&lt;<PAGE 75>&gt;&gt;）</li>
+</ol>
+<h2 id="a2">A2（操作步骤）</h2>
+<ul>
+<li><strong>侧装托盘</strong>：核对四类支架位置（Front Chassis 与 Front Tray 对齐）→托盘与机箱孔位对齐螺丝紧固（C1，&lt;&lt;<PAGE 13>&gt;&gt;/&lt;&lt;<PAGE 14>&gt;&gt;）</li>
+<li><strong>后装托盘</strong>：拆侧装支架→托盘 tab 插后板槽位→贴平后拧 2×M4 + 4×M3X6（C2，&lt;&lt;<PAGE 14>&gt;&gt;/&lt;&lt;<PAGE 15>&gt;&gt;）</li>
+<li><strong>托盘装电源</strong>：电源滑入、底部 tab 入槽→拧前面拇指螺丝→DB-15 分别插电源与机箱→冗余在另一侧重复（C5/C6，&lt;&lt;<PAGE 18>&gt;&gt;/&lt;&lt;<PAGE 20>&gt;&gt;）</li>
+<li><strong>DIN 导轨装电源</strong>：DIN 卡扣 M4X6 装电源→底部钩住导轨下沿→上推压缩张力弹簧→顶部越过导轨释放锁定（C12，&lt;&lt;<PAGE 25>&gt;&gt;）；拆机箱=下拉 strap 释放卡扣（C15，&lt;&lt;<PAGE 27>&gt;&gt;）</li>
+<li><strong>DNV 全架</strong>：侧导轨 7×M4X8+托盘 4×M4X8+支撑板→装电源→装电源盖→总装（盖 4×M3X6、填充板 2×M3X6、滑板 2×M3X6）（C16，&lt;&lt;<PAGE 28>&gt;&gt;/&lt;&lt;<PAGE 30>&gt;&gt;）</li>
+<li><strong>DC 接线五步</strong>：剥线 6-7.5mm（12AWG 三线）→螺丝刀旋松开夹→地线推入触底→旋紧拉验→正/负线重复（C20，&lt;&lt;<PAGE 52>&gt;&gt;/&lt;&lt;<PAGE 53>&gt;&gt;）；线扎按 1.5 圈/25mm 间距（C21）</li>
+<li><strong>接地</strong>：后部两螺孔接 Panduit LCD8-10AL lug + 8AWG + 30-60 in-lb（P40/X43，&lt;&lt;<PAGE 73>&gt;&gt;）</li>
+<li><strong>桌脚安装</strong>：按机型用 B/C/D+E 孔位装 4-5 颗 M4X6，提供底部 1/2 RU 间隙（C4，&lt;&lt;<PAGE 16>&gt;&gt;/&lt;&lt;<PAGE 17>&gt;&gt;）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>高温预算降额实战：P16X/U12X 双 BP 电源 60°C=300W，65°C/74°C 腰斩至 150W——高温机房 PoE 规划必须按降额后数值（X31/P25，&lt;&lt;<PAGE 56>&gt;&gt;）</li>
+<li>DC -24V 部署：BP-D 在 -20~-28V/12A 输入时输出预算比 -48V 输入再低 20-40W（P15，&lt;&lt;<PAGE 50>&gt;&gt;）</li>
+<li>DNV 半架安装六步全流程（C17，&lt;&lt;<PAGE 31>&gt;&gt;-&lt;&lt;<PAGE 34>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（反例与坑）</h2>
+<ul>
+<li><strong>DC 极性军规（本机型易混点）</strong>：无论 -24V 还是 -48V 输入，一律源正接正、负接负，"regardless of the polarity signs shown on the power supply specification labels"——勿按电源标签上的 -48V/+24V/-24V 符号反接，错插可致损坏（X14/P21，&lt;&lt;<PAGE 53>&gt;&gt;）</li>
+<li>DC 孔位错插后果：线插错孔电源不工作且可能损坏（X13，&lt;&lt;<PAGE 52>&gt;&gt;）</li>
+<li>就绪前禁上电：电源与 DB-15 电缆未全部装完不得接源（X12，&lt;&lt;<PAGE 19>&gt;&gt;）</li>
+<li>桌面方向军规：大散热片面必须朝外远离安装面，面贴桌面=散热失效（X4/P14，&lt;&lt;<PAGE 11>&gt;&gt;）；无桌脚禁桌面运行（X5，&lt;&lt;<PAGE 16>&gt;&gt;）</li>
+<li>垂直 DIN 安装仅限混凝土等不可燃表面（X7，&lt;&lt;<PAGE 25>&gt;&gt;）</li>
+<li>DC 线超 3 米属本地规范管辖，须咨询电工与 AHJ（X15，&lt;&lt;<PAGE 51>&gt;&gt;）；过流必须 15A+双 12AWG（X16）</li>
+<li>EMC 强制：每个 DC 电源地线必须接大地（X23，&lt;&lt;<PAGE 74>&gt;&gt;）；接地引线用 22AWG（X44）</li>
+<li>禁延长线；电涌军规违反可失保（X9/X17，&lt;&lt;<PAGE 10>&gt;&gt;/&lt;&lt;<PAGE 11>&gt;&gt;）</li>
+<li>双人搬运（屈膝直背）；检修前断全部电源（X32/X21，&lt;&lt;<PAGE 72>&gt;&gt;/&lt;&lt;<PAGE 73>&gt;&gt;）</li>
+</ul>
+<p>来源：OmniSwitch 6865 Hardware Users Guide（Ch1 p9-41 + Ch2 p42-55）</p><div class="pn"><a href="os6865-model-ports.html">⬅ 上一单元：os6865-model-ports</a><a class="nxt" href="os6865-ops-troubleshoot.html">下一单元：os6865-ops-troubleshoot ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>os6870-install-power — OmniSwitch 6870 Hardware Guide</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>OmniSwitch 6870 Hardware Guide</h1>
+<div class="sub">Rev D · 85 页 · 九机型（QSFP56 200G/混插扩容/四色 LED）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">机型与端口</div>
+<a href="../skills/os6870-model-ports.html">os6870-model-ports</a>
+<div class="grp">安装与电源</div>
+<a href="../skills/os6870-install-power.html" class="on">os6870-install-power</a>
+<div class="grp">运维排障</div>
+<a href="../skills/os6870-ops-troubleshoot.html">os6870-ops-troubleshoot</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../hardware/index.html">硬件手册</a> › <a href="../index.html">OmniSwitch 6870 Hardware Guide</a> › <span>os6870-install-power</span></nav><h1>os6870-install-power</h1><p class="meta"><span class="badge">SKILL</span> os6870-install-power · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>新机上架：弹簧夹法兰+后支架/双人机架六步/桌面四脚垫/盲板</li>
+<li>电源选型：非 PoE 250W AC/DC、V12 专用 550W、P 系列 600W/1200W/2000W</li>
+<li>电源混插扩容规划（本机型支持不同瓦数混插，先混后替）</li>
+<li>PoE 预算按四变量查表（1200W/2000W 需 190-240VAC 才得高功率）</li>
+<li>-48VDC 接线与机箱 supplemental 接地</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>6870 为双电源负载分担+热插拔架构，且<strong>支持不同瓦数电源混插</strong>（P12，&lt;&lt;<PAGE 47>&gt;&gt;/&lt;&lt;<PAGE 51>&gt;&gt;："Mixing different wattage power supplies in a chassis is supported"）——扩容可先混后替，这是与 6860（wattage 禁混）的关键差异。PoE 预算四变量联动（F2，&lt;&lt;<PAGE 47>&gt;&gt;/&lt;&lt;<PAGE 63>&gt;&gt;）：①机型（定可用电源与口能力）②电源瓦数（600/1200/2000W；Z 系列上限 1200W）③单/双电源（双电负载分担、预算非简单翻倍，如 P24M 双 600W=788W）④市电电压（双值条目=低压/高压输入；1200W/2000W 需 190-240VAC 才得高 PoE 功率，P14）。无总开关=接电即开机（P13）。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<ol>
+<li>安装形态：机架（弹簧夹法兰+后支架，双人作业）→桌面（四脚垫正放，承重按满配）→空槽常装盲板（X3，&lt;&lt;<PAGE 41>&gt;&gt;）</li>
+<li>电源选型（P11）：-24/-48/V12=250W AC/DC（V12 另可用 550W）；P 系列=600W/1200W/2000W（2000W 仅 M 系列）；双电负载分担</li>
+<li>混插扩容（F4）：600W 入门→1200W 中档→2000W 高密，同一机箱可先混插后替换升级</li>
+<li>供电纪律：双电分电路分源（X24）；多电源数秒内相继插电保证启动供电（X10，&lt;&lt;<PAGE 18>&gt;&gt;）</li>
+<li>现场准备：前 6"/后 6"/侧 2"、顶底免间隙（P39，&lt;&lt;<PAGE 16>&gt;&gt;/&lt;&lt;<PAGE 17>&gt;&gt;）；专业安装者负责接地合规（X6）</li>
+<li>机架五大考量（P40）：Tmra/Reduced Air Flow/Mechanical Loading/Circuit Overloading/Reliable Earthing</li>
+</ol>
+<h2 id="a2">A2（操作步骤）</h2>
+<ul>
+<li><strong>法兰安装五步</strong>：弹簧夹置 out→tab 插机箱槽→按压至 CLICK 入 in→螺丝固定→对侧重复（C7，&lt;&lt;<PAGE 42>&gt;&gt;/&lt;&lt;<PAGE 43>&gt;&gt;）</li>
+<li><strong>机架装机六步（双人）</strong>：预标记孔位→一人抬起贴平立柱→孔位对齐→第二人先拧每侧底部螺丝→装顶部螺丝全拧→后支架滑入导轨固定（C8，&lt;&lt;<PAGE 44>&gt;&gt;/&lt;&lt;<PAGE 45>&gt;&gt;）</li>
+<li><strong>装电源</strong>：插入后部电源槽后滑至 securely seated，锁片"咔哒"锁定→插电源线即开机（C12，&lt;&lt;<PAGE 55>&gt;&gt;）</li>
+<li><strong>拆电源</strong>：先从源侧断线→按压锁片释放→直向后拉出；不回装盖盲板（C13，&lt;&lt;<PAGE 56>&gt;&gt;）</li>
+<li><strong>DC 接线</strong>：连接器插至"clicks firmly into place"；三根 12AWG 绿黄=地/黑=return/红=-48VDC 接熔丝面板，注意极性（C14，&lt;&lt;<PAGE 54>&gt;&gt;）</li>
+<li><strong>DC 安全五则</strong>：接地 SELV 源/15A 过流/12AWG/易触及断开装置/受限场所（C15，&lt;&lt;<PAGE 54>&gt;&gt;）</li>
+<li><strong>机箱接地</strong>：后部 paint-free 双螺纹孔装 Panduit LCD8-10A-L lug+10-32 3/8" 螺丝+8AWG，30-60 in-lb（C16/X44，&lt;&lt;<PAGE 57>&gt;&gt;）</li>
+<li><strong>盲板</strong>：箭头朝上插入空槽螺丝固定（C10，&lt;&lt;<PAGE 40>&gt;&gt;/&lt;&lt;<PAGE 41>&gt;&gt;）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>预算表查法（P27，&lt;&lt;<PAGE 63>&gt;&gt;）：P24M 双 1200W=1516W/1880W（低/高压）、双 2000W=1516W/2280W；P48M 双 2000W 最高 3309W</li>
+<li>混插扩容实战：P24M 从双 600W（788W）起步，先插一只 1200W 混跑、业务不中断，再替另一只升至双 1200W（F4/P12，&lt;&lt;<PAGE 47>&gt;&gt;/&lt;&lt;<PAGE 51>&gt;&gt;）</li>
+<li>高压输入才得全功率：1200W/2000W 电源 "High power PoE wattages available at voltage inputs between 190-240VAC"（P14/X11，&lt;&lt;<PAGE 52>&gt;&gt;/&lt;&lt;<PAGE 53>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（反例与坑）</h2>
+<ul>
+<li><strong>跨书易混（本机型方向）</strong>：6870 允许不同瓦数电源混插（P12）——与 6860 的"wattage 禁混、混插发 trap"相反；但 2000W 仍仅限 P24M/P48M，Z 系列标 N/A（X30）</li>
+<li>1200W/2000W 在 100-120V 市电降额：高 PoE 功率须 190-240VAC（X11，&lt;&lt;<PAGE 52>&gt;&gt;/&lt;&lt;<PAGE 53>&gt;&gt;）</li>
+<li>多电源必须数秒内相继插电，保证启动全程供电（X10，&lt;&lt;<PAGE 18>&gt;&gt;）</li>
+<li>拆电源必先断源；运行中勿触电源槽与背板；多电源检修全断（X12/X22/X23，&lt;&lt;<PAGE 56>&gt;&gt;/&lt;&lt;<PAGE 81>&gt;&gt;）</li>
+<li>DC 强制受限场所；每个 DC 电源地线必须接大地（EMC）（X15/X17，&lt;&lt;<PAGE 54>&gt;&gt;/&lt;&lt;<PAGE 82>&gt;&gt;）</li>
+<li>气流遮挡致过热失效；盲板必须常装、电源槽箭头朝上（X2/X3/X4，&lt;&lt;<PAGE 40>&gt;&gt;/&lt;&lt;<PAGE 41>&gt;&gt;）</li>
+<li>禁倒放/侧放运行；桌面须四脚垫起、顶底免间隙但不叠压（X1/X8，&lt;&lt;<PAGE 46>&gt;&gt;/&lt;&lt;<PAGE 17>&gt;&gt;）</li>
+<li>禁延长线；电涌五条军规违反可失保（X9/X18，&lt;&lt;<PAGE 14>&gt;&gt;/&lt;&lt;<PAGE 15>&gt;&gt;）</li>
+<li>机架螺丝自备（ALE 不附）；双人机架作业强制（X5/X7，&lt;&lt;<PAGE 41>&gt;&gt;/&lt;&lt;<PAGE 42>&gt;&gt;）</li>
+</ul>
+<p>来源：OmniSwitch 6870 Hardware Users Guide（Ch2 p14-21 + Ch3 p39-60 + Ch4 p61-71）</p><div class="pn"><a href="os6870-model-ports.html">⬅ 上一单元：os6870-model-ports</a><a class="nxt" href="os6870-ops-troubleshoot.html">下一单元：os6870-ops-troubleshoot ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

@@ -1,0 +1,762 @@
+{
+ "cases": [
+  {
+   "h": "n/a",
+   "ok": true
+  },
+  {
+   "h": 0.69,
+   "ok": true,
+   "head": "- **C2** 首次登录六步：console 连接（9600-8N1，DCE）→admin/switch 登录→aaa authentic"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C3** 会话类型按类解锁：aaa authentication default local 全解锁；或逐类 aaa authent"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C4** 全宽机架安装流程（U28）：两侧装法兰→标记机架孔位→抬举对齐→先下孔螺丝后上孔螺丝全紧固；螺丝自备（not provid"
+  },
+  {
+   "h": 0.0,
+   "ok": false,
+   "head": "- **C5** 单半宽机架安装流程（RM-19-L 套件）：L 支架长短臂任意侧装于机箱前部两侧→法兰孔对准机架孔→先下孔后上孔插入螺丝紧"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **C6** 双半宽并排安装流程（DUO-MNT 套件）：slot 支架+slide 支架用 M3 平头螺丝装于两机前后→两机前后中央支"
+  },
+  {
+   "h": 0.0,
+   "ok": false,
+   "head": "- **C7** 现场准备检查单：维持机型规格表温湿度范围；预留机型对应气流间隙（12 口侧 2\"/上下 1\"；U28 上下 1RU/侧 2"
+  },
+  {
+   "h": "n/a",
+   "ok": true
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C9** 电源安装流程：电源插入后部电源舱→滑入至背板锁扣\"click\"锁定→插电源线（接电即开机） <<<PAGE 41>>>"
+  },
+  {
+   "h": "n/a",
+   "ok": true
+  },
+  {
+   "h": 0.0,
+   "ok": false,
+   "head": "- **C11** 电源托盘安装流程：托盘 4 螺丝固定机箱→电源装托盘并以支架 2 螺丝固定→盖板 2 螺丝→附赠扎带理线；AC/DC 电"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **C12** DC 线束接线流程（BP-D）：三芯 12AWG 线束连接器端插电源三孔（至牢固 click）→另一端按极性接 -48V"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **C13** 机箱 supplemental 接地流程：Panduit LCD8-10A-L lug 装 10-32 螺丝至接地耳无漆"
+  },
+  {
+   "h": 0.9,
+   "ok": true,
+   "head": "- **C14** 硬件巡检流程：show module / show module long 查槽位→show temperature 查"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C15** 温度超限处置流程：Warning（trap 已发、业务未停）→查气流遮挡+查室温；Danger（已自动关机）→查气流遮挡"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C16** Dying Gasp OAM 配置：efm-oam admin-state enable→efm-oam port 1/"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C17** DG 告警接收配置：snmp station 配置 SNMP 站（收 trap，前 3 站生效）；swlog outpu"
+  }
+ ],
+ "counter-examples": [
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X1** 全机型不支持半双工：\"The OS6570M-12 does not support half-duplex connec"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X2** 双冗余电源必须同规格：\"both power supplies must have identical output wa"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X3** 温度阈值固化不可改：\"The threshold values are factory-set and cannot be"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X4** Danger 超限必须手动重启：\"the switch will power off until the temperat"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X5** aaa authentication 一次一类：\"You cannot specify more than one ses"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X6** 密码覆盖受限：\"Be sure to remember or securely record all new passwo"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X7** 非本机文档范围：\"it is not intended as a software users guide\"——软件配置需"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X8** 禁延长线：\"Do not use extension cords.\"（电源要求与上电流程两处） <<<PAGE 13>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X9** 非 ALE 电源线需自证合规：\"If using a non-ALE provided power cord the in"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X10** 违反电涌军规可能失保：\"Failure to follow the above recommendations coul"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X11** 室外禁裸线缆：\"Never install exposed network cables outdoors.\" <<<P"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X12** 气流遮挡致失效：\"Restricted airflow can cause your switch to overhea"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X13** 密闭多机架环温偏高：\"If installed in a closed or multi-rack assembly, "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X14** 机架螺丝自备：\"insert a rack mount screw (not provided)\"——ALE 不随机提供"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X15** 盲板必须常装：\"Because they regulate airflow and help protect inter"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X16** 雷暴作业禁令：\"To avoid a shock hazard, do not connect or disconnec"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X17** 运行中勿触背板：\"keep your hands and fingers out of power supply bay"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X18** 搬运前断全部电源：\"be sure to disconnect all power connections before"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X19** 接地完整性双要求：\"The power cord must be connected to a properly wir"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X20** DC 电源接地强制（EMC/EMI）：\"each DC/DC power supply requires that th"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X21** ESD 防护强制：\"Because electrostatic discharge (ESD) can damage s"
+  },
+  {
+   "h": 0.06,
+   "ok": false,
+   "head": "- **X22** 锂电池更换须返厂：\"There is a danger of explosion if the lithium batt"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X23** Class 1M 激光警告：\"CLASS 1M LASER RADIATION WHEN OPEN. DO NOT VI"
+  },
+  {
+   "h": 0.94,
+   "ok": true,
+   "head": "- **X24** 空光口勿直视：\"Lasers emit invisible radiation from the aperture op"
+  },
+  {
+   "h": 0.93,
+   "ok": true,
+   "head": "- **X25** 受限场所安装：\"This equipment should be installed in a location tha"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X26** Class A 住宅禁用：\"To avoid electromagnetic interference, this pr"
+  }
+ ],
+ "frameworks": [
+  {
+   "h": 0.29,
+   "ok": false,
+   "head": "- **F1** 6570M 家族选型三轴矩阵：轴一=下行口形态（12/12D=8 铜口+2 SFP 混合，适合柜边小汇聚；U28=20 纯"
+  },
+  {
+   "h": 0.25,
+   "ok": false,
+   "head": "- **F2** 半宽空间利用框架：12/12D 半宽机（21.72cm）三态部署——单机桌面（橡胶脚垫正放）/单半宽入 19 英寸机架（R"
+  },
+  {
+   "h": 0.56,
+   "ok": true,
+   "head": "- **F3** 高可用双支柱框架：供电侧=内置电源+外置备份电源（12/12D）或双 150W 舱冗余/负载分担（U28）+独立电路+多电"
+  }
+ ],
+ "glossary": [
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **OS6570M-12**：半宽定配置机，8×10/100/1000Base-T + 2×100/1000Base-X SFP + 2"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **OS6570M-12D**：12 的 DC 版（内置 DC 电源），待机 24W，存储温度 -40~85°C <<<PAGE 11>"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **OS6570M-U28**：全宽全光上联型，20×SFP + 4×SFP/RJ45 combo（21-24）+ 6×SFP+（25-"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Uplink/Stacking SFP+ 口**：1G/10G 双角色口——上联与 Virtual Chassis 堆叠共用 <<<"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **combo 口**：同口位 SFP 光口与 RJ45 铜口二选一（U28 21-24） <<<PAGE 11>>>/<<<PAGE "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Availability Features**：可用性特性——防子系统失效丢流的软硬件保障（电源冗余/热插拔/硬件监控） <<<PA"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Hot-Swapping**：热插拔——不断电、不中断其他组件地加/换硬件 <<<PAGE 12>>>"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **Grounding wrist strap**：接地防静电腕带——安装三件套之一（另为 Phillips/Flat-blade 螺丝"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Redundant AC Power**：冗余交流供电——建议每 AC 插座独立电路，单路故障余电源存活 <<<PAGE 14>>>"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **Electrical Surge Warning**：电涌警告五条军规——接地/STP/浪涌保护器/室外雷电流/CDE 电缆放电，违"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **CDE（Cable Discharge Event）**：电缆静电放电事件——Cat5e/6/6a 介质储静电，接线前先将铜缆瞬时接"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **STP/UTP**：屏蔽/非屏蔽双绞线；室外或近交流导体场景建议 STP Cat5e 以上 <<<PAGE 14>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Console port**：控制台串口——默认 DCE 连接，首次登录必经 <<<PAGE 15>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Serial Default Settings**：串口默认参数——9600 波特/无校验/8 数据位/1 停止位 <<<PAGE "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **EMP（Ethernet Management Port）**：带外管理以太网口——连交换机用直通线，连计算机用交叉线 <<<PAG"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **aaa authentication**：会话类型解锁命令（default/telnet/http/ftp local）——默认仅 "
+  },
+  {
+   "h": 0.0,
+   "ok": false,
+   "head": "- **admin/switch**：出厂默认登录名/密码 <<<PAGE 17>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **system timezone / system daylight-savings-time**：时区与夏令时配置命令（默认 UTC"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **system contact / system name / system location**：管理联系人/系统名/物理位置可选参"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **show system / write memory**：查看配置/保存配置命令 <<<PAGE 19>>>"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **Tmra（Ambient Operating Temperature）**：环境工作温度 0-50°C——近似室温，通常低于内部温度"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **Warning Threshold（Thresh）**：内部温度警告阈值——12/12D 为 85°C、U28 为 69°C，超限发"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **Danger Threshold**：内部温度危险阈值——12/12D 为 88°C、U28 为 74°C，超限自动关机待手动重启 "
+  },
+  {
+   "h": "n/a",
+   "ok": true
+  },
+  {
+   "h": 0.33,
+   "ok": false,
+   "head": "- **VC LED**：虚拟机箱角色灯——稳绿 master/稳琥珀 slave/闪琥珀（12 口机型）以次数报 unit 号/灭=关机或"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Virtual Chassis ID LED**：VC 识别 LED——U28 前面板独有 <<<PAGE 25>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **PS1/PS2 LED**：电源状态灯——U28 三态（绿正常/琥珀异常/灭不在位）；12 口机两态（绿/灭） <<<PAGE 27"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **1/CMMA**：show temperature 输出中的机箱/设备传感器标识 <<<PAGE 45>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **UNDER THRESHOLD**：show temperature 正常状态值 <<<PAGE 45>>>"
+  },
+  {
+   "h": 0.0,
+   "ok": false,
+   "head": "- **OS6570M-RM-19-L**：单半宽机 19 英寸机架安装套件（L 支架，长短臂可任意侧） <<<PAGE 30>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **OS6570M-DUO-MNT**：双半宽机并排安装套件（slot 支架/slide 支架/前后中央支架/盖板与拇指螺丝） <<<P"
+  },
+  {
+   "h": 0.0,
+   "ok": false,
+   "head": "- **Slot-bracket / Slide-bracket**：DUO-MNT 套件中分别固定两机与滑合连接的支架（M3 平头螺丝） "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Rack mount screw (not provided)**：机架螺丝不随机提供，需用机架厂商螺丝 <<<PAGE 29>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Rubber table-mounting feet**：桌面安装橡胶脚垫 <<<PAGE 15>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Minimum Clearances**：最小间隙——12 口：上下各 1 英寸（有邻设备时）/侧 2 英寸；U28：上下各 1.7"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **Internal AC Power Supply（65W）**：12 机内置电源，100-240V/50-60Hz 输入，12V/5"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Internal DC Power Supply（30W）**：12D 机内置电源，36-72VDC 输入，12V/5.42A 输出"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **OS6570-12-BP（PS-60W-AC，DA-60Z12）**：12 机外置备份电源，100-240VAC→12V/5A（60"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **OS6570-12-BP-D（PS-30W-DC，DDR-30L-12）**：12D 机外置备份电源，18-75VDC 宽压输入→1"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **OS6570-BP（PS-150W-AC）**：U28 用 150W AC 电源，100-240VAC/3-1.5A→150W/12"
+  },
+  {
+   "h": 0.6,
+   "ok": true,
+   "head": "- **OS6570-BP-D（PS-150W-DC）**：U28 用 150W DC 电源，-36~-72VDC/1.8-6A→150W/"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Lock Tab**：电源锁扣——插入至\"click\"锁定；拆卸按向中心后直拉 <<<PAGE 38>>>/<<<PAGE 41>>"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **Power Supply Tray**：电源托盘——AC/DC 通用，4+2+2 螺丝+扎带固定 <<<PAGE 44>>>"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **External Power Connector**：12/12D 后部外部电源连接器——接外置备份电源 <<<PAGE 11>>>"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **DC Cable Harness**：DC 三芯线束——12AWG，绿黄=地/黑=return/红=-48VDC <<<PAGE 4"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **-48VDC SELV**：安全特低电压直流源——DC 接线的可靠接地前提 <<<PAGE 40>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **CBN（Common Bonding Network）**：共模连接网络——产品设计安装目标 <<<PAGE 40>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **DC-1（Isolated DC Return）**：隔离直流回流——电池回流导体类型 <<<PAGE 40>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **LCD8-10A-L**：Panduit UL 认证接地 lug——配 10-32 螺丝与 8AWG 铜线 <<<PAGE 40>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Grounding Lug**：机箱接地耳——前/后面板，无漆区金属接触 <<<PAGE 22>>>/<<<PAGE 45>>>"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **Branch circuit overcurrent protection 15A**：支路过流保护额定 15A——DC 前提之一 "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **show module / show module long**：槽位基础/详细信息查看命令 <<<PAGE 45>>>"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **show temperature**：温度状态查看命令（Current/Range/Danger/Thresh/Status 五列）"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Dying Gasp**：临终告警——整机失电时电容余量发三通道通告 <<<PAGE 46>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Dying Gasp Power Failure Event Occurred**：DG Syslog 消息原文（发前 3 个 Sy"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **efm-oam propagate-events dying-gasp**：在口上使能 DG 触发 802.3ah OAM PDU "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **802.3ah OAM Information PDU**：链路 OAM 报文——DG 时发 4 个，Dying Gasp 位置位，"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **snmp station / swlog output socket**：配置 SNMP 站/Syslog 服务器以接收 DG 告警"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **CE Mark / DoC**：欧盟符合性声明（2014/30/EU EMC、2014/35/EU LVD、2011/65/EU R"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **WEEE**：废弃电子电气设备指令——EU 终端分类回收标志 <<<PAGE 48>>>"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **China/Taiwan RoHS**：有害物质表 <<<PAGE 49>>>/<<<PAGE 50>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **California Proposition 65**：加州 65 号提案警告（含铅化合物） <<<PAGE 50>>>"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **Class A**：A 级数字设备——Class A 住宅环境禁用警告（FCC/VCCI/BSMI/Korea 多版本） <<<PA"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Class 1M Laser**：1M 级激光——开盖时勿用光学仪器直视 <<<PAGE 21>>>/<<<PAGE 54>>>"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **Hi-Pot Test**：耐压测试——IEEE 802.3，全部以太网口 2250V DC <<<PAGE 52>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Restricted Access Location**：受限访问场所——仅持钥匙/权限的服务人员可达 <<<PAGE 57>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **ESD（Electrostatic Discharge）**：静电放电——操作组件前须消除人体与环境静电 <<<PAGE 57>>>"
+  },
+  {
+   "h": 0.33,
+   "ok": false,
+   "head": "- **Lithium Battery Warning**：锂电池警告——错换有爆炸风险，须返厂 ALE 更换 <<<PAGE 58>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **GR-63-CORE**：电信设备环境耐用性标准 <<<PAGE 52>>>"
+  }
+ ],
+ "principles": [
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P1** 家族三机型：OS6570M-12（8×10/100/1000Base-T + 2×100/1000Base-X SFP +"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P2** Uplink/Stacking 双角色口：SFP+ 口标注\"Uplink/Stacking SFP+ Ports (1G/"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P3** combo 口机制：U28 的 21-24 口为\"100/1000Base-X SFP or 10/100/1000Bas"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P4** U28 全光上联型面板：1-20 纯 SFP 下联 + 21-24 combo + 25-30 SFP+，且独有前面板 V"
+  },
+  {
+   "h": 0.0,
+   "ok": false,
+   "head": "- **P5** 半宽/全宽双包络：12/12D=21.72cm 宽×28.07cm 深×1.7kg（半宽）；U28=44cm 宽×35cm"
+  },
+  {
+   "h": "n/a",
+   "ok": true
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P7** 可用性三特性定义：Power Supply Redundancy（多电源冗余/负载分担）、Hot-Swapping（不断电"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P8** 监控三层：自动（内置传感器超阈值发 trap 到 console）+ LED（前后面板视觉状态）+ 用户驱动（show 命"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **P9** 温度阈值按机型分化：12/12D 内部 Warning 85°C / Danger 88°C；U28 Warning 69"
+  },
+  {
+   "h": 0.25,
+   "ok": false,
+   "head": "- **P10** Tmra 统一 0-50°C；存储温度分化：12=-20~60°C、12D/U28=-40~85°C；湿度一律 5-95"
+  },
+  {
+   "h": 0.88,
+   "ok": true,
+   "head": "- **P11** 内部温度 vs Tmra 语义：\"Internal temperature refers to the sensor r"
+  },
+  {
+   "h": 0.62,
+   "ok": true,
+   "head": "- **P12** 温度双阈值行为：Warning 超限发 trap 且\"switch operations remain active\"（"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P13** show temperature 输出结构：Chassis/Device（1/CMMA）｜Current｜Range（1"
+  },
+  {
+   "h": 0.71,
+   "ok": true,
+   "head": "- **P14** 双层电源架构（12/12D）：内置电源（12=AC 65W、12=DC 30W，均 12V/5.42A 输出）+ Ext"
+  },
+  {
+   "h": 0.89,
+   "ok": true,
+   "head": "- **P15** 外置备份电源对：OS6570-12-BP（DA-60Z12，100-240VAC→12V/5A 60W）配 12；OS6"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **P16** 12D 外置 DC 宽压输入：18-75VDC（Tolerances Included）——比 U28 的 150W D"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **P17** 30W DC 双态 LED：Solid Green=DC power is good；Solid Red=There i"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **P18** U28 双 150W 电源：OS6570-BP（PS-150W-AC，100-240VAC/3-1.5A→150W/12"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P19** 150W 电源六态 LED 语义：稳绿=供电正常；闪绿=待机可接管（\"power supply is on standb"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P20** 无电源开关语义：\"The chassis does not provide an on/off switch. Conn"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P21** 电源热插拔锁扣机制：插入滑至背板\"the lock tab will click and hold\"；拆卸按锁扣向中心（"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P22** 电源托盘通用化：\"The same power supply tray is used for both AC and "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P23** DC 供电五条安全前提：可靠接地 -48VDC SELV 源、支路过流保护 15A、12AWG 铜导线、易达断路装置、受"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P24** DC 三芯极性约定：Green/yellow=ground、Black=return、Red=-48VDC；\"The b"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **P25** 机箱 supplemental 接地：前/后接地耳用 10-32 螺丝+无漆区金属接触；Panduit LCD8-10A"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **P26** 四组状态 LED：OK 三态（稳绿=诊断与 AOS 启动 OK/闪绿=进行中/稳琥珀=启动失败）；VC 四态（稳绿=ma"
+  },
+  {
+   "h": 0.0,
+   "ok": false,
+   "head": "- **P27** 端口 LED 全绿色系：千兆/SFP/SFP+ 口均稳绿=有效链路、闪绿=链路活动——无 PoE 琥珀色维度（本家族无 "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P28** DG 三通道：整机失电时发 SNMP trap（前 3 个已配 SNMP 站，含槽号/主备电源类型/失效时间）+ Sys"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P29** DG PDU 优先级：\"Dying gasp packets will be sent in the following"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P30** DG 触发三场景：唯一电源失效；主后备先后失效；后备主先后失效——\"Connect each power supply "
+  },
+  {
+   "h": 0.89,
+   "ok": true,
+   "head": "- **P31** 机架安装五项通则：Tmra（密闭多机架环温高于室温）、Reduced Air Flow、Mechanical Loadi"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P32** 间隙按机型分化：12 口机上下各 1 英寸（仅当有邻设备；无邻设备 N/A）+ 侧 2 英寸；U28 上下各 1.75 "
+  },
+  {
+   "h": 0.33,
+   "ok": false,
+   "head": "- **P33** 三套机架方案：全宽法兰（U28）；单半宽 OS6570M-RM-19-L（L 支架长短任意侧）；双半宽 OS6570M-"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P34** 先下孔后上孔紧固纪律：\"insert a rack mount screw (not provided) through"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P35** EMP 线缆规则：EMP to a Switch=Straight-through；EMP to a Computer "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P36** 多电源上电时序：\"plug in each power supply in rapid succession, (i.e"
+  }
+ ]
+}

@@ -1,0 +1,110 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>os9900-ops-troubleshoot — OmniSwitch 9900 Hardware Guide</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>OmniSwitch 9900 Hardware Guide</h1>
+<div class="sub">Rev S · 74 页 · 核心机箱（9907/9912/CMM-CFM 矩阵/VC-of-2）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">机箱与板卡</div>
+<a href="../skills/os9900-chassis-modules.html">os9900-chassis-modules</a>
+<div class="grp">安装与电源</div>
+<a href="../skills/os9900-install-power.html">os9900-install-power</a>
+<div class="grp">运维排障</div>
+<a href="../skills/os9900-ops-troubleshoot.html" class="on">os9900-ops-troubleshoot</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../hardware/index.html">硬件手册</a> › <a href="../index.html">OmniSwitch 9900 Hardware Guide</a> › <span>os9900-ops-troubleshoot</span></nav><h1>os9900-ops-troubleshoot</h1><p class="meta"><span class="badge">SKILL</span> os9900-ops-troubleshoot · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>现场更换 CMM/CFM/NI/电源/风扇托盘：执行热插拔节律（拆件间隔 30s、插件间隔 5 分钟+LED 无错）</li>
+<li>CFM 热换：先拆风扇托盘、120 秒内完成、一次只换一块</li>
+<li>NI 模块热换：同类替换（like modules）流程</li>
+<li>LED 诊断：PRI/VC/FAB/PS/TEMP 组合判读（含五灯同闪 PCIe 失效）</li>
+<li>PoE 供电排障：lanpower 命令族、Priority Disconnect 裁决、预算不足断电分析</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>热插拔节律双标准（P37，&lt;&lt;<PAGE 63>&gt;&gt;）：所有拆件间隔 30 秒；所有插件间隔 5 分钟且 LED 无错才能进行下一件——这是 9900 区别于 1U 交换机的机箱级纪律。三重热换限制（P38-P40，&lt;&lt;<PAGE 63>&gt;&gt;）：单件不可热拆；CFM 热换 120 秒窗口且风扇全在位、一次一块；NI 只能同类热换（先断网线拔光模块等 30 秒）。LED 组合诊断语义（P12，&lt;&lt;<PAGE 18>&gt;&gt;）：PRI/FAB 状态编码故障域，五灯同闪=全部 CFM PCIe 硬链路失效（拒绝登录、console 每 5 秒报错）。PoE 机制三要点：默认 operational disabled（装好不等于供电）；功率上限只设限不预留；Priority Disconnect 端口优先方向为 <strong>48（最高）→1（最低）</strong>，与接入系列相反（P31/P32/X37/X38，&lt;&lt;<PAGE 50>&gt;&gt;/&lt;&lt;<PAGE 52>&gt;&gt;/&lt;&lt;<PAGE 53>&gt;&gt;/&lt;&lt;<PAGE 55>&gt;&gt;）。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<ol>
+<li>更换作业先过三关：该组件是否多于一件（单件禁拆）→ 热插拔节律表（拆 30s/插 5min+LED 无错）→ 功率预算（<code>show chassis</code> Power Left）</li>
+<li>LED 诊断分级：单灯异常→查对应组件；FAB 闪黄→CFM 电源/PCIe；五灯同闪→整机矩阵失效走支援</li>
+<li>PoE 变更走预算：<code>show lanpower slot</code> 查逐口用量 → 调整上限/优先级 → 留意 Priority Disconnect 裁决方向</li>
+<li>更换后验证：主 CMM 四绿（PRI/PS/FAB/TEMP）+ <code>show chassis</code> 复核</li>
+</ol>
+<h2 id="a2">A2（操作步骤）</h2>
+<ul>
+<li><strong>NI 热换完整流程</strong>：断模块全部网线→拔全部光模块→等 30 秒→插同类替代模块→回插光模块→重接网线（C27，&lt;&lt;<PAGE 63>&gt;&gt;）</li>
+<li><strong>CFM 热换</strong>：一次只换一个、风扇托盘全数在位、120 秒内完成（P39/X20，&lt;&lt;<PAGE 63>&gt;&gt;）</li>
+<li><strong>拆 CFM</strong>：先拆遮挡的风扇托盘→松上下拇指螺丝、锁杆外拉释放→滑出并全程托承重量（C25，&lt;&lt;<PAGE 59>&gt;&gt;-&lt;&lt;<PAGE 61>&gt;&gt;）</li>
+<li><strong>拆电源四步</strong>：双端拔线→松拇指螺丝→手柄下拉 open→一手拉一手托底取出；空槽装盲板（C23，&lt;&lt;<PAGE 57>&gt;&gt;/&lt;&lt;<PAGE 58>&gt;&gt;）</li>
+<li><strong>拆风扇托盘</strong>：松拇指螺丝→拉出下把手脱开底部→向外向下拉出脱离顶部 tab；尽快装回（C24，&lt;&lt;<PAGE 58>&gt;&gt;/&lt;&lt;<PAGE 59>&gt;&gt;）</li>
+<li><strong>PoE 首次激活</strong>：<code>lanpower slot 2/1 service start</code>（唯一途径，admin-state 不能首启）（C15/X33，&lt;&lt;<PAGE 52>&gt;&gt;）</li>
+<li><strong>PoE 调整</strong>：单口 <code>lanpower port 1/1/6 priority critical</code>；槽上限 <code>lanpower slot 3/1 maxpower 400</code>（上限不预留）（C17/C18，&lt;&lt;<PAGE 53>&gt;&gt;/&lt;&lt;<PAGE 54>&gt;&gt;）</li>
+<li><strong>Priority Disconnect 开关</strong>：<code>lanpower slot 2/1 priority-disconnect disable|enable</code>（默认启用）（C20，&lt;&lt;<PAGE 55>&gt;&gt;）</li>
+<li><strong>状态查看</strong>：<code>show powersupply</code>（逐槽 Type/Status）+ <code>show lanpower slot 1/4</code>（逐口用量/优先级/预算）（C22，&lt;&lt;<PAGE 50>&gt;&gt;/&lt;&lt;<PAGE 51>&gt;&gt;）</li>
+<li><strong>CMM LED 判读</strong>：PRI 稳绿=主/闪绿=备/稳黄=停运/闪黄=升级中；VC 稳蓝=Master；NI 背光稳蓝=HW OK/闪蓝=启动或故障；Speed LED 稳红=HW 故障（P12/P22，&lt;&lt;<PAGE 18>&gt;&gt;/&lt;&lt;<PAGE 27>&gt;&gt;）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>Priority Disconnect 四场景裁决（P32，&lt;&lt;<PAGE 55>&gt;&gt;/&lt;&lt;<PAGE 56>&gt;&gt;）：禁用→一律拒新 PD；启用+同级→按物理端口号 48 高 1 低；启用+新 PD 最高优先级→必得电、先断最低优先级口；启用+新 PD 最低→拒</li>
+<li>调低 slot 上限致低优先级口断电（新值低于当前总消耗时）（C17/X36，&lt;&lt;<PAGE 53>&gt;&gt;）</li>
+<li>开 Class 检测复位全部 PoE 口（仅老式 IP 话机用、默认关）（C19/X34，&lt;&lt;<PAGE 52>&gt;&gt;/&lt;&lt;<PAGE 54>&gt;&gt;）</li>
+<li>FAB 闪黄时 NI 全断电但仍可 console/EMP 登录定位（P12，&lt;&lt;<PAGE 18>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（反例与坑）</h2>
+<ul>
+<li><strong>Priority Disconnect 端口优先方向为 48（最高）→1（最低），与 6865/6870/6560 等接入系列（1 高 48 低）相反</strong>——跨平台直接套用优先级规划，预算不足时断电的口正好相反（X38/P31，&lt;&lt;<PAGE 55>&gt;&gt;）</li>
+<li>热插拔节律红线：拆件间隔不足 30 秒、插件间隔不足 5 分钟或 LED 未示无错即进行下一件（X21/P37，&lt;&lt;<PAGE 63>&gt;&gt;）</li>
+<li>单 CMM/单 CFM/单电源时热拆即断业务（X11，&lt;&lt;<PAGE 63>&gt;&gt;）</li>
+<li>CFM 热换超 120 秒、一次换多块、风扇未全在位（X20，&lt;&lt;<PAGE 63>&gt;&gt;）</li>
+<li>NI 非同类模块热换（"can only be hot swapped with like modules"）；换前不断线不拔光模块不等 30 秒（X22/C27，&lt;&lt;<PAGE 63>&gt;&gt;）</li>
+<li>三风扇托盘常驻："Three fan trays are required at all times"，运维拆除须尽快装回（X19/C24，&lt;&lt;<PAGE 28>&gt;&gt;/&lt;&lt;<PAGE 59>&gt;&gt;）</li>
+<li>PoE 默认 operational disabled，装好即供电的预期会落空；lanpower port admin-state 不能用于首次激活（X37/X33，&lt;&lt;<PAGE 50>&gt;&gt;/&lt;&lt;<PAGE 52>&gt;&gt;）</li>
+<li>开 Class 检测会复位全部 PoE 口（生产操作前评估影响面）（X34，&lt;&lt;<PAGE 52>&gt;&gt;）</li>
+<li>排障红线：运行中勿触电源内部/主板；雷暴禁插拔作业；空光口不可见激光勿直视（X40/X41/X42，&lt;&lt;<PAGE 69>&gt;&gt;/&lt;&lt;<PAGE 70>&gt;&gt;/&lt;&lt;<PAGE 73>&gt;&gt;）</li>
+<li>密码丢失后果：OmniSwitch 覆盖已配置密码受限制（X46，&lt;&lt;<PAGE 48>&gt;&gt;）；解锁远程会话即向所有持凭证者开放远程访问（X47，&lt;&lt;<PAGE 47>&gt;&gt;）</li>
+</ul>
+<p>来源：OmniSwitch 9900 Series Hardware Users Guide（Ch3 PoE + Ch4 拆除部件 + LED 诊断，p50-63；附录 A，p68-73）</p><div class="pn"><a href="os9900-install-power.html">⬅ 上一单元：os9900-install-power</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

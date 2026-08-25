@@ -1,0 +1,105 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>os6360-install-power — OmniSwitch 6360 Hardware Guide</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>OmniSwitch 6360 Hardware Guide</h1>
+<div class="sub">Rev J · 83 页 · 入门千兆接入（10 机型/内置电源/PoE 三环）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">机型与端口</div>
+<a href="../skills/os6360-model-ports.html">os6360-model-ports</a>
+<div class="grp">安装与电源</div>
+<a href="../skills/os6360-install-power.html" class="on">os6360-install-power</a>
+<div class="grp">运维排障</div>
+<a href="../skills/os6360-ops-troubleshoot.html">os6360-ops-troubleshoot</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../hardware/index.html">硬件手册</a> › <a href="../index.html">OmniSwitch 6360 Hardware Guide</a> › <span>os6360-install-power</span></nav><h1>os6360-install-power</h1><p class="meta"><span class="badge">SKILL</span> os6360-install-power · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>新机上架：全宽机架安装、10 口半宽 L 支架、桌面摆放或 10/P10 壁挂</li>
+<li>站点准备：气流间隙、电涌防护、接地 lug、电源插座与电源线纪律</li>
+<li>PoE 部署：首次激活 lanpower service、调端口/槽预算、设优先级、处理 Guard Band 拒载</li>
+<li>PD 不供电或被断电，需要排查 Priority Disconnect 裁决</li>
+<li>机房温度偏高，核对 Tmra 与温度双阈值行为</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>PoE 供电三环体系（F2，&lt;&lt;<PAGE 62-68>&gt;&gt;）：外环=预算（slot maxpower/port power 上限+Guard Band 拒载），中环=优先级（low/high/critical+物理端口号 1 高 48 低同级裁决），内环=保护动作（Priority Disconnect 四情形）。PoE 激活两级模型（P27）：软件层默认 enabled，但物理层必须逐 slot <code>lanpower slot service</code> 启动才真正供电。环境包络（P7）：0-45°C（Tmra）/湿度 5-95%/100-240V；chassis 温度=传感器读数（阈值判断用）、恒高于室温（P8）。安装五大考量（P17）：Tmra 折减/气流/载重/过流/接地。</p>
+<h2 id="a1">A1（决策框架）</h2>
+<ol>
+<li><strong>安装形态四选</strong>：全宽 24/48 口机架法兰 → 10 口半宽 L 支架（OS6360-RM-19-L）→ 桌面（橡胶脚垫）→ 壁挂（仅 10/P10，OS6360-WALL-MNT）（C6-C10，&lt;&lt;<PAGE 48-55>&gt;&gt;）</li>
+<li><strong>间隙三向预留</strong>：前 6"/后 6"/侧 2"，顶底免间隙（P10，&lt;&lt;<PAGE 19>&gt;&gt;）</li>
+<li><strong>PoE 预算核算</strong>：按机型查预算表（120-760W），叠加待机功耗阶梯（13-60W，P9）；maxpower 只设上限不预留（P32）</li>
+<li><strong>预算不足时的裁决</strong>：Guard Band（余量&lt;口上限即拒新 PD）→ 降口上限放行；Priority Disconnect 四情形按优先级+端口号裁决（P34/P35）</li>
+<li><strong>温度治理</strong>：Warning 超阈值发 trap 查气流；Danger 超阈值自动关机、处理后手动重启（P23）</li>
+</ol>
+<h2 id="a2">A2（操作步骤）</h2>
+<ul>
+<li><strong>机架安装</strong>：双人作业→先穿每侧法兰底部螺丝并紧固→再上顶部螺丝；重设备下置（C6，&lt;&lt;<PAGE 48>&gt;&gt;-&lt;&lt;<PAGE 51>&gt;&gt;）；法兰卡扣：弹簧夹 out→tab 入槽→"CLICK"→螺丝固定（C7，&lt;&lt;<PAGE 49>&gt;&gt;）</li>
+<li><strong>壁挂</strong>：四托架朝下→双人定位标记→预钻孔→承重达标紧固件（自备）；建议侧立面板朝侧（C10，&lt;&lt;<PAGE 54>&gt;&gt;）</li>
+<li><strong>接地</strong>：Panduit LCD8-10A-L 接地耳+8AWG 铜线+扭矩 30-60 in-lb（C12，&lt;&lt;<PAGE 55>&gt;&gt;）</li>
+<li><strong>PoE 首次激活</strong>：<code>show powersupply</code> 确认 UP→<code>lanpower slot 2/1 service start</code>→<code>show lanpower slot 1/1</code> 核对（C14，&lt;&lt;<PAGE 60-62>&gt;&gt;）</li>
+<li><strong>预算/优先级调整</strong>：<code>lanpower port 1/1/24 power 3000</code>、<code>lanpower slot 3/1 maxpower 400</code>、<code>lanpower port 1/1/6 priority critical</code>（C16-C18，&lt;&lt;<PAGE 63-64>&gt;&gt;）</li>
+<li><strong>Guard Band 解锁</strong>：拒载时 <code>lanpower power 1/1/1 power 10000</code> 降口上限放行 4W 小 PD（C22，&lt;&lt;<PAGE 65>&gt;&gt;）</li>
+<li><strong>bt/4pair</strong>：<code>lanpower 4pair</code> 开 60/75/95W；<code>lanpower 8023bt</code> 开 Class 5-8（C20，&lt;&lt;<PAGE 62>&gt;&gt;）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>站点准备与开箱清点流程（C2/C3，&lt;&lt;<PAGE 17-19>&gt;&gt;）</li>
+<li>盲板安装：空槽箭头朝上常装，调节气流（C11，&lt;&lt;<PAGE 48>&gt;&gt;）</li>
+<li>Fast PoE：PoE 默认态固化于 FPGA，上电数秒即供电不等 AOS 启动（P30，&lt;&lt;<PAGE 63>&gt;&gt;）</li>
+<li>电涌防护五条军规（P11，&lt;&lt;<PAGE 18>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（反例/坑）</h2>
+<ul>
+<li><strong>本机型注意</strong>：<code>lanpower port admin-state</code> 不能用于首次激活 PoE——必须先 <code>lanpower slot service</code>（X5，&lt;&lt;<PAGE 62>&gt;&gt;）</li>
+<li>Class 检测开启会复位全机 PoE 口（X6，&lt;&lt;<PAGE 62>&gt;&gt;）；电容检测不符 IEEE 仅限 legacy 话机（X4，&lt;&lt;<PAGE 65>&gt;&gt;）</li>
+<li>maxpower 下调低于当前总耗时，低优先级口立即失电（C17，&lt;&lt;<PAGE 64>&gt;&gt;）</li>
+<li>危险温度阈值出厂固化不可配（X3，&lt;&lt;<PAGE 57>&gt;&gt;）</li>
+<li>桌面运行禁顶面/侧面朝上（X16，&lt;&lt;<PAGE 51>&gt;&gt;）；禁延长线（X11，&lt;&lt;<PAGE 17>&gt;&gt;）；违反电涌五条军规可能失保（X18，&lt;&lt;<PAGE 18>&gt;&gt;）</li>
+<li>盲板必须常装，否则气流改道可致整机过热故障（X14/X15，&lt;&lt;<PAGE 19>&gt;&gt;/&lt;&lt;<PAGE 77>&gt;&gt;）</li>
+</ul>
+<h2 id="_1">来源</h2>
+<p>OmniSwitch 6360 Hardware Users Guide Ch2 快速入门（&lt;&lt;<PAGE 17-24>&gt;&gt;）、Ch3 机箱与电源（&lt;&lt;<PAGE 25-57>&gt;&gt;）、Ch4 PoE 管理（&lt;&lt;<PAGE 58-69>&gt;&gt;）。条目来源：cases C2-C22；principles P7-P12/P17-P23/P25-P35；counter-examples X3-X8/X11-X18；frameworks F2。</p><div class="pn"><a href="os6360-model-ports.html">⬅ 上一单元：os6360-model-ports</a><a class="nxt" href="os6360-ops-troubleshoot.html">下一单元：os6360-ops-troubleshoot ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

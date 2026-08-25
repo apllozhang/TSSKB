@@ -1,0 +1,107 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>os6575-ops-troubleshoot — OmniSwitch 6575 Hardware Guide</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>OmniSwitch 6575 Hardware Guide</h1>
+<div class="sub">Rev A · 86 页 · 工业无风扇（M12 连接器/温度阶梯预算/Alarm Relay）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">机型与端口</div>
+<a href="../skills/os6575-model-ports.html">os6575-model-ports</a>
+<div class="grp">安装与电源</div>
+<a href="../skills/os6575-install-power.html">os6575-install-power</a>
+<div class="grp">运维排障</div>
+<a href="../skills/os6575-ops-troubleshoot.html" class="on">os6575-ops-troubleshoot</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../hardware/index.html">硬件手册</a> › <a href="../index.html">OmniSwitch 6575 Hardware Guide</a> › <span>os6575-ops-troubleshoot</span></nav><h1>os6575-ops-troubleshoot</h1><p class="meta"><span class="badge">SKILL</span> os6575-ops-troubleshoot · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>告警链路建设：Alarm Relay 输入联动输出、系统事件（如认证失败）映射干接点</li>
+<li>失电通告：Dying Gasp SNMP trap/Syslog 双通道接收端配置</li>
+<li>PoE 运维：首次激活、逐口功率/优先级调节、Guard Band 拒载解锁、Priority Disconnect 裁决</li>
+<li>巡检排障：show module/temperature/powersupply/lanpower、告警 LED 判读、温度超限处置</li>
+<li>安全红线：NEBS OSP 隔离、激光/ESD/锂电池警告</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>工业高可用三支柱框架（F3，&lt;&lt;<PAGE 12>&gt;&gt;/&lt;&lt;<PAGE 48>&gt;&gt;/&lt;&lt;<PAGE 50>&gt;&gt;-&lt;&lt;<PAGE 52>&gt;&gt;）：链路侧=MP16 Port Bypass 断电旁路；供电侧=双同规格电源+独立电路+UPS+Dying Gasp 双通道（SNMP trap/Syslog 各前 3 目标）+Alarm Relay 干接点外送（NO/NC 触点 220VDC/250VAC/2A）；运行侧=无风扇宽温+温度双阈值（93/98°C：Warning 发 trap→Danger 关机手动恢复）+Alarm in/out/event 三源映射（VC 内跨机同步）。DG 本机仅双通道，无 802.3ah OAM PDU（P30，&lt;&lt;<PAGE 52>&gt;&gt;）。PoE 语义核心：Priority Disconnect 四情形规则+Guard Band 余量判据（P37/P38）。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<ol>
+<li>告警三源映射：输入（传感器 5-12VDC）→动作（output/trap/SWLog 三选）→系统事件绑定；VC 内任一机可驱动任一机输出（P24/P25，&lt;&lt;<PAGE 48>&gt;&gt;）</li>
+<li>PoE 首启两步前置：先 powersupply type 声明电源→再 lanpower slot service start（C22/X7，&lt;&lt;<PAGE 46>&gt;&gt;/&lt;&lt;<PAGE 64>&gt;&gt;）</li>
+<li>预算管理三命令：lanpower port power（口限额）/lanpower slot maxpower（槽上限，不预留）/lanpower priority（low/high/critical）（C24/C25，&lt;&lt;<PAGE 64>&gt;&gt;/&lt;&lt;<PAGE 65>&gt;&gt;）</li>
+<li>拒载分诊：Guard Band=剩余预算&lt;口 maxpower 即拒新 PD，解法=调低口上限（C26/P37，&lt;&lt;<PAGE 67>&gt;&gt;）；Priority Disconnect 禁用后新 PD 一律按预算拒供（C27，&lt;&lt;<PAGE 68>&gt;&gt;）</li>
+<li>巡检三命令：show module→show temperature（UNDER THRESHOLD 正常）→show powersupply（Total Power/PS Type/Status）（C20，&lt;&lt;<PAGE 50>&gt;&gt;/&lt;&lt;<PAGE 62>&gt;&gt;）</li>
+</ol>
+<h2 id="a2">A2（操作步骤）</h2>
+<ul>
+<li><strong>告警输入→输出联动</strong>：alarm in temperature-alarm-in action alarm-out admin-state enable→alarm out alarm-out-1 admin-state enable→alarm map temperature-alarm-in out alarm-out-1（C18，&lt;&lt;<PAGE 49>&gt;&gt;）</li>
+<li><strong>系统事件→输出映射（认证失败例）</strong>：alarm event auth-fail-event event authentication-failure admin-state enable→alarm out set-alarm-out-chassis-1→alarm map … out …；show alarm event config/show alarm status/alarm clear status 核对清除（C19，&lt;&lt;<PAGE 49>&gt;&gt;）</li>
+<li><strong>触点接线</strong>：NO/C/NC 三针——触发时 NO 闭合、NC 断开（P26，&lt;&lt;<PAGE 49>&gt;&gt;）；输入针 1 正/针 2 地（P24）</li>
+<li><strong>DG 接收配置</strong>：snmp station+swlog output socket（C21，&lt;&lt;<PAGE 52>&gt;&gt;）</li>
+<li><strong>PoE 首次激活与核对</strong>：powersupply type→lanpower slot 1/1 service start→show lanpower 1/1 逐口核对 Maximum/Actual/Status/Priority/On-Off/Class 与槽预算（C22，&lt;&lt;<PAGE 46>&gt;&gt;/&lt;&lt;<PAGE 64>&gt;&gt;/&lt;&lt;<PAGE 71>&gt;&gt;）</li>
+<li><strong>PoE 关断两级</strong>：单口 lanpower port admin-state disable；整槽 lanpower slot service stop；admin-state enable 仅复活被断口（C23，&lt;&lt;<PAGE 64>&gt;&gt;）</li>
+<li><strong>告警四态 LED 组合判读</strong>：输入+动作 alarm out→双 On；输入+动作 trap/SWLog→仅 Input On；系统事件触发输出→仅 Output On（P27，&lt;&lt;<PAGE 48>&gt;&gt;）；Alarm In/Out LED 各 Solid Red=检测到触发（P21，&lt;&lt;<PAGE 27>&gt;&gt;）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>温度告警输入驱动干接点外送 PLC（C18，&lt;&lt;<PAGE 49>&gt;&gt;）</li>
+<li>认证失败事件→告警输出映射与实时状态核对（C19，&lt;&lt;<PAGE 49>&gt;&gt;）</li>
+<li>Guard Band 解锁小功率 PD：lanpower power 1/1/1 power 10000 调低口上限后正常上电（C26，&lt;&lt;<PAGE 67>&gt;&gt;）</li>
+<li>Priority Disconnect 四情形：禁用拒新 PD；同级按物理口号 1 最高→8 最低裁决；新 PD 最高级→自动断最低级口接纳；新 PD 最低级→被拒存量不停（P38，&lt;&lt;<PAGE 68>&gt;&gt;-&lt;&lt;<PAGE 70>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（反例与坑）</h2>
+<ul>
+<li>admin-state 不能首次激活 PoE，必须 lanpower slot service（X7，&lt;&lt;<PAGE 64>&gt;&gt;）</li>
+<li>class detection 开启复位全口 PoE（X6，&lt;&lt;<PAGE 64>&gt;&gt;）</li>
+<li>电容检测不符 IEEE，仅限老 IP 话机（X8，&lt;&lt;<PAGE 66>&gt;&gt;）</li>
+<li>调低槽预算可致低优先级口掉电；maxpower 不预留功率（X9/X10，&lt;&lt;<PAGE 65>&gt;&gt;）</li>
+<li>Guard Band 不适用于已上电 PD——但拔电源缩减预算时 priority disconnect 会生效掉口（X11，&lt;&lt;<PAGE 67>&gt;&gt;）</li>
+<li>Danger 阈值固化不可配；超限关机须手动重启（X16/X17，&lt;&lt;<PAGE 51>&gt;&gt;）</li>
+<li>NEBS 红线：楼内端口禁金属直连 OSP；AC 电源必须接 SPD（X25/X26，&lt;&lt;<PAGE 80>&gt;&gt;）</li>
+<li>Class 1M 激光勿直视、空光口加盖；运行中勿触背板；雷暴禁作业；锂电池返厂（X31/X29/X33，&lt;&lt;<PAGE 80>&gt;&gt;-&lt;&lt;<PAGE 85>&gt;&gt;）</li>
+<li>aaa 一次一类；密码覆盖受限（X14/X15，&lt;&lt;<PAGE 17>&gt;&gt;/&lt;&lt;<PAGE 18>&gt;&gt;）</li>
+</ul>
+<p>来源：OmniSwitch 6575 Hardware Users Guide（Ch3-Ch4+附录 A，p46-71、p77-85）</p><div class="pn"><a href="os6575-install-power.html">⬅ 上一单元：os6575-install-power</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

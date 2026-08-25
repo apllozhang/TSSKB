@@ -307,6 +307,86 @@ NEW_COURSES = [
         ('选型', ['aos-tx-module-matrix', 'aos-tx-platform-compat']),
         ('运维', ['aos-tx-ddm-install']),
        ]),
+  dict(id='hardware/os6360', book='hw-6360', title='OmniSwitch 6360 Hardware Guide',
+       subtitle='Rev J · 83 页 · 入门千兆接入（10 机型/内置电源/PoE 三环）',
+       route=['P/PX/H 命名解码', 'combo 与 10G 许可口', 'PoE 三环与 Fast/Perpetual'],
+       groups=[
+        ('机型与端口', ['os6360-model-ports']),
+        ('安装与电源', ['os6360-install-power']),
+        ('运维排障', ['os6360-ops-troubleshoot']),
+       ]),
+  dict(id='hardware/os6465', book='hw-6465', title='OmniSwitch 6465 Hardware Guide',
+       subtitle='Rev V · 99 页 · 工业加固（宽温三档/DIN-DNV 安装/告警继电器）',
+       route=['工业线/运输线双线', '宽温与 PoE 温度降额', 'DIN/DUO/DNV 三套件与 ROJ 接线'],
+       groups=[
+        ('机型与端口', ['os6465-model-ports']),
+        ('安装与电源', ['os6465-install-power']),
+        ('运维排障', ['os6465-ops-troubleshoot']),
+       ]),
+  dict(id='hardware/os6560', book='hw-6560', title='OmniSwitch 6560 Hardware Guide',
+       subtitle='Rev P · 111 页 · 多千兆 bt 接入（2.5G/5G/双 PX 1565W/DNV）',
+       route=['Z/E 命名与 5G 口位', '三档热换电源与混插规则', 'lanpower 全家桶与 Dying Gasp'],
+       groups=[
+        ('机型与端口', ['os6560-model-ports']),
+        ('安装与电源', ['os6560-install-power']),
+        ('运维排障', ['os6560-ops-troubleshoot']),
+       ]),
+  dict(id='hardware/os6570', book='hw-6570', title='OmniSwitch 6570M Hardware Guide',
+       subtitle='Rev G · 59 页 · 千兆接入（12/12D/U28/半宽并装）',
+       route=['三机型选型', '双层电源架构', 'DG 三通道与温度阈值分化'],
+       groups=[
+        ('机型与端口', ['os6570-model-ports']),
+        ('安装与电源', ['os6570-install-power']),
+        ('运维排障', ['os6570-ops-troubleshoot']),
+       ]),
+  dict(id='hardware/os6575', book='hw-6575', title='OmniSwitch 6575 Hardware Guide',
+       subtitle='Rev A · 86 页 · 工业无风扇（M12 连接器/温度阶梯预算/Alarm Relay）',
+       route=['P12/U28/MP16 形态选型', '四款电源与 ROJ 接线', '告警继电器与 Port Bypass'],
+       groups=[
+        ('机型与端口', ['os6575-model-ports']),
+        ('安装与电源', ['os6575-install-power']),
+        ('运维排障', ['os6575-ops-troubleshoot']),
+       ]),
+  dict(id='hardware/os6860', book='hw-6860', title='OmniSwitch 6860/6860E/6860N Hardware Guide',
+       subtitle='Rev W · 115 页 · 三代 15 机型（20G VC→QSFP28 VFL/七款电源）',
+       route=['三代命名与 VFL 演进', 'N 型预算矩阵与 2000W 降额', 'DG PDU 挤占公式与反向优先级'],
+       groups=[
+        ('机型与端口', ['os6860-model-ports']),
+        ('安装与电源', ['os6860-install-power']),
+        ('运维排障', ['os6860-ops-troubleshoot']),
+       ]),
+  dict(id='hardware/os6865', book='hw-6865', title='OmniSwitch 6865 Hardware Guide',
+       subtitle='Rev Y · 76 页 · 加固型（无风扇宽温/五形态安装/军规 DC 极性）',
+       route=['P16X/U12X/U28X 选型', '高温预算腰斩', 'DC 极性军规与 LED 判读'],
+       groups=[
+        ('机型与端口', ['os6865-model-ports']),
+        ('安装与电源', ['os6865-install-power']),
+        ('运维排障', ['os6865-ops-troubleshoot']),
+       ]),
+  dict(id='hardware/os6870', book='hw-6870', title='OmniSwitch 6870 Hardware Guide',
+       subtitle='Rev D · 85 页 · 九机型（QSFP56 200G/混插扩容/四色 LED）',
+       route=['M/Z/V/CNI/LNI 分类', '200G 阶梯与允许混插', 'Class 5-8 与上电七步'],
+       groups=[
+        ('机型与端口', ['os6870-model-ports']),
+        ('安装与电源', ['os6870-install-power']),
+        ('运维排障', ['os6870-ops-troubleshoot']),
+       ]),
+  dict(id='hardware/os6900', book='hw-6900v2', title='OmniSwitch 6900 Hardware Guide',
+       subtitle='Rev C · 90 页 · 模块化机箱（端口组锁速/QSFP-DD 十二态/两代电源）',
+       route=['十机型矩阵与 NI 板卡', '深机箱三方案与气流', '热插拔与十二态 LED'],
+       groups=[
+        ('机箱与板卡', ['os6900-chassis-modules']),
+        ('安装与电源', ['os6900-install-power']),
+        ('运维排障', ['os6900-ops-troubleshoot']),
+       ]),
+  dict(id='hardware/os9900', book='hw-9900', title='OmniSwitch 9900 Hardware Guide',
+       subtitle='Rev S · 74 页 · 核心机箱（9907/9912/CMM-CFM 矩阵/VC-of-2）',
+       route=['9907/9912 与 NI 禁用清单', 'N+1 冗余与三不混', '热插拔节律与五灯诊断'],
+       groups=[
+        ('机箱与板卡', ['os9900-chassis-modules']),
+        ('安装与电源', ['os9900-install-power']),
+        ('运维排障', ['os9900-ops-troubleshoot']),
+       ]),
 ]
 COURSES = NEW_COURSES  # 旧课程(ov-terra/bootcamp/core)保留 site/ 预构建页面，源 books 未随库分发
 _LEGACY = [
@@ -465,7 +545,7 @@ def build_course(c):
 
     def crumbs(cur='', sub=False):
         cat = c['id'].split('/')[0]
-        cat_label = {'postsales': '售后', 'presales': '售前', 'manuals': '配置手册', 'aos': 'AOS 软件手册'}[cat]
+        cat_label = {'postsales': '售后', 'presales': '售前', 'manuals': '配置手册', 'aos': 'AOS 软件手册', 'hardware': '硬件手册'}[cat]
         p = '../../../' if sub else '../../'
         q = '../' if sub else ''
         bar = f'<nav class="crumbs"><a href="{p}index.html">🏠 培训门户</a> › <a href="{p}{cat}/index.html">{cat_label}</a> › <a href="{q}index.html">{html_mod.escape(c["title"].split(" · ")[0])}</a>'
@@ -562,7 +642,7 @@ def build_category(dirname, label):
         f.write(page)
     print('category built:', dirname)
 
-for dirname, label in [('postsales', '售后 · Postsales'), ('presales', '售前 · Presales'), ('manuals', '配置手册 · Manuals'), ('aos', 'AOS 软件手册 · Software Guides')]:
+for dirname, label in [('postsales', '售后 · Postsales'), ('presales', '售前 · Presales'), ('manuals', '配置手册 · Manuals'), ('aos', 'AOS 软件手册 · Software Guides'), ('hardware', '硬件手册 · Hardware Guides')]:
     build_category(dirname, label)
 
 # ============ 门户封面 ============
@@ -609,6 +689,13 @@ CATALOG = [
         ('AOS 8.10R04 · Release Notes', '105 页 · 4 个知识单元 · 升级方法论 / 已知问题库 / 新特性', 'aos/release-notes/index.html'),
         ('AOS 8.10R04 · Specifications Guide', '98 页 · 3 个知识单元 · 平台梯队 / 容量红线 / TCAM', 'aos/specifications/index.html'),
         ('AOS 8.10R04 · Transceivers Guide', '107 页 · 3 个知识单元 · 模块矩阵 / 平台兼容 / DDM', 'aos/transceivers/index.html'),
+    ]),
+    ('硬件手册 · Hardware Guides', '#f97316', [
+        ('OmniSwitch 6360 / 6570M', '入门千兆接入 · 83+59 页 · 内置电源 / PoE 三环', 'hardware/os6360/index.html'),
+        ('OmniSwitch 6560', '多千兆 bt 接入 · 111 页 · 2.5G/5G / 双 PX 1565W', 'hardware/os6560/index.html'),
+        ('OmniSwitch 6465 / 6575', '工业加固 · 99+86 页 · 宽温 / DIN-DNV / 告警继电器', 'hardware/os6465/index.html'),
+        ('OmniSwitch 6860 / 6865 / 6870', '汇聚与加固 · 276 页 · 三代 VFL / 军规 DC / 200G', 'hardware/os6860/index.html'),
+        ('OmniSwitch 6900 / 9900', '模块化核心机箱 · 164 页 · NI 板卡 / CMM-CFM / N+1', 'hardware/os6900/index.html'),
     ]),
     ('无线网络 · WLAN', '#a78bfa', [
         ('WiFi 6 / 6E / 7 技术基础', '标准演进、OFDMA、多链路操作', None),

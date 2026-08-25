@@ -1,0 +1,100 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>os6865-model-ports — OmniSwitch 6865 Hardware Guide</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>OmniSwitch 6865 Hardware Guide</h1>
+<div class="sub">Rev Y · 76 页 · 加固型（无风扇宽温/五形态安装/军规 DC 极性）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">机型与端口</div>
+<a href="../skills/os6865-model-ports.html" class="on">os6865-model-ports</a>
+<div class="grp">安装与电源</div>
+<a href="../skills/os6865-install-power.html">os6865-install-power</a>
+<div class="grp">运维排障</div>
+<a href="../skills/os6865-ops-troubleshoot.html">os6865-ops-troubleshoot</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../hardware/index.html">硬件手册</a> › <a href="../index.html">OmniSwitch 6865 Hardware Guide</a> › <span>os6865-model-ports</span></nav><h1>os6865-model-ports</h1><p class="meta"><span class="badge">SKILL</span> os6865-model-ports · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>加固场景选型：在 P16X/U12X/U28X 三机型中按 PoE 密度 vs 上行密度选</li>
+<li>解码命名：P=PoE 电机型、U=上行口密集、数字=端口总数、X=含 SFP+ 10G 上行</li>
+<li>核对 75W HPoE / 60W bt 口位与 SFP/SFP+/QSFP+ 上行构成</li>
+<li>宽温部署核对：-40~74°C（需气流）/65°C（免气流）/55°C（DNV 盖）三档</li>
+<li>工业合规核对（IEC 61850-3 变电站/EN 50121-4 铁路/NEMA TS-2 交通/DNV 2.4 船用）</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>6865 是加固型（hardened）千兆/10G 交换机家族（P1，&lt;&lt;<PAGE 42>&gt;&gt;）："designed for demanding electrical and severe temperature environments"。三机型分工（F1，&lt;&lt;<PAGE 42>&gt;&gt;-&lt;&lt;<PAGE 48>&gt;&gt;）：P16X=PoE 供电密集（4×75W HPoE/bt + 8×PoE+）；U12X=光纤上行紧凑型；U28X=大量光纤上行 + 2×QSFP+ VFL。四条家族铁律：全无风扇（P3，散热全靠机箱散热片+外部气流）；机箱两档（半宽 2RU/全宽 1RU，P4）；TMRA 三档温度包络（P9：有气流 -40~74°C、无气流 -40~65°C、DNV 盖一律 55°C）；1588v2 精密时间同步全家族支持（电力/工业场景）。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<ol>
+<li>选型三问（F1）：现场要给多少 75W 大功率 PD？→P16X；要多少路上行？→U12X（8 光）/U28X（24 光+2 VFL）；要不要 VC 堆叠？→仅 U28X 有 QSFP+ VFL</li>
+<li>温度档核对（F2 环境环）：现场最高温 &lt;65°C 免气流；≥65°C 必须气流；74°C 还必须封闭机柜/机架（X2，&lt;&lt;<PAGE 9>&gt;&gt;）；装 DNV 盖一律按 55°C 降额（X3）</li>
+<li>顶部间隙按温度分档：机架 &lt;65°C 留 1/2 RU、≥65°C 留 1 RU；侧 2"/前后 6"（P13，&lt;&lt;<PAGE 11>&gt;&gt;/&lt;&lt;<PAGE 12>&gt;&gt;）</li>
+<li>端口功率域核对：HPoE 口默认 75000mW、bt 口 60000mW、PoE+ 口 30000mW（P26，&lt;&lt;<PAGE 56>&gt;&gt;）</li>
+</ol>
+<h2 id="a2">A2（操作步骤）</h2>
+<ul>
+<li><strong>面板识别</strong>：P16X=2 SFP+ + 2 SFP + 4 HPoE/bt + 8 PoE+（半宽 2RU）；U12X=2 SFP+ + 6 SFP + 4 HPoE；U28X=4 SFP+ + 20 SFP + 4 HPoE + 2 QSFP+ VFL（29/30 口）（P2，&lt;&lt;<PAGE 44>&gt;&gt;/&lt;&lt;<PAGE 46>&gt;&gt;/&lt;&lt;<PAGE 48>&gt;&gt;）</li>
+<li><strong>LED 判读</strong>：OK（稳绿=正常/闪绿=诊断中/稳琥珀=软件错误）；VC（闪绿=Master/闪琥珀=Slave，闪烁次数=单元号，每 5 秒停顿）；PS1/PS2（稳绿=正常/稳琥珀=故障/灭=不在位）（P38，&lt;&lt;<PAGE 38>&gt;&gt;）</li>
+<li><strong>端口 LED 颜色</strong>：RJ45 绿=非 PoE 链路、琥珀=PoE 设备已接、闪烁=有活动；SFP 琥珀=100M（P39，&lt;&lt;<PAGE 38>&gt;&gt;）</li>
+<li><strong>console 连接</strong>：RJ45 Console 口 + 随箱 DB9-RJ45 转接头，9600-8N1（&lt;&lt;<PAGE 12>&gt;&gt;/&lt;&lt;<PAGE 39>&gt;&gt;）</li>
+<li><strong>待机功耗核对</strong>：P16X=30W、U12X=29W、U28X=50W（P8）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>P16X 16 口 PoE 部署构成：4×75W HPoE/bt + 8×PoE+ + 2 SFP+ + 2 SFP，面向话机/AP/摄像头密集供电（F1，&lt;&lt;<PAGE 42>&gt;&gt;/&lt;&lt;<PAGE 44>&gt;&gt;）</li>
+<li>U28X 大规模光纤上行：4 SFP+ + 20 SFP + 4 HPoE + 2×QSFP+ VFL，全宽 1RU（17.2" 宽），VC 堆叠走 VFL（&lt;&lt;<PAGE 47>&gt;&gt;/&lt;&lt;<PAGE 49>&gt;&gt;）</li>
+<li>高温机房部署核对链：74°C →必须封闭机柜+气流+顶部 1 RU 间隙（X1/X2，&lt;&lt;<PAGE 9>&gt;&gt;/&lt;&lt;<PAGE 11>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（反例与坑）</h2>
+<ul>
+<li>65°C 是气流硬阈值：低于 65°C 免气流、≥65°C 必须气流（X1，&lt;&lt;<PAGE 11>&gt;&gt;）；74°C 必须封闭机柜（X2，&lt;&lt;<PAGE 9>&gt;&gt;）</li>
+<li>DNV 电源盖降额：装盖后无论有无气流上限都降到 55°C（X3，&lt;&lt;<PAGE 42>&gt;&gt;/&lt;&lt;<PAGE 45>&gt;&gt;/&lt;&lt;<PAGE 47>&gt;&gt;）</li>
+<li>三机型均不支持半双工（X38，&lt;&lt;<PAGE 44>&gt;&gt;/&lt;&lt;<PAGE 46>&gt;&gt;/&lt;&lt;<PAGE 48>&gt;&gt;）</li>
+<li>高温下 PoE 预算腰斩：P16X/U12X 双电源 65°C/74°C 从 300W 降到 150W——选型勿按常温预算外推（X31，&lt;&lt;<PAGE 56>&gt;&gt;）</li>
+<li>激光辐射：空光口勿直视，拆线后加盖（X34，&lt;&lt;<PAGE 72>&gt;&gt;）</li>
+<li>跨书易混：6865 的 HPoE 口为 75W/60W bt 双兼容，与 6860 E 代"not 802.3bt compliant"的私有 HPoE 不同，对 bt PD 互通性更好</li>
+</ul>
+<p>来源：OmniSwitch 6865 Hardware Users Guide（Ch1 p9-12/p38 + Ch2 p42-50）</p><div class="pn"><a href="../index.html">⬅ 返回课程首页</a><a class="nxt" href="os6865-install-power.html">下一单元：os6865-install-power ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

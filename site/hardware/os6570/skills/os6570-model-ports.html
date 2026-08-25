@@ -1,0 +1,96 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>os6570-model-ports — OmniSwitch 6570M Hardware Guide</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>OmniSwitch 6570M Hardware Guide</h1>
+<div class="sub">Rev G · 59 页 · 千兆接入（12/12D/U28/半宽并装）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">机型与端口</div>
+<a href="../skills/os6570-model-ports.html" class="on">os6570-model-ports</a>
+<div class="grp">安装与电源</div>
+<a href="../skills/os6570-install-power.html">os6570-install-power</a>
+<div class="grp">运维排障</div>
+<a href="../skills/os6570-ops-troubleshoot.html">os6570-ops-troubleshoot</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../hardware/index.html">硬件手册</a> › <a href="../index.html">OmniSwitch 6570M Hardware Guide</a> › <span>os6570-model-ports</span></nav><h1>os6570-model-ports</h1><p class="meta"><span class="badge">SKILL</span> os6570-model-ports · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>6570M 家族选型：12（铜口小规模）/12D（直流场景）/U28（全光密集）三选一</li>
+<li>解码面板端口：铜口/SFP/SFP+ 口位、combo 21-24、Uplink/Stacking 双角色口</li>
+<li>规划 Virtual Chassis 堆叠链路口位（12 口机 11-12，U28 机 25-30）</li>
+<li>半宽机双机 1U 并排（DUO-MNT）的端口/空间核算</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>6570M 选型三轴矩阵（F1，&lt;&lt;<PAGE 11>&gt;&gt;/&lt;&lt;<PAGE 22>&gt;&gt;/&lt;&lt;<PAGE 26>&gt;&gt;/&lt;&lt;<PAGE 35>&gt;&gt;）：轴一=下行口形态（12/12D=8 铜口+2 SFP 混合，柜边小汇聚；U28=20 纯 SFP+4 combo 全光，光纤入柜）；轴二=供电制式（12=内置 AC、12D=内置 DC 宽压）；轴三=上联与堆叠需求（12/12D=2 个 SFP+、U28=6 个 SFP+）。核心机制：Uplink/Stacking SFP+ 口为 1G/10G 双角色——同一口既做上联又做 Virtual Chassis 堆叠链路（P2，&lt;&lt;<PAGE 11>&gt;&gt;/&lt;&lt;<PAGE 21>&gt;&gt;/&lt;&lt;<PAGE 25>&gt;&gt;）；U28 combo 口同口位光铜互斥（P3）。本家族无 PoE、全机型不支持半双工（X1，&lt;&lt;<PAGE 21>&gt;&gt;/&lt;&lt;<PAGE 23>&gt;&gt;/&lt;&lt;<PAGE 25>&gt;&gt;）。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<ol>
+<li>按物理环境定包络：12/12D=半宽 21.72cm×28.07cm×1.7kg；U28=全宽 44cm×35cm×4.08kg（P5，&lt;&lt;<PAGE 22>&gt;&gt;/&lt;&lt;<PAGE 24>&gt;&gt;/&lt;&lt;<PAGE 26>&gt;&gt;）</li>
+<li>按业务定端口：铜口接终端选 12/12D；全光汇聚选 U28（20×SFP + 4 combo 21-24 + 6×SFP+ 25-30）</li>
+<li>按堆叠定上联口预算：12 口机堆叠占 11-12 两口；U28 有 6 个 SFP+ 可分摊上联与堆叠（P2）</li>
+<li>半宽空间利用框架（F2，&lt;&lt;<PAGE 28>&gt;&gt;-&lt;&lt;<PAGE 34>&gt;&gt;/&lt;&lt;<PAGE 5>&gt;&gt;）：两台 12 并排=16 铜口+4 SFP+4 SFP+ 上联/堆叠口，深度 28cm 仍省机架空间</li>
+<li>按功耗定供电：待机 12=23W、12D=24W、U28=71W——光口密度推高基线（P6，&lt;&lt;<PAGE 22>&gt;&gt;/&lt;&lt;<PAGE 24>&gt;&gt;/&lt;&lt;<PAGE 26>&gt;&gt;）</li>
+</ol>
+<h2 id="a2">A2（操作步骤）</h2>
+<ul>
+<li>面板核对：12/12D=8×10/100/1000Base-T + 2×100/1000Base-X SFP + 2×SFP+（11-12）；U28=20×SFP + 4×combo（21-24）+ 6×SFP+（25-30）（P1，&lt;&lt;<PAGE 11>&gt;&gt;）</li>
+<li>combo 口使用：同口位 SFP 光口与 RJ45 铜口二选一，不可同时（P3，&lt;&lt;<PAGE 11>&gt;&gt;/&lt;&lt;<PAGE 25>&gt;&gt;）</li>
+<li>VC 识别：U28 独有 Virtual Chassis ID LED；VC LED 稳绿=master/稳琥珀=slave/闪琥珀以次数报 unit 号（P26，&lt;&lt;<PAGE 25>&gt;&gt;/&lt;&lt;<PAGE 27>&gt;&gt;）</li>
+<li>端口 LED 判读：稳绿=有效链路、闪绿=链路活动，全绿色系无 PoE 维度（P27，&lt;&lt;<PAGE 27>&gt;&gt;）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>U28 全光上联型面板构成与双电源舱布局（P1/P18，&lt;&lt;<PAGE 11>&gt;&gt;/&lt;&lt;<PAGE 25>&gt;&gt;）</li>
+<li>半宽双机并排后端口总量核算（F2，&lt;&lt;<PAGE 32>&gt;&gt;-&lt;&lt;<PAGE 34>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（反例与坑）</h2>
+<ul>
+<li>全机型不支持半双工连接（X1，&lt;&lt;<PAGE 21>&gt;&gt;/&lt;&lt;<PAGE 23>&gt;&gt;/&lt;&lt;<PAGE 25>&gt;&gt;）</li>
+<li>combo 口光铜互斥，按两口配置会失效（P3，&lt;&lt;<PAGE 25>&gt;&gt;）</li>
+<li>上联/堆叠共用 SFP+ 口：堆叠占口后上联带宽同步受挤，规划时先留堆叠口（P2）</li>
+<li>待机功耗梯度差 3 倍：U28 71W，按 12 机型 23W 估算供电会低估（P6）</li>
+</ul>
+<p>来源：OmniSwitch 6570M Hardware Users Guide（Ch1/Ch3，p11-34）</p><div class="pn"><a href="../index.html">⬅ 返回课程首页</a><a class="nxt" href="os6570-install-power.html">下一单元：os6570-install-power ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>精华长文 DIGEST — OmniSwitch 6560 Hardware Guide</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>OmniSwitch 6560 Hardware Guide</h1>
+<div class="sub">Rev P · 111 页 · 多千兆 bt 接入（2.5G/5G/双 PX 1565W/DNV）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">机型与端口</div>
+<a href="skills/os6560-model-ports.html">os6560-model-ports</a>
+<div class="grp">安装与电源</div>
+<a href="skills/os6560-install-power.html">os6560-install-power</a>
+<div class="grp">运维排障</div>
+<a href="skills/os6560-ops-troubleshoot.html">os6560-ops-troubleshoot</a></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../hardware/index.html">硬件手册</a> › <a href="index.html">OmniSwitch 6560 Hardware Guide</a> › <span>精华长文 DIGEST</span></nav><h1>精华长文 DIGEST</h1><h1 id="digest-omniswitch-6560-hardware-users-guide">DIGEST — OmniSwitch 6560 Hardware Users Guide 精华</h1>
+<p>本书是 ALE 多千兆（2.5G/5G 802.3bt）接入交换机 OS6560 家族的硬件手册（111 页，13 个 1U 机型）。核心卖点：Wi-Fi6/Wi-Fi7 时代的多千兆 bt 供电接入 + 20G QSFP+ VFL。全书沿"选型→安装→上电→PoE→监控"生命周期展开。</p>
+<h2 id="_1">一、知识地图（三技能单元）</h2>
+<ol>
+<li><strong>机型与端口体系</strong>（os6560-model-ports）：Z/E 命名解码、多千兆口位、10G 许可口、VFL（Ch1/Ch3，p12-49）。</li>
+<li><strong>安装与供电</strong>（os6560-install-power）：机架/桌面/DNV 船用、三档可热换电源（300/600/920W）、PoE 预算联动、DC 接线（Ch2-Ch4，p51-95）。</li>
+<li><strong>运维与排障</strong>（os6560-ops-troubleshoot）：lanpower 全家桶、Dying Gasp 三通道、温度双阈值、LED 诊断（Ch2-Ch4，p19-96）。</li>
+</ol>
+<h2 id="_2">二、三单元要点串讲</h2>
+<h3 id="1">1. 机型与端口：多千兆三轴矩阵</h3>
+<p>命名（&lt;&lt;<PAGE 12-13>&gt;&gt;）：<code>P</code>=PoE；<code>Z8/Z24/Z16</code>=2.5G bt 口数；<code>E</code>=增强版指定口段升 5G；<code>X4</code>=4×SFP+ 上行；<code>X10</code>=纯上联。10G 许可口：X4 家族 49-50 口 SFP(+) 默认 1G，10G 需软件许可（&lt;&lt;<PAGE 30-44>&gt;&gt;）。双 PX 电源 PoE 预算最高 1565W（&lt;&lt;<PAGE 87>&gt;&gt;）。陷阱：BP-P 300W 电源不配 E 机型与新 PN 的 P48Z16；新 PN（904072/904073-90）需 AOS ≥8.8R1（&lt;&lt;<PAGE 60>&gt;&gt;）。</p>
+<h3 id="2">2. 安装与供电：可热换电源与混插规则</h3>
+<p>与 6360（内置电源）不同，6560 为可热换模块化电源：BP-P 300W/BP-PH 600W/BP-PX 920W 三档，同 wattage 双电源负载分担（&lt;&lt;<PAGE 60-63>&gt;&gt;）。混插规则：wattage 禁混（发 trap 告警）；唯一例外 BP（AC）+BP-D（DC）150W 可同箱（&lt;&lt;<PAGE 64-65>&gt;&gt;）。DNV 船用套件仅限 P48X4/X10：OS-DNV-MNT 托架+OS-DNV-FILTER EMC 滤波器（10kHz-150kHz）（&lt;&lt;<PAGE 58-67>&gt;&gt;）。DC 接线三芯 12AWG（绿黄=地/黑=return/红=-48V）+15A 过流+SELV（&lt;&lt;<PAGE 68-69>&gt;&gt;）。</p>
+<h3 id="3-poe">3. 运维与排障：PoE 语义与失电通告</h3>
+<p>lanpower 命令族（&lt;&lt;<PAGE 89-95>&gt;&gt;）：slot service 两级激活（admin-state 仅复活）；power/maxpower 上限不预留；priority 三级；Priority Disconnect 同级按物理口号 <strong>1 高 48 低</strong> 裁决；Guard Band 余量低于口上限即拒新 PD（解法=降口上限）。Dying Gasp 三通道：SNMP trap（前 3 站）+Syslog（前 3 服务器）+4 个 802.3ah OAM PDU 上联口优先（&lt;&lt;<PAGE 78-82>&gt;&gt;）。温度双阈值：Warning 用户可配不停机，Danger 固化关机需手动重启（&lt;&lt;<PAGE 76>&gt;&gt;）。</p>
+<h2 id="_3">三、本书在知识库中的位置</h2>
+<p>与 hw-6360（入门千兆）、hw-6465（工业加固）构成接入家族三线——6560 定位多千兆 bt 旗舰、可热换电源、预算上限 1565W。跨书易混点：本机型 Priority Disconnect 为"端口号 1 高 48 低"（接入系列通用），与 hw-9900 的"48 高 1 低"相反；
+电源可混插场景仅 BP+BP-D。</p>
+<h2 id="_4">来源</h2>
+<p>OmniSwitch 6560 Hardware Users Guide（Rev. P, 2025-12）。verified.md：cases C1-C22；
+principles P1-P34；
+counter-examples X1-X27；
+frameworks F1-F3；
+glossary 约 60 条。</p><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

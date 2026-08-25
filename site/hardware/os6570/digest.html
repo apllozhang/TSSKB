@@ -1,0 +1,84 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>精华长文 DIGEST — OmniSwitch 6570M Hardware Guide</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>OmniSwitch 6570M Hardware Guide</h1>
+<div class="sub">Rev G · 59 页 · 千兆接入（12/12D/U28/半宽并装）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">机型与端口</div>
+<a href="skills/os6570-model-ports.html">os6570-model-ports</a>
+<div class="grp">安装与电源</div>
+<a href="skills/os6570-install-power.html">os6570-install-power</a>
+<div class="grp">运维排障</div>
+<a href="skills/os6570-ops-troubleshoot.html">os6570-ops-troubleshoot</a></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../hardware/index.html">硬件手册</a> › <a href="index.html">OmniSwitch 6570M Hardware Guide</a> › <span>精华长文 DIGEST</span></nav><h1>精华长文 DIGEST</h1><h1 id="digest-omniswitch-6570m-hardware-users-guide">DIGEST — OmniSwitch 6570M Hardware Users Guide 精华</h1>
+<p>本书是 ALE 紧凑型交换机 OS6570M 家族硬件手册（59 页，3 个定配置机型：12/12D/U28）。核心卖点：半宽双机并排省机位 + 全光上联型 U28 + Dying Gasp 三通道失电通告。无 PoE、无光模块专章，全书沿"选型→安装→上电→监控"生命周期展开。</p>
+<h2 id="_1">一、知识地图（三技能单元）</h2>
+<ol>
+<li><strong>机型与端口体系</strong>（os6570-model-ports）：12/12D/U28 三轴选型、Uplink/Stacking SFP+ 双角色口、combo 互斥、半宽空间利用（Ch1/Ch3，p11-34）。</li>
+<li><strong>安装与供电</strong>（os6570-install-power）：三套机架方案（全宽法兰/RM-19-L/DUO-MNT）、双层电源架构（12/12D 内置+外置备份）与 U28 双 150W 舱、DC 线束、supplemental 接地（Ch2-Ch3，p13-45）。</li>
+<li><strong>运维与排障</strong>（os6570-ops-troubleshoot）：Dying Gasp 三通道、温度双阈值固化（12 口 85/88°C vs U28 69/74°C）、OK/VC/PS LED 与 150W 六态灯、安全红线（Ch2-Ch3+附录 A，p16-58）。</li>
+</ol>
+<h2 id="_2">二、三单元要点串讲</h2>
+<h3 id="1">1. 机型与端口：三轴选型矩阵</h3>
+<p>命名（&lt;&lt;<PAGE 11>&gt;&gt;）：<code>12</code>=8 铜口+2 SFP+2 SFP+ 半宽机；<code>12D</code>=DC 版（内置 DC 30W，18-75VDC 宽压）；<code>U28</code>=28 口全光上联型（20×SFP+4 combo+6×SFP+，双电源舱，独有 VC ID LED）。核心机制：SFP+ 口为"Uplink/Stacking"双角色——上联与 Virtual Chassis 堆叠共用（12 口机 11-12、U28 25-30）（&lt;&lt;<PAGE 21>&gt;&gt;/&lt;&lt;<PAGE 25>&gt;&gt;）。半宽双机并排（DUO-MNT）=16 铜口+4 SFP+4 SFP+ 上联/堆叠，仍省机架深度。陷阱：全机型不支持半双工；combo 口光铜互斥（&lt;&lt;<PAGE 21>&gt;&gt;-&lt;&lt;<PAGE 25>&gt;&gt;）。</p>
+<h3 id="2">2. 安装与供电：双层电源与三套机架</h3>
+<p>12/12D 为双层电源架构：内置（AC 65W/DC 30W）+ External Power Connector 外置备份（OS6570-12-BP 60W AC / 12-BP-D 30W DC 宽压 18-75VDC）（&lt;&lt;<PAGE 35>&gt;&gt;-&lt;&lt;<PAGE 37>&gt;&gt;）；U28 为双 150W 舱（OS6570-BP/BP-D），可冗余/负载分担，双电源必须同 wattage 同额定电压（&lt;&lt;<PAGE 24>&gt;&gt;）。机架三方案：全宽法兰（U28）、单半宽 RM-19-L、双半宽 DUO-MNT 并排；一律先下孔后上孔紧固，机架螺丝自备（&lt;&lt;<PAGE 29>&gt;&gt;-&lt;&lt;<PAGE 34>&gt;&gt;）。DC 线束三芯 12AWG（绿黄=地/黑=return/红=-48V）+15A 过流+SELV 前提五条（&lt;&lt;<PAGE 40>&gt;&gt;）。</p>
+<h3 id="3-dg">3. 运维与排障：DG 三通道与温度双阈值</h3>
+<p>Dying Gasp 三通道（&lt;&lt;<PAGE 46>&gt;&gt;/&lt;&lt;<PAGE 47>&gt;&gt;）：SNMP trap（前 3 站）+Syslog（前 3 服务器）+4 个 802.3ah OAM PDU（Dying Gasp 位置位，上联口优先发送）。温度双阈值出厂固化（&lt;&lt;<PAGE 45>&gt;&gt;-&lt;&lt;<PAGE 46>&gt;&gt;）：Warning 超限发 trap 业务不停；Danger 超限自动关机且必须手动重启。阈值按机型分化：12/12D 85/88°C、U28 69/74°C——光口机热预算更紧（&lt;&lt;<PAGE 22>&gt;&gt;/&lt;&lt;<PAGE 26>&gt;&gt;）。LED 三层：OK 三态/VC 四态（闪琥珀报 unit 号）/PS 按机型两套语义；150W 电源六态灯含"闪红=本舱无 AC 邻舱有电"的冗余态（&lt;&lt;<PAGE 27>&gt;&gt;/&lt;&lt;<PAGE 38>&gt;&gt;/&lt;&lt;<PAGE 39>&gt;&gt;）。</p>
+<h2 id="_3">三、本书在知识库中的位置</h2>
+<p>与 hw-6560（多千兆 bt 旗舰）、hw-6575（工业无风扇）构成紧凑/专用三线——6570M 定位无 PoE 紧凑接入与全光上联。跨书易混点：6560 温度 Warning 阈值用户可配，6570M 均固化不可改；
+6560 DG 与本机同为三通道（含 OAM PDU），而 6575 仅双通道（无 OAM PDU）；
+本机 12D 的 BP-D 30W 外置备份与 U28 的 BP-D 150W 舱同名不同物，选型时按主机型号对配。</p>
+<h2 id="_4">来源</h2>
+<p>OmniSwitch 6570M Hardware Users Guide（Part No. 060828-10, Rev. G, 2025-12）。verified.md：cases C1-C17；
+principles P1-P36；
+counter-examples X1-X26；
+frameworks F1-F3；
+glossary 约 75 条。</p><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>os6575-model-ports — OmniSwitch 6575 Hardware Guide</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>OmniSwitch 6575 Hardware Guide</h1>
+<div class="sub">Rev A · 86 页 · 工业无风扇（M12 连接器/温度阶梯预算/Alarm Relay）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">机型与端口</div>
+<a href="../skills/os6575-model-ports.html" class="on">os6575-model-ports</a>
+<div class="grp">安装与电源</div>
+<a href="../skills/os6575-install-power.html">os6575-install-power</a>
+<div class="grp">运维排障</div>
+<a href="../skills/os6575-ops-troubleshoot.html">os6575-ops-troubleshoot</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../hardware/index.html">硬件手册</a> › <a href="../index.html">OmniSwitch 6575 Hardware Guide</a> › <span>os6575-model-ports</span></nav><h1>os6575-model-ports</h1><p class="meta"><span class="badge">SKILL</span> os6575-model-ports · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>6575 家族选型：P12（DIN 导轨）/U28（1U 机架）/MP16（壁装工业）三选一</li>
+<li>解码 MP16 四段端口阵列与 M12/M23 防水连接器 pinout、选配件线缆</li>
+<li>规划 Uplink/VFL 双角色 SFP+ 上联堆叠口</li>
+<li>核对输入电压域与 PoE 等级（U28 三档、48V 以下禁 PoE）</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>6575 选型三轴矩阵（F1，&lt;&lt;<PAGE 11>&gt;&gt;/&lt;&lt;<PAGE 21>&gt;&gt;/&lt;&lt;<PAGE 23>&gt;&gt;/&lt;&lt;<PAGE 25>&gt;&gt;/&lt;&lt;<PAGE 60>&gt;&gt;）：轴一=安装形态（P12=DIN 导轨/壁装配电柜；U28=19 英寸机架 1U；MP16=壁装工业现场）；轴二=端口与连接器（P12=8×bt 60W RJ45；U28=全光 24 SFP+4 combo；MP16=M12 防水四段阵列）；轴三=供电与 PoE（P12=外置 BPNS/BPNSX；U28=后装双 BPR/BPRD 或 BPNSX；MP16=20-110VDC 宽压直挂）。全家族无风扇、Tmra -40~75°C（P1）。MP16 独有 Port Bypass 断电旁路："失电或故障时自动直连两口保通信"（P3，&lt;&lt;<PAGE 12>&gt;&gt;/&lt;&lt;<PAGE 25>&gt;&gt;）。铁律：48VDC 以下一律禁 PoE（P11/X1）。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<ol>
+<li>按物理环境定形态：P12=17×9.1×16.1cm/2.5kg（最小）；MP16=17.5×27×8cm/3.4kg（超薄挂墙）；U28=44×29.5×4.34cm/5.6kg（1U）（P8，&lt;&lt;<PAGE 22>&gt;&gt;/&lt;&lt;<PAGE 24>&gt;&gt;/&lt;&lt;<PAGE 26>&gt;&gt;）</li>
+<li>按 PD 等级定 PoE 段：at 30W / bt 60W / Bypass 保链路——MP16 四段一口一功能（P2）</li>
+<li>按输入电压核对 PoE 档位（U28，P10，&lt;&lt;<PAGE 24>&gt;&gt;）：50-57V=at 150W；44-57V=af 120W；24-60V=纯系统无 PoE；&lt;48V 禁 PoE</li>
+<li>堆叠规划：Uplink/VFL 双角色口——P12 的 9-12 与 U28 的 29-32，LED 绿=uplink/琥珀=VFL 分色（P4）</li>
+<li>MP16 连接器选型：数据口 D-code（10/100）/X-code（千兆）、Power M23 5-pin、Console/USB/Alarm 全 M12 A-code（P5，&lt;&lt;<PAGE 25>&gt;&gt;/&lt;&lt;<PAGE 53>&gt;&gt;-&lt;&lt;<PAGE 55>&gt;&gt;）</li>
+</ol>
+<h2 id="a2">A2（操作步骤）</h2>
+<ul>
+<li><strong>MP16 四段阵列核对</strong>：1-4 纯 10/100（D-code）；5-8 at 30W（D-code）；9-12 bt 60W（X-code）；13-16 Bypass 千兆（X-code）——速率与 PoE 按段固定（P2，&lt;&lt;<PAGE 11>&gt;&gt;/&lt;&lt;<PAGE 25>&gt;&gt;）</li>
+<li><strong>M12 X-code PoE pinout</strong>：1-4 脚带 PoE-(G1)/PoE+(G1)、5-8 脚带 PoE-(G2)/PoE+(G2)；D-code PoE 为 1/3 脚 PoE+、2/4 脚 PoE-（P6，&lt;&lt;<PAGE 54>&gt;&gt;）</li>
+<li><strong>M23 5-pin 电源</strong>：PWR-1±/FGND/PWR-2± 双路输入（&lt;&lt;<PAGE 25>&gt;&gt;/&lt;&lt;<PAGE 53>&gt;&gt;）</li>
+<li><strong>配件线缆选型</strong>：M12-CONSOLE-5P/USB-2P/ALARM-6P、M12-DC-M/RJ45F/RJ45M-8P（D-code 族）、M12-XC-*（X-code 族）、M23-PWRCONN-5P（&lt;&lt;<PAGE 55>&gt;&gt;）</li>
+<li><strong>端口 LED 判读</strong>：稳/闪绿=非 PoE 链路、稳/闪琥珀=PoE 链路（P23，&lt;&lt;<PAGE 27>&gt;&gt;）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>MP16 四段阵列工业现场部署：at 段接摄像头、bt 段接高功率 PD、Bypass 段接关键链路（P2/P3）</li>
+<li>U28 全光 + combo PoE 90W 混合接入（P1，&lt;&lt;<PAGE 11>&gt;&gt;/&lt;&lt;<PAGE 23>&gt;&gt;）</li>
+<li>P12 DIN 导轨配电柜部署：8×bt 60W + 4×SFP+ VFL（P1，&lt;&lt;<PAGE 21>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（反例与坑）</h2>
+<ul>
+<li>48VDC 以下禁 PoE（三机型面板注记；第三方电源同理须 ≥48V）（X1/P11，&lt;&lt;<PAGE 21>&gt;&gt;/&lt;&lt;<PAGE 23>&gt;&gt;/&lt;&lt;<PAGE 25>&gt;&gt;/&lt;&lt;<PAGE 61>&gt;&gt;）</li>
+<li>MP16 各段速率与 PoE 等级固定，不能软件改段（P2）</li>
+<li>M12 非 RJ45：普通网线不能直插，须配 D-code/X-code 转 RJ45 配件线缆（P5，&lt;&lt;<PAGE 55>&gt;&gt;）</li>
+<li>U28 输入电压低档（24-60V/1.5A）仅为系统供电，误按 at 满配 PoE 会拒载（P10，&lt;&lt;<PAGE 24>&gt;&gt;）</li>
+</ul>
+<p>来源：OmniSwitch 6575 Hardware Users Guide（Ch1/Ch3，p11-26、p53-55）</p><div class="pn"><a href="../index.html">⬅ 返回课程首页</a><a class="nxt" href="os6575-install-power.html">下一单元：os6575-install-power ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

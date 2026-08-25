@@ -1,0 +1,101 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>os6560-install-power — OmniSwitch 6560 Hardware Guide</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>OmniSwitch 6560 Hardware Guide</h1>
+<div class="sub">Rev P · 111 页 · 多千兆 bt 接入（2.5G/5G/双 PX 1565W/DNV）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">机型与端口</div>
+<a href="../skills/os6560-model-ports.html">os6560-model-ports</a>
+<div class="grp">安装与电源</div>
+<a href="../skills/os6560-install-power.html" class="on">os6560-install-power</a>
+<div class="grp">运维排障</div>
+<a href="../skills/os6560-ops-troubleshoot.html">os6560-ops-troubleshoot</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../hardware/index.html">硬件手册</a> › <a href="../index.html">OmniSwitch 6560 Hardware Guide</a> › <span>os6560-install-power</span></nav><h1>os6560-install-power</h1><p class="meta"><span class="badge">SKILL</span> os6560-install-power · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>新机上架：机架法兰/整机双人安装/桌面摆放/DNV 船用套件（P48X4/X10）</li>
+<li>PoE 供电规划：按 PD 总功率选 BP-P/PH/PX 电源档与数量</li>
+<li>核对电源混插规则与 PN 版本兼容（BP-P 不配 E 机型）</li>
+<li>-48VDC 场景接线（BP-D/DC 线束）与 supplemental 接地</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>电源-PoE 预算联动框架（F2，&lt;&lt;<PAGE 60>&gt;&gt;/&lt;&lt;<PAGE 87>&gt;&gt;/&lt;&lt;<PAGE 88>&gt;&gt;）：单电源预算≈wattage−系统 110W 封顶，双电源负载分担预算≈2×单电源（P48X4 双 PX=1440W）。部署三查：一查机型×电源×数量预算表；二查 PN 版本（老 903852/903853 vs 新 904071/904072/904073，新件需 AOS ≥8.8R1，P8/P9，&lt;&lt;<PAGE 60-63>&gt;&gt;）；三查混插规则（wattage 禁混 X4，BP+BP-D 唯一例外 X6，混插发 trap X5）。DNV 船用体系仅限 P48X4/X10：OS-DNV-MNT 套件+OS-DNV-FILTER EMC 滤波器串接电源与机箱之间，滤除 10kHz-150kHz 传导发射（P19/P20，&lt;&lt;<PAGE 58>&gt;&gt;/&lt;&lt;<PAGE 67>&gt;&gt;）。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<ol>
+<li>安装形态选择：标准机架（法兰 C3/C4）→桌面（C5，禁倒放侧放）→DNV 船用（C7）</li>
+<li>电源选型：非 PoE 机型=内置 65W+BPS 槽；PoE 机型按预算表选 P/PH/PX（F2）</li>
+<li>供电冗余：双电源各接独立电路+UPS（911 纪律 P33）；无电源开关语义=接电即开机（P12）</li>
+<li>DC 场景：BP-D（-36~-72V）三芯 12AWG 线束+15A 过流+SELV+CBN 接地（P14，&lt;&lt;<PAGE 65-69>&gt;&gt;）</li>
+</ol>
+<h2 id="a2">A2（操作步骤）</h2>
+<ul>
+<li><strong>机架安装</strong>：法兰弹簧夹 out→tab 入槽→CLICK→螺丝固定（C3，&lt;&lt;<PAGE 54-55>&gt;&gt;）；整机双人作业、重物下置（C4/P27，&lt;&lt;<PAGE 53>&gt;&gt;/&lt;&lt;<PAGE 56>&gt;&gt;）</li>
+<li><strong>DNV 安装</strong>：OS-DNV-MNT 侧轨+后托架固定→前托架入位→滤波器 C14 入/C15 出串接（C7，&lt;&lt;<PAGE 58-59>&gt;&gt;）</li>
+<li><strong>电源插拔</strong>：插入至背板 click 锁定（C9）；拆=按锁扣向中心直拉（C10，&lt;&lt;<PAGE 70-73>&gt;&gt;）</li>
+<li><strong>DC 接线</strong>：绿黄=地/黑=return/红=-48VDC；前提五条（X20，&lt;&lt;<PAGE 68>&gt;&gt;）</li>
+<li><strong>supplemental 接地</strong>：LCD8-10A-L 接地耳+8AWG+30-60 in-lb（C8，&lt;&lt;<PAGE 74>&gt;&gt;）</li>
+<li><strong>盲板</strong>：空槽常装、箭头朝上（C6/X17，&lt;&lt;<PAGE 52>&gt;&gt;）</li>
+<li><strong>PoE 激活</strong>：show powersupply 确认→lanpower slot service start→逐项核对（C14，&lt;&lt;<PAGE 87-89>&gt;&gt;）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>PoE 首次激活与逐口核对流程（C14，&lt;&lt;<PAGE 87-89>&gt;&gt;）</li>
+<li>Guard Band 拒载处置：降口上限放行 4W PD（C18，&lt;&lt;<PAGE 92>&gt;&gt;）</li>
+<li>DC 线束接线全流程（C11，&lt;&lt;<PAGE 68-69>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（反例与坑）</h2>
+<ul>
+<li>wattage 禁混：300/600/920 之间不可混插，混插或不支持电源发 console 告警+trap（X4/X5，&lt;&lt;<PAGE 61-63>&gt;&gt;/&lt;&lt;<PAGE 88>&gt;&gt;）</li>
+<li>BP-P 300W 不配 E 机型与新 PN 的 P48Z16（X2，&lt;&lt;<PAGE 60>&gt;&gt;/&lt;&lt;<PAGE 87>&gt;&gt;）</li>
+<li>新 PN 电源需 AOS ≥8.8R1（X3，&lt;&lt;<PAGE 60>&gt;&gt;）</li>
+<li>气流遮挡致过热失效；盲板必须常装（X15/X17，&lt;&lt;<PAGE 17>&gt;&gt;/&lt;&lt;<PAGE 52>&gt;&gt;）</li>
+<li>禁延长线；电涌五条军规违反可能失保（X13/X14，&lt;&lt;<PAGE 15-16>&gt;&gt;）</li>
+<li>DC 维护红线：运行中勿触电源舱/背板；雷暴禁作业（X21/X18，&lt;&lt;<PAGE 106-107>&gt;&gt;）</li>
+</ul>
+<p>来源：OmniSwitch 6560 Hardware Users Guide（安装 Ch3 + PoE Ch4，p51-95）</p><div class="pn"><a href="os6560-model-ports.html">⬅ 上一单元：os6560-model-ports</a><a class="nxt" href="os6560-ops-troubleshoot.html">下一单元：os6560-ops-troubleshoot ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

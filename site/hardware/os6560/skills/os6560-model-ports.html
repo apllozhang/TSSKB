@@ -1,0 +1,101 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>os6560-model-ports — OmniSwitch 6560 Hardware Guide</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>OmniSwitch 6560 Hardware Guide</h1>
+<div class="sub">Rev P · 111 页 · 多千兆 bt 接入（2.5G/5G/双 PX 1565W/DNV）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">机型与端口</div>
+<a href="../skills/os6560-model-ports.html" class="on">os6560-model-ports</a>
+<div class="grp">安装与电源</div>
+<a href="../skills/os6560-install-power.html">os6560-install-power</a>
+<div class="grp">运维排障</div>
+<a href="../skills/os6560-ops-troubleshoot.html">os6560-ops-troubleshoot</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../hardware/index.html">硬件手册</a> › <a href="../index.html">OmniSwitch 6560 Hardware Guide</a> › <span>os6560-model-ports</span></nav><h1>os6560-model-ports</h1><p class="meta"><span class="badge">SKILL</span> os6560-model-ports · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>拿到 OS6560E-P48Z16 之类型号，要解码多千兆口数、E 版 5G 口位与上联构成</li>
+<li>Wi-Fi6/Wi-Fi7 AP 接入需要 2.5G/5G bt 口，核算哪些口是 Z 口</li>
+<li>确认 49-50 口 SFP(+) 的 10G 速率为何不通（需许可）</li>
+<li>需要 20G QSFP+ VFL 堆叠或纯 10G 上联（X10）选型</li>
+<li>核对 PN 版本（903954-90 等）与机型兼容</li>
+</ul>
+<h2 id="i">I（核心理念)</h2>
+<p>6560 家族选型三轴矩阵（F1，&lt;&lt;<PAGE 12>&gt;&gt;/&lt;&lt;<PAGE 13>&gt;&gt;/&lt;&lt;<PAGE 60>&gt;&gt;/&lt;&lt;<PAGE 87>&gt;&gt;）：轴一=下行口构成（X4 家族纯千兆 24/48 口；Z8/Z24/Z16 含 2.5G bt 口；E 版部分口升 5G；X10 纯 8×SFP+ 上联）；轴二=PoE 与预算（非 PoE=内置 65W+BPS；PoE=300/600/920W 单/双电源，双 PX 最高 1565W）；轴三=上联形态（4×SFP+/2×20G QSFP+ VFL/纯 10G X10）。家族命名解码（P1）：<code>P</code>=PoE；<code>Z8/Z24/Z16</code>=多千兆 2.5G/bt 口数；<code>E</code>=增强版含 5G 口（E-P24Z8 口 21-24、E-P48Z16 口 33-36 为 2.5G/5G）；<code>X4</code>=4×SFP+ 上行；<code>X10</code>=8×SFP+ + 2×QSFP+ VFL。10G 许可口机制（P3）：49-50 口为 SFP(+) 1G/10G 口，10G 速率需软件许可解锁，默认 1G。多千兆口速率梯度（P2）：Z 口 100/1000/2.5G（E 版至 5G）全 802.3bt；基础口 10/100/1000 at——同机箱两种 PoE 标准并存。</p>
+<h2 id="a1">A1（决策框架）</h2>
+<ol>
+<li><strong>按 AP 需求定 Z 口数</strong>：Z8（8×2.5G）/Z24（全 24×2.5G）/Z16（16×2.5G）；E 版指定口段升 5G（P1/P2，&lt;&lt;<PAGE 12>&gt;&gt;）</li>
+<li><strong>按 PD 总功率查预算表</strong>：机型×电源×数量三要素（如 P48X4 双 PX=1440W）（F2，&lt;&lt;<PAGE 87>&gt;&gt;）</li>
+<li><strong>上联选型</strong>：4×SFP+（X4 家族）/2×20G QSFP+ VFL（Z24/Z16 家族）/8×SFP+ 纯上联（X10）（P1）</li>
+<li><strong>10G 需求核对许可</strong>：49-50 口 SFP(+) 默认 1G，10G 需软件许可（P3，&lt;&lt;<PAGE 30>&gt;&gt;/&lt;&lt;<PAGE 42>&gt;&gt;）</li>
+<li><strong>PN 版本兼容三查</strong>：BP-P 不配 E 机型与新 PN 的 P48Z16；新 PN（904072/904073-90）需 AOS ≥8.8R1（F2，&lt;&lt;<PAGE 60>&gt;&gt;）</li>
+</ol>
+<h2 id="a2">A2（操作步骤）</h2>
+<ul>
+<li><strong>机型速查</strong>：Ch1 总表（&lt;&lt;<PAGE 12-14>&gt;&gt;）+ Ch3 逐机型面板（&lt;&lt;<PAGE 24-47>&gt;&gt;）</li>
+<li><strong>Z 口识别</strong>：2.5G 口有 Speed+PoE 双 LED（Speed 绿=2.5G/琥珀=100-1000；PoE 琥珀=PoE 开）（P16，&lt;&lt;<PAGE 49>&gt;&gt;）</li>
+<li><strong>10G 许可口启用</strong>：为 49-50 口购买并加载 10G 许可后才能跑 10G 速率（P3）</li>
+<li><strong>VFL/QSFP+ 部署</strong>：2×20G QSFP+ 口兼作 VFL 堆叠链路（P1，&lt;&lt;<PAGE 13>&gt;&gt;）</li>
+<li><strong>待机功耗核算</strong>：多千兆机型待机翻倍（P24Z8=67W、E-P48Z16=119W、Z24 系列 116W vs P24X4=44W）（P6，&lt;&lt;<PAGE 25-47>&gt;&gt;）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>E-P24Z8 口位细分：16 at + 4×2.5G bt（17-20）+ 4×2.5G/5G bt（21-24）+ 2×SFP+（&lt;&lt;<PAGE 26>&gt;&gt;）</li>
+<li>P48Z16 双版本：903954-90 老版支持 BP-P，新 PN 不支持（X2，&lt;&lt;<PAGE 60>&gt;&gt;）</li>
+<li>X10 面板：8×SFP+ 1G/10G + 2×20G QSFP+ VFL，内置 65W+模块化电源（&lt;&lt;<PAGE 46>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（反例/坑）</h2>
+<ul>
+<li><strong>本机型注意</strong>：10G 速率不是买硬件就有——49-50 口 SFP(+) 需软件许可，默认只跑 1G（X1，&lt;&lt;<PAGE 30>&gt;&gt;/&lt;&lt;<PAGE 32>&gt;&gt;/&lt;&lt;<PAGE 42>&gt;&gt;/&lt;&lt;<PAGE 44>&gt;&gt;）</li>
+<li>E 版与普通版电源不通用：BP-P 300W 不支持 E 机型（X2，&lt;&lt;<PAGE 60>&gt;&gt;）</li>
+<li>新 PN 电源（904072-90/904073-90）需 AOS ≥8.8R1，否则不识别（X3，&lt;&lt;<PAGE 60>&gt;&gt;）</li>
+<li>Z 口速率上限按机型固化：普通 Z 口 2.5G、仅 E 版指定口段到 5G——别按"E 版全系 5G"记（P1/P2）</li>
+<li>2.5G 口双 LED 分工：速度与 PoE 分灯，琥珀 Speed 灯不是故障而是 100/1000 链路（P16，&lt;&lt;<PAGE 49>&gt;&gt;）</li>
+</ul>
+<h2 id="_1">来源</h2>
+<p>OmniSwitch 6560 Hardware Users Guide Ch1 机型总表（&lt;&lt;<PAGE 12-14>&gt;&gt;）、Ch3 逐机型面板与规格（&lt;&lt;<PAGE 23-47>&gt;&gt;）、电源兼容表（&lt;&lt;<PAGE 60>&gt;&gt;）。条目来源：principles P1-P6/P16；counter-examples X1-X3；frameworks F1/F2。</p><div class="pn"><a href="../index.html">⬅ 返回课程首页</a><a class="nxt" href="os6560-install-power.html">下一单元：os6560-install-power ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

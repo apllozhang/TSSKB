@@ -1,0 +1,748 @@
+{
+ "cases": [
+  {
+   "h": "n/a",
+   "ok": true
+  },
+  {
+   "h": 0.69,
+   "ok": true,
+   "head": "- **C2** 首次登录六步流程：console（9600-8N1 DCE）→admin/switch→aaa authenticatio"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C3** 机架法兰安装流程：弹簧夹置 out→tab 入机箱槽→按压至\"CLICK\"锁定→螺丝固定→对侧重复 <<<PAGE 54>"
+  },
+  {
+   "h": "n/a",
+   "ok": true
+  },
+  {
+   "h": "n/a",
+   "ok": true
+  },
+  {
+   "h": "n/a",
+   "ok": true
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **C7** DNV 安装流程（P48X4/X10）：OS-DNV-MNT 套件侧轨+后托架固定机箱后部→前托架入位→OS-DNV-FI"
+  },
+  {
+   "h": 0.6,
+   "ok": true,
+   "head": "- **C8** 机箱 supplemental 接地：LCD8-10A-L 接地耳+8AWG 铜线+30-60 in-lb（后板无漆区）；"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C9** 电源安装流程：电源插入后部电源舱→滑入至背板就位（锁扣\"click\"锁定）→插电源线——接电即开机 <<<PAGE 70>"
+  },
+  {
+   "h": "n/a",
+   "ok": true
+  },
+  {
+   "h": 0.71,
+   "ok": true,
+   "head": "- **C11** DC 线束接线流程（BP-D）：三芯 12AWG 线束一端插电源三孔连接器（至 click）→另一端按极性接 -48VD"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C12** Dying Gasp OAM 配置：efm-oam admin-state enable→efm-oam port 1/"
+  },
+  {
+   "h": 0.9,
+   "ok": true,
+   "head": "- **C13** 硬件巡检流程：show module/long→show temperature（UNDER THRESHOLD 正常；"
+  },
+  {
+   "h": 0.9,
+   "ok": true,
+   "head": "- **C14** PoE 首次激活流程：show powersupply 确认（如 920 AC UP）→lanpower slot 2/"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C15** PoE 关断两级：单口 lanpower port 1/1/12 admin-state disable；整槽 lanp"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C16** 端口/槽功率配置：lanpower port 1/1/24 power 3000 限口；lanpower slot 3/"
+  },
+  {
+   "h": 0.83,
+   "ok": true,
+   "head": "- **C17** 优先级配置：lanpower port 1/1/6 priority critical（low/high/critica"
+  },
+  {
+   "h": 0.88,
+   "ok": true,
+   "head": "- **C18** Guard Band 拒载处置：余 50W/口上限 75W 拒 4W PD→lanpower power 1/1/1 p"
+  },
+  {
+   "h": 0.83,
+   "ok": true,
+   "head": "- **C19** Priority Disconnect 开关：默认启用；lanpower slot 2/1 priority-disco"
+  },
+  {
+   "h": 0.71,
+   "ok": true,
+   "head": "- **C20** bt/4pair 使能：lanpower 4pair 开 60/75/95W；lanpower 8023bt 开 Cla"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C21** Class 检测/电容检测：lanpower slot class-detection（复位全 PoE 口）；lanpo"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **C22** PoE 监控：show lanpower 1 输出逐口 Maximum/Actual/Status/Priority/O"
+  }
+ ],
+ "counter-examples": [
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X1** SFP(+) 口 10G 需许可：\"(49-50) SFP(+) (1G/10G) ports (10G speed re"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X2** BP-P 300W 电源对 E 机型/新 PN 不支持：\"OS6560E-P24Z8 ... Not Supported\""
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X3** 新 PN 电源版本门槛：\"OS6560-BP-PH (904072-90) requires a minimum AOS "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X4** PoE 电源禁混插 wattage：\"Mixing different wattage power supplies in"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X5** 混插或不支持电源会告警：\"If unlike power supplies are mixed or if an unsu"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X6** 150W 双兄弟例外：BP（AC）与 BP-D（DC）可同箱混用：\"Mixing the OS6560-BP with t"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X7** Danger 阈值不可配：\"The danger threshold is factory-set and cannot "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X8** admin-state 不能首次激活 PoE：\"You cannot use the lanpower port admi"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X9** Class 检测开启复位全口：\"Enabling class detection will reset all PoE p"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X10** 电容检测不符 IEEE：\"The capacitive detection method should only be "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X11** aaa authentication 一次一类：\"You cannot specify more than one se"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X12** 密码覆盖受限：\"overriding configured passwords on an OmniSwitch is "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X13** 禁延长线：\"Do not use extension cords.\"；室外禁裸线缆：\"Never install exp"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X14** 违反电涌五条军规可能失保：\"Failure to follow the above recommendations co"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X15** 气流遮挡致失效：\"Restricted airflow can cause your switch to overhea"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X16** 桌面摆放限制：\"Never attempt to operate a switch while it is placed"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X17** 盲板必须常装：\"Because they regulate airflow and help protect inter"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X18** 雷暴作业禁令：\"To avoid a shock hazard, do not connect or disconnec"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X19** 机架螺丝自备：\"Alcatel-Lucent Enterprise does not provide rack-moun"
+  },
+  {
+   "h": 0.87,
+   "ok": true,
+   "head": "- **X20** DC 接线五前提：\"Connect to a reliably ground -48VDC Selv source..."
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X21** 运行中勿触电源舱/背板：\"keep your hands and fingers out of power supply"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X22** 接地红线：电源线必须接正确接地插座；DC/DC 电源地线必须接大地（EMC/EMI）；CBN 共模接地网安装 <<<PA"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X23** Class 1M 激光：\"CLASS 1M LASER RADIATION WHEN OPEN. DO NOT VIEW"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X24** ESD 腕带强制：\"Because electrostatic discharge (ESD) can damage s"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X25** 锂电池爆炸风险：\"Hay un peligro de la explosión si la batería del li"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X26** Class A 住宅禁令：\"Warning: To avoid electromagnetic interference"
+  },
+  {
+   "h": 0.91,
+   "ok": true,
+   "head": "- **X27** 受限访问场所：\"This equipment should be installed in a location tha"
+  }
+ ],
+ "frameworks": [
+  {
+   "h": 0.36,
+   "ok": true,
+   "head": "- **F1** 6560 家族选型三轴矩阵：轴一=下行口构成（X4 家族=纯千兆 24/48 口；Z8/Z24/Z16=含 2.5G bt"
+  },
+  {
+   "h": 0.45,
+   "ok": true,
+   "head": "- **F2** 电源-PoE 预算联动框架：单电源预算≈电源 wattage−系统 110W 封顶；双电源负载分担预算≈2×单电源（如 P"
+  },
+  {
+   "h": 0.44,
+   "ok": true,
+   "head": "- **F3** 高可用双支柱框架：供电侧=双电源负载分担+独立电路+UPS（911 纪律）+DG 失电三通道通告（SNMP/Syslog/"
+  }
+ ],
+ "glossary": [
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **OS6560-P24Z8**：16 口 at + 8 口 2.5G bt PoE + 2×SFP+，待机 67W <<<PAGE 1"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **OS6560E-P24Z8**：16 at + 4×2.5G bt（17-20）+ 4×2.5G/5G bt（21-24）+ 2×S"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **OS6560-P24Z24**：24 口全 2.5G bt PoE + 4×SFP+ + 2×20G QSFP+ VFL，待机 11"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **OS6560-P48Z16**：32 at + 16 口 2.5G bt + 4×SFP+ + 2×QSFP+ VFL；有 9039"
+  },
+  {
+   "h": 0.57,
+   "ok": true,
+   "head": "- **OS6560E-P48Z16**：32 at + 4×2.5G/5G bt（33-36）+ 12×2.5G bt（37-48）+ 4"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **OS6560-24Z8**：16 千兆 + 8×2.5G 非 PoE + 2×SFP+ <<<PAGE 12>>>/<<<PAGE "
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **OS6560-24Z24**：24×2.5G 非 PoE + 4×SFP+ + 2×QSFP+ VFL <<<PAGE 12>>>/"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **OS6560-24X4**：24 千兆非 PoE + 2×SFP(+)（10G 需许可）+ 4×SFP+；内置电源+BPS 槽 <<"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **OS6560-P24X4**：24 口 at PoE + 2×SFP(+)（10G 需许可）+ 4×SFP+ <<<PAGE 13>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **OS6560-48X4**：48 千兆 + 2×SFP(+)（10G 需许可）+ 2×SFP+ + 2×纯 10G SFP+；内置电"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **OS6560-P48X4**：48 口 at PoE 版 48X4，双 PX 电源 PoE 预算最高 1440W <<<PAGE 1"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **OS6560-X10**：8×SFP+ 1G/10G + 2×20G QSFP+ VFL 纯上联机型，内置 65W+模块化电源 <<"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **Z 口（多千兆口）**：100/1000/2.5G（E 版至 5G）802.3bt PoE 口，Speed+PoE 双 LED <<"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **10G 许可口**：SFP(+) 1G/10G 口位，10G 速率需软件许可（49-50 口）<<<PAGE 30>>>等"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **OS6560-BP-P**：300W AC PoE 电源（PS-300W-AC-P），54.5V/5.5A，系统 110W 封顶；不"
+  },
+  {
+   "h": 0.57,
+   "ok": true,
+   "head": "- **OS6560-BP-PH**：600W AC PoE 电源（PS-600W-AC-P），54.5V/11A；PN 903852-90"
+  },
+  {
+   "h": 0.71,
+   "ok": true,
+   "head": "- **OS6560-BP-PX**：920W AC PoE 电源（PS-920W-AC-P），54.5V/16.88A；903853-90"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **OS6560-BP**：150W AC 电源（PS-150W-AC），配非 PoE 机型/BPS；可与 BP-D 混插 <<<PAG"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **OS6560-BP-D**：150W DC 电源（PS-150W-DC），-36~-72V 输入，配非 PoE 机型 <<<PAGE"
+  },
+  {
+   "h": 0.0,
+   "ok": false,
+   "head": "- **内置 AC 电源（65W）**：24X4/48X4/X10 的内置 12V/5.42A 系统电源 <<<PAGE 66>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **BPS（Backup Power Supply Slot）**：非 PoE 机型后部模块化备份电源槽（标\"BPS\"）<<<PAGE "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **锁扣（Lock Tab）**：可插拔电源的锁定片（插入 click 锁定/按住中心抽出）<<<PAGE 70>>>/<<<PAGE "
+  },
+  {
+   "h": "n/a",
+   "ok": true
+  },
+  {
+   "h": 0.0,
+   "ok": false,
+   "head": "- **BP/BP-D 单 LED 六态**：稳绿/闪绿待机/闪红无 AC/闪绿红告警/稳红故障/灭全停 <<<PAGE 64>>>/<<<"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **负载分担（Load Sharing）**：双 PoE 电源共同分担供电（\"the two power supplies will l"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **DC 线束**：三芯 12AWG（绿黄=地/黑=return/红=-48VDC），15A 过流、SELV、DC-1 隔离回流 <<<"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **Rack Mount Flange**：免工具卡扣机架法兰（out/in 位+CLICK）<<<PAGE 54>>>"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **OS-DNV-MNT**：P48X4/X10 船用安装套件（侧轨+前后托架）<<<PAGE 58>>>"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **OS-DNV-FILTER**：DNV EMC 滤波器——滤除 10kHz-150kHz 传导发射，串接电源与机箱之间；C14 入/"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Blank Cover Panel**：空槽盲板（箭头朝上常装）<<<PAGE 52>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Virtual Chassis ID LED**：前面板 VC 标识灯 <<<PAGE 24>>>等"
+  },
+  {
+   "h": "n/a",
+   "ok": true
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **VC LED**：稳绿=master、稳琥珀=slave、灭=关机或非 VC <<<PAGE 48>>>"
+  },
+  {
+   "h": "n/a",
+   "ok": true
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **2.5G 口双 LED**：Speed LED（绿=2.5G/琥珀=100-1000）+PoE LED（琥珀=PoE 开）<<<PA"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Warning Threshold（可配）**：6560 温度告警阈值用户可配（\"user-configurable warning"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Danger Threshold**：危险阈值出厂固化，超限关机需手动重启 <<<PAGE 76>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Dying Gasp**：失电残电通告——SNMP trap（前 3 站）+Syslog（前 3 服务器）+4 个 802.3ah "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **efm-oam propagate-events dying-gasp**：使能 DG 经 OAM PDU 通告 <<<PAGE 8"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **CBN（Common Bonding Network）**：共模接地网（DC 安装要求）<<<PAGE 68>>>"
+  },
+  {
+   "h": 0.33,
+   "ok": false,
+   "head": "- **802.3bt 口功率范围**：3000-95000mW（at 口 3000-30000mW）<<<PAGE 85>>>"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **PoE 预算表**：机型×电源×数量三要素查表（如 P48X4 双 PX=1440W）<<<PAGE 87>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **lanpower slot service / port admin-state**：slot 启停 / 端口复活（不能首启）<<<"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **lanpower power / slot maxpower**：端口/槽上限（不预留）<<<PAGE 90>>>"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **lanpower priority**：low/high/critical 三级 <<<PAGE 90>>>"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **lanpower 4pair / 8023bt**：开 60/75/95W PoH / 开 bt Class 5-8 <<<PAGE"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Guard Band**：余量低于口上限即拒新 PD <<<PAGE 92>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Priority Disconnect**：优先级+物理口号（1 高 48 低）裁决新 PD <<<PAGE 93>>>/<<<PA"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **BPS power 显示**：show lanpower 输出的备份电源状态行 <<<PAGE 88>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **show module / long / temperature / powersupply / lanpower**：硬件巡检命令"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **WebView**：内嵌 Web 管理界面（OmniVista 或浏览器启动），可管 PoE 等硬件特性 <<<PAGE 84>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **aaa authentication / password / system * / write memory**：首次登录六步命令"
+  },
+  {
+   "h": 0.83,
+   "ok": true,
+   "head": "- **snmp station / swlog output socket**：DG trap/Syslog 接收站配置 <<<PAGE "
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **CDE（Cable Discharge Event）**：线缆静电放电（Cat5e/6/6a 接前先接地）<<<PAGE 16>>>"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **ESD/Wrist Strap**：静电防护腕带 <<<PAGE 108>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Class 1M Laser**：开盖激光勿直视 <<<PAGE 24>>>等/<<<PAGE 105>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Restricted Access Location**：受限访问场所 <<<PAGE 108>>>"
+  },
+  {
+   "h": 0.0,
+   "ok": false,
+   "head": "- **WEEE/RoHS/Prop 65**：回收/有害物/加州铅警告 <<<PAGE 97>>>-<<<PAGE 100>>>"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **Hi-Pot Test**：以太网口 2250V DC 耐压测试 <<<PAGE 102>>>"
+  },
+  {
+   "h": 0.0,
+   "ok": false,
+   "head": "- **ETS 300 019**：环境标准（存储 1.1/运输 2.3/固定使用 3.1）<<<PAGE 103>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Class A 设备**：商用限制（住宅禁用）<<<PAGE 104>>>"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **Tmra**：最大额定环境温度（全家族 0-45°C）<<<PAGE 25>>>等"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Chassis vs Ambient Temperature**：机箱传感器温度恒高于室温 <<<PAGE 25>>>等"
+  }
+ ],
+ "principles": [
+  {
+   "h": 0.3,
+   "ok": false,
+   "head": "- **P1** 家族命名解码：`P`=PoE（at/bt）；`Z8/Z24/Z16`=多千兆 2.5G/802.3bt 口数（8/24/1"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **P2** 多千兆口速率梯度：Z 口支持 100/1000/2.5G（E 版部分口至 5G），全部为 802.3bt PoE；基础口为"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P3** 10G 许可口机制：24X4/48X4（及 P 版）口 49-50 为\"SFP(+) (1G/10G) ports (10"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **P4** 20G QSFP+ VFL 口：Z24/Z16 家族与 X10 统一配 2 个 20G QSFP+ VFL 口；X4 家族"
+  },
+  {
+   "h": 0.2,
+   "ok": false,
+   "head": "- **P5** 全家族统一物理包络：1U、44cm 宽、35cm 深、Tmra 0-45°C、存储 -40~85°C、湿度 5-95%——"
+  },
+  {
+   "h": 0.0,
+   "ok": false,
+   "head": "- **P6** 待机功耗梯度（体现多千兆成本）：P24X4=44W、24X4=44W、X10=49W、P24Z8=67W、E-P24Z8="
+  },
+  {
+   "h": 0.88,
+   "ok": true,
+   "head": "- **P7** 两套电源架构：PoE 机型=双可插拔 PSU 负载分担（\"If a second power supply is inst"
+  },
+  {
+   "h": 0.73,
+   "ok": true,
+   "head": "- **P8** PoE 电源三档：OS6560-BP-P 300W（54.5V/5.5A）、BP-PH 600W（54.5V/11A）、B"
+  },
+  {
+   "h": 0.0,
+   "ok": false,
+   "head": "- **P9** 电源 PN 版本双轨：BP-PH 有 903852-90/904071-90/904072-90 三版、BP-PX 有 9"
+  },
+  {
+   "h": 0.4,
+   "ok": true,
+   "head": "- **P10** PoE 预算矩阵（机型×电源×数量）：如 P48X4：1×BP-P=200W/2=462W；1×PH=477W/2=10"
+  },
+  {
+   "h": 0.38,
+   "ok": true,
+   "head": "- **P11** PN 门槛特例：P48Z16 903954-90（老版）用 BP-P/PH/PX；其他 PN 版仅支持 PH/PX（BP"
+  },
+  {
+   "h": 0.0,
+   "ok": false,
+   "head": "- **P12** 无电源开关语义：接电即开机、断全部电源即关机（与 6465 同）<<<PAGE 60>>>/<<<PAGE 71>>>"
+  },
+  {
+   "h": 0.0,
+   "ok": false,
+   "head": "- **P13** 电源 LED 双灯制（PoE PSU）：AC OK（绿/红）+ DC OK（绿/红）分离指示；BP/BP-D 单 LED"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **P14** DC 电源规范：-36~-72VDC 输入；12AWG 三芯线束（绿黄=地、黑=return、红=-48VDC）；支路过"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **P15** 四颗系统 LED：OK（绿/闪绿/琥珀=启动失败）；VC（稳绿=master/稳琥珀=slave）；PWR 四态语义按电"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **P16** 2.5G 口双 LED 机制：Speed LED1（绿=2.5G 链路/闪绿=活动；琥珀=100/1000 链路/闪琥珀"
+  },
+  {
+   "h": "n/a",
+   "ok": true
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **P18** 机架法兰免工具卡扣与 6360 同构：弹簧夹 out→tab 入槽→\"CLICK\"锁定→螺丝固定<<<PAGE 54>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P19** DNV（船用）体系仅限 P48X4/X10：OS-DNV-MNT 套件（侧轨+前后托架）固定机箱后部 + OS-DNV-"
+  },
+  {
+   "h": 0.0,
+   "ok": false,
+   "head": "- **P20** DNV 滤波器规格：C14 入/C15 出、100-240VAC/15-7.5A、36\" 输出线、自然对流散热、IP22"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **P21** 盲板/气流/接地规范同家族：盲板箭头朝上常装；前 6\"/后 6\"/侧 2\" 间隙；LCD8-10A-L+8AWG+30-"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P22** 气流遮挡致失效：\"Restricted airflow can cause your switch to overhea"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P23** 温度双阈值行为：Warning 超限发 trap 不停机——注意 6560 的 Warning 阈值是\"user-con"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P24** 硬件监控命令族：show module / show module long / show temperature / "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P25** Dying Gasp 三通道：整机失电发 SNMP trap（前 3 站：槽号/主备电源/时间）+ Syslog\"Dyi"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P26** DG 触发场景与防护：单电源失效、主备先后全失；\"Connect each power supply to a sepa"
+  },
+  {
+   "h": 0.83,
+   "ok": true,
+   "head": "- **P27** 双人机架纪律与重物下置（\"install the switch at the bottom of the rack wh"
+  },
+  {
+   "h": 0.2,
+   "ok": false,
+   "head": "- **P28** bt 全规格栈：802.3/af/at/bt；at 口 3000-30000mW、bt 口 3000-95000mW；C"
+  },
+  {
+   "h": 0.71,
+   "ok": true,
+   "head": "- **P29** 4pair/802.3bt 使能：lanpower 4pair 开 60/75/95W（PoH）；lanpower 80"
+  },
+  {
+   "h": 0.54,
+   "ok": true,
+   "head": "- **P30** lanpower 命令族与 6360 同构：service 两级激活、admin-state 仅复活、power/max"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P31** BPS 显示：show lanpower 输出含\"BPS power: Not Available\"行——非 PoE 机"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P32** 混插 wattage 电源会告警：\"PoE units support different wattage power "
+  },
+  {
+   "h": 0.0,
+   "ok": false,
+   "head": "- **P33** 911/UPS 纪律：IP 话机 PoE 交换机保持电源冗余并接 UPS <<<PAGE 83>>>"
+  },
+  {
+   "h": 0.57,
+   "ok": true,
+   "head": "- **P34** 首次登录六步与会话解锁模型与 6360 同构：admin/switch→aaa authentication（一次一类）"
+  }
+ ]
+}

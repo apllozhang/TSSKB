@@ -1,0 +1,922 @@
+{
+ "cases": [
+  {
+   "h": "n/a",
+   "ok": true
+  },
+  {
+   "h": 0.64,
+   "ok": true,
+   "head": "- **C2** 首次登录六步：console（rollover 线，9600/无流控/8N1，DCE）→admin/switch→aaa "
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **C3** 会话类型按类解锁：aaa authentication default local 全解锁；或 telnet/http/f"
+  },
+  {
+   "h": "n/a",
+   "ok": true
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C5** U28 后装机架流程（OS6575-REAR-MNT 套件：2 侧轨+2 后支架+1 支撑支架+18×M4X8MM；另 O"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C6** P12 DIN 导轨安装：DIN Rail Bracket 选件装于机箱→挂扣 DIN 导轨（\"DIN Mounted C"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **C7** P12 壁装流程：Wall Bracket 选件安装→挂壁（\"The OmniSwitch-P12 is wall mou"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **C8** MP16 壁装流程：利用机箱 Mounting Holes（后面板四角）直接螺丝挂壁 <<<PAGE 26>>>/<<<P"
+  },
+  {
+   "h": "n/a",
+   "ok": true
+  },
+  {
+   "h": "n/a",
+   "ok": true
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C11** 后装托盘电源安装流程（U28）：电源定向→DB-15 两侧导柱对准机箱后部导孔滑入→推至连接器完全就位→拧电源前端拇指螺"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **C12** ROJ 输出线接线流程（电源→机箱）：红线插电源顶部前端 V- 端子与交换机电源连接器(-)端→黑线插 V+ 与(+)端"
+  },
+  {
+   "h": "n/a",
+   "ok": true
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **C14** 最终上电连接：输出线插机箱前面板 PS1/PS2 电源连接器→AC 线 NEMA 5-15 头插易达 AC 源——插头在"
+  },
+  {
+   "h": "n/a",
+   "ok": true
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C16** 电源类型声明：powersupply 1 name ALE-75W-ps1 type ale lo-ac（逐电源声明；不"
+  },
+  {
+   "h": 0.71,
+   "ok": true,
+   "head": "- **C17** 机箱 supplemental 接地：Panduit LCD8-10A-L lug+10-32 螺丝装于接地耳无漆区→8"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C18** 告警输入→输出联动配置：alarm in temperature-alarm-in action alarm-out a"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C19** 系统事件→输出映射（认证失败例）：alarm event auth-fail-event event authentic"
+  },
+  {
+   "h": 0.86,
+   "ok": true,
+   "head": "- **C20** 硬件巡检流程：show module / show module long→show temperature（UNDER"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C21** DG 告警接收配置：snmp station 配 SNMP 站（trap 前 3 站生效）；swlog output s"
+  },
+  {
+   "h": 0.88,
+   "ok": true,
+   "head": "- **C22** PoE 首次激活流程：先 powersupply type 声明电源→lanpower slot 1/1 service"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C23** PoE 关断两级：单口 lanpower port 1/1/4 admin-state disable；整槽 lanpo"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C24** 端口/槽功率调节：lanpower port 1/1/4 power 3000（降口限额保预算）；lanpower sl"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C25** 端口优先级设置：lanpower port 1/1/4 priority critical——低/高/关键三档，关键口在"
+  },
+  {
+   "h": 0.88,
+   "ok": true,
+   "head": "- **C26** Guard Band 解锁小功率 PD：剩余预算 < 端口 maxpower 时 PD 不上电→lanpower pow"
+  },
+  {
+   "h": 0.71,
+   "ok": true,
+   "head": "- **C27** Priority Disconnect 开关：lanpower slot 2/1 priority-disconnect"
+  }
+ ],
+ "counter-examples": [
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X1** 48VDC 以下禁 PoE（三机型面板注记）：\"Under 48VDC, PoE not supported.\"；第三方电"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X2** 双电源禁混规格：\"both power supplies must have identical output watta"
+  },
+  {
+   "h": 0.92,
+   "ok": true,
+   "head": "- **X3** 电源类型不能自动检测：\"The OmniSwitch 6575 cannot auto-detect the type o"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X4** NEMA 插头不得提前带电插拔：\"Do not insert the NEMA 5-15 plug or power co"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X5** 只准用 ALE 原厂配件：\"Only parts provided by Alcatel-Lucent Enterpris"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X6** class detection 开启复位全口：\"Enabling class detection will reset a"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X7** admin-state 不能首次激活 PoE：\"You cannot use the lanpower port admi"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X8** 电容检测不符 IEEE：\"The capacitive detection method should only be e"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X9** 调低槽预算可掉电：\"Decreasing the slot-wide power could cause lower pr"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X10** maxpower 不预留功率：\"Changing the maximum power available to a sl"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X11** Guard Band 对已上电 PD 不适用：\"The Guard Band functionality does no"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **X12** 高温预算降档：温度阶梯预算表——如 P12+1×BPNSX 从 ≤50°C 的 330W 降至 70-75°C 的 14"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **X13** MP16 加电源不扩预算：150W→52W 恒定、480W→120W 恒定（单双电源相同）——机内路径封顶，叠电源只为冗"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X14** aaa authentication 一次一类：\"You cannot specify more than one se"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X15** 密码覆盖受限：\"Be sure to remember or securely record all new passw"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X16** Danger 阈值固化不可配：\"The Danger threshold is factory-set and cann"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X17** Danger 超限须手动重启：\"the switch will power off until the temperat"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X18** 禁延长线：\"Do not use extension cords.\"；非 ALE 电源线需安装者自证合规 <<<PAGE"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X19** 违反电涌军规可能失保：\"Failure to follow the above recommendations coul"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X20** 室外禁裸线缆：\"Never install exposed network cables outdoors.\" <<<P"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X21** Type A 电源线插座须易达：\"The product uses a Pluggable Type A power c"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **X22** 密闭多机架环温偏高（General Mounting Recommendations：Tmra/气流/机械载荷/电路过载"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X23** 机架螺丝自备：\"insert a rack mount screw (not provided)\" <<<PAGE 30"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X24** 盲板必须常装：\"Because they regulate airflow and help protect inter"
+  },
+  {
+   "h": 0.92,
+   "ok": true,
+   "head": "- **X25** OSP 禁金属直连：\"The intra-building port(s)...MUST NOT be metallic"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X26** AC 电源必须接 SPD：\"The AC power supply must be connected to a sur"
+  },
+  {
+   "h": 0.83,
+   "ok": true,
+   "head": "- **X27** 接地细则：星形垫圈防松（\"Star washers must be used to prevent any connec"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X28** 雷暴作业禁令：\"do not connect or disconnect any cables or perform i"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X29** 运行中勿触背板/电源舱：\"keep your hands and fingers out of power supply"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X30** 多电源设备搬运前全断：\"be sure to disconnect all power connections befo"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X31** Class 1M 激光：\"CLASS 1M LASER RADIATION WHEN OPEN. DO NOT VIEW"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X32** ESD 腕带强制：\"you must follow proper procedures to eliminate ESD"
+  },
+  {
+   "h": 0.14,
+   "ok": false,
+   "head": "- **X33** 锂电池更换须返厂：\"There is a danger of the explosion if the lithium "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X34** 受限场所安装：\"This equipment should be installed in a location tha"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X35** Class A 住宅禁用：\"To avoid electromagnetic interference, this pr"
+  }
+ ],
+ "frameworks": [
+  {
+   "h": 0.21,
+   "ok": false,
+   "head": "- **F1** 6575 家族选型三轴矩阵：轴一=安装形态（P12=DIN 导轨/壁装配电柜；U28=19 英寸机架 1U；MP16=壁装"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **F2** 温度-PoE 预算联动框架：预算=机型×电源×数量×温度带四元函数。部署四查：一查 Tmra 所在温度带（≤50/50-6"
+  },
+  {
+   "h": 0.58,
+   "ok": true,
+   "head": "- **F3** 工业高可用三支柱框架：链路侧=MP16 Port Bypass 断电旁路（13-16 口失电自动直连保通信）；供电侧=双同"
+  }
+ ],
+ "glossary": [
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **OS6575-P12**：无风扇 DIN 导轨机，8×10/100/1000Base-T 802.3bt 60W + 4×SFP+ "
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **OS6575-U28**：无风扇 1U 机架机，4×PoE+ 90W combo + 20×100FX/1G SFP + 4×SFP"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **OS6575-MP16**：无风扇壁装工业机，M12/M23 连接器，4×10/100 + 4×at 30W + 4×bt 60W "
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **Port Bypass**：断电旁路特性（MP16 13-16 口）——失电或故障时自动直连两口保通信 <<<PAGE 12>>>/"
+  },
+  {
+   "h": 0.33,
+   "ok": false,
+   "head": "- **Uplink / VFL**：上联/虚拟 fabric 链路双角色 SFP+ 口（LED 绿=uplink/琥珀=VFL） <<<P"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Availability Features**：可用性三特性——电源冗余/热插拔/硬件监控 <<<PAGE 12>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Grounding wrist strap**：接地防静电腕带（安装三件套之一） <<<PAGE 13>>>"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **Electrical Surge Warning**：电涌警告五条军规（接地 0.01Ω/STP/浪涌保护器/室外防雷/CDE） <"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **CDE（Cable Discharge Event）**：电缆静电放电——Cat5e/6/6a 储静电，接线前先瞬时接地 <<<PA"
+  },
+  {
+   "h": 0.83,
+   "ok": true,
+   "head": "- **Serial Default Settings**：console 默认 9600/无流控/8N1，rollover 线 <<<PA"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **rollover cable**：反转线——本家族 console 线型 <<<PAGE 15>>>"
+  },
+  {
+   "h": 0.0,
+   "ok": false,
+   "head": "- **admin/switch**：出厂默认登录名/密码 <<<PAGE 16>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **aaa authentication**：会话类型解锁命令（一次一类） <<<PAGE 17>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **system timezone / daylight-savings-time**：时区/夏令时命令（默认 UTC） <<<PAGE"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **show system / write memory**：查看/保存配置命令 <<<PAGE 19>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Tmra**：环境工作温度 -40~75°C（三机型一致，工业级） <<<PAGE 22>>>/<<<PAGE 24>>>/<<<P"
+  },
+  {
+   "h": "n/a",
+   "ok": true
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Alarm In / Alarm Out LED**：告警输入/输出灯，Solid Red 表示各自检测到触发 <<<PAGE 27"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **GRN（Leaf）LED**：省电模式灯——绿=Power Saving Mode/灭=Normal <<<PAGE 27>>>"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **1/CMMA**：show temperature 传感器标识（Range -45~93/Danger 98/Thresh 93） "
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **Warning/Danger Threshold**：温度警告/危险阈值——Danger 出厂固化不可配，超限关机待手动重启 <<<"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **OS6575-REAR-MNT**：U28 后装套件——2 侧轨+2 后支架+1 支撑支架+18×M4X8MM 螺丝 <<<PAGE"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **OS6575-TRAY-1U**：U28 1U 电源托盘（4×M4 螺丝安装） <<<PAGE 31>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **DIN Rail Bracket**：P12 DIN 导轨安装支架选件 <<<PAGE 22>>>/<<<PAGE 33>>>"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **Wall Bracket**：P12 壁装支架选件；MP16 用自带 Mounting Holes <<<PAGE 22>>>/<<"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Rack mount screw (not provided)**：机架螺丝不随机提供 <<<PAGE 30>>>"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **OS6NN5-BPNS（XDR-150E-48）**：150W 外置 AC 电源（85-260VAC→54.5VDC），配 P12 "
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **OS6NN5-BPNSX（XDR-480E-48）**：480W 外置 AC 电源（85-264VAC→54.5V/8.8A），配 "
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **OS6575-BPR（PS-I180AC-P）**：180W 模块 AC 电源（100-240VAC→+56V/3.22A），U28"
+  },
+  {
+   "h": 0.6,
+   "ok": true,
+   "head": "- **OS6575-BPRD（PS-I180DC-P）**：180W 模块 DC 电源（-20~-28V/12A 或 -36~-72V/6"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **ROJ（Removed Outer Jacket）**：剥外皮电源线制——外置电源输入/输出均为裸线端子接线 <<<PAGE 42>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **V- / V+ 端子**：输出线极性——红=V-、黑=V+（本机红负黑正）、绿=保护地（ring 端子） <<<PAGE 42>>>"
+  },
+  {
+   "h": "n/a",
+   "ok": true
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **3.5 inch-pounds**：输出端子接线力矩；输入端子按电源标签 <<<PAGE 43>>>/<<<PAGE 45>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **DB-15 连接器 / Guide Pins**：后装电源与机箱对接的连接器及两侧导柱 <<<PAGE 41>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **NEMA 5-15**：AC 插头标准——未到提示步骤不得插入带电插座 <<<PAGE 43>>>/<<<PAGE 45>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **powersupply type 命令**：手动声明电源型号（不能自动检测），如 type ale lo-ac <<<PAGE 46"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **Thumb Screw**：后装电源固定拇指螺丝 <<<PAGE 41>>>"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **Alarm Relay**：告警继电器——系统事件/告警输入的输出/trap/SWLog 通告机制 <<<PAGE 48>>>"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **Alarm Input**：单线告警输入（5-12VDC，外接温度/门磁/接近传感器） <<<PAGE 48>>>"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **Alarm Output**：单线继电器干接点输出（Max 220VDC/250VAC/2A/60W） <<<PAGE 48>>>"
+  },
+  {
+   "h": "n/a",
+   "ok": true
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **alarm in/out/map/event 命令族**：告警输入定义/输出使能/映射/事件绑定配置 <<<PAGE 49>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **show alarm event config / show alarm status / alarm clear status**"
+  },
+  {
+   "h": 0.0,
+   "ok": false,
+   "head": "- **VC 同步**：VC 内告警输入/trap/系统事件跨机同步，支持多对一/一对多映射 <<<PAGE 48>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Dying Gasp**：临终告警——失电时发 SNMP trap（前 3 站）+ Syslog（前 3 服务器） <<<PAGE "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Dying Gasp Power Failure Event Occurred**：DG Syslog 消息原文 <<<PAGE 5"
+  },
+  {
+   "h": 0.83,
+   "ok": true,
+   "head": "- **snmp station / swlog output socket**：DG 告警接收端配置命令 <<<PAGE 52>>>"
+  },
+  {
+   "h": 0.6,
+   "ok": true,
+   "head": "- **M23 5-pin（Power）**：MP16 电源连接器——PWR-1±/FGND/PWR-2± 双路输入 <<<PAGE 25>"
+  },
+  {
+   "h": 0.2,
+   "ok": false,
+   "head": "- **M12 A-code**：Console/USB/Alarm 公头连接器（TX/RX/GND；D+/D-/VCC；DO-NO/DO-"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **M12 D-code**：10/100 口连接器（TX±/RX±，PoE 版 1/3 脚 PoE+、2/4 脚 PoE-） <<<P"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **M12 X-code**：千兆口连接器（8 脚四对差分，PoE 版 G1/G2 两对组各 PoE±） <<<PAGE 25>>>/<"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **M23-PWRCONN-5P**：M23 电源插座配件（5 只装，不带线） <<<PAGE 55>>>"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **M12-USB-2P / M12-CONSOLE-5P**：M12 转 USB / RS232 console 配件线缆 <<<PA"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **M12-ALARM-6P**：M12 转裸线告警线缆（1m 6 只装） <<<PAGE 55>>>"
+  },
+  {
+   "h": 0.33,
+   "ok": false,
+   "head": "- **M12-DC-M/RJ45F/RJ45M-8P**：D-code 转 D-code/RJ45 配件线缆族 <<<PAGE 55>>>"
+  },
+  {
+   "h": 0.33,
+   "ok": false,
+   "head": "- **M12-XC-M/RJ45F/RJ45M-8P**：X-code 转 X-code/RJ45 配件线缆族 <<<PAGE 55>>>"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **PoE/PoL/Inline Power**：以太网供电同义术语族 <<<PAGE 56>>>"
+  },
+  {
+   "h": "n/a",
+   "ok": true
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **802.3at / 802.3bt**：PoE+ 30W / PoE++ 90W 标准；本机 at 口 3000-30000mW、b"
+  },
+  {
+   "h": 0.0,
+   "ok": false,
+   "head": "- **PoE 温度阶梯预算表**：按机型×电源×数量×温度带（≤50 至 70-75°C 四档）的预算矩阵 <<<PAGE 60>>>/<"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **lanpower slot service start/stop**：PoE 整槽启停（首次激活必用） <<<PAGE 64>>>"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **lanpower port admin-state enable/disable**：单口 PoE 复活/关断（不能首次激活） <<"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **lanpower power / lanpower slot maxpower**：口/槽功率上限命令 <<<PAGE 64>>>/"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **lanpower priority**：口优先级 low/high/critical（默认 low） <<<PAGE 65>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **lanpower class-detection**：等级检测使能（开启复位全口） <<<PAGE 64>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **lanpower capacitor-detection**：电容检测法（仅老 IP 话机，不符 IEEE） <<<PAGE 66>"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **Guard Band**：保护带机制——剩余预算低于口 maxpower 即拒供新 PD <<<PAGE 67>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Priority Disconnect**：优先级断开——预算不足时按优先级+物理口号裁决新 PD 供电 <<<PAGE 68>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **show lanpower slot**：PoE 逐口状态/槽预算查看命令 <<<PAGE 63>>>/<<<PAGE 71>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **show powersupply**：电源类型/状态/总功率查看命令 <<<PAGE 62>>>"
+  },
+  {
+   "h": 0.0,
+   "ok": false,
+   "head": "- **911/UPS 纪律**：带 IP 话机的 PoE 交换机须常备电源冗余并接 UPS <<<PAGE 56>>>"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **NEBS GR-1089-CORE**：电信设备电气防护——楼内端口禁金属直连 OSP、AC 须接 SPD <<<PAGE 80>>"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **CBN（Common Bonding Network）**：共模连接网络——NEBS 安装要求 <<<PAGE 80>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Star washers**：星形垫圈——防接地连接松动 <<<PAGE 80>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **ISA 12.12.01 / UL 508 / EN50021**：工业安全标准（危险场所/工业控制设备） <<<PAGE 77>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **DNV 2.4**：船级社认证；**EN 50121-4 / IEC 62236-4**：铁路 EMC；**NEMA TS-2**："
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **IEC 60529 IPXX**：防护等级标准；**IEC 61850-3 / IEEE 1613**：变电站/电力自动化 EMC "
+  },
+  {
+   "h": 0.83,
+   "ok": true,
+   "head": "- **Class A / Class 1M Laser / ESD / WEEE / RoHS / Prop 65**：通用法规警告族（住"
+  }
+ ],
+ "principles": [
+  {
+   "h": 0.83,
+   "ok": true,
+   "head": "- **P1** 家族三机型按安装形态分化：OS6575-P12（\"fanless, din-mountable\"，8×10/100/100"
+  },
+  {
+   "h": 0.92,
+   "ok": true,
+   "head": "- **P2** MP16 四段端口阵列：1-4 纯 10/100（M12 D-code）、5-8 为 802.3at 30W PoE（D-"
+  },
+  {
+   "h": 0.92,
+   "ok": true,
+   "head": "- **P3** Port Bypass 断电旁路（MP16 独有）：\"automatically connects two network"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **P4** Uplink/VFL 双角色口：P12 的 9-12 与 U28 的 29-32 标注\"10G SFP+ Uplink /"
+  },
+  {
+   "h": 0.78,
+   "ok": true,
+   "head": "- **P5** 工业连接器体系（MP16）：Console/USB/Alarm 全部 M12 A-code 公头、Power 为 M23 "
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **P6** M12 X-code PoE pinout 分组：1-4 脚 TXD1/RXD2 带 PoE-(G1)/PoE+(G1)、"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **P7** 全家族 Tmra 工业级：-40~75°C（三机型一致）；存储 -40~85°C；湿度 5-95%——比机房交换机宽一档 "
+  },
+  {
+   "h": 0.33,
+   "ok": false,
+   "head": "- **P8** 包络分化：P12=17×9.1×16.1cm/2.5kg（最小）；MP16=17.5×27×8cm/3.4kg（超薄挂墙）"
+  },
+  {
+   "h": 0.6,
+   "ok": true,
+   "head": "- **P9** 输入电压域分化：P12=24-57VDC max 8A；U28=24-60VDC max 3.5A；MP16=20-110"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P10** U28 输入电压三档 PoE 档位：\"50 - 57V: (3.5A), 150W max, PoE 802.3AT；4"
+  },
+  {
+   "h": 0.83,
+   "ok": true,
+   "head": "- **P11** 48V 禁 PoE 红线（三机型面板注记）：\"Under 48VDC, PoE not supported.\"——第三方"
+  },
+  {
+   "h": 0.65,
+   "ok": true,
+   "head": "- **P12** 四款电源矩阵：OS6NN5-BPNS（XDR-150E-48）150W 外置 AC（85-260VAC→54.5V，仅 "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P13** 电源手动配置机制：\"The OmniSwitch 6575 cannot auto-detect the type of"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P14** 无电源开关语义：\"the chassis does not provide an on/off switch\"——接电即"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **P15** 外置电源 ROJ（Removed Outer Jacket）接线制：输入线 L=黑/棕、N=白/蓝、PG=绿/绿黄条纹（"
+  },
+  {
+   "h": 0.0,
+   "ok": false,
+   "head": "- **P16** ROJ 输出线接线力矩 3.5 in-lb；输入端子按电源标签力矩；地线用附带螺丝固定到电源并连到交换机电源连接器地端子"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P17** Pluggable Type A 电源线纪律：\"please make sure that the power sock"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P18** 电源 DC OK LED 双态制：四款电源统一 Solid Green=DC power is good / Solid"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P19** 双冗余电源同规格强制（三机型注记）：\"both power supplies must have identical o"
+  },
+  {
+   "h": 0.88,
+   "ok": true,
+   "head": "- **P20** PS LED 三态带主备语义：稳绿=\"Main power supply and secondary power sup"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **P21** Alarm In/Out LED：各一枚，Solid Red 分别表示\"Alarm input detected\"/\"A"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P22** GRN（Leaf）省电模式灯：稳绿=Power Saving Mode、灭=Normal Operating Mode—"
+  },
+  {
+   "h": 0.0,
+   "ok": false,
+   "head": "- **P23** M12/RJ45 端口双色分 PoE：稳/闪绿=有效链路（非 PoE）；稳/闪琥珀=有效链路（PoE）——家族惯例 <<"
+  },
+  {
+   "h": 0.43,
+   "ok": true,
+   "head": "- **P24** Alarm Relay 双通道机制：单线告警输入（外接温度/接近/门磁传感器，5-12VDC，针 1 正/针 2 地）+"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P25** Alarm Relay VC 同步：\"On VC: The alarm input, traps, and system"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P26** 告警继电器动作语义：\"When the alarm relay output is triggered, the nor"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **P27** 告警四态 LED 组合表：输入+动作为 alarm out→双 On；输入+动作 trap/SWLog→仅 Input "
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **P28** 温度双阈值（宽域设计）：show temperature 例 1/CMMA Current 33、Range -45 t"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P29** Warning 超限发 trap 不停机、Danger 超限关机待手动重启——与家族一致；处置=查气流遮挡+查室温 <<"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P30** Dying Gasp 双通道（本书仅 SNMP+Syslog）：整机失电发 SNMP trap（前 3 站，含槽号/主备"
+  },
+  {
+   "h": 0.57,
+   "ok": true,
+   "head": "- **P31** PoE 规格栈：IEEE 802.3at/bt；at 口 3000-30000mW、bt 口 3000-90000mW（"
+  },
+  {
+   "h": 0.56,
+   "ok": true,
+   "head": "- **P32** PoE 默认值六项：service=Disabled；端口功率 at=30000mW/HPoE=60000mW；prio"
+  },
+  {
+   "h": 0.44,
+   "ok": true,
+   "head": "- **P33** PoE 温度阶梯预算（本书核心特色）：预算随 Tmra 分档降级——P12+1×BPNSX：≤50°C 330W→50-"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **P34** 双电源预算增量不翻倍且高温可保持：P12 双 BPNSX 全温度域恒 360W（>70°C 时 180W）；U28 双 "
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **P35** MP16 预算封顶：150W 电源=52W 恒定（单双同）；480W 电源=120W 恒定——机内 PoE 路径上限主导"
+  },
+  {
+   "h": 0.25,
+   "ok": false,
+   "head": "- **P36** PoE Class 0-8 全表（af 0-3：15.4/4/7/15.4W；at 4：30W；bt 5-8：45/60"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P37** Guard Band 机制：\"If the amount of power remaining is less than"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P38** Priority Disconnect 四情形规则：禁用时新 PD 一律拒供；使能+同级→按物理口号（1 最高→8 最低"
+  },
+  {
+   "h": 0.89,
+   "ok": true,
+   "head": "- **P39** 911/UPS 纪律：\"PoE-enabled switches with attached IP telephones"
+  },
+  {
+   "h": 0.83,
+   "ok": true,
+   "head": "- **P40** powersupply type 命令例：`powersupply 1 name ALE-75W-ps1 type al"
+  }
+ ]
+}

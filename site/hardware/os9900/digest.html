@@ -1,0 +1,84 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>精华长文 DIGEST — OmniSwitch 9900 Hardware Guide</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>OmniSwitch 9900 Hardware Guide</h1>
+<div class="sub">Rev S · 74 页 · 核心机箱（9907/9912/CMM-CFM 矩阵/VC-of-2）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">机箱与板卡</div>
+<a href="skills/os9900-chassis-modules.html">os9900-chassis-modules</a>
+<div class="grp">安装与电源</div>
+<a href="skills/os9900-install-power.html">os9900-install-power</a>
+<div class="grp">运维排障</div>
+<a href="skills/os9900-ops-troubleshoot.html">os9900-ops-troubleshoot</a></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../hardware/index.html">硬件手册</a> › <a href="index.html">OmniSwitch 9900 Hardware Guide</a> › <span>精华长文 DIGEST</span></nav><h1>精华长文 DIGEST</h1><h1 id="digest-omniswitch-9900-series-hardware-users-guide">DIGEST — OmniSwitch 9900 Series Hardware Users Guide 精华</h1>
+<p>本书是 ALE 核心/园区骨干模块化机箱 OS9900 系列的硬件手册（74 页，两款机箱）。核心卖点：CMM/CFM/NI 全模块化架构 + 4 电源 N+1 负载分担 + VC-of-2 双机箱虚拟化 + PoE（HPoE 75W）。全书沿"机箱架构→安装上电→PoE→组件拆除"生命周期展开。</p>
+<h2 id="_1">一、知识地图（三技能单元）</h2>
+<ol>
+<li><strong>机箱与模块体系</strong>（os9900-chassis-modules）：9907/9912 选型矩阵、CMM/CFM 兼容组合决策表、slot2 双角色权衡、11 种 NI 谱系、VC-of-2（Ch1，p5-31）。</li>
+<li><strong>安装与供电</strong>（os9900-install-power）：组件安装标准序列、功率预算三步法（Power Left）、电源三不混、DC 75A/10AWG 接线（Ch1/Ch2，p28-49）。</li>
+<li><strong>运维与排障</strong>（os9900-ops-troubleshoot）：热插拔节律（拆 30s/插 5min）、CFM 120 秒窗口、NI 同类替换、CMM LED 诊断、lanpower 与 Priority Disconnect（Ch3/Ch4，p50-63）。</li>
+</ol>
+<h2 id="_2">二、三单元要点串讲</h2>
+<h3 id="1">1. 机箱与模块：兼容矩阵是生命线</h3>
+<p>9907=11RU 七槽（2 CMM+5 NI，32.83kg）；9912=17RU 十二槽（2 CMM+10 NI，64.36kg）；均 23" 深、仅前→后气流、CFM3/4 预留未激活（&lt;&lt;<PAGE 5>&gt;&gt;-&lt;&lt;<PAGE 15>&gt;&gt;）。CMM/CFM 只有三种同箱组合支持（旧体系/CMM+CFM2/CMM2+CFM2 对称），一切新旧混插 Not Supported；CMM2 需 AOS ≥8.10R2、CFM2 需 ≥8.9R1（&lt;&lt;<PAGE 17>&gt;&gt;/&lt;&lt;<PAGE 20>&gt;&gt;/&lt;&lt;<PAGE 22>&gt;&gt;）。9907 slot2 双角色：装 NI 只活前 8 口且失 CMM 冗余。9912 不支持 XNI-P48Z16/P24Z8/UP24Q2/U12Q 四种 NI。VC-of-2 双机箱仅三种对称组合。</p>
+<h3 id="2">2. 安装与供电：功率预算先行</h3>
+<p>组件插入中板功率需求即刻生效，预算不足则新组件不上电甚至中断数据流——变更前必查 <code>show chassis</code> Power Left（&lt;&lt;<PAGE 49>&gt;&gt;）。电源 OS99-PS-A（AC 1200/3000W 两档）/OS99-PS-D（DC 2500W）三不混：AC/DC 不可混、Hi(240V)/Lo(110V) 不可混（与 6900 家族相反）。DC 接线 75A 过流+双 10AWG+FCI PWRBLADE 连接器（&lt;&lt;<PAGE 30>&gt;&gt;/&lt;&lt;<PAGE 31>&gt;&gt;）。安装序列：空箱就位（禁满载搬运）→ CFM（先拆风扇托盘）→ NI → CMM → 核预算 → 电源 → 主 CMM 四绿判据（&lt;&lt;<PAGE 36-45>&gt;&gt;）。</p>
+<h3 id="3">3. 运维与排障：机箱级热插拔节律</h3>
+<p>拆件间隔 30 秒、插件间隔 5 分钟+LED 无错（&lt;&lt;<PAGE 63>&gt;&gt;）；单 CMM/CFM/电源不可热拆；CFM 热换 120 秒窗口且一次一块；NI 只能同类替换。LED 诊断：PRI/FAB 编码+五灯同闪=全部 CFM PCIe 失效（&lt;&lt;<PAGE 18>&gt;&gt;）。PoE：默认 operational disabled；lanpower slot service 是首次激活唯一途径；Priority Disconnect 端口优先 48 高→1 低（与接入系列相反）（&lt;&lt;<PAGE 52>&gt;&gt;/&lt;&lt;<PAGE 55>&gt;&gt;）。</p>
+<h2 id="_3">三、本书在知识库中的位置</h2>
+<p>与 hw-6900v2（1U 汇聚/ToR）构成"盒式 vs 机箱"两级硬件线。跨书易混点：9900 电源 AC/DC 不可混而 6900 可混；
+9900 仅前→后气流而 6900 双向；
+Priority Disconnect 端口方向 9900 为 48 高 1 低、接入系列为 1 高 48 低。</p>
+<h2 id="_4">来源</h2>
+<p>OmniSwitch 9900 Series Hardware Users Guide（Rev. S, 2025-12）。verified.md：cases C2-C27；
+principles P1-P40；
+counter-examples X1-X51；
+frameworks F1-F4；
+glossary 约 60 条。</p><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

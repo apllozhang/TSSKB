@@ -1,0 +1,99 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>os6560-ops-troubleshoot — OmniSwitch 6560 Hardware Guide</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>OmniSwitch 6560 Hardware Guide</h1>
+<div class="sub">Rev P · 111 页 · 多千兆 bt 接入（2.5G/5G/双 PX 1565W/DNV）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">机型与端口</div>
+<a href="../skills/os6560-model-ports.html">os6560-model-ports</a>
+<div class="grp">安装与电源</div>
+<a href="../skills/os6560-install-power.html">os6560-install-power</a>
+<div class="grp">运维排障</div>
+<a href="../skills/os6560-ops-troubleshoot.html" class="on">os6560-ops-troubleshoot</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../hardware/index.html">硬件手册</a> › <a href="../index.html">OmniSwitch 6560 Hardware Guide</a> › <span>os6560-ops-troubleshoot</span></nav><h1>os6560-ops-troubleshoot</h1><p class="meta"><span class="badge">SKILL</span> os6560-ops-troubleshoot · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>PD 上电被拒/掉电：Guard Band 拒载、优先级裁决、Class 检测排障</li>
+<li>失电通告需求：配置 Dying Gasp（SNMP/Syslog/OAM PDU 三通道）</li>
+<li>温度告警：区分 Warning（可配不停机）与 Danger（固化关机）</li>
+<li>面板 LED 诊断：OK/VC/PWR 系统灯与 2.5G 口双灯读法</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>高可用双支柱框架（F3，&lt;&lt;<PAGE 76-82>&gt;&gt;）：供电侧=双电源负载分担+独立电路+UPS+DG 失电三通道通告（SNMP trap 前 3 站/Syslog 前 3 服务器/4 个 802.3ah OAM PDU 上联口优先，P25，&lt;&lt;<PAGE 78-82>&gt;&gt;）；运行侧=温度双阈值（Warning 用户可配预警不停机→Danger 出厂固化关机，P26/X7，&lt;&lt;<PAGE 76>&gt;&gt;）+LED 三层+show 命令巡检。lanpower 命令族语义（P30，&lt;&lt;<PAGE 89-95>&gt;&gt;）：service 两级激活、admin-state 仅复活不能首启、power/maxpower 上限不预留、priority 三级、Priority Disconnect 同级按物理口号 1 高 48 低裁决。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<p>PoE 排障决策树：
+1. 口完全无电 → 查 slot service 是否 start（C15）
+2. 新 PD 被拒 → Guard Band：余量低于口上限即拒（C18：降口上限放行）
+3. 超预算掉 PD → Priority Disconnect：优先级+物理口号裁决（C19）
+4. 老legacy 话机不识别 → capacitor-detection（仅此场景，X10）
+5. 4pair/bt 高功率不通 → lanpower 4pair / 8023bt 使能（C20）</p>
+<h2 id="a2">A2（操作步骤）</h2>
+<ul>
+<li><strong>巡检三命令</strong>：show module / show temperature（UNDER THRESHOLD 正常；Warning 查气流室温；Danger 关机处理后手动启动）/ show powersupply（C13，&lt;&lt;<PAGE 75-76>&gt;&gt;/&lt;&lt;<PAGE 87>&gt;&gt;）</li>
+<li><strong>PoE 监控</strong>：show lanpower 1 逐口 Maximum/Actual/Status/Priority/Class+槽预算（C22，&lt;&lt;<PAGE 96>&gt;&gt;）</li>
+<li><strong>优先级/限功率</strong>：lanpower port priority critical；lanpower port power 3000 / slot maxpower 400（C16/C17，&lt;&lt;<PAGE 90-91>&gt;&gt;）</li>
+<li><strong>DG 配置</strong>：efm-oam admin-state enable→port admin-state→propagate-events dying-gasp enable（C12，&lt;&lt;<PAGE 82>&gt;&gt;）；trap 站 snmp station / syslog swlog output socket（&lt;&lt;<PAGE 80-81>&gt;&gt;）</li>
+<li><strong>LED 读法</strong>：OK（绿/闪绿/琥珀=启动失败）；VC（稳绿=master/琥珀=slave）；PWR（绿=正常/琥珀=故障）；2.5G 口 Speed+PoE 双灯（P15/P16，&lt;&lt;<PAGE 48-49>&gt;&gt;）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>硬件巡检三命令流程（C13）</li>
+<li>Guard Band 拒载处置：余 50W/口上限 75W 拒 4W PD→power 10000 放行（C18，&lt;&lt;<PAGE 92>&gt;&gt;）</li>
+<li>PoE 关断两级与复活（C15，&lt;&lt;<PAGE 89>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（反例与坑）</h2>
+<ul>
+<li>admin-state 不能首次激活 PoE，必须 slot service（X8，&lt;&lt;<PAGE 89>&gt;&gt;）</li>
+<li>class-detection 开启会复位全 PoE 口（X9）；电容检测不符 IEEE 仅限 legacy 话机（X10，&lt;&lt;<PAGE 89>&gt;&gt;/&lt;&lt;<PAGE 91>&gt;&gt;）</li>
+<li>Danger 阈值固化不可配；Warning 设太低会误告警（X7，&lt;&lt;<PAGE 76>&gt;&gt;）</li>
+<li>slot maxpower 下调可致低优先级口失电（C16 附加警告）</li>
+<li>BPS 状态只在 show lanpower 输出行看（P31，&lt;&lt;<PAGE 88>&gt;&gt;）</li>
+<li>ESD 腕带强制；锂电池同型号更换并返厂（X24/X25，&lt;&lt;<PAGE 108>&gt;&gt;/&lt;&lt;<PAGE 110>&gt;&gt;）</li>
+</ul>
+<p>来源：OmniSwitch 6560 Hardware Users Guide（监控/DG/PoE Ch3-Ch4，p48-96）</p><div class="pn"><a href="os6560-install-power.html">⬅ 上一单元：os6560-install-power</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

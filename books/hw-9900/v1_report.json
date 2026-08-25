@@ -1,0 +1,967 @@
+{
+ "cases": [
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C1** 机架安装纪律：11RU/17RU 高整机；三人作业——\"Use two additional people to help"
+  },
+  {
+   "h": 0.0,
+   "ok": false,
+   "head": "- **C2** 独立安装流程：稳固平面承满配重量（32.83/64.36kg 起）；两人以上搬运空机箱正位放置；保证气流间隙与 AC 插座"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C3** 满载机箱搬运禁令+空箱组装策略：\"Do not attempt to move or install a fully lo"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C4** 装 CFM 六步：①确认遮挡槽位的风扇托盘已拆 ②模块电路板元件面朝左，板边插入上下 card guides 并部分推入 "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C5** 装风扇托盘三步：①手持上下把手、底部朝外斜角把顶部两 tab 插入槽位顶部 ②推底部入槽至 firmly seated ③"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C6** 装 NI 模块三步：①电路板板边插入机箱左右两侧凹槽 ②锁杆 open 位推模块至背板连接器 ③向面板中心拉紧锁杆至 90"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C7** 装电源四步：①拆电源槽盲板留存 ②一手扶前面、一手托底承重，手柄 down（open）位后滑至背板 ③手柄上翻竖直（loc"
+  },
+  {
+   "h": "n/a",
+   "ok": true
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C9** 启动成功判据（主 CMM LED）：PRI 稳绿 + PS 稳绿 + FAB 稳绿 + TEMP 稳绿；LED 持续报错则"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **C10** 首次登录七步：console 登录（admin/switch，RJ45 或 Micro-USB）→ 设 EMP IP →"
+  },
+  {
+   "h": 0.89,
+   "ok": true,
+   "head": "- **C11** EMP 设 IP：console 先行 → `ip interface emp address 168.22.2.120"
+  },
+  {
+   "h": 0.86,
+   "ok": true,
+   "head": "- **C12** 解锁会话：全部 `aaa authentication default local`；单个如 `aaa authenti"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C13** 改密码与可选项：`password` 两输入；`system timezone`/`system time`/`syst"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **C14** 变更前查预算：加 NI/冗余 CMM/PoE 设备或拔电源前 `show chassis` 看 Power Left（示"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C15** PoE 物理激活：`lanpower slot 2/1 service start`（逐 slot 首次激活唯一途径）；"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C16** 关 PoE：单口 `lanpower port 1/1/12 admin-state disable`；整 slot `"
+  },
+  {
+   "h": 0.88,
+   "ok": true,
+   "head": "- **C17** 调口/槽上限：`lanpower power`（须全三段 chassis/slot/port）；`lanpower sl"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C18** 设口优先级：`lanpower port 1/1/6 priority critical`（关键任务 PD 专用口）<<"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C19** 电容检测：`lanpower slot 3/1 capacitor-detection enable`（仅传统 IP 话"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C20** Priority Disconnect 开关：`lanpower slot 2/1 priority-disconnec"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **C21** 定时供电规则：`lanpower power-rule` 可按日期/时间开关 PoE（详见 CLI Reference）"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **C22** 状态查看：`show powersupply`（逐槽 Total/Used/Voltage/Type/Status）；`"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C23** 拆电源四步：①电源线从电源源与电源面板双端拔出，松前面拇指螺丝 ②手柄下拉至水平（open）位 ③一手握手柄部分拉出、另"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C24** 拆风扇托盘三步：①松拇指螺丝 ②持上下把手拉出下把手使底部脱开，再向外向下拉出直至脱离顶部 tab ③\"Three fa"
+  },
+  {
+   "h": "n/a",
+   "ok": true
+  },
+  {
+   "h": "n/a",
+   "ok": true
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C27** NI 热换完整流程：断模块全部网线 → 拔全部光模块 → 等 30 秒 → 插同类替代模块（\"can only be h"
+  }
+ ],
+ "counter-examples": [
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X1** CMM 与 CMM2 不可混插：\"the OS99-CMM2 requires a minimum AOS version"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X2** CFM2 版本与混插限制：\"The OS9907-CFM2 requires a minimum AOS version "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X3** 组合矩阵三禁：CMM+CMM 配 CFM+CFM2 混插=Not Supported；CMM2+CMM2 配 CFM+CF"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X4** VC-of-2 组合限制：双机箱仅三种对等组合支持（CMM+CFM、CMM+CFM2、CMM2+CFM2 各自对称），\"A"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X5** 9912 不支持四种 NI：XNI-P48Z16 / XNI-P24Z8 / XNI-UP24Q2 / XNI-U12Q "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X6** slot2 NI 只活 8 口（9907）：\"When an XNI module (i.e. OS99-XNI-U48)"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X7** slot2 装 NI 即失 CMM 冗余：\"when an NI is installed in slot 2, CMM "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X8** CFM3/4 预留未激活：\"Slots CFM 3 and CFM 4 are currently inactive an"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X9** AC/DC 电源不可混：\"Mixing of AC and DC power supplies is not suppor"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X10** 高低压输入不可混：\"Mixing of Hi (240VAC) and Low (110VAC) input is no"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X11** 单件不可热拆：\"Hot swapping CMMs, CFMs, or power supplies is suppor"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X12** 拆装电源先断源：\"Whenever connecting or disconnecting a power supply"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X13** DC 过流与线规：\"The branch circuit overcurrent protection must be "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X14** DC 长线属本地规范：\"Installation of a DC cable that is more than 3 m"
+  },
+  {
+   "h": 0.86,
+   "ok": true,
+   "head": "- **X15** DC 专用连接器：\"The power supply shall used with an 4P PWRBLADE CO"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X16** 禁用延长线：\"each supplied AC power cord is 2 meters (approx. 6.5 "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X17** 多电源快速上电：\"be sure to plug in each power supply in rapid succe"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X18** 功率预算不足后果：\"If there is not adequate power, the incoming compo"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X19** 三风扇托盘常驻：\"Three fan trays are required at all times; removal "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X20** CFM 热换 120 秒限时：\"CFM hot swap should be completed within 120 "
+  },
+  {
+   "h": 0.96,
+   "ok": true,
+   "head": "- **X21** 拆插间隔纪律：\"All component removals must have a 30 second interva"
+  },
+  {
+   "h": 0.83,
+   "ok": true,
+   "head": "- **X22** NI 只能同类热换：\"Network Interface (NI) modules can only be hot sw"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X23** 拆电源不托底后果：\"Failure to support the chassis as it is being remo"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X24** 墙装禁令：\"Due to weight and airflow requirements, OS9900 switche"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X25** 满载机箱搬运禁令：\"Do not attempt to move or install a fully loaded c"
+  },
+  {
+   "h": 0.85,
+   "ok": true,
+   "head": "- **X26** 双人/三人搬运纪律：\"Two people are required when lifting the chassis."
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X27** 倒放/侧躺禁令：\"The chassis must be placed 'right side up.' Never a"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X28** 盲板必须常装：\"Because they regulate airflow and help protect inter"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X29** 气流阻塞后果：\"Restricted airflow can cause the switch to overheat,"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X30** 专业安装者要求：\"Alcatel-Lucent Enterprise products must be installe"
+  },
+  {
+   "h": 0.4,
+   "ok": true,
+   "head": "- **X31** 电涌违规范即失保 + CDE 风险：\"Failure to follow the above recommendatio"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X32** 室外裸线禁令：\"Never install exposed network cables outdoors.\" <<<P"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X33** lanpower port admin-state 不能首次激活：\"You cannot use the lanpowe"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X34** 开 Class 检测复位全部 PoE 口：\"Enabling class detection will reset al"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X35** 电容检测不符 IEEE：\"The capacitive detection method should only be "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X36** 调低 slot 上限可致断电：\"Decreasing the slot-wide power could cause l"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X37** PoE 默认 operational disabled：\"Default PoE operational status:"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X38** 端口优先方向反转陷阱：本平台 \"48 (Highest) -> 1 (Lowest)\"（与 6865/6870 相反），"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X39** 多电源检修全断电：\"Your switch is equipped with multiple power suppli"
+  },
+  {
+   "h": 0.17,
+   "ok": false,
+   "head": "- **X40** 运行中勿触电源内部：\"keep your hands and fingers out of the power supp"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X41** 雷暴作业禁令：\"To avoid a shock hazard, do not connect or disconnec"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X42** 不可见激光辐射：\"Lasers emit invisible radiation from the aperture o"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X43** ESD 腕带生效条件：\"For the grounding wrist strap to be effective in"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X44** 受限场所要求：\"This equipment should be installed in a location tha"
+  },
+  {
+   "h": 0.11,
+   "ok": false,
+   "head": "- **X45** 锂电池更换纪律：\"There is a danger of an explosion if the lithium ba"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X46** 密码丢失后果：\"Be sure to remember or securely record all new passw"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X47** 解锁远程会话即开放远程访问：\"Unlocking session types grants access to non-"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X48** EMP 远程访问前置：配好 EMP IP 后 \"The switch cannot be accessed throug"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X49** Class A 住宅禁用：\"To avoid electromagnetic interference, this pr"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X50** FCC 擅改失权：\"Changes and modifications made to the equipment wi"
+  },
+  {
+   "h": 0.95,
+   "ok": true,
+   "head": "- **X51** 接地 lug 规范强制：\"connect a Panduit Corporation UL listed Lug, P/"
+  }
+ ],
+ "frameworks": [
+  {
+   "h": 0.41,
+   "ok": true,
+   "head": "- **F1** 9907 vs 9912 机箱选型矩阵："
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **F2** CMM/CFM 兼容组合决策表（升级与采购防错）："
+  },
+  {
+   "h": 0.6,
+   "ok": true,
+   "head": "- **F3** 机箱功率预算三步法（变更前必走）："
+  },
+  {
+   "h": 0.43,
+   "ok": true,
+   "head": "- **F4** 组件安装/拆除标准作业序列（满载机箱从头搭建）："
+  }
+ ],
+ "glossary": [
+  {
+   "h": 0.33,
+   "ok": false,
+   "head": "- **OS9907**：11RU 模块化机箱，7 槽（2 CMM+5 NI），32.83kg，23 英寸深 <<<PAGE 5>>>/<<"
+  },
+  {
+   "h": 0.33,
+   "ok": false,
+   "head": "- **OS9912**：17RU 模块化机箱，12 槽（2 CMM+10 NI），64.36kg <<<PAGE 11>>>"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **CMM（Chassis Management Module）**：机箱管理模块，管控 NI/CFM/配电；2 槽 1+1 冗余 <<"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **CFM（Chassis Fabric Module）**：机箱交换矩阵模块，藏于风扇托盘之后、经中板连接；4 槽中 CFM1/2 可"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **中板（Mid-plane）**：CFM 与机箱连接的背中板结构（NI 走 backplane）<<<PAGE 20>>>"
+  },
+  {
+   "h": 0.4,
+   "ok": true,
+   "head": "- **NI（Network Interface）模块**：网络接口模块，装前面板槽位（9907 有 3-7、9912 有 3-12）<<<"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **VC-of-2**：两台 OS9907 机箱虚拟化为一台虚拟机箱的配置 <<<PAGE 22>>>"
+  },
+  {
+   "h": "n/a",
+   "ok": true
+  },
+  {
+   "h": "n/a",
+   "ok": true
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Wrist Strap Grounding Connector**：机箱前/后部 ESD 腕带接地点 <<<PAGE 8>>>/<<"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **OS99-CMM**：初代管理模块，2×40G QSFP+ 上行，功耗 64W，仅 9907 支持 <<<PAGE 16>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **OS99-CMM2**：新一代管理模块，4×100G QSFP28 上行/VFL，74W，需 AOS ≥8.10R2，不可与 CMM"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Micro-USB console**：CMM 上的第二 console 口，需安装驱动 <<<PAGE 16>>>/<<<PAGE"
+  },
+  {
+   "h": 0.38,
+   "ok": true,
+   "head": "- **OS9907-CFM / CFM2**：9907 交换矩阵（2.56T / 12.8T 每块，119W；CFM2 需 AOS ≥8."
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **OS9912-CFM**：9912 交换矩阵（25.6T 每块，222W）<<<PAGE 21>>>"
+  },
+  {
+   "h": "n/a",
+   "ok": true
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **FAB LED**：CFM 状态灯（稳绿=正常/稳黄=降级运行/闪黄=CFM 电源或 PCIe 上报失败）<<<PAGE 18>>>"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **五灯同闪（PCIe link failure）**：PRI/VC/FAB/PS/TEMP 同时闪黄=全部 CFM PCIe 硬链路失"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **OS99-XNI-48**：48 口 1/10GBaseT 模块，402W <<<PAGE 23>>>"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **OS99-XNI-U48**：48 口 1/10G SFP+ 模块，305W（slot2 只活 8 口）<<<PAGE 23>>>/"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **OS99-GNI-48**：48 口 10/100/1000BaseT + 2×10G，56W <<<PAGE 23>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **OS99-GNI-P48**：48 口千兆 PoE 模块（前 8 口 HPoE 75W），54W（不含 PD）<<<PAGE 24>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **OS99-GNI-U48**：48 口 1G SFP 模块，70W <<<PAGE 24>>>"
+  },
+  {
+   "h": 0.6,
+   "ok": true,
+   "head": "- **OS99-XNI-P48Z16**：32 口 1/10G at PoE + 16 口多千兆 at PoE（前 8 口 HPoE），4"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **OS99-XNI-P24Z8**：16+8 口 PoE 组合模块，187W；不支持 9912 <<<PAGE 25>>>"
+  },
+  {
+   "h": 0.33,
+   "ok": false,
+   "head": "- **OS99-XNI-U24**：24 口 1/10G SFP+ 模块，153W <<<PAGE 25>>>"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **OS99-CNI-U8**：8 口 10/25/40/100G QSFP28 模块，117W <<<PAGE 25>>>"
+  },
+  {
+   "h": 0.83,
+   "ok": true,
+   "head": "- **OS99-CNI-U20**：20 口 100G QSFP28 模块（13-20 口支持 splitter），314W <<<PAG"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **OS99-XNI-UP24Q2**：12×SFP+ +12×多千兆 HPoE(75W) +2×QSFP+，117W；不支持 9912"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **OS99-XNI-U12Q**：12×SFP+ +1×QSFP+，117W；不支持 9912 <<<PAGE 26>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **HPoE 口**：PoE 模块前 8 口、面板有 \"HPoE\" 标注、支持 75W <<<PAGE 24>>>"
+  },
+  {
+   "h": 0.33,
+   "ok": false,
+   "head": "- **Speed LED（NI）**：模块最大端口速率指示灯 + HW/SW 心跳状态（稳绿=HW OK/闪绿=SW 心跳/稳黄=SW 故"
+  },
+  {
+   "h": 0.4,
+   "ok": true,
+   "head": "- **OS99-PS-A**：AC 电源（100-240V；输出 1200W/21.4A 或 3000W/53.5A 两档），热插拔，Sy"
+  },
+  {
+   "h": 0.33,
+   "ok": false,
+   "head": "- **OS99-PS-D**：DC 电源（-40~-72VDC/75A；输出 2500W/44.6A@56V），热插拔 <<<PAGE 3"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **分路保护额定值**：每电源建议 30A（AC）/110A（DC）断路器 <<<PAGE 29>>>"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **FCI 10080598-2ED0006LF**：DC 电源要求的 4P PWRBLADE 专用连接器 <<<PAGE 31>>>"
+  },
+  {
+   "h": 0.0,
+   "ok": false,
+   "head": "- **10AWG**：DC 供电双铜导体线规 <<<PAGE 30>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **AHJ（Authority Having Jurisdiction）**：有管辖权的地方电气机构（DC 线 >3m 时咨询）<<<P"
+  },
+  {
+   "h": 0.33,
+   "ok": false,
+   "head": "- **风扇托盘（Fan Tray）**：3 件常驻、N+1 冗余、仅前→后气流；9907 每托 3 扇、9912 每托 5 扇 <<<PA"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **三人机架作业**：两人抬一人拧（\"Use two additional people\"）<<<PAGE 36>>>"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **锁杆（Lock Levers）**：CFM/NI 模块闭锁机构（90 度全闭锁定）<<<PAGE 38>>>/<<<PAGE 42>"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **9600-8N1**：console 默认串口参数（RJ45 或 Micro-USB）<<<PAGE 44>>>"
+  },
+  {
+   "h": "n/a",
+   "ok": true
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **EMP 默认地址**：192.168.1.1/255.255.255.0；改址命令 `ip interface emp` <<<PA"
+  },
+  {
+   "h": 0.0,
+   "ok": false,
+   "head": "- **admin/switch**：出厂默认账号/密码 <<<PAGE 46>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **aaa authentication**：解锁会话类型命令族 <<<PAGE 47>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **show chassis / Power Left**：机箱信息与可用功率预算查看 <<<PAGE 49>>>"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **DB9-RJ45 Connector**：随箱附带的 console 转接头 <<<PAGE 34>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **lanpower slot service**：逐 slot 物理激活/停止 PoE（首次激活唯一途径）<<<PAGE 50>>>/"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **lanpower power / lanpower slot maxpower**：单口/整槽功率上限（slot 默认 1800W；"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **lanpower priority**：口优先级 low/high/critical（默认 low）<<<PAGE 50>>>/<<"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **lanpower capacitor-detection**：电容检测（仅老式 IP 话机、不符 IEEE、默认关）<<<PAGE "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **lanpower slot priority-disconnect**：优先级断电裁决开关（默认启用）<<<PAGE 50>>>/<"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **lanpower power-rule**：按日期/时间的 PoE 供电规则命令 <<<PAGE 53>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Priority Disconnect**：预算不足时按优先级+物理端口号（48 最高→1 最低，与接入平台相反）裁决 <<<PAG"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Class 检测**：Class 0-4 分级限功率；默认关；开启复位全部 PoE 口 <<<PAGE 51>>>/<<<PAGE "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **show powersupply / show lanpower slot**：电源/PoE 逐口与预算状态命令 <<<PAGE 5"
+  },
+  {
+   "h": 0.33,
+   "ok": false,
+   "head": "- **HPoE（75W）**：前 8 口 75000mW 大功率 PoE；at 口 30000mW <<<PAGE 50>>>"
+  },
+  {
+   "h": "n/a",
+   "ok": true
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **同类替换（like modules）**：NI 模块热换只能换同型号 <<<PAGE 63>>>"
+  },
+  {
+   "h": "n/a",
+   "ok": true
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **UL 60950 / IEC 60950-1**：IT 设备安全标准 <<<PAGE 64>>>"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **IEEE 802.3 Hi-Pot + 1.5kV surge**：铜口耐压与浪涌要求 <<<PAGE 64>>>"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **FCC Part 15 Class A / CISPR 22**：Class A 电磁干扰限值 <<<PAGE 64>>>"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **CLASS 1 LASER PRODUCT**：CMM/NI 模块面板激光产品标识 <<<PAGE 16>>>等"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **Prop 65 / WEEE / RoHS（中国、台湾）**：加州警告/欧盟回收/有害物质限制 <<<PAGE 65>>>-<<<P"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **Panduit LCD8-10AL / CT-940CH**：接地 lug 及压接工具型号，8AWG、30-60 in-lb <<<"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **22AWG**：机框接地与 DC 回流引线线规 <<<PAGE 70>>>"
+  },
+  {
+   "h": "n/a",
+   "ok": true
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **受限场所（Restricted Access Location）**：仅持钥匙/安保措施的维护人员可进入 <<<PAGE 71>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Tmra**：最大额定环境温度（封闭机架折减依据）<<<PAGE 32>>>"
+  }
+ ],
+ "principles": [
+  {
+   "h": 0.31,
+   "ok": false,
+   "head": "- **P1** 双机箱规格：OS9907 为 11RU（7 槽=2 CMM+5 NI，49.02×44.2×58.42cm，32.83kg"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P2** OS9907 slot2 双角色设计：\"Slot 2 Supports a CMM (for 1+1 CMM redund"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P3** slot2 NI 半速陷阱（9907）：\"When an XNI module (i.e. OS99-XNI-U48) i"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P4** CFM 藏于风扇之后：\"CFMs are located behind the chassis fan trays. To"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **P5** 电源 N+1 负载分担：\"Slots PS1 through PS4 Support up to four load-sh"
+  },
+  {
+   "h": 0.71,
+   "ok": true,
+   "head": "- **P6** 风扇 N+1 与单向气流：3 风扇托盘常驻（9907 每托 3 风扇、9912 每托 5 风扇）、Airflow Dire"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P7** 拇指螺丝材质过渡：\"Modules are transitioning to ship with aluminum-hea"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P8** ESD 双接地点：机箱前部 Wrist Strap Grounding Connector + 后部 Grounding "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P9** CMM 职责：\"The CMM manages system functions in the chassis. This"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P10** CMM2 升级版：4×100G QSFP28 上行/VFL 口，功耗 74W；版本门槛——\"The OS99-CMM2 "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P11** CMM 双 console：RJ45 + Micro-USB（需装驱动）；EMP RJ45 10/100/1000 带外"
+  },
+  {
+   "h": 0.7,
+   "ok": true,
+   "head": "- **P12** CMM LED 组合诊断语义：PRI（稳绿=主/闪绿=备/稳黄=停运/闪黄=软件升级中）；VC（稳蓝=Master/稳黄"
+  },
+  {
+   "h": 0.83,
+   "ok": true,
+   "head": "- **P13** QSFP 上行 LED 多维编码：Off=管理 Down 或无收发器；绿(A)=40G/100G；绿(A/B/C/D)="
+  },
+  {
+   "h": 0.9,
+   "ok": true,
+   "head": "- **P14** CFM 带宽叠加模型：\"Each CFM installed provides additional fabric ba"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P15** CFM 经中板连接：\"The modules connect to the chassis mid-plane and "
+  },
+  {
+   "h": 0.82,
+   "ok": true,
+   "head": "- **P16** OS9907 组合兼容矩阵：CMM+CMM/CFM+CFM=支持；CMM+CMM/CFM2+CFM2=支持；CMM2+C"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P17** VC-of-2 双机箱虚拟化：9907 支持两机箱互联，仅三种对等组合支持（CMM+CFM ↔ CMM+CFM；CMM+"
+  },
+  {
+   "h": 0.44,
+   "ok": true,
+   "head": "- **P18** 11 种 NI 模块谱系：铜口（XNI-48 1/10GBaseT 402W、GNI-48 千兆 56W）；光口（XNI"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P19** HPoE 口规则（PoE 模块通用）：\"Ports 1 through 8 support HPoE (75W). Th"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P20** 9912 不支持的 NI 清单：XNI-P48Z16、XNI-P24Z8、XNI-UP24Q2、XNI-U12Q 均标注"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P21** CNI-U20 分支口：\"13-20 support splitter function\"（100G 口可分支）<<<P"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P22** NI 模块 LED 体系：背光状态 LED（稳蓝=HW OK/闪蓝=启动中或故障）；Speed LED（稳绿=HW OK"
+  },
+  {
+   "h": 0.43,
+   "ok": true,
+   "head": "- **P23** 双电源型号：OS99-PS-A（AC，100-240V 输入，输出两档 1200W/21.4A 或 3000W/53.5"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P24** 电源三不混：\"Mixing of AC and DC power supplies is not supported. "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P25** 分路保护建议：\"ALE recommends using circuit breakers that are rated"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P26** 机箱功率预算动态机制：\"As soon as a component is inserted and its conne"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **P27** DC 长线与连接器规范：DC 线 >3m 属本地规范管辖（联系电工与 AHJ）；须配 FCI 10080598-2ED0"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P28** 冗余 AC 分电路原则：\"It is recommended that each AC outlet resides o"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **P29** PoE 模块四件套：GNI-P48、XNI-P48Z16、XNI-P24Z8、XNI-UP24Q2；标准栈 802.3a"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P30** PoE 激活两级模型：软件默认 administratively enabled，但必须逐 slot `lanpower"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P31** 端口优先方向反转（对比接入交换机）：\"PoE Physical Port Priority 48 (Highest) -"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P32** Priority Disconnect 四场景裁决：禁用→一律拒新 PD；启用+同级→按物理端口号（48 高 1 低）；"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P33** Class 检测默认关、开启复位全部 PoE 口：\"Enabling class detection will rese"
+  },
+  {
+   "h": 0.86,
+   "ok": true,
+   "head": "- **P34** 三级端口优先级：low（默认先断）/high/critical，`lanpower port priority` 逐口设"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P35** 端口/槽最大功率语义：只设上限不做预留：\"Changing the maximum power available to"
+  },
+  {
+   "h": 0.0,
+   "ok": false,
+   "head": "- **P36** 911/UPS 供电纪律：带 IP 话机的 PoE 交换机应全程电源冗余并接 UPS <<<PAGE 50>>>"
+  },
+  {
+   "h": 0.89,
+   "ok": true,
+   "head": "- **P37** 热插拔节律双标准：拆件间隔 30 秒；插件间隔 5 分钟且 LED 无错才可进行下一件——\"All component "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P38** 单件不可热拆原则：\"Hot swapping CMMs, CFMs, or power supplies is supp"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P39** CFM 热换三纪律：一次只换一个；风扇托盘全数在位；\"CFM hot swap should be completed "
+  },
+  {
+   "h": 0.83,
+   "ok": true,
+   "head": "- **P40** NI 热换只限同类：\"Network Interface (NI) modules can only be hot sw"
+  }
+ ]
+}

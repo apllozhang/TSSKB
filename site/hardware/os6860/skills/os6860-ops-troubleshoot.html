@@ -1,0 +1,108 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>os6860-ops-troubleshoot — OmniSwitch 6860/6860E/6860N Hardware Guide</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>OmniSwitch 6860/6860E/6860N Hardware Guide</h1>
+<div class="sub">Rev W · 115 页 · 三代 15 机型（20G VC→QSFP28 VFL/七款电源）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">机型与端口</div>
+<a href="../skills/os6860-model-ports.html">os6860-model-ports</a>
+<div class="grp">安装与电源</div>
+<a href="../skills/os6860-install-power.html">os6860-install-power</a>
+<div class="grp">运维排障</div>
+<a href="../skills/os6860-ops-troubleshoot.html" class="on">os6860-ops-troubleshoot</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../hardware/index.html">硬件手册</a> › <a href="../index.html">OmniSwitch 6860/6860E/6860N Hardware Guide</a> › <span>os6860-ops-troubleshoot</span></nav><h1>os6860-ops-troubleshoot</h1><p class="meta"><span class="badge">SKILL</span> os6860-ops-troubleshoot · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>PoE 上线：首次激活、逐口/槽功率上限、优先级与定时规则</li>
+<li>新 PD 不上电排查（Guard Band 拒载）或预算不足裁口（Priority Disconnect）</li>
+<li>掉电场景可观测性：Dying Gasp 三通道配置与 PDU 口数挤占</li>
+<li>例行巡检：show module/temperature/powersupply/lanpower；温度告警处置</li>
+<li>LED 异常判读（五色端口灯/PS 五态/OK2）与首次登录七步</li>
+</ul>
+<h2 id="i">I（核心理念)</h2>
+<p>三层预算闸门框架（F2，&lt;&lt;<PAGE 93>&gt;&gt;/&lt;&lt;<PAGE 99>&gt;&gt;/&lt;&lt;<PAGE 100>&gt;&gt;/&lt;&lt;<PAGE 102>&gt;&gt;）：层一=物理预算（机型×电源×数量矩阵）；层二=priority disconnect 抢占上限（920W 电源→780W/只、600W→450W/只，超限部分只供不抢，P41，&lt;&lt;<PAGE 99>&gt;&gt;）；层三=Guard Band（剩余预算须大于口 maxpower 才上电，P44）。DG 三通道（P35，&lt;&lt;<PAGE 69>&gt;&gt;/&lt;&lt;<PAGE 70>&gt;&gt;）：SNMP trap（前 3 站）+Syslog（前 3 服务器）+4×802.3ah OAM PDU（上联口优先）；PDU 口数挤占公式=10−已配服务器数（P36，本书独有）。温度双阈值（P34，&lt;&lt;<PAGE 87>&gt;&gt;）：Warning 可配发 trap 不停机，Danger 固化关机须手动重启。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<ol>
+<li>巡检三板斧：show module → show temperature（VC 内逐机箱独立阈值）→ show powersupply（C17，&lt;&lt;<PAGE 86>&gt;&gt;/&lt;&lt;<PAGE 87>&gt;&gt;/&lt;&lt;<PAGE 91>&gt;&gt;）</li>
+<li>PoE 上线四级：lanpower slot service start 物理激活→maxpower/power 调上限→priority 设关键口→power-rule 定时</li>
+<li>新 PD 拒载排查：先查剩余预算 vs 口 maxpower（Guard Band）→调低口上限放行→再查 priority disconnect 上限</li>
+<li>温度告警处置：Warning→查气流/室温不停机；Danger→固化阈值关机，处置后手动重启</li>
+<li>VC 高可用基线（F3）：双电源分电路+UPS+DG 三通道+Fast/Perpetual PoE</li>
+<li>首次登录七步（C2，&lt;&lt;<PAGE 22>&gt;&gt;-&lt;&lt;<PAGE 26>&gt;&gt;）：console→admin/switch→（E 型）EMP 设 IP→解锁会话→改密→时区时间→show system/write memory</li>
+</ol>
+<h2 id="a2">A2（操作步骤）</h2>
+<ul>
+<li><strong>PoE 首次激活</strong>：show powersupply 确认→lanpower slot 2/1 service start→show lanpower slot 核对预算（C20，&lt;&lt;<PAGE 91>&gt;&gt;/&lt;&lt;<PAGE 92>&gt;&gt;/&lt;&lt;<PAGE 95>&gt;&gt;）</li>
+<li><strong>关断两级</strong>：单口 lanpower port admin-state disable；整槽 lanpower slot service stop；admin-state enable 仅复活（C21，&lt;&lt;<PAGE 96>&gt;&gt;）</li>
+<li><strong>调限额</strong>：lanpower port power 3000 降口限额；lanpower slot maxpower 400 调槽上限；lanpower port priority critical 设关键口（C22，&lt;&lt;<PAGE 96>&gt;&gt;/&lt;&lt;<PAGE 98>&gt;&gt;）</li>
+<li><strong>Guard Band 放行</strong>：PD 不上电时 lanpower power 1/1/1 power 10000 调低口上限至低于剩余预算（C23，&lt;&lt;<PAGE 102>&gt;&gt;）</li>
+<li><strong>Priority Disconnect 开关</strong>：lanpower slot 2/1 priority-disconnect disable/enable（C24，&lt;&lt;<PAGE 99>&gt;&gt;）</li>
+<li><strong>DG 配置</strong>：efm-oam admin-state enable→端口 enable→propagate-events dying-gasp enable；snmp station+swlog output socket 配接收端（C18/C19，&lt;&lt;<PAGE 70>&gt;&gt;）</li>
+<li><strong>EMP（E 型）</strong>：默认 192.168.1.1/24；ip interface emp 改 IP→show ip interface 核对（C3，&lt;&lt;<PAGE 24>&gt;&gt;）</li>
+<li><strong>会话解锁</strong>：aaa authentication default local 全解；或逐类 telnet/http/ftp local，一次一类（C4/X23，&lt;&lt;<PAGE 25>&gt;&gt;）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>DG PDU 挤占实战：2 SNMP 站+1 Syslog 服务器→同时发 PDU 口数上限=10−3=7 口（P36，&lt;&lt;<PAGE 70>&gt;&gt;）</li>
+<li>show temperature VC 逐机箱读法：1/CMMA（15-93/Danger 93）与 2/CMMA（15-85/85）并列，堆叠内每台阈值独立（P33，&lt;&lt;<PAGE 87>&gt;&gt;）</li>
+<li>Guard Band 不护已上电 PD：拔电源等预算缩减场景改由 priority disconnect 裁决（X22，&lt;&lt;<PAGE 102>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（反例与坑）</h2>
+<ul>
+<li><strong>物理口号优先级方向（本机型特有）</strong>：6860 的 Priority Disconnect 端口号越大优先级越高（24 口机 24 最高→1 最低；48 口机 48 最高→1 最低，P42，&lt;&lt;<PAGE 100>&gt;&gt;）——与 6360/6560/6865/6870 等接入系列的"1 高 N 低"相反，跨书配置勿照搬</li>
+<li>priority disconnect 电源档上限：920W→780W/只、600W→450W/只，超限部分不参与抢占（X11，&lt;&lt;<PAGE 99>&gt;&gt;）</li>
+<li>lanpower port admin-state 不能首次激活 PoE，必须 slot service（X18，&lt;&lt;<PAGE 95>&gt;&gt;）；class detection 开启复位全机 PoE 口（X17，&lt;&lt;<PAGE 95>&gt;&gt;）</li>
+<li>maxpower 不预留功率；调低槽上限可致低优先级口掉电（X21/X20，&lt;&lt;<PAGE 97>&gt;&gt;）</li>
+<li>电容检测不符 IEEE，仅限老式 IP 话机（X19，&lt;&lt;<PAGE 98>&gt;&gt;）</li>
+<li>Fast PoE 四限制：需正确 FPGA/CPLD 版本；出厂机须先完成初始 PoE 配置；启动期禁改 PoE 配置；LLDP PD 须等启动完成（X12-X15，&lt;&lt;<PAGE 96>&gt;&gt;）；Perpetual PoE 的 MCU 固件升级必断 PD 电（X16，&lt;&lt;<PAGE 96>&gt;&gt;）</li>
+<li>Danger 阈值固化不可配，超限关机须手动重启（X25，&lt;&lt;<PAGE 87>&gt;&gt;）</li>
+<li>密码覆盖受限，丢失密码恢复困难，须安全记录（X24，&lt;&lt;<PAGE 25>&gt;&gt;）</li>
+<li>锂电池更换须返厂，禁自行拆换（X37，&lt;&lt;<PAGE 114>&gt;&gt;）</li>
+</ul>
+<p>来源：OmniSwitch 6860/6860E/6860N Hardware Users Guide（Ch2 p18-26 + Ch3 p69-70/p86-91 + Ch4 p89-103）</p><div class="pn"><a href="os6860-install-power.html">⬅ 上一单元：os6860-install-power</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

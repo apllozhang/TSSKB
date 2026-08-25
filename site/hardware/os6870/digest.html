@@ -1,0 +1,88 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>精华长文 DIGEST — OmniSwitch 6870 Hardware Guide</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>OmniSwitch 6870 Hardware Guide</h1>
+<div class="sub">Rev D · 85 页 · 九机型（QSFP56 200G/混插扩容/四色 LED）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">机型与端口</div>
+<a href="skills/os6870-model-ports.html">os6870-model-ports</a>
+<div class="grp">安装与电源</div>
+<a href="skills/os6870-install-power.html">os6870-install-power</a>
+<div class="grp">运维排障</div>
+<a href="skills/os6870-ops-troubleshoot.html">os6870-ops-troubleshoot</a></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../hardware/index.html">硬件手册</a> › <a href="index.html">OmniSwitch 6870 Hardware Guide</a> › <span>精华长文 DIGEST</span></nav><h1>精华长文 DIGEST</h1><h1 id="digest-omniswitch-6870-hardware-users-guide">DIGEST — OmniSwitch 6870 Hardware Users Guide 精华</h1>
+<p>本书是 ALE 千兆/多千兆接入交换机 OS6870 家族的硬件手册（85 页，9 个 1U 机型）。核心卖点：上行覆盖 SFP28(25G)/QSFP28(100G)/QSFP56(200G) 三档；
+M 系列模块化（95W bt 多千兆 + Uplink Module Slot 后配上行）；
+6 型电源（250W-2000W）支持不同瓦数混插扩容；
+PoE 802.3af/at/bt 至 Class 8（90-99W/口）。全书沿"选型→安装→上电→PoE→监控"生命周期展开。</p>
+<h2 id="_1">一、知识地图（三技能单元）</h2>
+<ol>
+<li><strong>机型与端口体系</strong>（os6870-model-ports）：九机型三分类、QSFP56 200G、M/Z/V/CNI/LNI 命名、四色 RJ45 速率 LED（Ch1/Ch3，p12-39）。</li>
+<li><strong>安装与供电</strong>（os6870-install-power）：弹簧夹法兰机架、六型电源与混插扩容、PoE 预算四变量、DC 三线（Ch2-Ch4，p14-71）。</li>
+<li><strong>运维与排障</strong>（os6870-ops-troubleshoot）：lanpower+4pair/bt 使能、温度双阈值、DG 三通道、上电入网七步（Ch2-Ch4，p14-71）。</li>
+</ol>
+<h2 id="_2">二、三单元要点串讲</h2>
+<h3 id="1">1. 机型与端口：九机型三分类</h3>
+<p>命名（&lt;&lt;<PAGE 12>&gt;&gt;）：<code>P</code>=PoE；<code>M</code>=Modular（上行模块槽+95W bt+QSFP56 200G）；<code>Z</code>=固定多千兆 60W bt；<code>V12</code>=全光；CNI-U2/LNI-U6=上行扩展机箱。三分类（P1）：非 PoE 固定（-24/-48）→P<em>M 模块化（P24M 至 10G/P48M 至 5G，均 95W bt）→P</em>Z 固定（至 2.5G，60W bt）。上行阶梯（P2）：SFP28 1/10/25G（25G 推荐 VFL）→QSFP28 40/100G→QSFP56 40/100/200G。RJ45 四色速率 LED：绿=10/100/1000、蓝=2.5G、品红=5G、琥珀=10G（&lt;&lt;<PAGE 39>&gt;&gt;）。功耗梯度：-24=71W→P48M=251.8W。</p>
+<h3 id="2">2. 安装与供电：混插扩容与四变量预算</h3>
+<p>双电源负载分担+热插拔，且<strong>支持不同瓦数混插</strong>（&lt;&lt;<PAGE 47>&gt;&gt;/&lt;&lt;<PAGE 51>&gt;&gt;）——扩容可先混后替（F4：600W→1200W→2000W 平滑升级），与 6860 wattage 禁混相反。2000W 仅 P24M/P48M（Z 系列标 N/A，&lt;&lt;<PAGE 47>&gt;&gt;）。PoE 预算四变量（F2，&lt;&lt;<PAGE 63>&gt;&gt;）：机型×电源瓦数×单双×电压档（双值条目=低压/高压输入；1200W/2000W 需 190-240VAC 才得高 PoE 功率，&lt;&lt;<PAGE 52>&gt;&gt;/&lt;&lt;<PAGE 53>&gt;&gt;）；P48M 双 2000W 最高 3309W。多电源数秒内相继插电（&lt;&lt;<PAGE 18>&gt;&gt;）。DC 三线：绿黄=地/黑=return/红=-48V（&lt;&lt;<PAGE 54>&gt;&gt;）。</p>
+<h3 id="3-bt">3. 运维与排障：bt 全栈与双阈值</h3>
+<p>两级使能（&lt;&lt;<PAGE 65>&gt;&gt;）：<code>lanpower 4pair</code>（60/75/95W，at 4 对+PoH）→<code>lanpower 8023bt</code>（bt Type3/4 Class 5-8，90-99W）。首次激活必须 <code>lanpower slot service start</code>（&lt;&lt;<PAGE 65>&gt;&gt;）。Guard Band：剩余预算&lt;口上限/类最大值即拒载，调低口上限放行；不作用已在电 PD（&lt;&lt;<PAGE 67>&gt;&gt;/&lt;&lt;<PAGE 68>&gt;&gt;）。Priority Disconnect：<strong>端口号 1 最高→48 最低</strong>（&lt;&lt;<PAGE 68>&gt;&gt;/&lt;&lt;<PAGE 69>&gt;&gt;）。温度双阈值：Warning 可配发 trap，Danger 固化关机须手动启动（&lt;&lt;<PAGE 58>&gt;&gt;/&lt;&lt;<PAGE 59>&gt;&gt;）。DG 三通道（&lt;&lt;<PAGE 59>&gt;&gt;/&lt;&lt;<PAGE 60>&gt;&gt;）：SNMP 前 3 站+Syslog 前 3 服务器+4×802.3ah PDU（上联口优先）。console 全系 115200-8N1 rollover 线。</p>
+<h2 id="_3">三、本书在知识库中的位置</h2>
+<p>6870 定位多千兆 bt 高端接入/楼宇汇聚，上行 25G-200G 覆盖，与 hw-6860（VC 千兆中坚）、hw-6560（多千兆办公）构成接入高、中、办公三线，上接 hw-6900v2 核心。跨书易混点：①Priority Disconnect 口号 1 高 48 低，与 6860 反向；
+②6870 允许混插电源，6860 禁混；
+③console 波特率全系 115200，与 6360/6865（9600）、6860（9600/仅 N 型 115200）不同；
+④6870 SFP28 口组无 6860 N 型"禁混速"限制。</p>
+<h2 id="_4">来源</h2>
+<p>OmniSwitch 6870 Hardware Users Guide（Part No. 060931-00, Rev. D, 2025-12）。verified.md：cases C1-C27；
+principles P1-P40；
+counter-examples X1-X45；
+frameworks F1-F4；
+glossary 约 55 条。</p><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

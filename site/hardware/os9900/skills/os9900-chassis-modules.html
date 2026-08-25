@@ -1,0 +1,105 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>os9900-chassis-modules — OmniSwitch 9900 Hardware Guide</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>OmniSwitch 9900 Hardware Guide</h1>
+<div class="sub">Rev S · 74 页 · 核心机箱（9907/9912/CMM-CFM 矩阵/VC-of-2）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">机箱与板卡</div>
+<a href="../skills/os9900-chassis-modules.html" class="on">os9900-chassis-modules</a>
+<div class="grp">安装与电源</div>
+<a href="../skills/os9900-install-power.html">os9900-install-power</a>
+<div class="grp">运维排障</div>
+<a href="../skills/os9900-ops-troubleshoot.html">os9900-ops-troubleshoot</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../hardware/index.html">硬件手册</a> › <a href="../index.html">OmniSwitch 9900 Hardware Guide</a> › <span>os9900-chassis-modules</span></nav><h1>os9900-chassis-modules</h1><p class="meta"><span class="badge">SKILL</span> os9900-chassis-modules · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>核心/园区骨干选型：OS9907（11RU，2 CMM+5 NI）vs OS9912（17RU，2 CMM+10 NI）</li>
+<li>管理模块与交换矩阵升级规划：CMM/CMM2、CFM/CFM2 的 AOS 版本门槛与混插禁令</li>
+<li>slot2 取舍：9907 上 slot2 装 CMM（1+1 冗余）还是装 NI（扩端口但只活 8 口且失冗余）</li>
+<li>NI 模块选型：11 种模块（铜/光/PoE/高速）与 9912 不支持的四款 NI</li>
+<li>双机箱虚拟化 VC-of-2 的组合约束</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>9907 vs 9912 选型矩阵（F1，&lt;&lt;<PAGE 5>&gt;&gt;/&lt;&lt;<PAGE 6>&gt;&gt;/&lt;&lt;<PAGE 11>&gt;&gt;/&lt;&lt;<PAGE 22>&gt;&gt;/&lt;&lt;<PAGE 24>&gt;&gt;-&lt;&lt;<PAGE 26>&gt;&gt;）：高度（11RU/17RU）、槽位数（7/12）、重量（32.83/64.36kg）、CFM 带宽阶梯，共性为 4 电源 N+1、仅前→后气流、23 英寸深。CMM/CFM 兼容组合决策表（F2，&lt;&lt;<PAGE 17>&gt;&gt;/&lt;&lt;<PAGE 20>&gt;&gt;/&lt;&lt;<PAGE 22>&gt;&gt;）：只有三种同箱组合支持（旧体系、CMM+CFM2、CMM2+CFM2 各自对称），一切新旧混插 Not Supported，升级路径只有整代切换。CFM 带宽叠加模型（P14，&lt;&lt;<PAGE 20>&gt;&gt;/&lt;&lt;<PAGE 21>&gt;&gt;）：每加一块 CFM 即增加矩阵带宽（2.56T→12.8T→25.6T），CFM 藏于风扇托盘之后、经中板连接（P4/P15）。slot2 双角色是 9907 的架构级权衡：装 NI 换端口密度，代价是 CMM 无冗余且 NI 只活前 8 口（P2/P3，&lt;&lt;<PAGE 7>&gt;&gt;/&lt;&lt;<PAGE 16>&gt;&gt;/&lt;&lt;<PAGE 17>&gt;&gt;）。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<ol>
+<li>机箱选型走 F1：端口规模定 9907/9912 → 查 9912 不支持 NI 清单（P48Z16/P24Z8/UP24Q2/U12Q）→ 核机架承重与 23" 深度</li>
+<li>CMM/CFM 代际决策走 F2：现网 AOS 版本 → 目标组合（CMM2 需 ≥8.10R2、CFM2 需 ≥8.9R1）→ 整代切换不可混</li>
+<li>slot2 冗余权衡：要 1+1 CMM 冗余则 slot2 装 CMM；要端口则接受"NI 只活 8 口+失冗余"</li>
+<li>NI 选型按谱系四象限：铜（XNI-48/GNI-48）→ 光（XNI-U48/U24、GNI-U48）→ PoE（GNI-P48/P48Z16/P24Z8/UP24Q2）→ 高速（CNI-U8/U20、XNI-U12Q）</li>
+<li>VC-of-2 规划：两箱必须对称组合（CMM+CFM ↔ CMM+CFM 等三种），其余 Not Supported</li>
+</ol>
+<h2 id="a2">A2（操作步骤）</h2>
+<ul>
+<li><strong>核对槽位布局</strong>：9907 NI 槽 3-7、9912 NI 槽 3-12；CFM1/2 可用、CFM3/4 预留未激活不可当可用槽（X8，&lt;&lt;<PAGE 5>&gt;&gt;/&lt;&lt;<PAGE 10>&gt;&gt;/&lt;&lt;<PAGE 15>&gt;&gt;）</li>
+<li><strong>CMM 面板核对</strong>：CMM=2×40G QSFP+ 上行 64W；CMM2=4×100G QSFP28+VFL 74W；均带 RJ45+Micro-USB 双 console 与 EMP（P9-P11，&lt;&lt;<PAGE 16>&gt;&gt;/&lt;&lt;<PAGE 17>&gt;&gt;）</li>
+<li><strong>CFM 带宽与功耗</strong>：OS9907-CFM=2.56T/119W、CFM2=12.8T/119W、OS9912-CFM=25.6T/222W（P14，&lt;&lt;<PAGE 20>&gt;&gt;/&lt;&lt;<PAGE 21>&gt;&gt;）</li>
+<li><strong>NI 规格核对</strong>：功耗谱 56-402W（XNI-48 402W 最重）；HPoE 模块前 8 口 75W 面板标 "HPoE"（P18/P19，&lt;&lt;<PAGE 23>&gt;&gt;-&lt;&lt;<PAGE 26>&gt;&gt;）</li>
+<li><strong>CNI-U20 分支口</strong>：13-20 口支持 splitter（P21，&lt;&lt;<PAGE 26>&gt;&gt;）</li>
+<li><strong>CMM LED 诊断语义</strong>：PRI（稳绿=主/闪绿=备/稳黄=停运/闪黄=升级中）；FAB 闪黄=CFM 电源或 PCIe 失败；五灯同闪=全部 CFM PCIe 链路失效（P12，&lt;&lt;<PAGE 18>&gt;&gt;）</li>
+<li><strong>拇指螺丝识别</strong>：新批次铝头替代紫色塑料头，机械性能相同勿困惑（P7，&lt;&lt;<PAGE 6>&gt;&gt;/&lt;&lt;<PAGE 12>&gt;&gt;）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>OS9907 组合兼容矩阵三支持三禁止：CMM+CMM/CFM+CFM、CMM+CMM/CFM2+CFM2、CMM2+CMM2/CFM2+CFM2 支持；任何混插 Not Supported（P16/X3，&lt;&lt;<PAGE 22>&gt;&gt;）</li>
+<li>VC-of-2 三种对称组合（CMM+CFM ↔ CMM+CFM；CMM+CFM2 ↔ CMM+CFM2；CMM2+CFM2 ↔ CMM2+CFM2），其余 Not Supported（P17/X4，&lt;&lt;<PAGE 22>&gt;&gt;）</li>
+<li>slot2 装 XNI-U48 只活前 8 口（9907），CMM 冗余同时丢失（X6/X7，&lt;&lt;<PAGE 7>&gt;&gt;/&lt;&lt;<PAGE 16>&gt;&gt;/&lt;&lt;<PAGE 17>&gt;&gt;）</li>
+<li>QSFP 上行 LED 多维编码：Off=Down/无收发器；绿(A)=40G/100G；绿(A/B/C/D)=4X10G/4X25G 分支；蓝=VFL（P13，&lt;&lt;<PAGE 19>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（反例与坑）</h2>
+<ul>
+<li>CMM 与 CMM2 不可同箱混插（CMM2 需 AOS ≥8.10R2）；CFM 与 CFM2 不可混插（CFM2 需 ≥8.9R1）；组合矩阵三禁（X1/X2/X3，&lt;&lt;<PAGE 17>&gt;&gt;/&lt;&lt;<PAGE 20>&gt;&gt;/&lt;&lt;<PAGE 22>&gt;&gt;）</li>
+<li>9912 不支持四种 NI：XNI-P48Z16 / XNI-P24Z8 / XNI-UP24Q2 / XNI-U12Q（X5，&lt;&lt;<PAGE 24>&gt;&gt;/&lt;&lt;<PAGE 25>&gt;&gt;/&lt;&lt;<PAGE 26>&gt;&gt;）</li>
+<li>CFM3/4 预留未激活（"currently inactive and reserved for future use"），不可当可用槽规划（X8，&lt;&lt;<PAGE 5>&gt;&gt;/&lt;&lt;<PAGE 10>&gt;&gt;/&lt;&lt;<PAGE 15>&gt;&gt;）</li>
+<li>slot2 装 NI 即失 CMM 冗余且 NI 只活 8 口——扩端口的隐性代价（X6/X7，&lt;&lt;<PAGE 7>&gt;&gt;/&lt;&lt;<PAGE 16>&gt;&gt;/&lt;&lt;<PAGE 17>&gt;&gt;）</li>
+<li>VC-of-2 双机箱只允许对称组合，非对称组合 Not Supported（X4，&lt;&lt;<PAGE 22>&gt;&gt;）</li>
+<li>满配重量 32.83/64.36kg 起步：禁止满载搬运，先就位空机箱再逐件装模块（X25/C3，&lt;&lt;<PAGE 32>&gt;&gt;）</li>
+<li>PoE Priority Disconnect 端口优先方向为 48（最高）→1（最低），与 6865/6870/6560 等接入系列（1 高 48 低）相反——跨平台套用优先级规划会反噬，预算不足时被断电的口正好相反（X38/P31，&lt;&lt;<PAGE 55>&gt;&gt;）</li>
+</ul>
+<p>来源：OmniSwitch 9900 Series Hardware Users Guide（Ch1 机箱与电源架构，p5-31）</p><div class="pn"><a href="../index.html">⬅ 返回课程首页</a><a class="nxt" href="os9900-install-power.html">下一单元：os9900-install-power ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

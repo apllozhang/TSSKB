@@ -1,0 +1,99 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>os6900-chassis-modules — OmniSwitch 6900 Hardware Guide</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>OmniSwitch 6900 Hardware Guide</h1>
+<div class="sub">Rev C · 90 页 · 模块化机箱（端口组锁速/QSFP-DD 十二态/两代电源）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">机箱与板卡</div>
+<a href="../skills/os6900-chassis-modules.html" class="on">os6900-chassis-modules</a>
+<div class="grp">安装与电源</div>
+<a href="../skills/os6900-install-power.html">os6900-install-power</a>
+<div class="grp">运维排障</div>
+<a href="../skills/os6900-ops-troubleshoot.html">os6900-ops-troubleshoot</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../hardware/index.html">硬件手册</a> › <a href="../index.html">OmniSwitch 6900 Hardware Guide</a> › <span>os6900-chassis-modules</span></nav><h1>os6900-chassis-modules</h1><p class="meta"><span class="badge">SKILL</span> os6900-chassis-modules · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>汇聚层或数据中心 ToR（Top-of-Rack）选型：在十个 6900 机型中按介质/速率/密度/机架深度选型</li>
+<li>规划 25G 端口：核对 4 口端口组内 10G/25G 锁速约束（V72/X48C4E/V48C8）</li>
+<li>400G 场景：OS6920-D32 的 QSFP-DD 单口多形态（400G/2X200G/4X100G 及向下兼容）</li>
+<li>核对风扇托盘/电源气流方向（F/R 后缀、紫色标识）与机箱深度三档（47.3/51.5-53.6/59cm）</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>十机型选型矩阵（F1，&lt;&lt;<PAGE 12>&gt;&gt;/&lt;&lt;<PAGE 28>&gt;&gt;-&lt;&lt;<PAGE 47>&gt;&gt;）：介质（T=10GBaseT/X=SFP+/V=SFP28）×速率档（10G/25G/100G/400G）×机架深度三档，决策三问——铜还是光、速率档位、机架能否容纳 51.5-59cm 深机箱。三件套气流一致性框架（F2，&lt;&lt;<PAGE 50>&gt;&gt;/&lt;&lt;<PAGE 52>&gt;&gt;）：风扇托盘+电源1+电源2 必须同方向（F=前→后标准色/R=后→前紫色标识），失配即 trap→循环重启。端口速率的约束单元是端口组而非单口：4 口一组锁速，组内 10G 与 25G 不可混（P 系原则，&lt;&lt;<PAGE 28>&gt;&gt;/&lt;&lt;<PAGE 38>&gt;&gt;/&lt;&lt;<PAGE 40>&gt;&gt;）。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<ol>
+<li>选型走 F1 矩阵：铜口入门 T24C2/X24C2（47.3cm）→ 10G 汇聚 T48C6/X48C6 → 25G V48C8/V72 → 100G C32/C32E → 400G OS6920-D32（59cm）</li>
+<li>规划 25G 口位前先查分组表：V72 端口 1-48 十二个 4 口组；X48C4E 端口 41-48 分 2 组；V48C8 端口组编号非连续（X3/X4，&lt;&lt;<PAGE 28>&gt;&gt;/&lt;&lt;<PAGE 38>&gt;&gt;/&lt;&lt;<PAGE 40>&gt;&gt;）</li>
+<li>OS6920-D32 用 QSFP-DD 多形态规划：单口 400G/2X200G/4X100G，向下兼容 QSFP56/28/+（P4，&lt;&lt;<PAGE 46>&gt;&gt;）</li>
+<li>气流方向定调：按机房冷热通道选 F 或 R 后缀部件，三件套逐一对齐（P14，&lt;&lt;<PAGE 50>&gt;&gt;）</li>
+</ol>
+<h2 id="a2">A2（操作步骤）</h2>
+<ul>
+<li><strong>核对机型端口构成</strong>：V72=48×SFP28+6×QSFP28；C32/C32E=32×QSFP28；V48C8=48×SFP28+8×QSFP28+2×SFP+；T48C6=48×10GBaseT+6×QSFP28（P3，&lt;&lt;<PAGE 12>&gt;&gt;）</li>
+<li><strong>混合速率口规划</strong>：端口组内 1G 与 10G 可混、10G 与 25G 不可混（X4，&lt;&lt;<PAGE 38>&gt;&gt;/&lt;&lt;<PAGE 40>&gt;&gt;）</li>
+<li><strong>T48C6/X48C6 上行口</strong>：51/54 口支持 splitter 一拆四；52/53 口 DAC 与 QSFP 必须同型（X5，&lt;&lt;<PAGE 34>&gt;&gt;/&lt;&lt;<PAGE 36>&gt;&gt;）</li>
+<li><strong>风扇托盘选型</strong>：按机型+气流方向选专用型号（OS6900V-FT/T48C6-FT/V48C8-FT/OS6920-FT 的 F/R 版），V/C 系 6 托盘、T/X 系 5 托盘（P27/P29，&lt;&lt;<PAGE 28>&gt;&gt;等/&lt;&lt;<PAGE 70>&gt;&gt;/&lt;&lt;<PAGE 71>&gt;&gt;）</li>
+<li><strong>LED 判读准备</strong>：QSFP-DD 十二态色表（青=400G/紫=200G/蓝=100G/红=故障等）与 QSFP28 分色（蓝=100G/琥珀=40G）（P32/P33，&lt;&lt;<PAGE 48>&gt;&gt;）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>OS6920-D32 单口多形态部署：QSFP-DD 兼容 QSFP56/QSFP28/QSFP+，400G 核心一步到位（P4，&lt;&lt;<PAGE 46>&gt;&gt;）</li>
+<li>V48C8 端口组编号非连续，规划前必查分组表防锁速踩坑（X4，&lt;&lt;<PAGE 40>&gt;&gt;）</li>
+<li>后→前气流（R 后缀紫色部件）部署与识别（P 系/紫色编码，&lt;&lt;<PAGE 51>&gt;&gt;/&lt;&lt;<PAGE 52>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（反例与坑）</h2>
+<ul>
+<li>端口组内 10G 与 25G 混速：V72 与 X48C4E/V48C8 明令不支持，组是锁定单元（X3/X4，&lt;&lt;<PAGE 28>&gt;&gt;/&lt;&lt;<PAGE 38>&gt;&gt;/&lt;&lt;<PAGE 40>&gt;&gt;）</li>
+<li>T48C6/X48C6 的 52/53 口 DAC 与 QSFP 光模块混插禁令，两口同插必须同型（X5，&lt;&lt;<PAGE 34>&gt;&gt;/&lt;&lt;<PAGE 36>&gt;&gt;）</li>
+<li>预留口不可当可用口：C32E/V48C8 的 SFP+ 口（33/34、57/58）与 OS6920 的 33 口 "Not currently functional"（X30，&lt;&lt;<PAGE 32>&gt;&gt;/&lt;&lt;<PAGE 40>&gt;&gt;/&lt;&lt;<PAGE 46>&gt;&gt;）</li>
+<li>T48C6/X48C6 双 EMP 口仅顶部可用（X31，&lt;&lt;<PAGE 34>&gt;&gt;/&lt;&lt;<PAGE 36>&gt;&gt;）</li>
+<li>OS6920 后→前气流 Tmra 降额至 0-35°C（前→后为 0-45°C），机柜规划按 35°C 校验（X6，&lt;&lt;<PAGE 14>&gt;&gt;/&lt;&lt;<PAGE 47>&gt;&gt;）</li>
+<li>深机箱 51.5-59cm 必须配后支撑，机架深度先量再选型（P8/X25，&lt;&lt;<PAGE 29>&gt;&gt;等/&lt;&lt;<PAGE 54>&gt;&gt;）</li>
+</ul>
+<p>来源：OmniSwitch 6900 Hardware Users Guide（Ch1 机型总表 + Ch3 机型面板/规格，p12-47）</p><div class="pn"><a href="../index.html">⬅ 返回课程首页</a><a class="nxt" href="os6900-install-power.html">下一单元：os6900-install-power ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

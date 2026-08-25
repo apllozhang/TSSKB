@@ -1,0 +1,102 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>os6465-ops-troubleshoot — OmniSwitch 6465 Hardware Guide</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>OmniSwitch 6465 Hardware Guide</h1>
+<div class="sub">Rev V · 99 页 · 工业加固（宽温三档/DIN-DNV 安装/告警继电器）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">机型与端口</div>
+<a href="../skills/os6465-model-ports.html">os6465-model-ports</a>
+<div class="grp">安装与电源</div>
+<a href="../skills/os6465-install-power.html">os6465-install-power</a>
+<div class="grp">运维排障</div>
+<a href="../skills/os6465-ops-troubleshoot.html" class="on">os6465-ops-troubleshoot</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../hardware/index.html">硬件手册</a> › <a href="../index.html">OmniSwitch 6465 Hardware Guide</a> › <span>os6465-ops-troubleshoot</span></nav><h1>os6465-ops-troubleshoot</h1><p class="meta"><span class="badge">SKILL</span> os6465-ops-troubleshoot · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>无人值守站点要把温度/门磁等外部传感器接告警输入、联动本地声光/PLC 输出</li>
+<li>把系统事件（认证失败/电源故障/Link-Down 等）映射到继电器输出或 trap</li>
+<li>站点失电要被网管感知：Dying Gasp 三通道（SNMP/Syslog/OAM PDU）</li>
+<li>日常巡检 show module/temperature/powersupply；LED 异常判断</li>
+<li>处置温度 Warning trap 或 Danger 关机；核对 NEBS/OSP 接线红线</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>失电感知与告警双体系（F3，&lt;&lt;<PAGE 63>&gt;&gt;/&lt;&lt;<PAGE 65>&gt;&gt;/&lt;&lt;<PAGE 68>&gt;&gt;/&lt;&lt;<PAGE 69>&gt;&gt;）：预防侧=告警继电器（外部传感器输入 5-12VDC+8 类系统事件，独立/VC 两模式，映射到 NO/C/NC 输出，条件恢复自动清除）；亡故侧=Dying Gasp（残电三通道：SNMP trap 前 3 站+Syslog 前 3 服务器+4 个 802.3ah OAM PDU 上联口优先）。告警 VC 同步机制（P19）：VC 中任一机的输入/事件可驱动任一机的输出。温度双阈值与 6360 同构（P24）：Warning trap 不停机/Danger 自动关机需手动重启且不可配；各机型阈值梯度不同（P8：75-95/83-97°C）。</p>
+<h2 id="a1">A1（决策框架）</h2>
+<ol>
+<li><strong>本地告警选继电器输出</strong>：传感器/事件→alarm map→NO/C/NC 干接点（220VDC/250VAC·2A·60W）接声光/PLC（P18，&lt;&lt;<PAGE 63>&gt;&gt;）</li>
+<li><strong>远端失电感知选 DG</strong>：SNMP trap+Syslog 站点配置+上联口 efm-oam PDU 三通道并行（P21，&lt;&lt;<PAGE 68>&gt;&gt;）</li>
+<li><strong>VC 部署告警同步</strong>：跨机箱输入/事件同步，支持多对一/一对多映射（P19，&lt;&lt;<PAGE 63>&gt;&gt;）</li>
+<li><strong>告警不清自愈</strong>：8 类事件条件恢复自动清除；其余 <code>alarm clear status</code> 手工清（P20，&lt;&lt;<PAGE 65>&gt;&gt;）</li>
+<li><strong>LED 分层诊断</strong>：OK（绿/闪绿/琥珀=失败）、PS1/PS2（绿/琥珀/灭）、Alarm In/Out（琥珀=检测到）（&lt;&lt;<PAGE 36-37>&gt;&gt;）</li>
+</ol>
+<h2 id="a2">A2（操作步骤）</h2>
+<ul>
+<li><strong>告警输入→输出映射</strong>：<code>alarm in temperature-alarm-in action alarm-out admin-state enable</code>→<code>alarm out alarm-out-1 admin-state enable</code>→<code>alarm map temperature-alarm-in out alarm-out-1</code>（C16，&lt;&lt;<PAGE 64>&gt;&gt;）</li>
+<li><strong>系统事件→输出</strong>：<code>alarm event auth-fail-event event authentication-failure admin-state enable</code>→<code>alarm out ...</code>→<code>alarm map ...</code>→<code>show alarm event config</code>/<code>show alarm status</code> 核对（C17，&lt;&lt;<PAGE 64>&gt;&gt;）</li>
+<li><strong>手工清除</strong>：<code>alarm clear status</code>（C18，&lt;&lt;<PAGE 65>&gt;&gt;）</li>
+<li><strong>DG OAM 通告</strong>：<code>efm-oam admin-state enable</code>→<code>efm-oam port 1/1/23-24 admin-state enable</code>→<code>efm-oam port 1/1/23-24 propagate-events dying-gasp enable</code>（PDU 上联口优先）（C19，&lt;&lt;<PAGE 68-69>&gt;&gt;）</li>
+<li><strong>DG 接收端</strong>：<code>snmp station</code> 配 trap 站（前 3 站生效）；<code>swlog output socket</code> 加 Syslog 服务器（&lt;&lt;<PAGE 68>&gt;&gt;）</li>
+<li><strong>硬件巡检</strong>：show module/long→show temperature（UNDER THRESHOLD 正常）→Danger 关机处理后手动启动（C20，&lt;&lt;<PAGE 66-67>&gt;&gt;）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>认证失败事件驱动告警输出全流程（C17，&lt;&lt;<PAGE 64>&gt;&gt;）</li>
+<li>DG 触发场景：单电源失效/主备先后全失——双电源分独立电路降低触发概率（C1，&lt;&lt;<PAGE 15>&gt;&gt;）</li>
+<li>各机型 Warning/Danger 阈值梯度：P6 93/94、P12 95/97、ENH-240 84/89、P28 80/86、T-12 75/83、T-P12 78/85°C（P8，&lt;&lt;<PAGE 24-36>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（反例/坑）</h2>
+<ul>
+<li><strong>本机型注意</strong>：Danger 阈值出厂固化不可配（X25，&lt;&lt;<PAGE 67>&gt;&gt;）；且本机 24V 输入存在检测电路缺陷——PS LED 不亮不代表电源真坏（X1，&lt;&lt;<PAGE 24>&gt;&gt;）</li>
+<li>DG 的 OAM PDU 通道需先在端口使能 efm-oam 并开 propagate-events dying-gasp，否则对端收不到失电通告（C19）</li>
+<li>告警输出触点上限 220VDC/250VAC·2A·60W，超限外接会损坏继电器（P18）</li>
+<li>NEBS 红线：楼内端口禁金属直连 OSP 室外线路，加 Primary Protectors 也不够；AC 须接 SPD（X17，&lt;&lt;<PAGE 93>&gt;&gt;）</li>
+<li>T 机型不满足工业认证清单（X7）；Class A 住宅禁用（X23）；雷暴禁作业（X16）；锂电池更换须返厂（X22）</li>
+</ul>
+<h2 id="_1">来源</h2>
+<p>OmniSwitch 6465 Hardware Users Guide Ch3 告警/温度/DG（&lt;&lt;<PAGE 63-69>&gt;&gt;）、Ch4 PoE（&lt;&lt;<PAGE 70-84>&gt;&gt;）、附录 A 工业认证与 NEBS（&lt;&lt;<PAGE 85-99>&gt;&gt;）。条目来源：cases C1/C16-C20；principles P8/P17-P24/P26；counter-examples X1/X7/X16/X17/X22/X23/X25；frameworks F3。</p><div class="pn"><a href="os6465-install-power.html">⬅ 上一单元：os6465-install-power</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

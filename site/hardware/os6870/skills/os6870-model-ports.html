@@ -1,0 +1,102 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>os6870-model-ports — OmniSwitch 6870 Hardware Guide</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>OmniSwitch 6870 Hardware Guide</h1>
+<div class="sub">Rev D · 85 页 · 九机型（QSFP56 200G/混插扩容/四色 LED）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">机型与端口</div>
+<a href="../skills/os6870-model-ports.html" class="on">os6870-model-ports</a>
+<div class="grp">安装与电源</div>
+<a href="../skills/os6870-install-power.html">os6870-install-power</a>
+<div class="grp">运维排障</div>
+<a href="../skills/os6870-ops-troubleshoot.html">os6870-ops-troubleshoot</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../hardware/index.html">硬件手册</a> › <a href="../index.html">OmniSwitch 6870 Hardware Guide</a> › <span>os6870-model-ports</span></nav><h1>os6870-model-ports</h1><p class="meta"><span class="badge">SKILL</span> os6870-model-ports · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>6870 家族选型：在九机型中按 PoE 等级 × 上行速率 × 模块化三轴选型</li>
+<li>解码命名：P=PoE、M=Modular（上行模块槽+95W bt+QSFP56）、Z=固定多千兆 60W bt、V=全光、CNI/LNI=上行扩展节点</li>
+<li>核对面板端口：多千兆 RJ45（2.5G-10G）、SFP28/QSFP28/QSFP56 上行、VFL</li>
+<li>规划 Wi-Fi6/WiFi7 AP 95W bt 供电接入或 200G 上行</li>
+<li>判读 RJ45 四色速率 LED 与 VFL 口状态</li>
+</ul>
+<h2 id="i">I（核心理念)</h2>
+<p>6870 是九机型三分类家族（P1，&lt;&lt;<PAGE 12>&gt;&gt;）：非 PoE 固定（-24/-48/V12/CNI-U2/LNI-U6）；P<em>M 模块化（95W bt 多千兆 + 2×QSFP56 200G + Uplink Module Slot）；P</em>Z 固定（60W bt 多千兆至 2.5G + 6×SFP28 + 2×QSFP28 100G）。上行速率阶梯（P2，&lt;&lt;<PAGE 23>&gt;&gt;/&lt;&lt;<PAGE 25>&gt;&gt;）：SFP28=1G/10G/25G（25G 推荐 VFL）→QSFP28=40G/100G→QSFP56=40G/100G/200G。选型决策三问（F1）：要不要 95W AP？→M；要不要 200G/后配上行？→M/V12；预算型 60W PoE？→Z。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<ol>
+<li>三分类定位（F1）：纯千兆非 PoE=24/48；95W bt+200G+模块槽=P24M/P48M；60W bt 固定=P24Z/P48Z；全光=V12；上行扩展=CNI-U2/LNI-U6</li>
+<li>下行核对：M 系列 24 口至 10G（P24M）/48 口至 5G（P48M）；Z 系列至 2.5G；下行 PoE M=95W bt、Z=60W bt</li>
+<li>上行核对：24/48=4×SFP28+2×QSFP28；Z=6×SFP28+2×QSFP28；M/V12=2×QSFP56；CNI-U2=2×QSFP28、LNI-U6=6×SFP56(50G)</li>
+<li>VFL 规划：VFL 口可作 VC 堆叠或普通上行；SFP28 口 25G 推荐用于 VFL（X45，&lt;&lt;<PAGE 23>&gt;&gt;）</li>
+<li>环境包络核对：全家族 Tmra 0-45°C、1U 4.4cm、湿度 5-95%（P6）</li>
+</ol>
+<h2 id="a2">A2（操作步骤）</h2>
+<ul>
+<li><strong>面板识别</strong>：逐机型端口构成查 F1 表（&lt;&lt;<PAGE 12>&gt;&gt;/&lt;&lt;<PAGE 23>&gt;&gt;-&lt;&lt;<PAGE 38>&gt;&gt;）</li>
+<li><strong>RJ45 四色速率 LED 判读</strong>：绿=10/100/1000、蓝=2.5G、品红=5G、琥珀=10G；LED2 琥珀=PoE 使能（P23，&lt;&lt;<PAGE 39>&gt;&gt;）</li>
+<li><strong>光口 LED 两色</strong>：绿=有效上行、琥珀=有效 VFL（P24，&lt;&lt;<PAGE 39>&gt;&gt;）</li>
+<li><strong>系统 LED 五组</strong>：OK（稳绿=诊断与启动 OK/闪绿=进行中/琥珀=失败）；VC（绿=Master/琥珀=Slave/灭=未知）；PS（绿=正常/琥珀=单双故障/灭=无电源）；GRN（绿=省电模式）；VC ID（多灯数值相加=单元号）（P22，&lt;&lt;<PAGE 38>&gt;&gt;/&lt;&lt;<PAGE 39>&gt;&gt;）</li>
+<li><strong>温度语义区分</strong>：chassis 温度=机箱内部传感器（恒高）；ambient=近似室温（P9，&lt;&lt;<PAGE 24>&gt;&gt;）</li>
+<li><strong>console 连接</strong>：rollover 线，115200-8N1（注意与 6360/6865 的 9600 不同）（&lt;&lt;<PAGE 17>&gt;&gt;）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>95W bt 高密 AP 部署：P48M 48 口多千兆（至 5G）95W bt + 2×QSFP56 + 上行模块槽，待机 251.8W、双 2000W 电源预算最高 3309W（&lt;&lt;<PAGE 31>&gt;&gt;/&lt;&lt;<PAGE 63>&gt;&gt;）</li>
+<li>预算型 60W PoE：P48Z 48 口多千兆（至 2.5G）60W bt + 6×SFP28 + 2×QSFP28，待机 92.4W，不支持 2000W 电源（X30，&lt;&lt;<PAGE 33>&gt;&gt;）</li>
+<li>全光接入：V12=12×SFP28（25G 推荐 VFL）+ 2×QSFP56 + 上行模块槽，无铜口（P4，&lt;&lt;<PAGE 35>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（反例与坑）</h2>
+<ul>
+<li>Z 系列不支持 2000W 电源（PS-2000W-AC-POE-2 仅 P24M/P48M），预算规划不可套用（X30，&lt;&lt;<PAGE 47>&gt;&gt;/&lt;&lt;<PAGE 63>&gt;&gt;）</li>
+<li>全部 RJ45 机型不支持半双工（X38，&lt;&lt;<PAGE 23>&gt;&gt;）</li>
+<li>待机功耗梯度大：-24=71W → P48M=251.8W，机柜供电与散热规划按 M 系列高功耗预留（P8）</li>
+<li>Class 1M 激光：空光口勿直视、禁光学仪器，加盖（X33/X34，&lt;&lt;<PAGE 23>&gt;&gt;/&lt;&lt;<PAGE 81>&gt;&gt;）</li>
+<li>跨书易混：6870 的 SFP28 允许 1G/10G/25G 同口组混跑（无 6860 N 型四口组禁混速限制）；QSFP56 200G 为本家族独有上行档</li>
+<li>M 系列上联形态可后置扩展（Uplink Module Slot），但 V12/CNI/LNI 无铜口，纯光部署需另配光电转换</li>
+</ul>
+<p>来源：OmniSwitch 6870 Hardware Users Guide（Ch1 p12-13 + Ch3 p22-39）</p><div class="pn"><a href="../index.html">⬅ 返回课程首页</a><a class="nxt" href="os6870-install-power.html">下一单元：os6870-install-power ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

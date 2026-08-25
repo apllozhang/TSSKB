@@ -1,0 +1,105 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>os6575-install-power — OmniSwitch 6575 Hardware Guide</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>OmniSwitch 6575 Hardware Guide</h1>
+<div class="sub">Rev A · 86 页 · 工业无风扇（M12 连接器/温度阶梯预算/Alarm Relay）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">机型与端口</div>
+<a href="../skills/os6575-model-ports.html">os6575-model-ports</a>
+<div class="grp">安装与电源</div>
+<a href="../skills/os6575-install-power.html" class="on">os6575-install-power</a>
+<div class="grp">运维排障</div>
+<a href="../skills/os6575-ops-troubleshoot.html">os6575-ops-troubleshoot</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../hardware/index.html">硬件手册</a> › <a href="../index.html">OmniSwitch 6575 Hardware Guide</a> › <span>os6575-install-power</span></nav><h1>os6575-install-power</h1><p class="meta"><span class="badge">SKILL</span> os6575-install-power · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>新机安装：U28 前装法兰/后装 REAR-MNT+TRAY-1U、P12 DIN 导轨/壁装、MP16 直接壁装</li>
+<li>电源选型与接线：BPNS 150W/BPNSX 480W 外置、BPR/BPRD 180W 模块后装；ROJ 输入/输出线端子接线</li>
+<li>PoE 预算规划：按温度带查阶梯预算表（≤50 至 70-75°C 四档）</li>
+<li>接地：supplemental 接地耳 + NEBS 星形垫圈细则</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>温度-PoE 预算联动框架（F2，&lt;&lt;<PAGE 24>&gt;&gt;/&lt;&lt;<PAGE 60>&gt;&gt;/&lt;&lt;<PAGE 61>&gt;&gt;/&lt;&lt;<PAGE 67>&gt;&gt;）：预算=机型×电源×数量×温度带四元函数。部署四查：一查 Tmra 温度带；二查预算表（MP16/U28+BPNSX 有机内封顶，加电源不扩容）；三查输入电压档位；四查 Guard Band。电源机制两铁律：双电源必须同 wattage 同额定电压（X2）；电源类型不能自动检测，必须 powersupply type 手动声明，否则功率信息错乱且 PoE 配置前置（P13/X3）。ROJ 接线注意本机 V-=红、V+=黑（与常规红正黑负相反）（P15，&lt;&lt;<PAGE 42>&gt;&gt;/&lt;&lt;<PAGE 43>&gt;&gt;）。工业高可用三支柱（F3）：链路 Bypass+供电冗余+无风扇宽温。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<ol>
+<li>按形态定安装路径（F1）：U28 前装法兰/后装套件；P12 DIN Rail Bracket 或 Wall Bracket 选件；MP16 自带 Mounting Holes 直接壁装（C4-C8，&lt;&lt;<PAGE 29>&gt;&gt;-&lt;&lt;<PAGE 35>&gt;&gt;）</li>
+<li>现场准备（C9，&lt;&lt;<PAGE 13>&gt;&gt;/&lt;&lt;<PAGE 29>&gt;&gt;）：维持 -40~75°C 温湿度域；预留通风空间；每电源一个接地插座；2 米原装电源线</li>
+<li>电源选型四矩阵（P12，&lt;&lt;<PAGE 36>&gt;&gt;-&lt;&lt;<PAGE 40>&gt;&gt;）：BPNS 150W（仅 P12）/BPNSX 480W（P12+U28）外置 AC；BPR 180W AC/BPRD 180W DC 模块（U28 后装最多 2）</li>
+<li>PoE 预算按温度带核对（P33，&lt;&lt;<PAGE 60>&gt;&gt;/&lt;&lt;<PAGE 61>&gt;&gt;）：P12+1×BPNSX 330W→140W（70-75°C）；U28+1×BPR(D) 75W→15W——高温场预算可缩水过半</li>
+<li>供电冗余：双同规格电源+独立电路+UPS（911 纪律，P39，&lt;&lt;<PAGE 56>&gt;&gt;）</li>
+</ol>
+<h2 id="a2">A2（操作步骤）</h2>
+<ul>
+<li><strong>U28 后装电源安装</strong>：DB-15 两侧导柱对准机箱后部导孔滑入→推至连接器就位→拧前端拇指螺丝；冗余在对侧重复（C11，&lt;&lt;<PAGE 41>&gt;&gt;）</li>
+<li><strong>ROJ 输出线（电源→机箱）</strong>：红线插 V- 与机箱(-)端、黑线插 V+ 与(+)端、绿线 ring 端子接地端——力矩 3.5 in-lb（C12，&lt;&lt;<PAGE 43>&gt;&gt;/&lt;&lt;<PAGE 44>&gt;&gt;）</li>
+<li><strong>ROJ 输入线（市电→电源）</strong>：黑/棕=L、白/蓝=N、绿/绿黄条纹=PG，按电源标签力矩（C13，&lt;&lt;<PAGE 45>&gt;&gt;）</li>
+<li><strong>最终上电</strong>：输出线插机箱前面板 PS1/PS2→AC 线 NEMA 5-15 插易达 AC 源；插头在接到提示前不得插入带电插座（C14/X4，&lt;&lt;<PAGE 43>&gt;&gt;/&lt;&lt;<PAGE 45>&gt;&gt;）</li>
+<li><strong>电源热拔</strong>：源侧拔插头→拆输入线→拆输出线→按接线流程装新电源；冗余下单电源可换不影响运行（C15，&lt;&lt;<PAGE 46>&gt;&gt;）</li>
+<li><strong>电源类型声明</strong>：powersupply 1 name ALE-75W-ps1 type ale lo-ac（逐电源声明）（C16/P40，&lt;&lt;<PAGE 46>&gt;&gt;）</li>
+<li><strong>supplemental 接地</strong>：LCD8-10A-L lug+10-32 螺丝+8AWG，力矩 30-60 in-lb（C17，&lt;&lt;<PAGE 47>&gt;&gt;）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>U28 后装套件+电源托盘全流程（C5，&lt;&lt;<PAGE 31>&gt;&gt;/&lt;&lt;<PAGE 32>&gt;&gt;）</li>
+<li>P12 DIN 导轨与壁装部署（C6/C7，&lt;&lt;<PAGE 33>&gt;&gt;/&lt;&lt;<PAGE 34>&gt;&gt;）</li>
+<li>温度阶梯预算部署：高温车间按降档预算配置 PD（P33/P34，&lt;&lt;<PAGE 60>&gt;&gt;/&lt;&lt;<PAGE 61>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（反例与坑）</h2>
+<ul>
+<li>48VDC 以下禁 PoE；第三方电源须 ≥48V（X1，&lt;&lt;<PAGE 21>&gt;&gt;/&lt;&lt;<PAGE 23>&gt;&gt;/&lt;&lt;<PAGE 25>&gt;&gt;/&lt;&lt;<PAGE 61>&gt;&gt;）</li>
+<li>双电源禁混规格（wattage+额定电压均须一致）（X2，&lt;&lt;<PAGE 21>&gt;&gt;/&lt;&lt;<PAGE 23>&gt;&gt;/&lt;&lt;<PAGE 25>&gt;&gt;）</li>
+<li>电源类型不能自动检测，不声明则功率显示与 PoE 利用错误（X3/P13，&lt;&lt;<PAGE 46>&gt;&gt;/&lt;&lt;<PAGE 57>&gt;&gt;）</li>
+<li>MP16 加电源不扩预算：150W→52W、480W→120W 恒定——叠电源只为冗余（X13/P35，&lt;&lt;<PAGE 61>&gt;&gt;）</li>
+<li>NEMA 插头不得提前带电插拔，违者可能人伤/设备损坏（X4，&lt;&lt;<PAGE 43>&gt;&gt;）</li>
+<li>只准用 ALE 原厂配件安装电源（X5，&lt;&lt;<PAGE 42>&gt;&gt;）</li>
+<li>ROJ 极性反直觉：V-=红、V+=黑，接反烧设备（P15，&lt;&lt;<PAGE 42>&gt;&gt;/&lt;&lt;<PAGE 43>&gt;&gt;）</li>
+<li>高温预算降档：不得按常温满配（X12，&lt;&lt;<PAGE 60>&gt;&gt;）</li>
+<li>NEBS 接地细则：星形垫圈防松、裸导体压接前清洁涂抗氧化剂、仅用铜导体、AC 须接 SPD（X26/X27，&lt;&lt;<PAGE 80>&gt;&gt;）</li>
+</ul>
+<p>来源：OmniSwitch 6575 Hardware Users Guide（Ch2-Ch4，p13-47、p56-68）</p><div class="pn"><a href="os6575-model-ports.html">⬅ 上一单元：os6575-model-ports</a><a class="nxt" href="os6575-ops-troubleshoot.html">下一单元：os6575-ops-troubleshoot ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
