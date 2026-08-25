@@ -118,7 +118,7 @@ NEW_COURSES = [
                 'l3-routing-vrrp-troubleshooting', 'multicast-troubleshooting']),
         ('工具与 AI 运维', ['app-logging-qos-troubleshooting', 'ovna-deployment-teams-bot']),
        ]),
-  dict(id='manuals/awos-ap-guide', book='awos-ap-guide', title='AWOS 5.0.3 · Stellar AP 用户手册',
+  dict(id='wlan/awos-ap-guide', book='awos-ap-guide', title='AWOS 5.0.3 · Stellar AP 用户手册',
        subtitle='128 页 · AP 本地管理配置手册（Express 模式 GUI 全参考）',
        route=['集群开局与 PVM 选举', 'SSID 射频调优与内置服务', 'WLAN 安全与高级认证', '运维升级与 Mesh'],
        groups=[
@@ -571,7 +571,7 @@ def build_course(c):
 
     def crumbs(cur='', sub=False):
         cat = c['id'].split('/')[0]
-        cat_label = {'postsales': '售后', 'presales': '售前', 'manuals': 'OV2500 配置手册', 'aos': 'AOS 软件手册', 'hardware': '硬件手册', 'brochures': '产品彩页'}[cat]
+        cat_label = {'postsales': '售后', 'presales': '售前', 'manuals': 'OV2500 配置手册', 'aos': 'AOS 软件手册', 'hardware': '硬件手册', 'brochures': '产品彩页', 'wlan': '无线网络'}[cat]
         p = '../../../' if sub else '../../'
         q = '../' if sub else ''
         bar = f'<nav class="crumbs"><a href="{p}index.html">🏠 培训门户</a> › <a href="{p}{cat}/index.html">{cat_label}</a> › <a href="{q}index.html">{html_mod.escape(c["title"].split(" · ")[0])}</a>'
@@ -668,7 +668,7 @@ def build_category(dirname, label):
         f.write(page)
     print('category built:', dirname)
 
-for dirname, label in [('postsales', '售后 · Postsales'), ('presales', '售前 · Presales'), ('manuals', 'OV2500 配置手册 · Manuals'), ('aos', 'AOS 软件手册 · Software Guides'), ('hardware', '硬件手册 · Hardware Guides'), ('brochures', '产品彩页 · Product Datasheets')]:
+for dirname, label in [('postsales', '售后 · Postsales'), ('presales', '售前 · Presales'), ('manuals', 'OV2500 配置手册 · Manuals'), ('aos', 'AOS 软件手册 · Software Guides'), ('hardware', '硬件手册 · Hardware Guides'), ('brochures', '产品彩页 · Product Datasheets'), ('wlan', '无线网络 · WLAN')]:
     build_category(dirname, label)
 
 # ============ 门户封面 ============
@@ -733,7 +733,7 @@ CATALOG = [
         ('OmniSwitch · 官方数据表', '15 份 158 页 · OS2260-OS9900 全系选型速查', 'brochures/omniswitch/index.html'),
     ]),
     ('无线网络 · WLAN', '#a78bfa', [
-        ('AWOS 5.0.3 · Stellar AP 用户手册', '128 页 · 4 个知识单元 · 集群开局 / 射频调优 / 安全 / 运维升级', 'manuals/awos-ap-guide/index.html'),
+        ('AWOS 5.0.3 · Stellar AP 用户手册', '128 页 · 4 个知识单元 · 集群开局 / 射频调优 / 安全 / 运维升级', 'wlan/awos-ap-guide/index.html'),
         ('WiFi 6 / 6E / 7 技术基础', '标准演进、OFDMA、多链路操作', None),
         ('Stellar AP 产品与组网', 'Mesh / Bridge / RAP 特殊组网', None),
     ]),
