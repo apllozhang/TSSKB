@@ -1,0 +1,221 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>精华长文 DIGEST — OmniVista 2500 4.9R2 User Guide</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>OmniVista 2500 4.9R2 User Guide</h1>
+<div class="sub">935 页 · GUI 参考手册全科（控制台/Analytics/发现拓扑/资源管理/统一接入/UPAM/SSID 高级/隔离/VM 织构）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">控制台与分析</div>
+<a href="skills/ov-console-basics-dashboard.html">ov-console-basics-dashboard</a>
+<a href="skills/ov-analytics-reports.html">ov-analytics-reports</a>
+<div class="grp">发现与资源</div>
+<a href="skills/ov-discovery-topology-views.html">ov-discovery-topology-views</a>
+<a href="skills/ov-resource-manager-ops.html">ov-resource-manager-ops</a>
+<a href="skills/ov-cli-scripting-mib.html">ov-cli-scripting-mib</a>
+<div class="grp">接入与策略</div>
+<a href="skills/ov-unified-access-profiles.html">ov-unified-access-profiles</a>
+<a href="skills/ov-upam-guest-byod.html">ov-upam-guest-byod</a>
+<a href="skills/ov-quarantine-policyview.html">ov-quarantine-policyview</a>
+<div class="grp">无线高级与织构</div>
+<a href="skills/ov-wlan-ssid-advanced.html">ov-wlan-ssid-advanced</a>
+<a href="skills/ov-vm-vxlan-fabric.html">ov-vm-vxlan-fabric</a></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../manuals/index.html">配置手册</a> › <a href="index.html">OmniVista 2500 4.9R2 User Guide</a> › <span>精华长文 DIGEST</span></nav><h1>精华长文 DIGEST</h1><h1 id="digest-omnivista-2500-nms-49r2-user-guide">DIGEST — OmniVista 2500 NMS 4.9R2 User Guide 精华</h1>
+<p>本书是 ALE OmniVista 2500 网管平台的 935 页 GUI 参考手册（38 个功能章，按菜单 A-Z 组织），技术栈为 OV2500 4.9R2 + OmniSwitch AOS 6.x-8.x + Stellar AP (AWOS)。它没有叙事结构，是"某功能在哪配、怎么配、默认值是什么"的查询底座：先用功能地图定位应用，再按技能单元的 Profile/向导流程操作。以下按十个技能单元摘要，页码均指原书。</p>
+<h2 id="_1">一、知识地图（十技能单元）</h2>
+<ol>
+<li><strong>控制台与仪表盘</strong>（ov-console-basics-dashboard）：菜单两视图、Dashboard 四标签、Widget/Favorites/过滤器、用户与 2FA（p31-64）。</li>
+<li><strong>Analytics 与报表</strong>（ov-analytics-reports）：Profile 驱动报表、sFlow、Statistics 采集/查看、AppVis 签名、定时报表（p64-136、201-211、484-486）。</li>
+<li><strong>发现与拓扑</strong>（ov-discovery-topology-views）：Range+Profile 发现、四级轮询、三层地图+Geo 站点、手工链路、Locator（p40-44、255-301、336-349、554-587）。</li>
+<li><strong>Resource Manager 运维</strong>（ov-resource-manager-ops）：备份三类型、镜像升级、Auto Configuration、零接触 Provisioning/Thin Switch、SAA（p429-456、487-521）。</li>
+<li><strong>CLI Scripting 与 MIB</strong>（ov-cli-scripting-mib）：CLI+JS 混编、内置变量/expectPrompt/tapps、第三方 MIB 导入（p238-248、285-288）。</li>
+<li><strong>Unified Access</strong>（ov-unified-access-profiles）：Workflow/Template/Device Config 三途径、Access Auth/Role/WLAN Service Profile、L2/L3 分层（p590-655）。</li>
+<li><strong>UPAM 与 Guest/BYOD</strong>（ov-upam-guest-byod）：内置 CP+RADIUS、三种认证工作流、Guest/BYOD 策略体系、社交登录、WiFi4EU（p678-778）。</li>
+<li><strong>SSIDs 与 WLAN 高级</strong>（ov-wlan-ssid-advanced）：一步式创建、五种 Usage、WPA3/6GHz/PPSK/Device Specific PSK、VLAN 池限制（p601-655、861-874）。</li>
+<li><strong>Quarantine 与 PolicyView</strong>（ov-quarantine-policyview）：IPS 事件流/Candidates/Banned 状态机、QMR 三件套、QoS 策略 Notify 机制（p384-412、457-479）。</li>
+<li><strong>VM/VXLAN Fabric</strong>（ov-vm-vxlan-fabric）：vCenter/Hyper-V 纳管、VM VLAN 塑形、One-Touch SPB、VXLAN 核心、VM Snooping（p830-860）。</li>
+</ol>
+<h2 id="_2">二、十单元要点串讲</h2>
+<h3 id="1">1. 控制台：先拿功能地图再干活</h3>
+<p>Network / Configuration / Unified Access / Security / Administration / UPAM / WLAN 七大菜单区是全书总目录（&lt;&lt;<PAGE 31-32>&gt;&gt;）；WLAN Menu 视图仅重组入口、内容相同（&lt;&lt;<PAGE 33>&gt;&gt;）。Dashboard 分 Global/WLAN Advanced/IoT/Performance Monitoring 四标签，Performance Monitoring 挂 Analytics Chart View Profile（≤20 widget）（&lt;&lt;<PAGE 45, 54-56>&gt;&gt;）。所有页面底部有 Unacknowledged Alarm 实时告警栏。权限三维度（地图×应用读写×VLAN 对象）多角色叠加，预置 admin/netadmin/writer/user 四账号默认密码全部 switch（&lt;&lt;<PAGE 780-789>&gt;&gt;）。</p>
+<h3 id="2-analyticsprofile-sflow">2. Analytics：Profile 驱动 + sFlow 数据面</h3>
+<p>Top N Apps/Clients/Ports 报表必须先建 Analytics Profile；Availability/Alarms/Health/SIP 免 Profile（&lt;&lt;<PAGE 66-67>&gt;&gt;）。建 Profile 时 OV 自动成为 sFlow Receiver，应用识别靠 TCP/UDP 端口（&lt;&lt;<PAGE 67, 74>&gt;&gt;）。统计采集与查看解耦（Collection Profile + View Profile ≤50 计数器）（&lt;&lt;<PAGE 117, 120-124>&gt;&gt;）。三大静默坑：SNMP 源 IP 与发现 IP 不一致收不到数据（&lt;&lt;<PAGE 119>&gt;&gt;）、删 Profile 连带删全部历史（&lt;&lt;<PAGE 121, 129>&gt;&gt;）、外部 RADIUS 用户不能排程报表（&lt;&lt;<PAGE 64>&gt;&gt;）。AppVis 是三步法（签名文件→Signature Profile→应用），一机一档且会清掉 CLI 配置（&lt;&lt;<PAGE 202-209>&gt;&gt;）。</p>
+<h3 id="3-rangeprofile">3. 发现与拓扑：Range×Profile + 四级轮询</h3>
+<p>首次纳管五步法（发现→修正凭据→配 trap→保存→QoS 后再保存）是全书最常被引用的流程（&lt;&lt;<PAGE 40-44>&gt;&gt;）。多 Discovery Profile 按序回退，重新发现不覆盖已录入参数（&lt;&lt;<PAGE 256>&gt;&gt;）。四级轮询 Full⊇Occasional⊇Regular⊇Frequent，间隔随网络规模分档（&lt;&lt;<PAGE 298-299>&gt;&gt;）。拓扑三层地图：Physical（自动不可删）→Child→Logical，加 Dynamic（过滤器）；Geo Map 是默认视图，Site 自动生成同名逻辑图（&lt;&lt;<PAGE 554-581, 575-578>&gt;&gt;）。手工链路持久显示、断链变红，适合核心监控（&lt;&lt;<PAGE 290>&gt;&gt;）。Locator 一切搜索归结为 MAC，Live=最近 5 分钟（&lt;&lt;<PAGE 336-339>&gt;&gt;）。</p>
+<h3 id="4-resource-manager-ftp">4. Resource Manager：备份只记版本号，升级防 FTP 超时</h3>
+<p>Backup 三类型（Full/Config Only/Images Only），镜像不物理备份只记录版本——Restore 前必须先导镜像进 Repository（&lt;&lt;<PAGE 489-490>&gt;&gt;）。备份文件含源机器 IP/MAC 二进制信息，严禁拷给其他机器（&lt;&lt;<PAGE 493>&gt;&gt;）。升级铁律：先 Image 后 U-Boot；FTP 默认 5 分钟超时，大文件先 <code>session ftp timeout</code> 调大（&lt;&lt;<PAGE 497>&gt;&gt;）。Provisioning 是 DHCP Option 43+Cloud Agent Call-Home+SSH 推模板的零接触链路（&lt;&lt;<PAGE 430-436>&gt;&gt;）；Thin Switch write memory 失效、属性不可改（&lt;&lt;<PAGE 436-438>&gt;&gt;）。SAA 仅 MACSAA，建议 ≤50 个（&lt;&lt;<PAGE 512-514>&gt;&gt;）。</p>
+<h3 id="5-cli-scripting">5. CLI Scripting：混编脚本 + 训练技巧</h3>
+<p>.script 文件 CLI+JS 混编；内置变量 $IP_ADDRESS/$BASE_MAC 等发送时替换（&lt;&lt;<PAGE 242-243>&gt;&gt;）。三个训练技巧：expectPrompt 应答确认提示（reload 示例）、<tapps> lastcmd 防挂起、setTimeout/<tapps> set timeout 处理慢命令（&lt;&lt;<PAGE 241-244>&gt;&gt;）。脚本不能发 Stellar 无线设备（&lt;&lt;<PAGE 239>&gt;&gt;）。第三方 MIB：OID 只填 enterprises 后段，依赖顺序排好再 Apply，导入后不立即解析（&lt;&lt;<PAGE 285-288>&gt;&gt;）。</p>
+<h3 id="6-unified-access-l2l3">6. Unified Access：三途径 + L2/L3 分层</h3>
+<p>Workflow（六种引导流）/Template（批量）/Device Config（单机微调）三途径（&lt;&lt;<PAGE 592>&gt;&gt;）。L2 认证定 UNP+VLAN 之后不变，L3 动态改策略（&lt;&lt;<PAGE 591-592>&gt;&gt;）。角色分配优先级：认证返回角色 &gt; Classification Rules &gt; Default ARP（&lt;&lt;<PAGE 602-603>&gt;&gt;）。映射方法六选一（VLAN/SPB/VXLAN/Static Service/Tunnel/VLAN+Tunnel）（&lt;&lt;<PAGE 608-613>&gt;&gt;）。高频坑：AAA 超时改了不追溯在线用户（&lt;&lt;<PAGE 614-618>&gt;&gt;）、tagged 口与聚合成员不能启 UNP（&lt;&lt;<PAGE 594-601>&gt;&gt;）、Redirect 开启后只能映射 VLAN（&lt;&lt;<PAGE 608-613>&gt;&gt;）。</p>
+<h3 id="7-upam-cpradius">7. UPAM：内置 CP+RADIUS 双角色</h3>
+<p>UPAM 同时做 Captive Portal 与 RADIUS 服务器（&lt;&lt;<PAGE 678>&gt;&gt;）。三种工作流：BYOD（MAC+CP）、Guest（MAC+CP+自助注册）、MAC or 802.1X（无 CP）（&lt;&lt;<PAGE 681-682>&gt;&gt;）。预置 All Managed Devices NAS 密钥固定 123456，托管设备每 15 分钟自动入库（&lt;&lt;<PAGE 682-684>&gt;&gt;）。Guest 策略 ≤32 条，Login Strategy 四种 + 社交登录（FB/Google/Rainbow/WeChat 需 OAuth+DNS）；WiFi4EU 专用模板且 CP 有效期 ≤24h（&lt;&lt;<PAGE 712-718>&gt;&gt;）。BYOD 无自助注册/Access Code/Data Quota，Max Device 仅 1-10（&lt;&lt;<PAGE 756-766>&gt;&gt;）。</p>
+<h3 id="8-ssids">8. SSIDs：一步式联动生成八对象</h3>
+<p>创建 SSID 自动派生 Access Role Profile/Access Policy/Authentication Strategy/Guest/BYOD Strategy/AAA/Tunnel Profile/Global Configuration（&lt;&lt;<PAGE 861-863>&gt;&gt;）。五种 Usage：Guest Network(Open+CP)、Employee BYOD、Enterprise 802.1X、Protected Network(PSK±CP)、Protected for Employees(PSK+BYOD Portal)。Usage 与 Strategy 不匹配的 SSID 不能编辑。安全矩阵：6GHz 强制 OWE、WPA3 不支持机型回退 WPA2、Transition Mode 需 AWOS 4.0.8+（&lt;&lt;<PAGE 649-655, 864-874>&gt;&gt;）。PPSK 每 SSID ≤16 Entry、单 AP 合计 ≤64；Device Specific PSK 仅配 UPAM RADIUS（Prefer/Force）（&lt;&lt;<PAGE 864-874>&gt;&gt;）。Stellar AP VLAN 池按机型限 2/4/7 个 WLAN（&lt;&lt;<PAGE 864-874>&gt;&gt;）。</p>
+<h3 id="9-quarantine-policyview-">9. Quarantine 与 PolicyView：状态机 + 通知-拉取</h3>
+<p>事件链：IPS/Syslog→规则（Banned 优先）→Candidates（流量照常）/Banned（进隔离 VLAN 走 QMR）/Disabled Ports（全部条目释放端口才启用）（&lt;&lt;<PAGE 457, 460-465>&gt;&gt;）。基础设施三件套（Quarantined VLAN+同名 MAC 组+Drop 策略）缺一则 Banned 设备照样通流量（&lt;&lt;<PAGE 473-475>&gt;&gt;）。无线客户端走 Client Blocklist（365 天）而非 Banned（&lt;&lt;<PAGE 460>&gt;&gt;）。PolicyView 策略存内置 LDAP、Notify 触发全网 flush+重载（代价高，批量一次）（&lt;&lt;<PAGE 396-397>&gt;&gt;）；优先级域 30001-65535 分段给 One Touch Voice/Data 与 Expert，外部工具勿占用（&lt;&lt;<PAGE 387>&gt;&gt;）；QoS 执行后全网 Unsaved，必须两步保存（&lt;&lt;<PAGE 44>&gt;&gt;）。</p>
+<h3 id="10-vmvxlan">10. VM/VXLAN：塑形模型 + 大二层</h3>
+<p>vCenter(≤2)+Hyper-V 混合纳管，VM 上限 5000；Hypervisor 时间必须与 OV 同步（&lt;&lt;<PAGE 830-840>&gt;&gt;）。塑形模型：VM VLAN→UNP Tag 规则→每 VLAN 一个 UNP，vMotion 免改配置（&lt;&lt;<PAGE 830-840>&gt;&gt;）。One-Touch SPB 自动生成 UNP/ISID/BVLAN(4 轮转+ECT)（&lt;&lt;<PAGE 841-847>&gt;&gt;）。VXLAN 仅 OS6900-Q32/X72：VFI=SAP 学客户 MAC+SDP 学网络 MAC；组播隧道要求全网 PIM 统一（&lt;&lt;<PAGE 848-852>&gt;&gt;）。VM Snooping 默认 UDP 4789、Aging 300s（&lt;&lt;<PAGE 855-860>&gt;&gt;）。</p>
+<h2 id="_3">三、高价值章节页码索引</h2>
+<table>
+<thead>
+<tr>
+<th>主题</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>功能地图（LAN+WLAN/WLAN 菜单）</td>
+<td>31-34</td>
+</tr>
+<tr>
+<td>首次纳管五步法</td>
+<td>40-44</td>
+</tr>
+<tr>
+<td>Top N 报表与 Analytics Profile</td>
+<td>66-91, 130-131</td>
+</tr>
+<tr>
+<td>Statistics Collection/Chart View</td>
+<td>117-124</td>
+</tr>
+<tr>
+<td>Application Visibility 三步法</td>
+<td>201-209</td>
+</tr>
+<tr>
+<td>Captive Portal 定制四步</td>
+<td>235-236</td>
+</tr>
+<tr>
+<td>CLI Scripting 全流程</td>
+<td>238-248</td>
+</tr>
+<tr>
+<td>Discovery Range/Profile/操作集</td>
+<td>255-264</td>
+</tr>
+<tr>
+<td>第三方 MIB 导入</td>
+<td>285-288</td>
+</tr>
+<tr>
+<td>Locator 定位</td>
+<td>336-349</td>
+</tr>
+<tr>
+<td>PolicyView Unified Policy 向导</td>
+<td>386-396</td>
+</tr>
+<tr>
+<td>Provisioning 工作流/Thin Switch</td>
+<td>429-439</td>
+</tr>
+<tr>
+<td>Quarantine 三列表与规则</td>
+<td>457-475</td>
+</tr>
+<tr>
+<td>Report 两步模型</td>
+<td>484-486</td>
+</tr>
+<tr>
+<td>Backup/Restore/Upgrade</td>
+<td>488-501</td>
+</tr>
+<tr>
+<td>Auto Configuration 四步</td>
+<td>502-506</td>
+</tr>
+<tr>
+<td>SAA</td>
+<td>512-515</td>
+</tr>
+<tr>
+<td>Topology 地图体系</td>
+<td>554-581</td>
+</tr>
+<tr>
+<td>Unified Access 三途径</td>
+<td>590-592</td>
+</tr>
+<tr>
+<td>Access Role Profile</td>
+<td>608-613</td>
+</tr>
+<tr>
+<td>UPAM 工作流与策略</td>
+<td>678-693, 712-718</td>
+</tr>
+<tr>
+<td>Guest Account/自助注册</td>
+<td>742-766</td>
+</tr>
+<tr>
+<td>UPAM Settings 集成</td>
+<td>767-778</td>
+</tr>
+<tr>
+<td>Users/User Groups/2FA</td>
+<td>780-808</td>
+</tr>
+<tr>
+<td>VM Manager/VXLAN/VM Snooping</td>
+<td>830-860</td>
+</tr>
+<tr>
+<td>SSIDs 一步式/PPSK/WPA3</td>
+<td>861-874</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_4">四、一句话总纲</h2>
+<p>OV2500 是 Profile 驱动的参考型网管：先在功能地图里找到应用，再按"建 Profile→应用到设备→Notify/保存"的固定节奏操作；
+所有静默失败（SNMP 源 IP、Unsaved 跳过、凭据缺失）都靠本手册的默认值与反例清单兜底。</p><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

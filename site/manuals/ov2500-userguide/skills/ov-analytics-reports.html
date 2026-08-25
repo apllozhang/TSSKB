@@ -1,0 +1,123 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ov-analytics-reports — OmniVista 2500 4.9R2 User Guide</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>OmniVista 2500 4.9R2 User Guide</h1>
+<div class="sub">935 页 · GUI 参考手册全科（控制台/Analytics/发现拓扑/资源管理/统一接入/UPAM/SSID 高级/隔离/VM 织构）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">控制台与分析</div>
+<a href="../skills/ov-console-basics-dashboard.html">ov-console-basics-dashboard</a>
+<a href="../skills/ov-analytics-reports.html" class="on">ov-analytics-reports</a>
+<div class="grp">发现与资源</div>
+<a href="../skills/ov-discovery-topology-views.html">ov-discovery-topology-views</a>
+<a href="../skills/ov-resource-manager-ops.html">ov-resource-manager-ops</a>
+<a href="../skills/ov-cli-scripting-mib.html">ov-cli-scripting-mib</a>
+<div class="grp">接入与策略</div>
+<a href="../skills/ov-unified-access-profiles.html">ov-unified-access-profiles</a>
+<a href="../skills/ov-upam-guest-byod.html">ov-upam-guest-byod</a>
+<a href="../skills/ov-quarantine-policyview.html">ov-quarantine-policyview</a>
+<div class="grp">无线高级与织构</div>
+<a href="../skills/ov-wlan-ssid-advanced.html">ov-wlan-ssid-advanced</a>
+<a href="../skills/ov-vm-vxlan-fabric.html">ov-vm-vxlan-fabric</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../manuals/index.html">配置手册</a> › <a href="../index.html">OmniVista 2500 4.9R2 User Guide</a> › <span>ov-analytics-reports</span></nav><h1>ov-analytics-reports</h1><p class="meta"><span class="badge">SKILL</span> ov-analytics-reports · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>要回答"网上最耗带宽的应用/客户端/端口是谁"</li>
+<li>需要周期性采集端口利用率并画趋势图、做异常检测</li>
+<li>为链路容量规划出定时 PDF 报表并邮件分发</li>
+<li>部署 Application Visibility（L7 应用识别 + Enforcement）</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>Analytics 是 Profile 驱动的报表体系：Top N Apps/Clients/Ports 报表必须先建 Analytics Profile（设备+端口+信息类型），实时类报表（Availability/Alarms/Health/SIP）免 Profile；
+Top N Apps-Advanced 由 Application Visibility 的 Signature Profile 驱动。数据面是 sFlow：建 Profile 时 OV 自动成为 sFlow Receiver，应用识别靠 sFlow 包中的 TCP/UDP 端口。统计采集与查看解耦：Collection Profile（采集什么）+ View Profile（怎么看）。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<p>报表选型（frameworks·F3，&lt;&lt;<PAGE 66-67>&gt;&gt;）：
+1. 要 Top N Apps/Clients/Ports Utilization/PoE → 先 Profiles 建 Analytics Profile（&lt;&lt;<PAGE 130-131>&gt;&gt;）
+2. 要 Top N Apps-Advanced（L7 签名级）→ 先 Application Visibility 三步（&lt;&lt;<PAGE 202-203>&gt;&gt;）
+3. 要 Network Availability / Alarms / Network Health / SIP → 直接出，无需 Profile
+4. 要端口利用率趋势/预测/异常检测 → Statistics 基础统计四屏（frameworks·F5，&lt;&lt;<PAGE 117>&gt;&gt;）
+5. 数据下钻粒度固定：月→周→日→时→15 分钟（frameworks·F4，&lt;&lt;<PAGE 72-74>&gt;&gt;）</p>
+<h2 id="a2">A2（操作步骤）</h2>
+<ul>
+<li><strong>建 Analytics Profile</strong>：Profiles→Add→Configuration（Profile Type：Top N Apps &amp; Clients / Top N Ports Utilization / Top N PoE Ports Utilization；Sampling Rate；PoE Usage Threshold 1-99 默认 99 仅 AOS 8.x）→Device/Port Selection（可用 Default Ports Template 批量套端口如 1/1-1/10）→Create；PoE Profile 无需选端口（cases·C9，&lt;&lt;<PAGE 130-131>&gt;&gt;）</li>
+<li><strong>出 Top N Applications 报表</strong>：Analytics→Reports→Top N Applications；默认 Summary 饼图（过去 24 小时）；Filter by Profile/Select Devices 过滤；点饼图扇区下钻 Clients/Switches；Configuration 配 Top 数(1-20)/Interval Type/Time Interval(24h|7d|4w)；Actions→Add to Report 转定时 PDF（cases·C4，&lt;&lt;<PAGE 74-82>&gt;&gt;）</li>
+<li><strong>App Advanced 过滤</strong>：Filter Bar 设 Time Slice/Application/App Group/Source IP/Device/UNP/Time Range（Most Recent-最近 7 天 / Custom）（cases·C5，&lt;&lt;<PAGE 85-86, 89-90>&gt;&gt;）</li>
+<li><strong>健康阈值</strong>：Network Health→选类别(CPU/Memory/Temperature)→ADD 选设备（一次最多 20 台）→Configure Health Thresholds→逐设备 Edit→Save；可直通 Configure Traps 向导（cases·C6，&lt;&lt;<PAGE 99-100>&gt;&gt;）</li>
+<li><strong>Collection Profile</strong>：Statistics→Collection→Add：Poll Interval 1-60 默认 5 分钟、Data Retention 1-180 天默认 30、选设备+属性→Create；排程先 Stop→Schedule→重启（cases·C7，&lt;&lt;<PAGE 120-121>&gt;&gt;）</li>
+<li><strong>Chart View Profile</strong>：Chart Views→Add：属性、设备、Counters（&gt;50 个时须手动挑 ≤50）、Line Options、Scale(0.001-1000)→Create；可 Switch to Table / Save to PNG（cases·C8，&lt;&lt;<PAGE 122-124>&gt;&gt;）</li>
+<li><strong>端口↔应用映射</strong>：Applications Management：Range-Based 或 Enumuated 模式；可 Import/Export .json（导入覆盖现有）；映射端口不可改只能删除重建（cases·C10，&lt;&lt;<PAGE 132-133>&gt;&gt;）</li>
+<li><strong>Application Visibility 三步</strong>：导入 Signature File（可自动更新）→建 Signature Profile（监控组+Enforcement 组，Enforcement 还需 Unified Access 配 Access Role Profile）→应用到交换机/端口（cases·C21，&lt;&lt;<PAGE 202-203>&gt;&gt;）</li>
+<li><strong>创建定时报表</strong>：Report→Add：Title/Purging Policy/Schedule(Now|Periodically Simple|Cron)/E-Mail（单一收件人，前置 Preferences Email）→Create（先产生空白报表）；再到目标屏 Add to Report 绑定（cases·C48，&lt;&lt;<PAGE 484-485>&gt;&gt;）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>Top N Applications 从建 Profile 到饼图下钻再到定时报表（cases·C4，&lt;&lt;<PAGE 74-82>&gt;&gt;）</li>
+<li>Collection Profile 建+排程（Stop→Schedule→重启）（cases·C7，&lt;&lt;<PAGE 120-121>&gt;&gt;）</li>
+<li>Network Health 阈值 + Configure Traps 直通（cases·C6，&lt;&lt;<PAGE 99-100>&gt;&gt;）</li>
+<li>Application Visibility 从签名文件到交换机应用（cases·C21，&lt;&lt;<PAGE 202-203>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（反例/坑）</h2>
+<ul>
+<li>sFlow 包不能经 EMP 端口发送——发现交换机不能用 EMP IP，否则收不到 Top N App 数据（counter·X1，&lt;&lt;<PAGE 75, 92>&gt;&gt;）</li>
+<li>未定义 FTP 凭据时备份/恢复/升级会逐台弹窗询问（counter·X2，&lt;&lt;<PAGE 43>&gt;&gt;）</li>
+<li>外部 RADIUS 登录的管理员只能出实时报表、不能排程（counter·X6 / principles·P13，&lt;&lt;<PAGE 64>&gt;&gt;）</li>
+<li>改交换机 IP 后已指派的 Top N App &amp; Clients Profile 失效，须重新指派（counter·X7，&lt;&lt;<PAGE 131>&gt;&gt;）</li>
+<li>统计采集静默失败：设备 SNMP 源 IP 与 OV 发现 IP 不一致时收不到数据且无报错（counter·X8 / principles·P24，&lt;&lt;<PAGE 119>&gt;&gt;）</li>
+<li>删除 Statistics/View Profile 连带删除全部历史统计（counter·X9，&lt;&lt;<PAGE 121, 129>&gt;&gt;）</li>
+<li>健康阈值修改最长 1 小时（下个轮询周期）后才可见（counter·X10 / principles·P20，&lt;&lt;<PAGE 100>&gt;&gt;）</li>
+<li>健康阈值一次最多 20 台，超过按钮不激活（principles·P19，&lt;&lt;<PAGE 99>&gt;&gt;）</li>
+<li>"Enable Statistics Automatically On" 选 All 且设备量大有性能风险；升级环境默认 0 台不会自动开启（counter·X12，&lt;&lt;<PAGE 134>&gt;&gt;）</li>
+<li>Periodic 报表不能手动 Generate；首次建报表配置生成的是空白报表（counter·X45/X46，&lt;&lt;<PAGE 484-486>&gt;&gt;）</li>
+<li>端口利用率低于 1%、PoE 为 0% 的端口不显示；PoE 报表需 CLI 预先启用（principles·P21，&lt;&lt;<PAGE 101, 106>&gt;&gt;）</li>
+<li>一台交换机同一 Profile Type 只能入一个 Profile；移除端口连带删 sFlow 配置（principles·P27，&lt;&lt;<PAGE 130-131>&gt;&gt;）</li>
+<li>异常检测最少需 11 天数据、季节性最多学 30 天（principles·P29，&lt;&lt;<PAGE 133-134>&gt;&gt;）</li>
+<li>含不支持 AV 的 AP 的组应用签名档案：操作"成功"但部分 AP 未生效；会清掉 CLI 配置的 AV 配置（counter·X21/X22，&lt;&lt;<PAGE 209>&gt;&gt;）</li>
+<li>签名档案向导里配的 Access Role Profile 不会自动下发设备（counter·X23，&lt;&lt;<PAGE 208>&gt;&gt;）</li>
+</ul>
+<h2 id="_1">来源</h2>
+<p>OmniVista 2500 NMS 4.9R2 User Guide 第 3 章 Analytics（&lt;&lt;<PAGE 64-136>&gt;&gt;）、第 6 章 Application Visibility（&lt;&lt;<PAGE 201-211>&gt;&gt;）、第 26 章 Report（&lt;&lt;<PAGE 484-486>&gt;&gt;）。条目来源：frameworks F3/F4/F5/F6；cases C4-C10/C21/C48；counter-examples X1/X2/X4/X5/X6/X7/X8/X9/X10/X12/X21/X22/X23/X45/X46；principles P12-P29。</p><div class="pn"><a href="ov-console-basics-dashboard.html">⬅ 上一单元：ov-console-basics-dashboard</a><a class="nxt" href="ov-discovery-topology-views.html">下一单元：ov-discovery-topology-views ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

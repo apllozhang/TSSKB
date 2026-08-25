@@ -8,6 +8,13 @@ from pathlib import Path
 
 KEEP = {
     "smb-express-lan-wlan": ["16. **Wi-Fi Express"],
+    # OV2500 User Guide：中文密度高/表格型条目特征词命中率低，逐条人工核对原文后保留
+    "ov2500-userguide": [
+        "## X6.", "## X35.", "- **sFlow**", "- **Kafka**", "- **Audit 应用**",
+        "- **内置变量", "- **expectPrompt", "- **Full/Occasional", "- **UNP Type",
+        "- **Netforward", "- **Loopback0", "- **Zulu CEK**", "- **BMF", "- **SPT",
+        "## P64.", "## P81.", "## P83.", "## P133.", "## P141.",
+    ],
 }
 DROP = {
     # V1 通过但空洞/通用，人工淘汰（暂无）
@@ -15,7 +22,7 @@ DROP = {
 
 def split_entries(text, cat):
     if cat == "glossary":
-        return re.split(r"\n(?=\d+\.\s+\*\*)", text)
+        return re.split(r"\n(?=\d+\.\s+\*\*|- \*\*)", text)
     return re.split(r"\n(?=## |### |\d+\.\s+\S)", text)
 
 def gen(slug):

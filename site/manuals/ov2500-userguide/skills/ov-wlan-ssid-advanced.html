@@ -1,0 +1,114 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ov-wlan-ssid-advanced — OmniVista 2500 4.9R2 User Guide</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>OmniVista 2500 4.9R2 User Guide</h1>
+<div class="sub">935 页 · GUI 参考手册全科（控制台/Analytics/发现拓扑/资源管理/统一接入/UPAM/SSID 高级/隔离/VM 织构）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">控制台与分析</div>
+<a href="../skills/ov-console-basics-dashboard.html">ov-console-basics-dashboard</a>
+<a href="../skills/ov-analytics-reports.html">ov-analytics-reports</a>
+<div class="grp">发现与资源</div>
+<a href="../skills/ov-discovery-topology-views.html">ov-discovery-topology-views</a>
+<a href="../skills/ov-resource-manager-ops.html">ov-resource-manager-ops</a>
+<a href="../skills/ov-cli-scripting-mib.html">ov-cli-scripting-mib</a>
+<div class="grp">接入与策略</div>
+<a href="../skills/ov-unified-access-profiles.html">ov-unified-access-profiles</a>
+<a href="../skills/ov-upam-guest-byod.html">ov-upam-guest-byod</a>
+<a href="../skills/ov-quarantine-policyview.html">ov-quarantine-policyview</a>
+<div class="grp">无线高级与织构</div>
+<a href="../skills/ov-wlan-ssid-advanced.html" class="on">ov-wlan-ssid-advanced</a>
+<a href="../skills/ov-vm-vxlan-fabric.html">ov-vm-vxlan-fabric</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../manuals/index.html">配置手册</a> › <a href="../index.html">OmniVista 2500 4.9R2 User Guide</a> › <span>ov-wlan-ssid-advanced</span></nav><h1>ov-wlan-ssid-advanced</h1><p class="meta"><span class="badge">SKILL</span> ov-wlan-ssid-advanced · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>新建员工/访客 Wi-Fi，想一步生成认证、策略、Portal 全套配置</li>
+<li>上 Wi-Fi 6E/7：6GHz 频段的 OWE、Transition Mode 兼容</li>
+<li>不同部门共享 SSID 但口令与权限隔离（PPSK）</li>
+<li>每台设备派发独立 PSK（Device Specific PSK）</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>SSIDs 应用是一步式配置模型：创建 SSID 时自动派生并联动创建 Access Role Profile/Access Policy/Authentication Strategy/Guest/BYOD Access Strategy/AAA Server Profile/Tunnel Profile/Global Configuration（以 SSID 派生名命名）。五种 Usage 预设决定认证形态；
+SSID 也可在 WLAN Service (Expert) 里配，两种入口的编辑权随 Origin 而定。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<p>Usage 预设选型（principles·P195，&lt;&lt;<PAGE 861-863>&gt;&gt;）：
+1. <strong>Guest Network</strong>：Open + Captive Portal（CP 二选 OV-UPAM / External）
+2. <strong>Employee BYOD</strong>：MAC + BYOD Portal
+3. <strong>Enterprise 802.1X</strong>：企业认证
+4. <strong>Protected Network</strong>：PSK + 可选 CP
+5. <strong>Protected Network for Employees</strong>：PSK + BYOD Portal
+约束：SSID ≤31 字符；一屏最多 15 个 SSID；Usage 与 Authentication Strategy 不匹配的 SSID 不能编辑。</p>
+<h2 id="a2">A2（操作步骤）</h2>
+<ul>
+<li><strong>安全等级矩阵</strong>（principles·P175，&lt;&lt;<PAGE 649-655>&gt;&gt;）：Open / Enhanced Open（OWE；Transition Mode 双 BSSID 兼容旧客户端，仅 AWOS 4.0.8+）/ Enterprise（DYNAMIC_WEP~WPA3_AES256 六种）/ Personal（STATIC_WEP~WPA3_PSK_SAE_AES 七种）；PMF 三态 Disabled/Optional/Required；Hotspot 2.0 仅 Enterprise WPA2_AES/WPA3_AES256</li>
+<li><strong>6GHz 规则</strong>：Enhanced Open 在 6GHz 强制启用且不可关；6GHz SSID 的 2.4/5G 自动继承 WPA3_SAE_AES，开 Backward Compatibility 后用混合 WPA3_PSK_SAE_AES（MLO 含 6GHz 时自动禁用）（principles·P175/P196，&lt;&lt;<PAGE 649-655, 864-874>&gt;&gt;）</li>
+<li><strong>WPA3 兼容回退</strong>：WPA3_AES256 不支持的 AP 自动回退 WPA2_AES（AP1101 全频段、AP1201H 2.4G 不支持）；AUTO_WPA_WPA2 混合模式两谱系均可用（principles·P196，&lt;&lt;<PAGE 864-874>&gt;&gt;）</li>
+<li><strong>Device Specific PSK</strong>：每台设备按 MAC 派发不同 PSK，须同时在 SSIDs/WLAN Service (Expert) 与设备上启用；仅配 UPAM RADIUS：Prefer（无 AES-CBC-128 属性时用 SSID key）/Force（恒用 AAA 返回值，隐藏 Private Group PSK 配置）；可打印 PSK 或二维码（principles·P179/P196，&lt;&lt;<PAGE 697-702, 864-874>&gt;&gt;）</li>
+<li><strong>Private Group PSK (PPSK)</strong>：按不同口令分组建组入不同 Access Role Profile；每 SSID ≤16 条 Entry，单 AP 全部 SSID 合计 ≤64 条；Entry 名与口令均不可重复（principles·P196，&lt;&lt;<PAGE 864-874>&gt;&gt;）</li>
+<li><strong>WLAN Service 无线参数默认值</strong>：Max Clients Per Band 1-128 默认 64；最小客户端速率建议 2.4G=12、5G=24；Broadcast Key Rotation 默认 15 分钟；802.1p/DSCP 映射（Voice 上行 6/下行 6,7、Video 上 4/下 4,5）（principles·P165，&lt;&lt;<PAGE 603-606>&gt;&gt;）</li>
+<li><strong>TLS RADIUS</strong>：选 TLS 服务器的 SSID 生成 AAA 仅含 802.1X 主服务器；TLS 服务器不支持 CP/MAC 认证；自动生成的 AAA Profile 与 SSID 同名——要换 RADIUS 应改 SSID 而非直接改该 Profile（principles·P196）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>SSID 一步式创建：选 Usage → 自动派生八个配置对象（principles·P195，&lt;&lt;<PAGE 861-863>&gt;&gt;）</li>
+<li>PPSK 分组建组入不同 Access Role Profile（principles·P196，&lt;&lt;<PAGE 864-874>&gt;&gt;）</li>
+<li>SSID 也可在 WLAN Service (Expert) 配置，WLAN Name/WLAN Service Name 即 SSID Service Name（principles·P195）</li>
+</ul>
+<h2 id="b">B（反例/坑）</h2>
+<ul>
+<li>Usage 与 Authentication Strategy 不匹配的 SSID 不能编辑（如 Guest CP 用途却配了 Local DB+无 Web 认证）（principles·P195，&lt;&lt;<PAGE 861-863>&gt;&gt;）</li>
+<li>Transition Mode 需 AWOS 4.0.8+，旧版本重启后 SSID 退化为 open（principles·P196，&lt;&lt;<PAGE 864-874>&gt;&gt;）</li>
+<li>Stellar AP VLAN 池按机型限 WLAN 数：AP1301H=2、AP1311/1301/1431/1411=4、AP1320/1331/1351/1451=7（各 256 VLAN/WLAN）（principles·P196，&lt;&lt;<PAGE 864-874>&gt;&gt;）</li>
+<li>事后把 TLS-disabled 服务器改开 TLS 会失败（principles·P196）</li>
+<li>WCF 首访放行陷阱：AP 对首次访问的 URL 先放行再判定，DNS 缓存过期后首个访客不受过滤（principles·P196，&lt;&lt;<PAGE 864-874>&gt;&gt;）</li>
+<li>Origin=SSIDs 的 WLAN Service 只能在 SSIDs 应用编辑/删除；Device Config 改动只影响所选设备不回写模板（principles·P175，&lt;&lt;<PAGE 649-655>&gt;&gt;）</li>
+<li>Hide SSID 几乎无安全价值（principles·P164，&lt;&lt;<PAGE 602-603>&gt;&gt;）</li>
+<li>MLO 频段取自 Allowed Band 且依赖 radio+EHT 开启；仅 Wi-Fi 7 AP（principles·P164/P44）</li>
+</ul>
+<h2 id="_1">来源</h2>
+<p>OmniVista 2500 NMS 4.9R2 User Guide SSIDs 应用（&lt;&lt;<PAGE 861-874>&gt;&gt;）、WLAN Service (Device Config)（&lt;&lt;<PAGE 649-655>&gt;&gt;）、WLAN Service 无线参数（&lt;&lt;<PAGE 601-606>&gt;&gt;）。条目来源：principles P164/P165/P175/P179/P195/P196。</p><div class="pn"><a href="ov-quarantine-policyview.html">⬅ 上一单元：ov-quarantine-policyview</a><a class="nxt" href="ov-vm-vxlan-fabric.html">下一单元：ov-vm-vxlan-fabric ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

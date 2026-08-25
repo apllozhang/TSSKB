@@ -29,13 +29,20 @@ def check_book(base):
         cat = f.stem
         # 条目分隔：glossary 为编号行；其他为 ## 标题或顶格数字编号
         if cat == "glossary":
-            entries = re.split(r"\n(?=\d+\.\s+\*\*)", text)
+            entries = re.split(r"\n(?=\d+\.\s+\*\*|- \*\*)", text)
         else:
             entries = re.split(r"\n(?=## |### |\d+\.\s+\S)", text)
         results = []
         for e in entries:
             if not e.strip() or e.startswith("# "): continue
-            pnums = [int(p) for p in re.findall(r"<<<PAGE (\d+)>>>", e)]
+            raw = re.findall(r"<<<PAGE (\d+)(?:-(\d+))?", e)
+            pnums = []
+            for a, b in raw:
+                a = int(a)
+                if b:
+                    pnums.extend(range(a, min(int(b), a + 24) + 1))
+                else:
+                    pnums.append(a)
             if not pnums: continue
             quotes = re.findall(r"原文摘录：\"(.*?)\"", e, re.S) or re.findall(r"\"([^\"\\]{25,})\"", e)
             qs = " ".join(quotes) if quotes else e

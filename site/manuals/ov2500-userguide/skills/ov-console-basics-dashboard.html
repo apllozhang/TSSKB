@@ -1,0 +1,113 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ov-console-basics-dashboard — OmniVista 2500 4.9R2 User Guide</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>OmniVista 2500 4.9R2 User Guide</h1>
+<div class="sub">935 页 · GUI 参考手册全科（控制台/Analytics/发现拓扑/资源管理/统一接入/UPAM/SSID 高级/隔离/VM 织构）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">控制台与分析</div>
+<a href="../skills/ov-console-basics-dashboard.html" class="on">ov-console-basics-dashboard</a>
+<a href="../skills/ov-analytics-reports.html">ov-analytics-reports</a>
+<div class="grp">发现与资源</div>
+<a href="../skills/ov-discovery-topology-views.html">ov-discovery-topology-views</a>
+<a href="../skills/ov-resource-manager-ops.html">ov-resource-manager-ops</a>
+<a href="../skills/ov-cli-scripting-mib.html">ov-cli-scripting-mib</a>
+<div class="grp">接入与策略</div>
+<a href="../skills/ov-unified-access-profiles.html">ov-unified-access-profiles</a>
+<a href="../skills/ov-upam-guest-byod.html">ov-upam-guest-byod</a>
+<a href="../skills/ov-quarantine-policyview.html">ov-quarantine-policyview</a>
+<div class="grp">无线高级与织构</div>
+<a href="../skills/ov-wlan-ssid-advanced.html">ov-wlan-ssid-advanced</a>
+<a href="../skills/ov-vm-vxlan-fabric.html">ov-vm-vxlan-fabric</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../manuals/index.html">配置手册</a> › <a href="../index.html">OmniVista 2500 4.9R2 User Guide</a> › <span>ov-console-basics-dashboard</span></nav><h1>ov-console-basics-dashboard</h1><p class="meta"><span class="badge">SKILL</span> ov-console-basics-dashboard · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>第一次登录 OV2500，不知道"某个功能在哪个应用里配"</li>
+<li>要把常用的 Analytics 图表、告警摘要放到首页 Dashboard</li>
+<li>不同角色（netadmin / writer / user）的访问权限划分、2FA 开关</li>
+<li>表格数据太多，要建可复用的过滤器</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>OV2500 是按 GUI 菜单 A-Z 组织的参考型网管平台：两种菜单视图（LAN+WLAN Menu / WLAN Menu）内容相同、仅入口重组；
+首页 Dashboard 是 Widget 容器（Global / WLAN Advanced / IoT / Performance Monitoring 四标签）；
+所有页面底部有 Unacknowledged Alarm 实时告警栏；
+权限由 用户组 × 用户角色（地图×应用读写×VLAN 对象）三维度叠加决定。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<ol>
+<li><strong>找功能先看总地图</strong>：Network（Discovery/Topology/AP Registration/SAA/Locator/Notifications/VM Manager/Analytics/Application Visibility/Provisioning/IoT）、Configuration（VLANs/Services/VXLANs/IP Multicast/CLI Scripting/PolicyView/SIP/Captive Portal/Groups…）、Unified Access、Security（含 Quarantine Manager）、Administration（Control Panel/Preferences/Audit/License/OV System Health）、UPAM、WLAN 共七大区（frameworks·F1，&lt;&lt;<PAGE 31-32>&gt;&gt;）。无线团队可切 WLAN Menu 视图：SSID/APs/Analytics/Clients/IoT/Guest-BYOD/Authentication/Policies/RF/Security/Alarms-Logs/Administration 分组，内容与 LAN+WLAN 相同（&lt;&lt;<PAGE 33-34>&gt;&gt;）</li>
+<li><strong>Dashboard 按标签定制</strong>：Performance Monitoring 标签挂 Analytics Chart View Profile 图表（最多 20 个 widget，删 Profile 则 widget 一并移除）（frameworks·F2，&lt;&lt;<PAGE 45, 54-56>&gt;&gt;）</li>
+<li><strong>权限规划</strong>：预置 admin（Account Admin，唯一能改用户/组，密码 switch，必须改）/netadmin/writer/user 四账号；User Role = 可访问地图 × 应用读写 × VLAN/VXLAN 对象限制三维度，可多角色叠加（principles·P187/P188，&lt;&lt;<PAGE 780-808>&gt;&gt;）</li>
+</ol>
+<h2 id="a2">A2（操作步骤）</h2>
+<ul>
+<li><strong>添加/删除/布局 Widget</strong>：Settings 图标→Add Widget→列表选一个→OK（一次只能加一个，加到左上角）；删除点 widget 右上角 x；布局 Settings→Change Layout，默认 Auto（cases·C2，&lt;&lt;<PAGE 34-36, 52-53>&gt;&gt;）</li>
+<li><strong>Widget 刷新率</strong>：最小与默认均为 5 分钟（principles·P1，&lt;&lt;<PAGE 37>&gt;&gt;）</li>
+<li><strong>Favorites</strong>：应用快捷方式加入 Favorites Widget 后同步出现在主导航 Favorites 标签（&lt;&lt;<PAGE 36>&gt;&gt;）</li>
+<li><strong>自定义表格过滤器</strong>：点 filter 按钮→Add→Filter Name→条件严格度 ANY/ALL→have/not have + contains/begins with/ends with/equal/not equal→大小写敏感开关；可加新条件或新条件组（cases·C3，&lt;&lt;<PAGE 38>&gt;&gt;）</li>
+<li><strong>Table View vs List View</strong>：List View 不能用 Print 按钮打印，打印前须切 Table View（principles·P2，&lt;&lt;<PAGE 37, 39>&gt;&gt;）</li>
+<li><strong>用户设置</strong>：User Settings 任何用户可改（Locale/主题/超时/温度单位/Device Naming/颜色/声音），System Settings 需 Account Admin；Inactivity Timeout 15 分钟~25 周默认 15；声音 .wav/.mp3 ≤500KB（principles·P118，&lt;&lt;<PAGE 416-420>&gt;&gt;）</li>
+<li><strong>2FA</strong>：Google Authenticator 六位时间码，按 Role 启用；仅能全局启用/禁用，Verify 卡住用 Reset 2FA（principles·P187/P188，&lt;&lt;<PAGE 780-808>&gt;&gt;）</li>
+<li><strong>Watchdog 启停 OV 服务</strong>（运维入门）：Control Panel→Watchdog 滑块启停单个服务（连带依赖）；停 ActiveMQ/Tomcat 会关掉 Web 须手工恢复（cases·C24，&lt;&lt;<PAGE 249-250>&gt;&gt;；principles·P68）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>Dashboard 增删 widget 与 Change Layout 全流程（cases·C2，&lt;&lt;<PAGE 34-36, 52-53>&gt;&gt;）</li>
+<li>自定义表格过滤器（ANY/ALL + 多条件组）（cases·C3，&lt;&lt;<PAGE 38>&gt;&gt;）</li>
+<li>Watchdog 批量 Start All/Restart All（cases·C24，&lt;&lt;<PAGE 249-250>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（反例/坑）</h2>
+<ul>
+<li>List View 数据打印不出来——不是故障，是设计如此，切 Table View（principles·P2，&lt;&lt;<PAGE 37, 39>&gt;&gt;）</li>
+<li>大表（如 VLANs）默认不显示数据：需用 Device Selection Bar 选设备；选择结果在会话内持久、登出复位（principles·P3，&lt;&lt;<PAGE 40>&gt;&gt;）</li>
+<li>admin 默认密码 switch、四个预置账号默认密码全部为 switch，至少要改掉（principles·P187，&lt;&lt;<PAGE 780-789>&gt;&gt;）</li>
+<li>admin 用户不可删、Administrators/Default 组不可删、系统 Role 不可改（principles·P188，&lt;&lt;<PAGE 790-808>&gt;&gt;）</li>
+<li>用户属多组时权限取最高特权组，不是叠加投票（principles·P188，&lt;&lt;<PAGE 790-808>&gt;&gt;）</li>
+<li>Stellar AP 的 Unsaved 变更告警无害——AP 重启自动取最新配置，可在 Settings 关闭该通知（principles·P11，&lt;&lt;<PAGE 31, 46>&gt;&gt;）</li>
+</ul>
+<h2 id="_1">来源</h2>
+<p>OmniVista 2500 NMS 4.9R2 User Guide 第 1-2 章（&lt;&lt;<PAGE 31-64>&gt;&gt;）、Control Panel 章（&lt;&lt;<PAGE 249-253>&gt;&gt;）、Users/User Groups 相关（&lt;&lt;<PAGE 780-808>&gt;&gt;）。条目来源：frameworks F1/F2；cases C2/C3/C24；principles P1/P2/P3/P11/P68/P118/P187/P188。</p><div class="pn"><a href="../index.html">⬅ 返回课程首页</a><a class="nxt" href="ov-analytics-reports.html">下一单元：ov-analytics-reports ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
