@@ -1,25 +1,33 @@
 # GLOSSARY · OmniAccess Stellar AP 数据表合集
 
-> 页码为原书 `<<<PAGE N>>>` 标记。按型号/订购配件/Wi-Fi 标准/硬件规格/安全管理分组，精选 44 条。
+> 页码为原书 `<<<PAGE N>>>` 标记。按 AP 型号（与 14 个技能一一对应）+订购配件/Wi-Fi 标准/硬件规格/安全管理分组，精选 44 条。
 
-## 型号速查
+## 型号速查（按代际分组）
+
+### 11ac Wave2 / Wi-Fi 6
 - **AP1261（OAW-AP1261-RW-B）**：室外 11ac Wave2，2x2，1.2Gbps，IP67，单 GbE，at 20W，384 客户端 <<<PAGE 1-4>>>
 - **AP1301**：室内 Wi-Fi 6 入门，2x2，1.77Gbps，af 13.1W，512 客户端，双 GbE <<<PAGE 6-11>>>
 - **AP1301H**：酒店墙面 Wi-Fi 6，1 上联+4 下联（1 口 af PSE）+RJ45 直通对+BLE/Zigbee，1024 客户端，MTBF 150 年 <<<PAGE 14-19>>>
 - **AP1331**：Wi-Fi 6 中高端 4x4+4x4，3.55Gbps，双 5GE，专用扫描+BLE，bt 28W <<<PAGE 22-27>>>
 - **AP1351**：Wi-Fi 6 旗舰，2.4G 4x4+5GL 4x4+5GH 8x8，~10Gbps，双 10GE，bt 45W，1536 客户端 <<<PAGE 30-34>>>
 - **AP1360 系列**：室外 Wi-Fi 6；1361 全向（12.5dBi@5G）/1361D 定向（H80°xV80°）/1362 外置 6x N 头；2.5GE+SFP+GbE PSE，bt 64W，IP67，抗 165MPH 阵风 <<<PAGE 37-42>>>
+
+### Wi-Fi 6E
 - **AP1431**：Wi-Fi 6E 三频 2x2x3，4.2Gbps，双 2.5GE，bt 34W，多频滤波器 <<<PAGE 48-53>>>
 - **AP1451**：Wi-Fi 6E 旗舰 6G 4x4+5G 8x8+2.4G 4x4，10Gbps，双 10GE，五射频，1536 客户端 <<<PAGE 57-62>>>
+
+### Wi-Fi 7 室内（15xx）
 - **AP1501**：Wi-Fi 7 入门，2x2x3，9.328Gbps，单 2.5GE，仅 at 22.19W，无 BLE/扫描/第二口，DPGPSK <<<PAGE 66-72>>>
 - **AP1511**：Wi-Fi 7 入门+BLE5.4/Zigbee+FTM，1x 5GE，MACsec，768 客户端 <<<PAGE 77-83>>>
 - **AP1521**：Wi-Fi 7 中端，5GHz 4x4+三频专用扫描，12.2Gbps，10GE+GE，bt 40.2W，1280 客户端 <<<PAGE 87-93>>>
 - **AP1540 系列**：Wi-Fi 7 超高密旗舰 4x4x3，18.67Gbps（6G 11.52G/EHT320），双 10GE 含 combo SFP+，bt 51W，1536 客户端；1541 内置/1542 8x RP-SMA 外置（天线 TBC） <<<PAGE 97-105>>>
+
+### Wi-Fi 7 室外（15xx）
 - **AP1561**：室外 Wi-Fi 7，2x2x3，9.328Gbps，1x 5GE，仅 at 23.64W，IP67，AFC <<<PAGE 108-114>>>
 - **AP1570 系列**：室外 Wi-Fi 7 旗舰，2x2x3+三频扫描+BLE6.0，10GE combo（RJ45/SFP+）+1GE PSE 下联，bt 50W；1571 内置/1572 6x N 头外置（6KA 防雷，须接地） <<<PAGE 117-124>>>
 
 ## 订购后缀与配件
-- **-RW**：全球管制域（注明 not for use in US/Egypt/Japan 等） <<<PAGE 12>>>
+- **-RW**：全球管制域（注明 not for use in US/Egypt/Japan 等；1561/1570 写法含 ME） <<<PAGE 12>>>/<<<PAGE 115>>>
 - **-US / -ME**：美国/中东管制域专用版本 <<<PAGE 12>>>/<<<PAGE 20>>>
 - **OAW-AP-MNT-B/W/C**：T 型龙骨/壁装/异形吊顶套件（1101/12xx/13xx） <<<PAGE 12>>>
 - **AP-MNT-IN-BE/CE/WE/WE2**：增强型吊顶/平面不锈钢/塑料套件（13xx/14xx/15xx） <<<PAGE 73>>>
@@ -49,7 +57,7 @@
 - **Multi-Gigabit（802.3bz）**：2.5G/5G(/10G) 多千兆以太网 <<<PAGE 26>>>
 - **PoE 802.3af/at/bt**：15.4W/30W/60-90W；Type3/Type4 为 bt 档 <<<PAGE 27>>>/<<<PAGE 42>>>
 - **PSE**：供电设备端（AP 下联口对外供电） <<<PAGE 17>>>
-- **IP67 / 6KA lightning protection**：室外防护等级 / 外置接口内置防雷（接地前提下免避雷器） <<<PAGE 3>>>/<<<PAGE 41>>>
+- **IP67 / 6KA lightning protection**：室外防护等级/外置接口内置防雷（接地前提下免避雷器） <<<PAGE 3>>>/<<<PAGE 41>>>
 - **MxN:K（如 4x4:4）**：M 发 N 收 K 空间流 <<<PAGE 25>>>
 - **UL2043 plenum rating**：吊顶风管空间防火认证 <<<PAGE 12>>>
 - **Multi-band filter**：内置多频段滤波器，5G/6G 全信道无限制运行 <<<PAGE 48>>>
@@ -66,4 +74,4 @@
 - **RTLS（Stanley Healthcare/Aeroscout）**：医疗实时定位生态 <<<PAGE 11>>>
 
 ---
-合计：44 条。
+合计：44 条。型号分组的条目与 14 个 bp-ap*-datasheet 技能一一对应。
