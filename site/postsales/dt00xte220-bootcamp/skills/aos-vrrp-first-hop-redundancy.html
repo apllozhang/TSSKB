@@ -1,0 +1,106 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>aos-vrrp-first-hop-redundancy — DT00XTE220 · OmniSwitch R6/R8 Bootcamp</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE220 · OmniSwitch R6/R8 Bootcamp</h1>
+<div class="sub">Issue 25 · 1207 页 · 五天全科训练营（新流水线重制版，全文可溯源）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">开局与系统管理</div>
+<a href="../skills/aos-bootcamp-switch-fundamentals.html">aos-bootcamp-switch-fundamentals</a>
+<a href="../skills/aos-flash-config-management.html">aos-flash-config-management</a>
+<a href="../skills/aos-stacking-virtual-chassis.html">aos-stacking-virtual-chassis</a>
+<div class="grp">二层基础与冗余</div>
+<a href="../skills/aos-vlan-l2-foundations.html">aos-vlan-l2-foundations</a>
+<a href="../skills/aos-lacp-stp-redundancy.html">aos-lacp-stp-redundancy</a>
+<a href="../skills/aos-vrrp-first-hop-redundancy.html" class="on">aos-vrrp-first-hop-redundancy</a>
+<div class="grp">策略与准入</div>
+<a href="../skills/aos-qos-policy-engine.html">aos-qos-policy-engine</a>
+<a href="../skills/aos-access-guardian-unp-bootcamp.html">aos-access-guardian-unp-bootcamp</a>
+<a href="../skills/aos-poe-power.html">aos-poe-power</a>
+<div class="grp">路由与安全</div>
+<a href="../skills/aos-ip-routing-rip-ospf.html">aos-ip-routing-rip-ospf</a>
+<a href="../skills/aos-security-vrf-macsec.html">aos-security-vrf-macsec</a>
+<div class="grp">组播与织构</div>
+<a href="../skills/aos-multicast-erp-spb.html">aos-multicast-erp-spb</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../postsales/index.html">售后</a> › <a href="../index.html">DT00XTE220</a> › <span>aos-vrrp-first-hop-redundancy</span></nav><h1>aos-vrrp-first-hop-redundancy</h1><p class="meta"><span class="badge">SKILL</span> aos-vrrp-first-hop-redundancy · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>网关冗余：两台三层交换机为同一 VLAN 提供虚拟默认网关</li>
+<li>主备切换演练或 Master 故障后流量未切走的排障</li>
+<li>上行口故障需要联动降优先级（Tracking）触发切换</li>
+<li>多虚拟路由器负载分担规划</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>VRRP（RFC 2338）用一个虚拟 IP + 虚拟 MAC（00-00-5E-00-01-{VRID}）把多台路由器虚拟成一台，最高优先级者为 Master 负责转发与 ARP 应答，IP 拥有者直接 Master（P99/P100，&lt;&lt;<PAGE 524-526>&gt;&gt;）。收敛的时钟设计是 Master_Down_Interval = 3×通告间隔 + Skew_Time，而 Skew_Time=(256-Priority)/256——优先级越低的 Backup 等得越久，天然错峰升主，防止多备同时抢占（P101，&lt;&lt;<PAGE 527>&gt;&gt;）。可靠性闭环靠 Tracking：跟踪口断则按策略扣优先级触发切换（P103，&lt;&lt;<PAGE 531>&gt;&gt;）。</p>
+<h2 id="a1">A1（决策/选型）</h2>
+<ol>
+<li>首跳冗余选型：VRRP 标准协议；与 Cisco HSRP 不兼容，混布网络不能两侧各跑一个（X53，&lt;&lt;<PAGE 524>&gt;&gt;）</li>
+<li>负载分担：两个虚拟路由器互为主备，主机按不同默认网关分摊（P102，&lt;&lt;<PAGE 528>&gt;&gt;）</li>
+<li>多虚拟路由器统一管理用 VRRP Group（组内统一改优先级/通告间隔/抢占）（P104，&lt;&lt;<PAGE 533>&gt;&gt;）</li>
+</ol>
+<h2 id="a2">A2（操作步骤）</h2>
+<ol>
+<li>基本主备（两台同配）：<code>ip vrrp 1 interface int_20</code> → <code>ip vrrp 1 interface int_20 address 192.168.20.254</code> → <code>ip vrrp 1 interface int_20 admin-state enable</code>（C25，&lt;&lt;<PAGE 529-537>&gt;&gt;）</li>
+<li>验证：<code>show ip vrrp 1</code>（Priority 100、Virtual MAC 00-00-5E-00-01-01）；<code>show ip vrrp statistics</code> 看 A Master/B Backup——同优先级时比 router-id（C25，&lt;&lt;<PAGE 529-537>&gt;&gt;）</li>
+<li>Tracking：<code>ip vrrp track 3 admin-state enable priority 30 port 1/1/3</code> → <code>ip vrrp 1 interface int_20 track-association 3</code>；断跟踪口后优先级 100-30=70 让位（C25/P103，&lt;&lt;<PAGE 529-537>&gt;&gt;）</li>
+<li>Group：<code>ip vrrp group 2</code> + <code>group association</code> 统一参数（C25，&lt;&lt;<PAGE 529-537>&gt;&gt;）</li>
+</ol>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>C25 VRRP 主备+抢占+Tracking 全流程：两台 6860 同配虚拟 IP，断跟踪口观察 Master 迁移（&lt;&lt;<PAGE 529-537>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（反例与坑）</h2>
+<ul>
+<li>VRRP 与 HSRP 不兼容（X53，&lt;&lt;<PAGE 524>&gt;&gt;）</li>
+<li>备份路由器之间优先级应彼此不同，避免 Master 故障时同时升主（X54，&lt;&lt;<PAGE 527>&gt;&gt;）——Skew_Time 只能部分错峰，显式分层更稳</li>
+<li>抢占（Preempt）默认行为与通告间隔调整要在两侧一致，否则会看到意外震荡（&lt;&lt;<PAGE 527, 529-530>&gt;&gt;）</li>
+</ul>
+<h2 id="_1">来源</h2>
+<ul>
+<li>principles·P99-P104；cases·C25；counter-examples·X53/X54</li>
+</ul><div class="pn"><a href="aos-lacp-stp-redundancy.html">⬅ 上一单元：aos-lacp-stp-redundancy</a><a class="nxt" href="aos-qos-policy-engine.html">下一单元：aos-qos-policy-engine ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

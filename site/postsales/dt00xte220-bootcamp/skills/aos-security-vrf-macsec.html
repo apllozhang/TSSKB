@@ -1,0 +1,122 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>aos-security-vrf-macsec — DT00XTE220 · OmniSwitch R6/R8 Bootcamp</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE220 · OmniSwitch R6/R8 Bootcamp</h1>
+<div class="sub">Issue 25 · 1207 页 · 五天全科训练营（新流水线重制版，全文可溯源）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">开局与系统管理</div>
+<a href="../skills/aos-bootcamp-switch-fundamentals.html">aos-bootcamp-switch-fundamentals</a>
+<a href="../skills/aos-flash-config-management.html">aos-flash-config-management</a>
+<a href="../skills/aos-stacking-virtual-chassis.html">aos-stacking-virtual-chassis</a>
+<div class="grp">二层基础与冗余</div>
+<a href="../skills/aos-vlan-l2-foundations.html">aos-vlan-l2-foundations</a>
+<a href="../skills/aos-lacp-stp-redundancy.html">aos-lacp-stp-redundancy</a>
+<a href="../skills/aos-vrrp-first-hop-redundancy.html">aos-vrrp-first-hop-redundancy</a>
+<div class="grp">策略与准入</div>
+<a href="../skills/aos-qos-policy-engine.html">aos-qos-policy-engine</a>
+<a href="../skills/aos-access-guardian-unp-bootcamp.html">aos-access-guardian-unp-bootcamp</a>
+<a href="../skills/aos-poe-power.html">aos-poe-power</a>
+<div class="grp">路由与安全</div>
+<a href="../skills/aos-ip-routing-rip-ospf.html">aos-ip-routing-rip-ospf</a>
+<a href="../skills/aos-security-vrf-macsec.html" class="on">aos-security-vrf-macsec</a>
+<div class="grp">组播与织构</div>
+<a href="../skills/aos-multicast-erp-spb.html">aos-multicast-erp-spb</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../postsales/index.html">售后</a> › <a href="../index.html">DT00XTE220</a> › <span>aos-security-vrf-macsec</span></nav><h1>aos-security-vrf-macsec</h1><p class="meta"><span class="badge">SKILL</span> aos-security-vrf-macsec · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>接入口限制 MAC 数量/白名单（防私接傻瓜交换机）</li>
+<li>流量强制经防火墙清洗（PBR 重定向）且要防回环</li>
+<li>端口防 IP 欺骗、病毒端口批量阻断（UserPorts/DropServices）</li>
+<li>ARP 毒化/DoS 攻击检测与缓解</li>
+<li>防 rogue DHCP 服务器（DHCP Snooping）+ 终端定位（Option 82）</li>
+<li>用户口-网络口硬隔离（Port Mapping）</li>
+<li>链路级加密（MACsec 802.1AE）</li>
+<li>多租户/多业务路由隔离（VRF）与受控互通（Route Leak）</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>AOS 安全是一整套组合拳（F9，&lt;&lt;<PAGE 799>&gt;&gt;）：接入面 LLDP Rogue Detection + LPS，转发面 PBR/高级 ACL 组（UserPorts/DropServices/port-disable），控制面 DoS/ARP 防御，数据面 DHCP Snooping+Option82+Port Mapping+MACsec+Storm Control。共同思路是"默认收紧、显式信任"：非信任 DHCP 口只收 Discover/Request（P161，&lt;&lt;<PAGE 829-830>&gt;&gt;）；端口默认只学 1 个 MAC（P152，&lt;&lt;<PAGE 850>&gt;&gt;）。VRF 把一台物理交换机切成多个路由实例、可重复 IP，隔离是默认、互通是例外——只能经 route-map 在 VRF 与 GRT 间泄漏（P165/P168，&lt;&lt;<PAGE 855-864>&gt;&gt;）。</p>
+<h2 id="a1">A1（决策/选型）</h2>
+<ol>
+<li>端口 MAC 管控：LPS 限学 MAC 数/白名单（不支持聚合口）；违规动作 restrict（只滤违规流量）vs shutdown（全口阻断）（P151/P152，&lt;&lt;<PAGE 804-806>&gt;&gt;）</li>
+<li>PBR 用于硬件级覆盖路由表的定向转发，回程必须加 source port 条件防打环（P154/P155，&lt;&lt;<PAGE 811-814>&gt;&gt;）</li>
+<li>MACsec 模式：Static SA（交换机间手工 key-chain）vs Dynamic SA（PSK/EAP，MKA 协商）（P160，&lt;&lt;<PAGE 826-827>&gt;&gt;）</li>
+<li>VRF 感知面：静态/RIP/OSPF/BGP/PIM/VRRP/QoS/AAA 均 VRF-aware；规模 8~64 依机型（P166，&lt;&lt;<PAGE 855-856>&gt;&gt;）</li>
+</ol>
+<h2 id="a2">A2（操作步骤）</h2>
+<ol>
+<li>LPS：<code>port-security 1/1 enable</code> → <code>port-security max-filtering 0</code> → <code>port-security 1/1 violation shutdown</code> → <code>port-security convert-to-static enable</code> 固化当前 MAC；违规后 300 秒自动清或 <code>port-security slot/port release</code>；进阶 <code>maximum num</code>、<code>mac-range low high</code>（8 段/口）、<code>learn-trap-threshold num</code>（C42/P153，&lt;&lt;<PAGE 805-809, 850-852>&gt;&gt;）</li>
+<li>LLDP Rogue Detection：<code>lldp 1/1 trust-agent enable</code> + <code>lldp 1/1 trust-agent violation-action trap|shutdown</code>；验证 <code>show lldp trusted remote-agent</code>；违规恢复 <code>interfaces &lt;slot&gt;/&lt;port&gt; clear-violation-all</code>（C41/P150，&lt;&lt;<PAGE 802, 801-802>&gt;&gt;）</li>
+<li>PBR 防火墙重定向：<code>policy condition Traffic10 source ip 10.10.0.0 mask 255.255.0.0</code> → <code>policy action Firewall permanent gateway ip 192.168.99.254</code> → 规则绑定；回程 <code>policy condition TrafficFromFW source IP 10.10.0.0 … source port 2/1</code> + action 指回内网网关（C43，&lt;&lt;<PAGE 813-814>&gt;&gt;）</li>
+<li>UserPorts 防欺骗：<code>policy port group UserPorts 1/1-24 2/1-24 3/1 4/1</code> → <code>qos user-port filter spoof rip ospf bgp</code>；病毒端口 <code>policy service tcp135/tcp445/udp137</code> + DropServices 组 + port-disable 动作 + <code>interfaces violation-recovery-time &lt;num&gt;</code>、<code>violation-recovery-trap enable</code>；<code>show qos log</code> 查 "Spoofed traffic triggered user-port shutdown"（C44/P156/P157，&lt;&lt;<PAGE 816-818>&gt;&gt;）</li>
+<li>ARP/DoS 加固：<code>ip dos arp-poison restricted-address 192.168.100.152</code>（每接口最多 2 个）→ <code>show ip dos arp-poison</code> 看攻击计数；<code>ip directed-broadcast off</code>、<code>no ip service telnet</code>、<code>no ip service port 23</code>；ICMP 5 秒窗 &gt;100pps 判 DoS（C45/P158/P159，&lt;&lt;<PAGE 819-824>&gt;&gt;）</li>
+<li>DHCP Snooping + Option 82 + Port Mapping：<code>ip helper dhcp-snooping enable</code> → <code>ip helper dhcp-snooping vlan 24</code> → 端口角色 <code>[block/trust/client-only]</code> → <code>ip helper dhcp-snooping option-82 data-insertion format ascii …</code>；映射 <code>port mapping 1 user-port 1/1-2 network-port 3/2</code> → <code>port mapping 1 dynamic-proxy-arp enable</code> → <code>port mapping 1 enable</code> → <code>show port mapping 1 status</code>、<code>show ip dynamic-proxy-arp</code>（C46/P161-P163，&lt;&lt;<PAGE 829-839>&gt;&gt;）</li>
+<li>MACsec Static SA：接口下 <code>interface 1/1/25 macsec sci-tx key-chain …</code>/<code>sci-tx encryption</code>/<code>sci-rx 0x2 …</code> 两端成对配置；删除逐项 no（C55，&lt;&lt;<PAGE 1049>&gt;&gt;）</li>
+<li>VRF：<code>vrf create IpOne</code> → <code>vrf IpOne</code> 进上下文 → <code>ip interface intf100 address 100.1.1.1/24 vlan 100</code> → <code>show vrf</code>；泄漏 <code>ip route-map R1 action permit</code> + <code>match protocol static</code> → <code>ip export route-map R1</code>；<code>ip import vrf V1 route-map R2</code> → <code>ip route-pref import 100</code>（C47/P165-P168，&lt;&lt;<PAGE 859-864>&gt;&gt;）</li>
+<li>Storm Control：广播/组播/未知单播按 %、mbps、pps 三种阈值限洪泛（P164，&lt;&lt;<PAGE 886>&gt;&gt;）</li>
+</ol>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>C42 LPS：换设备触发违规 → RESTRICT 默认 → 300 秒自动清（&lt;&lt;<PAGE 805-809>&gt;&gt;）</li>
+<li>C43 PBR 防火墙重定向与回程防环（&lt;&lt;<PAGE 813-814>&gt;&gt;）</li>
+<li>C46 DHCP Snooping + Option 82 + Port Mapping 组合拳（&lt;&lt;<PAGE 829-839>&gt;&gt;）</li>
+<li>C47 VRF 创建与静态路由泄漏到 GRT（&lt;&lt;<PAGE 859-864>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（反例与坑）</h2>
+<ul>
+<li>LPS 不支持聚合口（X78，&lt;&lt;<PAGE 804>&gt;&gt;）；默认违规 restrict、300 秒自动清；端口默认只学 1 个 MAC，接傻瓜交换机/集线器即违规（X79/X80，&lt;&lt;<PAGE 850, 852>&gt;&gt;）</li>
+<li>ARP 毒化受限地址每接口最多 2 个（X81，&lt;&lt;<PAGE 824>&gt;&gt;）</li>
+<li>DHCP 非信任口丢弃 Offer/ACK（只收 Discover/Request）——接 DHCP 服务器/中继的口必须标 trust（X82，&lt;&lt;<PAGE 830>&gt;&gt;）</li>
+<li>MACsec 支持面：6860 仅 10G 口；E-P24Z8 不支持 2.5G 口；99-CMM 仅 4x10G 模式（X83，&lt;&lt;<PAGE 827>&gt;&gt;）</li>
+<li>VRF 名大小写敏感；VLAN 编号不可在 VRF 间重复使用（X68，&lt;&lt;<PAGE 859, 861>&gt;&gt;）；一个 IP 接口+其 VLAN 同时只能属一个 VRF（X69/P167，&lt;&lt;<PAGE 861>&gt;&gt;）</li>
+<li>LLDP Rogue：每口仅一个可信 agent，超时/重复即违规（P150，&lt;&lt;<PAGE 801-802>&gt;&gt;）</li>
+</ul>
+<h2 id="_1">来源</h2>
+<ul>
+<li>principles·P150-P168；frameworks·F9；cases·C41-C47/C55；counter-examples·X78-X83/X68/X69</li>
+</ul><div class="pn"><a href="aos-ip-routing-rip-ospf.html">⬅ 上一单元：aos-ip-routing-rip-ospf</a><a class="nxt" href="aos-multicast-erp-spb.html">下一单元：aos-multicast-erp-spb ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

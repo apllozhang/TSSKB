@@ -15,6 +15,10 @@ KEEP = {
         "- **Netforward", "- **Loopback0", "- **Zulu CEK**", "- **BMF", "- **SPT",
         "## P64.", "## P81.", "## P83.", "## P133.", "## P141.",
     ],
+    # Bootcamp Issue 25：标准缩写术语中文解释占比高致命中率失真，人工判定保留
+    "os-lan-bootcamp": [
+        "- **F1 五天课程主线", "- **OmniSwitch 9907/9900", "- **CMM", "- **SFP/SFP+", "- **HPoE", "- **ISSU", "- **AOS", "- **MiniBoot/BootROM", "- **ELM", "- **AAA", "- **Auto-VC", "- **swlog", "- **appid/subapp", "- **command-log", "- **sFlow Receiver/Sampl", "- **Inter-VLAN Routing", "- **OmniChannel", "- **hash-control", "- **MAC Flushing", "- **ECMP", "- **Skew Time", "- **EF", "- **Precedence", "- **ToS/DSCP", "- **ACL", "- **UNP Classification R", "- **MAC OUI", "- **RIP", "- **RIP Timers", "- **Route Map", "- **SPF", "- **BGP", "- **Level-1 / Level-2", "- **VRF", "- **VRF-aware", "- **GRT", "- **IGMP", "- **IGMP Proxying", "- **ERP", "- **Intelligent Fabric (", "- **SPB", "- **SLB", "- **IPv6", "- **:: 缩写",
+    ],
 }
 DROP = {
     # V1 通过但空洞/通用，人工淘汰（暂无）
@@ -23,7 +27,7 @@ DROP = {
 def split_entries(text, cat):
     if cat == "glossary":
         return re.split(r"\n(?=\d+\.\s+\*\*|- \*\*)", text)
-    return re.split(r"\n(?=## |### |\d+\.\s+\S)", text)
+    return re.split(r"\n(?=## |### |\d+\.\s+\S|- \*\*)", text)
 
 def gen(slug):
     bdir = Path(f"D:/Claude code/TSSKB/books/{slug}")

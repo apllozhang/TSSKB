@@ -1,0 +1,121 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>aos-ip-routing-rip-ospf — DT00XTE220 · OmniSwitch R6/R8 Bootcamp</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE220 · OmniSwitch R6/R8 Bootcamp</h1>
+<div class="sub">Issue 25 · 1207 页 · 五天全科训练营（新流水线重制版，全文可溯源）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">开局与系统管理</div>
+<a href="../skills/aos-bootcamp-switch-fundamentals.html">aos-bootcamp-switch-fundamentals</a>
+<a href="../skills/aos-flash-config-management.html">aos-flash-config-management</a>
+<a href="../skills/aos-stacking-virtual-chassis.html">aos-stacking-virtual-chassis</a>
+<div class="grp">二层基础与冗余</div>
+<a href="../skills/aos-vlan-l2-foundations.html">aos-vlan-l2-foundations</a>
+<a href="../skills/aos-lacp-stp-redundancy.html">aos-lacp-stp-redundancy</a>
+<a href="../skills/aos-vrrp-first-hop-redundancy.html">aos-vrrp-first-hop-redundancy</a>
+<div class="grp">策略与准入</div>
+<a href="../skills/aos-qos-policy-engine.html">aos-qos-policy-engine</a>
+<a href="../skills/aos-access-guardian-unp-bootcamp.html">aos-access-guardian-unp-bootcamp</a>
+<a href="../skills/aos-poe-power.html">aos-poe-power</a>
+<div class="grp">路由与安全</div>
+<a href="../skills/aos-ip-routing-rip-ospf.html" class="on">aos-ip-routing-rip-ospf</a>
+<a href="../skills/aos-security-vrf-macsec.html">aos-security-vrf-macsec</a>
+<div class="grp">组播与织构</div>
+<a href="../skills/aos-multicast-erp-spb.html">aos-multicast-erp-spb</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../postsales/index.html">售后</a> › <a href="../index.html">DT00XTE220</a> › <span>aos-ip-routing-rip-ospf</span></nav><h1>aos-ip-routing-rip-ospf</h1><p class="meta"><span class="badge">SKILL</span> aos-ip-routing-rip-ospf · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>园区三层层间互通：静态/RIP/OSPF 选型与配置</li>
+<li>OSPF 区域设计（Stub/NSSA/虚链路）、路由汇总与重分发</li>
+<li>计划主控重启要求转发不中断（Graceful Restart）</li>
+<li>快速故障检测（BFD）、等价多路径（ECMP）</li>
+<li>对接外部 AS（BGP）或扁平化大型二层底座（IS-IS）</li>
+<li>本地服务器集群负载均衡（SLB VIP/WRR/探针）</li>
+<li>IPv6 地址规划基础</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>路由体系的骨架是偏好值：AOS 默认 Local 1 / Static 2 / OSPF 10 / RIP 100 / BGP 200，可手工调整（P147，&lt;&lt;<PAGE 769>&gt;&gt;），静态永远优先于动态（P135，&lt;&lt;<PAGE 714-716>&gt;&gt;）。RIP 是距离向量（跳数 16 不可达、30 秒全表更新），四定时器 update 30/invalid 180/garbage 120/holddown 0 且 invalid≥3×update 由 AOS 强制（P138/P140，&lt;&lt;<PAGE 724, 730-731>&gt;&gt;）。OSPF 三数据库（邻接表/LSDB/路由表）+ SPF 并行计算（P142，&lt;&lt;<PAGE 753>&gt;&gt;）；区域类型本质是"允许进入的 LSA 集合"（F13/P144，&lt;&lt;<PAGE 759-762>&gt;&gt;）。GR 的契约是重启方保持转发、邻居做 helper 不重算 SPF，Grace LSA（Type 9 Opaque）携宽限期（P148/P149，&lt;&lt;<PAGE 772-775>&gt;&gt;）。重分发范式全书统一："先 route-map 后 redist"（P141，&lt;&lt;<PAGE 726-727>&gt;&gt;）。</p>
+<h2 id="a1">A1（决策/选型）</h2>
+<ol>
+<li>IGP 选型：小网络 RIP（v2 组播 224.0.0.9、带认证，P139，&lt;&lt;<PAGE 724>&gt;&gt;）；中大型 OSPF；超大型/SPB 底座用 IS-IS（直接跑在 802.3/802.2 二层，P202，&lt;&lt;<PAGE 1093-1096>&gt;&gt;）</li>
+<li>OSPF 区域裁剪：Stub（拒 Type5）/ Totally Stubby（仅默认路由）/ NSSA（Type7 注入本区外部）（P144，&lt;&lt;<PAGE 760>&gt;&gt;）；不接骨干的区域走 virtual-link（P146，&lt;&lt;<PAGE 763>&gt;&gt;）</li>
+<li>GR 默认状态：OSPF/ISIS 默认关、BGP 默认开（X65，&lt;&lt;<PAGE 776>&gt;&gt;）</li>
+<li>SLB 双模式：VIP 模式（L3 路由/桥接代理 ARP）vs QoS Condition 模式（按策略条件截流，如防火墙集群）（P196，&lt;&lt;<PAGE 981-985>&gt;&gt;）</li>
+</ol>
+<h2 id="a2">A2（操作步骤）</h2>
+<ol>
+<li>静态路由：普通下一跳 / 递归 <code>follows</code>（网关随动态路由变化，6.7.1 无此选项）/ 出接口型（P136/P137，&lt;&lt;<PAGE 719-721>&gt;&gt;）；<code>show ip router database</code> 看含未用路由（&lt;&lt;<PAGE 718, 720>&gt;&gt;）</li>
+<li>RIP：<code>ip load rip</code> → <code>ip rip admin-state enable</code> → <code>ip rip interface int_217</code> + <code>admin-state enable</code>；验证 <code>show ip rip interface/peer/routes</code>；重分发 <code>ip route-map rip_1 sequence-number 50 action permit</code> + <code>match ip-address 0.0.0.0/0</code> → <code>ip redist local into rip route-map rip_1 admin-state enable</code>；定时器 <code>ip rip update-timer 45</code>/<code>invalid-timer 270</code>/<code>garbage-timer 180</code>/<code>holddown-timer 10</code>；版本/MD5 认证按需（C38，&lt;&lt;<PAGE 733-745>&gt;&gt;）</li>
+<li>OSPF 骨干：<code>ip load ospf</code> → <code>ip router router-id 192.168.254.1</code>（可被 Loopback0 覆盖，P143，&lt;&lt;<PAGE 754>&gt;&gt;）→ <code>ip ospf area 0.0.0.0</code> → 各接口 <code>ip ospf interface int_217</code> + area + enable → <code>ip ospf admin-state enable</code>；验证 <code>show ip ospf/area/interface/routes/lsdb/neighbor</code>；保存 <code>configuration snapshot all save-ospf-backbone</code>（C39，&lt;&lt;<PAGE 779-792>&gt;&gt;）</li>
+<li>OSPF 重分发与外部聚合：localIntoOspf/staticIntoOspf route-map（match 192.168.100.0/24 与 0.0.0.0/0）→ <code>show ip ospf ext-lsdb</code>；ASBR 聚合 <code>ip access-list extip address 150.215.0.0/16 action permit redist-control aggregate</code>；虚链路 <code>ip ospf virtual-link 2.2.2.2 192.168.10.2</code>（C39/C40，&lt;&lt;<PAGE 763, 768, 779-792>&gt;&gt;）</li>
+<li>OSPF 认证：simple（<code>auth-type simple</code>+<code>auth-key alcatel</code>）或 MD5（<code>md5 1</code>+<code>md5 1 key alcatel</code>）后邻居重建（C39，&lt;&lt;<PAGE 779-792>&gt;&gt;）</li>
+<li>偏好调整：<code>show ip route-pref</code> → <code>ip route-pref rip 8</code>（C39，&lt;&lt;<PAGE 768-769>&gt;&gt;）</li>
+<li>BGP：<code>ip router router-id</code> → <code>ip load BGP</code> → <code>ip bgp status enable</code> → <code>ip bgp autonomous-system 100</code> → <code>ip bgp neighbor 100.10.1.1</code> + remote-as + status enable（可 <code>md5 key</code>）；<code>update-source Loopback0</code>、<code>ebgp-multihop</code>；策略三列表 aspath-list/community-list/prefix-list 配合 route-map（C56/P199/P200，&lt;&lt;<PAGE 1080-1088>&gt;&gt;）</li>
+<li>IS-IS：<code>ip load isis</code> → <code>ip isis admin-state enable</code> → <code>ip isis area-id 49.0001</code>（AFI=49 本地管理，P203，&lt;&lt;<PAGE 1094-1095>&gt;&gt;）→ <code>ip isis activate-ipv4</code> → <code>ip isis vlan 5 address-family v4 admin-state enable</code>；层级 <code>ip isis vlan 10 level-capability level-1/2</code>；验证 <code>show isis status</code>、<code>show ip isis adjacency/route/spf</code>（C57/P206，&lt;&lt;<PAGE 1105-1106>&gt;&gt;）；PDU 四类 Hello/LSP/PSNP/CSNP 与 DIS 可抢占选举（P204/P205，&lt;&lt;<PAGE 1096-1103>&gt;&gt;）</li>
+<li>SLB：<code>ip slb admin-state enable</code>(R8) → <code>ip slb cluster Web vip 128.241.130.204</code>（VIP 须与服务器同网段，集群自动 proxy ARP，P194，&lt;&lt;<PAGE 975>&gt;&gt;）→ <code>ip slb server ip &lt;ip&gt; cluster Web</code>；WRR <code>weight 1/3</code>、备份机 <code>weight 0</code>（总权重 ≤32，P195，&lt;&lt;<PAGE 977-979>&gt;&gt;）；QoS Condition 集群 <code>ip slb cluster Firewall condition cond1 L3</code>；探针 <code>ip slb probe http_test http</code> + <code>period 10</code>（20 个/switch，P197，&lt;&lt;<PAGE 986-987>&gt;&gt;）（C54，&lt;&lt;<PAGE 976-987, 995>&gt;&gt;）</li>
+<li>IPv6 基础：128bit、:: 仅一次、FE80::/10 链路本地、EUI-64（插 FFFE 翻 U/L 位）（P208-P210，&lt;&lt;<PAGE 1133-1138>&gt;&gt;）</li>
+</ol>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>C38 RIP 骨干：linkagg 18 承载 + 重分发本地/静态 + 定时器调优（&lt;&lt;<PAGE 733-745>&gt;&gt;）</li>
+<li>C39 OSPF 骨干：区域/认证/重分发/route-pref 全要素（&lt;&lt;<PAGE 779-792>&gt;&gt;）</li>
+<li>C54 SLB 三合一：VIP + WRR 权重 + HTTP 探针（&lt;&lt;<PAGE 976-987, 995>&gt;&gt;）</li>
+<li>C56/C57 BGP 邻接与 IS-IS 基础（&lt;&lt;<PAGE 1080-1088, 1105-1106>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（反例与坑）</h2>
+<ul>
+<li>RIP invalid 必须 ≥3×update（AOS 强制）；默认不通告本地/静态路由，必须重分发（X62/X63，&lt;&lt;<PAGE 730, 726>&gt;&gt;）；默认收 v1/v2 发 v2、无认证（X64，&lt;&lt;<PAGE 745, 748>&gt;&gt;）</li>
+<li>OSPF/ISIS 的 GR 默认关、BGP 默认开（X65，&lt;&lt;<PAGE 776>&gt;&gt;）；递归静态路由 6.7.1 不可用（X66，&lt;&lt;<PAGE 719>&gt;&gt;）</li>
+<li>IBGP 学到的路由不应再传 IBGP 邻居（全互联或路由反射器，X67/P201，&lt;&lt;<PAGE 1082>&gt;&gt;）</li>
+<li>SLB WRR 权重总和 ≤32；weight 0 为备份（P195，&lt;&lt;<PAGE 977-979>&gt;&gt;）</li>
+<li>IS-IS 用 802.3/802.2 而非 Ethernet II——与 IP 流量混跑时注意抓包过滤（P202，&lt;&lt;<PAGE 1093-1096>&gt;&gt;）</li>
+</ul>
+<h2 id="_1">来源</h2>
+<ul>
+<li>principles·P135-P149/P193-P210；frameworks·F13；cases·C38-C40/C54/C56/C57；counter-examples·X62-X67</li>
+</ul><div class="pn"><a href="aos-poe-power.html">⬅ 上一单元：aos-poe-power</a><a class="nxt" href="aos-security-vrf-macsec.html">下一单元：aos-security-vrf-macsec ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

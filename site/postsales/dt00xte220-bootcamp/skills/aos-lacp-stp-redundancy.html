@@ -1,0 +1,118 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>aos-lacp-stp-redundancy — DT00XTE220 · OmniSwitch R6/R8 Bootcamp</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE220 · OmniSwitch R6/R8 Bootcamp</h1>
+<div class="sub">Issue 25 · 1207 页 · 五天全科训练营（新流水线重制版，全文可溯源）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">开局与系统管理</div>
+<a href="../skills/aos-bootcamp-switch-fundamentals.html">aos-bootcamp-switch-fundamentals</a>
+<a href="../skills/aos-flash-config-management.html">aos-flash-config-management</a>
+<a href="../skills/aos-stacking-virtual-chassis.html">aos-stacking-virtual-chassis</a>
+<div class="grp">二层基础与冗余</div>
+<a href="../skills/aos-vlan-l2-foundations.html">aos-vlan-l2-foundations</a>
+<a href="../skills/aos-lacp-stp-redundancy.html" class="on">aos-lacp-stp-redundancy</a>
+<a href="../skills/aos-vrrp-first-hop-redundancy.html">aos-vrrp-first-hop-redundancy</a>
+<div class="grp">策略与准入</div>
+<a href="../skills/aos-qos-policy-engine.html">aos-qos-policy-engine</a>
+<a href="../skills/aos-access-guardian-unp-bootcamp.html">aos-access-guardian-unp-bootcamp</a>
+<a href="../skills/aos-poe-power.html">aos-poe-power</a>
+<div class="grp">路由与安全</div>
+<a href="../skills/aos-ip-routing-rip-ospf.html">aos-ip-routing-rip-ospf</a>
+<a href="../skills/aos-security-vrf-macsec.html">aos-security-vrf-macsec</a>
+<div class="grp">组播与织构</div>
+<a href="../skills/aos-multicast-erp-spb.html">aos-multicast-erp-spb</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../postsales/index.html">售后</a> › <a href="../index.html">DT00XTE220</a> › <span>aos-lacp-stp-redundancy</span></nav><h1>aos-lacp-stp-redundancy</h1><p class="meta"><span class="badge">SKILL</span> aos-lacp-stp-redundancy · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>上行带宽扩容与链路冗余：LACP 动态聚合或 OmniChannel 静态聚合</li>
+<li>园区防环与收敛优化：根桥规划、RSTP 端口角色、MSTP 多实例负载分担</li>
+<li>与 Cisco 共存网络的 PVST+ 互操作</li>
+<li>接入双上联两台不同核心、不想跑 STP 阻塞：DHL Active-Active</li>
+<li>堆叠/VC 场景外的二层冗余选型对比</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>聚合把多物理口合成单逻辑链路：静态 OmniChannel 仅限 OmniSwitch 间且两端参数必须完全一致；LACP（802.3ad）用 LACPDU 协商可跨厂商（P74，&lt;&lt;<PAGE 396>&gt;&gt;），关联靠 actor admin key 两端同值（P75，&lt;&lt;<PAGE 398-404>&gt;&gt;）。STP 家族的选型矩阵：协议 802.1D/802.1w（默认）/802.1s/ERPv2 × 模式 flat/1x1（默认）（F7，&lt;&lt;<PAGE 415>&gt;&gt;）。MSTP 的精髓是"同域三要素（域名+修订级+VLAN-实例映射）一致才是一个域，一帧 BPDU 携带全部实例"（P86/P87，&lt;&lt;<PAGE 438-443>&gt;&gt;），负载分担靠不同 MSTI 选不同根桥。DHL 用 VLAN-链路映射代替 STP 防环，两条上行都活跃、100% 带宽（P90/P93，&lt;&lt;<PAGE 477-481>&gt;&gt;）。冗余方案横向对比：STP 50% 带宽 &lt; LACP 仅链路 &lt; VC 全冗余 &lt; DHL 链路+设备冗余 100% 带宽（F16，&lt;&lt;<PAGE 481>&gt;&gt;）。</p>
+<h2 id="a1">A1（决策/选型）</h2>
+<ol>
+<li>动态 vs 静态聚合：跨厂商/防误配用 LACP；纯 OmniSwitch 间可用静态</li>
+<li>聚合规模：组大小仅 2/4/8/16；一端口只能属一个组（P73，&lt;&lt;<PAGE 395>&gt;&gt;）</li>
+<li>哈希档位：brief 仅 IP 对；extended 加 UDP/TCP 端口更均匀；组播默认走主端口，可开 non-ucast 哈希分担（P76/P77，&lt;&lt;<PAGE 401-402>&gt;&gt;）</li>
+<li>STP 模式：flat 每机一棵树（MSTP/MVRP 必需）；1x1 每 VLAN 一棵树（默认，实例上限 R6=252/R7=128/R8=100）（P82/P83，&lt;&lt;<PAGE 427-429>&gt;&gt;）</li>
+<li>路径开销：STP/RSTP 用 16bit（GE=4）、MSTP 用 32bit（GE=20000），默认 auto（P84，&lt;&lt;<PAGE 432>&gt;&gt;）</li>
+</ol>
+<h2 id="a2">A2（操作步骤）</h2>
+<ol>
+<li>LACP 聚合：6450 <code>lacp linkagg 5 size 2 actor admin key 5</code> + <code>lacp agg 1/11 actor admin key 5</code>；6860(R8) <code>linkagg lacp agg 5 size 2 actor admin-key 5</code> + <code>linkagg lacp port 1/1/23-24 actor admin-key 5</code> → 激活端口 → <code>show linkagg</code>（Oper UP、Att/Sel 2/2）→ down 一成员口 ping 不丢验证（C17，&lt;&lt;<PAGE 404-406>&gt;&gt;）</li>
+<li>静态聚合：6860 <code>linkagg static agg 5 size 2</code> → <code>linkagg static port 1/1/23-24 agg 5</code>；删除须先清成员口再删组（直接删非空组报 LAERR53）（C19/P198，&lt;&lt;<PAGE 999-1002>&gt;&gt;）</li>
+<li>STP 根桥控制：<code>show spantree</code>（默认 RSTP、priority 32768）→ <code>bridge 1x1 vid priority</code> / <code>spantree vlan instance {port|linkagg} priority</code>；GE cost=4 推断根口（C20/P79，&lt;&lt;<PAGE 418-464>&gt;&gt;）；根桥选举四判据：最低 Root Bridge ID &gt; 最低路径开销 &gt; 最低发送者 Bridge ID &gt; 最低端口 ID（P79，&lt;&lt;<PAGE 420-425>&gt;&gt;）</li>
+<li>MSTP 双实例负载分担：<code>bridge mode flat</code> → <code>bridge protocol mstp</code> → <code>bridge mst region name myregion</code> + <code>revision level 1</code> → <code>bridge cist protocol mstp</code> → <code>bridge msti 1 vlan 1-15</code>、<code>bridge msti 2 vlan 16-20</code>；A 机 cist/msti1 优先级 4096、msti2 8192，B 机对调；验证 <code>show spantree mst port 1/1</code>（MST1 ROOT/FORW、MST2 ALT/BLK）（C21/P89，&lt;&lt;<PAGE 444-472>&gt;&gt;）</li>
+<li>DHL Active-Active：双上行打标签 → <code>dhl num 1</code> → <code>dhl num 1 linka port 1/3 linkb port 1/4</code> → <code>dhl num 1 vlan-map linkb 30</code> → <code>dhl num 1 admin-state enable</code>；验证 <code>show dhl num 1</code>（LinkA Active 1 20 / LinkB Active 30）；故障演练 <code>dhl num 1 mac-flushing raw</code> + ping –t（C22，&lt;&lt;<PAGE 487-489>&gt;&gt;）</li>
+<li>PVST+ 互操作：用户口自动检测 PVST+ BPDU 转为 PVST+ 口；端口必须 1x1 模式（P85，&lt;&lt;<PAGE 433-434>&gt;&gt;）</li>
+</ol>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>C17 LACP 双端配置与成员口故障不丢包（&lt;&lt;<PAGE 404-406>&gt;&gt;）</li>
+<li>C21 MSTP 双实例负载分担（A/B 机优先级对调）（&lt;&lt;<PAGE 444-472>&gt;&gt;）</li>
+<li>C22 DHL Active-Active 与链路故障切换（&lt;&lt;<PAGE 487-489>&gt;&gt;）</li>
+<li>C19 静态聚合删除顺序报错实证（&lt;&lt;<PAGE 999-1002>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（反例与坑）</h2>
+<ul>
+<li>一端口只能属一个聚合组；组非空不能删（X41，&lt;&lt;<PAGE 395, 1001>&gt;&gt;）</li>
+<li>组播默认只走聚合主端口（X42，&lt;&lt;<PAGE 402, 887>&gt;&gt;）</li>
+<li>1x1 与 MSTP 不能同时配置，MSTP 须 flat 模式；切 MSTP 会 reset flat 优先级与路径开销（X43/X44，&lt;&lt;<PAGE 471>&gt;&gt;）</li>
+<li>MSTP 链路须承载实例全部 VLAN，否则该实例不承载任何 VLAN（X45，&lt;&lt;<PAGE 444>&gt;&gt;）；32bit 开销与 802.1d/w 默认 16bit 不兼容注意（X46，&lt;&lt;<PAGE 471-472>&gt;&gt;）</li>
+<li>PVST+ 端口必须 1x1 模式（X47，&lt;&lt;<PAGE 434>&gt;&gt;）</li>
+<li>DHL 每机仅一个会话；DHL 口上 STP 自动禁用，须配 MAC 冲刷（None/MVRP Enhanced/RAW）（X48/P92，&lt;&lt;<PAGE 478-479>&gt;&gt;）；MVRP Enhanced 不支持 6250/6450，DHL 冲刷只能选 RAW（X49，&lt;&lt;<PAGE 479>&gt;&gt;）</li>
+<li>RSTP 把 802.1D 的 disabled/blocking/listening 合并为 discarding，亚秒收敛（P80/P81，&lt;&lt;<PAGE 420-423>&gt;&gt;）</li>
+</ul>
+<h2 id="_1">来源</h2>
+<ul>
+<li>principles·P72-P93/P198；frameworks·F7/F16；cases·C17-C22；counter-examples·X41-X49</li>
+</ul><div class="pn"><a href="aos-vlan-l2-foundations.html">⬅ 上一单元：aos-vlan-l2-foundations</a><a class="nxt" href="aos-vrrp-first-hop-redundancy.html">下一单元：aos-vrrp-first-hop-redundancy ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

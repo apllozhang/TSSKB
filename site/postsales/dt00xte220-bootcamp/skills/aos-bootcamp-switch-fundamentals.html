@@ -1,0 +1,114 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>aos-bootcamp-switch-fundamentals — DT00XTE220 · OmniSwitch R6/R8 Bootcamp</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE220 · OmniSwitch R6/R8 Bootcamp</h1>
+<div class="sub">Issue 25 · 1207 页 · 五天全科训练营（新流水线重制版，全文可溯源）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">开局与系统管理</div>
+<a href="../skills/aos-bootcamp-switch-fundamentals.html" class="on">aos-bootcamp-switch-fundamentals</a>
+<a href="../skills/aos-flash-config-management.html">aos-flash-config-management</a>
+<a href="../skills/aos-stacking-virtual-chassis.html">aos-stacking-virtual-chassis</a>
+<div class="grp">二层基础与冗余</div>
+<a href="../skills/aos-vlan-l2-foundations.html">aos-vlan-l2-foundations</a>
+<a href="../skills/aos-lacp-stp-redundancy.html">aos-lacp-stp-redundancy</a>
+<a href="../skills/aos-vrrp-first-hop-redundancy.html">aos-vrrp-first-hop-redundancy</a>
+<div class="grp">策略与准入</div>
+<a href="../skills/aos-qos-policy-engine.html">aos-qos-policy-engine</a>
+<a href="../skills/aos-access-guardian-unp-bootcamp.html">aos-access-guardian-unp-bootcamp</a>
+<a href="../skills/aos-poe-power.html">aos-poe-power</a>
+<div class="grp">路由与安全</div>
+<a href="../skills/aos-ip-routing-rip-ospf.html">aos-ip-routing-rip-ospf</a>
+<a href="../skills/aos-security-vrf-macsec.html">aos-security-vrf-macsec</a>
+<div class="grp">组播与织构</div>
+<a href="../skills/aos-multicast-erp-spb.html">aos-multicast-erp-spb</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../postsales/index.html">售后</a> › <a href="../index.html">DT00XTE220</a> › <span>aos-bootcamp-switch-fundamentals</span></nav><h1>aos-bootcamp-switch-fundamentals</h1><p class="meta"><span class="badge">SKILL</span> aos-bootcamp-switch-fundamentals · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>新建园区/数据中心网络，需要按接入-汇聚-核心分层选择 OmniSwitch 机型</li>
+<li>评估 2.5G/10G/25G/100G 速率演进路径与上联带宽规划</li>
+<li>9900 模块化机箱的 CMM/NI/CFM 板卡设计与供电预算核算</li>
+<li>电源冗余（N+1/N+N）与 Omni BPS 备电柜选型</li>
+<li>到货验收或例行巡检，需要硬件信息/电源/风扇/健康状态检查命令</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>OmniSwitch 家族分三层产品线：堆叠式（6350/6450/6560）、工业加固（6465/6865）、模块化（6900/9900）（P1，&lt;&lt;<PAGE 19>&gt;&gt;）。选型沿着"速率演进主线"走：接入 100M→1G→2.5G、汇聚 1G→2.5G→10G、核心 10G→25G→40G→100G（P2/F3，&lt;&lt;<PAGE 21>&gt;&gt;）。产品组合按 Size（Small/Medium/Large/Hardened）×能力（Value L2+/L2+ Basic L3/Advanced L3）放入同一矩阵（F2，&lt;&lt;<PAGE 23, 30, 41, 51>&gt;&gt;）。硬件运维的底层逻辑是"系统上电优先，剩余功率全部给 PoE"（9900 最高 10800W，P14，&lt;&lt;<PAGE 106-107>&gt;&gt;）；电源冗余的两种模式防的故障不同，选错模式等于没冗余（P9，&lt;&lt;<PAGE 63-64>&gt;&gt;）。</p>
+<h2 id="a1">A1（选型决策）</h2>
+<ol>
+<li>入门/SMB：6350（L2+ GE、IPv4/IPv6 基础 L3、Auto-QoS、8 硬件队列，P3，&lt;&lt;<PAGE 27>&gt;&gt;）</li>
+<li>多千兆接入：6560 mGIG 机型（24Z8/24Z24/P48Z16，100/1G/2.5G + 802.3bt 75W，P4，&lt;&lt;<PAGE 33>&gt;&gt;；电源复用 6860 体系 300/600/900W 负载分担，P5，&lt;&lt;<PAGE 39>&gt;&gt;）</li>
+<li>高级 L3 接入/汇聚：6860/6860E——E 型带协处理器（约 1000 签名发现/100 签名线速匹配 DPI）、前 4 口 60W PoE、仅 E 型有 EMP 口（P7，&lt;&lt;<PAGE 52-56>&gt;&gt;）</li>
+<li>数据中心/核心：6900 系列——2011 10G → 2015 40G → 2018 25G/100G（X72/V72/C32）（P10，&lt;&lt;<PAGE 78>&gt;&gt;）；Q32 每管道 ≤240Gbps 才线速，40G 口可分裂 4x10G（a/b/c/d 子编号，P11，&lt;&lt;<PAGE 85>&gt;&gt;）</li>
+<li>机箱核心：9907/9900 无背板直连架构（每槽直连 CFM 交换网板，两阶段容量翻倍，P13，&lt;&lt;<PAGE 98>&gt;&gt;）</li>
+<li>工业场景：6465（-40~+75℃、DIN 导轨、1588v2/MACsec，P6，&lt;&lt;<PAGE 42-43>&gt;&gt;）或 6865（SPB、75W HPoE，&lt;&lt;<PAGE 66-74>&gt;&gt;）</li>
+<li>电源冗余：N+1（SINGLE）只防电源模块故障；N+N（FULL）才防市电线路故障（P9，&lt;&lt;<PAGE 63-64>&gt;&gt;）；BPS 备电柜最多备 8 台、一次只备份一台交换机（&lt;&lt;<PAGE 60-64>&gt;&gt;）</li>
+</ol>
+<h2 id="a2">A2（操作步骤）</h2>
+<ul>
+<li>硬件巡检命令集：<code>show hardware info</code>(R6)/<code>show hardware-info</code>(R8)、<code>show microcode</code>、<code>show chassis</code>、<code>show cmm</code>、<code>show power</code>(R6)/<code>show powersupply</code>(R8)、<code>show fan</code>、<code>show health</code>（C1，&lt;&lt;<PAGE 206-209>&gt;&gt;）</li>
+<li>端口参数：<code>interfaces 1/1 duplex full</code>(R6)/<code>interfaces 1/1/1 duplex full</code>(R8)、<code>speed 1000</code>、<code>admin up</code>(R6)/<code>admin-state enable</code>(R8)；验证 <code>show interfaces 1/1 status/accounting/counters</code>（C2，&lt;&lt;<PAGE 210>&gt;&gt;）</li>
+<li>V72/C32 机型镜像为 Yos.img，与其余 6900（Tos.img）不同，升级时不可混用（P12，&lt;&lt;<PAGE 86-87>&gt;&gt;）</li>
+<li>软件加固配套：CodeGuardian 三层（IV&amp;V 源码验证 → 每版本 5 种衍生镜像 → 随机下载安全交付）（P15/F17，&lt;&lt;<PAGE 109-111>&gt;&gt;）；运维侧配合 ProActive Lifecycle（OmniVista 2500 每两周推送资产/软件/保修状态，F18，&lt;&lt;<PAGE 1139-1140>&gt;&gt;）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>C1 硬件信息与运行状态检查：全家桶 show 命令 + session 超时配置对比验证（&lt;&lt;<PAGE 206-209>&gt;&gt;）</li>
+<li>C2 端口参数与计数器观察：R6/R8 双语法对照（&lt;&lt;<PAGE 210>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（反例与坑）</h2>
+<ul>
+<li>6860 与 6850E 不可共用一台 BPS（X1，&lt;&lt;<PAGE 58, 61>&gt;&gt;）；BPS 一次只备份一台交换机（X3，&lt;&lt;<PAGE 63>&gt;&gt;）</li>
+<li>N+1 备电不防市电断电（X2，&lt;&lt;<PAGE 63>&gt;&gt;）</li>
+<li>6860E-P24Z8 的 2.5G 口自动协商只到 1G，2.5G 须手工且成对修改（17,18）（19,20）（X7/P8，&lt;&lt;<PAGE 55>&gt;&gt;）</li>
+<li>6860E 电源 600W 与 920W 不可混插（X8，&lt;&lt;<PAGE 55>&gt;&gt;）</li>
+<li>CodeGuardian 美加强制一年订阅、其余地区可选（X87，&lt;&lt;<PAGE 111>&gt;&gt;）；ProActive Lifecycle 需本地 OmniVista 2500（X88，&lt;&lt;<PAGE 1139>&gt;&gt;）</li>
+</ul>
+<h2 id="_1">来源</h2>
+<ul>
+<li>principles·P1-P15；frameworks·F2/F3/F17/F18；cases·C1/C2；counter-examples·X1/X2/X3/X7/X8/X84/X87/X88</li>
+</ul><div class="pn"><a href="../index.html">⬅ 返回课程首页</a><a class="nxt" href="aos-flash-config-management.html">下一单元：aos-flash-config-management ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

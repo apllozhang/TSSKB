@@ -1,0 +1,115 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>aos-vlan-l2-foundations — DT00XTE220 · OmniSwitch R6/R8 Bootcamp</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>DT00XTE220 · OmniSwitch R6/R8 Bootcamp</h1>
+<div class="sub">Issue 25 · 1207 页 · 五天全科训练营（新流水线重制版，全文可溯源）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">开局与系统管理</div>
+<a href="../skills/aos-bootcamp-switch-fundamentals.html">aos-bootcamp-switch-fundamentals</a>
+<a href="../skills/aos-flash-config-management.html">aos-flash-config-management</a>
+<a href="../skills/aos-stacking-virtual-chassis.html">aos-stacking-virtual-chassis</a>
+<div class="grp">二层基础与冗余</div>
+<a href="../skills/aos-vlan-l2-foundations.html" class="on">aos-vlan-l2-foundations</a>
+<a href="../skills/aos-lacp-stp-redundancy.html">aos-lacp-stp-redundancy</a>
+<a href="../skills/aos-vrrp-first-hop-redundancy.html">aos-vrrp-first-hop-redundancy</a>
+<div class="grp">策略与准入</div>
+<a href="../skills/aos-qos-policy-engine.html">aos-qos-policy-engine</a>
+<a href="../skills/aos-access-guardian-unp-bootcamp.html">aos-access-guardian-unp-bootcamp</a>
+<a href="../skills/aos-poe-power.html">aos-poe-power</a>
+<div class="grp">路由与安全</div>
+<a href="../skills/aos-ip-routing-rip-ospf.html">aos-ip-routing-rip-ospf</a>
+<a href="../skills/aos-security-vrf-macsec.html">aos-security-vrf-macsec</a>
+<div class="grp">组播与织构</div>
+<a href="../skills/aos-multicast-erp-spb.html">aos-multicast-erp-spb</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../postsales/index.html">售后</a> › <a href="../index.html">DT00XTE220</a> › <span>aos-vlan-l2-foundations</span></nav><h1>aos-vlan-l2-foundations</h1><p class="meta"><span class="badge">SKILL</span> aos-vlan-l2-foundations · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>新建 VLAN 并把端口静态/打标签划入，跨交换机桥接多 VLAN</li>
+<li>按 MAC/网段规则动态指派 VLAN（mobile 口 + VLAN Rules）</li>
+<li>VLAN 间三层互通：给 VLAN 挂 IP 接口、配 DHCP 中继</li>
+<li>IP 话机自动入语音 VLAN（LLDP-MED Network Policy）</li>
+<li>管理面需要 Loopback0 常驻地址</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>VLAN 即广播域，端口经静态配置、移动/认证、802.1q、Mobile Tag 四种途径入 VLAN（P64，&lt;&lt;<PAGE 360>&gt;&gt;）。动态分类的优先序固定：MAC &gt; MAC Range &gt; Network &gt; Protocol &gt; Default（P66，&lt;&lt;<PAGE 367-368>&gt;&gt;）。三层互通的开关很简单——VLAN 挂上 IP 接口路由即激活，无活跃成员则 oper down（P68，&lt;&lt;<PAGE 373>&gt;&gt;）。管理面的锚点是 Loopback0：不绑 VLAN 恒 up，RIP/OSPF 自动通告（BGP 不），是 router-id/RP/RADIUS 源 IP 的标准身份地址（P94，&lt;&lt;<PAGE 492>&gt;&gt;）。LLDP 默认全交换机使能，LLDP-MED 的 Network Policy TLV 让话机拿到 VLAN+802.1p+DSCP 三件套自动上线（P97/P98，&lt;&lt;<PAGE 509-517>&gt;&gt;）。</p>
+<h2 id="a1">A1（决策/选型）</h2>
+<ol>
+<li>静态 VLAN（默认 VLAN 指派）vs 动态 VLAN（规则/认证匹配）vs 802.1Q tag（跨交换机 trunk）</li>
+<li>Mobile Tag 用于 mobile 口同时收多 VLAN 打标流量，优先于一切 VLAN 规则；802.1Q 标签不适用于 mobile 口（P70，X40，&lt;&lt;<PAGE 382, 383>&gt;&gt;）</li>
+<li>802.1Q 标签 4 字节：12bit VID（4096 个）+ 3bit 802.1p（8 级优先级）（P69，&lt;&lt;<PAGE 379>&gt;&gt;）</li>
+<li>DHCP 中继 vs UDP 中继：<code>ip helper address</code> 指 DHCP 服务器；<code>ip udp relay DNS</code> 转发指定 UDP 端口（P96，&lt;&lt;<PAGE 498-499>&gt;&gt;）</li>
+</ol>
+<h2 id="a2">A2（操作步骤）</h2>
+<ol>
+<li>建 VLAN 与静态指派：<code>vlan 20</code> → <code>vlan 20 port default 1/2</code>(R6)/<code>vlan 20 members port 1/1/2 untagged</code>(R8) → <code>interfaces 1/2 admin up</code>(R6)/<code>interface 1/1/2 admin-state enable</code>(R8) → <code>show vlan 20 port</code> 验证（C15，&lt;&lt;<PAGE 385-390>&gt;&gt;）</li>
+<li>VLAN 规则动态分类：<code>vlan 2 ip 10.1.20.0 255.255.255.0</code>、<code>vlan 3 mac-range 00:80:9f:00:00:00 00:80:9f:ff:ff:ff</code>、<code>vlan port mobile 1/1</code>、<code>vlan 3 mobile-tag enable</code> → <code>show vlan rules</code> 验证命中（C16，&lt;&lt;<PAGE 370-382>&gt;&gt;）</li>
+<li>802.1Q 跨交换机：四台各建 VLAN 20/30 + IP 接口（<code>ip interface int_20 address 192.168.20.7/24 vlan 20</code>）→ 打标签 <code>vlan 20 30 802.1q 3/4</code>(R6)/<code>vlan 20 members port 1/3/4 tagged</code>(R8) → 跨机 ping 网关验证（C18，&lt;&lt;<PAGE 407-411>&gt;&gt;）</li>
+<li>VLAN 间路由与 DHCP Relay：IP 接口激活路由；<code>ip helper address {Server}</code>（可多地址/按 VLAN）；<code>ip udp relay DNS</code>；<code>show ip helper</code> + 客户端获取地址验证（C23，&lt;&lt;<PAGE 492-499>&gt;&gt;）</li>
+<li>LLDP-MED 话机策略：<code>vlan 10</code> + <code>vlan port mobile 1/10</code> + <code>vlan 10 mobile-tag enable</code> → <code>lldp 1/10 tlv med network-policy enable</code> → <code>lldp network-policy 1 application voice vlan 10 l2-priority 7 dscp 46</code> → <code>lldp 1/10 med network-policy 1</code> → <code>show lldp remote-system med inventory</code> 看话机型号/固件（C24，&lt;&lt;<PAGE 511-520>&gt;&gt;）</li>
+<li>LLDP 邻居验证：<code>show lldp statistics</code>、<code>show lldp remote-system</code>（邻机系统名/能力/VLAN）（C24，&lt;&lt;<PAGE 511-520>&gt;&gt;）</li>
+</ol>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>C15 VLAN 创建：初始仅 VLAN 1（4094 为 VCM IPC 保留），无成员 VLAN oper 状态 inactive（&lt;&lt;<PAGE 385-390>&gt;&gt;）</li>
+<li>C16 VLAN 规则：ip-net/mac-range 双规则命中验证（&lt;&lt;<PAGE 370-382>&gt;&gt;）</li>
+<li>C18 四交换机 802.1Q 桥接（&lt;&lt;<PAGE 407-411>&gt;&gt;）</li>
+<li>C24 LLDP-MED 话机上线全流程（&lt;&lt;<PAGE 511-520>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（反例与坑）</h2>
+<ul>
+<li>VLAN 1 不可删除，只能禁用（P71/X38，&lt;&lt;<PAGE 385>&gt;&gt;）</li>
+<li>管理状态 down 的接口不响应 ping、不会被路由协议通告（X39，&lt;&lt;<PAGE 387>&gt;&gt;）</li>
+<li>mobile 口不能用 802.1Q 标签，须用 Mobile Tag（X40，&lt;&lt;<PAGE 383>&gt;&gt;）</li>
+<li>LLDP 只能在 port/NI/chassis 层配置，不能按 linkagg 配置（X52，&lt;&lt;<PAGE 519>&gt;&gt;）</li>
+<li>802.1x 认证成功后 MAC 才关联目标 VLAN/UNP——排障先看认证状态（P67，&lt;&lt;<PAGE 371>&gt;&gt;）</li>
+</ul>
+<h2 id="_1">来源</h2>
+<ul>
+<li>principles·P64-P71/P94-P98；cases·C15/C16/C18/C23/C24；counter-examples·X38-X40/X52</li>
+</ul><div class="pn"><a href="aos-stacking-virtual-chassis.html">⬅ 上一单元：aos-stacking-virtual-chassis</a><a class="nxt" href="aos-lacp-stp-redundancy.html">下一单元：aos-lacp-stp-redundancy ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
