@@ -1,0 +1,105 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>aos-rn-secure-boot — AOS 8.10R04 · Release Notes</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>AOS 8.10R04 · Release Notes</h1>
+<div class="sub">105 页 · 版本说明（升级方法论/Secure Boot/已知问题库/新特性与废弃）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">升级与安全</div>
+<a href="../skills/aos-rn-upgrade-path.html">aos-rn-upgrade-path</a>
+<a href="../skills/aos-rn-secure-boot.html" class="on">aos-rn-secure-boot</a>
+<div class="grp">问题与特性</div>
+<a href="../skills/aos-rn-known-issues.html">aos-rn-known-issues</a>
+<a href="../skills/aos-rn-new-features-deprecations.html">aos-rn-new-features-deprecations</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../aos/index.html">AOS 软件手册</a> › <a href="../index.html">AOS 8.10R04</a> › <span>aos-rn-secure-boot</span></nav><h1>aos-rn-secure-boot</h1><p class="meta"><span class="badge">SKILL</span> aos-rn-secure-boot · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>安全基线要求交换机只运行可信软件，要规划 Secure Boot 启用</li>
+<li>升级到 8.10R4 时被 U-Boot/BIOS 版本卡住，或 Secure Boot 镜像装完重启回落 Certified</li>
+<li>混合 VC 里部分平台不支持 Secure Boot，要选镜像</li>
+<li>管理设备 X.509 证书（ALE CA）、禁用弱加密、适配首访强制改密</li>
+<li>用 pkgmgr 安装/卸载功能包，或升级前处理 AMS 明文密码</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>Secure Boot 通过启动期认证校验保证只运行可信软件，需 U-Boot/ONIE/BIOS 升级 + Secure Boot 专用镜像三件配合（P1，&lt;&lt;<PAGE 34>&gt;&gt;）。平台分型框架（F3，&lt;&lt;<PAGE 104-105>&gt;&gt;）：U-Boot 型（6360/6465/6560/6570M——先升 U-Boot 再升镜像，之后只认 Secure Boot 镜像）／ONIE 型（6860N/6870/6900-X 系列——BIOS 使能+ONIE 包）／例外型（6860(E)/6865/9900/6900-V72·C32·V48C8·C32E 不支持或需 BIOS）；混 VC 用"最小公分母"（非 Secure Boot 镜像）。证书与密码治理是配套安全层：ALE CA 设备证书（每台唯一密钥对+内部 CA 签 X.509，5 年有效、到期前 1 年更新，P5，&lt;&lt;<PAGE 27>&gt;&gt;）、首访强制改密（P3，&lt;&lt;<PAGE 27>&gt;&gt;）、su 口令不可恢复（P4，&lt;&lt;<PAGE 26>&gt;&gt;）、弱加密禁用（P6，&lt;&lt;<PAGE 28>&gt;&gt;）、TLS 默认 1.2（P8，&lt;&lt;<PAGE 33>&gt;&gt;）。</p>
+<h2 id="a1">A1（决策框架）</h2>
+<ol>
+<li><strong>先查平台属于哪一型</strong>：U-Boot 型先 <code>update uboot</code> 到 8.10.37.R04 再升 Secure Boot 镜像；ONIE 型升镜像→重启进 BIOS 启用→（6860N/6870）装 onie deb 包；例外型用非 Secure Boot 镜像</li>
+<li><strong>混 VC 判定</strong>：含 6900-V72/C32/V48C8/C32E 的混合 VC 全网必须用非 Secure Boot 镜像（X3，&lt;&lt;<PAGE 104>&gt;&gt;）</li>
+<li><strong>证书策略</strong>：默认走 ALE CA（升级自动获得）；已装自定义 CA 证书的升级后继续沿用不替换（P5）</li>
+<li><strong>包管理纪律</strong>：pkgmgr install 后必须 <code>write memory</code> commit，否则 reload 时镜像校验失败（X16，&lt;&lt;<PAGE 101>&gt;&gt;）</li>
+</ol>
+<h2 id="a2">A2（操作步骤）</h2>
+<ul>
+<li><strong>U-Boot 平台启用（6360/6465/6560/6570M）</strong>：先 <code>update uboot</code> 到 8.10.37.R04 → 再用 Secure Boot 镜像升 AOS（C9，&lt;&lt;<PAGE 105>&gt;&gt;）</li>
+<li><strong>ONIE 平台启用（6860N/6870/6900-X48C6 等）</strong>：Secure Boot 镜像升 AOS → 重启进 BIOS 启用 Secure Boot →（仅 6860N/6870）<code>pkgmgr install uosn-onie-v1.deb</code> + <code>write memory flash-synchro</code> 升 ONIE/Diag（C10，&lt;&lt;<PAGE 105>&gt;&gt;）</li>
+<li><strong>6900-V48C8/C32E</strong>：先升 BIOS（C32E v40.01.01.03 / V48C8 v40.01.01.04，联系 Support）→ 再升 Secure Boot 镜像 → 重启进 BIOS 启用（C11，&lt;&lt;<PAGE 105>&gt;&gt;）</li>
+<li><strong>包安装/卸载</strong>：<code>pkgmgr verify nos-mrp-v1.deb</code>（MD5）→ <code>pkgmgr install nos-mrp-v1.deb</code> → <code>write memory</code> → <code>show pkgmgr</code>（+ 未保存、* 待 reload）；卸载 <code>pkgmgr remove mrp</code> → <code>write memory</code> → <code>rm /flash/working/pkg/nos-mrp-v#.deb</code>（C12，&lt;&lt;<PAGE 101-102>&gt;&gt;）</li>
+<li><strong>弱加密禁用与查看</strong>：<code>system security crypto-strong-security enable</code> + <code>show system security</code>；弱密钥探测 <code>ssh strong-hmacs enable</code>（C16，&lt;&lt;<PAGE 28>&gt;&gt;/&lt;&lt;<PAGE 16>&gt;&gt;）</li>
+<li><strong>升级前 AMS/IoT-Profiler 密码加密化</strong>：升 8.7R1+ 前删 <code>/flash/&lt;running&gt;/pkg/ams/ams-broker.cfg</code>（每台 VC 成员）→ 升级 → 重配 broker；AMS-APPS 同理删 <code>pkg/ams-apps/install.sh</code>（C13，&lt;&lt;<PAGE 102>&gt;&gt;）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>三类平台 Secure Boot 启用路径（C9/C10/C11，&lt;&lt;<PAGE 105>&gt;&gt;）</li>
+<li>pkgmgr 包生命周期管理（C12，&lt;&lt;<PAGE 101-102>&gt;&gt;）</li>
+<li>升级前 AMS 明文密码治理（C13，&lt;&lt;<PAGE 102>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（反例/坑）</h2>
+<ul>
+<li>次序颠倒装了 Secure Boot 镜像会重启回落 Certified 镜像：6360/6465/6560/6570M 必须 U-Boot ≥8.10.37.R04 才能升 8.10R4（X1/P2，&lt;&lt;<PAGE 18>&gt;&gt;/&lt;&lt;<PAGE 104>&gt;&gt;）</li>
+<li>6570M 出厂 U-Boot 8.10.42.R02 只认签名镜像（8.9R4+），降级到更早 AOS 必须先降 U-Boot 到 &lt;8.9.70.R04（X7，&lt;&lt;<PAGE 18>&gt;&gt;）</li>
+<li>Secure Boot 不支持平台清单：6860(E)、6865、6900-V72/C32/V48C8/C32E（无 BIOS 升级时）、9900（X4，&lt;&lt;<PAGE 104>&gt;&gt;）</li>
+<li>8.10R4 首访强制改密会打断自动化：admin 默认口令的 REST API/脚本必须改（X8/P3，&lt;&lt;<PAGE 18>&gt;&gt;/&lt;&lt;<PAGE 27>&gt;&gt;）</li>
+<li>8.7R2 起新用户口令策略默认收紧（禁含用户名、大写/小写/数字/非字母各≥1），存量用户不受影响（X9，&lt;&lt;<PAGE 17>&gt;&gt;）</li>
+<li>包未 commit 引发镜像校验错误：pkgmgr install 后必须 write memory（X16，&lt;&lt;<PAGE 101>&gt;&gt;）</li>
+<li>升级前未删 ams-broker.cfg / install.sh 则密码不会转加密（X17，&lt;&lt;<PAGE 102>&gt;&gt;）</li>
+<li>ssh-rsa（SHA-1）默认禁用，替代 rsa-sha2-256/512 与 ecdsa（P7，&lt;&lt;<PAGE 16>&gt;&gt;）</li>
+<li>PKI 私钥与 installsshkey 曾不随 VC 主备同步（8.10R4 修复，复制到 /flash/switch/.profiles 并全机箱应用）（X35，&lt;&lt;<PAGE 87>&gt;&gt;）</li>
+</ul>
+<h2 id="_1">来源</h2>
+<p>OmniSwitch AOS Release 8.10R4 Release Notes Appendix L（&lt;&lt;<PAGE 104-105>&gt;&gt;）、Prerequisites（&lt;&lt;<PAGE 15-18>&gt;&gt;）、New Features 安全类（&lt;&lt;<PAGE 26-34>&gt;&gt;）、Appendix J（&lt;&lt;<PAGE 101-102>&gt;&gt;）。条目来源：cases C9-C13/C16；principles P1-P9/P5；counter-examples X1/X3/X4/X7/X8/X9/X16/X17/X35；frameworks F3。</p><div class="pn"><a href="aos-rn-upgrade-path.html">⬅ 上一单元：aos-rn-upgrade-path</a><a class="nxt" href="aos-rn-known-issues.html">下一单元：aos-rn-known-issues ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

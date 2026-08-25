@@ -1,0 +1,112 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>aos-nc-oam-monitoring — AOS 8.10R04 · Network Configuration</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>AOS 8.10R04 · Network Configuration</h1>
+<div class="sub">1745 页 · 网络配置全科（二层/织构/IP 服务/路由/组播/QoS/准入/OAM，48 章）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">二层与冗余</div>
+<a href="../skills/aos-nc-vlan-l2.html">aos-nc-vlan-l2</a>
+<a href="../skills/aos-nc-redundancy-protection.html">aos-nc-redundancy-protection</a>
+<div class="grp">骨干织构</div>
+<a href="../skills/aos-nc-fabric-backbone.html">aos-nc-fabric-backbone</a>
+<div class="grp">三层与服务</div>
+<a href="../skills/aos-nc-ip-ipv6-services.html">aos-nc-ip-ipv6-services</a>
+<a href="../skills/aos-nc-routing.html">aos-nc-routing</a>
+<a href="../skills/aos-nc-multicast.html">aos-nc-multicast</a>
+<div class="grp">策略与安全</div>
+<a href="../skills/aos-nc-qos-policy.html">aos-nc-qos-policy</a>
+<a href="../skills/aos-nc-access-security.html">aos-nc-access-security</a>
+<div class="grp">监测与基础</div>
+<a href="../skills/aos-nc-oam-monitoring.html" class="on">aos-nc-oam-monitoring</a>
+<a href="../skills/aos-nc-switch-foundation.html">aos-nc-switch-foundation</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../aos/index.html">AOS 软件手册</a> › <a href="../index.html">AOS 8.10R04</a> › <span>aos-nc-oam-monitoring</span></nav><h1>aos-nc-oam-monitoring</h1><p class="meta"><span class="badge">SKILL</span> aos-nc-oam-monitoring · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>端到端以太业务要连续性检查与故障定位：CFM CC/loopback/linktrace</li>
+<li>单条链路质量劣化要监控告警：EFM errored-frame 窗口阈值</li>
+<li>要测帧时延/抖动：Y.1731 帧时延测量</li>
+<li>交换机 CPU/内存资源要阈值监控：Switch Health</li>
+<li>要调日志级别/输出设备/格式，或做 SPB 服务保障测量（SAA）</li>
+<li>宽带接入要在 PPPoE 报文插用户线路标识：PPPoE-IA</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>OAM 分层框架（F14，&lt;&lt;<PAGE 1655>&gt;&gt;）：LINK OAM(802.3ah，单链路发现/监控/环回) 与 Service OAM(802.1ag/Y.1731，MD/MA/MEP 层级+CC/LB/LT+时延测量) 互补，CFM MD 分层 0-7 对应运营商/客户组织边界。MD 分级：5-7 客户、3-4 运营商、0-2 操作员；MEP 发起 OAM 命令防域间泄漏，MIP 被动应答（P196，&lt;&lt;<PAGE 1655>&gt;&gt;）。EFM 用慢协议 OAMPDU 承载控制与状态，单链路传递不被网桥转发；发现阶段双方能力匹配才建立 OAM 连接，5 秒无 OAMPDU 即失联（P198/P199，&lt;&lt;<PAGE 1673-1674>&gt;&gt;）。</p>
+<h2 id="a1">A1（决策框架）</h2>
+<ol>
+<li><strong>定位故障先分层</strong>：单链路问题用 LINK OAM（发现/三窗口链路监控/远端故障/远端环回，P200，&lt;&lt;<PAGE 1673>&gt;&gt;）；业务端到端问题用 Service OAM（P195，&lt;&lt;<PAGE 1655>&gt;&gt;）</li>
+<li><strong>MD 级别按组织边界规划</strong>：运营商侧低级别（0-4）、客户侧高级别（5-7），避免 MEP 命令跨域泄漏</li>
+<li><strong>链路劣化监控选 EFM 窗口</strong>：errored-frame / errored-frame-seconds / errored-frame-seconds-summary 三窗口阈值+notify</li>
+<li><strong>资源与运维面</strong>：Switch Health 资源阈值+采样间隔（P190，&lt;&lt;<PAGE 1566>&gt;&gt;）；日志=级别筛选+输出设备+文件大小+格式+存储上限（P194，&lt;&lt;<PAGE 1580>&gt;&gt;）</li>
+<li><strong>测量类</strong>：帧时延测量（Y.1731）、SAA 以 SPB 会话做服务保障测量并可生成 XML 历史（P204，&lt;&lt;<PAGE 1700>&gt;&gt;）</li>
+</ol>
+<h2 id="a2">A2（操作步骤）</h2>
+<ul>
+<li><strong>Service OAM</strong>：<code>cfm domain</code>→MA→MEP/虚拟 MEP→loopback/linktrace/帧时延测量（cases·C62，&lt;&lt;<PAGE 1650>&gt;&gt;）；RFP 把连通故障事件传播到 MEP 所在接口（P197，&lt;&lt;<PAGE 1655>&gt;&gt;）</li>
+<li><strong>EFM LINK OAM</strong>：<code>efm-oam enable</code>→端口使能→errored-frame(-seconds-summary) 窗口/阈值/notify（样例 <code>efm-oam port 1/1/1 errored-frame window 32 threshold 10 notify enable</code>）→远端环回；验证 show efm-oam（cases·C63，&lt;&lt;<PAGE 1672>&gt;&gt;）</li>
+<li><strong>Switch Health</strong>：资源阈值+采样间隔监控 CPU/内存等并出统计（P190，&lt;&lt;<PAGE 1566>&gt;&gt;）</li>
+<li><strong>日志</strong>：级别筛选+输出设备（console/memory/remote 等）+文件大小+格式+存储上限（P194，&lt;&lt;<PAGE 1580>&gt;&gt;）</li>
+<li><strong>SAA</strong>：以 SPB 会话做测量，可生成 XML 历史文件（P204，&lt;&lt;<PAGE 1700>&gt;&gt;）</li>
+<li><strong>PPPoE-IA</strong>：<code>pppoe-ia enable</code>→（可选）<code>pppoe-ia ignore-slot</code>（AOS6 格式 Circuit-ID）→<code>pppoe-ia port 1/1/1 enable</code>→trust/client 口→access-node-id/circuit-id/remote-id；验证 show pppoe-ia（cases·C64，&lt;&lt;<PAGE 1715>&gt;&gt;）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>Service OAM domain→MA→MEP→测量（C62，&lt;&lt;<PAGE 1650>&gt;&gt;）</li>
+<li>EFM LINK OAM 窗口阈值与远端环回（C63，&lt;&lt;<PAGE 1672>&gt;&gt;）</li>
+<li>PPPoE-IA trust/client 口与线路标识（C64，&lt;&lt;<PAGE 1715>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（反例/坑）</h2>
+<ul>
+<li>LINK OAM 5 秒收不到 OAMPDU 邻接即丢，keepalive 间隔配置不当会频繁掉 OAM 会话（X72/P199，&lt;&lt;<PAGE 1674>&gt;&gt;）</li>
+<li>PPPoE-IA 不支持镜像目的口；全局+端口两级必须同时使能否则不生效（X73/P203，&lt;&lt;<PAGE 1715>&gt;&gt;）</li>
+<li>PPPoE access loop 标识：直连用户=chassis/slot/port，多用户共享口=端口+CVLAN 组合（P202，&lt;&lt;<PAGE 1714>&gt;&gt;）</li>
+<li>MD Level 分层对应组织边界，跨层规划会导致 OAM 命令泄漏或测量失效（P196，&lt;&lt;<PAGE 1655>&gt;&gt;）</li>
+<li>虚拟 MEP 是虚拟端口上的 UP MEP，用于没有物理口的场景（&lt;&lt;<PAGE 1655>&gt;&gt;）</li>
+</ul>
+<h2 id="_1">来源</h2>
+<p>OmniSwitch AOS 8.10R4 Network Configuration Guide 第 41 章 Switch Health（&lt;&lt;<PAGE 1566>&gt;&gt;）、第 43 章 Switch Logging（&lt;&lt;<PAGE 1580>&gt;&gt;）、第 44 章 Service OAM/CFM（&lt;&lt;<PAGE 1650-1665>&gt;&gt;）、第 45 章 EFM LINK OAM（&lt;&lt;<PAGE 1672-1674>&gt;&gt;）、第 47 章 PPPoE-IA（&lt;&lt;<PAGE 1714-1715>&gt;&gt;）、第 48 章 SAA（&lt;&lt;<PAGE 1700>&gt;&gt;）。条目来源：cases C62-C64；principles P190/P194-P204；counter-examples X72/X73；frameworks F14。</p><div class="pn"><a href="aos-nc-access-security.html">⬅ 上一单元：aos-nc-access-security</a><a class="nxt" href="aos-nc-switch-foundation.html">下一单元：aos-nc-switch-foundation ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

@@ -1,0 +1,1130 @@
+{
+ "cases": [
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C1** 升级前健康巡检：`show system`（确认日期/版本/型号/Flash 余量）→ 删旧日志 `rm *.log`、`"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C2** 升级前基线采集：`show tech-support` / `show tech-support layer2` / `s"
+  },
+  {
+   "h": 0.71,
+   "ok": true,
+   "head": "- **C3** 固件版本核对：`show hardware-info` 查当前 U-Boot/FPGA 版本，对照 System Spec"
+  },
+  {
+   "h": 0.76,
+   "ok": true,
+   "head": "- **C4** 五步标准升级：①下载镜像（6360=Nosa.img、6465/6560=Nos.img、6570M=Wos.img、68"
+  },
+  {
+   "h": 0.98,
+   "ok": true,
+   "head": "- **C5** 十二步 ISSU：`mkdir /flash/issu_dir` → `debug show virtual-chassi"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **C6** FPGA/CPLD 升级：下载 kit（如 fpga_kit_9631）→ FTP 到 /flash → `update "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C7** U-Boot 升级：FTP u-boot tar 包到 /flash → `update uboot cmm all fi"
+  },
+  {
+   "h": 0.97,
+   "ok": true,
+   "head": "- **C8** ONIE 机型 CPLD/ONIE 升级：确认配置 certified+synchronized、建议接 console "
+  },
+  {
+   "h": 0.57,
+   "ok": true,
+   "head": "- **C9** U-Boot 平台（6360/6465/6560/6570M）：先 `update uboot` 到 8.10.37.R0"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **C10** ONIE 平台（6860N/6870/6900-X48C6 等）：用 Secure Boot 镜像升 AOS → 重启进"
+  },
+  {
+   "h": 0.7,
+   "ok": true,
+   "head": "- **C11** 6900-V48C8/C32E：先升 BIOS（C32E v40.01.01.03 / V48C8 v40.01.01."
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C12** 包安装/卸载：`pkgmgr verify nos-mrp-v1.deb`（MD5 校验）→ `pkgmgr insta"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **C13** 升级前 AMS/IoT-Profiler 密码加密化：升级 8.7R1+ 前删 `/flash/<running>/pk"
+  },
+  {
+   "h": 0.0,
+   "ok": false,
+   "head": "- **C14** 模块热插拔规程：拆线 → 拔光模块 → 拔板卡等 ≥30 秒再插同型号（CMM 插后等 15-20 分钟；NI 拔插间隔"
+  },
+  {
+   "h": 0.57,
+   "ok": true,
+   "head": "- **C15** fast/perpetual PoE 机型换异种电源（6860N-P48M）：禁 fpoe/ppoe（lanpower "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C16** 弱加密禁用与查看：`system security crypto-strong-security enable` + `"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C17** SPB BVLAN 收敛运维：`show spb isis bvlans` 查 In Use（全网视图）→ 维护窗内把业"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C18** Celona PD 降级规避：`lanpower {slot | port} autoclass disable`。 <"
+  },
+  {
+   "h": 0.94,
+   "ok": true,
+   "head": "- **C19** MKA VLAN 隧道化配置：`interfaces <c/s/p> macsec mode dynamic mka-v"
+  }
+ ],
+ "counter-examples": [
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X1** Secure Boot 先升 U-Boot 再升 AOS：6360/6465/6560/6570M 必须 U-Boot ≥"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X2** ISSU 在 6360/6465/6560(E)/6570M 全系不支持（因 Secure Boot U-Boot 升级要"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X3** 6900 双镜像分裂：V72/C32/V48C8/C32E 只能用非 Secure Boot 镜像（V48C8/C32E "
+  },
+  {
+   "h": 0.43,
+   "ok": true,
+   "head": "- **X4** Secure Boot 不支持平台清单：6860(E)、6865、6900-V72/C32/V48C8/C32E（无 BI"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X5** 8.10R3 起 EVPN 强制 VRF 语境：升级到 8.10R3+ 后旧版 EVPN 配置必须手工迁入对应 VRF c"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X6** EVB 配置存在则无法升级：8.5R4 起移除 EVB，带 EVB 配置的交换机禁止升到 8.5R4 及以上：\"Any s"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X7** 6570M 出厂 U-Boot 8.10.42.R02 只认签名镜像（8.9R4+），要降级到更早 AOS 必须先降 U-"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **X8** 8.10R4 首访强制改密会打断自动化：admin 默认口令的 REST API/脚本必须改 <<<PAGE 18>>>/"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X9** 8.7R2 起新用户口令策略默认收紧（禁含用户名、大写/小写/数字/非字母各≥1），存量用户不受影响 <<<PAGE 17"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X10** 6560 两款电源强制最低 AOS 8.8R1：OS6560-BP-PH（600W）与 OS6560-BP-PX（920"
+  },
+  {
+   "h": 0.6,
+   "ok": true,
+   "head": "- **X11** 8.9R1 起 6560 Metro 特性转收费：CPE Test Head/PPPoE-IA/Ethernet OAM"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X12** ONIE 机型 CPLD 升级前置：AOS 必须 ≥8.9R4 才能用 updater kit 升 CPLD <<<PA"
+  },
+  {
+   "h": 0.33,
+   "ok": false,
+   "head": "- **X13** 升级后 SPB 控制 MAC 回落缺陷（已修）：8.9R2→8.10R2 升级曾把配置的 SPB 控制 MAC（09:0"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **X14** ISSU 期间禁止改配置：等 System ready/[L8] 再做 write-memory/配置变更 <<<PAG"
+  },
+  {
+   "h": 0.88,
+   "ok": true,
+   "head": "- **X15** Slave 存在同名 ISSU 目录会破坏升级：ISSU 依赖交换机自行在 Slave 建目录，预先存在的同名目录有 a"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X16** 包未 commit 会引发镜像校验错误：reload 时 image validation errors，pkgmgr "
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **X17** 升级前 AMS/IoT-Profiler 明文密码处理：升级 8.7R1+ 前必须先删 ams-broker.cfg /"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X18** ONIE 机型 CPLD 升级后不回 running 目录：只启动到 Certified，需手动再切 <<<PAGE 8"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X19** 出厂 diag.img 可安全删除（内部诊断用），勿当作系统文件保留 <<<PAGE 15>>>"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **X20** 长期运行陷阱：6450 动态路由在 uptime 超 828.5 天后老化复位抖动（自动恢复）——超长不重启的网关设备要"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X21** OS6560-P48Z16（903954-90 旧版）1G 口 1-32 不支持链路聚合，仅 33-52（多千兆/10G"
+  },
+  {
+   "h": 0.64,
+   "ok": true,
+   "head": "- **X22** MACsec 端口矩阵例外：6870-24 口 25-26、6870-48 口 49-50 不支持；6870 VFL 模"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X23** 6860N 不支持 MACsec Static 模式（仅 Dynamic 128-bit），且扩展模块上任何 4X10G"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **X24** 快速收敛例外清单：铜口/铜模块、VFL 口、splitter 口（4X10G/4X25G）、OS6865-P16X·U1"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **X25** 6560 X4 系列 10G 性能许可只解锁特定口：24X4/P24X4 口 25/26、48X4/P48X4 口 49"
+  },
+  {
+   "h": 0.78,
+   "ok": true,
+   "head": "- **X26** 6560 Advanced Routing 许可短板：OSPF 限 2 区域、无多 VRF/ISIS/GRE/IP-IP"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X27** QSFP-4X25G-C 光模块插 OS99-CNI-U8 会报错（8.7R1 起显式拦截） <<<PAGE 17>>>"
+  },
+  {
+   "h": 0.33,
+   "ok": false,
+   "head": "- **X28** 6920 本版无 VC 支持；不支持 IP-IP/GRE/配置 IPv6/6to4 隧道 <<<PAGE 21>>>/<"
+  },
+  {
+   "h": 0.0,
+   "ok": false,
+   "head": "- **X29** 6575-MP16 无 VC 支持（P12/U28 支持最多 4 机箱 VC） <<<PAGE 21>>>"
+  },
+  {
+   "h": 0.91,
+   "ok": true,
+   "head": "- **X30** 9900 XNI 板用于 CMM2/OS9912 机箱前必须先升 U-Boot 与 FPGA；OS99-XNI-U12Q"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X31** SPB BVLAN 修改不支持在线改：服务必须删除重建到新 BVLAN，收敛操作要安排维护窗 <<<PAGE 65>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X32** 6360 无 RTC：断电后时钟停在关机时刻，必须 NTP 对时 <<<PAGE 17>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X33** WebView 法语支持 8.8R2 起移除，默认法语的设备升级后回落英语 <<<PAGE 17>>>"
+  },
+  {
+   "h": 0.33,
+   "ok": false,
+   "head": "- **X34** 6570M TDR 仅限铜口：12/12D 口 1-8；U28 仅 hybrid 口 21-24 且 hybrid-mo"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X35** PKI 私钥与 installsshkey 曾不随 VC 主备同步（8.10R4 修复，复制到 /flash/switc"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X36** FTP 用户名（RCD）上限 15 字符（规范限制，8.10R4 文档化） <<<PAGE 91>>>"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **X37** vcboot.cfg 含明文 key 会导致哈希错误：即使 show 显示 hash-key，RADIUS 会话也建不起"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X38** SFP-10G-T 只支持 10G 对端：1G/100M 对端链路 down；100M 长时间连接+多次翻动后可能回 1"
+  },
+  {
+   "h": 0.6,
+   "ok": true,
+   "head": "- **X39** SFP-GIG-T 配 10M 时反复 admin disable/enable 会端口不稳定（假 linkup/无流量"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **X40** OS99-CNI-U8 4x25G DAC 某些 lane 不起来，workaround 换 QSFP-100G-SR4"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **X41** SFP-DUAL-BX-U/D 在 6870-P24Z/P48Z/LNI-U6 不 link up，只能用于 6870-"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **X42** 6570M-U28 口 25 + SFP-10G-T 对端反复 admin 翻动会出现仅本地 linkup 或 LED "
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **X43** SFP-GIG-T 对端从 10M 变 100M/1G 间歇性链路 down（对端 up）：U28 热插拔模块恢复，12"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **X44** VFL 用 4X25G splitter 出 CRC：需两侧 inter-frame-gap=13（首选）或 FEC F"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X45** OS6575-MP16 电源状态更新延迟约 1 分钟 <<<PAGE 43>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X46** OS6860N-U28 控制台可能打印 smgrOpenLicenseFile 错误，无功能影响 <<<PAGE 43>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X47** OS9912 聚合口禁用某成员后哈希失衡，流量可能全压一条剩余链路，无解 <<<PAGE 41>>>"
+  },
+  {
+   "h": 0.12,
+   "ok": false,
+   "head": "- **X48** PTP 打戳 PHY 口↔PHYless 口交叉时不正确（6870-V12 1-12 ↔ 13-14/CNI/LNI；6"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X49** breakout 模式 subport A 的 LED1 链路/活动状态可能不反映真实状态，用 CLI 确认 <<<PA"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **X50** BFD 在 VRRP VLAN 接口 toggle 时丢包，无解 <<<PAGE 41>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X51** CFM2+XNI-U48 板违规恢复比 WTR 15 秒多花约 2 分钟 <<<PAGE 41>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X52** OS6575 8 成员 LAG 禁主口后组播/广播负载失衡（降到 7 成员时某成员停转广播），无解 <<<PAGE 41"
+  },
+  {
+   "h": 0.79,
+   "ok": true,
+   "head": "- **X53** OS6920 多项协议缺口：ICMP redirect（type5 code1）不转发、Snap 头场景 ARP 解析失"
+  },
+  {
+   "h": 0.73,
+   "ok": true,
+   "head": "- **X54** EVPN 一组 toggle 触发掉流：对称 IRB service toggle 掉流（含 6870）、PIM+非对称"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **X55** IPMVLAN+rvlan 在 VC takeover 后残留 L3 模式行为，无解 <<<PAGE 43>>>"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **X56** 二次 vc-takeover 后 sdp/sap MAC 可能从 show mac-learning 丢失，重发流量可恢"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **X57** OS9900 chassis-2 偶发 cmm-takeover 后 VC 分裂，无解 <<<PAGE 45>>>"
+  },
+  {
+   "h": "n/a",
+   "ok": true
+  },
+  {
+   "h": 0.89,
+   "ok": true,
+   "head": "- **X59** OS99-XNI-P24Z8 前 8 口 dynamic MACsec reload 后状态 down，需手动 togg"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X60** 静态 MACsec 无加密时 key 不匹配流量仍通（有加密则正常）——安全审计注意 <<<PAGE 45>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X61** CMM2 NI 卡上 policy mac group alaPhones 默认 802.1p 信任行为变化，执行 `q"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **X62** OS6900-V48 无损 TC 上限 40：DCB-2/4 profile（全 TC 无损）最多 5 端口，更多端口需"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **X63** OS6575 启用 policy rule Redirect_All 后掉流量，无解 <<<PAGE 46>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X64** ERP 环端口/节点 down/up 摆动时收敛次数偏高（10 次迭代平均），无解 <<<PAGE 43>>>"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **X65** OS6575 组播 UNP policy list v4/v6 规则计数不更新（仅显示问题） <<<PAGE 44>>>"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **X66** 多 SAP 口上部分 SAP 配 port-security 时，全端口 SAP 的 ARP 包都被 trap 学习 <"
+  },
+  {
+   "h": "n/a",
+   "ok": true
+  },
+  {
+   "h": 0.83,
+   "ok": true,
+   "head": "- **X68** OVSDB 8.10R2 起移除；automatic fabric admin-state 8.10R2 起默认禁用 <"
+  },
+  {
+   "h": 0.92,
+   "ok": true,
+   "head": "- **X69** 分布式 ARP、WRED、`qos dscp-table` 于 8.6R2 移除；`ip helper`→`ip dhc"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X70** mrp interconnect 三条命令在 8.8R1 存在但不支持（part of AOS but not supp"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X71** Kerberos Snooping 8.7R3 不支持 bridge mode <<<PAGE 17>>>"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **X72** SPB Auto Fabric BVLAN 默认 16→4（8.7R1），仅对出厂默认且无 vcboot.cfg 的设备"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X73** NTP 的 `ip service source-ip ntp` 参数 8.5R4 废弃、8.6R2 恢复——跨版本升级"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **X74** 8.8R1 起 CVE-2024-6387（regreSSHion）修复默认内建 <<<PAGE 17>>>"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **X75** 软件获取卡停止随箱附带（环保），软件走 Business Portal <<<PAGE 16>>>"
+  }
+ ],
+ "frameworks": [
+  {
+   "h": 0.76,
+   "ok": true,
+   "head": "- **F1** AOS 升级方法论二分框架：Standard（传镜像到 Running 目录→reload→验证→copy running"
+  },
+  {
+   "h": 0.76,
+   "ok": true,
+   "head": "- **F2** 固件三件套分层框架：AOS 镜像（功能性升级）／引导件 U-Boot·ONIE·BIOS（Secure Boot 信任链、"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **F3** Secure Boot 平台分型框架：U-Boot 型（6360/6465/6560/6570M——先升 U-Boot 再"
+  },
+  {
+   "h": 0.92,
+   "ok": true,
+   "head": "- **F4** Feature Matrix 特性核对法：13 平台 × 特性 × 首次支持版本（Y=历来支持 / N=不支持 / 版本号"
+  }
+ ],
+ "glossary": [
+  {
+   "h": 0.33,
+   "ok": false,
+   "head": "- **GA（General Availability）**：正式发布版，如 8.10.86.R04 (GA)，区别于 MR（维护版）与 E"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **MR（Maintenance Release）**：维护版本（如 8.9.130.R04 MR1），作为 ISSU 源版本时常被列出"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **EA（Early Availability）**：早期可用特性——可配置但未走完整验证流程、不受官方支持：\"they have no"
+  },
+  {
+   "h": 0.43,
+   "ok": true,
+   "head": "- **U-Boot**：嵌入式引导加载器；Secure Boot 镜像要求 8.10.37.R04（6360/6465/6560/6570"
+  },
+  {
+   "h": 0.33,
+   "ok": false,
+   "head": "- **FPGA**：现场可编程门阵列固件，承载电源/风扇/PoE/端口物理行为，按机型有 Minimum/Current 两列 <<<PA"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **ONIE**：开放网络安装环境，6860N/6870/6900/6920 等 ONIE 型机型的引导/安装层，升级走 pkgmgr "
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **CPLD**：复杂可编程逻辑器件，ONIE 机型多颗（Main/CPU/LED），updater kit 逐颗升级 <<<PAGE "
+  },
+  {
+   "h": 0.83,
+   "ok": true,
+   "head": "- **Coreboot-Uboot / Control FPGA / Power FPGA**：9900 平台的引导与控制/电源固件三层 "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **diag.img**：出厂可能附带的内部诊断镜像文件，可安全删除 <<<PAGE 15>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **imgsha256sum**：镜像校验文件，仅 Common Criteria 模式需要 <<<PAGE 72>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Standard Upgrade（标准升级）**：镜像放 Running 目录整机/整 VC 重启的升级方式 <<<PAGE 67>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **ISSU（In Service Software Upgrade）**：在服务软件升级，VC 按 chassis-id 低到高逐台重"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **Certified/Working 目录**：认证（回滚兜底）/工作（试验运行）双目录机制；`copy running certif"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **rollback-timeout**：reload 参数（no rollback-timeout），用于跳过回滚等待直接切换 <<<"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **write memory flash-synchro**：保存配置并同步 Flash（VC 成员/CMM 间），升级前置与 ISSU"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **issu_version**：ISSU 升级包内的版本描述文件，ISSU 目录必备 <<<PAGE 74>>>"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **VFL（Virtual Fabric Link）**：VC 内部互联链路；内网固定 IP 127.10.<chassis>.65；4"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **chassis-id**：VC 成员编号；出厂首启自动 VC 会固定为 1，可能引发重复 chassis-id 冲突 <<<PAGE"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **vcboot.cfg / vcsetup.cfg**：VC 启动/设置配置文件；明文 key 直接加载会导致哈希错误 <<<PAGE"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **CAPEX License**：一次性买断型许可，区别于订阅 <<<PAGE 19>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **MACsec Site License（OS-SW-MACSEC）**：8.6R1 起 MACsec 需站点许可（免费生成、免重启生"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **Performance License（OS####-SW-PERF）**：解锁端口速率（6560 的 10G、6570M 的 25"
+  },
+  {
+   "h": 0.71,
+   "ok": true,
+   "head": "- **Metro License**：8.9R1 起 6560 的城域特性包（CPE Test Head/PPPoE-IA/OAM/SAA"
+  },
+  {
+   "h": 0.78,
+   "ok": true,
+   "head": "- **Advanced Routing License（OS6570M-SW-AR / OS6560-SW-AR）**：OSPF/PIM/"
+  },
+  {
+   "h": 0.43,
+   "ok": true,
+   "head": "- **Premium (Bundle) License（OS6570-SW-PRMxx / OS6870-SW-PRMx）**：8.10R"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **VC Parity: Match / Local-Only**：子许可 VC 生效语义——Match=全成员一致才生效；Local-"
+  },
+  {
+   "h": 0.6,
+   "ok": true,
+   "head": "- **NAAS 2.0 Licensing**：Network-as-a-Service 许可框架，8.10R4 扩到 6575 <<<P"
+  },
+  {
+   "h": 0.86,
+   "ok": true,
+   "head": "- **SILOS（Site License Client/Manager）**：站点许可客户端/管理器，6870/6900-X 系列支持 "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Router Mode / Edge-router Mode**：capability profile 切换的转发规模形态（6870"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Secure su Account**：su 超级用户提示符必须设口令，仅 admin 可配 <<<PAGE 26>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Change Password on First Access**：admin 默认口令首登强制改密 <<<PAGE 27>>>"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **ALE CA Signed Certificate**：ALE 内部 CA 签发的设备 X.509 证书（5 年有效、到期前 1 年"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **Crypto Strong Security**：弱加密算法（SHA/MD5 等）禁用开关 <<<PAGE 28>>>"
+  },
+  {
+   "h": 0.4,
+   "ok": true,
+   "head": "- **Lightning Config Mode（闪电配置）**：出厂/EMP 口的快速开局模式；6575 支持 1/1/1-1/1/2，"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **AAA Certificate convert-cert**：CER/CRT/DER/P7B/PKCS#12 证书转 PEM <<<"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Session Prompt 64**：CLI 提示符长度 32→64 字符 <<<PAGE 26>>>"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **AOS 内嵌 Linux 命令**：watch/cut/paste/tee 经包装直接在 AOS CLI 使用，免进 su <<<P"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **DPA / MAC Forced Forwarding**：动态代理 ARP（6560/6570M 8.10R4 支持） <<<PA"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **PIM over GRE**：GRE 隧道上跑 PIM 组播路由邻接 <<<PAGE 29>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **sFlow BGP Gateway**：sFlow 样本携带 BGP 网关归因字段 <<<PAGE 30>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **PEG（PIM EVPN Gateway）**：EVPN 网络与外部 PIM 域的网关 <<<PAGE 31>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **OISM**：优化的跨子网组播，fabric 内选择性转发 <<<PAGE 31>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **ERP over SPB / spb-remote-flush**：ERP 环跑在 SPB 上时让 MAC flush 传播到 SD"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **Manual RD/RT**：EVPN 服务手工路由目标配置，支撑多站点/PoD 选择性导入与 E-Tree <<<PAGE 33>"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **Threat-Insight**：AppMon 集成的每流威胁智能（DGA/MITM/JA3） <<<PAGE 36>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **DGA Score / MITM Score / JA3 Fingerprint**：域名生成算法评分／中间人概率／TLS Clie"
+  },
+  {
+   "h": 0.57,
+   "ok": true,
+   "head": "- **RoCEv2 / DCQCN**：RDMA over Converged Ethernet v2 与基于 ECN+PFC 的拥塞控制"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **DCBX**：数据中心桥接能力交换协议（LLDP TLV 承载） <<<PAGE 36>>>"
+  },
+  {
+   "h": 0.33,
+   "ok": false,
+   "head": "- **PROFINET**：工业协议，6575 通过 IO-Device 认证 <<<PAGE 37>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **DHL Active-Standby**：双归链路 LACP 主备模式，standby 秒级接替+pre-empt 回切 <<<PA"
+  },
+  {
+   "h": 0.57,
+   "ok": true,
+   "head": "- **Telemetry（IPFIX 推送）**：本地 Redis DPI/流数据按 IPFIX (RFC 7011) 推送到 Teleg"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Multi-Site SPB / SBN / site-id**：多站点层级 SPB——站点内 ISIS L1、站点边界节点（SBN"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **MKA VLAN Tag / TPID（alaSecyMkaVlan/Tpid）**：MKA 控制包打指定 VLAN 标签隧道化过中"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **PKIX SSH / CAC·PIV**：智能卡 X.509 证书 SSH 登录（JITC STIGS） <<<PAGE 33>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Device Profiling 自动启用**：全局启用后边缘端口默认启用设备画像 <<<PAGE 37>>>"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **ISFv6 on SAPs**：业务域 IPv6 源过滤（dhcpv6-snooping ipv6-source-filter se"
+  },
+  {
+   "h": 0.0,
+   "ok": false,
+   "head": "- **OS6575 家族**：-40~75°C 加固工业交换机（P12/U28/MP16 三形态） <<<PAGE 21>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **OS6920-D32**：1RU 32×400G QSFP-DD 平台 <<<PAGE 21>>>"
+  },
+  {
+   "h": 0.36,
+   "ok": true,
+   "head": "- **QSFPD-400G 系列**：400G QSFP-DD 光模块/DAC/AOC（C/DR4 500m/FR4 2km/LR4 10"
+  },
+  {
+   "h": 0.83,
+   "ok": true,
+   "head": "- **QSFP-100G-SR1.2 / PSM4**：100G 新模块（SR1.2 配 SR4.2 拆分；PSM4 MPO 2km） <"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **SFP-10G-T / SFP-GIG-T**：10G/1G 铜口光模块，Open CR 多条涉及其速率协商缺陷 <<<PAGE 4"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **Splitter（4X10G/4X25G 拆分）**：高速口拆分模式，快速收敛与部分 MACsec 不支持 <<<PAGE 15>>"
+  },
+  {
+   "h": 0.0,
+   "ok": false,
+   "head": "- **VFL**：VC 内部互联用的专用上行口组（6575/6570M/6870） <<<PAGE 15>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **EMP 端口**：以太网管理端口；Lightning Config 与静态 IP 支持相关 <<<PAGE 28>>>"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **RTC（实时时钟）**：6360 无 RTC，断电丢时间，需 NTP <<<PAGE 17>>>"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **Hot-Swap（热插拔）**：运行中插拔模块；NI 间隔 30 秒、CMM 15-20 分钟、插入后 5 分钟+LED 正常，且必"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **Fast PoE / Perpetual PoE（fpoe/ppoe）**：快速/持续供电，换异种电源前须禁用并 reload <<"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **Dying Gasp**：断电临终告警（trap/syslog），非默认 SNMP 端口场景 8.10R4 修复 <<<PAGE 5"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **RCD（Remote Chassis Detection）**：远程机箱检测/零触摸开局特性 <<<PAGE 53>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **AMS（AOS Micro Services）**：AOS 微服务框架（deb 包形态） <<<PAGE 52>>>"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **pkgmgr**：AOS/第三方 Debian 包管理器（verify/install/remove） <<<PAGE 101>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **HSP（Hitless Security Patch Upgrade）**：不打断业务的安全补丁升级 <<<PAGE 52>>>"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **Signed AOS Image**：签名 AOS 镜像（6570M 8.9R4 起，需配套 U-Boot） <<<PAGE 53>"
+  },
+  {
+   "h": 0.0,
+   "ok": false,
+   "head": "- **CMM / NI / CFM**：机箱管理模块／网络接口模块／风扇模块（9900/6900 机箱语境） <<<PAGE 47>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Severity 1-4**：ALE 技术支持严重度分级（1=生产网中断……4=咨询） <<<PAGE 50>>>"
+  },
+  {
+   "h": 0.0,
+   "ok": false,
+   "head": "- **CRAOS8X-xxxxx**：ALE 问题报告编号体系（8X=AOS 8.x），Fixed/Open CR 的索引键 <<<PAG"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **show tech-support eng complete**：生成含 SWLOG 的完整诊断 TAR，升级基线必备 <<<PAG"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **FOSS（/flash/foss）**：第三方开源组件许可声明目录 <<<PAGE 51>>>"
+  }
+ ],
+ "principles": [
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P1** Secure Boot 通过启动期认证校验保证只运行可信软件，需 U-Boot/ONIE/BIOS 升级 + Secure"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P2** U-Boot 平台（6360/6465/6560/6570M）升级 8.10R4 前必须先把 U-Boot 升到 8.10"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P3** 首访强制改密：8.10R4 起 admin/switch 默认口令登录必须改密且符合 password-policy，RE"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P4** su 账户口令只有 admin 能配、可授权其他用户、reset-to-factory 会重置、忘记口令只能恢复出厂：\"T"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P5** ALE CA 设备证书机制：每台设备唯一密钥对 + 内部 CA 签 X.509，有效期 5 年、到期前 1 年内更新，单 "
+  },
+  {
+   "h": 0.6,
+   "ok": true,
+   "head": "- **P6** Crypto Strong Security 开启后用户创建只允许强算法（SHA224/256/384 及 AES 变体）"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **P7** ssh-rsa（SHA-1 签名）默认禁用，替代为 rsa-sha2-256/512 与 ecdsa-sha2-nistp"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P8** 8.10R4 默认 TLS 版本从 1.0 升到 1.2，并可配 TLS 1.3（RADIUS/LDAP/SYSLOG N"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P9** PKIX SSH（CAC/PIV 智能卡）：独立 PKIX SSH 服务器 + X.509v3 证书/公钥映射本地用户 +"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P10** IP 分片攻击防护新增 tear-drop（重叠/畸形分片丢弃）与 icmp-frag-drop（分片 ICMP 丢弃）"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P11** IPv6 DoS 检测运行于 NI、上报 CMM 生成统计/日志/SNMP trap，支持 8 种攻击类型（Ping o"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P12** MACsec 站点许可从 8.6R1 起强制（免费生成），升级后未装许可特性禁用，装许可无需重启：\"After upgr"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P13** MKA VLAN Tag/TPID 机制：中间节点不支持 MACsec 时，MKA 控制包需打 VLAN 标签在 NNI"
+  },
+  {
+   "h": 0.82,
+   "ok": true,
+   "head": "- **P14** MACsec 平台密钥长度分层：9900-CMM2/CNI-U20、6870、6570M、6575 为 Dynamic "
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **P15** 802.1X max-req 从 1-3 扩到 1-50，覆盖 PC 启动/瞬时网络导致的 EAP-Response 延"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **P16** Router Mode（6870）：capability profile 切换扩容转发表——64K MAC/312K I"
+  },
+  {
+   "h": 0.57,
+   "ok": true,
+   "head": "- **P17** Edge-router Mode（6900 除 V72/C32）：比 router-mode 更大 MAC 规模，启用后"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P18** DHL Active-Standby：LACP 聚合内一条成员 Active 一条 Standby 的确定性冗余，故障即"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **P19** IPv6 BGP 路由聚合：合并多条明细属性为单条聚合路由向邻居通告（admin-state/as-set/commun"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P20** PIM over GRE：PIM 可在 GRE 隧道接口上建邻并转发组播，覆盖原生组播不可达的远程网络：\"allowin"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **P21** sFlow BGP Gateway：流样本携带扩展网关字段（next-hop/AS/communities/local-"
+  },
+  {
+   "h": 0.56,
+   "ok": true,
+   "head": "- **P22** EVPN 多站点部署模型库：Clos-3/Collapsed Core/Clos-5/DCI/Multi-PoD/Mul"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **P23** 手工 RD/RT 配置：多站点/PoD 各自 RT 体系下选择性导入导出 EVPN 路由，配合 E-Tree 拓扑避免 "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P24** PEG（PIM EVPN Gateway）：边界 leaf 桥接 EVPN 网络与外部 PIM 域，OISM 优化 fa"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P25** ERP over SPB 单播客户端 MAC flush 问题：SAP 口 flush 正确但不传播到 BEB 的 SD"
+  },
+  {
+   "h": 0.82,
+   "ok": true,
+   "head": "- **P26** SPB 引入 6570M/6575：6570M 需 premium bundle 许可、6575 默认支持；defaul"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P27** Multi-Site SPB 层级（PoC）：站点内 ISIS Level-1、站点间 Site Border Node"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P28** SPB BVLAN 收敛原则：业务分散在 >4 条 BVLAN 时应收敛到 4 条以内，减少控制面地址更新规模、提升稳定"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P29** BVLAN 判活网络级语义：`show spb isis bvlans` 的 In Use=Yes 是全网视图，远端节点"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P30** LPS on VXLAN：LPS 从端口/linkagg 扩展到 EVPN VXLAN SAP，限单归属（single-"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **P31** Telemetry 推送管道：交换机本地 Redis 存 DPI/流数据 → IPFIX（RFC 7011）封装 → 导"
+  },
+  {
+   "h": 0.89,
+   "ok": true,
+   "head": "- **P32** Threat-Insight 集成 AppMon：每流威胁智能三属性——DGA Score（算法生成域名）、MITM S"
+  },
+  {
+   "h": 0.89,
+   "ok": true,
+   "head": "- **P33** RoCEv2 无损以太（6900/6920）：PFC+ETS+DCBX 符合 MSFT 要求；LLDP 扩展 DCBX "
+  },
+  {
+   "h": 0.56,
+   "ok": true,
+   "head": "- **P34** 快速收敛（Improved Convergence）：SFP/SFP+/QSFP+/QSFP28 光口可更快收敛；铜口、"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P35** LACP 组数扩容：6570M 从 32 提到 96（`linkagg lacp agg size`） <<<PAGE "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P36** Premium（捆绑）许可：单许可文件含多个子许可（SPB/AR/25G/50G/VxLAN-EVPN），按 MAC/序"
+  },
+  {
+   "h": 0.89,
+   "ok": true,
+   "head": "- **P37** ISSU 机理：VC 按 chassis-id 从低到高逐台从 ISSU 目录重启，Slave 全部完成后 Master"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P38** 标准升级认证回滚机制：working 目录 reload 试验成功后 `copy running certified` "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P39** ONIE 机型 CPLD 升级语义：kit 内含多 CPLD updater，命令按平台/CPLD 类型逐个升级需多次执"
+  },
+  {
+   "h": 0.44,
+   "ok": true,
+   "head": "- **P40** 出厂首启 VC 自动化副作用：vcboot.cfg/vcsetup.cfg 只写 working 不写 certifie"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P41** NTP 遵循 RFC 不再同步 stratum 16（未同步）服务器，OmniSwitch 之间级联对时的存量部署会断同"
+  },
+  {
+   "h": 0.91,
+   "ok": true,
+   "head": "- **P42** Celona AP autoclass 降级问题机理：PD 侧硬件信号错误使 Class 6/8 设备被识别为 Clas"
+  },
+  {
+   "h": 0.6,
+   "ok": true,
+   "head": "- **P43** ERP 与 MACsec 交互语义：MACsec/MKA 单侧关闭时 R-APS 仍可从不受影响端口交换，ERP 环可能"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P44** DHL 无缝切换规模边界：4000 VLAN/大 MAC 场景下无缝 failover 支持 128 VLAN/1000"
+  },
+  {
+   "h": 0.6,
+   "ok": true,
+   "head": "- **P45** OS6920 400G 平台定位：1RU 32×400G QSFP-DD、低时延 L2/L3，本版无 VC 支持 <<<"
+  },
+  {
+   "h": 0.57,
+   "ok": true,
+   "head": "- **P46** OS6575 工业平台特性：-40°C~75°C 加固无风扇，P12（8×bt+4×SFP+ VFL，360W PoE）"
+  },
+  {
+   "h": 0.91,
+   "ok": true,
+   "head": "- **P47** 认证升级双通道：HSP（Hitless Security Patch Upgrade）与 Signed AOS Imag"
+  },
+  {
+   "h": 0.69,
+   "ok": true,
+   "head": "- **P48** 许可分层模型：Data Center 许可（本版均不支持 DCB/FIP/FCoE）→ Feature/Performa"
+  }
+ ]
+}

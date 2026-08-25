@@ -1,0 +1,107 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>aos-rn-upgrade-path — AOS 8.10R04 · Release Notes</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>AOS 8.10R04 · Release Notes</h1>
+<div class="sub">105 页 · 版本说明（升级方法论/Secure Boot/已知问题库/新特性与废弃）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">升级与安全</div>
+<a href="../skills/aos-rn-upgrade-path.html" class="on">aos-rn-upgrade-path</a>
+<a href="../skills/aos-rn-secure-boot.html">aos-rn-secure-boot</a>
+<div class="grp">问题与特性</div>
+<a href="../skills/aos-rn-known-issues.html">aos-rn-known-issues</a>
+<a href="../skills/aos-rn-new-features-deprecations.html">aos-rn-new-features-deprecations</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../aos/index.html">AOS 软件手册</a> › <a href="../index.html">AOS 8.10R04</a> › <span>aos-rn-upgrade-path</span></nav><h1>aos-rn-upgrade-path</h1><p class="meta"><span class="badge">SKILL</span> aos-rn-upgrade-path · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>计划把 OmniSwitch 升到 8.10R4（或跨版本迁移），需要选标准升级还是 ISSU</li>
+<li>升级前做健康巡检、基线采集、固件版本核对</li>
+<li>需要升级 U-Boot / FPGA / CPLD / ONIE 等引导件或逻辑件</li>
+<li>VC 或模块化机箱要业务中断最小化的在服务升级（ISSU）</li>
+<li>升级出问题要用 Certified 目录回退</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>升级方法论二分框架（F1，&lt;&lt;<PAGE 67-76>&gt;&gt;）：Standard（传镜像到 Running 目录→reload→验证→copy running certified，全程一次中断）vs ISSU（逐成员/逐 CMM 升级、双归属主机不断链）。选型三问——平台是否支持 ISSU（6360/6465/6560/6570M 不支持，X2，&lt;&lt;<PAGE 69>&gt;&gt;）、源版本是否在 ISSU 支持清单、是否需要保留 running 目录名。升级前置四查：certified 配置、U-Boot/FPGA 版本、tech-support 基线、EMP/console 带外通道。固件三件套分层框架（F2，&lt;&lt;<PAGE 4-14>&gt;&gt;/&lt;&lt;<PAGE 77-82>&gt;&gt;）：AOS 镜像（功能性）／引导件 U-Boot·ONIE·BIOS（信任链与启动）／逻辑件 FPGA·CPLD（电源/风扇/PoE/PHY 行为）三者独立演进，版本矩阵按机型×部件列 Minimum/Current；每条 FPGA/U-Boot 升级都对应 CRAOS8X 编号，可反查"该现象要不要升固件"。ISSU 机理（P37，&lt;&lt;<PAGE 67>&gt;&gt;）：VC 按 chassis-id 从低到高逐台从 ISSU 目录重启，Slave 全部完成后 Master 重启引发 takeover；模块化机箱则备 CMM 先升转主。</p>
+<h2 id="a1">A1（决策框架）</h2>
+<ol>
+<li><strong>先核对固件三件套版本</strong>：<code>show hardware-info</code> 查 U-Boot/FPGA 当前版本，对照 System Specifications 表 Minimum 列，低于最小值先走 FPGA/U-Boot 升级（C3，&lt;&lt;<PAGE 4>&gt;&gt;）</li>
+<li><strong>平台在 ISSU 黑名单（6360/6465/6560(E)/6570M）→ 只能标准升级</strong>；其余平台再查源版本支持清单</li>
+<li><strong>标准升级五步</strong>：下载对应机型镜像→FTP 二进制传到 Running 目录→<code>reload from working no rollback-timeout</code>→验证→固化（C4，&lt;&lt;<PAGE 72-73>&gt;&gt;）</li>
+<li><strong>ISSU 十二步</strong>：清 Slave 同名目录→传镜像+issu_version→<code>issu from issu_dir</code>→等 System ready→认证（C5，&lt;&lt;<PAGE 74-76>&gt;&gt;）</li>
+<li><strong>回退兜底</strong>：<code>reload from certified no rollback-timeout</code>（P38，&lt;&lt;<PAGE 73>&gt;&gt;）</li>
+</ol>
+<h2 id="a2">A2（操作步骤）</h2>
+<ul>
+<li><strong>升级前巡检</strong>：<code>show system</code>（版本/Flash 余量）→ 删旧日志 <code>rm *.log</code>/<code>rm *.tar</code> → 检查 /flash/pmd 与 /flash/pmd/work（&lt;10 天的新文件先联系 Support）→ <code>show running-directory</code> 须 CERTIFIED+SYNCHRONIZED，否则 <code>write memory flash-synchro</code>（C1，&lt;&lt;<PAGE 70>&gt;&gt;）</li>
+<li><strong>基线采集</strong>：<code>show tech-support</code> / layer2 / layer3 + <code>show tech-support eng complete</code>（TAR 含 SWLOG），导出留档（C2，&lt;&lt;<PAGE 71>&gt;&gt;）</li>
+<li><strong>标准升级</strong>：镜像名按机型（6360=Nosa.img、6465/6560=Nos.img、6570M=Wos.img、6860/6865=Uos.img、6860N=Uosn.img、6870=Kaos.img、6900=Yos.img、9900=Mos.img+Mhost.img+Meni.img）→ <code>reload from working no rollback-timeout</code>（VC 自动复制镜像到全部 Slave 并整环重启，5-20 分钟）→ 验证 <code>show microcode</code> + <code>show running-directory</code>（CERTIFY NEEDED）→ <code>copy running certified</code>（C4，&lt;&lt;<PAGE 72-73>&gt;&gt;）</li>
+<li><strong>ISSU</strong>：<code>mkdir /flash/issu_dir</code> → <code>debug show virtual-chassis connection</code> 查 Slave VFL IP（127.10.x.65）→ <code>ssh 127.10.2.65</code>（密码 switch）删 Slave 同名目录 → <code>cp /flash/working/*.cfg /flash/issu_dir</code> → FTP 镜像+issu_version → <code>issu from issu_dir</code> → <code>show issu status</code> → <code>debug show virtual-chassis topology</code> 确认全 System Ready → <code>write memory flash-synchro</code> → 可选 <code>copy certified working make-running-directory</code>（C5，&lt;&lt;<PAGE 74-76>&gt;&gt;）</li>
+<li><strong>FPGA/CPLD</strong>：<code>update fpga-cpld cmm all file fpga_kit_9022</code>（all 覆盖 VC 全成员）→ 见 "Reload required" 后重启（C6，&lt;&lt;<PAGE 79-80>&gt;&gt;）</li>
+<li><strong>U-Boot</strong>：<code>update uboot cmm all file /flash/u-boot.8.10.R04.37.tar.gz</code> → 重启生效（C7，&lt;&lt;<PAGE 80>&gt;&gt;）</li>
+<li><strong>ONIE 机型 CPLD/ONIE</strong>：<code>update fpga-cpld cmm all file updater_kit_8629</code>（多 CPLD 需多次执行）→ 手动 reload 进 "ONIE: Update ONIE" 模式（勿按键）→ OS6860N（除 U28）自动 power cycle，其他手动 → <code>pkgmgr install uosn-onie-v1.deb</code>（6870 用 kaos-onie-v1.deb）→ reload 回 running（C8，&lt;&lt;<PAGE 81-82>&gt;&gt;）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>升级前健康巡检与基线采集（C1/C2，&lt;&lt;<PAGE 70-71>&gt;&gt;）</li>
+<li>五步标准升级与回退（C4，&lt;&lt;<PAGE 72-73>&gt;&gt;）</li>
+<li>十二步 ISSU 全流程（C5，&lt;&lt;<PAGE 74-76>&gt;&gt;）</li>
+<li>FPGA/U-Boot/ONIE 三类固件升级（C6/C7/C8，&lt;&lt;<PAGE 79-82>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（反例/坑）</h2>
+<ul>
+<li>ISSU 在 6360/6465/6560(E)/6570M 全系不支持，只能标准升级（X2，&lt;&lt;<PAGE 69>&gt;&gt;）</li>
+<li>ISSU 期间禁止改配置：等 System ready/[L8] 再做 write-memory/配置变更（X14，&lt;&lt;<PAGE 76>&gt;&gt;）</li>
+<li>Slave 存在同名 ISSU 目录会破坏升级：须 SSH 到 Slave（VFL 内网 IP 127.10.x.65）删除（X15，&lt;&lt;<PAGE 75>&gt;&gt;）</li>
+<li>ONIE 机型 CPLD 升级后只启动到 Certified 目录，不回 running，需手动再切（X18，&lt;&lt;<PAGE 82>&gt;&gt;）</li>
+<li>9900 XNI 板用于 CMM2/OS9912 机箱前必须先升 U-Boot 与 FPGA；OS99-XNI-U12Q 与 OS9912 机箱不兼容（X30，&lt;&lt;<PAGE 14>&gt;&gt;）</li>
+<li>8.9R2→8.10R2 升级曾把配置的 SPB 控制 MAC 回落为默认导致邻接丢失，8.10R4 修正——跨版本升级后核查 SPB 邻接（X13，&lt;&lt;<PAGE 94>&gt;&gt;）</li>
+<li>出厂首启 VC 自动化副作用：vcboot.cfg/vcsetup.cfg 只写 working 不写 certified，chassis-id 固定为 1 可能引发冲突，需 reset-to-factory 纠正（P40，&lt;&lt;<PAGE 15>&gt;&gt;）</li>
+<li>6450 动态路由在 uptime 超 828.5 天后老化复位抖动——超长不重启的网关设备升级前留意（X20，&lt;&lt;<PAGE 90>&gt;&gt;）</li>
+</ul>
+<h2 id="_1">来源</h2>
+<p>OmniSwitch AOS Release 8.10R4 Release Notes Appendix D（&lt;&lt;<PAGE 67-71>&gt;&gt;）、Appendix E（&lt;&lt;<PAGE 72-73>&gt;&gt;）、Appendix F（&lt;&lt;<PAGE 74-76>&gt;&gt;）、Appendix G（&lt;&lt;<PAGE 77-80>&gt;&gt;）、Appendix H（&lt;&lt;<PAGE 81-82>&gt;&gt;）、System Specifications（&lt;&lt;<PAGE 4-14>&gt;&gt;）。条目来源：cases C1-C8；principles P37-P40；counter-examples X2/X13/X14/X15/X18/X20/X30；frameworks F1/F2。</p><div class="pn"><a href="../index.html">⬅ 返回课程首页</a><a class="nxt" href="aos-rn-secure-boot.html">下一单元：aos-rn-secure-boot ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

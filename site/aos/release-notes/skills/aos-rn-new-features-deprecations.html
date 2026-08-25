@@ -1,0 +1,107 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>aos-rn-new-features-deprecations — AOS 8.10R04 · Release Notes</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>AOS 8.10R04 · Release Notes</h1>
+<div class="sub">105 页 · 版本说明（升级方法论/Secure Boot/已知问题库/新特性与废弃）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">升级与安全</div>
+<a href="../skills/aos-rn-upgrade-path.html">aos-rn-upgrade-path</a>
+<a href="../skills/aos-rn-secure-boot.html">aos-rn-secure-boot</a>
+<div class="grp">问题与特性</div>
+<a href="../skills/aos-rn-known-issues.html">aos-rn-known-issues</a>
+<a href="../skills/aos-rn-new-features-deprecations.html" class="on">aos-rn-new-features-deprecations</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../aos/index.html">AOS 软件手册</a> › <a href="../index.html">AOS 8.10R04</a> › <span>aos-rn-new-features-deprecations</span></nav><h1>aos-rn-new-features-deprecations</h1><p class="meta"><span class="badge">SKILL</span> aos-rn-new-features-deprecations · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>评估或规划升级到 8.10R4，要盘点能拿到哪些新能力</li>
+<li>升级前检查存量配置是否踩废弃/行为变更（EVB、OVSDB、EVPN VRF 化、ip helper 改名）</li>
+<li>选型时核对特性许可（Premium 捆绑、Advanced Routing、Metro、Performance）</li>
+<li>新硬件（OS6575/OS6920-D32/400G 模块）支持情况查询</li>
+</ul>
+<h2 id="i">I（核心理念)</h2>
+<p>8.10R4 变更分三层看：新特性（管理安全类、L3/业务类、安全类、运维类）按 Feature Matrix 核对平台与首版（F4，&lt;&lt;<PAGE 52-61>&gt;&gt;/&lt;&lt;<PAGE 19>&gt;&gt;：Y=历来支持 / N=不支持 / 版本号=该版引入 / EA=Early Availability 未完整验证不受支持）；许可分层模型（P48，&lt;&lt;<PAGE 19-20>&gt;&gt;）：Data Center 许可（本版均不支持 DCB/FIP/FCoE）→ Feature/Performance（MACsec/10G/MPLS/50G）→ Metro（8.9R1 起 6560 收费）→ Advanced Routing（6560 版限 2 OSPF 区域；8.10R4 加 BGP）→ Premium 捆绑（单文件多子许可，VC 内 Match=全成员一致才生效 / Local-Only=仅本机，P36/X"VC Parity"）。废弃与行为变更（8.5R4-8.10R4）是升级迁移的硬前提，带 EVB 配置的交换机直接禁止升级（X6）。</p>
+<h2 id="a1">A1（决策框架）</h2>
+<ol>
+<li><strong>升前查废弃清单</strong>：存量配置含 EVB/OVSDB/分布式 ARP/WRED/qos dscp-table/ip helper 旧格式等，先清理或改写再升级</li>
+<li><strong>8.10R3+ EVPN 强制 VRF 语境</strong>：旧版 EVPN 配置必须手工迁入对应 VRF context，否则失效（X5，&lt;&lt;<PAGE 18>&gt;&gt;）</li>
+<li><strong>新特性启用三步</strong>：查 Feature Matrix 定平台列→看特性行首版→对照 Licensed Features 表确认许可</li>
+<li><strong>EA 特性不上生产</strong>：可配置但未走完整验证流程、不受官方支持（glossary·EA，&lt;&lt;<PAGE 15>&gt;&gt;）</li>
+<li><strong>自动化适配</strong>：首访强制改密（X8）与 TLS 默认 1.2（P8）影响 REST API/脚本</li>
+</ol>
+<h2 id="a2">A2（操作步骤）</h2>
+<ul>
+<li><strong>新特性速查</strong>（8.10R4 要点）：Router Mode/Edge-router Mode 规模切换（P16/P17，&lt;&lt;<PAGE 26>&gt;&gt;/&lt;&lt;<PAGE 37-38>&gt;&gt;）、IPv6 BGP 聚合（P19）、PIM over GRE（P20）、sFlow BGP Gateway（P21）、EVPN 多站点模型库 Clos-3/5/Collapsed Core/DCI/Multi-PoD/Multi-site（P22）、手工 RD/RT（P23）、PEG+OISM（P24）、ERP over SPB spb-remote-flush（P25）、SPB on 6570M/6575（P26，推荐 Fabric TCAM profile）、Multi-Site SPB/SBN/site-id 突破平面 500-1000 节点上限（P27）、DHL Active-Standby（P18）、Threat-Insight DGA/MITM/JA3（P32）、RoCEv2/DCQCN（P33）、Telemetry IPFIX→Telegraf/InfluxDB/Grafana（P31）、MKA VLAN/TPID 隧道化（P13/C19）、PKIX SSH 智能卡（P9）、TLS 1.3 可配（P8）</li>
+<li><strong>许可核对</strong>：Performance License 解锁端口速率（6560 10G/6570M 25G/6870 50G，默认降速）；MACsec Site License 8.6R1 起强制（免费生成、免重启，P12）；Premium 捆绑按 MAC/序列号生成</li>
+<li><strong>新硬件</strong>：OS6575 家族三形态（P46）、OS6920-D32 32×400G（P45）、QSFPD-400G 系列（C/DR4 500m/FR4 2km/LR4 10km/A10M/SR4.2 可拆 4×100G）、QSFP-100G-SR1.2/PSM4（&lt;&lt;<PAGE 21-22>&gt;&gt;）</li>
+<li><strong>跨版本配置漂移自查</strong>：NTP <code>ip service source-ip ntp</code> 参数 8.5R4 废弃、8.6R2 恢复（X73）；DHCPv6 Guard 接口名格式改 vlan 形式（X69）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>SPB on 6570M 部署：需 premium bundle 许可，6575 默认支持；default 与 Fabric TCAM profile 都支持，推荐 Fabric 获更好性能（P26，&lt;&lt;<PAGE 31>&gt;&gt;）</li>
+<li>DHL 无缝切换规模边界：4000 VLAN 场景下无缝 failover 支持 128 VLAN/1000 MAC，超出需把 pre-empt timer 从 30 秒提到 60 秒防残留 MAC（P44，&lt;&lt;<PAGE 97>&gt;&gt;）</li>
+<li>ERP 与 MACsec 交互：单侧关闭 MACsec/MKA 时 R-APS 仍可交换、环可能回 Idle/RPL 阻塞——预期行为（P43，&lt;&lt;<PAGE 90-91>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（反例/坑）</h2>
+<ul>
+<li>带 EVB 配置的交换机禁止升到 8.5R4 及以上（X6，&lt;&lt;<PAGE 16>&gt;&gt;）</li>
+<li>8.10R3 起旧版 EVPN 配置必须手工迁入 VRF context（X5，&lt;&lt;<PAGE 18>&gt;&gt;）</li>
+<li>OVSDB 8.10R2 起移除；automatic fabric admin-state 8.10R2 起默认禁用（X68，&lt;&lt;<PAGE 17>&gt;&gt;）</li>
+<li>分布式 ARP、WRED、qos dscp-table 于 8.6R2 移除；ip helper→ip dhcp relay（8.6R1，旧 vcboot.cfg 兼容）（X69，&lt;&lt;<PAGE 16>&gt;&gt;）</li>
+<li>8.9R1 起 6560 Metro 特性转收费：CPE Test Head/PPPoE-IA/Ethernet OAM/SAA/Link OAM/VLAN Stacking/DPA/IPMVLAN 需 Metro 许可（X11，&lt;&lt;<PAGE 19>&gt;&gt;）</li>
+<li>6560 两款电源（BP-PH 600W/BP-PX 920W）强制最低 AOS 8.8R1（X10，&lt;&lt;<PAGE 17>&gt;&gt;）</li>
+<li>mrp interconnect 三条命令 8.8R1 存在但不支持（X70，&lt;&lt;<PAGE 17>&gt;&gt;）；Kerberos Snooping 8.7R3 不支持 bridge mode（X71，&lt;&lt;<PAGE 17>&gt;&gt;）</li>
+<li>SPB Auto Fabric BVLAN 默认 16→4（8.7R1）仅对出厂默认且无 vcboot.cfg 的设备生效，升级不改存量（X72，&lt;&lt;<PAGE 17>&gt;&gt;）</li>
+<li>NTP 遵循 RFC 不再同步 stratum 16 服务器，OmniSwitch 级联对时的存量部署会断同步（P41，&lt;&lt;<PAGE 16>&gt;&gt;）</li>
+<li>WebView 法语支持 8.8R2 起移除，默认法语的设备升级后回落英语（X33，&lt;&lt;<PAGE 17>&gt;&gt;）</li>
+<li>6570M TDR 仅限铜口：12/12D 口 1-8；U28 仅 hybrid 口 21-24 且 hybrid-mode=copper（X34，&lt;&lt;<PAGE 38>&gt;&gt;）</li>
+<li>FTP 用户名（RCD）上限 15 字符（X36，&lt;&lt;<PAGE 91>&gt;&gt;）；vcboot.cfg 含明文 key 导致哈希错误，必须用交换机生成的 hash-key/hash-salt（X37，&lt;&lt;<PAGE 91>&gt;&gt;）</li>
+<li>软件获取卡停止随箱附带，软件走 Business Portal（X75，&lt;&lt;<PAGE 16>&gt;&gt;）；8.8R1 起 CVE-2024-6387（regreSSHion）修复默认内建（X74，&lt;&lt;<PAGE 17>&gt;&gt;）</li>
+</ul>
+<h2 id="_1">来源</h2>
+<p>OmniSwitch AOS Release 8.10R4 Release Notes New Features（&lt;&lt;<PAGE 23-40>&gt;&gt;）、Licensed Features（&lt;&lt;<PAGE 19-20>&gt;&gt;）、New Hardware（&lt;&lt;<PAGE 21-22>&gt;&gt;）、Prerequisites 废弃清单（&lt;&lt;<PAGE 15-19>&gt;&gt;）、Appendix A Feature Matrix（&lt;&lt;<PAGE 52-61>&gt;&gt;）。条目来源：principles P8-P27/P31-P33/P36/P41/P43/P44/P45/P46/P48；counter-examples X5/X6/X10/X11/X33/X34/X36/X37/X68-X75；frameworks F4。</p><div class="pn"><a href="aos-rn-known-issues.html">⬅ 上一单元：aos-rn-known-issues</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

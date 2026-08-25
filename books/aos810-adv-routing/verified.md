@@ -1,0 +1,470 @@
+# Verified 候选（V1 原文真实性核对 + V2/V3 抽查）
+
+## cases
+
+- **C1 OSPF 基础九步上线（VLAN→IP 接口→端口→router-id→load/enable→骨干与区域→OSPF 接口→挂区域→使能）**：`vlan 5` / `ip interface vlan-5 …` / `vlan 5 members port 1/2/1` / `ip router router-id 1.1.1.1` / `ip load ospf` + `ip ospf admin-state enable` / `ip ospf area 0.0.0.0` / `ip ospf interface vlan-5` / `ip ospf interface vlan-5 area 0.0.0.0` / `ip ospf interface vlan-5 admin-state enable`，随后 `show ip ospf`、`show ip ospf area`、`show ip ospf interface` 验证。<<<PAGE 21>>>
+- **C2 OSPF 三区域三路由器应用例（骨干 + 每路由器一区域）**：Router 1/2/3 各建 3 个 VLAN（12/23/31 走骨干，10/20/30 接终端），逐台配置 VLAN+IP+端口+router-id、`ip load ospf`、`ip ospf admin-state enable`、创建 Area 0.0.0.0 与 0.0.0.1/2/3、接口挂区并使能，最后用 show 命令体检。<<<PAGE 49>>><<<PAGE 50>>><<<PAGE 51>>><<<PAGE 52>>><<<PAGE 53>>>
+- **C3 Totally Stubby 区域两路由器配置**：Router B（ABR）：`ip ospf area 0.0.0.0` + `ip ospf area 1.1.1.1 type stub` + `summary disable` + `default-metric 0`，两接口分别挂骨干与 Stub 区；Router A（区内）：`type stub` + 接口挂区。<<<PAGE 35>>><<<PAGE 36>>>
+- **C4 OSPF 虚链路创建（两端互指对端 Router ID + 共同 transit 区）**：Router A：`ip ospf virtual-link 0.0.0.1 2.2.2.2`；Router B：`ip ospf virtual-link 0.0.0.1 1.1.1.1`；`show ip ospf virtual-link` 验证。<<<PAGE 39>>>
+- **C5 OSPF 接口认证全套（simple / MD5 / keychain-SHA256）**：`ip ospf interface vlan-213 auth-type simple` + `auth-key test`；MD5：`auth-type md5` + `md5 7` + `md5 7 key "test"`（两条命令）；keychain：`security key…algorithm sha256` + `security key-chain 1 key 125` + `auth-type key-chain 1`。<<<PAGE 37>>><<<PAGE 38>>>
+- **C6 Route Map 三段式重分发 OSPF→BGP（deny 外部 type2/tag5 → permit 指定接口 set metric 255 → 兜底 permit set tag 8）**：`ip route-map ospf-to-bgp sequence-number 10 action deny`（match tag 5 + route-type external type2）…sequence 20 permit（match ipv4-interface intf_ospf + set metric 255）…sequence 30 permit（set tag 8）→ `ip redist ospf into bgp route-map ospf-to-bgp`。<<<PAGE 44>>><<<PAGE 45>>>
+- **C7 用 Route Map 批量生成 OSPF 被动接口**：`ip route-map "R1" action permit` + `match ip-address 10.10.0.0/16` + `set metric-type internal` → `ip redist local into ospf route-map R1 admin-state enable`；`show ip ospf interface` 查看。<<<PAGE 46>>>
+- **C8 OSPF NBMA 静态邻居三步**：建接口并常规配置 → `ip ospf interface vlan-213 type non-broadcast` → `ip ospf neighbor 1.1.1.8 eligible`（不参与 DR 选举则 ineligible）。<<<PAGE 47>>>
+- **C9 OSPF 冗余 CMM 优雅重启**：`ip ospf restart-support planned-unplanned`；可选参数 restart-interval / restart-helper admin-state / strict-lsa-checking / restart initiate；`no ip ospf restart-support` 关闭。<<<PAGE 48>>>
+- **C10 OSPFv3 基础九步上线（ipv6 interface / ipv6 address / ipv6 load ospf…）**：`ipv6 interface test vlan 1` → `ipv6 address 2001::/64 eui-64 test` → `ip router router-id 5.5.5.5` → `ipv6 load ospf` + `ipv6 ospf admin-state enable` → `ipv6 ospf area 0.0.0.0` → `ipv6 ospf interface test area 0.0.0.0` → `ipv6 ospf interface test admin-state enable`。<<<PAGE 57>>>
+- **C11 OSPFv3 三区域应用例**：Router 1/2/3 各建 IPv6 VLAN 接口（2001:1::/64 等）+ router-id，`ipv6 load ospf`，建骨干与 0.0.0.1/2/3，接口挂区（`ipv6 ospf interface vlan-31 area 0.0.0.0`），`show ipv6 ospf*` 验证。<<<PAGE 84>>><<<PAGE 85>>><<<PAGE 86>>><<<PAGE 87>>><<<PAGE 88>>>
+- **C12 OSPFv3 NSSA 参数三件套（translator role / stab-interval / nssa-summarize）**：`ipv6 ospf area 0.0.0.1 nssa-translator role always|candidate`；`nssa-translator-stab-interval 60`；`nssa-summarize c000::/64 [filter]`。<<<PAGE 72>>>
+- **C13 OSPFv3 Loopback0 通告配置**：`ipv6 interface "ipv6-loopback0" loopback0` → `ipv6 address …/128` → `ipv6 ospf interface "ipv6-loopback0" area 0.0.0.0 type point-to-point`。<<<PAGE 73>>>
+- **C14 IS-IS 十步上线（area-id → level → circuit → admin-state）**：`vlan 5 name "vlan-5"` → `ip interface vlan-5…` → `ip load isis` → `ip isis area-id 49.0001` → `ip isis admin-state enable` → `ip isis activate-ipv4` → `ip isis vlan 5` + `address-family v4` → `ip isis vlan 5 admin-state enable`；`show ip isis status` 验证。<<<PAGE 92>>>
+- **C15 IS-IS 双路由器 L1/L2 应用例**：两台各建 vlan-isis（v4+v6 地址）→ `ip load isis` + `ip isis admin-state enable` → 分别 `ip isis area-id 00.0001/00.0002` → `ip isis level-capability level-1/2` → `ip isis vlan vlan-isis address-family v4v6` + `admin-state enable` → `show ip isis adjacency/routes/spf` 验证。<<<PAGE 117>>><<<PAGE 118>>><<<PAGE 119>>>
+- **C16 IS-IS 认证分层配置（simple/MD5/keychain × 全局/level/电路/电路级）**：全局 `ip isis auth-type md5 key 12345`；level 级 `ip isis level 2 auth-type md5 encrypt-key …`；电路级 `ip isis vlan 10 hello-auth-type md5 key 12345`；keychain `ip isis auth-type key-chain 2`。<<<PAGE 106>>><<<PAGE 107>>><<<PAGE 108>>>
+- **C17 IS-IS L1→L2 泄漏 route map**：`ip route-map is2is sequence-number 1 action permit` + `match route-type level1` + `set level level2` → `ip redist isis into isis route-map is2is status enable`。<<<PAGE 115>>>
+- **C18 IS-IS 汇总（v4/v6）**：`ip isis summary-address 100.1.0.0/16 level-2`；IPv6：`ip isis summary-address6 4001::/16 level-1`；`show ip isis summary-address[6]` 验证。<<<PAGE 104>>><<<PAGE 105>>>
+- **C19 M-ISIS 启用与验证**：`ip isis multi-topology`；`show ip isis status` 与 `show ip isis adjacency` 查看；切换模式会复位 IS-IS 邻接。<<<PAGE 120>>><<<PAGE 121>>>
+- **C20 BGP 七步上线（router-id/primary → load → AS 号 → enable → neighbor → remote-as → neighbor enable）**：`ip router router-id 1.1.1.1` + `ip router primary-address 1.1.1.1` → `ip load bgp` → `ip bgp autonomous-system 100` → `ip bgp admin-state enable` → `ip bgp neighbor 198.45.16.145` → `ip bgp neighbor … remote-as 200` → `ip bgp neighbor … admin-state enable`。<<<PAGE 125>>>
+- **C21 BGP EBGP/IBGP 混合五 speaker 应用例**：AS 100 三 speaker 全互联 iBGP + 对 AS 200/300 的 eBGP，逐台给出 neighbor/remote-as/admin-state enable 命令序列。<<<PAGE 173>>><<<PAGE 174>>><<<PAGE 175>>>
+- **C22 BGP 聚合路由配置（summary-only / as-set / 属性覆盖 / admin-state）**：`ip bgp aggregate-address 172.22.2.0 255.255.255.0` → `summary-only` → `as-set` → community/local-preference/metric → `admin-state enable`。<<<PAGE 152>>>
+- **C23 BGP Route Reflection 四步**：`ip bgp admin-state disable` → `ip bgp client-to-client reflection` → 逐 client `ip bgp neighbor 190.17.20.16 route-reflector-client`（IPv6：`ipv6 bgp neighbor 2001::1 route-reflector-client`）→ 冗余 RR：`ip bgp cluster-id 190.17.21.16`。<<<PAGE 162>>><<<PAGE 163>>>
+- **C24 BGP 联邦三步**：`ip bgp confederation-identifier 2` → `ip bgp confederation neighbor 190.17.20.16`（IPv6 用 neighbor6）→ 重复添加全部联邦 peer。<<<PAGE 165>>>
+- **C25 BGP dampening 参数一次到位**：`ip bgp dampening half-life 500 reuse 200 suppress 300 max-suppress-time 1800`（改任一参数须整条按序重输）；`ip bgp dampening clear` 清历史。<<<PAGE 157>>><<<PAGE 158>>><<<PAGE 159>>>
+- **C26 BGP for IPv6：IPv4 peer 换 IPv6 前缀九步**：`ip load bgp` → AS 号 → `ipv6 bgp unicast` → `ip bgp neighbor 23.23.23.23` → `remote-as 200` → `activate-ipv6` → `ipv6-nexthop 2001:100:3:4::1` → peer `admin-state enable` → `ip bgp admin-state enable`。<<<PAGE 178>>>
+- **C27 IPv6 BGP peer（含 link-local 对等）**：`ipv6 bgp neighbor 2001::1` + `remote-as 10` + `activate-ipv6` + `admin-state enable`；link-local 场景加 `ipv6 bgp neighbor fe80::… update-source Vlan2`。<<<PAGE 183>>>
+- **C28 IPv6 BGP 全场景应用例（双栈/纯 IPv6 域）**：Speaker 1/2 双栈对等（ipv4-nexthop 配套）、Speaker 3 纯 IPv6 域（`no ip bgp unicast` + 显式 router-id/primary-address）、Speaker 4 IPv4 对等 + IPv6 转发口、Speaker 5 仅 IPv4。<<<PAGE 195>>><<<PAGE 196>>><<<PAGE 197>>><<<PAGE 198>>>
+- **C29 BGP 策略体系五类创建 + 绑定 peer（aspath/community/prefix/prefix6/route-map）**：如 `ip bgp policy aspath-list aspathfilter "^100 200$" action permit`、community-list + match-type exact、prefix-list + ge/le、route-map 组合；再 `ip bgp neighbor 172.22.2.0 in-aspathlist/out-…/route-map mapfilter in|out`；改动后 `clear soft in|out` 重应用。<<<PAGE 201>>>–<<<PAGE 210>>>
+- **C30 GTSM 配置与验证**：`ip bgp neighbor 10.0.0.1 ttl-security 6`（IPv6：`ipv6 bgp neighbor 2001:db8::1 ttl-security 6`；直连对等用 0）；`show ip bgp neighbors` 的 "Neighbor TTL security" 字段验证。<<<PAGE 212>>><<<PAGE 213>>>
+- **C31 BGP EVPN / VPLS / 邻居模板**：`ip bgp address-family evpn` + `ip bgp neighbor … activate-evpn` + fabric 邻居 `evpn-nbr-type-fabric` + `ip bgp evpn-fabric-autonomous-system 1000`；VPLS：`ip bgp address-family l2vpn-vpls` + `activate l2vpn-vpls`；模板：`ip bgp nbr-template Mytemplate` → `ip bgp neighbor 1.1.1.5 nbr-template Mytemplate`。<<<PAGE 214>>><<<PAGE 215>>><<<PAGE 216>>><<<PAGE 217>>><<<PAGE 218>>>
+- **C32 组播地址边界快速配置（已有/新建接口两种路径）**：`ip load pim` → `ip mroute-boundary vlan-3 239.120.0.0 255.255.0.0` → `show ip mroute-boundary` 验证；新接口路径先 `ip interface vlan-2 address … vlan 3`。<<<PAGE 220>>>
+- **C33 组播边界应用例（核心 239.0.0.0/8 + 两个布线间 239.188.0.0/16 复用同段地址）**：核心交换机 vlan2/178.10.1.1 配 239.0.0.0/8；HR vlan3/178.20.1.1 与 Training vlan4/178.30.1.1 均配 239.188.0.0/16，实现同地址段两域并发使用。<<<PAGE 226>>><<<PAGE 227>>>（图见 <<<PAGE 227>>><<<PAGE 228>>>）
+- **C34 DVMRP 五步上线**：`ip load dvmrp` → `ip interface vlan-2 address … vlan 2` → `ip dvmrp interface vlan-2` → `ip dvmrp admin-state enable` → `write memory`；`show ip dvmrp [interface]` 验证。<<<PAGE 231>>>
+- **C35 DVMRP 隧道配置**：`ip interface "tnl-1" tunnel source 23.23.23.1 destination 155.2.2.2`；源地址接口与隧道接口都要 `ip dvmrp interface` 使能；`show ip dvmrp tunnel` 验证。<<<PAGE 244>>>
+- **C36 PIM-DM 六步上线**：`ip load pim` → `ip interface vlan-2…` → `ip pim interface vlan-2` → `ip pim dense group 225.0.0.0/24` → `ip pim dense admin-state enable` → `write memory`。<<<PAGE 252>>>
+- **C37 PIM-SM Bootstrap/RP 体系（C-RP + C-BSR + static-RP 三选一）**：C-RP：`ip pim candidate-rp 50.1.1.1 225.16.1.1/32 priority 100 interval 100`；C-BSR：`ip pim cbsr 50.1.1.1 priority 100 mask-length 4`；静态：`ip pim static-rp 225.0.0.0/24 10.1.1.1 priority 10`；`show ip pim group-map/candidate-rp/cbsr/static-rp` 验证。<<<PAGE 270>>><<<PAGE 272>>><<<PAGE 273>>>
+- **C38 PIM Anycast RP 双机配置例**：两 RP 各配 Loopback1=10.10.10.1（RP 地址，OSPF 通告）+ 各自 Loopback0；全网所有 PIM 路由器 `ip pim static-rp 224.0.0.0/4 10.10.10.1`；两台 RP 各配完整 RP set（`ip pim anycast-rp 10.10.10.1 192.168.1.1` + `… 192.168.2.2`）；`show ip pim anycast-rp` 验证两侧一致。<<<PAGE 275>>><<<PAGE 276>>>
+- **C39 PIM Register/Join-Prune 打包三命令**：`ip pim register-packing enable|force-enable|disable`；`ip pim register-mtu 1000`；`ip pim register-delay 100`；`show ip pim sparse` 验证 Register Message packing/MTU/Triggered Delay 字段。<<<PAGE 278>>><<<PAGE 279>>>
+- **C40 IPv6 PIM-DM 六步 + Bootstrap/RP 全套（candidate-rp/cbsr/static-rp/rp-switchover）**：`ipv6 pim interface vlan-2` → `ipv6 pim dense group ff0e::1234/128` → `ipv6 pim dense admin-state enable`；SM 侧 `ipv6 pim candidate-rp 2000::1 ff0e::1234/128 priority 100 interval 100`、`ipv6 pim cbsr 2000::1 priority 100 mask-length 4`、`ipv6 pim static-rp ff0e::1234/128 2000::1 priority 10`、`ipv6 pim rp-switchover enable`。<<<PAGE 283>>><<<PAGE 288>>><<<PAGE 289>>><<<PAGE 291>>><<<PAGE 292>>>
+- **C41 MBR 三例（默认 / DVMRP 默认路由 / PIM all-sources）**：基础：`ip load pim`+PIM 接口/组映射/全局使能 + `ip load dvmrp`+DVMRP 接口/全局使能 + `ip mroute mbr admin-state enable`；例2 加 `ip dvmrp interface "vlan-6" mbr-default-information enable`；例3 加 `ip pim mbr all-sources`；`show ip mroute mbr` 看 "Protocols Registered = DVMRP PIM"。<<<PAGE 298>>><<<PAGE 302>>><<<PAGE 303>>>
+
+## counter-examples
+
+## OSPF / OSPFv3
+- **X1 Stub 区域两条硬限制（无虚链路、无 ASBR）**：Two restrictions on the use of stub areas are: Virtual links cannot be configured through stub areas. AS boundary routers cannot be placed internal to stub areas. <<<PAGE 27>>>（OSPFv3 同文见 <<<PAGE 64>>>）
+- **X2 NSSA/完全末节区域内同样禁虚链路，且区域类型必须全网一致**：AS-external LSAs are not flooded into an NSSA and virtual links are not allowed in an NSSA. …All routers in an NSSA must have their OSPF area defined as an NSSA. To configure otherwise will ensure that the router will be unsuccessful in establishing an adjacent in the OSPF domain. <<<PAGE 28>>><<<PAGE 65>>>
+- **X3 虚链路是"最后手段"，不连续骨干是劣构**：This is not an ideal OSPF configuration, and maximum effort should be made to avoid this situation. …Accepted network design theory states that virtual links are the option of last resort. <<<PAGE 26>>><<<PAGE 39>>>
+- **X4 单路由器不建议带超过三个区域**：standard networking design does not recommended that more than three areas be handled on a single router. <<<PAGE 33>>><<<PAGE 70>>>
+- **X5 ECMP 只看度量不看带宽，可能选中慢链路**：So it is possible for OSPF to decide two paths have an equal cost even though one may contain faster links than another. <<<PAGE 29>>>
+- **X6 接口名不能含空格**：The interface name cannot have spaces. <<<PAGE 21>>><<<PAGE 36>>><<<PAGE 73>>>
+- **X7 MD5 key ID 与 key string 必须两条命令分别设置**：Note that setting the key ID and key string must be done in two separate commands. <<<PAGE 37>>>
+- **X8 被动接口上已存在的邻接会立即拆除**：if a OSPF-enabled interface is configured as passive where an adjacency already exists, the adjacency drops almost immediately. <<<PAGE 46>>>
+- **X9 多区域域中被动接口只会生成在 Area ID 最小的区域**：If there are multiple areas configured in an OSPF domain, the passive OSPF interfaces will be created in the area with the lowest-numbered Area ID, which is usually the Backbone Area. <<<PAGE 46>>>
+- **X10 从内存移除 OSPF/OSPFv3/IS-IS 必须手改 boot.cfg 并重启**：To remove OSPF from the router memory, it is necessary to manually edit the boot.cfg file. …For the operation to take effect the switch needs to be rebooted. <<<PAGE 33>>><<<PAGE 70>>><<<PAGE 102>>>
+- **X11 接口参数可一次配多个但只能逐个恢复默认**：Although you can configure several parameters at once, you can only reset them to the default one at a time. <<<PAGE 39>>>
+- **X12 OSPF stub default-metric 当前仅支持 ToS 0**：At this time, only the default metric of ToS 0 is supported. <<<PAGE 35>>>
+- **X13 NBMA 的 DR eligibility 配置必须与其他路由器接口优先级一致**：the neighbor eligibility configuration for a router on every other router should match the routers interface priority configuration. <<<PAGE 29>>>
+## IS-IS
+- **X14 IS-IS GR 当前仅支持 helper 模式**：In the current release, only the graceful restart helper mode is supported. <<<PAGE 116>>>
+- **X15 IS-IS GR 仅在堆叠备/空闲交换机的活动口上支持**：Graceful restart is only supported on active ports (i.e., interfaces), which are on the secondary or idle switches in a stack during a takeover. It is not supported on ports on a primary switch in a stack. <<<PAGE 116>>>
+- **X16 次 CMM 路由 MAC 不同或 VLAN 端口在主模块时，STP 重收敛可能中断 GR 转发**：If the secondary module has a different router MAC than the primary module, or if one or more ports of a VLAN belonged to the primary module, spanning tree re-convergence might disrupt forwarding state, even though IS-IS performs a graceful restart. <<<PAGE 116>>>
+- **X17 route map 的 tag 参数当前版本不支持**：The tag parameter is not supported in the current release. <<<PAGE 110>>>
+- **X18 metric 大于 64 必须先开 wide-metrics**：Wide metrics need to be enabled, if a metric of more than 64 is configured. <<<PAGE 115>>>
+- **X19 每路由器最多 3 个 area ID**：Each router can have a maximum of 3 area IDs assigned to it. <<<PAGE 102>>>
+- **X20 L1 内部路由不能汇总（只有外部重分发路由可以）**：It is not possible to summarize IS-IS internal routes at Level-1, although it is possible to summarize external (redistributed) routes. <<<PAGE 104>>>
+- **X21 点到点链路两端口 L1 未配认证时，无论 L2 配置如何 L1 hello 都裸奔**：On a point-to-point link with both levels enabled, if no authentication is configured for Level 1, the hello packets are sent without any password regardless of the Level 2 authentication configurations. <<<PAGE 107>>>
+- **X22 retransmit 间隔须大于往返时延否则无谓重传**：The retransmit interval should be greater than the expected round-trip delay between two devices. This will avoid any needless retransmission of PDUs. <<<PAGE 110>>>
+- **X23 切换 multi-topology 模式会复位全部 IS-IS 邻接**：Changing the multi-topology mode with this command will result in internal disabling and re-enabling of IS-IS protocol, with the new mode of operation. This causes IS-IS adjacencies to be reset. <<<PAGE 120>>>
+- **X24 encrypt-key 只接受系统生成的合法值**：Only valid system generated values are accepted as encrypt-key. <<<PAGE 106>>>
+## BGP
+- **X25 一批全局命令改前必须先禁用 BGP（AS 号、本地优先、MED、同步、RR、cluster-id 等）**：Many BGP global commands require the user to disable the protocol before changing parameters. <<<PAGE 139>>>
+- **X26 CIDR 斜杠写法不支持于 CLI，需写全掩码**：Although CIDR is supported by the router, CIDR route notation is not supported on the CLI command line. For example, in order to enter the route "198.16.10.0/24" input "198.16.10.0 255.255.255.0". <<<PAGE 137>>>
+- **X27 MP-BGP 当前不支持 IPv6 dampening、IPv6 聚合、VPN/MPLS 标签等多协议能力**（注意：IPv6 aggregate 的配置小节后文出现，存在文档内部矛盾）：Some features that are not supported in the current release of Multiprotocol BGP include: IPv6 route-flap dampening…IPv6 route aggregation…Other multiprotocol capabilities for VPNs, MPLS label exchanges. <<<PAGE 177>>>
+- **X28 AS 正则常见错误：数字超界、逗号被当分隔符、括号嵌套、^ 不在首/$ 不在尾、重复符不能作用于行首**：66543 Number is too large. AS numbers must be in the range 1 to 65535. / Parthentheses may not be nested. / The "^" metacharacter must occur first in the pattern… <<<PAGE 136>>>
+- **X29 dampening 参数必须整条按序一次输入，不能单独改**：To change one variable to a number different than its default value, you must enter all of the variables with the ip bgp dampening command in the correct order. <<<PAGE 157>>>
+- **X30 无聚合内至少一条更精确路由则聚合不成立**：You cannot aggregate an address (for example, 100.10.0.0) if you do not have at least one more-specific route of the address (for example, 100.10.20.0) in the BGP routing table. <<<PAGE 152>>>
+- **X31 RR 冗余过多会推高内存**：Using many redundant reflectors is not recommended as it places demands on the memory required to store routes for all redundant reflectors' peers. <<<PAGE 163>>>
+- **X32 同步开启会给 AS 内非 BGP 路由器带来大负担**：since routes learned over external BGP can be numerous, enabling synchronization can place an extra burden on non-BGP routers. <<<PAGE 144>>>
+- **X33 BGP 软件不随启动自动加载，须手动 ip load bgp**：The BGP software is not loaded automatically when the router is booted. The user must manually load the software into memory. <<<PAGE 125>>>
+- **X34 BGP peer 不会动态学习，必须逐个显式配置**：BGP peers are not dynamically learned. BGP peers must be explicitly configured on the router using the ip bgp neighbor command. <<<PAGE 147>>>
+- **X35 部分 peer 命令（如定时器）不自动复位会话，需手动 clear 才生效**：there are some peer commands (such as those configuring timer values) that do not reset the peer. If you want these parameters to take effect, then you must manually restart the BGP peer using the ip bgp neighbor clear command. <<<PAGE 149>>>
+- **X36 纯 IPv6 网络必须显式配置 router-id 与 IPv4 primary 地址（AGGREGATOR 用）**：In homogeneous IPv6 networks (i.e., in the absence of IPv4 interface configuration), the router's router ID and the primary address must be explicitly configured prior to configuring the BGP protocol. <<<PAGE 179>>>
+- **X37 IPv4 地址对等且已建会话时不能关 IPv4 unicast**：However, in IPv6 environments where the BGP speakers have established peering using their IPv4 addresses, IPv4 unicasting may not be disabled. <<<PAGE 180>>>
+- **X38 GTSM 与 eBGP multihop 互斥，同配报错；GTSM 须两端同配**：When GTSM is enabled, eBGP multihop must be disabled or vise-versa. Attempting to configure GTSM when eBGP multihop is configured or vice-versa will display an error message. …GTSM must be manually configured on all the participating switch in the peering session. <<<PAGE 212>>>
+- **X39 route map policy 引用的子策略必须先创建，否则报错**：Conditions added to a route map policy must have already been created using their respective policy commands. If you attempt to add non-existent policies to a route map policy, an error message is returned. <<<PAGE 205>>>
+- **X40 VPLS 能力依赖 MPLS license 与 MPLS BGP 二进制，启用前必须先禁 BGP**：To enable VPLS capabilities in BGP, MPLS license must be installed first. …BGP protocol must be disabled using the ip bgp admin-state command before enabling VPLS capabilities in BGP. <<<PAGE 214>>>
+- **X41 BGP 邻居模板当前仅支持 EVPN 族命令**：Currently, BGP neighbor template is supported only for EVPN family commands. <<<PAGE 218>>>
+- **X42 模板不会覆盖已存在的个体 peer 配置，想生效须先删个体配置**：Once the template is applied on the peer, the template configurations will not override the existing BGP peer configuration until the individual BGP peer configuration is present. To apply the BGP neighbor template configuration on the peer, first remove the individual peer configuration. <<<PAGE 218>>>
+- **X43 VRF 内 BGP peer 默认上限 32**：By default, maximum of 32 peers per VRF is supported. <<<PAGE 144>>>
+## DVMRP / PIM / MBR
+- **X44 每接口仅支持一个组播路由协议（PIM 与 DVMRP 不能同接口共存）**：Only one multicast routing protocol is supported per interface. This means that you cannot enable both PIM and DVMRP on the same interface. <<<PAGE 238>>><<<PAGE 266>>>
+- **X45 协议未加载即配置会报 "application is not loaded"**：If DVMRP is not loaded and you enter a configuration command, the following message displays: ERROR: The specified application is not loaded. <<<PAGE 237>>><<<PAGE 265>>>
+- **X46 组播边界地址必须是 239/8 管理作用域段**：The boundary address must be an administratively-scoped multicast address from 239.0.0.0 to 239.255.255.255. <<<PAGE 224>>>
+- **X47 修改 prune-lifetime 可能令已接收的 prune 提前/延后过期，只能谨慎改**：the value of ip dvmrp prune-lifetime should only be modified with caution. …received prunes may expire sooner or later than the neighbor expects. <<<PAGE 243>>>
+- **X48 show ip dvmrp prune 只显示发出的 prune 不显示收到的**：However, note that this command does not display received prunes. <<<PAGE 243>>>
+- **X49 隧道两端（源地址接口与隧道接口）都要使能 DVMRP 否则不 operational**：DVMRP needs to be enabled on the IP interface of the source address of the tunnel and also on the configured tunnel interface. The tunnel will be operational only when the DVMRP interface is also operational. <<<PAGE 244>>>
+- **X50 flash-interval 必须小于 report-interval**：Routing Table Change messages are sent between transmissions of the complete routing tables…For this reason, the Flash Interval value must be lower than the Route Report interval. <<<PAGE 241>>>
+- **X51 老版本 DVMRP 用 Route Report 而非 Probe 做邻居发现（互通注意）**：Older versions of DVMRP use Route Report messages to perform neighbor discovery rather than the Probe messages used in DVMRP Version 3. <<<PAGE 233>>><<<PAGE 240>>>
+- **X52 邻居有初始大流量冲击问题时建议把 subord-default 改 false**：if neighbors in the DVMRP domain have difficulty handling large initial bursts of traffic, it is recommended that the subordinate neighbor status is changed to false. <<<PAGE 237>>>
+- **X53 OmniSwitch PIM 只兼容 SMv2，不兼容 SMv1**：The OmniSwitch supports PIM-DM and PIM-SMv2 but is not compatible with PIM-SMv1. <<<PAGE 254>>>
+- **X54 Hello 报文无法区分 DM/SM 邻居，DM 不应与 SM 直接交互**：A PIM router cannot differentiate a PIM-DM neighbor and a PIM-SM neighbor based on Hello messages, and PIM-DM is not intended to interact directly with a PIM-SM router. <<<PAGE 258>>>
+- **X55 SPT 状态关闭则 SPT 切换不发生**：SPT status must be enabled for SPT switchover to occur. If the SPT status is disabled, the SPT switchover will not occur. <<<PAGE 262>>>
+- **X56 SSM 默认地址段（232/8、FF3x::/32）不会自动启用，须手动配置**：The PIM-Source-Specific Multicast (SSM) mode for the default SSM address range is not enabled automatically and needs to be configured manually to support SSM. <<<PAGE 264>>><<<PAGE 282>>>
+- **X57 IGMP 代理场景必须 v3 否则 PIM-SSM 不工作**：For networks using IGMP proxy, be sure that the IGMP proxy version is set to Version 3. Otherwise, PIM-SSM will not function. <<<PAGE 264>>>
+- **X58 改 max-rps 前必须先全局禁用 PIM-SM**：PIM must be globally disabled on the switch before changing the maximum number of RPs. <<<PAGE 271>>>
+- **X59 C-RP 配置在未使能 PIM 的接口上会报错**：If you attempt to configure an interface that is not PIM enabled as a C-RP, you will receive the following error message: ERROR: PIM is not enabled on this Interface. <<<PAGE 270>>>
+- **X60 每交换机只支持一个 RP 地址**：Only one RP address is supported per switch. If multiple candidate-RP entries are defined, they must use the same RP address. <<<PAGE 270>>>
+- **X61 priority 与 override 参数互斥，配了 priority 则 override 失效**：As specifying the priority value obsoletes the override option, you can use only the priority parameter or the override parameter. <<<PAGE 268>>><<<PAGE 273>>>
+- **X62 Anycast-RP 地址不能与 Router ID 相同（建议用 Loopback0 之外的接口）**：The Router ID used by the unicast routing protocols must not be the same as the IP address being used for this Anycast-RP address. <<<PAGE 275>>>
+- **X63 Anycast-RP 静态 RP 配置必须配在域内所有 PIM 路由器，不只是 RP 成员**：This static configuration must exist on all PIM routers in the PIM domain, not just those routers that are participating in the Anycast-RP set. <<<PAGE 275>>>
+- **X64 register-packing 配 Anycast-RP 时仅当 RP set 全体支持才启用；建议全 domain force-enable**：PIM register packing should be enabled only if it is supported by all PIM anycast RP members in the RP set for the RP address. <<<PAGE 278>>>
+- **X65 Register/Join-Prune 打包仅 SM 支持（DM 无周期 Join，不支持）**：This feature will only work with PIM-SM, PIM-SSM and PIM-BIDIR. This feature will not be supported with PIM-DM. <<<PAGE 280>>><<<PAGE 295>>>
+- **X66 register-mtu 过大且 RP 不支持时会产生分片重组，不建议调大**：It is not recommended to configure to a large value unless it is known that all the RP routers in the domain can support the MTU size. <<<PAGE 279>>>
+- **X67 Join/Prune 实际最大尺寸取接口 IP MTU 与配置值的较小者**：the actual maximum size used for PIM Join/Prune messages will be the smaller of the IP MTU value of the interface and the configured PIM interface Join/Prune MTU value. <<<PAGE 280>>>
+- **X68 MBR 不支持 PIM-SSM，也不支持 PIM 与其他协议或多个 PIM 域之间互通**：Interoperability between PIM and other protocols or between multiple PIM domains is not supported. In addition, PIM support refers only to PIM-DM and PIM-SM (PIM-SSM is not supported). <<<PAGE 299>>>
+- **X69 MBR 使能但 PIM/DVMRP 未各有一个 enabled 接口前不 operational**：It is possible for MBR to be enabled, but until both PIM and DVMRP have enabled at least one interface and are active, then MBR functionality is still not operational. <<<PAGE 300>>>
+- **X70 MBR 的 DVMRP 默认路由不能向 MBONE 通告**：When enabling this type of advertisement, make sure that the default route is not advertised on the MBONE. <<<PAGE 302>>>
+- **X71 高级路由特性需购买附加包，且平台支持随机型差异（见规格与发布说明）**：The routing protocols described in this manual are purchased as an add-on package to the base switch software. <<<PAGE 12>>>
+
+## frameworks
+
+- **F1 IGP 三协议统一配置骨架（本书 OSPF/OSPFv3/IS-IS 章共用范式）**：准备网络（VLAN/IP 接口/端口/router-id）→ 加载并使能协议（ip load X / X admin-state enable）→ 建区域或 area-id → 建接口并挂区域 → 可选：认证/定时器/汇总/虚链路/重分发(route map)/静态邻居 → 优雅重启 → 应用例 → show 验证。各章 "Configuring X" 任务列表显式给出该序列（OSPF：<<<PAGE 31>>>；OSPFv3：<<<PAGE 68>>>；IS-IS：<<<PAGE 100>>>）。
+- **F2 链路状态协议统一原理骨架（泛洪→一致 LSDB→SPF 最短路径树→路由表）**：Each participating router distributes its local state…throughout the AS by flooding…The flooding algorithm ensures that all routers have exactly the same topological database. From this database each router calculates a shortest-path tree, with itself as root. This shortest-path tree in turn yields a routing table.（OSPF/OSPFv3/IS-IS 三章同构表述：<<<PAGE 24>>><<<PAGE 61>>><<<PAGE 96>>>）
+- **F3 区域分层路由体系（两层层级 + 路由器角色分类）**：区域隔离拓扑知识（"An area's topology is visible only to the members of the area"，<<<PAGE 25>>>）；骨干/Level-2 负责区间分发；路由器按角色分类（OSPF 四类：Internal/ABR/Backbone/ASBR，<<<PAGE 26>>>；IS-IS 三类：L1/L1-2/L2，<<<PAGE 98>>>）。
+- **F4 Route Map 重分发统一模型（Action/Match/Set + 序列 OR + 同类 OR/异类 AND + ip redist 挂接）**：A route map specifies the criteria that are used to control redistribution of routes between protocols…three different types of statements: Action…Match…Set.（OSPF：<<<PAGE 40>>><<<PAGE 42>>>；OSPFv3：<<<PAGE 76>>><<<PAGE 78>>>；IS-IS：<<<PAGE 110>>><<<PAGE 113>>>；BGP：<<<PAGE 166>>><<<PAGE 169>>>）——同一机制跨四章复用，是 AOS 的核心策略框架。
+- **F5 BGP 策略体系（四类原子策略 + route map 聚合 + peer 的 in/out 绑定 + soft 重配置）**：There are four main policy types: AS Path…Community Lists…Prefix Lists…Route Maps…each BGP peer needs to be tied to inbound and/or outbound policies.（<<<PAGE 133>>><<<PAGE 201>>>）；绑定与重应用命令族见 <<<PAGE 206>>>–<<<PAGE 210>>>。
+- **F6 优雅重启统一模型（重启方通告 + helper 维持邻接/LSA + 宽限期 + LSA/拓扑变化终止条件）**：OSPF：<<<PAGE 30>>>；OSPFv3（Grace-LSA）：<<<PAGE 67>>>；IS-IS（IIH 携带重启信号 + CSNP 同步）：<<<PAGE 98>>>；BGP（graceful-restart + restart-interval）：<<<PAGE 172>>>。四协议同一"takeover→重建邻接→helper 支撑转发不断"的框架。
+- **F7 组播路由体系（密集模式泛洪-剪枝 vs 稀疏模式显式加入的双范式 + SSM 第三范式）**：密集（DVMRP/PIM-DM）："broadcast and prune"…flooded down the delivery tree…prunes（<<<PAGE 229>>><<<PAGE 258>>>）；稀疏（PIM-SM）：multicast forwarding…initiated only via specific requests, referred to as Join messages（<<<PAGE 254>>>）；SSM：explicit channel subscription model…without the use of a Rendezvous Point（<<<PAGE 264>>>）。
+- **F8 PIM-SM 控制体系（RP/BSR/DR/RPT/SPT 五要素及其选举与切换机制）**：RP 与 C-RP（<<<PAGE 254>>>）、BSR 与 C-BSR 选举（<<<PAGE 255>>>）、DR 选举与 Register 封装（<<<PAGE 255>>>）、RPT 共享树（<<<PAGE 255>>><<<PAGE 256>>>）、RP 阈值 Join 与 SPT 切换（<<<PAGE 259>>>–<<<PAGE 263>>>）；组到 RP 映射算法四步（<<<PAGE 276>>>）。
+- **F9 组播域隔离与边界互通体系（地址边界 + MBR）**：管理作用域地址 239/8（<<<PAGE 221>>>）+ ip mroute-boundary 域复用（<<<PAGE 222>>><<<PAGE 223>>>）+ MBR 连接 PIM/DVMRP 两域（RFC 2715，<<<PAGE 297>>><<<PAGE 299>>>）。
+- **F10 IPv4/IPv6 双栈对称配置框架（ipv6 镜像命令族：ospf/redist/pim/ospfv3/redist 全套）**：全书 OSPFv3 章（<<<PAGE 55>>>–<<<PAGE 88>>>）、BGP for IPv6（<<<PAGE 177>>>–<<<PAGE 200>>>）、IPv6 PIM（<<<PAGE 282>>>–<<<PAGE 296>>>）均按"同机制、ipv6 前缀命令"组织，形成 v4/v6 平行框架；BGP 层面由 MP-BGP（MP_REACH/MP_UNREACH_NLRI）承载（<<<PAGE 177>>>）。
+
+## glossary
+
+- **OSPF（Open Shortest Path First）**：链路状态 IGP，在单一 AS 内分发路由信息，选最低开销路径。 <<<PAGE 24>>>
+- **IGP（Interior Gateway Protocol，内部网关协议）**：自治系统内部使用的路由协议（如 OSPF、IS-IS）。 <<<PAGE 24>>>
+- **LSA（Link State Advertisement，链路状态通告）**：路由器本地状态的通告单元，泛洪构建拓扑库。 <<<PAGE 24>>>
+- **LSDB（Link State Database，链路状态数据库）**：由全部 LSA 汇成的区域拓扑库。 <<<PAGE 20>>>
+- **SPF（Shortest Path First，最短路径优先算法）**：以自身为根计算最短路径树。 <<<PAGE 24>>>
+- **Area（区域）**：连续网络与主机的分组，各区域独立运行 SPF、维护独立拓扑库。 <<<PAGE 25>>>
+- **Backbone（骨干区，Area 0.0.0.0）**：负责区间路由信息分发的特殊区域，必须连续。 <<<PAGE 25>>>
+- **ABR（Area Border Router，区域边界路由器）**：连接多区域的路由器，为每区域运行一份 SPF 并浓缩拓扑。 <<<PAGE 26>>>
+- **ASBR（AS Boundary Router，自治系统边界路由器）**：与其他 AS 交换路由信息的路由器。 <<<PAGE 26>>>
+- **Internal Router（内部路由器）**：所有直连网络同属一个区域的路由器。 <<<PAGE 26>>>
+- **Virtual Link（虚链路）**：穿越 transit 区恢复骨干连续性的逻辑点到点链路。 <<<PAGE 26>>>
+- **Transit Area（转接区域）**：虚链路所穿越的非骨干区域。 <<<PAGE 26>>>
+- **Stub Area（末节区域）**：不含 AS 外部 LSA、依赖默认路由的区域。 <<<PAGE 27>>>
+- **NSSA（Not-So-Stubby Area，非纯末节区域）**：可用 Type-7 LSA 选择性导入外部路由的末节扩展（RFC 1587）。 <<<PAGE 28>>>
+- **Type-7 LSA**：NSSA 内泛洪、在 NSSA 边界翻译为 AS-external LSA 的 LSA 类型。 <<<PAGE 28>>>
+- **Totally Stubby Area（完全末节区域）**：在 Stub 基础上再过滤 Type-3 汇总 LSA、仅留默认路由的区域。 <<<PAGE 28>>>
+- **ECMP（Equal Cost Multi-Path，等价多路径）**：等开销路径同时保留并按流分发。 <<<PAGE 29>>>
+- **NBMA（Non Broadcast Multi Access，非广播多路访问）**：需静态配置邻居、要求全互联的网络类型。 <<<PAGE 29>>>
+- **Point-to-Multipoint（点到多点）**：非广播网络的另一种 OSPF 运行模式。 <<<PAGE 29>>>
+- **DR / BDR（Designated Router / Backup DR，指定路由器/备份）**：多路访问网络上代表全网泛洪 LSA 的选举角色。 <<<PAGE 24>>>
+- **Graceful Restart（优雅重启，GR）**：主备 CMM 接管期间由 helper 维持邻接与 LSA 的不间断机制。 <<<PAGE 30>>>
+- **Takeover（接管）**：主 CMM 失效时备 CMM 立即接管主角色。 <<<PAGE 30>>>
+- **CMM（Chassis Management Module，机箱管理模块）**：机箱式交换机的管理模块，可双模块冗余。 <<<PAGE 30>>>
+- **Helper Router（辅助路由器）**：GR 期间替重启路由器维持 LSA 与邻接的邻居。 <<<PAGE 30>>>
+- **Passive Interface（被动接口）**：不收发路由更新、仅向邻居通告该接口网络的接口。 <<<PAGE 46>>>
+- **Route Map（路由映射）**：由 Action/Match/Set 语句控制重分发的策略对象。 <<<PAGE 40>>>
+- **Redistribution（重分发）**：把源协议学到的路由注入目的协议。 <<<PAGE 43>>>
+- **IP Access List（IP 访问列表）**：把多条 IPv4/IPv6 地址聚合进 route map 的机制。 <<<PAGE 43>>>
+- **Area Range（区域范围）**：ABR 上把多条区域路由汇总成单条通告，兼作过滤。 <<<PAGE 35>>>
+- **Router ID（路由器标识）**：点分十进制标识，未配置时自动取主接口地址。 <<<PAGE 32>>>
+- **Dead Interval（死亡间隔）**：未收到 Hello 判邻居失效的时间（广播/P2P 默认 40s，NBMA 120s）。 <<<PAGE 20>>>
+- **Hello Interval / Poll Interval**：Hello 周期（默认 10s/30s）与 NBMA 轮询间隔（默认 120s）。 <<<PAGE 20>>>
+- **SPF Timer（delay/hold）**：SPF 计算的延迟与抑制定时器（默认 5/10）。 <<<PAGE 20>>>
+- **Keychain Authentication（密钥链认证）**：定期轮换密钥的认证方式，可配 SHA256。 <<<PAGE 38>>>
+- **ip load ospf**：把 OSPF 软件动态加载进运行内存的命令。 <<<PAGE 32>>>
+
+## 第 2 章 OSPFv3
+- **OSPFv3**：OSPFv2 的 IPv6 版本，机制与 v2 对应。 <<<PAGE 55>>>
+- **Grace-LSA**：OSPFv3 GR 用链路本地 Opaque-LSA 通告重启意图与宽限期。 <<<PAGE 67>>>
+- **Opaque-LSA**：可扩展携带附加信息的 LSA 类别。 <<<PAGE 67>>>
+- **NSSA Translator Role（always/candidate）**：NSSA 边界路由器是否无条件承担 Type-7→Type-5 翻译。 <<<PAGE 72>>>
+- **NSSA Translator Stability Interval**：翻译者角色交接后的稳定间隔（默认 40s）。 <<<PAGE 72>>>
+- **area-summary（noareasummary/sendareasummary）**：控制汇总 LSA 是否进入 Stub/NSSA。 <<<PAGE 71>>>
+- **nssa-summarize**：NSSA 内 IPv6 前缀汇总为外部 LSA 通告，filter 可抑制。 <<<PAGE 72>>>
+- **Loopback0 Interface**：不绑定 VLAN、永久 up 的管理用环回接口。 <<<PAGE 151>>>（OSPFv3 通告需 point-to-point：<<<PAGE 73>>>）
+- **Link-Local Address（链路本地地址）**：OSPFv3/IPv6 邻居与对等使用的 fe80::/10 地址。 <<<PAGE 82>>>
+
+## 第 3 章 IS-IS
+- **IS-IS（Intermediate System-to-Intermediate System）**：ISO 定义的链路状态 IGP，同时支持 IP 与 OSI 环境。 <<<PAGE 89>>>
+- **CLNP / CLNS**：IS-IS 承载所用的无连接网络协议/服务（即便纯 IP 环境也需 ISO 地址）。 <<<PAGE 89>>>
+- **NSAP（Network Service Access Point）**：OSI 网络层地址，由 Area ID + System ID + NSEL 组成。 <<<PAGE 95>>>
+- **NET（Network Entity Title）**：NSEL=00 的 NSAP，即 IS-IS 网络层地址。 <<<PAGE 95>>>
+- **System ID**：NSAP 中 6 字节设备标识（常用 MAC 或 Loopback IP）。 <<<PAGE 95>>>
+- **Level-1 / Level-2 / Level-1/2**：IS-IS 区内/区间/双能力路由层级。 <<<PAGE 98>>>
+- **IIH（IS-IS Hello）**：邻居发现与邻接建立的 Hello 报文。 <<<PAGE 97>>>
+- **LSP（Link State Packet）**：IS-IS 的链路状态通告，含邻接、前缀、区域等信息。 <<<PAGE 97>>>
+- **CSNP（Complete Sequence Number PDU）**：全量 LSP 清单，用于数据库同步。 <<<PAGE 97>>>
+- **PSNP（Partial Sequence Number PDU）**：请求与确认 LSP 的部分序号报文。 <<<PAGE 97>>>
+- **DIS（Designated Intermediate System）**：广播网上的指定中间系统，按优先级/SNPA 选举。 <<<PAGE 95>>>
+- **SNPA（Subnetwork Point of Attachment）**：子网连接点，通常即 MAC 地址。 <<<PAGE 95>>>
+- **Wide Metrics（宽度量）**：支持大于 64 度量值的扩展 metric。 <<<PAGE 115>>>
+- **Level-1 to Level-2 Leaking（L1→L2 泄漏）**：把 L1 路由注入 L2（反向前缀分发亦支持）。 <<<PAGE 115>>>
+- **M-ISIS（Multi-Topology IS-IS）**：单域内为 IPv4/IPv6 分别跑独立 SPF/RIB 的多拓扑模式。 <<<PAGE 120>>>
+- **MT ID / MT TLV**：多拓扑标识（IPv4=0，IPv6=2）与 Hello/LSP 中的能力通告 TLV。 <<<PAGE 120>>>
+- **Overload State（过载状态）**：指示路由器参与转发的过载比特，可带超时配置。 <<<PAGE 116>>>
+- **ip isis area-id**：创建 IS-IS 区域标识（1–13 字节，每路由器最多 3 个）。 <<<PAGE 102>>>
+- **Strict Adjacency Check（严格邻接检查）**：GR 期间邻接一致性检查开关。 <<<PAGE 90>>>
+
+## 第 4 章 BGP
+- **BGP（Border Gateway Protocol）**：自治系统间交换路由的外部网关协议，本实现支持 BGP-4。 <<<PAGE 123>>>
+- **AS（Autonomous System，自治系统）**：单一策略、单一管理下的路由器集合。 <<<PAGE 127>>>
+- **ASN / 4-Octet ASN**：AS 编号；4 字节 ASN 按 RFC 6793 支持，兼容 2 字节设备。 <<<PAGE 127>>>
+- **AS_TRANS（23456）**：4 字节与 2 字节 ASN 互通用的保留 2 字节 AS 号。 <<<PAGE 128>>>
+- **asplain / asdot+ / asdot**：4 字节 ASN 的三种表示格式。 <<<PAGE 128>>>
+- **IBGP / EBGP（Internal/External BGP）**：AS 内部 / AS 之间的 BGP 会话。 <<<PAGE 129>>>
+- **Transit AS（穿越自治系统）**：为其他 AS 转发流量的多宿主 AS。 <<<PAGE 129>>>
+- **TCP 179**：BGP 承载协议与端口。 <<<PAGE 126>>>
+- **AS_PATH**：路由穿越的 AS 序列属性，兼作环路检测。 <<<PAGE 126>>>
+- **AS4_PATH / AS4_AGGREGATE**：与旧 BGP 互通时携带 4 字节 AS 信息的可选过渡属性。 <<<PAGE 128>>>
+- **NEXT_HOP**：BGP 最重要的路径属性之一，指下一跳。 <<<PAGE 126>>>
+- **Local Preference（本地优先级）**：AS 内选路偏好，数值越高越优先（默认 100）。 <<<PAGE 141>>>
+- **MED（Multi Exit Discriminator，多出口鉴别器）**：向邻居 AS 建议的出口权重，越低越优先，不向下一 AS 传播。 <<<PAGE 143>>>
+- **Community（团体）**：以 AS:编号 标识的路由逻辑分组（如 no-export、no-advertise、no-export-subconfed）。 <<<PAGE 130>>><<<PAGE 164>>>
+- **Route Reflector（RR，路由反射器）**：集中反射 IBGP 路由以避免全互联的服务角色。 <<<PAGE 131>>>
+- **RR Client / Non-Client**：与 RR 同 AS 的两类内部对等；client 免全互联，non-client 需全互联。 <<<PAGE 161>>>
+- **Cluster（集群）**：RR 及其 client 组成的集合；冗余 RR 以 cluster-id 标识。 <<<PAGE 161>>><<<PAGE 163>>>
+- **Confederation（联邦）**：把子 AS 组成超 AS 的大型网扩展方案，子 AS 间走 EBGP。 <<<PAGE 132>>><<<PAGE 165>>>
+- **Synchronization（BGP-IGP 同步）**：仅当 IGP 也已知该目的地时才向 EBGP 通告的规则（默认关闭）。 <<<PAGE 144>>>
+- **Route Dampening（路由抖动抑制）**：按 flap 次数抑制不稳定路由的机制。 <<<PAGE 137>>>
+- **Instability Metric / Half-life / Reuse / Suppress / Max Suppress Time**：抖动抑制四参数（默认 300/200/300/1800）。 <<<PAGE 156>>><<<PAGE 157>>>
+- **CIDR（Classless Inter-Domain Routing，无类别域间路由）**：前缀/掩码式路由表示。 <<<PAGE 126>>><<<PAGE 137>>>
+- **Aggregate Route（聚合路由）**：合并多条更精确路由的通告（summary-only/as-set）。 <<<PAGE 152>>>
+- **BGP Network（本地网络）**：指示 BGP 从本路由器起源某网络。 <<<PAGE 153>>>
+- **BGP Peer / Neighbor**：显式配置的 BGP 对等实体（peer 与 neighbor 混用）。 <<<PAGE 146>>>
+- **ebgp-multihop**：允许非直连外部对等建立会话。 <<<PAGE 147>>>
+- **update-source**：强制 BGP 会话 TCP 采用指定本地接口/地址。 <<<PAGE 150>>>
+- **next-hop-self**：让对等在 UPDATE 中以自身为下一跳。 <<<PAGE 147>>>
+- **remove-private-as**：向对等通告时剥离私有 AS 号。 <<<PAGE 147>>>
+- **soft-reconfiguration / clear soft**：不复位会话的入/出策略软重配置。 <<<PAGE 147>>><<<PAGE 149>>>
+- **maximum-prefix（warning-only）**：限制对等通告前缀数（默认 5000，80% 告警）。 <<<PAGE 146>>>
+- **Regular Expression（AS 正则）**：用元字符（^ $ . ? + * | []）匹配 AS path 的策略表达式。 <<<PAGE 134>>>
+- **AS Path List / Community List / Prefix List / Prefix6 List**：四类 BGP 原子过滤策略。 <<<PAGE 133>>><<<PAGE 201>>>
+- **Routing Policy（in-/out-）**：绑定到 peer 学习/通告方向的策略。 <<<PAGE 201>>>
+- **asprepend（as-path prepend）**：route map 中向 AS path 追加 AS 的动作。 <<<PAGE 204>>>
+- **BGP Graceful Restart**：CMM 接管期间保留路由信息的连续转发机制（restart-interval 默认 90s）。 <<<PAGE 140>>><<<PAGE 172>>>
+- **MP-BGP（Multiprotocol Extensions）**：以 MP_REACH/MP_UNREACH_NLRI 支持多网络层协议（IPv6 等）。 <<<PAGE 177>>>
+- **MP_REACH_NLRI / MP_UNREACH_NLRI**：多协议可达/不可达 NLRI 属性。 <<<PAGE 177>>>
+- **ipv6 bgp unicast / activate-ipv6**：启用 IPv6 单播能力并激活对等交换 IPv6 前缀。 <<<PAGE 178>>>
+- **ipv6-nexthop / ipv4-nexthop**：跨族对等时手工指定对应族下一跳。 <<<PAGE 178>>><<<PAGE 183>>>
+- **GTSM（Generalized TTL Security Mechanism）**：基于 TTL 的 eBGP 会话防攻击机制（ttl-security）。 <<<PAGE 212>>>
+- **VPLS（Virtual Private LAN Service）**：MPLS L2 VPN LAN 服务；BGP 信令实现 PE 自动发现与标签分发。 <<<PAGE 214>>>
+- **L2VPN VPLS Address Family（l2vpn-vpls）**：承载 VPLS NLRI 的 BGP 地址族。 <<<PAGE 214>>>
+- **EVPN（Ethernet VPN）**：BGP EVPN 能力，按 peer 在默认 VRF 激活。 <<<PAGE 216>>>
+- **evpn-nbr-type-fabric**：把邻居标记为 fabric 侧（super-spine/对等/远端 border spine）连接。 <<<PAGE 216>>>
+- **evpn-fabric-autonomous-system**：border spine/leaf 面向 fabric eBGP 会话的附加本地 AS 号。 <<<PAGE 216>>>
+- **BGP Neighbor Template（nbr-template）**：批量 peer 配置模板，当前仅支持 EVPN 族。 <<<PAGE 218>>>
+- **ip bgp max-neighbors**：VRF 内最大 peer 数（默认 32）。 <<<PAGE 144>>>
+- **check-first-as**：处理 UPDATE 时校验 AS path 首个 AS 的开关。 <<<PAGE 149>>>
+- **default-originate（peer 级）**：向对等通告默认路由。 <<<PAGE 146>>>
+
+## 第 5 章 组播地址边界
+- **Administratively Scoped Multicast Addresses**：IANA 保留给私有组播域的 239.0.0.0–239.255.255.255。 <<<PAGE 221>>>
+- **Multicast Address Boundary（组播地址边界）**：在 IP 接口上限定作用域组播地址不外发（ip mroute-boundary）。 <<<PAGE 222>>>
+- **Concurrent Multicast Addresses（并发组播地址）**：借助边界在多域复用同一地址段。 <<<PAGE 223>>>
+- **IANA（Internet Assigned Numbers Authority）**：互联网编号分配机构，规制组播地址段。 <<<PAGE 221>>>
+- **SSM 地址段（232.0.0.0/8）**：IANA 保留给源特定组播的目的地址段。 <<<PAGE 221>>>
+
+## 第 6 章 DVMRP
+- **DVMRP（Distance Vector Multicast Routing Protocol）**：密集模式组播路由协议（v3），广播-剪枝建源树。 <<<PAGE 229>>>
+- **Reverse Path Multicasting / RPF（逆向路径组播/转发检查）**：按通往源的最好路由校验到达接口再转发。 <<<PAGE 232>>>
+- **Probe Message（探测消息）**：周期发往 224.0.0.4 的邻居发现/保活消息，含 Neighbor List。 <<<PAGE 233>>>
+- **All-DVMRP-Routers（224.0.0.4）**：DVMRP Probe 的组播目的地址。 <<<PAGE 233>>>
+- **Route Report Message（路由报告消息）**：周期交换含掩码源网络与跳数度量的路由表。 <<<PAGE 233>>>
+- **Poison Reverse（毒性反转）**：下游以原 metric+32（无穷）回送路由声明依赖。 <<<PAGE 234>>>
+- **Infinity（DVMRP metric 32）**：DVMRP 的无穷度量值；32–64 区间视为依赖声明。 <<<PAGE 234>>>
+- **Dependent Downstream Router（依赖下游路由器）**：上游据毒性反转建立的按源依赖列表。 <<<PAGE 234>>>
+- **Prune / Prune Lifetime（剪枝/剪枝生存期）**：上游停止转发的消息及其有效期（默认 7200s）。 <<<PAGE 235>>><<<PAGE 242>>>
+- **Graft / Graft-Ack（嫁接/嫁接确认）**：快速把剪掉分支接回分发树及其确认机制。 <<<PAGE 235>>>
+- **DVMRP Tunnel（DVMRP 隧道）**：IP-IP 封装使组播穿越非组播网络的隧道接口。 <<<PAGE 236>>>
+- **Flash Update（Routing Table Change 消息）**：两次全量报告间的变化通告（flash-interval 默认 5s）。 <<<PAGE 241>>>
+- **Route Hold-down（路由保持）**：失效路由以无穷度量继续通告一段时间（默认 120s）。 <<<PAGE 242>>>
+- **Subordinate Neighbor（从属邻居状态，subord-default）**：影响初始大流量冲击处理的邻居状态标志。 <<<PAGE 237>>>
+- **IGMP（Internet Group Management Protocol）**：主机向路由器表达组播成员关系的协议。 <<<PAGE 232>>>
+
+## 第 7 章 PIM
+- **PIM（Protocol-Independent Multicast）**：协议无关组播路由，复用单播 RPF 信息。 <<<PAGE 247>>>
+- **PIM-SM（Sparse Mode，稀疏模式）**：接收者显式 Join 才转发的模式。 <<<PAGE 254>>>
+- **PIM-DM（Dense Mode，密集模式）**：泛洪-剪枝、无 RP 的密集模式。 <<<PAGE 258>>>
+- **PIM-SSM（Source-Specific Multicast）**：显式频道订阅、免 RP 直连源的模式。 <<<PAGE 264>>>
+- **RP（Rendezvous Point，汇聚点）**：共享树根，解封装 Register 并向下分发。 <<<PAGE 254>>>
+- **C-RP（Candidate RP，候选汇聚点）**：向 BSR 周期通告自身的候选 RP（默认优先级 192，通告 60s）。 <<<PAGE 254>>><<<PAGE 249>>>
+- **BSR（Bootstrap Router）**：域内唯一，汇集并向全网分发 RP-set。 <<<PAGE 255>>>
+- **C-BSR（Candidate BSR）**：可参选 BSR 的候选（优先级高者当选，平局比 IP）。 <<<PAGE 255>>>
+- **RP-set**：BSR 维护并分发的可达 C-RP 列表。 <<<PAGE 255>>>
+- **Bootstrap Message**：BSR 周期扩散 RP-set 的消息。 <<<PAGE 255>>>
+- **DR（Designated Router，指定路由器）**：每 LAN 一个；源侧 DR 封装 Register，接收侧 DR 发 Join/Prune。 <<<PAGE 255>>>
+- **RPT（RP Tree，共享树）**：以 RP 为根的共享分发树（(*,G) 树）。 <<<PAGE 254>>>
+- **SPT（Shortest Path Tree，最短路径树）**：源到接收者的最短路径树。 <<<PAGE 258>>>
+- **Register Message / Register-Stop**：源侧 DR 单播封装给 RP 的注册消息与 RP 的停止应答。 <<<PAGE 258>>><<<PAGE 260>>>
+- **(*,G) Join / (S,G) Join**：对全源组加入与源特定加入消息。 <<<PAGE 256>>><<<PAGE 259>>>
+- **(S,G,RPT) Prune**：SPT 切换后剪掉共享树上该源流量的消息。 <<<PAGE 263>>>
+- **RP Threshold（RP 阈值）**：触发 RP 发起 (S,G) Join 的速率门限（ip pim rp-threshold）。 <<<PAGE 259>>>
+- **SPT Switchover（SPT 切换）**：末跳 DR 收到首个数据包即切换到 SPT（ip pim spt admin-state）。 <<<PAGE 262>>>
+- **Static RP（静态 RP）**：手工配置的组到 RP 映射（ip pim static-rp）。 <<<PAGE 273>>>
+- **Anycast RP**：多 RP 共用同一 RP 地址 + IGP 通告的负载分担/冗余机制。 <<<PAGE 274>>>
+- **Group-to-RP Mapping（组到 RP 映射算法）**：最长匹配→最高优先级→hash→最高 IP 四步。 <<<PAGE 276>>>
+- **Keepalive Period（保活周期）**：(S,G) 状态无显式 Join 时的维持时间（默认 210s）。 <<<PAGE 276>>>
+- **State Refresh（状态刷新）**：DM 模式周期刷新剪枝状态（interval 60s、TTL 16）。 <<<PAGE 249>>>
+- **Join/Prune Packing（加入/剪枝打包）**：合并 J/P 消息降低控制面丢包（默认 enable）。 <<<PAGE 280>>>
+- **Register Packing / Register MTU / Register Delay**：Null Register 打包、打包 MTU 与触发延迟（仅 SM）。 <<<PAGE 278>>><<<PAGE 279>>>
+- **ip pim max-rps**：域内最大 RP 数（默认 32，改前须禁 PIM-SM）。 <<<PAGE 271>>>
+- **IPMS（IP Multicast Switching）**：组播转发基础，随协议使能自动开启。 <<<PAGE 231>>>
+- **MLD（Multicast Listener Discovery）**：IPv6 的组播成员发现协议（源自 IGMPv2，用 ICMPv6）。 <<<PAGE 282>>>
+- **IPv6 SSM 地址段（FF3x::/32）**：IPv6 源特定组播保留段，须手动启用。 <<<PAGE 282>>>
+- **RP-Switchover（IPv6）**：IPv6 RP 收到首个 Register 即切原生转发（无阈值）。 <<<PAGE 292>>>
+- **ip pim mbr all-sources**：让 PIM 向 DVMRP 通告全部学到的源路由（MBR 场景）。 <<<PAGE 301>>>
+- **SPB（Shortest Path Bridging）服务上的 PIM**：PIM 接口可绑 SPB 服务（9900 上支持 SPB L3 VPN in-line routing）。 <<<PAGE 266>>>
+
+## 第 8 章 MBR
+- **MBR（Multicast Border Router，组播边界路由器）**：同机运行 DVMRP 与 PIM 实例实现两域互通（RFC 2715 / RFC 4601）。 <<<PAGE 297>>><<<PAGE 299>>>
+- **MBR Default Route Advertisement（mbr-default-information）**：在 DVMRP 接口通告默认路由以覆盖 DVMRP 域内路由器。 <<<PAGE 302>>>
+- **MBR Protocol Registration**：PIM/DVMRP 首个接口 enabled 后自动向 MBR 注册。 <<<PAGE 300>>>
+
+## 通用/跨章
+- **Advanced Routing Add-on Package（高级路由附加包）**：本书所述协议需另行购买加载的软件包。 <<<PAGE 12>>>
+- **boot.cfg**：控制交换机参数的 ASCII 配置文件；保存协议命令可实现重启自动加载。 <<<PAGE 33>>><<<PAGE 240>>>
+- **Working / Certified Directory（工作/认证目录）**：交换机运行目录体系，决定重启后加载的配置。 <<<PAGE 240>>><<<PAGE 269>>>
+- **write memory**：把当前配置保存到 Working 目录 boot.cfg。 <<<PAGE 231>>>
+- **BFD（Bidirectional Forwarding Detection）**：转发故障快速检测（各协议 show 输出中的 BFD Status）。 <<<PAGE 22>>>
+- **VLAN / IP Interface（路由端口）**：AOS 上一切路由协议接口的载体。 <<<PAGE 21>>>
+- **Redistribution Administrative Status（重分发管理状态）**：ip redist 配置的启停开关（默认 enable）。 <<<PAGE 44>>>
+
+## principles
+
+## OSPF（第 1 章）
+- **P1 OSPF 是链路状态 IGP，以最低开销选路**：OSPF chooses the least-cost path as the best path. …OSPF is an interior gateway protocol (IGP) that distributes routing information between routers in a Single Autonomous System (AS). <<<PAGE 24>>>
+- **P2 LSA 泛洪保证全区域一致的拓扑库**：The flooding algorithm ensures that all routers have exactly the same topological database. …From this database each router calculates a shortest-path tree, with itself as root. <<<PAGE 24>>>
+- **P3 Hello 协议承担邻居发现与 DR 选举**：On all networks (broadcast or non-broadcast), the Hello Protocol also elects a designated router for the network. <<<PAGE 24>>>
+- **P4 邻接关系控制协议报文分发**：Adjacencies control the distribution of routing protocol packets. Routing protocol packets are sent and received only on adjacencies. <<<PAGE 24>>>
+- **P5 多路访问网络由 DR 泛洪网络 LSA**：Each multi-access network that has at least two attached routers has a designated router and a backup designated router. The designated router floods a link state advertisement for the multi-access network. <<<PAGE 24>>>
+- **P6 区域隔离拓扑知识以减少路由流量**：An area's topology is visible only to the members of the area. …This isolation of knowledge enables the protocol to reduce routing traffic by concentrating on small areas of an AS. <<<PAGE 25>>>
+- **P7 骨干区（Area 0.0.0.0）负责区间路由信息分发**：Different areas communicate with each other through a backbone. …The backbone is responsible for distributing routing information between areas. <<<PAGE 25>>>
+- **P8 区域参数不一致将阻止邻接形成**：All routers belonging to an area must agree on that area's configuration. Misconfiguration will keep neighbors from forming adjacencies between themselves, and OSPF will not function. <<<PAGE 25>>>
+- **P9 四类路由器角色（内部/ABR/骨干/ASBR）可重叠**：Internal routers. …Area border routers. …Backbone routers. …AS boundary routers. …This classification is completely independent of the previous classifications. <<<PAGE 26>>>
+- **P10 ABR 为每个所连区域运行一份 SPF 并浓缩拓扑**：Area border routers run multiple copies of the SPF algorithm, one copy for each attached area. Area border routers condense the topological information of their attached areas for flooding to other areas. <<<PAGE 26>>>
+- **P11 虚链路将两台骨干路由器视作无编号点到点连接**：The protocol treats two routers joined by a virtual link as if they were connected by an unnumbered point-to-point network. <<<PAGE 26>>>
+- **P12 Stub 区域不通告 AS 外部 LSA，靠默认路由出域**：A stub area is an area with routers that have no AS external Link State Advertisements (LSAs). …default routing must be used in the stub area. <<<PAGE 27>>>
+- **P13 NSSA 用 Type-7 LSA 有选择地导入外部路由**：These routes are imported into the NSSA using a new LSA type: Type-7 LSA. Type-7 LSAs are flooded within the NSSA and are translated at the NSSA boundary into AS-external LSAs. <<<PAGE 28>>>
+- **P14 Totally Stubby 区域在 Stub 基础上再过滤 Type-3 LSA**：This concept has been extended with Totally Stubby Areas by filtering Type 3 LSAs (Network Summary LSA) in addition to Type 4 and 5 with the exception of one single Type 3 LSA used to advertise a default route. <<<PAGE 28>>>
+- **P15 ECMP 按流分发而非轮询，且不考虑线速**：Delivery of packets along equal paths is based on flows rather than a round-robin scheme. …other variables, such as line speed, are not considered. <<<PAGE 29>>>
+- **P16 NBMA 网络必须全互联且需静态配置邻居**：For non-broadcast networks neighbors should be statically configured. …a fully meshed network is mandatory. <<<PAGE 29>>>
+- **P17 冗余 CMM 接管触发改邻接重建的优雅重启（GR）**：This time period between the restart and the reestablishment of adjacencies is termed graceful restart. <<<PAGE 30>>>
+- **P18 Helper 路由器在 GR 期间维持重启路由器的 LSA（含 DR 身份）**：Router Y's LSAs continue to list an adjacency to Router X over network segment S, regardless of the adjacency's current synchronization state. <<<PAGE 30>>>
+- **P19 Totally Stubby 的实现方式 = Stub 类型 + 关闭汇总**：In order to configure a totally stubby area you need to configure the area as stub on the ABR and disable summarization. <<<PAGE 35>>>
+- **P20 被动接口不收发路由更新且立即拆除已有邻接**：No OSPF adjacency is formed on a passive interface, and if a OSPF-enabled interface is configured as passive where an adjacency already exists, the adjacency drops almost immediately. <<<PAGE 46>>>
+- **P21 用 Route Map 重分发 local 路由成内部路由，批量生成被动接口**：A route map with set action of route-type 'internal' needs to be created for the local interface (routes) on which passive OSPF interface needs to be created. <<<PAGE 46>>>
+- **P22 配置重分发即自动成为 ASBR**：An OSPF router automatically becomes an Autonomous System Border Router (ASBR) when redistribution is configured on the router. <<<PAGE 43>>>
+- **P23 iBGP→OSPF 重分发默认禁止，需显式开启**：By default, redistribution of iBGP routes is not allowed into OSPF protocol. To allow redistribution of iBGP routes (from the same AS) into OSPF protocol, use the ip ospf redist-bgp-internal command. <<<PAGE 48>>>
+- **P24 OSPF 接口认证三种：simple / MD5 / keychain（可 SHA256）**：There are three types of authentication: simple, MD5, and Keychain authentication. …The authentication type can be set to SHA256 when using the key-chain parameter. <<<PAGE 37>>><<<PAGE 38>>>
+- **P25 MD5 key ID 与 key string 必须分两条命令配置**：Note that setting the key ID and key string must be done in two separate commands. <<<PAGE 37>>>
+## Route Map 与重分发（跨章机制）
+- **P26 Route Map 三类语句：Action / Match / Set**：Action. An action statement configures the route map name, sequence number, and whether or not redistribution is permitted or denied…Match…Set. <<<PAGE 40>>>
+- **P27 序列间隐含逻辑 OR；同类型 match 之间 OR、不同类型之间 AND**：Note that there is an implied logical OR between sequences. …If these statements are of the same kind …then a logical OR is implied…If the match statements specify different types of matches…then a logical AND is implied. <<<PAGE 42>>>
+- **P28 无 match 语句的 route map 重分发所有路由**：If a route map does not contain any match statements and the route map is applied using the ip redist command, the router redistributes all routes into the network of the receiving protocol. <<<PAGE 77>>><<<PAGE 111>>>
+- **P29 route map 未配序列号时默认取 50**：If a value is not configured, then the number 50 is used by default. <<<PAGE 76>>>
+- **P30 deny 某路由不等于默认放行其余路由**：With route maps denying a route does not mean that all the other routes are automatically permitted. It is necessary to configure proper permit/deny rule for each route. <<<PAGE 42>>><<<PAGE 168>>>
+- **P31 set metric 支持 add/subtract/replace/none 四种效果**：Add - Adds the given value to the routes metric…Subtract…Replace…None - Ignores the given value and passes the routes metric through. <<<PAGE 42>>><<<PAGE 168>>>
+- **P32 访问列表把多条地址聚合进单条 route map 语句**：An IP access list provides a convenient way to add multiple IPv4 or IPv6 addresses to a route map. <<<PAGE 43>>>
+- **P33 重分发要求源/目的协议均已加载并使能**：Make sure that both protocols are loaded and enabled before configuring redistribution. <<<PAGE 43>>>
+## OSPFv3（第 2 章）
+- **P34 OSPFv3 是 OSPFv2 的 IPv6 扩展，GR 默认使能**：OSPFv3 is an extension of OSPF version 2 that provides support for networks using the IPv6 protocol. …By default, OSPFv3 is enabled on the router. <<<PAGE 55>>><<<PAGE 56>>>
+- **P35 OSPFv3 GR 用链路本地 Grace-LSA 通告重启意图**：The OSPFv3 router attempting a graceful restart originates link-local Opaque-LSAs, called Grace-LSAs, announcing the intention to perform a graceful restart and requests for a grace period. <<<PAGE 67>>>
+- **P36 helper 三条件：宽限期未到、helper 使能、拓扑稳定**：these neighbors continue to announce the 'restarting' router in their LSAs as if it were fully adjacent provided the grace period has not expired, graceful restart helper functionality is enabled, and network topology remains stable. <<<PAGE 67>>>
+- **P37 重启完成后 flush Grace-LSA 结束 GR**：Once all adjacencies are established, the restarting router flushes its grace LSAs signaling the successful termination of graceful restart. <<<PAGE 67>>>
+- **P38 NSSA translator 角色与稳定性间隔（默认 40s）**：Stability interval is the duration for which a Type-7 translator will continue in the translator role after another NSSA border router translator has assumed the role. <<<PAGE 72>>>
+- **P39 area-summary 两档：noareasummary 只进默认路由 / sendareasummary 汇总后放行**：When set to noareasummary option, inter-area LSAs will neither originate or propagate into the stub or NSSA. Only a default route will be advertised. <<<PAGE 71>>>
+- **P40 OSPFv3 Loopback0 不会自动通告，需配成 point-to-point**：Unlike with OSPFv2, the OSPFv3 Loopback0 interface is not automatically advertised to its neighbor. To advertise the Loopback0 interface, configure it as a point-to-point interface. <<<PAGE 73>>>
+- **P41 OSPFv3 静态邻居使用链路本地地址**：to create an OSPFv3 neighbor with a link-local address to be a static neighbor…ipv6 ospf neighbor fe80::2e0:b1ff:fe7e:5f1e interface vlan-213 eligible. <<<PAGE 82>>>
+## IS-IS（第 3 章）
+- **P42 IS-IS 两层层级：Level-1 区内、Level-2 区间**：Routing within an area is referred to as Level-1 routing. …Routing between areas is referred to as Level-2 routing. <<<PAGE 95>>>
+- **P43 NSAP 三字段：Area ID + System ID + NSEL（=00 时称 NET）**：NSEL field…System ID…Area ID…The NSAP address with its NSEL set to 00 is called Network Entity Title (NET). <<<PAGE 95>>>
+- **P44 DIS 选举按接口优先级（默认 64），平局比 SNPA/MAC**：Election of the DIS is based on the highest interface priority, the default value of which is 64. …In case of a tie, the router with the highest Subnetwork Point Of Attachment (SNPA) address (usually the MAC address). <<<PAGE 95>>>
+- **P45 形成邻接的三要素：认证匹配、IS 类型、MTU**：The primary criteria for forming adjacencies are authentication match, IS-type, and MTU size. <<<PAGE 95>>>
+- **P46 IS-IS 四种报文：IIH / LSP / CSNP / PSNP**：Intermediate System-to-Intermediate System Hello (IIH)—Used by routers to detect neighbors…CSNP—Contains a list of all the LSPs…PSNP—Used to request an LSP(s) and acknowledge receipt of an LSP(s). <<<PAGE 97>>>
+- **P47 IS-IS 路由器完全属于单一区域（对比 OSPF 接口分域）**：In IS-IS, the router belongs entirely to a single area. <<<PAGE 98>>>
+- **P48 全局与接口 level 能力组合决定潜在邻接**：When the level capabilities are configured both globally and on per-interface basis, the combination of the two settings will decide the potential adjacency. <<<PAGE 103>>>
+- **P49 汇总路由取最小 metric 通告；内部路由不能在 L1 汇总**：The metric that is used to advertise the summary address is the smallest metric than any of the more specific IP routes. …It is not possible to summarize IS-IS internal routes at Level-1. <<<PAGE 104>>>
+- **P50 认证可在全局/level/电路/电路级四层配置，低层覆盖全局**：Keychain authentication can be applied at a global level, capability level, circuit level, and capability level per circuit. …Enabling authentication on specific IS-IS levels over-rides the global authentication. <<<PAGE 107>>><<<PAGE 108>>>
+- **P51 auth-check 关闭时仍认证但只报错不丢包**：If disabled, the authentication PDUs are generated and the IS-IS PDUs are authenticated on receipt. An error message will be generated in case of a mismatch; but PDUs will not be rejected. <<<PAGE 107>>>
+- **P52 IS-IS GR：IIH 携带重启请求与 Remaining Time，helper 同步 CSNP**：The IS-IS Hello (IIH) messages are modified to signal a graceful restart request. …They send their Complete Sequence Number PDUs (CSNPs) to the restarting router. <<<PAGE 98>>>
+- **P53 Level-1→Level-2 泄漏及 L2→L1 前缀分发经 route map 实现**：IS-IS allows redistributing Level-1 IS-IS routes into Level-2 IS-IS routes. This is termed as Level-1 to Level-2 Leaking. This release also supports the prefix distribution from the level-2 IS-IS routes to level-1. <<<PAGE 115>>>
+- **P54 M-ISIS 背景：单拓扑 IPv4/IPv6 混布会黑洞**：This behavior may result in black-holed routing when there are some IPv4-only or IPv6-only routers in an IS-IS routing domain. <<<PAGE 120>>>
+- **P55 M-ISIS 为每个拓扑独立 SPF 与 RIB（IPv4=MT ID 0，IPv6=MT ID 2）**：M-ISIS mechanism runs multiple, independent IP topologies within a single IS-IS network domain, using separate topology-specific SPF computation and multiple Routing Information Bases (RIBs). <<<PAGE 120>>>
+- **P56 MT 能力经 Hello 的 MT TLV 通告；无 MT TLV 视为默认拓扑**：M-ISIS routers advertise their MT capability by including a set of MT TLVs in their Hello PDUs. Any IS-IS router that does not advertise MT capability…is considered as belonging to the default topology. <<<PAGE 120>>>
+- **P57 点到点无共同拓扑不成邻接；广播网即使无共同拓扑也成邻接**：On point-to-point interfaces, if two neighboring MT capable IS-IS routers have no common topologies in common, no adjacency is formed. On broadcast interfaces, an adjacency is formed…even if there is no topology in common. <<<PAGE 120>>>
+- **P58 切换 multi-topology 会内部重启 IS-IS 并复位邻接**：Changing the multi-topology mode with this command will result in internal disabling and re-enabling of IS-IS protocol…This causes IS-IS adjacencies to be reset. <<<PAGE 120>>>
+- **P59 非 MT 模式下 MT TLV 不参与 SPF 计算（向后兼容默认 IPv4 TLV）**：even if M-ISIS capability is enabled, AOS IS-IS will continue to exchange IPv4 prefixes in the default IPv4 reachability TLVs. <<<PAGE 121>>>
+## BGP（第 4 章）
+- **P60 BGP 用 TCP 179，增量更新使长会话更高效**：Hosts using BGP communicate using the Transmission Control Protocol (TCP) on port 179. …only changes are exchanged after startup, which makes long running BGP sessions more efficient than shorter ones. <<<PAGE 126>>>
+- **P61 AS_PATH 承担 AS 级环路检测**：Loops are detected and avoided by checking for your own AS number in AS_PATHs received from neighboring Autonomous Systems. <<<PAGE 126>>>
+- **P62 BGP 定位是 EGP，作 IGP 时适合多出口 transit AS**：It is not intended to be used as an Interior Gateway protocol (IGP)…is best used in transit autonomous systems with multiple exit points. <<<PAGE 126>>><<<PAGE 127>>>
+- **P63 IGP 策略偏技术，EGP 策略偏商业关系**：IGP policies tend to be set due to traffic concerns and technical demands, while EGP policies are set more on business relationships between corporate entities. <<<PAGE 127>>>
+- **P64 4 字节 ASN：AS4_PATH/AS4_AGGREGATOR 属性 + AS_TRANS 23456 兼容旧设备**：Support for two new optional transitive attributes AS4_PATH and AS4_AGGREGATE…To establish a neighbor relationship between non-mappable BGP 4-octet ASNs with BGP 2-octet ASNs the reserved 2-octet ASN AS_TRANS 23456 is used. <<<PAGE 128>>>
+- **P65 IBGP 全互联规则及 RR 对规则的放松**：routes learned through one IBGP speaker cannot be advertised to another IBGP speaker, route reflection allows the router reflector servers to "reflect" routes, thereby relaxing the IBGP standards. <<<PAGE 131>>>
+- **P66 RR 通告规则表（按路由来源决定反射范围）**：External BGP Router→All Clients and Non-Clients；Non-Client Peer→All Clients；Client Peer→All Clients and Non-Clients. <<<PAGE 162>>>
+- **P67 Cluster 内 client 不需全互联，non-client 必须全互联**：The client peers do not need to be fully meshed…but the non-client peers must be fully meshed. <<<PAGE 161>>>
+- **P68 冗余 RR 用 cluster-id 标识且 RR 之间全互联**：Redundant route reflectors must be identified by a 4-byte cluster ID…All route reflectors in the same cluster must be fully meshed and should have the exact same client and non-client peers. <<<PAGE 163>>>
+- **P69 联邦：子 AS 间走 EBGP 但整体表现为 IBGP，属性跨子 AS 保留**：Even though EBGP is used to communicate between AS 1001 and 1002, the entire confederation behaves as though it were using IBGP. …the sub AS attributes are preserved when crossing the sub AS boundaries. <<<PAGE 132>>>
+- **P70 Community 逻辑分组跨 AS 传播策略语义（如 no-export）**：Communities are used to simplify routing policies by identifying routes based on a logical property rather than an IP prefix or an AS number. <<<PAGE 130>>>
+- **P71 MED 只在同一邻居 AS 间比较，绝不向下一 AS 传播**：If received on external links, the MED may be propagated over internal links to other BGP speakers in the same AS. However, the MED is never propagated to speakers in a neighboring AS. <<<PAGE 143>>>
+- **P72 同步规则：IGP 未知的 IBGP 路由不向 EBGP 通告**：a BGP router should not advertise to external neighbors destinations learned from IBGP neighbors unless those destinations are also known via an IGP. <<<PAGE 144>>>
+- **P73 路由抖动抑制：不稳定性度量、半衰期折半、低于复用值重新通告**：Each time a route flaps…its "instability metric" is increased by 1. Once a route's instability metric reaches the suppress value, it is suppressed…its instability metric will be cut in half…Once below the reuse value, a route will be re-advertised. <<<PAGE 156>>>
+- **P74 dampening 参数必须一次性按序全部输入**：The variables for these parameters must be entered together, in one command, in order. <<<PAGE 157>>>
+- **P75 聚合路由需至少存在一条更精确路由；聚合本身无需本地已知**：You cannot aggregate an address…if you do not have at least one more-specific route of the address…in the BGP routing table. Aggregate routes do not need to be known to the local BGP speaker. <<<PAGE 152>>>
+- **P76 AS 正则按 token 匹配而非字符匹配，便于书写与加速加载**：the BGP implementation treats AS numbers as single tokens, providing two benefits: It makes writing (and reading) policies much easier. It enables the router to begin using the policies more quickly after startup. <<<PAGE 134>>>
+- **P77 本地优先级数值越高越优先，是选路首要属性之一**：In many cases, it will be the most important criteria in determining the selection of one route over another. …The higher the number, the higher the preference. <<<PAGE 141>>><<<PAGE 153>>>
+- **P78 4 类策略（AS path/community/prefix(prefix6)/route map）先建后绑到 peer 的 in/out 方向**：each BGP peer needs to be tied to inbound and/or outbound policies (direction based on whether routes are being learned or advertised). <<<PAGE 201>>>
+- **P79 AS 正则元字符语义（^ $ . ? + * () [] 等）**：^ Matches the beginning of the AS path list…$ Matches the end of the AS path list…( ) Begins/Ends an alternation sequence…[ ] Begin/End a range pair. <<<PAGE 134>>>
+- **P80 多协议 BGP 用 MP_REACH/MP_UNREACH_NLRI 承载 IPv6 前缀与下一跳**：two new non-transitive attributes are introduced, Multiprotocol Reachable NLRI (MP_REACH_NLRI) and Multiprotocol Unreachable NLRI (MP_UNREACH_NLRI). <<<PAGE 177>>>
+- **P81 IPv6 对等可跑在 IPv4 会话上（需 activate-ipv6 + ipv6-nexthop）**：Multiprotocol BGP extensions support the advertisement of IPv6 prefixes over the BGP sessions established between two BGP speakers using either of their IPv4 or IPv6 addresses. <<<PAGE 177>>><<<PAGE 178>>>
+- **P82 本地 IPv6 地址（FC00::/7）在 iBGP 间交换、eBGP 间忽略**：The local IPv6 address prefixes are exchanged between internal BGP (IBGP) speakers within the same Autonomous System (AS)…As Exterior BGP (EBGP) peers between different AS ignore receipt of and do not advertise prefixes with the well-known FC00::/7 prefix. <<<PAGE 182>>>
+- **P83 GTSM：控制包 TTL 置 255，接收方按剩余 TTL 判跳数、超限丢弃**：the TTL (IPv4) and hop limit (IPv6) field of BGP control packets sent to the peer is set to 255. …If the number of hops exceeds the maximum configured value, the packet is dropped. <<<PAGE 212>>>
+- **P84 VPLS BGP 信令：NLRI 自动发现 PE + 单条 Update 携带全部远端 PE 标签**：each PE discovers which other PEs are part of a given VPLS by using the BGP protocol to send BGP NLRI updates for the l2vpn-vpls address family. …a PE to send a single (common) Update message that contains MPLS labels for all the remote PEs. <<<PAGE 214>>>
+- **P85 BGP EVPN：每 peer 会话需在默认 VRF 上显式激活 EVPN 能力**：The BGP EVPN capability must be activated for each peer BGP session on the default VRF. <<<PAGE 216>>>
+- **P86 邻居模板的优先级：个体 peer 配置覆盖模板配置**：The individual BGP peer configuration will take precedence over the BGP neighbor template configuration. <<<PAGE 218>>>
+- **P87 BGP GR 保持转发不断以支撑域间流量**：On an OmniSwitch router in a redundant CMM configuration, inter-domain routing is not disrupted during a CMM takeover/failover. BGP retains routing information using Graceful Restart mechanisms. <<<PAGE 172>>>
+- **P88 Loopback0 永久 up，适合作 BGP 对等源（配合 update-source / ebgp-multihop）**：The Loopback0 interface is not bound to any VLAN, so it will always remain operationally active. <<<PAGE 151>>>
+- **P89 BGP soft reset（clear soft）只重应用策略不复位会话**：Use the ip bgp neighbor clear soft command to reset peer policy parameters. <<<PAGE 149>>>
+- **P90 多条全局命令要求先禁用 BGP 才能修改（AS 号、本地优先级、MED 比较等）**：Many BGP global commands require the user to disable the protocol before changing parameters. <<<PAGE 139>>>
+## 组播地址边界（第 5 章）
+- **P91 239.0.0.0/8 为管理作用域组播地址**：Multicast addresses 239.0.0.0 through 239.255.255.255 have been reserved by the IANA as administratively scoped addresses for use in private multicast domains. <<<PAGE 221>>>
+- **P92 边界阻止作用域地址的组播流量 leaking 到域外**：A boundary is used to eliminate these conflicts by confining multicast traffic on an IP interface. When a boundary is set, multicast packets with a destination address within the specified boundary will not be forwarded on the interface. <<<PAGE 222>>>
+- **P93 边界使同一作用域地址块可在多个域并发复用**：scoped multicast addresses can be reused throughout the network. This allows network administrators to conserve limited multicast address space. <<<PAGE 223>>>
+## DVMRP（第 6 章）
+- **P94 DVMRP = 广播-剪枝型密集模式协议，按源生成分发树**：DVMRP, essentially a "broadcast and prune" routing protocol…dynamically generates per-source delivery trees based upon routing exchanges, using a technique called Reverse Path Multicasting. <<<PAGE 229>>><<<PAGE 232>>>
+- **P95 RPF 检查：仅当分组到达上游接口才转发**：If the packet arrived on an upstream interface that would be used to transmit packets back to the source, it is forwarded…Otherwise, it is not on the optimal delivery tree and is discarded. <<<PAGE 232>>>
+- **P96 邻居发现靠周期 Probe（224.0.0.4），Neighbor List 出现自己即双向邻接**：When a DVMRP router receives a Probe with its own IP address included in the Neighbor List, the router knows that a two-way adjacency has been successfully formed. <<<PAGE 233>>>
+- **P97 DVMRPv3 未建立邻接不接受 Route Report**：In DVMRPv3, a router will not accept a Route Report from another DVMRP router until it has established adjacency with that neighboring router. <<<PAGE 233>>>
+- **P98 毒性反转：回送 metric=原值+32 的路由，上游据此建依赖列表**：it indicates this by echoing back the route on the upstream interface with a metric equal to the original metric plus infinity. (DVMRP uses a metric of 32 as infinity.) <<<PAGE 234>>>
+- **P99 DVMRP 毒性反转语义区别于单播 DV 协议**：Poison reverse is used differently in DVMRP than in most unicast distance vector routing protocols (such as RIP), which use poison reverse to advertise that a particular route is unreachable. <<<PAGE 234>>>
+- **P100 剪枝自下而上逐级回传，直到无用的分支全部移除**：If the upstream router is able to remove all of its downstream interfaces in this manner, it can then send a DVMRP Prune message to its upstream router. <<<PAGE 235>>>
+- **P101 Graft/Graft-Ack 机制把重加入时延降到毫秒级**：By using a graft mechanism, DVMRP reduces the join latency to a few milliseconds. <<<PAGE 235>>>
+- **P102 DVMRP 隧道用 IP-IP 封装穿越非组播网络，协议消息也走单播**：IP multicast packets are encapsulated in unicast IP packets…DVMRP protocol messages…are sent between tunnel endpoints using unicast, rather than multicast, packets. <<<PAGE 236>>>
+- **P103 路由保持 holddown 以无穷度量继续通告，防旧路由回环传播**：it is common in distance vector protocols to continue to advertise a route that has been deleted with a metric of infinity…The hold down period is usually two report intervals. <<<PAGE 242>>>
+- **P104 路由表带掩码，DVMRP 实际是 classless 协议**：The key difference…is that DVMRP routes are advertised with a subnet mask, which makes DVMRP effectively a classless protocol. <<<PAGE 241>>>
+- **P105 分支路由器发送剪枝的 lifetime 取本机配置与队列中最小剩余值**：the prune-lifetime value inserted into the prune packet is the smallest of the following values: the value of ip dvmrp prune-lifetime on the sending device…the amount of lifetime that remains for each individual prune… <<<PAGE 242>>>
+## PIM（第 7 章）
+- **P106 PIM 协议无关：复用任一单播协议的 RIB**：Protocol-Independent Multicast (PIM) is an IP multicast routing protocol that uses routing information provided by unicast routing protocols such as RIP and OSPF. PIM is "protocol-independent" because it does not rely on any particular unicast routing protocol. <<<PAGE 247>>>
+- **P107 PIM-SM 接收者驱动（显式 Join），适合稀疏/WAN 场景**：multicast forwarding in PIM-SM is initiated only via specific requests, referred to as Join messages. …ideal for network environments where receiver groups are thinly populated and bandwidth conservation is a concern. <<<PAGE 254>>>
+- **P108 RP 是共享树（RPT）根，负责解封装 Register 并向下分发**：shared distribution trees are rooted at a common forwarding router, referred to as a Rendezvous Point (RP). The RP unencapsulates Register messages and forwards multicast packets natively down established distribution trees. <<<PAGE 254>>>
+- **P109 BSR 域内唯一，经 Bootstrap 消息分发 RP-set**：There is only one BSR per PIM domain. This allows all PIM routers in the PIM domain to view the same RP set. <<<PAGE 255>>>
+- **P110 C-BSR 选举：优先级最高者胜，平局比 IP**：The C-BSR with the highest priority level is elected as the BSR…If two or more C-BSRs have the same priority value, the C-BSR with the highest IP address is elected. <<<PAGE 255>>>
+- **P111 DR 选举看 DR 优先级（Hello 携带），平局比 IP；源侧 DR 封装 Register**：When a DR receives multicast data from the source, the DR encapsulates the data packets into the Register messages, which are in turn sent to the RP. <<<PAGE 255>>>
+- **P112 Register 封装低效：耗 CPU 且路径可能绕远**：The encapsulation and unencapsulation of Register messages tax router resources. Hardware routing does not support encapsulation and unencapsulation. …data may have to travel "out of their way" to the RP. <<<PAGE 258>>>
+- **P113 RP 阈值触发的 (S,G) 源特定 Join + Register-Stop**：When the data rate at the Rendezvous Point (RP) exceeds the configured RP threshold value, the RP will initiate a (S, G) source-specific Join message toward the source. …A register-stop packet is sent back to the sender's DR. <<<PAGE 259>>><<<PAGE 260>>>
+- **P114 SPT 切换由最后一跳 DR 收到首个组播数据包即自动发起**：The last hop Designated Router (DR) initiates the switchover to a true Shortest Path Tree (SPT) once the DR receives the first multicast data packet. <<<PAGE 262>>>
+- **P115 SPT/RPT 双流期间丢 RPT 份并发 (S,G,RPT) 剪枝**：This router drops the packets arriving via the RP tree and forwards only those packets arriving via the SPT. An (S, G, RPT) Prune message is sent toward the RP. <<<PAGE 263>>>
+- **P116 PIM-DM 与 SM 本质差异：无周期 Join、无 RP**：There are no periodic joins transmitted, only explicitly triggered prunes and grafts. There is no Rendezvous Point (RP). <<<PAGE 258>>>
+- **P117 PIM-SSM：显式频道订阅，无需 RP，直接建 SPT**：SSM, using an explicit channel subscription model, allows receivers to receive multicast traffic directly from the source; an RP tree model is not used. <<<PAGE 264>>>
+- **P118 232.0.0.0/8 为 SSM 保留段，须手动配置才启用**：The multicast address range from 232.0.0.0 through 232.255.255.255 have been reserved by the Internet Assigned Numbers Authority (IANA) as Source-Specific Multicast (SSM) destination addresses. …needs to be configured manually to support SSM. <<<PAGE 264>>>
+- **P119 组到 RP 映射算法：最长匹配→最高优先级→hash→最高 IP**：1 Perform longest match on group-range…2 find the one with the highest priority…4 use the PIM-SM hash function defined in the RFC to choose one. <<<PAGE 276>>><<<PAGE 292>>>
+- **P120 Anycast RP：多机同一 RP 地址 + IGP 通告，收敛与 IGP 同级**：Anycast RP introduces the concept where the same IP address (RP Address) is configured on two or more routers serving as the RP. …In case of a failure, the convergence is the same as the IGP. <<<PAGE 274>>>
+- **P121 Register/Join-Prune 打包降低控制面丢包风险**：In large networks with a lot of sources, this can amount to a lot of PIM Control packets which ultimately may be dropped due to control plane processing overhead or CPU queue rate-limiting. The packing of these Null Registers and Register stops has been added to reduce the possibility of losing these packets. <<<PAGE 278>>>
+- **P122 IPv6 SSM 保留段为 FF3x::/32，同样需手动启用**：The multicast addresses range FF3x::/32 that has been reserved by the Internet Assigned Numbers Authority (IANA) as Source-Specific Multicast (SSM) destination addresses is not enabled automatically. <<<PAGE 282>>>
+- **P123 IPv6 RP-switchover 无阈值概念，收到首个 Register 即切换**：You can configure an RP to attempt switching to native forwarding upon receiving the first register-encapsulated packet from the source DR in the IPv6 PIM domain. <<<PAGE 292>>>
+- **P124 MLD 是 IPv6 的组播成员发现（源自 IGMPv2，走 ICMPv6）**：Multicast Listener Discovery (MLD) is the protocol used by an IPv6 router to discover the nodes that request multicast packets…MLD is derived from version 2 of IPv4's Internet Group Management Protocol, IGMPv2. <<<PAGE 282>>>
+## MBR（第 8 章）
+- **P125 MBR = 同机 DVMRP 实例 + PIM 实例，按 RFC 2715 互通**：an OmniSwitch MBR consists of a DVMRP instance and a PIM instance with one or more active interfaces in each instance. <<<PAGE 299>>>
+- **P126 MBR 三职能：拉取 PIM 域注入 DVMRP、导入 DVMRP 域流量、 transit 穿越**：The MBR first pulls down packets generated within the PIM domain and injects them into the DVMRP domain. …imports packets generated within the DVMRP domain…passes the multicast traffic through. <<<PAGE 299>>>
+- **P127 PIM/DVMRP 首个接口 enabled 后自动向 MBR 注册**：PIM and DVMRP are dynamically registered with MBR as soon as the first interface is enabled and operational for the particular protocol. <<<PAGE 300>>>
+- **P128 IPv6 无广播地址，组播前缀 ff00::/8**：There are no broadcast addresses in IPv6. …multicast addresses begin with the prefix ff00::/8. <<<PAGE 177>>><<<PAGE 282>>>

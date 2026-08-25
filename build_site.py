@@ -247,6 +247,66 @@ NEW_COURSES = [
         ('路由与安全', ['aos-ip-routing-rip-ospf', 'aos-security-vrf-macsec']),
         ('组播与织构', ['aos-multicast-erp-spb']),
        ]),
+
+  dict(id='aos/net-config', book='aos810-net-config', title='AOS 8.10R04 · Network Configuration',
+       subtitle='1745 页 · 网络配置全科（二层/织构/IP 服务/路由/组播/QoS/准入/OAM，48 章）',
+       route=['VLAN/QinQ 与冗余保护', 'SPB/MPLS/VXLAN 骨干', 'IP/IPv6/DHCP 服务',
+              '组播与 QoS 策略', '准入安全与 OAM 监测'],
+       groups=[
+        ('二层与冗余', ['aos-nc-vlan-l2', 'aos-nc-redundancy-protection']),
+        ('骨干织构', ['aos-nc-fabric-backbone']),
+        ('三层与服务', ['aos-nc-ip-ipv6-services', 'aos-nc-routing', 'aos-nc-multicast']),
+        ('策略与安全', ['aos-nc-qos-policy', 'aos-nc-access-security']),
+        ('监测与基础', ['aos-nc-oam-monitoring', 'aos-nc-switch-foundation']),
+       ]),
+  dict(id='aos/switch-management', book='aos810-switch-mgmt', title='AOS 8.10R04 · Switch Management',
+       subtitle='511 页 · 交换机管理（Flash/升级/CLI 用户/SNMP Web 纳管/日志健康/机箱 CMM）',
+       route=['Flash 双目录与配置管理', '代码升级与 ISSU', 'CLI 会话与用户权限',
+              'SNMP/Web/Cirrus 纳管', '日志健康与机箱管理'],
+       groups=[
+        ('配置与升级', ['aos-sm-flash-config', 'aos-sm-software-upgrade']),
+        ('用户与纳管', ['aos-sm-cli-session-usermgmt', 'aos-sm-mgmt-services']),
+        ('运维与硬件', ['aos-sm-logging-health', 'aos-sm-chassis-cmm']),
+       ]),
+  dict(id='aos/advanced-routing', book='aos810-adv-routing', title='AOS 8.10R04 · Advanced Routing',
+       subtitle='313 页 · 高级路由（OSPF/OSPFv3/IS-IS/BGP/组播边界/DVMRP/PIM/MBR）',
+       route=['OSPF 与 OSPFv3 区域设计', 'IS-IS', 'BGP 与策略（本书重点）',
+              '组播高级（PIM/DVMRP/MBR）', 'Route Map 策略工具箱'],
+       groups=[
+        ('IGP', ['aos-ar-ospf-ospfv3', 'aos-ar-isis']),
+        ('BGP 与策略', ['aos-ar-bgp', 'aos-ar-policy-toolbox']),
+        ('组播高级', ['aos-ar-multicast-advanced']),
+       ]),
+  dict(id='aos/cli-reference', book='aos810-cli-reference', title='AOS 8.10R04 · CLI Reference 命令地图',
+       subtitle='6240 页 · 70 章命令字典导航（约 2480 条命令，按 5 域组织）',
+       route=['L2 接入域命令', 'Fabric 骨干域命令', '路由域命令',
+              '组播/QoS/准入域命令', '管理与 OAM 域命令'],
+       groups=[
+        ('二层与接入', ['aos-cli-map-l2-access']),
+        ('骨干与路由', ['aos-cli-map-fabric', 'aos-cli-map-routing']),
+        ('策略与运维', ['aos-cli-map-multicast-qos', 'aos-cli-map-mgmt-oam']),
+       ]),
+  dict(id='aos/release-notes', book='aos810-release-notes', title='AOS 8.10R04 · Release Notes',
+       subtitle='105 页 · 版本说明（升级方法论/Secure Boot/已知问题库/新特性与废弃）',
+       route=['升级路径与固件三件套', 'Secure Boot 与包管理', 'Open CR 已知问题排障库', '新特性与废弃变更'],
+       groups=[
+        ('升级与安全', ['aos-rn-upgrade-path', 'aos-rn-secure-boot']),
+        ('问题与特性', ['aos-rn-known-issues', 'aos-rn-new-features-deprecations']),
+       ]),
+  dict(id='aos/specifications', book='aos810-specifications', title='AOS 8.10R04 · Specifications Guide',
+       subtitle='98 页 · 规格指南（平台三梯队/容量红线/TCAM 分配/特性矩阵）',
+       route=['平台梯队与规格解读', 'VC/织构/路由容量红线', 'TCAM 零和分配与特性缺口'],
+       groups=[
+        ('平台与容量', ['aos-spec-platform-tiers', 'aos-spec-capacity-limits']),
+        ('TCAM 与特性', ['aos-spec-tcam-features']),
+       ]),
+  dict(id='aos/transceivers', book='aos810-transceivers', title='AOS 8.10R04 · Transceivers Guide',
+       subtitle='107 页 · 光模块指南（1G-400G 型号矩阵/平台兼容/DDM 安装纪律）',
+       route=['模块型号与速率距离矩阵', '平台兼容与硬件修订陷阱', 'DDM 监控与安装纪律'],
+       groups=[
+        ('选型', ['aos-tx-module-matrix', 'aos-tx-platform-compat']),
+        ('运维', ['aos-tx-ddm-install']),
+       ]),
 ]
 COURSES = NEW_COURSES  # 旧课程(ov-terra/bootcamp/core)保留 site/ 预构建页面，源 books 未随库分发
 _LEGACY = [
@@ -405,7 +465,7 @@ def build_course(c):
 
     def crumbs(cur='', sub=False):
         cat = c['id'].split('/')[0]
-        cat_label = {'postsales': '售后', 'presales': '售前', 'manuals': '配置手册'}[cat]
+        cat_label = {'postsales': '售后', 'presales': '售前', 'manuals': '配置手册', 'aos': 'AOS 软件手册'}[cat]
         p = '../../../' if sub else '../../'
         q = '../' if sub else ''
         bar = f'<nav class="crumbs"><a href="{p}index.html">🏠 培训门户</a> › <a href="{p}{cat}/index.html">{cat_label}</a> › <a href="{q}index.html">{html_mod.escape(c["title"].split(" · ")[0])}</a>'
@@ -502,7 +562,7 @@ def build_category(dirname, label):
         f.write(page)
     print('category built:', dirname)
 
-for dirname, label in [('postsales', '售后 · Postsales'), ('presales', '售前 · Presales'), ('manuals', '配置手册 · Manuals')]:
+for dirname, label in [('postsales', '售后 · Postsales'), ('presales', '售前 · Presales'), ('manuals', '配置手册 · Manuals'), ('aos', 'AOS 软件手册 · Software Guides')]:
     build_category(dirname, label)
 
 # ============ 门户封面 ============
@@ -540,6 +600,15 @@ CATALOG = [
         ('OV2500 4.9R2 · RAP 与 VPN VA 安装', '84 页 · 4 个知识单元 · VPN 模式 / VA 容量 / 隧道排障', 'manuals/ov2500-rap-vpn/index.html'),
         ('OV2500 4.9R2 · Release Notes', '93 页 · 4 个知识单元 · 升级评估 / 63 条已知问题排障库 / 危险陷阱', 'manuals/ov2500-release-notes/index.html'),
         ('OV2500 4.9R2 · User Guide', '935 页 · 10 个知识单元 · Analytics 报表 / 发现拓扑 / 资源管理 / UPAM / VM 织构', 'manuals/ov2500-userguide/index.html'),
+    ]),
+    ('AOS 软件手册 · Software Guides', '#60a5fa', [
+        ('AOS 8.10R04 · Network Configuration', '1745 页 · 10 个知识单元 · 二层/织构/IP 服务/路由/组播/QoS/准入/OAM', 'aos/net-config/index.html'),
+        ('AOS 8.10R04 · Switch Management', '511 页 · 6 个知识单元 · Flash / 升级 / 用户 / 纳管 / 日志 / 机箱', 'aos/switch-management/index.html'),
+        ('AOS 8.10R04 · Advanced Routing', '313 页 · 5 个知识单元 · OSPF / IS-IS / BGP / 组播高级 / Route Map', 'aos/advanced-routing/index.html'),
+        ('AOS 8.10R04 · CLI Reference 命令地图', '6240 页 · 5 个命令域 · 70 章 2480 条命令导航', 'aos/cli-reference/index.html'),
+        ('AOS 8.10R04 · Release Notes', '105 页 · 4 个知识单元 · 升级方法论 / 已知问题库 / 新特性', 'aos/release-notes/index.html'),
+        ('AOS 8.10R04 · Specifications Guide', '98 页 · 3 个知识单元 · 平台梯队 / 容量红线 / TCAM', 'aos/specifications/index.html'),
+        ('AOS 8.10R04 · Transceivers Guide', '107 页 · 3 个知识单元 · 模块矩阵 / 平台兼容 / DDM', 'aos/transceivers/index.html'),
     ]),
     ('无线网络 · WLAN', '#a78bfa', [
         ('WiFi 6 / 6E / 7 技术基础', '标准演进、OFDMA、多链路操作', None),

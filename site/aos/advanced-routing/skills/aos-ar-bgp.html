@@ -1,0 +1,119 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>aos-ar-bgp — AOS 8.10R04 · Advanced Routing</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>AOS 8.10R04 · Advanced Routing</h1>
+<div class="sub">313 页 · 高级路由（OSPF/OSPFv3/IS-IS/BGP/组播边界/DVMRP/PIM/MBR）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">IGP</div>
+<a href="../skills/aos-ar-ospf-ospfv3.html">aos-ar-ospf-ospfv3</a>
+<a href="../skills/aos-ar-isis.html">aos-ar-isis</a>
+<div class="grp">BGP 与策略</div>
+<a href="../skills/aos-ar-bgp.html" class="on">aos-ar-bgp</a>
+<a href="../skills/aos-ar-policy-toolbox.html">aos-ar-policy-toolbox</a>
+<div class="grp">组播高级</div>
+<a href="../skills/aos-ar-multicast-advanced.html">aos-ar-multicast-advanced</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../aos/index.html">AOS 软件手册</a> › <a href="../index.html">AOS 8.10R04</a> › <span>aos-ar-bgp</span></nav><h1>aos-ar-bgp</h1><p class="meta"><span class="badge">SKILL</span> aos-ar-bgp · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>新上线 BGP：router-id/primary → ip load bgp → AS 号 → 邻居 remote-as → 使能七步</li>
+<li>iBGP 全互联太贵：要部署 Route Reflector（含冗余 cluster-id）或联邦</li>
+<li>要做路由聚合（summary-only/as-set）、抖动抑制 dampening、属性策略（local-preference/MED/community）</li>
+<li>IPv6 对等（纯 v6 域或 IPv4 会话跑 v6 前缀）、GTSM 防攻击、EVPN/VPLS 地址族、邻居模板</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>BGP 是 AS 间 EGP，跑在 TCP 179 上，增量更新使长会话更高效（P60）；
+AS_PATH 承担 AS 级环路检测（P61）。选路属性体系：Local Preference（AS 内、越高越优先）与 MED（仅同一邻居 AS 间比较、绝不向下一 AS 传播）（P71/P77）。iBGP 全互联规则由 RR 放松（P65），RR 通告按路由来源决定反射范围（P66）；
+联邦以子 AS 间 EBGP 模拟整体 IBGP（P69）。策略体系（F5）：aspath/community/prefix(prefix6)/route-map 四类原子策略先建后绑到 peer 的 in/out 方向，改动后 clear soft 重应用（P78/C29）。IPv6 由 MP-BGP 的 MP_REACH/MP_UNREACH_NLRI 承载，v6 前缀可跑在 v4 会话上（P80/P81）。</p>
+<h2 id="a1">A1（决策框架）</h2>
+<ol>
+<li><strong>邻居设计</strong>：peer 必须逐个显式配置、不会动态学习（X34）；Loopback0 永久 up 适合作对等源（update-source + ebgp-multihop）（P88）</li>
+<li><strong>iBGP 扩展选型</strong>：中小型用 RR（冗余 RR 用 cluster-id、RR 间全互联，P68）；超大型用联邦（子 AS 间 EBGP、属性跨子 AS 保留，P69）；两者都嫌重才全互联</li>
+<li><strong>路由整合</strong>：聚合需至少一条更精确路由存在（X30）；不稳定路由用 dampening（半衰期折半、低于 reuse 重新通告，P73）</li>
+<li><strong>安全加固</strong>：GTSM（TTL 置 255 按剩余跳数丢弃，P83）与 eBGP multihop 互斥且须两端同配（X38）</li>
+<li><strong>IPv6 选型</strong>：双栈走 IPv4 会话 + activate-ipv6 + ipv6-nexthop（C26）；纯 IPv6 域必须显式配 router-id 与 IPv4 primary 地址（X36）</li>
+</ol>
+<h2 id="a2">A2（操作步骤）</h2>
+<ul>
+<li><strong>七步上线</strong>：<code>ip router router-id 1.1.1.1</code> + <code>ip router primary-address 1.1.1.1</code> → <code>ip load bgp</code> → <code>ip bgp autonomous-system 100</code> → <code>ip bgp admin-state enable</code> → <code>ip bgp neighbor 198.45.16.145</code> → <code>ip bgp neighbor ... remote-as 200</code> → <code>ip bgp neighbor ... admin-state enable</code>（C20，&lt;&lt;<PAGE 125>&gt;&gt;）</li>
+<li><strong>RR 四步</strong>：<code>ip bgp admin-state disable</code> → <code>ip bgp client-to-client reflection</code> → 逐 client <code>ip bgp neighbor 190.17.20.16 route-reflector-client</code> → 冗余 <code>ip bgp cluster-id 190.17.21.16</code>（C23，&lt;&lt;<PAGE 162-163>&gt;&gt;）</li>
+<li><strong>联邦</strong>：<code>ip bgp confederation-identifier 2</code> → <code>ip bgp confederation neighbor 190.17.20.16</code>（逐个加全）（C24，&lt;&lt;<PAGE 165>&gt;&gt;）</li>
+<li><strong>聚合</strong>：<code>ip bgp aggregate-address 172.22.2.0 255.255.255.0</code> → <code>summary-only</code> → <code>as-set</code> → community/local-preference/metric → <code>admin-state enable</code>（C22，&lt;&lt;<PAGE 152>&gt;&gt;）</li>
+<li><strong>dampening</strong>：<code>ip bgp dampening half-life 500 reuse 200 suppress 300 max-suppress-time 1800</code>（改任一参数须整条按序重输）；<code>ip bgp dampening clear</code> 清历史（C25，&lt;&lt;<PAGE 157-159>&gt;&gt;）</li>
+<li><strong>IPv6（v4 会话）</strong>：<code>ip bgp neighbor 23.23.23.23</code> → remote-as 200 → <code>activate-ipv6</code> → <code>ipv6-nexthop 2001:100:3:4::1</code> → enable（C26，&lt;&lt;<PAGE 178>&gt;&gt;）；纯 v6 对等 <code>ipv6 bgp neighbor 2001::1</code> + update-source（C27）</li>
+<li><strong>策略绑定</strong>：<code>ip bgp policy aspath-list aspathfilter "^100 200$" action permit</code> 等四类 → <code>ip bgp neighbor 172.22.2.0 in-aspathlist|route-map mapfilter in|out</code> → <code>clear soft in|out</code>（C29，&lt;&lt;<PAGE 201-210>&gt;&gt;）</li>
+<li><strong>GTSM</strong>：<code>ip bgp neighbor 10.0.0.1 ttl-security 6</code>（直连对等用 0）；<code>show ip bgp neighbors</code> 验证（C30，&lt;&lt;<PAGE 212-213>&gt;&gt;）</li>
+<li><strong>EVPN/VPLS/模板</strong>：<code>ip bgp address-family evpn</code> + <code>activate-evpn</code> + fabric 邻居 <code>evpn-nbr-type-fabric</code>；VPLS <code>address-family l2vpn-vpls</code>；模板 <code>ip bgp nbr-template Mytemplate</code>（C31，&lt;&lt;<PAGE 214-218>&gt;&gt;）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>EBGP/IBGP 混合五 speaker 应用例（C21，&lt;&lt;<PAGE 173-175>&gt;&gt;）</li>
+<li>Route Reflection 四步与冗余 RR（C23，&lt;&lt;<PAGE 162-163>&gt;&gt;）</li>
+<li>IPv6 BGP 全场景应用例（双栈/纯 v6 域）（C28，&lt;&lt;<PAGE 195-198>&gt;&gt;）</li>
+<li>五类策略创建 + peer 绑定 + soft 重应用（C29，&lt;&lt;<PAGE 201-210>&gt;&gt;）</li>
+<li>GTSM 配置验证（C30，&lt;&lt;<PAGE 212-213>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（反例/坑）</h2>
+<ul>
+<li>一批全局命令（AS 号、本地优先、MED、RR、cluster-id）改前必须先禁用 BGP（X25，&lt;&lt;<PAGE 139>&gt;&gt;）</li>
+<li>CLI 不支持 CIDR 斜杠写法，必须写全掩码（X26，&lt;&lt;<PAGE 137>&gt;&gt;）</li>
+<li>AS 正则错误：数字超 65535、逗号当分隔符、括号嵌套、^ 不在首/$ 不在尾（X28，&lt;&lt;<PAGE 136>&gt;&gt;）</li>
+<li>dampening 参数必须整条按序一次输入（X29，&lt;&lt;<PAGE 157>&gt;&gt;）</li>
+<li>聚合前 BGP 表内须至少一条更精确路由（X30，&lt;&lt;<PAGE 152>&gt;&gt;）</li>
+<li>冗余 RR 过多推高内存（X31，&lt;&lt;<PAGE 163>&gt;&gt;）；同步开启给 AS 内非 BGP 路由器带来大负担（X32，&lt;&lt;<PAGE 144>&gt;&gt;）</li>
+<li>BGP 软件不随启动自动加载，须手动 ip load bgp（X33，&lt;&lt;<PAGE 125>&gt;&gt;）</li>
+<li>部分 peer 命令（定时器等）不自动复位会话，须手动 clear（X35，&lt;&lt;<PAGE 149>&gt;&gt;）</li>
+<li>纯 IPv6 网必须显式配 router-id 与 IPv4 primary 地址（X36）；IPv4 对等已建会话时不能关 IPv4 unicast（X37）（&lt;&lt;<PAGE 179-180>&gt;&gt;）</li>
+<li>GTSM 与 eBGP multihop 互斥，且须两端同配（X38，&lt;&lt;<PAGE 212>&gt;&gt;）</li>
+<li>route map 引用的子策略必须先创建否则报错（X39，&lt;&lt;<PAGE 205>&gt;&gt;）</li>
+<li>VPLS 依赖 MPLS license 与二进制，启用前须先禁 BGP（X40，&lt;&lt;<PAGE 214>&gt;&gt;）</li>
+<li>邻居模板当前仅支持 EVPN 族命令（X41）；个体 peer 配置覆盖模板，想生效先删个体配置（X42）；VRF 内 peer 默认上限 32（X43）（&lt;&lt;<PAGE 218, 144>&gt;&gt;）</li>
+<li>MED 只在同一邻居 AS 间比较且绝不向下一 AS 传播（P71，&lt;&lt;<PAGE 143>&gt;&gt;）</li>
+</ul>
+<h2 id="_1">来源</h2>
+<p>OmniSwitch AOS 8.10R4 Advanced Routing Guide 第 4 章 BGP（&lt;&lt;<PAGE 123-218>&gt;&gt;）。条目来源：cases C20-C31；principles P60-P90；counter-examples X25-X43；frameworks F5/F6。</p><div class="pn"><a href="aos-ar-isis.html">⬅ 上一单元：aos-ar-isis</a><a class="nxt" href="aos-ar-policy-toolbox.html">下一单元：aos-ar-policy-toolbox ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

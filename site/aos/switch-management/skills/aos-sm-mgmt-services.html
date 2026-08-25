@@ -1,0 +1,114 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>aos-sm-mgmt-services — AOS 8.10R04 · Switch Management</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>AOS 8.10R04 · Switch Management</h1>
+<div class="sub">511 页 · 交换机管理（Flash/升级/CLI 用户/SNMP Web 纳管/日志健康/机箱 CMM）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">配置与升级</div>
+<a href="../skills/aos-sm-flash-config.html">aos-sm-flash-config</a>
+<a href="../skills/aos-sm-software-upgrade.html">aos-sm-software-upgrade</a>
+<div class="grp">用户与纳管</div>
+<a href="../skills/aos-sm-cli-session-usermgmt.html">aos-sm-cli-session-usermgmt</a>
+<a href="../skills/aos-sm-mgmt-services.html" class="on">aos-sm-mgmt-services</a>
+<div class="grp">运维与硬件</div>
+<a href="../skills/aos-sm-logging-health.html">aos-sm-logging-health</a>
+<a href="../skills/aos-sm-chassis-cmm.html">aos-sm-chassis-cmm</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../aos/index.html">AOS 软件手册</a> › <a href="../index.html">AOS 8.10R04</a> › <span>aos-sm-mgmt-services</span></nav><h1>aos-sm-mgmt-services</h1><p class="meta"><span class="badge">SKILL</span> aos-sm-mgmt-services · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>要把交换机接入 NMS/OmniVista：配 SNMP station、community-map、v3 认证加密用户、trap 过滤/重放</li>
+<li>要启用 WebView 或换 HTTPS 证书；要用 REST API / Python 自动化管理</li>
+<li>要零接触接入 OmniVista Cirrus 云（DHCP Option 43、cloud-agent、NaaS license）</li>
+<li>要让交换机解析域名（DNS resolver）或对时（NTP 客户端/服务器/广播/认证）</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>纳管四条通道递进：SNMP（传统 NMS 轮询+trap，v1/v2c community 映射到用户、v3 USM/TSM 加密认证，P93-P100）→ WebView/REST（内嵌 Web 界面 + mib/cli 双域 RESTful API，P101/P113-P117）→ AMS 发布订阅（MQTT 替代 SNMP 轮询的局域微服务，P120-P123）→ OmniVista Cirrus 云管理（零接触 call-home + VPN 隧道 + NaaS 订阅状态机，F10）。时间同步框架（F12）：本地时钟/时区（DST 自动）→ NTP 分层 stratum 模型 → 云场景 NTP 池保障证书时间有效。DNS 三步启用：domain-name → domain-lookup → name-server（P43）。</p>
+<h2 id="a1">A1（决策框架）</h2>
+<ol>
+<li><strong>传统 NMS 纳管选 SNMP</strong>：v3 加密认证（sha+aes）优先；v1/v2c 靠 community-map 映射到用户继承权限（P95）；安全等级链决定接受哪些请求（P94）</li>
+<li><strong>Web/编程纳管</strong>：WebView 需 <code>aaa authentication http local</code> 解锁（分区权限授权）；自动化走 REST（GET/PUT/POST/DELETE + JSON/XML）或 AOSAPI Python 库（P113-P117）</li>
+<li><strong>云纳管选 Cirrus</strong>：新机默认上云（无 vcboot.cfg 即启用 agent，P104）；存量机 <code>cloud-agent admin-state enable</code>；NaaS license 状态机 Operational→Grace→Degraded（P107/P108）</li>
+<li><strong>对时选 NTP</strong>：客户端/服务器/广播三模式；认证场景 ntp.keys + trusted key；不与 stratum 16 同步（P158-P161/X98）</li>
+<li><strong>跨交换机事件联动选嵌入式 Python/AMS</strong>：trap 绑定脚本须存 /flash/python（P119）；AMS 以 MQTT broker/topic 做配置同步（P120-P121）</li>
+</ol>
+<h2 id="a2">A2（操作步骤）</h2>
+<ul>
+<li><strong>SNMP 管理站</strong>：<code>user NMSuserV3MD5DES md5+des password ***</code> → <code>snmp station 199.199.100.200 8010 NMSuserV3MD5DES v3 enable</code> → <code>show snmp station</code>（C36，&lt;&lt;<PAGE 205>&gt;&gt;）</li>
+<li><strong>SNMP community/引擎/过滤</strong>：<code>user community_user1 password *** no auth read-only all</code> → <code>snmp community-map comstring2 user community_user1 enable</code> → <code>snmp community-map mode enable</code>；engineid 可改 text/mac/ipv4；<code>snmp trap filter 210.1.2.1 0 1 2 3</code>（C37）</li>
+<li><strong>WebView</strong>：<code>aaa authentication http local</code> → https://<ip>/new#/；自定义证书 <code>cat wv_server.key wv_server.crt &gt; web.pem</code> → <code>aaa certificate install-certificate webview web.pem</code>（C35，&lt;&lt;<PAGE 192>&gt;&gt;）</li>
+<li><strong>Cirrus 接入</strong>：DHCP 配 Option 43；<code>cloud-agent admin-state enable</code>、<code>cloud-agent discovery-interval 60</code> → <code>show cloud-agent status</code>（C38，&lt;&lt;<PAGE 224>&gt;&gt;）；NaaS：<code>naas license apply file licenseFile.v2c</code>（需重启）→ <code>show naas license</code>（C39）</li>
+<li><strong>REST</strong>：<code>GET https://192.168.1.1/auth/?&amp;username=admin&amp;password=switch</code>；<code>PUT https://192.168.1.1/mib/vlanTable?mibObject0=vlanNumber:2&amp;...</code>；<code>GET .../cli/aos?&amp;cmd=show+vlan+5</code>（C40，&lt;&lt;<PAGE 249-259>&gt;&gt;）</li>
+<li><strong>DNS</strong>：<code>ip domain-name mycompany1.com</code> → <code>ip domain-lookup</code> → <code>ip name-server &lt;ip&gt;</code>（C11，&lt;&lt;<PAGE 46>&gt;&gt;）</li>
+<li><strong>NTP</strong>：<code>ntp server 198.206.181.139</code> → <code>ntp client admin-state enable</code> → <code>show ntp status</code>；广播 <code>ntp broadcast-client enable</code> + <code>broadcast-delay 1000</code>；认证 <code>ntp key load</code> → <code>ntp authentication enable</code> → <code>ntp server 1.1.1.1 key 2</code> → <code>ntp key 2 trusted</code>（C52，&lt;&lt;<PAGE 408-417>&gt;&gt;）</li>
+<li><strong>事件脚本</strong>：<code>event-action trap linkDown script /flash/python/link_event.py</code> → <code>show event-action statistics</code>（C41，&lt;&lt;<PAGE 270-271>&gt;&gt;）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>SNMP v3 管理站部署（C36，&lt;&lt;<PAGE 205>&gt;&gt;）与 community/引擎/过滤（C37，&lt;&lt;<PAGE 207-216>&gt;&gt;）</li>
+<li>WebView 启用与自定义证书（C35，&lt;&lt;<PAGE 192>&gt;&gt;）</li>
+<li>Cirrus 快速接入（C38，&lt;&lt;<PAGE 224>&gt;&gt;）与 NaaS 配置（C39，&lt;&lt;<PAGE 237>&gt;&gt;）</li>
+<li>REST 登录/建 VLAN/查询三例（C40，&lt;&lt;<PAGE 249-259>&gt;&gt;）</li>
+<li>NTP 客户端/广播/认证三套（C52，&lt;&lt;<PAGE 408-417>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（反例/坑）</h2>
+<ul>
+<li>WebView 改 http/https 端口前必须先断开所有 WebView 会话（X48，&lt;&lt;<PAGE 191>&gt;&gt;）</li>
+<li>TSM 启用后丢弃全部 v1/v2/v3 USM 请求与 trap，SNMP 仅走 IPv4（X49，&lt;&lt;<PAGE 209>&gt;&gt;）</li>
+<li>证书更新须手工从 primary 拷到所有 secondary/slave 并重启（X50，&lt;&lt;<PAGE 210, 213>&gt;&gt;）</li>
+<li>修改用户 SNMP 权限必须重输密码（哈希依赖认证等级）（X52，&lt;&lt;<PAGE 161>&gt;&gt;）</li>
+<li>已有 (vc)boot.cfg 的存量交换机不会自动上云，需 CLI 手动启用 cloud-agent（X54，&lt;&lt;<PAGE 223>&gt;&gt;）</li>
+<li>无 NTP 则设备无法连激活服务器入云（除非手工设对日期）（X55，&lt;&lt;<PAGE 228>&gt;&gt;）</li>
+<li>NaaS degraded 模式禁访 certified/running 目录、禁 show/监控命令（X57）；宽限/降级模式可登录但不能执行 CLI（X58）；NaaS license 需重启激活且宽限计时依赖 NTP（X59）（&lt;&lt;<PAGE 238-239>&gt;&gt;）</li>
+<li>Thin Switch 模式不落本地配置，由 OmniVista 下发才知道自己是瘦模式（X61，&lt;&lt;<PAGE 240>&gt;&gt;）</li>
+<li>REST 场景代理不遵守 Vary 头会出现 JSON/XML 串格式（X62，&lt;&lt;<PAGE 248>&gt;&gt;）</li>
+<li>事件脚本单绑定（一事件一脚本），须存 /flash/python 且需 AAA 写权限（X63，&lt;&lt;<PAGE 270>&gt;&gt;）</li>
+<li>NTP 不支持 2035 年以后（X97）；不同步 stratum 16 未同步服务器（X98）；peer 关联只应建在同 stratum 层（X99）（&lt;&lt;<PAGE 413-414>&gt;&gt;）</li>
+</ul>
+<h2 id="_1">来源</h2>
+<p>OmniSwitch AOS 8.10R4 Switch Management Guide 第 2 章 DNS（&lt;&lt;<PAGE 46>&gt;&gt;）、第 9 章 WebView（&lt;&lt;<PAGE 190-199>&gt;&gt;）、第 10 章 SNMP（&lt;&lt;<PAGE 203-220>&gt;&gt;）、第 11 章 OmniVista Cirrus（&lt;&lt;<PAGE 222-241>&gt;&gt;）、第 12 章 Web Services（&lt;&lt;<PAGE 246-278>&gt;&gt;）、第 17 章 NTP（&lt;&lt;<PAGE 406-417>&gt;&gt;）。条目来源：cases C11/C35-C41/C52；principles P43/P93-P123/P158-P163；counter-examples X48-X52/X54-X62/X97-X99；frameworks F9/F10/F12。</p><div class="pn"><a href="aos-sm-cli-session-usermgmt.html">⬅ 上一单元：aos-sm-cli-session-usermgmt</a><a class="nxt" href="aos-sm-logging-health.html">下一单元：aos-sm-logging-health ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

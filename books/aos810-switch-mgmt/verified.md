@@ -1,0 +1,602 @@
+# Verified 候选（V1 原文真实性核对 + V2/V3 抽查）
+
+## cases
+
+- **C1 标准升级（standalone/VC）全流程**：Switch Maintenance（show system / 清理 / show running-directory / 采集 tech-support 基线）→ 下载升级文件 → FTP 到 RUNNING 目录 → reload → 验证 → certify。<<<PAGE 23>>>、<<<PAGE 24>>>（page 1-7/1-8）
+- **C2 ISSU 升级流程**：维护前置 → 下载 → Master 建 ISSU 目录并清理旧 ISSU 目录 → 拷贝当前 Running 配置到 ISSU 目录 → FTP 新镜像+验证文件 → issu 执行 → 验证 → certify → 复位 NI。<<<PAGE 24>>>（page 1-8）
+- **C3 交换机维护例行（升级前）**：`show system` → `rm *.log` / `rm *.tar` → 清 /pmd → `show running-directory`（不 certified 则 `write memory flash-synchro`）→ `show tech-support [layer2|layer3|eng complete]`。<<<PAGE 23>>>（page 1-7）
+- **C4 强制退出自动管理模式（进 standalone）**：开机提示按 'y' 禁用 auto-configurations；或事后 `auto-fabric admin-state ... remove-vc-reload`（清除 fabric 配置、生成 vcboot.cfg、重启）。<<<PAGE 21>>>（page 1-4）
+- **C5 micro-USB/RJ-45 控制台接入**：装 USB-UART 驱动 → 连线识别 COM 口 → 终端仿真登录（admin/switch）；改串口参数用 `modify boot parameters` 下 `boot serialbaudrate/serialparity/...` + `commit system` + `commit boot`。<<<PAGE 33>>>、<<<PAGE 34>>>
+- **C6 蓝牙 USB 适配器接入并定位设备**：`bluetooth` 启用 → 插适配器 → 发现并分配 COM 口 → 登录；多机场景 `show me` 使机箱 ID LED 闪 10 秒识别当前连接。<<<PAGE 34>>>
+- **C7 配置 EMP 共享 IP 与 CMM 私有 IP**：共享地址 `ip interface emp address 198.51.100.100 mask 255.255.0.0`（存 vcboot.cfg）；CMM 私有地址须在对应控制台下 `modify boot parameters` → `boot empipaddr/empmasklength` → `commit boot`。<<<PAGE 35>>>、<<<PAGE 36>>>
+- **C8 SSH PKA 部署与撤销**：`ssh-keygen -t rsa -C remote_ssh_user@device` → `scp ...pub admin@ip:/flash/system` → 确认/创建用户 → `installsshkey new_ssh_user /flash/system/new_ssh_user_rsa.pub` → 客户端 `ssh -o PreferredAuthentications=publickey` 登录；撤销用 `revokesshkey`。<<<PAGE 41>>>、<<<PAGE 42>>>
+- **C9 登录横幅定制**：/flash/switch 建 ASCII .txt 文件 → `session {ftp|cli|http} banner /flash/switch/xxx.txt`；登录前文本编辑 pre_banner.txt（FTP 不支持 pre-banner）。<<<PAGE 43>>>、<<<PAGE 44>>>
+- **C10 登录参数与会话超时**：`session login-attempt 5`、`session login-timeout 20`、`ssh login-grace-time 200`（30-600 秒，默认 120）、`session {cli|ftp|http} timeout N`。<<<PAGE 45>>>
+- **C11 启用 DNS 解析器**：`ip domain-name mycompany1.com` → `ip domain-lookup` → `ip name-server <ip>...`。<<<PAGE 46>>>
+- **C12 启用/禁用 FIPS**：前置（客户端支持强算法、SHA+AES、FIPS 证书）→ `system fips admin-state enable` → `reload from working no rollback-timeout` → `show system fips` 验证 → 手动禁 Telnet/FTP → `user snmpadmin password ... sha+aes`。<<<PAGE 47>>>、<<<PAGE 48>>>
+- **C13 传统 license 安装**：myportal 提交客户号/订单/激活码/序列号/MAC（可 CSV 批量）→ 文件存 /flash → `license apply file /flash/swlicense.txt`（或 `license apply key '...' order-id ...`）→ 重启（MACsec/10G/Metro/VXLAN-EVPN/premium 免重启）→ `show license-info`。<<<PAGE 66>>>、<<<PAGE 67>>>
+- **C14 SILOS 站点 license 端到端部署（8 步）**：`pkgmgr install uosn-sitemgr-v1.deb` + write memory → `license server ip-address ... admin-state enable` → 客户端 `license client site-id test server-ip ...` →（MPLS）`pkgmgr install uosn-mpls-v1.deb` → `ip interface Loopback0 address ...` → `mpls interface "intf1" admin-state enable` → `show license-client info` / `show license-server usage` 监控 → `license server apply file "/flash/license.txt"`。<<<PAGE 76>>>、<<<PAGE 77>>>
+- **C15 系统时钟与时区**：`system date 06/23/2002`（mm/dd/yyyy）、`system timezone pst`、`system time 10:45:00`（hh:mm:ss 24 小时制）；DST 随时区自动。<<<PAGE 78>>>、<<<PAGE 79>>>
+- **C16 keychain 配置**：`security key-chain gen-random-key [-256]` → `security key 5 algorithm sha256 key "..." start-time ... life-time 180 10:30`（上限 256 key）→ `security key-chain 1 globalKeyChain`（上限 32）→ `security key-chain 1 key 5` 关联；删除前须先解除应用关联。<<<PAGE 83>>>、<<<PAGE 84>>>
+- **C17 安装 Debian 应用包（以 NTP 为例）**：包放 /flash/working/pkg → `pkgmgr verify yos-ntpd-v1.deb`（MD5+兼容版本）→ `pkgmgr install ...` → `write memory` → `show pkgmgr` 验证；移除 `pkgmgr remove ntpd` + write memory。<<<PAGE 87>>>、<<<PAGE 88>>>
+- **C18 appmgr 应用启停**：`appmgr start|stop|restart ams config-dbase` + `write memory`；`show appmgr` 看状态（+ 表示未跨重启保存）。<<<PAGE 89>>>、<<<PAGE 90>>>
+- **C19 U-boot/ONIE 安全加固**：`uboot access enable|disable`、`uboot authentication enable password abcd1234`；`onie authentication enable password abcd@1234` → `show onie config`。<<<PAGE 91>>>、<<<PAGE 92>>>
+- **C20 保存运行配置（绕开 certified 限制）**：`modify running-directory user-config1` → `write memory`；验证后 `copy running certified`。<<<PAGE 104>>>、<<<PAGE 106>>>
+- **C21 从指定目录带回滚超时重启**：`reload from working rollback-timeout 5`（超时自动正常重启）；无回滚 `reload from working no rollback-timeout`；定时目录重启 `reload from working no rollback-timeout in 3:03`。<<<PAGE 105>>>
+- **C22 certify-on-reboot**：`certify-on-reboot`（WARNING: Next reboot will be forced from working）→ 重启后自动 flash-synchro；`no certify-on-reboot` 取消；`show reload` 看状态。<<<PAGE 107>>>
+- **C23 CMM 同步与接管**：`copy running certified flash-synchro`（certify+同步一步完成）或单独 `copy flash-synchro`；`takeover` 让 secondary 接管（注意先同步）。<<<PAGE 110>>>、<<<PAGE 111>>>
+- **C24 USB 升级/备份**：自动拷贝——USB 根放 aossignature 空文件 + 6900/working 目录放镜像 → `usb enable` → `usb auto-copy enable copy config enable [key/hash-key]` → 插 USB 自动升级；备份——`usb backup admin-state enable` + `write memory`。<<<PAGE 113>>>、<<<PAGE 114>>>
+- **C25 USB 灾难恢复（含 ONIE 设备）**：传统——USB 建 6900/certified|working + 根放 Trescue.img → 重启 → miniboot/uboot 下 `run rescue`；ONIE——根放 Yos.img → Onie Menu > Onie Rescue → `blkid` 找盘 → `mount /dev/sdb1 /mnt/usb` → `cp Yos.img /var/tmp/` → `onie-nos-install /var/tmp/Yos.img`。<<<PAGE 116>>>
+- **C26 命令日志启用与查看**：`command-log enable`（自动建 /flash/command.log）→ `show command-log status` → `show command-log`（降序，含 Command/UserName/Date/IP/Result）→ `command-log disable`。<<<PAGE 127>>>、<<<PAGE 128>>>
+- **C27 配置文件教程（DHCP Relay 三命令）**：PC 记事本建 dhcp_relay.txt（ip helper address/forward-delay/maximum-hops）→ 传到交换机 → `configuration apply dhcp_relay.txt` → `show configuration status` → `show ip helper` 验证。<<<PAGE 133>>>（page 6-2）
+- **C28 配置文件定时应用**：`configuration apply bncom_cfg.txt at 09:00 july 4`（定时）或 `... in 6:15`（倒计时）；`configuration cancel` 取消。<<<PAGE 134>>>、<<<PAGE 135>>>
+- **C29 快照与恢复出厂**：`configuration snapshot [all|vlan qos snmp|名称.snap]` 生成快照；`reset-to-factory [config [retain-vc] | all] [in 60]`。<<<PAGE 139>>>、<<<PAGE 141>>>
+- **C30 创建用户并授权**：`user thomas password techpubs` → `user thomas read-write domain-network ip-helper telnet`（或 all / none / all-except aaa）→ `show user thomas` 验证；密码策略 `user password-size min 10`、`user password-policy cannot-contain-username enable`、`user password-expiration 3`、`user password-history 2`。<<<PAGE 149>>>、<<<PAGE 153>>>、<<<PAGE 155>>>
+- **C31 锁定配置与手工解锁**：`user lockout-window 30`、`user lockout-threshold 3`、`user lockout-duration 60`；手工 `user j_smith lockout` / `user j_smith unlock`。<<<PAGE 157>>>、<<<PAGE 158>>>
+- **C32 ASA 快速部署**：`user thomas password mypassword read-write all` → `aaa radius-server rad1 host 10.10.1.2 timeout 3` → `aaa authentication telnet rad1 ldap2 local`（顺序即故障切换序）→ `aaa accounting session ldap2 local` → `show aaa authentication` 验证。<<<PAGE 171>>>（page 8-7）
+- **C33 ASA 增强模式**：`aaa switch-access mode enhanced`（建议保存并重启）；附 IP 锁定 `aaa switch-access ip-lockout-threshold 2`、解封 `aaa switch-access banned-ip <ip> release`；管理站 `aaa switch-access management stations admin-state enable` + `aaa switch-access management stations 100.15.5.9`。<<<PAGE 176>>>、<<<PAGE 180>>>、<<<PAGE 182>>>
+- **C34 JITC 模式**：确认 enhanced/CC 已禁用 → `aaa jitc admin-state enable` → 保存并重启 → `show aaa jitc config` 验证。<<<PAGE 184>>>
+- **C35 WebView 启用与证书**：`aaa authentication http local` → 浏览器 https://<ip>/new#/ 登录；自定义证书 `cat wv_server.key wv_server.crt > web.pem` → 拷到 /flash/switch → `aaa certificate install-certificate webview web.pem`（自动重启服务）。<<<PAGE 192>>>
+- **C36 SNMP 管理站部署**：`user NMSuserV3MD5DES md5+des password ***` → `snmp station 199.199.100.200 8010 NMSuserV3MD5DES v3 enable` → `show snmp station` 验证。<<<PAGE 205>>>（page 10-3）
+- **C37 SNMP community/认证/引擎/过滤**：`user community_user1 password *** no auth read-only all` → `snmp community-map comstring2 user community_user1 enable` → `snmp community-map mode enable`；v3 认证 `user user_auth1 password *** md5+des`；`snmp snmp-engineid-type {text|mac-address|ipv4-address} snmp-engineid ...`；单 trap 过滤 `snmp trap filter 210.1.2.1 0 1 2 3`。<<<PAGE 212>>>、<<<PAGE 214>>>、<<<PAGE 216>>>、<<<PAGE 207>>>
+- **C38 Cirrus 快速接入**：DHCP 配 Option 43 → 新交换机首次启动默认启用 agent；存量机 `cloud-agent admin-state enable`、`cloud-agent discovery-interval 60` → `show cloud-agent status` 验证。<<<PAGE 224>>>（page 11-3）
+- **C39 NaaS 配置**：`naas license call-home interval 60 [now|1]` → `naas license apply file licenseFile.v2c`（需重启）→ `show naas license` / `show naas-agent status`。<<<PAGE 237>>>（page 11-16）
+- **C40 REST 登录/建 VLAN/查询**：`GET https://192.168.1.1/auth/?&username=admin&password=switch`；`PUT https://192.168.1.1/mib/vlanTable?mibObject0=vlanNumber:2&mibObject1=vlanDescription:VLAN-2`；`GET .../cli/aos?&cmd=show+vlan+5`。<<<PAGE 249>>>、<<<PAGE 252>>>、<<<PAGE 259>>>
+- **C41 嵌入式 Python 事件绑定**：脚本放 /flash/python → `event-action trap linkDown script /flash/python/link_event.py` → `show event-action [statistics]`；交互执行 `python3` / `python3 sample.py`。<<<PAGE 270>>>、<<<PAGE 271>>>
+- **C42 AMS 手动启用（broker+订阅者）**：改 ams-broker.cfg 的 -h → broker 侧 `appmgr start ams broker` / `config-dbase` / `config-sync` / `cron-app` → write memory；订阅侧 `appmgr start ams config-sync` + write memory；`show appmgr` 验证；设备画像同步示例 `device-profile ... from dhcp-option-55 1,3,6` 自动同步全网。<<<PAGE 276>>>、<<<PAGE 277>>>
+- **C43 OpenFlow 逻辑交换机**：`openflow logical-switch vswitch1 mode normal version 1.3.1 vlan 5` / `vswitch2 mode api` → `... controller 1.1.1.1` → `... interfaces port 1/1/3` → `show openflow logical-switch [controllers|interfaces]`。<<<PAGE 283>>>（page 12-39）
+- **C44 Nutanix 插件全流程**：`pkgmgr install yos-nutanix-v1.deb` + write memory → 检查 ntnx.cfg → `appmgr start nutanix ntnx-plugin` → `debug nutanix show vm|interface|network|host` 查看拉取配置；停用/卸载 appmgr stop + pkgmgr remove。<<<PAGE 284>>>、<<<PAGE 285>>>、<<<PAGE 286>>>
+- **C45 PROFINET 端到端安装（10 步）**：scp Nos.img → show microcode working → reload from working → show microcode loaded → scp nos-pnet-v3.deb 到 pkg → pkgmgr install → write memory flash-synchro → show profinet status → `profinet vlan 2` + vlan member → `profinet admin-state enable` → write memory flash-synchro；配套 LLDP（hold-multiplier 4 / interval 5 / nearest-bridge tlv management-address）与 SNMP no-security 映射。<<<PAGE 291>>>-<<<PAGE 297>>>
+- **C46 两台交换机组 VC（手工）**：双侧 `virtual-chassis configured-chassis-id 1|2` → `virtual-chassis vf-link 0 create` + member-port → `ip interface local emp ...` → `write memory` → `convert-configuration to vc_dir` → `reload from vc_dir no rollback-timeout`；完成后 Master 上 `ip interface master emp address 10.255.100.100`。<<<PAGE 307>>>、<<<PAGE 328>>>
+- **C47 Auto-VFL 快速组 VC**：用默认 auto-VFL 端口直连即可；无默认端口机型 `virtual-chassis auto-vf-link-port 1/1/25`；验证 `show virtual-chassis topology|consistency|vf-link member-port`。<<<PAGE 304>>>、<<<PAGE 339>>>
+- **C48 VCSP 配置**：VC 侧 `virtual-chassis split-protection admin-state enable` + `split-protection linkagg`；helper 侧 `split-protection helper admin-state enable` + helper linkagg；guard-timer 控自动恢复。<<<PAGE 341>>>
+- **C49 RCL 服务端准备**：DHCP 配 IP/网关/Option 66/67 → TFTP 放 *.alu 指令文件（Keyword:Value）→ FTP/SFTP 主备放 config/image/script/license；脚本建议 Unix 编辑器创建。<<<PAGE 348>>>、<<<PAGE 358>>>
+- **C50 Nearest-Edge 管理交换机配置**：管理交换机 `lldp nearest-bridge chassis lldpdu tx-and-rx` + `lldp nearest-edge mode enable`，untagged 口接网络；新交换机零配置自动学习管理 VLAN。<<<PAGE 363>>>
+- **C51 Auto Fabric 参数调优**：`auto-fabric admin-state enable`、`auto-fabric interface 1/1/1-4 admin-state disable`（端口级优先）、`auto-fabric protocols {lacp|mvrp|ip ospfv2|isis} admin-state ...`、`auto-fabric discovery-interval 30`、`auto-fabric config-save admin-state enable` + `interval 600`、`auto-fabric protocols spb default-profile single-service`；验证 `show auto-fabric config [interface]`。<<<PAGE 380>>>、<<<PAGE 381>>>
+- **C52 NTP 客户端快速配置**：`ntp server 198.206.181.139`（或 FQDN）→ `ntp client admin-state enable` → `show ntp server status` / `show ntp client server-list` / `show ntp status`；广播模式 `ntp broadcast-client enable` + `ntp broadcast-delay 1000`；认证 `ntp key load` → `ntp authentication enable` → `ntp server 1.1.1.1 key 2` → `ntp key 2 trusted`。<<<PAGE 408>>>、<<<PAGE 414>>>、<<<PAGE 417>>>
+
+## counter-examples
+
+- **X1 certified 目录不能直接保存配置**："Configuration changes CAN NOT be saved directly to the certified directory." 运行目录为 certified 时改动重启即丢。<<<PAGE 94>>>、<<<PAGE 95>>>
+- **X2 未保存的运行配置重启丢失**："If the switch reboots before the RUNNING CONFIGURATION is saved, then the certified directory is reloaded to the RUNNING CONFIGURATION and configuration changes are lost." <<<PAGE 95>>>
+- **X3 Telnet/FTP 不安全**："A Telnet connection is not secure. Secure Shell is recommended instead of Telnet." "Both Telnet and FTP are available on the OmniSwitch but they do not support encrypted passwords." <<<PAGE 37>>>、<<<PAGE 38>>>
+- **X4 commit system 不落盘**："If you use the commit system command only, changes will be saved to the running system but not to the switch's non-volatile memory and will be lost if the switch is rebooted." <<<PAGE 34>>>、<<<PAGE 36>>>
+- **X5 EMP 无独立路由表**："There is no dedicated routing table for the EMP interface. All management interfaces use the same routing table with EMP and non-EMP routes." <<<PAGE 35>>>
+- **X6 USB dongle 重插需延时**："Reinsertion of a dongle should be done with at least a 10 second delay." 且 VC 内所有机箱都应插 dongle。<<<PAGE 35>>>
+- **X7 FTP/TFTP 用主机名需 DNS**："You can only use a host name instead of an IP address if the DNS resolver has been configured and enabled." <<<PAGE 63>>>
+- **X8 TFTP 单会话 + 空间限制**："only one active TFTP session is allowed at any point of time"；"When downloading a file to the switch, the file size must not exceed the available flash space." <<<PAGE 64>>>
+- **X9 签名镜像降级需降 u-boot**："On an OS6570M, U-boot versions 8.9.70.R04 and above support AOS signed images only (8.9R4 and above). To use AOS releases prior to 8.9R4... the u-boot must be downgraded." <<<PAGE 66>>>
+- **X10 Metro 配置先于 license 被拒**："The Metro configuration will be rejected if the Metro license is not installed prior to configuration." <<<PAGE 67>>>
+- **X11 MACsec order ID 需补零**："The order ID is a seven digit number and the license generation process appends the digit 0 at the beginning implicitly. Hence, it is required to provide eight digits (0 + 7 digits of the order ID) to install the license successfully." <<<PAGE 68>>>
+- **X12 出厂重置清除 premium license**："Execution of a factory reset command (reset-to-factory CLI command) removes all the premium licenses installed." <<<PAGE 69>>>
+- **X13 VC 子 license 不齐特性不生效**："if there is no sub-license parity across the units, the feature will not become operational." <<<PAGE 70>>>
+- **X14 SILOS license 迁移要走工单**："For license migration to a different server a customer service request must be created to invalidate the existing license." <<<PAGE 72>>>
+- **X15 MPLS 无 Loopback0 连不上 SILOS**："If MPLS interface is configured, but no Loopback0 interface is configured, the connection from SWLIC to SILOS will not be established." <<<PAGE 77>>>
+- **X16 同应用不能装多个包**："Multiple Debian Packages cannot be installed for an application at the same time." 且包须与当前 AOS 发行版同版本。<<<PAGE 87>>>
+- **X17 包未保存重启/接管丢失**："If the installed package is not saved it will not be loaded when the switch is reloaded and during VC-takeover." <<<PAGE 87>>>
+- **X18 安全补丁类包删除需重启回滚**："If a security patch upgrade package is removed (ex. OpenSSL), the switch must be reloaded to roll back to the version that came in the AOS image." <<<PAGE 88>>>
+- **X19 U-boot 禁用后镜像损坏不可救**："If the AOS images are not valid or corrupted, switch goes to no response state, where only watch-dog reboots are possible... the switch must be returned to the factory for repair." <<<PAGE 91>>>
+- **X20 U-boot 密码遗忘+flash 损坏=返厂**："If the flash is corrupted and U-boot fails to start the AOS with the password enabled and the password is forgotten, the switch must be returned to the factory for repair." <<<PAGE 91>>>
+- **X21 ONIE 密码遗忘无法灾备**："During disaster recovery the correct password must be entered to recover the switch if ONIE authentication is enabled. If the password is forgotten there is no other mechanism to perform disaster recovery and the switch needs to undergo RMA." <<<PAGE 92>>>
+- **X22 banner 文件不随 CMM 同步**："The banner text files located in the /flash/switch directory are not synchronized across CMMs when using the 'copy running certified' command, they must manually copied to each CMM." <<<PAGE 44>>>
+- **X23 banner 仅支持 ASCII**："The banner files must contain only ASCII characters and should bear the .txt extension. The switch will not reproduce graphics or formatting contained in the file." <<<PAGE 44>>>
+- **X24 FIPS 下 MD5/DES 被拒**："SNMPv3 communications in the FIPS mode supports SHA+AES. Session establishment with MD5 or DES should be rejected." <<<PAGE 47>>>
+- **X25 FIPS 切换必须重启**："The FIPS mode is enabled/disabled only with a reboot of the switch." <<<PAGE 47>>>
+- **X26 FIPS 无证书合规校验**："There are no checks in the OpenSSL module to verify the FIPS compliance of the certificate/keys in the flash." <<<PAGE 47>>>
+- **X27 takeover 断开管理会话**："When takeover happens, management sessions with the old Primary will be disconnected. User will have to reconnect to the new Primary." <<<PAGE 47>>>（FIPS 节）
+- **X28 Bash 特殊字符劫持**："the '$' when interpreted by Bash causes the next characters to be interpreted as a variable or command line argument. If using special Bash characters (i.e. '$' or '!') in the CLI they should be enclosed in single quotes." <<<PAGE 123>>>
+- **X29 command.log 启用期不可删**："The command.log file cannot be deleted while the command logging feature is enabled." <<<PAGE 127>>>
+- **X30 同时只能有一个配置定时会话**："Only one session at a time can be scheduled on the switch. If two sessions are set, the last one will overwrite the first." <<<PAGE 136>>>
+- **X31 密码策略命令不自动保存**："Password settings configured through the user password-policy commands are not automatically saved to the switch configuration." <<<PAGE 151>>>
+- **X32 全密码不可全星号**："password **123456** is allowed; password ******** is not allowed." <<<PAGE 151>>>
+- **X33 用户密码过期需 admin 解锁**："If a user's password expires, the user will be unable to log into the switch through any interface; the admin user must reset the user's password." <<<PAGE 154>>>
+- **X34 锁定窗不应长于锁时长**："Do not configure an observation window time period that is greater than the lockout duration time period."（反向同理）<<<PAGE 157>>>
+- **X35 SNMP 不可配 admin 用户**："SNMP access cannot be specified for the admin user." <<<PAGE 161>>>
+- **X36 OmniVista 需 v3 认证用户**："At least one user with SHA/MD5 authentication and/or DES encryption must be configured on the switch for SNMPv3 communication with OmniVista." <<<PAGE 161>>>
+- **X37 secondary CMM/Slave 不支持远端认证**："Remote authentication is not supported on secondary CMMs or Slave chassis. Use local authentication on secondary CMMs and Slave chassis." <<<PAGE 173>>>
+- **X38 SNMP 仅 LDAP/local**："SNMP can only use LDAP servers or the local user database for authentication." <<<PAGE 174>>>
+- **X39 增强模式改密不合规即认证失败**："any login request through SNMP and FTP that does not follow the enhanced mode password policy shall be considered as authentication failure." <<<PAGE 177>>>
+- **X40 增强模式单用户单会话**："In enhanced mode, a given user is restricted to only one session... another session with the same user 'admin' is not allowed." <<<PAGE 177>>>
+- **X41 增强模式仅 TLS 1.2**："When enhanced mode is activated, TLS connections use only TLS version 1.2. Connection requests with TLS 1.1 and lower shall be rejected." <<<PAGE 178>>>
+- **X42 增强模式 imgsha256sum 需随镜像更新**："The user must upload the 'imgsha256sum' checksum file whenever new AOS images are uploaded to the running directory." 否则校验失败循环重启。<<<PAGE 178>>>
+- **X43 迁移用户无盐**："Migrated users will not have a salt until the user's password is changed." <<<PAGE 180>>>
+- **X44 priv-mask 读写仅限 HTTP(S)**："The read-write privilege can be applied only for HTTP and HTTPS access types. For SSH, TELNET and Console only read-only privilege can be applied." <<<PAGE 181>>>
+- **X45 JITC 与增强/CC 模式互斥**："JITC mode is mutually exclusive of enhanced mode and common criteria mode." <<<PAGE 184>>>
+- **X46 JITC 站点本地 IPv6 禁配**："Site-Local IPv6 addresses of range FEC0::/10 (FEC, FED, FEE and FEF) cannot be configured." <<<PAGE 185>>>
+- **X47 超级用户密码不可恢复**："The super-user password cannot be recovered. In the case of a forgotten password a factory reset will need to be performed." <<<PAGE 186>>>
+- **X48 WebView 改端口须先断会话**："All WebView sessions must be terminated before the switch will accept the command."（改 http/https 端口）<<<PAGE 191>>>
+- **X49 TSM 启用丢弃 USM**："When the TSM security model is enabled, all the v1/v2/v3 USM request and traps are discarded. The SNMP requests are supported only over IPv4 transport." <<<PAGE 209>>>
+- **X50 证书更新需手工同步+重启**："If the contents of local or remote certificates are changed, the updated certificates must be manually copied from master or primary to all secondaries and slaves. A reboot is required for the changes to be applied." <<<PAGE 210>>>、<<<PAGE 213>>>
+- **X51 远端身份映射单用户**："The remote identity mapping can be done for only one user at a time... Mapping it to a different user will replace the existing user." <<<PAGE 213>>>
+- **X52 TSM 映射修改 SNMP 权限须重输密码**："When modifying a user's SNMP access, the user password must be re-entered (or a new one configured). This is required because the hash algorithm used to save the password in the switch depends on the SNMP authentication level." <<<PAGE 161>>>
+- **X53 增强模式 SWLOG 查看需凭据**："When the switch is in ASA enhanced mode, both user name and password is prompted to view the SWLOG data when show log swlog commands are used." <<<PAGE 178>>>
+- **X54 Cirrus 已有配置不自动上云**："For Switch with (vc)boot.cfg, it needs to be enabled using CLI command." <<<PAGE 223>>>
+- **X55 无 NTP 无法上云**："Without NTP, devices will not be able to talk to the activation server and join the cloud, unless the user manually sets the correct date." <<<PAGE 228>>>
+- **X56 VPN 连接失败 90 秒转错误态**："if the connection is not established is 90 seconds, the switch will move to an error state and will call home after the expiry of the discovery interval." 重连失败 10 分钟终止客户端重新 call-home。<<<PAGE 228>>>
+- **X57 NaaS degraded 模式禁止升级与展示**："Access to the /flash/certified and /flash/running directories will not be permitted." "The switch will not permit the execution of show or monitoring commands from any management interface." <<<PAGE 238>>>、<<<PAGE 239>>>
+- **X58 NaaS 宽限/降级模式下 CLI 受限**："When OmniSwitch operates in the Grace period or Degraded mode, you are allowed to establish a telnet or SSH connection to the switch, but not allowed to execute CLI commands." <<<PAGE 238>>>
+- **X59 NaaS 需重启激活 + NTP 依赖**："It is required to reboot the switch after installing NaaS license." "NTP is required to be configured on the switch to efficiently implement the grace period. If it is not enabled, the counting of days will be inaccurate." <<<PAGE 239>>>
+- **X60 OS9900 不支持 NaaS；Undecided Capex 不能组 VC**："OmniSwitch 9900 does not support NaaS feature." "When the switch is operating in UNDECIDED_CAPEX mode, Virtual Chassis cannot be formed." <<<PAGE 239>>>
+- **X61 Thin Switch 不能本地配置**："The Thin Switch mode is not configurable on the switch or saved in the switch configuration; a switch does not know it is a Thin Switch until OmniVista tells the switch to operate in that mode." <<<PAGE 240>>>
+- **X62 代理不遵守 Vary 头会串格式**："Should a proxy server decide not to respect the latter header it's possible to have unexpected behaviors such as retrieving JSON-encoded data after specifically requesting XML-encoded data." <<<PAGE 248>>>
+- **X63 事件脚本单绑定**："An event can have only one script assigned to it, but a script can be assigned to multiple events." 且须存 /flash/python、需 AAA 写权限。<<<PAGE 270>>>
+- **X64 OpenFlow 端口禁 STP/源学习**："Spanning tree and source learning do not operate on OpenFlow assigned ports." <<<PAGE 281>>>
+- **X65 ALL 组不支持包修改动作**："Packet modification actions are not supported by this type of group."（ALL group）<<<PAGE 282>>>
+- **X66 Nutanix 仅限 OS6900 部分型号**："Currently, only OS6900 (V72/C32/X48C6/T48C6/X48C4E/V48C8/C32E/T24C2/X24C2) supports Nutanix Plug-in." <<<PAGE 284>>>
+- **X67 PROFINET 仅非实时**："In this release OmniSwitch only supports Acyclic data or non-real time TCP/IP based communication." <<<PAGE 289>>>
+- **X68 PROFINET VLAN 变更需先禁用**："A PROFINET VLAN can be created or deleted only when the PROFINET is disabled on the switch." 删除 PROFINET VLAN 后回落 VLAN 1。<<<PAGE 297>>>
+- **X69 PROFINET 包删除前置**："The PROFINET must be disabled before removing the PROFINET package." <<<PAGE 299>>>
+- **X70 混合机型 VC 需切 mixed 模式**："In [Standard] mode the OS6900-X48C4E cannot be part of the VC." 需 `capability vfl-type mixed` 并重启 VC。<<<PAGE 319>>>
+- **X71 VC 参数运行时改不生效**："Some of the virtual chassis parameters runtime modification only take effect after the next reboot of the switch. These parameters are chassis identifier, chassis priority, control VLAN and hello interval." <<<PAGE 319>>>
+- **X72 新单元加入 VC 可能双重启**："the new chassis will reboot two times"——目录名、镜像或 vcboot.cfg 与现有 VC 不一致时。<<<PAGE 319>>>
+- **X73 VC 不能混家族**："A virtual chassis cannot contain a mix of different families of switches (i.e OS6900 and OS6860)." <<<PAGE 319>>>
+- **X74 重复 chassis ID 自动改号至 101-102**："This will cause the operational chassis identifier of one of the switches to be automatically renumbered to fall into the range (101-102)." 需经 EMP 本地修复。<<<PAGE 324>>>
+- **X75 组 ID 冲突不自检**："If two or more separate virtual chassis groups use the same group identifier, this inconsistency is not detected or corrected by the virtual chassis functionality." 影响 RCD。<<<PAGE 322>>>
+- **X76 VFL 上禁跑 SFlow/ERP/UDLD/LLDP**："Individual protocols such as SFlow, ERP, UDLD and LLDP are not supported on VFLs and must not be configured on ports belonging to a VFL." <<<PAGE 322>>>
+- **X77 VFL 限 10/40/100G 且不混速**："Only physical ports operating at 10-Gbps (not including 10GBaseT), 40-Gbps, or 100-Gbps can be members of a VFL... 10-Gbps and 40-Gbps links cannot be mixed in the same VFL... 10GBase-T ports cannot be members of a VFL." <<<PAGE 322>>>
+- **X78 VFL 线速可能丢包**："Some user-data traffic loss may be seen on VFL link when sending at wire rate."（16 字节头开销）<<<PAGE 322>>>
+- **X79 hello 间隔不匹配降级**："Failure to adhere to this recommendation will lead the switches... to assume the Inconsistent role and Misconfigured-Hello-Interval status." <<<PAGE 324>>>
+- **X80 EMP 直连不是推荐分裂检测法**："Directly connecting the EMP ports of the CMMs on the Slave and Master switches is not a recommended method for detecting a split chassis scenario." <<<PAGE 312>>>
+- **X81 VCSP 与 helper 不能同机**："The VCSP feature and the VCSP Helper functionality cannot be enabled on the same switch. The VCSP helper and the VC cannot have the same Group ID." <<<PAGE 340>>>
+- **X82 VC 分裂后配置不生效**："If a VC is split, configuration changes on the split switch will not take affect until the switch is rebooted." <<<PAGE 317>>>
+- **X83 RCL 已有 vcboot.cfg 不触发**："If a vcboot.cfg is already present on the switch, Automatic Remote Configuration Download does not occur." <<<PAGE 348>>>
+- **X84 RCL 脚本禁 reload**："The script file does not support the reload command. If the command is included in the script file, a 'command not supported' error will be displayed." <<<PAGE 348>>>
+- **X85 RCL 脚本 write memory 会覆盖 vcboot.cfg**："If a write memory command is used in the script file, then it overwrites the vcboot.cfg file. Hence, if the script file is downloaded along with the bootup configuration file, then the script file must not contain the write memory command." <<<PAGE 348>>>
+- **X86 RCL 文件传输三次失败即中止**："File transfer is tried three times and if file transfer still fails, an error is logged, and download process is stopped." working 目录可能残留不完整文件集。<<<PAGE 351>>>
+- **X87 RCL 删 working 目录后不可用**："The RCL process will not work if the /flash/working directory is deleted before RCL is started." <<<PAGE 354>>>
+- **X87b 指令文件大小写敏感、格式错即弃行**："The instruction file is case sensitive... If the Keyword:Value format is incorrect, the information on that line is discarded." <<<PAGE 359>>>
+- **X88 Windows 编辑脚本有隐藏控制字符风险**："Creating the script file in a Windows environment can result in hidden control characters that may cause issues with script file parsing." <<<PAGE 360>>>
+- **X89 LACP 自动检测仅限 RCL 模式**："The LACP auto detection mode is not supported when the switch boots up in normal mode (non-remote configuration load mode)." <<<PAGE 365>>>
+- **X90 Lightning 模式平台差异**：6360/6465/6560/6575/6750M 走 WebView 向导（2 小时、1/1/1-2 口）；6860 系列等仅 SSH（1 小时、EMP/dongle）；均不支持 VC。<<<PAGE 373>>>
+- **X91 Auto Fabric 不建 VFL**："Automatic Fabric cannot be used to create a VFL for a Virtual Chassis." 且须在 VC 建立后才运行。<<<PAGE 399>>>
+- **X92 SPB 发现在 4000-4003 被占用时不跑**："If there are any BVLANs manually configured that are not in the range of 4000-4003, SPB discovery will not run. If there are any standard VLAN IDs configured in the 4000-4003 range, SPB discovery will not run." <<<PAGE 399>>>
+- **X93 MVRP 动态 VLAN 不入配置**："MVRP configuration learned through the Automatic Fabric process is not written to the switch configuration file... To retain these VLANs... manually convert them to static VLANs." <<<PAGE 388>>>
+- **X94 自动 IP 发现不适合复杂网络**："Automatic IP discovery is designed for use in more simplistic networks. It is not recommended to be used for complex networks such as those with multiple OSPF areas." <<<PAGE 389>>>
+- **X95 手工配置优先于自动发现（且不可逆）**："if the IP protocol configuration was manually applied to the interface, the interface does not become eligible for automatic IP configuration when the manual configuration is removed." <<<PAGE 391>>>
+- **X96 Auto Fabric 致显示不同步**："there may be periodic changes to the switch configuration. This will cause the Running Configuration to display as 'NOT SYNCHRONIZED' even after manually synchronizing CMMs." <<<PAGE 397>>>
+- **X97 NTP 不支持 2035 年以后**："NTP does not support year date values greater than 2035 (the reasons are documented in RFC 1305 in the data format section)." <<<PAGE 413>>>
+- **X98 NTP 不同步 stratum 16 服务器**："NTP client will not synchronize with an unsynchronized NTP server (Stratum 16)." <<<PAGE 414>>>
+- **X99 同层 peer 同步原则**："Peer associations should only be configured between servers at the same stratum level. Higher Strata should configure lower Strata, not the reverse." 避免共同故障点。<<<PAGE 413>>>
+- **X100 hash-control brief 不建议用于机箱**："It is recommended not to set brief hashing mode on Chassis based products." <<<PAGE 82>>>
+- **X101 secureadmin 模式 Telnet/FTP 不可用**："The TELNET and FTP services are not supported for secureadmin user." 且 cp/mkdir/mv/rm/vi 等关键 CLI 仅 console 会话可用。<<<PAGE 146>>>
+
+## frameworks
+
+- **F1 自动管理特性总体框架（Auto VC → RCL → Auto Fabric → Lightning/Cirrus）**：工厂默认交换机上电后按序执行：自动虚拟机箱（Auto VC）→ 远程配置下载（RCL）→ 自动 Fabric → Lightning/Cirrus；有配置文件则跳过自动阶段。"Power Up → Factory Default? → AutoVC Begins → VC Ready? → RCL Starts → RCL Success? → Auto Fabric Success? → Config Applied" <<<PAGE 21>>>（Figure 1-1）、<<<PAGE 230>>>
+- **F2 CMM 双目录配置管理体系（certified/working/RUNNING + 回滚）**：certified（最可靠基线）+ working/用户目录（试验场）+ RUNNING CONFIGURATION（RAM）三层模型；write memory 落盘、copy running certified 认证、flash-synchro 同步，共同构成软件回滚与冗余体系。<<<PAGE 94>>>-<<<PAGE 101>>>
+- **F3 认证交换机访问（ASA）安全框架**：管理接口（console/ftp/http/ssh/telnet/snmp）× 认证源（RADIUS/LDAP/local 链式故障切换）× 授权（命令域/族分区管理）× 计费（aaa accounting session）四层；default/enhanced/JITC 三档安全模式递进。<<<PAGE 167>>>-<<<PAGE 186>>>
+- **F4 用户权限分区管理框架（domain/family 两级）**：命令域（domain-admin/system/physical/network/layer2/service/policy/security/mpls/vcm/datacenter/afn）下辖命令族，read-only/read-write/all/none/all-except 组合授权；适用于 user 与 aaa priv-mask 两处。<<<PAGE 159>>>、<<<PAGE 181>>>
+- **F5 License 体系框架（传统单机 + Premium 捆绑 + SILOS 站点/节点 + NaaS 订阅）**：单机文件 license（EEPROM 化）→ 捆绑子 license（VC Match/Local-Only）→ SILOS 服务器/客户端（MQTT 分发、demo/grace/撤销）→ NaaS 云订阅（Essential/Advanced/Management/Upgrade、grace/degraded 状态机）。<<<PAGE 66>>>-<<<PAGE 77>>>、<<<PAGE 232>>>-<<<PAGE 233>>>
+- **F6 包与应用管理框架（pkgmgr/appmgr/文件同步三组件）**：Debian 包的验证-安装-提交（write memory 持久化）-移除生命周期，以及应用的 start/stop/restart 免重启管理；支撑 AMS、WebView 2.0、NTP、Nutanix、PROFINET、Cirrus Agent 等生态。<<<PAGE 85>>>-<<<PAGE 90>>>
+- **F7 虚拟机箱（VC）框架**：vcsetup.cfg（单机入组）+ vcboot.cfg（整体配置）双文件体系；Master/Slave 选举五准则；VFL（10/40/100G 聚合、16 字节封装头）+ 控制 VLAN + IS-IS VC 协议；RCD（EMP 带外）与 VCSP（helper linkagg）双分裂防护；Auto-VFL/自动 Chassis ID 零接触建组。<<<PAGE 305>>>-<<<PAGE 343>>>
+- **F8 零接触部署框架（DHCP Option 43/66/67 + 指令文件 + Nearest-Edge LLDP）**：DHCP 客户端在 VLAN 1/127/管理 VLAN 轮换获取地址 → TFTP 指令文件（*.alu）→ 主备 FTP/SFTP 拉取镜像/配置/脚本/license → 脚本执行 → 自动重启；Nearest-Edge 用专用组播 MAC 的 LLDP 传播管理 VLAN；DHCP 服务器偏好序（OVCloud > OmniVista > OXO）。<<<PAGE 348>>>-<<<PAGE 364>>>
+- **F9 网络可编程框架（REST Web Services + Python + CLI/Bash 脚本 + AMS 发布订阅）**：REST 双域（mib/cli）+ JSON/XML 媒体类型；AOSAPI Python 库；Bash 原生脚本与 grep/awk/sed 工具链；嵌入式 Python 事件（trap）绑定；AMS 以 MQTT broker/topic/community 实现跨交换机配置同步与 replay。<<<PAGE 246>>>-<<<PAGE 278>>>
+- **F10 OmniVista Cirrus 云管理框架**：DHCP（Option 43 VSO）→ Activation Server（call-home、证书）→ VPN 隧道 → OV Cirrus 实例（SNMP over VPN）；NaaS license 状态机（Operational → Grace → Degraded）；Thin Switch 最小本地配置模式；LAN 管理改用 MQTT 推送替代 SNMP 轮询。<<<PAGE 226>>>-<<<PAGE 241>>>
+- **F11 AOS Micro Services（AMS）微服务生态**：broker + topic（COMMUNITY/APPLICATION/SUB_CONFIG 层级）+ Config-DB（replay）+ config-sync + cron 定时任务；内置设备画像同步与 OS6465 电源配置同步两个示范应用；broker 冗余可借 VRRP。<<<PAGE 272>>>-<<<PAGE 279>>>
+- **F12 时间同步框架（系统时钟 + NTP 分层 + Cirrus NTP 池）**：本地 system date/timezone（DST 自动）→ NTP 客户端/服务器/广播模式（minpoll/maxpoll 指数、burst/iburst、MD5/SHA1 认证、stratum 模型）→ 云场景 NTP 池（clockN.ovcirrus.com）保障证书时间有效性。<<<PAGE 78>>>-<<<PAGE 81>>>、<<<PAGE 406>>>-<<<PAGE 417>>>
+
+## glossary
+
+- **AOS**：Alcatel-Lucent Enterprise OmniSwitch 操作系统，本书描述 8.10R4 版。<<<PAGE 1>>>
+- **ISSU**：In Service Software Upgrade，在线软件升级，"used to upgrade the software on a VC or modular chassis with minimal network disruption"。<<<PAGE 22>>>
+- **Validation File**：ISSU 升级兼容性验证文件，含版本匹配信息。<<<PAGE 24>>>
+- **CLI**：Command Line Interface，文本配置界面，AOS 为单级命令体系。<<<PAGE 29>>>、<<<PAGE 122>>>
+- **EMP**：Ethernet Management Port，以太网管理口，"allows you to bypass the Network Interface (NI) modules and remotely manage the switch directly through the CMM"。<<<PAGE 31>>>
+- **ASA**：Authenticated Switch Access，经本地数据库或外部服务器认证管理用户。<<<PAGE 31>>>
+- **WebView**：交换机内嵌的 Web 管理界面（HTTPS，URL 含 /new#/）。<<<PAGE 32>>>
+- **Console Port**：控制台串口（micro-USB 或 RJ-45），默认 9600-8-N-1。<<<PAGE 33>>>
+- **SSH**：Secure Shell，加密远程登录，防 IP 欺骗/DNS 欺骗/明文截获等。<<<PAGE 38>>>
+- **SFTP**：Secure Shell FTP，SSH 子系统的加密文件传输。<<<PAGE 38>>>
+- **PKA**：Public Key Authentication，SSH 公钥认证。<<<PAGE 41>>>
+- **Login Banner**：登录横幅，/flash/switch 下文本文件经 session banner 命令启用。<<<PAGE 43>>>
+- **pre_banner.txt**：登录提示前显示的文本文件，FTP 会话不支持。<<<PAGE 44>>>
+- **DNS Resolver**：域名解析服务，最多 3 IPv4 + 3 IPv6 服务器。<<<PAGE 46>>>
+- **FIPS**：Federal Information Processing Standards，FIPS 140-2 加密合规模式，切换需重启。<<<PAGE 46>>>
+- **session timeout**：会话不活动超时（默认 4 分钟）。<<<PAGE 29>>>
+- **USB Ethernet Dongle**：USB 转以太网适配器，等效 EMP（ASIX 8817 / RTL8153 芯片）。<<<PAGE 35>>>
+
+## 第 3 章 系统文件
+- **/flash**：闪存根目录，含 certified/working/network/switch/system 等。<<<PAGE 52>>>
+- **certified directory**：已认证的默认可靠文件目录，配置不可直接写入。<<<PAGE 94>>>
+- **working directory**：新文件暂存/测试目录，可保存配置。<<<PAGE 94>>>
+- **RUNNING DIRECTORY**：当前配置保存目标目录，"any directory can be configured to be the RUNNING DIRECTORY"。<<<PAGE 94>>>
+- **RUNNING CONFIGURATION**：RAM 中的当前运行配置。<<<PAGE 94>>>
+- **vcboot.cfg**：启动配置文件（ASCII），VC 模式整体配置。<<<PAGE 94>>>、<<<PAGE 306>>>
+- **Image files / archive files**：镜像文件，多个内部文件的聚合容器。<<<PAGE 94>>>
+- **swlog**：交换机日志文件（/flash/network 下 swlog.0/1 等）。<<<PAGE 52>>>
+- **fsck**：文件系统检查/修复命令（no-repair/repair）。<<<PAGE 59>>>
+- **newfs**：删除整个文件系统的命令（危险）。<<<PAGE 59>>>
+- **freespace**：显示文件系统剩余空间。<<<PAGE 59>>>
+- **watch/cut/paste/tee**：CLI 直接暴露的 Linux 工具集。<<<PAGE 60>>>
+- **TFTP**：Trivial File Transfer Protocol，无登录、单会话。<<<PAGE 64>>>
+- **ALE Secured Code**：ALE 第三方加固代码计划（源码审查、漏洞扫描等）。<<<PAGE 65>>>
+- **ASLR**：Address Space Layout Randomization，每次重启随机化内存布局防利用。<<<PAGE 65>>>
+- **Signed AOS Images**：RSA-2048+SHA-256 签名的 AOS 镜像。<<<PAGE 66>>>
+- **Secure Boot**：启动链验证，确保只引导可信软件。<<<PAGE 66>>>
+- **License apply**：安装 license 的命令（file 或 key 方式）。<<<PAGE 66>>>
+- **Premium (Bundle) License**：捆绑多子 license 的单一大 license（OS6570-SW-PRM12/28、OS6870-SW-PRM1/2）。<<<PAGE 69>>>
+- **SILOS**：Site Local Licensing Server，跑在交换机上的站点 license 服务器（Debian 包）。<<<PAGE 71>>>
+- **SWLIC**：Switch Local Licensing client，向 SILOS 取 license 的客户端。<<<PAGE 71>>>
+- **MQTT**：Message Queuing Telemetry Transport，SILOS/SWLIC 与 AMS/Cirrus 使用的消息协议。<<<PAGE 71>>>、<<<PAGE 272>>>
+- **Site license**：最多 4 节点共享的浮动 license。<<<PAGE 73>>>
+- **Node license**：绑定单个网络节点（standalone 或 ≤8 单元 VC）的 license。<<<PAGE 73>>>、<<<PAGE 74>>>
+- **DST**：Daylight Savings Time，随时区自动启停。<<<PAGE 78>>>
+- **UTC/GMT**：协调世界时，system timezone 基于 UTC 偏移。<<<PAGE 78>>>
+- **DHCP Option-2**：DHCP 下发时区偏移（仅默认值时可被设置）。<<<PAGE 78>>>
+- **hash-control**：哈希模式（brief/extended），影响 LAG/SLB/ECMP 哈希算法。<<<PAGE 82>>>
+- **load-balance non-ucast**：链路聚合非单播负载分担开关（默认关）。<<<PAGE 82>>>
+- **Keychain**：集中密钥管理模块，密钥带生命周期轮转。<<<PAGE 83>>>
+- **pkgmgr**：Package Manager，Debian 包验证/安装/移除。<<<PAGE 85>>>
+- **appmgr**：Application Manager，应用 start/stop/restart。<<<PAGE 85>>>
+- **U-boot**：引导加载器，可设访问与密码认证。<<<PAGE 91>>>
+- **ONIE**：开放网络安装环境，可设认证；灾备用 Onie Rescue。<<<PAGE 92>>>、<<<PAGE 116>>>
+
+## 第 4 章 CMM 目录
+- **CMM**：Chassis Management Module，机箱管理模块；双 CMM 提供冗余。<<<PAGE 93>>>
+- **Primary/Secondary CMM**：主/备 CMM，secondary 提供 fail over。<<<PAGE 93>>>、<<<PAGE 99>>>
+- **Software Rollback**：软件回滚，借目录结构回到旧版本。<<<PAGE 95>>>
+- **copy running certified**：将运行目录内容认证到 certified。<<<PAGE 106>>>
+- **copy flash-synchro**：同步主备 CMM 的 certified 内容。<<<PAGE 110>>>
+- **takeover**：secondary CMM 接管为主。<<<PAGE 111>>>
+- **certify-on-reboot**：下次重启强制从 working 加载并自动认证的特性。<<<PAGE 107>>>
+- **show running-directory**：显示当前运行目录与同步状态。<<<PAGE 107>>>
+- **show microcode**：显示目录内/已加载镜像版本。<<<PAGE 108>>>
+- **/uflash**：USB 闪存挂载点。<<<PAGE 113>>>
+- **aossignature**：USB 自动拷贝防误触发的签名空文件。<<<PAGE 113>>>
+- **usb auto-copy / usb backup**：USB 自动升级与备份特性（互斥）。<<<PAGE 113>>>、<<<PAGE 114>>>
+- **Trescue.img**：USB 灾备恢复镜像。<<<PAGE 116>>>
+- **image integrity check / get-key**：镜像 SHA256 校验/取值命令。<<<PAGE 118>>>
+
+## 第 5-6 章 CLI / 配置文件
+- **Single-level CLI**：无命令模式层级，任意时刻可输入任意命令。<<<PAGE 122>>>
+- **Partial Keyword Completion**：Tab 最短唯一前缀补全。<<<PAGE 124>>>
+- **no form**：命令的 no 形式，撤销配置。<<<PAGE 124>>>
+- **command-log**：命令日志（command.log，含用户/IP/结果）。<<<PAGE 127>>>
+- **history buffer**：命令历史缓存，配合 !n 调用。<<<PAGE 126>>>
+- **tty 命令**：设置屏幕行列（10-150 行 / 20-150 列）。<<<PAGE 130>>>
+- **Configuration File**：含 CLI 命令的 ASCII 文本，configuration apply 应用。<<<PAGE 122>>>、<<<PAGE 136>>>
+- **Timer Session**：配置文件的定时/倒计时应用会话。<<<PAGE 136>>>
+- **.err file**：配置应用/检查出错时生成的错误日志文件。<<<PAGE 137>>>
+- **configuration syntax-check**：应用前语法预检。<<<PAGE 137>>>
+- **configuration snapshot**：导出当前非默认配置为快照文件（asc.n.snap）。<<<PAGE 139>>>
+- **configuration backup / restore**：用户配置 tar 备份（/flash/config-recovery，上限 10 份）与恢复。<<<PAGE 138>>>
+- **reset-to-factory**：恢复出厂（config/retain-vc/all 三档）。<<<PAGE 141>>>
+- **write terminal**：显示当前全部运行配置。<<<PAGE 142>>>
+- **Vi editor**：交换机内置行编辑器。<<<PAGE 138>>>
+
+## 第 7-8 章 用户 / 安全
+- **admin user**：默认管理员（admin/switch），恒可 console 登录。<<<PAGE 145>>>
+- **secureadmin user**：高安全默认账户，首登强制改密并切增强模式。<<<PAGE 145>>>
+- **default user**：存储新用户默认权限的模板账户，不可登录。<<<PAGE 150>>>
+- **Partitioned Management**：按命令域/族分配用户权限的机制。<<<PAGE 145>>>
+- **Command Domain / Command Family**：命令域与命令族（族为域子集）。<<<PAGE 159>>>
+- **Password History**：旧密码保留数（默认 4），防重复使用。<<<PAGE 155>>>
+- **Password Expiration**：密码过期（全局 1-365 天或单用户指定日期）。<<<PAGE 154>>>
+- **Lockout Window/Threshold/Duration**：锁定观察窗/阈值/时长三参数。<<<PAGE 156>>>
+- **user lockout unlock**：手工锁定/解锁用户。<<<PAGE 158>>>
+- **priv-password**：SNMPv3 用户独立于登录密码的加密密码。<<<PAGE 214>>>
+- **who / whoami / kill**：会话查看与终止命令。<<<PAGE 163>>>、<<<PAGE 164>>>
+- **RADIUS**：Remote Authentication Dial-In User Service，AAA 服务器。<<<PAGE 168>>>
+- **LDAP**：Lightweight Directory Access Protocol，AAA 服务器（SNMP 可用）。<<<PAGE 168>>>
+- **AAA**：Authentication, Authorization, Accounting。<<<PAGE 168>>>
+- **aaa authentication**：配置各管理接口认证源链的命令。<<<PAGE 170>>>
+- **exit-on-fail**：仅用第一个可用服务器、失败即拒绝的选项（默认 enable）。<<<PAGE 171>>>
+- **aaa accounting session**：ASA 计费（会话日志）配置。<<<PAGE 175>>>
+- **ASA Enhanced Mode**：增强安全模式（更强密码/锁定默认值、单会话、TLS1.2、完整性校验等）。<<<PAGE 176>>>
+- **aaa console admin-only**：仅 admin 可用安全 console 会话。<<<PAGE 169>>>
+- **ip-lockout-threshold**：按来源 IP 的封禁阈值（默认 6，上限 128 banned IP）。<<<PAGE 180>>>
+- **Management Station**：远程管理 IP 白名单（上限 64）。<<<PAGE 182>>>
+- **priv-mask**：按接入类型（ssh/telnet/console/http）的权限掩码。<<<PAGE 181>>>
+- **JITC Mode**：Joint Interoperability Test Command 军用安全认证模式。<<<PAGE 184>>>
+- **Crypto Strong Security**：禁弱哈希/加密算法的特性。<<<PAGE 186>>>
+- **super-user-password**：su 超级用户账户密码（不可恢复）。<<<PAGE 186>>>
+- **hardware-self-test / process-self-test**：增强模式硬件/进程自检命令。<<<PAGE 146>>>、<<<PAGE 183>>>
+- **imgsha256sum**：增强模式/JITC 镜像校验和文件。<<<PAGE 178>>>、<<<PAGE 185>>>
+- **Salt（增强模式密码盐）**：16 字节随机盐与密码一同哈希存储。<<<PAGE 180>>>
+
+## 第 9-10 章 WebView / SNMP
+- **webview force-ssl**：强制 HTTPS（默认启用）。<<<PAGE 190>>>
+- **Web Service / REST**：RESTful 管理接口（mib/cli/info 域，JSON/XML）。<<<PAGE 246>>>、<<<PAGE 247>>>
+- **aaa certificate install-certificate webview**：安装 WebView 自定义 SSL 证书。<<<PAGE 192>>>
+- **WLAN Cluster-Virtual-IP**：OAW-AP 集群虚拟管理 IP（LLDP 自动学习或手工配置）。<<<PAGE 198>>>、<<<PAGE 199>>>
+- **SNMP**：Simple Network Management Protocol，网络管理协议。<<<PAGE 203>>>
+- **NMS**：Network Management System/Station，接收 trap 的管理工作站。<<<PAGE 205>>>
+- **SNMP Agent / Manager**：代理（交换机内）与管理器（工作站）两角色。<<<PAGE 208>>>
+- **MIB**：Management Information Base，被管对象数据库。<<<PAGE 208>>>
+- **PDU**：Protocol Data Unit，SNMP 报文。<<<PAGE 208>>>
+- **Get/GetNext/GetBulk/Set**：SNMP 读/写操作。<<<PAGE 208>>>
+- **Trap / Inform**：代理主动通知；inform 需确认。<<<PAGE 208>>>、<<<PAGE 210>>>
+- **Community String**：v1/v2c 的口令式标识（≤32 字符）。<<<PAGE 210>>>、<<<PAGE 212>>>
+- **snmp community-map**：community 到用户的映射库。<<<PAGE 212>>>
+- **snmp security 等级链**：no security → authentication set/all → privacy set/all（默认）→ traps only。<<<PAGE 215>>>
+- **USM**：User-Based Security Model，SNMPv3 安全模型。<<<PAGE 211>>>
+- **VACM**：View-Based Access Control Model。<<<PAGE 211>>>
+- **TSM**：TLS Security Model，SNMP over TLS（仅 v3）。<<<PAGE 209>>>
+- **SNMP Engine ID**：代理引擎标识（默认企业值+MAC）。<<<PAGE 216>>>
+- **Trap Filtering**：按命令族或按 trap ID 过滤。<<<PAGE 217>>>
+- **Trap Absorption**：抑制重复相同 trap。<<<PAGE 218>>>
+- **snmp trap replay**：重放已存储 trap。<<<PAGE 218>>>
+- **authentication trap**：SNMP 认证失败 trap（standard/private/both 三模式）。<<<PAGE 218>>>
+- **show snmp mib-family**：MIB 表与命令族映射。<<<PAGE 220>>>
+
+## 第 11 章 OmniVista Cirrus / NaaS
+- **OmniVista Cirrus**：ALE 云管理平台，零接触开通。<<<PAGE 222>>>
+- **Cloud Agent**：交换机上连云的代理（cloud-agent admin-state）。<<<PAGE 224>>>
+- **Activation Server**：激活服务器（默认 license.ovng.myovcloud.com）。<<<PAGE 223>>>、<<<PAGE 227>>>
+- **DHCP Option 43 (VSO)**：厂商自定义选项，下发激活/代理等子选项（1/128-133/138）。<<<PAGE 229>>>、<<<PAGE 234>>>
+- **Call-home**：交换机以序列号向激活服务器注册/取 license 的过程。<<<PAGE 229>>>、<<<PAGE 237>>>
+- **discovery-interval**：call-home 重试间隔（默认 30 分钟）。<<<PAGE 223>>>、<<<PAGE 224>>>
+- **VPN Server**：云端 OpenVPN 接入点，建立管理隧道。<<<PAGE 228>>>
+- **Image Download Server**：云端镜像下载服务器（HTTPS）。<<<PAGE 228>>>
+- **NaaS**：Network as a Service，订阅式网络服务模式。<<<PAGE 232>>>
+- **Essential/Advanced/Management/Upgrade License**：NaaS 四类订阅。<<<PAGE 232>>>
+- **Grace Period**：NaaS 宽限期（45/30/30 天三类）。<<<PAGE 233>>>
+- **Degraded Mode**：降级模式，仅转发流量、禁管理/升级。<<<PAGE 238>>>
+- **Capex / Undecided Capex mode**：永久买断模式及其未定状态（按制造日期 2021-06-01 判定）。<<<PAGE 233>>>
+- **Thin Switch**：瘦交换机模式，本地仅存最小连通配置。<<<PAGE 240>>>
+- **Monitoring Agent / Config Agent**：Cirrus agent 的两个组件（MQTT 上报/配置执行）。<<<PAGE 241>>>
+- **Greenfield / Brownfield Deployment**：绿地（全新部署）/棕地（存量网络新增）部署场景。<<<PAGE 231>>>
+
+## 第 12 章 Web Services / 脚本 / AMS / OpenFlow
+- **REST**：Representational State Transfer 架构风格（无状态、可缓存、URI 命名资源）。<<<PAGE 246>>>
+- **REST Verbs（GET/PUT/POST/DELETE）**：读/建/改/删四种动词。<<<PAGE 246>>>
+- **URN / Domain（mib/cli/info）**：REST 资源名与访问域。<<<PAGE 247>>>
+- **AOSAPI / AOSConnection**：Python Web Services 客户端库核心类。<<<PAGE 260>>>、<<<PAGE 262>>>
+- **HEREDOC（<<）**：Bash 块输入重定向。<<<PAGE 265>>>
+- **awk / grep / sed**：CLI 文本处理工具。<<<PAGE 268>>>
+- **event-action**：trap 事件绑定 Python 脚本的命令。<<<PAGE 270>>>
+- **/flash/python**：事件脚本必须存放的目录。<<<PAGE 270>>>
+- **AMS**：AOS Micro Services，交换机间发布订阅生态。<<<PAGE 272>>>
+- **Broker**：AMS 消息中继（OmniVista 或一台 OmniSwitch，默认端口 8883）。<<<PAGE 272>>>、<<<PAGE 273>>>
+- **Topic / Community**：AMS 订阅主题（层级字符串）与交换机社区。<<<PAGE 273>>>
+- **Config-DB / config-sync**：AMS 的配置记录回放与本地消费组件。<<<PAGE 273>>>
+- **ams-broker.cfg / config-sync.cfg / cron.cfg**：AMS 三配置文件。<<<PAGE 274>>>、<<<PAGE 275>>>
+- **Device Profiling Agent**：IoT 设备画像签名同步应用。<<<PAGE 273>>>
+- **AMS Broker Redundancy**：基于 VRRP 的 broker 故障切换。<<<PAGE 278>>>
+- **OpenFlow**：SDN 控制/转发分离接口。<<<PAGE 281>>>
+- **OpenFlow Logical Switch**：受控制器管理的逻辑交换机（含 VLAN/端口资源）。<<<PAGE 281>>>
+- **Hybrid (API) Mode**：OpenFlow 混合模式，flow 作为 QoS 策略插入。<<<PAGE 281>>>
+- **OpenFlow Group（ALL/INDIRECT）**：动作桶组合。<<<PAGE 282>>>
+- **Nutanix Prism**：超融合管理 UI；OmniSwitch 经 Nutanix 插件对接。<<<PAGE 284>>>
+- **PROFINET**：工业以太标准；OmniSwitch 作 IO-Device（CC-B）。<<<PAGE 288>>>
+- **IO-Controller / IO-Device / IO-Supervisor**：PROFINET 三类节点。<<<PAGE 288>>>
+- **GSDML**：PROFINET 设备描述文件（随包提供）。<<<PAGE 293>>>
+- **profinet vlan / device-name**：PROFINET 专用 VLAN 与设备名命令。<<<PAGE 289>>>、<<<PAGE 298>>>
+
+## 第 13 章 虚拟机箱
+- **VC**：Virtual Chassis，多交换机单 IP 管理的虚拟机箱。<<<PAGE 300>>>
+- **Master / Slave Chassis**：VC 主/从机箱。<<<PAGE 306>>>
+- **VFL**：Virtual Fabric Link，VC 互联虚拟 fabric 链路（聚合）。<<<PAGE 306>>>
+- **Control VLAN**：VC 控制专用 VLAN（默认 4094，仅 VFL 端口）。<<<PAGE 306>>>、<<<PAGE 302>>>
+- **IS-IS VC**：VC 专有拓扑管理协议（与路由 IS-IS 无关）。<<<PAGE 306>>>
+- **RCD**：Remote Chassis Detection，EMP 带外分裂检测协议。<<<PAGE 306>>>、<<<PAGE 311>>>
+- **VCSP**：Virtual Chassis Split Protection，经 helper 的分裂保护协议。<<<PAGE 306>>>、<<<PAGE 340>>>
+- **VCSP Helper / VCSP Link Aggregate**：帮助转发 VCSP PDU 的邻机与专用聚合。<<<PAGE 340>>>
+- **Active-VC / Sub-VC**：分裂后的主/子 VC。<<<PAGE 340>>>
+- **Protection State**：分裂后端口操作关闭的保护状态。<<<PAGE 340>>>
+- **Guard Timer**：VCSP 恢复前等待计时器。<<<PAGE 340>>>
+- **vcsetup.cfg**：单机入 VC 的设置文件（Chassis ID、Group、priority 等）。<<<PAGE 306>>>
+- **convert-configuration**：standalone 转 VC 的配置转换命令。<<<PAGE 307>>>
+- **EMP-VC / Chassis EMP**：VC 整体管理 IP 与单机管理 IP。<<<PAGE 306>>>、<<<PAGE 325>>>
+- **Startup Error Mode**：vcsetup.cfg 损坏时的回退模式（Invalid-Chassis-Id 等）。<<<PAGE 309>>>
+- **Duplicate-Chassis / Mismatch-Chassis-Group**：ID 冲突/组不一致的失败状态。<<<PAGE 320>>>、<<<PAGE 322>>>
+- **Auto-VFL / auto-vf-link-port**：自动 VFL 端口与自动 VFL ID 分配。<<<PAGE 333>>>、<<<PAGE 334>>>
+- **VFL Mode（auto/static）**：VFL 两种互斥配置模式。<<<PAGE 333>>>
+- **Automatic Chassis ID Assignment**：无 vcsetup.cfg 启动时由 Master 分配 ID。<<<PAGE 336>>>
+- **virtual-chassis shutdown**：受控隔离一台 VC 成员便于下架。<<<PAGE 327>>>
+- **ssh-chassis**：VC 内跨机箱 SSH 访问命令。<<<PAGE 327>>>
+- **Remote VC (Remote Stacking)**：10G SFP+ 端口作 auto-VFL 延伸 VC 距离。<<<PAGE 312>>>
+- **Mixed VFL Mode**：OS6900-X48C4E 与其他 6900 机型混合 VC 所需模式。<<<PAGE 319>>>
+
+## 第 14 章 自动远程配置（RCL）
+- **RCL / Automatic Remote Configuration Download**：无 vcboot.cfg 时经 DHCP+TFTP/FTP 自动下载配置/镜像。<<<PAGE 345>>>、<<<PAGE 348>>>
+- **Instruction File（*.alu）**：TFTP 上的指令文件（Keyword:Value）。<<<PAGE 346>>>、<<<PAGE 357>>>
+- **Bootup Configuration File**：下载后保存为 vcboot.cfg 的启动配置。<<<PAGE 359>>>
+- **AlcatelDebug.cfg**：自动下载的调测配置文件。<<<PAGE 360>>>
+- **Script File**：下载后按序执行的命令脚本。<<<PAGE 360>>>
+- **auto-config-abort**：人工中止 RCL 的命令。<<<PAGE 356>>>
+- **Nearest-Edge Mode**：管理交换机以专用 MAC（01:20:DA:02:01:73）LLDP 通告管理 VLAN 的模式。<<<PAGE 363>>>
+- **VLAN 127**：RCL 用 tagged DHCP 广播 VLAN（上行口预定义表）。<<<PAGE 346>>>、<<<PAGE 352>>>
+- **DHCP Option 66/67**：TFTP 服务器名与启动文件名。<<<PAGE 354>>>
+- **LACP Auto Detection**：RCL 期间检测 LACP PDU 自动建聚合。<<<PAGE 365>>>
+
+## 第 15-17 章 Lightning / Auto Fabric / NTP
+- **Lightning Configuration Mode**：出厂交换机 WebView/SSH 快速开局向导（默认 192.168.0.1/24，客户端 192.168.0.200）。<<<PAGE 373>>>
+- **JSON 模板（EXPORT/IMPORT）**：Lightning 向导的配置模板文件。<<<PAGE 374>>>
+- **Automatic Fabric（auto-fabric）**：自动发现配置 LACP/SPB/MVRP/IP 的特性。<<<PAGE 377>>>、<<<PAGE 383>>>
+- **Discovery Window / discovery-interval**：发现窗口与周期间隔（默认 0=禁用）。<<<PAGE 379>>>、<<<PAGE 385>>>
+- **config-save（auto-fabric）**：发现配置自动保存（默认 300 秒）。<<<PAGE 379>>>、<<<PAGE 403>>>
+- **UNP**：User Network Profiles，支持动态 SPB 服务 profile。<<<PAGE 386>>>
+- **SAP**：Service Access Point，绑定接入端口与 SPB 服务的逻辑实体。<<<PAGE 386>>>
+- **single-service / auto-vlan profile**：动态 SAP 两种 profile（untagged/每 tag）。<<<PAGE 387>>>、<<<PAGE 404>>>
+- **SPB**：Shortest Path Bridging；自动发现建 BVLAN 4000-4003、ECT 1-4。<<<PAGE 386>>>
+- **BVLAN / Control BVLAN**：SPB 骨干 VLAN（4000 为控制）。<<<PAGE 386>>>
+- **MVRP**：Multiple VLAN Registration Protocol；仅 flat STP 下支持。<<<PAGE 388>>>
+- **LBD**：Loopback Detection，SAP 口环回检测。<<<PAGE 387>>>
+- **NTP**：Network Time Protocol，时间同步协议。<<<PAGE 406>>>
+- **Stratum**：距时间源的层级（1 为直连）。<<<PAGE 411>>>
+- **minpoll/maxpoll**：NTP 轮询区间指数（2^n，默认 6/10）。<<<PAGE 415>>>
+- **burst / iburst**：NTP 加速同步的包突发模式。<<<PAGE 416>>>
+- **ntp broadcast-client / broadcast-delay**：广播客户端模式与其时延（默认 4000 μs）。<<<PAGE 414>>>、<<<PAGE 407>>>
+- **ntp.keys**：NTP 认证密钥文件（/flash/network/ntp.keys）。<<<PAGE 417>>>
+- **trusted key**：标记可信的 NTP 密钥 ID。<<<PAGE 417>>>
+- **preempt（NTP）**：服务器可抢占关联模式。<<<PAGE 416>>>
+
+## principles
+
+## 系统目录 / Flash
+- **P1 出厂默认目录结构与回滚设计**：/flash 下有 certified（已认证最可靠文件）、working（新文件待验证）、network（swlog）、switch、system 等目录。<<<PAGE 52>>>
+- **P2 certified 目录不可直接写**："The certified directory contains files that have been certified by an authorized user as the default files for the switch... Configuration changes CAN NOT be saved directly to the certified directory." <<<PAGE 94>>>
+- **P3 RUNNING CONFIGURATION 位于 RAM**："The RUNNING CONFIGURATION is the current operating configuration of the switch obtained from the directory the switch booted from in addition to any additional configuration changes made by the user. The RUNNING CONFIGURATION resides in the switch's RAM." <<<PAGE 94>>>
+- **P4 正常重启选择规则**："At the time of a normal boot (cold start or by using the reload command) the switch will reboot from CERTIFIED directory if contents (images and vcboot.cfg) are different from the RUNNING DIRECTORY. If contents are the same, the switch will reboot from the RUNNING DIRECTORY." <<<PAGE 95>>>
+- **P5 软件回滚机制**：目录结构本身提供回滚能力——新镜像先放 working/用户目录测试，验证可靠后再 copy running certified；不可靠时可 "rolled back" 到 certified 旧版本。<<<PAGE 95>>>
+- **P6 vcboot.cfg 是启动配置文件**："A configuration file, named vcboot.cfg, which is an ASCII-based text file, sets and controls the configurable functions inherent in the image files provided with the switch... When the switch boots, it looks for the file called vcboot.cfg." <<<PAGE 94>>>
+- **P8 文件系统工具**：ls/pwd/cd/mkdir/cp/rmdir/rm/vi/chmod/freespace/fsck/newfs 构成文件与目录管理三组命令（目录/文件/工具）。<<<PAGE 53>>>、<<<PAGE 59>>>
+- **P9 fsck 修复模式**：fsck 有 no-repair 与 repair 两选项；repair 会修复文件系统错误并显示诊断信息。<<<PAGE 59>>>
+- **P10 AOS LINUX 命令直通**："select Linux tools are exposed directly in the CLI via a wrapper so it need to enter su mode to use them is not required. This initial LINUX command set includes watch, cut, paste, and tee." <<<PAGE 60>>>
+- **P11 文件传输四模式**：交换机可作为 FTP/SFTP/SCP 服务器、TFTP 客户端、FTP/SFTP 客户端；镜像用 binary 模式传、配置文件用 ASCII 模式传。<<<PAGE 62>>>
+- **P12 TFTP 限制原理**："A TFTP server does not prompt for a user to login and only one active TFTP session is allowed at any point of time." <<<PAGE 64>>>
+## 升级 / 代码管理
+- **P13 标准升级流程**：上传新镜像到 Running 目录 → reload → 验证 → certify；VC 场景 Master 会先把镜像拷给 Slave 再统一重启。<<<PAGE 22>>>（page 1-5）
+- **P14 ISSU 原理（VC）**：按 chassis-id 从低到高逐台重启 Slave，最后重启 Master，"To restore the role of Master to the original Master chassis the current Master can be rebooted"。<<<PAGE 22>>>
+- **P16 ISSU 后 NI 复位**：模块化机箱 ISSU 后 NI 必须复位，"If the NIs are not reset by the time the NI reset timer expires, they will be reset individually by the system in ascending order beginning with slot 1." <<<PAGE 24>>>（page 1-9）
+- **P17 升级前维护基线**：升级前清旧 tech-support 文件、检查 /pmd 目录、确认 certified/synchronized、采集 show tech-support 基线。<<<PAGE 23>>>（page 1-7）
+- **P18 ALE Secured Code / ASLR**："In AOS 8.6.R01, ALE has adopted address system layout randomization (ASLR) as a standard feature. ASLR results in a unique memory layout of the running software each time the OmniSwitch reboots to impede or prevent software exploitation." <<<PAGE 65>>>
+- **P19 签名镜像**："Using RSA-2048 and SHA-256, AOS images are signed with a private key allowing AOS to verify the signature with a corresponding public key during reload." 8.10R1 起公钥与中间 CA 自动预置。<<<PAGE 66>>>
+- **P20 Secure Boot**："Secure Boot is a important security mechanism that ensures an OmniSwitch boots with only verified and trusted software." 需升级 u-boot/ONIE/BIOS。<<<PAGE 66>>>
+- **P21 包管理器（pkgmgr/appmgr）框架**："Package manager (pkgmgr) - responsible for validation, extraction and installation of the non-AOS Debian packages on the AOS switch. Application manager (appmgr) - responsible for launching... without the need for the system reboot." <<<PAGE 85>>>
+- **P22 包版本兼容语法**："The sign '>=' indicates that the package is compatible for AOS release version greater than or equal to the version displayed in 'Compatible release'." <<<PAGE 85>>>
+- **P23 安装持久化**："After the package is installed successfully, use the write memory command to save the installation permanently." 未保存则重启/VC takeover 后丢失。<<<PAGE 87>>>
+- **P24 升级包二进制备份与回滚**：Upgrade 类包（NTPD/SNMP/OpenSSH）安装时备份现有二进制，"The backed up binaries and libraries are restored during package removal and commit"；Patch 类（OpenSSL/OpenSSH）移除后需重启回固件版本。<<<PAGE 86>>>、<<<PAGE 88>>>
+## License
+- **P25 License 安装流程**：myportal 生成 license 文件（绑定 serial+MAC）→ 存 /flash → license apply → 重启（部分 license 免重启）→ show license-info 验证。<<<PAGE 66>>>
+- **P26 License 写入 EEPROM**："Once the license is applied, it is written to the EEPROM and the license file is no longer needed." <<<PAGE 67>>>
+- **P27 Premium 捆绑 license**："A premium (bundle) software license can be considered as a single super set of more than one software license." 子 license 分 Per Node / Match（VC 全员一致）/ Local-Only 三种行为。<<<PAGE 69>>>
+- **P28 VC 子 license 一致性检查**："a license check is performed for all chassis IDs in the VC. If there is no sub-license parity match, the feature/configuration is not enabled." <<<PAGE 70>>>
+- **P29 SILOS 架构**：SILOS（Site Local Licensing Server）为 Debian 包，运行在一台交换机/VC 上作为 license 服务器；SWLIC（Switch Local Licensing client）跑在每台需要的交换机上，"SWLIC will establish secure communication with the on-premises SILOS license server using secure MQTT (Message Queuing Telemetry Transport) protocol." <<<PAGE 71>>>
+- **P30 SILOS 断连撤销规则**："If the connectivity loss lasts for 15 days, the license allocation is automatically revoked. If the demo period has not yet been fully used, the client will fall back to the remaining demo period." <<<PAGE 72>>>
+- **P31 SILOS demo 期**："A demo period of 15 days is activated when a licensed feature is present in the system. The demo period will be extended an additional 15 days (total 30 days) when SILOS server and clients are configured regardless if a license key is applied on the server or not." <<<PAGE 72>>>
+- **P32 SILOS VC 分裂宽限期**：license 所绑单元脱离 VC 触发 15 天 grace period，过期未回归则移除该 license 并发 trap。<<<PAGE 73>>>
+- **P33 Site vs Node license**：Site license 浮动共享最多 4 个网络节点；Node license 一节点（standalone 或最多 8 单元 VC）一个。<<<PAGE 73>>>、<<<PAGE 74>>>
+## 登录 / 会话 / EMP
+- **P34 管理面默认锁定**："Management access is disabled (except through the console port) unless specifically enabled by a network administrator." 各接口需 aaa authentication 解锁。<<<PAGE 29>>>（page 2-1）
+- **P35 登录默认参数**：session login-attempt 默认 3 次；session login-timeout 55 秒；session timeout（不活动超时）4 分钟。<<<PAGE 29>>>（page 2-2 之前表格）
+- **P36 admin 恒可走 console**："Access to managing the switch is always available for the admin user through the console port, even if management access to the console port is disabled." <<<PAGE 166>>>、<<<PAGE 144>>>
+- **P37 EMP 双层地址模型**：共享 EMP IP 存 vcboot.cfg（跨 CMM），每 CMM 的 NVRAM 地址可选；"All the EMP IP addresses and CMM's IP addreses must be in the same subnet." "There is no dedicated routing table for the EMP interface." <<<PAGE 35>>>
+- **P38 USB Ethernet Dongle 等同 EMP**："This interface is treated just like an EMP interface. All functions and CLIs related to EMP are applicable to the USB-to-Ethernet dongle." 芯片 ASIX 8817/RealTek RTL8153。<<<PAGE 35>>>
+- **P39 SSH 认证四阶段**：Protocol Identification（可读标识串）→ Algorithm and Key Exchange（密钥协商+主机认证）→ Authentication（服务器列出可用方法）→ Connection。<<<PAGE 40>>>、<<<PAGE 41>>>
+- **P40 SSH 主机密钥存储**：密钥位于 /flash/system（ssh_host_key、ssh_host_dsa_key、ssh_host_rsa_key 及 .pub）；换钥需重启生效。<<<PAGE 40>>>
+- **P41 SSH PKA 安装**：ssh-keygen 生成密钥对 → scp 公钥到 /flash/system → installsshkey user file →（可选）ssh enforce-pubkey-auth 强制公钥认证；revokesshkey 撤销。<<<PAGE 41>>>、<<<PAGE 42>>>
+- **P42 登录横幅机制**：/flash/switch 下文本文件 + session {cli|ftp|http} banner 命令；pre_banner.txt 为登录前文本；"The banner text files located in the /flash/switch directory are not synchronized across CMMs"。<<<PAGE 43>>>、<<<PAGE 44>>>
+- **P43 DNS 解析器**：最多 3 个 IPv4 + 3 个 IPv6 域名服务器轮询；三步启用：ip domain-name → ip domain-lookup → ip name-server。<<<PAGE 46>>>
+- **P44 FIPS 模式**："When FIPS mode is enabled on OmniSwitch, FIPS 140-2 compliant encryption is used by the OmniSwitch devices in the various management interfaces such as SFTP, HTTP, SSh and SSL." 仅 SNMPv3 SHA+AES，"The FIPS mode is enabled/disabled only with a reboot of the switch." <<<PAGE 46>>>、<<<PAGE 47>>>
+- **P45 并发会话限制**：session session-limit 可对 FTP/SSH/Telnet/HTTP(S) 限制并发数，超限拒绝。<<<PAGE 183>>>（page 8-19）
+## CLI 机制
+- **P46 单级命令体系**："the OmniSwitch CLI is different from industry standard interfaces in that it uses a single level command hierarchy... The OmniSwitch will accept any CLI command at any time because there is no hierarchy." <<<PAGE 122>>>（page 5-2）
+- **P47 在线/离线配置**：CLI 命令可写入 ASCII 文本文件，configuration apply 应用；"This ability to store comprehensive network information in a single text file facilitates troubleshooting, testing, and overall network reliability." <<<PAGE 122>>>
+- **P48 Bash 作为 CLI 输入层**："AOS uses the Bash shell for CLI input. This could result in certain special characters being interpreted by Bash instead of being applied to an AOS command or password." 特殊字符需单引号。<<<PAGE 123>>>
+- **P49 部分关键字补全/缩写**：Tab 补全、最短唯一前缀缩写（sh vl）；"session cli-auto-complete-space enable" 可启用空格补全（默认关）。<<<PAGE 124>>>、<<<PAGE 125>>>
+- **P50 ? 帮助按命令集分组**：`?` 列出按 Command Set 分组的关键字。<<<PAGE 125>>>
+- **P51 历史与 bang 调用**：history 显示编号列表；`!4` 重放 4 号命令；`!!` 重放上一条。<<<PAGE 126>>>、<<<PAGE 127>>>
+- **P52 命令日志（command-log）**：记录命令全文、用户名、时间、来源 IP、执行结果（SUCCESS/ERROR），写入 /flash 的 command.log；默认禁用。<<<PAGE 127>>>、<<<PAGE 128>>>
+- **P53 屏幕与提示符定制**：tty 行列（10-150 行 / 20-150 列）；session prompt default 改 CLI 提示符。<<<PAGE 130>>>
+## 配置文件管理
+- **P54 配置文件三种生成方式**：工作站文本编辑器上传 / configuration snapshot 抓取 / 交换机内置 vi 编辑。<<<PAGE 136>>>（page 6-5）
+- **P55 定时应用会话**：configuration apply 支持 at（定时）与 in（倒计时）；"Timer sessions are very useful for certain management tasks, especially synchronized batch updates." <<<PAGE 136>>>
+- **P56 错误文件机制**：应用含错文件时生成 `<file>.n.err`；configuration error-file-limit 控制保留数量，超限删最旧。<<<PAGE 137>>>
+- **P57 语法预检**："The configuration syntax check command is used to detect potential syntax errors contained in a configuration file before it is applied to the switch." <<<PAGE 137>>>
+- **P58 快照（snapshot）机制**：configuration snapshot 按特性族导出非默认运行配置为 asc.n.snap；注释行以 `!` 开头被忽略；可编辑后作为配置文件复用。<<<PAGE 139>>>
+- **P59 配置备份/恢复**：configuration backup 将 banner、当前 running 目录 vcboot.cfg、userTable 收集为 /flash/config-recovery 下的 tar，最多保留 10 份；restore 需重启生效。<<<PAGE 138>>>
+- **P60 恢复出厂（reset-to-factory）三档**：config（清配置保留镜像/license/证书）、retain-vc（另保留 vcsetup.cfg）、all（再清 NVRAM、/flash/switch、/flash/system、license、证书）；"The switch must be certified and synchronized to activate or schedule this feature." <<<PAGE 141>>>
+## 用户 / AAA 安全
+- **P61 账户三元组**："A user account includes a login name, password, and user privileges. These privileges determine whether the user has read or write access to the switch and which command domains and command families the user is authorized to execute." 分区管理即 partitioned management。<<<PAGE 145>>>（page 7-3）
+- **P62 双内置账户**：admin/switch（初始仅 console 可用、SNMP 不可用、除密码外不可修改）；secureadmin（首登强制改密；登录即切换增强模式并禁用 admin）。<<<PAGE 145>>>
+- **P63 default 账户是模板**："The default user account on the switch is used for storing new user defaults for privileges and profile information. This account does not include a password and cannot be used to log into the switch." <<<PAGE 150>>>
+- **P64 用户设置实时入库存**："Unlike other settings on the switch, user settings configured through the user and password commands are saved to the switch configuration automatically... At bootup, the switch reads the database file for user information (rather than the vcboot.cfg file)." <<<PAGE 150>>>
+- **P65 密码策略体系**：全局密码策略含最小长度（默认 8）、禁含用户名（默认 enable）、大小写/数字/符号最小数量（各 1）、过期、历史（默认 4）、最小年龄。<<<PAGE 144>>>、<<<PAGE 153>>>
+- **P66 锁定三参数**：lockout-window（观察窗）、lockout-threshold（阈值）、lockout-duration（锁时长）；均默认 0（不限制）；"Only the admin user is allowed to configure user lockout settings. The admin account is protected from lockout." <<<PAGE 156>>>、<<<PAGE 157>>>
+- **P67 权限域/族两级模型**：read-only（show）/read-write（配置+show）；命令族是命令域子集，如 domain-network 包含 ip rip ospf bgp vrrp 等。<<<PAGE 159>>>
+- **P68 用户级 SNMP 认证等级**：user 命令可设 no auth / sha / md5 / sha+des / md5+des / sha+aes / sha224 / sha256；修改 SNMP 等级必须重输密码（哈希依赖认证等级）。<<<PAGE 161>>>
+- **P69 priv-password 双密码**："Two different passwords are supported for a SNMPv3 user, one for switch login and another for SNMPv3 frames authentication/encryption using the priv-password parameter." <<<PAGE 214>>>（page 10-12）
+- **P70 ASA 认证链**：aaa authentication <iface> server1 server2 ... local；"The switch uses only one server for authentication—the first available server in the list... If local is specified, it must be last in the list." <<<PAGE 173>>>（page 8-9）
+- **P71 exit-on-fail**："if the user information is not found on the first available server then the authentication request will fail. By default exit-on-fail is set to 'enable' for all access types." <<<PAGE 171>>>（page 8-7）
+- **P72 认证服务器与接口矩阵**：RADIUS 支持 Telnet/FTP/HTTP/SSH；LDAP 与 local 另支持 SNMP。<<<PAGE 173>>>
+- **P73 外部服务器失效回退**："If external servers are configured for other management interfaces... but the servers become unavailable, the switch will poll the local user database for login information." <<<PAGE 169>>>
+- **P74 计费（accounting）**：aaa accounting session 指定 RADIUS/LDAP/local（Switch Logging）链，记录会话与登录尝试。<<<PAGE 175>>>
+- **P75 ASA 增强模式密码加盐**："When a new user is created or a password changed, a 16-byte random salt is concatenated with the password and hashed. It will store both the salt and the hash to the local user database." <<<PAGE 180>>>（page 8-16）
+- **P76 增强模式镜像完整性**：reload 自动比对镜像 SHA256 与 running 目录 imgsha256sum 文件；不匹配则回退 certified，均失败则循环重启，需 USB 灾备恢复。<<<PAGE 178>>>（page 8-14）
+- **P77 增强模式 vcboot.cfg 完整性**：write memory 计算 vcboot.cfg 的 SHA256 存 /flash；重启校验失败则"boot up with an empty configuration file"并回退 certified。<<<PAGE 179>>>
+- **P78 IP 锁定阈值**："aaa switch-access ip-lockout-threshold" 默认 6；超阈 IP 永久封禁，最多 128 个 banned IP，满后删最旧；aaa switch-access banned-ip release 解封。<<<PAGE 180>>>
+- **P79 管理站白名单**：management-stations 启用后仅允许配置 IP 访问，最多 64 个。<<<PAGE 182>>>
+- **P80 priv-mask 按接入类型限权**：aaa switch-access priv-mask ssh/telnet/console/http(s) read-only|read-write <族>；"The read-write privilege can be applied only for HTTP and HTTPS access types." <<<PAGE 181>>>
+- **P81 JITC 模式**：军用认证要求——密码≥15 字符、不得与近 5 次相同、默认 60 天过期、SSH 每 GB/60 分钟 rekey、Diffie-Hellman-Group14-SHA1、升级前验签等。<<<PAGE 184>>>、<<<PAGE 185>>>
+- **P82 Crypto Strong Security**：启用后禁弱算法（SHA/MD5/SHADES/MD5DES/SHAAES），仅允许 SHA224/256/384 系列。<<<PAGE 186>>>
+- **P83 超级用户密码**：super-user-password 仅 admin 可设；"The super-user password cannot be recovered. In the case of a forgotten password a factory reset will need to be performed." <<<PAGE 186>>>
+- **P84 多会话管理**：who 列会话（session 0 恒为 console）、whoami 看自身、kill <n> 终止他人会话（需管理权限）。<<<PAGE 163>>>、<<<PAGE 164>>>
+## CMM / 机箱冗余
+- **P85 CMM 冗余模型**："When two CMMs are running one CMM has the primary role and the other has the secondary role at any given time. The primary CMM manages the current switch operations while the secondary CMM provides backup (also referred to as 'fail over')." <<<PAGE 99>>>（page 4-7）
+- **P86 运行配置自动同步**：主 CMM 的 running-configuration 自动同步到 secondary CMM；certified 需 copy flash-synchro / copy running certified flash-synchro 手动同步。<<<PAGE 99>>>、<<<PAGE 101>>>、<<<PAGE 110>>>
+- **P87 takeover**：takeover 让 secondary 接管；"It's normal for the NIs to indicate a DOWN status for approximately 10 seconds while establishing communication to the secondary CMM, however this does not affect the flow of traffic." <<<PAGE 111>>>
+- **P88 certify-on-reboot**：强制下次重启从 working 目录加载并自动 certify；失败则回退 certified；仅 VC-of-1 支持。<<<PAGE 107>>>
+- **P89 定时重启**：reload all in 3:03 / at 20:00 june 30；reload cancel 取消；show reload 查看状态。<<<PAGE 103>>>
+- **P90 USB 自动拷贝签名机制**："In order to prevent an accidental upgrade, a file named aossignature must be stored on the USB flash drive as well as having a directory with the same name as the product family"；重启后 auto-copy 自动关闭。<<<PAGE 113>>>、<<<PAGE 114>>>
+- **P91 USB 灾备**：USB 根放 Trescue.img + 平台目录（6900/certified 等）→ 重启进恢复 → 'run rescue'；ONIE 设备用 Onie Rescue + onie-nos-install。<<<PAGE 116>>>
+- **P92 镜像完整性人工校验**：image integrity check 比对目录镜像与 key file 的 SHA256；image integrity get-key 显示哈希。<<<PAGE 118>>>
+## SNMP / WebView
+- **P93 SNMP 模型**："The SNMP model defines two components, the SNMP Manager and the SNMP Agent." Agent 维护 MIB 变量，NMS 用 Get/GetNext/GetBulk/Set 操作，trap/inform 为主动通知。<<<PAGE 208>>>（page 10-6）
+- **P94 SNMP 安全等级链**：no security → authentication set → authentication all → privacy set → privacy all（默认）→ traps only；等级决定接受哪些请求。<<<PAGE 215>>>（page 10-13）
+- **P95 community string 映射**：v1/v2c 请求的 community 必须映射到本地用户（snmp community-map）；"A community string inherits the security privileges of the user account that creates it." <<<PAGE 212>>>
+- **P96 SNMPv3 加密认证组合**：认证 SHA/MD5 + 加密 DES/AES；"The encryption key is derived from the authentication key, which is used to decrypt the PDU on the switch's side." <<<PAGE 213>>>、<<<PAGE 214>>>
+- **P97 engine ID 生成规则**：默认 = 企业值 + 交换机 base MAC（如 8000195603+2c:fa:a2:13:e4:02）；可改为 IPv4/IPv6/MAC/text。<<<PAGE 216>>>
+- **P98 trap 过滤两法**：按用户命令族（读权限收回即屏蔽对应 trap）或按 trap ID（snmp trap filter <ip> <id...>）。<<<PAGE 217>>>（page 10-15）
+- **P99 trap 重放与吸收**：snmp trap replay 重发已存 trap（可指定序号起点）；"When trap absorption is enabled, traps that are identical to traps previously sent will be suppressed." <<<PAGE 218>>>
+- **P100 TSM/TLS over SNMP**："To send SNMP traps over TLS connection, the SNMP station needs to be configured with TSM user along with certificate identities. These configurations are supported only for SNMP version 3." TSM 启用时丢弃 USM 请求。<<<PAGE 209>>>
+- **P101 WebView 架构**：内嵌交换机的 Web 管理界面，URL 为 https://<ip>/new#/；"WebView access supports only partition manager family based authorization"；默认 force-ssl enable、443/80 端口。<<<PAGE 190>>>、<<<PAGE 191>>>、<<<PAGE 192>>>
+- **P102 WebView WLAN 虚拟 IP 自动学习**："The OmniSwitch acquires the Cluster Virtual IP address from the LLDP TLV received from the Access Points (APs)." precedence 默认 lldp。<<<PAGE 199>>>
+## OmniVista Cirrus / NaaS
+- **P103 Cirrus 零接触组件**：DHCP Server（Option 43）、Activation Server（默认 license.ovng.myovcloud.com）、OV Cirrus 实例、Proxy、NTP、Image Server、VPN Server。<<<PAGE 226>>>
+- **P104 无配置默认上云**："When the OmniSwitch is booted up for the first time, the switch will not have a [(vc)boot.cfg] configuration file. Hence, OmniVista Cirrus is enabled by default." 已有 vcboot.cfg 需 cloud-agent admin-state enable。<<<PAGE 224>>>
+- **P105 自动管理特性启动顺序**：Auto VC → RCL（远程配置下载）→ Auto Fabric → Lightning/Cirrus agent；有 (vc)boot.cfg 则跳过 auto VC 与 RCL。<<<PAGE 230>>>
+- **P106 NTP 缺省池**："The four available NTP pool servers are 'clock0.ovcirrus.com','clock1.ovcirrus.com', 'clock3.ovcirrus.com' and 'clock4.ovcirrus.com'." DHCP/NTP 均缺失时配置。<<<PAGE 228>>>
+- **P107 NaaS license 模型**：Node Locked Permanent / Node Locked Subscription；四类订阅 Essential（默认）/ Advanced / Management / Upgrade；Management 过期走 30 天 grace 再 degraded，Upgrade 过期立即 degraded。<<<PAGE 232>>>
+- **P108 NaaS 三类宽限**：Bootup 无 license 45 天；无连接有效 license 30 天；订阅到期默认 30 天。<<<PAGE 233>>>
+- **P109 Capex 判定规则**：AOS 升级重启后按序列号连 License Activation Server；Unknown 时按制造日期（2021-06-01 前=Capex，之后=Undecided Capex 周期 call-home 30 分钟）。<<<PAGE 233>>>
+- **P110 Thin Switch 模式**："In this mode no configuration can be saved in the 'Running' directory of the switch. Only the vcboot.cfg with minimal network reachability configuration is stored"；模式由 OmniVista 激活响应下发，交换机自身不感知。<<<PAGE 240>>>
+- **P111 Cirrus LAN 管理推送模型**："LAN devices periodically push data or respond to on-demand requests initiated by OmniVista Cirrus. The configuration of switches within this system is facilitated through MQTT... rather than SNMP protocol." <<<PAGE 241>>>
+- **P112 Cirrus Agent 组件**：Monitoring Agent（本地 REST API 采集 + MQTT 上报，JSON 配置文件定义采集组/间隔）与 Config Agent（订阅 MQTT topic 执行云侧配置）；以 Debian 包经 pkgmgr 安装。<<<PAGE 241>>>
+## Web Services / 脚本 / AMS
+- **P113 REST 双粒度**："The Web Services interface provides two levels of granularity, either through direct handling of MIB variables or using the embedded CLI commands to configure the switch." <<<PAGE 246>>>（page 12-2）
+- **P114 REST URL 结构**：`<http|https>://<ip>/<domain>/<URN>?<vars>`；domain ∈ {mib, cli, info}；动词 GET/PUT/POST/DELETE。<<<PAGE 247>>>
+- **P115 响应媒体类型**：application/vnd.alcatellucentaos+json / +xml；响应含 domain/diag/error/output/data。<<<PAGE 247>>>、<<<PAGE 249>>>
+- **P116 REST 禁缓存头**：Cache-Control: no-cache, no-store / Pragma: no-cache / Vary: Content-Type。<<<PAGE 248>>>
+- **P117 Python API 库**：AOSAPI + AOSConnection 依赖注入；login/logout/query/put/post/delete/success/diag。<<<PAGE 260>>>、<<<PAGE 262>>>
+- **P118 CLI 脚本=Bash**："The AOS CLI relies on Bash scripting, it can be leveraged for creating CLI scripts without the need for an external tool." 循环/变量/函数/shift/$? 可用。<<<PAGE 265>>>
+- **P119 嵌入式 Python 事件绑定**："administrators to create Python scripts and associate these scripts with specific traps. When the traps are generated by the switch, the pre-configured scripts will be run on the switch." 脚本须存 /flash/python。<<<PAGE 270>>>
+- **P120 AMS 发布订阅**："AMS uses publish-subscribe messaging as the underlying protocol for communication among switches... The role of broker is played by OmniVista or by an OmniSwitch if OmniVista is not present." Broker 默认端口 8883。<<<PAGE 272>>>、<<<PAGE 273>>>
+- **P121 AMS Topic 层级**：COMMUNITY_NAME/APPLICATION/APPLICATION_SUB_CONFIG；订阅 `COMMUNITY_NAME/#` 收全社区消息；Config-DB 负责新成员"configuration replay"。<<<PAGE 273>>>
+- **P122 AMS Broker 信息获取两途**：DHCP VSO option 43（option 43 140 IP-address=...）或手改 /flash/working/pkg/ams/ams-broker.cfg 的 -h。<<<PAGE 273>>>、<<<PAGE 274>>>
+- **P123 AMS Broker 冗余基于 VRRP**："It uses the VRRP protocol to handle the broker fail over"；客户端用同一 VIP 重连。<<<PAGE 278>>>
+- **P124 OpenFlow 逻辑交换机**："An OpenFlow logical switch consists of a portion of the switch's resources that are managed by an OpenFlow Controller (or set of Controllers) via the OpenFlow Agent... Spanning tree and source learning do not operate on OpenFlow assigned ports." <<<PAGE 281>>>
+- **P125 OpenFlow Hybrid(API) 模式**："the logical switch acts as an interface through which the Controller may insert flows. These flows are treated as QoS policy entries and offer the same functionality." <<<PAGE 281>>>
+- **P126 Nutanix 插件**：Debian 包 yos-nutanix-v1.deb，"The Nutanix Plug-in automatically pulls the necessary configuration from the Nutanix Prism and applies it to the OmniSwitch"；仅 OS6900 部分型号支持。<<<PAGE 284>>>
+- **P127 PROFINET 定位**：OmniSwitch 作为 PROFINET IO-Device、CC-B 一致性等级；"In this release OmniSwitch only supports Acyclic data or non-real time TCP/IP based communication." <<<PAGE 288>>>、<<<PAGE 289>>>
+## 虚拟机箱（VC）
+- **P128 VC 本质**："A Virtual Chassis is a group of switches managed through a single management IP address that operates as a single bridge and router." 免 STP/VRRP。<<<PAGE 300>>>（page 13-1）
+- **P129 vcsetup.cfg vs vcboot.cfg**：前者是单机入 VC 的设置（Chassis ID、Group、priority、control VLAN、EMP、VFL），后者是 VC 整体配置（L2/L3/管理）。<<<PAGE 306>>>（page 13-7）
+- **P130 Master 选举五准则**（高到低）：现任 Master → 最高 priority（默认 100）→ 最长 uptime → 最小 Chassis ID → 最小 MAC。<<<PAGE 310>>>（page 13-11）
+- **P131 Slave 同步规则**："if there is a mismatch between the Master and Slave vcboot.cfg or images files, the Master will overwrite the files on the Slave chassis and the Slave will automatically reboot." <<<PAGE 307>>>
+- **P132 控制 VLAN**："A special type of VLAN reserved for the inter-chassis communication exchange... Only VFL ports are assigned to this VLAN"（默认 4094）。<<<PAGE 306>>>、<<<PAGE 302>>>
+- **P133 IS-IS VC 协议**："Proprietary protocol for managing a Virtual Chassis mesh topology... determining adjacencies, loop-detection and the shortest path between members of the VC." <<<PAGE 306>>>
+- **P134 RCD 分裂检测**：各机箱经 EMP 口周期通告；VFL 全断时 former Slave "will shutdown all its front-panel user ports to prevent duplicate IP and chassis MAC addresses"。<<<PAGE 310>>>、<<<PAGE 311>>>
+- **P135 VCSP 分裂保护**：经 helper 交换机的专用 linkagg 传 VCSP PDU；正常 3 秒一帧，尺寸变化时 50ms 一帧发 3-10 秒；收到 master MAC 不匹配的 3-5 帧后进 protection state（面板口 operationally down，仅 VCSP linkagg 保留）。<<<PAGE 340>>>、<<<PAGE 341>>>
+- **P136 VCSP 恢复**：手动（guard-timer=0，重启后禁/启 VCSP 清状态）或自动（VFL 恢复后 sub-VC 重启，Master 等 60 秒逐台拉起）。<<<PAGE 342>>>
+- **P137 Auto-VFL 机制**：自动 VFL 端口（默认端口集或 auto-vf-link-port 指定）自动分配 VFL ID，"Multiple ports connected to the same peer chassis will be aggregated and assigned the same VFL ID." <<<PAGE 334>>>、<<<PAGE 337>>>
+- **P138 自动 Chassis ID**：无 vcsetup.cfg 启动时临时用 ID 1，VC 发现与选举后由 Master 统一分配唯一 ID 并写回 vcsetup.cfg，Slave 重启生效；"chassis with configured chassis id will always win over chassis with temporary chassis id"。<<<PAGE 336>>>
+- **P139 VFL 模式互斥**：auto/static 两模式，"Chassis must have the same VFL mode to form a VC"；模式可运行时切换无需重启。<<<PAGE 333>>>
+- **P140 VC 拓扑变更 trap 与写配置确认**：write memory 时比对当前与保存拓扑，元素缺失则警告"possible configuration purge"需确认。<<<PAGE 313>>>
+- **P141 VFL 16 字节头开销**："Since all packets that traverse the VFL have an additional 16 byte header prepended to the packet this reduces the effective bandwidth of a given VFL port." <<<PAGE 322>>>
+## 自动配置（RCL）/ Lightning / Auto Fabric / NTP / 其他
+- **P142 RCL 触发条件**：无 vcboot.cfg、bootup 完成端口就绪、能经 VLAN 1 / Management VLAN / VLAN 127 连到 DHCP 与 TFTP。<<<PAGE 349>>>
+- **P143 RCL 文件链**：DHCP（Option 66 TFTP、67 文件名）→ instruction file（*.alu，Keyword:Value 格式）→ FTP/SFTP 主/备服务器下载 image/config/debug/script/license；密码与用户名相同。<<<PAGE 348>>>、<<<PAGE 358>>>
+- **P144 DHCP 客户端轮换机制**："initial DHCP client starts with untagged VLAN 1... waits for 30 seconds"；失败转 tagged VLAN 127 再 30 秒，交替；收到 LLDP 管理 VLAN 通告则切换；收到 LACP PDU 则自动建聚合。<<<PAGE 361>>>
+- **P145 DHCP 服务器偏好序**：OVCloud > OmniVista > OXO ("alcatel.a4400.0") > 其他；高优先响应覆盖低优先，30 秒窗口等待。<<<PAGE 362>>>
+- **P147 LACP 自动检测**："The Remote Configuration Manager on OmniSwitch detects any LACP PDUs on any ports and configures a link aggregate automatically during Automatic Remote Configuration." 聚合加入 VLAN 127(tagged)+VLAN 1(untagged)，完成后删除。<<<PAGE 365>>>
+- **P148 Lightning 模式默认 IP**：交换机配 192.168.0.1/24（VLAN 1），对 1/1/1、1/1/2、EMP、USB dongle 提供 DHCP（分配 192.168.0.200/24），HTTPS/SSH 连 192.168.0.1 进入向导。<<<PAGE 373>>>（page 15-2）
+- **P149 Lightning 终止三途径**：超时（6360 等 2 小时 / 6860 等 1 小时）、WebView 显式禁用、检测到 CLI 登录会话隐式终止。<<<PAGE 373>>>、<<<PAGE 374>>>
+- **P150 Auto Fabric 发现顺序**："The switch will attempt to discover and automatically set up an LACP configuration... After the LACP discovery process completes... SPB... After the SPB discovery process completes and if MVRP is enabled... MVRP"；IP 协议发现并行。<<<PAGE 380>>>
+- **P151 Auto Fabric 端口资格**："The port has no previous configuration that would prevent the port from joining a link aggregate, forming an SPB adjacency, serving as a UNP SPB access port, and enabling MVRP"（default port state）。<<<PAGE 385>>>
+- **P152 SPB 发现预置**："BVLANs 4000-4003 are created and mapped to Equal Cost Tree (ECT) IDs 1-4, respectively. BVLAN 4000 will serve as the control BVLAN"；bridge priority 置 0x8000。<<<PAGE 386>>>
+- **P153 动态 SAP 双 profile**：single-service（untagged）与 auto-vlan（每个收到的 VLAN tag 建一个 SAP，默认）；端口级 set-profile 优先于全局 default-profile。<<<PAGE 387>>>、<<<PAGE 404>>>
+- **P154 MVRP 与 STP 联动**："MVRP is supported only when the switch is operating in the flat Spanning Tree mode. If the switch is running in the per-VLAN (1x1) mode when Automatic Fabric discovery is started for MVRP, the Spanning Tree mode is automatically changed to the flat mode." <<<PAGE 388>>>
+- **P155 Auto Fabric IP 自动配置**：已有 IP 接口监听 OSPF/IS-IS Hello，被动学习 Area/Level/计时器；"Automatic IP discovery is designed for use in more simplistic networks." <<<PAGE 389>>>、<<<PAGE 395>>>
+- **P156 发现配置保存**：默认不保存；可 write memory 或启用 auto-fabric config-save（默认 300 秒间隔）；"If the discovered configuration is not saved... the learned configuration is lost on the next switch reboot." <<<PAGE 403>>>
+- **P157 发现间隔建议**："Setting the discovery interval value to a time that is more than twice the value of the switch MAC address aging time is recommended." <<<PAGE 402>>>
+- **P158 NTP stratum 模型**："Stratum is the term used to define the relative proximity of a node in a network to a time source... Stratum 1 is the server connected to the time source itself." <<<PAGE 411>>>
+- **P159 NTP 轮询指数**：minpoll/maxpoll 为 2 的幂（默认 6/10，即 64s/1024s，可 3-17）；maxpoll 不得小于 minpoll。<<<PAGE 415>>>
+- **P160 NTP burst/iburst**：burst 可达时每轮询周期发 8 包加速同步；iburst 不可达时立即发 8 包加速初始同步。<<<PAGE 416>>>
+- **P161 NTP 认证**：MD5/SHA1 密钥文件须在两端（交换机路径 /flash/network/ntp.keys），ntp key load 载入、ntp server key <id> 指定、ntp key <id> trusted 信任；"Untrusted keys, even if they are in the switch memory and match an NTP server, will not authenticate NTP messages." <<<PAGE 413>>>、<<<PAGE 417>>>
+- **P162 Keychain 集中密钥管理**："The keychain module is a centralized key management mechanism in AOS. Any module using key management service ensures enhanced security with regular rotation of the keys." 认证通过需活动 key、认证类型、摘要三者一致。<<<PAGE 83>>>
+- **P163 系统时钟与 DHCP Option-2**："The user-defined time zone configuration (through CLI, WebView, SNMP) always gets priority over the DHCP server values."；DST 随时区自动启停、不可手工切换。<<<PAGE 78>>>、<<<PAGE 79>>>
+- **P164 hash-control 影响面**："Changing the hash control mode affects the hashing algorithm for Link Aggregation, Server Load Balancing and ECMP." <<<PAGE 82>>>
+- **P165 U-boot 访问与认证**：仅 admin 可开关；"If the AOS images are not valid or corrupted, switch goes to no response state... the switch must be returned to the factory for repair"（禁访问且镜像损坏时）。<<<PAGE 91>>>
+- **P166 ONIE 认证同步范围**："In the case of a VC, the ONIE authentication will be synchronized to all existing units of the VC. The authentication will not be synchronized to any new unit joining the VC." <<<PAGE 92>>>

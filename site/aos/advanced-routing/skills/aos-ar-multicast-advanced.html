@@ -1,0 +1,114 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>aos-ar-multicast-advanced — AOS 8.10R04 · Advanced Routing</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>AOS 8.10R04 · Advanced Routing</h1>
+<div class="sub">313 页 · 高级路由（OSPF/OSPFv3/IS-IS/BGP/组播边界/DVMRP/PIM/MBR）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">IGP</div>
+<a href="../skills/aos-ar-ospf-ospfv3.html">aos-ar-ospf-ospfv3</a>
+<a href="../skills/aos-ar-isis.html">aos-ar-isis</a>
+<div class="grp">BGP 与策略</div>
+<a href="../skills/aos-ar-bgp.html">aos-ar-bgp</a>
+<a href="../skills/aos-ar-policy-toolbox.html">aos-ar-policy-toolbox</a>
+<div class="grp">组播高级</div>
+<a href="../skills/aos-ar-multicast-advanced.html" class="on">aos-ar-multicast-advanced</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../aos/index.html">AOS 软件手册</a> › <a href="../index.html">AOS 8.10R04</a> › <span>aos-ar-multicast-advanced</span></nav><h1>aos-ar-multicast-advanced</h1><p class="meta"><span class="badge">SKILL</span> aos-ar-multicast-advanced · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>要隔离/复用私组播地址段：ip mroute-boundary 地址边界，多布线间复用同一段 239 地址</li>
+<li>要跑 DVMRP（含 DVMRP 隧道穿越非组播网络）或 PIM-DM（泛洪-剪枝）</li>
+<li>要部署 PIM-SM：C-RP/C-BSR/静态 RP 选型、Anycast RP 冗余、Register 打包调优、SPT 切换</li>
+<li>要启用 SSM（232/8、FF3x::/32）或 IPv6 PIM；要打通 PIM 与 DVMRP 两域（MBR）</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>组播路由三范式（F7）：密集模式（DVMRP/PIM-DM，广播-剪枝按源建树）→ 稀疏模式（PIM-SM，接收者显式 Join，RP 共享树 + SPT 切换）→ SSM（显式频道订阅免 RP）。域隔离体系（F9）：239/8 管理作用域 + mroute-boundary 让同段地址多域并发复用 + MBR 连接 PIM/DVMRP 两域。PIM-SM 控制体系五要素（F8）：RP（解封装 Register）、BSR（域内唯一分发 RP-set）、DR（源侧封装/接收侧 Join）、RPT 共享树、SPT 切换（末跳 DR 收到首包即切换）。RPF 逆向路径检查是全部组播转发的公共底层（P95）。</p>
+<h2 id="a1">A1（决策框架）</h2>
+<ol>
+<li><strong>地址域设计</strong>：边界地址必须是 239/8 作用域段（X46）；同一 239 段可在多个被边界隔离的域并发复用（P93/C33）</li>
+<li><strong>模式选型</strong>：接收者密集/小网用 DM（泛洪-剪枝）；稀疏/WAN 用 SM；接收者明确知道源用 SSM（免 RP 直连源）</li>
+<li><strong>RP 供给三选一</strong>：C-RP+BSR（自动选举）；静态 RP（全网手配）；Anycast RP（多机同地址+IGP 通告，收敛与 IGP 同级，P120）</li>
+<li><strong>Register/Join-Prune 调优</strong>：大源量网络开打包降低控制面丢包（P121）；register-mtu 不建议盲目调大（X66）</li>
+<li><strong>跨域互通用 MBR</strong>：同机 DVMRP 实例+PIM 实例（RFC 2715）；注意每接口只能跑一个组播协议（X44）</li>
+</ol>
+<h2 id="a2">A2（操作步骤）</h2>
+<ul>
+<li><strong>地址边界</strong>：<code>ip load pim</code> → <code>ip mroute-boundary vlan-3 239.120.0.0 255.255.0.0</code> → <code>show ip mroute-boundary</code>；多域复用例：核心配 239.0.0.0/8，两个布线间各配 239.188.0.0/16（C32/C33，&lt;&lt;<PAGE 220, 226-228>&gt;&gt;）</li>
+<li><strong>DVMRP 五步</strong>：<code>ip load dvmrp</code> → <code>ip interface vlan-2 ...</code> → <code>ip dvmrp interface vlan-2</code> → <code>ip dvmrp admin-state enable</code> → <code>write memory</code>；<code>show ip dvmrp [interface]</code>（C34，&lt;&lt;<PAGE 231>&gt;&gt;）</li>
+<li><strong>DVMRP 隧道</strong>：<code>ip interface "tnl-1" tunnel source 23.23.23.1 destination 155.2.2.2</code>；源地址接口与隧道接口都要 <code>ip dvmrp interface</code> 使能（C35，&lt;&lt;<PAGE 244>&gt;&gt;）</li>
+<li><strong>PIM-DM 六步</strong>：<code>ip load pim</code> → <code>ip interface vlan-2</code> → <code>ip pim interface vlan-2</code> → <code>ip pim dense group 225.0.0.0/24</code> → <code>ip pim dense admin-state enable</code> → <code>write memory</code>（C36，&lt;&lt;<PAGE 252>&gt;&gt;）</li>
+<li><strong>PIM-SM RP 体系</strong>：C-RP <code>ip pim candidate-rp 50.1.1.1 225.16.1.1/32 priority 100 interval 100</code>；C-BSR <code>ip pim cbsr 50.1.1.1 priority 100 mask-length 4</code>；静态 <code>ip pim static-rp 225.0.0.0/24 10.1.1.1 priority 10</code>；<code>show ip pim group-map/candidate-rp/cbsr</code>（C37，&lt;&lt;<PAGE 270-273>&gt;&gt;）</li>
+<li><strong>Anycast RP</strong>：两 RP 各配 Loopback1=10.10.10.1（IGP 通告）；全网 <code>ip pim static-rp 224.0.0.0/4 10.10.10.1</code>；两 RP 各配完整 RP set（<code>ip pim anycast-rp 10.10.10.1 192.168.1.1</code> + 对端）；<code>show ip pim anycast-rp</code>（C38，&lt;&lt;<PAGE 275-276>&gt;&gt;）</li>
+<li><strong>Register/J-P 调优</strong>：<code>ip pim register-packing enable|force-enable</code>、<code>ip pim register-mtu 1000</code>、<code>ip pim register-delay 100</code>（C39，&lt;&lt;<PAGE 278-279>&gt;&gt;）</li>
+<li><strong>IPv6 PIM</strong>：<code>ipv6 pim interface vlan-2</code> → <code>ipv6 pim dense group ff0e::1234/128</code> → enable；SM 侧 candidate-rp/cbsr/static-rp/rp-switchover 全套（C40，&lt;&lt;<PAGE 283-292>&gt;&gt;）</li>
+<li><strong>MBR</strong>：PIM 与 DVMRP 各自 load+接口+全局使能 → <code>ip mroute mbr admin-state enable</code>；可选 DVMRP 默认路由通告（<code>ip dvmrp interface "vlan-6" mbr-default-information enable</code>）或 <code>ip pim mbr all-sources</code>；<code>show ip mroute mbr</code> 看 "Protocols Registered = DVMRP PIM"（C41，&lt;&lt;<PAGE 298-303>&gt;&gt;）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>组播地址边界（核心+双布线间复用 239.188/16）（C33，&lt;&lt;<PAGE 226-228>&gt;&gt;）</li>
+<li>PIM-SM Bootstrap/RP 三路配置与验证（C37，&lt;&lt;<PAGE 270-273>&gt;&gt;）</li>
+<li>Anycast RP 双机配置（C38，&lt;&lt;<PAGE 275-276>&gt;&gt;）</li>
+<li>IPv6 PIM-DM + Bootstrap/RP 全套（C40，&lt;&lt;<PAGE 283-292>&gt;&gt;）</li>
+<li>MBR 三例（默认/DVMRP 默认路由/PIM all-sources）（C41，&lt;&lt;<PAGE 298-303>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（反例/坑）</h2>
+<ul>
+<li>每接口仅支持一个组播路由协议，PIM 与 DVMRP 不能同接口共存（X44，&lt;&lt;<PAGE 238, 266>&gt;&gt;）</li>
+<li>协议未加载即配置报 "application is not loaded"（X45，&lt;&lt;<PAGE 237, 265>&gt;&gt;）</li>
+<li>边界地址必须是 239.0.0.0-239.255.255.255 作用域段（X46，&lt;&lt;<PAGE 224>&gt;&gt;）</li>
+<li>DVMRP：prune-lifetime 谨慎改（X47）；show ip dvmrp prune 只显示发出的 prune（X48）；隧道两端都要使能 DVMRP 否则不 operational（X49）；flash-interval 必须小于 report-interval（X50）；老版本用 Route Report 做邻居发现（X51）（&lt;&lt;<PAGE 233-244>&gt;&gt;）</li>
+<li>OmniSwitch PIM 只兼容 SMv2 不兼容 SMv1（X53）；Hello 无法区分 DM/SM 邻居，DM 不应与 SM 直接交互（X54）（&lt;&lt;<PAGE 254, 258>&gt;&gt;）</li>
+<li>SPT 状态关闭则 SPT 切换不发生（X55）；SSM 默认段（232/8、FF3x::/32）不自动启用须手动配置（X56）；IGMP 代理场景必须 v3 否则 SSM 不工作（X57）（&lt;&lt;<PAGE 262-264, 282>&gt;&gt;）</li>
+<li>改 max-rps 前必须全局禁用 PIM-SM（X58）；C-RP 配在未使能 PIM 的接口上会报错（X59）；每交换机只支持一个 RP 地址（X60）；priority 与 override 互斥（X61）（&lt;&lt;<PAGE 268-273>&gt;&gt;）</li>
+<li>Anycast RP 地址不能与 Router ID 相同（X62）；静态 RP 必须配在域内所有 PIM 路由器而非仅 RP 成员（X63）；register-packing 配 Anycast-RP 时仅 RP set 全体支持才启用（X64）（&lt;&lt;<PAGE 275-278>&gt;&gt;）</li>
+<li>Register/J-P 打包仅 SM/SSM/BIDIR 支持，DM 不支持（X65）；register-mtu 盲目调大会致分片重组（X66）；J/P 实际最大尺寸取接口 IP MTU 与配置值较小者（X67）（&lt;&lt;<PAGE 279-280>&gt;&gt;）</li>
+<li>MBR 不支持 PIM-SSM，也不支持 PIM 与其他协议或多个 PIM 域互通（X68）；MBR 使能但 PIM/DVMRP 未各有 enabled 接口前不 operational（X69）；DVMRP 默认路由不能向 MBONE 通告（X70）（&lt;&lt;<PAGE 299-302>&gt;&gt;）</li>
+<li>高级路由协议需购买附加包（X71，&lt;&lt;<PAGE 12>&gt;&gt;）</li>
+</ul>
+<h2 id="_1">来源</h2>
+<p>OmniSwitch AOS 8.10R4 Advanced Routing Guide 第 5 章 Multicast Address Boundary（&lt;&lt;<PAGE 220-228>&gt;&gt;）、第 6 章 DVMRP（&lt;&lt;<PAGE 229-244>&gt;&gt;）、第 7 章 PIM（&lt;&lt;<PAGE 247-296>&gt;&gt;）、第 8 章 MBR（&lt;&lt;<PAGE 297-303>&gt;&gt;）。条目来源：cases C32-C41；principles P91-P127；counter-examples X44-X71；frameworks F7/F8/F9/F10（组播部分）。</p><div class="pn"><a href="aos-ar-policy-toolbox.html">⬅ 上一单元：aos-ar-policy-toolbox</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>aos-ar-isis — AOS 8.10R04 · Advanced Routing</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>AOS 8.10R04 · Advanced Routing</h1>
+<div class="sub">313 页 · 高级路由（OSPF/OSPFv3/IS-IS/BGP/组播边界/DVMRP/PIM/MBR）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">IGP</div>
+<a href="../skills/aos-ar-ospf-ospfv3.html">aos-ar-ospf-ospfv3</a>
+<a href="../skills/aos-ar-isis.html" class="on">aos-ar-isis</a>
+<div class="grp">BGP 与策略</div>
+<a href="../skills/aos-ar-bgp.html">aos-ar-bgp</a>
+<a href="../skills/aos-ar-policy-toolbox.html">aos-ar-policy-toolbox</a>
+<div class="grp">组播高级</div>
+<a href="../skills/aos-ar-multicast-advanced.html">aos-ar-multicast-advanced</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../aos/index.html">AOS 软件手册</a> › <a href="../index.html">AOS 8.10R04</a> › <span>aos-ar-isis</span></nav><h1>aos-ar-isis</h1><p class="meta"><span class="badge">SKILL</span> aos-ar-isis · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>新上线 IS-IS：area-id → level 能力 → 电路（接口）→ admin-state 十步流程</li>
+<li>规划 Level-1/L1-2/L2 路由器角色与区域归属（路由器整体属单区域，与 OSPF 接口分域不同）</li>
+<li>要配分层认证（全局/level/电路/电路级四层）或 keychain</li>
+<li>要做 L1→L2 泄漏、L2→L1 前缀分发、路由汇总；IPv4/IPv6 双栈要选单拓扑还是 M-ISIS 多拓扑</li>
+</ul>
+<h2 id="i">I（核心理解）</h2>
+<p>IS-IS 两层层级（P42）：Level-1 区内、Level-2 区间；
+与 OSPF 最大差异是路由器整体属于单一区域（P47）。NSAP 三字段 Area ID + System ID + NSEL，NSEL=00 时称 NET（P43）。报文四类：IIH 发现邻居、LSP 承载链路状态、CSNP 全量清单同步、PSNP 请求确认（P46）。邻接三要素：认证匹配、IS 类型、MTU（P45）。M-ISIS 为 IPv4/IPv6 各自独立 SPF 与 RIB（MT ID：IPv4=0、IPv6=2），解决单拓扑混布黑洞问题（P54/P55）。</p>
+<h2 id="a1">A1（决策框架）</h2>
+<ol>
+<li><strong>角色规划</strong>：区内路由器 level-1、区间路由器 level-1/2、纯骨干 level-2；全局与接口 level 能力组合决定潜在邻接（P48）</li>
+<li><strong>认证分层</strong>：全局 → level → 电路 → 电路级，低层覆盖全局（P50）；排障期可 auth-check 关闭只报错不丢包（P51）</li>
+<li><strong>域间路由</strong>：L1→L2 泄漏经 route map（P53/C17）；内部路由不能在 L1 汇总，只有外部重分发路由可以（X20）</li>
+<li><strong>双栈选型</strong>：域内有 v4-only/v6-only 设备时必须 M-ISIS 多拓扑（P54），否则单拓扑即可（但混布会黑洞）</li>
+<li><strong>度量</strong>：metric &gt; 64 必须先开 wide-metrics（X18）</li>
+</ol>
+<h2 id="a2">A2（操作步骤）</h2>
+<ul>
+<li><strong>十步上线</strong>：<code>vlan 5</code> → <code>ip interface vlan-5 ...</code> → <code>ip load isis</code> → <code>ip isis area-id 49.0001</code> → <code>ip isis admin-state enable</code> → <code>ip isis activate-ipv4</code> → <code>ip isis vlan 5</code> + <code>address-family v4</code> → <code>ip isis vlan 5 admin-state enable</code> → <code>show ip isis status</code>（C14，&lt;&lt;<PAGE 92>&gt;&gt;）</li>
+<li><strong>双栈双路由器</strong>：各建 vlan-isis（v4+v6 地址）→ <code>ip isis level-capability level-1/2</code> → <code>ip isis vlan vlan-isis address-family v4v6</code> + enable → <code>show ip isis adjacency/routes/spf</code>（C15，&lt;&lt;<PAGE 117-119>&gt;&gt;）</li>
+<li><strong>认证</strong>：全局 <code>ip isis auth-type md5 key 12345</code>；level 级 <code>ip isis level 2 auth-type md5 encrypt-key ...</code>；电路级 <code>ip isis vlan 10 hello-auth-type md5 key 12345</code>；keychain <code>ip isis auth-type key-chain 2</code>（C16，&lt;&lt;<PAGE 106-108>&gt;&gt;）</li>
+<li><strong>L1→L2 泄漏</strong>：<code>ip route-map is2is sequence-number 1 action permit</code> + <code>match route-type level1</code> + <code>set level level2</code> → <code>ip redist isis into isis route-map is2is status enable</code>（C17，&lt;&lt;<PAGE 115>&gt;&gt;）</li>
+<li><strong>汇总</strong>：<code>ip isis summary-address 100.1.0.0/16 level-2</code>；IPv6 <code>ip isis summary-address6 4001::/16 level-1</code>；<code>show ip isis summary-address[6]</code>（C18，&lt;&lt;<PAGE 104-105>&gt;&gt;）</li>
+<li><strong>M-ISIS</strong>：<code>ip isis multi-topology</code>；切换模式会复位全部邻接（C19/X23，&lt;&lt;<PAGE 120-121>&gt;&gt;）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>IS-IS 十步上线与验证（C14，&lt;&lt;<PAGE 92>&gt;&gt;）</li>
+<li>双路由器 L1/L2 双栈应用例（C15，&lt;&lt;<PAGE 117-119>&gt;&gt;）</li>
+<li>认证四层配置（C16，&lt;&lt;<PAGE 106-108>&gt;&gt;）</li>
+<li>L1→L2 泄漏 route map（C17，&lt;&lt;<PAGE 115>&gt;&gt;）</li>
+<li>汇总 v4/v6（C18，&lt;&lt;<PAGE 104-105>&gt;&gt;）与 M-ISIS 切换（C19，&lt;&lt;<PAGE 120-121>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（反例/坑）</h2>
+<ul>
+<li>IS-IS GR 当前仅支持 helper 模式（X14）；且仅在堆叠备/空闲交换机的活动口上支持（X15）；次 CMM 路由 MAC 不同或 VLAN 端口在主模块时 STP 重收敛可能中断 GR 转发（X16）（&lt;&lt;<PAGE 116>&gt;&gt;）</li>
+<li>route map 的 tag 参数当前版本不支持（X17，&lt;&lt;<PAGE 110>&gt;&gt;）</li>
+<li>metric 大于 64 必须先开 wide-metrics（X18，&lt;&lt;<PAGE 115>&gt;&gt;）</li>
+<li>每路由器最多 3 个 area ID（X19，&lt;&lt;<PAGE 102>&gt;&gt;）</li>
+<li>L1 内部路由不能汇总（只有外部重分发路由可以）（X20，&lt;&lt;<PAGE 104>&gt;&gt;）</li>
+<li>点到点链路 L1 未配认证时，无论 L2 怎么配，L1 hello 都裸奔（X21，&lt;&lt;<PAGE 107>&gt;&gt;）</li>
+<li>retransmit 间隔必须大于往返时延否则无谓重传（X22，&lt;&lt;<PAGE 110>&gt;&gt;）</li>
+<li>切换 multi-topology 模式复位全部 IS-IS 邻接（X23，&lt;&lt;<PAGE 120>&gt;&gt;）</li>
+<li>encrypt-key 只接受系统生成的合法值（X24，&lt;&lt;<PAGE 106>&gt;&gt;）</li>
+<li>从内存移除 IS-IS 必须手改 boot.cfg 并重启（X10，&lt;&lt;<PAGE 102>&gt;&gt;）</li>
+<li>DIS 选举按接口优先级（默认 64），平局比 SNPA/MAC（P44，&lt;&lt;<PAGE 95>&gt;&gt;）</li>
+<li>点到点口无共同拓扑不成邻接；广播网即使无共同拓扑也成邻接（P57，&lt;&lt;<PAGE 120>&gt;&gt;）</li>
+</ul>
+<h2 id="_1">来源</h2>
+<p>OmniSwitch AOS 8.10R4 Advanced Routing Guide 第 3 章 IS-IS（&lt;&lt;<PAGE 89-121>&gt;&gt;）。条目来源：cases C14-C19；principles P42-P59；counter-examples X10/X14-X24；frameworks F1/F2/F3/F6。</p><div class="pn"><a href="aos-ar-ospf-ospfv3.html">⬅ 上一单元：aos-ar-ospf-ospfv3</a><a class="nxt" href="aos-ar-bgp.html">下一单元：aos-ar-bgp ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

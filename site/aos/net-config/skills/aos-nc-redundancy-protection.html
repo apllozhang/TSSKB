@@ -1,0 +1,119 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>aos-nc-redundancy-protection — AOS 8.10R04 · Network Configuration</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>AOS 8.10R04 · Network Configuration</h1>
+<div class="sub">1745 页 · 网络配置全科（二层/织构/IP 服务/路由/组播/QoS/准入/OAM，48 章）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">二层与冗余</div>
+<a href="../skills/aos-nc-vlan-l2.html">aos-nc-vlan-l2</a>
+<a href="../skills/aos-nc-redundancy-protection.html" class="on">aos-nc-redundancy-protection</a>
+<div class="grp">骨干织构</div>
+<a href="../skills/aos-nc-fabric-backbone.html">aos-nc-fabric-backbone</a>
+<div class="grp">三层与服务</div>
+<a href="../skills/aos-nc-ip-ipv6-services.html">aos-nc-ip-ipv6-services</a>
+<a href="../skills/aos-nc-routing.html">aos-nc-routing</a>
+<a href="../skills/aos-nc-multicast.html">aos-nc-multicast</a>
+<div class="grp">策略与安全</div>
+<a href="../skills/aos-nc-qos-policy.html">aos-nc-qos-policy</a>
+<a href="../skills/aos-nc-access-security.html">aos-nc-access-security</a>
+<div class="grp">监测与基础</div>
+<a href="../skills/aos-nc-oam-monitoring.html">aos-nc-oam-monitoring</a>
+<a href="../skills/aos-nc-switch-foundation.html">aos-nc-switch-foundation</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../aos/index.html">AOS 软件手册</a> › <a href="../index.html">AOS 8.10R04</a> › <span>aos-nc-redundancy-protection</span></nav><h1>aos-nc-redundancy-protection</h1><p class="meta"><span class="badge">SKILL</span> aos-nc-redundancy-protection · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>二层组网要防环：选 STP/RSTP/MSTP 还是环网协议</li>
+<li>上联带宽不够/单链故障：做链路聚合（静态或 LACP）</li>
+<li>接入交换机双上联两台核心，要 Active-Active 或 Active-Standby 保护（DHL）</li>
+<li>光纤单通导致 STP 环路：部署 UDLD</li>
+<li>接入侧私接小交换机成环：部署 LBD</li>
+<li>电信以太环网（G.8032 ERP）或工业环网（MRP）保护切换</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>二层高可靠防环分层选型（F3，&lt;&lt;<PAGE 157>&gt;&gt;/&lt;&lt;<PAGE 395>&gt;&gt;/&lt;&lt;<PAGE 211>&gt;&gt;）：STP/RSTP/MSTP（通用树）→UDLD（单向链路）→LBD（环回）→ERP/MRP（电信/工业环网）→DHL（双归）→SPBM（ISIS 最短路径，见 aos-nc-fabric-backbone）。环网保护双体系（F16，&lt;&lt;<PAGE 395>&gt;&gt;/&lt;&lt;<PAGE 426>&gt;&gt;）：ERP(G.8032，RPL owner+WTR/Guard+R-APS) 面向电信以太，MRP(IEC 62439-2，MRM/MRC/MRA 投票+测试帧) 面向工业环。STP 拓扑计算三步：选根桥（最低桥 ID）→每桥算到根最优路径→阻塞成环节路（P43，&lt;&lt;<PAGE 157>&gt;&gt;）。</p>
+<h2 id="a1">A1（决策框架）</h2>
+<ol>
+<li><strong>通用防环</strong>：小网 RSTP；多 VLAN 独立路径选 MSTP（VLAN 映射 MSTI，Flat 模式最多 17 实例含 CIST）；per-VLAN 模式是 AOS 私有，跨厂商互通受限（P45/P46/X21，&lt;&lt;<PAGE 164>&gt;&gt;）</li>
+<li><strong>带宽/链路冗余</strong>：对端是 OmniSwitch 或支持 LACP 用动态聚合；跨厂商对接慎用静态聚合（X31，&lt;&lt;<PAGE 341>&gt;&gt;）</li>
+<li><strong>双上联保护</strong>：两链路分属不同 VLAN 组、要 Active-Active 用 DHL；DHL 会话使能后两链路 STP 自动禁用（P69，&lt;&lt;<PAGE 382>&gt;&gt;）</li>
+<li><strong>环网</strong>：电信以太选 ERP（RPL owner+WTR+Guard 定时器）；工业确定性重构选 MRP（MRM/MRC，或 MRA 投票自动选 MRM）（P78/P79，&lt;&lt;<PAGE 426-428>&gt;&gt;）</li>
+<li><strong>单向链路</strong>：点对点光纤用 UDLD Aggressive 模式，其他场景 Normal（P22，&lt;&lt;<PAGE 98>&gt;&gt;）</li>
+</ol>
+<h2 id="a2">A2（操作步骤）</h2>
+<ul>
+<li><strong>MST 区域</strong>：<code>spantree mst region &lt;name&gt;</code>+revision+VLAN-MSTI 映射（cases·C12，&lt;&lt;<PAGE 202>&gt;&gt;）；单 MSTI 调优：对特定 MSTI 配端口 path cost/priority 使该 MSTI VLAN 走独立路径（cases·C13，&lt;&lt;<PAGE 205>&gt;&gt;）；端口参数（edge port、root guard、限 TCN/BPDU）见章内 Configuring STP Port Parameters（cases·C14，&lt;&lt;<PAGE 189>&gt;&gt;）</li>
+<li><strong>静态聚合</strong>：<code>linkagg static agg &lt;id&gt; size n</code>→<code>linkagg static port agg &lt;id&gt; port &lt;slot/port&gt;</code>（两端都要）；验证 show linkagg（cases·C24，&lt;&lt;<PAGE 342>&gt;&gt;）</li>
+<li><strong>动态 LACP 聚合</strong>：建动态组→成员口 actor 参数（LACP 模式/slow-fast 超时）→partner 参数；验证 show linkagg dynamic（cases·C25，&lt;&lt;<PAGE 354>&gt;&gt;）</li>
+<li><strong>DHL Active-Active 九步</strong>：<code>vlan 100-110</code>→两链路同默认 VLAN untagged→其余 VLAN tagged→<code>dhl 10</code>→<code>dhl 10 pre-emption-time 500</code>→<code>dhl 10 mac-flushing mvrp</code>→<code>dhl 10 linka linkagg 5 linkb port 1/1/10</code>→<code>dhl 10 vlan-map linkb 11-20</code>→<code>dhl 10 admin-state enable</code>（cases·C26，&lt;&lt;<PAGE 383>&gt;&gt;）</li>
+<li><strong>LBD</strong>：全局 enable→边缘口 enable→（可选）remote-origin enable→transmission timer（默认 30s）→违规口 autorecovery；验证 <code>show loopback-detection</code>（cases·C19，&lt;&lt;<PAGE 329>&gt;&gt;）</li>
+<li><strong>ERP 标准 VLAN 环</strong>：<code>vlan 1001</code>+members port tagged→<code>erp-ring 1 port1 1/1/1 port2 1/1/2 service-vlan 1001 level 1</code>→<code>erp-ring 1 rpl-node port 1/1/1</code>→加保护 VLAN 11-20→<code>erp-ring 1 enable</code>→<code>show erp</code>（cases·C20，&lt;&lt;<PAGE 403>&gt;&gt;）</li>
+<li><strong>MRP 环</strong>：配 MRM（含测试帧周期）与 MRC 角色、冗余域；MRA 自动选举替代手工指定（cases·C23，&lt;&lt;<PAGE 437>&gt;&gt;）</li>
+<li><strong>UDLD</strong>：Normal 模式仅显式证据关停、未确定标记 Undetermined；Aggressive 超时即关端（P22，&lt;&lt;<PAGE 98>&gt;&gt;）；机制为邻居数据库+echo detection 窗口（P23，&lt;&lt;<PAGE 99>&gt;&gt;）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>per-VLAN RSTP 四交换样例（C11，&lt;&lt;<PAGE 197>&gt;&gt;）</li>
+<li>DHL Active-Active 九步（C26，&lt;&lt;<PAGE 383>&gt;&gt;）</li>
+<li>ERP 标准 VLAN 环（C20，&lt;&lt;<PAGE 403>&gt;&gt;）；ERP+VLAN Stacking（C21，&lt;&lt;<PAGE 403>&gt;&gt;）</li>
+<li>ERPv2 主环+子环+共享链路（C22，&lt;&lt;<PAGE 419>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（反例/坑）</h2>
+<ul>
+<li>MST 模式下 LBD 只能开在 STP 禁用的接口上；LBD 帧不打 tag 发送（P61/X28，&lt;&lt;<PAGE 328>&gt;&gt;）</li>
+<li>聚合组任一成员口环回，整组 shutdown（X29，&lt;&lt;<PAGE 328>&gt;&gt;）；remote-origin LBD 双端都开时结果不确定（X30，&lt;&lt;<PAGE 327>&gt;&gt;）</li>
+<li>聚合组成员必须同速，混速无法成组；负载分担非 IP 按 MAC、IP 报文按 IP 地址（X32/P64，&lt;&lt;<PAGE 341>&gt;&gt;）</li>
+<li>静态聚合不能与部分厂商设备对接（X31，&lt;&lt;<PAGE 341>&gt;&gt;）</li>
+<li>DHL：未同时挂到 linkA/linkB 的 VLAN 不受保护；每交换机仅一个会话、每会话仅两链路；VLAN 数≤128/组；raw flooding 的 MAC≤1000（X33/X34，&lt;&lt;<PAGE 382>&gt;&gt;）；未映射到 linkB 的 VLAN 自动归 linkA（P70，&lt;&lt;<PAGE 383>&gt;&gt;）</li>
+<li>ERP Guard Timer 必须大于 R-APS 绕环最大时延，否则可能成环（X35/P75，&lt;&lt;<PAGE 396>&gt;&gt;）</li>
+<li>ERPv2 子环不能使用共享链路；共享链路只能属于一个主环（X36，&lt;&lt;<PAGE 395>&gt;&gt;）</li>
+<li>MSTP 仅 Flat 模式支持；MSTI 端口状态由 CST 统一算，不调 path cost 无法让单实例独立转发（X23/P47，&lt;&lt;<PAGE 164>&gt;&gt;）</li>
+<li>MSTP 恢复流程要点：恢复侧发 R-APS(NR) 并启 Guard→RPL owner 启 WTR→超时阻塞 RPL 并发 R-APS(NR,RB)→各节点 flush MAC 回 idle（P74，&lt;&lt;<PAGE 398>&gt;&gt;）</li>
+</ul>
+<h2 id="_1">来源</h2>
+<p>OmniSwitch AOS 8.10R4 Network Configuration Guide 第 2 章 UDLD（&lt;&lt;<PAGE 98-99>&gt;&gt;）、第 6 章 Spanning Tree（&lt;&lt;<PAGE 157-205>&gt;&gt;）、第 8 章 LBD（&lt;&lt;<PAGE 325-329>&gt;&gt;）、第 9/10 章链路聚合（&lt;&lt;<PAGE 341-354>&gt;&gt;）、第 11 章 DHL（&lt;&lt;<PAGE 380-383>&gt;&gt;）、第 12 章 ERP（&lt;&lt;<PAGE 395-419>&gt;&gt;）、第 13 章 MRP（&lt;&lt;<PAGE 426-437>&gt;&gt;）。条目来源：cases C11-C14/C19-C26；principles P21-P24/P42-P48/P58-P70/P72-P82；counter-examples X21-X23/X28-X36；frameworks F3/F16。</p><div class="pn"><a href="aos-nc-vlan-l2.html">⬅ 上一单元：aos-nc-vlan-l2</a><a class="nxt" href="aos-nc-fabric-backbone.html">下一单元：aos-nc-fabric-backbone ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

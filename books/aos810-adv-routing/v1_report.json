@@ -1,0 +1,2136 @@
+{
+ "cases": [
+  {
+   "h": 0.98,
+   "ok": true,
+   "head": "- **C1 OSPF 基础九步上线（VLAN→IP 接口→端口→router-id→load/enable→骨干与区域→OSPF 接口→挂"
+  },
+  {
+   "h": 0.76,
+   "ok": true,
+   "head": "- **C2 OSPF 三区域三路由器应用例（骨干 + 每路由器一区域）**：Router 1/2/3 各建 3 个 VLAN（12/23/"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C3 Totally Stubby 区域两路由器配置**：Router B（ABR）：`ip ospf area 0.0.0.0` "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C4 OSPF 虚链路创建（两端互指对端 Router ID + 共同 transit 区）**：Router A：`ip ospf"
+  },
+  {
+   "h": 0.95,
+   "ok": true,
+   "head": "- **C5 OSPF 接口认证全套（simple / MD5 / keychain-SHA256）**：`ip ospf interfac"
+  },
+  {
+   "h": 0.97,
+   "ok": true,
+   "head": "- **C6 Route Map 三段式重分发 OSPF→BGP（deny 外部 type2/tag5 → permit 指定接口 set "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C7 用 Route Map 批量生成 OSPF 被动接口**：`ip route-map \"R1\" action permit` "
+  },
+  {
+   "h": 0.91,
+   "ok": true,
+   "head": "- **C8 OSPF NBMA 静态邻居三步**：建接口并常规配置 → `ip ospf interface vlan-213 type "
+  },
+  {
+   "h": 0.92,
+   "ok": true,
+   "head": "- **C9 OSPF 冗余 CMM 优雅重启**：`ip ospf restart-support planned-unplanned`；"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C10 OSPFv3 基础九步上线（ipv6 interface / ipv6 address / ipv6 load ospf…）"
+  },
+  {
+   "h": 0.9,
+   "ok": true,
+   "head": "- **C11 OSPFv3 三区域应用例**：Router 1/2/3 各建 IPv6 VLAN 接口（2001:1::/64 等）+ r"
+  },
+  {
+   "h": 0.94,
+   "ok": true,
+   "head": "- **C12 OSPFv3 NSSA 参数三件套（translator role / stab-interval / nssa-summa"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C13 OSPFv3 Loopback0 通告配置**：`ipv6 interface \"ipv6-loopback0\" loopb"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C14 IS-IS 十步上线（area-id → level → circuit → admin-state）**：`vlan 5 "
+  },
+  {
+   "h": 0.88,
+   "ok": true,
+   "head": "- **C15 IS-IS 双路由器 L1/L2 应用例**：两台各建 vlan-isis（v4+v6 地址）→ `ip load isis"
+  },
+  {
+   "h": 0.89,
+   "ok": true,
+   "head": "- **C16 IS-IS 认证分层配置（simple/MD5/keychain × 全局/level/电路/电路级）**：全局 `ip i"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C17 IS-IS L1→L2 泄漏 route map**：`ip route-map is2is sequence-number"
+  },
+  {
+   "h": 0.93,
+   "ok": true,
+   "head": "- **C18 IS-IS 汇总（v4/v6）**：`ip isis summary-address 100.1.0.0/16 level-"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C19 M-ISIS 启用与验证**：`ip isis multi-topology`；`show ip isis status` "
+  },
+  {
+   "h": 0.96,
+   "ok": true,
+   "head": "- **C20 BGP 七步上线（router-id/primary → load → AS 号 → enable → neighbor →"
+  },
+  {
+   "h": 0.62,
+   "ok": true,
+   "head": "- **C21 BGP EBGP/IBGP 混合五 speaker 应用例**：AS 100 三 speaker 全互联 iBGP + 对 "
+  },
+  {
+   "h": 0.91,
+   "ok": true,
+   "head": "- **C22 BGP 聚合路由配置（summary-only / as-set / 属性覆盖 / admin-state）**：`ip b"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C23 BGP Route Reflection 四步**：`ip bgp admin-state disable` → `ip b"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C24 BGP 联邦三步**：`ip bgp confederation-identifier 2` → `ip bgp confe"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C25 BGP dampening 参数一次到位**：`ip bgp dampening half-life 500 reuse 2"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C26 BGP for IPv6：IPv4 peer 换 IPv6 前缀九步**：`ip load bgp` → AS 号 → `i"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C27 IPv6 BGP peer（含 link-local 对等）**：`ipv6 bgp neighbor 2001::1` +"
+  },
+  {
+   "h": 0.92,
+   "ok": true,
+   "head": "- **C28 IPv6 BGP 全场景应用例（双栈/纯 IPv6 域）**：Speaker 1/2 双栈对等（ipv4-nexthop 配"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **C29 BGP 策略体系五类创建 + 绑定 peer（aspath/community/prefix/prefix6/route-m"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C30 GTSM 配置与验证**：`ip bgp neighbor 10.0.0.1 ttl-security 6`（IPv6：`i"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C31 BGP EVPN / VPLS / 邻居模板**：`ip bgp address-family evpn` + `ip bg"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C32 组播地址边界快速配置（已有/新建接口两种路径）**：`ip load pim` → `ip mroute-boundary "
+  },
+  {
+   "h": 0.62,
+   "ok": true,
+   "head": "- **C33 组播边界应用例（核心 239.0.0.0/8 + 两个布线间 239.188.0.0/16 复用同段地址）**：核心交换机 "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C34 DVMRP 五步上线**：`ip load dvmrp` → `ip interface vlan-2 address … "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C35 DVMRP 隧道配置**：`ip interface \"tnl-1\" tunnel source 23.23.23.1 de"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C36 PIM-DM 六步上线**：`ip load pim` → `ip interface vlan-2…` → `ip pim"
+  },
+  {
+   "h": 0.91,
+   "ok": true,
+   "head": "- **C37 PIM-SM Bootstrap/RP 体系（C-RP + C-BSR + static-RP 三选一）**：C-RP：`i"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C38 PIM Anycast RP 双机配置例**：两 RP 各配 Loopback1=10.10.10.1（RP 地址，OSPF"
+  },
+  {
+   "h": 0.86,
+   "ok": true,
+   "head": "- **C39 PIM Register/Join-Prune 打包三命令**：`ip pim register-packing enabl"
+  },
+  {
+   "h": 0.92,
+   "ok": true,
+   "head": "- **C40 IPv6 PIM-DM 六步 + Bootstrap/RP 全套（candidate-rp/cbsr/static-rp/r"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C41 MBR 三例（默认 / DVMRP 默认路由 / PIM all-sources）**：基础：`ip load pim`+P"
+  }
+ ],
+ "counter-examples": [
+  {
+   "h": 0.95,
+   "ok": true,
+   "head": "- **X1 Stub 区域两条硬限制（无虚链路、无 ASBR）**：Two restrictions on the use of stub"
+  },
+  {
+   "h": 0.96,
+   "ok": true,
+   "head": "- **X2 NSSA/完全末节区域内同样禁虚链路，且区域类型必须全网一致**：AS-external LSAs are not flood"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X3 虚链路是\"最后手段\"，不连续骨干是劣构**：This is not an ideal OSPF configuration, "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X4 单路由器不建议带超过三个区域**：standard networking design does not recommende"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X5 ECMP 只看度量不看带宽，可能选中慢链路**：So it is possible for OSPF to decide tw"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X6 接口名不能含空格**：The interface name cannot have spaces. <<<PAGE 21>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X7 MD5 key ID 与 key string 必须两条命令分别设置**：Note that setting the key "
+  },
+  {
+   "h": 0.92,
+   "ok": true,
+   "head": "- **X8 被动接口上已存在的邻接会立即拆除**：if a OSPF-enabled interface is configured as"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X9 多区域域中被动接口只会生成在 Area ID 最小的区域**：If there are multiple areas conf"
+  },
+  {
+   "h": 0.94,
+   "ok": true,
+   "head": "- **X10 从内存移除 OSPF/OSPFv3/IS-IS 必须手改 boot.cfg 并重启**：To remove OSPF fro"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X11 接口参数可一次配多个但只能逐个恢复默认**：Although you can configure several param"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X12 OSPF stub default-metric 当前仅支持 ToS 0**：At this time, only the "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X13 NBMA 的 DR eligibility 配置必须与其他路由器接口优先级一致**：the neighbor eligibi"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X14 IS-IS GR 当前仅支持 helper 模式**：In the current release, only the gr"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X15 IS-IS GR 仅在堆叠备/空闲交换机的活动口上支持**：Graceful restart is only support"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X16 次 CMM 路由 MAC 不同或 VLAN 端口在主模块时，STP 重收敛可能中断 GR 转发**：If the secon"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X17 route map 的 tag 参数当前版本不支持**：The tag parameter is not supported"
+  },
+  {
+   "h": 0.9,
+   "ok": true,
+   "head": "- **X18 metric 大于 64 必须先开 wide-metrics**：Wide metrics need to be enabl"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X19 每路由器最多 3 个 area ID**：Each router can have a maximum of 3 area "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X20 L1 内部路由不能汇总（只有外部重分发路由可以）**：It is not possible to summarize IS-"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X21 点到点链路两端口 L1 未配认证时，无论 L2 配置如何 L1 hello 都裸奔**：On a point-to-poin"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X22 retransmit 间隔须大于往返时延否则无谓重传**：The retransmit interval should be"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X23 切换 multi-topology 模式会复位全部 IS-IS 邻接**：Changing the multi-topolo"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X24 encrypt-key 只接受系统生成的合法值**：Only valid system generated values a"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X25 一批全局命令改前必须先禁用 BGP（AS 号、本地优先、MED、同步、RR、cluster-id 等）**：Many BGP"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X26 CIDR 斜杠写法不支持于 CLI，需写全掩码**：Although CIDR is supported by the ro"
+  },
+  {
+   "h": 0.89,
+   "ok": true,
+   "head": "- **X27 MP-BGP 当前不支持 IPv6 dampening、IPv6 聚合、VPN/MPLS 标签等多协议能力**（注意：IPv"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X28 AS 正则常见错误：数字超界、逗号被当分隔符、括号嵌套、^ 不在首/$ 不在尾、重复符不能作用于行首**：66543 Num"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X29 dampening 参数必须整条按序一次输入，不能单独改**：To change one variable to a num"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X30 无聚合内至少一条更精确路由则聚合不成立**：You cannot aggregate an address (for exa"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X31 RR 冗余过多会推高内存**：Using many redundant reflectors is not recommen"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X32 同步开启会给 AS 内非 BGP 路由器带来大负担**：since routes learned over external"
+  },
+  {
+   "h": 0.92,
+   "ok": true,
+   "head": "- **X33 BGP 软件不随启动自动加载，须手动 ip load bgp**：The BGP software is not loade"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X34 BGP peer 不会动态学习，必须逐个显式配置**：BGP peers are not dynamically learn"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X35 部分 peer 命令（如定时器）不自动复位会话，需手动 clear 才生效**：there are some peer co"
+  },
+  {
+   "h": 0.96,
+   "ok": true,
+   "head": "- **X36 纯 IPv6 网络必须显式配置 router-id 与 IPv4 primary 地址（AGGREGATOR 用）**：In"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X37 IPv4 地址对等且已建会话时不能关 IPv4 unicast**：However, in IPv6 environment"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X38 GTSM 与 eBGP multihop 互斥，同配报错；GTSM 须两端同配**：When GTSM is enabled"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X39 route map policy 引用的子策略必须先创建，否则报错**：Conditions added to a rout"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X40 VPLS 能力依赖 MPLS license 与 MPLS BGP 二进制，启用前必须先禁 BGP**：To enable "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X41 BGP 邻居模板当前仅支持 EVPN 族命令**：Currently, BGP neighbor template is s"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X42 模板不会覆盖已存在的个体 peer 配置，想生效须先删个体配置**：Once the template is applied"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X43 VRF 内 BGP peer 默认上限 32**：By default, maximum of 32 peers per V"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X44 每接口仅支持一个组播路由协议（PIM 与 DVMRP 不能同接口共存）**：Only one multicast routi"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X45 协议未加载即配置会报 \"application is not loaded\"**：If DVMRP is not loade"
+  },
+  {
+   "h": 0.89,
+   "ok": true,
+   "head": "- **X46 组播边界地址必须是 239/8 管理作用域段**：The boundary address must be an admin"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X47 修改 prune-lifetime 可能令已接收的 prune 提前/延后过期，只能谨慎改**：the value of i"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X48 show ip dvmrp prune 只显示发出的 prune 不显示收到的**：However, note that t"
+  },
+  {
+   "h": 0.95,
+   "ok": true,
+   "head": "- **X49 隧道两端（源地址接口与隧道接口）都要使能 DVMRP 否则不 operational**：DVMRP needs to be"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X50 flash-interval 必须小于 report-interval**：Routing Table Change mes"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X51 老版本 DVMRP 用 Route Report 而非 Probe 做邻居发现（互通注意）**：Older versions"
+  },
+  {
+   "h": 0.89,
+   "ok": true,
+   "head": "- **X52 邻居有初始大流量冲击问题时建议把 subord-default 改 false**：if neighbors in the "
+  },
+  {
+   "h": 0.78,
+   "ok": true,
+   "head": "- **X53 OmniSwitch PIM 只兼容 SMv2，不兼容 SMv1**：The OmniSwitch supports PIM"
+  },
+  {
+   "h": 0.94,
+   "ok": true,
+   "head": "- **X54 Hello 报文无法区分 DM/SM 邻居，DM 不应与 SM 直接交互**：A PIM router cannot dif"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X55 SPT 状态关闭则 SPT 切换不发生**：SPT status must be enabled for SPT switc"
+  },
+  {
+   "h": 0.93,
+   "ok": true,
+   "head": "- **X56 SSM 默认地址段（232/8、FF3x::/32）不会自动启用，须手动配置**：The PIM-Source-Specif"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X57 IGMP 代理场景必须 v3 否则 PIM-SSM 不工作**：For networks using IGMP proxy,"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X58 改 max-rps 前必须先全局禁用 PIM-SM**：PIM must be globally disabled on t"
+  },
+  {
+   "h": 0.92,
+   "ok": true,
+   "head": "- **X59 C-RP 配置在未使能 PIM 的接口上会报错**：If you attempt to configure an inter"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X60 每交换机只支持一个 RP 地址**：Only one RP address is supported per switch."
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X61 priority 与 override 参数互斥，配了 priority 则 override 失效**：As specif"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X62 Anycast-RP 地址不能与 Router ID 相同（建议用 Loopback0 之外的接口）**：The Route"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X63 Anycast-RP 静态 RP 配置必须配在域内所有 PIM 路由器，不只是 RP 成员**：This static co"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X64 register-packing 配 Anycast-RP 时仅当 RP set 全体支持才启用；建议全 domain fo"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **X65 Register/Join-Prune 打包仅 SM 支持（DM 无周期 Join，不支持）**：This feature "
+  },
+  {
+   "h": 0.91,
+   "ok": true,
+   "head": "- **X66 register-mtu 过大且 RP 不支持时会产生分片重组，不建议调大**：It is not recommended "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X67 Join/Prune 实际最大尺寸取接口 IP MTU 与配置值的较小者**：the actual maximum size"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X68 MBR 不支持 PIM-SSM，也不支持 PIM 与其他协议或多个 PIM 域之间互通**：Interoperability"
+  },
+  {
+   "h": 0.94,
+   "ok": true,
+   "head": "- **X69 MBR 使能但 PIM/DVMRP 未各有一个 enabled 接口前不 operational**：It is possi"
+  },
+  {
+   "h": 0.9,
+   "ok": true,
+   "head": "- **X70 MBR 的 DVMRP 默认路由不能向 MBONE 通告**：When enabling this type of adve"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X71 高级路由特性需购买附加包，且平台支持随机型差异（见规格与发布说明）**：The routing protocols desc"
+  }
+ ],
+ "frameworks": [
+  {
+   "h": 0.62,
+   "ok": true,
+   "head": "- **F1 IGP 三协议统一配置骨架（本书 OSPF/OSPFv3/IS-IS 章共用范式）**：准备网络（VLAN/IP 接口/端口/"
+  },
+  {
+   "h": 0.94,
+   "ok": true,
+   "head": "- **F2 链路状态协议统一原理骨架（泛洪→一致 LSDB→SPF 最短路径树→路由表）**：Each participating rou"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **F3 区域分层路由体系（两层层级 + 路由器角色分类）**：区域隔离拓扑知识（\"An area's topology is visi"
+  },
+  {
+   "h": 0.95,
+   "ok": true,
+   "head": "- **F4 Route Map 重分发统一模型（Action/Match/Set + 序列 OR + 同类 OR/异类 AND + ip "
+  },
+  {
+   "h": 0.96,
+   "ok": true,
+   "head": "- **F5 BGP 策略体系（四类原子策略 + route map 聚合 + peer 的 in/out 绑定 + soft 重配置）**"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **F6 优雅重启统一模型（重启方通告 + helper 维持邻接/LSA + 宽限期 + LSA/拓扑变化终止条件）**：OSPF：<"
+  },
+  {
+   "h": 0.92,
+   "ok": true,
+   "head": "- **F7 组播路由体系（密集模式泛洪-剪枝 vs 稀疏模式显式加入的双范式 + SSM 第三范式）**：密集（DVMRP/PIM-DM）"
+  },
+  {
+   "h": 0.83,
+   "ok": true,
+   "head": "- **F8 PIM-SM 控制体系（RP/BSR/DR/RPT/SPT 五要素及其选举与切换机制）**：RP 与 C-RP（<<<PAGE"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **F9 组播域隔离与边界互通体系（地址边界 + MBR）**：管理作用域地址 239/8（<<<PAGE 221>>>）+ ip mr"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **F10 IPv4/IPv6 双栈对称配置框架（ipv6 镜像命令族：ospf/redist/pim/ospfv3/redist 全套"
+  }
+ ],
+ "glossary": [
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **OSPF（Open Shortest Path First）**：链路状态 IGP，在单一 AS 内分发路由信息，选最低开销路径。 "
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **IGP（Interior Gateway Protocol，内部网关协议）**：自治系统内部使用的路由协议（如 OSPF、IS-IS"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **LSA（Link State Advertisement，链路状态通告）**：路由器本地状态的通告单元，泛洪构建拓扑库。 <<<PA"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **LSDB（Link State Database，链路状态数据库）**：由全部 LSA 汇成的区域拓扑库。 <<<PAGE 20>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **SPF（Shortest Path First，最短路径优先算法）**：以自身为根计算最短路径树。 <<<PAGE 24>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Area（区域）**：连续网络与主机的分组，各区域独立运行 SPF、维护独立拓扑库。 <<<PAGE 25>>>"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **Backbone（骨干区，Area 0.0.0.0）**：负责区间路由信息分发的特殊区域，必须连续。 <<<PAGE 25>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **ABR（Area Border Router，区域边界路由器）**：连接多区域的路由器，为每区域运行一份 SPF 并浓缩拓扑。 <<"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **ASBR（AS Boundary Router，自治系统边界路由器）**：与其他 AS 交换路由信息的路由器。 <<<PAGE 26"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Internal Router（内部路由器）**：所有直连网络同属一个区域的路由器。 <<<PAGE 26>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Virtual Link（虚链路）**：穿越 transit 区恢复骨干连续性的逻辑点到点链路。 <<<PAGE 26>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Transit Area（转接区域）**：虚链路所穿越的非骨干区域。 <<<PAGE 26>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Stub Area（末节区域）**：不含 AS 外部 LSA、依赖默认路由的区域。 <<<PAGE 27>>>"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **NSSA（Not-So-Stubby Area，非纯末节区域）**：可用 Type-7 LSA 选择性导入外部路由的末节扩展（RFC"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Type-7 LSA**：NSSA 内泛洪、在 NSSA 边界翻译为 AS-external LSA 的 LSA 类型。 <<<PA"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **Totally Stubby Area（完全末节区域）**：在 Stub 基础上再过滤 Type-3 汇总 LSA、仅留默认路由的区"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **ECMP（Equal Cost Multi-Path，等价多路径）**：等开销路径同时保留并按流分发。 <<<PAGE 29>>>"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **NBMA（Non Broadcast Multi Access，非广播多路访问）**：需静态配置邻居、要求全互联的网络类型。 <<<"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **Point-to-Multipoint（点到多点）**：非广播网络的另一种 OSPF 运行模式。 <<<PAGE 29>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **DR / BDR（Designated Router / Backup DR，指定路由器/备份）**：多路访问网络上代表全网泛洪 L"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Graceful Restart（优雅重启，GR）**：主备 CMM 接管期间由 helper 维持邻接与 LSA 的不间断机制。 "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Takeover（接管）**：主 CMM 失效时备 CMM 立即接管主角色。 <<<PAGE 30>>>"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **CMM（Chassis Management Module，机箱管理模块）**：机箱式交换机的管理模块，可双模块冗余。 <<<PAG"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Helper Router（辅助路由器）**：GR 期间替重启路由器维持 LSA 与邻接的邻居。 <<<PAGE 30>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Passive Interface（被动接口）**：不收发路由更新、仅向邻居通告该接口网络的接口。 <<<PAGE 46>>>"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **Route Map（路由映射）**：由 Action/Match/Set 语句控制重分发的策略对象。 <<<PAGE 40>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Redistribution（重分发）**：把源协议学到的路由注入目的协议。 <<<PAGE 43>>>"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **IP Access List（IP 访问列表）**：把多条 IPv4/IPv6 地址聚合进 route map 的机制。 <<<PA"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Area Range（区域范围）**：ABR 上把多条区域路由汇总成单条通告，兼作过滤。 <<<PAGE 35>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Router ID（路由器标识）**：点分十进制标识，未配置时自动取主接口地址。 <<<PAGE 32>>>"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **Dead Interval（死亡间隔）**：未收到 Hello 判邻居失效的时间（广播/P2P 默认 40s，NBMA 120s）。"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **Hello Interval / Poll Interval**：Hello 周期（默认 10s/30s）与 NBMA 轮询间隔（默"
+  },
+  {
+   "h": 0.0,
+   "ok": false,
+   "head": "- **SPF Timer（delay/hold）**：SPF 计算的延迟与抑制定时器（默认 5/10）。 <<<PAGE 20>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Keychain Authentication（密钥链认证）**：定期轮换密钥的认证方式，可配 SHA256。 <<<PAGE 38"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **ip load ospf**：把 OSPF 软件动态加载进运行内存的命令。 <<<PAGE 32>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **OSPFv3**：OSPFv2 的 IPv6 版本，机制与 v2 对应。 <<<PAGE 55>>>"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **Grace-LSA**：OSPFv3 GR 用链路本地 Opaque-LSA 通告重启意图与宽限期。 <<<PAGE 67>>>"
+  },
+  {
+   "h": 0.0,
+   "ok": false,
+   "head": "- **Opaque-LSA**：可扩展携带附加信息的 LSA 类别。 <<<PAGE 67>>>"
+  },
+  {
+   "h": 0.86,
+   "ok": true,
+   "head": "- **NSSA Translator Role（always/candidate）**：NSSA 边界路由器是否无条件承担 Type-7→"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **NSSA Translator Stability Interval**：翻译者角色交接后的稳定间隔（默认 40s）。 <<<PAG"
+  },
+  {
+   "h": 0.33,
+   "ok": false,
+   "head": "- **area-summary（noareasummary/sendareasummary）**：控制汇总 LSA 是否进入 Stub/N"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **nssa-summarize**：NSSA 内 IPv6 前缀汇总为外部 LSA 通告，filter 可抑制。 <<<PAGE 72"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Loopback0 Interface**：不绑定 VLAN、永久 up 的管理用环回接口。 <<<PAGE 151>>>（OSPF"
+  },
+  {
+   "h": 0.6,
+   "ok": true,
+   "head": "- **Link-Local Address（链路本地地址）**：OSPFv3/IPv6 邻居与对等使用的 fe80::/10 地址。 <<"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **IS-IS（Intermediate System-to-Intermediate System）**：ISO 定义的链路状态 IG"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **CLNP / CLNS**：IS-IS 承载所用的无连接网络协议/服务（即便纯 IP 环境也需 ISO 地址）。 <<<PAGE 8"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **NSAP（Network Service Access Point）**：OSI 网络层地址，由 Area ID + System "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **NET（Network Entity Title）**：NSEL=00 的 NSAP，即 IS-IS 网络层地址。 <<<PAGE "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **System ID**：NSAP 中 6 字节设备标识（常用 MAC 或 Loopback IP）。 <<<PAGE 95>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Level-1 / Level-2 / Level-1/2**：IS-IS 区内/区间/双能力路由层级。 <<<PAGE 98>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **IIH（IS-IS Hello）**：邻居发现与邻接建立的 Hello 报文。 <<<PAGE 97>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **LSP（Link State Packet）**：IS-IS 的链路状态通告，含邻接、前缀、区域等信息。 <<<PAGE 97>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **CSNP（Complete Sequence Number PDU）**：全量 LSP 清单，用于数据库同步。 <<<PAGE 97"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **PSNP（Partial Sequence Number PDU）**：请求与确认 LSP 的部分序号报文。 <<<PAGE 97>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **DIS（Designated Intermediate System）**：广播网上的指定中间系统，按优先级/SNPA 选举。 <<"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **SNPA（Subnetwork Point of Attachment）**：子网连接点，通常即 MAC 地址。 <<<PAGE 9"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Wide Metrics（宽度量）**：支持大于 64 度量值的扩展 metric。 <<<PAGE 115>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Level-1 to Level-2 Leaking（L1→L2 泄漏）**：把 L1 路由注入 L2（反向前缀分发亦支持）。 <<"
+  },
+  {
+   "h": 0.6,
+   "ok": true,
+   "head": "- **M-ISIS（Multi-Topology IS-IS）**：单域内为 IPv4/IPv6 分别跑独立 SPF/RIB 的多拓扑模式"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **MT ID / MT TLV**：多拓扑标识（IPv4=0，IPv6=2）与 Hello/LSP 中的能力通告 TLV。 <<<PA"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Overload State（过载状态）**：指示路由器参与转发的过载比特，可带超时配置。 <<<PAGE 116>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **ip isis area-id**：创建 IS-IS 区域标识（1–13 字节，每路由器最多 3 个）。 <<<PAGE 102>>"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **Strict Adjacency Check（严格邻接检查）**：GR 期间邻接一致性检查开关。 <<<PAGE 90>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **BGP（Border Gateway Protocol）**：自治系统间交换路由的外部网关协议，本实现支持 BGP-4。 <<<PA"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **AS（Autonomous System，自治系统）**：单一策略、单一管理下的路由器集合。 <<<PAGE 127>>>"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **ASN / 4-Octet ASN**：AS 编号；4 字节 ASN 按 RFC 6793 支持，兼容 2 字节设备。 <<<PAG"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **AS_TRANS（23456）**：4 字节与 2 字节 ASN 互通用的保留 2 字节 AS 号。 <<<PAGE 128>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **asplain / asdot+ / asdot**：4 字节 ASN 的三种表示格式。 <<<PAGE 128>>>"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **IBGP / EBGP（Internal/External BGP）**：AS 内部 / AS 之间的 BGP 会话。 <<<PAG"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Transit AS（穿越自治系统）**：为其他 AS 转发流量的多宿主 AS。 <<<PAGE 129>>>"
+  },
+  {
+   "h": "n/a",
+   "ok": true
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **AS_PATH**：路由穿越的 AS 序列属性，兼作环路检测。 <<<PAGE 126>>>"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **AS4_PATH / AS4_AGGREGATE**：与旧 BGP 互通时携带 4 字节 AS 信息的可选过渡属性。 <<<PAGE"
+  },
+  {
+   "h": 0.0,
+   "ok": false,
+   "head": "- **NEXT_HOP**：BGP 最重要的路径属性之一，指下一跳。 <<<PAGE 126>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Local Preference（本地优先级）**：AS 内选路偏好，数值越高越优先（默认 100）。 <<<PAGE 141>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **MED（Multi Exit Discriminator，多出口鉴别器）**：向邻居 AS 建议的出口权重，越低越优先，不向下一 A"
+  },
+  {
+   "h": 0.25,
+   "ok": false,
+   "head": "- **Community（团体）**：以 AS:编号 标识的路由逻辑分组（如 no-export、no-advertise、no-expo"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Route Reflector（RR，路由反射器）**：集中反射 IBGP 路由以避免全互联的服务角色。 <<<PAGE 131>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **RR Client / Non-Client**：与 RR 同 AS 的两类内部对等；client 免全互联，non-client "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Cluster（集群）**：RR 及其 client 组成的集合；冗余 RR 以 cluster-id 标识。 <<<PAGE 16"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Confederation（联邦）**：把子 AS 组成超 AS 的大型网扩展方案，子 AS 间走 EBGP。 <<<PAGE 13"
+  },
+  {
+   "h": 0.33,
+   "ok": false,
+   "head": "- **Synchronization（BGP-IGP 同步）**：仅当 IGP 也已知该目的地时才向 EBGP 通告的规则（默认关闭）。 "
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **Route Dampening（路由抖动抑制）**：按 flap 次数抑制不稳定路由的机制。 <<<PAGE 137>>>"
+  },
+  {
+   "h": 0.88,
+   "ok": true,
+   "head": "- **Instability Metric / Half-life / Reuse / Suppress / Max Suppress T"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **CIDR（Classless Inter-Domain Routing，无类别域间路由）**：前缀/掩码式路由表示。 <<<PAGE"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **Aggregate Route（聚合路由）**：合并多条更精确路由的通告（summary-only/as-set）。 <<<PAGE"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **BGP Network（本地网络）**：指示 BGP 从本路由器起源某网络。 <<<PAGE 153>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **BGP Peer / Neighbor**：显式配置的 BGP 对等实体（peer 与 neighbor 混用）。 <<<PAGE "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **ebgp-multihop**：允许非直连外部对等建立会话。 <<<PAGE 147>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **update-source**：强制 BGP 会话 TCP 采用指定本地接口/地址。 <<<PAGE 150>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **next-hop-self**：让对等在 UPDATE 中以自身为下一跳。 <<<PAGE 147>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **remove-private-as**：向对等通告时剥离私有 AS 号。 <<<PAGE 147>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **soft-reconfiguration / clear soft**：不复位会话的入/出策略软重配置。 <<<PAGE 147>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **maximum-prefix（warning-only）**：限制对等通告前缀数（默认 5000，80% 告警）。 <<<PAGE "
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **Regular Expression（AS 正则）**：用元字符（^ $ . ? + * | []）匹配 AS path 的策略表达"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **AS Path List / Community List / Prefix List / Prefix6 List**：四类 BG"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **Routing Policy（in-/out-）**：绑定到 peer 学习/通告方向的策略。 <<<PAGE 201>>>"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **asprepend（as-path prepend）**：route map 中向 AS path 追加 AS 的动作。 <<<PA"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **BGP Graceful Restart**：CMM 接管期间保留路由信息的连续转发机制（restart-interval 默认 9"
+  },
+  {
+   "h": 0.6,
+   "ok": true,
+   "head": "- **MP-BGP（Multiprotocol Extensions）**：以 MP_REACH/MP_UNREACH_NLRI 支持多网"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **MP_REACH_NLRI / MP_UNREACH_NLRI**：多协议可达/不可达 NLRI 属性。 <<<PAGE 177>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **ipv6 bgp unicast / activate-ipv6**：启用 IPv6 单播能力并激活对等交换 IPv6 前缀。 <<"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **ipv6-nexthop / ipv4-nexthop**：跨族对等时手工指定对应族下一跳。 <<<PAGE 178>>><<<PA"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **GTSM（Generalized TTL Security Mechanism）**：基于 TTL 的 eBGP 会话防攻击机制（t"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **VPLS（Virtual Private LAN Service）**：MPLS L2 VPN LAN 服务；BGP 信令实现 PE"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **L2VPN VPLS Address Family（l2vpn-vpls）**：承载 VPLS NLRI 的 BGP 地址族。 <<"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **EVPN（Ethernet VPN）**：BGP EVPN 能力，按 peer 在默认 VRF 激活。 <<<PAGE 216>>>"
+  },
+  {
+   "h": 0.6,
+   "ok": true,
+   "head": "- **evpn-nbr-type-fabric**：把邻居标记为 fabric 侧（super-spine/对等/远端 border sp"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **evpn-fabric-autonomous-system**：border spine/leaf 面向 fabric eBGP 会"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **BGP Neighbor Template（nbr-template）**：批量 peer 配置模板，当前仅支持 EVPN 族。 <"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **ip bgp max-neighbors**：VRF 内最大 peer 数（默认 32）。 <<<PAGE 144>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **check-first-as**：处理 UPDATE 时校验 AS path 首个 AS 的开关。 <<<PAGE 149>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **default-originate（peer 级）**：向对等通告默认路由。 <<<PAGE 146>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Administratively Scoped Multicast Addresses**：IANA 保留给私有组播域的 239.0"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **Multicast Address Boundary（组播地址边界）**：在 IP 接口上限定作用域组播地址不外发（ip mrout"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Concurrent Multicast Addresses（并发组播地址）**：借助边界在多域复用同一地址段。 <<<PAGE 2"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **IANA（Internet Assigned Numbers Authority）**：互联网编号分配机构，规制组播地址段。 <<<"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **SSM 地址段（232.0.0.0/8）**：IANA 保留给源特定组播的目的地址段。 <<<PAGE 221>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **DVMRP（Distance Vector Multicast Routing Protocol）**：密集模式组播路由协议（v3）"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Reverse Path Multicasting / RPF（逆向路径组播/转发检查）**：按通往源的最好路由校验到达接口再转发。"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Probe Message（探测消息）**：周期发往 224.0.0.4 的邻居发现/保活消息，含 Neighbor List。 <"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **All-DVMRP-Routers（224.0.0.4）**：DVMRP Probe 的组播目的地址。 <<<PAGE 233>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Route Report Message（路由报告消息）**：周期交换含掩码源网络与跳数度量的路由表。 <<<PAGE 233>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Poison Reverse（毒性反转）**：下游以原 metric+32（无穷）回送路由声明依赖。 <<<PAGE 234>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Infinity（DVMRP metric 32）**：DVMRP 的无穷度量值；32–64 区间视为依赖声明。 <<<PAGE 2"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Dependent Downstream Router（依赖下游路由器）**：上游据毒性反转建立的按源依赖列表。 <<<PAGE 2"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **Prune / Prune Lifetime（剪枝/剪枝生存期）**：上游停止转发的消息及其有效期（默认 7200s）。 <<<PA"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Graft / Graft-Ack（嫁接/嫁接确认）**：快速把剪掉分支接回分发树及其确认机制。 <<<PAGE 235>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **DVMRP Tunnel（DVMRP 隧道）**：IP-IP 封装使组播穿越非组播网络的隧道接口。 <<<PAGE 236>>>"
+  },
+  {
+   "h": 0.83,
+   "ok": true,
+   "head": "- **Flash Update（Routing Table Change 消息）**：两次全量报告间的变化通告（flash-interva"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **Route Hold-down（路由保持）**：失效路由以无穷度量继续通告一段时间（默认 120s）。 <<<PAGE 242>>>"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **Subordinate Neighbor（从属邻居状态，subord-default）**：影响初始大流量冲击处理的邻居状态标志。 "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **IGMP（Internet Group Management Protocol）**：主机向路由器表达组播成员关系的协议。 <<<P"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **PIM（Protocol-Independent Multicast）**：协议无关组播路由，复用单播 RPF 信息。 <<<PAG"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **PIM-SM（Sparse Mode，稀疏模式）**：接收者显式 Join 才转发的模式。 <<<PAGE 254>>>"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **PIM-DM（Dense Mode，密集模式）**：泛洪-剪枝、无 RP 的密集模式。 <<<PAGE 258>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **PIM-SSM（Source-Specific Multicast）**：显式频道订阅、免 RP 直连源的模式。 <<<PAGE 2"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **RP（Rendezvous Point，汇聚点）**：共享树根，解封装 Register 并向下分发。 <<<PAGE 254>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C-RP（Candidate RP，候选汇聚点）**：向 BSR 周期通告自身的候选 RP（默认优先级 192，通告 60s）。 <"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **BSR（Bootstrap Router）**：域内唯一，汇集并向全网分发 RP-set。 <<<PAGE 255>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C-BSR（Candidate BSR）**：可参选 BSR 的候选（优先级高者当选，平局比 IP）。 <<<PAGE 255>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **RP-set**：BSR 维护并分发的可达 C-RP 列表。 <<<PAGE 255>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Bootstrap Message**：BSR 周期扩散 RP-set 的消息。 <<<PAGE 255>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **DR（Designated Router，指定路由器）**：每 LAN 一个；源侧 DR 封装 Register，接收侧 DR 发 "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **RPT（RP Tree，共享树）**：以 RP 为根的共享分发树（(*,G) 树）。 <<<PAGE 254>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **SPT（Shortest Path Tree，最短路径树）**：源到接收者的最短路径树。 <<<PAGE 258>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Register Message / Register-Stop**：源侧 DR 单播封装给 RP 的注册消息与 RP 的停止应答。"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **(*,G) Join / (S,G) Join**：对全源组加入与源特定加入消息。 <<<PAGE 256>>><<<PAGE 25"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **(S,G,RPT) Prune**：SPT 切换后剪掉共享树上该源流量的消息。 <<<PAGE 263>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **RP Threshold（RP 阈值）**：触发 RP 发起 (S,G) Join 的速率门限（ip pim rp-threshol"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **SPT Switchover（SPT 切换）**：末跳 DR 收到首个数据包即切换到 SPT（ip pim spt admin-st"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Static RP（静态 RP）**：手工配置的组到 RP 映射（ip pim static-rp）。 <<<PAGE 273>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Anycast RP**：多 RP 共用同一 RP 地址 + IGP 通告的负载分担/冗余机制。 <<<PAGE 274>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Group-to-RP Mapping（组到 RP 映射算法）**：最长匹配→最高优先级→hash→最高 IP 四步。 <<<PAG"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **Keepalive Period（保活周期）**：(S,G) 状态无显式 Join 时的维持时间（默认 210s）。 <<<PAGE"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **State Refresh（状态刷新）**：DM 模式周期刷新剪枝状态（interval 60s、TTL 16）。 <<<PAGE "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Join/Prune Packing（加入/剪枝打包）**：合并 J/P 消息降低控制面丢包（默认 enable）。 <<<PAGE"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Register Packing / Register MTU / Register Delay**：Null Register 打"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **ip pim max-rps**：域内最大 RP 数（默认 32，改前须禁 PIM-SM）。 <<<PAGE 271>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **IPMS（IP Multicast Switching）**：组播转发基础，随协议使能自动开启。 <<<PAGE 231>>>"
+  },
+  {
+   "h": 0.83,
+   "ok": true,
+   "head": "- **MLD（Multicast Listener Discovery）**：IPv6 的组播成员发现协议（源自 IGMPv2，用 ICM"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **IPv6 SSM 地址段（FF3x::/32）**：IPv6 源特定组播保留段，须手动启用。 <<<PAGE 282>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **RP-Switchover（IPv6）**：IPv6 RP 收到首个 Register 即切原生转发（无阈值）。 <<<PAGE 2"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **ip pim mbr all-sources**：让 PIM 向 DVMRP 通告全部学到的源路由（MBR 场景）。 <<<PAGE"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **SPB（Shortest Path Bridging）服务上的 PIM**：PIM 接口可绑 SPB 服务（9900 上支持 SPB"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **MBR（Multicast Border Router，组播边界路由器）**：同机运行 DVMRP 与 PIM 实例实现两域互通（R"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **MBR Default Route Advertisement（mbr-default-information）**：在 DVMRP"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **MBR Protocol Registration**：PIM/DVMRP 首个接口 enabled 后自动向 MBR 注册。 <<"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Advanced Routing Add-on Package（高级路由附加包）**：本书所述协议需另行购买加载的软件包。 <<<P"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **boot.cfg**：控制交换机参数的 ASCII 配置文件；保存协议命令可实现重启自动加载。 <<<PAGE 33>>><<<PA"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Working / Certified Directory（工作/认证目录）**：交换机运行目录体系，决定重启后加载的配置。 <<<"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **write memory**：把当前配置保存到 Working 目录 boot.cfg。 <<<PAGE 231>>>"
+  },
+  {
+   "h": 0.4,
+   "ok": true,
+   "head": "- **BFD（Bidirectional Forwarding Detection）**：转发故障快速检测（各协议 show 输出中的 B"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **VLAN / IP Interface（路由端口）**：AOS 上一切路由协议接口的载体。 <<<PAGE 21>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Redistribution Administrative Status（重分发管理状态）**：ip redist 配置的启停开关（"
+  }
+ ],
+ "principles": [
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P1 OSPF 是链路状态 IGP，以最低开销选路**：OSPF chooses the least-cost path as th"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P2 LSA 泛洪保证全区域一致的拓扑库**：The flooding algorithm ensures that all rou"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P3 Hello 协议承担邻居发现与 DR 选举**：On all networks (broadcast or non-broad"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P4 邻接关系控制协议报文分发**：Adjacencies control the distribution of routing "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P5 多路访问网络由 DR 泛洪网络 LSA**：Each multi-access network that has at lea"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P6 区域隔离拓扑知识以减少路由流量**：An area's topology is visible only to the mem"
+  },
+  {
+   "h": 0.93,
+   "ok": true,
+   "head": "- **P7 骨干区（Area 0.0.0.0）负责区间路由信息分发**：Different areas communicate with "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P8 区域参数不一致将阻止邻接形成**：All routers belonging to an area must agree on"
+  },
+  {
+   "h": 0.81,
+   "ok": true,
+   "head": "- **P9 四类路由器角色（内部/ABR/骨干/ASBR）可重叠**：Internal routers. …Area border rou"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P10 ABR 为每个所连区域运行一份 SPF 并浓缩拓扑**：Area border routers run multiple c"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P11 虚链路将两台骨干路由器视作无编号点到点连接**：The protocol treats two routers joined"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P12 Stub 区域不通告 AS 外部 LSA，靠默认路由出域**：A stub area is an area with rou"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P13 NSSA 用 Type-7 LSA 有选择地导入外部路由**：These routes are imported into "
+  },
+  {
+   "h": 0.9,
+   "ok": true,
+   "head": "- **P14 Totally Stubby 区域在 Stub 基础上再过滤 Type-3 LSA**：This concept has b"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P15 ECMP 按流分发而非轮询，且不考虑线速**：Delivery of packets along equal paths i"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P16 NBMA 网络必须全互联且需静态配置邻居**：For non-broadcast networks neighbors sh"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P17 冗余 CMM 接管触发改邻接重建的优雅重启（GR）**：This time period between the resta"
+  },
+  {
+   "h": 0.93,
+   "ok": true,
+   "head": "- **P18 Helper 路由器在 GR 期间维持重启路由器的 LSA（含 DR 身份）**：Router Y's LSAs conti"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P19 Totally Stubby 的实现方式 = Stub 类型 + 关闭汇总**：In order to configure "
+  },
+  {
+   "h": 0.94,
+   "ok": true,
+   "head": "- **P20 被动接口不收发路由更新且立即拆除已有邻接**：No OSPF adjacency is formed on a passiv"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P21 用 Route Map 重分发 local 路由成内部路由，批量生成被动接口**：A route map with set "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P22 配置重分发即自动成为 ASBR**：An OSPF router automatically becomes an Auto"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P23 iBGP→OSPF 重分发默认禁止，需显式开启**：By default, redistribution of iBGP r"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P24 OSPF 接口认证三种：simple / MD5 / keychain（可 SHA256）**：There are thre"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P25 MD5 key ID 与 key string 必须分两条命令配置**：Note that setting the key "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P26 Route Map 三类语句：Action / Match / Set**：Action. An action statem"
+  },
+  {
+   "h": 0.96,
+   "ok": true,
+   "head": "- **P27 序列间隐含逻辑 OR；同类型 match 之间 OR、不同类型之间 AND**：Note that there is an "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P28 无 match 语句的 route map 重分发所有路由**：If a route map does not contai"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P29 route map 未配序列号时默认取 50**：If a value is not configured, then th"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P30 deny 某路由不等于默认放行其余路由**：With route maps denying a route does not"
+  },
+  {
+   "h": 0.88,
+   "ok": true,
+   "head": "- **P31 set metric 支持 add/subtract/replace/none 四种效果**：Add - Adds the "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P32 访问列表把多条地址聚合进单条 route map 语句**：An IP access list provides a con"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P33 重分发要求源/目的协议均已加载并使能**：Make sure that both protocols are loaded "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P34 OSPFv3 是 OSPFv2 的 IPv6 扩展，GR 默认使能**：OSPFv3 is an extension of "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P35 OSPFv3 GR 用链路本地 Grace-LSA 通告重启意图**：The OSPFv3 router attemptin"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P36 helper 三条件：宽限期未到、helper 使能、拓扑稳定**：these neighbors continue to "
+  },
+  {
+   "h": 0.93,
+   "ok": true,
+   "head": "- **P37 重启完成后 flush Grace-LSA 结束 GR**：Once all adjacencies are establi"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P38 NSSA translator 角色与稳定性间隔（默认 40s）**：Stability interval is the d"
+  },
+  {
+   "h": 0.94,
+   "ok": true,
+   "head": "- **P39 area-summary 两档：noareasummary 只进默认路由 / sendareasummary 汇总后放行**"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P40 OSPFv3 Loopback0 不会自动通告，需配成 point-to-point**：Unlike with OSPFv"
+  },
+  {
+   "h": 0.94,
+   "ok": true,
+   "head": "- **P41 OSPFv3 静态邻居使用链路本地地址**：to create an OSPFv3 neighbor with a link"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P42 IS-IS 两层层级：Level-1 区内、Level-2 区间**：Routing within an area is r"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P43 NSAP 三字段：Area ID + System ID + NSEL（=00 时称 NET）**：NSEL field…S"
+  },
+  {
+   "h": 0.94,
+   "ok": true,
+   "head": "- **P44 DIS 选举按接口优先级（默认 64），平局比 SNPA/MAC**：Election of the DIS is base"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P45 形成邻接的三要素：认证匹配、IS 类型、MTU**：The primary criteria for forming adj"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P46 IS-IS 四种报文：IIH / LSP / CSNP / PSNP**：Intermediate System-to-In"
+  },
+  {
+   "h": 0.88,
+   "ok": true,
+   "head": "- **P47 IS-IS 路由器完全属于单一区域（对比 OSPF 接口分域）**：In IS-IS, the router belongs"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P48 全局与接口 level 能力组合决定潜在邻接**：When the level capabilities are confi"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P49 汇总路由取最小 metric 通告；内部路由不能在 L1 汇总**：The metric that is used to a"
+  },
+  {
+   "h": 0.95,
+   "ok": true,
+   "head": "- **P50 认证可在全局/level/电路/电路级四层配置，低层覆盖全局**：Keychain authentication can b"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P51 auth-check 关闭时仍认证但只报错不丢包**：If disabled, the authentication PDU"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P52 IS-IS GR：IIH 携带重启请求与 Remaining Time，helper 同步 CSNP**：The IS-IS"
+  },
+  {
+   "h": 0.96,
+   "ok": true,
+   "head": "- **P53 Level-1→Level-2 泄漏及 L2→L1 前缀分发经 route map 实现**：IS-IS allows re"
+  },
+  {
+   "h": 0.86,
+   "ok": true,
+   "head": "- **P54 M-ISIS 背景：单拓扑 IPv4/IPv6 混布会黑洞**：This behavior may result in bl"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P55 M-ISIS 为每个拓扑独立 SPF 与 RIB（IPv4=MT ID 0，IPv6=MT ID 2）**：M-ISIS m"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P56 MT 能力经 Hello 的 MT TLV 通告；无 MT TLV 视为默认拓扑**：M-ISIS routers adve"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P57 点到点无共同拓扑不成邻接；广播网即使无共同拓扑也成邻接**：On point-to-point interfaces, if"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P58 切换 multi-topology 会内部重启 IS-IS 并复位邻接**：Changing the multi-topol"
+  },
+  {
+   "h": 0.93,
+   "ok": true,
+   "head": "- **P59 非 MT 模式下 MT TLV 不参与 SPF 计算（向后兼容默认 IPv4 TLV）**：even if M-ISIS c"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P60 BGP 用 TCP 179，增量更新使长会话更高效**：Hosts using BGP communicate using "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P61 AS_PATH 承担 AS 级环路检测**：Loops are detected and avoided by checki"
+  },
+  {
+   "h": 0.92,
+   "ok": true,
+   "head": "- **P62 BGP 定位是 EGP，作 IGP 时适合多出口 transit AS**：It is not intended to be"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P63 IGP 策略偏技术，EGP 策略偏商业关系**：IGP policies tend to be set due to tra"
+  },
+  {
+   "h": 0.91,
+   "ok": true,
+   "head": "- **P64 4 字节 ASN：AS4_PATH/AS4_AGGREGATOR 属性 + AS_TRANS 23456 兼容旧设备**：S"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P65 IBGP 全互联规则及 RR 对规则的放松**：routes learned through one IBGP speake"
+  },
+  {
+   "h": 0.91,
+   "ok": true,
+   "head": "- **P66 RR 通告规则表（按路由来源决定反射范围）**：External BGP Router→All Clients and No"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P67 Cluster 内 client 不需全互联，non-client 必须全互联**：The client peers do "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P68 冗余 RR 用 cluster-id 标识且 RR 之间全互联**：Redundant route reflectors m"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P69 联邦：子 AS 间走 EBGP 但整体表现为 IBGP，属性跨子 AS 保留**：Even though EBGP is u"
+  },
+  {
+   "h": 0.93,
+   "ok": true,
+   "head": "- **P70 Community 逻辑分组跨 AS 传播策略语义（如 no-export）**：Communities are used "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P71 MED 只在同一邻居 AS 间比较，绝不向下一 AS 传播**：If received on external links,"
+  },
+  {
+   "h": 0.94,
+   "ok": true,
+   "head": "- **P72 同步规则：IGP 未知的 IBGP 路由不向 EBGP 通告**：a BGP router should not adver"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P73 路由抖动抑制：不稳定性度量、半衰期折半、低于复用值重新通告**：Each time a route flaps…its \"i"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P74 dampening 参数必须一次性按序全部输入**：The variables for these parameters m"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P75 聚合路由需至少存在一条更精确路由；聚合本身无需本地已知**：You cannot aggregate an address…"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P76 AS 正则按 token 匹配而非字符匹配，便于书写与加速加载**：the BGP implementation treat"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P77 本地优先级数值越高越优先，是选路首要属性之一**：In many cases, it will be the most im"
+  },
+  {
+   "h": 0.89,
+   "ok": true,
+   "head": "- **P78 4 类策略（AS path/community/prefix(prefix6)/route map）先建后绑到 peer 的"
+  },
+  {
+   "h": 0.85,
+   "ok": true,
+   "head": "- **P79 AS 正则元字符语义（^ $ . ? + * () [] 等）**：^ Matches the beginning of t"
+  },
+  {
+   "h": 0.92,
+   "ok": true,
+   "head": "- **P80 多协议 BGP 用 MP_REACH/MP_UNREACH_NLRI 承载 IPv6 前缀与下一跳**：two new no"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P81 IPv6 对等可跑在 IPv4 会话上（需 activate-ipv6 + ipv6-nexthop）**：Multipro"
+  },
+  {
+   "h": 0.97,
+   "ok": true,
+   "head": "- **P82 本地 IPv6 地址（FC00::/7）在 iBGP 间交换、eBGP 间忽略**：The local IPv6 addre"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P83 GTSM：控制包 TTL 置 255，接收方按剩余 TTL 判跳数、超限丢弃**：the TTL (IPv4) and ho"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P84 VPLS BGP 信令：NLRI 自动发现 PE + 单条 Update 携带全部远端 PE 标签**：each PE di"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P85 BGP EVPN：每 peer 会话需在默认 VRF 上显式激活 EVPN 能力**：The BGP EVPN capabi"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P86 邻居模板的优先级：个体 peer 配置覆盖模板配置**：The individual BGP peer configurat"
+  },
+  {
+   "h": 0.93,
+   "ok": true,
+   "head": "- **P87 BGP GR 保持转发不断以支撑域间流量**：On an OmniSwitch router in a redundant "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P88 Loopback0 永久 up，适合作 BGP 对等源（配合 update-source / ebgp-multihop）*"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P89 BGP soft reset（clear soft）只重应用策略不复位会话**：Use the ip bgp neighbo"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P90 多条全局命令要求先禁用 BGP 才能修改（AS 号、本地优先级、MED 比较等）**：Many BGP global com"
+  },
+  {
+   "h": 0.94,
+   "ok": true,
+   "head": "- **P91 239.0.0.0/8 为管理作用域组播地址**：Multicast addresses 239.0.0.0 through"
+  },
+  {
+   "h": 0.95,
+   "ok": true,
+   "head": "- **P92 边界阻止作用域地址的组播流量 leaking 到域外**：A boundary is used to eliminate t"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P93 边界使同一作用域地址块可在多个域并发复用**：scoped multicast addresses can be reuse"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P94 DVMRP = 广播-剪枝型密集模式协议，按源生成分发树**：DVMRP, essentially a \"broadcast"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P95 RPF 检查：仅当分组到达上游接口才转发**：If the packet arrived on an upstream in"
+  },
+  {
+   "h": 0.95,
+   "ok": true,
+   "head": "- **P96 邻居发现靠周期 Probe（224.0.0.4），Neighbor List 出现自己即双向邻接**：When a DVMR"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P97 DVMRPv3 未建立邻接不接受 Route Report**：In DVMRPv3, a router will not "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P98 毒性反转：回送 metric=原值+32 的路由，上游据此建依赖列表**：it indicates this by echo"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P99 DVMRP 毒性反转语义区别于单播 DV 协议**：Poison reverse is used differently i"
+  },
+  {
+   "h": 0.93,
+   "ok": true,
+   "head": "- **P100 剪枝自下而上逐级回传，直到无用的分支全部移除**：If the upstream router is able to re"
+  },
+  {
+   "h": 0.78,
+   "ok": true,
+   "head": "- **P101 Graft/Graft-Ack 机制把重加入时延降到毫秒级**：By using a graft mechanism, D"
+  },
+  {
+   "h": 0.95,
+   "ok": true,
+   "head": "- **P102 DVMRP 隧道用 IP-IP 封装穿越非组播网络，协议消息也走单播**：IP multicast packets are"
+  },
+  {
+   "h": 0.89,
+   "ok": true,
+   "head": "- **P103 路由保持 holddown 以无穷度量继续通告，防旧路由回环传播**：it is common in distance v"
+  },
+  {
+   "h": 0.93,
+   "ok": true,
+   "head": "- **P104 路由表带掩码，DVMRP 实际是 classless 协议**：The key difference…is that DV"
+  },
+  {
+   "h": 0.95,
+   "ok": true,
+   "head": "- **P105 分支路由器发送剪枝的 lifetime 取本机配置与队列中最小剩余值**：the prune-lifetime value"
+  },
+  {
+   "h": 0.96,
+   "ok": true,
+   "head": "- **P106 PIM 协议无关：复用任一单播协议的 RIB**：Protocol-Independent Multicast (PIM)"
+  },
+  {
+   "h": 0.91,
+   "ok": true,
+   "head": "- **P107 PIM-SM 接收者驱动（显式 Join），适合稀疏/WAN 场景**：multicast forwarding in P"
+  },
+  {
+   "h": 0.91,
+   "ok": true,
+   "head": "- **P108 RP 是共享树（RPT）根，负责解封装 Register 并向下分发**：shared distribution tree"
+  },
+  {
+   "h": 0.91,
+   "ok": true,
+   "head": "- **P109 BSR 域内唯一，经 Bootstrap 消息分发 RP-set**：There is only one BSR per "
+  },
+  {
+   "h": 0.94,
+   "ok": true,
+   "head": "- **P110 C-BSR 选举：优先级最高者胜，平局比 IP**：The C-BSR with the highest priority"
+  },
+  {
+   "h": 0.93,
+   "ok": true,
+   "head": "- **P111 DR 选举看 DR 优先级（Hello 携带），平局比 IP；源侧 DR 封装 Register**：When a DR "
+  },
+  {
+   "h": 0.94,
+   "ok": true,
+   "head": "- **P112 Register 封装低效：耗 CPU 且路径可能绕远**：The encapsulation and unencapsu"
+  },
+  {
+   "h": 0.95,
+   "ok": true,
+   "head": "- **P113 RP 阈值触发的 (S,G) 源特定 Join + Register-Stop**：When the data rate "
+  },
+  {
+   "h": 0.94,
+   "ok": true,
+   "head": "- **P114 SPT 切换由最后一跳 DR 收到首个组播数据包即自动发起**：The last hop Designated Route"
+  },
+  {
+   "h": 0.88,
+   "ok": true,
+   "head": "- **P115 SPT/RPT 双流期间丢 RPT 份并发 (S,G,RPT) 剪枝**：This router drops the pa"
+  },
+  {
+   "h": 0.93,
+   "ok": true,
+   "head": "- **P116 PIM-DM 与 SM 本质差异：无周期 Join、无 RP**：There are no periodic joins "
+  },
+  {
+   "h": 0.94,
+   "ok": true,
+   "head": "- **P117 PIM-SSM：显式频道订阅，无需 RP，直接建 SPT**：SSM, using an explicit channel"
+  },
+  {
+   "h": 0.92,
+   "ok": true,
+   "head": "- **P118 232.0.0.0/8 为 SSM 保留段，须手动配置才启用**：The multicast address range "
+  },
+  {
+   "h": 0.93,
+   "ok": true,
+   "head": "- **P119 组到 RP 映射算法：最长匹配→最高优先级→hash→最高 IP**：1 Perform longest match on"
+  },
+  {
+   "h": 0.94,
+   "ok": true,
+   "head": "- **P120 Anycast RP：多机同一 RP 地址 + IGP 通告，收敛与 IGP 同级**：Anycast RP introd"
+  },
+  {
+   "h": 0.93,
+   "ok": true,
+   "head": "- **P121 Register/Join-Prune 打包降低控制面丢包风险**：In large networks with a lo"
+  },
+  {
+   "h": 0.9,
+   "ok": true,
+   "head": "- **P122 IPv6 SSM 保留段为 FF3x::/32，同样需手动启用**：The multicast addresses ran"
+  },
+  {
+   "h": 0.88,
+   "ok": true,
+   "head": "- **P123 IPv6 RP-switchover 无阈值概念，收到首个 Register 即切换**：You can configur"
+  },
+  {
+   "h": 0.91,
+   "ok": true,
+   "head": "- **P124 MLD 是 IPv6 的组播成员发现（源自 IGMPv2，走 ICMPv6）**：Multicast Listener D"
+  },
+  {
+   "h": 0.92,
+   "ok": true,
+   "head": "- **P125 MBR = 同机 DVMRP 实例 + PIM 实例，按 RFC 2715 互通**：an OmniSwitch MBR "
+  },
+  {
+   "h": 0.92,
+   "ok": true,
+   "head": "- **P126 MBR 三职能：拉取 PIM 域注入 DVMRP、导入 DVMRP 域流量、 transit 穿越**：The MBR f"
+  },
+  {
+   "h": 0.85,
+   "ok": true,
+   "head": "- **P127 PIM/DVMRP 首个接口 enabled 后自动向 MBR 注册**：PIM and DVMRP are dynami"
+  },
+  {
+   "h": 0.92,
+   "ok": true,
+   "head": "- **P128 IPv6 无广播地址，组播前缀 ff00::/8**：There are no broadcast addresses i"
+  }
+ ]
+}

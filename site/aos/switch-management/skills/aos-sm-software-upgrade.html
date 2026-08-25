@@ -1,0 +1,112 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>aos-sm-software-upgrade — AOS 8.10R04 · Switch Management</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>AOS 8.10R04 · Switch Management</h1>
+<div class="sub">511 页 · 交换机管理（Flash/升级/CLI 用户/SNMP Web 纳管/日志健康/机箱 CMM）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">配置与升级</div>
+<a href="../skills/aos-sm-flash-config.html">aos-sm-flash-config</a>
+<a href="../skills/aos-sm-software-upgrade.html" class="on">aos-sm-software-upgrade</a>
+<div class="grp">用户与纳管</div>
+<a href="../skills/aos-sm-cli-session-usermgmt.html">aos-sm-cli-session-usermgmt</a>
+<a href="../skills/aos-sm-mgmt-services.html">aos-sm-mgmt-services</a>
+<div class="grp">运维与硬件</div>
+<a href="../skills/aos-sm-logging-health.html">aos-sm-logging-health</a>
+<a href="../skills/aos-sm-chassis-cmm.html">aos-sm-chassis-cmm</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../aos/index.html">AOS 软件手册</a> › <a href="../index.html">AOS 8.10R04</a> › <span>aos-sm-software-upgrade</span></nav><h1>aos-sm-software-upgrade</h1><p class="meta"><span class="badge">SKILL</span> aos-sm-software-upgrade · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>计划把交换机/VC 从旧版本 AOS 升级到 8.10R4（标准 reload 升级或 ISSU 最小中断升级）</li>
+<li>升级前要做维护例行：清旧文件、确认 certified/synchronized、采 tech-support 基线</li>
+<li>安装/移除 Debian 应用包（NTP、Cirrus Agent、Nutanix 插件等），或免重启启停应用</li>
+<li>处理签名镜像降级、u-boot/ONIE 版本匹配、镜像完整性校验</li>
+<li>用 USB 闪存做自动批量升级、备份或灾难恢复（含 ONIE 设备）</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>标准升级模型（P13）：上传新镜像到 Running 目录 → reload → 验证 → certify；
+VC 场景 Master 先把镜像拷给 Slave 再统一重启。ISSU（P14）按 chassis-id 从低到高逐台重启 Slave、最后重启 Master，实现最小网络 disruption。目录结构即回滚体系（certified 保底）。安全链：ALE Secured Code + ASLR（P18）→ RSA-2048/SHA-256 签名镜像（P19）→ Secure Boot 启动链验证（P20）。包管理双组件（P21）：pkgmgr 管验证/安装/移除，appmgr 管免重启启停；
+安装必须 <code>write memory</code> 持久化（P23）。</p>
+<h2 id="a1">A1（决策框架）</h2>
+<ol>
+<li><strong>standalone/普通 VC 选标准升级</strong>：维护前置 → 下载 → FTP 到 RUNNING 目录 → reload → 验证 → certify（C1，&lt;&lt;<PAGE 23-24>&gt;&gt;）</li>
+<li><strong>不能中断的 VC/机箱选 ISSU</strong>：Master 建 ISSU 目录（清理旧 ISSU 目录）→ 拷当前 Running 配置进 ISSU 目录 → FTP 新镜像+验证文件 → issu 执行 → 验证 certify → 复位 NI（C2，&lt;&lt;<PAGE 24>&gt;&gt;）</li>
+<li><strong>升级前必做维护基线</strong>：<code>show system</code> → 清 <em>.log/</em>.tar 与 /pmd → <code>show running-directory</code> 确认 certified/synchronized → <code>show tech-support</code> 基线（C3，&lt;&lt;<PAGE 23>&gt;&gt;；P17）</li>
+<li><strong>非 AOS 软件走包管理</strong>：<code>pkgmgr verify</code>（MD5+兼容版本）→ install → write memory（C17）；应用启停用 appmgr 免重启（C18）</li>
+<li><strong>批量/灾备场景用 USB</strong>：自动拷贝需 aossignature 签名文件防误触发（P90）；灾难恢复用 Trescue.img 或 ONIE Rescue（P91）</li>
+</ol>
+<h2 id="a2">A2（操作步骤）</h2>
+<ul>
+<li><strong>标准升级</strong>：维护例行（C3）→ 下载升级文件 → FTP 到 RUNNING 目录 → <code>reload</code> → 验证 → certify（C1，&lt;&lt;<PAGE 23-24>&gt;&gt;）</li>
+<li><strong>ISSU</strong>：<code>issu</code> 执行 → 验证 → certify → 复位 NI（NI 未按时复位则系统按槽位升序逐个强制复位，P16）（C2，&lt;&lt;<PAGE 24>&gt;&gt;）</li>
+<li><strong>包安装</strong>：包放 /flash/working/pkg → <code>pkgmgr verify yos-ntpd-v1.deb</code> → <code>pkgmgr install yos-ntpd-v1.deb</code> → <code>write memory</code> → <code>show pkgmgr</code>；移除 <code>pkgmgr remove ntpd</code> + write memory（C17，&lt;&lt;<PAGE 87-88>&gt;&gt;）</li>
+<li><strong>应用启停</strong>：<code>appmgr start|stop|restart ams config-dbase</code> + <code>write memory</code>；<code>show appmgr</code>（+ 表示未跨重启保存）（C18，&lt;&lt;<PAGE 89-90>&gt;&gt;）</li>
+<li><strong>镜像完整性</strong>：<code>image integrity check</code> 比对目录镜像 SHA256 与 key file；<code>image integrity get-key</code> 显示哈希（P92，&lt;&lt;<PAGE 118>&gt;&gt;）</li>
+<li><strong>USB 自动升级</strong>：USB 根放 aossignature 空文件 + 6900/working 目录放镜像 → <code>usb enable</code> → <code>usb auto-copy enable copy config enable</code> → 插 USB；备份 <code>usb backup admin-state enable</code>（C24，&lt;&lt;<PAGE 113-114>&gt;&gt;）</li>
+<li><strong>USB 灾难恢复</strong>：传统——USB 建 6900/certified|working + 根放 Trescue.img → 重启 → miniboot/uboot 下 <code>run rescue</code>；ONIE——根放 Yos.img → Onie Menu &gt; Onie Rescue → <code>blkid</code> 找盘 → mount → <code>onie-nos-install /var/tmp/Yos.img</code>（C25，&lt;&lt;<PAGE 116>&gt;&gt;）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>标准升级（standalone/VC）全流程（C1，&lt;&lt;<PAGE 23-24>&gt;&gt;）</li>
+<li>ISSU 升级流程含验证文件与 NI 复位（C2，&lt;&lt;<PAGE 24>&gt;&gt;）</li>
+<li>升级前维护例行基线（C3，&lt;&lt;<PAGE 23>&gt;&gt;）</li>
+<li>Debian 包安装/验证/移除以 NTP 为例（C17，&lt;&lt;<PAGE 87-88>&gt;&gt;）</li>
+<li>USB 升级/备份与灾难恢复（C24/C25，&lt;&lt;<PAGE 113-116>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（反例/坑）</h2>
+<ul>
+<li>签名镜像机型降级到旧版 AOS 必须先降 u-boot（X9，&lt;&lt;<PAGE 66>&gt;&gt;）</li>
+<li>同一应用不能同时装多个 Debian 包，且包须与当前 AOS 发行版同版本（X16，&lt;&lt;<PAGE 87>&gt;&gt;）</li>
+<li>包未 write memory 保存则重启/VC takeover 后丢失（X17，&lt;&lt;<PAGE 87>&gt;&gt;；P23）</li>
+<li>安全补丁类包（OpenSSL 等）删除后必须重启才回滚到镜像内置版本（X18，&lt;&lt;<PAGE 88>&gt;&gt;）</li>
+<li>U-boot 访问禁用 + 镜像损坏 = 只能返厂（X19）；U-boot 密码遗忘 + flash 损坏同样返厂（X20）；ONIE 密码遗忘无法灾备只能 RMA（X21）（&lt;&lt;<PAGE 91-92>&gt;&gt;）</li>
+<li>ISSU 后 NI 必须复位，超时由系统按槽位升序强制执行（P16，&lt;&lt;<PAGE 24>&gt;&gt;）</li>
+<li>USB 自动拷贝重启后自动关闭；auto-copy 与 backup 互斥（P90，&lt;&lt;<PAGE 113-114>&gt;&gt;）</li>
+</ul>
+<h2 id="_1">来源</h2>
+<p>OmniSwitch AOS 8.10R4 Switch Management Guide 第 1 章 Upgrading AOS（&lt;&lt;<PAGE 21-24>&gt;&gt;）、第 3 章 Loading Software / Secured Code / Package Management / U-boot &amp; ONIE（&lt;&lt;<PAGE 62-92>&gt;&gt;）、第 4 章 USB（&lt;&lt;<PAGE 113-118>&gt;&gt;）。条目来源：cases C1/C2/C3/C17/C18/C24/C25；principles P13-P25/P90-P92；counter-examples X9/X16-X21；frameworks F6。</p><div class="pn"><a href="aos-sm-flash-config.html">⬅ 上一单元：aos-sm-flash-config</a><a class="nxt" href="aos-sm-cli-session-usermgmt.html">下一单元：aos-sm-cli-session-usermgmt ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

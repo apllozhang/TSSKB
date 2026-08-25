@@ -1,0 +1,113 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>aos-nc-qos-policy — AOS 8.10R04 · Network Configuration</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>AOS 8.10R04 · Network Configuration</h1>
+<div class="sub">1745 页 · 网络配置全科（二层/织构/IP 服务/路由/组播/QoS/准入/OAM，48 章）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">二层与冗余</div>
+<a href="../skills/aos-nc-vlan-l2.html">aos-nc-vlan-l2</a>
+<a href="../skills/aos-nc-redundancy-protection.html">aos-nc-redundancy-protection</a>
+<div class="grp">骨干织构</div>
+<a href="../skills/aos-nc-fabric-backbone.html">aos-nc-fabric-backbone</a>
+<div class="grp">三层与服务</div>
+<a href="../skills/aos-nc-ip-ipv6-services.html">aos-nc-ip-ipv6-services</a>
+<a href="../skills/aos-nc-routing.html">aos-nc-routing</a>
+<a href="../skills/aos-nc-multicast.html">aos-nc-multicast</a>
+<div class="grp">策略与安全</div>
+<a href="../skills/aos-nc-qos-policy.html" class="on">aos-nc-qos-policy</a>
+<a href="../skills/aos-nc-access-security.html">aos-nc-access-security</a>
+<div class="grp">监测与基础</div>
+<a href="../skills/aos-nc-oam-monitoring.html">aos-nc-oam-monitoring</a>
+<a href="../skills/aos-nc-switch-foundation.html">aos-nc-switch-foundation</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../aos/index.html">AOS 软件手册</a> › <a href="../index.html">AOS 8.10R04</a> › <span>aos-nc-qos-policy</span></nav><h1>aos-nc-qos-policy</h1><p class="meta"><span class="badge">SKILL</span> aos-nc-qos-policy · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>语音/视频流量要优先转发：分类标记+队列调度</li>
+<li>某些应用/用户要限速：policing/shaping、tri-color 三色</li>
+<li>按五元组/MAC/端口做精细策略：policy condition+action+rule</li>
+<li>大量同类地址要复用条件：条件组（network/service/MAC/port group）</li>
+<li>安全需求：ACL drop/accept 规则入 policy</li>
+<li>IP 语音要按 SIP 信令识别媒体流给 QoS：SIP snooping</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>QoS 四步处理链（F8/P156，&lt;&lt;<PAGE 1103>&gt;&gt;）：分类标记→拥塞管理（入队调度）→拥塞避免（随机丢弃防 tail drop）→policing/shaping。策略三元组：policy=condition+action+rule；流不匹配任何策略则用端口默认 QoS，多策略命中取最高 precedence（P158，&lt;&lt;<PAGE 1133>&gt;&gt;）。每端口 8 条队列，入队依据策略+ToS/802.1p+端口信任状态（P159）。策略来源决定修改权：PolicyView(LDAP) 建的只能 PolicyView 改，CLI/WebView 建的只能本端改（P160/X61，&lt;&lt;<PAGE 1133>&gt;&gt;）。四类策略列表：default/UNP/egress/AFP（AFP 仅 OS6900）（P161，&lt;&lt;<PAGE 1134>&gt;&gt;）。</p>
+<h2 id="a1">A1（决策框架）</h2>
+<ol>
+<li><strong>先定分类</strong>：信任口采信报文已有 802.1p/ToS；802.1Q tagged 口默认 untrusted——上联口语音/视频标记不生效的常见原因（X64，&lt;&lt;<PAGE 1134>&gt;&gt;）</li>
+<li><strong>再定队列与限速</strong>：QSet profile 配每口调度参数；带宽控制选 policy 带宽 policing（sr/tcm 三色）或端口 bandwidth policing</li>
+<li><strong>复杂策略走 policy 体系</strong>：条件组（network/service/MAC/port group）免逐地址建条件；map group 做标记映射；ACL 条件+drop/accept 动作入 policy rule（F8，&lt;&lt;<PAGE 1103>&gt;&gt;/&lt;&lt;<PAGE 1133>&gt;&gt;）</li>
+<li><strong>语音流识别选 SIP snooping</strong>：trusted call server+RTCP 阈值（注意一揽子限制，见 B）</li>
+</ol>
+<h2 id="a2">A2（操作步骤）</h2>
+<ul>
+<li><strong>条件组与 map group</strong>：network group/service group/MAC group/port group 建好后挂到单个 condition；map group 做标记映射；验证 show policy group/map（cases·C52，&lt;&lt;<PAGE 1176>&gt;&gt;）</li>
+<li><strong>ACL 安全策略</strong>：L2/L3/IPv6 ACL 条件+drop/accept 动作入 policy rule，<code>qos apply</code> 生效（cases·C53，&lt;&lt;<PAGE 1142>&gt;&gt;）</li>
+<li><strong>端口限速/整形与 tri-color</strong>：policy 带宽 policing（sr/tcm 三色）+端口 bandwidth policing（cases·C54，&lt;&lt;<PAGE 1118>&gt;&gt;）</li>
+<li><strong>提交</strong>：policy condition/action/rule 配置后必须 <code>qos apply</code> 才激活（P164，&lt;&lt;<PAGE 1149>&gt;&gt;）</li>
+<li><strong>LDAP 策略服务器</strong>：交换机按 <code>aaa ldap-server</code> 系列配置主机/端口/检索库/SSL，策略经 PolicyView 下发（P165，&lt;&lt;<PAGE 1175>&gt;&gt;）</li>
+<li><strong>SIP snooping</strong>：配 trusted SIP server、RTCP 阈值，端口使能（&lt;&lt;<PAGE 704>&gt;&gt;）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>条件组复用（C52，&lt;&lt;<PAGE 1176>&gt;&gt;）</li>
+<li>ACL 安全策略+qos apply（C53，&lt;&lt;<PAGE 1142>&gt;&gt;）</li>
+<li>policy/端口两级带宽 policing（C54，&lt;&lt;<PAGE 1118>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（反例/坑）</h2>
+<ul>
+<li>policy 配置后不 <code>qos apply</code> 不生效——最常见的"配了没反应"（X60，&lt;&lt;<PAGE 1149>&gt;&gt;）</li>
+<li>LDAP/PolicyView 创建的 QoS 对象不能在 CLI 改，反之亦然（X61，&lt;&lt;<PAGE 1133>&gt;&gt;）</li>
+<li>IPv4 与 IPv6 条件不能组合进同一 condition；destination VLAN 条件仅组播规则可用；source ip+ARP 组合仅 OS6860/E 支持（X62/P163，&lt;&lt;<PAGE 1135>&gt;&gt;）</li>
+<li>有效的规则也可能因依赖功能（如路由）未开而无法执行（X63，&lt;&lt;<PAGE 1134>&gt;&gt;）</li>
+<li>SIP Snooping 一揽子限制：仅 IPv4、仅 UDP（含 UDP/TCP），不支持 TLS/SCTP/MPLS、加密 RTCP/SDP、DNS/FQDN、无 VRF/NAT 感知（X65，&lt;&lt;<PAGE 704>&gt;&gt;）</li>
+<li>SIP 所有初始消息必须过同一 SIP Server，端到端直连会话不支持；电话侧 outbound proxy 必须与交换机 trusted call server 一致（X66，&lt;&lt;<PAGE 704>&gt;&gt;）</li>
+<li>边缘口 SIP IP 与 RTP IP 不一致时 TCAM 表项不建、QoS 不生效；TCAM 装表前的早发媒体流得不到 QoS 待遇（X67/X68，&lt;&lt;<PAGE 704>&gt;&gt;）</li>
+</ul>
+<h2 id="_1">来源</h2>
+<p>OmniSwitch AOS 8.10R4 Network Configuration Guide 第 20 章 SIP Snooping（&lt;&lt;<PAGE 704>&gt;&gt;）、第 33 章 QoS（&lt;&lt;<PAGE 1103-1176>&gt;&gt;）、第 34 章 Policy Servers（&lt;&lt;<PAGE 1175>&gt;&gt;）。条目来源：cases C52-C54；principles P156-P165；counter-examples X60-X68；frameworks F8。</p><div class="pn"><a href="aos-nc-multicast.html">⬅ 上一单元：aos-nc-multicast</a><a class="nxt" href="aos-nc-access-security.html">下一单元：aos-nc-access-security ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

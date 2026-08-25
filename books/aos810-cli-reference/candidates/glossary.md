@@ -1,0 +1,74 @@
+# glossary — 70 章一行速查（命令域 + 命令数估计）
+
+页码为全文 `<<<PAGE N>>>` 标记；命令数为目录条目估计（含 show）。
+
+- **第1章 Ethernet Port Commands**：D1 端口物理层参数（speed/duplex/fec/ddm/violation 等）与端口统计，约 85 条 <<<PAGE 67>>>
+- **第2章 Power over Ethernet (PoE) Commands**：D1 PoE 供电预算、分级、power rule 管理，约 38 条 <<<PAGE 254>>>
+- **第3章 UDLD Commands**：D1 单向链路检测，防单向光纤故障成环，约 12 条 <<<PAGE 327>>>
+- **第4章 Source Learning Commands**：D2 MAC 地址学习/过滤/老化与 FDB 管理，约 33 条 <<<PAGE 351>>>
+- **第5章 VLAN Management Commands**：D2 VLAN/私有 VLAN 创建、成员划分与 STP 开关，约 13 条 <<<PAGE 427>>>
+- **第6章 High Availability VLAN Commands**：D2 跨机箱 VLAN 高可用同步，约 10 条 <<<PAGE 455>>>
+- **第7章 VLAN Stacking Commands**：D2 QinQ 双层标签/保留 VLAN/NNI-UNI 角色，约 40 条 <<<PAGE 476>>>
+- **第8章 Distributed Spanning Tree Commands**：D3 802.1D 分布式 STP/RSTP/MSTP 树形防环，约 50 条 <<<PAGE 567>>>
+- **第9章 MPLS Commands**：D4 MPLS LSP/标签转发与 VPN 隧道，约 26 条 <<<PAGE 689>>>
+- **第10章 Shortest Path Bridging Commands**：D4 ISIS-SPB 骨干（BVLAN/桥优先级/ECT/GR），SPBM 控制面，约 43 条 <<<PAGE 743>>>
+- **第11章 Service Manager Commands**：D4 SPBM 服务层（ISID/SAP/PBB 封装业务），SPBM 数据面，约 83 条 <<<PAGE 839>>>
+- **第12章 Loopback Detection Commands**：D3 二层环路检测与端口自动阻断，约 11 条 <<<PAGE 1070>>>
+- **第13章 Link Aggregation Commands**：D3 静态/LACP 链路聚合与哈希控制，约 46 条 <<<PAGE 1092>>>
+- **第14章 Virtual Chassis Commands**：D5 虚拟机箱（VFL 互联/双机箱管理），约 32 条 <<<PAGE 1198>>>
+- **第15章 Ethernet Ring Protection Commands**：D3 ITU-T G.8032 环网保护倒换，约 16 条 <<<PAGE 1268>>>
+- **第16章 Media Redundancy Protocol Commands**：D3 IEC 62439-2 MRP 工业环网冗余，约 11 条 <<<PAGE 1306>>>
+- **第17章 MVRP Commands**：D2 802.1ak MVRP 动态 VLAN 注册传播，约 23 条 <<<PAGE 1340>>>
+- **第18章 802.1AB Commands**：D9 LLDP 邻居发现与 TLV 管理，约 40 条 <<<PAGE 1390>>>
+- **第19章 SIP Commands**：D5 会话/互联类命令（章名缩写未展开，域归属待确认），约 18 条 <<<PAGE 1486>>>
+- **第20章 Automatic Fabric Commands**：D5 自动织构（Auto-Fabric 节点角色与自动发现），约 12 条 <<<PAGE 1523>>>
+- **第21章 IP Commands**：D6 IP 接口/路由/ARP/DNS/UDP 中继等单播底座，约 113 条 <<<PAGE 1549>>>
+- **第22章 IPv6 Commands**：D6 IPv6 地址/邻居发现/路由与过渡，约 68 条 <<<PAGE 1793>>>
+- **第23章 IPsec Commands**：D8 IPsec/IKE 隧道加密，约 11 条 <<<PAGE 1948>>>
+- **第24章 RIP Commands**：D6 RIP/RIPv2 距离矢量路由，约 41 条 <<<PAGE 1974>>>
+- **第25章 BFD Commands**：D6 双向转发检测（为路由协议提供毫秒级故障检测），约 16 条 <<<PAGE 2058>>>
+- **第26章 DHCP Relay Commands**：D6 DHCP 中继/option82/监督，约 116 条 <<<PAGE 2092>>>
+- **第27章 VRRP Commands**：D6 虚拟路由冗余（首跳网关备份），约 24 条 <<<PAGE 2334>>>
+- **第28章 OSPF Commands**：D6 OSPFv2 链路态 IGP（区域/接口/虚链路/重分发），约 57 条 <<<PAGE 2392>>>
+- **第29章 OSPFv3 Commands**：D6 OSPFv3（IPv6 版链路态 IGP），约 46 条 <<<PAGE 2513>>>
+- **第30章 IS-IS Commands**：D6 IS-IS 链路态路由（SPB 控制面基础），约 62 条 <<<PAGE 2610>>>
+- **第31章 BGP Commands**：D6 BGP-4/MP-BGP 域间路由（全书第二大章），约 194 条 <<<PAGE 2744>>>
+- **第32章 Server Load Balancing Commands**：D6 服务器负载均衡（VIP/实服务组/健康检查），约 31 条 <<<PAGE 3160>>>
+- **第33章 IP Multicast Switching Commands**：D7 二层组播交换（IGMP 侦听/MCS），约 106 条 <<<PAGE 3227>>>
+- **第34章 IP Multicast VLAN Commands**：D7 组播 VLAN（MVR）业务通道，约 12 条 <<<PAGE 3471>>>
+- **第35章 DVMRP Commands**：D7 距离矢量组播路由，约 23 条 <<<PAGE 3495>>>
+- **第36章 PIM Commands**：D7 PIM-SM/SSM/DM 组播路由协议，约 99 条 <<<PAGE 3542>>>
+- **第37章 Multicast Routing Commands**：D7 组播路由全局/边界/静态组播路由管理，约 14 条 <<<PAGE 3769>>>
+- **第38章 QoS Commands**：D10 QoS 硬件队列/调度/端口 QoS 参数，约 70 条 <<<PAGE 3797>>>
+- **第39章 QoS Policy Commands**：D10 策略条件-动作-规则-列表模型与各类 group，约 111 条 <<<PAGE 3953>>>
+- **第40章 Policy Server Commands**：D10 策略服务器（LDAP 端 PolicyView 联动），约 9 条 <<<PAGE 4190>>>
+- **第41章 AAA Commands**：D8 RADIUS/TACACS+/LDAP 与认证授权计费方法链，约 119 条 <<<PAGE 4205>>>
+- **第42章 Access Guardian Commands**：D8 UNP/BYOD/Captive Portal/QMR/IoST 设备画像安全准入框架（全书第一大章），约 199 条 <<<PAGE 4470>>>
+- **第43章 Application Monitoring and Enforcement Commands**：D10 应用识别与流量管控（AppMon），约 37 条 <<<PAGE 4934>>>
+- **第44章 Application Fingerprinting Commands**：D10 应用指纹库管理，约 12 条 <<<PAGE 5016>>>
+- **第45章 FIP Snooping Commands**：D5 FCoE 初始化协议侦听（FCoE 安全），约 22 条 <<<PAGE 5039>>>
+- **第46章 FCoE/FC Gateway Commands**：D5 以太网光纤通道与 FC 网关，约 27 条 <<<PAGE 5090>>>
+- **第47章 VXLAN Snooping Commands**：D5 VXLAN 侦听与虚拟网段管理，约 20 条 <<<PAGE 5152>>>
+- **第48章 Port Mapping Commands**：D5 端口映射（数据流量重定向到应用/服务），约 9 条 <<<PAGE 5195>>>
+- **第49章 Learned Port Security Commands**：D8 已学习端口安全（LPS，限定可接入设备），约 18 条 <<<PAGE 5212>>>
+- **第50章 Port Mirroring and Monitoring Commands**：D9 端口镜像与流量监测，约 9 条 <<<PAGE 5256>>>
+- **第51章 sFlow Commands**：D9 sFlow 采样流量监测，约 13 条 <<<PAGE 5277>>>
+- **第52章 RMON Commands**：D9 RMON 远程网络监视告警/历史/统计，约 4 条 <<<PAGE 5305>>>
+- **第53章 Switch Logging Commands**：D11 系统日志（syslog）级别/服务器/过滤，约 14 条 <<<PAGE 5313>>>
+- **第54章 Health Monitoring Commands**：D9 健康监测（CPU/内存/进程阈值检查），约 6 条 <<<PAGE 5347>>>
+- **第55章 Ethernet OAM Commands**：D9 802.1ag CFM 连通性故障管理（MEP/MAID），约 46 条 <<<PAGE 5358>>>
+- **第56章 LINK OAM Commands**：D9 802.3ah 链路级 OAM 远端发现/环回/远端故障指示，约 23 条 <<<PAGE 5432>>>
+- **第57章 CPE Test Head Commands**：D9 CPE 测试头（接入侧业务拨测），约 31 条 <<<PAGE 5503>>>
+- **第58章 PPPoE Intermediate Agent**：D8 PPPoE 中间代理（接入侧认证辅助/截留），约 12 条 <<<PAGE 5571>>>
+- **第59章 Service Assurance Agent Commands**：D9 SAA 主动探测（ping/ftp/http 等业务质量测量），约 19 条 <<<PAGE 5597>>>
+- **第60章 CMM Commands**：D11 通信模块管理（CMM 控制模块冗余/同步），约 29 条 <<<PAGE 5645>>>
+- **第61章 Chassis Management and Monitoring Commands**：D11 机箱/风扇/电源/温度等硬件管理，约 91 条 <<<PAGE 5697>>>
+- **第62章 Network Time Protocol Commands**：D11 NTP/SNTP 时间同步，约 25 条 <<<PAGE 5884>>>
+- **第63章 Session Management Commands**：D11 CLI 会话/telnet/SSH 连接与超时管理，约 35 条 <<<PAGE 5936>>>
+- **第64章 File Management Commands**：D11 文件系统（copy/delete/directory/脚本）管理，约 21 条 <<<PAGE 5999>>>
+- **第65章 Web Management Commands**：D11 内嵌 Web 管理开关与 HTTP/HTTPS 配置，约 11 条 <<<PAGE 6040>>>
+- **第66章 Configuration File Manager Commands**：D11 配置文件（running/committed/备份/回滚）管理，约 11 条 <<<PAGE 6060>>>
+- **第67章 SNMP Commands**：D11 SNMP v1/v2c/v3 团体/用户/陷阱/通知管理，约 26 条 <<<PAGE 6079>>>
+- **第68章 OmniVista Cirrus Commands**：D11 云管理平台（OmniVista Cirrus）对接配置，约 10 条 <<<PAGE 6132>>>
+- **第69章 OpenFlow Commands**：D11 SDN OpenFlow 控制器/流表混合模式管理，约 8 条 <<<PAGE 6151>>>
+- **第70章 DNS Commands**：D11 DNS 客户端解析配置，约 6 条 <<<PAGE 6169>>>

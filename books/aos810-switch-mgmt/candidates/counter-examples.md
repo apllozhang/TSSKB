@@ -1,0 +1,106 @@
+# counter-examples.md — 限制/陷阱候选（《OmniSwitch AOS Release 810R04 Switch Management User Guide》）
+
+- X1…，页码为真实 `<<<PAGE N>>>` 标记页，摘录保留英文原句。
+
+- **X1 certified 目录不能直接保存配置**："Configuration changes CAN NOT be saved directly to the certified directory." 运行目录为 certified 时改动重启即丢。<<<PAGE 94>>>、<<<PAGE 95>>>
+- **X2 未保存的运行配置重启丢失**："If the switch reboots before the RUNNING CONFIGURATION is saved, then the certified directory is reloaded to the RUNNING CONFIGURATION and configuration changes are lost." <<<PAGE 95>>>
+- **X3 Telnet/FTP 不安全**："A Telnet connection is not secure. Secure Shell is recommended instead of Telnet." "Both Telnet and FTP are available on the OmniSwitch but they do not support encrypted passwords." <<<PAGE 37>>>、<<<PAGE 38>>>
+- **X4 commit system 不落盘**："If you use the commit system command only, changes will be saved to the running system but not to the switch's non-volatile memory and will be lost if the switch is rebooted." <<<PAGE 34>>>、<<<PAGE 36>>>
+- **X5 EMP 无独立路由表**："There is no dedicated routing table for the EMP interface. All management interfaces use the same routing table with EMP and non-EMP routes." <<<PAGE 35>>>
+- **X6 USB dongle 重插需延时**："Reinsertion of a dongle should be done with at least a 10 second delay." 且 VC 内所有机箱都应插 dongle。<<<PAGE 35>>>
+- **X7 FTP/TFTP 用主机名需 DNS**："You can only use a host name instead of an IP address if the DNS resolver has been configured and enabled." <<<PAGE 63>>>
+- **X8 TFTP 单会话 + 空间限制**："only one active TFTP session is allowed at any point of time"；"When downloading a file to the switch, the file size must not exceed the available flash space." <<<PAGE 64>>>
+- **X9 签名镜像降级需降 u-boot**："On an OS6570M, U-boot versions 8.9.70.R04 and above support AOS signed images only (8.9R4 and above). To use AOS releases prior to 8.9R4... the u-boot must be downgraded." <<<PAGE 66>>>
+- **X10 Metro 配置先于 license 被拒**："The Metro configuration will be rejected if the Metro license is not installed prior to configuration." <<<PAGE 67>>>
+- **X11 MACsec order ID 需补零**："The order ID is a seven digit number and the license generation process appends the digit 0 at the beginning implicitly. Hence, it is required to provide eight digits (0 + 7 digits of the order ID) to install the license successfully." <<<PAGE 68>>>
+- **X12 出厂重置清除 premium license**："Execution of a factory reset command (reset-to-factory CLI command) removes all the premium licenses installed." <<<PAGE 69>>>
+- **X13 VC 子 license 不齐特性不生效**："if there is no sub-license parity across the units, the feature will not become operational." <<<PAGE 70>>>
+- **X14 SILOS license 迁移要走工单**："For license migration to a different server a customer service request must be created to invalidate the existing license." <<<PAGE 72>>>
+- **X15 MPLS 无 Loopback0 连不上 SILOS**："If MPLS interface is configured, but no Loopback0 interface is configured, the connection from SWLIC to SILOS will not be established." <<<PAGE 77>>>
+- **X16 同应用不能装多个包**："Multiple Debian Packages cannot be installed for an application at the same time." 且包须与当前 AOS 发行版同版本。<<<PAGE 87>>>
+- **X17 包未保存重启/接管丢失**："If the installed package is not saved it will not be loaded when the switch is reloaded and during VC-takeover." <<<PAGE 87>>>
+- **X18 安全补丁类包删除需重启回滚**："If a security patch upgrade package is removed (ex. OpenSSL), the switch must be reloaded to roll back to the version that came in the AOS image." <<<PAGE 88>>>
+- **X19 U-boot 禁用后镜像损坏不可救**："If the AOS images are not valid or corrupted, switch goes to no response state, where only watch-dog reboots are possible... the switch must be returned to the factory for repair." <<<PAGE 91>>>
+- **X20 U-boot 密码遗忘+flash 损坏=返厂**："If the flash is corrupted and U-boot fails to start the AOS with the password enabled and the password is forgotten, the switch must be returned to the factory for repair." <<<PAGE 91>>>
+- **X21 ONIE 密码遗忘无法灾备**："During disaster recovery the correct password must be entered to recover the switch if ONIE authentication is enabled. If the password is forgotten there is no other mechanism to perform disaster recovery and the switch needs to undergo RMA." <<<PAGE 92>>>
+- **X22 banner 文件不随 CMM 同步**："The banner text files located in the /flash/switch directory are not synchronized across CMMs when using the 'copy running certified' command, they must manually copied to each CMM." <<<PAGE 44>>>
+- **X23 banner 仅支持 ASCII**："The banner files must contain only ASCII characters and should bear the .txt extension. The switch will not reproduce graphics or formatting contained in the file." <<<PAGE 44>>>
+- **X24 FIPS 下 MD5/DES 被拒**："SNMPv3 communications in the FIPS mode supports SHA+AES. Session establishment with MD5 or DES should be rejected." <<<PAGE 47>>>
+- **X25 FIPS 切换必须重启**："The FIPS mode is enabled/disabled only with a reboot of the switch." <<<PAGE 47>>>
+- **X26 FIPS 无证书合规校验**："There are no checks in the OpenSSL module to verify the FIPS compliance of the certificate/keys in the flash." <<<PAGE 47>>>
+- **X27 takeover 断开管理会话**："When takeover happens, management sessions with the old Primary will be disconnected. User will have to reconnect to the new Primary." <<<PAGE 47>>>（FIPS 节）
+- **X28 Bash 特殊字符劫持**："the '$' when interpreted by Bash causes the next characters to be interpreted as a variable or command line argument. If using special Bash characters (i.e. '$' or '!') in the CLI they should be enclosed in single quotes." <<<PAGE 123>>>
+- **X29 command.log 启用期不可删**："The command.log file cannot be deleted while the command logging feature is enabled." <<<PAGE 127>>>
+- **X30 同时只能有一个配置定时会话**："Only one session at a time can be scheduled on the switch. If two sessions are set, the last one will overwrite the first." <<<PAGE 136>>>
+- **X31 密码策略命令不自动保存**："Password settings configured through the user password-policy commands are not automatically saved to the switch configuration." <<<PAGE 151>>>
+- **X32 全密码不可全星号**："password **123456** is allowed; password ******** is not allowed." <<<PAGE 151>>>
+- **X33 用户密码过期需 admin 解锁**："If a user's password expires, the user will be unable to log into the switch through any interface; the admin user must reset the user's password." <<<PAGE 154>>>
+- **X34 锁定窗不应长于锁时长**："Do not configure an observation window time period that is greater than the lockout duration time period."（反向同理）<<<PAGE 157>>>
+- **X35 SNMP 不可配 admin 用户**："SNMP access cannot be specified for the admin user." <<<PAGE 161>>>
+- **X36 OmniVista 需 v3 认证用户**："At least one user with SHA/MD5 authentication and/or DES encryption must be configured on the switch for SNMPv3 communication with OmniVista." <<<PAGE 161>>>
+- **X37 secondary CMM/Slave 不支持远端认证**："Remote authentication is not supported on secondary CMMs or Slave chassis. Use local authentication on secondary CMMs and Slave chassis." <<<PAGE 173>>>
+- **X38 SNMP 仅 LDAP/local**："SNMP can only use LDAP servers or the local user database for authentication." <<<PAGE 174>>>
+- **X39 增强模式改密不合规即认证失败**："any login request through SNMP and FTP that does not follow the enhanced mode password policy shall be considered as authentication failure." <<<PAGE 177>>>
+- **X40 增强模式单用户单会话**："In enhanced mode, a given user is restricted to only one session... another session with the same user 'admin' is not allowed." <<<PAGE 177>>>
+- **X41 增强模式仅 TLS 1.2**："When enhanced mode is activated, TLS connections use only TLS version 1.2. Connection requests with TLS 1.1 and lower shall be rejected." <<<PAGE 178>>>
+- **X42 增强模式 imgsha256sum 需随镜像更新**："The user must upload the 'imgsha256sum' checksum file whenever new AOS images are uploaded to the running directory." 否则校验失败循环重启。<<<PAGE 178>>>
+- **X43 迁移用户无盐**："Migrated users will not have a salt until the user's password is changed." <<<PAGE 180>>>
+- **X44 priv-mask 读写仅限 HTTP(S)**："The read-write privilege can be applied only for HTTP and HTTPS access types. For SSH, TELNET and Console only read-only privilege can be applied." <<<PAGE 181>>>
+- **X45 JITC 与增强/CC 模式互斥**："JITC mode is mutually exclusive of enhanced mode and common criteria mode." <<<PAGE 184>>>
+- **X46 JITC 站点本地 IPv6 禁配**："Site-Local IPv6 addresses of range FEC0::/10 (FEC, FED, FEE and FEF) cannot be configured." <<<PAGE 185>>>
+- **X47 超级用户密码不可恢复**："The super-user password cannot be recovered. In the case of a forgotten password a factory reset will need to be performed." <<<PAGE 186>>>
+- **X48 WebView 改端口须先断会话**："All WebView sessions must be terminated before the switch will accept the command."（改 http/https 端口）<<<PAGE 191>>>
+- **X49 TSM 启用丢弃 USM**："When the TSM security model is enabled, all the v1/v2/v3 USM request and traps are discarded. The SNMP requests are supported only over IPv4 transport." <<<PAGE 209>>>
+- **X50 证书更新需手工同步+重启**："If the contents of local or remote certificates are changed, the updated certificates must be manually copied from master or primary to all secondaries and slaves. A reboot is required for the changes to be applied." <<<PAGE 210>>>、<<<PAGE 213>>>
+- **X51 远端身份映射单用户**："The remote identity mapping can be done for only one user at a time... Mapping it to a different user will replace the existing user." <<<PAGE 213>>>
+- **X52 TSM 映射修改 SNMP 权限须重输密码**："When modifying a user's SNMP access, the user password must be re-entered (or a new one configured). This is required because the hash algorithm used to save the password in the switch depends on the SNMP authentication level." <<<PAGE 161>>>
+- **X53 增强模式 SWLOG 查看需凭据**："When the switch is in ASA enhanced mode, both user name and password is prompted to view the SWLOG data when show log swlog commands are used." <<<PAGE 178>>>
+- **X54 Cirrus 已有配置不自动上云**："For Switch with (vc)boot.cfg, it needs to be enabled using CLI command." <<<PAGE 223>>>
+- **X55 无 NTP 无法上云**："Without NTP, devices will not be able to talk to the activation server and join the cloud, unless the user manually sets the correct date." <<<PAGE 228>>>
+- **X56 VPN 连接失败 90 秒转错误态**："if the connection is not established is 90 seconds, the switch will move to an error state and will call home after the expiry of the discovery interval." 重连失败 10 分钟终止客户端重新 call-home。<<<PAGE 228>>>
+- **X57 NaaS degraded 模式禁止升级与展示**："Access to the /flash/certified and /flash/running directories will not be permitted." "The switch will not permit the execution of show or monitoring commands from any management interface." <<<PAGE 238>>>、<<<PAGE 239>>>
+- **X58 NaaS 宽限/降级模式下 CLI 受限**："When OmniSwitch operates in the Grace period or Degraded mode, you are allowed to establish a telnet or SSH connection to the switch, but not allowed to execute CLI commands." <<<PAGE 238>>>
+- **X59 NaaS 需重启激活 + NTP 依赖**："It is required to reboot the switch after installing NaaS license." "NTP is required to be configured on the switch to efficiently implement the grace period. If it is not enabled, the counting of days will be inaccurate." <<<PAGE 239>>>
+- **X60 OS9900 不支持 NaaS；Undecided Capex 不能组 VC**："OmniSwitch 9900 does not support NaaS feature." "When the switch is operating in UNDECIDED_CAPEX mode, Virtual Chassis cannot be formed." <<<PAGE 239>>>
+- **X61 Thin Switch 不能本地配置**："The Thin Switch mode is not configurable on the switch or saved in the switch configuration; a switch does not know it is a Thin Switch until OmniVista tells the switch to operate in that mode." <<<PAGE 240>>>
+- **X62 代理不遵守 Vary 头会串格式**："Should a proxy server decide not to respect the latter header it's possible to have unexpected behaviors such as retrieving JSON-encoded data after specifically requesting XML-encoded data." <<<PAGE 248>>>
+- **X63 事件脚本单绑定**："An event can have only one script assigned to it, but a script can be assigned to multiple events." 且须存 /flash/python、需 AAA 写权限。<<<PAGE 270>>>
+- **X64 OpenFlow 端口禁 STP/源学习**："Spanning tree and source learning do not operate on OpenFlow assigned ports." <<<PAGE 281>>>
+- **X65 ALL 组不支持包修改动作**："Packet modification actions are not supported by this type of group."（ALL group）<<<PAGE 282>>>
+- **X66 Nutanix 仅限 OS6900 部分型号**："Currently, only OS6900 (V72/C32/X48C6/T48C6/X48C4E/V48C8/C32E/T24C2/X24C2) supports Nutanix Plug-in." <<<PAGE 284>>>
+- **X67 PROFINET 仅非实时**："In this release OmniSwitch only supports Acyclic data or non-real time TCP/IP based communication." <<<PAGE 289>>>
+- **X68 PROFINET VLAN 变更需先禁用**："A PROFINET VLAN can be created or deleted only when the PROFINET is disabled on the switch." 删除 PROFINET VLAN 后回落 VLAN 1。<<<PAGE 297>>>
+- **X69 PROFINET 包删除前置**："The PROFINET must be disabled before removing the PROFINET package." <<<PAGE 299>>>
+- **X70 混合机型 VC 需切 mixed 模式**："In [Standard] mode the OS6900-X48C4E cannot be part of the VC." 需 `capability vfl-type mixed` 并重启 VC。<<<PAGE 319>>>
+- **X71 VC 参数运行时改不生效**："Some of the virtual chassis parameters runtime modification only take effect after the next reboot of the switch. These parameters are chassis identifier, chassis priority, control VLAN and hello interval." <<<PAGE 319>>>
+- **X72 新单元加入 VC 可能双重启**："the new chassis will reboot two times"——目录名、镜像或 vcboot.cfg 与现有 VC 不一致时。<<<PAGE 319>>>
+- **X73 VC 不能混家族**："A virtual chassis cannot contain a mix of different families of switches (i.e OS6900 and OS6860)." <<<PAGE 319>>>
+- **X74 重复 chassis ID 自动改号至 101-102**："This will cause the operational chassis identifier of one of the switches to be automatically renumbered to fall into the range (101-102)." 需经 EMP 本地修复。<<<PAGE 324>>>
+- **X75 组 ID 冲突不自检**："If two or more separate virtual chassis groups use the same group identifier, this inconsistency is not detected or corrected by the virtual chassis functionality." 影响 RCD。<<<PAGE 322>>>
+- **X76 VFL 上禁跑 SFlow/ERP/UDLD/LLDP**："Individual protocols such as SFlow, ERP, UDLD and LLDP are not supported on VFLs and must not be configured on ports belonging to a VFL." <<<PAGE 322>>>
+- **X77 VFL 限 10/40/100G 且不混速**："Only physical ports operating at 10-Gbps (not including 10GBaseT), 40-Gbps, or 100-Gbps can be members of a VFL... 10-Gbps and 40-Gbps links cannot be mixed in the same VFL... 10GBase-T ports cannot be members of a VFL." <<<PAGE 322>>>
+- **X78 VFL 线速可能丢包**："Some user-data traffic loss may be seen on VFL link when sending at wire rate."（16 字节头开销）<<<PAGE 322>>>
+- **X79 hello 间隔不匹配降级**："Failure to adhere to this recommendation will lead the switches... to assume the Inconsistent role and Misconfigured-Hello-Interval status." <<<PAGE 324>>>
+- **X80 EMP 直连不是推荐分裂检测法**："Directly connecting the EMP ports of the CMMs on the Slave and Master switches is not a recommended method for detecting a split chassis scenario." <<<PAGE 312>>>
+- **X81 VCSP 与 helper 不能同机**："The VCSP feature and the VCSP Helper functionality cannot be enabled on the same switch. The VCSP helper and the VC cannot have the same Group ID." <<<PAGE 340>>>
+- **X82 VC 分裂后配置不生效**："If a VC is split, configuration changes on the split switch will not take affect until the switch is rebooted." <<<PAGE 317>>>
+- **X83 RCL 已有 vcboot.cfg 不触发**："If a vcboot.cfg is already present on the switch, Automatic Remote Configuration Download does not occur." <<<PAGE 348>>>
+- **X84 RCL 脚本禁 reload**："The script file does not support the reload command. If the command is included in the script file, a 'command not supported' error will be displayed." <<<PAGE 348>>>
+- **X85 RCL 脚本 write memory 会覆盖 vcboot.cfg**："If a write memory command is used in the script file, then it overwrites the vcboot.cfg file. Hence, if the script file is downloaded along with the bootup configuration file, then the script file must not contain the write memory command." <<<PAGE 348>>>
+- **X86 RCL 文件传输三次失败即中止**："File transfer is tried three times and if file transfer still fails, an error is logged, and download process is stopped." working 目录可能残留不完整文件集。<<<PAGE 351>>>
+- **X87 RCL 删 working 目录后不可用**："The RCL process will not work if the /flash/working directory is deleted before RCL is started." <<<PAGE 354>>>
+- **X87b 指令文件大小写敏感、格式错即弃行**："The instruction file is case sensitive... If the Keyword:Value format is incorrect, the information on that line is discarded." <<<PAGE 359>>>
+- **X88 Windows 编辑脚本有隐藏控制字符风险**："Creating the script file in a Windows environment can result in hidden control characters that may cause issues with script file parsing." <<<PAGE 360>>>
+- **X89 LACP 自动检测仅限 RCL 模式**："The LACP auto detection mode is not supported when the switch boots up in normal mode (non-remote configuration load mode)." <<<PAGE 365>>>
+- **X90 Lightning 模式平台差异**：6360/6465/6560/6575/6750M 走 WebView 向导（2 小时、1/1/1-2 口）；6860 系列等仅 SSH（1 小时、EMP/dongle）；均不支持 VC。<<<PAGE 373>>>
+- **X91 Auto Fabric 不建 VFL**："Automatic Fabric cannot be used to create a VFL for a Virtual Chassis." 且须在 VC 建立后才运行。<<<PAGE 399>>>
+- **X92 SPB 发现在 4000-4003 被占用时不跑**："If there are any BVLANs manually configured that are not in the range of 4000-4003, SPB discovery will not run. If there are any standard VLAN IDs configured in the 4000-4003 range, SPB discovery will not run." <<<PAGE 399>>>
+- **X93 MVRP 动态 VLAN 不入配置**："MVRP configuration learned through the Automatic Fabric process is not written to the switch configuration file... To retain these VLANs... manually convert them to static VLANs." <<<PAGE 388>>>
+- **X94 自动 IP 发现不适合复杂网络**："Automatic IP discovery is designed for use in more simplistic networks. It is not recommended to be used for complex networks such as those with multiple OSPF areas." <<<PAGE 389>>>
+- **X95 手工配置优先于自动发现（且不可逆）**："if the IP protocol configuration was manually applied to the interface, the interface does not become eligible for automatic IP configuration when the manual configuration is removed." <<<PAGE 391>>>
+- **X96 Auto Fabric 致显示不同步**："there may be periodic changes to the switch configuration. This will cause the Running Configuration to display as 'NOT SYNCHRONIZED' even after manually synchronizing CMMs." <<<PAGE 397>>>
+- **X97 NTP 不支持 2035 年以后**："NTP does not support year date values greater than 2035 (the reasons are documented in RFC 1305 in the data format section)." <<<PAGE 413>>>
+- **X98 NTP 不同步 stratum 16 服务器**："NTP client will not synchronize with an unsynchronized NTP server (Stratum 16)." <<<PAGE 414>>>
+- **X99 同层 peer 同步原则**："Peer associations should only be configured between servers at the same stratum level. Higher Strata should configure lower Strata, not the reverse." 避免共同故障点。<<<PAGE 413>>>
+- **X100 hash-control brief 不建议用于机箱**："It is recommended not to set brief hashing mode on Chassis based products." <<<PAGE 82>>>
+- **X101 secureadmin 模式 Telnet/FTP 不可用**："The TELNET and FTP services are not supported for secureadmin user." 且 cp/mkdir/mv/rm/vi 等关键 CLI 仅 console 会话可用。<<<PAGE 146>>>

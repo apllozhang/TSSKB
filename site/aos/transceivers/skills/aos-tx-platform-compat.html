@@ -1,0 +1,108 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>aos-tx-platform-compat — AOS 8.10R04 · Transceivers Guide</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>AOS 8.10R04 · Transceivers Guide</h1>
+<div class="sub">107 页 · 光模块指南（1G-400G 型号矩阵/平台兼容/DDM 安装纪律）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">选型</div>
+<a href="../skills/aos-tx-module-matrix.html">aos-tx-module-matrix</a>
+<a href="../skills/aos-tx-platform-compat.html" class="on">aos-tx-platform-compat</a>
+<div class="grp">运维</div>
+<a href="../skills/aos-tx-ddm-install.html">aos-tx-ddm-install</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../aos/index.html">AOS 软件手册</a> › <a href="../index.html">AOS 8.10R04</a> › <span>aos-tx-platform-compat</span></nav><h1>aos-tx-platform-compat</h1><p class="meta"><span class="badge">SKILL</span> aos-tx-platform-compat · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>采购/插拔光模块前核对目标平台是否支持（N/S 判定）</li>
+<li>模块插上不识别或被限速——怀疑版本不够、端口不对、许可未买</li>
+<li>同型号模块一批能用一批不能用——硬件修订/序列号双版本陷阱</li>
+<li>混合平台采购要对齐最低 AOS 版本</li>
+<li>扩展模块（OS68-XNI/VNI/QNI/CNI、6870 CNI/LNI、9900 板卡）选件核对</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>兼容矩阵平台分型框架（F3，&lt;&lt;<PAGE 75-107>&gt;&gt;）：全谱系型（6860N/6870/6900-X：1G~200G 全列）／上联收窄型（6560：1G+10G+40G-SR/AOC；6570M：+25G）／工业型（6465/6865/6575 用 iSFP PN 体系）／40G+ 专用型（6920 只有 QSFP；V72/C32 无 1G）／板卡拼图型（9900/6860N 按板卡逐列）。矩阵单元格语义=该平台支持该模块的最低 AOS 版本；"or"双值为硬件代次分界（前者老硬件、后者新硬件修订，满足其一即可，P30）。同一模块跨平台最低版本差异大（如 100G-SR4：6860N 8.7R2 / 6900 8.5R2 / 6870 8.10R2 / 6920 8.10R4），多平台混采按最高版本对齐。</p>
+<h2 id="a1">A1（决策框架）</h2>
+<ol>
+<li><strong>查矩阵定"支持 + 最低版本"</strong>：平台列 × 模块行，单元格 N/S 即换模块或换平台</li>
+<li><strong>辨"or"双值</strong>：按硬件修订/序列号判定自己属于哪一代（P17：10G-T 老 Rev -43/-54 任意 AOS、Rev A53 需 ≥8.9R3、Rev V1.0 需 ≥8.10R2；SFP-GIG-T/DUAL-MM-N 新序列号 APxx 需 ≥8.9R3）</li>
+<li><strong>查端口级脚注</strong>：部分模块仅特定口支持（6560 LRM 口位、6360 10G 口位、6570M U28 25-30）</li>
+<li><strong>查许可依赖</strong>：6560 X4 系列部分口跑 10G 需 OS6560-SW-PERF（X1）</li>
+<li><strong>扩展模块独立核对</strong>：6860N 的 25G 仅主板 SFP28、扩展卡上 N/S（X33）；9900 按板卡逐列（X22）</li>
+</ol>
+<h2 id="a2">A2（操作步骤）·平台红线速查</h2>
+<ul>
+<li><strong>6920</strong>：只认 40G 及以上——全部 SFP/SFP+/SFP28 与 50G SFP56 均 N/S，仅 QSFP+/QSFP28/QSFP56/QSFP-DD 可用（8.10R4 起）；400G 全系仅 6920（X10/X19，&lt;&lt;<PAGE 103-104>&gt;&gt;）</li>
+<li><strong>6900-V72/C32/C32E</strong>：不支持任何 1G/100FX SFP；10G SFP 仅 V72 支持（X11，&lt;&lt;<PAGE 97-98>&gt;&gt;）</li>
+<li><strong>6900 整机</strong>：每机箱 SFP-10G-T 上限 38 只（X7，&lt;&lt;<PAGE 102>&gt;&gt;）</li>
+<li><strong>6560</strong>：不支持 40G LR/ER/CLR/PSM4/LM4 光模块与 QSFP-4X10G 拆分（仅 SR/AOC/VFL 用 DAC）；LRM 仅 48X4/P48X4 口 49-50（需 PERF 许可）与 51/52、P48Z16(904044-90) 49-52、X10 口 1-8；C7M 排除 (P)24Z24/24Z8/24X4 与 48X4 口 53/54；X10 整机不支持 40G DAC（X2/X3/X12，&lt;&lt;<PAGE 81-82>&gt;&gt;）</li>
+<li><strong>6860 系</strong>：上行口 SFP-GIG-T 只跑 1G（用户口 1-28 支持 10/100/1000）；U28 上 DUAL 系列仅用户口 100/1000、SFP-10G-GIG-SR/LR 不支持 U28 的 1G 用户口；DUAL/100 系列主型 N/S 而 U28 支持（X4/X5/X13，&lt;&lt;<PAGE 87-89>&gt;&gt;）</li>
+<li><strong>6860N</strong>：SFP28 口 SFP-GIG-T/SFP-1G-T 不支持；DUAL-BX/SFP-100 系列在 SFP28 口仅 1G；SFP-10G-T 在 SFP28 口支持 1G+10G；25G 模块在 OS68-XNI-U4 扩展卡上 N/S（仅主板 SFP28）；100/DUAL 系列 P24Z/P48Z 不支持——同家族清单不通用（X6/X33/X34，&lt;&lt;<PAGE 90-92>&gt;&gt;）</li>
+<li><strong>6870</strong>：P24M/P48M（万兆铜主机型）不支持任何 1G/100 SFP——1G 接入靠 P24Z/48/V12；SFP-50G 系列仅 LNI-U6（8.10R2）；QSFP-200G 仅 P24M/P48M/V12 上联口（24/48/P24Z/P48Z 数据口不支持）（X16/X17/X18，&lt;&lt;<PAGE 94-96>&gt;&gt;）</li>
+<li><strong>6360</strong>：10G 口位因型号而异（P10 11-12/P24 25-28/P48 49-52…），另一组口位适用 XGS-PON ONT——插错口位不识别（X8，&lt;&lt;<PAGE 76>&gt;&gt;）</li>
+<li><strong>6570M</strong>：10G 仅 U28 口 25-30 支持 XGS-PON ONT；SFP-GIG-T 不支持 U28 combo 口（X9，&lt;&lt;<PAGE 84-85>&gt;&gt;）</li>
+<li><strong>9900 板卡</strong>：1G SFP 仅 XNI-U48/GNI-U48/XNI-U24；100G QSFP 仅 CMM2/CNI-U8/CNI-U20（CMM/CMM2 的 QSFP 要 8.9R3）（X22，&lt;&lt;<PAGE 105-107>&gt;&gt;）</li>
+<li><strong>PON</strong>：GPON ONT（3FE46541AA）在 6860/6865/6870/6920/9900 全不支持；XGS ONT（3FE49327AA）仅 6360/6465T/6560/6570M(U28)/6860N-P48M+XNI-U4（X21，&lt;&lt;<PAGE 89>&gt;&gt;/&lt;&lt;<PAGE 93>&gt;&gt;）</li>
+<li><strong>6465T</strong>：不支持 BX20/BX40 双纤双向 1G 与 12 口以外的 XGS ONT（X35，&lt;&lt;<PAGE 78-79>&gt;&gt;）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>本书无配置案例；"场景"即兼容核对：F1 三查法（规格表→矩阵→脚注）完成后，若版本不够先升级 AOS（见 aos-rn-upgrade-path），若 N/S 则换 PN 或换平台</li>
+</ul>
+<h2 id="b">B（反例/坑）</h2>
+<ul>
+<li>同型号模块不同批次最低版本不同（"or"双值）：SFP-10G-ZR 在 6560 写 8.4.1.R02 or 8.6R1、6860 写 8.2.1 or 8.6R1、6900-V72 写 8.5R2 or 8.6R1（X24，&lt;&lt;<PAGE 81>&gt;&gt;/&lt;&lt;<PAGE 88>&gt;&gt;/&lt;&lt;<PAGE 98>&gt;&gt;）</li>
+<li>2019 年 5 月采购分界：BX-D/U 等模块 2019-05 之后采购的最低版本提到 8.6R1（P18，&lt;&lt;<PAGE 82>&gt;&gt;/&lt;&lt;<PAGE 99>&gt;&gt;）</li>
+<li>SFP28 口与 1G 模块不自协商：6860N/6900 的 SFP28 口必须在对端交换机禁用自协商（P16，&lt;&lt;<PAGE 92>&gt;&gt;/&lt;&lt;<PAGE 102>&gt;&gt;）</li>
+<li>QSFP-40G-C 9900↔6900 互连必须关 9900 侧自协商（X26，&lt;&lt;<PAGE 48>&gt;&gt;）；QSFP-100G-A20M 必须关自协商+FEC RS（X27/P27，&lt;&lt;<PAGE 55>&gt;&gt;）</li>
+<li>6865 平台用 iSFP 工业 PN 体系（6575 同），商用平台用商用 PN——同代际两套 PN 并行，不可混认（P28）</li>
+<li>SFP28 自协商例外见 6860N（X6）；拆分模式牺牲自动 VFL：6870 QSFP-100G-SR4 splitter 模式不支持 Auto-VFL（P20，&lt;&lt;<PAGE 96>&gt;&gt;）</li>
+<li>QSFP-40G-C7M 7m DAC 仅在 OmniSwitch 之间验证过，接他厂设备先验证再上量（P22，&lt;&lt;<PAGE 48>&gt;&gt;）</li>
+<li>停购物料（EZX/##CWD/EXTND/DUAL-SM10/SR-BD/100-BX20 等）存量可继续用，新项目不可选（X32）</li>
+</ul>
+<h2 id="_1">来源</h2>
+<p>OmniSwitch AOS Release 8 Transceivers Guide Ch2 Compatibility Matrices（&lt;&lt;<PAGE 75-107>&gt;&gt;）及 Ch1 硬件修订散点（&lt;&lt;<PAGE 20-34>&gt;&gt;）。条目来源：counter-examples X1-X13/X16-X19/X21-X27/X33-X35；principles P16/P17/P18/P20/P22/P28/P30；frameworks F1/F3。</p><div class="pn"><a href="aos-tx-module-matrix.html">⬅ 上一单元：aos-tx-module-matrix</a><a class="nxt" href="aos-tx-ddm-install.html">下一单元：aos-tx-ddm-install ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>aos-sm-chassis-cmm — AOS 8.10R04 · Switch Management</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>AOS 8.10R04 · Switch Management</h1>
+<div class="sub">511 页 · 交换机管理（Flash/升级/CLI 用户/SNMP Web 纳管/日志健康/机箱 CMM）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">配置与升级</div>
+<a href="../skills/aos-sm-flash-config.html">aos-sm-flash-config</a>
+<a href="../skills/aos-sm-software-upgrade.html">aos-sm-software-upgrade</a>
+<div class="grp">用户与纳管</div>
+<a href="../skills/aos-sm-cli-session-usermgmt.html">aos-sm-cli-session-usermgmt</a>
+<a href="../skills/aos-sm-mgmt-services.html">aos-sm-mgmt-services</a>
+<div class="grp">运维与硬件</div>
+<a href="../skills/aos-sm-logging-health.html">aos-sm-logging-health</a>
+<a href="../skills/aos-sm-chassis-cmm.html" class="on">aos-sm-chassis-cmm</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../aos/index.html">AOS 软件手册</a> › <a href="../index.html">AOS 8.10R04</a> › <span>aos-sm-chassis-cmm</span></nav><h1>aos-sm-chassis-cmm</h1><p class="meta"><span class="badge">SKILL</span> aos-sm-chassis-cmm · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>双 CMM 机箱要做 certified 同步（flash-synchro）或计划内接管（takeover）</li>
+<li>要把多台交换机组成 Virtual Chassis 单 IP 管理：手工组 VC 或 Auto-VFL 零接触建组</li>
+<li>要配置 VFL 聚合链路、控制 VLAN、Master 选举优先级</li>
+<li>要部署分裂保护（RCD 带外检测 / VCSP+helper）并演练分裂恢复</li>
+<li>VC 加新成员、混合机型入组、重复 chassis ID 排障</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>VC 框架（F7，&lt;&lt;<PAGE 305-343>&gt;&gt;）：vcsetup.cfg（单机入组设置：Chassis ID/Group/priority/VFL）+ vcboot.cfg（VC 整体配置）双文件体系；Master/Slave 选举五准则（现任→priority→uptime→最小 ID→最小 MAC，P130）；VFL（10/40/100G 聚合、16 字节封装头）+ 控制 VLAN（默认 4094）+ IS-IS VC 专有协议维持拓扑。分裂双保险：RCD（EMP 带外周期通告，VFL 全断时 former Slave 关全部面板口防双 IP/MAC，P134）与 VCSP（经 helper 邻机专用 linkagg 转 PDU，master MAC 不匹配即进 protection state，P135/P136）。CMM 冗余（P85-P87）：running 配置自动同步，certified 需手动 flash-synchro；takeover 断开旧主管理会话。</p>
+<h2 id="a1">A1（决策框架）</h2>
+<ol>
+<li><strong>双 CMM 日常</strong>：certify + 同步一步 <code>copy running certified flash-synchro</code>；计划内切换 <code>takeover</code>（先同步）（C23）</li>
+<li><strong>组 VC 选路径</strong>：默认 auto-VFL 端口直连即成（C47）；无默认端口机型 <code>auto-vf-link-port</code> 指定；手工模式走 configured-chassis-id + vf-link + convert-configuration（C46）</li>
+<li><strong>VFL 设计</strong>：仅 10/40/100G、同速不混、10GBase-T 不可入 VFL（X77）；线速场景注意 16 字节头开销可能丢包（X78/P141）</li>
+<li><strong>分裂保护选型</strong>：标准 VC 用 RCD（EMP 互连）；VFL 需经第三方链路时用 VCSP+helper（VC 与 helper 不能同机，X81）</li>
+<li><strong>混合机型</strong>：OS6900-X48C4E 入组需 <code>capability vfl-type mixed</code> 并重启 VC（X70）</li>
+</ol>
+<h2 id="a2">A2（操作步骤）</h2>
+<ul>
+<li><strong>CMM 同步与接管</strong>：<code>copy running certified flash-synchro</code>（或单独 <code>copy flash-synchro</code>）；<code>takeover</code>（C23，&lt;&lt;<PAGE 110-111>&gt;&gt;）</li>
+<li><strong>手工组 VC</strong>：双侧 <code>virtual-chassis configured-chassis-id 1|2</code> → <code>virtual-chassis vf-link 0 create</code> + member-port → <code>ip interface local emp ...</code> → <code>write memory</code> → <code>convert-configuration to vc_dir</code> → <code>reload from vc_dir no rollback-timeout</code>；Master 上配 <code>ip interface master emp address 10.255.100.100</code>（C46，&lt;&lt;<PAGE 307, 328>&gt;&gt;）</li>
+<li><strong>Auto-VFL</strong>：默认端口直连即成；<code>virtual-chassis auto-vf-link-port 1/1/25</code>；验证 <code>show virtual-chassis topology|consistency|vf-link member-port</code>（C47，&lt;&lt;<PAGE 304, 339>&gt;&gt;）</li>
+<li><strong>VCSP</strong>：VC 侧 <code>virtual-chassis split-protection admin-state enable</code> + <code>split-protection linkagg</code>；helper 侧 <code>split-protection helper admin-state enable</code> + helper linkagg；guard-timer 控自动恢复（C48，&lt;&lt;<PAGE 341>&gt;&gt;）</li>
+<li><strong>受控下架成员</strong>：<code>virtual-chassis shutdown</code>；跨机箱访问 <code>ssh-chassis</code>（&lt;&lt;<PAGE 327>&gt;&gt;）</li>
+<li><strong>write memory 拓扑确认</strong>：拓扑元素缺失时确认 possible configuration purge（P140，&lt;&lt;<PAGE 313>&gt;&gt;）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>CMM 同步与接管（C23，&lt;&lt;<PAGE 110-111>&gt;&gt;）</li>
+<li>两台交换机手工组 VC 全流程（C46，&lt;&lt;<PAGE 307, 328>&gt;&gt;）</li>
+<li>Auto-VFL 快速组 VC 与验证（C47，&lt;&lt;<PAGE 304, 339>&gt;&gt;）</li>
+<li>VCSP 双侧配置（C48，&lt;&lt;<PAGE 341>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（反例/坑）</h2>
+<ul>
+<li>VC 不能混不同家族机型（OS6900 与 OS6860 不可同 VC）（X73）；混合机型需切 mixed 模式（X70）；部分 VC 参数运行时改不生效须重启（chassis ID/priority/控制 VLAN/hello interval）（X71）（&lt;&lt;<PAGE 319>&gt;&gt;）</li>
+<li>新单元加入 VC 与现有目录/镜像/vcboot.cfg 不一致时可能重启两次（X72，&lt;&lt;<PAGE 319>&gt;&gt;）</li>
+<li>重复 chassis ID 会被自动改号到 101-102，需经 EMP 本地修复（X74，&lt;&lt;<PAGE 324>&gt;&gt;）</li>
+<li>组 ID 冲突不自检也不纠正，影响 RCD（X75，&lt;&lt;<PAGE 322>&gt;&gt;）</li>
+<li>VFL 上禁配 SFlow/ERP/UDLD/LLDP（X76）；VFL 限 10/40/100G 不混速、10GBase-T 不可入（X77）；线速可能丢包（X78）（&lt;&lt;<PAGE 322>&gt;&gt;）</li>
+<li>hello 间隔不匹配会降级为 Inconsistent/Misconfigured-Hello-Interval（X79，&lt;&lt;<PAGE 324>&gt;&gt;）</li>
+<li>EMP 直连不是推荐的分裂检测法（X80，&lt;&lt;<PAGE 312>&gt;&gt;）</li>
+<li>VCSP 与 helper 不能同机、helper 与 VC 不能同 Group ID（X81，&lt;&lt;<PAGE 340>&gt;&gt;）</li>
+<li>VC 分裂后配置改动不生效直到重启（X82，&lt;&lt;<PAGE 317>&gt;&gt;）</li>
+<li>takeover 断开旧主上的管理会话，需重连新主（X27，&lt;&lt;<PAGE 47>&gt;&gt;）</li>
+<li>Master 与 Slave 的 vcboot.cfg/镜像不一致时 Master 覆盖 Slave 并令其自动重启（P131，&lt;&lt;<PAGE 307>&gt;&gt;）</li>
+</ul>
+<h2 id="_1">来源</h2>
+<p>OmniSwitch AOS 8.10R4 Switch Management Guide 第 4 章 CMM 冗余（&lt;&lt;<PAGE 99-111>&gt;&gt;）、第 13 章 Virtual Chassis（&lt;&lt;<PAGE 300-343>&gt;&gt;）。条目来源：cases C23/C46/C47/C48；principles P85-P92/P128-P141；counter-examples X27/X70-X82；frameworks F7。</p><div class="pn"><a href="aos-sm-logging-health.html">⬅ 上一单元：aos-sm-logging-health</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

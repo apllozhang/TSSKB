@@ -1,0 +1,385 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>教书理解 BOOK_OVERVIEW — AOS 8.10R04 · Network Configuration</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>AOS 8.10R04 · Network Configuration</h1>
+<div class="sub">1745 页 · 网络配置全科（二层/织构/IP 服务/路由/组播/QoS/准入/OAM，48 章）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">二层与冗余</div>
+<a href="skills/aos-nc-vlan-l2.html">aos-nc-vlan-l2</a>
+<a href="skills/aos-nc-redundancy-protection.html">aos-nc-redundancy-protection</a>
+<div class="grp">骨干织构</div>
+<a href="skills/aos-nc-fabric-backbone.html">aos-nc-fabric-backbone</a>
+<div class="grp">三层与服务</div>
+<a href="skills/aos-nc-ip-ipv6-services.html">aos-nc-ip-ipv6-services</a>
+<a href="skills/aos-nc-routing.html">aos-nc-routing</a>
+<a href="skills/aos-nc-multicast.html">aos-nc-multicast</a>
+<div class="grp">策略与安全</div>
+<a href="skills/aos-nc-qos-policy.html">aos-nc-qos-policy</a>
+<a href="skills/aos-nc-access-security.html">aos-nc-access-security</a>
+<div class="grp">监测与基础</div>
+<a href="skills/aos-nc-oam-monitoring.html">aos-nc-oam-monitoring</a>
+<a href="skills/aos-nc-switch-foundation.html">aos-nc-switch-foundation</a></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../aos/index.html">AOS 软件手册</a> › <a href="index.html">AOS 8.10R04</a> › <span>教书理解 BOOK_OVERVIEW</span></nav><h1>教书理解 BOOK_OVERVIEW</h1><h1 id="omniswitch-aos-release-810r4-network-configuration-guide">OmniSwitch AOS Release 8.10R4 Network Configuration Guide — 全书概览</h1>
+<ul>
+<li>书名：OmniSwitch AOS Release 8 Network Configuration Guide（8.10R4）</li>
+<li>出版：ALE（Alcatel-Lucent Enterprise），2025-12，Part No. 060969-00 Rev. A</li>
+<li>页数：正文 1745 页（fulltext.md 页码标记 <code>&lt;&lt;&lt;PAGE N&gt;&gt;&gt;</code>）</li>
+<li>性质：OmniSwitch 多产品线 AOS 8 特性配置手册（CLI 配置向导型文档）</li>
+</ul>
+<h2 id="_1">章节结构与蒸馏重点</h2>
+<table>
+<thead>
+<tr>
+<th>章</th>
+<th>标题</th>
+<th>正文起始页</th>
+<th>蒸馏重点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Configuring Ethernet Ports</td>
+<td>&lt;&lt;<PAGE 51>&gt;&gt;</td>
+<td>端口参数/EEE/DDM/TDR 诊断/链路监控/Violation Recovery/Link Fault Propagation/MACsec(含 WAN MACsec)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Configuring UDLD</td>
+<td>~&lt;&lt;<PAGE 195>&gt;&gt;</td>
+<td>单向链路检测机制、probe/echo 定时器</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Managing Source Learning</td>
+<td>~&lt;&lt;<PAGE 225>&gt;&gt;</td>
+<td>MAC 表、静态单播/组播 MAC、老化时间</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Configuring VLANs</td>
+<td>~&lt;&lt;<PAGE 260>&gt;&gt;</td>
+<td>VLAN 创建/802.1Q 打标/Private VLAN 体系</td>
+</tr>
+<tr>
+<td>5</td>
+<td>High Availability VLANs</td>
+<td>~&lt;&lt;<PAGE 380>&gt;&gt;</td>
+<td>服务器集群（L2/L3 cluster）、虚 MAC</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Spanning Tree Parameters</td>
+<td>~&lt;&lt;<PAGE 430>&gt;&gt;</td>
+<td>STP/RSTP/MSTP 拓扑计算、Flat/Per-VLAN 模式、PVST+ 互通、Loop-guard、Root Guard</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Shortest Path Bridging (SPBM)</td>
+<td>~&lt;&lt;<PAGE 700>&gt;&gt;</td>
+<td>ISIS-SPB 骨干、SPB 服务/I-SID/SAP/Pseudo-wire、IP over SPB、SPB over Shared Ethernet</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Loopback Detection</td>
+<td>~&lt;&lt;<PAGE 965>&gt;&gt;</td>
+<td>LBD 机制、remote-origin LBD、与 STP/链路聚合交互</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Static Link Aggregation</td>
+<td>~&lt;&lt;<PAGE 1000>&gt;&gt;</td>
+<td>静态聚合组</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Dynamic Link Aggregation</td>
+<td>~&lt;&lt;<PAGE 1040>&gt;&gt;</td>
+<td>LACP 动态聚合、actor/partner 参数</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Dual-Home Links</td>
+<td>~&lt;&lt;<PAGE 1150>&gt;&gt;</td>
+<td>DHL Active-Active/Active-Standby、推荐拓扑</td>
+</tr>
+<tr>
+<td>12</td>
+<td>ERP</td>
+<td>~&lt;&lt;<PAGE 1210>&gt;&gt;</td>
+<td>G.8032 环网、RPL owner、guard/wait-to-restore、ERPv2 子环、ERP over SPB</td>
+</tr>
+<tr>
+<td>13</td>
+<td>MRP</td>
+<td>~&lt;&lt;<PAGE 1330>&gt;&gt;</td>
+<td>工业环网 MRM/MRC/MRA、MRP Interconnect（MIM/MIC）</td>
+</tr>
+<tr>
+<td>14</td>
+<td>MVRP</td>
+<td>~&lt;&lt;<PAGE 1370>&gt;&gt;</td>
+<td>VLAN 动态注册、applicant 模式、定时器</td>
+</tr>
+<tr>
+<td>15</td>
+<td>MPLS</td>
+<td>~&lt;&lt;<PAGE 1410>&gt;&gt;</td>
+<td>LDP 信令 LSP、LDP GR、MPLS ping/traceroute</td>
+</tr>
+<tr>
+<td>16</td>
+<td>L2VPN (VPLS/VPWS)</td>
+<td>~&lt;&lt;<PAGE 1470>&gt;&gt;</td>
+<td>VPLS LDP/BGP 信令、SAP/SDP、VPWS</td>
+</tr>
+<tr>
+<td>17</td>
+<td>VXLAN Gateway</td>
+<td>~&lt;&lt;<PAGE 1720>&gt;&gt;</td>
+<td>VXLAN 封装/VTEP、SDP 绑定、BIDIR-PIM 下层</td>
+</tr>
+<tr>
+<td>18</td>
+<td>EVPN</td>
+<td>~&lt;&lt;<PAGE 1940>&gt;&gt;</td>
+<td>BGP EVPN 路由类型、IRB（对称/非对称）、DAG、OISM、EVPN-VXLAN、Clos/Multi-site 部署模型</td>
+</tr>
+<tr>
+<td>19</td>
+<td>802.1AB (LLDP)</td>
+<td>~&lt;&lt;<PAGE 2330>&gt;&gt;</td>
+<td>LLDPDU/TLV、LLDP-MED</td>
+</tr>
+<tr>
+<td>20</td>
+<td>SIP Snooping</td>
+<td>~&lt;&lt;<PAGE 2400>&gt;&gt;</td>
+<td>SIP 监听、信任服务器、RTCP 阈值</td>
+</tr>
+<tr>
+<td>21</td>
+<td>IP</td>
+<td>~&lt;&lt;<PAGE 2460>&gt;&gt;</td>
+<td>IP 接口/静态路由/ARP/GARP/DoS 过滤/隧道(GRE,IPIP)/VRF Route Leak</td>
+</tr>
+<tr>
+<td>22</td>
+<td>Multiple VRF</td>
+<td>~&lt;&lt;<PAGE 2690>&gt;&gt;</td>
+<td>VRF 实例/profile、Management VRF、特性交互</td>
+</tr>
+<tr>
+<td>23</td>
+<td>IPv6</td>
+<td>~&lt;&lt;<PAGE 2760>&gt;&gt;</td>
+<td>IPv6 寻址/RA 过滤/NUD/DoS 检测/VRF leak</td>
+</tr>
+<tr>
+<td>24</td>
+<td>IPsec</td>
+<td>~&lt;&lt;<PAGE 2950>&gt;&gt;</td>
+<td>ESP/AH 策略、SA、discard 策略</td>
+</tr>
+<tr>
+<td>25</td>
+<td>RIP</td>
+<td>~&lt;&lt;<PAGE 3030>&gt;&gt;</td>
+<td>RIPv1/v2、定时器、SHA256 认证</td>
+</tr>
+<tr>
+<td>26</td>
+<td>BFD</td>
+<td>~&lt;&lt;<PAGE 3100>&gt;&gt;</td>
+<td>BFD 会话/echo、与各 L3 协议联动</td>
+</tr>
+<tr>
+<td>27</td>
+<td>DHCP Relay</td>
+<td>~&lt;&lt;<PAGE 3300>&gt;&gt;</td>
+<td>内部/外部 relay、Option-82、DHCP Snooping、Generic UDP Relay、DHCPv6 Relay/Snooping/RA Guard</td>
+</tr>
+<tr>
+<td>28</td>
+<td>Internal DHCP Server</td>
+<td>~&lt;&lt;<PAGE 3520>&gt;&gt;</td>
+<td>策略文件/配置文件/数据库</td>
+</tr>
+<tr>
+<td>29</td>
+<td>VRRP</td>
+<td>~&lt;&lt;<PAGE 3750>&gt;&gt;</td>
+<td>虚拟路由器、优先级/preempt、VRRP tracking+BFD、V3</td>
+</tr>
+<tr>
+<td>30</td>
+<td>Server Load Balancing</td>
+<td>~&lt;&lt;<PAGE 3890>&gt;&gt;</td>
+<td>SLB 集群、WRR、健康探测</td>
+</tr>
+<tr>
+<td>31</td>
+<td>IP Multicast Switching</td>
+<td>~&lt;&lt;<PAGE 3970>&gt;&gt;</td>
+<td>IGMP v1-3 参数、IPMSv6/MLD、组播路由交互</td>
+</tr>
+<tr>
+<td>32</td>
+<td>IP Multicast VLAN</td>
+<td>~&lt;&lt;<PAGE 4220>&gt;&gt;</td>
+<td>IPMVLAN 企业模式/VLAN Stacking 模式</td>
+</tr>
+<tr>
+<td>33</td>
+<td>QoS</td>
+<td>~&lt;&lt;<PAGE 4280>&gt;&gt;</td>
+<td>分类标记、QSet/队列、policing/shaping、policy 条件动作规则、ACL、条件组、map group、ECN</td>
+</tr>
+<tr>
+<td>34</td>
+<td>Policy Servers</td>
+<td>~&lt;&lt;<PAGE 4720>&gt;&gt;</td>
+<td>LDAP 策略服务器</td>
+</tr>
+<tr>
+<td>35</td>
+<td>Access Guardian (UNP)</td>
+<td>~&lt;&lt;<PAGE 4740>&gt;&gt;</td>
+<td>802.1X/MAB/设备分类/UNP profile/端口、Captive Portal、BYOD(mDNS/SSDP)、IoT profiling、Stellar AP、L2 GRE、QMR、Switch Supplicant</td>
+</tr>
+<tr>
+<td>36</td>
+<td>Application Monitoring (AppMon)</td>
+<td>~&lt;&lt;<PAGE 5600>&gt;&gt;</td>
+<td>DPI 应用监控/强制、签名、Threat-Insight</td>
+</tr>
+<tr>
+<td>37</td>
+<td>Application Fingerprinting (AFP)</td>
+<td>~&lt;&lt;<PAGE 5680>&gt;&gt;</td>
+<td>REGEX 指纹识别</td>
+</tr>
+<tr>
+<td>38</td>
+<td>Authentication Servers</td>
+<td>~&lt;&lt;<PAGE 5750>&gt;&gt;</td>
+<td>RADIUS/RADSEC/TACACS+/LDAP、PKI、PKIX-SSH、Kerberos Snooping</td>
+</tr>
+<tr>
+<td>39</td>
+<td>Port Mapping</td>
+<td>~&lt;&lt;<PAGE 6000>&gt;&gt;</td>
+<td>端口映射会话</td>
+</tr>
+<tr>
+<td>40</td>
+<td>Learned Port Security</td>
+<td>~&lt;&lt;<PAGE 6030>&gt;&gt;</td>
+<td>MAC 学习窗口、违规模式</td>
+</tr>
+<tr>
+<td>41</td>
+<td>Diagnosing Switch Problems</td>
+<td>~&lt;&lt;<PAGE 6170>&gt;&gt;</td>
+<td>端口镜像/监控、sFlow、RMON、Switch Health</td>
+</tr>
+<tr>
+<td>42</td>
+<td>VLAN Stacking</td>
+<td>~&lt;&lt;<PAGE 6370>&gt;&gt;</td>
+<td>QinQ SVLAN/CVLAN、SAP/UNI profile、硬件环回测试</td>
+</tr>
+<tr>
+<td>43</td>
+<td>Switch Logging</td>
+<td>~&lt;&lt;<PAGE 6550>&gt;&gt;</td>
+<td>日志级别/输出/格式</td>
+</tr>
+<tr>
+<td>44</td>
+<td>Ethernet OAM (Service OAM/CFM)</td>
+<td>~&lt;&lt;<PAGE 6590>&gt;&gt;</td>
+<td>MD/MA/MEP、Loopback/Linktrace、帧时延测量</td>
+</tr>
+<tr>
+<td>45</td>
+<td>EFM (LINK OAM)</td>
+<td>~&lt;&lt;<PAGE 6670>&gt;&gt;</td>
+<td>发现/链路监控/远端环回</td>
+</tr>
+<tr>
+<td>46</td>
+<td>CPE Test Head</td>
+<td>~&lt;&lt;<PAGE 6710>&gt;&gt;</td>
+<td>L2 SAA 测试/测试组</td>
+</tr>
+<tr>
+<td>47</td>
+<td>PPPoE Intermediate Agent</td>
+<td>~&lt;&lt;<PAGE 6870>&gt;&gt;</td>
+<td>PPPoE-IA、Circuit-ID/Remote-ID</td>
+</tr>
+<tr>
+<td>48</td>
+<td>Service Assurance Agent</td>
+<td>~&lt;&lt;<PAGE 6900>&gt;&gt;</td>
+<td>SAA SPB 会话、XML 历史</td>
+</tr>
+</tbody>
+</table>
+<p>（正文起始页为近似值，提取时以 fulltext.md 内真实 <code>&lt;&lt;&lt;PAGE N&gt;&gt;&gt;</code> 标记为准。）</p>
+<h2 id="_2">文档体例规律（对蒸馏有用）</h2>
+<ul>
+<li>每章结构固定：In This Chapter → Defaults 表 → Quick Steps → Overview（原理）→ Configuring（逐参数 CLI）→ Application Example → Verifying。</li>
+<li>"Quick Steps" 与 "Application Example" 是 cases 的主要来源；
+"Overview/How ... Works" 是 principles 主要来源；
+"Interaction With Other Features"、"Configuration Guidelines"、"Limitations"、Defaults 表注记是 counter-examples 主要来源。</li>
+<li>CLI 命令均以 OmniSwitch AOS 语法给出（如 <code>vlan 10 port default 1/1/1</code>、-&gt; 配置层级缩进）。</li>
+</ul><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>精华长文 DIGEST — AOS 8.10R04 · Specifications Guide</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>AOS 8.10R04 · Specifications Guide</h1>
+<div class="sub">98 页 · 规格指南（平台三梯队/容量红线/TCAM 分配/特性矩阵）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">平台与容量</div>
+<a href="skills/aos-spec-platform-tiers.html">aos-spec-platform-tiers</a>
+<a href="skills/aos-spec-capacity-limits.html">aos-spec-capacity-limits</a>
+<div class="grp">TCAM 与特性</div>
+<a href="skills/aos-spec-tcam-features.html">aos-spec-tcam-features</a></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../aos/index.html">AOS 软件手册</a> › <a href="index.html">AOS 8.10R04</a> › <span>精华长文 DIGEST</span></nav><h1>精华长文 DIGEST</h1><h1 id="digest-omniswitch-aos-release-8-specifications-guide-810r4">DIGEST — OmniSwitch AOS Release 8 Specifications Guide (8.10R4) 精华</h1>
+<p>本书是 AOS 8.10R4 的规格速查手册（98 页），按"特性 × 13 平台"矩阵给出最大值/支持项/RFC 清单，不含任何配置与 CLI（原书自述："This guide is designed to provide feature specification information only"）。它回答"能到多少"，不回答"怎么配"——配置去 Network Configuration / Advanced Routing 手册，命令查 CLI Reference。全书为纯规格表格，蒸馏以 glossary/principles/counter-examples 为主体（cases 为 0）。以下按三个技能单元摘要，页码均指原书。</p>
+<h2 id="_1">一、知识地图（三技能单元）</h2>
+<ol>
+<li><strong>平台三梯队选型与规格解读法</strong>（aos-spec-platform-tiers）：平台规模梯队（接入/汇聚/核心）、SM/RM/ER profile、VC"整机上限"语义与混搭白名单、管理面资源、文档地图（前言+Ch1+Ch2 前半，&lt;&lt;<PAGE 7-46>&gt;&gt;）。</li>
+<li><strong>容量红线速查</strong>（aos-spec-capacity-limits）：VC/链路层/SPB/VXLAN/EVPN/IP/路由/DHCP/组播/QoS/接入/OAM 全特性容量上限（Ch2+Ch3，&lt;&lt;<PAGE 27-86>&gt;&gt;）。</li>
+<li><strong>TCAM 零和分配与特性支持矩阵</strong>（aos-spec-tcam-features）：6870/6570M/6575 的 TCAM profile 档位权衡、平台 N/S 缺口清单（Ch4+Ch2 散点，&lt;&lt;<PAGE 87-92>&gt;&gt;）。</li>
+</ol>
+<h2 id="_2">二、三单元要点串讲</h2>
+<h3 id="1-profile-tcam">1. 平台三梯队：先选梯队、再选 profile、最后对 TCAM 档位</h3>
+<p>平台规模三梯队框架（F2，&lt;&lt;<PAGE 30, 42>&gt;&gt;）：接入级（6360/6465/6560：MAC 16K、路由 32-2K、聚合 32 组）→ 汇聚级（6570M/6575/6860 系：MAC 32-64K、路由 12-13K、聚合 128）→ 核心/数据中心级（6870/6900/6920/9900：MAC 104-228K、路由 113-384K、聚合 252+）。VC 规格解读（F4，&lt;&lt;<PAGE 12, 23-24>&gt;&gt;）：maximum 默认作用于整 VC 而非单机（P13），三类例外要辨明——按机箱×成员数扩的、VC 封顶的（UNP 用户脚注 2，X35）、仅单机的（1588v2 VC-of-1）；混搭白名单之外 <strong>6860N 与 OS686x 禁止混 VC</strong>（X2）；6900 VC 的 ARP 总量=最低能力模块的值（X6，&lt;&lt;<PAGE 42>&gt;&gt;）。管理面全平台一致：Telnet 6/SSH 8/HTTP 4（P2）；各平台镜像与 USB 救援文件名体系见 P1/P5（&lt;&lt;<PAGE 14, 17>&gt;&gt;）。</p>
+<h3 id="2">2. 容量红线：许多容量互相反比</h3>
+<p>骨干选型：SPB（BVLAN 16、I-SID 512-8K 按平台，P19/P20）vs VXLAN（段 1600 万/SAP 8K/VTEP 500/VNI 4K/组播组 500，P22）vs EVPN on 6900（主机 10K 生成 20K RT2、业务 50、VRF 4，P23）。路由：硬件路由 6360 256 → 6900-X RM 312K，超限走软件路由（P16）；OSPF 区域 2-15、BGP 路由 2K-256K（P29）；6560 OSPF 仅 2 区域（X46）。容量反比规律：DHCP Snooping 条目按 VLAN 数反比缩放（P33）；PIMv4+PIMv6+DVMRP 接口合计 384 全局预算（P31）；UNP 用户 VC 两种脚注语义（X35，&lt;&lt;<PAGE 61>&gt;&gt;）；VLAN Stacking service 仅 4、SAP profile 带 QoS 时 8K 降 1K（X40，&lt;&lt;<PAGE 71>&gt;&gt;）；RMON 仅基础 4 组（X39）；L2 GRE Access 隧道多数平台仅 1 是 BYOD 规划瓶颈（X37）；6570M/6575 路由特性需 Advanced Routing license（X44）。</p>
+<h3 id="3-tcam">3. TCAM 零和：档位间是重分配，缺口不因版本改变</h3>
+<p>TCAM profile 机制（F3/P51，&lt;&lt;<PAGE 87>&gt;&gt;）：按应用分配 TCAM 规则数，配置后必须 reload 激活。6870 五档（Default/Metro services/QoS ACL/Source IPv6 ACL/Bidirectional IPv6 ACL）——QoS ACL 档 QoS 入规则 2048→4096 但 SAP 分类降到 1024（P52，&lt;&lt;<PAGE 89>&gt;&gt;）；6570M Fabric 档隧道与 UNP 换掉 PVLAN/VSTK（归零）与 QoS 入规则（P53，&lt;&lt;<PAGE 90>&gt;&gt;）；6575 特例：要 IPv6 snooping 只能选 Source IPv6 ACL 档（P54，&lt;&lt;<PAGE 92>&gt;&gt;）。平台 N/S 缺口是另一维度：MACsec 6360/6865/6900（除 X48C4E）/6920 不支持且需站点许可（X9）；Application Fingerprinting 全平台未实现（X12）；WRED 全平台 N/S（X13）；Ethernet OAM 不支持 6360 与 9900（X11）；MRP 仅 6465/6575/6865（X19）。</p>
+<h2 id="_3">三、高价值章节页码索引</h2>
+<table>
+<thead>
+<tr>
+<th>主题</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>文档地图 / About</td>
+<td>7-11</td>
+</tr>
+<tr>
+<td>镜像文件名 / 管理会话 / 内存 Flash / USB 救援</td>
+<td>14-17</td>
+</tr>
+<tr>
+<td>SNMP / Web Services / AMS / OpenFlow</td>
+<td>20-22</td>
+</tr>
+<tr>
+<td>VC / VFL / 混搭白名单 / RCD / Automatic Fabric</td>
+<td>23-26</td>
+</tr>
+<tr>
+<td>帧长 / MAC 三模式 / MACsec / PoE / UDLD</td>
+<td>29-30</td>
+</tr>
+<tr>
+<td>PVLAN / STP / HA VLAN / IPCL</td>
+<td>31-32</td>
+</tr>
+<tr>
+<td>SPB（BVLAN/I-SID/SAP/Inline Routing/RFP）</td>
+<td>33-34</td>
+</tr>
+<tr>
+<td>聚合 / DHL</td>
+<td>35-36</td>
+</tr>
+<tr>
+<td>ERP / MVRP</td>
+<td>37-38</td>
+</tr>
+<tr>
+<td>VXLAN / EVPN</td>
+<td>39-40</td>
+</tr>
+<tr>
+<td>LLDP / ARP / IP 接口 / 静态路由</td>
+<td>41-43</td>
+</tr>
+<tr>
+<td>VRF / IPv6 / IPsec / RIP / BFD</td>
+<td>44-49</td>
+</tr>
+<tr>
+<td>DHCP 全家（Relay/Snooping/Server/v6）</td>
+<td>50-53</td>
+</tr>
+<tr>
+<td>VRRP / SLB / IPMS 组播 / QoS</td>
+<td>54-58</td>
+</tr>
+<tr>
+<td>AAA / UNP / AG / QMR / Captive Portal</td>
+<td>60-62</td>
+</tr>
+<tr>
+<td>L2 GRE / mDNS / LPS</td>
+<td>62-65</td>
+</tr>
+<tr>
+<td>镜像 / 端口监控 / sFlow / RMON / Switch Health</td>
+<td>66-70</td>
+</tr>
+<tr>
+<td>VLAN Stacking (QinQ)</td>
+<td>71</td>
+</tr>
+<tr>
+<td>Syslog / Ethernet OAM (MD/MA/MEP)</td>
+<td>72-73</td>
+</tr>
+<tr>
+<td>Link OAM / CPE Testhead / SAA / PPPoE-IA / MRP</td>
+<td>73-76</td>
+</tr>
+<tr>
+<td>OSPF / IS-IS / BGP / 组播边界 (MBR/SSM)</td>
+<td>77-86</td>
+</tr>
+<tr>
+<td>TCAM Profiles（6870/6570M/6575）</td>
+<td>87-92</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_4">四、条目统计与技能对应</h2>
+<p>verified 计数：principles 54 / counter-examples 50 / frameworks 4 / glossary 60 / cases 0（纯规格手册无配置流程）。技能对应：aos-spec-platform-tiers（F1/F2/F4+P1-P17+X1-X6/X42/X48）；
+aos-spec-capacity-limits（F2/F4+P16/P19-P50+容量类 X）；
+aos-spec-tcam-features（F3+P38/P51-P54+缺口类 X9-X13/X20-X22）。</p>
+<h2 id="_5">五、一句话总纲</h2>
+<p>规格手册是网络设计的红线底座：先按三梯队选平台、再用 SM/RM/ER 放大规模、最后用 TCAM 档位换资源；所有"为什么超了/为什么缩水"（VC 整机语义、反比容量、零和 TCAM、N/S 缺口）都能在本手册矩阵中找到权威答案。</p><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

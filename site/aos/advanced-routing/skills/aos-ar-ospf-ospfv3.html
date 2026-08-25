@@ -1,0 +1,114 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>aos-ar-ospf-ospfv3 — AOS 8.10R04 · Advanced Routing</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>AOS 8.10R04 · Advanced Routing</h1>
+<div class="sub">313 页 · 高级路由（OSPF/OSPFv3/IS-IS/BGP/组播边界/DVMRP/PIM/MBR）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">IGP</div>
+<a href="../skills/aos-ar-ospf-ospfv3.html" class="on">aos-ar-ospf-ospfv3</a>
+<a href="../skills/aos-ar-isis.html">aos-ar-isis</a>
+<div class="grp">BGP 与策略</div>
+<a href="../skills/aos-ar-bgp.html">aos-ar-bgp</a>
+<a href="../skills/aos-ar-policy-toolbox.html">aos-ar-policy-toolbox</a>
+<div class="grp">组播高级</div>
+<a href="../skills/aos-ar-multicast-advanced.html">aos-ar-multicast-advanced</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../aos/index.html">AOS 软件手册</a> › <a href="../index.html">AOS 8.10R04</a> › <span>aos-ar-ospf-ospfv3</span></nav><h1>aos-ar-ospf-ospfv3</h1><p class="meta"><span class="badge">SKILL</span> aos-ar-ospf-ospfv3 · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>新上线 OSPF/OSPFv3：VLAN→IP 接口→router-id→load/enable→区域→接口挂区的标准九步</li>
+<li>区域设计：骨干+普通区域、Stub/Totally Stubby/NSSA 选型、ABR 汇总（area range）</li>
+<li>骨干不连续要用虚链路修复；或 NBMA 网络要配静态邻居</li>
+<li>接口认证（simple/MD5/keychain-SHA256）、被动接口批量生成、CMM 冗余优雅重启（GR）</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>链路状态统一原理骨架（F2）：本地状态经泛洪保证全区域一致 LSDB，各路由器以自身为根算 SPF 树得路由表（P1/P2）。区域分层体系（F3）：区域隔离拓扑知识以减少路由流量（P6），骨干区 Area 0.0.0.0 负责区间分发（P7），路由器按 Internal/ABR/Backbone/ASBR 四角色分类（P9），ABR 为每个所连区域跑一份 SPF 并浓缩拓扑（P10）。OSPFv3 是 v2 的 IPv6 扩展、GR 默认使能（P34），命令族整体 ipv6 镜像（F10）。IGP 配置统一骨架（F1）：准备网络 → ip load → admin-state enable → 建区域 → 接口挂区 → 可选特性 → show 验证。</p>
+<h2 id="a1">A1（决策框架）</h2>
+<ol>
+<li><strong>末节区域选型</strong>：Stub（无外部 LSA、默认路由出域，P12）→ Totally Stubby（再滤 Type-3，实现=Stub+关汇总，P19）→ NSSA（Type-7 LSA 选择性导入外部，P13）</li>
+<li><strong>骨干不连续</strong>：虚链路两端互指对端 Router ID + 共同 transit 区（C4）；但虚链路是最后手段，不连续骨干是劣构设计（X3）</li>
+<li><strong>认证选型</strong>：simple / MD5（key ID 与 key string 两条命令，P25）/ keychain（可 SHA256，支持密钥轮转）（P24/C5）</li>
+<li><strong>终端网段</strong>：被动接口通告网段但不建邻接（P20）；或用 route map 重分发 local 为 internal 批量生成被动接口（P21/C7）</li>
+<li><strong>非广播网络</strong>：NBMA 需全互联+静态邻居（P16/C8），eligible 决定是否参与 DR 选举</li>
+<li><strong>冗余 CMM</strong>：<code>ip ospf restart-support planned-unplanned</code> 让 helper 在接管期间维持 LSA 与邻接（P17/P18/C9）</li>
+</ol>
+<h2 id="a2">A2（操作步骤）</h2>
+<ul>
+<li><strong>OSPF 九步上线</strong>：<code>vlan 5</code> / <code>ip interface vlan-5 ...</code> / <code>vlan 5 members port 1/2/1</code> / <code>ip router router-id 1.1.1.1</code> / <code>ip load ospf</code> + <code>ip ospf admin-state enable</code> / <code>ip ospf area 0.0.0.0</code> / <code>ip ospf interface vlan-5</code> / <code>ip ospf interface vlan-5 area 0.0.0.0</code> / <code>... admin-state enable</code> → <code>show ip ospf [area|interface]</code>（C1，&lt;&lt;<PAGE 21>&gt;&gt;）</li>
+<li><strong>OSPFv3 九步</strong>：<code>ipv6 interface test vlan 1</code> → <code>ipv6 address 2001::/64 eui-64 test</code> → router-id → <code>ipv6 load ospf</code> + enable → area → 接口挂区 enable（C10，&lt;&lt;<PAGE 57>&gt;&gt;）</li>
+<li><strong>Totally Stubby</strong>：ABR 上 <code>ip ospf area 1.1.1.1 type stub</code> + <code>summary disable</code> + <code>default-metric 0</code>；区内路由器配 <code>type stub</code>（C3，&lt;&lt;<PAGE 35-36>&gt;&gt;）</li>
+<li><strong>虚链路</strong>：Router A <code>ip ospf virtual-link 0.0.0.1 2.2.2.2</code>；Router B 互指；<code>show ip ospf virtual-link</code>（C4，&lt;&lt;<PAGE 39>&gt;&gt;）</li>
+<li><strong>认证</strong>：simple：<code>auth-type simple</code> + <code>auth-key test</code>；MD5：<code>auth-type md5</code> + <code>md5 7</code> + <code>md5 7 key "test"</code>；keychain：<code>security key ... algorithm sha256</code> + <code>security key-chain 1 key 125</code> + <code>auth-type key-chain 1</code>（C5，&lt;&lt;<PAGE 37-38>&gt;&gt;）</li>
+<li><strong>NBMA 邻居</strong>：<code>ip ospf interface vlan-213 type non-broadcast</code> → <code>ip ospf neighbor 1.1.1.8 eligible</code>（C8，&lt;&lt;<PAGE 47>&gt;&gt;）</li>
+<li><strong>GR</strong>：<code>ip ospf restart-support planned-unplanned</code>（可选 restart-interval / helper / strict-lsa-checking）（C9，&lt;&lt;<PAGE 48>&gt;&gt;）</li>
+<li><strong>OSPFv3 特有</strong>：NSSA translator 三件套 <code>nssa-translator role always|candidate</code> / <code>stab-interval 60</code> / <code>nssa-summarize c000::/64</code>（C12）；Loopback0 通告须 <code>type point-to-point</code>（P40/C13）；静态邻居用链路本地地址 fe80::（P41）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>OSPF 三区域三路由器应用例（C2，&lt;&lt;<PAGE 49-53>&gt;&gt;）</li>
+<li>Totally Stubby 两路由器配置（C3，&lt;&lt;<PAGE 35-36>&gt;&gt;）</li>
+<li>虚链路创建与验证（C4，&lt;&lt;<PAGE 39>&gt;&gt;）</li>
+<li>认证三套（simple/MD5/keychain-SHA256）（C5，&lt;&lt;<PAGE 37-38>&gt;&gt;）</li>
+<li>OSPFv3 三区域应用例（C11，&lt;&lt;<PAGE 84-88>&gt;&gt;）与 NSSA 参数（C12，&lt;&lt;<PAGE 72>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（反例/坑）</h2>
+<ul>
+<li>Stub 区域禁虚链路、禁内部 ASBR（X1，&lt;&lt;<PAGE 27, 64>&gt;&gt;）；NSSA 同样禁虚链路且区域类型必须全网一致否则邻接建不起来（X2，&lt;&lt;<PAGE 28, 65>&gt;&gt;）</li>
+<li>虚链路是最后手段，最大努力避免（X3，&lt;&lt;<PAGE 26, 39>&gt;&gt;）</li>
+<li>单路由器不建议带超过三个区域（X4，&lt;&lt;<PAGE 33, 70>&gt;&gt;）</li>
+<li>ECMP 只看度量不看线速，可能选中慢链路（X5，&lt;&lt;<PAGE 29>&gt;&gt;）</li>
+<li>接口名不能含空格（X6，&lt;&lt;<PAGE 21>&gt;&gt;）</li>
+<li>MD5 key ID 与 key string 必须两条命令分别设置（X7，&lt;&lt;<PAGE 37>&gt;&gt;）</li>
+<li>被动接口上已有邻接会立即拆除（X8）；多区域域中被动接口只生成在 Area ID 最小的区域（X9）（&lt;&lt;<PAGE 46>&gt;&gt;）</li>
+<li>从内存移除 OSPF/OSPFv3 必须手改 boot.cfg 并重启（X10，&lt;&lt;<PAGE 33, 70>&gt;&gt;）</li>
+<li>接口参数可一次配多个但只能逐个恢复默认（X11，&lt;&lt;<PAGE 39>&gt;&gt;）</li>
+<li>NBMA 邻居 eligibility 必须与其他路由器接口优先级一致（X13，&lt;&lt;<PAGE 29>&gt;&gt;）</li>
+<li>配置重分发即自动成为 ASBR（P22）；iBGP→OSPF 重分发默认禁止，需 <code>ip ospf redist-bgp-internal</code>（P23，&lt;&lt;<PAGE 48>&gt;&gt;）</li>
+</ul>
+<h2 id="_1">来源</h2>
+<p>OmniSwitch AOS 8.10R4 Advanced Routing Guide 第 1 章 OSPF（&lt;&lt;<PAGE 20-53>&gt;&gt;）、第 2 章 OSPFv3（&lt;&lt;<PAGE 55-88>&gt;&gt;）。条目来源：cases C1-C13；principles P1-P25/P34-P41；counter-examples X1-X13；frameworks F1/F2/F3/F6/F10。</p><div class="pn"><a href="../index.html">⬅ 返回课程首页</a><a class="nxt" href="aos-ar-isis.html">下一单元：aos-ar-isis ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

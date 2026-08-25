@@ -1,0 +1,136 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>教书理解 BOOK_OVERVIEW — AOS 8.10R04 · Advanced Routing</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>AOS 8.10R04 · Advanced Routing</h1>
+<div class="sub">313 页 · 高级路由（OSPF/OSPFv3/IS-IS/BGP/组播边界/DVMRP/PIM/MBR）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">IGP</div>
+<a href="skills/aos-ar-ospf-ospfv3.html">aos-ar-ospf-ospfv3</a>
+<a href="skills/aos-ar-isis.html">aos-ar-isis</a>
+<div class="grp">BGP 与策略</div>
+<a href="skills/aos-ar-bgp.html">aos-ar-bgp</a>
+<a href="skills/aos-ar-policy-toolbox.html">aos-ar-policy-toolbox</a>
+<div class="grp">组播高级</div>
+<a href="skills/aos-ar-multicast-advanced.html">aos-ar-multicast-advanced</a></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../aos/index.html">AOS 软件手册</a> › <a href="index.html">AOS 8.10R04</a> › <span>教书理解 BOOK_OVERVIEW</span></nav><h1>教书理解 BOOK_OVERVIEW</h1><h1 id="book_overview-omniswitch-aos-release-810r4-advanced-routing-configuration-guide">BOOK_OVERVIEW — OmniSwitch AOS Release 8.10R4 Advanced Routing Configuration Guide</h1>
+<ul>
+<li>313 页，Part No. 060970-00 Rev A，December 2025，ALE（Alcatel-Lucent Enterprise）</li>
+<li>面向 OmniSwitch 6360/6465/6560/6570M/6575/6860/6865/6870/6900/6920/9900 系列交换机</li>
+<li>高级路由协议为基础交换软件的附加购买包（add-on package）</li>
+<li>全文：<code>fulltext.md</code>，页码标记 <code>&lt;&lt;&lt;PAGE N&gt;&gt;&gt;</code>，共 313 页</li>
+</ul>
+<h2 id="_1">章节结构（正文实际章节）</h2>
+<table>
+<thead>
+<tr>
+<th>章</th>
+<th>主题</th>
+<th>内容要点</th>
+<th>页范围（正文页码 N）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Configuring OSPF</td>
+<td>OSPF 区域/路由器分类/虚链路/Stub 区域/ECMP/NBMA/GR（冗余 CMM）；被动接口 Route Map、静态邻居、BGP→OSPF 重分发、应用例</td>
+<td>约正文页 25–60</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Configuring OSPFv3</td>
+<td>OSPFv3 区域/虚链路/Stub/NSSA/ECMP/GR、重分发、应用例</td>
+<td>约正文页 65–98</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Configuring IS-IS</td>
+<td>IS-IS 报文/区域/Level、认证、Route Map 重分发、GR（堆叠）、Multi-Topology IS-IS (M-ISIS)、IPv4/IPv6</td>
+<td>约正文页 99–130</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Configuring BGP（本书最重章，约占 1/3 篇幅）</td>
+<td>AS/iBGP vs eBGP/Community/RR/联邦/策略(Route Map)/路由抖动抑制/CIDR、Peer 配置、聚合、本地网络、Route Reflection、联邦、重分发、GR、IPv6 BGP（MP-BGP）、Routing Policies、GTSM、VPLS BGP 信令、BGP EVPN、BGP Neighbor Template、VRF 内 BGP Peer 数量提升</td>
+<td>约正文页 131–225</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Multicast Address Boundaries</td>
+<td>IANA 组播地址、组播地址边界（过滤外发组播）、并发组播地址</td>
+<td>约正文页 226–235</td>
+</tr>
+<tr>
+<td>6</td>
+<td>DVMRP</td>
+<td>逆向路径组播/邻居发现/路由报告/依赖下游与毒性反转/剪枝/嫁接/DVMRP 隧道</td>
+<td>约正文页 236–250</td>
+</tr>
+<tr>
+<td>7</td>
+<td>PIM</td>
+<td>PIM-SM（RP 树、Register、SPT 切换）、PIM-DM、SSM、Bootstrap/RP 发现、Join/Prune 打包、IPv6 PIM 全套、RP-Switchover</td>
+<td>约正文页 251–300</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Multicast Border Router (MBR)</td>
+<td>PIM↔DVMRP 边界、PIM 路由通知、DVMRP 默认路由通告</td>
+<td>约正文页 301–306</td>
+</tr>
+</tbody>
+</table>
+<p>附录 A 为许可证；Index 无正文。</p>
+<h2 id="_2">提取注意事项</h2>
+<ul>
+<li>页码标记只有全书连续页号 <code>&lt;&lt;&lt;PAGE 1&gt;&gt;&gt;</code>–<code>&lt;&lt;&lt;PAGE 313&gt;&gt;&gt;</code>，正文页脚的 "4-15" 为章内页码，两者需区分；候选条目统一引用 <code>&lt;&lt;&lt;PAGE N&gt;&gt;&gt;</code> 的 N。</li>
+<li>命令行均为 AOS CLI（如 <code>ip ospf</code>、<code>router bgp</code>、<code>ip pim</code>、<code>ipv6 pim</code>、<code>ip dvmrp</code> 等）。</li>
+<li>本书无独立 VRF-Lite / 隧道专章；VRF 仅在 BGP 章（Increase BGP Peer Support in VRF）出现，隧道仅 DVMRP tunnel 小节。</li>
+</ul><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

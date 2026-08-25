@@ -1,0 +1,620 @@
+{
+ "counter-examples": [
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **X1 spb bvlan 平台支持（第 10 章，<<<PAGE 745>>>）**：BVLAN 仅 6570M/6860/6860"
+  },
+  {
+   "h": 0.57,
+   "ok": true,
+   "head": "- **X2 ip ospf spf-timer / hello-interval 平台（第 28 章，<<<PAGE 2409>>>/<<"
+  },
+  {
+   "h": 0.62,
+   "ok": true,
+   "head": "- **X3 ip bgp default local-preference / maximum-paths 平台（第 31 章，<<<PA"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X4 QoS Policy 章通用限制（第 39 章，<<<PAGE 3953>>>）**：原书明示\"部分命令当前在一个或多个平台不"
+  },
+  {
+   "h": 0.7,
+   "ok": true,
+   "head": "- **X6 PoE power rule 生效链（第 2 章，<<<PAGE 254>>>）**：power rule 必须先创建、再绑定"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **X10 VC chassis id 生效时机（第 14 章，<<<PAGE 1198>>>）**：配置的 chassis ident"
+  },
+  {
+   "h": 0.25,
+   "ok": false,
+   "head": "- **X12 linkagg 与 AppMon 互斥（第 13 章，<<<PAGE 1092>>>）**：链路聚合不能配置在 AppMon"
+  },
+  {
+   "h": 0.33,
+   "ok": false,
+   "head": "- **X13 UNP multi-untag SAP 与 persistent profile 互斥（第 42 章，<<<PAGE 447"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X17 BVLAN 一致性要求（第 10 章，<<<PAGE 745>>>）**：每台 SPB 桥的 BVLAN 配置必须完全一致，"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **X18 reserved VLAN 不可常规配置（第 7 章，<<<PAGE 476>>>）**：VLAN Stacking 的保留"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **X21 PolicyView 规则只读（第 39 章，<<<PAGE 3953>>>）**：经 PolicyView 创建的规则不能"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X22 VLAN prompt-on-deletion（第 5 章，<<<PAGE 428>>>）**：默认删除带成员端口的 VLA"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **X23 OSPF hello=0 语义（第 28 章，<<<PAGE 2434>>>）**：hello-interval 设 0 的"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **X24 LLDP 控制帧默认丢弃（第 18 章，<<<PAGE 1390>>>）**：带标签与无标签 802.1AB 控制帧默认均丢"
+  }
+ ],
+ "frameworks": [
+  {
+   "h": 0.86,
+   "ok": true,
+   "head": "## F1 端口与 PoE（基础连接层）"
+  },
+  {
+   "h": 0.79,
+   "ok": true,
+   "head": "## F2 二层与 VLAN"
+  },
+  {
+   "h": 0.59,
+   "ok": true,
+   "head": "## F3 冗余与环网保护"
+  },
+  {
+   "h": 0.81,
+   "ok": true,
+   "head": "## F4 SPB/MPLS 骨干与服务（PBB 骨干）"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "## F5 VC/自动织构与数据中心"
+  },
+  {
+   "h": 0.55,
+   "ok": true,
+   "head": "## F6 IP 与路由（单播路由与服务）"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "## F7 组播"
+  },
+  {
+   "h": 0.56,
+   "ok": true,
+   "head": "## F8 安全与准入"
+  },
+  {
+   "h": 0.47,
+   "ok": true,
+   "head": "## F9 监测与 OAM"
+  },
+  {
+   "h": 0.69,
+   "ok": true,
+   "head": "## F10 QoS 与策略"
+  },
+  {
+   "h": 0.52,
+   "ok": true,
+   "head": "## F11 系统与管理"
+  }
+ ],
+ "glossary": [
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **第1章 Ethernet Port Commands**：D1 端口物理层参数（speed/duplex/fec/ddm/viola"
+  },
+  {
+   "h": 0.83,
+   "ok": true,
+   "head": "- **第2章 Power over Ethernet (PoE) Commands**：D1 PoE 供电预算、分级、power rule"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **第3章 UDLD Commands**：D1 单向链路检测，防单向光纤故障成环，约 12 条 <<<PAGE 327>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **第4章 Source Learning Commands**：D2 MAC 地址学习/过滤/老化与 FDB 管理，约 33 条 <<"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **第5章 VLAN Management Commands**：D2 VLAN/私有 VLAN 创建、成员划分与 STP 开关，约 1"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **第6章 High Availability VLAN Commands**：D2 跨机箱 VLAN 高可用同步，约 10 条 <<<"
+  },
+  {
+   "h": 0.6,
+   "ok": true,
+   "head": "- **第7章 VLAN Stacking Commands**：D2 QinQ 双层标签/保留 VLAN/NNI-UNI 角色，约 40 "
+  },
+  {
+   "h": 0.83,
+   "ok": true,
+   "head": "- **第8章 Distributed Spanning Tree Commands**：D3 802.1D 分布式 STP/RSTP/MS"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **第9章 MPLS Commands**：D4 MPLS LSP/标签转发与 VPN 隧道，约 26 条 <<<PAGE 689>>>"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **第10章 Shortest Path Bridging Commands**：D4 ISIS-SPB 骨干（BVLAN/桥优先级/E"
+  },
+  {
+   "h": 0.83,
+   "ok": true,
+   "head": "- **第11章 Service Manager Commands**：D4 SPBM 服务层（ISID/SAP/PBB 封装业务），SPB"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **第12章 Loopback Detection Commands**：D3 二层环路检测与端口自动阻断，约 11 条 <<<PAGE"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **第13章 Link Aggregation Commands**：D3 静态/LACP 链路聚合与哈希控制，约 46 条 <<<PA"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **第14章 Virtual Chassis Commands**：D5 虚拟机箱（VFL 互联/双机箱管理），约 32 条 <<<PA"
+  },
+  {
+   "h": 0.71,
+   "ok": true,
+   "head": "- **第15章 Ethernet Ring Protection Commands**：D3 ITU-T G.8032 环网保护倒换，约 "
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **第16章 Media Redundancy Protocol Commands**：D3 IEC 62439-2 MRP 工业环网冗"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **第17章 MVRP Commands**：D2 802.1ak MVRP 动态 VLAN 注册传播，约 23 条 <<<PAGE 1"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **第18章 802.1AB Commands**：D9 LLDP 邻居发现与 TLV 管理，约 40 条 <<<PAGE 1390>>"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **第19章 SIP Commands**：D5 会话/互联类命令（章名缩写未展开，域归属待确认），约 18 条 <<<PAGE 148"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **第20章 Automatic Fabric Commands**：D5 自动织构（Auto-Fabric 节点角色与自动发现），约 "
+  },
+  {
+   "h": 0.33,
+   "ok": false,
+   "head": "- **第21章 IP Commands**：D6 IP 接口/路由/ARP/DNS/UDP 中继等单播底座，约 113 条 <<<PAGE"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **第22章 IPv6 Commands**：D6 IPv6 地址/邻居发现/路由与过渡，约 68 条 <<<PAGE 1793>>>"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **第23章 IPsec Commands**：D8 IPsec/IKE 隧道加密，约 11 条 <<<PAGE 1948>>>"
+  },
+  {
+   "h": 0.33,
+   "ok": false,
+   "head": "- **第24章 RIP Commands**：D6 RIP/RIPv2 距离矢量路由，约 41 条 <<<PAGE 1974>>>"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **第25章 BFD Commands**：D6 双向转发检测（为路由协议提供毫秒级故障检测），约 16 条 <<<PAGE 2058>"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **第26章 DHCP Relay Commands**：D6 DHCP 中继/option82/监督，约 116 条 <<<PAGE "
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **第27章 VRRP Commands**：D6 虚拟路由冗余（首跳网关备份），约 24 条 <<<PAGE 2334>>>"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **第28章 OSPF Commands**：D6 OSPFv2 链路态 IGP（区域/接口/虚链路/重分发），约 57 条 <<<PA"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **第29章 OSPFv3 Commands**：D6 OSPFv3（IPv6 版链路态 IGP），约 46 条 <<<PAGE 251"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **第30章 IS-IS Commands**：D6 IS-IS 链路态路由（SPB 控制面基础），约 62 条 <<<PAGE 261"
+  },
+  {
+   "h": 0.33,
+   "ok": false,
+   "head": "- **第31章 BGP Commands**：D6 BGP-4/MP-BGP 域间路由（全书第二大章），约 194 条 <<<PAGE 2"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **第32章 Server Load Balancing Commands**：D6 服务器负载均衡（VIP/实服务组/健康检查），约 "
+  },
+  {
+   "h": 0.6,
+   "ok": true,
+   "head": "- **第33章 IP Multicast Switching Commands**：D7 二层组播交换（IGMP 侦听/MCS），约 10"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **第34章 IP Multicast VLAN Commands**：D7 组播 VLAN（MVR）业务通道，约 12 条 <<<PA"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **第35章 DVMRP Commands**：D7 距离矢量组播路由，约 23 条 <<<PAGE 3495>>>"
+  },
+  {
+   "h": 0.33,
+   "ok": false,
+   "head": "- **第36章 PIM Commands**：D7 PIM-SM/SSM/DM 组播路由协议，约 99 条 <<<PAGE 3542>>>"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **第37章 Multicast Routing Commands**：D7 组播路由全局/边界/静态组播路由管理，约 14 条 <<<"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **第38章 QoS Commands**：D10 QoS 硬件队列/调度/端口 QoS 参数，约 70 条 <<<PAGE 3797>"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **第39章 QoS Policy Commands**：D10 策略条件-动作-规则-列表模型与各类 group，约 111 条 <<"
+  },
+  {
+   "h": 0.83,
+   "ok": true,
+   "head": "- **第40章 Policy Server Commands**：D10 策略服务器（LDAP 端 PolicyView 联动），约 9 "
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **第41章 AAA Commands**：D8 RADIUS/TACACS+/LDAP 与认证授权计费方法链，约 119 条 <<<P"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **第42章 Access Guardian Commands**：D8 UNP/BYOD/Captive Portal/QMR/IoS"
+  },
+  {
+   "h": 0.83,
+   "ok": true,
+   "head": "- **第43章 Application Monitoring and Enforcement Commands**：D10 应用识别与流量"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **第44章 Application Fingerprinting Commands**：D10 应用指纹库管理，约 12 条 <<<P"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **第45章 FIP Snooping Commands**：D5 FCoE 初始化协议侦听（FCoE 安全），约 22 条 <<<PA"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **第46章 FCoE/FC Gateway Commands**：D5 以太网光纤通道与 FC 网关，约 27 条 <<<PAGE 5"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **第47章 VXLAN Snooping Commands**：D5 VXLAN 侦听与虚拟网段管理，约 20 条 <<<PAGE 5"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **第48章 Port Mapping Commands**：D5 端口映射（数据流量重定向到应用/服务），约 9 条 <<<PAGE "
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **第49章 Learned Port Security Commands**：D8 已学习端口安全（LPS，限定可接入设备），约 18"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **第50章 Port Mirroring and Monitoring Commands**：D9 端口镜像与流量监测，约 9 条 <"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **第51章 sFlow Commands**：D9 sFlow 采样流量监测，约 13 条 <<<PAGE 5277>>>"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **第52章 RMON Commands**：D9 RMON 远程网络监视告警/历史/统计，约 4 条 <<<PAGE 5305>>>"
+  },
+  {
+   "h": 0.6,
+   "ok": true,
+   "head": "- **第53章 Switch Logging Commands**：D11 系统日志（syslog）级别/服务器/过滤，约 14 条 <<"
+  },
+  {
+   "h": 0.6,
+   "ok": true,
+   "head": "- **第54章 Health Monitoring Commands**：D9 健康监测（CPU/内存/进程阈值检查），约 6 条 <<<"
+  },
+  {
+   "h": 0.4,
+   "ok": true,
+   "head": "- **第55章 Ethernet OAM Commands**：D9 802.1ag CFM 连通性故障管理（MEP/MAID），约 46"
+  },
+  {
+   "h": 0.25,
+   "ok": false,
+   "head": "- **第56章 LINK OAM Commands**：D9 802.3ah 链路级 OAM 远端发现/环回/远端故障指示，约 23 条 "
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **第57章 CPE Test Head Commands**：D9 CPE 测试头（接入侧业务拨测），约 31 条 <<<PAGE 5"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **第58章 PPPoE Intermediate Agent**：D8 PPPoE 中间代理（接入侧认证辅助/截留），约 12 条 <"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **第59章 Service Assurance Agent Commands**：D9 SAA 主动探测（ping/ftp/http "
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **第60章 CMM Commands**：D11 通信模块管理（CMM 控制模块冗余/同步），约 29 条 <<<PAGE 5645>"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **第61章 Chassis Management and Monitoring Commands**：D11 机箱/风扇/电源/温度等"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **第62章 Network Time Protocol Commands**：D11 NTP/SNTP 时间同步，约 25 条 <<<"
+  },
+  {
+   "h": 0.6,
+   "ok": true,
+   "head": "- **第63章 Session Management Commands**：D11 CLI 会话/telnet/SSH 连接与超时管理，约"
+  },
+  {
+   "h": 0.6,
+   "ok": true,
+   "head": "- **第64章 File Management Commands**：D11 文件系统（copy/delete/directory/脚本）"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **第65章 Web Management Commands**：D11 内嵌 Web 管理开关与 HTTP/HTTPS 配置，约 11"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **第66章 Configuration File Manager Commands**：D11 配置文件（running/commit"
+  },
+  {
+   "h": 0.6,
+   "ok": true,
+   "head": "- **第67章 SNMP Commands**：D11 SNMP v1/v2c/v3 团体/用户/陷阱/通知管理，约 26 条 <<<PA"
+  },
+  {
+   "h": 0.83,
+   "ok": true,
+   "head": "- **第68章 OmniVista Cirrus Commands**：D11 云管理平台（OmniVista Cirrus）对接配置，约"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **第69章 OpenFlow Commands**：D11 SDN OpenFlow 控制器/流表混合模式管理，约 8 条 <<<PA"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **第70章 DNS Commands**：D11 DNS 客户端解析配置，约 6 条 <<<PAGE 6169>>>"
+  }
+ ],
+ "principles": [
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P1 `interfaces` 命令族（第 1 章，<<<PAGE 67>>>）**：以太网端口软件负责硬件诊断、链路状态通知、线路"
+  },
+  {
+   "h": 0.62,
+   "ok": true,
+   "head": "- **P3 PoE 供电管理（第 2 章，<<<PAGE 254>>>）**：`lanpower` 族管理 PSE 供电预算、端口优先级与"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P5 `vlan` 命令（第 5 章，<<<PAGE 428>>>）**：`vlan vlan_id [admin-state {e"
+  },
+  {
+   "h": 0.6,
+   "ok": true,
+   "head": "- **P8 VLAN Stacking/QinQ（第 7 章，<<<PAGE 476>>>）**：以 reserved VLAN 承载业务"
+  },
+  {
+   "h": 0.6,
+   "ok": true,
+   "head": "- **P9 分布式 STP（第 8 章，<<<PAGE 567>>>）**：基于 802.1D，STP 计算分布在主管理模块与接口模块之间"
+  },
+  {
+   "h": 0.57,
+   "ok": true,
+   "head": "- **P10 链路聚合（第 13 章，<<<PAGE 1092>>>）**：`linkagg` 支持静态与动态（LACP）聚合；动态聚合仅"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P11 SPBM 架构（第 10 章，<<<PAGE 743>>>）**：SPB-M 按 IEEE 802.1aq 用 PBB（80"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **P12 `spb bvlan`（第 10 章，<<<PAGE 745>>>）**：BVLAN ID 取值 1–4094，支持区间（如"
+  },
+  {
+   "h": 0.4,
+   "ok": true,
+   "head": "- **P14 `spb isis bridge-priority`（第 10 章，<<<PAGE 750>>> 附近）**：默认 3276"
+  },
+  {
+   "h": 0.25,
+   "ok": false,
+   "head": "- **P15 SPB IP VPN（第 10 章，<<<PAGE 744>>>）**：`spb ipvpn bind/redist` 把 "
+  },
+  {
+   "h": 0.25,
+   "ok": false,
+   "head": "- **P16 IP 命令章规模（第 21 章，<<<PAGE 1549>>>）**：113 条，`ip interface`/`ip ro"
+  },
+  {
+   "h": 0.2,
+   "ok": false,
+   "head": "- **P17 OSPF 定位（第 28 章，<<<PAGE 2392>>>）**：链路态 IGP，符合 RFC 1370/1850/232"
+  },
+  {
+   "h": 0.83,
+   "ok": true,
+   "head": "- **P18 `ip ospf spf-timer`（第 28 章，<<<PAGE 2409>>>）**：`[delay seconds]"
+  },
+  {
+   "h": 0.56,
+   "ok": true,
+   "head": "- **P19 `ip ospf interface hello-interval`（第 28 章，<<<PAGE 2434>>>）**：取"
+  },
+  {
+   "h": 0.56,
+   "ok": true,
+   "head": "- **P20 BGP 定位（第 31 章，<<<PAGE 2744>>>）**：BGP-4 + 多协议扩展（MP-BGP 支持 IPv6 "
+  },
+  {
+   "h": 0.43,
+   "ok": true,
+   "head": "- **P21 `ip bgp default local-preference`（第 31 章，<<<PAGE 2759>>>）**：取值"
+  },
+  {
+   "h": 0.6,
+   "ok": true,
+   "head": "- **P22 `ip bgp maximum-paths`（第 31 章，<<<PAGE 2776>>>）**：等价多路径（ECMP）开关"
+  },
+  {
+   "h": 0.83,
+   "ok": true,
+   "head": "- **P23 策略模型（第 39 章，<<<PAGE 3953>>>）**：policy rule = policy condition "
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **P25 条件子命令族（第 39 章，<<<PAGE 3955>>>）**：`policy condition` 40+ 子命令，覆盖"
+  },
+  {
+   "h": 0.53,
+   "ok": true,
+   "head": "- **P26 动作子命令族（第 39 章，<<<PAGE 3956>>>）**：`policy action` 提供 dispositio"
+  },
+  {
+   "h": 0.0,
+   "ok": false,
+   "head": "- **P28 QoS 硬件章（第 38 章，<<<PAGE 3797>>>）**：与第 39 章策略软件互补，管理硬件队列、调度与端口 Q"
+  },
+  {
+   "h": 0.82,
+   "ok": true,
+   "head": "- **P29 Access Guardian 架构（第 42 章，<<<PAGE 4470>>>）**：UNP（Universal Net"
+  },
+  {
+   "h": 0.7,
+   "ok": true,
+   "head": "- **P30 UNP 命令分组（第 42 章，<<<PAGE 4471>>>）**：全局配置（dynamic-vlan-configura"
+  },
+  {
+   "h": 0.6,
+   "ok": true,
+   "head": "- **P31 AAA 支撑（第 41 章，<<<PAGE 4205>>>）**：119 条，RADIUS/TACACS+/LDAP 服务器"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **P32 LLDP（第 18 章，<<<PAGE 1390>>>）**：802.1AB 以 LLDPDU 与邻居交换信息并维护邻居数据"
+  },
+  {
+   "h": 0.25,
+   "ok": false,
+   "head": "- **P33 双 OAM 体系（第 55、56 章）**：Ethernet OAM/CFM（802.1ag，MEP/MAID/远端 MEP"
+  },
+  {
+   "h": 0.43,
+   "ok": true,
+   "head": "- **P34 配置管理模型（第 61、66 章，<<<PAGE 5697>>>/<<<PAGE 6060>>>）**：`working-s"
+  }
+ ]
+}

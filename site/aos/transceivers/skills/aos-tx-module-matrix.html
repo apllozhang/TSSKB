@@ -1,0 +1,106 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>aos-tx-module-matrix — AOS 8.10R04 · Transceivers Guide</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>AOS 8.10R04 · Transceivers Guide</h1>
+<div class="sub">107 页 · 光模块指南（1G-400G 型号矩阵/平台兼容/DDM 安装纪律）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">选型</div>
+<a href="../skills/aos-tx-module-matrix.html" class="on">aos-tx-module-matrix</a>
+<a href="../skills/aos-tx-platform-compat.html">aos-tx-platform-compat</a>
+<div class="grp">运维</div>
+<a href="../skills/aos-tx-ddm-install.html">aos-tx-ddm-install</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../aos/index.html">AOS 软件手册</a> › <a href="../index.html">AOS 8.10R04</a> › <span>aos-tx-module-matrix</span></nav><h1>aos-tx-module-matrix</h1><p class="meta"><span class="badge">SKILL</span> aos-tx-module-matrix · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>新建/扩链路要定光模块 PN：多远距离、什么光纤、什么封装</li>
+<li>机柜内短距用 DAC 还是跨柜用 AOC/光纤</li>
+<li>单纤（BX BiDi）链路两端 PN 配对</li>
+<li>400G/200G 新平台（6920/6870）模块选型</li>
+<li>核对模块功耗（散热预算）、温度档（商用/工业）、DDM 支持度</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>速率代际 × 距离档位矩阵（F2，&lt;&lt;<PAGE 18-63>&gt;&gt;）：列=封装（SFP→SFP+→SFP28→QSFP+→SFP56→QSFP28→QSFP56→QSFP-DD），行=距离档（DAC 0.4-7m→AOC 10-20m→MMF SR 70-400m→SMF CLR/FR 2km→LR 10km→ER/LH40 40km→DR4 500m→LH70 70km→ZR 80km→EZX 120km）；选型先定距离再定封装，同距离多封装时用功耗与 DDM 支持度决胜。光模块选型三查法（F1，&lt;&lt;<PAGE 18-107>&gt;&gt;）：一查 Ch1 规格表（速率/距离/连接器/DDM/功耗）→二查 Ch2 兼容矩阵（平台×最低 AOS 版本）→三查脚注排除项。距离档位体系（P26）：LR/CLR=10/2km、LH40/ER=40km、LH70=70km、ZR=80km、EZX=120km；MMF 按 OM2/OM3/OM4 递减表。单双纤配对原则（P25）：BX 系列 D/U 成对（一端 D 发 1490/收 1310，另一端 U 反之），设计单纤链路两端 PN 必须配对下单。</p>
+<h2 id="a1">A1（决策框架）</h2>
+<ol>
+<li><strong>先定距离与介质</strong>：机柜内（≤7m）→DAC；跨柜短距（10-20m）→AOC；楼内多模→SR/ESR（按 OM2/3/4）；园区单模→CLR/FR 2km 或 LR 10km；城域→ER/LH40 40km；长途→ZR 80km/EZX 120km（EZX 已停购）</li>
+<li><strong>再定速率封装</strong>：1G SFP→10G SFP+→25G SFP28→40G QSFP+→50G SFP56→100G QSFP28→200G QSFP56→400G QSFP-DD</li>
+<li><strong>单纤场景 BX 配对</strong>：D/U 两端成对；100FX 与双速 DUAL 系列同理</li>
+<li><strong>决胜参数</strong>：功耗梯度（1G/10G ≤1-1.5W→400G 高达 10-12W，P23）；温度档（商用 0-70°C vs 工业 iSFP -40~85°C，P24）；DDM 支持度（DAC/铜口/部分 BiDi 无 DDM，X31）</li>
+<li><strong>停购物料甄别</strong>：EZX/##CWD/EXTND/DUAL-SM10/SR-BD 等已停购（No longer purchasable），存量可用新项目不选（X32）</li>
+</ol>
+<h2 id="a2">A2（操作步骤）·速率档代表型号速查</h2>
+<ul>
+<li><strong>1G</strong>：SFP-GIG-SX（多模 300/550m）、LX（单模 10km）、LH40（40km）、LH70（70km）、EZX（120km，停购）、T（铜口 100m）、BX-D/U 及 BX20/BX40 变体（单纤配对）（&lt;&lt;<PAGE 18-24>&gt;&gt;）</li>
+<li><strong>双速/100FX</strong>：SFP-DUAL-MM/MM-N（100FX+1000LX）、DUAL-BX-D/U；SFP-100-LC-MM/SM15/SM40、BXLC-D/U（&lt;&lt;<PAGE 25-31>&gt;&gt;）</li>
+<li><strong>10G</strong>：SR（OM3 300m，1W）、LR（10km）、ER（40km，1.5W）、LRM（220m）、ZR（80km）、T（铜口 30m，2.5W）、C（DAC 0.6-7m）、GIG-SR/LR 双速过渡件、BX-D/U 10/40km、CWDM（&lt;&lt;<PAGE 32-39>&gt;&gt;）</li>
+<li><strong>25G SFP28</strong>：SR（OM4 100m）、ESR（OM4 300m）、LR（10km）、CLR（2km）、A20M、C（DAC 1/3/5m）、BX-D40/U40（&lt;&lt;<PAGE 40-43>&gt;&gt;）</li>
+<li><strong>40G QSFP+</strong>：SR（OM4 150m，4X10G 拆分）、LR（10km）、ER（40km）、CLR（2km）、PSM4（MPO 10km）、C（DAC）、4X10G-SR/C 拆分件、AOC20M、OS6860-CBL 20G VFL 专用线（&lt;&lt;<PAGE 44-50>&gt;&gt;）</li>
+<li><strong>50G SFP56</strong>：SR（OM4 100m，3.3W）、FR（2km）、LR（10km）、C（DAC）——仅 6870-LNI-U6 支持（&lt;&lt;<PAGE 51-52>&gt;&gt;）</li>
+<li><strong>100G</strong>：SR4（OM4 100m，4X25G 拆分）、LR4（10km）、CLR4（2km）、ER4（40km，4.5W）、CWDM4（2km）、A20M（20m）、C（DAC）、SR1.2/PSM4（8.10R4 新品）（&lt;&lt;<PAGE 53-57>&gt;&gt;）</li>
+<li><strong>200G</strong>：SR4（OM4 100m，4.5W）、FR4（2km，6W）、A20M、C、2XQ100/2XQ200 拆分线（&lt;&lt;<PAGE 58-60>&gt;&gt;）</li>
+<li><strong>400G QSFP-DD</strong>（均 8.10R4、仅 6920）：C（DAC 0.5-3m）、DR4（500m，10W）、FR4（2km）、LR4（10km）、A10M（10m）、SR4.2（OM4 100m，可拆 4×SR1.2，12W）、2Q100-C 拆分线（&lt;&lt;<PAGE 61-63>&gt;&gt;）</li>
+<li><strong>PON/工业</strong>：3FE46541AA（GPON ONT）、3FE49327AA（XGS-PON ONT）；iSFP 全家族 -40~85°C（配 6465/6865/6575 工业平台），iSFP-10G-C 与商用同件互换（&lt;&lt;<PAGE 64-73>&gt;&gt;）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>本书无配置流程案例（纯规格手册）；"场景"即选型决策：按 A1 五步走完得 PN，再到 aos-tx-platform-compat 核对该 PN 在目标平台的最低 AOS 版本</li>
+</ul>
+<h2 id="b">B（反例/坑）</h2>
+<ul>
+<li>使用非 ALE 认证 PN 的模块被禁止、性能无保障且失保（P2，&lt;&lt;<PAGE 1>&gt;&gt;）</li>
+<li>双速模块建议两端手工配速防速率失配（P15，&lt;&lt;<PAGE 25>&gt;&gt;）</li>
+<li>DAC 三级长度体系：1G 无 DAC；机柜内用 DAC、跨柜用 AOC/光纤（P11，&lt;&lt;<PAGE 34-63>&gt;&gt;）</li>
+<li>长距模块温度上限收窄：LH40/LH70/EZX 上限收窄到 -10/-5~70°C（P24）</li>
+<li>10G-ER 损伤阈值 4dBm、ZR 过载 -7dBm——长距链路做光功率预算时注意（&lt;&lt;<PAGE 33>&gt;&gt;/&lt;&lt;<PAGE 34>&gt;&gt;）</li>
+<li>40G SR4 的 DDM 仅 V/T/mA/Input 四项；SR-BD/A20M/铜口 T 系列等无 DDM，无法用 DDM 做光功率监控（X31，&lt;&lt;<PAGE 20-63>&gt;&gt;）</li>
+<li>QSFP-QSFP MPO 直连必须 Type-B 交叉线（8 芯使用）（glossary，&lt;&lt;<PAGE 17>&gt;&gt;）</li>
+<li>10G-GIG-SR/LR 双速按光纤分级：OM1 33m@10G、OM3 300m@10G——旧布线升级的过渡件（P29）</li>
+</ul>
+<h2 id="_1">来源</h2>
+<p>OmniSwitch AOS Release 8 Transceivers Guide Ch1 各速率节（&lt;&lt;<PAGE 18-73>&gt;&gt;）。条目来源：principles P2/P11/P15/P23/P24/P25/P26/P29；counter-examples X31/X32；frameworks F1/F2；glossary 各速率组。</p><div class="pn"><a href="../index.html">⬅ 返回课程首页</a><a class="nxt" href="aos-tx-platform-compat.html">下一单元：aos-tx-platform-compat ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

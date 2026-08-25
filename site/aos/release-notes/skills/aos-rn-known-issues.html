@@ -1,0 +1,108 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>aos-rn-known-issues — AOS 8.10R04 · Release Notes</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>AOS 8.10R04 · Release Notes</h1>
+<div class="sub">105 页 · 版本说明（升级方法论/Secure Boot/已知问题库/新特性与废弃）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">升级与安全</div>
+<a href="../skills/aos-rn-upgrade-path.html">aos-rn-upgrade-path</a>
+<a href="../skills/aos-rn-secure-boot.html">aos-rn-secure-boot</a>
+<div class="grp">问题与特性</div>
+<a href="../skills/aos-rn-known-issues.html" class="on">aos-rn-known-issues</a>
+<a href="../skills/aos-rn-new-features-deprecations.html">aos-rn-new-features-deprecations</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../aos/index.html">AOS 软件手册</a> › <a href="../index.html">AOS 8.10R04</a> › <span>aos-rn-known-issues</span></nav><h1>aos-rn-known-issues</h1><p class="meta"><span class="badge">SKILL</span> aos-rn-known-issues · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>链路起不来/翻动/CRC，涉及 SFP-10G-T、SFP-GIG-T、DUAL-BX、4X25G splitter、DAC</li>
+<li>升级或换板后聚合哈希失衡、组播/广播负载异常、VC takeover 后 MAC 丢失</li>
+<li>EVPN/组播/VRRP/BFD 出现 toggle 掉流、丢包、残留行为</li>
+<li>选型或部署前核对平台端口级限制（MACsec 端口矩阵、快速收敛例外、聚合限制）</li>
+<li>判断"这是缺陷还是配置问题"——先查 Open CR 再排障</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>Release Notes 的 Open Problem Reports 是手册里没有的独占排障库：按 CRAOS8X-xxxxx 编号索引，Fixed CR（Appendix I，&lt;&lt;<PAGE 83-100>&gt;&gt;）为已修，Open CR（&lt;&lt;<PAGE 41-46>&gt;&gt;）为发布时未修、多数"无解"只能绕行。排障口诀：现象先对号 Open CR（避免无效变更）→ 不是 CR 再走配置排障；硬件类 CR 多与光模块速率协商/批次相关，软件类 CR 多与 toggle/admin-state 操作触发相关。平台端口级限制（MACsec 端口矩阵、快速收敛例外、性能许可口）是"设计即如此"，升级不能解决。</p>
+<h2 id="a1">A1（决策框架）</h2>
+<ol>
+<li><strong>光模块/链路类故障</strong>：对号 X38-X44 清单——多数 workaround 是换模块类型、固定速率、调 inter-frame-gap/FEC</li>
+<li><strong>协议行为异常</strong>：对号 X47-X67——toggle 类问题避免不必要的 admin-state 操作；无解项记录为已知风险</li>
+<li><strong>特性部署前</strong>：查平台缺口（X21-X25/X28-X31）——P48Z16 聚合口位、MACsec 端口例外、6920/6575-MP16 无 VC、SPB BVLAN 不支持在线改</li>
+<li><strong>硬件换代</strong>：X30 类（9900 XNI 板进 CMM2/OS9912 机箱先升 U-Boot+FPGA）</li>
+</ol>
+<h2 id="a2">A2（操作步骤）</h2>
+<ul>
+<li><strong>光模块 CR 绕行</strong>：SFP-10G-T 对端强制 10G（X38，&lt;&lt;<PAGE 42>&gt;&gt;）；SFP-GIG-T 避开 10M 配置下的反复 admin disable/enable（X39，&lt;&lt;<PAGE 42>&gt;&gt;）；OS99-CNI-U8 4x25G DAC 起 lane 不来换 QSFP-100G-SR4 光纤（X40，&lt;&lt;<PAGE 42>&gt;&gt;）；SFP-DUAL-BX-U/D 只用于 6870-24/48/V12 的 1G（X41，&lt;&lt;<PAGE 43>&gt;&gt;）；VFL 4X25G splitter CRC 两侧 inter-frame-gap=13 或 FEC FC+关自协商（X44，&lt;&lt;<PAGE 42>&gt;&gt;）</li>
+<li><strong>MACsec 部署核对</strong>：端口矩阵例外——6870-24 口 25-26、6870-48 口 49-50 不支持；6865 系列不支持；6900 仅 X48C4E（Dynamic only）；6860N 仅 Dynamic 128-bit 且 splitter 光模块不支持；9900 CNI-U8 不支持（X22/X23，&lt;&lt;<PAGE 62>&gt;&gt;/&lt;&lt;<PAGE 17>&gt;&gt;/&lt;&lt;<PAGE 63>&gt;&gt;）</li>
+<li><strong>平台缺口预查</strong>：6920 本版无 VC、不支持 IP-IP/GRE/IPv6 隧道（X28，&lt;&lt;<PAGE 21>&gt;&gt;/&lt;&lt;<PAGE 43>&gt;&gt;）；6575-MP16 无 VC（X29，&lt;&lt;<PAGE 21>&gt;&gt;）；P48Z16(903954-90) 1G 口 1-32 不支持聚合，只能靠 PN 区分（X21，&lt;&lt;<PAGE 15>&gt;&gt;）；快速收敛例外：铜口/VFL/splitter 口、6865-P16X·U12X 口 3/4、6570M-12/12D 口 9/10（X24，&lt;&lt;<PAGE 15>&gt;&gt;）</li>
+<li><strong>6560 X4 系列 10G 解锁口</strong>：24X4/P24X4 口 25/26、48X4/P48X4 口 49/50（默认 1G）；6570M-U28 口 25-28、6870-LNI-U6（50G）同理（X25，&lt;&lt;<PAGE 19>&gt;&gt;）</li>
+<li><strong>SPB BVLAN 收敛运维</strong>：<code>show spb isis bvlans</code> 查全网 In Use → 维护窗内业务删除重建到 4 条 BVLAN → 空闲 BVLAN 全网删除（在线改不支持）（C17，&lt;&lt;<PAGE 66>&gt;&gt;/X31 &lt;&lt;<PAGE 65>&gt;&gt;）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>SPB BVLAN 收敛到 4 条的运维操作（C17，&lt;&lt;<PAGE 66>&gt;&gt;）</li>
+<li>Celona PD 降级规避：<code>lanpower {slot | port} autoclass disable</code>（C18，&lt;&lt;<PAGE 34>&gt;&gt;）</li>
+<li>MKA VLAN 隧道化：<code>interfaces &lt;c/s/p&gt; macsec mode dynamic mka-vlan &lt;vid&gt; [mka-tpid &lt;tpid&gt;]</code>，验证 <code>show interfaces macsec mka-info</code>（C19，&lt;&lt;<PAGE 35>&gt;&gt;）</li>
+<li>模块热插拔规程：拔线→拔光模块→拔板卡等 ≥30 秒再插同型号（CMM 15-20 分钟；新模块插入间隔 5 分钟且 LED 回正常）→重插光模块→接线；CFM 一次只换一个、120 秒内完成（C14，&lt;&lt;<PAGE 47-48>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（反例/坑）</h2>
+<ul>
+<li>SFP-GIG-T 对端从 10M 变 100M/1G 间歇性链路 down：U28 热插拔模块恢复，12/12D 可能要整机重启（X43，&lt;&lt;<PAGE 42>&gt;&gt;）；6570M-U28 口 25 + SFP-10G-T 对端反复 admin 翻动出现仅本地 linkup（X42，&lt;&lt;<PAGE 42>&gt;&gt;）</li>
+<li>OS9912 聚合口禁用某成员后哈希失衡，流量可能全压一条剩余链路，无解（X47，&lt;&lt;<PAGE 41>&gt;&gt;）</li>
+<li>PTP 打戳 PHY 口↔PHYless 口交叉时不正确（6870-V12 1-12↔13-14/CNI/LNI；6570-U28 1-24↔25-30），无解（X48，&lt;&lt;<PAGE 41>&gt;&gt;）</li>
+<li>BFD 在 VRRP VLAN 接口 toggle 时丢包，无解（X50，&lt;&lt;<PAGE 41>&gt;&gt;）</li>
+<li>EVPN 一组 toggle 触发掉流：对称 IRB service toggle、PIM+非对称 BGP admin-state toggle、非对称 OSPF admin-state toggle（X54，&lt;&lt;<PAGE 44>&gt;&gt;）</li>
+<li>OS6920 多项协议缺口：ICMP redirect 不转发、Snap 头 ARP 解析失败、IPv6 隧道不转发 ICMPv6、组播 MAC 广播不转发等（X53，&lt;&lt;<PAGE 43-44>&gt;&gt;）</li>
+<li>二次 vc-takeover 后 sdp/sap MAC 可能从 show mac-learning 丢失，重发流量可恢复（X56，&lt;&lt;<PAGE 45>&gt;&gt;）；OS9900 chassis-2 偶发 cmm-takeover 后 VC 分裂，无解（X57，&lt;&lt;<PAGE 45>&gt;&gt;）</li>
+<li>静态 MACsec 无加密时 key 不匹配流量仍通——安全审计注意（X60，&lt;&lt;<PAGE 45>&gt;&gt;）</li>
+<li>OS99-XNI-P24Z8 前 8 口 dynamic MACsec reload 后状态 down，需手动 toggle admin state（X59，&lt;&lt;<PAGE 45>&gt;&gt;）</li>
+<li>OS6900-V48 无损 TC 上限 40：全 TC 无损 DCB profile 最多 5 端口，更多需自定义 QSP 只配必要无损 TC（X62，&lt;&lt;<PAGE 45-46>&gt;&gt;）</li>
+<li>OS6575 启用 policy rule Redirect_All 后掉流量，无解（X63，&lt;&lt;<PAGE 46>&gt;&gt;）；8 成员 LAG 禁主口后组播/广播负载失衡（X52，&lt;&lt;<PAGE 41>&gt;&gt;）</li>
+<li>OS6860N-U28 控制台 smgrOpenLicenseFile 错误无功能影响（X46，&lt;&lt;<PAGE 43>&gt;&gt;）；CMM2+XNI-U48 板违规恢复比 WTR 多约 2 分钟（X51，&lt;&lt;<PAGE 41>&gt;&gt;）</li>
+</ul>
+<h2 id="_1">来源</h2>
+<p>OmniSwitch AOS Release 8.10R4 Release Notes Open Problem Reports（&lt;&lt;<PAGE 41-46>&gt;&gt;）、Prerequisites（&lt;&lt;<PAGE 14-21>&gt;&gt;）、Appendix B MACsec Platform Support（&lt;&lt;<PAGE 62-63>&gt;&gt;）、Appendix C SPB（&lt;&lt;<PAGE 64-66>&gt;&gt;）、Hot-Swap Guidelines（&lt;&lt;<PAGE 47-49>&gt;&gt;）。条目来源：counter-examples X21-X25/X28-X31/X38-X44/X46-X48/X50-X53/X54-X57/X59/X60/X62/X63/X65；cases C14/C17-C19。</p><div class="pn"><a href="aos-rn-secure-boot.html">⬅ 上一单元：aos-rn-secure-boot</a><a class="nxt" href="aos-rn-new-features-deprecations.html">下一单元：aos-rn-new-features-deprecations ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>教书理解 BOOK_OVERVIEW — AOS 8.10R04 · Release Notes</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>AOS 8.10R04 · Release Notes</h1>
+<div class="sub">105 页 · 版本说明（升级方法论/Secure Boot/已知问题库/新特性与废弃）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">升级与安全</div>
+<a href="skills/aos-rn-upgrade-path.html">aos-rn-upgrade-path</a>
+<a href="skills/aos-rn-secure-boot.html">aos-rn-secure-boot</a>
+<div class="grp">问题与特性</div>
+<a href="skills/aos-rn-known-issues.html">aos-rn-known-issues</a>
+<a href="skills/aos-rn-new-features-deprecations.html">aos-rn-new-features-deprecations</a></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../aos/index.html">AOS 软件手册</a> › <a href="index.html">AOS 8.10R04</a> › <span>教书理解 BOOK_OVERVIEW</span></nav><h1>教书理解 BOOK_OVERVIEW</h1><h1 id="omniswitch-aos-release-810r4-release-notes">OmniSwitch AOS Release 8.10R4 Release Notes — 全书概览</h1>
+<ul>
+<li>书名：Release Notes — OmniSwitch 6360/6465/6560(E)/6570M/6575/6860(E)/6860N/6865/6870/6900/6920/9900, Release 8.10R4</li>
+<li>出版：ALE（Alcatel-Lucent Enterprise），2025-12，Part No. 033808-00 Rev. A</li>
+<li>页数：105 页（fulltext.md 页码标记 <code>&lt;&lt;&lt;PAGE N&gt;&gt;&gt;</code>，与 PDF 页码一致）</li>
+<li>性质：版本发布说明——升级前提、新特性、许可、已知问题（Open CR）、修复列表（Fixed CR）、升级流程附录。信息密度高、大量内容为"手册里没有"的独占信息（原书自述："Since much of the information in these release notes is not included in the hardware and software user manuals, it is important that you read all sections"）</li>
+</ul>
+<h2 id="_1">章节结构与蒸馏重点</h2>
+<table>
+<thead>
+<tr>
+<th>页</th>
+<th>章节</th>
+<th>蒸馏重点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4-14</td>
+<td>System Specifications</td>
+<td>各机型 SDRAM/Flash 配置；各机型 U-Boot/FPGA/ONIE/CPLD 最低版与当前版矩阵（升级硬前提）</td>
+</tr>
+<tr>
+<td>15-18</td>
+<td>[MUST READ] Prerequisites and Deployment</td>
+<td>出厂首次启动 VC 自动化副作用、OS6560-P48Z16(903954-90) 聚合限制、快速收敛例外、MACsec 站点许可、SHA-1/ssh-rsa 禁用、按版本列出的废弃特性（EVB/NTP/WRED/OVSDB/EVPN VRF 化等）</td>
+</tr>
+<tr>
+<td>19-20</td>
+<td>Licensed Features</td>
+<td>CAPEX 特性许可表（MACsec/10G/MPLS/50G）、Metro 许可、Advanced Routing 许可差异</td>
+</tr>
+<tr>
+<td>21-22</td>
+<td>New Hardware Support</td>
+<td>OS6575 三款工业机型、OS6920-D32、400G/100G 新光模块</td>
+</tr>
+<tr>
+<td>23-40</td>
+<td>8.10R4 New Features</td>
+<td>管理类（Router Mode/su 安全/首访改密/ALE CA 证书/弱加密禁用/Linux 命令）、L3（IPv6 BGP 聚合/PIM over GRE/sFlow BGP 网关）、业务类（EVPN 多站点/VXLAN EVPN on 6870/PEG/SPB on 6570M·6575/ERP over SPB）、安全类（TLS 1.3/Secure Boot/IP 分片攻击防护/PKIX SSH/MKA VLAN Tag）、其他（Threat-Insight/RoCEv2 DCQCN/PROFINET/DHL Active-Standby/Telemetry/Multi-Site SPB）</td>
+</tr>
+<tr>
+<td>41-46</td>
+<td>Open Problem Reports</td>
+<td>发布时已知未修问题：光模块/链路类（SFP-10G-T 只跑 10G、SFP-GIG-T 10M 抖动、4X25G 分光纤 CRC）、EVPN toggle 掉流、VC sdp/sap MAC 丢失、MACsec 静态无加密 mismatch 仍通、OS6920 隧道不支持等</td>
+</tr>
+<tr>
+<td>47-49</td>
+<td>Hot-Swap/Redundancy Guidelines</td>
+<td>NI 拔插间隔 30 秒、CMM 15-20 分钟、同型号才能热换、fast/perpetual PoE 换异种电源流程</td>
+</tr>
+<tr>
+<td>52-61</td>
+<td>Appendix A: Feature Matrix</td>
+<td>13 平台 × 数百特性首次支持版本矩阵（Y/N/版本号/EA）</td>
+</tr>
+<tr>
+<td>62-63</td>
+<td>Appendix B: MACsec Platform Support</td>
+<td>各平台/模块 MACsec 端口级支持与密钥长度（128/256-bit、Static/Dynamic）</td>
+</tr>
+<tr>
+<td>64-66</td>
+<td>Appendix C: SPB L3 VPN-Lite</td>
+<td>Inline Routing 与 External Loopback 协议支持表；BVLAN 收敛到 4 条的指南与 <code>show spb isis bvlans</code> 判活</td>
+</tr>
+<tr>
+<td>67-71</td>
+<td>Appendix D: Upgrade Requirements</td>
+<td>标准/ISSU 两路径、ISSU 支持版本清单、升级前置检查（certified 配置、U-Boot/FPGA 版本、tech-support 基线）</td>
+</tr>
+<tr>
+<td>72-73</td>
+<td>Appendix E: Standard Upgrade</td>
+<td>5 步标准升级：下载→FTP→reload from working→验证→copy running certified</td>
+</tr>
+<tr>
+<td>74-76</td>
+<td>Appendix F: ISSU</td>
+<td>12 步 ISSU：mkdir issu 目录→清理 Slave 同名目录→issu from→show issu status→certify</td>
+</tr>
+<tr>
+<td>77-80</td>
+<td>Appendix G: FPGA/U-boot Upgrade</td>
+<td>按 CR 索引的 FPGA/CPLD/U-Boot 升级表 + <code>update fpga-cpld</code>/<code>update uboot</code> 命令</td>
+</tr>
+<tr>
+<td>81-82</td>
+<td>Appendix H: CPLD/ONIE Upgrade</td>
+<td>ONIE 机型 CPLD kit 逐个升级 + <code>pkgmgr install *-onie-v1.deb</code></td>
+</tr>
+<tr>
+<td>83-100</td>
+<td>Appendix I: Fixed Problem Reports</td>
+<td>本版修复的数十条 CR（DHCP snooping 绑定、MSTP 跨域 TCN、SSH 内存泄漏、VC DHCP 停转、SPB 控制 MAC 回落等），多数含根因解释</td>
+</tr>
+<tr>
+<td>101-102</td>
+<td>Appendix J: Packages</td>
+<td>pkgmgr 安装/卸载、AMS/IoT-Profiler 升级前明文密码处理</td>
+</tr>
+<tr>
+<td>103</td>
+<td>Appendix K: Fixed CVEs</td>
+<td>CVE-2025-49794/49795/49796、6965、3277、49844、46817、1861 等</td>
+</tr>
+<tr>
+<td>104-105</td>
+<td>Appendix L: Secure Boot</td>
+<td>各平台 Secure Boot 镜像/U-Boot/BIOS 要求与升级次序</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_2">蒸馏策略（本书特调）</h2>
+<ul>
+<li><strong>counter-examples 是大头</strong>：升级陷阱（Secure Boot 前必须先升 U-Boot、ISSU 不支持的平台、8.10R3 EVPN 必须手工迁 VRF）、已知未修问题（Open CR 全量收）、废弃特性（EVB 配置存在则无法升 8.5R4+）、平台/端口级限制（MACsec 端口矩阵、OS6560-P48Z16 聚合）</li>
+<li><strong>principles 收新特性机制</strong>：Secure Boot 信任链、ALE CA 证书生命周期、DHL Active-Standby、Telemetry IPFIX 管道、Multi-Site SPB 层级、MKA VLAN/TPID 隧道化等</li>
+<li><strong>cases 收升级流程</strong>：标准升级、ISSU、FPGA/U-Boot、CPLD/ONIE、Secure Boot、包管理六套</li>
+<li><strong>frameworks</strong>：升级方法论（Standard/ISSU 二分）、固件三件套（AOS/U-Boot·ONIE/FPGA·CPLD）分层、Feature Matrix 查询法</li>
+<li><strong>glossary</strong>：版本/固件/许可/新特性术语</li>
+</ul><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

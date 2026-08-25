@@ -1,0 +1,120 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>aos-nc-access-security — AOS 8.10R04 · Network Configuration</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>AOS 8.10R04 · Network Configuration</h1>
+<div class="sub">1745 页 · 网络配置全科（二层/织构/IP 服务/路由/组播/QoS/准入/OAM，48 章）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">二层与冗余</div>
+<a href="../skills/aos-nc-vlan-l2.html">aos-nc-vlan-l2</a>
+<a href="../skills/aos-nc-redundancy-protection.html">aos-nc-redundancy-protection</a>
+<div class="grp">骨干织构</div>
+<a href="../skills/aos-nc-fabric-backbone.html">aos-nc-fabric-backbone</a>
+<div class="grp">三层与服务</div>
+<a href="../skills/aos-nc-ip-ipv6-services.html">aos-nc-ip-ipv6-services</a>
+<a href="../skills/aos-nc-routing.html">aos-nc-routing</a>
+<a href="../skills/aos-nc-multicast.html">aos-nc-multicast</a>
+<div class="grp">策略与安全</div>
+<a href="../skills/aos-nc-qos-policy.html">aos-nc-qos-policy</a>
+<a href="../skills/aos-nc-access-security.html" class="on">aos-nc-access-security</a>
+<div class="grp">监测与基础</div>
+<a href="../skills/aos-nc-oam-monitoring.html">aos-nc-oam-monitoring</a>
+<a href="../skills/aos-nc-switch-foundation.html">aos-nc-switch-foundation</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../aos/index.html">AOS 软件手册</a> › <a href="../index.html">AOS 8.10R04</a> › <span>aos-nc-access-security</span></nav><h1>aos-nc-access-security</h1><p class="meta"><span class="badge">SKILL</span> aos-nc-access-security · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>边缘端口要认证准入：802.1X（supplicant）或 MAC 认证（打印机/IoT）</li>
+<li>认证后按用户/设备给不同 VLAN 与 QoS：UNP profile+分类规则</li>
+<li>访客 Web 认证：Captive Portal</li>
+<li>AAA 服务器选型与备份：RADIUS/RADSEC/TACACS+/LDAP</li>
+<li>BYOD/零配置发现：mDNS/SSDP relay；AP 流量回传：L2 GRE</li>
+<li>要按应用（DPI/REGEX 指纹）识别并施策：AppMon/AFP</li>
+<li>限制端口学习 MAC 数防私接：LPS</li>
+<li>取证与流量分析：端口镜像/端口监控/sFlow/RMON</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>网络准入框架（F9，&lt;&lt;<PAGE 1212>&gt;&gt;）：认证（802.1X/MAC/Captive Portal→RADIUS/UPAM/CPPM）→分类（UNP 规则/端口默认）→角色（profile：VLAN/service 映射+QoS 列表）→限制/隔离（QMR 隔离修复）；BYOD（mDNS/SSDP）与 IoT profiling 是外延。AAA 服务器选型矩阵（F10，&lt;&lt;<PAGE 1475>&gt;&gt;）：RADIUS（管理+准入）/TACACS+（管理含 SNMP）/LDAP（管理含 SNMP）。应用感知框架（F11，&lt;&lt;<PAGE 1431>&gt;&gt;/&lt;&lt;<PAGE 1457>&gt;&gt;）：AppMon（DPI 签名+应用列表+QoS 执行）与 AFP（REGEX 指纹+分类器库+trap/UNP 列表）互补。安全纵深四层（F18，&lt;&lt;<PAGE 83>&gt;&gt;/&lt;&lt;<PAGE 1536>&gt;&gt;/&lt;&lt;<PAGE 819>&gt;&gt;/&lt;&lt;<PAGE 1212>&gt;&gt;）：端口级（LPS/风暴控制）→链路级（MACsec）→网络级（IPsec/DoS）→身份级（AG/UNP）。</p>
+<h2 id="a1">A1（决策框架）</h2>
+<ol>
+<li><strong>准入路径</strong>：supplicant 用 802.1X（EAP over RADIUS）；非 supplicant 用 MAC 认证（MAC 作 username/password）；无认证场景用 UNP 分类规则（源 MAC/IP/domain 等）（P167/P169，&lt;&lt;<PAGE 1213>&gt;&gt;）</li>
+<li><strong>标准次序</strong>：先配 RADIUS→profile→映射→分类规则→端口→认证/分类使能→默认 profile（P171，&lt;&lt;<PAGE 1211>&gt;&gt;）</li>
+<li><strong>AAA 选型</strong>：端口准入只认 RADIUS（TACACS+/LDAP 不支持，X71）；管理授权优先从服务器取，未配置回落本地用户库（P180）</li>
+<li><strong>应用识别</strong>：面向 OVNG DPI 生态选 AppMon；面向服务器侧端口行为选 AFP（F11）</li>
+<li><strong>观测面选型</strong>：抓包分析端口镜像/端口监控；采样统计 sFlow；SNMP 探针 RMON（F15）</li>
+</ol>
+<h2 id="a2">A2（操作步骤）</h2>
+<ul>
+<li><strong>Access Guardian 十二步</strong>：<code>aaa radius-server rad1_mac host 10.135.60.44 hash-key secret ...</code>→<code>aaa device-authentication mac rad1_mac</code>→<code>aaa mac session-timeout enable</code>→<code>unp profile na_employee</code>→<code>unp profile na_employee qos-policy-list naEmpList</code>→默认 profile <code>unp profile def_unp</code>→<code>unp profile map na_employee vlan 100</code>→<code>unp classification mac-range ... profile1 na_employee</code>→<code>unp port 1/1/20 port-type bridge</code>→<code>unp port 1/1/1 mac-authentication</code>→<code>unp port 1/1/1 classification</code>→端口默认 profile；验证 show unp 系列（cases·C55，&lt;&lt;<PAGE 1210>&gt;&gt;）</li>
+<li><strong>Captive Portal</strong>：操作模式→配置 profile→替换证书→自定义 web 页→认证流程（cases·C56，&lt;&lt;<PAGE 1303>&gt;&gt;）</li>
+<li><strong>L2 GRE 隧道（BYOD/AP 流量）</strong>：tunnel access switch 与 tunnel aggregation switch 两侧配置+外部环回 SAP+SDP 绑定（cases·C57，&lt;&lt;<PAGE 1353>&gt;&gt;）</li>
+<li><strong>mDNS/SSDP 零配置</strong>：使能 relay→VLAN/service 域配置→（可选）filtering 规则（cases·C58，&lt;&lt;<PAGE 1400>&gt;&gt;）</li>
+<li><strong>AppMon</strong>：签名 kit 文件→应用池→应用列表→应用组→QoS 策略；监控流程=端口采样→签名匹配→更新流数据库→应用记录，强制流程再叠加 QoS 执行（P174/P175，&lt;&lt;<PAGE 1431-1432>&gt;&gt;）</li>
+<li><strong>AFP</strong>：REGEX 签名文件（/flash/app-signature/app-regex.txt）匹配采样 IP 包，命中生成分类器入库并联动 QoS/trap/UNP 列表；默认全局使能但所有端口禁用，端口使能才采样（P176/P177，&lt;&lt;<PAGE 1457>&gt;&gt;）</li>
+<li><strong>LPS</strong>：学习窗口时长+最大 bridged/filtered 数量+授权 MAC 范围；违规处理三选一（阻断违规流量/停止学习/管理关闭端口）（P182/P183，&lt;&lt;<PAGE 1536>&gt;&gt;）</li>
+<li><strong>端口镜像</strong>：<code>port-mirroring 6 source 1/2/3-9 destination 1/2/10 unblocked-vlan 7</code>；验证 <code>show port-mirroring status 6</code>（cases·C59，&lt;&lt;<PAGE 1558>&gt;&gt;）</li>
+<li><strong>sFlow 三段</strong>：<code>sflow receiver 1 name Golden address 198.206.181.3</code>→<code>sflow sampler 1 port 2/1/1-5 receiver 1 rate 2048 sample-hdr-size 128</code>→<code>sflow poller 1 port 1/2/6-10 receiver 1 interval 30</code>；验证 <code>show sflow receiver</code>（cases·C60，&lt;&lt;<PAGE 1561>&gt;&gt;）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>Access Guardian 十二步快配（C55，&lt;&lt;<PAGE 1210>&gt;&gt;）</li>
+<li>Captive Portal 五步（C56，&lt;&lt;<PAGE 1303>&gt;&gt;）</li>
+<li>sFlow 三段配置（C60，&lt;&lt;<PAGE 1561>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（反例/坑）</h2>
+<ul>
+<li>认证服务器不逐台轮询：第一台可用服务器上找不到用户即判失败，不自动试下台（X70/P179，&lt;&lt;<PAGE 1475>&gt;&gt;）</li>
+<li>TACACS+/LDAP 不支持端口准入，Access Guardian 只认 RADIUS（X71，&lt;&lt;<PAGE 1475>&gt;&gt;）</li>
+<li>MAC 认证把 MAC 同时作用户名密码，服务器侧格式不匹配（大小写/分隔符）会全军覆没（X74，&lt;&lt;<PAGE 1214>&gt;&gt;）</li>
+<li>认证失败或无 profile 返回时回落到 UNP 端口默认 profile 与分类规则（P168，&lt;&lt;<PAGE 1213>&gt;&gt;）；MAC 会话定时器默认 12 小时（P172，&lt;&lt;<PAGE 1210>&gt;&gt;）</li>
+<li>LPS 不支持 linkagg/聚合成员口；学习窗口全局生效不能按口调（X69/P184，&lt;&lt;<PAGE 1536>&gt;&gt;）；MAC 四类型中 bridged 满后新地址按 filtered 学（P185，&lt;&lt;<PAGE 1537>&gt;&gt;）</li>
+<li>sFlow 三件套默认 UDP 6343、datagram 1400 字节、版本 5；端口镜像加 unblocked-vlan 防 STP 变化中断镜像会话（P188/P187，&lt;&lt;<PAGE 1561, 1558>&gt;&gt;）</li>
+<li>端口监控（port-monitoring）持久会话落盘数据文件默认 64K、可覆盖、capture brief（P189，&lt;&lt;<PAGE 1559>&gt;&gt;）</li>
+<li>802.1Q tagged 口默认 untrusted，上联口标记不生效（X64，&lt;&lt;<PAGE 1134>&gt;&gt;，详见 aos-nc-qos-policy）</li>
+</ul>
+<h2 id="_1">来源</h2>
+<p>OmniSwitch AOS 8.10R4 Network Configuration Guide 第 35 章 Access Guardian（&lt;&lt;<PAGE 1210-1400>&gt;&gt;）、第 36 章 AppMon（&lt;&lt;<PAGE 1431-1449>&gt;&gt;）、第 37 章 AFP（&lt;&lt;<PAGE 1457-1458>&gt;&gt;）、第 38 章 Authentication Servers（&lt;&lt;<PAGE 1475-1525>&gt;&gt;）、第 40 章 LPS（&lt;&lt;<PAGE 1536-1542>&gt;&gt;）、第 41 章端口镜像/sFlow/RMON（&lt;&lt;<PAGE 1558-1567>&gt;&gt;）。条目来源：cases C55-C60；principles P167-P190；counter-examples X69-X71/X74；frameworks F9-F11/F15/F18。</p><div class="pn"><a href="aos-nc-qos-policy.html">⬅ 上一单元：aos-nc-qos-policy</a><a class="nxt" href="aos-nc-oam-monitoring.html">下一单元：aos-nc-oam-monitoring ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

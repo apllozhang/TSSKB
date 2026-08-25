@@ -62,6 +62,12 @@ def gen(slug):
             keep_flag = r.get("ok", True)
             if slug in KEEP and any(head.startswith(k) for k in KEEP[slug]):
                 keep_flag = True
+            # 自动 KEEP 清单：books/<slug>/v1_keep_auto.json = [[cat, head40], ...]
+            auto_path = bdir / "v1_keep_auto.json"
+            if auto_path.exists():
+                auto = json.load(open(auto_path, encoding="utf-8"))
+                if [cat, head] in auto:
+                    keep_flag = True
             if slug in DROP and any(head.startswith(k) for k in DROP[slug]):
                 keep_flag = False
             (keep if keep_flag else drop).append(e)
