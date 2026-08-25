@@ -1,0 +1,113 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>sol-sec-device-access — 网络基础设施安全 · Tech Brief</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>网络基础设施安全 · Tech Brief</h1>
+<div class="sub">2 份 100 页 · 安全 Tech Brief + 白皮书（五层框架/三平面加固/NLM 生命周期）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">框架与加固</div>
+<a href="../skills/sol-sec-five-layer-framework.html">sol-sec-five-layer-framework</a>
+<a href="../skills/sol-sec-protocol-hardening.html">sol-sec-protocol-hardening</a>
+<div class="grp">准入与运维</div>
+<a href="../skills/sol-sec-device-access.html" class="on">sol-sec-device-access</a>
+<a href="../skills/sol-sec-nlm-lifecycle.html">sol-sec-nlm-lifecycle</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../solutions/index.html">解决方案</a> › <a href="../index.html">网络基础设施安全</a> › <span>sol-sec-device-access</span></nav><h1>sol-sec-device-access</h1><p class="meta"><span class="badge">SKILL</span> sol-sec-device-access · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>首次开机安全基线：改默认口令、限制控制台、关多余服务</li>
+<li>规划管理通道：带外 EMP vs 管理 VRF vs 数据 VRF 关管理口</li>
+<li>部署 SSH PKA、IP 锁定、AAA 集中化与 RADIUS over TLS</li>
+<li>SNMPv3 三模型选择、PKI/SSL cipher、Captive Portal 证书</li>
+<li>按合规要求选择 CC/JITC/FIPS/ASA enhanced 安全模式</li>
+<li>加固 OmniVista：2FA、Network ID、REST API 凭据管理</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>管理面三道闸（F2，&lt;&lt;<PAGE 9-30>&gt;&gt;）：物理/引导层（U-boot 口令+镜像校验）→ 通道层（OOB 优先、管理 VRF 隔离、白名单）→ 认证层（强加密 SSH+PKA+AAA+MFA）。密码认证固有弱点（可预测、重用、共享、钓鱼、暴力破解、长期有效，X5，&lt;&lt;<PAGE 16>&gt;&gt;）——公钥+多因素是出路（P22/P27）。安全模式是成套收紧：CC 仅 console+SSH、JITC 军规、FIPS 强算法，互斥选用。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<ol>
+<li>管理通道选型：专用物理 OOB（最优，P14）→ 不行则带内专用 VLAN/VRF（次优）→ 数据 VRF 内逐项关闭管理服务兜底（P15/C5，&lt;&lt;<PAGE 10>&gt;&gt;）</li>
+<li>认证体系递进：改默认口令（P17）→ 强口令策略（P45）→ SSH 强加密+PKA（P21/P22）→ IP 锁定+限登录次数（P23/P25）→ AAA 集中化+MFA（P27/P28）→ RADIUS over TLS（P29）</li>
+<li>安全模式选择：常规 ASA enhanced（P43）→ 合规 CC（默认 admin 仅装机用，X14）→ 军用 JITC → 密码合规 FIPS；互斥不可叠加（&lt;&lt;<PAGE 24-28>&gt;&gt;）</li>
+<li>网管平台（OmniVista）加固：2FA 全用户（P74）→ 停用未用服务（P75）→ Network ID 安全上线（P76）→ API 凭据不入代码+专用账户+最小权限（P80）</li>
+</ol>
+<h2 id="a2">A2（操作步骤）</h2>
+<ul>
+<li><strong>首开基线</strong>：改 admin 默认口令 "switch"（X1/P17）；secureadmin 首登强制改密并可校验镜像完整性（C4，&lt;&lt;<PAGE 11>&gt;&gt;）；U-boot/ONIE 设口令（P12）</li>
+<li><strong>管理 VRF 收敛攻击面</strong>（C5，&lt;&lt;<PAGE 10>&gt;&gt;）：<code>vrf data ssh admin-state disable</code> / <code>vrf data telnet admin-state disable</code> / <code>vrf data webview server disable</code></li>
+<li><strong>管理站白名单</strong>：仅预定义 IP 可管理，上限 64 个（P16，&lt;&lt;<PAGE 11>&gt;&gt;）</li>
+<li><strong>SSH PKA 七步</strong>（C6，&lt;&lt;<PAGE 14>&gt;&gt;）：ssh-keygen 生成对→保存私钥→scp 公钥上机→建用户→installsshkey→公钥登录→<code>ssh enforce-pubkey-auth</code></li>
+<li><strong>暴力破解防护</strong>：限登录尝试次数（P23）+ 收敛 login-grace-time（默认 120s）与会话超时（P24）+ IP 锁定阈值（认证失败达阈值永久封禁，清单上限 128 IP）（C7/P25，&lt;&lt;<PAGE 14-15>&gt;&gt;）</li>
+<li><strong>AAA 回退链</strong>（C8，&lt;&lt;<PAGE 16>&gt;&gt;）：<code>aaa authentication ssh rad1 ldap2 local</code>——顺序可用性回退，rad1 挂走 ldap2，再挂走本地库；RADIUS over TLS 消除 MD5 风险（P29，&lt;&lt;<PAGE 17>&gt;&gt;）；按命令域/族做 RBAC（P30，&lt;&lt;<PAGE 17-18>&gt;&gt;）并开记账与 command.log（P31/P32，&lt;&lt;<PAGE 18-19>&gt;&gt;）</li>
+<li><strong>SNMPv3</strong>：VACM 视图访问 + USM 用户安全 + TSM（over TLS/DTLS，已有 PKI 则用 TSM，否则 USM）；SNMP 专用账户禁 SSH；开认证陷阱（P33-P36，&lt;&lt;<PAGE 19-20>&gt;&gt;）；TSM 需 <code>snmp tsm-map remote-identity manager.crt user ...</code> 证书映射（C9，&lt;&lt;<PAGE 20>&gt;&gt;）</li>
+<li><strong>PKI/SSL</strong>：三模式 No Validation（默认，不校验）/Server Cert Validation/Mutual Auth（P38，&lt;&lt;<PAGE 21>&gt;&gt;）；cipher 设 high（CC 模式强制 high）；WebView 换自定义证书勿依赖自签默认（P39/P40/X11，&lt;&lt;<PAGE 22-23>&gt;&gt;）；OCSP/CRL 校验失败即断 TLS（&lt;&lt;<PAGE 22>&gt;&gt;）</li>
+<li><strong>JITC 细则</strong>（C13，&lt;&lt;<PAGE 27>&gt;&gt;）：口令≥15 字符；SSH 每 GB 或每 60 分钟 rekey；升级前必须验签</li>
+<li><strong>日志</strong>：集中 syslog + TLS 加密 + 第二服务器冗余（P37，&lt;&lt;<PAGE 21>&gt;&gt;）</li>
+<li><strong>OmniVista</strong>：MSP/Organization 两级用户均开 2FA（P74，&lt;&lt;<PAGE 72>&gt;&gt;）；DHCP Option 43 Sub-Option 133 下发 Network ID，Strict Mode 拒绝无 ID 设备（P76，&lt;&lt;<PAGE 75-76>&gt;&gt;）；API 凭据用第三方保管、专用账户、最小权限、勿暴露公网（P80/X23/X24，&lt;&lt;<PAGE 84>&gt;&gt;）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>secureadmin 特权账户首登强制改密与自检（C4，&lt;&lt;<PAGE 11>&gt;&gt;）</li>
+<li>SSH PKA 部署七步（C6，&lt;&lt;<PAGE 14>&gt;&gt;）</li>
+<li>IP 锁定与封禁清单（上限 128 IP）（C7，&lt;&lt;<PAGE 15>&gt;&gt;）</li>
+<li>RADIUS 服务器排序回退链（rad1→ldap2→local）（C8，&lt;&lt;<PAGE 16>&gt;&gt;）</li>
+<li>SNMP over TLS（TSM）证书身份映射（C9，&lt;&lt;<PAGE 20>&gt;&gt;）</li>
+<li>JITC 模式强制安全细则（C13，&lt;&lt;<PAGE 27>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（反例与坑）</h2>
+<ul>
+<li>默认口令 "switch"：admin 与 secureadmin 首开同密码（X1，&lt;&lt;<PAGE 11>&gt;&gt;）</li>
+<li>控制台直连可重置管理员口令——控制台也要管起来（X2/P18，&lt;&lt;<PAGE 11>&gt;&gt;）</li>
+<li>U-boot 口令丢失且 flash 损坏时只能返厂（C3，&lt;&lt;<PAGE 9>&gt;&gt;）</li>
+<li>工厂默认口令策略弱（无大小写要求数）、默认无用户锁定——必须手工收紧（X12/X13，&lt;&lt;<PAGE 25>&gt;&gt;）</li>
+<li>默认 PKI 模式 No Validation 不校验证书（X10，&lt;&lt;<PAGE 21>&gt;&gt;）</li>
+<li>自签默认证书触发浏览器告警且不可依赖（X11，&lt;&lt;<PAGE 23>&gt;&gt;）</li>
+<li>CC 模式下日常管理用默认 admin 是反模式（X14，&lt;&lt;<PAGE 26>&gt;&gt;）</li>
+<li>API 凭据硬编码、API 暴露公网（X23/X24，&lt;&lt;<PAGE 84>&gt;&gt;）</li>
+<li>不用的 WebView 应整服务关闭而非仅改口（P26，&lt;&lt;<PAGE 15>&gt;&gt;）</li>
+</ul>
+<p>来源：Network Security Guidelines（Management Plane 章 + OmniVista 章，p9-30、71-85）</p><div class="pn"><a href="sol-sec-protocol-hardening.html">⬅ 上一单元：sol-sec-protocol-hardening</a><a class="nxt" href="sol-sec-nlm-lifecycle.html">下一单元：sol-sec-nlm-lifecycle ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

@@ -1,0 +1,946 @@
+{
+ "cases": [
+  {
+   "h": 0.96,
+   "ok": true,
+   "head": "- **C1 VLAN 域 AP 发现配置流程**：`vlan 125 name \"AP Management VLAN\"` → 上联口打标"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C2 服务域（SPB）AP 发现配置流程**：`service l2profile \"ap-SvcUnp\" 802.1ab peer"
+  },
+  {
+   "h": 0.92,
+   "ok": true,
+   "head": "- **C3 AP 安全模式认证时序**：AP 发 LLDP-MED TLV 自证身份 → 交换机 UNP 规则归入 defaultWLAN"
+  },
+  {
+   "h": 0.86,
+   "ok": true,
+   "head": "- **C4 Trust Tag 接纳客户端 VLAN**：AP 上线的客户端 DHCP 流量带 SSID 对应 VLAN tag → 交换"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **C5 漫游判定操作矩阵**：新 AP 无客户端上下文→按新客户端处理；有上下文且 WLAN 服务/ARP 与 VLAN 映射一致→L"
+  },
+  {
+   "h": 0.25,
+   "ok": false,
+   "head": "- **C6 L2GRE 隧道建立流程**：隧道接入交换机与汇聚交换机各配端点 → UNP 口收到的流量按 L2/L3 方法分类进 UNP "
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **C7 mDNS 网关模式部署**：边缘交换机把 mDNS/SSDP 流量转发到网关交换机 → 网关按预配置 VLAN 共享列表在所有"
+  },
+  {
+   "h": 0.92,
+   "ok": true,
+   "head": "- **C8 mDNS Responder 模式部署**：核心交换机跑 Responder → 边缘交换机配 standard 型 L2GR"
+  },
+  {
+   "h": 0.88,
+   "ok": true,
+   "head": "- **C9 RAP 远程接入流程**：AP 启动连 OmniVista Cirrus 按 MAC 识别 → 下发 VPN 服务器公网 IP"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C10 OmniVista HA 部署选型**：Standalone 单机无故障切换；L2 HA 双 VM 同子网 + 虚拟 Clu"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C11 AP Onboarding 流程**：AP 初联自动回连 Cirrus Activation Server → 序列号对 D"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **C12 WCF 配置三步**：建 WCF Profile（可含多条过滤条件）→ 给 ARP 或 SSID 挂 WCF Profile"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C13 Mesh 建网约束**：有线上联者为 mesh root、无线上联者为 pure mesh；每 AP 最多 5 SSID +"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C14 访客认证四方式部署**：嵌入式 Captive Portal 自注册 / 社交登录（Facebook、Google、Rain"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C15 BYOD 注册管控**：用户经 UPAM Captive Portal 声明设备 → 挂符合安全策略的 ARP → 施加时限"
+  }
+ ],
+ "counter-examples": [
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X1 静态 VLAN 指定不可行**：\"static VLAN assignment of User VLANs is imprac"
+  },
+  {
+   "h": 0.94,
+   "ok": true,
+   "head": "- **X2 全量建 VLAN 拖垮扩展性与稳定性**：\"Creating and tagging all possible VLANs i"
+  },
+  {
+   "h": 0.89,
+   "ok": true,
+   "head": "- **X3 端口只能属于一个 untagged VLAN**：\"A port can only be assigned to one un"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X4 集中控制器架构的三宗罪**：\"centralized controller-based architectures, whic"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X5 集中控制器的持续成本**：\"the distributed control plane reduces both capita"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X6 单 AP 失败时邻 AP 自动补位（反衬集中式）**：\"if one AP fails, the neighboring AP"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X7 OmniVista 不逐台管 AP**：\"OmniVista does not manage individual APs\"，"
+  },
+  {
+   "h": 0.94,
+   "ok": true,
+   "head": "- **X8 单 VLAN 按 AP 组分组的失败场景**：\"it becomes problematic in situations wh"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X9 2.4GHz 不适合语音**：\"utilizing the 5GHz frequency band is highly rec"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X10 语音客户端超量掉质量**：\"limiting voice clients to 20-25 per Access Point"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X11 mDNS 传统模式的同网段安全风险**：\"traditionally, both the source and destin"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X12 组播低速率的效率问题**：\"Since multicast traffic is transmitted at lower "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X13 网桥模式 AP 不再服务客户端**：\"the access points forego the provision of r"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X14 L3 HA 功能缺失**：\"Certain features, such as sFlow, policy enforcem"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X15 L3 HA 冗余设置不能走界面**：\"redundancy settings such as setting a Prefe"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X16 安全不应绑定物理端口**：\"Rather than being tied to a specific switch port"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X17 未注册设备不得入网**：\"it is issued the necessary certificates… ensuring"
+  },
+  {
+   "h": 0.93,
+   "ok": true,
+   "head": "- **X18 干扰 AP 不是直接安全威胁**：\"An interfering AP is visible within the wire"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X19 流氓 AP 遏制默认关闭**：\"If an AP is classified as rogue, and containme"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X20 传统资产盘点靠猜**：\"enterprises have had to rely on indirect methods s"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X21 Hybrid POL 并非处处适用，定位大园区**：\"ALE HPOL is the ideal solution for "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X22 纯 ONT 架构能力受限**：\"Redundancy at all network layers is not requir"
+  }
+ ],
+ "frameworks": [
+  {
+   "h": 0.14,
+   "ok": false,
+   "head": "- **F1 园区三层设计栈框架**：需求四目标（可用/扩展/安全/性能）→ 拓扑模型（两层折叠 vs 三层）→ 接入层构件（VC/Stac"
+  },
+  {
+   "h": 0.38,
+   "ok": true,
+   "head": "- **F2 Stellar 无控制器 WLAN 框架**：管理面集中（OmniVista Enterprise/Cirrus）+ 控制面分"
+  },
+  {
+   "h": 0.58,
+   "ok": true,
+   "head": "- **F3 AP 接入双域框架**：VLAN 域（bridge 口 + defaultWLANProfile map vlan + MVR"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **F4 漫游与用户移动框架**：客户端上下文共享 → 漫游判定矩阵（无上下文/上下文+ARP 匹配/上下文+VLAN 不匹配）→ L2"
+  },
+  {
+   "h": 0.58,
+   "ok": true,
+   "head": "- **F5 统一接入安全框架**：UPAM 中央 RADIUS+captive portal → 认证谱系（IoT 指纹/MAC、802."
+  },
+  {
+   "h": 0.6,
+   "ok": true,
+   "head": "- **F6 Hybrid POL 混合架构框架**：Nokia POL 光分配网（单纤点对多点+ONT）作物理承载 + ALE 以太接入交"
+  }
+ ],
+ "glossary": [
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Digital Age Networking**：ALE 网络理念：自治网络、IoT 安全接入、业务流程自动化三支柱 <<<PAGE"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **两层折叠核心模型（Two-Layered Collapsed Core）**：核心与汇聚合并为单层，适合中小园区 <<<PAGE 7"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **三层模型（Three-Tier Model）**：核心/汇聚/接入三层，适合大型复杂园区 <<<PAGE 7>>>"
+  },
+  {
+   "h": "n/a",
+   "ok": true
+  },
+  {
+   "h": 0.0,
+   "ok": false,
+   "head": "- **虚拟机箱（VC/Stack）**：多台交换机经 VFL 环形互联为单逻辑设备，Master/Slave 选举 <<<PAGE 8>>"
+  },
+  {
+   "h": 0.0,
+   "ok": false,
+   "head": "- **LAN/WAN/MAN**：局域网 / 广域网 / 城域网 <<<PAGE 7>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **VLAN**：逻辑分段广播域，接入层分管理 VLAN 与用户 VLAN <<<PAGE 8>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **MVRP**：多 VLAN 注册协议，按需动态创建/传播 VLAN，收敛广播与 STP 域 <<<PAGE 9>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Trunking（802.1Q）**：单链路承载多 VLAN 打标流量 <<<PAGE 9>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **LACP / LAG**：链路聚合控制协议 / 聚合组，带宽与冗余 <<<PAGE 9>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **SPB**：IEEE 802.1aq 最短路径桥接，大园区扁平 L2 与多租户 <<<PAGE 9>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **EVPN**：以太网 VPN，BGP 信令在 L3 网上延伸 L2，支持多归属 <<<PAGE 10>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **MPLS**：标签交换，流量工程与 QoS 强项 <<<PAGE 10>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **OSPF**：链路状态 IGP，分区域（Area 0 骨干）扩展 <<<PAGE 11>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **BGP**：路径向量协议，自治域间路由与 EVPN 信令 <<<PAGE 11>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **IS-IS**：链路状态 IGP，运营商核心常用，双栈 <<<PAGE 12>>>"
+  },
+  {
+   "h": "n/a",
+   "ok": true
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **LSDB/LSA/LSP**：链路状态数据库 / 通告 / 报文 <<<PAGE 11>>>"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **OmniAccess Stellar**：ALE 无控制器 Wi-Fi 7/6E/6/5 AP 产品族（含户外加固型）<<<PAGE"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **AWOS**：Stellar AP 操作系统 <<<PAGE 5>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **AOS**：OmniSwitch 操作系统 <<<PAGE 6>>>"
+  },
+  {
+   "h": "n/a",
+   "ok": true
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Floor Plan**：OmniVista 楼层规划仿真应用 <<<PAGE 12>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Wi-Fi 热图（Heatmap）**：实时信号与用户密度可视化 <<<PAGE 14>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **RDA（Radio Dynamic Adjustment）**：射频动态调整技术（含 DFS/TPC）<<<PAGE 14>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **NMP（Neighbor Management Protocol）**：AP 间空口/有线广播管理信息发现协议 <<<PAGE 5>"
+  },
+  {
+   "h": 0.0,
+   "ok": false,
+   "head": "- **over-the-air / over-the-LAN**：AP 邻居交换的两种通道 <<<PAGE 5>>>"
+  },
+  {
+   "h": "n/a",
+   "ok": true
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **本地桥接（Bridging）**：AP 直接将 802.11 帧 转 802.3 上交换网的转发方式 <<<PAGE 16>>>"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **L2GRE 隧道**：二层通用路由封装，功能类似 VXLAN 的 L2 overlay <<<PAGE 17>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Wi-Fi Express / Enterprise / Cloud**：Stellar 三种管理模式（默认小规模 / 本地 NMS"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **AP 组**：OmniVista 管理 AP 的基本单位 <<<PAGE 18>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **RF Profile**：信道/功率/带宽等射频参数集，绑定 AP 组 <<<PAGE 18>>>"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **PoE / PoE+ / Hi-PoE / PSE / PD**：以太网供电族与供电/受电角色；Stellar AP 下行口可作 P"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **defaultWLANProfile**：VLAN 域内置 AP 管理 UNP 画像 <<<PAGE 23>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **defaultWLANAccessProfile**：服务域内置 AP 管理 UNP 画像 <<<PAGE 24>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **ap-mode**：UNP 端口开启 AP 检测模式 <<<PAGE 23>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **LLDP-MED**：媒体终端 LLDP 扩展，AP 自证身份的 TLV 载体 <<<PAGE 19>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **DHCP Option 138**：向 AP 下发 OmniVista 服务器地址的选项 <<<PAGE 20>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **MQTT**：AP 与 OmniVista 间的管理通道协议 <<<PAGE 20>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Trust Tag**：交换机信任 AP 客户端流量 VLAN 标签并按需建 VLAN 的机制 <<<PAGE 21>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **漫游（Roaming）**：客户端在 AP 间无缝切换 <<<PAGE 25>>>"
+  },
+  {
+   "h": 0.0,
+   "ok": false,
+   "head": "- **家乡 AP / 外来 AP（home/foreign）**：L3 漫游中客户端原始关联与新关联 AP <<<PAGE 27>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **客户端上下文（Client Context）**：AP 间共享的漫游所需客户端信息 <<<PAGE 26>>>"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **快速漫游（Fast Roaming）**：802.11r/802.11k 预认证加速切换 <<<PAGE 27>>>"
+  },
+  {
+   "h": 0.0,
+   "ok": false,
+   "head": "- **L2 / L3 漫游**：同子网漫游保 IP / 跨子网漫游经 L2GRE 隧道保 IP <<<PAGE 27>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **SSID / BSSID**：网络名 / 每 AP 唯一基本服务集标识 <<<PAGE 28>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **VLAN 池（VLAN Pooling）**：一个 ARP 关联多个 VLAN，多用户 VLAN 场景首选 <<<PAGE 28>>"
+  },
+  {
+   "h": 0.33,
+   "ok": false,
+   "head": "- **WMM（802.11e）**：四队列无线 QoS（Voice/Video/Best Effort/Background）<<<PAG"
+  },
+  {
+   "h": "n/a",
+   "ok": true
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **带宽契约（Bandwidth Contract）**：按角色或 SSID 限上下行带宽 <<<PAGE 29>>>"
+  },
+  {
+   "h": 0.88,
+   "ok": true,
+   "head": "- **Auto Mesh**：自动组网 mesh；mesh root / pure mesh AP、16 AP/8 跳上限 <<<PAGE"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **点对点网桥（Wi-Fi Bridge）**：双 AP 专线互连两地网络，WPA2/WPA3 PSK 保护 <<<PAGE 30>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **RAP（Remote Access Point）**：远程 AP，经双 VPN 安全接入公司网 <<<PAGE 31>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **拆分隧道（Split Tunnelling）**：RAP 场景互联网流量直出 <<<PAGE 31>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **VoWLAN**：无线语音；5GHz、每 AP 20–25 语音客户端等设计约束 <<<PAGE 32>>>"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **mDNS / SSDP**：服务发现协议；ALE Relay 跨网段转发（gateway/responder 两模式）<<<PAGE"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **BLE 资产追踪（Asset Tracking）**：BLE 标签 + AP 定位 + 云位置引擎 <<<PAGE 34>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **OmniVista Enterprise / Cirrus**：本地 NMS / 云 NMS <<<PAGE 35>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **L2 HA / L3 HA**：OmniVista 双机高可用两种架构（Cluster IP / 跨子网双址）<<<PAGE 35>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Call-home / Device Catalog**：AP 回连激活服务器与序列号设备目录 <<<PAGE 36>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **统一接入（Unified Access）**：有线无线一致的安全与策略框架 <<<PAGE 36>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **UNP / ARP**：OmniSwitch 用户网络画像 / Stellar 接入角色画像 <<<PAGE 36>>>"
+  },
+  {
+   "h": 0.78,
+   "ok": true,
+   "head": "- **UPAM（Unified Policy Access Manager）**：OmniVista 内嵌 RADIUS+captive "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Access Guardian**：内嵌于交换机/AP 的认证+访问控制框架 <<<PAGE 37>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **NAC**：网络准入控制；可对接 ISE、ClearPass、NPS <<<PAGE 36>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **IoT 指纹（IoT Fingerprinting）**：按设备行为特征识别认证 IoT <<<PAGE 38>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **802.1X / EAP**：端口认证框架与承载协议 <<<PAGE 20>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **WPA2 / WPA3 / SAE**：无线加密标准；WPA3 的对等同时认证抗离线字典攻击 <<<PAGE 39>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Enhanced Open（OWE）**：免密自动加密的开放网络，适合访客 <<<PAGE 39>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **BYOD**：自带设备；声明注册 + 时限/数量限制策略 <<<PAGE 40>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Quarantine Manager / QMR**：告警触发隔离应用与补救特性 <<<PAGE 40>>>"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **WCF（Web Content Filtering）**：按 URL/关键词/类别过滤网页访问 <<<PAGE 41>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **wIDS/wIPS**：无线入侵检测/防御；干扰 AP 与流氓 AP 分类 <<<PAGE 41>>>"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **DEAUTH 遏制**：向流氓 AP 客户端发解除认证帧阻断连接 <<<PAGE 42>>>"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **Hybrid POL（HPOL）**：ALE 混合无源光局域网方案（POL+以太 LAN）<<<PAGE 44>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **POL（Passive Optical LAN）**：无源光局域网，单纤点对多点分发 <<<PAGE 45>>>"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **ONT（Optical Network Terminal）**：光网络终端；SFP ONT 与普通 ONT 两形态 <<<PAGE "
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **分光（Split Levels）**：POL 光分配层级 <<<PAGE 45>>>"
+  }
+ ],
+ "principles": [
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P1 园区网四目标**：\"The key goals of any campus network architecture are "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P2 Digital Age Networking 三支柱**：自治网络（自动安全连接人/流程/应用/物）、IoV 安全分段接入、业"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P3 两层折叠核心适合中小网**：\"Its simplified design reduces network complexity"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P4 三层模型适合大型复杂网**：\"modular structure enhances scalability… The core"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P5 接入层堆叠/VC 扩端口密度并保控制面韧性**：\"An election process designates one uni"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P6 接入 VLAN 动态分配，静态指定不可行**：\"static VLAN assignment of User VLANs is"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P7 不要全量建 VLAN，用 MVRP 收敛广播/STP 域**：\"Creating and tagging all possib"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P8 AP 管理 VLAN 与有线管理 VLAN 分开**：\"Different Management VLANs for Acce"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P9 无线客户端建议独立 VLAN ID**：\"it is recommended to reserve a separate VL"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P10 同一 SSID 跨 AP 组可配不同 VLAN，助力 L3 漫游**：\"Different VLANs can be ass"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P11 Trunk 统一 VLAN 分发保策略一致性**：802.1Q 打标使 \"devices to maintain their"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P12 LACP 是接入层韧性与带宽基线**：自动聚合、故障自动重路由、\"treating multiple links as a "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P13 SPB 用于大园区扁平化扩展**：\"For large campuses, it allows networks to sc"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P14 EVPN 价值在跨广域 L2 互联与多归属**：\"facilitates the extension of VLANs ac"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P15 MPLS 价值在流量工程与 QoS**：\"flexibility to route data via optimal pat"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **P16 动态路由选型按规模**：OSPF 分区可扩展、BGP 多 ISP 互联与 EVPN 信令、IS-IS 大型核心；RIP \"i"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P17 RF 规划先行，用工具仿真验证**：OmniVista Floor Plan \"allows administrators "
+  },
+  {
+   "h": 0.88,
+   "ok": true,
+   "head": "- **P18 容量规划按用户/应用画像**：\"considering factors such as location, usage pa"
+  },
+  {
+   "h": "n/a",
+   "ok": true
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P20 PoE 简化布线与供电**：\"Stellar APs leverage Power over Ethernet (PoE) "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P21 RDA 自动调优射频**：DFS/TPC 自动选道调功率，\"without disrupting connected cli"
+  },
+  {
+   "h": 0.86,
+   "ok": true,
+   "head": "- **P22 分布式控制面消除单点与瓶颈**：\"decentralizes the control functions, dispersi"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P23 分布式控制面降 CapEx/OpEx**：\"The absence of a centralized controller "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P24 数据面默认本地桥接保性能**：\"directly bridging most data traffic at the AP "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P25 安全或集中审查场景才隧道化**：\"When security policies demand centralized tra"
+  },
+  {
+   "h": 0.92,
+   "ok": true,
+   "head": "- **P26 桥接/隧道按角色动态二选一**：\"flexibility to dynamically choose between bri"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P27 三种管理模式按规模递进**：Wi-Fi Express（默认小场景）/ Enterprise（本地 OmniVista 最大"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P28 按 AP 组管理而非单 AP**：\"OmniVista does not manage individual APs\"，组级"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P29 RF Profile 承接 RF 规划结果并绑定 AP 组**：\"RF profile is to be created f"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P30 AP+交换机同厂协同价值**：UPAM 统一有线无线认证、\"automating essential tasks such "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P31 AP 安全模式多层验证**：LLDP-MED 识别 + 802.1x 认证 + DHCP Option 138 取 Omni"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P32 信任标签（Trust Tag）自动接纳 AP 客户端 VLAN**：\"If the switch does not have"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P33 AP 管理流量 untagged、客户端流量 tagged 分离**：\"management traffic remains"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P34 漫游由客户端上下文共享驱动**：AP 间 over-the-air/over-the-LAN 交换 \"client-spec"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P35 漫游三分支判定**：新 AP 无上下文→新客户端；上下文+ARP 匹配→L2 漫游；上下文有但 VLAN 不匹配→L3 漫游"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P36 L3 漫游用 L2GRE 隧道保原 IP**：\"use a Layer 2 GRE tunnel to maintain t"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P37 快速漫游靠预认证**：802.11r/802.11k \"pre-authenticating clients with ne"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P38 子网收敛到 /24 利于管理与控制广播域**：\"limit subnet sizes to what is commonly"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P39 VLAN 池是用户 VLAN 首选法**：\"ALE advises using VLAN pools as the pref"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P40 QoS 按角色动态施加**：角色同时定 VLAN 与 QoS 策略，语音视频优先 <<<PAGE 28>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P41 带宽契约与客户端限额治高密**：\"define 'bandwidth contracts' at the user/devi"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P42 组播转单播动态优化**：IGMP snooping 限制复制，\"transforming multicast streams"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P43 VoWLAN 硬指标**：优先 5GHz、每 AP 限 20–25 个语音客户端保 36 Mbps 吞吐、专用 SSID+漫"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P44 Mesh 适用于布线难场景**：露营地、历史保护建筑、室外临时活动 <<<PAGE 30>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P45 点对点网桥用 WPA2/WPA3 PSK 保护**：\"broadcasting a secure SSID configur"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P46 RAP 双 VPN 通道安全回源**：先连 Cirrus 取配置，再与公司 VPN 服务器及 OmniVista 2500 "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P47 mDNS/SSDP 跨网段转发由防火墙审查**：\"allows devices to discover each other"
+  },
+  {
+   "h": 0.88,
+   "ok": true,
+   "head": "- **P48 BLE 资产追踪复用 WLAN 基础设施**：\"leverages the existing Stellar infrast"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P49 L2 HA 复用原 IP 零改造**：\"the existing IP address of the Standalone "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P50 L3 HA 跨子网但功能受限**：\"Certain features, such as sFlow, policy enfo"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P51 AP onboarding 走 call-home 验序列号发证书**：\"authenticated by verifyin"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P52 安全内建于网络并按角色施加，而非绑端口**：\"Security configurations at the network "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P53 UNP/ARP 内嵌于接入设备实现一致性策略**：\"integration of the User Network Prof"
+  },
+  {
+   "h": 0.71,
+   "ok": true,
+   "head": "- **P54 统一策略源 UPAM 兼容外部认证与第三方 NAC**：内置 RADIUS+captive portal，可对 AD/LDA"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P55 IoT 指纹认证免手工配置保安全**：\"IoT fingerprinting authentication allows o"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P56 WPA3 优先但兼顾存量**：\"WPA3 is preferred when higher security is a pr"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **P57 访客认证方式按场景选**：自注册、社交登录、员工赞助、SMS-Plivo；Enhanced Open 用于免密便捷场景 <<"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **P58 SSID 即分段**：不同 SSID 对应不同安全设置/VLAN/访问控制（如 Faculty vs Student）<<<"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P59 BYOD 分两类设备施策**：公司发放设备预置画像；外部设备走声明注册 + 时限/会话/数量（1–10 台/人）限制 <<<"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P60 隔离与处置闭环**：Quarantine Manager 依 syslog/SNMP trap 触发规则，\"the devi"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P61 流氓 AP 判定与遏制**：rogue AP 接入有线或仿冒 SSID 才是威胁；遏制开启后 \"the detecting "
+  },
+  {
+   "h": 0.92,
+   "ok": true,
+   "head": "- **P62 POL+以太混合省铜缆省机房**：\"reduction of the copper cabling horizontal r"
+  },
+  {
+   "h": 0.9,
+   "ok": true,
+   "head": "- **P63 POL 边缘交换机补 IP 密度与 PoE 预算**：\"provide for LAN networking service"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P64 混合架构可去汇聚层**：\"point-to-multipoint optical infrastructure leads "
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **P65 两种推荐架构按需求分档**：需全层冗余/SPB/MACsec/高密 PoE → SFP ONT + OmniSwitch 接"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P66 光纤投资面向未来**：\"Guarantees evolution from 2.5 Gbps to 10/40 Gbps n"
+  }
+ ]
+}

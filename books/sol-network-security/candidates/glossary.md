@@ -1,0 +1,96 @@
+# glossary — sol-network-security
+
+- **PSIRT（产品安全事件响应团队）**：ALE 专职团队，受理漏洞报告、协调修复并发布安全通告 <<<PAGE 7>>>
+- **CVE（通用漏洞披露编号）**：漏洞报告的唯一编号，与 CERT/NVD 等协调中心联动 <<<PAGE 7>>>
+- **SA（Security Advisory，安全通告）**：漏洞确认后由安全通告委员会发布，含修复与缓解措施 <<<PAGE 7>>>
+- **BYOD（自带设备办公）**：员工自带终端接入，扩大攻击面的典型场景 <<<PAGE 5>>>
+- **DPI（深度包检测）**：ALE 智能分析能力，识别流量类型与异常模式 <<<PAGE 6>>>
+- **ASLR（地址空间布局随机化）**：每次交换机启动生成唯一内存布局的软件多样化技术 <<<PAGE 6>>>
+- **IV&V（独立第三方验证与确认）**：源代码白盒/黑盒测试寻找外部接口漏洞 <<<PAGE 6>>>
+- **Common Criteria EAL2 / NDcPP**：ALE 产品获得的国际安全评估认证 <<<PAGE 6>>>
+- **FIPS 140-2**：NIST 密码模块安全标准，FIPS 模式下仅允许强加密算法 <<<PAGE 6, 28>>>
+- **TAA 合规**：美国供应链规定，OmniSwitch 可指定美国原产国 <<<PAGE 6>>>
+- **U-boot / ONIE**：OmniSwitch 两种引导加载器，可设口令认证防止物理层篡改 <<<PAGE 9>>>
+- **镜像完整性校验**：image integrity-check 命令比对 SHA256 哈希与密钥文件 <<<PAGE 9>>>
+- **EMP（以太网管理口）**：专用带外管理端口，绕过业务 NI 模块直连 CMM <<<PAGE 10>>>
+- **管理 VRF**：无带外条件时，将全部管理协议收敛到专用 VRF 与数据隔离 <<<PAGE 10>>>
+- **IP 管理站（Management Station）**：仅允许预定义 IP 管理交换机，上限 64 个 <<<PAGE 11>>>
+- **secureadmin**：首登强制改密的特权账户，可校验镜像与 vcboot.cfg 完整性 <<<PAGE 11>>>
+- **SSH 强加密（strong-ciphers / strong-HMACs）**：强制启用 hmac-sha2-256/512 等强算法 <<<PAGE 13>>>
+- **PKA（公钥认证）**：SSH 免口令登录，installsshkey 安装公钥 <<<PAGE 13-14>>>
+- **登录宽限期（login-grace-time）**：未完成 SSH 会话的超时，默认 120 秒 <<<PAGE 14>>>
+- **IP 锁定阈值（ip-lockout-threshold）**：认证失败次数达阈值即封禁来源 IP，清单上限 128 <<<PAGE 15>>>
+- **MFA（多因素认证）**：Google Authenticator、Duo 等多道身份验证 <<<PAGE 16>>>
+- **ASA（Authenticated Switch Access）**：交换机管理接入认证体系，分 default 与 enhanced 模式 <<<PAGE 16, 24>>>
+- **AAA（认证/授权/记账）**：本地或 RADIUS/LDAP/TACACS+ 集中化的访问控制框架 <<<PAGE 16>>>
+- **RADIUS over TLS**：用 TLS 加密 RADIUS 报文，消除 MD5 攻击风险 <<<PAGE 17>>>
+- **命令域/命令族（domain/family）**：AOS 按 domain-network、domain-security 等划分用户权限粒度 <<<PAGE 18>>>
+- **记账（Accounting）**：记录登录登出、会话时长等供审计 <<<PAGE 18>>>
+- **命令日志（command.log）**：全量 CLI 命令历史审计文件 <<<PAGE 19>>>
+- **SNMPv3 三模型**：VACM（基于视图的访问控制）、USM（基于用户的安全模型）、TSM（传输安全模型） <<<PAGE 19>>>
+- **TSM**：SNMP over TLS/DTLS 的安全传输模型，需证书身份映射 <<<PAGE 20>>>
+- **SNMP 认证陷阱**：收到未授权实体请求时向网管站告警 <<<PAGE 20>>>
+- **SWLOG（交换机日志）**：默认 info(6) 级别，可按应用分配 1-8 严重级别，支持 TLS 远端发送 <<<PAGE 21>>>
+- **PKI 三种公钥安全模式**：No Validation / Server Certificate Validation / Mutual Authentication <<<PAGE 21>>>
+- **OpenSSL cipher 安全级别**：All/Low/Medium/High 四档，默认 medium，CC 模式为 high <<<PAGE 22>>>
+- **OCSP / CRL**：X.509 证书有效性校验手段，校验失败即断开 TLS <<<PAGE 22>>>
+- **Captive Portal（强制门户）**：Web 认证页面，默认自签证书 default_cportalCert.pem 可替换 <<<PAGE 23>>>
+- **CC 模式（Common Criteria）**：仅允许 console+SSH，默认禁用 FTP/Telnet/WebView/HTTP/RADIUS/LDAP/SNMP <<<PAGE 26>>>
+- **TOE（评估对象）**：CC 评估语境下被评估的 OmniSwitch 产品 <<<PAGE 26>>>
+- **JITC 模式**：军用认证模式，口令≥15 字符、SSH 每小时/每 GB 重协商、升级前验签；与 CC/enhanced 互斥 <<<PAGE 26-27>>>
+- **FIPS 模式**：OpenSSL 层强制 FIPS 140-2 算法，SNMPv3 仅 SHA+AES，需重启生效 <<<PAGE 28>>>
+- **登录横幅（Login Banner）**：/flash/switch 下 banner.txt 经 session banner 启用的合规告示 <<<PAGE 28>>>
+- **盐渍哈希口令存储**：新口令与 16 字节随机盐拼接后哈希入库 <<<PAGE 28>>>
+- **keychain 认证**：带起止时间与生命周期的密钥轮换机制，OSPF/IS-IS 最安全选项 <<<PAGE 30>>>
+- **LDP（标签分发协议）**：MPLS 中 LSR 间分发标签，MD5 认证防 TCP 伪造 <<<PAGE 31>>>
+- **Root Guard（restricted-role）**：阻止端口成为根端口，防外部桥影响生成树拓扑 <<<PAGE 32>>>
+- **TCN 限制（restricted-tcn）**：阻止边缘端口传播拓扑变更，避免核心区无谓 MAC 冲刷 <<<PAGE 32>>>
+- **BPDU 过滤/关闭**：用户端口收到 BPDU 即过滤或 shutdown <<<PAGE 33>>>
+- **LLDP Agent Security**：端口仅信一个 LLDP 远端代理，超限进入 violation 态（trap/shutdown） <<<PAGE 33>>>
+- **GARP（Gratuitous ARP，免费 ARP）**：源目 MAC 相同的通告广播，可被伪造用于 MiTM <<<PAGE 34-35>>>
+- **ARP 欺骗检测（arp-poison restricted-address）**：受限地址收到 ARP 应答即告警 <<<PAGE 35>>>
+- **NTP key file**：/flash/network/ntp.keys 存 MD5/SHA1 认证密钥，须设 trusted <<<PAGE 36-37>>>
+- **ICMP 裁剪表**：Echo/Redirect/Router Advertisement/Timestamp 等按风险禁用 <<<PAGE 37-38>>>
+- **DHCP Option-82**：中继在客户端报文中插入端口识别信息；与 Snooping 互斥 <<<PAGE 38>>>
+- **DHCP Snooping**：信任/非信任端口分类 + 绑定表，防 rogue DHCP <<<PAGE 38>>>
+- **DAI / IP Source Filtering（动态 ARP 检测）**：依 Snooping 绑定表校验源信息，防 ARP 欺骗 <<<PAGE 39>>>
+- **DHCPv6 Snooping / IPv6 Source Filtering**：IPv6 版绑定表与源过滤，需配合 TCAM 模式调整 <<<PAGE 39-40>>>
+- **DHCPv6 Guard**：仅信任端口放行 DHCPv6 服务器报文，防 rogue DHCPv6 <<<PAGE 40>>>
+- **MVRP**：动态 VLAN 注册协议，安全建议默认禁用 <<<PAGE 41>>>
+- **DoS 过滤**：默认开启，覆盖 Ping of Death、Land、ARP Flood（>500/s）、Ping overload（>100/s）等 <<<PAGE 41>>>
+- **端口扫描惩罚值机制**：按端口类型累计 penalty，超过阈值（如 2000）触发 SNMP trap <<<PAGE 41-42>>>
+- **Switch Supplicant（交换机请求者）**：交换机作为 802.1X 客户端上线，需 X509 证书 <<<PAGE 42-43>>>
+- **MACsec / MKA**：以太网点对点加密（etherType 0x88E5），SAK 会话密钥，静态四密钥或 MKA 动态轮换 <<<PAGE 43-44>>>
+- **SAK（安全关联密钥）**：MACsec 会话密钥，静态模式每信道四把（一用三备） <<<PAGE 44>>>
+- **定向广播（directed broadcast）**：默认丢弃，可配受控信任源放行 <<<PAGE 45>>>
+- **IPv6 RA 过滤（ra-filter）**：丢弃非法路由通告，仅信任端口转发 <<<PAGE 45-46>>>
+- **LPS（Learned Port Security）**：边缘端口 MAC 学习授权机制，可限数、限窗、违规 shutdown <<<PAGE 46-47>>>
+- **Stellar 证书八类**：Web 服务器（mywifi.al-enterprise.com）/ Portal / 本地 LDAP / 802.1X 客户端 / BLE / RTLS / RadSec / Syslog over TLS <<<PAGE 48>>>
+- **Wi-Fi Express（集群模式）**：Stellar AP 免网管独立组网模式，含 wIDS/wIPS 面板 <<<PAGE 47, 63>>>
+- **账户三级**：Administrator / Viewer / GuestOperator，默认仅 Administrator 启用 <<<PAGE 52>>>
+- **wIPS 三类 AP**：interfering（未接有线，非直接威胁）/ rogue（接有线或冒同 SSID，威胁）/ friendly（允许清单） <<<PAGE 63, 66>>>
+- **Rogue AP Containment（抑制）**：探测 AP 向 rogue 关联客户端发 DEAUTH 驱离 <<<PAGE 63, 66>>>
+- **WIPS 检测级别**：High / Medium / Low(默认) / Custom 四档策略强度 <<<PAGE 66>>>
+- **WPA3-Personal / SAE**：对等同步认证，口令不暴露，免疫离线字典攻击；PMF 强制 <<<PAGE 68>>>
+- **WPA3_AES256（CNSA/Suite B）**：192 位商用国家安全算法套件，AP 不支持时自动回退 WPA2_AES <<<PAGE 68>>>
+- **WPA3_PSK_SAE_AES**：WPA3/WPA2 混合模式，兼容双代客户端 <<<PAGE 68>>>
+- **OWE / Wi-Fi Enhanced Open（增强开放）**：开放 SSID 的机会式无线加密，6 GHz 频段强制启用 <<<PAGE 69>>>
+- **客户端隔离（Client Isolation）**：同 AP 同 SSID 内阻断客户端互访，仅放行去往路由器 <<<PAGE 70>>>
+- **漫游上下文 DTLS 加密**：AP 间漫游切换时客户端上下文走 DTLS 隧道 <<<PAGE 70>>>
+- **2FA（两步验证）**：OmniVista Cirrus 10 支持 Email 与 Google Authenticator 两种模式 <<<PAGE 72>>>
+- **Network ID（网络标识安全上线）**：DHCP Option 43 Sub-Option 133 下发，Strict Mode 拒绝无 ID 设备 <<<PAGE 75-76>>>
+- **MSP / Organization 用户**：OmniVista Cirrus 10 两级用户体系（托管服务商用户/组织用户） <<<PAGE 77>>>
+- **Z-Score 异常检测**：以 30 天小时级端口利用率为基线标记偏离点的统计方法 <<<PAGE 78>>>
+- **UPAM（OmniVista 策略与接入管理）**：内置 RADIUS/802.1X 服务器组件，含证书与信任 CA 管理 <<<PAGE 61, 80>>>
+- **RadSec（RADIUS over TLS）**：TLS 加密的 RADIUS 传输，UPAM 可作 RadSec 客户端 <<<PAGE 60, 80>>>
+- **Quarantine Manager / QMR**：联动 IPS 的终端隔离应用与交换机侧修复组件 <<<PAGE 83-84>>>
+- **IoC（失陷指标）**：持续监控网络与客户端活动所要发现的异常证据 <<<PAGE 77>>>
+- **OAuth 2.0 / JWT**：OmniVista 两代 REST API 令牌认证机制（RFC 7519） <<<PAGE 84>>>
+- **Web Services（AOS）**：基于 MIB 变量与 CLI 的 REST 管理接口，遵循 WebView 安全模型 <<<PAGE 85>>>
+- **NLM（网络生命周期管理）**：覆盖规划到退役全程的结构化管理框架 <<<PAGE 89>>>
+- **Five S's**：视频监控规划五要素：Software、Surveillance IoT、Servers/Storage、Switches、Services/Support <<<PAGE 90>>>
+- **UNP（Universal Network Profiling，通用网络档案）**：按用户/设备/应用动态下发网络行为的画像机制 <<<PAGE 93>>>
+- **Lightning Config**：ALE 开箱即用部署工具，受训 50 分钟的技术员 5 分钟装好设备 <<<PAGE 93>>>
+- **Milestone Plugin**：交换机信息集成进 XProtect VMS 的可视化插件 <<<PAGE 94-95>>>
+- **OmniVista Network Advisor**：AI 驱动的实时监控、风险告警与网络修复系统 <<<PAGE 98>>>
+- **Air Gap（空气隔离）**：物理孤立网络的老式安全措施，联网化后已弃用 <<<PAGE 93>>>

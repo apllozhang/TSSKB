@@ -1,0 +1,89 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>sol-campus-hybrid-pol — 园区网络架构 · 设计指南</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>园区网络架构 · 设计指南</h1>
+<div class="sub">2 份 47 页 · 园区架构指南 + Hybrid POL 彩页（分层设计/AP 发现/漫游/NMS/POL）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">设计与运维</div>
+<a href="../skills/sol-campus-lan-wlan-design.html">sol-campus-lan-wlan-design</a>
+<a href="../skills/sol-campus-nms-security.html">sol-campus-nms-security</a>
+<div class="grp">POL 方案</div>
+<a href="../skills/sol-campus-hybrid-pol.html" class="on">sol-campus-hybrid-pol</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../solutions/index.html">解决方案</a> › <a href="../index.html">园区网络架构</a> › <span>sol-campus-hybrid-pol</span></nav><h1>sol-campus-hybrid-pol</h1><p class="meta"><span class="badge">SKILL</span> sol-campus-hybrid-pol · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>大园区/长距离布线场景评估 POL 混合方案 vs 纯铜缆以太</li>
+<li>决定两档推荐架构：SFP ONT+OmniSwitch 接入 vs 纯 ONT+Stellar AP</li>
+<li>向客户核算降本点：铜缆横布、机房与制冷、有源设备、能耗</li>
+<li>规划 2.5G→10/40G 演进路径</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>混合架构框架（F6，&lt;&lt;<PAGE 45>&gt;&gt;）：Nokia POL 光分配网（单纤点对多点+ONT）作物理承载 + ALE 以太接入交换机/Stellar AP 作服务边缘；POL 补距离与布线成本，以太边缘补 IP 端口密度与高功率 PoE（P63，&lt;&lt;<PAGE 45>&gt;&gt;）。点对多点光基础设施在密集部署中可去掉汇聚交换层（P64，&lt;&lt;<PAGE 45>&gt;&gt;）；光纤投资面向未来，保证 2.5G→10/40G 演进（P66，&lt;&lt;<PAGE 46>&gt;&gt;）。定位画像：大园区、长距离、中高用户密度（X21，&lt;&lt;<PAGE 46>&gt;&gt;）——并非处处适用。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<ol>
+<li>适用性判断（X21，&lt;&lt;<PAGE 46>&gt;&gt;）：大园区/长距离/中高密度→HPOL 理想；小园区纯以太更简</li>
+<li>两档架构选型（P65，&lt;&lt;<PAGE 46>&gt;&gt;）：需全层冗余/SPB/MACsec/高密 PoE/高级特性→SFP ONT+OmniSwitch 接入交换机；仅需基础特性/低 IP 密度→纯 ONT+Stellar AP（X22 对比其能力边界）</li>
+<li>降本核算四类（P62，&lt;&lt;<PAGE 45>&gt;&gt;）：铜缆横布减少+去专用电信间与制冷+有源设备减少+能耗降低</li>
+<li>容量与演进：2.5G 起步，光纤到桌面保证 10/40G 演进（P66，&lt;&lt;<PAGE 46>&gt;&gt;）</li>
+</ol>
+<h2 id="a2">A2（操作步骤）</h2>
+<ul>
+<li>边缘补强：在需高 IP 端口密度与 HPoE 预算的位置布 ALE 接入交换机（P63，&lt;&lt;<PAGE 45>&gt;&gt;）</li>
+<li>密集部署场景以点对多点光基础设施替代汇聚层（P64，&lt;&lt;<PAGE 45>&gt;&gt;）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>两档推荐架构的适用对比：全冗余+SPB/MACsec 场景 vs 基础特性场景（P65/X22，&lt;&lt;<PAGE 46>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（反例与坑）</h2>
+<ul>
+<li>HPOL 并非处处适用：定位大园区、长距离、中高用户密度（X21，&lt;&lt;<PAGE 46>&gt;&gt;）</li>
+<li>纯 ONT 架构能力边界：无全层冗余、仅基础网络特性、无统一接入要求、仅 PoE/PoE+、低 IP 端口密度——超界需求选 SFP ONT 架构（X22，&lt;&lt;<PAGE 46>&gt;&gt;）</li>
+</ul>
+<p>来源：ALE Hybrid POL Solution Brochure（sol-campus-architecture DOC2，p44-47）</p><div class="pn"><a href="sol-campus-nms-security.html">⬅ 上一单元：sol-campus-nms-security</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

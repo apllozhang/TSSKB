@@ -1,0 +1,202 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>精华长文 DIGEST — 访客流量隧道 GTTS · 应用笔记</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>访客流量隧道 GTTS · 应用笔记</h1>
+<div class="sub">1 份 19 页 · Guest Traffic Tunnelling（L2 GRE/DMZ/多租户/四种冗余）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">机制与配置</div>
+<a href="skills/sol-gtts-architecture-config.html">sol-gtts-architecture-config</a>
+<div class="grp">场景与冗余</div>
+<a href="skills/sol-gtts-deployment-scenarios.html">sol-gtts-deployment-scenarios</a>
+<a href="skills/sol-gtts-redundancy-designs.html">sol-gtts-redundancy-designs</a></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../solutions/index.html">解决方案</a> › <a href="index.html">访客流量隧道 GTTS</a> › <span>精华长文 DIGEST</span></nav><h1>精华长文 DIGEST</h1><h1 id="digest-gtts-ap-omniswitch">DIGEST · GTTS（访客流量隧道服务）应用笔记精华——把无线流量从 AP 隧道到 OmniSwitch 终结的全套打法</h1>
+<blockquote>
+<p>教材：Guest Traffic Tunnelling Services Application Note（ALE，23032701，2023-04，19 页）
+本文是"不读全文、只看精华"的交付工程师版速读。页码可直接对照原书（&lt;&lt;<PAGE N>&gt;&gt;）。</p>
+</blockquote>
+<hr />
+<h2 id="_1">一、一页看懂这份应用笔记</h2>
+<p>它回答一个问题：<strong>Stellar 本是无控制器分布式架构，怎样把部分无线流量隧道到中心 OmniSwitch 上集中终结、隔离与施策，并且不把这个中心做成单点。</strong></p>
+<p>核心机制一句话：AP 上的流量按 ARP（访问角色档案）分类 → 加 L2 GRE 头（+24 字节）过隧道 → 隧道聚合交换机（通常在 DMZ）解封装 → 经 Hairpin（同机两口自环：SAP 口出隧道、ACCESS 口落 VLAN）进 VLAN 域出 Internet。DHCP、Portal、DNS、NTP 全部跟着流量走隧道，所以这些服务必须部署在聚合交换机可达的同区域。</p>
+<p>三条硬前置（文档明示 mandatory）：One ARP（一个 ARP 同一时刻只有一条活跃隧道；
+N 个隧道 SSID 需 N 台交换机）、L3 hop（AP 管理 IP 与 GRE Server IP 不同子网）、版本（AOS ≥8.4.1.R02 / AWOS ≥3.0.2.19）。</p>
+<h2 id="3-skill">二、技能地图（3 个 skill）</h2>
+<table>
+<thead>
+<tr>
+<th>Skill</th>
+<th>覆盖内容</th>
+<th>对应原书</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sol-gtts-architecture-config</code></td>
+<td>L2 GRE/Hairpin 机制、三前置、交换机五步 CLI、AP Use Tunnel 面板与 Entropy、服务部署/容量/MTU</td>
+<td>Configuration 章 p4-11</td>
+</tr>
+<tr>
+<td><code>sol-gtts-deployment-scenarios</code></td>
+<td>三用例定位（访客/安全/迁移）、DMZ 三区基线、Campus AP Group 汇聚、单机多租户</td>
+<td>p3 + Scenarios 章 p11-13</td>
+</tr>
+<tr>
+<td><code>sol-gtts-redundancy-designs</code></td>
+<td>R0-R4 五级冗余阶梯、R1/R3 完整 linkagg CLI、R2 Preemption、选型决策</td>
+<td>Redundancy 章 p14-19</td>
+</tr>
+</tbody>
+</table>
+<p>依赖关系：先读 architecture-config 掌握机制与五步配置；scenarios 决定架构落点；redundancy 在任何生产部署上叠加。</p>
+<h2 id="ap">三、配置主线速查（交换机五步 + AP 四要素）</h2>
+<p><strong>交换机（&lt;&lt;<PAGE 9>&gt;&gt;）</strong>：
+1. <code>service l2profile "name" stp drop gvrp drop mvrp drop</code>
+2. <code>service access port X/X/XX vlan-xlation enable l2profile "name"</code>（SAP 口）
+3. <code>service "id" l2gre vpnid "vpn-id" stats enable vlan-xlation enable remove-ingress-tag enable</code>
+4. <code>service "id" sap port X/X/XX:"vpn-id"</code>
+5. <code>vlan "VLAN-ID" members port X/X/XX untagged</code>（ACCESS 口）</p>
+<p><strong>AP（&lt;&lt;<PAGE 10>&gt;&gt;）</strong>：SSID 创建勾 Use Tunnel → Tunnel ID（=vpnid）→ GRE Tunnel Server IP → Backup IP（可选）→ Preemption（可选）→ <strong>Entropy 必开</strong>。
+开局必查：<code>service l2gre auto-discover enable</code>（默认开，&lt;&lt;<PAGE 8>&gt;&gt;）。</p>
+<h2 id="_2">四、部署场景速查表</h2>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>架构</th>
+<th>关键动作</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DMZ 访客隧道</td>
+<td>Corporate/DMZ/External 三区防火墙分隔</td>
+<td>Guest SSID 终点=DMZ 聚合交换机，DHCP 同区，只出 Internet</td>
+<td>p11</td>
+</tr>
+<tr>
+<td>Campus 园区</td>
+<td>多站点 + 1 数据中心</td>
+<td>全站 AP 入同一 AP Group，套用 GTTS SSID，统一隧道到 DC</td>
+<td>p12</td>
+</tr>
+<tr>
+<td>单机多租户</td>
+<td>运营商 SP + 多客户</td>
+<td>每客户一 AP Group（可各有 OV2500），配 SP 交换机 IP，走 SD-WAN/SPB/MPLS</td>
+<td>p13</td>
+</tr>
+</tbody>
+</table>
+<p>用例三选一（p3）：访客隔离 / IPS 类安全串行 / 控制器迁移免扩边缘 VLAN。</p>
+<h2 id="r0-r4">五、冗余等级速查表（R0-R4）</h2>
+<table>
+<thead>
+<tr>
+<th>等级</th>
+<th>做法</th>
+<th>保护范围</th>
+<th>收敛</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>R0</td>
+<td>单交换机+单 Hairpin</td>
+<td>无</td>
+<td>—</td>
+<td>p14</td>
+</tr>
+<tr>
+<td>R1</td>
+<td>SAP/ACCESS 各建 linkagg（可与 R2-R4 叠加，Hairpin 不限 2 条）</td>
+<td>各 1 端口故障无感；带宽翻倍</td>
+<td>无感</td>
+<td>p15-16</td>
+</tr>
+<tr>
+<td>R2</td>
+<td>备机同配置（vpnid 一致）+ SSID 填 Backup GRE Server IP（可开 Preemption 回切）</td>
+<td>整机故障</td>
+<td>秒级</td>
+<td>p16-17</td>
+</tr>
+<tr>
+<td>R3</td>
+<td>两机组 Virtual-Chassis + 跨成员 linkagg</td>
+<td>整机+连接+Hairpin</td>
+<td>亚秒</td>
+<td>p17-18</td>
+</tr>
+<tr>
+<td>R4</td>
+<td>每 SSID 一对交换机（建议异地），Primary-Backup 或 VC 实现</td>
+<td>地理故障仅伤单 SSID</td>
+<td>同 R2/R3</td>
+<td>p18-19</td>
+</tr>
+</tbody>
+</table>
+<h2 id="top8">六、交付陷阱 TOP8</h2>
+<ol>
+<li><strong>One ARB 换算错交换机数</strong>：3 个不同 ARP 的隧道 SSID 必须配 3 台聚合交换机（p7）。</li>
+<li><strong>L3 hop 违规</strong>：AP 管理 IP 与 GRE Server IP 同子网，GTTS 不工作（p7）。</li>
+<li><strong>Tunnel ID/VPN ID 三处不一致</strong>（AP/主机/备机）：隧道建不起来的第一嫌疑（p9-10/p16）。</li>
+<li><strong>Entropy 没开</strong>：文档 Important 级强制（p10）。</li>
+<li><strong>DHCP/Portal 不在隧道终点区</strong>：连 DHCP 都在隧道里跑，服务不可达=用户上不了线（p4-5）。</li>
+<li><strong>跨运营商链路 MTU</strong>：+24B 封装开销，不提前协商就静默丢大包（p8）。</li>
+<li><strong>把 R1 当整机冗余</strong>：只保端口级，交换机与连接仍单点（p15）。</li>
+<li><strong>容量两误区</strong>：Hairpin 线速封顶 SSID 带宽（多 Hairpin 扩容）；VC 不抬高单机隧道数上限（1000/2000/6000 按机型，p8）。</li>
+</ol>
+<hr />
+<blockquote>
+<p>本文。</p>
+</blockquote><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

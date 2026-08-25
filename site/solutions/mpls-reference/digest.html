@@ -1,0 +1,81 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>精华长文 DIGEST — MPLS 参考设计指南</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>MPLS 参考设计指南</h1>
+<div class="sub">1 份 45 页 · MPLS/VPLS/VPWS（双标签/LDP/VPLS 信令/QoS/OAM）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">基础与业务</div>
+<a href="skills/sol-mpls-foundation.html">sol-mpls-foundation</a>
+<a href="skills/sol-mpls-vpls-vpws.html">sol-mpls-vpls-vpws</a>
+<div class="grp">运维</div>
+<a href="skills/sol-mpls-qos-oam.html">sol-mpls-qos-oam</a></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../solutions/index.html">解决方案</a> › <a href="index.html">MPLS 参考设计指南</a> › <span>精华长文 DIGEST</span></nav><h1>精华长文 DIGEST</h1><h1 id="digest-mpls-reference-design-guide">DIGEST — MPLS Reference Design Guide 精华</h1>
+<p>本书是 AOS 的 IP/MPLS 参考设计指南（45 页，首支持 8.9R3/OmniSwitch 6860N，8.10R2 起支持 6900）。主线为 L2VPN（VPLS/VPWS）：从标签基础、LDP/T-LDP/MP-BGP 控制面、数据面操作、QoS/TTL 透明性、OAM，到 license 与全套配置验证。定位覆盖园区端到端与城域核心+汇聚两种形态。</p>
+<h2 id="_1">一、知识地图（三技能单元）</h2>
+<ol>
+<li><strong>MPLS 基础体系</strong>（sol-mpls-foundation）：32 位标签结构、双标签封装、LDP 发现/会话/模式（DU+ILD+LLR）、PHP、MD5 认证、AOS 支持边界（p5-17、p24-33）。</li>
+<li><strong>L2VPN 业务</strong>（sol-mpls-vpls-vpws）：VPLS/VPWS（EPL/EVPL）、SAP/SDP 服务模型、T-LDP vs BGP 信令、五步/四步配置（p15-22、p33-42）。</li>
+<li><strong>QoS 与 OAM</strong>（sol-mpls-qos-oam）：EXP uniform/pipe、TTL 透明性、PHP 与 explicit NULL 的 EXP 保留、LSP ping/traceroute、AOS 不支持清单（p16-19、p23-24、p44）。</li>
+</ol>
+<h2 id="_2">二、三单元要点串讲</h2>
+<h3 id="1-bgp-free-core">1. 基础：标签隧道换 BGP-free core</h3>
+<p>MPLS 用预分配标签做精确匹配转发，核心不承载大量路由（&lt;&lt;<PAGE 5>&gt;&gt;）。shim 标签 32 位（20-bit Label/EXP/S/TTL），Layer 2.5 协议（&lt;&lt;<PAGE 9>&gt;&gt;）。VPN 双层栈：transport 在顶、service 在底，中间 LSR 只看传输标签（&lt;&lt;<PAGE 10-21>&gt;&gt;）。LDP 依 IGP 而生：UDP 646 组播 hello 发现 → TCP 646 会话 → Initialization 协商；可靠性靠 hello/keepalive 双定时器（&lt;&lt;<PAGE 12>&gt;&gt;）。AOS 唯一支持 DU+ILD+LLR+MD5（&lt;&lt;<PAGE 13-17>&gt;&gt;）。部署前提：/32 loopback 唯一 Router-ID + p2p + BFD + /31 互联（&lt;&lt;<PAGE 28>&gt;&gt;）。</p>
+<h3 id="2">2. 业务：服务与传输解耦</h3>
+<p>服务只在有站点的 LER 创建：SAP 面向 CE、SDP 面向远端（&lt;&lt;<PAGE 20>&gt;&gt;）。VPLS（E-LAN）需全互联 PW + per-VPLS MAC 学习，防环靠 split horizon（PW 进 PW 出禁止）；VPWS（E-LINE）点对点透明转发不学 MAC，分 EPL/EVPL（C-VLAN 复用）（&lt;&lt;<PAGE 21-22>&gt;&gt;）。信令二选一：T-LDP 手工 SDP（抗链路故障保会话）或 MP-BGP l2vpn-vpls（自动发现+信令一体，单 AS 需 full-mesh 或 RR）。配置五步（LDP-VPLS）/四步（BGP-VPLS、VPWS）见 &lt;&lt;<PAGE 33-42>&gt;&gt;。</p>
+<h3 id="3-qosoam">3. QoS/OAM：透明性选型与数据面验证</h3>
+<p>只有顶层标签的 EXP/TTL 被处理（&lt;&lt;<PAGE 18-19>&gt;&gt;）。uniform 客户标记穿透、pipe 运营商自定；TTL pipe 模式下 L3VPN 两端各减 1、L2VPN 完全不变。PHP 用 implicit NULL 省 eLER 查表但丢 EXP；explicit NULL 可保 EXP 但 AOS 不支持。数据面验证用 <code>mpls ping/trace ldp</code>（RFC 4379，127/8 目的、UDP 3503），控制面正常仍可测出转发故障（&lt;&lt;<PAGE 23-24、44>&gt;&gt;）。GR 仅保计划内接管（&lt;&lt;<PAGE 19>&gt;&gt;）。</p>
+<h2 id="_3">三、本书在知识库中的位置</h2>
+<p>与 os-lan-mpls-impl（实现手册）、os-lan-spb-impl / sol-spb（SPM/SPB 替代路线）、os-lan-vxlan-evpn（数据中心 overlay）构成 ALE 二三层隧道全家桶。本书的独特价值是"为什么"与选型框架（五收益、F1-F5），以及明确的 AOS 能力边界清单。跨书易混点：explicit NULL、QoS over EXP、TTL manipulation 在 AOS 均不支持，规划时勿照搬通用 MPLS 教材。</p>
+<h2 id="_4">来源</h2>
+<p>MPLS Reference Design Guide（mpls-reference-design-guide-en.pdf，45p）。verified.md：cases C1-C18；
+principles P1-P33；
+counter-examples X1-X18；
+frameworks F1-F5；
+glossary 48 条。</p><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

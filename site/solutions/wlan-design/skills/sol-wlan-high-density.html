@@ -1,0 +1,103 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>sol-wlan-high-density — Stellar WLAN 设计与调优</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>Stellar WLAN 设计与调优</h1>
+<div class="sub">3 份 75 页 · 高密设计指南 + 微调最佳实践 + 部署服务表</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">设计</div>
+<a href="../skills/sol-wlan-high-density.html" class="on">sol-wlan-high-density</a>
+<a href="../skills/sol-wlan-fine-tuning.html">sol-wlan-fine-tuning</a>
+<div class="grp">配置</div>
+<a href="../skills/sol-wlan-profile-hierarchy.html">sol-wlan-profile-hierarchy</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../solutions/index.html">解决方案</a> › <a href="../index.html">Stellar WLAN 设计与调优</a> › <span>sol-wlan-high-density</span></nav><h1>sol-wlan-high-density</h1><p class="meta"><span class="badge">SKILL</span> sol-wlan-high-density · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>体育场/音乐厅/礼堂等极高密场景的 Wi-Fi 立项与容量测算</li>
+<li>选择设计范式：容量型 vs 覆盖型（竞品常推覆盖型）</li>
+<li>AP 选型与布点：屋顶定向、座椅下、猫道、卫星机柜配比</li>
+<li>规划核心交换、NMS、Captive Portal 与 LAN 带宽</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>需求分析与容量规划先于一切（P1/P2，&lt;&lt;<PAGE 6>&gt;&gt;）：先明确客户端类型、应用与并发负载再谈 AP 数。RF 管理是高密成败关键（P6，&lt;&lt;<PAGE 8>&gt;&gt;）。容量型优于覆盖型（F3/P36，&lt;&lt;<PAGE 50-51>&gt;&gt;）：ALE 主张更多 AP、更低功率、小蜂窝——高速率关联、更优性能；覆盖型大功率大蜂窝导致低速率关联与更多干扰（X4）。高密选型专用自治架构 + Enterprise 模式集中管理（P5，&lt;&lt;<PAGE 5>&gt;&gt;）。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<ol>
+<li>高密 WLAN 设计五步法（F1，&lt;&lt;<PAGE 6-7>&gt;&gt;）：需求分析（客户端类型/应用/并发与带宽容量/安全与 QoS）→ 设计（预测勘测定点位）→ 部署 → 验证（实时性能对比规划指标+真实用户调查）→ 交付（BOM/AP 点位图/勘测报告/安装指南/配置指南/培训）</li>
+<li>容量 vs 覆盖范式决策（F3，&lt;&lt;<PAGE 50-51>&gt;&gt;）：新部署一律容量型；覆盖型仅遗留网络过渡</li>
+<li>AP 计数与并发（P22/P23，&lt;&lt;<PAGE 12>&gt;&gt;）：看台 120 终端/AP（150 座/AP）；媒体/大厅/周边/服务区 1 AP/100m²；30% 并发率经验值</li>
+<li>SSID 规划（P16/P17，&lt;&lt;<PAGE 9-10>&gt;&gt;）：最多 7 个 SSID（5GHz 平均利用率约 12% 前提）；按角色差异化——访客=开放+Portal+限速、媒体 VIP=802.1X+高 QoS 不限速、售票=实时+QoS、监控=802.1X+流限速</li>
+</ol>
+<h2 id="a2">A2（操作步骤）</h2>
+<ul>
+<li><strong>VHD 吞吐基线</strong>（C2/C3，&lt;&lt;<PAGE 11>&gt;&gt;）：Wi-Fi 6 HE20 单用户 80Mbps（MCS8），60 并发衰减至约 40Mbps；再乘 25% VHD 折减系数（CCI/ACI/非 Wi-Fi 干扰/中等占空比）</li>
+<li><strong>并发负载推算</strong>（C4，&lt;&lt;<PAGE 12>&gt;&gt;）：52,000 座 × 30% ≈ 21,000 并发设备 ≈ 每 AP 60+ 台</li>
+<li><strong>AP 型号-场景映射</strong>（C5，&lt;&lt;<PAGE 13>&gt;&gt;）：AP1360=户外周边/监控；AP1322=看台定向（&lt;15m 结构）；AP1361D=看台猫道；AP1331/AP1351=媒体/大厅/礼堂；AP1311=办公室</li>
+<li><strong>布点实施</strong>：屋顶定向 AP1322+ANT-S-M4-60/-30 扇区天线，1 AP 平均覆盖 180 座（C6，&lt;&lt;<PAGE 16-17>&gt;&gt;）；座椅下/扶手安装须 NEMA 防护盒（IP3/IP4）并防人为破坏（P26/P28/X17）；物理勘测决定最终点位（P27）</li>
+<li><strong>卫星机柜</strong>：约每 3,200 座一个，配 24 口交换机（C7，&lt;&lt;<PAGE 17>&gt;&gt;）</li>
+<li><strong>端到端架构</strong>（C8，&lt;&lt;<PAGE 18-19>&gt;&gt;）：双 OmniSwitch 6900 冗余核心（40G 保底/100G 峰值、虚拟机箱、autofabric、双站点）；OmniVista 2500 HA（单机 4000 AP，C11）+ Cirrus 10 云分析互补（QoE/热图/密度图，P33）；第三方 Captive Portal 须支撑 ≥15,000 即时用户（如 UCOPIA，C9）</li>
+<li><strong>LAN 带宽估算</strong>（C10/P32，&lt;&lt;<PAGE 21>&gt;&gt;）：LAN BW = 信道复用因子 × AP 数 × 每 AP 客户端 × 每客户端带宽；再加 50% 有线冗余（实例 1×260×60×2=31.2G → 47G）</li>
+<li><strong>复用因子目标</strong>：VHD 区力争逼近 1；座椅下部署最高 3（P31，&lt;&lt;<PAGE 21>&gt;&gt;）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>5 万座体育场需求画像：数万座、AP 多于 5GHz 信道数、人均 2 台设备（C1，&lt;&lt;<PAGE 5>&gt;&gt;）</li>
+<li>VHD 单用户吞吐衰减基线与 25% 折减（C2/C3，&lt;&lt;<PAGE 11>&gt;&gt;）</li>
+<li>52,000 座 → 21,000 并发 → 60 设备/AP（C4，&lt;&lt;<PAGE 12>&gt;&gt;）</li>
+<li>260 台 AP1322 屋顶定向布点（1 AP/180 座）（C6，&lt;&lt;<PAGE 16-17>&gt;&gt;）</li>
+<li>LAN 带宽估算 47Gbps 实例（C10，&lt;&lt;<PAGE 21>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（反例与坑）</h2>
+<ul>
+<li>覆盖型设计陷阱：大功率大蜂窝=低速率关联+更多干扰（X4，&lt;&lt;<PAGE 51>&gt;&gt;）</li>
+<li>低性能 Wi-Fi 6 AP 不用于 &gt;5,000 座场馆（X16/P25，&lt;&lt;<PAGE 13>&gt;&gt;）</li>
+<li>SSID 超配：12 AP 同信道 × 10 SSID 吃掉 50% 空口；2.4G 更糟（8 AP × 3 SSID 即 &gt;50%）（C13/C14/X5，&lt;&lt;<PAGE 53>&gt;&gt;）</li>
+<li>宽信道（80/160MHz）带来 CCI+3dB 噪声惩罚，SNR 降、MCS 降、吞吐缩（X1，&lt;&lt;<PAGE 49>&gt;&gt;）</li>
+<li>座椅下 AP 易遭破坏，须防护（X17，&lt;&lt;<PAGE 16>&gt;&gt;）</li>
+<li>信道利用率 ≥50% 即显著损害容量（P40，&lt;&lt;<PAGE 52>&gt;&gt;）</li>
+</ul>
+<p>来源：OmniAccess Stellar High-Density Design Guidelines（p5-25）</p><div class="pn"><a href="../index.html">⬅ 返回课程首页</a><a class="nxt" href="sol-wlan-fine-tuning.html">下一单元：sol-wlan-fine-tuning ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

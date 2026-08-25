@@ -1,0 +1,26 @@
+# counter-examples — sol-evpn-architecture（书中警告的失败模式，英文原句 + 真实页码）
+
+- **X1 STP 阻塞链路浪费资源**："The use of Spanning Tree Protocol (STP) led to inefficient use of resources due to blocked redundant links... It was also complex, slow to converge, and had inter-operating issues between different versions." <<<PAGE 5>>>
+- **X2 L2 环路与广播风暴（无 TTL）**："Broadcast storms and endless Layer 2 loops (due to lack of TTL in Layer 2 frames) can cause instability of the entire infrastructure." <<<PAGE 5>>>
+- **X3 12-bit VLAN 上限**："VLAN segmentation allows for a 12-bit VLAN ID, which has an upper limit of 4096 VLANs. This is very restrictive specifically in data center environments." <<<PAGE 5>>>
+- **X4 Traffic tromboning（静态首跳网关导致绕行）**："Inter-VLAN traffic flows could suffer a 'trombone' effect and follow a sub-optimal path for east-west traffic. This is due to having a static first-hop router." <<<PAGE 5>>>
+- **X5 洪泛学习需组播底层、复杂度叠加**："In a VXLAN enabled network, this model requires a multicast-enabled underlay to discover remote VTEPs and to learn endpoint MAC addresses. This adds complexity to the architecture." <<<PAGE 7>>>
+- **X6 持续洪泛伤扩展性**："Constant flooding over the fabric in such a deployment in order to maintain accurate end-host reachability information can present a challenge for scalability." <<<PAGE 9>>>
+- **X7 广播帧走 EVI 隧道不被推荐**："Broadcast frames can also be forwarded using the EVI distribution tunnels but is generally not recommended since the FDB learning and ARP suppression mechanism is relied upon to reduce the flood traffic." <<<PAGE 14>>>
+- **X8 应禁用 proxy ARP 的例外场景**："some use cases might require to disable it. Some example are hosts that are using Gratuitous ARPs or ARP probes for detection and when you're debugging L2/L3 connectivity issues and require full visibility of ARP packets in the EVPN fabric." <<<PAGE 21>>>
+- **X9 VRRP 集中网关低效**："a redundancy protocol (such as VRRP) would be required on the VTEPs such that only the master VTEP router can act as the gateway. But this solution is not efficient since it can lead to traffic tromboning and the overhead of the control plane." <<<PAGE 28>>>
+- **X10 自动派生 anycast MAC 的碰撞风险**："Auto-derivation of the anycast MAC can only be used if there is a certainty that the auto-derived MAC does not collide with any MAC address that is already being used in the network." <<<PAGE 29>>>
+- **X11 Tandem replication 复杂 vs ingress replication 低效**："tandem replication adds complexity by using a multicast-enabled underlay... ingress replication... is less efficient than tandem replication. Ingress replication, however, is much simpler to configure." <<<PAGE 29-30>>>
+- **X12 非对称 IRB 资源/配置密集**："all PEs need to maintain each host's (local and remote) IP and MAC address in its ARP table and maintain MAC-VRFs and IRB interfaces for all subnets... makes the model more resource and configuration intensive." <<<PAGE 24>>>
+- **X13 无 R-T6/7/8 时多归属 IGMP 状态问题**："All-active: There is no guarantee that IGMP Join and Leave packets will be sent to the DF for that ES / Single-active: A failover in the DF will cause a loss of IGMP state information." <<<PAGE 36>>>
+- **X14 DF change 期间组播丢包**："In the event of a DF change, there will be traffic drop to clients, as the remote PEs will continue to forward the traffic to older PE until they receive the SMET routes form the new PE." <<<PAGE 36>>>
+- **X15 MAC duplication 拖垮控制平面**："Such a behavior leads to a continuous exchange of the MAC being advertised and withdrawn in the control plane among all the PEs... and leads to degradation of the EVPN network performance." <<<PAGE 39>>>
+- **X16 重复 IP 可能是人为错误或欺骗攻击**："This could be either because of human error or a spoofing attack on an EVPN network." <<<PAGE 39>>>
+- **X17 静默主机休眠失联**："These periods of inactivity can result in a loss of service binding, thus making the device effectively unreachable (for example for a WAKE-ON-LAN packet)." <<<PAGE 40>>>
+- **X18 8-bit 本地段 ID 限制 ES 数量**："The 8-bit value will limit the number of locally configurable ES to a maximum of 256 Segments." <<<PAGE 43>>>
+- **X19 SMET-by-all-PEs 的核心带宽浪费**："The disadvantage with this approach is that there will be traffic duplication in the core, wasting the bandwidth." <<<PAGE 43-44>>>
+- **X20 Border leaf 泄漏主机路由压垮外部路由器**："The border leaf will advertise all the host routes to the external network leading to excessive load in both the control-plane and the data-plane of the external router." <<<PAGE 48>>>
+- **X21 外部路由器路由回声（双 border leaf）**："it is possible for the external router to echo a route from one border leaf back to the other border leaf." <<<PAGE 48>>>
+- **X22 多归属 SAP 配置不一致导致 CE 侧黑洞**："Please ensure that the SAP is configured consistently on all peer nodes of a MH-ES, otherwise... However, the CE side traffic towards the PE will be black-holed! (if the flow were to hash to the attached PE that has the missing config)." <<<PAGE 66>>>
+- **X23 R-T10 源发现引入少量建流时延**："R-T10 based source discovery adds a little latency (additional delta time taken by PEG to generate RT-6 route plus traffic forwarding from source PE to PEG) when establishing data path." <<<PAGE 39>>>
+- **X24 VLAN-aware 模型多归属两端 VLAN ID 必须一致**："Local and peer PE's in multi-homed segment should still have identical VLAN IDs." <<<PAGE 20>>>

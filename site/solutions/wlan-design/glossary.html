@@ -1,0 +1,141 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>术语词典 — Stellar WLAN 设计与调优</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>Stellar WLAN 设计与调优</h1>
+<div class="sub">3 份 75 页 · 高密设计指南 + 微调最佳实践 + 部署服务表</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">设计</div>
+<a href="skills/sol-wlan-high-density.html">sol-wlan-high-density</a>
+<a href="skills/sol-wlan-fine-tuning.html">sol-wlan-fine-tuning</a>
+<div class="grp">配置</div>
+<a href="skills/sol-wlan-profile-hierarchy.html">sol-wlan-profile-hierarchy</a></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../solutions/index.html">解决方案</a> › <a href="index.html">Stellar WLAN 设计与调优</a> › <span>术语词典</span></nav><h1>术语词典</h1><h1 id="glossary-stellar">GLOSSARY · Stellar 高密设计 + 微调最佳实践 + 部署协助服务</h1>
+<blockquote>
+<p>页码为全册连续 <code>&lt;&lt;&lt;PAGE N&gt;&gt;&gt;</code> 标记。按高密设计/RF 管理/漫游与负载/组播广播/架构与运维/三级配置/服务分组，精选 48 条。</p>
+</blockquote>
+<h2 id="_1">高密设计</h2>
+<ul>
+<li><strong>HD / VHD</strong>：High-density / Very-high density，体育场看台为 VHD 典型 &lt;&lt;<PAGE 5-6>&gt;&gt;</li>
+<li><strong>容量规划（Capacity planning）</strong>：事件期并发客户端数与并发带宽测算 &lt;&lt;<PAGE 6>&gt;&gt;</li>
+<li><strong>预测勘测（Predictive survey）</strong>：基于数字地图部署前预测点位与覆盖 &lt;&lt;<PAGE 7, 74>&gt;&gt;</li>
+<li><strong>30% 并发率</strong>：连接人数占总观众比例的经验值 &lt;&lt;<PAGE 12>&gt;&gt;</li>
+<li><strong>AP 计数标准</strong>：看台 120 终端/AP（150 座/AP）；其余 1 AP/100m² &lt;&lt;<PAGE 12>&gt;&gt;</li>
+<li><strong>25% VHD 折减系数</strong>：体育场 VHD 场景扣 CCI/ACI/非 Wi-Fi 干扰/中等占空比的折减 &lt;&lt;<PAGE 11>&gt;&gt;</li>
+<li><strong>AP 型号-场景映射</strong>：AP1360 户外/监控、AP1322 看台定向、AP1361D 猫道、AP1331/1351 媒体大厅、AP1311 办公 &lt;&lt;<PAGE 13>&gt;&gt;</li>
+<li><strong>扇区天线（Sector antenna）</strong>：ANT-S-M4-30/60 定向天线，屋顶定向覆盖看台 &lt;&lt;<PAGE 17, 40>&gt;&gt;</li>
+<li><strong>NEMA 防护盒</strong>：座椅下/猫道安装的防护外壳（IP3/IP4） &lt;&lt;<PAGE 13>&gt;&gt;</li>
+<li><strong>卫星机柜</strong>：约每 3200 座一个，配 24 口交换机 &lt;&lt;<PAGE 17>&gt;&gt;</li>
+<li><strong>信道复用因子</strong>：可用/已用信道之比，VHD 力争逼近 1，座椅部署最高 3 &lt;&lt;<PAGE 21>&gt;&gt;</li>
+<li><strong>LAN 带宽公式</strong>：复用因子 × AP 数 × 每 AP 客户端 × 每客户端带宽，再 +50% 有线冗余 &lt;&lt;<PAGE 21>&gt;&gt;</li>
+<li><strong>QoE（体验质量）</strong>：连接成功率/时长/漫游/容量可用性综合评分 &lt;&lt;<PAGE 25, 64>&gt;&gt;</li>
+</ul>
+<h2 id="rf">RF 管理与微调</h2>
+<ul>
+<li><strong>CCI / ACI</strong>：同频干扰 / 邻频干扰 &lt;&lt;<PAGE 8>&gt;&gt;</li>
+<li><strong>RDA / DRM</strong>：Radio Dynamic Adjustment / Dynamic Radio Management，自动信道+功率调整 &lt;&lt;<PAGE 48, 56>&gt;&gt;</li>
+<li><strong>ACS / APC</strong>：自动信道选择 / 自动功率控制 &lt;&lt;<PAGE 48>&gt;&gt;</li>
+<li><strong>背景扫描</strong>：wIDS/wIPS/RDA 基础，默认开，间隔建议 &lt;40s（&gt;60s 损精度） &lt;&lt;<PAGE 49, 56>&gt;&gt;</li>
+<li><strong>Airtime Fairness</strong>：空口时间公平，默认关、高密必开 &lt;&lt;<PAGE 8, 56>&gt;&gt;</li>
+<li><strong>专用扫描射频</strong>：Wi-Fi 6 AP 独立全频扫描射频，工作信道不受影响 &lt;&lt;<PAGE 9>&gt;&gt;</li>
+<li><strong>DFS 信道</strong>：与雷达等共用的频率（UNII-2e 100-140），看台高密优选 &lt;&lt;<PAGE 8, 26>&gt;&gt;</li>
+<li><strong>20MHz 基准带宽</strong>：高密基准信道宽度，宽信道带来 CCI+3dB 噪声惩罚 &lt;&lt;<PAGE 8, 49>&gt;&gt;</li>
+<li><strong>信道利用率红线</strong>：≥50% 即显著损害 WLAN 容量 &lt;&lt;<PAGE 52>&gt;&gt;</li>
+<li><strong>SSID 空口开销</strong>：SSID 数×同信道 AP 数的 beacon/probe 开销；12AP×10SSID=50% &lt;&lt;<PAGE 53>&gt;&gt;</li>
+<li><strong>OFDMA / MU-MIMO / BSS Coloring</strong>：Wi-Fi 6 高密三大利器 &lt;&lt;<PAGE 12, 51>&gt;&gt;</li>
+<li><strong>MCS</strong>：调制编码方案；MCS8=256QAM 3/4，速率越高 SNR 要求越高 &lt;&lt;<PAGE 11, 49>&gt;&gt;</li>
+<li><strong>2x2:2 MIMO</strong>：当前主流客户端天线配置 &lt;&lt;<PAGE 9>&gt;&gt;</li>
+<li><strong>信号强度基准表</strong>：-67dBm 时敏（VoIP/视频）/ -70dBm 邮件网页 / -80dBm 最低连接不可靠 &lt;&lt;<PAGE 54>&gt;&gt;</li>
+</ul>
+<h2 id="_2">负载均衡与漫游</h2>
+<ul>
+<li><strong>Band Steering</strong>：引导双频客户端优先 5GHz；Apple iOS 可能拉黑 SSID 数分钟 &lt;&lt;<PAGE 54, 66>&gt;&gt;</li>
+<li><strong>Force 5GHz</strong>：拒绝全部 2.4G 关联，仅纯双频环境适用 &lt;&lt;<PAGE 54>&gt;&gt;</li>
+<li><strong>RSSI 阈值</strong>：以 -96dBm 底噪换算；关联 22=-74dBm、漫游 25=-71dBm &lt;&lt;<PAGE 55, 66>&gt;&gt;</li>
+<li><strong>最低客户端数据速率</strong>：低于门限拒绝关联；推荐 2.4G=12M、5G=24M &lt;&lt;<PAGE 10, 55>&gt;&gt;</li>
+<li><strong>最低管理帧速率（Minimum MGMT Rate）</strong>：须 ≤ 关联最低数据速率 &lt;&lt;<PAGE 55, 71>&gt;&gt;</li>
+<li><strong>Sticky client（粘滞客户端）</strong>：抱住信号变差的原始 AP 不漫游 &lt;&lt;<PAGE 57>&gt;&gt;</li>
+<li><strong>802.11k / 802.11v</strong>：邻居报告 / BSS 过渡引导，解粘滞客户端正解；依赖客户端支持 &lt;&lt;<PAGE 57-58>&gt;&gt;</li>
+<li><strong>802.11r（Fast BSS Transition）+ OKC</strong>：快速切换 + 机会性密钥缓存（复用 PMK）免完整 802.1X 重认证 &lt;&lt;<PAGE 57-58, 70>&gt;&gt;</li>
+<li><strong>FDB Update on Association</strong>：漫游后 AP 发 ARP 通知交换机刷新转发表 &lt;&lt;<PAGE 30, 57>&gt;&gt;</li>
+<li><strong>Smart Load Balance（SLB）</strong>：引导客户端去空闲 AP、拒弱信号关联的功能集；解决不了粘滞客户端 &lt;&lt;<PAGE 52, 58>&gt;&gt;</li>
+<li><strong>Dynamic Load Balance</strong>：相邻 AP 间按客户端数分担 &lt;&lt;<PAGE 27, 66>&gt;&gt;</li>
+</ul>
+<h2 id="qos">组播/广播/QoS</h2>
+<ul>
+<li><strong>Multicast Optimization</strong>：组播转单播，Number of Clients 默认 6 &lt;&lt;<PAGE 37, 59>&gt;&gt;</li>
+<li><strong>IGMP Snooping</strong>：按组播成员端口定向转发 &lt;&lt;<PAGE 38, 59>&gt;&gt;</li>
+<li><strong>Broadcast Filter ARP / All</strong>：AP 作 ARP 代理只发不播 / 丢弃除 DHCP/ARP 外全部广播 &lt;&lt;<PAGE 32, 60>&gt;&gt;</li>
+<li><strong>Broadcast Key Rotation</strong>：广播密钥轮换（1-1440 分钟，默认 15） &lt;&lt;<PAGE 32, 59>&gt;&gt;</li>
+<li><strong>Bandwidth Contract</strong>：SSID 级上/下行及突发带宽合约（0-2621440 Kbps） &lt;&lt;<PAGE 32, 72>&gt;&gt;</li>
+<li><strong>WMM / 802.1p / DSCP 映射</strong>：AC_BK/BE/VI/VO 与有线 QoS 互转；Trust Original DSCP &lt;&lt;<PAGE 32, 63>&gt;&gt;</li>
+<li><strong>Voice and Video Awareness</strong>：语音视频会话期间暂停背景扫描 &lt;&lt;<PAGE 61, 66>&gt;&gt;</li>
+</ul>
+<h2 id="_3">架构、模式与运维</h2>
+<ul>
+<li><strong>Enterprise / Express 模式</strong>：OmniVista 集中（4000 AP/组） vs 集群自治（256 AP/集群） &lt;&lt;<PAGE 47>&gt;&gt;</li>
+<li><strong>OmniSwitch 6900 双核心</strong>：40G 保底/100G 峰值、虚拟机箱、autofabric &lt;&lt;<PAGE 18-19>&gt;&gt;</li>
+<li><strong>OmniVista 2500 HA</strong>：双数据库高可用 NMS，单机 4000 AP &lt;&lt;<PAGE 19, 22>&gt;&gt;</li>
+<li><strong>Captive Portal</strong>：访客 Web 认证；OV2500 托管或第三方（UCOPIA ≥15,000 用户） &lt;&lt;<PAGE 19>&gt;&gt;</li>
+<li><strong>Custom Dashboard / 客户端密度图</strong>：Cirrus 10 专区聚合仪表盘 / 密度可视化（10.4.1+） &lt;&lt;<PAGE 23-24>&gt;&gt;</li>
+<li><strong>DTIM Interval</strong>：组播/广播传递指示，Apple 互通建议 3 &lt;&lt;<PAGE 71>&gt;&gt;</li>
+<li><strong>High Efficiency（HE）模式</strong>：802.11ax 开关，关闭降级 VHT &lt;&lt;<PAGE 68>&gt;&gt;</li>
+</ul>
+<h2 id="_4">三级配置与服务</h2>
+<ul>
+<li><strong>RF Profile</strong>：区域级——频段/信道计划（DRM/Channel List）/宽度/功率范围/信标/扫描 &lt;&lt;<PAGE 27-38, 66-72>&gt;&gt;</li>
+<li><strong>AP Group</strong>：设备组级——SSH/SNMP/IGMP Snooping/日志上送 &lt;&lt;<PAGE 27-38>&gt;&gt;</li>
+<li><strong>SSID 级配置</strong>：认证/最低速率/漫游（11r/k/v/OKC/FDB）/带宽合约/广播组播/QoS &lt;&lt;<PAGE 27-38>&gt;&gt;</li>
+<li><strong>Beacon Interval</strong>：默认 100ms，极高负载可至 150ms &lt;&lt;<PAGE 29, 68>&gt;&gt;</li>
+<li><strong>部署协助服务（Deployment Assistance）</strong>：预测勘测+现场勘测+辅导+培训+ACSE，5 天交付，PS-PAER-5-NET &lt;&lt;<PAGE 73-75>&gt;&gt;</li>
+<li><strong>ACFE / ACSE 认证 / HLD</strong>：服务前置基础认证 / 完成后技术支持准入 / 订购前必须完成的高层设计 &lt;&lt;<PAGE 75>&gt;&gt;</li>
+<li><strong>Ekahau Pro</strong>：业界预测勘测与干扰分析工具 &lt;&lt;<PAGE 49, 74>&gt;&gt;</li>
+</ul>
+<hr />
+<p>合计：50 条。</p><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

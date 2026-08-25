@@ -1,0 +1,106 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>sol-sec-protocol-hardening — 网络基础设施安全 · Tech Brief</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>网络基础设施安全 · Tech Brief</h1>
+<div class="sub">2 份 100 页 · 安全 Tech Brief + 白皮书（五层框架/三平面加固/NLM 生命周期）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">框架与加固</div>
+<a href="../skills/sol-sec-five-layer-framework.html">sol-sec-five-layer-framework</a>
+<a href="../skills/sol-sec-protocol-hardening.html" class="on">sol-sec-protocol-hardening</a>
+<div class="grp">准入与运维</div>
+<a href="../skills/sol-sec-device-access.html">sol-sec-device-access</a>
+<a href="../skills/sol-sec-nlm-lifecycle.html">sol-sec-nlm-lifecycle</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../solutions/index.html">解决方案</a> › <a href="../index.html">网络基础设施安全</a> › <span>sol-sec-protocol-hardening</span></nav><h1>sol-sec-protocol-hardening</h1><p class="meta"><span class="badge">SKILL</span> sol-sec-protocol-hardening · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>加固路由与标签协议邻居（RIP/OSPF/IS-IS/BGP/LDP 认证、keychain 轮换）</li>
+<li>防生成树攻击（Root Guard/TCN 限制/BPDU 过滤）与 rogue 设备（LLDP Agent Security）</li>
+<li>防 ARP 欺骗/MiTM/rogue DHCP（ARP 过滤、GARP 阻断、Snooping+DAI、IPv6 三件套）</li>
+<li>关键链路加密（MACsec/MKA）与边缘端口防护（LPS）</li>
+<li>用安全协议替换 Telnet/FTP/TFTP/SNMPv1/HTTP</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>开机默认全开的服务端口是 DoS 攻击面（X3，&lt;&lt;<PAGE 12>&gt;&gt;）：先全关服务再按需开安全协议（P19，&lt;&lt;<PAGE 12>&gt;&gt;）。不安全协议仅为兼容遗留系统保留，必须替换（P20，&lt;&lt;<PAGE 12>&gt;&gt;）。控制面防护逻辑 = 协议认证（谁可参与）+ 拓扑防护（防外部影响生成树）+ 地址防护（防 ARP/DHCP/RA 欺骗）。keychain 是 OSPF/IS-IS 最安全选项，密钥带起止时间定期轮换（P47，&lt;&lt;<PAGE 30>&gt;&gt;）。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<ol>
+<li>协议替换对照框架（F3/P20，&lt;&lt;<PAGE 12>&gt;&gt;）：Telnet→SSH（无加密无证书）；FTP/TFTP→SFTP/SCP；SNMPv1/v2c→SNMPv3（仅社区串认证）；HTTP→HTTPS（明文）</li>
+<li>控制面加固路线（&lt;&lt;<PAGE 30-43>&gt;&gt;）：路由/标签协议认证（P46）→ STP 三防（P48-P50）→ LLDP Agent Security（P51）→ ARP/GARP 防欺骗（P52-P54）→ NTP 认证（P55）→ ICMP 裁剪（P56）→ DHCP Snooping+DAI（P57）→ IPv6 三件套（P58）→ 不用即关 MVRP（P59）→ 交换机 supplicant（P60）</li>
+<li>数据面加固路线（&lt;&lt;<PAGE 43-47>&gt;&gt;）：MACsec 链路加密（P61）→ 禁定向广播（P62）→ IPv6 邻居缓存限额（P63）→ 边缘 LPS（P64）</li>
+</ol>
+<h2 id="a2">A2（操作步骤）</h2>
+<ul>
+<li><strong>OSPF keychain 三密钥轮换</strong>（C10，&lt;&lt;<PAGE 30>&gt;&gt;）：<code>security key 1/2/3 algorithm sha256 ... start-time/lifetime</code> → <code>security key-chain 1 name "OSPF"</code> → <code>ip ospf interface vlan-101 auth-type key-chain 1</code></li>
+<li><strong>STP 三防</strong>（P48-P50，&lt;&lt;<PAGE 32-33>&gt;&gt;）：核心下行口开 Root Guard（restricted-role）；边缘口开 TCN 限制（restricted-tcn）；用户口收 BPDU 即过滤或 shutdown</li>
+<li><strong>LLDP Agent Security</strong>：端口仅信一个 LLDP 远端代理，rogue 设备接入即触发 violation（trap/shutdown）并阻塞 NNI 口（C11/P51，&lt;&lt;<PAGE 33>&gt;&gt;）</li>
+<li><strong>ARP 防欺骗组合</strong>：ARP 过滤 + 阻断入向 GARP + 对服务器/网关等关键主机配 arp-poison restricted-address 检测（P52-P54，&lt;&lt;<PAGE 34-35>&gt;&gt;）</li>
+<li><strong>DHCP Snooping + DAI</strong>（C12/P57，&lt;&lt;<PAGE 38-39>&gt;&gt;）：<code>dhcp-snooping vlan 140 admin-state enable</code> + 服务器端口 <code>trust</code> + <code>dhcp-snooping ip-source-filter vlan 140 admin-state enable</code>（依绑定表校验源，防 ARP 欺骗）</li>
+<li><strong>IPv6 三件套</strong>（P58，&lt;&lt;<PAGE 39-46>&gt;&gt;）：DHCPv6 Snooping + IPv6 Source Filtering（需 TCAM 模式调整）；DHCPv6 Guard（仅信任口放服务器报文）；RA 过滤（ra-filter 丢非法 RA）</li>
+<li><strong>NTP 认证</strong>：/flash/network/ntp.keys 存 MD5/SHA1 密钥并设 trusted，保证日志时间可信（P55，&lt;&lt;<PAGE 36-37>&gt;&gt;）</li>
+<li><strong>ICMP 裁剪</strong>：按风险表禁 Echo/Redirect/RA/Timestamp 等无用消息（P56，&lt;&lt;<PAGE 37-38>&gt;&gt;）</li>
+<li><strong>MACsec/MKA</strong>：etherType 0x88E5 点对点加密；静态 SAK 四密钥（一用三备）或 MKA 动态轮换（P61，&lt;&lt;<PAGE 43-44>&gt;&gt;）</li>
+<li><strong>LPS</strong>：边缘端口 MAC 学习授权，限数/限窗/违规 shutdown（P64，&lt;&lt;<PAGE 46-47>&gt;&gt;）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>OSPF keychain 三密钥轮换配置（C10，&lt;&lt;<PAGE 30>&gt;&gt;）</li>
+<li>LLDP Agent Security 检测 rogue 接入并阻塞 NNI 口（C11，&lt;&lt;<PAGE 33>&gt;&gt;）</li>
+<li>DHCP Snooping + IP Source Filtering 组成 DAI（C12，&lt;&lt;<PAGE 39>&gt;&gt;）</li>
+<li>DoS 过滤默认开启：Ping of Death/Land/ARP Flood(&gt;500/s)/Ping overload(&gt;100/s)；端口扫描按 penalty 累计超阈值（如 2000）发 trap（&lt;&lt;<PAGE 41-42>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（反例与坑）</h2>
+<ul>
+<li>开机全开 TCP/UDP 知名服务端口，易被 DoS（X3，&lt;&lt;<PAGE 12>&gt;&gt;）</li>
+<li>Telnet/FTP/TFTP/HTTP/明文 SNMP 均为不安全协议（X4，&lt;&lt;<PAGE 12>&gt;&gt;）</li>
+<li>GARP 可被伪造用于 MiTM——阻断入向、放行出向（P53，&lt;&lt;<PAGE 35>&gt;&gt;）</li>
+<li>DHCP Option-82 与 Snooping 互斥（&lt;&lt;<PAGE 38>&gt;&gt;）</li>
+<li>MVRP 不用即关（P59，&lt;&lt;<PAGE 41>&gt;&gt;）</li>
+<li>定向广播默认丢弃，勿随意开受控放行（P62，&lt;&lt;<PAGE 45>&gt;&gt;）</li>
+<li>IPv6 邻居缓存可被 DoS 耗尽——配限额（P63，&lt;&lt;<PAGE 46>&gt;&gt;）</li>
+</ul>
+<p>来源：Network Security Guidelines（Control Plane + Data Plane 章，p12、30-47）</p><div class="pn"><a href="sol-sec-five-layer-framework.html">⬅ 上一单元：sol-sec-five-layer-framework</a><a class="nxt" href="sol-sec-device-access.html">下一单元：sol-sec-device-access ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

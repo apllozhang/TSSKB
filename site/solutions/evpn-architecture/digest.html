@@ -1,0 +1,79 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>精华长文 DIGEST — EVPN 架构指南</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>EVPN 架构指南</h1>
+<div class="sub">1 份 73 页 · BGP EVPN（Route Types/多归属五机制/IRB/OISM 组播）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">控制面</div>
+<a href="skills/sol-evpn-control-plane.html">sol-evpn-control-plane</a>
+<div class="grp">数据面</div>
+<a href="skills/sol-evpn-multi-homing.html">sol-evpn-multi-homing</a>
+<a href="skills/sol-evpn-irb-multicast.html">sol-evpn-irb-multicast</a></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../solutions/index.html">解决方案</a> › <a href="index.html">EVPN 架构指南</a> › <span>精华长文 DIGEST</span></nav><h1>精华长文 DIGEST</h1><h1 id="digest-evpn-architecture-guidesol-evpn-architecture">DIGEST — EVPN Architecture Guide（sol-evpn-architecture）精华</h1>
+<p>本书是 AOS 8.10R1-R3 在 OmniSwitch 6900 上的 MP-BGP EVPN for VXLAN 架构指南（73 页）：fundamentals（p9-40）+ AOS 差异化（p40-44）+ 参考设计（p44-48）+ 端到端配置案例（p48-72）四位一体。核心主张：控制平面主动学习取代洪泛学习，单一 BGP EVPN 控制面同时承载 L2/L3 服务。</p>
+<h2 id="_1">一、知识地图（三技能单元）</h2>
+<ol>
+<li><strong>控制面</strong>（sol-evpn-control-plane）：Why 论证、VXLAN/VNI/VTEP、R-T1~R-T8、RD/RT 自动派生、service 模型、ARP 抑制、underlay/overlay 设计（p5-46）。</li>
+<li><strong>Multi-homing 五机制</strong>（sol-evpn-multi-homing）：模式选型、ESI、DF/service carving、split horizon/local bias、aliasing、mass withdraw、组播状态同步（p32-44/p64-66）。</li>
+<li><strong>IRB 与组播</strong>（sol-evpn-irb-multicast）：对称/非对称 IRB、SBD(Fabric-VPN)、DAG、OISM/PEG、border leaf 外部连通（p23-31/p37-48）。</li>
+</ol>
+<h2 id="_2">二、三单元要点串讲</h2>
+<h3 id="1-nlri">1. 控制面：从洪泛学习到 NLRI 通告</h3>
+<p>传统模型五大痛点（STP 阻塞链路/L2 无 TTL 成环/4096 上限/运维复杂/tromboning，&lt;&lt;<PAGE 5>&gt;&gt;）逐项映射到 VXLAN（24-bit VNI 约 1600 万）与 EVPN（MP-BGP NLRI 智能通告可达性，&lt;&lt;<PAGE 7>&gt;&gt;）。控制面学的 MAC 不老化（&lt;&lt;<PAGE 13>&gt;&gt;）；ARP 抑制默认开、proxy ARP 代答减 BUM（&lt;&lt;<PAGE 20-21>&gt;&gt;）。路由类型分工：R-T1 ES 可达、R-T2 MAC/IP、R-T3 IMET 自动发现+ingress replication、R-T4 ES+DF 选举、R-T5 前缀、R-T6 SMET、R-T7/8 IGMP 同步（&lt;&lt;<PAGE 11-13>&gt;&gt;）。推荐设计：单区域 OSPF p2p+BFD underlay+iBGP overlay+冗余 RR（同 cluster-id）+TTL security 0（&lt;&lt;<PAGE 45-46>&gt;&gt;）。</p>
+<h3 id="2-multi-homing">2. Multi-homing：防环防重复五机制</h3>
+<p>LAG 是前提（&lt;&lt;<PAGE 32>&gt;&gt;）；DF=EVI mod N 的 service carving 按 EVI 分散 BUM 负载（&lt;&lt;<PAGE 33>&gt;&gt;）；split horizon（VXLAN 下靠对端 PE IP 列表）+ local bias（本 PE 的 BUM 只从本地 ES 出）防环（&lt;&lt;<PAGE 34>&gt;&gt;）；aliasing 让远端按流负载分担到全活 ES（&lt;&lt;<PAGE 34>&gt;&gt;）；mass withdraw 一条 ESI 撤路批量刷新 MAC（&lt;&lt;<PAGE 36>&gt;&gt;）。ESI 三档：物理口/LACP LAG 自动、静态 LAG 手工 5 字节（&lt;&lt;<PAGE 41>&gt;&gt;）。坑：多归属 SAP 不一致黑洞（&lt;&lt;<PAGE 66>&gt;&gt;）、DF change 丢包需 SMET 补救（&lt;&lt;<PAGE 36>&gt;&gt;）。</p>
+<h3 id="3-irb-irbdag">3. IRB 与组播：对称 IRB+DAG 是主干</h3>
+<p>对称 IRB 配置简扩展好为主流推荐，每 PE 只维护本地 ARP/MAC-VRF，每 VRF 一个 Fabric-VPN(SBD) 提供跨 EVI 可达（&lt;&lt;<PAGE 24-25>&gt;&gt;）。DAG 同一 anycast IP+MAC（每 VRF 一 VMAC，自动派生 00:00:5e:00:01:VRF-ID），免 VRRP、同 PE 流量不过 fabric（&lt;&lt;<PAGE 28-29>&gt;&gt;）。组播：AOS 仅 ingress replication；跨子网用 OISM（RFC 9625，Fabric-VPN+R-T6，8.10R3 EA），源发现选 R-T10 省带宽；外部 PIM 互通走 PEG（双 PEG 冗余+专用 L3 互联，&lt;&lt;<PAGE 37-39>&gt;&gt;）。外部连通：border leaf+GRM，对外只放聚合路由，双 leaf 调 import 优先级防回声（&lt;&lt;<PAGE 46-48>&gt;&gt;）。</p>
+<h2 id="_3">三、本书在知识库中的位置</h2>
+<p>与 os-lan-vxlan-evpn（配置实现）、sol-spb（另一条 L2 fabric 路线）构成三角：EVPN=数据中心/跨广域 L2 的事实标准路线，SPB=园区/MAN 单协议路线。跨书易混点：SPB 用 IS-IS 传服务成员，EVPN 用 BGP NLRI；
+SPB head-end 复制对应 EVPN ingress replication 但发现机制不同（LLDP/IS-IS vs R-T3）。版本强绑定 8.10R1-R3、OmniSwitch 6900；
+OISM/PEG 为 EA 特性。</p>
+<h2 id="_4">来源</h2>
+<p>evpn-architecture-guide-en.pdf（73 页）。verified.md：C1-C20；X1-X24；F1-F5；P1-P42；glossary 约 70 条。</p><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

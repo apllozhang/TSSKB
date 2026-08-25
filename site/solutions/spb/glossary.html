@@ -1,0 +1,151 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>术语词典 — SPB 智能织构 · 架构与部署</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>SPB 智能织构 · 架构与部署</h1>
+<div class="sub">3 份 86 页 · Tech Brief + 部署指南 + 方案简报（IS-IS SPB/I-SID/VRRP tracking/客户案例）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">架构与服务</div>
+<a href="skills/sol-spb-architecture.html">sol-spb-architecture</a>
+<a href="skills/sol-spb-l2-l3-services.html">sol-spb-l2-l3-services</a>
+<div class="grp">部署与案例</div>
+<a href="skills/sol-spb-deployment-flow.html">sol-spb-deployment-flow</a>
+<a href="skills/sol-spb-positioning-cases.html">sol-spb-positioning-cases</a></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../solutions/index.html">解决方案</a> › <a href="index.html">SPB 智能织构</a> › <span>术语词典</span></nav><h1>术语词典</h1><h1 id="glossary-spb-sol-spb">GLOSSARY · SPB 解决方案（sol-spb）</h1>
+<blockquote>
+<p>页码为原书 <code>&lt;&lt;&lt;PAGE N&gt;&gt;&gt;</code> 标记。按基础协议/数据面标识/节点角色/服务路由/组播/自动化安全/运维分组，精选 45 条。</p>
+</blockquote>
+<h2 id="_1">基础与协议</h2>
+<ul>
+<li><strong>SPB（Shortest Path Bridging）</strong>：IEEE 802.1aq 最短路径桥接，IS-IS 替代 STP 构建全链路可用的无环多路 fabric &lt;&lt;<PAGE 6>&gt;&gt;</li>
+<li><strong>SPB-M / SPBM</strong>：SPB MAC-in-MAC 模式（802.1ah 封装）&lt;&lt;<PAGE 5>&gt;&gt;</li>
+<li><strong>SPB-V</strong>：SPB Q-in-Q 模式 &lt;&lt;<PAGE 5>&gt;&gt;</li>
+<li><strong>IS-IS</strong>：中间系统到中间系统链路状态协议，SPB 唯一控制面协议 &lt;&lt;<PAGE 6>&gt;&gt;</li>
+<li><strong>RFC 6329</strong>：定义 SPB 的 IS-IS 扩展（NLPID 与一组 TLV）&lt;&lt;<PAGE 11>&gt;&gt;</li>
+<li><strong>PBB（Provider Backbone Bridging）</strong>：IEEE 802.1ah，MAC-in-MAC 封装 &lt;&lt;<PAGE 5>&gt;&gt;</li>
+<li><strong>Q-in-Q（Provider Bridging）</strong>：IEEE 802.1ad 双标签封装，服务实例上限 4096 &lt;&lt;<PAGE 6>&gt;&gt;</li>
+<li><strong>STP/RSTP/MSTP</strong>：生成树协议族，靠禁用链路防环 &lt;&lt;<PAGE 5>&gt;&gt;</li>
+<li><strong>OSPF</strong>：开放最短路径优先，VPN Lite 与部署指南外部路由所用 &lt;&lt;<PAGE 5>&gt;&gt;</li>
+<li><strong>BGP4</strong>：边界 BEB 与外部实体（如防火墙）交换路由的常用协议 &lt;&lt;<PAGE 34>&gt;&gt;</li>
+<li><strong>VRRP</strong>：虚拟路由冗余协议，双 BEB 网关冗余 &lt;&lt;<PAGE 50>&gt;&gt;</li>
+<li><strong>LACP / linkagg</strong>：链路聚合控制协议/聚合链路；auto-LACP 默认开启 &lt;&lt;<PAGE 37>&gt;&gt;</li>
+<li><strong>LLDP</strong>：链路层发现协议，Auto-VC/LACP/SPB 邻居探测基础 &lt;&lt;<PAGE 36>&gt;&gt;</li>
+<li><strong>802.1ag（CFM）</strong>：连通性故障管理，SPB 中用于 L2 ping/L2 trace；CCM 不支持 &lt;&lt;<PAGE 45>&gt;&gt;</li>
+<li><strong>802.1AE（MACSec）</strong>：MAC 层点到点认证与加密，硬件线速 &lt;&lt;<PAGE 55>&gt;&gt;</li>
+<li><strong>802.1x / MAC 认证</strong>：端口接入认证，RADIUS 返回 filter-id 动态定 UNP &lt;&lt;<PAGE 8>&gt;&gt;</li>
+</ul>
+<h2 id="_2">数据面与标识</h2>
+<ul>
+<li><strong>BVLAN（B-VID）</strong>：骨干传输 VLAN，最多 16 个，控制 BVLAN 承载 IS-IS 消息 &lt;&lt;<PAGE 9>&gt;&gt;</li>
+<li><strong>ISID（I-SID）</strong>：24 位服务实例标识，最多 16M 租户/服务 &lt;&lt;<PAGE 9>&gt;&gt;</li>
+<li><strong>BMAC（B-SA/B-DA）</strong>：骨干源/目的 MAC，骨干内转发唯一依据 &lt;&lt;<PAGE 9>&gt;&gt;</li>
+<li><strong>CMAC</strong>：客户 MAC，只在 BEB 边缘学习，不进骨干 &lt;&lt;<PAGE 9>&gt;&gt;</li>
+<li><strong>ECT（Equal-Cost Tree）</strong>：等价树，每节点每 BVLAN 一棵；ECT-ID 用于建树平局裁决 &lt;&lt;<PAGE 11>&gt;&gt;</li>
+<li><strong>FDB</strong>：转发表；BVLAN 域 FDB 由控制面预填充 &lt;&lt;<PAGE 9>&gt;&gt;</li>
+<li><strong>同余性（Congruy）</strong>：组播与单播走同一路径的性质；head-end 与 tandem (S,G) 具备 &lt;&lt;<PAGE 15>&gt;&gt;</li>
+<li><strong>路径对称性（Symmetry）</strong>：X→Y 与 Y→X 路径一致，利于 OAM 单向时延推算 &lt;&lt;<PAGE 12>&gt;&gt;</li>
+<li><strong>源 ID（Source ID）</strong>：20 位节点标识，源自 system ID 低位，tandem 复制标记 BUM 源 &lt;&lt;<PAGE 18>&gt;&gt;</li>
+<li><strong>桥优先级（Bridge Priority）</strong>：16 位，路径计算平局裁决 &lt;&lt;<PAGE 18>&gt;&gt;</li>
+<li><strong>RPFC（Reverse-Path Forwarding Check）</strong>：按 FDB 校验入帧源 BMAC 可达性以破瞬态环 &lt;&lt;<PAGE 51>&gt;&gt;</li>
+<li><strong>LBD（Loopback Detection）</strong>：接入层环路检测，应启用在所有 UNI 口 &lt;&lt;<PAGE 51>&gt;&gt;</li>
+</ul>
+<h2 id="_3">节点与端口角色</h2>
+<ul>
+<li><strong>BEB（Backbone Edge Bridge）</strong>：骨干边缘桥，封装/解封装、学 CMAC，服务与 SAP 只在其上配置 &lt;&lt;<PAGE 10>&gt;&gt;</li>
+<li><strong>BCB（Backbone Core Bridge）</strong>：骨干核心桥，纯中转，不学 CMAC、不配服务、无需 IP &lt;&lt;<PAGE 10>&gt;&gt;</li>
+<li><strong>SAP（Service Access Point）</strong>：UNI 侧逻辑端口，绑定物理口+流量类型到服务 &lt;&lt;<PAGE 14>&gt;&gt;</li>
+<li><strong>SDP（Service Distribution Point）</strong>：NNI 侧逻辑端口，控制面动态创建指向远端 BEB &lt;&lt;<PAGE 14>&gt;&gt;</li>
+<li><strong>CE（Customer Edge）</strong>：客户边缘设备，接入冗余四档模型主体 &lt;&lt;<PAGE 48>&gt;&gt;</li>
+<li><strong>L2Profile</strong>：定义 SAP 上各 L2 控制协议 peer/drop/tunnel 处理 &lt;&lt;<PAGE 24>&gt;&gt;</li>
+<li><strong>VC（Virtual Chassis）</strong>：虚拟机箱，多台堆叠为单逻辑设备 &lt;&lt;<PAGE 53>&gt;&gt;</li>
+</ul>
+<h2 id="_4">服务与路由</h2>
+<ul>
+<li><strong>L2 服务</strong>：多站点单一 any-to-any 桥接域 VPN &lt;&lt;<PAGE 20>&gt;&gt;</li>
+<li><strong>L3 服务</strong>：多站点单一 any-to-any 路由域 VPN，各站不同子网 &lt;&lt;<PAGE 29>&gt;&gt;</li>
+<li><strong>VPN Lite</strong>：L2 SPB 服务之上叠加 OSPF/BGP/静态路由，用于边界对接外部 &lt;&lt;<PAGE 29>&gt;&gt;</li>
+<li><strong>L3 VPN</strong>：借 IS-IS TLV 直接携带客户 VRF 路由，域内推荐 &lt;&lt;<PAGE 30>&gt;&gt;</li>
+<li><strong>VRF</strong>：虚拟路由转发实例，租户 L3 隔离载体 &lt;&lt;<PAGE 29>&gt;&gt;</li>
+<li><strong>VLAN 翻译</strong>：同一服务下不同 SAP 封装互通，服务级+SAP 级双开关 &lt;&lt;<PAGE 23>&gt;&gt;</li>
+<li><strong>单次直通路由</strong>：新代 ASIC 将 IP 接口直接绑 SPB 服务，无需回环 &lt;&lt;<PAGE 26>&gt;&gt;</li>
+<li><strong>两次路由</strong>：外部物理回环或内部前面板回环经 dummy VLAN 中转 &lt;&lt;<PAGE 26>&gt;&gt;</li>
+<li><strong>路由泄漏（Route Leaking）</strong>：shared_services VRF 与客户 VRF 经全局表互导共享路由 &lt;&lt;<PAGE 34>&gt;&gt;</li>
+<li><strong>PBR（Policy-Based Router）</strong>：部署指南中集中做 VRF 间策略路由的交换机角色 &lt;&lt;<PAGE 63>&gt;&gt;</li>
+</ul>
+<h2 id="bum">BUM 与组播</h2>
+<ul>
+<li><strong>BUM</strong>：广播/未知单播/组播流量统称 &lt;&lt;<PAGE 15>&gt;&gt;</li>
+<li><strong>Head-end 复制</strong>：入端 BEB 复制多份单播，省资源费带宽 &lt;&lt;<PAGE 15>&gt;&gt;</li>
+<li><strong>Tandem (S,G) 复制</strong>：按源-组独立组播 SPT，每链路一份副本，默认模式 &lt;&lt;<PAGE 15>&gt;&gt;</li>
+<li><strong>Tandem (*,G) 复制</strong>：每 BVLAN 一棵共享树，根按桥优先级，不保证最短路 &lt;&lt;<PAGE 16>&gt;&gt;</li>
+<li><strong>IGMP Snooping</strong>：组播侦听，与 head-end 复制组合可达最优 &lt;&lt;<PAGE 16>&gt;&gt;</li>
+</ul>
+<h2 id="_5">自动化与安全</h2>
+<ul>
+<li><strong>iFab（Intelligent Fabric）</strong>：ALE 自动化特性集合统称 &lt;&lt;<PAGE 6>&gt;&gt;</li>
+<li><strong>Auto-Fabric</strong>：出厂默认自动建网特性组（VC/RCD/LACP/SPB/MVRP/IP）&lt;&lt;<PAGE 36>&gt;&gt;</li>
+<li><strong>UNP（User Network Profile）</strong>：用户网络画像，分类/认证规则映射到 VLAN 或服务 &lt;&lt;<PAGE 8>&gt;&gt;</li>
+<li><strong>动态 SAP / 动态服务</strong>：按认证或 VLAN 标签即时生成 SAP 或整个 UNP+服务 &lt;&lt;<PAGE 38>&gt;&gt;</li>
+<li><strong>Base Service Number（BSN）</strong>：动态服务 ISID 下限基数（默认 10,000,000）&lt;&lt;<PAGE 42>&gt;&gt;</li>
+<li><strong>Domain ID</strong>：动态服务 ISID 公式的租户偏移量，保多租户隔离 &lt;&lt;<PAGE 42>&gt;&gt;</li>
+<li><strong>Service Modulo</strong>：VLAN→服务映射取模基数，默认 512，隔离需求建议 4096 &lt;&lt;<PAGE 42>&gt;&gt;</li>
+<li><strong>微分段（Micro-segmentation）</strong>：UNP 内 ACL/QoS 限制同 VPN 内横向流量 &lt;&lt;<PAGE 8>&gt;&gt;</li>
+<li><strong>带内管理</strong>：管理 IP 直接挂控制 BVLAN，经 spb-mgmt 协议传路由 &lt;&lt;<PAGE 44>&gt;&gt;</li>
+</ul>
+<h2 id="_6">运维</h2>
+<ul>
+<li><strong>MEP / MIP</strong>：802.1ag 维护端点/中间点；MIP 自动创建 &lt;&lt;<PAGE 45>&gt;&gt;</li>
+<li><strong>LBM/LBR、LTM/LTR</strong>：L2 ping 与 L2 trace 消息/应答 &lt;&lt;<PAGE 46>&gt;&gt;</li>
+<li><strong>SAA（Service Assurance Agent）</strong>：时延/抖动/丢包自动测试 &lt;&lt;<PAGE 47>&gt;&gt;</li>
+<li><strong>Overload 状态</strong>：让节点退出中转的维护手段，可定时回退 &lt;&lt;<PAGE 48>&gt;&gt;</li>
+<li><strong>Graceful Restart</strong>：主备切换保邻接保转发的平滑重启 &lt;&lt;<PAGE 48>&gt;&gt;</li>
+<li><strong>DHL（Dual-Home Link）</strong>：无 STP/LAG 的双归属快速倒换特性 &lt;&lt;<PAGE 49>&gt;&gt;</li>
+<li><strong>链路度量（Link Metric）</strong>：1-16M 整数，默认 10，按速率反比设置且两端同改 &lt;&lt;<PAGE 54>&gt;&gt;</li>
+<li><strong>mac-move</strong>：重复 MAC 在同服务内反复学习/冲刷的失稳现象 &lt;&lt;<PAGE 52>&gt;&gt;</li>
+</ul><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

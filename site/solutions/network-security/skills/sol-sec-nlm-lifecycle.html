@@ -1,0 +1,110 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>sol-sec-nlm-lifecycle — 网络基础设施安全 · Tech Brief</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>网络基础设施安全 · Tech Brief</h1>
+<div class="sub">2 份 100 页 · 安全 Tech Brief + 白皮书（五层框架/三平面加固/NLM 生命周期）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">框架与加固</div>
+<a href="../skills/sol-sec-five-layer-framework.html">sol-sec-five-layer-framework</a>
+<a href="../skills/sol-sec-protocol-hardening.html">sol-sec-protocol-hardening</a>
+<div class="grp">准入与运维</div>
+<a href="../skills/sol-sec-device-access.html">sol-sec-device-access</a>
+<a href="../skills/sol-sec-nlm-lifecycle.html" class="on">sol-sec-nlm-lifecycle</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../solutions/index.html">解决方案</a> › <a href="../index.html">网络基础设施安全</a> › <span>sol-sec-nlm-lifecycle</span></nav><h1>sol-sec-nlm-lifecycle</h1><p class="meta"><span class="badge">SKILL</span> sol-sec-nlm-lifecycle · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>规划视频监控/IP 视频网络（Five S's 五要素拆解）</li>
+<li>部署阶段提速：UNP、Lightning Config、边缘认证上线</li>
+<li>运营监控：Milestone VMS 插件、API 集成、Network Advisor AI 告警</li>
+<li>零停机固件升级与容量规划</li>
+<li>合规（网络保险）与设备退役数据擦除</li>
+<li>无线侧配套：wIPS rogue 治理、WPA3/OWE、客户端隔离</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>"装完就不管"不成立（P86/X25，&lt;&lt;<PAGE 95>&gt;&gt;）：视频监控网络需要系统化生命周期管理以适应技术、运营与安全需求的演进（P81，&lt;&lt;<PAGE 89>&gt;&gt;）。物理安全依赖网络安全（P88，&lt;&lt;<PAGE 99>&gt;&gt;）：看门的摄像头被远程禁用即物理失守。设计期即面向未来（P82，&lt;&lt;<PAGE 91>&gt;&gt;）：生命周期思维要在设计阶段进入；冗余设计支撑零停机升级（P87，&lt;&lt;<PAGE 96>&gt;&gt;）。无线侧 wIPS 持续运营是 rogue 防治关键（P68，&lt;&lt;<PAGE 63>&gt;&gt;）。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<p>视频监控网络生命周期 7 阶段框架（F4，&lt;&lt;<PAGE 89>&gt;&gt;）：
+1. 规划与设计：Five S's = Software / Surveillance IoT / Servers-Storage / Switches / Services-Support
+2. 部署：UNP、Lightning Config、边缘认证上线
+3. 运营管理：持续监控、API/VMS 集成、主动补丁
+4. 故障维护：固件升级、冗余切换、软件工具包
+5. 升级优化：AI、Network Advisor、分阶段换新
+6. 合规与文档：安全审计、网络保险、文档留存
+7. 退役与重部署：数据安全迁移、按隐私法擦除处置</p>
+<h2 id="a2">A2（操作步骤）</h2>
+<ul>
+<li><strong>规划</strong>：按 Five S's 拆解（&lt;&lt;<PAGE 90>&gt;&gt;）；容量规划不足会导致减速、丢数据、昂贵返工（X26/P83，&lt;&lt;<PAGE 91>&gt;&gt;）；入门级交换机跑不动 AI 系统，边缘设备纳入生命周期管理（P83/P84，&lt;&lt;<PAGE 91-92>&gt;&gt;）</li>
+<li><strong>部署</strong>：Lightning Config 让受训 50 分钟的技术员 5 分钟装好设备（C18，&lt;&lt;<PAGE 93>&gt;&gt;）；UNP 按用户/设备/应用动态下发网络行为（&lt;&lt;<PAGE 93>&gt;&gt;）</li>
+<li><strong>运营</strong>：交换机信息经 Milestone XProtect VMS 插件可视化（C20，&lt;&lt;<PAGE 95>&gt;&gt;）；PoE 向导一键诊断每台 PD（C19，&lt;&lt;<PAGE 97>&gt;&gt;）；Z-Score 以 30 天小时级端口利用率为基线标记异常（C15，&lt;&lt;<PAGE 78>&gt;&gt;）；Quarantine Manager 联动 Fortinet 等 IPS 在接入交换机/AP 级隔离可疑终端、阻断横向移动（C16/P79，&lt;&lt;<PAGE 83-84>&gt;&gt;）</li>
+<li><strong>维护/升级</strong>：冗余系统承载业务时另一侧升固件，零停机（P87，&lt;&lt;<PAGE 96>&gt;&gt;）；Network Advisor AI 实时监控与修复（&lt;&lt;<PAGE 98>&gt;&gt;）</li>
+<li><strong>无线配套</strong>：wIPS 三类 AP（interfering 非直接威胁/rogue 接有线即威胁/friendly 允许）+ Containment 发 DEAUTH 驱离 + allow/blocklist + Dynamic blocklist（C14，&lt;&lt;<PAGE 63-66>&gt;&gt;）；WPA3/SAE 优先（WPA2-PSK 可被离线字典攻击，X17/P69）、开放 SSID 启用 OWE（X19/P70）、访客客户端隔离（P71）、漫游上下文 DTLS 加密（P72）；WPA3_AES256 对不支持 AP 自动回退 WPA2_AES、漫游域默认空口令须改（X20/X21，&lt;&lt;<PAGE 68-70>&gt;&gt;）</li>
+<li><strong>合规与退役</strong>：过网络安全标准以满足网络保险（P89，&lt;&lt;<PAGE 99>&gt;&gt;）；含敏感信息的设备按数据隐私法擦除处置（P90，&lt;&lt;<PAGE 99>&gt;&gt;）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>Lightning Config 五分钟部署（C18，&lt;&lt;<PAGE 93>&gt;&gt;）</li>
+<li>PoE 向导一键诊断（C19，&lt;&lt;<PAGE 97>&gt;&gt;）</li>
+<li>Milestone VMS 插件打通视频与网络监控（C20，&lt;&lt;<PAGE 95>&gt;&gt;）</li>
+<li>wIPS rogue AP 治理组合拳（allowlist/blocklist/Suppress DEAUTH/Dynamic blocklist）（C14，&lt;&lt;<PAGE 63-64>&gt;&gt;）</li>
+<li>Z-Score 端口利用率异常检测（C15，&lt;&lt;<PAGE 78>&gt;&gt;）</li>
+<li>Quarantine Manager 与 IPS 联动隔离（C16，&lt;&lt;<PAGE 83-84>&gt;&gt;）</li>
+<li>Stellar AP 作为 802.1X 客户端五种上线场景（C17，&lt;&lt;<PAGE 61-62>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（反例与坑）</h2>
+<ul>
+<li>"装完就不管"心态不适用于视频网络（X25/P86，&lt;&lt;<PAGE 95>&gt;&gt;）</li>
+<li>容量规划不足导致减速、丢数据、昂贵改造（X26，&lt;&lt;<PAGE 91>&gt;&gt;）</li>
+<li>贪便宜设备导致反复 truck rolls，长期成本反升（X27/P92，&lt;&lt;<PAGE 100>&gt;&gt;）</li>
+<li>Air Gap 空气隔离在联网化的 IP 视频网络已不现实（P85，&lt;&lt;<PAGE 93>&gt;&gt;）</li>
+<li>干扰 AP 与 rogue AP 混淆误报：interfering 未接有线不算直接威胁（X16，&lt;&lt;<PAGE 63>&gt;&gt;）</li>
+<li>WPA2/PSK 可被离线字典攻击；PMF 可选时代未开启则受去认证攻击（X17/X18，&lt;&lt;<PAGE 68>&gt;&gt;）</li>
+<li>客户端隔离不跨 AP 生效，跨 AP 隔离需 SSID 级 ACL（X22，&lt;&lt;<PAGE 70>&gt;&gt;）</li>
+<li>过度工程可作未来预留，但须与成本权衡（P91，&lt;&lt;<PAGE 100>&gt;&gt;）</li>
+</ul>
+<p>来源：Maximizing Security and Performance Whitepaper（p87-100）+ Network Security Guidelines 无线章（p47-70）</p><div class="pn"><a href="sol-sec-device-access.html">⬅ 上一单元：sol-sec-device-access</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

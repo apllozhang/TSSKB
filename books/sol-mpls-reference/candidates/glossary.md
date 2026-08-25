@@ -1,0 +1,51 @@
+# glossary — sol-mpls-reference（页码为真实标记）
+
+- **MPLS (Multiprotocol Label Switching)**：基于预分配标签的标签交换技术，转发不看内层 IP 头。<<<PAGE 5>>>
+- **LER (Label Edge Router)**：MPLS 域边缘路由器（即 PE），负责 push/pop 标签；分 iLER/eLER。<<<PAGE 7>>>
+- **LSR (Label Switch Router)**：MPLS 域内路由器，执行 swap；LER 也算 LSR。<<<PAGE 7>>>
+- **LSP (Label Switched Path)**：从 iLER 到 eLER 的预确定传输隧道；单向。<<<PAGE 8>>>
+- **FEC (Forward Equivalence Class)**：被赋同一标签的相似包集合（目标 IP 前缀/QoS 标记等），多与 LSP 对应。<<<PAGE 8>>>
+- **LDP (Label Distribution Protocol)**：RFC 5036 定义的标签交换信令，依 IGP 路由建传输 LSP。<<<PAGE 8>>>
+- **T-LDP (Targeted-LDP)**：远端 LER 间单播 UDP/TCP 会话，用于服务标签与服务隧道，兼提收敛与 TE。<<<PAGE 15>>>
+- **MP-BGP**：RFC 2283，为服务交换路由+服务标签，并自动发现同服务 PE/隧道端点。<<<PAGE 15>>>
+- **MPLS 标签结构**：32 位 shim 头 = 20-bit Label + 3-bit EXP + 1-bit S(BoS) + 8-bit TTL；又称 Layer 2.5 协议。<<<PAGE 9>>>
+- **EXP bits**：MPLS 头中 3 个实验位，用于 QoS；仅顶层标签被处理。<<<PAGE 9>>>
+- **S Bit / BoS (Bottom of Stack)**：标签栈底标志位。<<<PAGE 9>>>
+- **保留标签 0-15**：0=IPv4 Explicit NULL、1=Router Alert、2=IPv6 Explicit NULL、3=Implicit NULL、14=OAM Alert。<<<PAGE 9-10>>>
+- **标签栈 (Label Stacking)**：LIFO 多标签；VPN 中顶为 transport 标签、底为 service 标签；多数厂商支持 4-6 层。<<<PAGE 10>>>
+- **FTN (FEC-To-NHLFE)**：FIB 中面向 Push 操作的条目。<<<PAGE 10>>>
+- **ILM (Ingress Label Mapping)**：FIB 中面向 Swap/Pop 操作的条目；本地与远端标签绑定均存于此。<<<PAGE 10>>>
+- **NHLFE (Next Hop Label Forwarding Entry)**：下一跳标签转发表项。<<<PAGE 10>>>
+- **push / swap / pop**：LSR 三种标签操作（imposition/disposition 为 push/pop 别称）。<<<PAGE 16>>>
+- **PHP (Penultimate Hop Popping)**：eLER 以 implicit NULL(3) 请求倒数第二跳弹掉传输标签以省一次查表。<<<PAGE 16>>>
+- **Implicit NULL (label 3)**：PHP 信号标签。<<<PAGE 10-16>>>
+- **Explicit NULL (0/2)**：保留 EXP 的 PHP 替代；AOS 当前不支持。<<<PAGE 16-17>>>
+- **MPLS QoS uniform mode**：客户 IP precedence 复制进 EXP，出域再回写。<<<PAGE 18>>>
+- **MPLS QoS pipe mode**：EXP 由运营商策略设定，客户 DSCP 不变。<<<PAGE 18>>>
+- **MPLS TTL uniform/pipe mode**：uniform 复制 IP TTL 逐跳递减；pipe 中 L3VPN 两端各减 1、L2VPN 不变。<<<PAGE 19>>>
+- **LDP 消息四类**：Discovery / Session / Advertisement / Notification；UDP 646 发现、TCP 646 会话、224.0.0.2 组播 hello。<<<PAGE 11-12>>>
+- **Label Mapping / Withdraw / Release**：标签映射通告 / 撤销 / 释放三类核心通告消息。<<<PAGE 11-13>>>
+- **DoD (Downstream-on-Demand)**：仅应答对端请求才发标签。<<<PAGE 13>>>
+- **DU (Downstream Unsolicited)**：不待请求主动发标签；AOS 唯一支持；常配 LLR。<<<PAGE 13>>>
+- **ILD (Independent Label Distribution)**：随时可通告标签映射；AOS 唯一支持。<<<PAGE 13-14>>>
+- **OLD (Ordered Label Distribution)**：收到下游标签或自身为 egress 才通告。<<<PAGE 14>>>
+- **CLR (Conservative Label Retention)**：只保留有效下一跳的标签绑定。<<<PAGE 14>>>
+- **LLR (Liberal Label Retention)**：保留所有收到的标签绑定；AOS 唯一支持。<<<PAGE 14>>>
+- **LDP ID**：6 字节 = 4 字节 LSR 唯一标识（loopback）+ 2 字节标签空间（0=per-platform）。<<<PAGE 13>>>
+- **LDP MD5 认证**：为每个 TCP 段附加 MD5 签名防伪造；双方同钥。<<<PAGE 14-15>>>
+- **LDP Graceful Restart**：RFC 3478，控制面重启期间保留转发状态（NSF）；仅计划内接管。<<<PAGE 19>>>
+- **SAP (Service Access Point) / AC (Attachment Circuit)**：UNI 侧逻辑端口，绑定物理端口与客户流量类型到服务；同端口可多 SAP 复用。<<<PAGE 20>>>
+- **SDP (Service Distribution Point) / VC**：NNI 侧单向逻辑连接，绑定服务到远端路由器；本地唯一 ID。<<<PAGE 20>>>
+- **Service Tunnel**：在传输 LSP 内透明承载服务流量的虚拟链路（FEC=服务标识）。<<<PAGE 20>>>
+- **Transport Tunnel**：基于 FEC 的单向传输路径（FEC=各 LSR loopback）。<<<PAGE 20>>>
+- **VPLS (Virtual Private LAN Service)**：E-LAN 多点 L2VPN；需 PE 间全互联 PW 与 per-VPLS MAC 学习/桥接/复制。<<<PAGE 21>>>
+- **PW (Pseudowire)**：LER 间的虚拟线路；VPLS 全互联成网。<<<PAGE 21>>>
+- **VPWS (Virtual Private Wire Service)**：E-LINE 点对点 L2VPN；不学客户 MAC、透明转发；RFC 8077。<<<PAGE 21-22>>>
+- **EPL (Ethernet Private Line)**：MEF 6.3 定义的整端口 VPWS 服务。<<<PAGE 22>>>
+- **EVPL (Ethernet Virtual Private Line)**：基于 C-VLAN 复用的 VPWS 服务，单端口可多条 PW。<<<PAGE 22>>>
+- **E-pipe**：PW 服务的别称，定义两 SAP 间的 E-LINE 虚拟专线。<<<PAGE 22>>>
+- **VE-ID / VBO / VBS**：BGP VPLS 的站点标识与标签块偏移/尺寸参数（show ip bgp l2vpn-vpls path 可见）。<<<PAGE 38-39>>>
+- **LSP Ping / Traceroute**：RFC 4379 的 MPLS OAM，echo request/reply 走标签验证数据面；目的 127/8、UDP 3503；traceroute 靠 TTL 递增逐跳发现。<<<PAGE 23-24>>>
+- **Site-based license**：浮动共享 license，最多 4 网络节点（节点可为 8 单元虚拟机箱），由站点 license 服务器管理。<<<PAGE 26>>>
+- **Node-based license**：绑定单个 MPLS 节点、不绑硬件序列号/MAC 的 license。<<<PAGE 26>>>
+- **SILOS / SWLIC**：站点本地 license 服务器（Debian 包）/ 每台 MPLS 交换机上的 license 客户端。<<<PAGE 26>>>

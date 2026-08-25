@@ -1,0 +1,842 @@
+{
+ "cases": [
+  {
+   "h": 0.91,
+   "ok": true,
+   "head": "- **C1 DC/Campus 双场景用例论证**：DC 用 spine-leaf 2/3-tier；campus 可沿用传统三层或 sp"
+  },
+  {
+   "h": 0.94,
+   "ok": true,
+   "head": "- **C2 3-tier Super-Spine DCI 场景**：\"A 3-tier (5-stage) spine-leaf topo"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C3 Intra-subnet 五步走包分析（Client-1→Client-6）**：ARP request → LEAF-1 查"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C4 Inter-subnet 对称 IRB 六步走包分析（Client-1→Client-4）**：ARP 网关 → IP-VRF"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C5 多归属开局流程案例（R-T4 发现→DF 选举→R-T1A/1B 通告冗余模式）**：single-active flags="
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C6 DF change 丢包场景与 SMET-by-all-PEs 补救**：\"In the event of a DF chan"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C7 OISM 跨子网组播转发案例**：IGMP join → R-T6 带 Fabric-VPN RT → 源 PE IPMS 建"
+  },
+  {
+   "h": 0.95,
+   "ok": true,
+   "head": "- **C8 双 PEG 冗余 + 外部 PIM 互通案例**：\"it is possible to have two PEGs actin"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C9 R-T10 源发现信令流案例**：ingress PE 收到组播首包 → R-T10(S,G) → DR PEG 注册到外部 "
+  },
+  {
+   "h": 0.93,
+   "ok": true,
+   "head": "- **C10 MAC duplication 场景（同 MAC 两主机/环路）**：\"a continuous exchange of t"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C11 Duplicate IP（DAD）双主机同 IP 场景**：\"Now, a new ARP with the same IP"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **C12 Silent host（WAKE-ON-LAN）静态绑定案例**：\"it may be necessary to stati"
+  },
+  {
+   "h": 0.93,
+   "ok": true,
+   "head": "- **C13 外部连通场景：border leaf + GRM 路由注入**：\"LEAF-1 should export the rout"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C14 全册端到端配置案例（2 spine + 6 leaf）**：VLAN/VNI/IP 规划表 → OSPF underlay（"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C15 静态 LAG ESI 手工配置实例**：\"service access linkagg 20 vlan-xlation en"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C16 BFD 参数实例（200ms 发包）**：\"ip bfd transmit 200 / receive 200 / echo"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C17 Anycast MAC 自动派生实例**：\"Anycast MAC = 00:00:5e:00:01:01\"（00:00:5"
+  },
+  {
+   "h": 0.93,
+   "ok": true,
+   "head": "- **C18 验证命令家族案例**：show ip bgp neighbors / show service evpn / show se"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C19 Proxy ARP 表老化后的恢复操作**：\"In case Proxy ARP Table is empty, it ha"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C20 VLAN-based 回退时的行为差异案例**：\"In data plane, the passenger packet i"
+  }
+ ],
+ "counter-examples": [
+  {
+   "h": 0.94,
+   "ok": true,
+   "head": "- **X1 STP 阻塞链路浪费资源**：\"The use of Spanning Tree Protocol (STP) led to "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X2 L2 环路与广播风暴（无 TTL）**：\"Broadcast storms and endless Layer 2 loops"
+  },
+  {
+   "h": 0.93,
+   "ok": true,
+   "head": "- **X3 12-bit VLAN 上限**：\"VLAN segmentation allows for a 12-bit VLAN ID"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X4 Traffic tromboning（静态首跳网关导致绕行）**：\"Inter-VLAN traffic flows coul"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X5 洪泛学习需组播底层、复杂度叠加**：\"In a VXLAN enabled network, this model requi"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X6 持续洪泛伤扩展性**：\"Constant flooding over the fabric in such a deploym"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X7 广播帧走 EVI 隧道不被推荐**：\"Broadcast frames can also be forwarded using"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X8 应禁用 proxy ARP 的例外场景**：\"some use cases might require to disable "
+  },
+  {
+   "h": 0.95,
+   "ok": true,
+   "head": "- **X9 VRRP 集中网关低效**：\"a redundancy protocol (such as VRRP) would be re"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X10 自动派生 anycast MAC 的碰撞风险**：\"Auto-derivation of the anycast MAC c"
+  },
+  {
+   "h": 0.89,
+   "ok": true,
+   "head": "- **X11 Tandem replication 复杂 vs ingress replication 低效**：\"tandem repl"
+  },
+  {
+   "h": 0.94,
+   "ok": true,
+   "head": "- **X12 非对称 IRB 资源/配置密集**：\"all PEs need to maintain each host's (local"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X13 无 R-T6/7/8 时多归属 IGMP 状态问题**：\"All-active: There is no guarantee"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X14 DF change 期间组播丢包**：\"In the event of a DF change, there will be"
+  },
+  {
+   "h": 0.94,
+   "ok": true,
+   "head": "- **X15 MAC duplication 拖垮控制平面**：\"Such a behavior leads to a continuou"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X16 重复 IP 可能是人为错误或欺骗攻击**：\"This could be either because of human er"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X17 静默主机休眠失联**：\"These periods of inactivity can result in a loss o"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X18 8-bit 本地段 ID 限制 ES 数量**：\"The 8-bit value will limit the number"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X19 SMET-by-all-PEs 的核心带宽浪费**：\"The disadvantage with this approach"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X20 Border leaf 泄漏主机路由压垮外部路由器**：\"The border leaf will advertise al"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X21 外部路由器路由回声（双 border leaf）**：\"it is possible for the external ro"
+  },
+  {
+   "h": 0.89,
+   "ok": true,
+   "head": "- **X22 多归属 SAP 配置不一致导致 CE 侧黑洞**：\"Please ensure that the SAP is config"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X23 R-T10 源发现引入少量建流时延**：\"R-T10 based source discovery adds a littl"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X24 VLAN-aware 模型多归属两端 VLAN ID 必须一致**：\"Local and peer PE's in mult"
+  }
+ ],
+ "frameworks": [
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "## F1 EVPN 演进决策链：为什么选 EVPN（问题→方案映射框架）"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "## F2 Underlay/Overlay 设计选型框架"
+  },
+  {
+   "h": 0.83,
+   "ok": true,
+   "head": "## F3 IRB 模型选型框架（非对称 vs 对称 × host-based vs prefix-based）"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "## F4 Multi-homing 模式与防环机制框架"
+  },
+  {
+   "h": 0.94,
+   "ok": true,
+   "head": "## F5 BUM 复制与外部连通性设计框架"
+  }
+ ],
+ "glossary": [
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **VXLAN**：基于 RFC 7348 的标准 L2 overlay 技术，将以太网帧封装进 UDP/IP 在 L3 网络中隧道传输"
+  },
+  {
+   "h": 0.86,
+   "ok": true,
+   "head": "- **VNI (VXLAN Network Identifier)**：24-bit 标识 VXLAN segment，上限约 1600 "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **VTEP (VXLAN Tunnel End Point)**：配置一个或多个 VTI 的设备，L2 帧封装/解封装端点。<<<PA"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **VTI (VXLAN Tunnel Interface)**：在 VTEP 之间转发 VXLAN 封装包的 UDP 隧道。<<<PA"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **VXLAN gateway**：作为 VTEP 在 VXLAN 与传统 VLAN 域之间透明桥接的设备。<<<PAGE 6>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **EVI (Ethernet VPN Instance)**：跨所有 PE 的 EVPN 转发/路由实例，按客户配置，含 RD/RT。"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **BD (Broadcast Domain)**：广播域，可与 EVI 一一对应或一个 EVI 含多个 BD（视服务模型）。<<<PA"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **ES (Ethernet Segment)**：连接一组 PE 的一组以太网链路。<<<PAGE 10>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **ESI (Ethernet Segment Identifier)**：标识 ES 的唯一非零 10 字节标识符（如 11:22:."
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **ETag (Ethernet Tag)**：标识特定广播域（如 VLAN），值为 SAP 关联的 VLAN ID。<<<PAGE 1"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **MAC-VRF**：单个 EVI 的 MAC 地址 VRF 表。<<<PAGE 10>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **IP-VRF**：PE 上 IP 路由的 VRF 表。<<<PAGE 10>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **SAP (Service Access Point)**：PE 上绑定接入端口到服务的逻辑服务实体（虚拟端口），指定封装的客户流量类"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **PE (Provider Edge)**：服务 originates/terminates、与其他 PE 建隧道的设备；本文中与 V"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **CE (Customer Edge)**：位于客户侧的主机/交换机/路由器。<<<PAGE 10>>>"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **MP-BGP EVPN**：基于 RFC 7432/8365 的 VXLAN 控制平面协议，AFI 25(L2VPN)/SAFI 7"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **BUM traffic**：Broadcast/Unknown-unicast/Multicast 流量。<<<PAGE 9>>>"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **R-T1 (Ethernet A-D Route)**：多归属场景通告 ES 可达性；用于 aliasing、split horiz"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **R-T2 (MAC/IP Advertisement Route)**：通告端主机 MAC（及可选 IP）可达性；支撑 ARP su"
+  },
+  {
+   "h": 0.89,
+   "ok": true,
+   "head": "- **R-T3 (IMET, Inclusive Multicast Ethernet Tag Route)**：按 VNI 自动发现 V"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **R-T4 (Ethernet Segment Route)**：发现同 ES 的 PE 并执行 DF 选举；仅多归属 PE 生成。<"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **R-T5 (IP Prefix Route)**：通告 IP 前缀（RFC 9136），用于外部连通与路由汇总、L3VPN；8.10"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **R-T6 (SMET, Selective Multicast Ethernet Tag Route)**：IGMP/MLD pro"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **R-T7 / R-T8 (IGMP Join/Leave Synch Route)**：多归属节点间同步 IGMP Join/Lea"
+  },
+  {
+   "h": 0.86,
+   "ok": true,
+   "head": "- **RD (Route Distinguisher)**：8 字节，使不同租户/VRF 的重叠路由唯一；EVPN 用 RFC 4364 "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **RT (Route Target)**：6 字节扩展社区，控制 MAC-VRF 的导入/导出；可多条；AOS 由 ASN+Etag("
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **VLAN-based service model**：VLAN:MAC-VRF:VNI:EVI 一一对应；ETag 必须为 0；允许"
+  },
+  {
+   "h": 0.88,
+   "ok": true,
+   "head": "- **VLAN bundle service model**：多 VLAN 共享一个 BD/EVI；ETag 必须为 0；不允许 VLAN"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **VLAN-aware service model**：一个 EVI 内多 VLAN 各自成广播域（ETag=VLAN）；MAC 可重"
+  },
+  {
+   "h": 0.91,
+   "ok": true,
+   "head": "- **Enhanced VLAN-bundle service interface**：ALE 定义模型；R-T1B/R-T2 带 ETa"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **ARP suppression / Proxy ARP**：PE 代答本地 ARP 请求以抑制洪泛；AOS 默认开启。<<<PAGE"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **GARP (Gratuitous ARP)**：主机主动发送的免费 ARP，可被 PE 用来学习 MAC+IP 并触发重复检测。<<"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **ES-Import RT Extended Community**：随 R-T4 携带，确保仅同 ES 的 PE 导入 ES 路由；"
+  },
+  {
+   "h": 0.42,
+   "ok": true,
+   "head": "- **ESI Label Extended Community**：R-T1A 携带；MPLS 下用于 split horizon 过滤并"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **BGP Tunnel Encapsulation EC**：指示数据面封装类型；EVPN-VXLAN 为 8。<<<PAGE 22>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **MAC Mobility Extended Community**：携带序列号跟踪主机最新位置，实现亚秒级 VM 迁移收敛。<<<P"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Default Gateway Extended Community**：PE 以 R-T2 通告默认网关 MAC，ESI 置零，实"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **DF Election Extended Community**：RFC 8584，标识 ES 使用的 DF 选举过程。<<<PAG"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Router MAC Extended Community**：携带始发路由器 MAC；仅在 MAC 作 overlay index"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **IRB (Integrated Routing and Bridging)**：基于 EVPN 的动态高效跨子网连通方案，本地 PE"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Asymmetric IRB**：拉伸 EVI 设计；ingress PE 三次查表（桥-路由-桥）、egress 仅桥；资源与配置"
+  },
+  {
+   "h": 0.33,
+   "ok": false,
+   "head": "- **Symmetric IRB**：ingress/egress 均执行桥+路由；只需在主机接入 PE 配服务；推荐模型。<<<PAGE"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **SBD (Supplementary Broadcast Domain) / Fabric-VPN**：每 VRF 一个的 L3EV"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Host-based routing**：仅以 R-T2 通告主机 /32 路由；可用对称或非对称 IRB。<<<PAGE 26>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Prefix-based routing**：以 R-T5 通告任意长度前缀；仅对称 IRB；RFC 9136 定义 interfa"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Overlay index**：R-T5 中的递归查找索引，可为网关 IP、MAC 或 ESI。<<<PAGE 15>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **DAG (Distributed Anycast Gateway)**：所有共 EVI 的 PE 配同一 anycast IP + "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Anycast MAC auto-derivation**：自动派生规则 00:00:5e:00:01:<VRF-ID>；或 sit"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **Ingress replication**：头端复制，ingress 设备将 BUM 包逐个单播复制到远端 egress；AOS 唯"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Tandem replication**：组播底层中继复制；核心高效但需组播底层。<<<PAGE 29>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **PMSI (Provider Multicast Service Interface)**：R-T3 附带的隧道属性，标识 BUM "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Multi-homing**：CE 经 LAG 连多 PE 的冗余接入；RFC 7432 定义 single-active 与 al"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **DF (Designated Forwarder)**：ES 内选出的指定转发者，负责 BUM 从 fabric 到 CE 的转发，"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **Service carving**：按 EVI/VLAN 选举多 DF 分散 BUM 负载的默认 DF 选举过程；模算法 DF = "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Split Horizon Group (SPG)**：non-DF SAP 关联的 BUM 出方向过滤组，丢弃来自网络隧道的 BU"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Local Bias / ES Pruning**：发往本 PE 上 all-active ES 的流量总走本地接入；远端 PE（含"
+  },
+  {
+   "h": 0.33,
+   "ok": false,
+   "head": "- **Aliasing**：全活 ES 各 PE 通告 R-T1A/1B，远端据此构建 VTEP 列表按流负载分担。<<<PAGE 34>"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **Backup path**：单活场景 Primary/Backup PE 列表，主撤路时远端无缝切换。<<<PAGE 35-36>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Mass withdraw**：R-T1A 以 EVI=0xFFFFFFFF 编码 ES 不可达，远端批量刷新/清空关联 MAC 路"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **IPMS / IPMSv6**：OmniSwitch 的 IGMP/MLD snooping 实现，硬件线速组播交付。<<<PAGE"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **OISM (Optimized Inter-Subnet Multicast)**：RFC 9625，基于 Fabric-VPN(S"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **PEG (PIM EVPN Gateway)**：EVPN fabric 与外部 PIM 路由器互通的网关功能；双 PEG 时需专用"
+  },
+  {
+   "h": 0.83,
+   "ok": true,
+   "head": "- **Default SBD-SMET route (*,*)**：RFC 9625 提议的内部源发现方式，PEG 借其收到全部组播流量；"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **MAC duplication / hold-down**：MAC 反复迁移达到 N 次/M 秒阈值后进入 hold-down，停止"
+  },
+  {
+   "h": 0.89,
+   "ok": true,
+   "head": "- **DAD (Duplicate Address Detection)**：同 IP 出现在不同 MAC 的检测；N 次 IP-move"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Silent host**：长时间不发包（如省电模式）的设备，需静态绑 MAC 到 SAP 并以 sticky bit 通告。<<<"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Sticky bit**：静态 MAC 通告标志，远端节点不得触发该 MAC 迁移。<<<PAGE 40>>>"
+  },
+  {
+   "h": 0.86,
+   "ok": true,
+   "head": "- **AOS auto-ESI (Type 0x3)**：物理口 0x3+Port_MAC+0xFFFFFF；LACP LAG 0x3+C"
+  },
+  {
+   "h": 0.6,
+   "ok": true,
+   "head": "- **Auto-generated RD**：Loopback0 + 2 字节 Type + Object Type/ID（Service"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **GRM (Global Route Manager)**：VRF 间/VRF 与 Fabric-VPN 间路由重分发中介。<<<PA"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **Border leaf**：对外部网络做网关的 PE 节点；需路由汇总与防路由回声处理。<<<PAGE 46-48>>>"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **RR (Route Reflector)**：spine 兼任的 BGP 路由反射器；冗余 RR 建议 same cluster-i"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **TTL Security**：BGP 邻居直连性保障；max-hops 0 时直连断则邻居断。<<<PAGE 46>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **UNP (Universal Network Profile)**：ALE 边到核自主多技术 fabric 的服务定义网络特性之一。"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Virtual Chassis (VC)**：ALE 实现多归属的另一技术路线（与 EVPN multi-homing 相对）。<<"
+  }
+ ],
+ "principles": [
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P1 用控制平面主动学习取代数据面洪泛学习**：endpoint reachability 通过 MP-BGP NLRI 智能通告，"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P2 路由式底层（routed underlay）消灭 STP 问题**：\"The routed architecture elim"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P3 单一控制平面同时承载 L2/L3 服务**：\"a single control plane protocol that sup"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P4 多租户隔离靠 VRF + VNI + RD/RT 四件套**：\"delivery of multi-tenant servic"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P5 控制平面学到的 MAC 不做老化**：\"MAC address table aging will be disabled fo"
+  },
+  {
+   "h": 0.83,
+   "ok": true,
+   "head": "- **P6 ARP 抑制默认开启以减少 BUM**：\"Proxy ARP should always be kept enabled fo"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P7 MAC mobility用序列号决胜**：\"the PEs retain the R-T2 with the highest "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P8 默认网关分布式化，流量不过 fabric**：\"it allows the default gateway to be ful"
+  },
+  {
+   "h": 0.93,
+   "ok": true,
+   "head": "- **P9 对称 IRB 优先于非对称 IRB**：\"The Symmetric IRB model is simpler for con"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P10 对称 IRB 下每 PE 只维护本地 ARP/MAC-VRF**：\"each PE participating in sym"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P11 每个 VRF 一个 L3EVI(SBD) 提供跨 EVI 可达**：\"only one L3EVI is required "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P12 主机路由用 R-T2、前缀路由用 R-T5**：\"Host routes (/32) are usually adverti"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P13 LAG 是多归属防环/防重复包的前提**：\"LAG is required to be configured between"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P14 DF 选举防止 BUM 重复洪泛**：\"elect a Designated Forwarder (DF) for the "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P15 Service carving 按 EVI 分散 DF 负载**：\"It is also possible to elect"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P16 Split horizon 原则：信息永不原路返回**：\"Information about the routing for"
+  },
+  {
+   "h": 0.93,
+   "ok": true,
+   "head": "- **P17 VXLAN 下 split horizon 靠源 IP 列表而非 ESI label**：\"EVPN-VXLAN does "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P18 Local bias：本 PE 的 BUM 只从本地 ES 出**：\"the forwarding to this ES f"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P19 Aliasing 让远端按流负载分担到全活 ES**：\"The aliasing feature allows the re"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P20 Mass withdraw：一条 ESI 撤路批量刷新 MAC**：\"a mass withdraw of the MAC "
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **P21 静默主机静态绑 MAC + sticky 位防误迁移**：\"statically binding the MAC addre"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P22 自动生成 RD/RT 降低配置面**：\"Supports the auto-generation of the RD and"
+  },
+  {
+   "h": 0.94,
+   "ok": true,
+   "head": "- **P23 优先用增强 VLAN-bundle 模型，互操作时回退 VLAN-based**：\"It is recommended to"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P24 每 EVI 一条 R-T3 以减少路由数**：\"In case of ALE model, only one R-T3 is"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P25 速率与可用性权衡：SMET by all PEs 用带宽换丢包**：\"The disadvantage with this "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P26 底层选 OSPF underlay + iBGP overlay**：\"The recommended topology t"
+  },
+  {
+   "h": 0.88,
+   "ok": true,
+   "head": "- **P27 单区域 OSPF + p2p 网络类型 + BFD 提速收敛**：\"Use a single-area OSPF confi"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P28 SPF delay/hold 调 0 立即算路**：\"Set OSPF SPF delay and hold timers "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P29 冗余 RR 用相同 cluster-id 省内存**：\"Use the same cluster ID in the spi"
+  },
+  {
+   "h": 0.92,
+   "ok": true,
+   "head": "- **P30 RR 场景开 TTL Security max-hop 0**：\"it is recommended to enable T"
+  },
+  {
+   "h": 0.91,
+   "ok": true,
+   "head": "- **P31 VXLAN MTU 由底层承担封装开销**：\"MTU should be considered in your underl"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P32 EVPN-VXLAN 只跑在一个 underlay VRF（默认 VRF）**：\"The EVPN-VXLAN is ope"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P33 外部连通必须走对称 IRB + Fabric-VPN**：\"it is mandatory to configure a F"
+  },
+  {
+   "h": 0.89,
+   "ok": true,
+   "head": "- **P34 Border leaf 对外只重分发聚合路由，不泄漏主机路由**：\"there is a need to summarize"
+  },
+  {
+   "h": 0.93,
+   "ok": true,
+   "head": "- **P35 双 border leaf 防 OSPF 路由回声：调 import 路由优先级**：\"the import routes "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P36 复制检测靠 N 次/M 秒阈值 + hold-down**：\"Duplicate IP detection monitors"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P37 确认旧主先于激活新主**：\"To detect the duplicate IP faster, the PE will s"
+  },
+  {
+   "h": 0.88,
+   "ok": true,
+   "head": "- **P38 IP+MAC 同迁（VM motion）不算 DAD**：\"In case of VM mobility where the"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P39 多归属场景 R-T7/R-T8 同步 IGMP 状态防丢**：无同步时 \"All-active: There is no g"
+  },
+  {
+   "h": 0.93,
+   "ok": true,
+   "head": "- **P40 源发现选 R-T10 而非 (*,*) 默认路由省带宽**：\"this approach makes the ineffic"
+  },
+  {
+   "h": 0.86,
+   "ok": true,
+   "head": "- **P41 静态 LAG 必须手工给 ESI**：\"Static LAG — No [auto]... User will input "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P42 Anycast MAC 每 VRF 一个、同 VRF 全子网共用**：\"This anycast MAC must be s"
+  }
+ ]
+}

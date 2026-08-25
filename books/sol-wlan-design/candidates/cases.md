@@ -1,0 +1,23 @@
+# cases — sol-wlan-design
+
+- **C1 5 万座体育场需求画像**：Several tens of thousands of seats (the example given in this note is for a stadium with up to 50,000 seats)... More access points than channels in the 5GHz band... Users are mainly guests (up to 2 devices per person). <<<PAGE 5>>>
+- **C2 VHD 单用户吞吐衰减基线**：A measured throughput of 80Mbps (MCS8 modulation) for a single Wi-Fi 6 user on a 5GHz channel... dropping to 40Mbps when there's a high concentration of clients connected on the same channel (average of 60 clients). <<<PAGE 11>>>
+- **C3 25% VHD 场景折减系数**：A 25% ratio, specific to VHD in stadium, is introduced to account CCI/ACI effects... Wi-Fi interference, non-Wi-Fi interference and considering a moderate duty cycle. <<<PAGE 11>>>
+- **C4 52,000 座并发负载推算**：For example, in a stadium with a capacity of 52,000 seats, this equates to a load of 21,000 concurrent devices, or 60 devices per AP and more.（30% 并发率） <<<PAGE 12>>>
+- **C5 AP 型号-场景映射表**：AP1360=户外周边/监控；AP1322=看台定向（<15m 结构）；AP1361D=看台猫道；AP1331/AP1351=媒体/大厅/礼堂；AP1311=办公室。 <<<PAGE 13>>>
+- **C6 5 万座屋顶定向 AP 布点实例**：a study for the location of 260 AP1322s equipped with ANT-S-M4-60 and ANT-S-M4-30 external antennas... each AP1322 covers an average of up to 180 seats. <<<PAGE 16-17>>>
+- **C7 卫星机柜配比**：One telecom satellite cabinet is required approximately every 3,200 seats, with each cabinet equipped with a 24-port switch in this example. <<<PAGE 17>>>
+- **C8 双 6900 核心架构**：OmniAccess Stellar high-density WLAN is based here on a network core consisting of two redundant Omniswitch 6900s... Guaranteed 40Gbps traffic, with the ability to peak at 100Gbps. <<<PAGE 18-19>>>
+- **C9 第三方 Captive Portal 容量底线**：the solution must be able to support at least 15,000 users immediately (for example, the UCOPIA Edge solution...). <<<PAGE 19>>>
+- **C10 LAN 带宽估算实例**：1 * 260 * 60 * 2 = 31,200 Mbps. To account for wired bandwidth, a precautionary additional 50% is included... resulting in a total of 47 Gbps for the core LAN. <<<PAGE 21>>>
+- **C11 OmniVista 2500 支撑规模**：supporting up to 4000 APs per appliance, along with compatibility for all AP models suitable for their deployment within a stadium. <<<PAGE 22>>>
+- **C12 媒体包厢自定义仪表盘**：all these statistics can be grouped into a single dashboard ("Custom Dashboard" menu), entirely customized for the use of this area. <<<PAGE 23>>>
+- **C13 SSID×同信道 AP 空口开销矩阵**：if one configures ten SSIDs on twelve Access Points operating on the same channel this will consume 50% of the available airtime. <<<PAGE 53>>>
+- **C14 2.4GHz 开销更糟**：The analysis for the 2.4Ghz band shows worse results, there is over 50% overhead for just three SSIDs for eight APs on the same channel. <<<PAGE 53>>>
+- **C15 Apple iOS 对 Band Steering 的黑名单行为**：Apple ios devices can have issues with the 'band steering' variable when enabled where it may blacklist the SSID for a few minutes. <<<PAGE 54>>>
+- **C16 信号强度行业基准表**：-67 dBm = Minimum signal strength for applications that require time-sensitive communications (VoIP / VoWLAN, Video streaming); -70 dBm = Email, web; -80 dBm = 最低连接（不可靠）。 <<<PAGE 54>>>
+- **C17 RSSI-dBm 换算**：we are using -96 dBm as the base noise floor less the RSSI threshold value of (29) it provides the value of -67 dBm. <<<PAGE 55>>>
+- **C18 时敏场景漫游阈值加严案例**：at one of our customer deployments we configured roaming RSSI thresholds of 34 for 2.4G and 28 for 5G bands. <<<PAGE 55>>>
+- **C19 AP1230 双 5G 信道细分配置**：select all 8 channels for the 5G Low... select 11 channels to have sufficient isolation... for the 5G High option, change the channel width from Auto to 20MHz. <<<PAGE 62>>>
+- **C20 Cirrus 信道分布 widget 调优闭环**：all the clients are well distributed, utilizing 9.1% of each of the 5GHz channels except for channel 40 which is being utilized by more clients than the other channels. <<<PAGE 65>>>
+- **C21 部署协助服务五天交付包**：This service is based on delivery over a five-day period... must be ordered using eBuy part number PS-PAER-5-NET.（前置：ACFE 认证+一次办公部署经验+HLD 已完成） <<<PAGE 75>>>

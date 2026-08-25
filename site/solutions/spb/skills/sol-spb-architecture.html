@@ -1,0 +1,98 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>sol-spb-architecture — SPB 智能织构 · 架构与部署</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>SPB 智能织构 · 架构与部署</h1>
+<div class="sub">3 份 86 页 · Tech Brief + 部署指南 + 方案简报（IS-IS SPB/I-SID/VRRP tracking/客户案例）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">架构与服务</div>
+<a href="../skills/sol-spb-architecture.html" class="on">sol-spb-architecture</a>
+<a href="../skills/sol-spb-l2-l3-services.html">sol-spb-l2-l3-services</a>
+<div class="grp">部署与案例</div>
+<a href="../skills/sol-spb-deployment-flow.html">sol-spb-deployment-flow</a>
+<a href="../skills/sol-spb-positioning-cases.html">sol-spb-positioning-cases</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../solutions/index.html">解决方案</a> › <a href="../index.html">SPB 智能织构</a> › <span>sol-spb-architecture</span></nav><h1>sol-spb-architecture</h1><p class="meta"><span class="badge">SKILL</span> sol-spb-architecture · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>向客户/团队解释 SPB 与 STP/MPLS 的本质差异，或做骨干技术选型</li>
+<li>规划 BVLAN 数量、ECT-ID 分配与等价路径负载分担</li>
+<li>选择 BUM 复制模式（head-end / tandem (S,G) / tandem (*,G)）</li>
+<li>排查骨干环路、瞬态环、广播风暴类问题（RPFC/LBD/风暴控制）</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>双平面架构框架（F1，&lt;&lt;<PAGE 9>&gt;&gt;）：DP=802.1ah PBB（B-VID/ISID/B-SA/B-DA，只查 FDB 不做决策）+ CP=RFC 6329 IS-IS（拓扑发现、SPT 计算、服务成员泛播、FDB 预填充）。每节点以自己为根建 SPF 树，全部链路可用且路径最短（P1/P2，&lt;&lt;<PAGE 7>&gt;&gt;/&lt;&lt;<PAGE 11>&gt;&gt;）；MAC-in-MAC 把 CMAC 学习限制在 BEB 边缘，BCB 零感知（P4/P15，&lt;&lt;<PAGE 7>&gt;&gt;/&lt;&lt;<PAGE 10>&gt;&gt;）。每节点每 BVLAN 一棵树，ECT-ID 打破平局实现按服务负载分担（P17/P18，&lt;&lt;<PAGE 11-12>&gt;&gt;）；路径对称与确定性保障帧有序送达与 OAM 单向时延推算（P19/P20，&lt;&lt;<PAGE 12>&gt;&gt;）。防环分预防+缓解双机制：RPFC 校验入帧源 BMAC 与 FDB 一致性丢非合规帧（P45，&lt;&lt;<PAGE 51>&gt;&gt;）。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<ol>
+<li>骨干搭建四步（C1，&lt;&lt;<PAGE 16>&gt;&gt;）：建 BVLAN 配 ECT-ID → 定控制 BVLAN → 定义 SPB IS-IS 接口 → 启用 SPB IS-IS</li>
+<li>BVLAN 容量规划：BVLAN 数量=物理等价路径数，不多建（P25，&lt;&lt;<PAGE 52>&gt;&gt;）；控制 BVLAN 一个（如 4000）</li>
+<li>BUM 模式选型矩阵（F3，&lt;&lt;<PAGE 16>&gt;&gt;）：低组播带宽+多源少收→head-end（+IGMP Snooping）；高组播带宽+少源多收→tandem (S,G)（默认）；根桥为源宿或第三方互通→tandem (*,G)</li>
+<li>骨干防环三件套：RPFC（对称性破瞬态环，&lt;&lt;<PAGE 51>&gt;&gt;）+ LBD 全 UNI 口启用（P46，&lt;&lt;<PAGE 51>&gt;&gt;）+ 风暴控制默认开（&lt;&lt;<PAGE 52>&gt;&gt;）</li>
+</ol>
+<h2 id="a2">A2（操作步骤）</h2>
+<ul>
+<li><strong>骨干验证命令族</strong>（C2，&lt;&lt;<PAGE 18>&gt;&gt;）：<code>show spb isis interface</code>（L1 邻接、metric=10、Hello 9s/持失 27s）→ <code>show spb isis nodes</code>（system ID=BMAC、source ID、bridge priority）→ <code>show spb isis adjacency</code> → <code>show spb isis bvlans</code>（ECT 算法、(S,G)/(*,G)）→ <code>show spb isis unicast-table</code> → <code>show spb isis spf bvlan</code></li>
+<li><strong>链路度量调优</strong>（P49/P50，&lt;&lt;<PAGE 54>&gt;&gt;）：按速率反比设置（100G=1000…1G=100000），引导流量走高容量链路；必须两端同时改</li>
+<li><strong>LAG 哈希补熵</strong>（P48，&lt;&lt;<PAGE 53>&gt;&gt;）：MAC-in-MAC 外层只剩 BMAC 缺熵，启用 tunnel-protocol 后可按 CMAC 或 IP+端口哈希</li>
+<li><strong>无扰维护</strong>（P41/P42，&lt;&lt;<PAGE 48>&gt;&gt;）：overload 状态让节点退出中转（可定时回退）；graceful restart 保邻接平滑主备切换</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>3 条等价路径样例拓扑建 4 个 BVLAN（4000-4003，4000 控制专用）（C1，&lt;&lt;<PAGE 16>&gt;&gt;）</li>
+<li>骨干全套 show 命令逐项验证（C2，&lt;&lt;<PAGE 18>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（反例与坑）</h2>
+<ul>
+<li>STP 三宗罪：禁链路费带宽、非根间绕行次优路径、秒级收敛且瞬态成环（X1/X2/X3，&lt;&lt;<PAGE 5>&gt;&gt;）</li>
+<li>以太网泛洪学习+全网学 MAC 不可扩展；Q-in-Q 服务实例上限 4096（X4/X5/X6，&lt;&lt;<PAGE 6>&gt;&gt;）</li>
+<li>MPLS 需协议栈（LDP/OSPF/MP-BGP），SPB 单协议搞定（X7，&lt;&lt;<PAGE 6>&gt;&gt;）</li>
+<li>BUM 模式取舍：head-end 复制费带宽、tandem (S,G) 每服务多耗 SPT/组播 FDB、tandem (*,G) 共享树不走最短路（X8/X9/X10，&lt;&lt;<PAGE 15-16>&gt;&gt;）</li>
+<li>BVLAN 超过等价路径数徒增控制面负担与收敛时间（X20，&lt;&lt;<PAGE 52>&gt;&gt;）</li>
+<li>overload 后若无备选路径则流量中断，维护前先确认替代路径（X19，&lt;&lt;<PAGE 48>&gt;&gt;）</li>
+<li>客户网配置错误可引发跨 SPB+接入网的广播风暴，LBD 是最后防线（X29，&lt;&lt;<PAGE 51>&gt;&gt;）</li>
+</ul>
+<p>来源：SPB Architecture Tech Brief（sol-spb DOC1，p5-56）</p><div class="pn"><a href="../index.html">⬅ 返回课程首页</a><a class="nxt" href="sol-spb-l2-l3-services.html">下一单元：sol-spb-l2-l3-services ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

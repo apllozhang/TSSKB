@@ -1,0 +1,32 @@
+# counter-examples — sol-spb（X1…，英文原句）
+
+- **X1 STP 禁用链路浪费带宽**："Unused links: Creating a loop-free topology by disabling network links results in inefficient bandwidth use and low Return on Investment (ROI)" <<<PAGE 5>>>
+- **X2 STP 非根节点间走次优路径**："communication between non-root bridges may need to traverse a sub-optimal route transiting the root-bridge instead of alternative better routes over links that have been disabled" <<<PAGE 5>>>
+- **X3 STP 收敛慢且瞬态成环**："typical convergence times are in the order of seconds. While STP re-converges to a new topology, transient loops may form, resulting in packet drops, link saturation, and session timeouts" <<<PAGE 5>>>
+- **X4 以太网泛洪学习**："Ethernet's 'flood and learn' address learning floods unknown-unicast traffic until the destination address is learned from return traffic" <<<PAGE 6>>>
+- **X5 全网学 MAC 不可扩展**："All nodes in the LAN learn all end-device MAC addresses thus posing a scalability challenge" <<<PAGE 6>>>
+- **X6 Q-in-Q 服务实例上限**："IEEE 802.1ad (Provider Bridging, or Q-in-Q) is limited to a maximum of 4096 service instances" <<<PAGE 6>>>
+- **X7 MPLS 协议栈负担**："unlike MPLS, which requires a 'stack' of protocols (for example: LDP, OSPF, MP-BGP, among others), SPB relies on a single protocol" <<<PAGE 6>>>
+- **X8 head-end 复制费带宽**："Head-End replication can be inefficient in terms of bandwidth consumption" <<<PAGE 15>>>
+- **X9 tandem (S,G) 费资源**："it is less efficient in terms of resource use because it requires an additional SPT and multicast FDB per ISID" <<<PAGE 15>>>
+- **X10 tandem (*,G) 不走最短路**："This tree is not a Shortest Path tree and is not congruent with the unicast SPT… traffic will not generally follow the shortest path" <<<PAGE 16>>>
+- **X11 第一代 ASIC 双次过交换矩阵**："routing between IP interfaces associated to two different SPB services… had to traverse the switch fabric twice. This required an external physical loopback connecting two different switch ports" <<<PAGE 26>>>
+- **X12 VPN Lite 配置量爆炸**："4 customer services spanning 8 BEB nodes require 4 x OSPF instances per node: A total of 32 x OSPF configurations across all nodes… 64 x OSPF configurations all nodes included" <<<PAGE 34>>>
+- **X13 路由协议叠加拖慢收敛**："VPN Lite convergence can be slower because the stacking of routing protocols has a compounding effect over convergence time: IS-IS must converge before OSPF can converge" <<<PAGE 34>>>
+- **X14 L3 VPN 无法直连外部网络**："L3 VPN relies on SPB IS-IS and cannot directly interoperate with external networks" <<<PAGE 34>>>
+- **X15 VRF 泄漏前提是地址不重叠**："As a pre-requisite, customer A's and B's address space must not overlap with each other nor with the shared services" <<<PAGE 34>>>
+- **X16 预置全部 VLAN 服务是坏实践**："It may be tempting to pre-provision services for all 4096 VLANs. But this is a poor practice as it creates an unnecessary load on the control plane" <<<PAGE 42>>>
+- **X17 默认 Service Modulo 造成 VLAN 混桥**："using the default Service Modulo of 512 can result in up to 8 different VLAN tags being mapped to the same service… it will result in different VLAN traffic being bridged in the same L2 domain" <<<PAGE 43>>>
+- **X18 静默设备丢绑定**："These periods of inactivity can result in a loss of service binding, thus making the device effectively unreachable (for example for a WAKE-ON-LAN packet)" <<<PAGE 39>>>
+- **X19 overload 后无备选路径则中断**："once the overload state is enabled on a node no traffic will transit through the node even if there are no alternative paths" <<<PAGE 48>>>
+- **X20 多 BVLAN 超过等价路径数徒增负担**："having more BVLANs than equal-cost-paths in the physical topology creates an additional unnecessary load in the CP which results in increased resource utilization and convergence times" <<<PAGE 52>>>
+- **X21 多 VLAN 映射同一服务破坏隔离**："Mapping different VLANs to the same SPB service makes inter-VLAN bridging possible, thus defeating the purpose of having different VLANs in the first place" <<<PAGE 52>>>
+- **X22 虚拟化环境重复 MAC 引发 mac-move**："Duplicate MAC addresses in different VLANs do not collide, however, if these VLANs are mapped to the same SPB service… those MACs will be constantly learned, re-learned and flushed" <<<PAGE 52>>>
+- **X23 MAC-in-MAC 下 LAG 哈希缺熵**："MAC addresses are the BMACs of BEB and BCB nodes while IP addresses and port numbers are not visible to the hashing logic. In most cases this does not create enough entropy" <<<PAGE 53>>>
+- **X24 骨干内无法基于内层 L2–L4 再分类**："No further classification based on inner L2-L4 conditions is possible within the SPB backbone due to the MAC-in-MAC encapsulation" <<<PAGE 54>>>
+- **X25 外部路由注入风险**："This creates an opportunity for a bad actor to inject malicious routes and poison the routing table to carry out DoS, MITM, or other attacks" <<<PAGE 56>>>
+- **X26 STP 在 SPB 中的局限场景**（非冗余接入的后果）："Non-redundant: The CE is attached to a single BEB through a single link. Link, BEB or CE failure will result in loss of service to the site" <<<PAGE 49>>>
+- **X27 光纤同沟双断**："fibre runs should use diverse physical paths to protect against fibre cuts which would typically interrupt both links otherwise" <<<PAGE 49>>>
+- **X28 无 graceful restart 的切换代价**："a VC master or CMM takeover event would require neighbour nodes to tear down and re-establish adjacencies… resulting in some disruption to traffic flows" <<<PAGE 48>>>
+- **X29 客户网配置错误可引发跨域广播风暴**："Configuration faults in customer networks can result in loops spanning both the SPB backbone and customer access network. This can result in broadcast storms" <<<PAGE 51>>>
+- **X30 命名冲突的教训（部署指南）**："BEB-1 and BEB-2 names are not used because BCB-1 and BCB-2 occupy those numbers. Avoiding using the same numbers here will simplify understanding the network topology" <<<PAGE 64>>>

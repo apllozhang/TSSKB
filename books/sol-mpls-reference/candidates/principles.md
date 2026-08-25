@@ -1,0 +1,35 @@
+# principles — sol-mpls-reference（候选原则池，页码为真实 `<<<PAGE N>>>` 标记）
+
+- **P1 标签隧道换来 BGP-free core**："Since MPLS uses labelling as a tunnel mechanism, this allows for a BGP-free core network. This saves cost to the service provider since the core routers do not need to support a large number of routes." <<<PAGE 5>>>
+- **P2 精确匹配优于最长匹配**："a simpler lookup process based on exact match rather than longest match lookup as in the case of routing." <<<PAGE 5>>>
+- **P3 MPLS 底层必须先有 IGP 全可达**："MPLS is tunneling protocol which relies on the underlay network to be pre-configured with an IGP routing protocol to allow full reachability between LERs." <<<PAGE 10>>>
+- **P4 服务只在有站点的 LER 上创建**："The service needs to be only created on LER nodes which are servicing the locations associated to the service." <<<PAGE 20>>>
+- **P5 VPN 靠双层标签：transport 在顶、service 在底**："In a VPN implementation, the top label is the transport label and the bottom label is the service label." <<<PAGE 10>>>
+- **P6 中间 LSR 不感知服务**："Intermediate LSR are unaware of the service tunnels and labels and only process the transport labels." <<<PAGE 21>>>
+- **P7 LSP 单向，双向流量需两条**："LSPs are unidirectional... This means that two LSPs are required for bidirectional traffic flow." <<<PAGE 8>>>
+- **P8 标签按 LIFO 出栈，栈深受硬件与包长限制**："sorted in a Last-In, First-Out (LIFO) fashion... The number of labels which can be stacked is unlimited, it depends however on the hardware support and the packet size. Most vendors support between 4 and 6 labels." <<<PAGE 10>>>
+- **P9 PHP 用 implicit NULL 让倒数第二跳弹标签省一次查表**："the eLER assigns the implicit NULL label (label value 3) to a FEC to request the upstream LSR to perform a pop operation... This enhances the performance on the eLER." <<<PAGE 16>>>
+- **P10 只有顶层（传输）标签的 EXP/TTL 被处理**："Only the EXP bits of the top label (transport label) is processed." / "only the Transport label TTL is decremented." <<<PAGE 18-19>>>
+- **P11 VPLS split horizon：PW 进 PW 出禁止**："a PE must never send a packet on a PW if that packet has been received from a PW. This ensures that traffic cannot form a loop over the backbone network using PWs." <<<PAGE 21>>>
+- **P12 VPLS 需 PE 具备每实例 MAC 学习/桥接/复制**："the PE must be capable of MAC learning, bridging and replication on a per-VPLS basis." <<<PAGE 21>>>
+- **P13 VPWS 点对点不学 MAC、透明转发**："With a PW point-to-point connection, there is no forwarding decision to be made... customer MAC addresses are not learned on the SAP attachment points." <<<PAGE 22>>>
+- **P14 T-LDP 保会话抗链路故障**："with T-LDP, the LDP session stays up since an alternative path may exist and negotiated labels are preserved." <<<PAGE 15>>>
+- **P15 LSR ID（loopback）必须全网唯一**："It is important that the LSR ID, or the loopback address is unique in the MPLS domain to avoid any unpredictable behavior." <<<PAGE 13>>>
+- **P16 hold-timer 取双方较低值，接口级覆盖全局**："Each proposes a hold time value, and the LSR uses the lower of the two hold-time values. The hold-time value set on the interface overrides the hold-time value set globally." <<<PAGE 12>>>
+- **P17 LDP 不在面向 CE 的接口使能**："LDP should be enabled on all interfaces in the MPLS domain except towards the CE router (in the LER router)." <<<PAGE 12>>>
+- **P18 LDP 认证双方必须同钥**："Authentication must be configured on both LDP peers using the same MD5 key (password), otherwise the peer session will not be established." <<<PAGE 14>>>
+- **P19 标签分发从 eLER 向 iLER 上游泛洪**："LDP label distribution is propagated and flooded from the eLER upstream towards the iLER." <<<PAGE 14>>>
+- **P20 一对 LSR 多链路仍只建一个（直连）会话**："In most cases, one LDP session is established even if multiple links exist between the LSRs." <<<PAGE 13>>>
+- **P21 OAM 探测用 127/8 目的地址防 IP 转发泄漏**："The destination IP address will be an address from 127.x.x.x/8 subnet, which prevents the MPLS echo packets from being IP forwarded and exiting the egress provider edge router as an IP packet." <<<PAGE 23>>>
+- **P22 Best Practice 清单：/32 loopback + Router-ID 唯一 + p2p + routed 接口 + BFD + /31 互联**："Configure a (/32) loopback interface on each switch... Assign the loopback interface as the Router-ID (make sure it is unique for each switch)... Consider using /31 contiguous (/31) addresses for point-to-point links." <<<PAGE 28>>>
+- **P23 LDP 可靠性靠 hello/keepalive 双定时器双保险**："An LSR maintains a hold-timer with each Hello adjacency... a keepalive timer is used to monitor the integrity of the established session." <<<PAGE 12>>>
+- **P24 传输隧道可由 LDP/RSVP-TE/静态任一种承载，T-LDP 依赖传输隧道建服务隧道**："T-LDP still depends on transport tunnels to establish the service tunnels. Transport tunnels can be created using LDP, RSVP-TE, or through static configuration." <<<PAGE 15>>>
+- **P25 LSP 由下游 LER 发起建立**："LSPs will then be established between LERs to allow for full reachability. LSPs are established upstream from downstream LERs." <<<PAGE 10>>>
+- **P26 单一 AS 内 BGP VPLS 用 RR 免全互联**："using MP-BGP will require either a full-mesh of peerings between LERs, or using Route Reflectors (RR)." <<<PAGE 21>>>
+- **P27 Graceful Restart 只保计划内接管**："This mechanism is supported only for planned takeovers... not unplanned takeovers... or when a link goes down between the two routers." <<<PAGE 19>>>
+- **P28 标签值范围 16 起步、0-15 保留**："Label: (20 bits)... with the first 16 values reserved for special use." <<<PAGE 9>>>
+- **P29 MPLS 定位：园区端到端或城域核心+汇聚**：campus "implemented from the access to the core layer"；metro "configured at the core and distribution layers... At the access layer, ethernet standard switching will be configured." <<<PAGE 24-25>>>
+- **P30 VPLS 是 VPWS 超集**："VPLS is a superset of VPWS. VPWS only provides point-to-point customer connectivity without providing any L2/L3 functionality." <<<PAGE 21>>>
+- **P31 EVPL 靠外层 C-VLAN 复用多条 PW 于同一接入端口**："Multiple PWs can be associated with a single Access Port to allow service multiplexing. Multiplexing is based on the outer VLAN (C-VLAN) tag value." <<<PAGE 22>>>
+- **P32 LSP ping/trace 验证数据面（控制面看似正常时）**："used to detect and isolate data plane failures in MPLS LSPs when IP reachability and MPLS control plane seem to be working fine." <<<PAGE 23>>>
+- **P33 MPLS 是 Layer 2.5 协议（shim 头位置）**："The MPLS label sits between the IP Packet and the Ethernet header as a 'shim' header. This is the reason why it is sometimes referred to as a Layer 2.5 protocol." <<<PAGE 9>>>

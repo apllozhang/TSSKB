@@ -1,0 +1,133 @@
+{
+ "cases": [],
+ "counter-examples": [],
+ "frameworks": [],
+ "glossary": [
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **GTTS（Guest Traffic Tunneling Services，访客流量隧道服务）**：OmniAccess Stell"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **L2 GRE（Layer 2 Generic Routing Encapsulation，二层通用路由封装）**：GTTS 底层协议"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **tunnel aggregation switch（隧道聚合交换机）**：L2 GRE 隧道的交换机侧终点，通常部署在 DMZ 等防"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Hairpin**：同一台交换机上两个端口用一根线自环；一侧 SAP 口出隧道，另一侧 ACCESS 口落 VLAN；其线速封顶 S"
+  },
+  {
+   "h": 0.88,
+   "ok": true,
+   "head": "- **SAP port（Service Access Point port，业务接入点端口）**：Hairpin 的隧道侧端口，创建 se"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **ACCESS port（Hairpin 的接入侧端口）**：Hairpin 另一侧的普通传统接入端口，映射 VLAN；隧道流量由此进"
+  },
+  {
+   "h": 0.71,
+   "ok": true,
+   "head": "- **ARP（Access Role Profile，访问角色档案）**：Stellar 的角色配置对象（含 ACL/QoS/用户 VLA"
+  },
+  {
+   "h": 0.86,
+   "ok": true,
+   "head": "- **Tunnel Profile（隧道档案）**：包含建立 L2 GRE 隧道全部参数的配置对象；单 SSID 多 ARP 场景下每个 "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **VPN ID**：service l2gre 的隧道标识，AP 侧 Tunnel ID、主备交换机 vpnid 必须一致，AP 依此"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Tunnel ID**：AP 侧 SSID 隧道配置中的隧道编号，必须与交换机侧配置一致。<<<PAGE 10>>>"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **GRE Tunnel Server IP / Data VPN Server**：SSID 隧道配置中主隧道聚合交换机的 IP 地址"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Backup GRE Tunnel Server IP**：备隧道聚合交换机 IP；与 Primary 无同/异网段要求，失联 Pr"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Preemption（抢占）**：R2 冗余选项；Primary 恢复后按 Preemption Countdown Timer 到"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Entropy（熵）**：AP 侧 SSID 隧道配置项，文档以 Important 标注必须启用，否则 GTTS 不可用。<<<P"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **auto-discover（自动发现）**：交换机特性，动态接受远端 AP 发起的隧道；默认开启，关闭则需逐台手工登记 AP MAC"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **l2profile（L2 服务档案）**：交换机侧服务端口模板，建 GTTS SAP 口时创建并丢弃 stp/gvrp/mvrp，配"
+  },
+  {
+   "h": 0.9,
+   "ok": true,
+   "head": "- **vlan-xlation（VLAN translation，VLAN 转换）**：service access port 与 ser"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **One ARP 规则**：每台 AP 同一时刻对一个 ARP 只能有一条活跃隧道指向一台聚合交换机；N 个不同 ARP 的隧道 SS"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Layer 3 hop（三层跳变）**：强制架构前置——AP 管理 IP 与 GRE Tunnel Server IP 必须不同子网"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **Virtual-Chassis（虚拟机箱）**：OmniSwitch 堆叠技术；R3 冗余用它替代 Primary-Backup，两"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **DMZ（Demilitarized Zone，非军事区）**：企业内网与外部网之间的缓冲区，由防火墙分隔；GTTS 聚合交换机与专属"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **Multi-tenancy（多租户）**：运营商场景下多个客户的流量集中终结于同一台（或多台）GTTS 聚合交换机且保持客户间逻辑隔"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **AP Group（接入点组）**：GTTS 的配置粒度单位；组内 AP 广播同一 SSID 指向同一隧道终点，是园区多站规模化与多租"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Filter-id**：802.1X 认证返回字段，可用于把一个 SSID 的用户分类到不同 ARP，进而进不同隧道。<<<PAGE"
+  },
+  {
+   "h": 0.83,
+   "ok": true,
+   "head": "- **linkagg / LACP（链路聚合）**：R1/R3 冗余中把 Hairpin 的 SAP 侧与 ACCESS 侧各自做成聚合（"
+  }
+ ],
+ "principles": []
+}

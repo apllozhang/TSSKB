@@ -1,0 +1,148 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>术语词典 — EVPN 架构指南</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>EVPN 架构指南</h1>
+<div class="sub">1 份 73 页 · BGP EVPN（Route Types/多归属五机制/IRB/OISM 组播）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">控制面</div>
+<a href="skills/sol-evpn-control-plane.html">sol-evpn-control-plane</a>
+<div class="grp">数据面</div>
+<a href="skills/sol-evpn-multi-homing.html">sol-evpn-multi-homing</a>
+<a href="skills/sol-evpn-irb-multicast.html">sol-evpn-irb-multicast</a></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../solutions/index.html">解决方案</a> › <a href="index.html">EVPN 架构指南</a> › <span>术语词典</span></nav><h1>术语词典</h1><h1 id="glossary-evpn-architecture-guidesol-evpn-architecture">GLOSSARY · EVPN Architecture Guide（sol-evpn-architecture）</h1>
+<blockquote>
+<p>页码为原书 <code>&lt;&lt;&lt;PAGE N&gt;&gt;&gt;</code> 标记。按数据面/实例与标识/路由类型/扩展社区/IRB 与 DAG/组播/多归属/设计与运维分组，精选 48 条。</p>
+</blockquote>
+<h2 id="_1">数据面基础</h2>
+<ul>
+<li><strong>VXLAN</strong>：RFC 7348 标准 L2 overlay，以太网帧封装进 UDP/IP 在 L3 网络隧道传输 &lt;&lt;<PAGE 6>&gt;&gt;</li>
+<li><strong>VNI (VXLAN Network Identifier)</strong>：24-bit 标识 VXLAN segment，上限约 1600 万 &lt;&lt;<PAGE 6>&gt;&gt;</li>
+<li><strong>VTEP / VTI</strong>：VXLAN 隧道端点（封装/解封装）/ 隧道接口 &lt;&lt;<PAGE 6>&gt;&gt;</li>
+<li><strong>VXLAN gateway</strong>：VXLAN 与传统 VLAN 域之间透明桥接的设备 &lt;&lt;<PAGE 6>&gt;&gt;</li>
+<li><strong>BUM traffic</strong>：Broadcast/Unknown-unicast/Multicast 流量 &lt;&lt;<PAGE 9>&gt;&gt;</li>
+<li><strong>MP-BGP EVPN</strong>：RFC 7432/8365 控制平面协议，AFI 25(L2VPN)/SAFI 70(EVPN) &lt;&lt;<PAGE 9-10>&gt;&gt;</li>
+</ul>
+<h2 id="_2">实例与标识</h2>
+<ul>
+<li><strong>EVI (Ethernet VPN Instance)</strong>：跨所有 PE 的 EVPN 转发/路由实例，含 RD/RT &lt;&lt;<PAGE 9>&gt;&gt;</li>
+<li><strong>BD (Broadcast Domain)</strong>：广播域，可与 EVI 一一对应或一对多 &lt;&lt;<PAGE 10>&gt;&gt;</li>
+<li><strong>ES / ESI</strong>：连接一组 PE 的以太链路组 / 其唯一 10 字节标识 &lt;&lt;<PAGE 10>&gt;&gt;</li>
+<li><strong>ETag (Ethernet Tag)</strong>：标识特定广播域（如 VLAN），值为 SAP 关联 VLAN ID &lt;&lt;<PAGE 10>&gt;&gt;</li>
+<li><strong>MAC-VRF / IP-VRF</strong>：单 EVI 的 MAC 表 / PE 的 IP 路由 VRF 表 &lt;&lt;<PAGE 10>&gt;&gt;</li>
+<li><strong>SAP</strong>：PE 上绑定接入端口到服务的逻辑服务实体（虚拟端口）&lt;&lt;<PAGE 10>&gt;&gt;</li>
+<li><strong>PE / CE</strong>：服务端点设备（与 VTEP 混用）/ 客户边缘设备 &lt;&lt;<PAGE 10>&gt;&gt;</li>
+<li><strong>RD (Route Distinguisher)</strong>：8 字节，使重叠路由唯一；AOS 用 Loopback0 自动派生 &lt;&lt;<PAGE 19>&gt;&gt;</li>
+<li><strong>RT (Route Target)</strong>：6 字节扩展社区，控制导入/导出；AOS 由 ASN+Etag(VNI) 派生 &lt;&lt;<PAGE 19>&gt;&gt;</li>
+</ul>
+<h2 id="_3">路由类型</h2>
+<ul>
+<li><strong>R-T1 (Ethernet A-D Route)</strong>：多归属 ES 可达性；aliasing/split horizon/mass withdraw；分 per-ESI(R-T1A) 与 per-EVI(R-T1B) &lt;&lt;<PAGE 11-13>&gt;&gt;</li>
+<li><strong>R-T2 (MAC/IP Advertisement)</strong>：端主机 MAC（及 IP）可达性；支撑 ARP 抑制 &lt;&lt;<PAGE 11>&gt;&gt;</li>
+<li><strong>R-T3 (IMET)</strong>：按 VNI 自动发现 VTEP，构建 ingress replication 列表 &lt;&lt;<PAGE 11>&gt;&gt;</li>
+<li><strong>R-T4 (Ethernet Segment Route)</strong>：发现同 ES 的 PE 并执行 DF 选举 &lt;&lt;<PAGE 11>&gt;&gt;</li>
+<li><strong>R-T5 (IP Prefix Route)</strong>：IP 前缀通告（RFC 9136）；外部连通与路由汇总；8.10R2 起 &lt;&lt;<PAGE 11>&gt;&gt;</li>
+<li><strong>R-T6 (SMET)</strong>：IGMP/MLD proxy，通告 (*,G)/(S,G) 组播兴趣 &lt;&lt;<PAGE 11>&gt;&gt;</li>
+<li><strong>R-T7 / R-T8</strong>：多归属节点间 IGMP Join/Leave 状态同步 &lt;&lt;<PAGE 11>&gt;&gt;</li>
+<li><strong>R-T10</strong>：MVPN 继承的源发现机制，PEG 拉流前的 (S,G) 信令 &lt;&lt;<PAGE 38-39>&gt;&gt;</li>
+</ul>
+<h2 id="service">Service 模型与扩展社区</h2>
+<ul>
+<li><strong>VLAN-based service model</strong>：VLAN:MAC-VRF:VNI:EVI 一一对应；ETag=0；允许 VLAN 转换 &lt;&lt;<PAGE 19>&gt;&gt;</li>
+<li><strong>VLAN bundle / VLAN-aware service model</strong>：多 VLAN 共享 BD（ETag=0 不许转换）/ EVI 内多 VLAN 各自成广播域 &lt;&lt;<PAGE 20>&gt;&gt;</li>
+<li><strong>Enhanced VLAN-bundle</strong>：ALE 定义模型；每 EVI 仅一条 R-T3（ETag=0）省路由数 &lt;&lt;<PAGE 41>&gt;&gt;</li>
+<li><strong>ARP suppression / Proxy ARP</strong>：PE 代答本地 ARP 抑制洪泛；AOS 默认开 &lt;&lt;<PAGE 20-21>&gt;&gt;</li>
+<li><strong>ES-Import RT EC</strong>：随 R-T4 携带，仅同 ES 的 PE 导入 &lt;&lt;<PAGE 21>&gt;&gt;</li>
+<li><strong>ESI Label EC</strong>：R-T1A 携带；指示冗余模式（flags 1=single-active, 0=all-active）&lt;&lt;<PAGE 21>&gt;&gt;</li>
+<li><strong>MAC Mobility EC</strong>：序列号跟踪主机最新位置，亚秒级 VM 迁移收敛 &lt;&lt;<PAGE 22>&gt;&gt;</li>
+<li><strong>Default Gateway EC</strong>：PE 以 R-T2 通告默认网关 MAC，网关分布式 &lt;&lt;<PAGE 22>&gt;&gt;</li>
+<li><strong>Router MAC EC</strong>：携带始发路由器 MAC；MAC 作 overlay index 的对称 IRB 用 &lt;&lt;<PAGE 23>&gt;&gt;</li>
+</ul>
+<h2 id="irb-dag">IRB 与 DAG</h2>
+<ul>
+<li><strong>IRB</strong>：EVPN 跨子网连通，本地 PE 直接路由 &lt;&lt;<PAGE 23>&gt;&gt;</li>
+<li><strong>Asymmetric / Symmetric IRB</strong>：拉伸 EVI 三次查表（资源密集）/ 双端桥+路由（推荐）&lt;&lt;<PAGE 24-25>&gt;&gt;</li>
+<li><strong>SBD / Fabric-VPN</strong>：每 VRF 一个 L3EVI，提供 VRF 内 IRB 服务间可达；AOS 记作 Fabric-VPN &lt;&lt;<PAGE 25>&gt;&gt;</li>
+<li><strong>Host-based / Prefix-based routing</strong>：R-T2 /32（两模型皆可）/ R-T5 前缀（仅对称）&lt;&lt;<PAGE 26>&gt;&gt;</li>
+<li><strong>Overlay index</strong>：R-T5 递归查找索引：网关 IP、MAC 或 ESI &lt;&lt;<PAGE 15>&gt;&gt;</li>
+<li><strong>DAG (Distributed Anycast Gateway)</strong>：全 PE 同 anycast IP+MAC，免 VRRP 支持主机移动 &lt;&lt;<PAGE 28>&gt;&gt;</li>
+<li><strong>Anycast MAC auto-derivation</strong>：00:00:5e:00:01:<VRF-ID> 或 site-based 派生 &lt;&lt;<PAGE 29>&gt;&gt;</li>
+</ul>
+<h2 id="_4">组播</h2>
+<ul>
+<li><strong>Ingress replication</strong>：头端逐单播复制 BUM；AOS 唯一支持方式 &lt;&lt;<PAGE 29-30>&gt;&gt;</li>
+<li><strong>Tandem replication</strong>：组播底层中继复制；核心高效需组播底层 &lt;&lt;<PAGE 29>&gt;&gt;</li>
+<li><strong>PMSI</strong>：R-T3 附带隧道属性，标识 BUM 使用的 P-Tunnel &lt;&lt;<PAGE 15>&gt;&gt;</li>
+<li><strong>IPMS / IPMSv6</strong>：OmniSwitch IGMP/MLD snooping 硬件线速组播交付 &lt;&lt;<PAGE 37>&gt;&gt;</li>
+<li><strong>OISM</strong>：RFC 9625，Fabric-VPN+R-T6 跨子网组播，无需 PIM；8.10R3 EA &lt;&lt;<PAGE 37>&gt;&gt;</li>
+<li><strong>PEG (PIM EVPN Gateway)</strong>：与外部 PIM 路由器互通的网关；双 PEG 需专用 L3 互联；8.10R3 EA &lt;&lt;<PAGE 38>&gt;&gt;</li>
+<li><strong>Default SBD-SMET route (<em>,</em>)</strong>：内部源发现方式，PEG 借其收全部组播；带宽低效 &lt;&lt;<PAGE 38-39>&gt;&gt;</li>
+</ul>
+<h2 id="_5">多归属</h2>
+<ul>
+<li><strong>Multi-homing</strong>：CE 经 LAG 连多 PE；single-active 与 all-active 两模式 &lt;&lt;<PAGE 32>&gt;&gt;</li>
+<li><strong>DF (Designated Forwarder)</strong>：ES 内指定转发者，防 BUM 重复/环路 &lt;&lt;<PAGE 32-33>&gt;&gt;</li>
+<li><strong>Service carving</strong>：按 EVI/VLAN 选多 DF 分散 BUM 负载；DF = EVI mod N &lt;&lt;<PAGE 33>&gt;&gt;</li>
+<li><strong>Split Horizon Group (SPG)</strong>：non-DF SAP 的 BUM 出向过滤组 &lt;&lt;<PAGE 34>&gt;&gt;</li>
+<li><strong>Local Bias / ES Pruning</strong>：本 PE 的流量总走本地接入；远端丢弃重复 BUM &lt;&lt;<PAGE 34>&gt;&gt;</li>
+<li><strong>Aliasing</strong>：全活 ES 各 PE 通告 R-T1A/1B，远端按流负载分担 &lt;&lt;<PAGE 34>&gt;&gt;</li>
+<li><strong>Backup path</strong>：单活 Primary/Backup 列表，主撤路无缝切换 &lt;&lt;<PAGE 35-36>&gt;&gt;</li>
+<li><strong>Mass withdraw</strong>：R-T1A 以 EVI=0xFFFFFFFF 编码 ES 不可达，批量刷新 MAC &lt;&lt;<PAGE 36>&gt;&gt;</li>
+</ul>
+<h2 id="_6">检测与运维</h2>
+<ul>
+<li><strong>MAC duplication / hold-down</strong>：MAC 反复迁移达阈值进 hold-down 停处理 BGP 通告 &lt;&lt;<PAGE 39>&gt;&gt;</li>
+<li><strong>DAD (Duplicate Address Detection)</strong>：同 IP 不同 MAC 检测；N 次 IP-move 进 filtering state；ARP Confirm 探测旧主 &lt;&lt;<PAGE 39>&gt;&gt;</li>
+<li><strong>Silent host / Sticky bit</strong>：静默主机静态绑 MAC 到 SAP 并以 sticky 位通告防误迁移 &lt;&lt;<PAGE 40>&gt;&gt;</li>
+<li><strong>AOS auto-ESI (Type 0x3)</strong>：物理口/LACP LAG 自动 ESI；静态 LAG 手工 5 字节 &lt;&lt;<PAGE 41>&gt;&gt;</li>
+<li><strong>Auto-generated RD</strong>：Loopback0+Type+Object（Service/ESI 8bit 段 ID 上限 256/Prefix）&lt;&lt;<PAGE 42-43>&gt;&gt;</li>
+<li><strong>GRM (Global Route Manager)</strong>：VRF 间/VRF 与 Fabric-VPN 间路由重分发中介 &lt;&lt;<PAGE 47>&gt;&gt;</li>
+<li><strong>Border leaf</strong>：对外部网络做网关的 PE；需路由汇总与防回声 &lt;&lt;<PAGE 46-48>&gt;&gt;</li>
+<li><strong>RR / TTL Security</strong>：spine 兼任路由反射器（冗余 RR 同 cluster-id）/ BGP 直连保障 max-hop 0 &lt;&lt;<PAGE 46>&gt;&gt;</li>
+</ul><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>术语词典 — MPLS 参考设计指南</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>MPLS 参考设计指南</h1>
+<div class="sub">1 份 45 页 · MPLS/VPLS/VPWS（双标签/LDP/VPLS 信令/QoS/OAM）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">基础与业务</div>
+<a href="skills/sol-mpls-foundation.html">sol-mpls-foundation</a>
+<a href="skills/sol-mpls-vpls-vpws.html">sol-mpls-vpls-vpws</a>
+<div class="grp">运维</div>
+<a href="skills/sol-mpls-qos-oam.html">sol-mpls-qos-oam</a></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../solutions/index.html">解决方案</a> › <a href="index.html">MPLS 参考设计指南</a> › <span>术语词典</span></nav><h1>术语词典</h1><h1 id="glossary-mpls-reference-design-guide">GLOSSARY · MPLS Reference Design Guide</h1>
+<blockquote>
+<p>页码为原书 <code>&lt;&lt;&lt;PAGE N&gt;&gt;&gt;</code> 标记。按基础术语/标签结构/LDP 体系/模式/QoS-TTL/服务模型/L2VPN/OAM/license 分组，精选 45 条。</p>
+</blockquote>
+<h2 id="_1">基础术语</h2>
+<ul>
+<li><strong>MPLS (Multiprotocol Label Switching)</strong>：基于预分配标签的标签交换，转发不看内层 IP 头 &lt;&lt;<PAGE 5>&gt;&gt;</li>
+<li><strong>LER (Label Edge Router)</strong>：MPLS 域边缘路由器（即 PE），push/pop 标签；分 iLER/eLER &lt;&lt;<PAGE 7>&gt;&gt;</li>
+<li><strong>LSR (Label Switch Router)</strong>：域内路由器，执行 swap；LER 也算 LSR &lt;&lt;<PAGE 7>&gt;&gt;</li>
+<li><strong>LSP (Label Switched Path)</strong>：iLER 到 eLER 的预确定传输隧道；单向，双向需两条 &lt;&lt;<PAGE 8>&gt;&gt;</li>
+<li><strong>FEC (Forwarding Equivalence Class)</strong>：赋同一标签的相似包集合（前缀/QoS 标记等） &lt;&lt;<PAGE 8>&gt;&gt;</li>
+<li><strong>LDP (Label Distribution Protocol)</strong>：RFC 5036 标签信令，依 IGP 路由建传输 LSP &lt;&lt;<PAGE 8>&gt;&gt;</li>
+<li><strong>T-LDP (Targeted-LDP)</strong>：远端 LER 间单播 UDP/TCP 会话，交换服务标签，抗链路故障保会话 &lt;&lt;<PAGE 15>&gt;&gt;</li>
+<li><strong>MP-BGP</strong>：RFC 2283，为服务交换路由+服务标签并自动发现同服务 PE &lt;&lt;<PAGE 15>&gt;&gt;</li>
+</ul>
+<h2 id="_2">标签结构</h2>
+<ul>
+<li><strong>MPLS 标签结构</strong>：32 位 shim 头 = 20-bit Label + 3-bit EXP + 1-bit S + 8-bit TTL；Layer 2.5 协议 &lt;&lt;<PAGE 9>&gt;&gt;</li>
+<li><strong>EXP bits</strong>：标签头 3 个实验位，承载 QoS；仅顶层标签被处理 &lt;&lt;<PAGE 9>&gt;&gt;</li>
+<li><strong>S Bit / BoS</strong>：标签栈底标志位 &lt;&lt;<PAGE 9>&gt;&gt;</li>
+<li><strong>保留标签 0-15</strong>：0=IPv4 Explicit NULL、1=Router Alert、2=IPv6 Explicit NULL、3=Implicit NULL、14=OAM Alert &lt;&lt;<PAGE 9-10>&gt;&gt;</li>
+<li><strong>标签栈 (Label Stacking)</strong>：LIFO 多标签；VPN 顶为 transport、底为 service；厂商普遍 4-6 层 &lt;&lt;<PAGE 10>&gt;&gt;</li>
+<li><strong>FTN (FEC-To-NHLFE)</strong>：FIB 中面向 Push 的条目 &lt;&lt;<PAGE 10>&gt;&gt;</li>
+<li><strong>ILM (Ingress Label Mapping)</strong>：面向 Swap/Pop 的条目；本地与远端标签绑定均存于此 &lt;&lt;<PAGE 10>&gt;&gt;</li>
+<li><strong>NHLFE</strong>：下一跳标签转发表项 &lt;&lt;<PAGE 10>&gt;&gt;</li>
+<li><strong>push / swap / pop</strong>：LSR 三种标签操作（imposition/disposition 为别称） &lt;&lt;<PAGE 16>&gt;&gt;</li>
+</ul>
+<h2 id="ldp">LDP 体系</h2>
+<ul>
+<li><strong>LDP 消息四类</strong>：Discovery/Session/Advertisement/Notification；UDP 646 发现、TCP 646 会话、224.0.0.2 组播 hello &lt;&lt;<PAGE 11-12>&gt;&gt;</li>
+<li><strong>Label Mapping / Withdraw / Release</strong>：标签映射通告/撤销/释放三类核心通告消息 &lt;&lt;<PAGE 11-13>&gt;&gt;</li>
+<li><strong>LDP ID</strong>：6 字节 = 4 字节 LSR 标识（loopback）+ 2 字节标签空间（0=per-platform） &lt;&lt;<PAGE 13>&gt;&gt;</li>
+<li><strong>LDP MD5 认证</strong>：每 TCP 段附 MD5 签名防伪造，双方同钥；不符静默丢弃 &lt;&lt;<PAGE 14-15>&gt;&gt;</li>
+<li><strong>LDP Graceful Restart</strong>：RFC 3478，控制面重启期间保留转发状态（NSF）；仅计划内接管 &lt;&lt;<PAGE 19>&gt;&gt;</li>
+<li><strong>hold-timer / keepalive 双定时器</strong>：hello adjacency 判死 / 会话完整性监测 &lt;&lt;<PAGE 12>&gt;&gt;</li>
+<li><strong>LSR ID 唯一性</strong>：loopback 必须全网唯一，否则不可预测行为 &lt;&lt;<PAGE 13>&gt;&gt;</li>
+</ul>
+<h2 id="_3">分发/控制/保留模式</h2>
+<ul>
+<li><strong>DoD (Downstream-on-Demand)</strong>：仅应答请求才发标签 &lt;&lt;<PAGE 13>&gt;&gt;</li>
+<li><strong>DU (Downstream Unsolicited)</strong>：主动发标签；AOS 唯一支持；常配 LLR &lt;&lt;<PAGE 13>&gt;&gt;</li>
+<li><strong>ILD (Independent Label Distribution)</strong>：随时通告标签映射；AOS 唯一支持 &lt;&lt;<PAGE 13-14>&gt;&gt;</li>
+<li><strong>OLD (Ordered Label Distribution)</strong>：收到下游标签或自身为 egress 才通告 &lt;&lt;<PAGE 14>&gt;&gt;</li>
+<li><strong>CLR (Conservative Label Retention)</strong>：只保留有效下一跳绑定 &lt;&lt;<PAGE 14>&gt;&gt;</li>
+<li><strong>LLR (Liberal Label Retention)</strong>：保留所有绑定；AOS 唯一支持 &lt;&lt;<PAGE 14>&gt;&gt;</li>
+</ul>
+<h2 id="qosttlphp">QoS/TTL/PHP</h2>
+<ul>
+<li><strong>PHP (Penultimate Hop Popping)</strong>：eLER 以 implicit NULL 请求倒数第二跳弹传输标签省一次查表 &lt;&lt;<PAGE 16>&gt;&gt;</li>
+<li><strong>Implicit NULL (label 3)</strong>：PHP 信号标签 &lt;&lt;<PAGE 10-16>&gt;&gt;</li>
+<li><strong>Explicit NULL (0/2)</strong>：保留 EXP 的 PHP 替代；AOS 不支持 &lt;&lt;<PAGE 16-17>&gt;&gt;</li>
+<li><strong>QoS uniform mode</strong>：客户 IP precedence 复制进 EXP，出域回写 &lt;&lt;<PAGE 18>&gt;&gt;</li>
+<li><strong>QoS pipe mode</strong>：EXP 按运营商策略设定，客户 DSCP 不动 &lt;&lt;<PAGE 18>&gt;&gt;</li>
+<li><strong>TTL uniform/pipe mode</strong>：uniform 逐跳递减；pipe 中 L3VPN 两端各减 1、L2VPN 不变 &lt;&lt;<PAGE 19>&gt;&gt;</li>
+</ul>
+<h2 id="_4">服务模型</h2>
+<ul>
+<li><strong>SAP (Service Access Point) / AC</strong>：UNI 侧逻辑端口绑定客户流量；同端口可多 SAP 复用 &lt;&lt;<PAGE 20>&gt;&gt;</li>
+<li><strong>SDP (Service Distribution Point) / VC</strong>：NNI 侧单向逻辑连接到远端；本地唯一 ID &lt;&lt;<PAGE 20>&gt;&gt;</li>
+<li><strong>Service Tunnel</strong>：传输 LSP 内承载服务流量的虚拟链路（FEC=服务标识） &lt;&lt;<PAGE 20>&gt;&gt;</li>
+<li><strong>Transport Tunnel</strong>：基于 FEC 的单向传输路径（FEC=各 LSR loopback） &lt;&lt;<PAGE 20>&gt;&gt;</li>
+</ul>
+<h2 id="l2vpn">L2VPN</h2>
+<ul>
+<li><strong>VPLS (Virtual Private LAN Service)</strong>：E-LAN 多点；全互联 PW + per-VPLS MAC 学习/桥接/复制 &lt;&lt;<PAGE 21>&gt;&gt;</li>
+<li><strong>PW (Pseudowire)</strong>：LER 间虚拟线路；VPLS 全互联成网；split horizon：PW 进 PW 出禁止 &lt;&lt;<PAGE 21>&gt;&gt;</li>
+<li><strong>VPWS (Virtual Private Wire Service)</strong>：E-LINE 点对点；不学 MAC 透明转发；RFC 8077 &lt;&lt;<PAGE 21-22>&gt;&gt;</li>
+<li><strong>EPL (Ethernet Private Line)</strong>：MEF 6.3 整端口 VPWS &lt;&lt;<PAGE 22>&gt;&gt;</li>
+<li><strong>EVPL (Ethernet Virtual Private Line)</strong>：按 C-VLAN 复用多条 PW 于同一端口 &lt;&lt;<PAGE 22>&gt;&gt;</li>
+<li><strong>VE-ID / VBO / VBS</strong>：BGP VPLS 站点标识与标签块偏移/尺寸参数 &lt;&lt;<PAGE 38-39>&gt;&gt;</li>
+</ul>
+<h2 id="oam-license">OAM 与 license</h2>
+<ul>
+<li><strong>LSP Ping / Traceroute</strong>：RFC 4379 数据面验证；目的 127/8、UDP 3503；trace 靠 TTL 递增 &lt;&lt;<PAGE 23-24>&gt;&gt;</li>
+<li><strong>show mpls ftn-table / ilm-table / forwarding-table</strong>：FTN/ILM/转发表巡检；OpCode 1=PUSH 2=POP 3=SWAP &lt;&lt;<PAGE 32>&gt;&gt;</li>
+<li><strong>show service vpls/vpws/bind-sdp/mesh-sdp + show mac-learning domain vpls</strong>：业务面验证命令族 &lt;&lt;<PAGE 31-44>&gt;&gt;</li>
+<li><strong>Site-based license</strong>：浮动共享，最多 4 节点（可为 8 单元虚拟机箱），SILOS 站点服务器管理 &lt;&lt;<PAGE 26>&gt;&gt;</li>
+<li><strong>Node-based license</strong>：绑定单 MPLS 节点、不绑硬件序列号/MAC；SWLIC 为机上客户端 &lt;&lt;<PAGE 26>&gt;&gt;</li>
+<li><strong>uosn-mpls-v1.deb</strong>：MPLS 功能 Debian 安装包（配置第一步） &lt;&lt;<PAGE 30>&gt;&gt;</li>
+</ul>
+<hr />
+<p>合计：45 条。</p><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

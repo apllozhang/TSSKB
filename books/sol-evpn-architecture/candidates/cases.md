@@ -1,0 +1,22 @@
+# cases — sol-evpn-architecture（作者在文中亲自演练的案例，页码为真实标记）
+
+- **C1 DC/Campus 双场景用例论证**：DC 用 spine-leaf 2/3-tier；campus 可沿用传统三层或 spine-leaf。"A common topology used is spine-and-leaf or Clos architecture. It can be 2-tier (3-stage) or 3-tier (5-stage) depending on the scale." <<<PAGE 8>>>
+- **C2 3-tier Super-Spine DCI 场景**："A 3-tier (5-stage) spine-leaf topology can be used for requirements with hyper scalability for DCI... when the core network (Inter-site) is operating in a different overlay protocol (for example, MPLS)." <<<PAGE 8>>>
+- **C3 Intra-subnet 五步走包分析（Client-1→Client-6）**：ARP request → LEAF-1 查 proxy ARP 缓存 → 代答 → 单播封装 VXLAN → LEAF-6 解封装桥接。"3. Since proxy ARP is enabled, LEAF-1 will send an ARP response to Client-1 with the MAC+IP address information for Client-6." <<<PAGE 31>>>
+- **C4 Inter-subnet 对称 IRB 六步走包分析（Client-1→Client-4）**：ARP 网关 → IP-VRF 查 SBD overlay index → 递归解析 LEAF-4 IRB MAC → VXLAN 封装 → 对端 SBD IP-VRF → MAC-VRF 下发。"5. LEAF-1 consults the ARP table to identify the destination (LEAF-4) MAC address and consults the SBD MAC-VRF table to determine the VNI." <<<PAGE 31-32>>>
+- **C5 多归属开局流程案例（R-T4 发现→DF 选举→R-T1A/1B 通告冗余模式）**：single-active flags=1、all-active flags=0。"R-T1A (A-D per ES) route is advertised with ESI Label extended community. This extended community has a flags field set to 1 to indicate single-active redundancy." <<<PAGE 32-33>>>
+- **C6 DF change 丢包场景与 SMET-by-all-PEs 补救**："In the event of a DF change, there will be traffic drop to clients, as the remote PEs will continue to forward the traffic to older PE until they receive the SMET routes form the new PE." <<<PAGE 36>>>
+- **C7 OISM 跨子网组播转发案例**：IGMP join → R-T6 带 Fabric-VPN RT → 源 PE IPMS 建 Fabric-VPN 组表项 → 隧道转发。"The PE where the multicast source is connected, assuming it is in a different EVI, will import the R-T6 and informs the IP Multicast Switching (IPMS) service." <<<PAGE 37-38>>>
+- **C8 双 PEG 冗余 + 外部 PIM 互通案例**："it is possible to have two PEGs acting as redundant pairs for a given VRF and supports load balancing across different VRFs... a dedicated L3 link should be used between PEGs for RP reachability." <<<PAGE 38>>>
+- **C9 R-T10 源发现信令流案例**：ingress PE 收到组播首包 → R-T10(S,G) → DR PEG 注册到外部 RP → PIM join 回来 → PEG 发 R-T6 拉流。"When the DR PEG recieves the PIM join, it will generate R-T6 for the given (S,G) to pull traffic from the source." <<<PAGE 39>>>
+- **C10 MAC duplication 场景（同 MAC 两主机/环路）**："a continuous exchange of the MAC being advertised and withdrawn in the control plane among all the PEs... leads to degradation of the EVPN network performance." 靠 hold-down + retry-time 解除。<<<PAGE 39>>>
+- **C11 Duplicate IP（DAD）双主机同 IP 场景**："Now, a new ARP with the same IP from host 2 (MAC B) entering to the EVPN network is considered as IP Mobility." Confirm message 探测旧主。<<<PAGE 39-40>>>
+- **C12 Silent host（WAKE-ON-LAN）静态绑定案例**："it may be necessary to statically bind MAC address to a SAP port... for example for a WAKE-ON-LAN packet." <<<PAGE 40>>>
+- **C13 外部连通场景：border leaf + GRM 路由注入**："LEAF-1 should export the routes from VRF-2 to the Global Route Manager (GRM) and the Fabric-VPN (EVI-50) should register with the GRM to receive these routes." <<<PAGE 47>>>
+- **C14 全册端到端配置案例（2 spine + 6 leaf）**：VLAN/VNI/IP 规划表 → OSPF underlay（10 步）→ BGP RR overlay（5 步）→ LAG → Fabric-VPN → SAP/ES → service → 对称 IRB → DAG → 外部 OSPF → proxy ARP，逐段验证。"Since we are using symmetric IRB in this configuration example, it is not required to have all the services instantiated in all leaf switches, but only where the hosts are attached." <<<PAGE 48-72>>>
+- **C15 静态 LAG ESI 手工配置实例**："service access linkagg 20 vlan-xlation enable evpn-ethernet-segment enable esi 01:01:01:02:04" <<<PAGE 64>>>
+- **C16 BFD 参数实例（200ms 发包）**："ip bfd transmit 200 / receive 200 / echo-interval 200" <<<PAGE 50>>>
+- **C17 Anycast MAC 自动派生实例**："Anycast MAC = 00:00:5e:00:01:01"（00:00:5e:00:01:<VRF-ID> 规则）<<<PAGE 69>>>
+- **C18 验证命令家族案例**：show ip bgp neighbors / show service evpn / show service evpn ethernet-segment / show ip evpn proxy-arp / show ip routes 逐段展示。<<<PAGE 60-71>>>
+- **C19 Proxy ARP 表老化后的恢复操作**："In case Proxy ARP Table is empty, it has probably timed out. Please try to send communication between the hosts and this should generate entries in the table." <<<PAGE 72>>>
+- **C20 VLAN-based 回退时的行为差异案例**："In data plane, the passenger packet is stripped of all tags and sent in the tunnel as untagged. Egress VLAN translation on PE's take care of adding the right VLAN." <<<PAGE 42>>>

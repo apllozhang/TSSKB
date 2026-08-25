@@ -1,0 +1,100 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>sol-wlan-profile-hierarchy — Stellar WLAN 设计与调优</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>Stellar WLAN 设计与调优</h1>
+<div class="sub">3 份 75 页 · 高密设计指南 + 微调最佳实践 + 部署服务表</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">设计</div>
+<a href="../skills/sol-wlan-high-density.html">sol-wlan-high-density</a>
+<a href="../skills/sol-wlan-fine-tuning.html">sol-wlan-fine-tuning</a>
+<div class="grp">配置</div>
+<a href="../skills/sol-wlan-profile-hierarchy.html" class="on">sol-wlan-profile-hierarchy</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../solutions/index.html">解决方案</a> › <a href="../index.html">Stellar WLAN 设计与调优</a> › <span>sol-wlan-profile-hierarchy</span></nav><h1>sol-wlan-profile-hierarchy</h1><p class="meta"><span class="badge">SKILL</span> sol-wlan-profile-hierarchy · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>把设计蓝图落成配置：按区域/设备组/业务三级组织参数</li>
+<li>决定 AP 运营模式：Enterprise（OmniVista 集中）vs Express（集群自治）</li>
+<li>查参数默认值与推荐值（信标间隔/DTIM/带宽合约/WMM 映射等）</li>
+<li>订购或交付 ALE 部署协助专业服务</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>三级配置体系各管一维（F4，&lt;&lt;<PAGE 27-38, 66-72>&gt;&gt;）：RF Profile 按区域差异化（频段/信道计划/功率/扫描）、AP Group 按设备组统一（SSH/SNMP/IGMP/日志）、SSID 按业务差异化（认证/漫游/带宽/QoS）。配置粒度对应管理责任：区域 RF 环境、设备组运维、业务体验。HD 指南附录给出访客与监控两套完整模板、微调简报附录给出默认值与推荐值对照表，照表落地即可。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<ol>
+<li>三级配置体系（F4）：</li>
+<li>RF Profile：频段/信道计划（DRM/Channel List）/信道宽度/收发功率范围/信标间隔/扫描</li>
+<li>AP Group：SSH/SNMP/IGMP Snooping/日志上送</li>
+<li>SSID：认证方式/最低速率/漫游（11r/k/v/OKC/FDB）/带宽合约/广播组播优化/QoS 映射</li>
+<li>运营模式选型：Enterprise = OmniVista 集中管理（单机 4000 AP/组）；Express = 集群自治（256 AP/集群）（&lt;&lt;<PAGE 47>&gt;&gt;）；高密场馆用 Enterprise（P5）</li>
+<li>服务路径（&lt;&lt;<PAGE 73-75>&gt;&gt;）：自建（预测勘测 Ekahau Pro + 现场勘测）vs 订购部署协助服务（前置：ACFE 认证 + 一次办公部署经验 + HLD 已完成）</li>
+</ol>
+<h2 id="a2">A2（操作步骤）</h2>
+<ul>
+<li><strong>RF Profile 参数基准</strong>：信标间隔默认 100ms，极高负载可增至 150ms（&lt;&lt;<PAGE 29, 68>&gt;&gt;）；扫描间隔 &lt;40s（X20，&lt;&lt;<PAGE 56>&gt;&gt;）</li>
+<li><strong>SSID 参数基准</strong>：DTIM 间隔 Apple 互通建议 3（&lt;&lt;<PAGE 71>&gt;&gt;）；Bandwidth Contract 上/下行及突发 0-2621440 Kbps（&lt;&lt;<PAGE 32, 72>&gt;&gt;）；Client Isolation 与 PMF 按安全需要（&lt;&lt;<PAGE 70>&gt;&gt;）</li>
+<li><strong>QoS 映射</strong>：WMM 四类（AC_BK/BE/VI/VO）↔ 802.1p/DSCP；Trust Original DSCP 信任上行原值（&lt;&lt;<PAGE 32, 63>&gt;&gt;）</li>
+<li><strong>模板套用</strong>：访客 SSID=开放+Captive Portal+限速+客户端隔离；监控 SSID=802.1X+流速率限制（P17，&lt;&lt;<PAGE 9-10>&gt;&gt; + 附录）</li>
+<li><strong>部署协助服务交付</strong>（C21，&lt;&lt;<PAGE 75>&gt;&gt;）：5 天交付包——项目启动会/数据分析/Ekahau 预测勘测/现场勘测/部署辅导/DT00WTE278 课程与 ACSE 认证；eBuy 订购号 PS-PAER-5-NET</li>
+<li><strong>运维监控配套</strong>：QoE 评分驱动（P34，&lt;&lt;<PAGE 25>&gt;&gt;）；Custom Dashboard 为媒体包厢等专区聚合统计（C12，&lt;&lt;<PAGE 23>&gt;&gt;）；客户端密度图（Cirrus 10.4.1+，&lt;&lt;<PAGE 24>&gt;&gt;）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>HD 附录访客与监控两套三级配置模板 + 454 AP 的 BOM（&lt;&lt;<PAGE 27-44>&gt;&gt;）</li>
+<li>媒体包厢 Custom Dashboard 自定义仪表盘（C12，&lt;&lt;<PAGE 23>&gt;&gt;）</li>
+<li>部署协助服务五天交付包全流程（C21，&lt;&lt;<PAGE 75>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（反例与坑）</h2>
+<ul>
+<li>手工功率设置值超型号能力时按最大能力发射，设定失效（X18，&lt;&lt;<PAGE 67>&gt;&gt;）</li>
+<li>关闭 High Efficiency 使 11ax AP 降级 VHT 模式（X19，&lt;&lt;<PAGE 68>&gt;&gt;）</li>
+<li>Beacon Interval 增大省空口但影响发现速度，仅极高负载调至 150ms（&lt;&lt;<PAGE 68>&gt;&gt;）</li>
+<li>订购部署协助服务前必须满足三前置（ACFE/办公部署经验/HLD），缺一不接（&lt;&lt;<PAGE 75>&gt;&gt;）</li>
+<li>AP Group 与 RF Profile 混配错区会导致相邻区域信道计划冲突——按区域严格分 Profile（P14，&lt;&lt;<PAGE 8>&gt;&gt;）</li>
+</ul>
+<p>来源：HD Design Guide 附录（p27-44）+ Fine-Tuning 附录（p66-72）+ Deployment Assistance Datasheet（p73-75）</p><div class="pn"><a href="sol-wlan-fine-tuning.html">⬅ 上一单元：sol-wlan-fine-tuning</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

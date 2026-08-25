@@ -1,0 +1,98 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>sol-campus-nms-security — 园区网络架构 · 设计指南</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>园区网络架构 · 设计指南</h1>
+<div class="sub">2 份 47 页 · 园区架构指南 + Hybrid POL 彩页（分层设计/AP 发现/漫游/NMS/POL）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">设计与运维</div>
+<a href="../skills/sol-campus-lan-wlan-design.html">sol-campus-lan-wlan-design</a>
+<a href="../skills/sol-campus-nms-security.html" class="on">sol-campus-nms-security</a>
+<div class="grp">POL 方案</div>
+<a href="../skills/sol-campus-hybrid-pol.html">sol-campus-hybrid-pol</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../solutions/index.html">解决方案</a> › <a href="../index.html">园区网络架构</a> › <span>sol-campus-nms-security</span></nav><h1>sol-campus-nms-security</h1><p class="meta"><span class="badge">SKILL</span> sol-campus-nms-security · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>选型 OmniVista 部署形态与高可用（单机/L2 HA/L3 HA 功能取舍）</li>
+<li>规划统一接入安全：员工 802.1x、IoT 指纹、访客认证、BYOD 管控</li>
+<li>设计角色化策略（安全跟人走而非绑端口）与隔离处置闭环</li>
+<li>无线安全：wIDS/wIPS、流氓 AP 判定与遏制、WCF 内容过滤</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>统一接入安全框架（F5，&lt;&lt;<PAGE 36>&gt;&gt;）：UPAM 中央 RADIUS+captive portal → 认证谱系 → 角色（UNP/ARP）定 VLAN+ACL+QoS → 事后处置（Quarantine+QMR/WCF/wIDS/wIPS），安全贯穿"接入-授权-运行-处置"全生命周期。安全内建于网络并按角色动态施加，而非静态绑端口（P52，&lt;&lt;<PAGE 36>&gt;&gt;）；UNP/ARP 内嵌于交换机/AP 保证有线无线策略一致（P53，&lt;&lt;<PAGE 36>&gt;&gt;）。NMS 选型：L2 HA 复用原 IP 零改造（P49，&lt;&lt;<PAGE 35>&gt;&gt;）；L3 HA 跨子网但 sFlow/策略执行等功能受限（P50/X14，&lt;&lt;<PAGE 36>&gt;&gt;）。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<ol>
+<li>NMS 部署选型（C10，&lt;&lt;<PAGE 35>&gt;&gt;）：单机无切换；L2 HA 双 VM 同子网+虚拟 Cluster IP（原单机 IP 可复用）；L3 HA 双节点跨子网各持 IP、设备配双地址、Preferred Node 须 CLI admin 菜单设置</li>
+<li>AP onboarding（C11/P51，&lt;&lt;<PAGE 36>&gt;&gt;）：初联自动回连 Cirrus Activation Server→序列号对 Device Catalog 校验→发证书建 VPN→按 AP 组模板下发配置</li>
+<li>认证谱系选型（P54-P57，&lt;&lt;<PAGE 37-39>&gt;&gt;）：IoT 指纹（行为特征免手工）；员工 802.1x（AD/LDAP/外部 RADIUS，可代理 ClearPass/ISE）；访客四式（自注册/社交登录/员工赞助/SMS-Plivo）+Enhanced Open 免密场景；WPA3 优先兼顾存量 WPA2</li>
+<li>分段与管控：SSID 即分段（不同 SSID 对应安全设置/VLAN/访问控制，P58，&lt;&lt;<PAGE 40>&gt;&gt;）；BYOD 公司设备预置画像、外部设备声明注册+时限/会话/1-10 台限制（P59/C15，&lt;&lt;<PAGE 40>&gt;&gt;）</li>
+<li>处置闭环（P60/P61，&lt;&lt;<PAGE 40-42>&gt;&gt;）：syslog/SNMP trap 触发 Quarantine Manager 隔离或 Candidate List，QMR 补救；流氓 AP（接有线或仿冒 SSID）才遏制——DEAUTH 帧，默认关闭</li>
+</ol>
+<h2 id="a2">A2（操作步骤）</h2>
+<ul>
+<li><strong>访客认证四方式部署</strong>（C14，&lt;&lt;<PAGE 39>&gt;&gt;）：嵌入式 Captive Portal 自注册/社交登录（Facebook、Google、Rainbow、微信）/赞助审批/SMS（Plivo）取凭证；默认记录留一个月，可外接日志服务器</li>
+<li><strong>BYOD 注册管控</strong>（C15，&lt;&lt;<PAGE 40>&gt;&gt;）：UPAM Captive Portal 声明设备→挂安全策略 ARP→时限、会话超时、每人 1-10 台</li>
+<li><strong>WCF 配置三步</strong>（C12，&lt;&lt;<PAGE 41>&gt;&gt;）：建 WCF Profile（多条过滤条件）→给 ARP 或 SSID 挂 Profile→应用到 AP</li>
+<li><strong>安全动态施加</strong>（X16，&lt;&lt;<PAGE 37>&gt;&gt;）：网络边缘安全按预定义角色随用户/设备动态应用，与端口解耦</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>OmniVista HA 三形态部署对比与 L3 HA 的 Preferred Node CLI 设置（C10/X15，&lt;&lt;<PAGE 35-36>&gt;&gt;）</li>
+<li>AP onboarding 全流程：call-home→序列号校验→证书→组模板（C11，&lt;&lt;<PAGE 36>&gt;&gt;）</li>
+<li>mDNS 网关/Responder 两模式实现跨网段服务共享并由防火墙审查（C7/C8，&lt;&lt;<PAGE 33>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（反例与坑）</h2>
+<ul>
+<li>L3 HA 不支持 sFlow、策略执行与部分设备管理功能；Preferred Node 不能走界面只能 CLI（X14/X15，&lt;&lt;<PAGE 36>&gt;&gt;）</li>
+<li>未注册设备不得入网——onboarding 按序列号白名单（X17，&lt;&lt;<PAGE 36>&gt;&gt;）</li>
+<li>mDNS 传统同网段模式有安全风险（含访客/BYOD 威胁）（X11，&lt;&lt;<PAGE 32>&gt;&gt;）</li>
+<li>干扰 AP 只造成 RF 干扰、不是直接安全威胁，勿与流氓 AP 混淆（X18，&lt;&lt;<PAGE 41>&gt;&gt;）</li>
+<li>流氓 AP 遏制默认关闭，开启后检测 AP 才发 DEAUTH（X19，&lt;&lt;<PAGE 42>&gt;&gt;）</li>
+<li>传统资产盘点靠用户反馈与猜测，易少买/多买——BLE 资产追踪替代（X20，&lt;&lt;<PAGE 34>&gt;&gt;）</li>
+</ul>
+<p>来源：ALE Mobile Campus Architecture Guide（sol-campus-architecture DOC1，p33-42）</p><div class="pn"><a href="sol-campus-lan-wlan-design.html">⬅ 上一单元：sol-campus-lan-wlan-design</a><a class="nxt" href="sol-campus-hybrid-pol.html">下一单元：sol-campus-hybrid-pol ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

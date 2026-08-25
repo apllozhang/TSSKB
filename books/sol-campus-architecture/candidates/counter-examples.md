@@ -1,0 +1,24 @@
+# counter-examples — sol-campus-architecture（X1…，英文原句）
+
+- **X1 静态 VLAN 指定不可行**："static VLAN assignment of User VLANs is impractical and not recommended" <<<PAGE 8>>>
+- **X2 全量建 VLAN 拖垮扩展性与稳定性**："Creating and tagging all possible VLANs is not recommended because this unnecessarily creates large L2 broadcast and STP domains which can lead to network scalability and stability problems" <<<PAGE 9>>>
+- **X3 端口只能属于一个 untagged VLAN**："A port can only be assigned to one untagged VLAN… but it can be assigned to as many 802.1Q-tagged VLANs as necessary" <<<PAGE 9>>>
+- **X4 集中控制器架构的三宗罪**："centralized controller-based architectures, which inherently suffer from various limitations such as single points of failure, traffic bottlenecks, and increased latency" <<<PAGE 15>>>
+- **X5 集中控制器的持续成本**："the distributed control plane reduces both capital expenditures (CapEx) and operational expenditures (OpEx). The absence of a centralized controller eliminates the substantial initial costs… and the ongoing expenses related to its maintenance, power consumption, and cooling" <<<PAGE 16>>>
+- **X6 单 AP 失败时邻 AP 自动补位（反衬集中式）**："if one AP fails, the neighboring APs can dynamically adjust their settings, such as increasing transmit power, to maintain seamless coverage" <<<PAGE 15>>>
+- **X7 OmniVista 不逐台管 AP**："OmniVista does not manage individual APs"，必须经 AP 组管理 <<<PAGE 18>>>
+- **X8 单 VLAN 按 AP 组分组的失败场景**："it becomes problematic in situations where large numbers of users congregate in a specific location, such as conference hall or large meetings room" <<<PAGE 28>>>
+- **X9 2.4GHz 不适合语音**："utilizing the 5GHz frequency band is highly recommended due to its robust performance and lower interference compared to the 2.4GHz band" <<<PAGE 32>>>
+- **X10 语音客户端超量掉质量**："limiting voice clients to 20-25 per Access Point (AP) ensures sufficient bandwidth and a stable 36 Mbps throughput" <<<PAGE 32>>>
+- **X11 mDNS 传统模式的同网段安全风险**："traditionally, both the source and destination must be on the same SSID, posing a security risk. This setup often involves guest or BYOD devices, which may introduce threats to the network" <<<PAGE 32>>>
+- **X12 组播低速率的效率问题**："Since multicast traffic is transmitted at lower broadcast rates, transforming multicast streams into unicast traffic can improve transmission efficiency" <<<PAGE 29>>>
+- **X13 网桥模式 AP 不再服务客户端**："the access points forego the provision of regular WLAN services for client association" <<<PAGE 30>>>
+- **X14 L3 HA 功能缺失**："Certain features, such as sFlow, policy enforcement, and specific device management functions, are not fully supported in a Layer 3 HA setup" <<<PAGE 36>>>
+- **X15 L3 HA 冗余设置不能走界面**："redundancy settings such as setting a Preferred Node must be made through the CLI admin menu" <<<PAGE 36>>>
+- **X16 安全不应绑定物理端口**："Rather than being tied to a specific switch port, security settings at the network edge are applied dynamically to each user or device based on predefined 'roles'" <<<PAGE 37>>>
+- **X17 未注册设备不得入网**："it is issued the necessary certificates… ensuring that only registered devices are permitted to join the network"（onboarding 按序列号白名单）<<<PAGE 36>>>
+- **X18 干扰 AP 不是直接安全威胁**："An interfering AP is visible within the wireless environment but is not connected to the wired network. While it may cause RF interference, it is not considered a direct security threat" <<<PAGE 41>>>
+- **X19 流氓 AP 遏制默认关闭**："If an AP is classified as rogue, and containment is enabled (default is disabled), the detecting AP will send DEAUTH frames" <<<PAGE 42>>>
+- **X20 传统资产盘点靠猜**："enterprises have had to rely on indirect methods such as feedback from users or speculative assessments… can lead to either under-procurement or over-procurement" <<<PAGE 34>>>
+- **X21 Hybrid POL 并非处处适用，定位大园区**："ALE HPOL is the ideal solution for enterprises and organizations with large premises… over long distances, for medium to high user density" <<<PAGE 46>>>
+- **X22 纯 ONT 架构能力受限**："Redundancy at all network layers is not required / Basic network features / Unified access is not required / Only PoE/PoE+ / Low IP port density"（对比 SFP ONT 架构）<<<PAGE 46>>>

@@ -1,0 +1,44 @@
+# principles — sol-evpn-architecture（候选原则池，页码为真实 `<<<PAGE N>>>` 标记）
+
+- **P1 用控制平面主动学习取代数据面洪泛学习**：endpoint reachability 通过 MP-BGP NLRI 智能通告，而非 flood-and-learn。"endpoint reachability information is advertised intelligently through the control plane within MP-BGP Network Layer Reachability Information (NLRI) updates." <<<PAGE 7>>>
+- **P2 路由式底层（routed underlay）消灭 STP 问题**："The routed architecture eliminates STP issues." spine-leaf 全路由架构保证等价路径。<<<PAGE 8>>>
+- **P3 单一控制平面同时承载 L2/L3 服务**："a single control plane protocol that supports Layer 2 and Layer 3 VPN services and allows for seamless integration." <<<PAGE 9>>>
+- **P4 多租户隔离靠 VRF + VNI + RD/RT 四件套**："delivery of multi-tenant services across a shared infrastructure using Virtual routing and forwarding (VRF) instances, VNIs, Route Distinguishers (RDs), and Route Targets (RTs) for segmentation and control." <<<PAGE 9>>>
+- **P5 控制平面学到的 MAC 不做老化**："MAC address table aging will be disabled for all MAC address learnt from the EVPN control plane." 以对端撤路为生命周期。<<<PAGE 13>>>
+- **P6 ARP 抑制默认开启以减少 BUM**："Proxy ARP should always be kept enabled for performance." <<<PAGE 21>>>
+- **P7 MAC mobility用序列号决胜**："the PEs retain the R-T2 with the highest sequence number." <<<PAGE 22>>>
+- **P8 默认网关分布式化，流量不过 fabric**："it allows the default gateway to be fully distributed across all PEs in the EVPN fabric. Inter-subnet traffic for VMs connected in same PE does not need to cross the fabric." <<<PAGE 22>>>
+- **P9 对称 IRB 优先于非对称 IRB**："The Symmetric IRB model is simpler for configuration and deployment and offers better scalability than the Asymmetric IRB model and therefore is the prevalent and recommended configuration." <<<PAGE 24>>>
+- **P10 对称 IRB 下每 PE 只维护本地 ARP/MAC-VRF**："each PE participating in symmetric IRB only maintains ARP entries for locally connected hosts and MAC-VRFs for only locally configured subnets." <<<PAGE 25>>>
+- **P11 每个 VRF 一个 L3EVI(SBD) 提供跨 EVI 可达**："only one L3EVI is required per VRF which will provide the inter-EVI reachability for all the IRB services in the VRF." <<<PAGE 25>>>
+- **P12 主机路由用 R-T2、前缀路由用 R-T5**："Host routes (/32) are usually advertised using R-T2, while prefix routes are advertised using R-T5." <<<PAGE 15>>>
+- **P13 LAG 是多归属防环/防重复包的前提**："LAG is required to be configured between the PE switches and the multi-homed CE device. This is to avoid receiving duplicate packets and for loop prevention." <<<PAGE 32>>>
+- **P14 DF 选举防止 BUM 重复洪泛**："elect a Designated Forwarder (DF) for the ES. This is required for loop prevention and to prevent duplicate traffic." <<<PAGE 32>>>
+- **P15 Service carving 按 EVI 分散 DF 负载**："It is also possible to elect multiple DFs per ES (one per VLAN) in order to perform load balancing of BUM traffic." DF = EVI mod N。<<<PAGE 33>>>
+- **P16 Split horizon 原则：信息永不原路返回**："Information about the routing for a particular packet is never sent back in the direction from which it was received." <<<PAGE 34>>>
+- **P17 VXLAN 下 split horizon 靠源 IP 列表而非 ESI label**："EVPN-VXLAN does not include the ESI label... The procedure used for split horizon is for each PE to track and maintain a list of peer PE IP address which are part of the same ES." <<<PAGE 34>>>
+- **P18 Local bias：本 PE 的 BUM 只从本地 ES 出**："the forwarding to this ES from other access ports of the PE should always use the local access attachment." <<<PAGE 34>>>
+- **P19 Aliasing 让远端按流负载分担到全活 ES**："The aliasing feature allows the remote PEs to perform per-flow load balancing of traffic to an all-active multi-homed ES." <<<PAGE 34>>>
+- **P20 Mass withdraw：一条 ESI 撤路批量刷新 MAC**："a mass withdraw of the MAC addresses based on a single ESI update message." <<<PAGE 36>>>
+- **P21 静默主机静态绑 MAC + sticky 位防误迁移**："statically binding the MAC address to the SAP port... advertised by BGP-EVPN with a sticky bit." <<<PAGE 40>>>
+- **P22 自动生成 RD/RT 降低配置面**："Supports the auto-generation of the RD and RT for various EVPN R-T messages." <<<PAGE 40>>>
+- **P23 优先用增强 VLAN-bundle 模型，互操作时回退 VLAN-based**："It is recommended to always use the enhanced VLAN-bundle service model for optimal performance, and to fall back to VLAN-based service model when required for inter-operability purposes." <<<PAGE 42>>>
+- **P24 每 EVI 一条 R-T3 以减少路由数**："In case of ALE model, only one R-T3 is generated for an EVI, which is applicable to all ETags (hence ETAG = 0). This reduces the number of R-T3 routes in the network." <<<PAGE 41>>>
+- **P25 速率与可用性权衡：SMET by all PEs 用带宽换丢包**："The disadvantage with this approach is that there will be traffic duplication in the core, wasting the bandwidth. So, this feature is recommended for customer scenarios in which the traffic loss is a concern." <<<PAGE 43-44>>>
+- **P26 底层选 OSPF underlay + iBGP overlay**："The recommended topology to be used is an OSPF underlay with iBGP overlay." <<<PAGE 45>>>
+- **P27 单区域 OSPF + p2p 网络类型 + BFD 提速收敛**："Use a single-area OSPF configuration to limit the SPF flooding domain." / "point-to-point OSPF network type... eliminates DR election wait times." / "BFD for millisecond fast-convergence." <<<PAGE 45-46>>>
+- **P28 SPF delay/hold 调 0 立即算路**："Set OSPF SPF delay and hold timers to 0 to trigger SPF calculation immediately." <<<PAGE 50>>>
+- **P29 冗余 RR 用相同 cluster-id 省内存**："Use the same cluster ID in the spines as it will save on memory usage and resources." <<<PAGE 46>>>
+- **P30 RR 场景开 TTL Security max-hop 0**："it is recommended to enable TTL Security feature and set the max-hops to 0... will bring the BGP neighbor down when direct connection goes down." <<<PAGE 46>>>
+- **P31 VXLAN MTU 由底层承担封装开销**："MTU should be considered in your underlay to allow for overhead of the VXLAN header. This is automatically adjusted in AOS." <<<PAGE 46>>>
+- **P32 EVPN-VXLAN 只跑在一个 underlay VRF（默认 VRF）**："The EVPN-VXLAN is operational in only one underlay VRF which is usually the default VRF, with the overlay configured in a non-default VRF." <<<PAGE 46>>>
+- **P33 外部连通必须走对称 IRB + Fabric-VPN**："it is mandatory to configure a Fabric-VPN for the PE(s) that needs reachability to the prefix-route." <<<PAGE 46>>>
+- **P34 Border leaf 对外只重分发聚合路由，不泄漏主机路由**："there is a need to summarize the host routes under the subnet of their IRB interface... The border leaf will advertise all the host routes to the external network leading to excessive load." <<<PAGE 48>>>
+- **P35 双 border leaf 防 OSPF 路由回声：调 import 路由优先级**："the import routes should have to be configured to have a higher route-preference than the OSPF routes (lower value than OSPF)." <<<PAGE 48>>>
+- **P36 复制检测靠 N 次/M 秒阈值 + hold-down**："Duplicate IP detection monitors N 'IP-moves' within M-second timer. If there are N moves within M time interval, then the host is moved to 'filtering state' (F state)." <<<PAGE 39>>>
+- **P37 确认旧主先于激活新主**："To detect the duplicate IP faster, the PE will send a Confirm message to the former owner of the IP." <<<PAGE 39>>>
+- **P38 IP+MAC 同迁（VM motion）不算 DAD**："In case of VM mobility where the Host (IP+MAC) is moved from one ESI to another ESI, this is not considered as DAD." <<<PAGE 40>>>
+- **P39 多归属场景 R-T7/R-T8 同步 IGMP 状态防丢**：无同步时 "All-active: There is no guarantee that IGMP Join and Leave packets will be sent to the DF for that ES"。<<<PAGE 36>>>
+- **P40 源发现选 R-T10 而非 (*,*) 默认路由省带宽**："this approach makes the inefficient use of EVPN network bandwidth. The other approach is to inherit MVPN source discovery mechanism using R-T10." <<<PAGE 38-39>>>
+- **P41 静态 LAG 必须手工给 ESI**："Static LAG — No [auto]... User will input manual 5-byte ESI." <<<PAGE 41>>>
+- **P42 Anycast MAC 每 VRF 一个、同 VRF 全子网共用**："This anycast MAC must be setup per VRF and the same anycast MAC address is used for all subnet anycast IP interfaces of VRFs." <<<PAGE 28>>>

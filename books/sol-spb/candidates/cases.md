@@ -1,0 +1,30 @@
+# cases — sol-spb（C1…，部署/配置流程）
+
+- **C1 SPB 骨干配置四步**：建 BVLAN（配 ECT-ID）→ 定控制 BVLAN → 定义 SPB IS-IS 接口 → 启用 SPB IS-IS；样例拓扑提供 3 条等价路径，建 4 个 BVLAN（4000–4003，4000 专用于控制）<<<PAGE 16>>>
+- **C2 骨干验证命令族**：`show spb isis interface`（L1 邻接、metric=10、Hello 9s/持失 27s）→ `show spb isis nodes`（system ID=BMAC、source ID、bridge priority）→ `show spb isis adjacency` → `show spb isis bvlans`（ECT 算法、(S,G)/(*,G)）→ `show spb isis unicast-table` → `show spb isis spf bvlan` <<<PAGE 18>>>
+- **C3 L2 服务创建三步**：`service N spb isid X bvlan Y` → 物理口设为 SAP → 定义匹配客户流量的 SAP（如 `sap port 1/1/48:0` 映射 untagged）；只需在相关 BEB 上配置，BCB 免配置 <<<PAGE 20>>>
+- **C4 L2 服务验证**：`show service spb`（BEB 视图/BCB 视图对比）、`show spb isis services`、`show service access`（SAP 类型与 L2Profile）、`show service spb ports`（SAP/SDP）、`show service mesh-sdp spb`、`show mac-learning domain spb`（BCB 不学 CMAC）<<<PAGE 22>>>
+- **C5 VLAN 翻译双级开关**：服务级 `service service_id vlan-translation enable` + SAP 级 `service access port vlan-xlation enable`，用于同一服务下不同封装（服务器 tagged / 客户端 untagged）互通 <<<PAGE 23>>>
+- **C6 L2Profile 控制 SAP 上 L2 协议处理**：`service l2profile name stp action…` 定义 peer/drop/tunnel，默认表见 Table 2（如 STP 在 def-access-profile 为 tunnel、在 unp-def-access-profile 为 drop）<<<PAGE 24>>>
+- **C7 两代 ASIC 的三种路由形态判定**：单次直通（IP 接口直接绑服务）/ 外部物理回环（dummy VLAN + rtr-port + 双口线缆）/ 内部前面板回环（`1/1/51A` 指定为 loopback 口，单逻辑口兼具 VLAN 与 SAP 功能）<<<PAGE 26>>>
+- **C8 外部物理回环配置**：为每个需路由的服务建 dummy VLAN（VLAN 11↔service 1），回环口 1/1/1 作 VLAN 口、1/1/2 作 SAP，IP 接口加 `rtr-port` 选项防止 VLAN 扩散并关 STP <<<PAGE 28>>>
+- **C9 L3 VPN 服务五步**：建 L2 SPB 服务 → 建租户 VRF → 建 LAN/WAN 侧 IP 接口（WAN 直挂服务或挂 dummy VLAN）→ WAN 接口绑定服务 ISID → VRF 与 SPB IS-IS ISID 实例间路由导入/导出 <<<PAGE 31>>>
+- **C10 L3 VPN 验证**：`show` 路由表中远端 LAN 网段为 IMPORT 路由、下一跳指向远端 BEB 的 WAN 地址；ARP 表动态学习远端 WAN 网关 <<<PAGE 33>>>
+- **C11 共享服务路由泄漏五步**（边界 BEB）：shared_services VRF 经 route-map 过滤后导出至全局表 → 全局表导入客户 VRF → 客户路由导入 shared_services VRF → 从 SPB IS-IS 各客户 ISID 导入远端客户路由 → shared_services 路由重分发回各客户 ISID <<<PAGE 35>>>
+- **C12 Auto-Fabric 启动序列**：Auto-VC → Auto-RCD → Auto-LACP → Auto-SPB → Auto-MVRP → Auto-IP；AOS 8.7R1 起 auto-SPB 默认建 BVLAN 4000–4003 映射 ECT 1–4、4000 为控制 BVLAN <<<PAGE 36>>>
+- **C13 Auto-VC 触发条件**：无 vcsetup.cfg 时用 LLDP 在 auto-VFL 口探测同族设备，选举 Master，生成 vcsetup.cfg 后不再触发 <<<PAGE 36>>>
+- **C14 Auto-RCD 取配置**：DHCP（untagged 默认 VLAN 或 VLAN 127，重试 3 次）→ 依 DHCP 选项从 TFTP 取指令文件或联络 OmniVista 2500 → 下载固件与 vcboot.cfg → 重启加载 <<<PAGE 37>>>
+- **C15 Auto-LACP 与第三方互通**：LLDP 识别对端交换机后将同对 LACP 兼容口并入 linkagg；对端即使是第三方手工配了 LACP，"the OmniSwitch detects LACP PDUs and automatically configures its side of the linkagg" <<<PAGE 37>>>
+- **C16 Auto-IP 邻居自动配平**：侦听 OSPFv2/OSPFv3/IS-IS Hello，按收到的 area/Hello/Dead 参数自动生成本地匹配配置建立邻接 <<<PAGE 38>>>
+- **C17 动态 SAP（L2 场景）**：定义 EMPLOYEE/IoT/GUEST/WLAN/CCTV/RESTRICTED 六个 UNP 各绑 ISID；端口 1/1/10–16 用 SAMPLE_FLOW 模板走 802.1x→filter-id、MAC 认证兜底、无匹配落 RESTRICTED（仅最小网络连通供 onboard）<<<PAGE 38>>>
+- **C18 静默设备静态绑定 UNP**：对长时间不发包的设备（如节能模式）在端口静态绑定 UNP，避免绑定丢失导致 WAKE-ON-LAN 不可达 <<<PAGE 39>>>
+- **C19 动态服务编号演算**：VLAN 101、默认参数下 ISID = 10,000,000 + 0 + (101 % 512) = 10,000,101；BVLAN Index = 10,000,101 % 4 = 1 → 映射 BVLAN 4001 <<<PAGE 42>>>
+- **C20 多租户 Domain ID 配置**：为客户 A/B/C 建 Domain 1/2/3，UNI 端口映射到对应 Domain，即使 VLAN 标签重叠也保持隔离 <<<PAGE 43>>>
+- **C21 带内管理配置**：管理 IP 直接建在控制 BVLAN 上；网关节点（BEB-1/2）在 OSPF 与 spb-mgmt 协议间互相重分发并用 route-map 防环 <<<PAGE 44>>>
+- **C22 OAM 配置**：BVLAN 级为所有 BVLAN 与 BEB 配虚 MEP（BCB 可选），MIP 自动创建；`saa auto create` 自动在所有 BEB/BCB/BVLAN 间建时延抖动丢包测试 <<<PAGE 45>>>
+- **C23 L2 trace 排障**：LBM/LBR 做 L2 ping，LTM/LTR 做 L2 trace，输出含各跳 BMAC 与入出接口 <<<PAGE 46>>>
+- **C24 部署指南总体步骤（0–11）**：物理拓扑/LAG → VLANs → LBD → 控制与业务 BVLAN → SPB 服务 → BEB 上 SAP → VRF 分段 → VRRP → VRF-PBR 点对点 → VRRP Tracking → OSPF → 网络策略 <<<PAGE 62>>>
+- **C25 部署指南落地命令链**：`vlan 1000` → `loopback-detection enable` + `loopback-detection service-access linkagg 31 enable` → `spb bvlan 4000-4002 admin-state enable` → 配控制 BVLAN 前先 `spb isis admin-state disable` → `spb isis interface linkagg 16` → `service 1000 spb isid 1000 bvlan 4001 vlan-xlation enable` → `service access linkagg 31 vlan-xlation enable` → `service 1000 sap linkagg 31:1000` → ping 测试 + `show spb isis spf bvlan 4001` 验路径 <<<PAGE 67>>>
+- **C26 AP 直挂 BEB SAP 的 untagged 处理**：AP 管理服务用 `service 2000 sap port 1/1/31:0` 映射 untagged，SSID 流量另建 tagged SAP（`service 1016 sap port 1/1/31:1016`）<<<PAGE 73>>>
+- **C27 VRF+VRRP+OSPF+策略全套**：`vrf create corp` 等五个 VRF → VRF 内 IP 接口挂 service（`vrf corp ip interface "corp-wired" address 10.10.15.3 mask 255.255.255.0 service 1000`）→ VRRP 三命令建虚网关 .1 → PBR 侧 /30 互联 → `ip vrrp track 1 … priority 25` + track-association → 各 VRF 独立 OSPF area、本地网段聚合进 access-list 经 route-map 重分发 → PBR 上 policy condition/rule 拒绝 Guest 到其它 VRF <<<PAGE 74>>>
+- **C28 S-Hook 替代配置（两代 ASIC 混合场景）**：VLAN 域 LAG-125 打 tagged VLAN，服务域 LAG-127 建 `service N sap linkagg 127:N`，实现 VLAN 域与 SPB 域的 S 形挂钩 <<<PAGE 81>>>

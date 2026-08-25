@@ -1,0 +1,98 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>sol-sec-five-layer-framework — 网络基础设施安全 · Tech Brief</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>网络基础设施安全 · Tech Brief</h1>
+<div class="sub">2 份 100 页 · 安全 Tech Brief + 白皮书（五层框架/三平面加固/NLM 生命周期）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">框架与加固</div>
+<a href="../skills/sol-sec-five-layer-framework.html" class="on">sol-sec-five-layer-framework</a>
+<a href="../skills/sol-sec-protocol-hardening.html">sol-sec-protocol-hardening</a>
+<div class="grp">准入与运维</div>
+<a href="../skills/sol-sec-device-access.html">sol-sec-device-access</a>
+<a href="../skills/sol-sec-nlm-lifecycle.html">sol-sec-nlm-lifecycle</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../solutions/index.html">解决方案</a> › <a href="../index.html">网络基础设施安全</a> › <span>sol-sec-five-layer-framework</span></nav><h1>sol-sec-five-layer-framework</h1><p class="meta"><span class="badge">SKILL</span> sol-sec-five-layer-framework · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>制定全网安全加固方案，需要分层分平面的系统化清单</li>
+<li>安全审计：按管理面/控制面/数据面逐面核查 OmniSwitch/Stellar/OmniVista</li>
+<li>对客户讲解 ALE 安全理念（Secure By Design、五层框架、认证资质）</li>
+<li>建立漏洞响应与补丁管理流程</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>安全是过程而非产品（P1，&lt;&lt;<PAGE 5>&gt;&gt;）：不可购买，是组织的持续保护方法。多层纵深防御（P2/P4，&lt;&lt;<PAGE 5>&gt;&gt;）：ALE 五层框架自用户/设备/应用/网络到 IoT 容器隔离逐层设防。三平面加固是全册主结构（F2，&lt;&lt;<PAGE 9-47>&gt;&gt;）：管理面（访问/AAA/证书/SNMP/日志/安全模式）、控制面（路由/发现/网管协议认证）、数据面（MACsec/地址防护/端口安全）。Secure By Design + 默认安全（P6，&lt;&lt;<PAGE 6>&gt;&gt;）：签名镜像、ASLR、默认 DoS 过滤、CC EAL2/NDcPP/FIPS/TAA 认证背书。安全对终端用户透明（P3，&lt;&lt;<PAGE 5>&gt;&gt;）。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<ol>
+<li>ALE 五层集成安全框架（F1/P4，&lt;&lt;<PAGE 5-6>&gt;&gt;）：用户级（画像/AAA）→ 设备级（认证+合规预检）→ 应用级（按应用规则：阻断/限速/身份限定）→ 网络级（智能分析可见性 + DPI 识别异常）→ IoT 级（虚拟容器隔离，单点失陷不扩散，P5）</li>
+<li>三平面安全加固框架（F2，&lt;&lt;<PAGE 9-47>&gt;&gt;）：管理面 → 控制面 → 数据面逐面过清单（详见各专项技能：sol-sec-device-access 管理面、sol-sec-protocol-hardening 控制面+数据面）</li>
+<li>认证与响应基线：及时打补丁（P7）+ 订阅 ALE 安全通告（P8）+ PSIRT/CVE 流程（C2）+ 物理访问边界（P9）+ 人员意识培训（P10）</li>
+</ol>
+<h2 id="a2">A2（操作步骤）</h2>
+<ul>
+<li><strong>供应链完整性</strong>：AOS 镜像 RSA-4096+SHA-256 签名，重载时验签；U-boot ≥8.9.70.R04 仅支持签名镜像（C1，&lt;&lt;<PAGE 6>&gt;&gt;）；升级前 <code>image integrity-check</code> 手工校验（P13，&lt;&lt;<PAGE 9-10>&gt;&gt;）</li>
+<li><strong>漏洞响应</strong>：PSIRT 与 CERT-IST/NVD/US-CERT 协作，报告带唯一 CVE 号，确认后发 Security Advisory（C2/P7/P8，&lt;&lt;<PAGE 7>&gt;&gt;）</li>
+<li><strong>物理层</strong>：关键交换机上锁机房、限制进入；监控 coldStart/warmStart trap 检测设备被重启（P9/P11，&lt;&lt;<PAGE 8>&gt;&gt;）</li>
+<li><strong>合规认证引用</strong>：Common Criteria EAL2/NDcPP、FIPS 140-2、TAA、IV&amp;V 源码测试、ASLR（&lt;&lt;<PAGE 6>&gt;&gt;）</li>
+<li><strong>物理安全依赖网络安全</strong>：看门的摄像头被远程禁用即物理失守（P88，&lt;&lt;<PAGE 99>&gt;&gt;）</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>签名镜像验证供应链完整（RSA-4096/SHA-256，U-boot 8.9.70.R04+）（C1，&lt;&lt;<PAGE 6>&gt;&gt;）</li>
+<li>PSIRT 漏洞响应流程与第三方协作（C2，&lt;&lt;<PAGE 7>&gt;&gt;）</li>
+<li>网络插孔直通防火墙内网（X8，&lt;&lt;<PAGE 8>&gt;&gt;）</li>
+<li>未培训员工无意暴露（X9，&lt;&lt;<PAGE 8>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（反例与坑）</h2>
+<ul>
+<li>公开漏洞即攻击武器，补丁拖延=开门揖盗（X7/P7，&lt;&lt;<PAGE 7>&gt;&gt;）</li>
+<li>物理访问是安全边界：控制台直连可重置管理员口令、U-boot 可改系统参数（X2/X6/P9，&lt;&lt;<PAGE 9-11>&gt;&gt;）</li>
+<li>单层防御不可靠，必须多层层深（P2，&lt;&lt;<PAGE 5>&gt;&gt;）</li>
+<li>入门级交换机不满足 AI 系统需求（P83，&lt;&lt;<PAGE 91>&gt;&gt;）</li>
+<li>网络保险与合规倒逼：视频监控系统须过网络安全标准（P89，&lt;&lt;<PAGE 99>&gt;&gt;）</li>
+</ul>
+<p>来源：Network Security Guidelines（Intro/Secure By Design/Physical Security，p5-10）+ 白皮书（p91、99）</p><div class="pn"><a href="../index.html">⬅ 返回课程首页</a><a class="nxt" href="sol-sec-protocol-hardening.html">下一单元：sol-sec-protocol-hardening ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

@@ -1,0 +1,22 @@
+# counter-examples — sol-wlan-design
+
+- **X1 宽信道带来噪声与 CCI 惩罚**：that implementation introduces the Co-Channel Interference (CCI), plus the introduction of an extra 3dB of noise to the channel, doubling the noise... It equates to a lower SNR... which will in turn force a lower Modulation Coding Scheme (MCS) rate, shrinking the throughput. <<<PAGE 49>>>
+- **X2 关闭背景扫描的代价**：When it's turned OFF, the foreign AP detection and rogue suppression will stop, and the RDA technology will drop its precision. <<<PAGE 49>>>
+- **X3 手工定义信道值引发干扰**：When RDA is disabled there is more risk that the manually defined values will create channel interference for new applications or roaming clients. <<<PAGE 49>>>
+- **X4 覆盖型设计的性能陷阱**：The APs operate at a higher transmit power and therefore cover larger areas.（反面：大功率大蜂窝导致低速率关联与更多干扰） <<<PAGE 51>>>
+- **X5 同信道 AP 堆叠 SSID 的空口开销**：as one increases the number of SSIDs it contributes to the Wi-Fi network overhead based on the added beacons and probe response frames. <<<PAGE 53>>>
+- **X6 过度微调反受其害**：be careful and do not go overboard in trying to fine-tune certain parameters. <<<PAGE 53>>>
+- **X7 Apple 设备对 Band Steering 过敏**：Apple ios devices can have issues with the 'band steering' variable when enabled where it may blacklist the SSID for a few minutes. Caution when enabling for heavy Apple ios device deployments. <<<PAGE 54>>>
+- **X8 混合客户端环境开 Force 5G 会拒联**：This functionality is recommended stay disabled for environments where the client population has a mixture of 2.4GHz and 5GHz clients. When enabled it will reject all association requests from 2.4Ghz clients. <<<PAGE 54>>>
+- **X9 -80dBm 下发包不可靠**：-80 dBm — Minimum signal strength for device connectivity. Packet delivery is unreliable. <<<PAGE 54>>>
+- **X10 粘滞客户端现象**：The sticky-client issue happens when Wi-Fi clients attempt to roam; those clients tend to hang on to the original access point they associated with, rather than moving to a nearby AP that has better signal strength. <<<PAGE 57>>>
+- **X11 每次漫游都做完整 802.1X 重认证抵消移动性**：If re-authentication happened every time a client roamed it would defeat the purpose for device mobility. <<<PAGE 57>>>
+- **X12 负载均衡解决不了粘滞客户端**：none of that functionality solves the problem of sticky clients or guarantees that the Wi-Fi network is providing optimal performance to all its connected clients. <<<PAGE 58>>>
+- **X13 802.11k/v 依赖客户端支持**：keep in mind the lowest common denominator is that the client needs to support those standard amendments to force the roaming gracefully. <<<PAGE 58>>>
+- **X14 AP 不代理免费 ARP**：The APs do not act as ARP proxy for gratuitous ARP packets. <<<PAGE 60>>>
+- **X15 iPhone/Chromebook 与 DFS 动态信道不兼容**：These problems may cause iPhones and Chomebooks to have issues when roaming, sticky-client, and randomness poor performance. <<<PAGE 60>>>
+- **X16 高密场馆禁用低性能 AP**：The use of low-performance Wi-Fi 6 APs is not recommended for stadiums with more than 5,000 seats. <<<PAGE 13>>>
+- **X17 座椅下 AP 易遭人为破坏**：APs must be protected from intentional destruction when installed in this manner. <<<PAGE 16>>>
+- **X18 手工功率超型号能力时设置失效**：If manually configured, and when the setting value exceeds the capability of the model, the AP will work with a maximum transmitting power rather than the setting value. <<<PAGE 67>>>
+- **X19 关闭 High Efficiency 使 11ax 降级**：when disabled, HE 802.11ax capable APs will downgrade to VHT (Very High Throughput) mode. <<<PAGE 68>>>
+- **X20 扫描间隔过长损 RDA 精度与 wIPS**：Keep in mind that an interval longer than 60 seconds loses RDA accuracy, and it affects the wIPS functionality, it recommended to keep it under 40 seconds. <<<PAGE 56>>>

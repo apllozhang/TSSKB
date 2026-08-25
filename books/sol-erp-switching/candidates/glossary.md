@@ -1,0 +1,32 @@
+# glossary — sol-erp-switching（页码为真实标记）
+
+- **ERP / ERPS (Ethernet Ring [Protection] Switching)**：ITU-T G.8032/Y.1344 定义的以太环保护倒换技术，亚秒收敛、控制面开销低。<<<PAGE 5>>>
+- **G.8032/Y.1344**：ITU-T 环保护建议书；本文基于 2020 版 Corrigendum 1（2022 年 2 月）。<<<PAGE 5>>>
+- **Ethernet ring**：由至少两个环口的环节点连成闭合物理环的集合。<<<PAGE 5>>>
+- **RPL (Ring Protection Link)**：环上平时被阻塞以防环的那条链路；故障时解阻保连通。<<<PAGE 5>>>
+- **RPL Owner Node**：RPL 一端负责阻塞/解阻的节点；正常态发 (NR, RB)。<<<PAGE 5>>>
+- **RPL Neighbour Node**：可选，负责阻塞 RPL 另一端的节点。<<<PAGE 5>>>
+- **R-APS (Ring Automatic Protection Switching)**：协调所有环节点保护动作的协议；走专用 R-APS channel VLAN。<<<PAGE 5-7>>>
+- **R-APS 消息码 (NR/RB/SF/DNF)**：No Request（无请求）、RPL Blocked（RPL 阻塞）、Signal Failure（信号故障）、Do Not Flush（免 flush 标志）。<<<PAGE 7-11>>>
+- **Idle state**：正常态下所有环节点所处状态，仅 RPL Owner 周期发 (NR, RB)。<<<PAGE 7>>>
+- **Hold-off timer**：故障检测后的等待定时器（0-10 秒可配），过滤间歇性链路故障。<<<PAGE 8>>>
+- **FDB (Forwarding Database) flush**：保护切换时清空转发表以强制重新学习；环单链故障时全环节点各 flush 两次。<<<PAGE 8-9>>>
+- **(Node ID, Blocked Port ID) 去重**：环节点用该二元组识别已知 SF 消息、避免重复 flush。<<<PAGE 9>>>
+- **DNF (Do Not Flush)**：RPL 自身故障时 SF 消息携带的标志，通知全环无需 flush（拓扑未变）。<<<PAGE 11>>>
+- **Guard timer**：链路恢复后两端忽略新 R-APS 消息的时段，防过期消息成环。<<<PAGE 11>>>
+- **R-APS NR**：No Request 消息，故障消除后由恢复链路两端发送。<<<PAGE 11>>>
+- **低/高优先级 ID 解阻规则**：guard 过后，ID 较低一端解阻、较高一端继续阻塞，形成单端阻塞。<<<PAGE 11>>>
+- **WTR (Wait-to-Restore) timer**：RPL Owner 收 NR 后启动的回切等待定时器，须长于 guard timer。<<<PAGE 11>>>
+- **R-APS (NR, RB)**：RPL Owner 回切时通告"无请求且 RPL 已阻塞"，触发全网 unblock 与一次性 flush。<<<PAGE 11>>>
+- **Revertive mode**：故障修复后经 WTR 自动回切到 RPL 阻塞态的模式。<<<PAGE 11-12>>>
+- **Non-revertive mode**：修复后不自动回切，等管理员在 RPL Owner 上执行 clear。<<<PAGE 12>>>
+- **Major ring / Sub-ring**：多环结构中的主环与子环；子环自身不闭合，与互联节点间链路共同成环。<<<PAGE 6>>>
+- **Interconnection node**：同时接入 major ring（双环口）与一个或多个 sub-ring（单口）的互联节点。<<<PAGE 6>>>
+- **R-APS Virtual Channel**：子环实例经互联节点共享链路传 R-APS 消息所用的（虚拟）通道 VLAN；多子环用不同 VLAN 区分。<<<PAGE 14>>>
+- **DHL (Dual Home Link)**：单节点双归接入环网的技术，按 VLAN 修改转发状态防环；不适用多节点接入层。<<<PAGE 13>>>
+- **50ms 保护切换**：ERP 收敛指标，仅在无拥塞、全 idle、节点<16、光纤<1200km 四条件下成立；非端到端收敛。<<<PAGE 14-15>>>
+- **VC (Virtual Chassis)**：多物理节点虚拟成单逻辑节点；与 ERP 组合可加弹性但增加收敛时间。<<<PAGE 15>>>
+- **FRR (Fast Reroute)**：MPLS 中预装备份下一跳的快速保护；同样不保证端到端 50ms。<<<PAGE 15>>>
+- **NNI / UNI**：网络间接口（可配为 ERP 环口保护 SVLAN）/ 用户网络接口（不可作 ERP 环口）。<<<PAGE 16>>>
+- **VLAN stacking / 802.1ad**：ALE ERP 支持在 802.1ad 网络上运行，用 VLAN 堆栈保护 Service VLAN。<<<PAGE 16>>>
+- **Access Guarding**：ALE 面向用户/设备/IoT 高级安全接入框架，与 ERP 叠加增强关键业务网络。<<<PAGE 5>>>

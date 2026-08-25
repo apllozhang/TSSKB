@@ -1,0 +1,97 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>sol-evpn-multi-homing — EVPN 架构指南</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>EVPN 架构指南</h1>
+<div class="sub">1 份 73 页 · BGP EVPN（Route Types/多归属五机制/IRB/OISM 组播）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">控制面</div>
+<a href="../skills/sol-evpn-control-plane.html">sol-evpn-control-plane</a>
+<div class="grp">数据面</div>
+<a href="../skills/sol-evpn-multi-homing.html" class="on">sol-evpn-multi-homing</a>
+<a href="../skills/sol-evpn-irb-multicast.html">sol-evpn-irb-multicast</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../solutions/index.html">解决方案</a> › <a href="../index.html">EVPN 架构指南</a> › <span>sol-evpn-multi-homing</span></nav><h1>sol-evpn-multi-homing</h1><p class="meta"><span class="badge">SKILL</span> sol-evpn-multi-homing · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>CE 双归/多归 PE 接入设计：选 single-active 还是 all-active</li>
+<li>规划 ESI：LACP LAG 自动生成 vs 静态 LAG 手工 5 字节</li>
+<li>排查多归属 BUM 重复包/环路/黑洞</li>
+<li>DF 选举与 failover 行为分析（含组播状态同步）</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>Multi-homing 框架（F4，&lt;&lt;<PAGE 32>&gt;&gt;）：模式（SH/SA/AA）→ LACP vs 静态 LAG（决定 ESI 自动/手工）→ DF 选举（service carving：DF=EVI mod N，&lt;&lt;<PAGE 33>&gt;&gt;）→ 防环三件套（split horizon/local bias/ES pruning）→ 流量优化（aliasing/backup path/mass withdraw）。LAG 是多归属防重复包与防环的前提（P13，&lt;&lt;<PAGE 32>&gt;&gt;）；DF 防止 BUM 从 fabric 到 CE 重复洪泛（P14，&lt;&lt;<PAGE 32>&gt;&gt;）。VXLAN 下 split horizon 靠维护同 ES 对端 PE IP 列表而非 ESI label（P17，&lt;&lt;<PAGE 34>&gt;&gt;）。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<ol>
+<li>模式选型：全活（aliasing 按流负载分担，P19，&lt;&lt;<PAGE 34>&gt;&gt;）或单活（Primary/Backup PE 列表主撤路无缝切换，&lt;&lt;<PAGE 35-36>&gt;&gt;）；R-T1A ESI Label 扩展社区 flags=1 表 single-active、0 表 all-active（C5，&lt;&lt;<PAGE 32-33>&gt;&gt;）</li>
+<li>ESI 配置分档（P41，&lt;&lt;<PAGE 41>&gt;&gt;）：物理口 auto（0x3+Port_MAC+0xFFFFFF）；LACP LAG auto（0x3+CE_MAC+0xFF+AggID）；静态 LAG 必须手工 5 字节</li>
+<li>防环规则落地：split horizon——路由信息永不原路返回（P16，&lt;&lt;<PAGE 34>&gt;&gt;）；local bias——发往本 PE 上全活 ES 的流量总走本地接入（P18，&lt;&lt;<PAGE 34>&gt;&gt;）</li>
+<li>组播状态保障：多归属场景 R-T7/R-T8 同步 IGMP Join/Leave 防 DF 切换丢状态（P39，&lt;&lt;<PAGE 36>&gt;&gt;）</li>
+</ol>
+<h2 id="a2">A2（操作步骤）</h2>
+<ul>
+<li><strong>静态 LAG ESI 手工配置</strong>（C15，&lt;&lt;<PAGE 64>&gt;&gt;）：<code>service access linkagg 20 vlan-xlation enable evpn-ethernet-segment enable esi 01:01:01:02:04</code></li>
+<li><strong>多归属 SAP 一致性检查</strong>（X22，&lt;&lt;<PAGE 66>&gt;&gt;）：确保 SAP 在 MH-ES 所有 peer 节点配置一致，否则 CE 侧流量哈希到缺配节点即黑洞</li>
+<li><strong>开局验证流程</strong>（C5，&lt;&lt;<PAGE 32-33>&gt;&gt;）：R-T4 发现同 ES PE→DF 选举→R-T1A/1B 通告冗余模式；<code>show service evpn ethernet-segment</code> 核对</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>多归属开局全流程：R-T4 发现→DF 选举→冗余模式通告（C5，&lt;&lt;<PAGE 32-33>&gt;&gt;）</li>
+<li>DF change 丢包场景与 SMET-by-all-PEs 补救：远端 PE 在收到新 PE 的 SMET 路由前持续发旧 PE 致丢包（C6，&lt;&lt;<PAGE 36>&gt;&gt;）</li>
+<li>MAC duplication 场景：同 MAC 两主机/环路致反复通告-撤销拖垮控制面，靠 hold-down+retry-time 解除（C10，&lt;&lt;<PAGE 39>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（反例与坑）</h2>
+<ul>
+<li>无 R-T6/7/8 时多归属 IGMP 状态问题：全活不保证 Join/Leave 到 DF；单活 DF failover 丢 IGMP 状态（X13，&lt;&lt;<PAGE 36>&gt;&gt;）</li>
+<li>DF change 期间组播丢包不可避免，需 SMET 补救（X14，&lt;&lt;<PAGE 36>&gt;&gt;）</li>
+<li>MAC duplication 连续通告/撤销降级全网性能（X15，&lt;&lt;<PAGE 39>&gt;&gt;）</li>
+<li>SAP 配置不一致导致 CE 侧黑洞（X22，&lt;&lt;<PAGE 66>&gt;&gt;）</li>
+<li>8-bit 本地段 ID 限制 ES 上限 256 个（X18，&lt;&lt;<PAGE 43>&gt;&gt;）</li>
+<li>SMET-by-all-PEs 用核心带宽换丢包，仅流量丢失敏感场景推荐（X19/P25，&lt;&lt;<PAGE 43-44>&gt;&gt;）</li>
+<li>Duplicate IP 可能是人为错误或欺骗攻击（X16，&lt;&lt;<PAGE 39>&gt;&gt;）</li>
+</ul>
+<p>来源：EVPN Architecture Guide（p32-44/p64-66）</p><div class="pn"><a href="sol-evpn-control-plane.html">⬅ 上一单元：sol-evpn-control-plane</a><a class="nxt" href="sol-evpn-irb-multicast.html">下一单元：sol-evpn-irb-multicast ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

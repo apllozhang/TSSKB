@@ -1,0 +1,22 @@
+# principles — sol-erp-switching（候选原则池，页码为真实 `<<<PAGE N>>>` 标记）
+
+- **P1 防环靠"任一时刻只阻塞一条环链路"**："Loop avoidance, this principle guarantees that at any time traffic can flow through all but one ring link." <<<PAGE 7>>>
+- **P2 正常态 RPL Owner 阻塞 RPL 并周期通告 (NR, RB)**："All ring nodes are in Idle state with only the RPL node sending R-APS messages, using a dedicated VLAN for it, informing other nodes in the ring that the RPL is blocked (RB) and there is no request (NR)." <<<PAGE 7>>>
+- **P3 故障检测先过 hold-off 再动作**："This detection will initiate their hold-off timer before taking any protection switching action to allow automatic link recovery from intermittent link faults within this period that could be configured between 0 and 10 seconds." <<<PAGE 8>>>
+- **P4 检测节点三连动作：本地阻塞 + FDB flush + 双向发 SF**："Internally block for traffic on the failed ring port / Perform flushing of their FDB / Start sending R-APS messages with Signal Failure (SF) code." <<<PAGE 8>>>
+- **P5 收到首个 SF 即 flush，靠 (Node ID, Blocked Port ID) 去重**："the ring nodes will check the pair (Node ID, Blocked Port ID) within the R-APS SF message and will not respond to the receipt of messages with already known and stored pair of IDs." <<<PAGE 9>>>
+- **P6 RPL Owner 收 SF 解阻 RPL**："On receipt of the first R-APS message with the SF code, the RPL owner will also unblock its end of the RPL." <<<PAGE 9>>>
+- **P7 RPL 自身故障带 DNF 位免全网 flush**："a Do-Not-Flush (DNF) flag is included in the R-APS messages along with the SF condition... there is no need to flush their FDBs as the topology is not changed." <<<PAGE 11>>>
+- **P8 恢复期 guard timer 屏蔽过期 R-APS 防环**："nodes at both ends of the link will start a guard timer during which both nodes will ignore newly received R-APS messages... could create a loop in the network." <<<PAGE 11>>>
+- **P9 恢复后低优先级 ID 端先解阻，形成单端阻塞**："The node with the lower priority ID will unblock its port of the recovered link for traffic while the node with the higher ID will continue to block traffic." <<<PAGE 11>>>
+- **P10 WTR 长于 guard timer，防抖后再回切**："the RPL owner node will start the Wait-to-Restore timer (WTR), which is configured to be longer than the guard timer, allowing the network to stabilise." <<<PAGE 11>>>
+- **P11 回切由 RPL Owner 发 (NR, RB) 触发全网 unblock + 一次性 flush**："Upon receiving R-APS (NR, RB) messages, all ring nodes should unblock any blocked link ports... The FDB flush is only performed upon receiving the first R-APS (NR, RB) message." <<<PAGE 11>>>
+- **P12 非回切模式把控制权交给管理员**："Only upon a 'clear' command initiated by a network administrator on the RPL owner node, non-revertive operation is cleared." <<<PAGE 12>>>
+- **P13 多环三原则**："The R-APS protocol is not shared across Ethernet ring interconnections / On each ring port, each R-APS control protocol and protected VLANs are controlled by only one Ethernet ring / Each major or sub-ring must have its own RPL." <<<PAGE 13>>>
+- **P14 子环跨共享链路必须用 R-APS Virtual Channel**："the ERP2 instance at the interconnection nodes must use the R-APS virtual channel for its R-APS protocol messages." 多子环共用互联链路时用不同 VLAN 区分。<<<PAGE 14>>>
+- **P15 接入层接环推荐 multi-ring，不推荐 STP**："The recommended solution to connect one or more access devices to the core ring network is to use a multi-ring topology which is supported with ERP v2." <<<PAGE 13>>>
+- **P16 ERP 口自动禁 STP，域内分工协作**："When configuring an ERP network by setting up a port as an ERP ring port, the Spanning Tree Protocol would be automatically disabled on that port since the port state would be controlled by the ERP protocol." <<<PAGE 15>>>
+- **P17 50ms 有四个前提条件**："There is no congestion / All nodes are in the idle state / The number of nodes in the ring is less than 16 / The ring fibre length is less than 1200km." <<<PAGE 14>>>
+- **P18 50ms 是保护切换时间，不是端到端收敛**："The 50 ms period for the protection switching mechanism should not be interpreted as an end-to-end convergence time." <<<PAGE 15>>>
+- **P19 ERP 与 VC 组合可提升弹性但代价是收敛变慢**："combining these two technologies in the network may increase its convergence time due to the added complexity of the control plane and the synchronisation of FDBs flushes." <<<PAGE 15>>>
+- **P20 NNI 可作 ERP 口保护 SVLAN，UNI 不可**："The Network-to-Network Interface (NNI) ports can be configured as ERP ports to protect the Service VLANs (SVLANs)... User-to-Network Interface (UNI) ports... cannot be used as ERP ring ports." <<<PAGE 16>>>

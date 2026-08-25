@@ -1,0 +1,22 @@
+# cases — sol-network-security
+
+- **C1 签名镜像验证供应链完整**：Using RSA-4096 and SHA-256, AOS images are signed with a private key allowing AOS to verify the signature with a corresponding public key during reload and flash synchronization. U-boot version 8.9.70.R04 and above supports AOS signed images only. <<<PAGE 6>>>
+- **C2 PSIRT 漏洞响应流程与第三方协作**：ALE PSIRT works with third-party coordination centers such as CERT-IST, NVD and US-CERT to manage vulnerabilities notices. The reports are referred to with a unique Common Vulnerabilities and Exposures (CVE) number. <<<PAGE 7>>>
+- **C3 U-boot 口令丢失导致返厂**：if the flash is corrupted and U-boot fails to start the AOS with the password enabled and the password is forgotten, the switch must be returned to the factory for repair. <<<PAGE 9>>>
+- **C4 secureadmin 特权账户首登强制改密**：The "secureadmin" user must change the default password during first login... with features including: Check integrity of image... Process self-test functions. <<<PAGE 11>>>
+- **C5 管理 VRF 收敛攻击面**：vrf data ssh admin-state disable / vrf data telnet admin-state disable / vrf data webview server disable —— 在数据 VRF 内逐项关闭管理服务。 <<<PAGE 10>>>
+- **C6 SSH PKA 部署七步**：ssh-keygen 生成密钥对→保存私钥→scp 公钥上交换机→建用户→installsshkey→公钥登录→ssh enforce-pubkey-auth。 <<<PAGE 14>>>
+- **C7 IP 锁定与封禁清单**：IP address is permanently blocked/banned if the number of authentication failures from a particular IP reaches the IP lockout threshold... A maximum of 128 IPs will be added to the banned list. <<<PAGE 15>>>
+- **C8 RADIUS 服务器排序回退链**：aaa authentication ssh rad1 ldap2 local —— The switch uses the first available server in the list... If ldap2 then becomes unavailable, the switch will use the local user database. <<<PAGE 16>>>
+- **C9 SNMP over TLS（TSM）映射证书身份**：snmp tsm-map remote-identity manager.crt user NMSuserV3MD5DES —— 用户账户必须映射到 TSM 模式下的远端证书。 <<<PAGE 20>>>
+- **C10 OSPF keychain 轮换三密钥配置**：security key 1/2/3 algorithm sha256 ... start-time/lifetime → security key-chain 1 name "OSPF" → ip ospf interface vlan-101 auth-type key-chain 1。 <<<PAGE 30>>>
+- **C11 LLDP Agent Security 检测 rogue 接入**：when someone tries to take control over the network by connecting non-registered devices to an NNI port, the LLDP Security mechanism is activated... The NNI port that is connected to the rogue device is blocked. <<<PAGE 33>>>
+- **C12 DHCP Snooping + IP Source Filtering 组成 DAI**：dhcp-snooping vlan 140 admin-state enable + dhcp-snooping port 1/1/5 trust (DHCP Server Port) + dhcp-snooping ip-source-filter vlan 140 admin-state enable。 <<<PAGE 39>>>
+- **C13 JITC 模式强制安全细则**：The minimum password length must be 15 characters or more... The SSH sessions will rekey at a minimum every one gigabyte or every 60 minutes... Software upgrades are allowed only after the digital signature of the software component is verified. <<<PAGE 27>>>
+- **C14 wIPS rogue AP 治理组合拳**：AP allowlist（可信外来 AP）+ AP blocklist（ rogue 禁止角色切换）+ Suppress（发 DEAUTH 驱离客户端）+ Dynamic blocklist（ad-hoc 自动拉黑）。 <<<PAGE 63-64>>>
+- **C15 Z-Score 端口利用率异常检测**：Anomaly detection uses Z-Score to check for anomalies in the latest port utilization data gathered from hourly polling over the past 30 days. <<<PAGE 78>>>
+- **C16 Quarantine Manager 与 IPS 联动隔离**：works with an external Intrusion Prevention System (IPS), such as Fortinet... the suspicious device is isolated at its attached switch or AP level, avoiding lateral movements in the intranet. <<<PAGE 83-84>>>
+- **C17 Stellar AP 作为 802.1X 客户端五种上线场景**：UPAM+内置证书 / UPAM+自定义证书 / 外部 RADIUS+内置证书 / 外部 RADIUS+自定义证书 / 用户名（AP MAC）认证。 <<<PAGE 61-62>>>
+- **C18 Lightning Config 五分钟部署**：With Lightning Config, an installer with 50 minutes of training can install a network device within five minutes. <<<PAGE 93>>>
+- **C19 PoE 向导一键诊断**：The PoE wizard verifies every PoE device on a switch and diagnoses and resolves common PoE problems with one click. <<<PAGE 97>>>
+- **C20 Milestone VMS 插件打通视频与网络监控**：information about ALE's managed switches is available through integration with the Milestone XProtect VMS system using a plug-in. <<<PAGE 95>>>

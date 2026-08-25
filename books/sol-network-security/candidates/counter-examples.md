@@ -1,0 +1,29 @@
+# counter-examples — sol-network-security
+
+- **X1 默认口令"switch"风险**：By default, two user management accounts are available at the first bootup of the switch. They are "admin" and "secureadmin" user account, both having the default password of "switch". <<<PAGE 11>>>
+- **X2 控制台直连可重置管理员口令**：With console access to the switch, the malicious actor can easily reset the admin password. <<<PAGE 11>>>
+- **X3 开机全开的服务端口易被 DoS**：When a switch initially boots up, all supported TCP/UDP well-known service ports are enabled (open). Although these ports provide access for essential switch management services... they also are vulnerable to DoS attacks. <<<PAGE 12>>>
+- **X4 Telnet/FTP/TFTP/HTTP/明文 SNMP 为不安全协议**：telnet does not use encryption nor certificates / SNMPv1 does not provide for user authentication nor encryption. <<<PAGE 12>>>
+- **X5 密码认证固有弱点**：password-based authentication presents several security weaknesses, including: predictability, re-use, issues with complexity, sharing and phishing, brute force attacks, and longevity. <<<PAGE 16>>>
+- **X6 U-boot 暴露系统参数**：The U-boot provides access to system parameters, with which boot images and system variables can be manipulated by any user having physical or console access to the switch. <<<PAGE 9>>>
+- **X7 公开漏洞即攻击武器**：Since vulnerabilities are publically disclosed they are also known by malicious attackers who will exploit these vulnerabilities. <<<PAGE 7>>>
+- **X8 网络插孔直通防火墙内网**：Physical access to network jacks allows a malicious actor to enter the network inside the firewall. <<<PAGE 8>>>
+- **X9 未培训员工无意暴露**：without information security awareness training the employees may inadvertently leave network elements vulnerable to misuse. <<<PAGE 8>>>
+- **X10 默认 PKI 模式不校验证书**：No Validation: This is the default mode, in this mode the client applications do not provide certificate and not validate server certificate. <<<PAGE 21>>>
+- **X11 自签证书触发浏览器告警**：When accessing WebView using the default settings, a self-signed certificate will be used which will generate a certificate warning on the web browser. <<<PAGE 23>>>
+- **X12 工厂默认口令策略弱（无大小写要求数）**：Minimum number of English uppercase characters: Factory Default Values — Disable. <<<PAGE 25>>>
+- **X13 工厂默认无用户锁定**：User Lockout Setting / Threshold: Factory Default Values — Disable. <<<PAGE 25>>>
+- **X14 CC 模式下默认 admin 日常使用是反模式**：the default "admin" user must be used only to perform installation and initial configuration of the TOE. The general switch administration or management must be performed by the users with appropriate administrative privileges... but not by the default "admin" user. <<<PAGE 26>>>
+- **X15 无线网络天然开放无边界**：An 802.11 network is open and borderless, making it vulnerable to attack (e.g., rogue APs, unauthorized clients, DoS attacks). <<<PAGE 63>>>
+- **X16 干扰 AP 与 rogue AP 混淆误报**：An interfering AP... is not considered a direct security threat, because it is not connected to the wired network. / A rogue AP is an unauthorized AP plugged into the wired side of the network... <<<PAGE 63>>>
+- **X17 WPA2 字典攻击失效前提**：With SAE, the passphrase is never exposed, making it impossible for an attacker to find the passphrase through brute force dictionary attacks.（反面：WPA2/PSK 可被离线字典攻击） <<<PAGE 68>>>
+- **X18 去认证攻击利用可选 PMF**：providing an additional layer of protection from deauthentication and disassociation attacks.（反面：PMF 可选时代未开启即受此类攻击） <<<PAGE 68>>>
+- **X19 开放 SSID 无加密可被窃听**：OmniAccess Stellar provides enhanced security and privacy for open SSIDs in WLAN networks with support of the new Wi-Fi Enhanced Open security standard based on Opportunistic Wireless Encryption (OWE).（反面：传统开放 SSID 明文传输） <<<PAGE 69>>>
+- **X20 WPA3_AES256 自动回退降级**：Note that when WPA3_AES256 encryption is applied to an AP that does not support it, the encryption will automatically fall back to WPA2_AES. <<<PAGE 68>>>
+- **X21 漫游域默认空口令**：By default, the Roaming Domain is set to "automatic" (password is empty). <<<PAGE 70>>>
+- **X22 客户端隔离不跨 AP 生效**：if isolation between guests is required even if they are associated to different APs, then an ACL (at SSID level) may be configured... <<<PAGE 70>>>
+- **X23 API 凭据硬编码**：don't store them in the code. You can use a third-party application to store and manage tokens, passwords, certificates, and API keys.（反面：把凭据写进代码） <<<PAGE 84>>>
+- **X24 API 暴露公网**：Avoid exposing APIs to the outside world (internet). <<<PAGE 84>>>
+- **X25 "装完就不管"心态**：The concept of "set it and forget it" does not apply. <<<PAGE 95>>>
+- **X26 能力不足的容量规划导致返工**：As network demand grows, systems that lack proper capacity planning can experience slowdowns, data loss, or require costly retrofits. <<<PAGE 91>>>
+- **X27 低质设备拉高长期成本**：If the integrator is responsible for ongoing maintenance costs, it behooves them to use the best equipment... to ensure fewer expensive "truck rolls".（反面：贪便宜设备导致反复上门） <<<PAGE 100>>>

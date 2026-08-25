@@ -413,6 +413,62 @@ NEW_COURSES = [
         ('汇聚', ['bp-os6860-datasheet', 'bp-os6865-datasheet']),
         ('核心', ['bp-os6870-datasheet', 'bp-os6900-datasheet', 'bp-os6920-datasheet', 'bp-os9900-datasheet']),
        ]),
+  dict(id='solutions/spb', book='sol-spb', title='SPB 智能织构 · 架构与部署',
+       subtitle='3 份 86 页 · Tech Brief + 部署指南 + 方案简报（IS-IS SPB/I-SID/VRRP tracking/客户案例）',
+       route=['IS-IS SPB 控制面机制', 'I-SID 二层与 VRF 三层服务', '部署 11 步流程', '卖点与客户案例'],
+       groups=[
+        ('架构与服务', ['sol-spb-architecture', 'sol-spb-l2-l3-services']),
+        ('部署与案例', ['sol-spb-deployment-flow', 'sol-spb-positioning-cases']),
+       ]),
+  dict(id='solutions/campus-architecture', book='sol-campus-architecture', title='园区网络架构 · 设计指南',
+       subtitle='2 份 47 页 · 园区架构指南 + Hybrid POL 彩页（分层设计/AP 发现/漫游/NMS/POL）',
+       route=['园区分层 LAN/WLAN 设计', 'AP 发现与漫游判定', 'NMS 与安全', 'POL 光园区'],
+       groups=[
+        ('设计与运维', ['sol-campus-lan-wlan-design', 'sol-campus-nms-security']),
+        ('POL 方案', ['sol-campus-hybrid-pol']),
+       ]),
+  dict(id='solutions/evpn-architecture', book='sol-evpn-architecture', title='EVPN 架构指南',
+       subtitle='1 份 73 页 · BGP EVPN（Route Types/多归属五机制/IRB/OISM 组播）',
+       route=['BGP EVPN 控制面', '多归属五机制', 'IRB 与组播/外部连通'],
+       groups=[
+        ('控制面', ['sol-evpn-control-plane']),
+        ('数据面', ['sol-evpn-multi-homing', 'sol-evpn-irb-multicast']),
+       ]),
+  dict(id='solutions/mpls-reference', book='sol-mpls-reference', title='MPLS 参考设计指南',
+       subtitle='1 份 45 页 · MPLS/VPLS/VPWS（双标签/LDP/VPLS 信令/QoS/OAM）',
+       route=['双标签与 LDP', 'VPLS/VPWS 业务', 'QoS/OAM 与 AOS 边界'],
+       groups=[
+        ('基础与业务', ['sol-mpls-foundation', 'sol-mpls-vpls-vpws']),
+        ('运维', ['sol-mpls-qos-oam']),
+       ]),
+  dict(id='solutions/erp-switching', book='sol-erp-switching', title='ERP 环网保护 · 应用笔记',
+       subtitle='1 份 17 页 · G.8032（RPL/R-APS/定时器/多环设计）',
+       route=['环网机制与定时器', '多环设计与选型对比'],
+       groups=[
+        ('机制', ['sol-erp-ring-mechanism']),
+        ('设计', ['sol-erp-multi-ring-design']),
+       ]),
+  dict(id='solutions/guest-tunneling', book='sol-guest-tunneling', title='访客流量隧道 GTTS · 应用笔记',
+       subtitle='1 份 19 页 · Guest Traffic Tunnelling（L2 GRE/DMZ/多租户/四种冗余）',
+       route=['GTTS 机制与配置', '部署场景', '四种冗余设计'],
+       groups=[
+        ('机制与配置', ['sol-gtts-architecture-config']),
+        ('场景与冗余', ['sol-gtts-deployment-scenarios', 'sol-gtts-redundancy-designs']),
+       ]),
+  dict(id='solutions/network-security', book='sol-network-security', title='网络基础设施安全 · Tech Brief',
+       subtitle='2 份 100 页 · 安全 Tech Brief + 白皮书（五层框架/三平面加固/NLM 生命周期）',
+       route=['五层框架与三平面', '协议加固与替换', '管理面准入', 'NLM 生命周期'],
+       groups=[
+        ('框架与加固', ['sol-sec-five-layer-framework', 'sol-sec-protocol-hardening']),
+        ('准入与运维', ['sol-sec-device-access', 'sol-sec-nlm-lifecycle']),
+       ]),
+  dict(id='solutions/wlan-design', book='sol-wlan-design', title='Stellar WLAN 设计与调优',
+       subtitle='3 份 75 页 · 高密设计指南 + 微调最佳实践 + 部署服务表',
+       route=['高密设计五步法', 'RF 微调七要点', '三级配置层次'],
+       groups=[
+        ('设计', ['sol-wlan-high-density', 'sol-wlan-fine-tuning']),
+        ('配置', ['sol-wlan-profile-hierarchy']),
+       ]),
 ]
 COURSES = NEW_COURSES  # 旧课程(ov-terra/bootcamp/core)保留 site/ 预构建页面，源 books 未随库分发
 _LEGACY = [
@@ -571,7 +627,7 @@ def build_course(c):
 
     def crumbs(cur='', sub=False):
         cat = c['id'].split('/')[0]
-        cat_label = {'postsales': '售后', 'presales': '售前', 'manuals': 'OV2500 配置手册', 'aos': 'AOS 软件手册', 'hardware': '硬件手册', 'brochures': '产品彩页', 'wlan': '无线网络'}[cat]
+        cat_label = {'postsales': '售后', 'presales': '售前', 'manuals': 'OV2500 配置手册', 'aos': 'AOS 软件手册', 'hardware': '硬件手册', 'brochures': '产品彩页', 'wlan': '无线网络', 'solutions': '解决方案'}[cat]
         p = '../../../' if sub else '../../'
         q = '../' if sub else ''
         bar = f'<nav class="crumbs"><a href="{p}index.html">🏠 培训门户</a> › <a href="{p}{cat}/index.html">{cat_label}</a> › <a href="{q}index.html">{html_mod.escape(c["title"].split(" · ")[0])}</a>'
@@ -668,7 +724,7 @@ def build_category(dirname, label):
         f.write(page)
     print('category built:', dirname)
 
-for dirname, label in [('postsales', '售后 · Postsales'), ('presales', '售前 · Presales'), ('manuals', 'OV2500 配置手册 · Manuals'), ('aos', 'AOS 软件手册 · Software Guides'), ('hardware', '硬件手册 · Hardware Guides'), ('brochures', '产品彩页 · Product Datasheets'), ('wlan', '无线网络 · WLAN')]:
+for dirname, label in [('postsales', '售后 · Postsales'), ('presales', '售前 · Presales'), ('manuals', 'OV2500 配置手册 · Manuals'), ('aos', 'AOS 软件手册 · Software Guides'), ('hardware', '硬件手册 · Hardware Guides'), ('brochures', '产品彩页 · Product Datasheets'), ('wlan', '无线网络 · WLAN'), ('solutions', '解决方案 · Solutions')]:
     build_category(dirname, label)
 
 # ============ 门户封面 ============
@@ -731,6 +787,16 @@ CATALOG = [
         ('ALE 网管与安全 · 官方彩页', '5 份 23 页 · OmniVista 双形态 / 订阅 / Fleet / Milestone / Advisor', 'brochures/nms/index.html'),
         ('OmniAccess Stellar WLAN · 官方数据表', '14 份 128 页 · AP1261-AP1570 全系选型速查', 'brochures/stellar-ap/index.html'),
         ('OmniSwitch · 官方数据表', '15 份 158 页 · OS2260-OS9900 全系选型速查', 'brochures/omniswitch/index.html'),
+    ]),
+    ('解决方案 · Solutions', '#4ade80', [
+        ('SPB 智能织构 · 架构与部署', '3 份 86 页 · IS-IS SPB / I-SID / 部署流程 / 客户案例', 'solutions/spb/index.html'),
+        ('园区网络架构 · 设计指南', '2 份 47 页 · 分层设计 / AP 发现 / 漫游 / POL', 'solutions/campus-architecture/index.html'),
+        ('EVPN 架构指南', '1 份 73 页 · Route Types / 多归属五机制 / IRB / OISM', 'solutions/evpn-architecture/index.html'),
+        ('MPLS 参考设计指南', '1 份 45 页 · 双标签 / LDP / VPLS-VPWS / OAM', 'solutions/mpls-reference/index.html'),
+        ('ERP 环网保护 · 应用笔记', '1 份 17 页 · G.8032 / RPL / 多环设计', 'solutions/erp-switching/index.html'),
+        ('访客流量隧道 GTTS · 应用笔记', '1 份 19 页 · L2 GRE / DMZ / 四种冗余', 'solutions/guest-tunneling/index.html'),
+        ('网络基础设施安全 · Tech Brief', '2 份 100 页 · 五层框架 / 三平面加固 / NLM', 'solutions/network-security/index.html'),
+        ('Stellar WLAN 设计与调优', '3 份 75 页 · 高密五步法 / 微调七要点', 'solutions/wlan-design/index.html'),
     ]),
     ('无线网络 · WLAN', '#a78bfa', [
         ('AWOS 5.0.3 · Stellar AP 用户手册', '128 页 · 4 个知识单元 · 集群开局 / 射频调优 / 安全 / 运维升级', 'wlan/awos-ap-guide/index.html'),

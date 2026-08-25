@@ -1,0 +1,85 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>精华长文 DIGEST — SPB 智能织构 · 架构与部署</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>SPB 智能织构 · 架构与部署</h1>
+<div class="sub">3 份 86 页 · Tech Brief + 部署指南 + 方案简报（IS-IS SPB/I-SID/VRRP tracking/客户案例）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">架构与服务</div>
+<a href="skills/sol-spb-architecture.html">sol-spb-architecture</a>
+<a href="skills/sol-spb-l2-l3-services.html">sol-spb-l2-l3-services</a>
+<div class="grp">部署与案例</div>
+<a href="skills/sol-spb-deployment-flow.html">sol-spb-deployment-flow</a>
+<a href="skills/sol-spb-positioning-cases.html">sol-spb-positioning-cases</a></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../solutions/index.html">解决方案</a> › <a href="index.html">SPB 智能织构</a> › <span>精华长文 DIGEST</span></nav><h1>精华长文 DIGEST</h1><h1 id="digest-spb-sol-spb">DIGEST — SPB 解决方案（sol-spb）精华</h1>
+<p>本书是 ALE SPB（IEEE 802.1aq 最短路径桥接）解决方案三部曲（86 页）：架构技术白皮书（p1-56）+ 部署指南 Ed.2025（p57-82）+ 方案简报（p83-86）。核心主张：用 IS-IS 单协议控制面 + 802.1ah MAC-in-MAC 数据面取代 STP/MPLS 协议栈，全链路可用、100ms 级收敛、16M 服务实例、仅边缘供给。</p>
+<h2 id="_1">一、知识地图（四技能单元）</h2>
+<ol>
+<li><strong>架构机制</strong>（sol-spb-architecture）：双平面（DP/CP）框架、BEB/BCB 分工、BVLAN/ECT 建树、BUM 三模式、RPFC/LBD 防环（p5-18/p48-54）。</li>
+<li><strong>L2/L3 服务</strong>（sol-spb-l2-l3-services）：Service→ISID→BVLAN 三层标识、SAP/VLAN 翻译/L2Profile、两代 ASIC 路由形态、L3 VPN vs VPN Lite、路由泄漏（p20-35）。</li>
+<li><strong>部署流程</strong>（sol-spb-deployment-flow）：11 步落地清单、VRF+VRRP+PBR+OSPF 全套、S-Hook 混合域对接、iFab 自动化与动态服务公式（p36-43/p57-82）。</li>
+<li><strong>定位与案例</strong>（sol-spb-positioning-cases）：四大价值主张、三场景、七行业用例、NDOT/IDC Frontier/UTS 证言（p83-86）。</li>
+</ol>
+<h2 id="_2">二、四单元要点串讲</h2>
+<h3 id="1-spb-stp">1. 架构：为什么 SPB 能取代 STP</h3>
+<p>STP 三宗罪：禁链路费带宽、非根间绕次优路径、秒级收敛且瞬态成环（&lt;&lt;<PAGE 5>&gt;&gt;）。SPB 由 IS-IS 跑 Dijkstra，每节点以自己为根建树，"no network link is disabled, all paths are available"（&lt;&lt;<PAGE 7>&gt;&gt;）。数据面只查 FDB（BVLAN 域 FDB 由控制面预填充，不泛洪学习）；骨干内只按 BMAC 转发，CMAC 只在 BEB 学（&lt;&lt;<PAGE 9>&gt;&gt;）。每节点每 BVLAN 一棵 SPF 树，ECT-ID 打破平局（&lt;&lt;<PAGE 11-12>&gt;&gt;）。BUM 三模式选型（&lt;&lt;<PAGE 16>&gt;&gt;）：head-end 省资源费带宽、tandem (S,G) 默认、tandem (*,G) 共享树不走最短路。防环双机制：预防（ECT 树）+缓解（RPFC 按对称性校验源 BMAC，&lt;&lt;<PAGE 51>&gt;&gt;）。</p>
+<h3 id="2-l2l3">2. 服务：三层标识与 L2/L3 分档</h3>
+<p>Service（本地）→ISID（全局 24 位）→BVLAN（承载）；SAP 是 UNI 侧虚拟端口，SDP 动态生成；服务只在 BEB 配、BCB 零感知（&lt;&lt;<PAGE 13>&gt;&gt;）。L2 服务三步：<code>service N spb isid X bvlan Y</code>+SAP（&lt;&lt;<PAGE 20>&gt;&gt;）。L3 两档：域内 L3 VPN（IS-IS TLV 直传 VRF 路由，单协议）；边界 VPN Lite（叠 OSPF，4 服务×8 BEB=64 个 OSPF 配置的爆炸是其代价，&lt;&lt;<PAGE 34>&gt;&gt;）。共享服务走 VRF 路由泄漏，前提地址不重叠。两代 ASIC：新代单次直通路由，老代需外部/内部回环经 dummy VLAN（&lt;&lt;<PAGE 26>&gt;&gt;）。</p>
+<h3 id="3-11">3. 部署：11 步与自动化</h3>
+<p>参考架构 2×BCB 全网格+N×BEB 双归 LAG+PBR（&lt;&lt;<PAGE 63>&gt;&gt;）。11 步：拓扑/LAG→VLAN→LBD→BVLAN→服务→SAP→VRF→VRRP→/30 连 PBR→VRRP tracking→OSPF→策略（&lt;&lt;<PAGE 62>&gt;&gt;）。VRRP 虚地址统一 .1、末位=BEB 号；上行断优先级 120−25=95 触发切换（&lt;&lt;<PAGE 74>&gt;&gt;/&lt;&lt;<PAGE 78>&gt;&gt;）。混代场景 S-Hook：VLAN 域 LAG 与服务域 LAG 挂接（&lt;&lt;<PAGE 81>&gt;&gt;）。iFab 自动化：Auto-VC/RCD/LACP/SPB/MVRP/IP 六阶段+动态服务（ISID=BSN+Domain ID+VLAN%Modulo，默认 BSN 10,000,000；Modulo 隔离需求从 512 调 4096，&lt;&lt;<PAGE 42-43>&gt;&gt;）。</p>
+<h3 id="4">4. 定位：卖点与案例</h3>
+<p>收敛 2-3s→100ms；对标 MPLS 话术=单协议 vs 协议栈（&lt;&lt;<PAGE 83>&gt;&gt;）。四大价值：可扩展/安全（ZTNA 构件）/简单/可靠（&lt;&lt;<PAGE 84>&gt;&gt;）。三场景：园区 STP 替代、DC any-to-any+私有云、MAN 对标 MPLS。七行业用例（&lt;&lt;<PAGE 85>&gt;&gt;）；NDOT（可扩展+快速上线）、IDC Frontier（扩展性+SLA 弹性）证言（&lt;&lt;<PAGE 86>&gt;&gt;）。</p>
+<h2 id="_3">三、本书在知识库中的位置</h2>
+<p>与 os-lan-spb-impl（配置实现细节）、spb-presales（售前材料）互补：本书是"架构原理+官方部署流程+价值主张"的一手来源。跨书易混点：tandem (S,G) 为默认 BUM 模式（按服务选择），tandem (*,G) 按 BVLAN 选择且不保证最短路；EVPN 书的 ingress replication 对应本书 head-end 复制思路但机制不同（BGP vs IS-IS）。</p>
+<h2 id="_4">来源</h2>
+<p>SPB 三文档（Tech Brief + Deployment Guide Ed.2025 + Solution Brief，共 86 页）。verified.md：C1-C28；
+X1-X30；
+F1-F6；
+P1-P60；
+glossary 约 80 条。注：DOC3（p83-86）内容未入 verified.md，页码取自 fulltext.md 原文标记。</p><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>sol-mpls-qos-oam — MPLS 参考设计指南</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>MPLS 参考设计指南</h1>
+<div class="sub">1 份 45 页 · MPLS/VPLS/VPWS（双标签/LDP/VPLS 信令/QoS/OAM）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">基础与业务</div>
+<a href="../skills/sol-mpls-foundation.html">sol-mpls-foundation</a>
+<a href="../skills/sol-mpls-vpls-vpws.html">sol-mpls-vpls-vpws</a>
+<div class="grp">运维</div>
+<a href="../skills/sol-mpls-qos-oam.html" class="on">sol-mpls-qos-oam</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../solutions/index.html">解决方案</a> › <a href="../index.html">MPLS 参考设计指南</a> › <span>sol-mpls-qos-oam</span></nav><h1>sol-mpls-qos-oam</h1><p class="meta"><span class="badge">SKILL</span> sol-mpls-qos-oam · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>决定客户 DSCP/ToS 是否穿透运营商域（QoS uniform vs pipe）</li>
+<li>解释 VPN 场景 traceroute/ttl 行为差异（L3VPN 减 2、L2VPN 不变）</li>
+<li>排查"控制面正常但丢包"的数据面故障（LSP ping/traceroute）</li>
+<li>核对 AOS 8.9R3/8.10R2 的 QoS/OAM 能力边界</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>只有顶层（传输）标签的 EXP/TTL 被处理（P10，&lt;&lt;<PAGE 18-19>&gt;&gt;）：内层标签原样透传。QoS/TTL 透明性选型框架（F5，&lt;&lt;<PAGE 18-19>&gt;&gt;）：uniform 让客户标记穿透（复制到 EXP、出域回写），pipe 运营商自定 EXP、客户 DSCP 不动。PHP 用 implicit NULL 让倒数第二跳弹传输标签省 eLER 一次查表（P9，&lt;&lt;<PAGE 16>&gt;&gt;），代价是 EXP 随标签一起弹掉（X9）。数据面验证靠 LSP ping/trace（P32，&lt;&lt;<PAGE 23>&gt;&gt;）：IP 可达、控制面看似正常时仍可能有数据面故障。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<ol>
+<li>QoS 模式决策（F5）：客户标记需端到端可见 → uniform；运营商独立 QoS 策略、客户标记不动 → pipe</li>
+<li>TTL 模式决策（F5/C8，&lt;&lt;<PAGE 19>&gt;&gt;）：uniform 复制 IP TTL 逐跳递减（traceroute 可见骨干）；pipe 中 L3VPN 仅 iLER/eLER 各减 1、L2VPN 完全不变</li>
+<li>OAM 排障分层（F4，&lt;&lt;<PAGE 20>&gt;&gt;）：transport 层 <code>show mpls *</code> → service 层 <code>show service *</code> → 数据面 <code>mpls ping/trace</code></li>
+<li>AOS 边界核查（X16，&lt;&lt;<PAGE 13-19>&gt;&gt;）：不支持 QoS over EXP、TTL manipulation、explicit NULL——设计前先按此过滤</li>
+</ol>
+<h2 id="a2">A2（操作步骤）</h2>
+<ul>
+<li><strong>LSP ping</strong>（C9，&lt;&lt;<PAGE 44>&gt;&gt;）：<code>mpls ping ldp 1.1.1.4/32</code>，5 发 5 中，min/avg/max=0.67/1.30/1.94 ms；目的地址取 127/8 防探测包被 IP 转发泄漏出 eLER（P21，&lt;&lt;<PAGE 23>&gt;&gt;）</li>
+<li><strong>LSP traceroute</strong>（C10，&lt;&lt;<PAGE 44>&gt;&gt;）：<code>mpls trace ldp 1.1.1.4/32</code> 逐跳 TTL 递增，末端显示 "0 20.2.1.2 [Labels: implicit-null]" 即 PHP 生效</li>
+<li><strong>协议参数</strong>：RFC 4379，echo request/reply 走标签转发、UDP 3503（&lt;&lt;<PAGE 23-24>&gt;&gt;）</li>
+<li><strong>PHP/QoS 核对</strong>（C6，&lt;&lt;<PAGE 16-17>&gt;&gt;）：implicit NULL 弹标签时 EXP 一并移除；explicit NULL 可保留 EXP 于标签头，但 AOS 当前不支持</li>
+<li><strong>Graceful Restart</strong>（P27，&lt;&lt;<PAGE 19>&gt;&gt;）：RFC 3478 控制面重启期间保留转发状态（NSF），仅计划内接管</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>QoS uniform/pipe 双模式行为对比：uniform 复制 IP precedence 到 EXP，pipe 按运营商策略设定（C7，&lt;&lt;<PAGE 18>&gt;&gt;）</li>
+<li>TTL 双模式：L3VPN 两端各减 1（traceroute 少 N-1 跳）、L2VPN 完全不变（C8，&lt;&lt;<PAGE 19>&gt;&gt;）</li>
+<li>PHP 与 explicit NULL 的 QoS 保留对比（C6，&lt;&lt;<PAGE 16-17>&gt;&gt;）</li>
+<li>LSP ping 5 发 5 中实测与 traceroute 逐跳发现 implicit-null（C9/C10，&lt;&lt;<PAGE 44>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（反例与坑）</h2>
+<ul>
+<li>implicit NULL 弹标签即丢 EXP/QoS 信息；要保留就得用 explicit NULL——AOS 不支持（X9/X16，&lt;&lt;<PAGE 16-17>&gt;&gt;）</li>
+<li>不用 PHP 则 eLER 做两次查表，性能受损（X10/P9，&lt;&lt;<PAGE 16>&gt;&gt;）</li>
+<li>AOS 明确不支持：QoS over EXP、TTL manipulation、explicit NULL（X16，&lt;&lt;<PAGE 17-19>&gt;&gt;）</li>
+<li>Graceful Restart 只保计划内接管；非计划主控故障或链路断仍有流量中断（X12/P27，&lt;&lt;<PAGE 19>&gt;&gt;）</li>
+<li>OAM Alert Label（14）未广泛实现，勿依赖其区分 OAM 与数据包（X11，&lt;&lt;<PAGE 10>&gt;&gt;）</li>
+<li>OAM 探测目的地址必须 127/8，否则 echo 包可能被当普通 IP 包转出 eLER（P21，&lt;&lt;<PAGE 23>&gt;&gt;）</li>
+<li>MPLS 复杂度与性能成正比，能力边界外勿硬上（X15，&lt;&lt;<PAGE 44>&gt;&gt;）</li>
+</ul>
+<p>来源：MPLS Reference Design Guide（Data Plane + Service Model OAM 节，p16-19、p23-24、p44）</p><div class="pn"><a href="sol-mpls-vpls-vpws.html">⬅ 上一单元：sol-mpls-vpls-vpws</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

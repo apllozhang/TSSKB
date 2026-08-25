@@ -1,0 +1,102 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>sol-erp-ring-mechanism — ERP 环网保护 · 应用笔记</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>ERP 环网保护 · 应用笔记</h1>
+<div class="sub">1 份 17 页 · G.8032（RPL/R-APS/定时器/多环设计）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">机制</div>
+<a href="../skills/sol-erp-ring-mechanism.html" class="on">sol-erp-ring-mechanism</a>
+<div class="grp">设计</div>
+<a href="../skills/sol-erp-multi-ring-design.html">sol-erp-multi-ring-design</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../solutions/index.html">解决方案</a> › <a href="../index.html">ERP 环网保护</a> › <span>sol-erp-ring-mechanism</span></nav><h1>sol-erp-ring-mechanism</h1><p class="meta"><span class="badge">SKILL</span> sol-erp-ring-mechanism · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>设计或评审以太环网（ERP/ERPS）保护方案，规划 RPL 与 RPL Owner 位置</li>
+<li>排查环网故障切换/回切异常（反复 flush、过期消息成环、间歇故障抖动）</li>
+<li>解释 50ms 收敛指标的成立条件与误区</li>
+<li>决定 revertive（自动回切）还是 non-revertive（管理员 clear）</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>防环靠"任一时刻只阻塞一条环链路"（P1，&lt;&lt;<PAGE 7>&gt;&gt;）：正常态 RPL Owner 阻塞 RPL 并周期发 (NR, RB)（P2）；故障时解阻 RPL 保连通。故障处理是"检测节点三连动作 + 全环两次 flush"（P4/P5，&lt;&lt;<PAGE 8-9>&gt;&gt;）：本地阻塞、FDB flush、双向发 SF；其余节点收首个 SF 即 flush，靠 (Node ID, Blocked Port ID) 二元组去重防反复 flush。定时器体系各司其职：hold-off 过滤间歇故障、guard 屏蔽过期 R-APS 防环、WTR（须长于 guard）防抖后回切（P3/P8/P10）。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<ol>
+<li>ERP 故障-恢复状态机框架（F3，&lt;&lt;<PAGE 14-15>&gt;&gt;）：故障检测（hold-off 0-10s 可调）→ SF 生成发送 → 环传播（四前提内 ≤50ms）→ 处理与 FDB flush；规划时逐段核对 50ms 四前提（无拥塞/全 idle/节点&lt;16/光纤&lt;1200km，P17）</li>
+<li>恢复模式选型框架（F2，&lt;&lt;<PAGE 12>&gt;&gt;）：能接受回切短暂扰动 → revertive（guard→NR→WTR→(NR,RB) 全网回切）；关键业务求稳 → non-revertive（管理员 clear 或维护窗口，C7）</li>
+</ol>
+<h2 id="a2">A2（操作步骤）</h2>
+<ul>
+<li><strong>单链故障走查</strong>（C2，&lt;&lt;<PAGE 8-10>&gt;&gt;）：hold-off 到期 → 两端节点本地阻塞/flush/双向发 SF → 其余节点各 flush 两次（去重）→ RPL Owner 收首个 SF 解阻 RPL</li>
+<li><strong>RPL 自身故障</strong>（C4/P7，&lt;&lt;<PAGE 11>&gt;&gt;）：流程同上但 SF 带 DNF 位，全环不 flush（拓扑未变）</li>
+<li><strong>恢复流程</strong>（C5/P8-P11，&lt;&lt;<PAGE 11-12>&gt;&gt;）：链路恢复两端起 guard → 发 NR → 低优先级 ID 端先解阻成单端阻塞 → RPL Owner 起 WTR → 到期重阻 RPL + flush + 发 (NR, RB) → 全网 unblock + 一次性 flush</li>
+<li><strong>WTR 期间收到新 SF 即中止回切</strong>（C6，&lt;&lt;<PAGE 11>&gt;&gt;）</li>
+<li><strong>non-revertive 运维</strong>（C12/P12，&lt;&lt;<PAGE 12>&gt;&gt;）：修复后不回切，管理员在 RPL Owner 上执行 clear</li>
+<li><strong>FDB 重建认知</strong>（C3，&lt;&lt;<PAGE 10>&gt;&gt;）：flush 后初期泛洪，双向通信建立后重新学习</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li>正常态 A/B 用户通信路径与各节点 FDB 快照（C1，&lt;&lt;<PAGE 8>&gt;&gt;）</li>
+<li>节点 1-2 间断链全流程状态走查（C2，&lt;&lt;<PAGE 8-10>&gt;&gt;）</li>
+<li>故障后 FDB 重建：先泛洪后学习（C3，&lt;&lt;<PAGE 10>&gt;&gt;）</li>
+<li>RPL 自身故障 DNF 例外场景（C4，&lt;&lt;<PAGE 11>&gt;&gt;）</li>
+<li>回切恢复全流程与 WTR 被新 SF 打断（C5/C6，&lt;&lt;<PAGE 11-12>&gt;&gt;）</li>
+<li>收敛时间预算四项分解（C10，&lt;&lt;<PAGE 15>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（反例与坑）</h2>
+<ul>
+<li>闭合环不阻塞 RPL 必广播风暴（X1，&lt;&lt;<PAGE 5>&gt;&gt;）</li>
+<li>间歇性链路故障误触发保护切换——hold-off 存在的理由（X2/P3，&lt;&lt;<PAGE 8>&gt;&gt;）</li>
+<li>重复 R-APS SF 导致反复 flush，靠 (Node ID, Blocked Port ID) 去重（X3/P5，&lt;&lt;<PAGE 9>&gt;&gt;）</li>
+<li>RPL 故障时无谓 flush 拖慢收敛——DNF 位解决（X4/P7，&lt;&lt;<PAGE 11-12>&gt;&gt;）</li>
+<li>过期 R-APS 消息可能造成环路——guard timer 屏蔽（X5/P8，&lt;&lt;<PAGE 11>&gt;&gt;）</li>
+<li>WTR 期间间歇故障反复回切——WTR 须长于 guard（X6/P10，&lt;&lt;<PAGE 11>&gt;&gt;）</li>
+<li>自动收敛造成非预期业务中断——非回切模式动因（X7，&lt;&lt;<PAGE 12>&gt;&gt;）</li>
+<li>50ms 不是端到端收敛：叠加 VRRP/接入-核心 L2 防环协议会显著加长（X12/P18，&lt;&lt;<PAGE 15>&gt;&gt;）</li>
+<li>超规格环（&gt;16 节点或 &gt;1200km 或拥塞）保不住 50ms（X11/P17，&lt;&lt;<PAGE 14>&gt;&gt;）</li>
+</ul>
+<p>来源：Ethernet Ring Protection Switching Application Note（Basic concept + Principle of operation + Convergence，p5-12、p14-15）</p><div class="pn"><a href="../index.html">⬅ 返回课程首页</a><a class="nxt" href="sol-erp-multi-ring-design.html">下一单元：sol-erp-multi-ring-design ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

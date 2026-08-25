@@ -1,0 +1,437 @@
+{
+ "cases": [
+  {
+   "h": 0.95,
+   "ok": true,
+   "head": "- **C1 正常态 A/B 用户通信与各节点 FDB 快照**：\"communication between users A and B "
+  },
+  {
+   "h": 0.6,
+   "ok": true,
+   "head": "- **C2 单链故障全流程状态走查（节点 1-2 间断链）**：hold-off → 两端节点本地阻塞/flush/双向发 SF → 其余"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C3 故障后 FDB 重建过程**：\"Due to the FDB flushing, initial communication "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C4 RPL 自身故障例外场景（DNF 位）**：\"the process remains the same for the nod"
+  },
+  {
+   "h": 0.94,
+   "ok": true,
+   "head": "- **C5 回切恢复全流程（guard→NR→单端阻塞→WTR→NR,RB→全网 unblock+flush）**：\"When this "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C6 WTR 期间新 SF 打断回切**：\"the above-mentioned process may be stopped i"
+  },
+  {
+   "h": 0.91,
+   "ok": true,
+   "head": "- **C7 非回切模式运维场景**：\"scheduled maintenance windows are preferred. In th"
+  },
+  {
+   "h": 0.88,
+   "ok": true,
+   "head": "- **C8 多环设计实例（major + sub-ring，双 ERP 实例）**：\"the network in Figure 11 i"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C9 R-APS Virtual Channel 实例**：\"When there are multiple sub-rings u"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C10 收敛时间预算分解案例**：检测 + SF 生成发送 + 环传播 + 处理与 flush 四项合成。<<<PAGE 15>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C11 VC+LACP 弹性部署案例**：\"By deploying ring links consisting of multip"
+  },
+  {
+   "h": 0.93,
+   "ok": true,
+   "head": "- **C12 ERP+STP 分域协作与失效场景**：\"if network node 2 fails, the VLAN connect"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **C13 附录配置拓扑（major ring ERP#1 + sub-ring ERP#2）**：\"a ring topology w"
+  },
+  {
+   "h": 0.33,
+   "ok": false,
+   "head": "- **C14 产品组合落地案例**：9900/6900 核心到 6865/6465T 室外严苛环境全谱系支持 ERPv2。<<<PAGE "
+  }
+ ],
+ "counter-examples": [
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X1 不阻 RPL 即成环**：\"In the Ethernet ring, the RPL is blocked for traf"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X2 间歇性链路故障误触发保护切换**：\"to allow automatic link recovery from intermi"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X3 重复 R-APS SF 导致反复 flush**：\"reception of subsequent messages will"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X4 RPL 故障时无谓 flush 拖慢收敛**：\"The Do-Not-Flush bit is set in the R-AP"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X5 过期 R-APS 消息可能造成环路**：\"This is to prevent the nodes from receivin"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X6 间歇故障期间回切误动作**：WTR 的存在 \"allowing the network to stabilise and pr"
+  },
+  {
+   "h": 0.91,
+   "ok": true,
+   "head": "- **X7 自动收敛造成非预期业务中断（非回切模式动因）**：\"The network may be deployed in non-re"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X8 STP 拉长收敛且可能引发不稳定**：\"any form of Spanning Tree Protocol is not r"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X9 DHL 不适用多节点接入层**：\"this technology is not a solution where multip"
+  },
+  {
+   "h": 0.91,
+   "ok": true,
+   "head": "- **X10 违反多环三原则的后果（R-APS 串环/双 RPL 冲突）**：三原则为 must——\"the following prin"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X11 超规格环（>16 节点或 >1200km 或拥塞）保不住 50ms**：\"If any of these condition"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X12 把 50ms 当端到端收敛的误解**：\"should not be interpreted as an end-to-end"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X13 MPLS FRR 同样不是端到端 50ms**：\"FRR does not provide end-to-end netwo"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X14 VC 与 ERP 叠加增加收敛时间**：\"may increase its convergence time due to "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X15 STP 域挂单节点故障全网断连**：\"if network node 2 fails, the VLAN connectiv"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **X16 BPDUs 仍会经环口泛洪**：\"the ERP ports do not participate in the STP p"
+  },
+  {
+   "h": 0.83,
+   "ok": true,
+   "head": "- **X17 UNI 口误用作 ERP 口**：\"User-to-Network Interface (UNI) ports... can"
+  }
+ ],
+ "frameworks": [
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "## F1 接入/汇聚层接入核心环的选型框架"
+  },
+  {
+   "h": 0.85,
+   "ok": true,
+   "head": "## F2 恢复模式选型框架（revertive vs non-revertive）"
+  },
+  {
+   "h": 0.79,
+   "ok": true,
+   "head": "## F3 ERP 故障-恢复状态机框架（保护切换时间预算）"
+  },
+  {
+   "h": 0.94,
+   "ok": true,
+   "head": "## F4 多环（multi-ring）设计规则框架"
+  }
+ ],
+ "glossary": [
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **ERP / ERPS (Ethernet Ring [Protection] Switching)**：ITU-T G.8032/Y"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **G.8032/Y.1344**：ITU-T 环保护建议书；本文基于 2020 版 Corrigendum 1（2022 年 2 月）"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Ethernet ring**：由至少两个环口的环节点连成闭合物理环的集合。<<<PAGE 5>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **RPL (Ring Protection Link)**：环上平时被阻塞以防环的那条链路；故障时解阻保连通。<<<PAGE 5>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **RPL Owner Node**：RPL 一端负责阻塞/解阻的节点；正常态发 (NR, RB)。<<<PAGE 5>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **RPL Neighbour Node**：可选，负责阻塞 RPL 另一端的节点。<<<PAGE 5>>>"
+  },
+  {
+   "h": 0.88,
+   "ok": true,
+   "head": "- **R-APS (Ring Automatic Protection Switching)**：协调所有环节点保护动作的协议；走专用 R"
+  },
+  {
+   "h": 0.78,
+   "ok": true,
+   "head": "- **R-APS 消息码 (NR/RB/SF/DNF)**：No Request（无请求）、RPL Blocked（RPL 阻塞）、Sig"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Idle state**：正常态下所有环节点所处状态，仅 RPL Owner 周期发 (NR, RB)。<<<PAGE 7>>>"
+  },
+  {
+   "h": 0.67,
+   "ok": true,
+   "head": "- **Hold-off timer**：故障检测后的等待定时器（0-10 秒可配），过滤间歇性链路故障。<<<PAGE 8>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **FDB (Forwarding Database) flush**：保护切换时清空转发表以强制重新学习；环单链故障时全环节点各 fl"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **(Node ID, Blocked Port ID) 去重**：环节点用该二元组识别已知 SF 消息、避免重复 flush。<<<P"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **DNF (Do Not Flush)**：RPL 自身故障时 SF 消息携带的标志，通知全环无需 flush（拓扑未变）。<<<PA"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Guard timer**：链路恢复后两端忽略新 R-APS 消息的时段，防过期消息成环。<<<PAGE 11>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **R-APS NR**：No Request 消息，故障消除后由恢复链路两端发送。<<<PAGE 11>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **低/高优先级 ID 解阻规则**：guard 过后，ID 较低一端解阻、较高一端继续阻塞，形成单端阻塞。<<<PAGE 11>>>"
+  },
+  {
+   "h": 0.8,
+   "ok": true,
+   "head": "- **WTR (Wait-to-Restore) timer**：RPL Owner 收 NR 后启动的回切等待定时器，须长于 guard"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **R-APS (NR, RB)**：RPL Owner 回切时通告\"无请求且 RPL 已阻塞\"，触发全网 unblock 与一次性 f"
+  },
+  {
+   "h": 0.5,
+   "ok": true,
+   "head": "- **Revertive mode**：故障修复后经 WTR 自动回切到 RPL 阻塞态的模式。<<<PAGE 11-12>>>"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Non-revertive mode**：修复后不自动回切，等管理员在 RPL Owner 上执行 clear。<<<PAGE 12"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Major ring / Sub-ring**：多环结构中的主环与子环；子环自身不闭合，与互联节点间链路共同成环。<<<PAGE 6"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Interconnection node**：同时接入 major ring（双环口）与一个或多个 sub-ring（单口）的互联节"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **R-APS Virtual Channel**：子环实例经互联节点共享链路传 R-APS 消息所用的（虚拟）通道 VLAN；多子环用"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **DHL (Dual Home Link)**：单节点双归接入环网的技术，按 VLAN 修改转发状态防环；不适用多节点接入层。<<<P"
+  },
+  {
+   "h": 0.75,
+   "ok": true,
+   "head": "- **50ms 保护切换**：ERP 收敛指标，仅在无拥塞、全 idle、节点<16、光纤<1200km 四条件下成立；非端到端收敛。<<"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **VC (Virtual Chassis)**：多物理节点虚拟成单逻辑节点；与 ERP 组合可加弹性但增加收敛时间。<<<PAGE 1"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **FRR (Fast Reroute)**：MPLS 中预装备份下一跳的快速保护；同样不保证端到端 50ms。<<<PAGE 15>>"
+  },
+  {
+   "h": 0.0,
+   "ok": false,
+   "head": "- **NNI / UNI**：网络间接口（可配为 ERP 环口保护 SVLAN）/ 用户网络接口（不可作 ERP 环口）。<<<PAGE "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **VLAN stacking / 802.1ad**：ALE ERP 支持在 802.1ad 网络上运行，用 VLAN 堆栈保护 Se"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **Access Guarding**：ALE 面向用户/设备/IoT 高级安全接入框架，与 ERP 叠加增强关键业务网络。<<<PAG"
+  }
+ ],
+ "principles": [
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P1 防环靠\"任一时刻只阻塞一条环链路\"**：\"Loop avoidance, this principle guarantees "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P2 正常态 RPL Owner 阻塞 RPL 并周期通告 (NR, RB)**：\"All ring nodes are in Id"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P3 故障检测先过 hold-off 再动作**：\"This detection will initiate their hold-"
+  },
+  {
+   "h": 0.94,
+   "ok": true,
+   "head": "- **P4 检测节点三连动作：本地阻塞 + FDB flush + 双向发 SF**：\"Internally block for traf"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P5 收到首个 SF 即 flush，靠 (Node ID, Blocked Port ID) 去重**：\"the ring nod"
+  },
+  {
+   "h": 0.89,
+   "ok": true,
+   "head": "- **P6 RPL Owner 收 SF 解阻 RPL**：\"On receipt of the first R-APS message "
+  },
+  {
+   "h": 0.93,
+   "ok": true,
+   "head": "- **P7 RPL 自身故障带 DNF 位免全网 flush**：\"a Do-Not-Flush (DNF) flag is includ"
+  },
+  {
+   "h": 0.95,
+   "ok": true,
+   "head": "- **P8 恢复期 guard timer 屏蔽过期 R-APS 防环**：\"nodes at both ends of the link"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P9 恢复后低优先级 ID 端先解阻，形成单端阻塞**：\"The node with the lower priority ID w"
+  },
+  {
+   "h": 0.85,
+   "ok": true,
+   "head": "- **P10 WTR 长于 guard timer，防抖后再回切**：\"the RPL owner node will start the"
+  },
+  {
+   "h": 0.94,
+   "ok": true,
+   "head": "- **P11 回切由 RPL Owner 发 (NR, RB) 触发全网 unblock + 一次性 flush**：\"Upon rece"
+  },
+  {
+   "h": 0.91,
+   "ok": true,
+   "head": "- **P12 非回切模式把控制权交给管理员**：\"Only upon a 'clear' command initiated by a n"
+  },
+  {
+   "h": 0.95,
+   "ok": true,
+   "head": "- **P13 多环三原则**：\"The R-APS protocol is not shared across Ethernet ring"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P14 子环跨共享链路必须用 R-APS Virtual Channel**：\"the ERP2 instance at the i"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P15 接入层接环推荐 multi-ring，不推荐 STP**：\"The recommended solution to conn"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P16 ERP 口自动禁 STP，域内分工协作**：\"When configuring an ERP network by sett"
+  },
+  {
+   "h": 0.94,
+   "ok": true,
+   "head": "- **P17 50ms 有四个前提条件**：\"There is no congestion / All nodes are in the "
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P18 50ms 是保护切换时间，不是端到端收敛**：\"The 50 ms period for the protection sw"
+  },
+  {
+   "h": 1.0,
+   "ok": true,
+   "head": "- **P19 ERP 与 VC 组合可提升弹性但代价是收敛变慢**：\"combining these two technologies i"
+  },
+  {
+   "h": 0.93,
+   "ok": true,
+   "head": "- **P20 NNI 可作 ERP 口保护 SVLAN，UNI 不可**：\"The Network-to-Network Interfac"
+  }
+ ]
+}

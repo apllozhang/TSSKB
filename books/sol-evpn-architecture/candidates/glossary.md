@@ -1,0 +1,77 @@
+# glossary — sol-evpn-architecture（页码为真实标记）
+
+- **VXLAN**：基于 RFC 7348 的标准 L2 overlay 技术，将以太网帧封装进 UDP/IP 在 L3 网络中隧道传输。<<<PAGE 6>>>
+- **VNI (VXLAN Network Identifier)**：24-bit 标识 VXLAN segment，上限约 1600 万逻辑网络。<<<PAGE 6>>>
+- **VTEP (VXLAN Tunnel End Point)**：配置一个或多个 VTI 的设备，L2 帧封装/解封装端点。<<<PAGE 6>>>
+- **VTI (VXLAN Tunnel Interface)**：在 VTEP 之间转发 VXLAN 封装包的 UDP 隧道。<<<PAGE 6>>>
+- **VXLAN gateway**：作为 VTEP 在 VXLAN 与传统 VLAN 域之间透明桥接的设备。<<<PAGE 6>>>
+- **EVI (Ethernet VPN Instance)**：跨所有 PE 的 EVPN 转发/路由实例，按客户配置，含 RD/RT。<<<PAGE 9>>>
+- **BD (Broadcast Domain)**：广播域，可与 EVI 一一对应或一个 EVI 含多个 BD（视服务模型）。<<<PAGE 10>>>
+- **ES (Ethernet Segment)**：连接一组 PE 的一组以太网链路。<<<PAGE 10>>>
+- **ESI (Ethernet Segment Identifier)**：标识 ES 的唯一非零 10 字节标识符（如 11:22:...:99），多归属 CE 必需。<<<PAGE 10>>>
+- **ETag (Ethernet Tag)**：标识特定广播域（如 VLAN），值为 SAP 关联的 VLAN ID。<<<PAGE 10>>>
+- **MAC-VRF**：单个 EVI 的 MAC 地址 VRF 表。<<<PAGE 10>>>
+- **IP-VRF**：PE 上 IP 路由的 VRF 表。<<<PAGE 10>>>
+- **SAP (Service Access Point)**：PE 上绑定接入端口到服务的逻辑服务实体（虚拟端口），指定封装的客户流量类型。<<<PAGE 10>>>
+- **PE (Provider Edge)**：服务 originates/terminates、与其他 PE 建隧道的设备；本文中与 VTEP 混用。<<<PAGE 10>>>
+- **CE (Customer Edge)**：位于客户侧的主机/交换机/路由器。<<<PAGE 10>>>
+- **MP-BGP EVPN**：基于 RFC 7432/8365 的 VXLAN 控制平面协议，AFI 25(L2VPN)/SAFI 70(EVPN)。<<<PAGE 9-10>>>
+- **BUM traffic**：Broadcast/Unknown-unicast/Multicast 流量。<<<PAGE 9>>>
+- **R-T1 (Ethernet A-D Route)**：多归属场景通告 ES 可达性；用于 aliasing、split horizon、mass withdraw；分 per-ESI(R-T1A, ETag=0xFFFFFFFF) 与 per-EVI(R-T1B) 两子类。<<<PAGE 11-13>>>
+- **R-T2 (MAC/IP Advertisement Route)**：通告端主机 MAC（及可选 IP）可达性；支撑 ARP suppression/proxy ARP。<<<PAGE 11>>>
+- **R-T3 (IMET, Inclusive Multicast Ethernet Tag Route)**：按 VNI 自动发现 VTEP 位置，构建 ingress replication 列表（BUM 隧道）。<<<PAGE 11>>>
+- **R-T4 (Ethernet Segment Route)**：发现同 ES 的 PE 并执行 DF 选举；仅多归属 PE 生成。<<<PAGE 11>>>
+- **R-T5 (IP Prefix Route)**：通告 IP 前缀（RFC 9136），用于外部连通与路由汇总、L3VPN；8.10R2 起支持。<<<PAGE 11>>>
+- **R-T6 (SMET, Selective Multicast Ethernet Tag Route)**：IGMP/MLD proxy 功能，通告主机对 (*,G)/(S,G) 的组播兴趣。<<<PAGE 11>>>
+- **R-T7 / R-T8 (IGMP Join/Leave Synch Route)**：多归属节点间同步 IGMP Join/Leave 状态。<<<PAGE 11>>>
+- **RD (Route Distinguisher)**：8 字节，使不同租户/VRF 的重叠路由唯一；EVPN 用 RFC 4364 Type-1 RD（源于 Router ID/Loopback0）。<<<PAGE 19>>>
+- **RT (Route Target)**：6 字节扩展社区，控制 MAC-VRF 的导入/导出；可多条；AOS 由 ASN+Etag(VNI) 自动派生。<<<PAGE 19>>>
+- **VLAN-based service model**：VLAN:MAC-VRF:VNI:EVI 一一对应；ETag 必须为 0；允许 VLAN 转换。<<<PAGE 19>>>
+- **VLAN bundle service model**：多 VLAN 共享一个 BD/EVI；ETag 必须为 0；不允许 VLAN 转换。<<<PAGE 20>>>
+- **VLAN-aware service model**：一个 EVI 内多 VLAN 各自成广播域（ETag=VLAN）；MAC 可重叠。<<<PAGE 20>>>
+- **Enhanced VLAN-bundle service interface**：ALE 定义模型；R-T1B/R-T2 带 ETag，每 EVI 仅一条 R-T3（ETag=0）；数据面同 VLAN-bundle（跨 ETag 的 MAC 不允许，视为 move）。<<<PAGE 41>>>
+- **ARP suppression / Proxy ARP**：PE 代答本地 ARP 请求以抑制洪泛；AOS 默认开启。<<<PAGE 20-21>>>
+- **GARP (Gratuitous ARP)**：主机主动发送的免费 ARP，可被 PE 用来学习 MAC+IP 并触发重复检测。<<<PAGE 21>>>
+- **ES-Import RT Extended Community**：随 R-T4 携带，确保仅同 ES 的 PE 导入 ES 路由；6 字节由 ESI 自动编码。<<<PAGE 21>>>
+- **ESI Label Extended Community**：R-T1A 携带；MPLS 下用于 split horizon 过滤并指示冗余模式（flags 1=single-active, 0=all-active）；VXLAN 不含 ESI label。<<<PAGE 21>>>
+- **BGP Tunnel Encapsulation EC**：指示数据面封装类型；EVPN-VXLAN 为 8。<<<PAGE 22>>>
+- **MAC Mobility Extended Community**：携带序列号跟踪主机最新位置，实现亚秒级 VM 迁移收敛。<<<PAGE 22>>>
+- **Default Gateway Extended Community**：PE 以 R-T2 通告默认网关 MAC，ESI 置零，实现网关分布式。<<<PAGE 22>>>
+- **DF Election Extended Community**：RFC 8584，标识 ES 使用的 DF 选举过程。<<<PAGE 22>>>
+- **Router MAC Extended Community**：携带始发路由器 MAC；仅在 MAC 作 overlay index 的对称 IRB 场景使用。<<<PAGE 23>>>
+- **IRB (Integrated Routing and Bridging)**：基于 EVPN 的动态高效跨子网连通方案，本地 PE 直接路由不同子网主机间流量。<<<PAGE 23>>>
+- **Asymmetric IRB**：拉伸 EVI 设计；ingress PE 三次查表（桥-路由-桥）、egress 仅桥；资源与配置密集。<<<PAGE 24>>>
+- **Symmetric IRB**：ingress/egress 均执行桥+路由；只需在主机接入 PE 配服务；推荐模型。<<<PAGE 24-25>>>
+- **SBD (Supplementary Broadcast Domain) / Fabric-VPN**：每 VRF 一个的 L3EVI，提供 VRF 内所有 IRB 服务间可达与前缀路由网关；AOS 中记作 Fabric-VPN。<<<PAGE 25>>>
+- **Host-based routing**：仅以 R-T2 通告主机 /32 路由；可用对称或非对称 IRB。<<<PAGE 26>>>
+- **Prefix-based routing**：以 R-T5 通告任意长度前缀；仅对称 IRB；RFC 9136 定义 interface-less / interface-ful SBD / interface-ful unnumbered 三模型。<<<PAGE 26>>>
+- **Overlay index**：R-T5 中的递归查找索引，可为网关 IP、MAC 或 ESI。<<<PAGE 15>>>
+- **DAG (Distributed Anycast Gateway)**：所有共 EVI 的 PE 配同一 anycast IP + anycast MAC（每 VRF 一个 VMAC），无需 VRRP 类冗余协议即支持主机移动。<<<PAGE 28>>>
+- **Anycast MAC auto-derivation**：自动派生规则 00:00:5e:00:01:<VRF-ID>；或 site-based（OUI+2 字节 site-id+1 字节 VRF-ID）。<<<PAGE 29>>>
+- **Ingress replication**：头端复制，ingress 设备将 BUM 包逐个单播复制到远端 egress；AOS 唯一支持方式。<<<PAGE 29-30>>>
+- **Tandem replication**：组播底层中继复制；核心高效但需组播底层。<<<PAGE 29>>>
+- **PMSI (Provider Multicast Service Interface)**：R-T3 附带的隧道属性，标识 BUM 使用的 P-Tunnel（类型/标签/隧道标识）。<<<PAGE 15>>>
+- **Multi-homing**：CE 经 LAG 连多 PE 的冗余接入；RFC 7432 定义 single-active 与 all-active 两模式。<<<PAGE 32>>>
+- **DF (Designated Forwarder)**：ES 内选出的指定转发者，负责 BUM 从 fabric 到 CE 的转发，防止重复/环路。<<<PAGE 32-33>>>
+- **Service carving**：按 EVI/VLAN 选举多 DF 分散 BUM 负载的默认 DF 选举过程；模算法 DF = EVI mod N。<<<PAGE 33>>>
+- **Split Horizon Group (SPG)**：non-DF SAP 关联的 BUM 出方向过滤组，丢弃来自网络隧道的 BUM。<<<PAGE 34>>>
+- **Local Bias / ES Pruning**：发往本 PE 上 all-active ES 的流量总走本地接入；远端 PE（含 DF）丢弃重复 BUM；BUM 位置 VXLAN 头置位。<<<PAGE 34>>>
+- **Aliasing**：全活 ES 各 PE 通告 R-T1A/1B，远端据此构建 VTEP 列表按流负载分担。<<<PAGE 34>>>
+- **Backup path**：单活场景 Primary/Backup PE 列表，主撤路时远端无缝切换。<<<PAGE 35-36>>>
+- **Mass withdraw**：R-T1A 以 EVI=0xFFFFFFFF 编码 ES 不可达，远端批量刷新/清空关联 MAC 路径列表。<<<PAGE 36>>>
+- **IPMS / IPMSv6**：OmniSwitch 的 IGMP/MLD snooping 实现，硬件线速组播交付。<<<PAGE 37>>>
+- **OISM (Optimized Inter-Subnet Multicast)**：RFC 9625，基于 Fabric-VPN(SBD)+R-T6 的跨子网组播路由，无需 PIM；8.10R3 EA。<<<PAGE 37>>>
+- **PEG (PIM EVPN Gateway)**：EVPN fabric 与外部 PIM 路由器互通的网关功能；双 PEG 时需专用 L3 互联链路；8.10R3 EA。<<<PAGE 38>>>
+- **Default SBD-SMET route (*,*)**：RFC 9625 提议的内部源发现方式，PEG 借其收到全部组播流量；带宽低效，可改用 R-T10。<<<PAGE 38-39>>>
+- **MAC duplication / hold-down**：MAC 反复迁移达到 N 次/M 秒阈值后进入 hold-down，停止处理该 MAC 的 BGP 通告直至 retry-time 结束。<<<PAGE 39>>>
+- **DAD (Duplicate Address Detection)**：同 IP 出现在不同 MAC 的检测；N 次 IP-move/M 秒进入 filtering state，hold-down 3×M；用 unicast ARP Confirm 探测旧主。<<<PAGE 39>>>
+- **Silent host**：长时间不发包（如省电模式）的设备，需静态绑 MAC 到 SAP 并以 sticky bit 通告。<<<PAGE 40>>>
+- **Sticky bit**：静态 MAC 通告标志，远端节点不得触发该 MAC 迁移。<<<PAGE 40>>>
+- **AOS auto-ESI (Type 0x3)**：物理口 0x3+Port_MAC+0xFFFFFF；LACP LAG 0x3+CE_MAC+0xFF+AggID；静态 LAG 手工 5 字节。<<<PAGE 41>>>
+- **Auto-generated RD**：Loopback0 + 2 字节 Type + Object Type/ID（Service 0x0=VFI、ESI 0x1=8bit 段ID+5bit 片段ID（上限 256 段）、Prefix 0x2=VRF-ID）。<<<PAGE 42-43>>>
+- **GRM (Global Route Manager)**：VRF 间/VRF 与 Fabric-VPN 间路由重分发中介。<<<PAGE 47>>>
+- **Border leaf**：对外部网络做网关的 PE 节点；需路由汇总与防路由回声处理。<<<PAGE 46-48>>>
+- **RR (Route Reflector)**：spine 兼任的 BGP 路由反射器；冗余 RR 建议 same cluster-id + TTL security。<<<PAGE 46>>>
+- **TTL Security**：BGP 邻居直连性保障；max-hops 0 时直连断则邻居断。<<<PAGE 46>>>
+- **UNP (Universal Network Profile)**：ALE 边到核自主多技术 fabric 的服务定义网络特性之一。<<<PAGE 72>>>
+- **Virtual Chassis (VC)**：ALE 实现多归属的另一技术路线（与 EVPN multi-homing 相对）。<<<PAGE 32>>>

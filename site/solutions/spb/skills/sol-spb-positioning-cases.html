@@ -1,0 +1,92 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>sol-spb-positioning-cases — SPB 智能织构 · 架构与部署</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>SPB 智能织构 · 架构与部署</h1>
+<div class="sub">3 份 86 页 · Tech Brief + 部署指南 + 方案简报（IS-IS SPB/I-SID/VRRP tracking/客户案例）</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">架构与服务</div>
+<a href="../skills/sol-spb-architecture.html">sol-spb-architecture</a>
+<a href="../skills/sol-spb-l2-l3-services.html">sol-spb-l2-l3-services</a>
+<div class="grp">部署与案例</div>
+<a href="../skills/sol-spb-deployment-flow.html">sol-spb-deployment-flow</a>
+<a href="../skills/sol-spb-positioning-cases.html" class="on">sol-spb-positioning-cases</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../solutions/index.html">解决方案</a> › <a href="../index.html">SPB 智能织构</a> › <span>sol-spb-positioning-cases</span></nav><h1>sol-spb-positioning-cases</h1><p class="meta"><span class="badge">SKILL</span> sol-spb-positioning-cases · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>售前/方案汇报：讲清 SPB 四大价值主张（可扩展/安全/简单/可靠）</li>
+<li>场景定位判断：园区 LAN / 数据中心 / MAN 三场景该不该上 SPB</li>
+<li>按客户行业（教育、交通、能源、医疗、政府、酒店、ISP）组织用例话术</li>
+<li>引用客户案例佐证（NDOT、IDC Frontier、UTS）</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>SPB 卖点主线：STP 收敛从 Rapid STP 的 2-3 秒缩到 100ms，多活路径+容错+最短路径（&lt;&lt;<PAGE 83>&gt;&gt;）；对 MPLS 的话术是"园区/MAN 里更简单更省——MPLS 要一摞协议栈，SPB 单协议"（&lt;&lt;<PAGE 83>&gt;&gt;）。四大价值：可扩展（扩容不降速）、安全（微/宏分段是 ZTNA 零信任架构的关键构件，容器化隔离+多租户+IoT 角色化接入）、简单（自动化开局、变更只在服务增删点操作）、可靠（自愈+快速收敛）（&lt;&lt;<PAGE 84>&gt;&gt;）。技术论据：24 位 ISID 突破 4096 上限达 16M 服务（P6，&lt;&lt;<PAGE 7>&gt;&gt;）、租户地址空间可重叠（P5，&lt;&lt;<PAGE 7>&gt;&gt;）、非 IP 核心免受 IP 扫描/欺骗/DoS（P11，&lt;&lt;<PAGE 9>&gt;&gt;）、服务随人/设备动态实例化免 MAC 工单（P7，&lt;&lt;<PAGE 8>&gt;&gt;）。</p>
+<h2 id="a1">A1（行动框架）</h2>
+<ol>
+<li>三场景定位（&lt;&lt;<PAGE 84>&gt;&gt;）：园区 LAN=STP 替代+多租户+IoT 分段；数据中心=any-to-any fabric+DC 互联+快速私有云化；MAN=L2/L3 服务对标 MPLS 但更简更省</li>
+<li>七行业用例矩阵（&lt;&lt;<PAGE 85>&gt;&gt;）：教育（多校区 VPN/STP 替代/IoT 管控）、交通（铁路 ITS 隔离/机场多租户）、能源公用（STP 替代/VPN 隔离）、ISP（大型政府设施 MAN/智慧城市）、医疗（多院区 VPN/生物医疗设备管控）、酒店（度假村赌场多租户/门锁 IoT）、政府（多机构多站点 VPN/智慧城市）</li>
+<li>安全叙事：SPB 分段=ZTNA 构件；短时服务不在线不可被扫描/DoS（P8，&lt;&lt;<PAGE 8>&gt;&gt;）；微分段限横向移动（P10，&lt;&lt;<PAGE 8>&gt;&gt;）</li>
+</ol>
+<h2 id="a2">A2（操作步骤）</h2>
+<ul>
+<li>客户对话三步：痛点对齐（STP 禁链路/次优路径/慢收敛，X1-X3，&lt;&lt;<PAGE 5>&gt;&gt;）→ 能力映射（单协议/16M 服务/边缘供给，P3/P6/P9，&lt;&lt;<PAGE 6-8>&gt;&gt;）→ 场景+同行业案例收尾（&lt;&lt;<PAGE 85>&gt;&gt;）</li>
+<li>差异化补刀：核心无 IP 免 IP 攻击面（P11，&lt;&lt;<PAGE 9>&gt;&gt;）vs 竞品需带内 IP 管理</li>
+</ul>
+<h2 id="e">E（实证案例）</h2>
+<ul>
+<li><strong>NDOT（内华达交通厅）</strong>：管辖 5400 英里公路/1000+ 桥梁；SPB 建可扩展网络并缩短新设备/服务/应用上线时间；ITS 网络经理 Gary Molnar 证言"提供更好服务…ALE 全程超出预期"（&lt;&lt;<PAGE 86>&gt;&gt;）</li>
+<li><strong>IDC Frontier（雅虎日本全资子公司）</strong>：日本九座数据中心；SPB 提供扩展性服务增长客户群与保障 SLA 的弹性（&lt;&lt;<PAGE 86>&gt;&gt;）</li>
+<li>UTS 客户证言见简报同页（&lt;&lt;<PAGE 86>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（反例与坑）</h2>
+<ul>
+<li>别把 SPB 当"STP 小升级"卖：简报明确"more than just an STP evolution"，应讲多问题域覆盖（&lt;&lt;<PAGE 83>&gt;&gt;）</li>
+<li>与 MPLS 对比聚焦园区/MAN 场景的部署运维复杂度与成本，避开核心网流量工程强需求场景（P15 语境，&lt;&lt;<PAGE 10>&gt;&gt;）</li>
+<li>安全话术勿过度：核心非 IP≠全网免疫，外部路由注入仍需路由协议认证防投毒（X25/P54，&lt;&lt;<PAGE 56>&gt;&gt;）</li>
+</ul>
+<p>来源：SPB Solution Brief（sol-spb DOC3，p83-86）+ SPB Architecture Tech Brief（p5-10/p56）</p><div class="pn"><a href="sol-spb-deployment-flow.html">⬅ 上一单元：sol-spb-deployment-flow</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

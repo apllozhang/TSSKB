@@ -1,0 +1,62 @@
+# principles — sol-spb（P1…）
+
+- **P1 用链路状态协议取代生成树，释放全部链路**：SPB 的无环拓扑由 IS-IS 运行 Dijkstra SPF 构建，"no network link is disabled, all paths are available and traffic between any pair of nodes follows the shortest path" <<<PAGE 7>>>
+- **P2 每个节点都是自己树的根，路径天然最短**：STP 单根导致非根节点间绕行；SPB 中 "every node builds a topology tree rooted on itself" <<<PAGE 11>>>
+- **P3 单协议原则：一个 IS-IS 搞定拓扑、地址学习与 VPN 路由**：MPLS 需要 LDP/OSPF/MP-BGP 协议栈，SPB "relies on a single protocol to provide this functionality: IS-IS" <<<PAGE 6>>>
+- **P4 MAC-in-MAC 封装把客户 MAC 学习限制在边缘**：核心节点 "do not learn any end-device MAC addresses, thus increasing the network scalability and stability" <<<PAGE 7>>>
+- **P5 多租户原生支持，租户间地址空间可重叠**："Customers, or IoT device groups, segregated into different VPNs are isolated… can use overlapping address space without conflict" <<<PAGE 7>>>
+- **P6 服务标识用 24 位 ISID，突破 4096 上限**："SPB's scalability is not limited to 4096 tenants because its service identifier, the ISID, is a 24-bit field which can differentiate up to 16M services" <<<PAGE 7>>>
+- **P7 动态服务实例化：服务随人/设备走**："The network configuration dynamically adapts to mobile users and devices or Virtual Machines (VMs) migrations without need for Move, Add or Change requests" <<<PAGE 8>>>
+- **P8 短时服务更安全**：临时性服务 "cannot be scanned, DoSd, or otherwise hacked, while they're not active" <<<PAGE 8>>>
+- **P9 仅边缘供给：核心零触碰**："SPB services need only be provisioned on edge nodes, not on core nodes… service MACs can be conducted during business hours" <<<PAGE 8>>>
+- **P10 微分段防横向移动**：UNP 内的 ACL "can allow communication between the camera and surveillance servers but at the same time block camera-to-camera communication" <<<PAGE 8>>>
+- **P11 非 IP 核心更安全**：核心节点无 IP 地址，IS-IS 不跑在 IP 之上，"protects it from IP-based attacks such as scanning, spoofing, DoS" <<<PAGE 9>>>
+- **P12 数据面只查表不做决策**：DP "makes no decisions… It simply performs lookups on the Forwarding Data Base (FDB)" <<<PAGE 9>>>
+- **P13 BVLAN 的 FDB 由控制面预填充，不用泛洪学习**："the BVLAN domain's FDB is pre-populated by the CP" <<<PAGE 9>>>
+- **P14 骨干内只按 BMAC 转发，CMAC 不进入骨干**："traffic is forwarded based on the destination BMAC (B-DA). Inner customer MACs are not learnt or used for forwarding within the backbone" <<<PAGE 9>>>
+- **P15 BCB 不学任何客户 MAC**：BCB "does not have to learn any of the customer MAC addresses. It mainly serves as a transit bridge" <<<PAGE 10>>>
+- **P16 双重防环：预防 + 缓解**："SPB implements two loop avoidance mechanisms: loop prevention and loop mitigation" <<<PAGE 10>>>
+- **P17 每节点每 BVLAN 建一棵 SPF 树，ECT-ID 用于打破平局**："Assigning different ECT-IDs to different BVLANs helps those BVLANs build different trees" <<<PAGE 12>>>
+- **P18 按服务（而非按包）负载分担**："SPB networks do not balance loads on a packet-by-packet basis like IP networks do" <<<PAGE 11>>>
+- **P19 路径确定性与帧有序送达**："network paths are deterministic and frames are delivered in the order they were sent… important for storage and real-time application traffic" <<<PAGE 12>>>
+- **P20 路径对称性利于 OAM**："the path from node X to node Y is identical to the path from node Y to node X… one-way delay calculations can be easily derived from roundtrip delay measurements" <<<PAGE 12>>>
+- **P21 服务成员信息经 IS-IS TLV 泛播，全网视图一致**："SPB service membership information is shared across the SPB backbone by way of IS-IS TLVs" <<<PAGE 13>>>
+- **P22 SDP 动态生成，只为有 SAP 的远端 BEB 创建**："SDPs are dynamically created in the CP and only for those far-end BEBs with SAPs for the specific service" <<<PAGE 14>>>
+- **P23 BUM 复制模式按带宽/资源取舍选择**：head-end 省资源费带宽、tandem (S,G) 省带宽费资源、tandem (*,G) 折中，"Refer to Table 1 to compare these three modes" <<<PAGE 16>>>
+- **P24 head-end 复制与单播路径同轨（同余性）**："Head-end replicated BUM traffic simply uses the unicast FDB and therefore travels along the same path. This property is known as congruency" <<<PAGE 15>>>
+- **P25 BVLAN 数量对齐物理等价路径数**："Only create as many BVLANs as there are equal-cost-paths in the physical topology" <<<PAGE 52>>>
+- **P26 VLAN 与服务一对一映射，防止 mac-move**："we strongly recommend mapping different VLANs to different SPB services (ISIDs). This will require one SAP and ISID per access VLAN" <<<PAGE 52>>>
+- **P27 服务号本地有效，ISID/BVLAN 全局一致**："The service number is only locally significant… The ISID number is globally significant and must match across all BEBs" <<<PAGE 21>>>
+- **P28 L3 服务靠边缘路由**："Routing is only performed at ingress and egress BEBs and bridged between these… the WAN represents a single L3 hop" <<<PAGE 29>>>
+- **P29 L3 VPN 复用 SPB IS-IS 传客户路由**：IS-IS 同时承担骨干可达性与 VPN 路由传递，"Using a single protocol instead of two, results in a network that is simpler to deploy and operate" <<<PAGE 30>>>
+- **P30 域内选 L3 VPN、边界用 VPN Lite**："L3 VPN is recommended within the SPB domain and VPN Lite is needed only on border nodes connecting to the outside world" <<<PAGE 34>>>
+- **P31 共享服务经 VRF 泄漏实现，前提地址空间不重叠**："customer A's and B's address space must not overlap with each other nor with the shared services" <<<PAGE 34>>>
+- **P32 出厂默认即近零接触**："A factory-default Alcatel-Lucent OmniSwitch has these mechanisms enabled by default and will automatically attempt to create an SPB backbone and services" <<<PAGE 36>>>
+- **P33 单链路也建 linkagg，引用逻辑名利于扩展**："by referencing the (logical) linkagg as opposed to the (physical) port in other configuration commands, those configuration commands do not need to change when additional member ports are added" <<<PAGE 37>>>
+- **P34 静态绑定 UNP（而非 SAP）解决静默设备问题，配置更标准**："by statically binding a UNP instead of a SAP, the exact same UNP constructs can be used for both silent and non-silent devices… This is considered a best practice" <<<PAGE 39>>>
+- **P35 动态服务按 VLAN 标签即时创建，避免预置 4096 服务**：预配全部 VLAN "is a poor practice as it creates an unnecessary load on the control plane" <<<PAGE 42>>>
+- **P36 ISID 用公式派生保证无冲突**：ISID = Base Service Number + Domain ID + (VLAN % Service Modulo)；BSN 隔离手工与动态服务编号空间 <<<PAGE 42>>>
+- **P37 Service Modulo 调成 4096 保证 L2 隔离**：默认 512 会让最多 8 个 VLAN 映射到同一服务，"To ensure L2 isolation, we can change the Service Modulo to 4096" <<<PAGE 43>>>
+- **P38 Domain ID 保多租户动态隔离**："Isolation is achieved by creating a Domain ID for each customer and by the mapping customer's UNI ports to the Domain" <<<PAGE 43>>>
+- **P39 管理流量独立 VRF**："management IP addresses should use a different VRF from the VRF used for service or customer traffic" <<<PAGE 55>>>
+- **P40 带内管理直接挂控制 BVLAN，免回环**：控制 BVLAN 上的 IP 接口 "do not rely on ARP… IP-to-MAC mapping is resolved through IS-IS TLVs" <<<PAGE 44>>>
+- **P41 overload 状态做无扰维护**："Setting the overload state on the node will signal other nodes not to use it as a transit node" <<<PAGE 48>>>
+- **P42 graceful restart 平滑主备切换**：重启节点置 RR 位并沿用现有 FDB，邻居维持邻接并回灌 LSP 数据库 <<<PAGE 48>>>
+- **P43 CE 接入冗余四档递进**：非冗余 → 冗余链路（LAG）→ 冗余链路+节点（DHL/路由协议）→ 全冗余（MSTP/VRRP）<<<PAGE 49>>>
+- **P44 光纤走物理分离路径**："fibre runs should use diverse physical paths to protect against fibre cuts" <<<PAGE 49>>>
+- **P45 RPFC 利用对称性破瞬态环**："RPFC verifies that incoming traffic's source BMAC is indeed reachable over the ingress interface according to the local FDB and discards non-conforming frames" <<<PAGE 51>>>
+- **P46 LBD 应在所有 UNI 口启用**："LBD should be enabled on all UNI ports" <<<PAGE 51>>>
+- **P47 VC 场景 LAG 成员跨槽分布**："one member (physical) port connects to every slot in the VC… will improve the network convergence time in the event of slot failure" <<<PAGE 53>>>
+- **P48 LAG 哈希需启用 tunnel-protocol 才能利用内层信息**：MAC-in-MAC 使外层只剩 BMAC，"this does not create enough entropy"，启用后可按 CMAC 或 IP+端口哈希 <<<PAGE 53>>>
+- **P49 链路度量按速率反比设置**：Table 3 建议 100G=1000 … 1G=100000，"help steer traffic towards links with higher capacity" <<<PAGE 54>>>
+- **P50 度量必须两端同时改**："the metric must be adjusted on both sides of a link" <<<PAGE 54>>>
+- **P51 QoS 分类只在 SAP 做，骨干内保持不变**："traffic is classified at the SAP and the classification does not change as traffic traverses the backbone" <<<PAGE 54>>>
+- **P52 两次路由时标准 VLAN 口信任 CoS 而非 DSCP**："the standard VLAN port must best set to trust and use CoS and not DSCP to preserve CoS markings end-to-end" <<<PAGE 54>>>
+- **P53 NAC 动态 SAP 让服务按需上线**："no service is instantiated on a BEB until an authorized user successfully authenticates… more difficult to hack… a service when it is not even connected" <<<PAGE 55>>>
+- **P54 外部路由协议启用认证防路由投毒**："This risk can be mitigated by enabling routing protocol authentication (e.g. MD5 for OSPF or BGP)" <<<PAGE 56>>>
+- **P55 命名规范降低运维认知负担**：接入交换机 "ACC-31"（BEB 号+序号）、linkagg "13"（BCB 号+BEB 号）<<<PAGE 64>>>
+- **P56 ISID/VLAN/服务号同号便于心智映射**："Although we use the same number for the service, ISID, and VLAN in this guide to maintain a good mentale map… they serve different purposes" <<<PAGE 70>>>
+- **P57 VRRP 虚地址统一用 .1，末位对应 BEB 号**："We reserve .1 for the VRRP interface"，BEB-3 用 .3、BEB-4 用 .4 <<<PAGE 74>>>
+- **P58 PBR 上的 /30 点对点互联各 VRF**：接口名 "source-destination" 格式（corp3-pbr / pbr-corp3）<<<PAGE 77>>>
+- **P59 VRRP tracking 联动上行链路**：上行断则优先级 120−25=95，"By decreasing the priority when the link fails, the second VRRP router takes over as the master" <<<PAGE 78>>>
+- **P60 VRF 间隔离由 PBR 强制，VRF 内再叠加 DHCP snooping/DAI**："for additional intra-VRF security (e.g. guest-to-guest isolation), it is advised to implement DHCP snooping, dynamic ARP inspection" <<<PAGE 80>>>
