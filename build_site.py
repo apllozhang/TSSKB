@@ -766,7 +766,7 @@ for gname, color, items in CATALOG:
         else:
             cards += f'''<div class="card">
 <a style="color:var(--mut);cursor:default" onclick="return false">{title}</a><p>{desc}</p>
-<p style="margin-top:6px"><span class="badge soon">待建设 · 教材上传后蒸馏上线</span></p></div>'''
+<p style="margin-top:6px"><span class="badge soon">待建设 · 教材翻译后上线</span></p></div>'''
     cats_html += f'<h2 style="color:{color}">{gname}</h2><div class="cards">{cards}</div>'
 
 cover = f"""<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
