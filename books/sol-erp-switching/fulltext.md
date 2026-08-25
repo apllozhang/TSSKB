@@ -1,8 +1,3 @@
-# sol-erp-switching — 解决方案文档合并（页码全册连续）
-
-
-<<<DOC 1: ethernet-ring-protection-switching-application-note-en.pdf | 起始页 1 | 17p>>>
-
 <<<PAGE 1>>>
 Application Note
 Ethernet Ring Protection Switching
@@ -257,7 +252,7 @@ recover from a failure and redirect traffic to an alternate path.
 Unblocking RPL
 On receipt of the first R-APS message with the SF code, the RPL owner will also unblock its end of the RPL 
 to allow communication over the RPL, thus providing reachability between all the nodes in the ring. This 
-way, the network will remain connected even in the event of a failure. 
+way, the network will remain connected even in the event of a failure.
 
 <<<PAGE 10>>>
 10
@@ -309,7 +304,7 @@ unblocked for traffic. As the RPL is already blocking at this point there will b
 addition, all ring nodes should, upon receiving R-APS (NR, RB) message, also flush their own FDB to allow 
 for faster convergence. The FDB flush is only performed upon receiving the first R-APS (NR, RB) message. 
 Exceptionally, the above-mentioned process may be stopped if a new R-APS SF message is received by 
-the RPL owner during the WTR time countdown. 
+the RPL owner during the WTR time countdown.
 
 <<<PAGE 12>>>
 12
@@ -366,7 +361,7 @@ ring networks, the following principles must be respected:
 •	 The R-APS protocol is not shared across Ethernet ring interconnections 
 •	 On each ring port, each R-APS control protocol and protected VLANs are controlled by only one 
 Ethernet ring
-•	 Each major or sub-ring must have its own RPL 
+•	 Each major or sub-ring must have its own RPL
 
 <<<PAGE 14>>>
 14
@@ -403,7 +398,7 @@ in the standard, is only respected under the following conditions:
 •	 All nodes are in the idle state 
 •	 The number of nodes in the ring is less than 16
 •	 The ring fibre length is less than 1200km 
-If any of these conditions are not met, the protection switching mechanism may take longer than 50ms. 
+If any of these conditions are not met, the protection switching mechanism may take longer than 50ms.
 
 <<<PAGE 15>>>
 15
@@ -486,7 +481,6 @@ also the RPL owner node for the major ring. The RPL owner for the sub-ring is no
 domain 2001 is connected to node #7. Nodes 2 and 3 act as interconnection nodes, and routing  
 between L2 domains is performed on node #1. The figure also shows configuration details related to  
 the ERP configuration.
- 
 
 <<<PAGE 17>>>
 www.al-enterprise.com The Alcatel-Lucent name and logo are trademarks of Nokia used under license by ALE. To 

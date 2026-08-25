@@ -34,7 +34,7 @@ for rel in pages:
             continue
         # 相对路径解析
         target = os.path.normpath(os.path.join(os.path.dirname(rel), href)).replace("\\", "/")
-        if target not in page_set:
+        if target not in page_set and not (os.path.exists(target) and not target.endswith('.html')):
             broken[target].append(rel)
 
 print(f"pages={stats['pages']} links={stats['links']} internal={stats['internal']}")

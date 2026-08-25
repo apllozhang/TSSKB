@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """构建 ALE Networking 技术培训门户 + 各课程学习子站"""
-import os, re, markdown, html as html_mod
+import os, re, shutil, markdown, html as html_mod
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(ROOT, 'site')
@@ -565,6 +565,7 @@ CSS = """
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
 aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
@@ -609,6 +610,13 @@ def build_course(c):
     os.makedirs(os.path.join(sub, 'skills'), exist_ok=True)
     book = os.path.join(ROOT, 'books', c['book'])
     skills = [s for _, slugs in c['groups'] for s in slugs]
+    # 原文插图：books/<book>/images -> site/<course>/skills/images（SKILL.md 以 images/x.png 相对引用）
+    bimg = os.path.join(book, 'images')
+    if os.path.isdir(bimg):
+        simg = os.path.join(sub, 'skills', 'images')
+        os.makedirs(simg, exist_ok=True)
+        for fn in os.listdir(bimg):
+            shutil.copy2(os.path.join(bimg, fn), os.path.join(simg, fn))
 
     def nav(active, sub=False):
         p = '../' if sub else ''

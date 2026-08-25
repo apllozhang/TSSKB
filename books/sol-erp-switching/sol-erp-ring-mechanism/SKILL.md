@@ -13,6 +13,12 @@ source_book: Ethernet Ring Protection Switching Application Note
 ## I（核心理念）
 防环靠"任一时刻只阻塞一条环链路"（P1，<<<PAGE 7>>>）：正常态 RPL Owner 阻塞 RPL 并周期发 (NR, RB)（P2）；故障时解阻 RPL 保连通。故障处理是"检测节点三连动作 + 全环两次 flush"（P4/P5，<<<PAGE 8-9>>>）：本地阻塞、FDB flush、双向发 SF；其余节点收首个 SF 即 flush，靠 (Node ID, Blocked Port ID) 二元组去重防反复 flush。定时器体系各司其职：hold-off 过滤间歇故障、guard 屏蔽过期 R-APS 防环、WTR（须长于 guard）防抖后回切（P3/P8/P10）。
 
+![环形网络与 RPL 阻塞示意（原文 p5）](images/fig01-rpl-blocked.png)
+
+![环结构、节点与数据转发路径（原文 p6）](images/fig02-ring-structure.jpeg)
+
+![RPL Owner 节点角色（原文 p7）](images/fig04-rpl-owner.jpeg)
+
 ## A1（行动框架）
 1. ERP 故障-恢复状态机框架（F3，<<<PAGE 14-15>>>）：故障检测（hold-off 0-10s 可调）→ SF 生成发送 → 环传播（四前提内 ≤50ms）→ 处理与 FDB flush；规划时逐段核对 50ms 四前提（无拥塞/全 idle/节点<16/光纤<1200km，P17）
 2. 恢复模式选型框架（F2，<<<PAGE 12>>>）：能接受回切短暂扰动 → revertive（guard→NR→WTR→(NR,RB) 全网回切）；关键业务求稳 → non-revertive（管理员 clear 或维护窗口，C7）
@@ -24,6 +30,14 @@ source_book: Ethernet Ring Protection Switching Application Note
 - **WTR 期间收到新 SF 即中止回切**（C6，<<<PAGE 11>>>）
 - **non-revertive 运维**（C12/P12，<<<PAGE 12>>>）：修复后不回切，管理员在 RPL Owner 上执行 clear
 - **FDB 重建认知**（C3，<<<PAGE 10>>>）：flush 后初期泛洪，双向通信建立后重新学习
+
+![正常态 Mac A/B 通信与各节点转发（原文 p8）](images/fig05-mac-flow-normal.png)
+
+![链路故障后的保护切换路径（原文 p9）](images/fig06-link-fail.jpeg)
+
+![恢复过程与 R-APS 消息交互（原文 p10）](images/fig07-raps-recovery.png)
+
+![恢复流程中的定时器交互（原文 p12）](images/fig08-guard-timer.png)
 
 ## E（实证案例）
 - 正常态 A/B 用户通信路径与各节点 FDB 快照（C1，<<<PAGE 8>>>）

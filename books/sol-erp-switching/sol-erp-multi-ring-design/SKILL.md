@@ -14,6 +14,10 @@ source_book: Ethernet Ring Protection Switching Application Note
 ## I（核心理念）
 接入接环首选 multi-ring + ERP v2（P15，<<<PAGE 13>>>）：支持多节点接入与光纤受限场景；STP 收敛慢且可能引发不稳定，DHL 只适用单节点接入。多环设计守"三原则"（P13，<<<PAGE 13>>>）：R-APS 协议不跨环共享；每端口只受一个环控制（R-APS 与被保护 VLAN）；每环独立 RPL。子环跨共享链路必须用 R-APS Virtual Channel（P14，<<<PAGE 14>>>）——共享链路本身归 major ring 管。ERP 口自动禁 STP，防环责任分域（P16，<<<PAGE 15>>>）。
 
+![主环 + 子环 + 互联节点结构（原文 p14）](images/fig10-multiring-interconnect.jpeg)
+
+![主环/子环与 RPL 阻塞点（原文 p6）](images/fig03-main-subring.png)
+
 ## A1（行动框架）
 1. 接入/汇聚接环选型框架（F1，<<<PAGE 13>>>）：STP/RSTP/MSTP（不推荐）vs DHL（仅单节点、按 VLAN 改转发状态）vs multi-ring + ERP v2（推荐）；判定变量 = 接入节点数量、光纤资源、冗余要求
 2. 多环设计规则框架（F4，<<<PAGE 13-14>>>）：每环独立 ERP 实例与 RPL（不同链路）→ 互联节点可跑多实例但每端口单环 → 子环经共享链路用 virtual channel（多子环不同 VLAN）→ 互联链路归 major ring 管；AOS 亦允许子环不用 VC（R-APS 在互联节点终结）
@@ -27,6 +31,12 @@ source_book: Ethernet Ring Protection Switching Application Note
 - **弹性增强**（C11/P19，<<<PAGE 15>>>）：环链路用 LACP 多光纤捆绑到 VC 不同物理节点、接入双归 VC 节点——但收敛时间增加，需权衡
 - **产品选型**（C14，<<<PAGE 16>>>）：9900/6900 核心到 6865/6465T 室外严苛环境全系支持 ERPv2
 - **配置拓扑参考**（C13，<<<PAGE 16-17>>>）：major ring ERP#1 + sub-ring ERP#2，用户 VLAN 域 1001 接在节点 #3（同时是 major ring RPL Owner）
+
+![STP 域与 ERP 域共存边界（原文 p16）](images/fig11-stp-domain.png)
+
+![附录配置拓扑：VLAN 域经环网互联（原文 p17）](images/fig12-vlan-topology.png)
+
+![实验拓扑：多环 EXP 场景（原文 p13）](images/fig09-lab-exp.jpeg)
 
 ## E（实证案例）
 - 多环设计实例：双 ERP 实例、两条不同 RPL（C8，<<<PAGE 13-14>>>）
