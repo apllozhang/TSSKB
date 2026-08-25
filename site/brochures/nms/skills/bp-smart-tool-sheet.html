@@ -1,0 +1,169 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>bp-smart-tool-sheet — ALE 网管与安全 · 官方彩页</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>ALE 网管与安全 · 官方彩页</h1>
+<div class="sub">2026-08 快照 · 5 份 23 页 · OmniVista 双形态/订阅/Fleet/Milestone/Advisor</div>
+<a href="../index.html">🏠 课程首页</a>
+<a href="../digest.html">📖 精华长文 DIGEST</a>
+<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="../glossary.html">🔤 术语词典</a>
+<a href="../../../index.html">⬅️ 返回培训门户</a>
+<a href="../index.html">──── Skills ────</a>
+<div class="grp">平台与工具</div>
+<a href="../skills/bp-ov2500-nms-datasheet.html">bp-ov2500-nms-datasheet</a>
+<a href="../skills/bp-network-advisor-datasheet.html">bp-network-advisor-datasheet</a>
+<a href="../skills/bp-fleet-supervision-sheet.html">bp-fleet-supervision-sheet</a>
+<div class="grp">方案页</div>
+<a href="../skills/bp-milestone-plugin-sheet.html">bp-milestone-plugin-sheet</a>
+<a href="../skills/bp-smart-tool-sheet.html" class="on">bp-smart-tool-sheet</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../brochures/index.html">产品彩页</a> › <a href="../index.html">ALE 网管与安全</a> › <span>bp-smart-tool-sheet</span></nav><h1>bp-smart-tool-sheet</h1><p class="meta"><span class="badge">SKILL</span> bp-smart-tool-sheet · 来源页码: </p><h2 id="r">R（何时用）</h2>
+<ul>
+<li>OT/IoT 环境（工厂、交通、智能楼宇、水电、监狱/赌场/银行等）现场云不可达或受限，装维人员非网络专业</li>
+<li>摄像机/传感器/门禁等设备密集型网络的 PoE 问题频发，需 60 秒级诊断修复</li>
+<li>装维外包、现场人员流动大、排障依赖 IT 升级导致效率低</li>
+<li>需要免 CLI、免云面板的独立现场工具；或需保留人工确认的 PoE 断电重启（高保障合规场景）</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p>OmniVista Smart Tool（OST）是专为现场技术员打造的独立（standalone）、不依赖云的现场工具（P36，&lt;&lt;<PAGE 22>&gt;&gt;），用于 IoT 设备连接的部署与排障，不依赖 CLI 工具、云面板或高级网络技能。差异化在"设备密集型 OT 网络"（摄像机、传感器、边缘设备主导）（&lt;&lt;<PAGE 22>&gt;&gt;）：90%+ 的物理安全问题源于供电或布线，OST 的 PoE 诊断与 TDR 线缆测试直击这两类根因（&lt;&lt;<PAGE 23>&gt;&gt;）。</p>
+<h2 id="a1">A1（选型/决策要点）</h2>
+<ol>
+<li>先问使用者在哪、是谁：OT 现场装维外包人员 → OST；IT 网络团队日常运维 → OmniVista 平台 + Network Advisor（F4）</li>
+<li>问云连接：现场云受限/无云 → OST 是少数可选项（cloud-independent）（&lt;&lt;<PAGE 22>&gt;&gt;）</li>
+<li>问故障类型：多为 PoE/布线类 → PoE Wizard + TDR 直接对症（&lt;&lt;<PAGE 23>&gt;&gt;）</li>
+<li>高保障市场（监狱、赌场、银行）要求操作留痕 → 一键 PoE Power Cycle 保留人工在环（&lt;&lt;<PAGE 23>&gt;&gt;）</li>
+<li>首装场景 → Lightning Config 向导保证首次安装成功率（&lt;&lt;<PAGE 22>&gt;&gt;）</li>
+</ol>
+<h2 id="a2">A2（规格细节速查表）</h2>
+<table>
+<thead>
+<tr>
+<th>能力</th>
+<th>具体内容</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>形态</td>
+<td>独立现场工具，不依赖云（standalone, cloud-independent）</td>
+<td>&lt;&lt;<PAGE 22>&gt;&gt;</td>
+</tr>
+<tr>
+<td>PoE Wizard</td>
+<td>60 秒内诊断并修复常见 PoE 问题，大幅缩短部署与培训时间</td>
+<td>&lt;&lt;<PAGE 23>&gt;&gt;</td>
+</tr>
+<tr>
+<td>PoE Power Cycle</td>
+<td>一键 PoE 断电重启摄像机/PoE 设备，免跑现场；保留人工在环以满足高保障市场（监狱/赌场/银行）问责要求</td>
+<td>&lt;&lt;<PAGE 23>&gt;&gt;</td>
+</tr>
+<tr>
+<td>TDR 线缆测试</td>
+<td>以太网线缆健康测试（时域反射）</td>
+<td>&lt;&lt;<PAGE 23>&gt;&gt;</td>
+</tr>
+<tr>
+<td>端口发现与电力可视</td>
+<td>按端口设备发现与供电可视（LLDP）</td>
+<td>&lt;&lt;<PAGE 23>&gt;&gt;</td>
+</tr>
+<tr>
+<td>配置向导</td>
+<td>安全配置向导快速上手；安装全程无 CLI 依赖</td>
+<td>&lt;&lt;<PAGE 23>&gt;&gt;</td>
+</tr>
+<tr>
+<td>Lightning Config</td>
+<td>OmniSwitch 首装配置向导，保障首次安装成功</td>
+<td>&lt;&lt;<PAGE 22>&gt;&gt;</td>
+</tr>
+<tr>
+<td>效率指标</td>
+<td>90%+ 摄像机问题更快解决；减少 truck rolls（跑现场次数）</td>
+<td>&lt;&lt;<PAGE 23>&gt;&gt;</td>
+</tr>
+<tr>
+<td>端口安全</td>
+<td>端口锁定到摄像机，防未授权变更</td>
+<td>&lt;&lt;<PAGE 23>&gt;&gt;</td>
+</tr>
+<tr>
+<td>团队赋能</td>
+<td>视频/OT 运维人员可做一线排障，释放 IT 做高价值工作</td>
+<td>&lt;&lt;<PAGE 23>&gt;&gt;</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_1">典型适用环境（&lt;&lt;<PAGE 22>&gt;&gt;）</h3>
+<ul>
+<li>物理安防（VMS）</li>
+<li>交通与 ITS（智能交通系统）</li>
+<li>工业与制造业</li>
+<li>智能楼宇与 BAS（楼宇自动化）</li>
+<li>水电、园区与关键基础设施</li>
+</ul>
+<h3 id="ot-ost">OT 部署五大痛点（OST 对症，&lt;&lt;<PAGE 22>&gt;&gt;）</h3>
+<ol>
+<li>安装由非网络专业人员执行</li>
+<li>现场与运维人员流动率高</li>
+<li>排障耗时且需 IT 升级</li>
+<li>设备密集网络（摄像机/传感器/门禁）PoE 问题频发</li>
+<li>OT 环境云连接受限或被禁</li>
+</ol>
+<h2 id="e">E（适用场景案例）</h2>
+<ul>
+<li>工厂/交通现场云不可达、装维外包非网络专业 → OST 而非 Cirrus（C8，&lt;&lt;<PAGE 22>&gt;&gt;）</li>
+<li>监狱/赌场/银行高保障场景 → 一键 PoE Power Cycle 保留人工确认，满足问责（&lt;&lt;<PAGE 23>&gt;&gt;）</li>
+<li>摄像机大规模部署首装 → Lightning Config 向导 + PoE Wizard，减少培训与部署时间（&lt;&lt;<PAGE 22>&gt;&gt;/&lt;&lt;<PAGE 23>&gt;&gt;）</li>
+<li>布线老化排查 → TDR 线缆健康测试定位物理层故障（&lt;&lt;<PAGE 23>&gt;&gt;）</li>
+</ul>
+<h2 id="b">B（限制与订购坑）</h2>
+<ul>
+<li>定位是现场工具，不含集中网管/监控面板——不能替代 OmniVista 平台（F4：多工具互补）</li>
+<li>彩页未列 SKU 号、许可与平台要求（支持的交换机型号/版本）——订购与技术前提待确认，需另查 ALE 报价与兼容清单</li>
+<li>面向 OmniSwitch 生态（Lightning Config 为 OmniSwitch 向导）；第三方交换机不在覆盖内（&lt;&lt;<PAGE 22>&gt;&gt;，推断自上下文）</li>
+</ul>
+<p>来源：bp-nms-brochures · omnivista-smart-tool-solution-sheet-en.pdf，p22-23</p><div class="pn"><a href="bp-milestone-plugin-sheet.html">⬅ 上一单元：bp-milestone-plugin-sheet</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
