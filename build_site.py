@@ -528,7 +528,10 @@ CATALOG = [
         ('DT00XTE221 · OmniSwitch LAN Troubleshooting', '587 页 · 9 个知识单元 · 有线排障全科 / 五大 LAB 根因 / OVNA', 'postsales/os-lan-troubleshooting/index.html'),
         ('DT00XTE317 · OmniVista Cirrus / Terra 部署与配置', 'Edition 10 · 478 页 · 10 个知识单元 · 激活排障 / SSID 选型 / RF 调优 / 漫游排障', 'postsales/ov-terra/index.html'),
         ('DT00XTE220 · OmniSwitch LAN R8 Bootcamp', 'Edition 23 · 1162 页 · 五天全科训练营 · 12 个知识单元 · 开局加固 / L2 冗余 / 路由 / SPB Fabric', 'postsales/dt00xte220-bootcamp/index.html'),
-        ('DT00XTE216 · OmniSwitch LAN R8 Core Switching', 'Edition 15 · 724 页 · 核心交换专题 · 11 个知识单元 · SPB 织构重点（含 Tech Brief 与实验附录）', 'postsales/dt00xte216-core-switching/index.html'),
+        ('DT00XTE216 · OmniSwitch LAN R8 Core Switching', 'Edition 15 · 724 页 · 核心交换专题 · 13 个知识单元 · SPB 织构重点（含 Tech Brief 与实验附录）', 'postsales/dt00xte216-core-switching/index.html'),
+        ('DT00XTE301 · OmniSwitch 接入与 Stellar WLAN 安装', 'Edition 04 · 512 页 · 10 个知识单元 · 交换机开局 / PoE / SSID 安全 / Cirrus 云管', 'postsales/smb-lan-wlan-install/index.html'),
+        ('DT00XTE310 · OmniSwitch 接入与 Stellar WLAN Express', 'Edition 05 · 1083 页 · 11 个知识单元 · 三部署模式 / 语音 WLAN / 故障排查', 'postsales/smb-express-lan-wlan/index.html'),
+        ('DT00XTE311 · OmniVista 2500 NMS 管理', 'Edition 09 · 581 页 · 10 个知识单元 · 安装 / 发现 / 资源 / 统一接入 / 隔离', 'postsales/ov2500-nms-admin/index.html'),
         ('Stellar WLAN 实施与优化', 'AP 部署、RF 规划、无线排障', None),
     ]),
     ('配置手册 · Manuals', '#22d3ee', [
@@ -536,6 +539,7 @@ CATALOG = [
         ('OV2500 4.9R2 · 安装与升级指南', '326 页 · 4 个知识单元 · 四档规模 / 三平台 / HA / 升级链', 'manuals/ov2500-install/index.html'),
         ('OV2500 4.9R2 · RAP 与 VPN VA 安装', '84 页 · 4 个知识单元 · VPN 模式 / VA 容量 / 隧道排障', 'manuals/ov2500-rap-vpn/index.html'),
         ('OV2500 4.9R2 · Release Notes', '93 页 · 4 个知识单元 · 升级评估 / 63 条已知问题排障库 / 危险陷阱', 'manuals/ov2500-release-notes/index.html'),
+        ('OV2500 4.9R2 · User Guide', '935 页 · 10 个知识单元 · Analytics 报表 / 发现拓扑 / 资源管理 / UPAM / VM 织构', 'manuals/ov2500-userguide/index.html'),
     ]),
     ('无线网络 · WLAN', '#a78bfa', [
         ('WiFi 6 / 6E / 7 技术基础', '标准演进、OFDMA、多链路操作', None),
