@@ -4,6 +4,7 @@ description: 售前为智能交通/轨道/电力/智慧城市等工业场景选�
 source_book: bp-omniswitch-datasheets（DOC 5 omniswitch_6465，p36-46）
 ---
 
+![OmniSwitch 6465 数据表速查（工业加固 DIN/19 英寸） · 产品实物图（官方彩页）](images/omniswitch_6465.jpeg)
 ## R（触发场景）
 - 智能交通、轨道交通、智慧城市、电力等室外/机柜工业以太选型
 - 工业机柜内多口汇聚（P28）vs DIN 导轨小盒（P6/P12）取舍

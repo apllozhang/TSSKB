@@ -4,6 +4,7 @@ description: 售前核对 ALE OmniAccess Stellar AP1431（4.2Gbps/6GHz HE160/双
 source_book: bp-stellar-ap-datasheets（AP1431 p48-56）
 ---
 
+![AP1431 数据表速查（Wi-Fi 6E 三频入门 2x2x3） · 产品实物图（官方彩页）](images/ap1431.jpeg)
 ## R（触发场景）
 - 6GHz 频谱干净的 Wi-Fi 6E 首次引入：中高密办公升级到三频
 - 核对双 2.5GE 上联与 bt 34W 供电；at 25W 会关 USB

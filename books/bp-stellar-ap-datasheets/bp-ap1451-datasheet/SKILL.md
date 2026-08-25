@@ -4,6 +4,7 @@ description: 售前核对 ALE OmniAccess Stellar AP1451（10Gbps/五射频/双 1
 source_book: bp-stellar-ap-datasheets（AP1451 p57-65）
 ---
 
+![AP1451 数据表速查（Wi-Fi 6E 旗舰 6G 4x4 + 5G 8x8） · 产品实物图（官方彩页）](images/ap1451.jpeg)
 ## R（触发场景）
 - 超高密 + 6GHz 频谱的 Wi-Fi 6E 旗舰选型（对标 1351 的 6E 版）
 - 双 10GE 上联 + bt 49W 供电预算核对

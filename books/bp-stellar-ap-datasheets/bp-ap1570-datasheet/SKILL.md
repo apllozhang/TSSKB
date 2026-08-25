@@ -4,6 +4,7 @@ description: 售前选 AP1571 内置或 AP1572 外置 6x N 头（6KA 防雷须�
 source_book: bp-stellar-ap-datasheets（AP1570 series p117-128）
 ---
 
+![AP1570 系列数据表速查（室外 Wi-Fi 7 旗舰 10GE combo + 光回传） · 产品实物图（官方彩页）](images/ap1570_series.jpeg)
 ## R（触发场景）
 - 室外园区 Wi-Fi 7 旗舰：需要光纤长距回传（SFP/SFP+）、专用三频扫描、BT 6.0、1GE PSE 下联（C3）
 - AP1571（内置全向）vs AP1572（6x N 头外置 + 6KA 防雷）取舍

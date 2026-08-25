@@ -4,6 +4,7 @@ description: 售前为高密礼堂/会议厅选 AP1541 内置或 AP1542 外置 8
 source_book: bp-stellar-ap-datasheets（AP1540 series p97-107）
 ---
 
+![AP1540 系列数据表速查（室内 Wi-Fi 7 超高密旗舰 18.67Gbps） · 产品实物图（官方彩页）](images/ap1540_series.jpeg)
 ## R（触发场景）
 - 高密礼堂/大会议室/教室/酒店公区 Wi-Fi 7 超高密：AP1541 内置 vs AP1542 外置怎么选（C2）
 - 双 10GE + combo SFP+ 光口上联与 bt 51W 供电预算

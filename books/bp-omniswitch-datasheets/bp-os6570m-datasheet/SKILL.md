@@ -4,6 +4,7 @@ description: 售前为企业与运营商城域边缘选型 OS6570M（12/28 口 G
 source_book: bp-omniswitch-datasheets（DOC 8 omniswitch_6570m，p64-72）
 ---
 
+![OmniSwitch 6570M 数据表速查（城域/SP 边缘） · 产品实物图（官方彩页）](images/omniswitch_6570m.jpeg)
 ## R（触发场景）
 - 运营商/城域光纤汇聚、CPE（客户驻地设备）部署选型
 - 全光口接入（20x100/1000 SFP）与 10G/25G 许可升速规划

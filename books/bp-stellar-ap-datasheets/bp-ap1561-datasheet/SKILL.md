@@ -4,6 +4,7 @@ description: 售前核对 ALE OmniAccess Stellar AP1561（9.328Gbps/2x2x3/1x 5GE
 source_book: bp-stellar-ap-datasheets（AP1561 p108-116）
 ---
 
+![AP1561 数据表速查（室外 Wi-Fi 7 经济型 5GE/at） · 产品实物图（官方彩页）](images/ap1561.jpeg)
 ## R（触发场景）
 - 室外园区 Wi-Fi 7：现网接入层只有 5GE/at，不想升级交换机与 bt 供电（C3）
 - 6GHz 未开放地区室外部署：AFC 就绪、6G 软切 5G（C4）

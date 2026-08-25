@@ -4,6 +4,7 @@ description: 查 Milestone Plugin 与 Milestone VMS 集成的摄像机远程复�
 source_book: bp-nms-brochures（ale-omniswitch-milestone-plugin-solution-sheet p7-8）
 ---
 
+![OmniSwitch Milestone Plugin 方案页（视频监控网络远程运维） · 产品实物图（官方彩页）](images/ale-omniswitch-milestone-plugin-solution-sheet-en.pdf.jpeg)
 ## R（何时用）
 - 视频监控行业客户（安防集成商、楼宇、园区）摄像机频繁掉线，需派人现场重启
 - 客户已用 Milestone Systems VMS + OmniSwitch，想在 VMS 界面内直接处置网络/摄像机故障

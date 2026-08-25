@@ -4,6 +4,7 @@ description: 售前为校园/中小网边缘选型 OS6560/E（24/48 口 + 6x10G 
 source_book: bp-omniswitch-datasheets（DOC 7 omniswitch_6560_e，p54-63）
 ---
 
+![OmniSwitch 6560/E 数据表速查（校园多千兆接入） · 产品实物图（官方彩页）](images/omniswitch_6560_e.jpeg)
 ## R（触发场景）
 - 校园/中小网边缘、分支与园区工作组接入：24/48 口 + 最多 6x10G 上联
 - 多千兆全口 95W bt（P24Z24/E-P48Z16）的 Wi-Fi 6/7 供电选型

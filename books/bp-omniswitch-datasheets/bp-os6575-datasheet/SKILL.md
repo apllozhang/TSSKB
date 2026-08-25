@@ -4,6 +4,7 @@ description: 售前为轨旁/交通/室外轨旁小点位选型 OS6575-MP16（IP
 source_book: bp-omniswitch-datasheets（DOC 9 omniswitch_6575，p73-81）
 ---
 
+![OmniSwitch 6575-MP16 数据表速查（IP67 壁挂工业加固） · 产品实物图（官方彩页）](images/omniswitch_6575.jpeg)
 ## R（触发场景）
 - 轨道交通沿线、智能交通、智慧城市、电力等室外/壁挂小点位接入
 - 需要 IP67 防护等级与 -40~75°C 全加固的 16 口小盒

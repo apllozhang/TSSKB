@@ -4,6 +4,7 @@ description: 售前为连锁零售/分支办公室选 ALE OmniAccess Stellar AP1
 source_book: bp-stellar-ap-datasheets（AP1501 p66-76）
 ---
 
+![AP1501 数据表速查（Wi-Fi 7 平价入门 2x2x3） · 产品实物图（官方彩页）](images/ap1501.jpeg)
 ## R（触发场景）
 - 数百分支/零售/小园区 Wi-Fi 7 平价换代：接入交换机仍 GbE/af-at（C1）
 - 核对"最便宜 Wi-Fi 7"砍掉了什么：BLE/Zigbee、扫描射频、第二网口

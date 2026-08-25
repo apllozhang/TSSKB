@@ -4,6 +4,7 @@ description: 售前为酒店/病房/宿舍客房墙面覆盖选 ALE OmniAccess S
 source_book: bp-stellar-ap-datasheets（AP1301H p14-21）
 ---
 
+![AP1301H 数据表速查（酒店墙面 Wi-Fi 6 一口多用） · 产品实物图（官方彩页）](images/ap1301h.jpeg)
 ## R（触发场景）
 - 酒店/病房/教室/宿舍/诊室/远程办公房间：一张 AP 解决房间 Wi-Fi + IPTV 供电 + IP 话机 + 模拟话机直通（C5）
 - 核对 OAW-AP1301H-RW/ME/US 规格与单 gang 86mm 墙盒安装

@@ -4,6 +4,7 @@ description: 售前核对 ALE OmniAccess Stellar AP1521（12.2Gbps/10GE 上联/�
 source_book: bp-stellar-ap-datasheets（AP1521 p87-96）
 ---
 
+![AP1521 数据表速查（Wi-Fi 7 中端 5G 4x4 + 三频专用扫描） · 产品实物图（官方彩页）](images/ap1521.jpeg)
 ## R（触发场景）
 - Wi-Fi 7 中端主力：需要全时三频扫描防护（wIPS）+ BLE/Zigbee + MACsec + 10GE
 - 与 1511 做预算/布线取舍（C7）；与 1540 做密度取舍

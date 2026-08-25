@@ -4,6 +4,7 @@ description: 售前核对 ALE OmniAccess Stellar AP1331（3.55Gbps/双 5GE/四�
 source_book: bp-stellar-ap-datasheets（AP1331 p22-29）
 ---
 
+![AP1331 数据表速查（Wi-Fi 6 中高端 4x4+专用扫描） · 产品实物图（官方彩页）](images/ap1331.jpeg)
 ## R（触发场景）
 - 中高密办公/开放区 Wi-Fi 6：需要专用扫描射频（全时 wIPS）+ BLE/Zigbee IoT 定位
 - 接入交换机具备 5GE 多千兆 + bt/dual-at 供电，核对上联与 PoE 预算

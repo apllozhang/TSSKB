@@ -4,6 +4,7 @@ description: 售前核对 ALE OmniAccess Stellar AP1261 室外 11ac Wave2 AP 规
 source_book: bp-stellar-ap-datasheets（AP1261 p1-5）
 ---
 
+![AP1261 数据表速查（室外 802.11ac Wave2 老将） · 产品实物图（官方彩页）](images/ap1261.jpeg)
 ## R（触发场景）
 - 老室外网扩容/替换，库里还有 AP1261（OAW-AP1261-RW-B）行项，核对规格与供电
 - 客户外场只有 GbE + 802.3at，只想做基础室外覆盖，不需要 Wi-Fi 6

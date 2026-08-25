@@ -4,6 +4,7 @@ description: 售前为交通/电力/视频监控等严苛工业环境选型 OS68
 source_book: bp-omniswitch-datasheets（DOC 11 omniswitch_6865，p99-109）
 ---
 
+![OmniSwitch 6865 数据表速查（工业 L3 旗舰：75W/SPB-M/-40~74°C） · 产品实物图（官方彩页）](images/omniswitch_6865.jpeg)
 ## R（触发场景）
 - 需要 SPB-M VPN + 工业加固的 L3 组网（交通控制、电力、视频监控、室外安装）
 - 每型 4 口 75W bt 供电的大功率工业设备（PTZ/室外 AP）规划

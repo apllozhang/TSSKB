@@ -4,6 +4,7 @@ description: 售前为 Wi-Fi 7 高密楼层与重 PoE IoT 选型 OS6370（Z 型�
 source_book: bp-omniswitch-datasheets（DOC 4 omniswitch_6370，p24-35）
 ---
 
+![OmniSwitch 6370 数据表速查（多千兆 PoE 接入/Wi-Fi 7 时代） · 产品实物图（官方彩页）](images/omniswitch_6370.jpeg)
 ## R（触发场景）
 - Wi-Fi 7 高密楼层接入：多口 2.5G + 95W bt 供电选型（P12Z12/P24Z8/P48Z16）
 - PTZ 摄像头、自助终端、超高清数字标牌等高功率 IoT 供电规划

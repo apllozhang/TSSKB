@@ -4,6 +4,7 @@ description: 售前为住宅/城域以太三重播放、智慧楼宇弱电间等
 source_book: bp-omniswitch-datasheets（DOC 6 omniswitch_6465t，p47-53）
 ---
 
+![OmniSwitch 6465T 数据表速查（宽温城域 L3/三重播放） · 产品实物图（官方彩页）](images/omniswitch_6465t.jpeg)
 ## R（触发场景）
 - 运营商住宅/城域以太接入、三重播放（triple play）楼宇布线间选型
 - 智慧城市/楼宇/交通部署中"宽温够用、预算比 6465 低"的 12 口小盒

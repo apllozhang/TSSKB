@@ -4,6 +4,7 @@ description: 售前在 AP1361 全向/AP1361D 定向/AP1362 外置 6N 头之间�
 source_book: bp-stellar-ap-datasheets（AP1360 series p37-47）
 ---
 
+![AP1360 系列数据表速查（室外 Wi-Fi 6 三天线形态 + SFP + PSE 下联） · 产品实物图（官方彩页）](images/ap1360_series.jpeg)
 ## R（触发场景）
 - 室外园区/厂区/港口 Wi-Fi 6 覆盖：全向（1361）/定向补盲（1361D）/外置天线自配增益（1362）三选一（C8）
 - 需要 SFP 长距回传 + 下联口给摄像头/ATP 供电的室外点位

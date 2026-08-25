@@ -4,6 +4,7 @@ description: 查 Fleet Supervision 免费自助注册工具的四大能力（资
 source_book: bp-nms-brochures（ale-network-fleet-supervision-solution-sheet p5-6）
 ---
 
+![ALE Network Fleet Supervision 方案页（免费资产盘点与支持合规） · 产品实物图（官方彩页）](images/ale-network-fleet-supervision-solution-sheet-en.pdf.jpeg)
 ## R（何时用）
 - 预算有限客户的零成本切入点：先免费提供资产可见价值，再谈付费网管
 - 客户要做 OmniSwitch / OmniAccess Stellar 资产盘点、硬件生命周期（EoS/EoL）与换新预算规划

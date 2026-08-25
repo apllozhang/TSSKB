@@ -4,6 +4,7 @@ description: 售前为企业边缘/分支/园区工作组选型 OS6360（10/24/4
 source_book: bp-omniswitch-datasheets（DOC 3 omniswitch_6360，p15-23）
 ---
 
+![OmniSwitch 6360 数据表速查（企业价值接入） · 产品实物图（官方彩页）](images/omniswitch_6360.jpeg)
 ## R（触发场景）
 - 企业边缘/教室与园区工作组接入，比 2360 高一档、比 6370 便宜的选型
 - 46x1G + 2x1G/2.5G + 760W 预算的低成本 Wi-Fi 6/7 AP 供电方案（P48X/PH48）

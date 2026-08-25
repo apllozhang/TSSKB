@@ -4,6 +4,7 @@ description: 售前核对 ALE OmniAccess Stellar AP1511（9.328Gbps/1x 5GE/BT5.4
 source_book: bp-stellar-ap-datasheets（AP1511 p77-86）
 ---
 
+![AP1511 数据表速查（Wi-Fi 7 入门+BLE5.4/FTM/5GE/MACsec） · 产品实物图（官方彩页）](images/ap1511.jpeg)
 ## R（触发场景）
 - Wi-Fi 7 入门但需要 BLE/Zigbee IoT 射频 + FTM 精确定位（医疗资产追踪等）（C9）
 - 接入层 5GE 多千兆 + at/bt 供电；上联要 MACsec 加密

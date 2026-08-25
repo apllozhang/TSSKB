@@ -4,6 +4,7 @@ description: 售前为中大型园区边缘/汇聚/小核心选型 OS6860（E/N 
 source_book: bp-omniswitch-datasheets（DOC 10 omniswitch_6860，p82-98）
 ---
 
+![OmniSwitch 6860 数据表速查（接入旗舰：95W/200G 堆叠/全 fabric） · 产品实物图（官方彩页）](images/omniswitch_6860.jpeg)
 ## R（触发场景）
 - 中大型园区边缘、汇聚层、小企业核心、DC GbE 服务器接入（<<<PAGE 82>>> 四定位）
 - Wi-Fi 6/7 高密供电：95W bt 口 + 3.4kW 预算规划

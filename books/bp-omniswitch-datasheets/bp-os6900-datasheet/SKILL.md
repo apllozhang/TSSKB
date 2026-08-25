@@ -4,6 +4,7 @@ description: 售前为园区核心/DC ToR-spine 选型 OS6900（7 型号 6.4Tb/s
 source_book: bp-omniswitch-datasheets（DOC 13 omniswitch_6900，p125-137）
 ---
 
+![OmniSwitch 6900 数据表速查（固定配置核心/DC） · 产品实物图（官方彩页）](images/omniswitch_6900.jpeg)
 ## R（触发场景）
 - 中型园区核心/汇聚、DC ToR 或 spine 选型（10/25/40/100G 固定平台）
 - 1RU 高密度需求：128x10G、80x25G、32x100G 端口核算

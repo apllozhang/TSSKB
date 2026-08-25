@@ -4,6 +4,7 @@ description: 售前核对 ALE OmniAccess Stellar AP1301 室内 Wi-Fi 6 入门 AP
 source_book: bp-stellar-ap-datasheets（AP1301 p6-13）
 ---
 
+![AP1301 数据表速查（室内 Wi-Fi 6 入门双频 2x2） · 产品实物图（官方彩页）](images/ap1301.jpeg)
 ## R（触发场景）
 - 普通办公/教室中低密度 Wi-Fi 6 覆盖，预算敏感，接入交换机为 GbE + 802.3af
 - 核对 AP1301（OAW-AP1301-RW/ME/US）规格与配件行项

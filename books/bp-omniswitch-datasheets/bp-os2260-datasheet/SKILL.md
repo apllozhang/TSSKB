@@ -4,6 +4,7 @@ description: 售前为小微办公/单层桌面接入选型 OS2260（8/24/48 口
 source_book: bp-omniswitch-datasheets（DOC 1 omniswitch_2260，p1-7）
 ---
 
+![OmniSwitch 2260 数据表速查（WebSmart+ SMB 接入） · 产品实物图（官方彩页）](images/omniswitch_2260.jpeg)
 ## R（触发场景）
 - 小微办公/单层 50 信息点以内、预算极紧的有线接入选型
 - 客户外包运维只会 web 界面、不需要堆叠和 10G 上联

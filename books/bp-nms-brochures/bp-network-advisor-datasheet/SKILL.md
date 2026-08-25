@@ -4,6 +4,7 @@ description: 查 Network Advisor 产品定位（AI/ML 运维伴随工具）、�
 source_book: bp-nms-brochures（alcatel-lucent-omnivista-network-advisor-datasheet p1-4）
 ---
 
+![OmniVista Network Advisor 数据表（AI 运维伴随·异常检测与修复） · 产品实物图（官方彩页）](images/alcatel-lucent-omnivista-network-advisor-datasheet-en.pdf.jpeg)
 ## R（何时用）
 - 客户想要 AI/ML 异常检测、自动/一键修复、网络调优建议等"智能运维"能力
 - 混合 ALE（OmniSwitch/OmniAccess Stellar）+ 第三方设备的网络想纳入统一告警

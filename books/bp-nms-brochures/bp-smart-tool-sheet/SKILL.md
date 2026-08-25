@@ -4,6 +4,7 @@ description: 查 Smart Tool（OST）OT 现场独立工具定位、PoE Wizard 60 
 source_book: bp-nms-brochures（omnivista-smart-tool-solution-sheet p22-23）
 ---
 
+![OmniVista Smart Tool 方案页（OT/IoT 现场免云免 CLI 工具） · 产品实物图（官方彩页）](images/omnivista-smart-tool-solution-sheet-en.pdf.jpeg)
 ## R（何时用）
 - OT/IoT 环境（工厂、交通、智能楼宇、水电、监狱/赌场/银行等）现场云不可达或受限，装维人员非网络专业
 - 摄像机/传感器/门禁等设备密集型网络的 PoE 问题频发，需 60 秒级诊断修复

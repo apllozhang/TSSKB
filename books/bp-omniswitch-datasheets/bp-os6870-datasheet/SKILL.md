@@ -4,6 +4,7 @@ description: 售前为多 fabric 演进（SPB+VxLAN-EVPN+MPLS）、Zero Trust �
 source_book: bp-omniswitch-datasheets（DOC 12 omniswitch_6870，p110-124）
 ---
 
+![OmniSwitch 6870 数据表速查（OmniFabric 三 fabric 合一高端） · 产品实物图（官方彩页）](images/omniswitch_6870.jpeg)
 ## R（触发场景）
 - 既有 SPB 园区要接 VxLAN-EVPN DC 或 MPLS WAN 的多 fabric 演进（一步到位不做网关转换）
 - Zero Trust 部署：全口 256bit MACsec（含用户口）+ Secure Boot 应答

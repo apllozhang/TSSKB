@@ -4,6 +4,7 @@ description: 售前为大型园区核心/DC 选型 OS9900（9907/9912 机箱 + C
 source_book: bp-omniswitch-datasheets（DOC 15 omniswitch_9900，p145-158）
 ---
 
+![OmniSwitch 9900 数据表速查（模块化机箱旗舰） · 产品实物图（官方彩页）](images/omniswitch_9900.jpeg)
 ## R（触发场景）
 - 大型园区核心/汇聚/边缘、DC 高密度接入：模块化机箱选型（9907 11RU vs 9912 17.25RU）
 - GbE 密度 + PoE 核心：288/480 GbE、10800W/7920W PoE 预算规划

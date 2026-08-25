@@ -4,6 +4,7 @@ description: 查 OmniVista 新平台双形态定位（云 Cirrus / 本地 Terra�
 source_book: bp-nms-brochures（omnivista-network-management-datasheet p9-21）
 ---
 
+![OmniVista 网管平台主数据表（Cirrus/Terra 全貌·功能·规格·订购） · 产品实物图（官方彩页）](images/omnivista-network-management-datasheet-en.pdf.jpeg)
 ## R（何时用）
 - 客户要换网管平台，纠结云（Cirrus）还是本地（Terra）；MSP/多组织集中管理；政务/受监管行业数据不出境
 - OV2500 / Cirrus 4 存量客户升级谈判（重配成本、迁移工具）

@@ -4,6 +4,7 @@ description: 售前为 SMB/分支/园区工作组选型 OS2360（24/48 口可堆
 source_book: bp-omniswitch-datasheets（DOC 2 omniswitch_2360，p8-14）
 ---
 
+![OmniSwitch 2360 数据表速查（SMB 可堆叠 GbE） · 产品实物图（官方彩页）](images/omniswitch_2360.jpeg)
 ## R（触发场景）
 - SMB/分支多楼层、需要堆叠统一管理或 10G 上联的接入选型
 - 2260（无堆叠）与 2360（可堆叠）之间的取舍

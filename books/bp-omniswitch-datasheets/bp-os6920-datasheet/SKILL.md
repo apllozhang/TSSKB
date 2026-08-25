@@ -4,6 +4,7 @@ description: 售前为 AI/HPC、GPU 集群、RoCEv2 无损存储网络与 Azure 
 source_book: bp-omniswitch-datasheets（DOC 14 omniswitch_6920，p138-144）
 ---
 
+![OmniSwitch 6920-D32 数据表速查（400G AI/HPC 骨干） · 产品实物图（官方彩页）](images/omniswitch_6920.jpeg)
 ## R（触发场景）
 - AI/HPC/解耦存储/超大规模架构的 400G 骨干选型（spine/super-spine/border-leaf）
 - RoCEv2 + PFC 无损 fabric（GPU 集群、RDMA 存储）方案

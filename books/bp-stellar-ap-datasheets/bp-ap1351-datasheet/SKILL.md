@@ -4,6 +4,7 @@ description: 售前核对 ALE OmniAccess Stellar AP1351（5GH 8x8/双 10GE/五�
 source_book: bp-stellar-ap-datasheets（AP1351 p30-36）
 ---
 
+![AP1351 数据表速查（Wi-Fi 6 旗舰三射频 ~10Gbps） · 产品实物图（官方彩页）](images/ap1351.jpeg)
 ## R（触发场景）
 - 超高密室内 Wi-Fi 6：大礼堂、开放密集办公、报告厅
 - 接入层已备 10GE/bt，核对双 10GE 上联与 45W 供电预算
