@@ -85,6 +85,15 @@ NEW_COURSES = [
         ('机制', ['upamfw-sso-overview']),
         ('Palo Alto 集成', ['upamfw-pan-arch', 'upamfw-pan-config']),
        ]),
+  dict(id='certification/training-system', book='cert-training', title='ALE 培训与认证体系',
+       subtitle='5 份官方培训文档 172 页 · 课程目录 / 专业化路径 / 培训中心 / 新增内容',
+       route=['培训服务体系与培训中心查询', '专业化培训路径（certification tracks）',
+              '网络云与行业课程目录', '通信云与行业课程目录', '培训服务新增内容'],
+       groups=[
+        ('总览', ['cert-overview']),
+        ('路径与目录', ['cert-paths-specialisations', 'cert-offer-network', 'cert-offer-communications', 'cert-offer-third-party']),
+        ('动态', ['cert-whats-new']),
+       ]),
   dict(id='postsales/acfe-wlan-basic', book='acfe-wlan', title='DT00XTE360 · ACFE WLAN Basic Deployment with OmniVista',
        subtitle='Edition 04 · 585 页 · Stellar+Cirrus 云管交付实操（AP 生命周期全流程，5 天带 Lab）',
        route=['部署模式判定与开局前置', 'Cirrus 组织与 License 生命周期', '设备 Onboarding 与激活排障',
@@ -813,7 +822,7 @@ def topbar(pfx='', active=''):
 # 分类 → Banner 图（PBG-2026 模板素材，ALE 品牌紫色调）
 CAT_BANNER = {'presales': 'banner-presales.jpg', 'postsales': 'banner-postsales.jpg', 'wlan': 'banner-wlan.jpg',
               'aos': 'banner-aos.jpg', 'hardware': 'banner-hardware.jpg', 'brochures': 'banner-brochures.jpg',
-              'manuals': 'banner-manuals.jpg', 'solutions': 'banner-solutions.jpg', 'security': 'banner-solutions.jpg'}
+              'manuals': 'banner-manuals.jpg', 'solutions': 'banner-solutions.jpg', 'security': 'banner-solutions.jpg', 'certification': 'banner-presales.jpg'}
 
 HERO_CSS = """
 .hero{position:relative;background:linear-gradient(118deg,#4F3478 0%,#6B489D 55%,#7E5CB4 100%);color:#fff;
@@ -1026,7 +1035,7 @@ def build_course(c):
 
     def crumbs(cur='', sub=False):
         cat = c['id'].split('/')[0]
-        cat_label = {'postsales': '售后', 'presales': '售前', 'manuals': 'OV2500 配置手册', 'aos': 'AOS 软件手册', 'hardware': '硬件手册', 'brochures': '产品彩页', 'wlan': '无线网络', 'solutions': '解决方案', 'security': '安全'}[cat]
+        cat_label = {'postsales': '售后', 'presales': '售前', 'manuals': 'OV2500 配置手册', 'aos': 'AOS 软件手册', 'hardware': '硬件手册', 'brochures': '产品彩页', 'wlan': '无线网络', 'solutions': '解决方案', 'security': '安全', 'certification': '认证与培训'}[cat]
         p = '../../../' if sub else '../../'
         q = '../' if sub else ''
         bar = f'<nav class="crumbs"><a href="{p}index.html">🏠 培训门户</a> › <a href="{p}{cat}/index.html">{cat_label}</a> › <a href="{q}index.html">{html_mod.escape(c["title"].split(" · ")[0])}</a>'
@@ -1163,7 +1172,7 @@ def build_category(dirname, label):
         f.write(page)
     print('category built:', dirname)
 
-for dirname, label in [('postsales', '售后 · Postsales'), ('presales', '售前 · Presales'), ('manuals', 'OV2500 配置手册 · Manuals'), ('aos', 'AOS 软件手册 · Software Guides'), ('hardware', '硬件手册 · Hardware Guides'), ('brochures', '产品彩页 · Product Datasheets'), ('wlan', '无线网络 · WLAN'), ('solutions', '解决方案 · Solutions'), ('security', '安全 · Security')]:
+for dirname, label in [('postsales', '售后 · Postsales'), ('presales', '售前 · Presales'), ('manuals', 'OV2500 配置手册 · Manuals'), ('aos', 'AOS 软件手册 · Software Guides'), ('hardware', '硬件手册 · Hardware Guides'), ('brochures', '产品彩页 · Product Datasheets'), ('wlan', '无线网络 · WLAN'), ('solutions', '解决方案 · Solutions'), ('security', '安全 · Security'), ('certification', '认证与培训 · Certification')]:
     build_category(dirname, label)
 
 build_paths_page()
@@ -1260,6 +1269,7 @@ CATALOG = [
         ('WIPS 无线入侵防护', 'Rogue 检测与抑制', None),
     ]),
     ('认证与学习路径 · Certification', '#fbbf24', [
+        ('ALE 培训与认证体系', '5 份官方文档 172 页 · 课程号目录 / 专业化路径 / 培训中心 / What is New', 'certification/training-system/index.html'),
         ('ALE 认证体系', 'ACE / ACFE 认证路径与考前串讲', None),
     ]),
 ]
