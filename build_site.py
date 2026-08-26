@@ -60,7 +60,7 @@ NEW_COURSES = [
         ('案例库', ['cases-healthcare', 'cases-transportation', 'cases-education',
                  'cases-hospitality', 'cases-government', 'cases-general']),
        ]),
-  dict(id='postsales/stellar-impl-opt', book='sol-stellar-bridge', title='Stellar 桥接与 Multi-Mesh 实施',
+  dict(id='wlan/stellar-impl-opt', book='sol-stellar-bridge', title='Stellar 桥接与 Multi-Mesh 实施',
        subtitle='Bridging & Meshing Guidelines · 32 页 · 室外桥接 / 多点 Mesh / 家庭 Mesh / OV2500 配置 / 链路监测',
        route=['Bridge vs Mesh 拓扑选型与角色（root/mesh/双 root）', '室外长距桥接设计（Fresnel 净空/天线/勘测）',
               'OV2500 四步配置与 uNP 下联口', 'SSH/iwlist 链路质量监测排障'],
@@ -1180,7 +1180,6 @@ CATALOG = [
         ('DT00XTE301 · OmniSwitch 接入与 Stellar WLAN 安装', 'Edition 04 · 512 页 · 10 个知识单元 · 交换机开局 / PoE / SSID 安全 / Cirrus 云管', 'postsales/smb-lan-wlan-install/index.html'),
         ('DT00XTE310 · OmniSwitch 接入与 Stellar WLAN Express', 'Edition 05 · 1083 页 · 11 个知识单元 · 三部署模式 / 语音 WLAN / 故障排查', 'postsales/smb-express-lan-wlan/index.html'),
         ('DT00XTE311 · OmniVista 2500 NMS 管理', 'Edition 09 · 581 页 · 10 个知识单元 · 安装 / 发现 / 资源 / 统一接入 / 隔离', 'postsales/ov2500-nms-admin/index.html'),
-        ('Stellar 桥接与 Multi-Mesh 实施', 'Bridging & Meshing Guidelines · 32 页 · 5 个知识单元 · 室外桥接 / 多点 Mesh / OV2500 配置 / 链路监测', 'postsales/stellar-impl-opt/index.html'),
     ]),
     ('OV2500 配置手册 · Manuals', '#22d3ee', [
         ('OV2500 4.9R2 · 安装与升级指南', '326 页 · 4 个知识单元 · 四档规模 / 三平台 / HA / 升级链', 'manuals/ov2500-install/index.html'),
@@ -1228,7 +1227,7 @@ CATALOG = [
     ('无线网络 · WLAN', '#a78bfa', [
         ('AWOS 5.0.3 · Stellar AP 用户手册', '128 页 · 4 个知识单元 · 集群开局 / 射频调优 / 安全 / 运维升级', 'wlan/awos-ap-guide/index.html'),
         ('WiFi 6 / 6E / 7 技术基础', '标准演进、OFDMA、多链路操作', None),
-        ('Stellar AP 产品与组网', 'Mesh / Bridge / RAP 特殊组网', None),
+        ('Stellar AP 产品与组网', 'Bridging & Meshing Guidelines · 32 页 · 5 个知识单元 · 室外桥接 / 多点 Mesh / OV2500 配置 / 链路监测', 'wlan/stellar-impl-opt/index.html'),
     ]),
     ('有线网络 · LAN Switching', '#34d399', [
         ('OmniSwitch R8 体系结构', 'VC 虚拟机箱、SPB / MPLS、UNP', None),
