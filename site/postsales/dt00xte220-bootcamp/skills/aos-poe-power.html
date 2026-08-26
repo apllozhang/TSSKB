@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -79,34 +80,34 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="i">I（核心理念）</h2>
 <ul>
-<li>OmniSwitch 用动态 PoE：按需供电至预算上限，优于 IEEE 可选分类（P129，&lt;&lt;<PAGE 694>&gt;&gt;）。</li>
-<li>分级靠 PD 固定电阻：802.3af Class 0-3（15.4W 顶）、802.3at Class 4（PSE 34.2W/PD 25.5W）（P130，&lt;&lt;<PAGE 695>&gt;&gt;）；高功率 HPoE 60/75W 对应 802.3bt 级（&lt;&lt;<PAGE 33, 54>&gt;&gt;）。</li>
-<li>电力不足时的仲裁规则是端口优先级三级 low/high/critical——critical 尽量不断电（P131，&lt;&lt;<PAGE 701>&gt;&gt;）。</li>
-<li>最大的坑是默认值：PoE 操作状态默认 down，必须逐台 <code>lanpower start</code> 激活（X76，&lt;&lt;<PAGE 697-698>&gt;&gt;）。</li>
+<li>OmniSwitch 用动态 PoE：按需供电至预算上限，优于 IEEE 可选分类（P129， <code>&lt;span class="pg"&gt;原文p694&lt;/span&gt;</code> ）。</li>
+<li>分级靠 PD 固定电阻：802.3af Class 0-3（15.4W 顶）、802.3at Class 4（PSE 34.2W/PD 25.5W）（P130， <code>&lt;span class="pg"&gt;原文p695&lt;/span&gt;</code> ）；高功率 HPoE 60/75W 对应 802.3bt 级（ <code>&lt;span class="pg"&gt;原文p33, 54&lt;/span&gt;</code> ）。</li>
+<li>电力不足时的仲裁规则是端口优先级三级 low/high/critical——critical 尽量不断电（P131， <code>&lt;span class="pg"&gt;原文p701&lt;/span&gt;</code> ）。</li>
+<li>最大的坑是默认值：PoE 操作状态默认 down，必须逐台 <code>lanpower start</code> 激活（X76， <code>&lt;span class="pg"&gt;原文p697-698&lt;/span&gt;</code> ）。</li>
 </ul>
 <h2 id="a1">A1（决策/选型）</h2>
 <ol>
-<li>功率等级：15.4W（af）→ 30W（at）→ 60W（6860E 前 4 口）→ 75W（6560 mGIG/802.3bt）（&lt;&lt;<PAGE 33, 54, 695>&gt;&gt;）</li>
-<li>关键设备（监控话机/核心 AP）标 critical，普通口保持 low/high（P131，&lt;&lt;<PAGE 701>&gt;&gt;）</li>
-<li>预算不足场景配 priority-disconnect 决定新 PD 授电与否（P133，&lt;&lt;<PAGE 702>&gt;&gt;）</li>
-<li>电容检测仅用于不支持标准分级的旧 IP 话机（P132，&lt;&lt;<PAGE 702>&gt;&gt;）</li>
+<li>功率等级：15.4W（af）→ 30W（at）→ 60W（6860E 前 4 口）→ 75W（6560 mGIG/802.3bt）（ <code>&lt;span class="pg"&gt;原文p33, 54, 695&lt;/span&gt;</code> ）</li>
+<li>关键设备（监控话机/核心 AP）标 critical，普通口保持 low/high（P131， <code>&lt;span class="pg"&gt;原文p701&lt;/span&gt;</code> ）</li>
+<li>预算不足场景配 priority-disconnect 决定新 PD 授电与否（P133， <code>&lt;span class="pg"&gt;原文p702&lt;/span&gt;</code> ）</li>
+<li>电容检测仅用于不支持标准分级的旧 IP 话机（P132， <code>&lt;span class="pg"&gt;原文p702&lt;/span&gt;</code> ）</li>
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ol>
-<li>R6 命令族：<code>show power</code> → <code>lanpower start 1</code>（整机开通）→ 端口级 <code>lanpower start 1/2</code>、<code>lanpower 1/9 power 18000</code>（毫瓦）、<code>lanpower 1/22 priority critical</code>、<code>lanpower 1 capacitor-detection enable</code>、<code>lanpower 1 priority-disconnect enable</code> → <code>show lanpower 1</code> 看各口 mW/优先级/预算余量（C35，&lt;&lt;<PAGE 700-703>&gt;&gt;）</li>
-<li>R8 命令族（slot/port 两级）：<code>show powersupply</code> → <code>lanpower slot 1/1 service start</code> → <code>lanpower port 1/1/1 admin-state enable</code>、<code>lanpower port 1/1/24 power 18000</code>、<code>lanpower port 1/1/6 priority critical</code>、<code>lanpower slot 1/1 maxpower 400</code> → <code>show lanpower slot 1/1</code>（C36/P134，&lt;&lt;<PAGE 705-708>&gt;&gt;）</li>
-<li>EEE 节能：<code>interfaces 1/1 eee enable</code>（C37，&lt;&lt;<PAGE 710>&gt;&gt;）</li>
+<li>R6 命令族：<code>show power</code> → <code>lanpower start 1</code>（整机开通）→ 端口级 <code>lanpower start 1/2</code>、<code>lanpower 1/9 power 18000</code>（毫瓦）、<code>lanpower 1/22 priority critical</code>、<code>lanpower 1 capacitor-detection enable</code>、<code>lanpower 1 priority-disconnect enable</code> → <code>show lanpower 1</code> 看各口 mW/优先级/预算余量（C35， <code>&lt;span class="pg"&gt;原文p700-703&lt;/span&gt;</code> ）</li>
+<li>R8 命令族（slot/port 两级）：<code>show powersupply</code> → <code>lanpower slot 1/1 service start</code> → <code>lanpower port 1/1/1 admin-state enable</code>、<code>lanpower port 1/1/24 power 18000</code>、<code>lanpower port 1/1/6 priority critical</code>、<code>lanpower slot 1/1 maxpower 400</code> → <code>show lanpower slot 1/1</code>（C36/P134， <code>&lt;span class="pg"&gt;原文p705-708&lt;/span&gt;</code> ）</li>
+<li>EEE 节能：<code>interfaces 1/1 eee enable</code>（C37， <code>&lt;span class="pg"&gt;原文p710&lt;/span&gt;</code> ）</li>
 </ol>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>C35 R6 PoE 管理：启动、限额、优先级、预算观察（&lt;&lt;<PAGE 700-703>&gt;&gt;）</li>
-<li>C36 R8 PoE 管理：slot 级 service start 与 maxpower 预算控制（&lt;&lt;<PAGE 705-708>&gt;&gt;）</li>
+<li>C35 R6 PoE 管理：启动、限额、优先级、预算观察（ <code>&lt;span class="pg"&gt;原文p700-703&lt;/span&gt;</code> ）</li>
+<li>C36 R8 PoE 管理：slot 级 service start 与 maxpower 预算控制（ <code>&lt;span class="pg"&gt;原文p705-708&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>
-<li>PoE 操作状态默认 down，须逐台 <code>lanpower start</code> 激活（X76，&lt;&lt;<PAGE 697-698>&gt;&gt;）</li>
-<li>电容检测不符合 802.3af 规范，只对旧 IP 话机开启（X77，&lt;&lt;<PAGE 702, 706>&gt;&gt;）</li>
-<li>PD 分级由 PSE 经 PD 固定电阻判定——分级错误时先查线序/PD 侧电阻（P130，&lt;&lt;<PAGE 695>&gt;&gt;）</li>
+<li>PoE 操作状态默认 down，须逐台 <code>lanpower start</code> 激活（X76， <code>&lt;span class="pg"&gt;原文p697-698&lt;/span&gt;</code> ）</li>
+<li>电容检测不符合 802.3af 规范，只对旧 IP 话机开启（X77， <code>&lt;span class="pg"&gt;原文p702, 706&lt;/span&gt;</code> ）</li>
+<li>PD 分级由 PSE 经 PD 固定电阻判定——分级错误时先查线序/PD 侧电阻（P130， <code>&lt;span class="pg"&gt;原文p695&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
 <ul>

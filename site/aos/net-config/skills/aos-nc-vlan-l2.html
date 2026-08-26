@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -77,45 +78,45 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="i">I（核心理念）</h2>
 <ul>
-<li>VLAN 演进框架（F17，&lt;&lt;<PAGE 115>&gt;&gt;/&lt;&lt;<PAGE 1606>&gt;&gt;/&lt;&lt;<PAGE 583>&gt;&gt;）：标准 VLAN→802.1Q trunk→PVLAN（子域隔离）→VLAN Stacking/QinQ（运营商隧道）→VXLAN/EVI（数据中心叠加）→EVPN（控制面化），按规模与隔离需求逐级选用。</li>
-<li>基本模型：端口只能属于一个 untagged VLAN（默认 VLAN）+任意多个 tagged VLAN；VLAN 在有活动端口前 oper 状态一直是 inactive（P31/P34，&lt;&lt;<PAGE 115, 118>&gt;&gt;）。</li>
-<li>QinQ 的隧道 ID 与 VLAN ID 一一对应，"tunnel and VLAN are interchangeable terms"（P192，&lt;&lt;<PAGE 1608>&gt;&gt;）。</li>
-<li>MVRP 是 MRP 应用，动态声明/撤销 VLAN 成员，学到的动态 VLAN 所有端口都是 tagged（P83/P84，&lt;&lt;<PAGE 442>&gt;&gt;）。</li>
+<li>VLAN 演进框架（F17， <code>&lt;span class="pg"&gt;原文p115&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p1606&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p583&lt;/span&gt;</code> ）：标准 VLAN→802.1Q trunk→PVLAN（子域隔离）→VLAN Stacking/QinQ（运营商隧道）→VXLAN/EVI（数据中心叠加）→EVPN（控制面化），按规模与隔离需求逐级选用。</li>
+<li>基本模型：端口只能属于一个 untagged VLAN（默认 VLAN）+任意多个 tagged VLAN；VLAN 在有活动端口前 oper 状态一直是 inactive（P31/P34， <code>&lt;span class="pg"&gt;原文p115, 118&lt;/span&gt;</code> ）。</li>
+<li>QinQ 的隧道 ID 与 VLAN ID 一一对应，"tunnel and VLAN are interchangeable terms"（P192， <code>&lt;span class="pg"&gt;原文p1608&lt;/span&gt;</code> ）。</li>
+<li>MVRP 是 MRP 应用，动态声明/撤销 VLAN 成员，学到的动态 VLAN 所有端口都是 tagged（P83/P84， <code>&lt;span class="pg"&gt;原文p442&lt;/span&gt;</code> ）。</li>
 </ul>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
-<li><strong>普通隔离选标准 VLAN + 802.1Q</strong>：单链多 VLAN 用 tagged 口（P32/P33：入向分类规则，带 tag 必须匹配端口默认 VLAN 或已打标 VLAN 否则丢弃，&lt;&lt;<PAGE 118>&gt;&gt;）</li>
-<li><strong>VLAN 内二次隔离选 PVLAN</strong>：主 VLAN+isolated（彼此隔离）/community（互通）二级 VLAN；上联走 promiscuous 口、跨交换机延伸走 ISL 口（&lt;&lt;<PAGE 128>&gt;&gt;）</li>
-<li><strong>客户流量透明穿越选 VLAN Stacking</strong>：double tagging（外插 SVLAN）或 VLAN translation（替换 CVLAN），NNI/UNI 分角色（P191/P193，&lt;&lt;<PAGE 1606, 1608>&gt;&gt;）</li>
-<li><strong>服务器冗余选 HA VLAN</strong>：把发往单一目的 MAC 的流量复制到多端口；L2 用静态 MAC、L3 用静态 ARP（P39/P40，&lt;&lt;<PAGE 140>&gt;&gt;）</li>
-<li><strong>动态 VLAN 注册选 MVRP</strong>：注意仅支持 STP Flat 模式，与 per-VLAN 模式互斥（P86，&lt;&lt;<PAGE 444>&gt;&gt;）</li>
+<li><strong>普通隔离选标准 VLAN + 802.1Q</strong>：单链多 VLAN 用 tagged 口（P32/P33：入向分类规则，带 tag 必须匹配端口默认 VLAN 或已打标 VLAN 否则丢弃， <code>&lt;span class="pg"&gt;原文p118&lt;/span&gt;</code> ）</li>
+<li><strong>VLAN 内二次隔离选 PVLAN</strong>：主 VLAN+isolated（彼此隔离）/community（互通）二级 VLAN；上联走 promiscuous 口、跨交换机延伸走 ISL 口（ <code>&lt;span class="pg"&gt;原文p128&lt;/span&gt;</code> ）</li>
+<li><strong>客户流量透明穿越选 VLAN Stacking</strong>：double tagging（外插 SVLAN）或 VLAN translation（替换 CVLAN），NNI/UNI 分角色（P191/P193， <code>&lt;span class="pg"&gt;原文p1606, 1608&lt;/span&gt;</code> ）</li>
+<li><strong>服务器冗余选 HA VLAN</strong>：把发往单一目的 MAC 的流量复制到多端口；L2 用静态 MAC、L3 用静态 ARP（P39/P40， <code>&lt;span class="pg"&gt;原文p140&lt;/span&gt;</code> ）</li>
+<li><strong>动态 VLAN 注册选 MVRP</strong>：注意仅支持 STP Flat 模式，与 per-VLAN 模式互斥（P86， <code>&lt;span class="pg"&gt;原文p444&lt;/span&gt;</code> ）</li>
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>VLAN 创建与成员</strong>：<code>vlan 755 name "IP Finance Network"</code>、<code>vlan 10-15</code> 批量、<code>vlan 5 members port 1/4/3 tagged</code>、<code>vlan 755 members linkagg 10 untagged</code>、<code>no vlan 200</code>；验证 <code>show vlan port</code>（cases·C7，&lt;&lt;<PAGE 116>&gt;&gt;）</li>
-<li><strong>跨交换机 trunk</strong>：互联口对 VLAN1 untagged、VLAN2/3 tagged，单链多 VLAN（cases·C8，&lt;&lt;<PAGE 118>&gt;&gt;）</li>
-<li><strong>PVLAN</strong>：建 Primary VLAN→建 isolated/community 二级 VLAN 关联主 VLAN→配 promiscuous/ISL 口→二级 VLAN 关联用户口；验证 <code>show pvlan</code>/<code>show pvlan mapping</code>/<code>show pvlan members</code>（cases·C9，&lt;&lt;<PAGE 128>&gt;&gt;）。主 VLAN 的 admin/STP/IP 接口配置自动作用于全部二级 VLAN（P38，&lt;&lt;<PAGE 129>&gt;&gt;）</li>
-<li><strong>HA VLAN 集群</strong>：建 VLAN→加入集群口→分配 cluster 模式→配虚 MAC（L2 静态 MAC、L3 静态 ARP，可加 IGMP 组播地址）；验证 show HA VLAN status（cases·C10，&lt;&lt;<PAGE 140>&gt;&gt;）</li>
-<li><strong>VLAN Stacking 服务</strong>：<code>ethernet-service svlan &lt;id&gt;</code>→<code>ethernet-service service-name CustomerA svlan &lt;id&gt;</code>→NNI 口（<code>ethernet-service nni port ...</code>）→SAP/UNI 口封装→UNI profile（cases·C61，&lt;&lt;<PAGE 1622>&gt;&gt;）</li>
-<li><strong>MVRP</strong>：全局/端口使能，applicant 声明模式（normal/active）、registrar 模式（fixed/forbidden/normal）、Join/Leave 定时器（&lt;&lt;<PAGE 442-447>&gt;&gt;）</li>
+<li><strong>VLAN 创建与成员</strong>：<code>vlan 755 name "IP Finance Network"</code>、<code>vlan 10-15</code> 批量、<code>vlan 5 members port 1/4/3 tagged</code>、<code>vlan 755 members linkagg 10 untagged</code>、<code>no vlan 200</code>；验证 <code>show vlan port</code>（cases·C7， <code>&lt;span class="pg"&gt;原文p116&lt;/span&gt;</code> ）</li>
+<li><strong>跨交换机 trunk</strong>：互联口对 VLAN1 untagged、VLAN2/3 tagged，单链多 VLAN（cases·C8， <code>&lt;span class="pg"&gt;原文p118&lt;/span&gt;</code> ）</li>
+<li><strong>PVLAN</strong>：建 Primary VLAN→建 isolated/community 二级 VLAN 关联主 VLAN→配 promiscuous/ISL 口→二级 VLAN 关联用户口；验证 <code>show pvlan</code>/<code>show pvlan mapping</code>/<code>show pvlan members</code>（cases·C9， <code>&lt;span class="pg"&gt;原文p128&lt;/span&gt;</code> ）。主 VLAN 的 admin/STP/IP 接口配置自动作用于全部二级 VLAN（P38， <code>&lt;span class="pg"&gt;原文p129&lt;/span&gt;</code> ）</li>
+<li><strong>HA VLAN 集群</strong>：建 VLAN→加入集群口→分配 cluster 模式→配虚 MAC（L2 静态 MAC、L3 静态 ARP，可加 IGMP 组播地址）；验证 show HA VLAN status（cases·C10， <code>&lt;span class="pg"&gt;原文p140&lt;/span&gt;</code> ）</li>
+<li><strong>VLAN Stacking 服务</strong>：<code>ethernet-service svlan &lt;id&gt;</code>→<code>ethernet-service service-name CustomerA svlan &lt;id&gt;</code>→NNI 口（<code>ethernet-service nni port ...</code>）→SAP/UNI 口封装→UNI profile（cases·C61， <code>&lt;span class="pg"&gt;原文p1622&lt;/span&gt;</code> ）</li>
+<li><strong>MVRP</strong>：全局/端口使能，applicant 声明模式（normal/active）、registrar 模式（fixed/forbidden/normal）、Join/Leave 定时器（ <code>&lt;span class="pg"&gt;原文p442-447&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>VLAN 创建与打标成员（C7，&lt;&lt;<PAGE 116>&gt;&gt;）</li>
-<li>PVLAN 完整部署与验证（C9，&lt;&lt;<PAGE 128>&gt;&gt;）</li>
-<li>ERP+VLAN Stacking 组合（C21，&lt;&lt;<PAGE 403>&gt;&gt;，详见 aos-nc-redundancy-protection）</li>
-<li>VLAN Stacking 服务五步（C61，&lt;&lt;<PAGE 1622>&gt;&gt;）</li>
+<li>VLAN 创建与打标成员（C7， <code>&lt;span class="pg"&gt;原文p116&lt;/span&gt;</code> ）</li>
+<li>PVLAN 完整部署与验证（C9， <code>&lt;span class="pg"&gt;原文p128&lt;/span&gt;</code> ）</li>
+<li>ERP+VLAN Stacking 组合（C21， <code>&lt;span class="pg"&gt;原文p403&lt;/span&gt;</code> ，详见 aos-nc-redundancy-protection）</li>
+<li>VLAN Stacking 服务五步（C61， <code>&lt;span class="pg"&gt;原文p1622&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="b">B（反例/坑）</h2>
 <ul>
-<li>删除 VLAN 连带删路由接口和全部 VPA；默认 VLAN 被删则端口回落 VLAN 1——误删业务风险（X15，&lt;&lt;<PAGE 116>&gt;&gt;）</li>
-<li>带 802.1Q tag 的包若 VID 既非端口默认 VLAN 又非该口 tagged VLAN，直接丢弃（X17，&lt;&lt;<PAGE 118>&gt;&gt;）</li>
-<li>NNI 口 TPID 非 0x8100 时不允许再打普通 802.1q tag（X18，&lt;&lt;<PAGE 119>&gt;&gt;）</li>
-<li>PVLAN：主 VLAN VID 不能与现存 VLAN 冲突；UNP 口只能属一个 PVLAN 域；IP 接口只能配在主 VLAN 上（X19，&lt;&lt;<PAGE 129>&gt;&gt;）</li>
-<li>HA VLAN 一旦成型，标准 VLAN 命令失效（X20，&lt;&lt;<PAGE 140>&gt;&gt;）</li>
-<li>MVRP 与 per-VLAN STP 互斥；MVRP 配置后 STP 模式不能再改成 per-VLAN（X22，&lt;&lt;<PAGE 444>&gt;&gt;）</li>
-<li>动态 VLAN 由 MVRP 学到的 VPA 在拓扑变化时一并删除（P86，&lt;&lt;<PAGE 444>&gt;&gt;）</li>
-<li>转发声明≠加入：端口转发从其他口学到的声明，但只有本口收到声明才加入该 VLAN（P85，&lt;&lt;<PAGE 442>&gt;&gt;）</li>
+<li>删除 VLAN 连带删路由接口和全部 VPA；默认 VLAN 被删则端口回落 VLAN 1——误删业务风险（X15， <code>&lt;span class="pg"&gt;原文p116&lt;/span&gt;</code> ）</li>
+<li>带 802.1Q tag 的包若 VID 既非端口默认 VLAN 又非该口 tagged VLAN，直接丢弃（X17， <code>&lt;span class="pg"&gt;原文p118&lt;/span&gt;</code> ）</li>
+<li>NNI 口 TPID 非 0x8100 时不允许再打普通 802.1q tag（X18， <code>&lt;span class="pg"&gt;原文p119&lt;/span&gt;</code> ）</li>
+<li>PVLAN：主 VLAN VID 不能与现存 VLAN 冲突；UNP 口只能属一个 PVLAN 域；IP 接口只能配在主 VLAN 上（X19， <code>&lt;span class="pg"&gt;原文p129&lt;/span&gt;</code> ）</li>
+<li>HA VLAN 一旦成型，标准 VLAN 命令失效（X20， <code>&lt;span class="pg"&gt;原文p140&lt;/span&gt;</code> ）</li>
+<li>MVRP 与 per-VLAN STP 互斥；MVRP 配置后 STP 模式不能再改成 per-VLAN（X22， <code>&lt;span class="pg"&gt;原文p444&lt;/span&gt;</code> ）</li>
+<li>动态 VLAN 由 MVRP 学到的 VPA 在拓扑变化时一并删除（P86， <code>&lt;span class="pg"&gt;原文p444&lt;/span&gt;</code> ）</li>
+<li>转发声明≠加入：端口转发从其他口学到的声明，但只有本口收到声明才加入该 VLAN（P85， <code>&lt;span class="pg"&gt;原文p442&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniSwitch AOS 8.10R4 Network Configuration Guide 第 4 章 VLAN（&lt;&lt;<PAGE 115-129>&gt;&gt;）、第 5 章 HA VLAN（&lt;&lt;<PAGE 140>&gt;&gt;）、第 14 章 MVRP（&lt;&lt;<PAGE 442-447>&gt;&gt;）、第 42 章 VLAN Stacking（&lt;&lt;<PAGE 1606-1622>&gt;&gt;）。条目来源：cases C7/C8/C9/C10/C61；principles P30-P41/P83-P86/P191-P193；counter-examples X15-X20/X22；frameworks F17。</p><div class="pn"><a href="../index.html">⬅ 返回课程首页</a><a class="nxt" href="aos-nc-redundancy-protection.html">下一单元：aos-nc-redundancy-protection ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<p>OmniSwitch AOS 8.10R4 Network Configuration Guide 第 4 章 VLAN（ <code>&lt;span class="pg"&gt;原文p115-129&lt;/span&gt;</code> ）、第 5 章 HA VLAN（ <code>&lt;span class="pg"&gt;原文p140&lt;/span&gt;</code> ）、第 14 章 MVRP（ <code>&lt;span class="pg"&gt;原文p442-447&lt;/span&gt;</code> ）、第 42 章 VLAN Stacking（ <code>&lt;span class="pg"&gt;原文p1606-1622&lt;/span&gt;</code> ）。条目来源：cases C7/C8/C9/C10/C61；principles P30-P41/P83-P86/P191-P193；counter-examples X15-X20/X22；frameworks F17。</p><div class="pn"><a href="../index.html">⬅ 返回课程首页</a><a class="nxt" href="aos-nc-redundancy-protection.html">下一单元：aos-nc-redundancy-protection ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

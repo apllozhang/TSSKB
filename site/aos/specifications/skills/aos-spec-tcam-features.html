@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -66,7 +67,7 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="i">I（核心理念）</h2>
 <ul>
-<li>TCAM profile 零和分配框架（F3，&lt;&lt;<PAGE 87-92>&gt;&gt;）：TCAM 总量固定，profile 在 QoS 入规则/SAP 分类/VSTK 翻译/业务隧道/DHCP snooping/UNP 用户/PVLAN 之间做此消彼长；配置后必须 reload 激活（P51）。</li>
+<li>TCAM profile 零和分配框架（F3， <code>&lt;span class="pg"&gt;原文p87-92&lt;/span&gt;</code> ）：TCAM 总量固定，profile 在 QoS 入规则/SAP 分类/VSTK 翻译/业务隧道/DHCP snooping/UNP 用户/PVLAN 之间做此消彼长；配置后必须 reload 激活（P51）。</li>
 <li>选型三步——列出必开特性清单→逐 profile 核对资源列→接受牺牲项后 reload 生效。</li>
 <li>档位间是零和重分配（6870 QoS ACL 档 QoS 4096 但 SAP 从 2048 降到 1024，P52）；
 fabric 场景牺牲 VPN 特性换隧道容量（6570M Fabric 档 PVLAN/VSTK 归零，P53）。</li>
@@ -82,11 +83,11 @@ fabric 场景牺牲 VPN 特性换隧道容量（6570M Fabric 档 PVLAN/VSTK 归�
 </ol>
 <h2 id="a2">A2（操作步骤）·档位明细与平台缺口</h2>
 <ul>
-<li><strong>6870 权衡典型</strong>（P52，&lt;&lt;<PAGE 89>&gt;&gt;）：QoS Ingress Default 2048→QoS ACL 4096，但 SAP 分类 2048→1024；Metro services 档 VSTK 出方向翻译升到 1024 但业务隧道降 1024、UNP 用户降 1024</li>
-<li><strong>6570M Fabric 档</strong>（P53，&lt;&lt;<PAGE 90>&gt;&gt;）：服务隧道 256→513（U28 达 1536）、UNP 用户 256→750（U28），代价 QoS 入规则 384→256、PVLAN/VSTK 归零</li>
-<li><strong>6575 双 fabric 特例</strong>（P54，&lt;&lt;<PAGE 92>&gt;&gt;）：Fabric 档隧道 225→512 但 DHCPv6 ISF 为 0；要 IPv6 snooping 只能选 Source IPv6 ACL 档（DHCP6_RLY_ISF 81、AntiSpoofv6 53），代价 QoS 入 384→128</li>
-<li><strong>平台 N/S 缺口清单</strong>：MACsec——6360、6865、6900（除 X48C4E）、6920 不支持，且需站点许可（X9，&lt;&lt;<PAGE 29>&gt;&gt;）；Fast/Perpetual PoE 仅 6360/6860/6860N/6865/6870，6575 无（X10）；Ethernet OAM(802.1ag/Y.1731) 不支持 6360 与 9900（X11）；Application Fingerprinting 全平台 Currently not supported（X12）；WRED 全平台 N/S（X13）；UDLD 在 6900-V72/C32 与 9900 不支持（X48C4E 除外）（X22）；DHL 在 6900-V72/C32 与 6920 不支持（X21）；CPE Testhead 仅 6465/6560/6570M/6575（X20）</li>
-<li><strong>TCAM 相关联动</strong>：6870 QoS 规模依 TCAM profile 2K/4K（P38）；System TTI=SAP 分类资源名（UNI/SAP 流量映射 SVLAN/业务）（glossary，&lt;&lt;<PAGE 89>&gt;&gt;）</li>
+<li><strong>6870 权衡典型</strong>（P52， <code>&lt;span class="pg"&gt;原文p89&lt;/span&gt;</code> ）：QoS Ingress Default 2048→QoS ACL 4096，但 SAP 分类 2048→1024；Metro services 档 VSTK 出方向翻译升到 1024 但业务隧道降 1024、UNP 用户降 1024</li>
+<li><strong>6570M Fabric 档</strong>（P53， <code>&lt;span class="pg"&gt;原文p90&lt;/span&gt;</code> ）：服务隧道 256→513（U28 达 1536）、UNP 用户 256→750（U28），代价 QoS 入规则 384→256、PVLAN/VSTK 归零</li>
+<li><strong>6575 双 fabric 特例</strong>（P54， <code>&lt;span class="pg"&gt;原文p92&lt;/span&gt;</code> ）：Fabric 档隧道 225→512 但 DHCPv6 ISF 为 0；要 IPv6 snooping 只能选 Source IPv6 ACL 档（DHCP6_RLY_ISF 81、AntiSpoofv6 53），代价 QoS 入 384→128</li>
+<li><strong>平台 N/S 缺口清单</strong>：MACsec——6360、6865、6900（除 X48C4E）、6920 不支持，且需站点许可（X9， <code>&lt;span class="pg"&gt;原文p29&lt;/span&gt;</code> ）；Fast/Perpetual PoE 仅 6360/6860/6860N/6865/6870，6575 无（X10）；Ethernet OAM(802.1ag/Y.1731) 不支持 6360 与 9900（X11）；Application Fingerprinting 全平台 Currently not supported（X12）；WRED 全平台 N/S（X13）；UDLD 在 6900-V72/C32 与 9900 不支持（X48C4E 除外）（X22）；DHL 在 6900-V72/C32 与 6920 不支持（X21）；CPE Testhead 仅 6465/6560/6570M/6575（X20）</li>
+<li><strong>TCAM 相关联动</strong>：6870 QoS 规模依 TCAM profile 2K/4K（P38）；System TTI=SAP 分类资源名（UNI/SAP 流量映射 SVLAN/业务）（glossary， <code>&lt;span class="pg"&gt;原文p89&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
@@ -94,12 +95,12 @@ fabric 场景牺牲 VPN 特性换隧道容量（6570M Fabric 档 PVLAN/VSTK 归�
 </ul>
 <h2 id="b">B（反例/坑）</h2>
 <ul>
-<li>TCAM profile 配置后不 reload 不激活（P51，&lt;&lt;<PAGE 87>&gt;&gt;）</li>
+<li>TCAM profile 配置后不 reload 不激活（P51， <code>&lt;span class="pg"&gt;原文p87&lt;/span&gt;</code> ）</li>
 <li>Fabric 档下 PVLAN/VSTK 归零——还要用 QinQ 或 PVLAN 的节点不能上 Fabric 档（P53）</li>
 <li>6575 要 SPB fabric 与 IPv6 snooping 二选一：Fabric 档无 DHCPv6 ISF，Source IPv6 ACL 档才有（P54）</li>
-<li>SPB RFP 域最多 8 且与其它 Ethernet OAM 域共享预算，已有 OAM 域时更少（X50，&lt;&lt;<PAGE 34>&gt;&gt;）</li>
-<li>SAP profile 一旦分配优先级/带宽，VLAN Stacking SAP 容量 8K 降到 1K（X40，&lt;&lt;<PAGE 71>&gt;&gt;）</li>
-<li>6860 系 SPB MTU 当前不可配（固定 9K）（X49，&lt;&lt;<PAGE 34>&gt;&gt;）</li>
+<li>SPB RFP 域最多 8 且与其它 Ethernet OAM 域共享预算，已有 OAM 域时更少（X50， <code>&lt;span class="pg"&gt;原文p34&lt;/span&gt;</code> ）</li>
+<li>SAP profile 一旦分配优先级/带宽，VLAN Stacking SAP 容量 8K 降到 1K（X40， <code>&lt;span class="pg"&gt;原文p71&lt;/span&gt;</code> ）</li>
+<li>6860 系 SPB MTU 当前不可配（固定 9K）（X49， <code>&lt;span class="pg"&gt;原文p34&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniSwitch AOS Release 8 Specifications Guide Ch4 TCAM Profiles（&lt;&lt;<PAGE 87-92>&gt;&gt;）、Ch2 平台支持矩阵散点（&lt;&lt;<PAGE 29-76>&gt;&gt;）。条目来源：principles P38/P51-P54；counter-examples X9-X13/X20-X22/X40/X49/X50；frameworks F3。</p><div class="pn"><a href="aos-spec-capacity-limits.html">⬅ 上一单元：aos-spec-capacity-limits</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<p>OmniSwitch AOS Release 8 Specifications Guide Ch4 TCAM Profiles（ <code>&lt;span class="pg"&gt;原文p87-92&lt;/span&gt;</code> ）、Ch2 平台支持矩阵散点（ <code>&lt;span class="pg"&gt;原文p29-76&lt;/span&gt;</code> ）。条目来源：principles P38/P51-P54；counter-examples X9-X13/X20-X22/X40/X49/X50；frameworks F3。</p><div class="pn"><a href="aos-spec-capacity-limits.html">⬅ 上一单元：aos-spec-capacity-limits</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

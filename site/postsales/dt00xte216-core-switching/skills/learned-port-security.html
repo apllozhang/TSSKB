@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -83,32 +84,32 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
-<li>最小模板一次成型：<code>port-security port 1/1/1 admin-state enable / maximum 1 / violation shutdown / convert-to-static enable</code>（&lt;&lt;<PAGE 193>&gt;&gt;）</li>
-<li>验证：<code>show port-security</code>（默认 maximum 1、violation RESTRICT、max-filtering 5，最多可学 100 MAC/口）（&lt;&lt;<PAGE 207>&gt;&gt;）</li>
-<li>固化设备：先让流量把 MAC 学上来，再 <code>port-security port 1/1/8 convert-to-static</code>（&lt;&lt;<PAGE 208>&gt;&gt;）</li>
-<li>违例处置：<code>violation shutdown</code> + <code>max-filtering 0</code> → 再学即端口关闭；<code>show violation</code> 查看，<code>violation port 1/1/8 recovery-time 30</code> 修改恢复时间（默认 300），<code>clear violation port 1/1/8</code> 手工恢复（&lt;&lt;<PAGE 209>&gt;&gt;-&lt;&lt;<PAGE 210>&gt;&gt;）</li>
+<li>最小模板一次成型：<code>port-security port 1/1/1 admin-state enable / maximum 1 / violation shutdown / convert-to-static enable</code>（ <code>&lt;span class="pg"&gt;原文p193&lt;/span&gt;</code> ）</li>
+<li>验证：<code>show port-security</code>（默认 maximum 1、violation RESTRICT、max-filtering 5，最多可学 100 MAC/口）（ <code>&lt;span class="pg"&gt;原文p207&lt;/span&gt;</code> ）</li>
+<li>固化设备：先让流量把 MAC 学上来，再 <code>port-security port 1/1/8 convert-to-static</code>（ <code>&lt;span class="pg"&gt;原文p208&lt;/span&gt;</code> ）</li>
+<li>违例处置：<code>violation shutdown</code> + <code>max-filtering 0</code> → 再学即端口关闭；<code>show violation</code> 查看，<code>violation port 1/1/8 recovery-time 30</code> 修改恢复时间（默认 300），<code>clear violation port 1/1/8</code> 手工恢复（ <code>&lt;span class="pg"&gt;原文p209&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p210&lt;/span&gt;</code> ）</li>
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
-<li>三阶段演进实验路径：限 1 MAC 观察 filtering → convert-to-static 固定 → shutdown+max-filtering 0 硬关（&lt;&lt;<PAGE 207>&gt;&gt;-&lt;&lt;<PAGE 210>&gt;&gt;）</li>
-<li>对端是交换机时：LLDP/STP 用一个 MAC、L3 用另一个 MAC，多个源 MAC 会挤占学习额度导致误过滤——先关协议再 flush mac-learning 后重学（&lt;&lt;<PAGE 206>&gt;&gt;）</li>
+<li>三阶段演进实验路径：限 1 MAC 观察 filtering → convert-to-static 固定 → shutdown+max-filtering 0 硬关（ <code>&lt;span class="pg"&gt;原文p207&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p210&lt;/span&gt;</code> ）</li>
+<li>对端是交换机时：LLDP/STP 用一个 MAC、L3 用另一个 MAC，多个源 MAC 会挤占学习额度导致误过滤——先关协议再 flush mac-learning 后重学（ <code>&lt;span class="pg"&gt;原文p206&lt;/span&gt;</code> ）</li>
 <li>命令权限纳入 security 域管理（同 MACsec，见 p82）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>C-16 三阶段实验：restrict 过滤 → convert-to-static 固化 → shutdown 关闭 + recovery-time 调整与 clear violation 手工恢复，含关 STP/LLDP 排除干扰（&lt;&lt;<PAGE 207>&gt;&gt;-&lt;&lt;<PAGE 210>&gt;&gt;）</li>
-<li>C-17 标准绑定模板（maximum 1 + shutdown + convert-to-static）（&lt;&lt;<PAGE 193>&gt;&gt;）</li>
+<li>C-16 三阶段实验：restrict 过滤 → convert-to-static 固化 → shutdown 关闭 + recovery-time 调整与 clear violation 手工恢复，含关 STP/LLDP 排除干扰（ <code>&lt;span class="pg"&gt;原文p207&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p210&lt;/span&gt;</code> ）</li>
+<li>C-17 标准绑定模板（maximum 1 + shutdown + convert-to-static）（ <code>&lt;span class="pg"&gt;原文p193&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="b">B（边界与陷阱）</h2>
 <ul>
-<li>LPS 不支持链路聚合端口（Not supported on Link Aggregate ports）（&lt;&lt;<PAGE 190>&gt;&gt;）</li>
-<li>convert-to-static 必须在设备 MAC 已学到之后执行，先发流量再固化（&lt;&lt;<PAGE 208>&gt;&gt;）</li>
-<li>对端交换机自身多 MAC（LLDP/STP/L3 各一个）会触发 restrict 误过滤（&lt;&lt;<PAGE 206>&gt;&gt;-&lt;&lt;<PAGE 207>&gt;&gt;）</li>
+<li>LPS 不支持链路聚合端口（Not supported on Link Aggregate ports）（ <code>&lt;span class="pg"&gt;原文p190&lt;/span&gt;</code> ）</li>
+<li>convert-to-static 必须在设备 MAC 已学到之后执行，先发流量再固化（ <code>&lt;span class="pg"&gt;原文p208&lt;/span&gt;</code> ）</li>
+<li>对端交换机自身多 MAC（LLDP/STP/L3 各一个）会触发 restrict 误过滤（ <code>&lt;span class="pg"&gt;原文p206&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p207&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
 <ul>
-<li>framework·F-09 LPS 配置四步法与违例决策（&lt;&lt;<PAGE 190>&gt;&gt;-&lt;&lt;<PAGE 193>&gt;&gt;）</li>
-<li>principle·P-32 学习控制与违例（&lt;&lt;<PAGE 190>&gt;&gt;、&lt;&lt;<PAGE 191>&gt;&gt;、&lt;&lt;<PAGE 207>&gt;&gt;）</li>
-<li>principle·P-33 自动恢复与 pkt-relay（&lt;&lt;<PAGE 196>&gt;&gt;、&lt;&lt;<PAGE 209>&gt;&gt;）</li>
+<li>framework·F-09 LPS 配置四步法与违例决策（ <code>&lt;span class="pg"&gt;原文p190&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p193&lt;/span&gt;</code> ）</li>
+<li>principle·P-32 学习控制与违例（ <code>&lt;span class="pg"&gt;原文p190&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p191&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p207&lt;/span&gt;</code> ）</li>
+<li>principle·P-33 自动恢复与 pkt-relay（ <code>&lt;span class="pg"&gt;原文p196&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p209&lt;/span&gt;</code> ）</li>
 <li>case·C-16/C-17；counter·X-11/X-12</li>
 </ul><div class="pn"><a href="arp-dos-defense.html">⬅ 上一单元：arp-dos-defense</a><a class="nxt" href="ip-routing-fundamentals.html">下一单元：ip-routing-fundamentals ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

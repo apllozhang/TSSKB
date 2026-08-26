@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -88,30 +89,72 @@ blockquote p{margin:6px 0}
 <p>外加一条贯穿全书的<strong>故障排查方法论</strong>（分层递进 + 分侧取证）。</p>
 <h2 id="_2">二、十个最重要知识点串讲</h2>
 <h3 id="1-aos">1. AOS 双分区：配置即文件，冷启动有回滚保护</h3>
-<p>AOS R8 用 working / certified / user-defined 三目录管理配置（&lt;&lt;<PAGE 85>&gt;&gt;）。<code>write memory</code> 把 running 写入 working，<code>copy running certified</code> 完成认证，<code>write memory flash-synchro</code> 是三合一（&lt;&lt;<PAGE 89>&gt;&gt;）。冷启动时交换机比较 working 与 certified 内容：相同则从 running 启动，不同则从 certified 启动（&lt;&lt;<PAGE 88>&gt;&gt;、&lt;&lt;<PAGE 126>&gt;&gt;）。这带来两个必记的坑：<code>reload all</code> 无条件从 certified 启动，未认证配置必丢（&lt;&lt;<PAGE 126>&gt;&gt;）；certified 模式下运行是只读的，<code>write memory</code> 会报 "not permitted when switch is running in certified mode"（&lt;&lt;<PAGE 129>&gt;&gt;），解法是 <code>reload from working no rollback-timeout</code> 或 <code>modify running-directory working</code>。备份有两条路：内置命令打 .tar（最多 10 份，&lt;&lt;<PAGE 92>&gt;&gt;）和 USB 自动备份（&lt;&lt;<PAGE 93>&gt;&gt;、&lt;&lt;<PAGE 132>&gt;&gt;-&lt;&lt;<PAGE 133>&gt;&gt;）。</p>
+<ul>
+<li>AOS R8 用 working / certified / user-defined 三目录管理配置（ <code>&lt;span class="pg"&gt;原文p85&lt;/span&gt;</code> ）。</li>
+<li><code>write memory</code> 把 running 写入 working，<code>copy running certified</code> 完成认证，<code>write memory flash-synchro</code> 是三合一（ <code>&lt;span class="pg"&gt;原文p89&lt;/span&gt;</code> ）。</li>
+<li>冷启动时交换机比较 working 与 certified 内容：相同则从 running 启动，不同则从 certified 启动（ <code>&lt;span class="pg"&gt;原文p88&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p126&lt;/span&gt;</code> ）。</li>
+<li>这带来两个必记的坑：<code>reload all</code> 无条件从 certified 启动，未认证配置必丢（ <code>&lt;span class="pg"&gt;原文p126&lt;/span&gt;</code> ）；certified 模式下运行是只读的，<code>write memory</code> 会报 "not permitted when switch is running in certified mode"（ <code>&lt;span class="pg"&gt;原文p129&lt;/span&gt;</code> ），解法是 <code>reload from working no rollback-timeout</code> 或 <code>modify running-directory working</code>。</li>
+<li>备份有两条路：内置命令打 .tar（最多 10 份， <code>&lt;span class="pg"&gt;原文p92&lt;/span&gt;</code> ）和 USB 自动备份（ <code>&lt;span class="pg"&gt;原文p93&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p132&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p133&lt;/span&gt;</code> ）。</li>
+</ul>
 <h3 id="2-vlan-ip-interface">2. VLAN 间路由：绑定 IP interface 即开路由</h3>
-<p>AOS 上 IP interface 与 VLAN 绑定后，三层路由立即激活——网关即虚拟路由器端口（&lt;&lt;<PAGE 165>&gt;&gt;）。要注意 VLAN 的 operational 状态依赖活动成员端口：无活动端口则 IP 接口 DOWN、不参与路由（&lt;&lt;<PAGE 512>&gt;&gt;）。每个物理端口恒有一个默认（untagged）VLAN 做二层桥接（&lt;&lt;<PAGE 599>&gt;&gt;）；802.1Q tag 提供 4096 个 VID 与 3bit 的 802.1p 优先级（&lt;&lt;<PAGE 169>&gt;&gt;）。AP 口的典型配置是"管理 VLAN untagged + 业务 VLAN tagged"（&lt;&lt;<PAGE 177>&gt;&gt;-&lt;&lt;<PAGE 183>&gt;&gt;），这也是上云排障时"管理 VLAN 须 untagged"的由来（&lt;&lt;<PAGE 377>&gt;&gt;）。</p>
+<ul>
+<li>AOS 上 IP interface 与 VLAN 绑定后，三层路由立即激活——网关即虚拟路由器端口（ <code>&lt;span class="pg"&gt;原文p165&lt;/span&gt;</code> ）。</li>
+<li>要注意 VLAN 的 operational 状态依赖活动成员端口：无活动端口则 IP 接口 DOWN、不参与路由（ <code>&lt;span class="pg"&gt;原文p512&lt;/span&gt;</code> ）。</li>
+<li>每个物理端口恒有一个默认（untagged）VLAN 做二层桥接（ <code>&lt;span class="pg"&gt;原文p599&lt;/span&gt;</code> ）；802.1Q tag 提供 4096 个 VID 与 3bit 的 802.1p 优先级（ <code>&lt;span class="pg"&gt;原文p169&lt;/span&gt;</code> ）。</li>
+<li>AP 口的典型配置是"管理 VLAN untagged + 业务 VLAN tagged"（ <code>&lt;span class="pg"&gt;原文p177&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p183&lt;/span&gt;</code> ），这也是上云排障时"管理 VLAN 须 untagged"的由来（ <code>&lt;span class="pg"&gt;原文p377&lt;/span&gt;</code> ）。</li>
+</ul>
 <h3 id="3-stellar-ap">3. Stellar 三模式自动选型：AP 自己会"找组织"</h3>
-<p>AP 上电后走三级判定：DHCP 下发 option 138（OV2500 地址）则进 Enterprise；已在 Cirrus 声明（MAC/序列号）则进 Cloud；两者皆无则落 Express（&lt;&lt;<PAGE 201>&gt;&gt;、&lt;&lt;<PAGE 264>&gt;&gt;）。规模边界：Express ≤255 AP 免许可证、Enterprise（OV2500）≤4000 AP、Cloud（Cirrus）≤10000 AP（&lt;&lt;<PAGE 188>&gt;&gt;-&lt;&lt;<PAGE 198>&gt;&gt;）。选 Express 前核对功能边界：Express 无语音分析与可视化（&lt;&lt;<PAGE 875>&gt;&gt;），AP1101 组规模仅 64 AP/256 客户端（&lt;&lt;<PAGE 868>&gt;&gt;）。</p>
+<ul>
+<li>AP 上电后走三级判定：DHCP 下发 option 138（OV2500 地址）则进 Enterprise；已在 Cirrus 声明（MAC/序列号）则进 Cloud；两者皆无则落 Express（ <code>&lt;span class="pg"&gt;原文p201&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p264&lt;/span&gt;</code> ）。</li>
+<li>规模边界：Express ≤255 AP 免许可证、Enterprise（OV2500）≤4000 AP、Cloud（Cirrus）≤10000 AP（ <code>&lt;span class="pg"&gt;原文p188&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p198&lt;/span&gt;</code> ）。</li>
+<li>选 Express 前核对功能边界：Express 无语音分析与可视化（ <code>&lt;span class="pg"&gt;原文p875&lt;/span&gt;</code> ），AP1101 组规模仅 64 AP/256 客户端（ <code>&lt;span class="pg"&gt;原文p868&lt;/span&gt;</code> ）。</li>
+</ul>
 <h3 id="4-ap-pvm">4. 分布式架构：同组 AP 自动成组，PVM 统一管理</h3>
-<p>无控制器架构下，同 Group ID + 同 VLAN 的 AP 自动成组（出厂 Group ID=100/VLAN 1，&lt;&lt;<PAGE 205>&gt;&gt;），按"最高型号 → 最高 MAC"选举 PVM/SVM（&lt;&lt;<PAGE 206>&gt;&gt;）。AP 间通过空口交换 RF 设置、通过 LAN 交换漫游客户端上下文（MAC、密钥、Access Role Profiles）（&lt;&lt;<PAGE 270>&gt;&gt;）。最大的坑：AP 入组后自身配置被 PVM 下发配置整体覆盖删除（&lt;&lt;<PAGE 243>&gt;&gt;）——先把目标配置做到 PVM，再扩成员。</p>
+<ul>
+<li>无控制器架构下，同 Group ID + 同 VLAN 的 AP 自动成组（出厂 Group ID=100/VLAN 1， <code>&lt;span class="pg"&gt;原文p205&lt;/span&gt;</code> ），按"最高型号 → 最高 MAC"选举 PVM/SVM（ <code>&lt;span class="pg"&gt;原文p206&lt;/span&gt;</code> ）。</li>
+<li>AP 间通过空口交换 RF 设置、通过 LAN 交换漫游客户端上下文（MAC、密钥、Access Role Profiles）（ <code>&lt;span class="pg"&gt;原文p270&lt;/span&gt;</code> ）。</li>
+<li>最大的坑：AP 入组后自身配置被 PVM 下发配置整体覆盖删除（ <code>&lt;span class="pg"&gt;原文p243&lt;/span&gt;</code> ）——先把目标配置做到 PVM，再扩成员。</li>
+</ul>
 <h3 id="5">5. 云管上线流水线与激活状态机</h3>
-<p>交换机上云序列：确认 cloudagent.cfg 在 working（缺则从 /flash/cirrus 拷贝，&lt;&lt;<PAGE 356>&gt;&gt;）→ 管理_VLAN/IP/静态路由 → SNMP/NTP/DNS → <code>cloud-agent admin-state enable</code> → Cirrus 建 Site 后用 <code>show chassis</code> 的 SN 建 Device → 强制激活 <code>cloud-agent admin-state disable force</code> + <code>enable</code> → <code>show cloud-agent status</code> 见 completeOK（&lt;&lt;<PAGE 353>&gt;&gt;-&lt;&lt;<PAGE 364>&gt;&gt;）。激活状态机每步有明确定义：Registered → Obtaining Certificate → VPN Configuring → Connected → OV Managed；失败态含 Factory Reset Required 等（&lt;&lt;<PAGE 327>&gt;&gt;-&lt;&lt;<PAGE 328>&gt;&gt;）。迁移 OVC4→OVC10 时序列号不能双平台并存，先删后宣（&lt;&lt;<PAGE 318>&gt;&gt;）；call home 慢优先 disable force/enable 而非重启（&lt;&lt;<PAGE 331>&gt;&gt;）。</p>
+<ul>
+<li>交换机上云序列：确认 cloudagent.cfg 在 working（缺则从 /flash/cirrus 拷贝， <code>&lt;span class="pg"&gt;原文p356&lt;/span&gt;</code> ）→ 管理_VLAN/IP/静态路由 → SNMP/NTP/DNS → <code>cloud-agent admin-state enable</code> → Cirrus 建 Site 后用 <code>show chassis</code> 的 SN 建 Device → 强制激活 <code>cloud-agent admin-state disable force</code> + <code>enable</code> → <code>show cloud-agent status</code> 见 completeOK（ <code>&lt;span class="pg"&gt;原文p353&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p364&lt;/span&gt;</code> ）。</li>
+<li>激活状态机每步有明确定义：Registered → Obtaining Certificate → VPN Configuring → Connected → OV Managed；失败态含 Factory Reset Required 等（ <code>&lt;span class="pg"&gt;原文p327&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p328&lt;/span&gt;</code> ）。</li>
+<li>迁移 OVC4→OVC10 时序列号不能双平台并存，先删后宣（ <code>&lt;span class="pg"&gt;原文p318&lt;/span&gt;</code> ）；call home 慢优先 disable force/enable 而非重启（ <code>&lt;span class="pg"&gt;原文p331&lt;/span&gt;</code> ）。</li>
+</ul>
 <h3 id="6-ssid-arp">6. SSID 与策略：五步向导 + ARP 三级裁决</h3>
-<p>SSID 创建走五步向导：General → Authentication → Access Policy → Default VLAN/Network → Assignment &amp; Schedule（&lt;&lt;<PAGE 383>&gt;&gt;）；访客多出 Guest Access Strategy（Portal 模板/Login 方式/自注册，&lt;&lt;<PAGE 427>&gt;&gt;）。用户策略由 ARP（Access Role Profile）承载——VLAN tag/QoS/防火墙 ACL/L7 规则/位置/时段的集合（&lt;&lt;<PAGE 394>&gt;&gt;），裁决优先级：外部 RADIUS/LDAP 下发 &gt; 认证策略内 &gt; SSID 默认（&lt;&lt;<PAGE 400>&gt;&gt;）。802.1X 员工 SSID 全流程与访客 Portal + Kick Off 的实操见 &lt;&lt;<PAGE 407>&gt;&gt;-&lt;&lt;<PAGE 414>&gt;&gt;、&lt;&lt;<PAGE 437>&gt;&gt;-&lt;&lt;<PAGE 443>&gt;&gt;。</p>
+<ul>
+<li>SSID 创建走五步向导：General → Authentication → Access Policy → Default VLAN/Network → Assignment &amp; Schedule（ <code>&lt;span class="pg"&gt;原文p383&lt;/span&gt;</code> ）；访客多出 Guest Access Strategy（Portal 模板/Login 方式/自注册， <code>&lt;span class="pg"&gt;原文p427&lt;/span&gt;</code> ）。</li>
+<li>用户策略由 ARP（Access Role Profile）承载——VLAN tag/QoS/防火墙 ACL/L7 规则/位置/时段的集合（ <code>&lt;span class="pg"&gt;原文p394&lt;/span&gt;</code> ），裁决优先级：外部 RADIUS/LDAP 下发 &gt; 认证策略内 &gt; SSID 默认（ <code>&lt;span class="pg"&gt;原文p400&lt;/span&gt;</code> ）。</li>
+<li>802.1X 员工 SSID 全流程与访客 Portal + Kick Off 的实操见  <code>&lt;span class="pg"&gt;原文p407&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p414&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p437&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p443&lt;/span&gt;</code> 。</li>
+</ul>
 <h3 id="7">7. 交换机高可用：五件套按需组合</h3>
 <ul>
-<li><strong>Virtual Chassis</strong>：多台虚拟成单逻辑设备，VFL 互联，ISIS-VC 管理拓扑，免 STP/VRRP/许可证（&lt;&lt;<PAGE 468>&gt;&gt;、&lt;&lt;<PAGE 471>&gt;&gt;）；Master 选举按 priority → uptime → chassis ID → MAC（&lt;&lt;<PAGE 472>&gt;&gt;）；分裂双检测 RCD（带外走 EMP，原 Slave 关全部用户口）+ VSCP（&lt;&lt;<PAGE 476>&gt;&gt;-&lt;&lt;<PAGE 477>&gt;&gt;）；ISSU 逐台 slave 升级（&lt;&lt;<PAGE 478>&gt;&gt;）。</li>
-<li><strong>LACP</strong>：<code>linkagg lacp agg N size 2 actor admin-key N</code> 关联端口（&lt;&lt;<PAGE 576>&gt;&gt;、&lt;&lt;<PAGE 588>&gt;&gt;）；负载哈希 extended 含四层端口更均匀（&lt;&lt;<PAGE 583>&gt;&gt;）。</li>
-<li><strong>STP</strong>：默认 per-VLAN 模式，RSTP 亚秒收敛（&lt;&lt;<PAGE 604>&gt;&gt;）；1x1 模式按 VLAN 分根桥做负载分担（&lt;&lt;<PAGE 606>&gt;&gt;）。</li>
-<li><strong>DHL</strong>：按 VLAN 划分活跃链路的双活方案，DHL 端口自动关 STP；默认 mac-flushing=none 会留过期 MAC，生产显式配 <code>dhl 1 mac-flushing raw</code>（&lt;&lt;<PAGE 628>&gt;&gt;-&lt;&lt;<PAGE 630>&gt;&gt;、&lt;&lt;<PAGE 642>&gt;&gt;）。</li>
-<li><strong>VRRP</strong>：虚拟 MAC 00-00-5E-00-01-VRID，多 VRID 负载分担；改 priority 必须先 disable（&lt;&lt;<PAGE 674>&gt;&gt;-&lt;&lt;<PAGE 675>&gt;&gt;、&lt;&lt;<PAGE 689>&gt;&gt;）。</li>
+<li><strong>Virtual Chassis</strong>：多台虚拟成单逻辑设备，VFL 互联，ISIS-VC 管理拓扑，免 STP/VRRP/许可证（ <code>&lt;span class="pg"&gt;原文p468&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p471&lt;/span&gt;</code> ）；Master 选举按 priority → uptime → chassis ID → MAC（ <code>&lt;span class="pg"&gt;原文p472&lt;/span&gt;</code> ）；分裂双检测 RCD（带外走 EMP，原 Slave 关全部用户口）+ VSCP（ <code>&lt;span class="pg"&gt;原文p476&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p477&lt;/span&gt;</code> ）；ISSU 逐台 slave 升级（ <code>&lt;span class="pg"&gt;原文p478&lt;/span&gt;</code> ）。</li>
+<li><strong>LACP</strong>：<code>linkagg lacp agg N size 2 actor admin-key N</code> 关联端口（ <code>&lt;span class="pg"&gt;原文p576&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p588&lt;/span&gt;</code> ）；负载哈希 extended 含四层端口更均匀（ <code>&lt;span class="pg"&gt;原文p583&lt;/span&gt;</code> ）。</li>
+<li><strong>STP</strong>：默认 per-VLAN 模式，RSTP 亚秒收敛（ <code>&lt;span class="pg"&gt;原文p604&lt;/span&gt;</code> ）；1x1 模式按 VLAN 分根桥做负载分担（ <code>&lt;span class="pg"&gt;原文p606&lt;/span&gt;</code> ）。</li>
+<li><strong>DHL</strong>：按 VLAN 划分活跃链路的双活方案，DHL 端口自动关 STP；默认 mac-flushing=none 会留过期 MAC，生产显式配 <code>dhl 1 mac-flushing raw</code>（ <code>&lt;span class="pg"&gt;原文p628&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p630&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p642&lt;/span&gt;</code> ）。</li>
+<li><strong>VRRP</strong>：虚拟 MAC 00-00-5E-00-01-VRID，多 VRID 负载分担；改 priority 必须先 disable（ <code>&lt;span class="pg"&gt;原文p674&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p675&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p689&lt;/span&gt;</code> ）。</li>
 </ul>
 <h3 id="8-poe">8. PoE：功率是预算，优先级是保险</h3>
-<p>四档标准：802.3af（PD 12.95W）→ at（25.5W）→ bt Type3（51W）→ Type4（71W）（&lt;&lt;<PAGE 150>&gt;&gt;）。管理三板斧：<code>show lanpower slot</code>（看 Actual Used/Power Budget）、<code>lanpower slot maxpower</code>（W）、<code>lanpower port priority critical</code>（&lt;&lt;<PAGE 153>&gt;&gt;-&lt;&lt;<PAGE 157>&gt;&gt;）。功率不足按 low→high→critical 断电（&lt;&lt;<PAGE 154>&gt;&gt;），关键口务必显式设 critical。Dynamic PoE Allocation 按需供电最省（&lt;&lt;<PAGE 150>&gt;&gt;）；Fast/Perpetual PoE 需 FPGA 升级（&lt;&lt;<PAGE 147>&gt;&gt;-&lt;&lt;<PAGE 148>&gt;&gt;）。</p>
+<ul>
+<li>四档标准：802.3af（PD 12.95W）→ at（25.5W）→ bt Type3（51W）→ Type4（71W）（ <code>&lt;span class="pg"&gt;原文p150&lt;/span&gt;</code> ）。</li>
+<li>管理三板斧：<code>show lanpower slot</code>（看 Actual Used/Power Budget）、<code>lanpower slot maxpower</code>（W）、<code>lanpower port priority critical</code>（ <code>&lt;span class="pg"&gt;原文p153&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p157&lt;/span&gt;</code> ）。</li>
+<li>功率不足按 low→high→critical 断电（ <code>&lt;span class="pg"&gt;原文p154&lt;/span&gt;</code> ），关键口务必显式设 critical。</li>
+<li>Dynamic PoE Allocation 按需供电最省（ <code>&lt;span class="pg"&gt;原文p150&lt;/span&gt;</code> ）；Fast/Perpetual PoE 需 FPGA 升级（ <code>&lt;span class="pg"&gt;原文p147&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p148&lt;/span&gt;</code> ）。</li>
+</ul>
 <h3 id="9-vowlanqos">9. VoWLAN：覆盖、QoS、漫游三线并进</h3>
-<p>覆盖按 -70dBm、漫游按 -62~-64dBm、边界交叠 8dB、SNR≥25dB 设计（&lt;&lt;<PAGE 928>&gt;&gt;-&lt;&lt;<PAGE 931>&gt;&gt;）；容量基准 1 AP/255m²、每 AP 20-25 用户（&lt;&lt;<PAGE 253>&gt;&gt;），AP13XX 约 35 条语音流（&lt;&lt;<PAGE 892>&gt;&gt;）。QoS 映射 Voice=DSCP46/802.1p6，信令 DSCP 26（&lt;&lt;<PAGE 874>&gt;&gt;、&lt;&lt;<PAGE 933>&gt;&gt;）。质量门限：时延 &lt;250ms、重传 &lt;15%、Jitter &lt;100ms、丢包 &lt;2%（&lt;&lt;<PAGE 933>&gt;&gt;）。漫游靠 802.11r/k/v（&lt;&lt;<PAGE 938>&gt;&gt;-&lt;&lt;<PAGE 940>&gt;&gt;），L3 漫游由新 AP 向 Home AP 建 GRE 隧道（&lt;&lt;<PAGE 894>&gt;&gt;）。禁区：不支持 11r 的终端可能连不上 11r WLAN，按终端能力分 SSID（&lt;&lt;<PAGE 938>&gt;&gt;）；语音走 5GHz，2.4GHz 信道聚合在大部署自扰（&lt;&lt;<PAGE 908>&gt;&gt;-&lt;&lt;<PAGE 909>&gt;&gt;、&lt;&lt;<PAGE 913>&gt;&gt;）；RAP 勿放总部、加密带宽约 100Mbps、同地两 RAP 话机不切换（&lt;&lt;<PAGE 904>&gt;&gt;）。</p>
+<ul>
+<li>覆盖按 -70dBm、漫游按 -62~-64dBm、边界交叠 8dB、SNR≥25dB 设计（ <code>&lt;span class="pg"&gt;原文p928&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p931&lt;/span&gt;</code> ）；容量基准 1 AP/255m²、每 AP 20-25 用户（ <code>&lt;span class="pg"&gt;原文p253&lt;/span&gt;</code> ），AP13XX 约 35 条语音流（ <code>&lt;span class="pg"&gt;原文p892&lt;/span&gt;</code> ）。</li>
+<li>QoS 映射 Voice=DSCP46/802.1p6，信令 DSCP 26（ <code>&lt;span class="pg"&gt;原文p874&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p933&lt;/span&gt;</code> ）。</li>
+<li>质量门限：时延 &lt;250ms、重传 &lt;15%、Jitter &lt;100ms、丢包 &lt;2%（ <code>&lt;span class="pg"&gt;原文p933&lt;/span&gt;</code> ）。</li>
+<li>漫游靠 802.11r/k/v（ <code>&lt;span class="pg"&gt;原文p938&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p940&lt;/span&gt;</code> ），L3 漫游由新 AP 向 Home AP 建 GRE 隧道（ <code>&lt;span class="pg"&gt;原文p894&lt;/span&gt;</code> ）。</li>
+<li>禁区：不支持 11r 的终端可能连不上 11r WLAN，按终端能力分 SSID（ <code>&lt;span class="pg"&gt;原文p938&lt;/span&gt;</code> ）；语音走 5GHz，2.4GHz 信道聚合在大部署自扰（ <code>&lt;span class="pg"&gt;原文p908&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p909&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p913&lt;/span&gt;</code> ）；RAP 勿放总部、加密带宽约 100Mbps、同地两 RAP 话机不切换（ <code>&lt;span class="pg"&gt;原文p904&lt;/span&gt;</code> ）。</li>
+</ul>
 <h3 id="10">10. 排查方法论：分层递进，命令说话</h3>
-<p>AP 不上线的五步法：<code>show lanpower slot</code>（PoE）→ <code>show vlan members port</code>（管理 VLAN untagged）→ AP 侧 <code>getmode</code>/<code>cat /etc/config/network</code> → <code>show ip interface</code> + ping 激活域名 → Cirrus Activation Log（&lt;&lt;<PAGE 376>&gt;&gt;-&lt;&lt;<PAGE 378>&gt;&gt;）。SSID 连不上在 AP CLI 走 iwconfig → sta_list → AAA_server.conf → tcpdump 抓 RADIUS（&lt;&lt;<PAGE 415>&gt;&gt;-&lt;&lt;<PAGE 418>&gt;&gt;）；Portal 不弹页查 date/resolv.conf → eag 进程与 eag.log（&lt;&lt;<PAGE 444>&gt;&gt;-&lt;&lt;<PAGE 448>&gt;&gt;）。安全红线：预配置设备（实验室核心、Organization）不要动出厂/删除（&lt;&lt;<PAGE 123>&gt;&gt;、&lt;&lt;<PAGE 100>&gt;&gt;、&lt;&lt;<PAGE 358>&gt;&gt;）；Lightning Config 只在"仅 1/2 口接客户端、无既有配置、无 DHCP 分配、无 NMS 连接"时触发（&lt;&lt;<PAGE 79>&gt;&gt;、&lt;&lt;<PAGE 1025>&gt;&gt;）。</p>
+<ul>
+<li>AP 不上线的五步法：<code>show lanpower slot</code>（PoE）→ <code>show vlan members port</code>（管理 VLAN untagged）→ AP 侧 <code>getmode</code>/<code>cat /etc/config/network</code> → <code>show ip interface</code> + ping 激活域名 → Cirrus Activation Log（ <code>&lt;span class="pg"&gt;原文p376&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p378&lt;/span&gt;</code> ）。</li>
+<li>SSID 连不上在 AP CLI 走 iwconfig → sta_list → AAA_server.conf → tcpdump 抓 RADIUS（ <code>&lt;span class="pg"&gt;原文p415&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p418&lt;/span&gt;</code> ）；Portal 不弹页查 date/resolv.conf → eag 进程与 eag.log（ <code>&lt;span class="pg"&gt;原文p444&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p448&lt;/span&gt;</code> ）。</li>
+<li>安全红线：预配置设备（实验室核心、Organization）不要动出厂/删除（ <code>&lt;span class="pg"&gt;原文p123&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p100&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p358&lt;/span&gt;</code> ）；Lightning Config 只在"仅 1/2 口接客户端、无既有配置、无 DHCP 分配、无 NMS 连接"时触发（ <code>&lt;span class="pg"&gt;原文p79&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p1025&lt;/span&gt;</code> ）。</li>
+</ul>
 <h2 id="_3">三、一句话总结</h2>
 <p>这本书的骨架是"两个操作系统（AOS/AWOS）+ 三种管理模式（Express/Enterprise/Cloud）+ 一套分层排障法"：先想清配置落在哪个目录、AP 归哪个组、策略由谁裁决，再动手敲命令，最后用 show/logs 验证闭环。</p><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -69,7 +70,7 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="i">I（核心理念）</h2>
 <ul>
-<li>本域是全书体量最大的命令域（&lt;&lt;<PAGE 1549-3227>&gt;&gt;），两条通用规律：其一，路由协议命令生效前需 <code>ip load &lt;protocol&gt;</code> 加载对应模块（X8，RIP/OSPF/IS-IS/BGP/VRRP）；其二，部分全局参数类命令要求先停协议再改。</li>
+<li>本域是全书体量最大的命令域（ <code>&lt;span class="pg"&gt;原文p1549-3227&lt;/span&gt;</code> ），两条通用规律：其一，路由协议命令生效前需 <code>ip load &lt;protocol&gt;</code> 加载对应模块（X8，RIP/OSPF/IS-IS/BGP/VRRP）；其二，部分全局参数类命令要求先停协议再改。</li>
 <li>BGP 章 194 条为全书第二大章，命令分 Global/Aggregate/Network/Neighbor/Address-family/VRF 组（P20）；
 OSPF 章按 Global/Area/Interface/BFD/VRF 分组（P17）。</li>
 </ul>
@@ -84,18 +85,18 @@ OSPF 章按 Global/Area/Interface/BFD/VRF 分组（P17）。</li>
 </ol>
 <h2 id="a2">A2（操作步骤）·章节清单与代表命令</h2>
 <ul>
-<li><strong>Ch21 IP（&lt;&lt;<PAGE 1549>&gt;&gt;，约 113 条）</strong>：<code>ip interface</code>、<code>ip route</code>、<code>ip domain</code>、ARP、<code>ip helper</code> 等单播底座（P16）</li>
-<li><strong>Ch22 IPv6（&lt;&lt;<PAGE 1793>&gt;&gt;，约 68 条）</strong>：<code>ipv6</code> 地址/邻居发现/路由与过渡</li>
-<li><strong>Ch23 IPsec（&lt;&lt;<PAGE 1948>&gt;&gt;，约 11 条）</strong>：<code>ipsec</code>/IKE 隧道加密</li>
-<li><strong>Ch24 RIP（&lt;&lt;<PAGE 1974>&gt;&gt;，约 41 条）</strong>：<code>ip rip</code> 距离矢量</li>
-<li><strong>Ch25 BFD（&lt;&lt;<PAGE 2058>&gt;&gt;，约 16 条）</strong>：<code>ip bfd</code>（为路由协议提供毫秒级故障检测）</li>
-<li><strong>Ch26 DHCP Relay（&lt;&lt;<PAGE 2092>&gt;&gt;，约 116 条）</strong>：<code>bootp relay</code>/DHCP 中继、option82、监督</li>
-<li><strong>Ch27 VRRP（&lt;&lt;<PAGE 2334>&gt;&gt;，约 24 条）</strong>：<code>ip vrrp</code>（首跳网关备份）</li>
-<li><strong>Ch28 OSPF（&lt;&lt;<PAGE 2392>&gt;&gt;，约 57 条）</strong>：<code>ip ospf spf-timer [delay seconds] [hold seconds]</code>（0-65535，默认 delay=5/hold=10；任一为 0 则立即触发 SPF）（P18）；<code>ip ospf interface hello-interval</code>（0-65535 秒，默认 broadcast/P2P=10、NBMA/P2MP=30）（P19）；<code>ip load ospf</code> 前置（X8）</li>
-<li><strong>Ch29 OSPFv3（&lt;&lt;<PAGE 2513>&gt;&gt;，约 46 条）</strong></li>
-<li><strong>Ch30 IS-IS（&lt;&lt;<PAGE 2610>&gt;&gt;，约 62 条）</strong>：SPB 控制面基础</li>
-<li><strong>Ch31 BGP（&lt;&lt;<PAGE 2744>&gt;&gt;，约 194 条）</strong>：<code>ip bgp maximum-paths</code>（ECMP 开关，默认 disabled；启用后忽略 router-id 判等装全部等价路径；要求先停 BGP）（P22）；<code>ip bgp default local-preference</code>；BGP-4+MP-BGP（IPv6 前缀与邻居），peer 与 neighbor 术语互换（P20）</li>
-<li><strong>Ch32 SLB（&lt;&lt;<PAGE 3160>&gt;&gt;，约 31 条）</strong>：<code>slb</code>（VIP/实服务组/健康检查）</li>
+<li><strong>Ch21 IP（ <code>&lt;span class="pg"&gt;原文p1549&lt;/span&gt;</code> ，约 113 条）</strong>：<code>ip interface</code>、<code>ip route</code>、<code>ip domain</code>、ARP、<code>ip helper</code> 等单播底座（P16）</li>
+<li><strong>Ch22 IPv6（ <code>&lt;span class="pg"&gt;原文p1793&lt;/span&gt;</code> ，约 68 条）</strong>：<code>ipv6</code> 地址/邻居发现/路由与过渡</li>
+<li><strong>Ch23 IPsec（ <code>&lt;span class="pg"&gt;原文p1948&lt;/span&gt;</code> ，约 11 条）</strong>：<code>ipsec</code>/IKE 隧道加密</li>
+<li><strong>Ch24 RIP（ <code>&lt;span class="pg"&gt;原文p1974&lt;/span&gt;</code> ，约 41 条）</strong>：<code>ip rip</code> 距离矢量</li>
+<li><strong>Ch25 BFD（ <code>&lt;span class="pg"&gt;原文p2058&lt;/span&gt;</code> ，约 16 条）</strong>：<code>ip bfd</code>（为路由协议提供毫秒级故障检测）</li>
+<li><strong>Ch26 DHCP Relay（ <code>&lt;span class="pg"&gt;原文p2092&lt;/span&gt;</code> ，约 116 条）</strong>：<code>bootp relay</code>/DHCP 中继、option82、监督</li>
+<li><strong>Ch27 VRRP（ <code>&lt;span class="pg"&gt;原文p2334&lt;/span&gt;</code> ，约 24 条）</strong>：<code>ip vrrp</code>（首跳网关备份）</li>
+<li><strong>Ch28 OSPF（ <code>&lt;span class="pg"&gt;原文p2392&lt;/span&gt;</code> ，约 57 条）</strong>：<code>ip ospf spf-timer [delay seconds] [hold seconds]</code>（0-65535，默认 delay=5/hold=10；任一为 0 则立即触发 SPF）（P18）；<code>ip ospf interface hello-interval</code>（0-65535 秒，默认 broadcast/P2P=10、NBMA/P2MP=30）（P19）；<code>ip load ospf</code> 前置（X8）</li>
+<li><strong>Ch29 OSPFv3（ <code>&lt;span class="pg"&gt;原文p2513&lt;/span&gt;</code> ，约 46 条）</strong></li>
+<li><strong>Ch30 IS-IS（ <code>&lt;span class="pg"&gt;原文p2610&lt;/span&gt;</code> ，约 62 条）</strong>：SPB 控制面基础</li>
+<li><strong>Ch31 BGP（ <code>&lt;span class="pg"&gt;原文p2744&lt;/span&gt;</code> ，约 194 条）</strong>：<code>ip bgp maximum-paths</code>（ECMP 开关，默认 disabled；启用后忽略 router-id 判等装全部等价路径；要求先停 BGP）（P22）；<code>ip bgp default local-preference</code>；BGP-4+MP-BGP（IPv6 前缀与邻居），peer 与 neighbor 术语互换（P20）</li>
+<li><strong>Ch32 SLB（ <code>&lt;span class="pg"&gt;原文p3160&lt;/span&gt;</code> ，约 31 条）</strong>：<code>slb</code>（VIP/实服务组/健康检查）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
@@ -104,10 +105,10 @@ OSPF 章按 Global/Area/Interface/BFD/VRF 分组（P17）。</li>
 <h2 id="b">B（反例/坑）</h2>
 <ul>
 <li>路由协议命令生效前需 <code>ip load &lt;protocol&gt;</code> 加载模块（X8，第 24/27/28/30/31 章）</li>
-<li><code>ip ospf spf-timer</code>/<code>hello-interval</code> 平台：6360/6465 不支持，6560 起支持（X2，&lt;&lt;<PAGE 2409>&gt;&gt;/&lt;&lt;<PAGE 2434>&gt;&gt;）</li>
-<li><code>ip ospf interface hello-interval</code> 设 0 的语义是创建被动接口（不发 hello），并非更快收敛（X23，&lt;&lt;<PAGE 2434>&gt;&gt;）</li>
-<li><code>ip bgp default local-preference</code>/<code>maximum-paths</code> 平台：6360/6465/6575 不支持（X3，&lt;&lt;<PAGE 2759>&gt;&gt;/&lt;&lt;<PAGE 2776>&gt;&gt;）</li>
+<li><code>ip ospf spf-timer</code>/<code>hello-interval</code> 平台：6360/6465 不支持，6560 起支持（X2， <code>&lt;span class="pg"&gt;原文p2409&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p2434&lt;/span&gt;</code> ）</li>
+<li><code>ip ospf interface hello-interval</code> 设 0 的语义是创建被动接口（不发 hello），并非更快收敛（X23， <code>&lt;span class="pg"&gt;原文p2434&lt;/span&gt;</code> ）</li>
+<li><code>ip bgp default local-preference</code>/<code>maximum-paths</code> 平台：6360/6465/6575 不支持（X3， <code>&lt;span class="pg"&gt;原文p2759&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p2776&lt;/span&gt;</code> ）</li>
 <li><code>ip bgp maximum-paths</code> 同样要求先停 BGP 再配（P22）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniSwitch AOS Release 810R04 CLI Reference User Guide 第 21-32 章（&lt;&lt;<PAGE 1549-3227>&gt;&gt;）。条目来源：principles P16-P22；counter-examples X2/X3/X8/X23；frameworks F6。</p><div class="pn"><a href="aos-cli-map-fabric.html">⬅ 上一单元：aos-cli-map-fabric</a><a class="nxt" href="aos-cli-map-multicast-qos.html">下一单元：aos-cli-map-multicast-qos ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<p>OmniSwitch AOS Release 810R04 CLI Reference User Guide 第 21-32 章（ <code>&lt;span class="pg"&gt;原文p1549-3227&lt;/span&gt;</code> ）。条目来源：principles P16-P22；counter-examples X2/X3/X8/X23；frameworks F6。</p><div class="pn"><a href="aos-cli-map-fabric.html">⬅ 上一单元：aos-cli-map-fabric</a><a class="nxt" href="aos-cli-map-multicast-qos.html">下一单元：aos-cli-map-multicast-qos ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

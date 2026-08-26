@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -86,25 +87,74 @@ blockquote p{margin:6px 0}
 <p><strong>三条支线</strong>：商业链路（账号→Trial→eBuy→订阅→导入）、平台切换链路（OVC4→OVC、Cirrus→Terra 的证书与 URL 清理）、无线体验链路（RF 参数→漫游→QoE 度量闭环）。</p>
 <h2 id="_2">二、十个最重要知识点串讲</h2>
 <h3 id="1-cirrus-terra">1. Cirrus 与 Terra 的本质分工</h3>
-<p>Cirrus 是 SaaS、"Zero Deployment"（&lt;&lt;<PAGE 5>&gt;&gt;）；Terra 是 On-Premises、客户自托管 3-VM 集群、单租户（&lt;&lt;<PAGE 13>&gt;&gt;&lt;&lt;<PAGE 14>&gt;&gt;）。容量差一个量级：Cirrus 最多 12000 台（10000 AP + 2000 交换机），Terra 最多 2000 台（1600 AP + 400 交换机）（&lt;&lt;<PAGE 6>&gt;&gt;&lt;&lt;<PAGE 14>&gt;&gt;）。但两者功能对等、商业结构一致、UI 一致（&lt;&lt;<PAGE 17>&gt;&gt;），所以技能跨平台通用，只是门槛参数不同：AP 最低版本 Cirrus 要 AWOS 4.0.6 GA、Terra 要 AWOS 4.0.7.14；交换机分别要 AOS 8.9R1 与 8.9.82R01（&lt;&lt;<PAGE 9>&gt;&gt;&lt;&lt;<PAGE 18>&gt;&gt;）。AP1101、AP1201L/H/HL 两边都不支持（&lt;&lt;<PAGE 140>&gt;&gt;）。</p>
+<ul>
+<li>Cirrus 是 SaaS、"Zero Deployment"（ <code>&lt;span class="pg"&gt;原文p5&lt;/span&gt;</code> ）；Terra 是 On-Premises、客户自托管 3-VM 集群、单租户（ <code>&lt;span class="pg"&gt;原文p13&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p14&lt;/span&gt;</code> ）。</li>
+<li>容量差一个量级：Cirrus 最多 12000 台（10000 AP + 2000 交换机），Terra 最多 2000 台（1600 AP + 400 交换机）（ <code>&lt;span class="pg"&gt;原文p6&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p14&lt;/span&gt;</code> ）。</li>
+<li>但两者功能对等、商业结构一致、UI 一致（ <code>&lt;span class="pg"&gt;原文p17&lt;/span&gt;</code> ），所以技能跨平台通用，只是门槛参数不同：AP 最低版本 Cirrus 要 AWOS 4.0.6 GA、Terra 要 AWOS 4.0.7.14；交换机分别要 AOS 8.9R1 与 8.9.82R01（ <code>&lt;span class="pg"&gt;原文p9&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p18&lt;/span&gt;</code> ）。</li>
+<li>AP1101、AP1201L/H/HL 两边都不支持（ <code>&lt;span class="pg"&gt;原文p140&lt;/span&gt;</code> ）。</li>
+</ul>
 <h3 id="2">2. 防火墙端口是激活的隐形门槛</h3>
-<p>Cirrus 场景 AP→云必须开 9093/30123/30124/30125 加出向 443/80/123/53；Terra 只需出向 443/80/123/53（&lt;&lt;<PAGE 9>&gt;&gt;&lt;&lt;<PAGE 18>&gt;&gt;&lt;&lt;<PAGE 140>&gt;&gt;）。DHCP 需标准 options 1,3,6,28,42,43（用代理加 129-133,138），至少 1 个 NTP（&lt;&lt;<PAGE 9>&gt;&gt;）。设备"宣告了没反应"先查这张清单。</p>
+<ul>
+<li>Cirrus 场景 AP→云必须开 9093/30123/30124/30125 加出向 443/80/123/53；Terra 只需出向 443/80/123/53（ <code>&lt;span class="pg"&gt;原文p9&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p18&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p140&lt;/span&gt;</code> ）。</li>
+<li>DHCP 需标准 options 1,3,6,28,42,43（用代理加 129-133,138），至少 1 个 NTP（ <code>&lt;span class="pg"&gt;原文p9&lt;/span&gt;</code> ）。</li>
+<li>设备"宣告了没反应"先查这张清单。</li>
+</ul>
 <h3 id="3">3. 三级账号体系与单邮箱陷阱</h3>
-<p>Partner 账号创建即 MSP 级用户（可建组织、邀用户），Customer 账号不挂 MSP（&lt;&lt;<PAGE 37>&gt;&gt;&lt;&lt;<PAGE 50>&gt;&gt;）；组织 = 企业或实体、含多站点（&lt;&lt;<PAGE 50>&gt;&gt;）。权限三档 Admin/Viewer/Limited（&lt;&lt;<PAGE 50>&gt;&gt;）。最大的坑：OVC 10.4.3 一个邮箱只能绑一个 MSP 门户，多 MSP 要用子地址 MyMail+sub@MyCompany.com，且激活链接仍发原始邮箱（&lt;&lt;<PAGE 49>&gt;&gt;）。组织脱离 MSP 后该 MSP 全部用户立即失访（&lt;&lt;<PAGE 59>&gt;&gt;）。</p>
+<ul>
+<li>Partner 账号创建即 MSP 级用户（可建组织、邀用户），Customer 账号不挂 MSP（ <code>&lt;span class="pg"&gt;原文p37&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p50&lt;/span&gt;</code> ）；组织 = 企业或实体、含多站点（ <code>&lt;span class="pg"&gt;原文p50&lt;/span&gt;</code> ）。</li>
+<li>权限三档 Admin/Viewer/Limited（ <code>&lt;span class="pg"&gt;原文p50&lt;/span&gt;</code> ）。</li>
+<li>最大的坑：OVC 10.4.3 一个邮箱只能绑一个 MSP 门户，多 MSP 要用子地址 MyMail+sub@MyCompany.com，且激活链接仍发原始邮箱（ <code>&lt;span class="pg"&gt;原文p49&lt;/span&gt;</code> ）。</li>
+<li>组织脱离 MSP 后该 MSP 全部用户立即失访（ <code>&lt;span class="pg"&gt;原文p59&lt;/span&gt;</code> ）。</li>
+</ul>
 <h3 id="4-license">4. License 三段链路与两个时间陷阱</h3>
-<p>eBuy 下单 → Subscription Manager 建订阅 → OV 实例导入（&lt;&lt;<PAGE 24>&gt;&gt;）。陷阱一：eBuy 下单后订阅最长 24 小时才出现在 Subscription Manager（&lt;&lt;<PAGE 26>&gt;&gt;）。陷阱二：勾选 "Activate subscription" 即开始订阅倒计时，不要提前激活（&lt;&lt;<PAGE 101>&gt;&gt;）。Terra 导入比 Cirrus 多一步：需从 Admin Center 取 OmniVista ID 并下载 license 文件 (.json)，与 Subscription ID + Activation Code 三件套一起导入（&lt;&lt;<PAGE 100>&gt;&gt;&lt;&lt;<PAGE 114>&gt;&gt;）。Trial 转正走 License Management &gt; import licenses &gt; CAPEX Subscription，upgrade 后确认 paid mode（&lt;&lt;<PAGE 62>&gt;&gt;~&lt;&lt;<PAGE 67>&gt;&gt;）。SKU 编码读法：OVCX-68-BAS-3Y = 等级（BAS/BIZ/PRM）+ 年限（1Y/3Y/5Y，Terra 另有 7Y）+ 品类（APL 为低端 AP）（&lt;&lt;<PAGE 23>&gt;&gt;&lt;&lt;<PAGE 95>&gt;&gt;）。</p>
+<ul>
+<li>eBuy 下单 → Subscription Manager 建订阅 → OV 实例导入（ <code>&lt;span class="pg"&gt;原文p24&lt;/span&gt;</code> ）。</li>
+<li>陷阱一：eBuy 下单后订阅最长 24 小时才出现在 Subscription Manager（ <code>&lt;span class="pg"&gt;原文p26&lt;/span&gt;</code> ）。</li>
+<li>陷阱二：勾选 "Activate subscription" 即开始订阅倒计时，不要提前激活（ <code>&lt;span class="pg"&gt;原文p101&lt;/span&gt;</code> ）。</li>
+<li>Terra 导入比 Cirrus 多一步：需从 Admin Center 取 OmniVista ID 并下载 license 文件 (.json)，与 Subscription ID + Activation Code 三件套一起导入（ <code>&lt;span class="pg"&gt;原文p100&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p114&lt;/span&gt;</code> ）。</li>
+<li>Trial 转正走 License Management &gt; import licenses &gt; CAPEX Subscription，upgrade 后确认 paid mode（ <code>&lt;span class="pg"&gt;原文p62&lt;/span&gt;</code> ~ <code>&lt;span class="pg"&gt;原文p67&lt;/span&gt;</code> ）。</li>
+<li>SKU 编码读法：OVCX-68-BAS-3Y = 等级（BAS/BIZ/PRM）+ 年限（1Y/3Y/5Y，Terra 另有 7Y）+ 品类（APL 为低端 AP）（ <code>&lt;span class="pg"&gt;原文p23&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p95&lt;/span&gt;</code> ）。</li>
+</ul>
 <h3 id="5-terra-dns">5. Terra 部署：硬件红线与四域名 DNS</h3>
-<p>3 台 VM 组成 Kubernetes 集群（Active-Active L3 高可用，含 VPN Server/Load balancer、Kafka/MQTT）（&lt;&lt;<PAGE 17>&gt;&gt;）。硬件：ESXi 8+、每台 8 vCPU@3GHz / 32GB RAM / SSD / System 200GB / Data 3TB；CPU 必须支持 AVX/AVX2，vCenter 集群 EVC 基线推荐 Ice Lake、最低 Broadwell——低于 Broadwell 必失败（&lt;&lt;<PAGE 75>&gt;&gt;）。流程：OVA 部署 → 控制台配 hostname/IP/DNS（必须能解析 myovterra.myovcloud.com）→ WebAdmin <code>&lt;Node_IP&gt;:3000</code> 建 admin、填 General Info 与集群节点、定义 Main/VPN/Captive Portal/Radius 四个 IP、配 SMTP → 上传 build (.7z) → DNS 配四域名（activation/as、vpn、images、myovterra.myovcloud.com，&lt;&lt;<PAGE 90>&gt;&gt;）→ 首登。失败时 Install 菜单点 Download the logs 取证（&lt;&lt;<PAGE 89>&gt;&gt;）。</p>
+<ul>
+<li>3 台 VM 组成 Kubernetes 集群（Active-Active L3 高可用，含 VPN Server/Load balancer、Kafka/MQTT）（ <code>&lt;span class="pg"&gt;原文p17&lt;/span&gt;</code> ）。</li>
+<li>硬件：ESXi 8+、每台 8 vCPU@3GHz / 32GB RAM / SSD / System 200GB / Data 3TB；CPU 必须支持 AVX/AVX2，vCenter 集群 EVC 基线推荐 Ice Lake、最低 Broadwell——低于 Broadwell 必失败（ <code>&lt;span class="pg"&gt;原文p75&lt;/span&gt;</code> ）。</li>
+<li>流程：OVA 部署 → 控制台配 hostname/IP/DNS（必须能解析 myovterra.myovcloud.com）→ WebAdmin <code>&lt;Node_IP&gt;:3000</code> 建 admin、填 General Info 与集群节点、定义 Main/VPN/Captive Portal/Radius 四个 IP、配 SMTP → 上传 build (.7z) → DNS 配四域名（activation/as、vpn、images、myovterra.myovcloud.com， <code>&lt;span class="pg"&gt;原文p90&lt;/span&gt;</code> ）→ 首登。</li>
+<li>失败时 Install 菜单点 Download the logs 取证（ <code>&lt;span class="pg"&gt;原文p89&lt;/span&gt;</code> ）。</li>
+</ul>
 <h3 id="6">6. 激活状态机是排障的地图</h3>
-<p>设备宣告后的正常链：Registered → Obtaining Certificate → Upgrade → Assigned → VPN Configuring → Connected to OV → OV Managed（终态，最长约 5 分钟）（&lt;&lt;<PAGE 146>&gt;&gt;&lt;&lt;<PAGE 147>&gt;&gt;）。原理：平台为设备签发数字证书，证书用于建设备与平台间的安全 VPN 通道（&lt;&lt;<PAGE 147>&gt;&gt;）。失败状态族：Failed To Get Certificate / Upgrade Failed / Configuring VPN Failed / Provisioning Failed / Device Validation Failed / Factory Reset Required；VPN profile 变更过就必须恢复出厂（&lt;&lt;<PAGE 147>&gt;&gt;）。推论：残留旧证书是激活失败头号根源——曾被 Cirrus 管的 AP 进 Terra 前要 <code>rm -rf /.ocloud/</code> 下证书文件（&lt;&lt;<PAGE 141>&gt;&gt;）；交换机切 Terra 要删 switch/cloud 下五类证书文件并把 /working/cloudagent.cfg 首行改成 activation.myovterra.com（&lt;&lt;<PAGE 161>&gt;&gt;）。</p>
+<ul>
+<li>设备宣告后的正常链：Registered → Obtaining Certificate → Upgrade → Assigned → VPN Configuring → Connected to OV → OV Managed（终态，最长约 5 分钟）（ <code>&lt;span class="pg"&gt;原文p146&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p147&lt;/span&gt;</code> ）。</li>
+<li>原理：平台为设备签发数字证书，证书用于建设备与平台间的安全 VPN 通道（ <code>&lt;span class="pg"&gt;原文p147&lt;/span&gt;</code> ）。</li>
+<li>失败状态族：Failed To Get Certificate / Upgrade Failed / Configuring VPN Failed / Provisioning Failed / Device Validation Failed / Factory Reset Required；VPN profile 变更过就必须恢复出厂（ <code>&lt;span class="pg"&gt;原文p147&lt;/span&gt;</code> ）。</li>
+<li>推论：残留旧证书是激活失败头号根源——曾被 Cirrus 管的 AP 进 Terra 前要 <code>rm -rf /.ocloud/</code> 下证书文件（ <code>&lt;span class="pg"&gt;原文p141&lt;/span&gt;</code> ）；交换机切 Terra 要删 switch/cloud 下五类证书文件并把 /working/cloudagent.cfg 首行改成 activation.myovterra.com（ <code>&lt;span class="pg"&gt;原文p161&lt;/span&gt;</code> ）。</li>
+</ul>
 <h3 id="7-cloud-agent">7. 交换机侧的 cloud-agent 机制</h3>
-<p>cloud-agent 是交换机与平台对接的代理：<code>show cloud-agent status</code> 看 Activation Server State（期望 completeOK）与 Device State（期望 DeviceManaged）；<code>cloud-agent admin-state disable force</code> 重建 VPN；发现间隔默认 30 分钟（Call Home），等不及就重启进程或设备（&lt;&lt;<PAGE 170>&gt;&gt;&lt;&lt;<PAGE 171>&gt;&gt;&lt;&lt;<PAGE 172>&gt;&gt;）。</p>
+<p>cloud-agent 是交换机与平台对接的代理：<code>show cloud-agent status</code> 看 Activation Server State（期望 completeOK）与 Device State（期望 DeviceManaged）；<code>cloud-agent admin-state disable force</code> 重建 VPN；发现间隔默认 30 分钟（Call Home），等不及就重启进程或设备（ <code>&lt;span class="pg"&gt;原文p170&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p171&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p172&lt;/span&gt;</code> ）。</p>
 <h3 id="8-ap-group">8. 无线配置模型：AP Group 承载一切</h3>
-<p>同 AP Group 的 AP 共享配置（SSID/RF Profile/模板），与物理网络无关，每组最多 20000 AP、可混型号（&lt;&lt;<PAGE 152>&gt;&gt;）。Provisioning Configuration 必填 Name/Site/RF Profile/Timezone，另含 SSH、SNMP、IoT Radio、Syslog（最多4）等（&lt;&lt;<PAGE 154>&gt;&gt;）。SSID 是向导式：Usage 预设（Guest/Employee/BYOD/Enterprise）决定参数走向（&lt;&lt;<PAGE 214>&gt;&gt;&lt;&lt;<PAGE 218>&gt;&gt;）；认证安全等级从 Open+CP → MAC → PSK → 802.1X 递增（&lt;&lt;<PAGE 215>&gt;&gt;）。PSK 精细化：DSPSK 按 MAC 发专属 passphrase（不支持 AUTO_WPA_WPA2，&lt;&lt;<PAGE 232>&gt;&gt;）、PPSK 多密码各绑 ARP、Dynamic PGPSK 条目直绑 VLAN+ARP（&lt;&lt;<PAGE 231>&gt;&gt;&lt;&lt;<PAGE 233>&gt;&gt;&lt;&lt;<PAGE 234>&gt;&gt;）。访客体系：UPAM 内置 RADIUS + MAC 认证服务器（&lt;&lt;<PAGE 240>&gt;&gt;），Guest Tunneling 按 ARP 建 L2 GRE 隧道隔离访客流量（&lt;&lt;<PAGE 256>&gt;&gt;），Registration Profile 管时间/数据配额及耗尽处理（&lt;&lt;<PAGE 283>&gt;&gt;）。带宽判定顺序：ACL 规则 → ARP → SSID 级（&lt;&lt;<PAGE 268>&gt;&gt;&lt;&lt;<PAGE 269>&gt;&gt;）。</p>
+<ul>
+<li>同 AP Group 的 AP 共享配置（SSID/RF Profile/模板），与物理网络无关，每组最多 20000 AP、可混型号（ <code>&lt;span class="pg"&gt;原文p152&lt;/span&gt;</code> ）。</li>
+<li>Provisioning Configuration 必填 Name/Site/RF Profile/Timezone，另含 SSH、SNMP、IoT Radio、Syslog（最多4）等（ <code>&lt;span class="pg"&gt;原文p154&lt;/span&gt;</code> ）。</li>
+<li>SSID 是向导式：Usage 预设（Guest/Employee/BYOD/Enterprise）决定参数走向（ <code>&lt;span class="pg"&gt;原文p214&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p218&lt;/span&gt;</code> ）；认证安全等级从 Open+CP → MAC → PSK → 802.1X 递增（ <code>&lt;span class="pg"&gt;原文p215&lt;/span&gt;</code> ）。</li>
+<li>PSK 精细化：DSPSK 按 MAC 发专属 passphrase（不支持 AUTO_WPA_WPA2， <code>&lt;span class="pg"&gt;原文p232&lt;/span&gt;</code> ）、PPSK 多密码各绑 ARP、Dynamic PGPSK 条目直绑 VLAN+ARP（ <code>&lt;span class="pg"&gt;原文p231&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p233&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p234&lt;/span&gt;</code> ）。</li>
+<li>访客体系：UPAM 内置 RADIUS + MAC 认证服务器（ <code>&lt;span class="pg"&gt;原文p240&lt;/span&gt;</code> ），Guest Tunneling 按 ARP 建 L2 GRE 隧道隔离访客流量（ <code>&lt;span class="pg"&gt;原文p256&lt;/span&gt;</code> ），Registration Profile 管时间/数据配额及耗尽处理（ <code>&lt;span class="pg"&gt;原文p283&lt;/span&gt;</code> ）。</li>
+<li>带宽判定顺序：ACL 规则 → ARP → SSID 级（ <code>&lt;span class="pg"&gt;原文p268&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p269&lt;/span&gt;</code> ）。</li>
+</ul>
 <h3 id="9">9. 射频与漫游：分布式决策 + 参数红线</h3>
-<p>DRM 全分布式：AP 空口发现邻居、LAN 共享 RF 上下文、自主决策，不依赖 AP Group/管理 VLAN（&lt;&lt;<PAGE 364>&gt;&gt;）。关键参数与推荐值：Band Steering 门限 2.4G=5 / 5G=10（&lt;&lt;<PAGE 370>&gt;&gt;）；信道利用率 1 分钟均值超 70% 判 Overloaded（&lt;&lt;<PAGE 371>&gt;&gt;）；扫描默认 20s/50ms，扫描期间客户端无数据、WIPS 依赖扫描（&lt;&lt;<PAGE 373>&gt;&gt;）；Roaming RSSI 2.4G=10 / 5G=15，阈值过低客户端滞留弱信号、过高频繁漫游丢包（&lt;&lt;<PAGE 416>&gt;&gt;）。漫游判定看 VLAN：home/foreign VLAN 一致走 L2，不一致走 L3（L2 GRE 隧道，默认禁用）（&lt;&lt;<PAGE 394>&gt;&gt;&lt;&lt;<PAGE 400>&gt;&gt;）。OKC 仅 Enterprise、802.11r 仅 WPA2/WPA3（&lt;&lt;<PAGE 402>&gt;&gt;）。特殊场景：地理相邻但互相看不见的 AP 要两端手工互加 Neighbor AP（&lt;&lt;<PAGE 415>&gt;&gt;）；Mesh 最多 16 AP/4 跳，最佳实践 5GHz、信道&gt;100（&lt;&lt;<PAGE 439>&gt;&gt;）；RAP 需 OV Cirrus + ALE VPN Server VM + OV2500 三块配置、五步开通（&lt;&lt;<PAGE 423>&gt;&gt;~&lt;&lt;<PAGE 432>&gt;&gt;）。</p>
+<ul>
+<li>DRM 全分布式：AP 空口发现邻居、LAN 共享 RF 上下文、自主决策，不依赖 AP Group/管理 VLAN（ <code>&lt;span class="pg"&gt;原文p364&lt;/span&gt;</code> ）。</li>
+<li>关键参数与推荐值：Band Steering 门限 2.4G=5 / 5G=10（ <code>&lt;span class="pg"&gt;原文p370&lt;/span&gt;</code> ）；信道利用率 1 分钟均值超 70% 判 Overloaded（ <code>&lt;span class="pg"&gt;原文p371&lt;/span&gt;</code> ）；扫描默认 20s/50ms，扫描期间客户端无数据、WIPS 依赖扫描（ <code>&lt;span class="pg"&gt;原文p373&lt;/span&gt;</code> ）；Roaming RSSI 2.4G=10 / 5G=15，阈值过低客户端滞留弱信号、过高频繁漫游丢包（ <code>&lt;span class="pg"&gt;原文p416&lt;/span&gt;</code> ）。</li>
+<li>漫游判定看 VLAN：home/foreign VLAN 一致走 L2，不一致走 L3（L2 GRE 隧道，默认禁用）（ <code>&lt;span class="pg"&gt;原文p394&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p400&lt;/span&gt;</code> ）。</li>
+<li>OKC 仅 Enterprise、802.11r 仅 WPA2/WPA3（ <code>&lt;span class="pg"&gt;原文p402&lt;/span&gt;</code> ）。</li>
+<li>特殊场景：地理相邻但互相看不见的 AP 要两端手工互加 Neighbor AP（ <code>&lt;span class="pg"&gt;原文p415&lt;/span&gt;</code> ）；Mesh 最多 16 AP/4 跳，最佳实践 5GHz、信道&gt;100（ <code>&lt;span class="pg"&gt;原文p439&lt;/span&gt;</code> ）；RAP 需 OV Cirrus + ALE VPN Server VM + OV2500 三块配置、五步开通（ <code>&lt;span class="pg"&gt;原文p423&lt;/span&gt;</code> ~ <code>&lt;span class="pg"&gt;原文p432&lt;/span&gt;</code> ）。</li>
+</ul>
 <h3 id="10">10. 运维闭环：度量、变更、取证</h3>
-<p>QoE Analytics 量化连接/漫游时间（失败原因 Association/Authorization/DHCP/Portal）、RSSI（OV 平均值 vs AP 瞬时值，Bad 区间别跑音视频，&lt;&lt;<PAGE 379>&gt;&gt;）、信道利用率、uptime（&lt;&lt;<PAGE 296>&gt;&gt;）。变更：Scheduled Upgrade 按 Site/AP Group/单 AP 分窗分版本（&lt;&lt;<PAGE 356>&gt;&gt;）；备份支持即时与计划（scope 到 switch/site/floor，&lt;&lt;<PAGE 355>&gt;&gt;）；Golden Configuration 周期审计配置偏离（&lt;&lt;<PAGE 195>&gt;&gt;&lt;&lt;<PAGE 351>&gt;&gt;）。取证：Collect support info，AP 下载 tar.gz 快照、交换机打包 Swlog/Cfg/Tech-support（&lt;&lt;<PAGE 358>&gt;&gt;&lt;&lt;<PAGE 359>&gt;&gt;）。Heat Map 注意最少 3 个 AP 才能生成（&lt;&lt;<PAGE 337>&gt;&gt;）。</p>
+<ul>
+<li>QoE Analytics 量化连接/漫游时间（失败原因 Association/Authorization/DHCP/Portal）、RSSI（OV 平均值 vs AP 瞬时值，Bad 区间别跑音视频， <code>&lt;span class="pg"&gt;原文p379&lt;/span&gt;</code> ）、信道利用率、uptime（ <code>&lt;span class="pg"&gt;原文p296&lt;/span&gt;</code> ）。</li>
+<li>变更：Scheduled Upgrade 按 Site/AP Group/单 AP 分窗分版本（ <code>&lt;span class="pg"&gt;原文p356&lt;/span&gt;</code> ）；备份支持即时与计划（scope 到 switch/site/floor， <code>&lt;span class="pg"&gt;原文p355&lt;/span&gt;</code> ）；Golden Configuration 周期审计配置偏离（ <code>&lt;span class="pg"&gt;原文p195&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p351&lt;/span&gt;</code> ）。</li>
+<li>取证：Collect support info，AP 下载 tar.gz 快照、交换机打包 Swlog/Cfg/Tech-support（ <code>&lt;span class="pg"&gt;原文p358&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p359&lt;/span&gt;</code> ）。</li>
+<li>Heat Map 注意最少 3 个 AP 才能生成（ <code>&lt;span class="pg"&gt;原文p337&lt;/span&gt;</code> ）。</li>
+</ul>
 <h2 id="_3">三、交付检查清单（浓缩版）</h2>
 <ul>
 <li>[ ] 选型：规模 &gt;2000 台只能 Cirrus；防火墙端口/版本门槛核对</li>

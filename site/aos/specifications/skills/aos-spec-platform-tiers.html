@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -66,27 +67,27 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="i">I（核心理念）</h2>
 <ul>
-<li>平台规模三梯队选型框架（F2，&lt;&lt;<PAGE 30>&gt;&gt;/&lt;&lt;<PAGE 42>&gt;&gt;）：接入级（6360/6465/6560：MAC 16K、路由 32-2K、聚合 32 组）→ 汇聚级（6570M/6575/6860 系：MAC 32-64K、路由 12-13K、聚合 128）→ 核心/数据中心级（6870/6900/6920/9900：MAC 104-228K、路由 113-384K、聚合 252+）；同级内再看 SM/RM/ER 转发 profile 二次放大。</li>
+<li>平台规模三梯队选型框架（F2， <code>&lt;span class="pg"&gt;原文p30&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p42&lt;/span&gt;</code> ）：接入级（6360/6465/6560：MAC 16K、路由 32-2K、聚合 32 组）→ 汇聚级（6570M/6575/6860 系：MAC 32-64K、路由 12-13K、聚合 128）→ 核心/数据中心级（6870/6900/6920/9900：MAC 104-228K、路由 113-384K、聚合 252+）；同级内再看 SM/RM/ER 转发 profile 二次放大。</li>
 <li>规划口诀：先选梯队、再选 profile、最后对 TCAM 档位。</li>
-<li>VC 规格解读框架（F4，&lt;&lt;<PAGE 12>&gt;&gt;/&lt;&lt;<PAGE 23-24>&gt;&gt;）：文档中的 maximum 默认作用于整 VC 而非单机（P13），三类例外要辨明——按机箱×成员数扩的、VC 封顶不随成员增加的（X35）、仅单机的（1588v2 VC-of-1）。</li>
-<li>文档地图四阶段法（F1，&lt;&lt;<PAGE 8-9>&gt;&gt;）：本手册只答"能到多少"不答"怎么配"，配置去 Network Config / Advanced Routing / Data Center Switching，命令查 CLI Reference。</li>
+<li>VC 规格解读框架（F4， <code>&lt;span class="pg"&gt;原文p12&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p23-24&lt;/span&gt;</code> ）：文档中的 maximum 默认作用于整 VC 而非单机（P13），三类例外要辨明——按机箱×成员数扩的、VC 封顶不随成员增加的（X35）、仅单机的（1588v2 VC-of-1）。</li>
+<li>文档地图四阶段法（F1， <code>&lt;span class="pg"&gt;原文p8-9&lt;/span&gt;</code> ）：本手册只答"能到多少"不答"怎么配"，配置去 Network Config / Advanced Routing / Data Center Switching，命令查 CLI Reference。</li>
 </ul>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>先定梯队</strong>：按 MAC 表/路由表/聚合组三指标对号三梯队（F2）</li>
 <li><strong>再定 profile</strong>：SM/RM/ER 三态放大转发规模（如 6900-X RM 312K IPv4 路由、ER 更大 MAC 需重启生效）</li>
-<li><strong>VC 场景辨语义</strong>：默认整 VC 上限；UNP 用户看平台脚注 1（×成员数）或脚注 2（VC 封顶）；6900 VC 的 ARP=最低能力模块的值（X6，&lt;&lt;<PAGE 42>&gt;&gt;）</li>
-<li><strong>混搭先查白名单</strong>：6900 系内（V72/C32(E)/X48C6/T48C6/V48C8/X24C2/T24C2，最多 6；X48C4E 需 mixed VFL 模式）、6860+6865、6465 系内（用 1G SFP）、6360 10 口型仅 4 成员；<strong>6860N 与 686x 禁止混 VC</strong>（X2，&lt;&lt;<PAGE 24>&gt;&gt;）</li>
+<li><strong>VC 场景辨语义</strong>：默认整 VC 上限；UNP 用户看平台脚注 1（×成员数）或脚注 2（VC 封顶）；6900 VC 的 ARP=最低能力模块的值（X6， <code>&lt;span class="pg"&gt;原文p42&lt;/span&gt;</code> ）</li>
+<li><strong>混搭先查白名单</strong>：6900 系内（V72/C32(E)/X48C6/T48C6/V48C8/X24C2/T24C2，最多 6；X48C4E 需 mixed VFL 模式）、6860+6865、6465 系内（用 1G SFP）、6360 10 口型仅 4 成员；<strong>6860N 与 686x 禁止混 VC</strong>（X2， <code>&lt;span class="pg"&gt;原文p24&lt;/span&gt;</code> ）</li>
 <li><strong>管理面核对</strong>：Telnet 6 / SSH 8 / HTTP 4 全平台一致（P2）；内存/Flash 按 P4 矩阵</li>
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>镜像与救援文件名核对</strong>（P1/P5，&lt;&lt;<PAGE 14>&gt;&gt;/&lt;&lt;<PAGE 17>&gt;&gt;）：6360=Nosa.img、6465/6560=Nos.img、6570M=Wos.img、6575=Dos.img、6860/6865=Uos.img、6860N=Uosn.img、6870=Kaos.img、6900=Yos.img、6920=Ypos.img、9900=Mhost.img+Mos.img+Meni.img；USB 救援用对应 rescue 镜像，ALE 认证 U 盘 FAT32、目录名小写</li>
-<li><strong>VC 成员数核对</strong>（P11，&lt;&lt;<PAGE 23>&gt;&gt;）：6360 24/48 口=8（10 口=4）、6465=4、6560/6570M/6860/6865/6870=8、6575=4、6900-X=6、9907=2、9912/6920 不支持</li>
-<li><strong>VFL 规格核对</strong>（P12，&lt;&lt;<PAGE 23>&gt;&gt;）：多数平台每机箱 2 peer、每 VFL 8 成员口、VFL id 0-1；6900 每 5 peer、16 成员口、VFL id 0-4</li>
-<li><strong>帧长核对</strong>（P14，&lt;&lt;<PAGE 29>&gt;&gt;）：10/100M 口 1553 字节、1G+ 口 9216 字节</li>
-<li><strong>路由软超载预判</strong>（P16，&lt;&lt;<PAGE 43>&gt;&gt;）：硬件路由超限时旧的不常用路由移入软件、活跃路由保硬件，超出即部分流量走软件路由</li>
-<li><strong>聚合规模梯度</strong>（P17，&lt;&lt;<PAGE 35-36>&gt;&gt;）：6360/6465/6560=32 组×8 口；6570M 静态 32/LACP 96；6860 系=128×16；6870=252 组；6920=253 组×16；9900 ID 0/126/127 保留不可用（X48）</li>
+<li><strong>镜像与救援文件名核对</strong>（P1/P5， <code>&lt;span class="pg"&gt;原文p14&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p17&lt;/span&gt;</code> ）：6360=Nosa.img、6465/6560=Nos.img、6570M=Wos.img、6575=Dos.img、6860/6865=Uos.img、6860N=Uosn.img、6870=Kaos.img、6900=Yos.img、6920=Ypos.img、9900=Mhost.img+Mos.img+Meni.img；USB 救援用对应 rescue 镜像，ALE 认证 U 盘 FAT32、目录名小写</li>
+<li><strong>VC 成员数核对</strong>（P11， <code>&lt;span class="pg"&gt;原文p23&lt;/span&gt;</code> ）：6360 24/48 口=8（10 口=4）、6465=4、6560/6570M/6860/6865/6870=8、6575=4、6900-X=6、9907=2、9912/6920 不支持</li>
+<li><strong>VFL 规格核对</strong>（P12， <code>&lt;span class="pg"&gt;原文p23&lt;/span&gt;</code> ）：多数平台每机箱 2 peer、每 VFL 8 成员口、VFL id 0-1；6900 每 5 peer、16 成员口、VFL id 0-4</li>
+<li><strong>帧长核对</strong>（P14， <code>&lt;span class="pg"&gt;原文p29&lt;/span&gt;</code> ）：10/100M 口 1553 字节、1G+ 口 9216 字节</li>
+<li><strong>路由软超载预判</strong>（P16， <code>&lt;span class="pg"&gt;原文p43&lt;/span&gt;</code> ）：硬件路由超限时旧的不常用路由移入软件、活跃路由保硬件，超出即部分流量走软件路由</li>
+<li><strong>聚合规模梯度</strong>（P17， <code>&lt;span class="pg"&gt;原文p35-36&lt;/span&gt;</code> ）：6360/6465/6560=32 组×8 口；6570M 静态 32/LACP 96；6860 系=128×16；6870=252 组；6920=253 组×16；9900 ID 0/126/127 保留不可用（X48）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
@@ -95,14 +96,14 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="b">B（反例/坑）</h2>
 <ul>
-<li>6920 与 OS9912 机箱完全不支持 VC；OS9907 仅 VC-of-2 且依赖 CMM/CFM 组合（X1，&lt;&lt;<PAGE 23-24>&gt;&gt;）</li>
-<li>OS6860N 与 OS686x 禁止混 VC（X2，&lt;&lt;<PAGE 24>&gt;&gt;）</li>
-<li>MAC Learning Mode 在 OS6900 VC 上不支持（X3，&lt;&lt;<PAGE 24>&gt;&gt;）</li>
-<li>VFL 在 4X25G splitter 口上必须两侧 inter-frame gap=13，否则 CRC（X4，&lt;&lt;<PAGE 24>&gt;&gt;）</li>
-<li>1588v2 只支持 VC-of-1；6570M/6860/6865/6870 不支持 10/100 半双工（X5，&lt;&lt;<PAGE 29>&gt;&gt;）</li>
-<li>作运行目录时文件/目录名上限 30 字符（普通场景 255）（glossary，&lt;&lt;<PAGE 15>&gt;&gt;）</li>
-<li>RCD 限制：ISSU 与 IPv6 不支持；uboot/miniboot/FPGA 升级不支持；FTP/SFTP 用户名 15 字符（X42，&lt;&lt;<PAGE 25>&gt;&gt;）</li>
-<li>OpenFlow 仅 6860 支持：Normal/Hybrid 模式、1.0/1.3.1、每逻辑交换机 3 控制器（最多 3 个、Hybrid 1）（P9，&lt;&lt;<PAGE 22>&gt;&gt;）</li>
+<li>6920 与 OS9912 机箱完全不支持 VC；OS9907 仅 VC-of-2 且依赖 CMM/CFM 组合（X1， <code>&lt;span class="pg"&gt;原文p23-24&lt;/span&gt;</code> ）</li>
+<li>OS6860N 与 OS686x 禁止混 VC（X2， <code>&lt;span class="pg"&gt;原文p24&lt;/span&gt;</code> ）</li>
+<li>MAC Learning Mode 在 OS6900 VC 上不支持（X3， <code>&lt;span class="pg"&gt;原文p24&lt;/span&gt;</code> ）</li>
+<li>VFL 在 4X25G splitter 口上必须两侧 inter-frame gap=13，否则 CRC（X4， <code>&lt;span class="pg"&gt;原文p24&lt;/span&gt;</code> ）</li>
+<li>1588v2 只支持 VC-of-1；6570M/6860/6865/6870 不支持 10/100 半双工（X5， <code>&lt;span class="pg"&gt;原文p29&lt;/span&gt;</code> ）</li>
+<li>作运行目录时文件/目录名上限 30 字符（普通场景 255）（glossary， <code>&lt;span class="pg"&gt;原文p15&lt;/span&gt;</code> ）</li>
+<li>RCD 限制：ISSU 与 IPv6 不支持；uboot/miniboot/FPGA 升级不支持；FTP/SFTP 用户名 15 字符（X42， <code>&lt;span class="pg"&gt;原文p25&lt;/span&gt;</code> ）</li>
+<li>OpenFlow 仅 6860 支持：Normal/Hybrid 模式、1.0/1.3.1、每逻辑交换机 3 控制器（最多 3 个、Hybrid 1）（P9， <code>&lt;span class="pg"&gt;原文p22&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniSwitch AOS Release 8 Specifications Guide 前言（&lt;&lt;<PAGE 7-11>&gt;&gt;）、Ch1 Switch Management（&lt;&lt;<PAGE 12-26>&gt;&gt;）、Ch2 平台规模部分（&lt;&lt;<PAGE 27-46>&gt;&gt;）。条目来源：principles P1/P2/P4/P5/P9/P11-P17；counter-examples X1-X6/X42/X48；frameworks F1/F2/F4。</p><div class="pn"><a href="../index.html">⬅ 返回课程首页</a><a class="nxt" href="aos-spec-capacity-limits.html">下一单元：aos-spec-capacity-limits ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<p>OmniSwitch AOS Release 8 Specifications Guide 前言（ <code>&lt;span class="pg"&gt;原文p7-11&lt;/span&gt;</code> ）、Ch1 Switch Management（ <code>&lt;span class="pg"&gt;原文p12-26&lt;/span&gt;</code> ）、Ch2 平台规模部分（ <code>&lt;span class="pg"&gt;原文p27-46&lt;/span&gt;</code> ）。条目来源：principles P1/P2/P4/P5/P9/P11-P17；counter-examples X1-X6/X42/X48；frameworks F1/F2/F4。</p><div class="pn"><a href="../index.html">⬅ 返回课程首页</a><a class="nxt" href="aos-spec-capacity-limits.html">下一单元：aos-spec-capacity-limits ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

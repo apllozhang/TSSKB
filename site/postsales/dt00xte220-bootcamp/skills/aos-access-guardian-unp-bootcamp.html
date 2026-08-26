@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -79,40 +80,40 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="i">I（核心理念）</h2>
 <ul>
-<li>Access Guardian 的核心是"端口自动感知多客户端认证"：同一口上自动检测 802.1X 与非 802.1X 设备（P120，&lt;&lt;<PAGE 630>&gt;&gt;）。</li>
-<li>身份的载体是 UNP（Universal Network Profile）= VLAN + QoS/ACL 策略列表 +（R8 加 Location/Period），档案随用户动态应用到端口（P121，&lt;&lt;<PAGE 631>&gt;&gt;）。</li>
-<li>下发路径：RADIUS Access-Accept 的 Filter-ID 携 UNP 名；无返回时走降级链——分类规则 → 默认 UNP → Captive Portal → 阻断（P122/F10，&lt;&lt;<PAGE 632, 635-638>&gt;&gt;）。</li>
-<li>R8 端口分类规则有 16 级固定优先序（Port &gt; Port+VLAN tag &gt; Domain 组合 &gt; MAC &gt; OUI &gt; Range &gt; LLDP &gt; Auth-type &gt; IP &gt; VLAN tag）（P124，&lt;&lt;<PAGE 638>&gt;&gt;）。</li>
-<li>IoT 画像三组件：本地签名收集器 + 本地 profiler + UNP 画像，识别后自动指派 UNP（P127/P128/F11，&lt;&lt;<PAGE 686-690>&gt;&gt;）。</li>
+<li>Access Guardian 的核心是"端口自动感知多客户端认证"：同一口上自动检测 802.1X 与非 802.1X 设备（P120， <code>&lt;span class="pg"&gt;原文p630&lt;/span&gt;</code> ）。</li>
+<li>身份的载体是 UNP（Universal Network Profile）= VLAN + QoS/ACL 策略列表 +（R8 加 Location/Period），档案随用户动态应用到端口（P121， <code>&lt;span class="pg"&gt;原文p631&lt;/span&gt;</code> ）。</li>
+<li>下发路径：RADIUS Access-Accept 的 Filter-ID 携 UNP 名；无返回时走降级链——分类规则 → 默认 UNP → Captive Portal → 阻断（P122/F10， <code>&lt;span class="pg"&gt;原文p632, 635-638&lt;/span&gt;</code> ）。</li>
+<li>R8 端口分类规则有 16 级固定优先序（Port &gt; Port+VLAN tag &gt; Domain 组合 &gt; MAC &gt; OUI &gt; Range &gt; LLDP &gt; Auth-type &gt; IP &gt; VLAN tag）（P124， <code>&lt;span class="pg"&gt;原文p638&lt;/span&gt;</code> ）。</li>
+<li>IoT 画像三组件：本地签名收集器 + 本地 profiler + UNP 画像，识别后自动指派 UNP（P127/P128/F11， <code>&lt;span class="pg"&gt;原文p686-690&lt;/span&gt;</code> ）。</li>
 </ul>
 <h2 id="a1">A1（决策/选型）</h2>
 <ol>
-<li>认证方式：802.1X（有 supplicant）vs MAC 认证（交换机以源 MAC 为用户名/密码构造 RADIUS 请求，P123，&lt;&lt;<PAGE 633>&gt;&gt;）vs 免认证纯分类</li>
-<li>R6 路线：mobile 口 + 802.1x enable + <code>aaa classification-rule … user-network-profile</code>；R8 路线：<code>unp port … port-type BRIDGE</code> + <code>unp classification …</code>（P120/C33，&lt;&lt;<PAGE 630, 642-677>&gt;&gt;）</li>
-<li>Captive Portal 用于 Web 认证引流，注意它是终结策略（X61，&lt;&lt;<PAGE 1014>&gt;&gt;）</li>
+<li>认证方式：802.1X（有 supplicant）vs MAC 认证（交换机以源 MAC 为用户名/密码构造 RADIUS 请求，P123， <code>&lt;span class="pg"&gt;原文p633&lt;/span&gt;</code> ）vs 免认证纯分类</li>
+<li>R6 路线：mobile 口 + 802.1x enable + <code>aaa classification-rule … user-network-profile</code>；R8 路线：<code>unp port … port-type BRIDGE</code> + <code>unp classification …</code>（P120/C33， <code>&lt;span class="pg"&gt;原文p630, 642-677&lt;/span&gt;</code> ）</li>
+<li>Captive Portal 用于 Web 认证引流，注意它是终结策略（X61， <code>&lt;span class="pg"&gt;原文p1014&lt;/span&gt;</code> ）</li>
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ol>
-<li>UNP 配置五步（P125，&lt;&lt;<PAGE 640>&gt;&gt;）：分类规则 → 认证服务器 → 设备分类策略 → UNP 档案 → 端口</li>
-<li>端口准备：R6 <code>vlan port mobile 3/1</code> + <code>vlan port 3/1 802.1x enable</code>；R8 <code>unp port 1/1/1 port-type BRIDGE</code>（C33，&lt;&lt;<PAGE 642-677>&gt;&gt;）</li>
-<li>UNP 策略列表：<code>policy list list_name type unp</code>；R6 <code>aaa user-network-profile name profile_name policy-list-name list_name</code> / R8 <code>unp profile profile_name qos-policy-list …</code>；VLAN 映射 <code>unp profile profile_name map vlan vlan_id</code>（C33，&lt;&lt;<PAGE 642-677>&gt;&gt;）</li>
-<li>分类规则（R8）：<code>unp classification mac-address 00:11:22:33:44:55 port 1/1/5 PROFILE1 Pr1</code>、<code>unp classification mac-oui 00:11:22 PROFILE1 myProfile1</code>、<code>unp classification lldp med-endpoint ip-phone p PROFILE1 myProfile1</code>、<code>unp classification authentication-type 802.1X/MAC …</code>（C33，&lt;&lt;<PAGE 642-677>&gt;&gt;）</li>
-<li>RADIUS 档案：<code>aaa profile ap-1</code> → <code>aaa profile ap-1 device-authentication mac rad1 rad2</code> / <code>device-authentication 802.1x rad1 rad2</code> → <code>unp port 1/1/5 aaa-profile ap-1</code>（可按 linkagg/范围）；联调 <code>aaa test-radius-server My_radius type authentication user employee password password</code>（C33/P207，&lt;&lt;<PAGE 642-677>&gt;&gt;）</li>
-<li>Location/Period 策略：<code>system location &lt;string&gt;</code> + <code>unp policy validity-location "Alcatel" port 1/1/10</code>；<code>unp policy validity-period "Office-Time" days MONDAY time-zone CET hours 9:00 to 17:00</code>（C34/P126，&lt;&lt;<PAGE 649-650>&gt;&gt;）</li>
-<li>IoT 画像：启用签名收集（DHCP Option 55/60）与本地 profiler，比对签名库后自动指派 UNP；维护已知/未知设备库供补录（F11，&lt;&lt;<PAGE 686-690>&gt;&gt;）</li>
+<li>UNP 配置五步（P125， <code>&lt;span class="pg"&gt;原文p640&lt;/span&gt;</code> ）：分类规则 → 认证服务器 → 设备分类策略 → UNP 档案 → 端口</li>
+<li>端口准备：R6 <code>vlan port mobile 3/1</code> + <code>vlan port 3/1 802.1x enable</code>；R8 <code>unp port 1/1/1 port-type BRIDGE</code>（C33， <code>&lt;span class="pg"&gt;原文p642-677&lt;/span&gt;</code> ）</li>
+<li>UNP 策略列表：<code>policy list list_name type unp</code>；R6 <code>aaa user-network-profile name profile_name policy-list-name list_name</code> / R8 <code>unp profile profile_name qos-policy-list …</code>；VLAN 映射 <code>unp profile profile_name map vlan vlan_id</code>（C33， <code>&lt;span class="pg"&gt;原文p642-677&lt;/span&gt;</code> ）</li>
+<li>分类规则（R8）：<code>unp classification mac-address 00:11:22:33:44:55 port 1/1/5 PROFILE1 Pr1</code>、<code>unp classification mac-oui 00:11:22 PROFILE1 myProfile1</code>、<code>unp classification lldp med-endpoint ip-phone p PROFILE1 myProfile1</code>、<code>unp classification authentication-type 802.1X/MAC …</code>（C33， <code>&lt;span class="pg"&gt;原文p642-677&lt;/span&gt;</code> ）</li>
+<li>RADIUS 档案：<code>aaa profile ap-1</code> → <code>aaa profile ap-1 device-authentication mac rad1 rad2</code> / <code>device-authentication 802.1x rad1 rad2</code> → <code>unp port 1/1/5 aaa-profile ap-1</code>（可按 linkagg/范围）；联调 <code>aaa test-radius-server My_radius type authentication user employee password password</code>（C33/P207， <code>&lt;span class="pg"&gt;原文p642-677&lt;/span&gt;</code> ）</li>
+<li>Location/Period 策略：<code>system location &lt;string&gt;</code> + <code>unp policy validity-location "Alcatel" port 1/1/10</code>；<code>unp policy validity-period "Office-Time" days MONDAY time-zone CET hours 9:00 to 17:00</code>（C34/P126， <code>&lt;span class="pg"&gt;原文p649-650&lt;/span&gt;</code> ）</li>
+<li>IoT 画像：启用签名收集（DHCP Option 55/60）与本地 profiler，比对签名库后自动指派 UNP；维护已知/未知设备库供补录（F11， <code>&lt;span class="pg"&gt;原文p686-690&lt;/span&gt;</code> ）</li>
 </ol>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>C33 AG 部署：R6/R8 双语法 + MAC/OUI/LLDP 分类规则 + RADIUS 档案 + test-radius-server 联调（&lt;&lt;<PAGE 642-677>&gt;&gt;）</li>
-<li>C34 Location/Period 策略：按位置与办公时间窗限制（&lt;&lt;<PAGE 649-650>&gt;&gt;）</li>
+<li>C33 AG 部署：R6/R8 双语法 + MAC/OUI/LLDP 分类规则 + RADIUS 档案 + test-radius-server 联调（ <code>&lt;span class="pg"&gt;原文p642-677&lt;/span&gt;</code> ）</li>
+<li>C34 Location/Period 策略：按位置与办公时间窗限制（ <code>&lt;span class="pg"&gt;原文p649-650&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>
-<li>Captive Portal/Profile/Block 是终结策略，后面不能跟其他策略（X61，&lt;&lt;<PAGE 1014>&gt;&gt;）</li>
-<li>6450 可对 UNP 直接限速，R8 不行——R8 限速要放在 QoS 策略列表里（X60，&lt;&lt;<PAGE 676>&gt;&gt;）</li>
-<li>R6 需 mobile+802.1x 口才能跑 AG，普通静态口不行（P120，&lt;&lt;<PAGE 630>&gt;&gt;）</li>
-<li>认证排障先 <code>aaa test-radius-server</code> 验证服务器连通，再看 Filter-ID 是否返回（&lt;&lt;<PAGE 677>&gt;&gt;）</li>
-<li>Location/Period 不满足时自动转未授权角色——时段策略变更要预留维护窗口（P126，&lt;&lt;<PAGE 649-650>&gt;&gt;）</li>
+<li>Captive Portal/Profile/Block 是终结策略，后面不能跟其他策略（X61， <code>&lt;span class="pg"&gt;原文p1014&lt;/span&gt;</code> ）</li>
+<li>6450 可对 UNP 直接限速，R8 不行——R8 限速要放在 QoS 策略列表里（X60， <code>&lt;span class="pg"&gt;原文p676&lt;/span&gt;</code> ）</li>
+<li>R6 需 mobile+802.1x 口才能跑 AG，普通静态口不行（P120， <code>&lt;span class="pg"&gt;原文p630&lt;/span&gt;</code> ）</li>
+<li>认证排障先 <code>aaa test-radius-server</code> 验证服务器连通，再看 Filter-ID 是否返回（ <code>&lt;span class="pg"&gt;原文p677&lt;/span&gt;</code> ）</li>
+<li>Location/Period 不满足时自动转未授权角色——时段策略变更要预留维护窗口（P126， <code>&lt;span class="pg"&gt;原文p649-650&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
 <ul>

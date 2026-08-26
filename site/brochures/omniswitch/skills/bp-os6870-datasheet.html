@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -83,7 +84,7 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="i">I（核心理念）</h2>
 <ul>
-<li>OS6870 基于 OmniFabric 架构："The first solution to support SPBM, VxLAN-EVPN, and MPLS within the Alcatel-Lucent OS (AOS) unified service manager framework"（&lt;&lt;<PAGE 110>&gt;&gt;）。</li>
+<li>OS6870 基于 OmniFabric 架构："The first solution to support SPBM, VxLAN-EVPN, and MPLS within the Alcatel-Lucent OS (AOS) unified service manager framework"（ <code>&lt;span class="pg"&gt;原文p110&lt;/span&gt;</code> ）。</li>
 <li>全口 256bit MACsec + Secure Boot + AI 流遥测（Network Advisor）。</li>
 <li>层级：高端接入/园区边缘旗舰，上接 6900/9900 核心。</li>
 </ul>
@@ -95,7 +96,7 @@ blockquote p{margin:6px 0}
 <li>V12 型独有 12x1/10/25G SFP28 全光形态，适合全光园区边缘。</li>
 </ul>
 <h2 id="a2">A2（规格细节速查表）</h2>
-<p>机型矩阵（&lt;&lt;<PAGE 111>&gt;&gt; Highlights / &lt;&lt;<PAGE 112>&gt;&gt;/&lt;&lt;<PAGE 113>&gt;&gt; 表 1-2 / &lt;&lt;<PAGE 120>&gt;&gt;-&lt;&lt;<PAGE 122>&gt;&gt; 订购）：
+<p>机型矩阵（ <code>&lt;span class="pg"&gt;原文p111&lt;/span&gt;</code>  Highlights /  <code>&lt;span class="pg"&gt;原文p112&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p113&lt;/span&gt;</code>  表 1-2 /  <code>&lt;span class="pg"&gt;原文p120&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p122&lt;/span&gt;</code>  订购）：
 Advanced（advanced：2x100G VFL 固定 + 4/6x25G 固定上联）：
 | 型号 | 用户口 | 上联与 VFL | PoE（1 PS/2 PS） |
 |---|---|---|---|
@@ -109,29 +110,29 @@ Premium（模块化上联槽 + 2x200G QSFP56 VFL 固定）：
 | OS6870-P48M | 48x2.5/5G bt 95W | LNI-U6（6x10/25/50G）或 CNI-U2（2x40/100G） | 216~762/580~1854W；BPXL 双配 3309W@230V |
 | OS6870-P24M | 24x2.5/5/10G bt 95W | 同上 | 242~788/788~2280W |
 | OS6870-V12（/D） | 12x1/10/25G SFP28 | 模块化 + 2x100/200G QSFP56 | N/A |
-上联与堆叠：VFL 容量 advanced 200/400 Gb/s（U32 与 premium 400/800 Gb/s 聚合，&lt;&lt;<PAGE 114>&gt;&gt;）；VC 8 台任意混搭，VFL 口可当上联用（&lt;&lt;<PAGE 111>&gt;&gt;）。
-交换容量与包转发（&lt;&lt;<PAGE 114>&gt;&gt;）：648（24）~2000 Gb/s（V12）；482.1~1488 Mpps；8MB 包缓冲。
-电源体系（&lt;&lt;<PAGE 115>&gt;&gt;）：1+1 热插拔、支持非平衡 PoE 负载分摊（不同容量 PSU 混配，&lt;&lt;<PAGE 113>&gt;&gt;）；BP 250W/BP-D/BPPH 600W/BPPX 1200W/BPXL 2000W（仅 P48M/P24M）/BPH 550W（V12/U32）；advanced 最高 1976W、premium 最高 2280W（P24M 双 BPXL@230V，&lt;&lt;<PAGE 113>&gt;&gt;）。
-Layer 特性（&lt;&lt;<PAGE 116>&gt;&gt;/&lt;&lt;<PAGE 117>&gt;&gt;）：OmniFabric：SPB-M + VxLAN + VxLAN-EVPN（RFC 8365，Type 2/Type 5 路由）+ MPLS；完整 IPv4/IPv6 路由（OSPF/IS-IS/BGP/VRF/PIM）内置；1588v2 端到端透明时钟（&lt;&lt;<PAGE 111>&gt;&gt;）；全口 256bit MACsec + Clear Tag（&lt;&lt;<PAGE 116>&gt;&gt;）；Streaming telemetry/DPI（&lt;&lt;<PAGE 111>&gt;&gt;）；128K MAC、116K IPv4/58K IPv6 路由（&lt;&lt;<PAGE 114>&gt;&gt;）。
-许可家族（&lt;&lt;<PAGE 122>&gt;&gt;）：OS-SW-MACSEC（免费站点许可）、OS6870-SW-PERF（LNI-U6 口 50G 速度）、SW-PRM1（P24M/P48M/V12 premium 特性）、SW-PRM2（24/48/P24Z/P48Z/U32）。
-硬件平台：8GB DRAM/32GB flash；风扇 2+1/3+1 冗余；0~45°C；MTBF 350k~558k 小时；待机 71~252W（&lt;&lt;<PAGE 119>&gt;&gt;）。
+上联与堆叠：VFL 容量 advanced 200/400 Gb/s（U32 与 premium 400/800 Gb/s 聚合， <code>&lt;span class="pg"&gt;原文p114&lt;/span&gt;</code> ）；VC 8 台任意混搭，VFL 口可当上联用（ <code>&lt;span class="pg"&gt;原文p111&lt;/span&gt;</code> ）。
+交换容量与包转发（ <code>&lt;span class="pg"&gt;原文p114&lt;/span&gt;</code> ）：648（24）~2000 Gb/s（V12）；482.1~1488 Mpps；8MB 包缓冲。
+电源体系（ <code>&lt;span class="pg"&gt;原文p115&lt;/span&gt;</code> ）：1+1 热插拔、支持非平衡 PoE 负载分摊（不同容量 PSU 混配， <code>&lt;span class="pg"&gt;原文p113&lt;/span&gt;</code> ）；BP 250W/BP-D/BPPH 600W/BPPX 1200W/BPXL 2000W（仅 P48M/P24M）/BPH 550W（V12/U32）；advanced 最高 1976W、premium 最高 2280W（P24M 双 BPXL@230V， <code>&lt;span class="pg"&gt;原文p113&lt;/span&gt;</code> ）。
+Layer 特性（ <code>&lt;span class="pg"&gt;原文p116&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p117&lt;/span&gt;</code> ）：OmniFabric：SPB-M + VxLAN + VxLAN-EVPN（RFC 8365，Type 2/Type 5 路由）+ MPLS；完整 IPv4/IPv6 路由（OSPF/IS-IS/BGP/VRF/PIM）内置；1588v2 端到端透明时钟（ <code>&lt;span class="pg"&gt;原文p111&lt;/span&gt;</code> ）；全口 256bit MACsec + Clear Tag（ <code>&lt;span class="pg"&gt;原文p116&lt;/span&gt;</code> ）；Streaming telemetry/DPI（ <code>&lt;span class="pg"&gt;原文p111&lt;/span&gt;</code> ）；128K MAC、116K IPv4/58K IPv6 路由（ <code>&lt;span class="pg"&gt;原文p114&lt;/span&gt;</code> ）。
+许可家族（ <code>&lt;span class="pg"&gt;原文p122&lt;/span&gt;</code> ）：OS-SW-MACSEC（免费站点许可）、OS6870-SW-PERF（LNI-U6 口 50G 速度）、SW-PRM1（P24M/P48M/V12 premium 特性）、SW-PRM2（24/48/P24Z/P48Z/U32）。
+硬件平台：8GB DRAM/32GB flash；风扇 2+1/3+1 冗余；0~45°C；MTBF 350k~558k 小时；待机 71~252W（ <code>&lt;span class="pg"&gt;原文p119&lt;/span&gt;</code> ）。
 规格红线：50G 需 SW-PERF；premium 上联模块不随整机发货；按 bundle（##）订购。</p>
 <h2 id="e">E（适用场景）</h2>
 <ul>
 <li>SPB 老园区向多 fabric 演进一步到位（C8）：不必加网关转换 VxLAN DC/MPLS WAN</li>
 <li>高安全园区/Zero Trust：全口 256bit MACsec + Secure Boot + MACsec Clear Tag</li>
 <li>Wi-Fi 6/6E/7 全 95W 旗舰接入：P24M（24 口全 10G 多千兆 95W）</li>
-<li>AI 运维：流遥测引擎 + OmniVista Network Advisor 自动识别风险（&lt;&lt;<PAGE 111>&gt;&gt;）</li>
+<li>AI 运维：流遥测引擎 + OmniVista Network Advisor 自动识别风险（ <code>&lt;span class="pg"&gt;原文p111&lt;/span&gt;</code> ）</li>
 <li>全光边缘：V12（12x25G SFP28）/U32（16x1G+8x10G+8x25G）</li>
 </ul>
 <h2 id="b">B（限制与坑）</h2>
 <ul>
-<li>50G 上联速度需 OS6870-SW-PERF 许可（"License required for 50G speed"，X16，&lt;&lt;<PAGE 111>&gt;&gt;）——到货默认只到 25G</li>
-<li>premium 上联模块（LNI-U6/CNI-U2）需单独下单，不随整机（&lt;&lt;<PAGE 114>&gt;&gt;/&lt;&lt;<PAGE 122>&gt;&gt;）</li>
-<li>全系按 bundle（## 号 = 主机 + 指定电源）订购——报价时注意包内电源规格（X21，&lt;&lt;<PAGE 120>&gt;&gt;-&lt;&lt;<PAGE 122>&gt;&gt;）</li>
-<li>MACsec 需免费站点许可 OS-SW-MACSEC（&lt;&lt;<PAGE 122>&gt;&gt;）</li>
-<li>BPXL 2000W 仅 P48M/P24M，115VAC 输出降为 1000W（&lt;&lt;<PAGE 115>&gt;&gt;）</li>
-<li>PoE 型深 44.2cm、重量满配 9kg+——机柜深度/承重复核（&lt;&lt;<PAGE 113>&gt;&gt;）</li>
-<li>MPLS 在数据表标注为 "MPLS2"（脚注 2，streaming telemetry/DPI 亦然，&lt;&lt;<PAGE 111>&gt;&gt;）——投标前按 AOS 规格指南确认当前版本交付状态</li>
+<li>50G 上联速度需 OS6870-SW-PERF 许可（"License required for 50G speed"，X16， <code>&lt;span class="pg"&gt;原文p111&lt;/span&gt;</code> ）——到货默认只到 25G</li>
+<li>premium 上联模块（LNI-U6/CNI-U2）需单独下单，不随整机（ <code>&lt;span class="pg"&gt;原文p114&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p122&lt;/span&gt;</code> ）</li>
+<li>全系按 bundle（## 号 = 主机 + 指定电源）订购——报价时注意包内电源规格（X21， <code>&lt;span class="pg"&gt;原文p120&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p122&lt;/span&gt;</code> ）</li>
+<li>MACsec 需免费站点许可 OS-SW-MACSEC（ <code>&lt;span class="pg"&gt;原文p122&lt;/span&gt;</code> ）</li>
+<li>BPXL 2000W 仅 P48M/P24M，115VAC 输出降为 1000W（ <code>&lt;span class="pg"&gt;原文p115&lt;/span&gt;</code> ）</li>
+<li>PoE 型深 44.2cm、重量满配 9kg+——机柜深度/承重复核（ <code>&lt;span class="pg"&gt;原文p113&lt;/span&gt;</code> ）</li>
+<li>MPLS 在数据表标注为 "MPLS2"（脚注 2，streaming telemetry/DPI 亦然， <code>&lt;span class="pg"&gt;原文p111&lt;/span&gt;</code> ）——投标前按 AOS 规格指南确认当前版本交付状态</li>
 </ul>
 <p>来源：bp-omniswitch-datasheets DOC 12（p110-124，MPR24040101EN June 2026）；verified.md C8/C9/X16/X21/P13/P14/F5</p><div class="pn"><a href="bp-os6865-datasheet.html">⬅ 上一单元：bp-os6865-datasheet</a><a class="nxt" href="bp-os6900-datasheet.html">下一单元：bp-os6900-datasheet ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

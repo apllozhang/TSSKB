@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -79,39 +80,39 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
-<li><strong>standalone/普通 VC 选标准升级</strong>：维护前置 → 下载 → FTP 到 RUNNING 目录 → reload → 验证 → certify（C1，&lt;&lt;<PAGE 23-24>&gt;&gt;）</li>
-<li><strong>不能中断的 VC/机箱选 ISSU</strong>：Master 建 ISSU 目录（清理旧 ISSU 目录）→ 拷当前 Running 配置进 ISSU 目录 → FTP 新镜像+验证文件 → issu 执行 → 验证 certify → 复位 NI（C2，&lt;&lt;<PAGE 24>&gt;&gt;）</li>
-<li><strong>升级前必做维护基线</strong>：<code>show system</code> → 清 <em>.log/</em>.tar 与 /pmd → <code>show running-directory</code> 确认 certified/synchronized → <code>show tech-support</code> 基线（C3，&lt;&lt;<PAGE 23>&gt;&gt;；P17）</li>
+<li><strong>standalone/普通 VC 选标准升级</strong>：维护前置 → 下载 → FTP 到 RUNNING 目录 → reload → 验证 → certify（C1， <code>&lt;span class="pg"&gt;原文p23-24&lt;/span&gt;</code> ）</li>
+<li><strong>不能中断的 VC/机箱选 ISSU</strong>：Master 建 ISSU 目录（清理旧 ISSU 目录）→ 拷当前 Running 配置进 ISSU 目录 → FTP 新镜像+验证文件 → issu 执行 → 验证 certify → 复位 NI（C2， <code>&lt;span class="pg"&gt;原文p24&lt;/span&gt;</code> ）</li>
+<li><strong>升级前必做维护基线</strong>：<code>show system</code> → 清 <em>.log/</em>.tar 与 /pmd → <code>show running-directory</code> 确认 certified/synchronized → <code>show tech-support</code> 基线（C3， <code>&lt;span class="pg"&gt;原文p23&lt;/span&gt;</code> ；P17）</li>
 <li><strong>非 AOS 软件走包管理</strong>：<code>pkgmgr verify</code>（MD5+兼容版本）→ install → write memory（C17）；应用启停用 appmgr 免重启（C18）</li>
 <li><strong>批量/灾备场景用 USB</strong>：自动拷贝需 aossignature 签名文件防误触发（P90）；灾难恢复用 Trescue.img 或 ONIE Rescue（P91）</li>
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>标准升级</strong>：维护例行（C3）→ 下载升级文件 → FTP 到 RUNNING 目录 → <code>reload</code> → 验证 → certify（C1，&lt;&lt;<PAGE 23-24>&gt;&gt;）</li>
-<li><strong>ISSU</strong>：<code>issu</code> 执行 → 验证 → certify → 复位 NI（NI 未按时复位则系统按槽位升序逐个强制复位，P16）（C2，&lt;&lt;<PAGE 24>&gt;&gt;）</li>
-<li><strong>包安装</strong>：包放 /flash/working/pkg → <code>pkgmgr verify yos-ntpd-v1.deb</code> → <code>pkgmgr install yos-ntpd-v1.deb</code> → <code>write memory</code> → <code>show pkgmgr</code>；移除 <code>pkgmgr remove ntpd</code> + write memory（C17，&lt;&lt;<PAGE 87-88>&gt;&gt;）</li>
-<li><strong>应用启停</strong>：<code>appmgr start|stop|restart ams config-dbase</code> + <code>write memory</code>；<code>show appmgr</code>（+ 表示未跨重启保存）（C18，&lt;&lt;<PAGE 89-90>&gt;&gt;）</li>
-<li><strong>镜像完整性</strong>：<code>image integrity check</code> 比对目录镜像 SHA256 与 key file；<code>image integrity get-key</code> 显示哈希（P92，&lt;&lt;<PAGE 118>&gt;&gt;）</li>
-<li><strong>USB 自动升级</strong>：USB 根放 aossignature 空文件 + 6900/working 目录放镜像 → <code>usb enable</code> → <code>usb auto-copy enable copy config enable</code> → 插 USB；备份 <code>usb backup admin-state enable</code>（C24，&lt;&lt;<PAGE 113-114>&gt;&gt;）</li>
-<li><strong>USB 灾难恢复</strong>：传统——USB 建 6900/certified|working + 根放 Trescue.img → 重启 → miniboot/uboot 下 <code>run rescue</code>；ONIE——根放 Yos.img → Onie Menu &gt; Onie Rescue → <code>blkid</code> 找盘 → mount → <code>onie-nos-install /var/tmp/Yos.img</code>（C25，&lt;&lt;<PAGE 116>&gt;&gt;）</li>
+<li><strong>标准升级</strong>：维护例行（C3）→ 下载升级文件 → FTP 到 RUNNING 目录 → <code>reload</code> → 验证 → certify（C1， <code>&lt;span class="pg"&gt;原文p23-24&lt;/span&gt;</code> ）</li>
+<li><strong>ISSU</strong>：<code>issu</code> 执行 → 验证 → certify → 复位 NI（NI 未按时复位则系统按槽位升序逐个强制复位，P16）（C2， <code>&lt;span class="pg"&gt;原文p24&lt;/span&gt;</code> ）</li>
+<li><strong>包安装</strong>：包放 /flash/working/pkg → <code>pkgmgr verify yos-ntpd-v1.deb</code> → <code>pkgmgr install yos-ntpd-v1.deb</code> → <code>write memory</code> → <code>show pkgmgr</code>；移除 <code>pkgmgr remove ntpd</code> + write memory（C17， <code>&lt;span class="pg"&gt;原文p87-88&lt;/span&gt;</code> ）</li>
+<li><strong>应用启停</strong>：<code>appmgr start|stop|restart ams config-dbase</code> + <code>write memory</code>；<code>show appmgr</code>（+ 表示未跨重启保存）（C18， <code>&lt;span class="pg"&gt;原文p89-90&lt;/span&gt;</code> ）</li>
+<li><strong>镜像完整性</strong>：<code>image integrity check</code> 比对目录镜像 SHA256 与 key file；<code>image integrity get-key</code> 显示哈希（P92， <code>&lt;span class="pg"&gt;原文p118&lt;/span&gt;</code> ）</li>
+<li><strong>USB 自动升级</strong>：USB 根放 aossignature 空文件 + 6900/working 目录放镜像 → <code>usb enable</code> → <code>usb auto-copy enable copy config enable</code> → 插 USB；备份 <code>usb backup admin-state enable</code>（C24， <code>&lt;span class="pg"&gt;原文p113-114&lt;/span&gt;</code> ）</li>
+<li><strong>USB 灾难恢复</strong>：传统——USB 建 6900/certified|working + 根放 Trescue.img → 重启 → miniboot/uboot 下 <code>run rescue</code>；ONIE——根放 Yos.img → Onie Menu &gt; Onie Rescue → <code>blkid</code> 找盘 → mount → <code>onie-nos-install /var/tmp/Yos.img</code>（C25， <code>&lt;span class="pg"&gt;原文p116&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>标准升级（standalone/VC）全流程（C1，&lt;&lt;<PAGE 23-24>&gt;&gt;）</li>
-<li>ISSU 升级流程含验证文件与 NI 复位（C2，&lt;&lt;<PAGE 24>&gt;&gt;）</li>
-<li>升级前维护例行基线（C3，&lt;&lt;<PAGE 23>&gt;&gt;）</li>
-<li>Debian 包安装/验证/移除以 NTP 为例（C17，&lt;&lt;<PAGE 87-88>&gt;&gt;）</li>
-<li>USB 升级/备份与灾难恢复（C24/C25，&lt;&lt;<PAGE 113-116>&gt;&gt;）</li>
+<li>标准升级（standalone/VC）全流程（C1， <code>&lt;span class="pg"&gt;原文p23-24&lt;/span&gt;</code> ）</li>
+<li>ISSU 升级流程含验证文件与 NI 复位（C2， <code>&lt;span class="pg"&gt;原文p24&lt;/span&gt;</code> ）</li>
+<li>升级前维护例行基线（C3， <code>&lt;span class="pg"&gt;原文p23&lt;/span&gt;</code> ）</li>
+<li>Debian 包安装/验证/移除以 NTP 为例（C17， <code>&lt;span class="pg"&gt;原文p87-88&lt;/span&gt;</code> ）</li>
+<li>USB 升级/备份与灾难恢复（C24/C25， <code>&lt;span class="pg"&gt;原文p113-116&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="b">B（反例/坑）</h2>
 <ul>
-<li>签名镜像机型降级到旧版 AOS 必须先降 u-boot（X9，&lt;&lt;<PAGE 66>&gt;&gt;）</li>
-<li>同一应用不能同时装多个 Debian 包，且包须与当前 AOS 发行版同版本（X16，&lt;&lt;<PAGE 87>&gt;&gt;）</li>
-<li>包未 write memory 保存则重启/VC takeover 后丢失（X17，&lt;&lt;<PAGE 87>&gt;&gt;；P23）</li>
-<li>安全补丁类包（OpenSSL 等）删除后必须重启才回滚到镜像内置版本（X18，&lt;&lt;<PAGE 88>&gt;&gt;）</li>
-<li>U-boot 访问禁用 + 镜像损坏 = 只能返厂（X19）；U-boot 密码遗忘 + flash 损坏同样返厂（X20）；ONIE 密码遗忘无法灾备只能 RMA（X21）（&lt;&lt;<PAGE 91-92>&gt;&gt;）</li>
-<li>ISSU 后 NI 必须复位，超时由系统按槽位升序强制执行（P16，&lt;&lt;<PAGE 24>&gt;&gt;）</li>
-<li>USB 自动拷贝重启后自动关闭；auto-copy 与 backup 互斥（P90，&lt;&lt;<PAGE 113-114>&gt;&gt;）</li>
+<li>签名镜像机型降级到旧版 AOS 必须先降 u-boot（X9， <code>&lt;span class="pg"&gt;原文p66&lt;/span&gt;</code> ）</li>
+<li>同一应用不能同时装多个 Debian 包，且包须与当前 AOS 发行版同版本（X16， <code>&lt;span class="pg"&gt;原文p87&lt;/span&gt;</code> ）</li>
+<li>包未 write memory 保存则重启/VC takeover 后丢失（X17， <code>&lt;span class="pg"&gt;原文p87&lt;/span&gt;</code> ；P23）</li>
+<li>安全补丁类包（OpenSSL 等）删除后必须重启才回滚到镜像内置版本（X18， <code>&lt;span class="pg"&gt;原文p88&lt;/span&gt;</code> ）</li>
+<li>U-boot 访问禁用 + 镜像损坏 = 只能返厂（X19）；U-boot 密码遗忘 + flash 损坏同样返厂（X20）；ONIE 密码遗忘无法灾备只能 RMA（X21）（ <code>&lt;span class="pg"&gt;原文p91-92&lt;/span&gt;</code> ）</li>
+<li>ISSU 后 NI 必须复位，超时由系统按槽位升序强制执行（P16， <code>&lt;span class="pg"&gt;原文p24&lt;/span&gt;</code> ）</li>
+<li>USB 自动拷贝重启后自动关闭；auto-copy 与 backup 互斥（P90， <code>&lt;span class="pg"&gt;原文p113-114&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniSwitch AOS 8.10R4 Switch Management Guide 第 1 章 Upgrading AOS（&lt;&lt;<PAGE 21-24>&gt;&gt;）、第 3 章 Loading Software / Secured Code / Package Management / U-boot &amp; ONIE（&lt;&lt;<PAGE 62-92>&gt;&gt;）、第 4 章 USB（&lt;&lt;<PAGE 113-118>&gt;&gt;）。条目来源：cases C1/C2/C3/C17/C18/C24/C25；principles P13-P25/P90-P92；counter-examples X9/X16-X21；frameworks F6。</p><div class="pn"><a href="aos-sm-flash-config.html">⬅ 上一单元：aos-sm-flash-config</a><a class="nxt" href="aos-sm-cli-session-usermgmt.html">下一单元：aos-sm-cli-session-usermgmt ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<p>OmniSwitch AOS 8.10R4 Switch Management Guide 第 1 章 Upgrading AOS（ <code>&lt;span class="pg"&gt;原文p21-24&lt;/span&gt;</code> ）、第 3 章 Loading Software / Secured Code / Package Management / U-boot &amp; ONIE（ <code>&lt;span class="pg"&gt;原文p62-92&lt;/span&gt;</code> ）、第 4 章 USB（ <code>&lt;span class="pg"&gt;原文p113-118&lt;/span&gt;</code> ）。条目来源：cases C1/C2/C3/C17/C18/C24/C25；principles P13-P25/P90-P92；counter-examples X9/X16-X21；frameworks F6。</p><div class="pn"><a href="aos-sm-flash-config.html">⬅ 上一单元：aos-sm-flash-config</a><a class="nxt" href="aos-sm-cli-session-usermgmt.html">下一单元：aos-sm-cli-session-usermgmt ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

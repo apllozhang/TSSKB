@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -67,8 +68,8 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="i">I（核心理念）</h2>
 <ul>
-<li>高可用双支柱框架（F3，&lt;&lt;<PAGE 76-82>&gt;&gt;）：供电侧=双电源负载分担+独立电路+UPS+DG 失电三通道通告（SNMP trap 前 3 站/Syslog 前 3 服务器/4 个 802.3ah OAM PDU 上联口优先，P25，&lt;&lt;<PAGE 78-82>&gt;&gt;）；运行侧=温度双阈值（Warning 用户可配预警不停机→Danger 出厂固化关机，P26/X7，&lt;&lt;<PAGE 76>&gt;&gt;）+LED 三层+show 命令巡检。</li>
-<li>lanpower 命令族语义（P30，&lt;&lt;<PAGE 89-95>&gt;&gt;）：service 两级激活、admin-state 仅复活不能首启、power/maxpower 上限不预留、priority 三级、Priority Disconnect 同级按物理口号 1 高 48 低裁决。</li>
+<li>高可用双支柱框架（F3， <code>&lt;span class="pg"&gt;原文p76-82&lt;/span&gt;</code> ）：供电侧=双电源负载分担+独立电路+UPS+DG 失电三通道通告（SNMP trap 前 3 站/Syslog 前 3 服务器/4 个 802.3ah OAM PDU 上联口优先，P25， <code>&lt;span class="pg"&gt;原文p78-82&lt;/span&gt;</code> ）；运行侧=温度双阈值（Warning 用户可配预警不停机→Danger 出厂固化关机，P26/X7， <code>&lt;span class="pg"&gt;原文p76&lt;/span&gt;</code> ）+LED 三层+show 命令巡检。</li>
+<li>lanpower 命令族语义（P30， <code>&lt;span class="pg"&gt;原文p89-95&lt;/span&gt;</code> ）：service 两级激活、admin-state 仅复活不能首启、power/maxpower 上限不预留、priority 三级、Priority Disconnect 同级按物理口号 1 高 48 低裁决。</li>
 </ul>
 <h2 id="a1">A1（行动框架）</h2>
 <p>PoE 排障决策树：
@@ -79,25 +80,25 @@ blockquote p{margin:6px 0}
 5. 4pair/bt 高功率不通 → lanpower 4pair / 8023bt 使能（C20）</p>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>巡检三命令</strong>：show module / show temperature（UNDER THRESHOLD 正常；Warning 查气流室温；Danger 关机处理后手动启动）/ show powersupply（C13，&lt;&lt;<PAGE 75-76>&gt;&gt;/&lt;&lt;<PAGE 87>&gt;&gt;）</li>
-<li><strong>PoE 监控</strong>：show lanpower 1 逐口 Maximum/Actual/Status/Priority/Class+槽预算（C22，&lt;&lt;<PAGE 96>&gt;&gt;）</li>
-<li><strong>优先级/限功率</strong>：lanpower port priority critical；lanpower port power 3000 / slot maxpower 400（C16/C17，&lt;&lt;<PAGE 90-91>&gt;&gt;）</li>
-<li><strong>DG 配置</strong>：efm-oam admin-state enable→port admin-state→propagate-events dying-gasp enable（C12，&lt;&lt;<PAGE 82>&gt;&gt;）；trap 站 snmp station / syslog swlog output socket（&lt;&lt;<PAGE 80-81>&gt;&gt;）</li>
-<li><strong>LED 读法</strong>：OK（绿/闪绿/琥珀=启动失败）；VC（稳绿=master/琥珀=slave）；PWR（绿=正常/琥珀=故障）；2.5G 口 Speed+PoE 双灯（P15/P16，&lt;&lt;<PAGE 48-49>&gt;&gt;）</li>
+<li><strong>巡检三命令</strong>：show module / show temperature（UNDER THRESHOLD 正常；Warning 查气流室温；Danger 关机处理后手动启动）/ show powersupply（C13， <code>&lt;span class="pg"&gt;原文p75-76&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p87&lt;/span&gt;</code> ）</li>
+<li><strong>PoE 监控</strong>：show lanpower 1 逐口 Maximum/Actual/Status/Priority/Class+槽预算（C22， <code>&lt;span class="pg"&gt;原文p96&lt;/span&gt;</code> ）</li>
+<li><strong>优先级/限功率</strong>：lanpower port priority critical；lanpower port power 3000 / slot maxpower 400（C16/C17， <code>&lt;span class="pg"&gt;原文p90-91&lt;/span&gt;</code> ）</li>
+<li><strong>DG 配置</strong>：efm-oam admin-state enable→port admin-state→propagate-events dying-gasp enable（C12， <code>&lt;span class="pg"&gt;原文p82&lt;/span&gt;</code> ）；trap 站 snmp station / syslog swlog output socket（ <code>&lt;span class="pg"&gt;原文p80-81&lt;/span&gt;</code> ）</li>
+<li><strong>LED 读法</strong>：OK（绿/闪绿/琥珀=启动失败）；VC（稳绿=master/琥珀=slave）；PWR（绿=正常/琥珀=故障）；2.5G 口 Speed+PoE 双灯（P15/P16， <code>&lt;span class="pg"&gt;原文p48-49&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
 <li>硬件巡检三命令流程（C13）</li>
-<li>Guard Band 拒载处置：余 50W/口上限 75W 拒 4W PD→power 10000 放行（C18，&lt;&lt;<PAGE 92>&gt;&gt;）</li>
-<li>PoE 关断两级与复活（C15，&lt;&lt;<PAGE 89>&gt;&gt;）</li>
+<li>Guard Band 拒载处置：余 50W/口上限 75W 拒 4W PD→power 10000 放行（C18， <code>&lt;span class="pg"&gt;原文p92&lt;/span&gt;</code> ）</li>
+<li>PoE 关断两级与复活（C15， <code>&lt;span class="pg"&gt;原文p89&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>
-<li>admin-state 不能首次激活 PoE，必须 slot service（X8，&lt;&lt;<PAGE 89>&gt;&gt;）</li>
-<li>class-detection 开启会复位全 PoE 口（X9）；电容检测不符 IEEE 仅限 legacy 话机（X10，&lt;&lt;<PAGE 89>&gt;&gt;/&lt;&lt;<PAGE 91>&gt;&gt;）</li>
-<li>Danger 阈值固化不可配；Warning 设太低会误告警（X7，&lt;&lt;<PAGE 76>&gt;&gt;）</li>
+<li>admin-state 不能首次激活 PoE，必须 slot service（X8， <code>&lt;span class="pg"&gt;原文p89&lt;/span&gt;</code> ）</li>
+<li>class-detection 开启会复位全 PoE 口（X9）；电容检测不符 IEEE 仅限 legacy 话机（X10， <code>&lt;span class="pg"&gt;原文p89&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p91&lt;/span&gt;</code> ）</li>
+<li>Danger 阈值固化不可配；Warning 设太低会误告警（X7， <code>&lt;span class="pg"&gt;原文p76&lt;/span&gt;</code> ）</li>
 <li>slot maxpower 下调可致低优先级口失电（C16 附加警告）</li>
-<li>BPS 状态只在 show lanpower 输出行看（P31，&lt;&lt;<PAGE 88>&gt;&gt;）</li>
-<li>ESD 腕带强制；锂电池同型号更换并返厂（X24/X25，&lt;&lt;<PAGE 108>&gt;&gt;/&lt;&lt;<PAGE 110>&gt;&gt;）</li>
+<li>BPS 状态只在 show lanpower 输出行看（P31， <code>&lt;span class="pg"&gt;原文p88&lt;/span&gt;</code> ）</li>
+<li>ESD 腕带强制；锂电池同型号更换并返厂（X24/X25， <code>&lt;span class="pg"&gt;原文p108&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p110&lt;/span&gt;</code> ）</li>
 </ul>
 <p>来源：OmniSwitch 6560 Hardware Users Guide（监控/DG/PoE Ch3-Ch4，p48-96）</p><div class="pn"><a href="os6560-install-power.html">⬅ 上一单元：os6560-install-power</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

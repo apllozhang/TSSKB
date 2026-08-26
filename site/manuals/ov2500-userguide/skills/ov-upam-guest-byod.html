@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -81,38 +82,38 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
-<li><strong>UPAM 应用地图</strong>（frameworks·F16，&lt;&lt;<PAGE 678>&gt;&gt;）：Authentication 子屏含 Summary/Workflow/NAS Clients/Access Policy/Authentication Strategy/Role Mapping for LDAP/Employee Account/Company Property/Switch User Account/Authentication Record/Captive Portal Access Record/Switch Access Record</li>
-<li><strong>三种认证工作流选型</strong>（frameworks·F17，&lt;&lt;<PAGE 681-682>&gt;&gt;）：BYOD（MAC+CP 对本地/外部库：SSID→MAC 的 Network Enforcement→认证源→Portal 页→Login Strategy→Web 认证 Enforcement）；Guest（MAC+CP 对 Guest 账号库，多一步 Self-Registration）；MAC or 802.1X（无 CP：SSID→认证源→Network Enforcement 三步）</li>
-<li><strong>ASA 用例矩阵</strong>（principles·P173，&lt;&lt;<PAGE 641-642>&gt;&gt;）：支持 UPAM 库同时做 ASA+客户端认证、UPAM 做 ASA+外部 RADIUS 做客户端；不支持外部 RADIUS 做 ASA+UPAM 做客户端</li>
+<li><strong>UPAM 应用地图</strong>（frameworks·F16， <code>&lt;span class="pg"&gt;原文p678&lt;/span&gt;</code> ）：Authentication 子屏含 Summary/Workflow/NAS Clients/Access Policy/Authentication Strategy/Role Mapping for LDAP/Employee Account/Company Property/Switch User Account/Authentication Record/Captive Portal Access Record/Switch Access Record</li>
+<li><strong>三种认证工作流选型</strong>（frameworks·F17， <code>&lt;span class="pg"&gt;原文p681-682&lt;/span&gt;</code> ）：BYOD（MAC+CP 对本地/外部库：SSID→MAC 的 Network Enforcement→认证源→Portal 页→Login Strategy→Web 认证 Enforcement）；Guest（MAC+CP 对 Guest 账号库，多一步 Self-Registration）；MAC or 802.1X（无 CP：SSID→认证源→Network Enforcement 三步）</li>
+<li><strong>ASA 用例矩阵</strong>（principles·P173， <code>&lt;span class="pg"&gt;原文p641-642&lt;/span&gt;</code> ）：支持 UPAM 库同时做 ASA+客户端认证、UPAM 做 ASA+外部 RADIUS 做客户端；不支持外部 RADIUS 做 ASA+UPAM 做客户端</li>
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>NAS Client</strong>：系统预置 All Managed Devices NAS（不可删），托管设备每 15 分钟自动入库，共享密钥固定 123456，与 UPAMRadiusServer 配套经 WLAN Service 下发；NAS IP 必须等于设备管理 IP；UPAM 作代理时 Shared Secret 四处一致（NAS Client+UPAM RADIUS+UPAM External RADIUS+第三方 RADIUS）（principles·P176，&lt;&lt;<PAGE 682-684>&gt;&gt;）</li>
-<li><strong>Access Policy / Authentication Strategy</strong>：Access Policy Priority 1-99（1 最高）按 Basic+Advanced 属性匹配；Strategy 认证源四选（None/Local DB/External LDAP-AD/External RADIUS）× Web 认证（None/Guest/Employee/两者）四推荐组合；Employee Account 上绑定的 Access Role Profile/Policy List 优先于 Strategy（principles·P178，&lt;&lt;<PAGE 687-693>&gt;&gt;）</li>
-<li><strong>Guest Access Strategy</strong>（frameworks·F18，&lt;&lt;<PAGE 712-718>&gt;&gt;）：General（Portal 模板+FQDN/IP）→Login Strategy（账密/条款/Access Code/Simple Persona 四种；社交登录 FB/Google/Rainbow/WeChat 需 OAuth ID+DNS 解析）→Registration Strategy（Remember Device+有效期）→Post Portal Enforcement（固定 ARP+Policy List+数据配额）→Self-Registration（审批 Employee Sponsor 或 Guest Operator；≤20 自定义属性）→Service Level（多档绑定不同 ARP）→WiFi4EU（专用模板+有效期 ≤24h）</li>
-<li><strong>Guest Account 机制</strong>：Account 与 Access Code 两类；Data Quota 默认 1MB；批量创建一次最多 5000 个（前置 Global Configuration 启用）；打印凭据票；xls/csv/xlsx 导入（principles·P183，&lt;&lt;<PAGE 742-745>&gt;&gt;）</li>
-<li><strong>Company Property / Device Specific PSK</strong>：公司资产设备清单绑定 ARP/Policy List 优先于 Strategy；每台设备按 MAC 派发不同 PSK；Online Devices 可 Kick Off（principles·P179，&lt;&lt;<PAGE 697-702>&gt;&gt;）</li>
-<li><strong>Switch User Account (ASA)</strong>：建用户→AAA Profile（Unified Profile-Global Configuration-AAA）→Apply to Devices；权限三级 Read-Write/Read Only/Advanced（BitMap Calculator）（principles·P180，&lt;&lt;<PAGE 703-706>&gt;&gt;）</li>
-<li><strong>UPAM Settings 集成</strong>：Email SMTP；External Log Server（MySQL/MSSQL/Syslog，本地日志仅存 1 个月）；LDAP/AD（AD 须设为 DNS 服务器）；External RADIUS；Captive Portal 页六种布局+自定义 Logo/广告；RADIUS 服务器证书六步 openssl 流程（principles·P186，&lt;&lt;<PAGE 767-778>&gt;&gt;）</li>
+<li><strong>NAS Client</strong>：系统预置 All Managed Devices NAS（不可删），托管设备每 15 分钟自动入库，共享密钥固定 123456，与 UPAMRadiusServer 配套经 WLAN Service 下发；NAS IP 必须等于设备管理 IP；UPAM 作代理时 Shared Secret 四处一致（NAS Client+UPAM RADIUS+UPAM External RADIUS+第三方 RADIUS）（principles·P176， <code>&lt;span class="pg"&gt;原文p682-684&lt;/span&gt;</code> ）</li>
+<li><strong>Access Policy / Authentication Strategy</strong>：Access Policy Priority 1-99（1 最高）按 Basic+Advanced 属性匹配；Strategy 认证源四选（None/Local DB/External LDAP-AD/External RADIUS）× Web 认证（None/Guest/Employee/两者）四推荐组合；Employee Account 上绑定的 Access Role Profile/Policy List 优先于 Strategy（principles·P178， <code>&lt;span class="pg"&gt;原文p687-693&lt;/span&gt;</code> ）</li>
+<li><strong>Guest Access Strategy</strong>（frameworks·F18， <code>&lt;span class="pg"&gt;原文p712-718&lt;/span&gt;</code> ）：General（Portal 模板+FQDN/IP）→Login Strategy（账密/条款/Access Code/Simple Persona 四种；社交登录 FB/Google/Rainbow/WeChat 需 OAuth ID+DNS 解析）→Registration Strategy（Remember Device+有效期）→Post Portal Enforcement（固定 ARP+Policy List+数据配额）→Self-Registration（审批 Employee Sponsor 或 Guest Operator；≤20 自定义属性）→Service Level（多档绑定不同 ARP）→WiFi4EU（专用模板+有效期 ≤24h）</li>
+<li><strong>Guest Account 机制</strong>：Account 与 Access Code 两类；Data Quota 默认 1MB；批量创建一次最多 5000 个（前置 Global Configuration 启用）；打印凭据票；xls/csv/xlsx 导入（principles·P183， <code>&lt;span class="pg"&gt;原文p742-745&lt;/span&gt;</code> ）</li>
+<li><strong>Company Property / Device Specific PSK</strong>：公司资产设备清单绑定 ARP/Policy List 优先于 Strategy；每台设备按 MAC 派发不同 PSK；Online Devices 可 Kick Off（principles·P179， <code>&lt;span class="pg"&gt;原文p697-702&lt;/span&gt;</code> ）</li>
+<li><strong>Switch User Account (ASA)</strong>：建用户→AAA Profile（Unified Profile-Global Configuration-AAA）→Apply to Devices；权限三级 Read-Write/Read Only/Advanced（BitMap Calculator）（principles·P180， <code>&lt;span class="pg"&gt;原文p703-706&lt;/span&gt;</code> ）</li>
+<li><strong>UPAM Settings 集成</strong>：Email SMTP；External Log Server（MySQL/MSSQL/Syslog，本地日志仅存 1 个月）；LDAP/AD（AD 须设为 DNS 服务器）；External RADIUS；Captive Portal 页六种布局+自定义 Logo/广告；RADIUS 服务器证书六步 openssl 流程（principles·P186， <code>&lt;span class="pg"&gt;原文p767-778&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>Guest Access Strategy 七段式配置（General→Login→Registration→Enforcement→Self-Registration→Service Level→WiFi4EU）（frameworks·F18，&lt;&lt;<PAGE 712-718>&gt;&gt;）</li>
-<li>Authentication Record 的 Generate：任意记录可生成 PSK；Fail+Local DB+802.1X 可生成 Employee Account；Fail+Call Check 可入 Company Property（principles·P181，&lt;&lt;<PAGE 710>&gt;&gt;）</li>
-<li>Guest 自助注册审批链（Employee Sponsor 邮箱后缀/位置路由 Guest Operator）（principles·P184，&lt;&lt;<PAGE 746-756>&gt;&gt;）</li>
+<li>Guest Access Strategy 七段式配置（General→Login→Registration→Enforcement→Self-Registration→Service Level→WiFi4EU）（frameworks·F18， <code>&lt;span class="pg"&gt;原文p712-718&lt;/span&gt;</code> ）</li>
+<li>Authentication Record 的 Generate：任意记录可生成 PSK；Fail+Local DB+802.1X 可生成 Employee Account；Fail+Call Check 可入 Company Property（principles·P181， <code>&lt;span class="pg"&gt;原文p710&lt;/span&gt;</code> ）</li>
+<li>Guest 自助注册审批链（Employee Sponsor 邮箱后缀/位置路由 Guest Operator）（principles·P184， <code>&lt;span class="pg"&gt;原文p746-756&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="b">B（反例/坑）</h2>
 <ul>
-<li>UPAM RADIUS Shared Secret 改动必须同步 NAS Client 屏，否则全网认证失败（counter·X25，&lt;&lt;<PAGE 224>&gt;&gt;）</li>
-<li>删除认证服务器不影响交换机继续使用——会产生"幽灵服务器"（counter·X24，&lt;&lt;<PAGE 221-222, 226>&gt;&gt;）</li>
-<li>Message-Authenticator：UPAM 开 Require 会丢弃无该属性的请求（即 AOS 8.10R1 及以下交换机的请求）；混合网络建多个 NAS 段分别设置（principles·P177，&lt;&lt;<PAGE 685-687>&gt;&gt;）</li>
-<li>Guest Data Quota 仅对账密登录生效，Access Code/条款用户不限（principles·P182，&lt;&lt;<PAGE 714-718>&gt;&gt;）</li>
-<li>Guest 账号有效期不能超 Global Configuration 全局上限（默认 90 天）；Remembered Device 只有 Activated 状态才消耗 Guest 许可（principles·P183/P184，&lt;&lt;<PAGE 742-756>&gt;&gt;）</li>
-<li>社交登录需本地 DNS 把 Portal Server Domain 解析到 UPAM IP；WeChat PC 端须建网站应用且 Verified（付费）（principles·P183，&lt;&lt;<PAGE 720-742>&gt;&gt;）</li>
-<li>BYOD 无自助注册/Access Code/Data Quota；Max Device Per Account 仅 1-10 默认 5（Guest 默认 10）（principles·P185，&lt;&lt;<PAGE 756-766>&gt;&gt;）</li>
+<li>UPAM RADIUS Shared Secret 改动必须同步 NAS Client 屏，否则全网认证失败（counter·X25， <code>&lt;span class="pg"&gt;原文p224&lt;/span&gt;</code> ）</li>
+<li>删除认证服务器不影响交换机继续使用——会产生"幽灵服务器"（counter·X24， <code>&lt;span class="pg"&gt;原文p221-222, 226&lt;/span&gt;</code> ）</li>
+<li>Message-Authenticator：UPAM 开 Require 会丢弃无该属性的请求（即 AOS 8.10R1 及以下交换机的请求）；混合网络建多个 NAS 段分别设置（principles·P177， <code>&lt;span class="pg"&gt;原文p685-687&lt;/span&gt;</code> ）</li>
+<li>Guest Data Quota 仅对账密登录生效，Access Code/条款用户不限（principles·P182， <code>&lt;span class="pg"&gt;原文p714-718&lt;/span&gt;</code> ）</li>
+<li>Guest 账号有效期不能超 Global Configuration 全局上限（默认 90 天）；Remembered Device 只有 Activated 状态才消耗 Guest 许可（principles·P183/P184， <code>&lt;span class="pg"&gt;原文p742-756&lt;/span&gt;</code> ）</li>
+<li>社交登录需本地 DNS 把 Portal Server Domain 解析到 UPAM IP；WeChat PC 端须建网站应用且 Verified（付费）（principles·P183， <code>&lt;span class="pg"&gt;原文p720-742&lt;/span&gt;</code> ）</li>
+<li>BYOD 无自助注册/Access Code/Data Quota；Max Device Per Account 仅 1-10 默认 5（Guest 默认 10）（principles·P185， <code>&lt;span class="pg"&gt;原文p756-766&lt;/span&gt;</code> ）</li>
 <li>Guest Operator 登录用 OV 的 secondary IP 管理界面（principles·P185）</li>
-<li>默认客户端/服务器证书不安全，正式环境必须换自定义证书（counter·X13，&lt;&lt;<PAGE 141>&gt;&gt;）</li>
-<li>UPAM 邮件要在 UPAM Settings-Email Server 单独配置，不吃 OV 的 Preferences（principles·P121，&lt;&lt;<PAGE 425-427>&gt;&gt;）</li>
+<li>默认客户端/服务器证书不安全，正式环境必须换自定义证书（counter·X13， <code>&lt;span class="pg"&gt;原文p141&lt;/span&gt;</code> ）</li>
+<li>UPAM 邮件要在 UPAM Settings-Email Server 单独配置，不吃 OV 的 Preferences（principles·P121， <code>&lt;span class="pg"&gt;原文p425-427&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniVista 2500 NMS 4.9R2 User Guide 第 33 章 UPAM（&lt;&lt;<PAGE 678-778>&gt;&gt;）、认证服务器相关（&lt;&lt;<PAGE 218-227>&gt;&gt;）。条目来源：frameworks F16/F17/F18；principles P173-P186；counter-examples X13/X24/X25。</p><div class="pn"><a href="ov-unified-access-profiles.html">⬅ 上一单元：ov-unified-access-profiles</a><a class="nxt" href="ov-quarantine-policyview.html">下一单元：ov-quarantine-policyview ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<p>OmniVista 2500 NMS 4.9R2 User Guide 第 33 章 UPAM（ <code>&lt;span class="pg"&gt;原文p678-778&lt;/span&gt;</code> ）、认证服务器相关（ <code>&lt;span class="pg"&gt;原文p218-227&lt;/span&gt;</code> ）。条目来源：frameworks F16/F17/F18；principles P173-P186；counter-examples X13/X24/X25。</p><div class="pn"><a href="ov-unified-access-profiles.html">⬅ 上一单元：ov-unified-access-profiles</a><a class="nxt" href="ov-quarantine-policyview.html">下一单元：ov-quarantine-policyview ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

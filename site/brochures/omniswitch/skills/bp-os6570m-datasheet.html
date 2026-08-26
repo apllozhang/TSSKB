@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -82,7 +83,7 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="i">I（核心理念）</h2>
 <ul>
-<li>OS6570M 是"企业与运营商网络的边缘汇聚方案"（&lt;&lt;<PAGE 64>&gt;&gt;："industry-leading edge and aggregation solution for both enterprise and service provider networks"），Metro Ethernet 服务特性内置、AC/DC 双电源、10G/25G 许可升速。</li>
+<li>OS6570M 是"企业与运营商网络的边缘汇聚方案"（ <code>&lt;span class="pg"&gt;原文p64&lt;/span&gt;</code> ："industry-leading edge and aggregation solution for both enterprise and service provider networks"），Metro Ethernet 服务特性内置、AC/DC 双电源、10G/25G 许可升速。</li>
 <li>层级：城域/SP 边缘（企业接入层最高档之一），上接 6860 系。</li>
 </ul>
 <h2 id="a1">A1（与相邻系列选型差异）</h2>
@@ -92,35 +93,35 @@ blockquote p{margin:6px 0}
 <li>vs OS6860E：6860N 已有 25G SFP28 + fabric；6570M 走许可路线升 25G，价格更低。</li>
 </ul>
 <h2 id="a2">A2（规格细节速查表）</h2>
-<p>机型矩阵（&lt;&lt;<PAGE 66>&gt;&gt; 表 1）：
+<p>机型矩阵（ <code>&lt;span class="pg"&gt;原文p66&lt;/span&gt;</code>  表 1）：
 | 型号 | RJ45 | 100M/1G SFP | SFP28（1G/10G/25G<em>） | 上联/VFL | 电源 |
 |---|---|---|---|---|---|
 | OS6570M-12 | 8 | 2 | 0 | 2x SFP+ 1G/10G | 内置 AC + 外置 AC/DC 备份 |
 | OS6570M-12D | 8 | 2 | 0 | 2 | 内置 DC |
 | OS6570M-U28 | 0 | 20 | 4（默认 1G）</em> | 2x SFP+ | 模块 AC + 模块备份 |
 | OS6570M-U28D | 0 | 20 | 4* | 2 | 模块 DC |</p>
-<p>（U28 另有 4x SFP/RJ45 1G combo；<em>："Default speed is 1G. License upgradable to 10G or 25G."，&lt;&lt;<PAGE 66>&gt;&gt; 注。）
-上联与堆叠：VFL 默认 40 Gb/s，SW-PRM28 许可后 100 Gb/s（&lt;&lt;<PAGE 67>&gt;&gt;）；VC 最多 4 台（&lt;&lt;<PAGE 69>&gt;&gt;，12 型）/LED 显示支持到 8（&lt;&lt;<PAGE 70>&gt;&gt;）；U28 最多 6x25G 上联（&lt;&lt;<PAGE 65>&gt;&gt;）。
-交换容量与包转发（&lt;&lt;<PAGE 66>&gt;&gt;）：12 型 60 Gb/s / 44.6 Mpps；U28 型 348 Gb/s / 258.9 Mpps（ASIC 396 Gb/s）。
-电源体系：12 型内置固定电源 + 外置备份（OS6570-12-BP 60W AC / -12-BP-D 30W DC）；U28 型双模块（OS6570-BP/BP-D 150W，&lt;&lt;<PAGE 67>&gt;&gt;）；全系 1+1 热插拔（备份）。
-Layer 特性：静态 + RIP + Access OSPFv2/v3 默认；完整 OSPFv2/v3、IS-IS、PIM、VRF 需 OS6570M-SW-AR（&lt;&lt;<PAGE 65>&gt;&gt;/&lt;&lt;<PAGE 70>&gt;&gt;）；SPB-M 支持需 PRM 许可（SW-PRM12/U28 用 SW-PRM28，且 810R4 起生效，&lt;&lt;<PAGE 68>&gt;&gt;）；Metro 特性内置（Q-in-Q/G.8032/SAA/TR-101/MEF CE 3.0，&lt;&lt;<PAGE 70>&gt;&gt;）；256 IPv4 + 128 IPv6 静态/RIP 路由；32k MAC；1588v2 透明时钟（U28，</em>*待软件）。
-许可家族（&lt;&lt;<PAGE 65>&gt;&gt;/&lt;&lt;<PAGE 68>&gt;&gt;）：SW-PERF4（4 口 SFP+ 升 10G）、SW-PRM28（6xSFP28 升 25G + SPB + AR）、SW-PRM12（12 型 SPB + AR）、SW-AR（高级路由）。
-硬件平台：双核 ARM Cortex A55 1.5GHz、2GB RAM、4GB flash、24MB 包缓冲（&lt;&lt;<PAGE 66>&gt;&gt;）。
-功耗/环境：待机 15/61W；0~50°C；MTBF 最高 3.26M 小时（12 型单电源，&lt;&lt;<PAGE 67>&gt;&gt;）。
-规格红线：25G/MACsec/1588v2/Secure Boot 带 ** 号（待软件开发，&lt;&lt;<PAGE 65>&gt;&gt; 注）；无 PoE。</p>
+<p>（U28 另有 4x SFP/RJ45 1G combo；<em>："Default speed is 1G. License upgradable to 10G or 25G."， <code>&lt;span class="pg"&gt;原文p66&lt;/span&gt;</code>  注。）
+上联与堆叠：VFL 默认 40 Gb/s，SW-PRM28 许可后 100 Gb/s（ <code>&lt;span class="pg"&gt;原文p67&lt;/span&gt;</code> ）；VC 最多 4 台（ <code>&lt;span class="pg"&gt;原文p69&lt;/span&gt;</code> ，12 型）/LED 显示支持到 8（ <code>&lt;span class="pg"&gt;原文p70&lt;/span&gt;</code> ）；U28 最多 6x25G 上联（ <code>&lt;span class="pg"&gt;原文p65&lt;/span&gt;</code> ）。
+交换容量与包转发（ <code>&lt;span class="pg"&gt;原文p66&lt;/span&gt;</code> ）：12 型 60 Gb/s / 44.6 Mpps；U28 型 348 Gb/s / 258.9 Mpps（ASIC 396 Gb/s）。
+电源体系：12 型内置固定电源 + 外置备份（OS6570-12-BP 60W AC / -12-BP-D 30W DC）；U28 型双模块（OS6570-BP/BP-D 150W， <code>&lt;span class="pg"&gt;原文p67&lt;/span&gt;</code> ）；全系 1+1 热插拔（备份）。
+Layer 特性：静态 + RIP + Access OSPFv2/v3 默认；完整 OSPFv2/v3、IS-IS、PIM、VRF 需 OS6570M-SW-AR（ <code>&lt;span class="pg"&gt;原文p65&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p70&lt;/span&gt;</code> ）；SPB-M 支持需 PRM 许可（SW-PRM12/U28 用 SW-PRM28，且 810R4 起生效， <code>&lt;span class="pg"&gt;原文p68&lt;/span&gt;</code> ）；Metro 特性内置（Q-in-Q/G.8032/SAA/TR-101/MEF CE 3.0， <code>&lt;span class="pg"&gt;原文p70&lt;/span&gt;</code> ）；256 IPv4 + 128 IPv6 静态/RIP 路由；32k MAC；1588v2 透明时钟（U28，</em>*待软件）。
+许可家族（ <code>&lt;span class="pg"&gt;原文p65&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p68&lt;/span&gt;</code> ）：SW-PERF4（4 口 SFP+ 升 10G）、SW-PRM28（6xSFP28 升 25G + SPB + AR）、SW-PRM12（12 型 SPB + AR）、SW-AR（高级路由）。
+硬件平台：双核 ARM Cortex A55 1.5GHz、2GB RAM、4GB flash、24MB 包缓冲（ <code>&lt;span class="pg"&gt;原文p66&lt;/span&gt;</code> ）。
+功耗/环境：待机 15/61W；0~50°C；MTBF 最高 3.26M 小时（12 型单电源， <code>&lt;span class="pg"&gt;原文p67&lt;/span&gt;</code> ）。
+规格红线：25G/MACsec/1588v2/Secure Boot 带 ** 号（待软件开发， <code>&lt;span class="pg"&gt;原文p65&lt;/span&gt;</code>  注）；无 PoE。</p>
 <h2 id="e">E（适用场景）</h2>
 <ul>
-<li>运营商托管服务：CPE、光纤汇聚（&lt;&lt;<PAGE 64>&gt;&gt; 部署建议）——U28 全光 20x SFP</li>
+<li>运营商托管服务：CPE、光纤汇聚（ <code>&lt;span class="pg"&gt;原文p64&lt;/span&gt;</code>  部署建议）——U28 全光 20x SFP</li>
 <li>无 AC 站点（户外机柜/传输机房）：12D/U28D 直流版（C7）</li>
 <li>分期建设：先 1G 全光跑，SW-PERF4→SW-PRM28 逐步升 10G/25G（C9）</li>
 <li>需 SPB/IS-IS/BGP 的 SP 边缘：SW-PRM12/PRM28（内含 SW-AR）一步到位</li>
 </ul>
 <h2 id="b">B（限制与坑）</h2>
 <ul>
-<li>25G、256bit MACsec、1588v2、Secure Boot 全部标 "**Hardware capable, requires future SW development"（&lt;&lt;<PAGE 65>&gt;&gt; 注）——投标应答需核实当前 AOS 版本，不能当已交付能力写（X8）</li>
-<li>25G 上联 "*License purchase required"（&lt;&lt;<PAGE 65>&gt;&gt;）——许可行项勿漏（X15）</li>
-<li>默认只有 basic L3：BGP/IS-IS/完整 OSPF 都要 SW-AR 或 PRM 许可（X17，&lt;&lt;<PAGE 65>&gt;&gt;）</li>
-<li>SFP28 口默认速度 1G，到货即插 10G/25G 不通（&lt;&lt;<PAGE 66>&gt;&gt; 注）</li>
+<li>25G、256bit MACsec、1588v2、Secure Boot 全部标 "**Hardware capable, requires future SW development"（ <code>&lt;span class="pg"&gt;原文p65&lt;/span&gt;</code>  注）——投标应答需核实当前 AOS 版本，不能当已交付能力写（X8）</li>
+<li>25G 上联 "*License purchase required"（ <code>&lt;span class="pg"&gt;原文p65&lt;/span&gt;</code> ）——许可行项勿漏（X15）</li>
+<li>默认只有 basic L3：BGP/IS-IS/完整 OSPF 都要 SW-AR 或 PRM 许可（X17， <code>&lt;span class="pg"&gt;原文p65&lt;/span&gt;</code> ）</li>
+<li>SFP28 口默认速度 1G，到货即插 10G/25G 不通（ <code>&lt;span class="pg"&gt;原文p66&lt;/span&gt;</code>  注）</li>
 <li>U28 无 PoE——AP/摄像头供电另配</li>
 <li>备份电源 12 型是外置小电源（60/30W），与 U28 模块 150W 不同，报价别混</li>
 </ul>

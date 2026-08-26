@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -84,39 +85,39 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
-<li>七步法（&lt;&lt;<PAGE 275>&gt;&gt;-&lt;&lt;<PAGE 280>&gt;&gt;）：①配 router-id（<code>ip interface Loopback0 address 192.168.254.1</code> → <code>ip router router-id 192.168.254.1</code>）②<code>ip load ospf</code> ③<code>ip ospf area 0.0.0.0</code> ④指定区域类型 ⑤<code>ip ospf interface int_217</code> ⑥<code>ip ospf interface int_217 area 0.0.0.0</code> ⑦<code>admin-state enable</code> → <code>ip ospf admin-state enable</code>（&lt;&lt;<PAGE 325>&gt;&gt;-&lt;&lt;<PAGE 330>&gt;&gt;）</li>
-<li>验证三步：<code>show ip ospf</code>（# of Full State Nbrs）、<code>show ip ospf lsdb</code>（rtr/net LSA）、<code>show ip ospf interface</code>（DR/BDR）（&lt;&lt;<PAGE 325>&gt;&gt;-&lt;&lt;<PAGE 330>&gt;&gt;）</li>
-<li>多区域+虚链路：<code>ip ospf area 1.1.1.1</code> + 接口入域；两端配 <code>ip ospf virtual-link 1.1.1.1 192.168.254.2</code>（对端 router-id）；<code>show ip ospf virtual-link</code>（State P2P/Full, up）（&lt;&lt;<PAGE 332>&gt;&gt;-&lt;&lt;<PAGE 339>&gt;&gt;）</li>
-<li>重分发：<code>ip route-map localIntoOspf sequence-number 10 action permit / match ip-address 192.168.120.0/24 permit</code> → <code>ip redist local into ospf route-map localIntoOspf admin-state enable</code>（默认路由 match 0.0.0.0/0）；验证 <code>show ip ospf routes</code> 出现 AS-Ext (E2)（&lt;&lt;<PAGE 347>&gt;&gt;-&lt;&lt;<PAGE 352>&gt;&gt;）</li>
-<li>认证：Simple <code>auth-type simple</code> + <code>auth-key alcatel</code>；MD5 <code>auth-type md5</code> + <code>md5 1</code> + <code>md5 1 key alcatel</code>，双端一致（&lt;&lt;<PAGE 353>&gt;&gt;-&lt;&lt;<PAGE 354>&gt;&gt;）</li>
-<li>Stub：<code>ip ospf area 4.4.4.4 type stub</code>（双端一致），区域內路由表只剩 Intra/Inter + ABR 注入的 Inter 默认路由（&lt;&lt;<PAGE 355>&gt;&gt;-&lt;&lt;<PAGE 356>&gt;&gt;）</li>
+<li>七步法（ <code>&lt;span class="pg"&gt;原文p275&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p280&lt;/span&gt;</code> ）：①配 router-id（<code>ip interface Loopback0 address 192.168.254.1</code> → <code>ip router router-id 192.168.254.1</code>）②<code>ip load ospf</code> ③<code>ip ospf area 0.0.0.0</code> ④指定区域类型 ⑤<code>ip ospf interface int_217</code> ⑥<code>ip ospf interface int_217 area 0.0.0.0</code> ⑦<code>admin-state enable</code> → <code>ip ospf admin-state enable</code>（ <code>&lt;span class="pg"&gt;原文p325&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p330&lt;/span&gt;</code> ）</li>
+<li>验证三步：<code>show ip ospf</code>（# of Full State Nbrs）、<code>show ip ospf lsdb</code>（rtr/net LSA）、<code>show ip ospf interface</code>（DR/BDR）（ <code>&lt;span class="pg"&gt;原文p325&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p330&lt;/span&gt;</code> ）</li>
+<li>多区域+虚链路：<code>ip ospf area 1.1.1.1</code> + 接口入域；两端配 <code>ip ospf virtual-link 1.1.1.1 192.168.254.2</code>（对端 router-id）；<code>show ip ospf virtual-link</code>（State P2P/Full, up）（ <code>&lt;span class="pg"&gt;原文p332&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p339&lt;/span&gt;</code> ）</li>
+<li>重分发：<code>ip route-map localIntoOspf sequence-number 10 action permit / match ip-address 192.168.120.0/24 permit</code> → <code>ip redist local into ospf route-map localIntoOspf admin-state enable</code>（默认路由 match 0.0.0.0/0）；验证 <code>show ip ospf routes</code> 出现 AS-Ext (E2)（ <code>&lt;span class="pg"&gt;原文p347&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p352&lt;/span&gt;</code> ）</li>
+<li>认证：Simple <code>auth-type simple</code> + <code>auth-key alcatel</code>；MD5 <code>auth-type md5</code> + <code>md5 1</code> + <code>md5 1 key alcatel</code>，双端一致（ <code>&lt;span class="pg"&gt;原文p353&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p354&lt;/span&gt;</code> ）</li>
+<li>Stub：<code>ip ospf area 4.4.4.4 type stub</code>（双端一致），区域內路由表只剩 Intra/Inter + ABR 注入的 Inter 默认路由（ <code>&lt;span class="pg"&gt;原文p355&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p356&lt;/span&gt;</code> ）</li>
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
-<li>邻居排障：<code>swlog appid ospf_0 subapp all level debug3</code> + <code>show log swlog | grep ospf_0</code>，可抓到 "HELLO ... discarded ... invalid helloInterval" 类证据（&lt;&lt;<PAGE 292>&gt;&gt;-&lt;&lt;<PAGE 294>&gt;&gt;）</li>
-<li>LSA 速查：Type1 每路由器域内泛洪 / Type2 DR 生成 / Type3 ABR 汇总（域内路由在 ABR 做 summarization）/ Type4 通告 ASBR 位置 / Type5 ASBR 外部（外部路由在 ASBR 做 aggregation）/ Type7 NSSA 专用由 ABR 转 Type5 出域（&lt;&lt;<PAGE 260>&gt;&gt;-&lt;&lt;<PAGE 267>&gt;&gt;、&lt;&lt;<PAGE 286>&gt;&gt;-&lt;&lt;<PAGE 287>&gt;&gt;）</li>
-<li>ECMP：等价路径最多 4 条、按流分担、不支持逐包（&lt;&lt;<PAGE 285>&gt;&gt;）</li>
-<li>Graceful Restart：重启期间邻居维持邻接避免全网 SPF；OSPF/ISIS 默认关、BGP 默认开（&lt;&lt;<PAGE 359>&gt;&gt;-&lt;&lt;<PAGE 363>&gt;&gt;）</li>
-<li>route-map 组合逻辑：同序列多 match 为 AND，同 match 多值为 OR（&lt;&lt;<PAGE 305>&gt;&gt;）</li>
+<li>邻居排障：<code>swlog appid ospf_0 subapp all level debug3</code> + <code>show log swlog | grep ospf_0</code>，可抓到 "HELLO ... discarded ... invalid helloInterval" 类证据（ <code>&lt;span class="pg"&gt;原文p292&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p294&lt;/span&gt;</code> ）</li>
+<li>LSA 速查：Type1 每路由器域内泛洪 / Type2 DR 生成 / Type3 ABR 汇总（域内路由在 ABR 做 summarization）/ Type4 通告 ASBR 位置 / Type5 ASBR 外部（外部路由在 ASBR 做 aggregation）/ Type7 NSSA 专用由 ABR 转 Type5 出域（ <code>&lt;span class="pg"&gt;原文p260&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p267&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p286&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p287&lt;/span&gt;</code> ）</li>
+<li>ECMP：等价路径最多 4 条、按流分担、不支持逐包（ <code>&lt;span class="pg"&gt;原文p285&lt;/span&gt;</code> ）</li>
+<li>Graceful Restart：重启期间邻居维持邻接避免全网 SPF；OSPF/ISIS 默认关、BGP 默认开（ <code>&lt;span class="pg"&gt;原文p359&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p363&lt;/span&gt;</code> ）</li>
+<li>route-map 组合逻辑：同序列多 match 为 AND，同 match 多值为 OR（ <code>&lt;span class="pg"&gt;原文p305&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>C-22 两个独立骨干经 transit area 用虚链路互联，<code>show ip ospf virtual-link</code> State P2P/Full（&lt;&lt;<PAGE 332>&gt;&gt;-&lt;&lt;<PAGE 339>&gt;&gt;）</li>
-<li>C-23 local/static 两类重分发，E2 路由识别（&lt;&lt;<PAGE 347>&gt;&gt;-&lt;&lt;<PAGE 352>&gt;&gt;）</li>
-<li>C-26 swlog 日志分级定位 Hello interval 不匹配（本端 20 对端 10），改一致后 Full（&lt;&lt;<PAGE 292>&gt;&gt;-&lt;&lt;<PAGE 294>&gt;&gt;）</li>
+<li>C-22 两个独立骨干经 transit area 用虚链路互联，<code>show ip ospf virtual-link</code> State P2P/Full（ <code>&lt;span class="pg"&gt;原文p332&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p339&lt;/span&gt;</code> ）</li>
+<li>C-23 local/static 两类重分发，E2 路由识别（ <code>&lt;span class="pg"&gt;原文p347&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p352&lt;/span&gt;</code> ）</li>
+<li>C-26 swlog 日志分级定位 Hello interval 不匹配（本端 20 对端 10），改一致后 Full（ <code>&lt;span class="pg"&gt;原文p292&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p294&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="b">B（边界与陷阱）</h2>
 <ul>
-<li>单端先开认证会立刻丢邻居（"Auth type 1 mismatch!"），生产开认证需两端窗口期内同步（&lt;&lt;<PAGE 353>&gt;&gt;）</li>
-<li>Hello interval 等邻居参数不一致导致无法 Full，用 swlog debug 定位（&lt;&lt;<PAGE 293>&gt;&gt;-&lt;&lt;<PAGE 294>&gt;&gt;）</li>
-<li>Stub 区域两端 area type 必须一致，一端 stub 一端 normal 邻居起不来；stub 内看不到外部路由（&lt;&lt;<PAGE 355>&gt;&gt;-&lt;&lt;<PAGE 356>&gt;&gt;）</li>
-<li>route-map 命中 deny 序列即停止且不重分发该路由（&lt;&lt;<PAGE 304>&gt;&gt;）</li>
+<li>单端先开认证会立刻丢邻居（"Auth type 1 mismatch!"），生产开认证需两端窗口期内同步（ <code>&lt;span class="pg"&gt;原文p353&lt;/span&gt;</code> ）</li>
+<li>Hello interval 等邻居参数不一致导致无法 Full，用 swlog debug 定位（ <code>&lt;span class="pg"&gt;原文p293&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p294&lt;/span&gt;</code> ）</li>
+<li>Stub 区域两端 area type 必须一致，一端 stub 一端 normal 邻居起不来；stub 内看不到外部路由（ <code>&lt;span class="pg"&gt;原文p355&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p356&lt;/span&gt;</code> ）</li>
+<li>route-map 命中 deny 序列即停止且不重分发该路由（ <code>&lt;span class="pg"&gt;原文p304&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
 <ul>
-<li>framework·F-05 Area 设计决策框架（&lt;&lt;<PAGE 253>&gt;&gt;-&lt;&lt;<PAGE 254>&gt;&gt;、&lt;&lt;<PAGE 267>&gt;&gt;-&lt;&lt;<PAGE 270>&gt;&gt;）</li>
-<li>framework·F-06 配置七步法（&lt;&lt;<PAGE 275>&gt;&gt;-&lt;&lt;<PAGE 280>&gt;&gt;）</li>
-<li>framework·F-07 重分发两步法（&lt;&lt;<PAGE 272>&gt;&gt;-&lt;&lt;<PAGE 273>&gt;&gt;、&lt;&lt;<PAGE 300>&gt;&gt;）</li>
-<li>principle·P-39/P-40/P-41/P-42/P-43/P-44/P-45/P-46/P-47/P-48（&lt;&lt;<PAGE 240>&gt;&gt;-&lt;&lt;<PAGE 305>&gt;&gt;、&lt;&lt;<PAGE 359>&gt;&gt;-&lt;&lt;<PAGE 363>&gt;&gt;）</li>
+<li>framework·F-05 Area 设计决策框架（ <code>&lt;span class="pg"&gt;原文p253&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p254&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p267&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p270&lt;/span&gt;</code> ）</li>
+<li>framework·F-06 配置七步法（ <code>&lt;span class="pg"&gt;原文p275&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p280&lt;/span&gt;</code> ）</li>
+<li>framework·F-07 重分发两步法（ <code>&lt;span class="pg"&gt;原文p272&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p273&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p300&lt;/span&gt;</code> ）</li>
+<li>principle·P-39/P-40/P-41/P-42/P-43/P-44/P-45/P-46/P-47/P-48（ <code>&lt;span class="pg"&gt;原文p240&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p305&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p359&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p363&lt;/span&gt;</code> ）</li>
 <li>case·C-21/C-22/C-23/C-24/C-25/C-26；counter·X-14/X-15/X-16</li>
 </ul><div class="pn"><a href="ip-routing-fundamentals.html">⬅ 上一单元：ip-routing-fundamentals</a><a class="nxt" href="bgp-vrf-leak.html">下一单元：bgp-vrf-leak ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

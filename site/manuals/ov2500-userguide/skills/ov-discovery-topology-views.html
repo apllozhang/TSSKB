@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -83,43 +84,43 @@ Geo Map 是默认视图，站点（Site/Sub-Site）自动生成同名逻辑图�
 </ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
-<li><strong>首次纳管五步法</strong>（cases·C1，&lt;&lt;<PAGE 40-44>&gt;&gt;）：Discovery→Discover New Devices 输 IP 范围（可用 Default Profile）→Managed Devices 里 Edit 修正主 IP/write community/CLI-FTP 凭据/SNMP 版本→Notifications 配 trap（Topology 需 coldStart/warmStart/linkUp/linkDown）→Copy Working/Running to Certified 保存→需 QoS 时跑 PolicyView 后再保存</li>
-<li><strong>地图体系选型</strong>（frameworks·F14，&lt;&lt;<PAGE 580-581>&gt;&gt;）：Physical Network Map 全网自动建；从父图建 Child Map（设备从父图移入）；Logical Map 无父图、设备可同时在多图；Dynamic Map 用过滤器动态加减（不能与 Logical 互转）；Admin 建删图、Netadmin/Write 编辑；大图减少设备可提升渲染性能</li>
-<li><strong>轮询档位</strong>（principles·P85，&lt;&lt;<PAGE 298-299>&gt;&gt;）：规模 Low(≤500)/Medium/High/Very High 对应 Full 8/10/12/18 小时、Occasional 4/6/8/12h、Regular 1/2/4/8h、Frequent 5/15/30min/2h</li>
+<li><strong>首次纳管五步法</strong>（cases·C1， <code>&lt;span class="pg"&gt;原文p40-44&lt;/span&gt;</code> ）：Discovery→Discover New Devices 输 IP 范围（可用 Default Profile）→Managed Devices 里 Edit 修正主 IP/write community/CLI-FTP 凭据/SNMP 版本→Notifications 配 trap（Topology 需 coldStart/warmStart/linkUp/linkDown）→Copy Working/Running to Certified 保存→需 QoS 时跑 PolicyView 后再保存</li>
+<li><strong>地图体系选型</strong>（frameworks·F14， <code>&lt;span class="pg"&gt;原文p580-581&lt;/span&gt;</code> ）：Physical Network Map 全网自动建；从父图建 Child Map（设备从父图移入）；Logical Map 无父图、设备可同时在多图；Dynamic Map 用过滤器动态加减（不能与 Logical 互转）；Admin 建删图、Netadmin/Write 编辑；大图减少设备可提升渲染性能</li>
+<li><strong>轮询档位</strong>（principles·P85， <code>&lt;span class="pg"&gt;原文p298-299&lt;/span&gt;</code> ）：规模 Low(≤500)/Medium/High/Very High 对应 Full 8/10/12/18 小时、Occasional 4/6/8/12h、Regular 1/2/4/8h、Frequent 5/15/30min/2h</li>
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>执行发现</strong>：Discovery→Managed Devices→Discover New Devices→Ranges List：现有 Range 直接 Discover Now 或 Add 新建（Start/End IP/Subnet Mask + 勾选 Discovery Profiles，可拖拽排序）→完成后设备入 Managed Devices；更新单台用 Rediscover（cases·C26，&lt;&lt;<PAGE 256>&gt;&gt;）</li>
-<li><strong>手工添加/克隆/多选编辑</strong>：Add 填 General(IP/Site/CLI-FTP 凭据)+SNMP+Advanced(Trap Station User/Discover Link/Shell Preference/Get Bulk)；Clone 后改 IP 密码；多选编辑用 Click to Overwrite 统一赋值、Retain Original Values 反悔（cases·C27，&lt;&lt;<PAGE 257-261>&gt;&gt;）</li>
-<li><strong>设备操作集</strong>：Ping/Poll For Traps/Poll Links/Configure Health Thresholds/Locate End Stations/Webpage/Device Inventory/Backup Device/SSH/SSH Custom(SecureCRT)/Configure Traps/View Traps/Reboot(选目录+延迟)/Copy Working↔Certified/Save to Running/Scheduled Upgrades（cases·C28，&lt;&lt;<PAGE 262-264>&gt;&gt;）</li>
-<li><strong>MIB 导入</strong>：先在 Third-Party Devices Support 建 OID 条目（只填 enterprises 后段）→Import MIBs→Upload Files→箭头调编译顺序→Apply（cases·C31，&lt;&lt;<PAGE 288>&gt;&gt;）</li>
-<li><strong>Network Advisor 启用</strong>：先在 Global Dashboard 的 NA widget 声明实例（Name/URL/Application UUID）→选设备→Features→Enable→选实例（cases·C30，&lt;&lt;<PAGE 264-267>&gt;&gt;）</li>
-<li><strong>手工链路</strong>：持久显示、断链变红，适合核心链路监控；自动链路不可达时从拓扑消失（principles·P83，&lt;&lt;<PAGE 290>&gt;&gt;）</li>
-<li><strong>Locator 定位</strong>：Search by IP/Host Name、MAC、Auth User→Historical/Live 切换（Live 可 1st Match Only/All Matches）→看 ARP 表 + Netforward 表；行内 Action 可 Locate On Map/Quarantine Manager/端口启停（cases·C35，&lt;&lt;<PAGE 337-339>&gt;&gt;）</li>
-<li><strong>状态颜色</strong>：设备绿=Up（AOS 的 Up 不代表可管理，看 SNMP Status）/橙=Warning/红=不可达；通知圈橙 Warning/紫 Minor/黄 Major/红 Critical；ping sweep 后链路等下次轮询或手动 Poll Links（principles·P156，&lt;&lt;<PAGE 554-561>&gt;&gt;）</li>
-<li><strong>SPB/ERP 专题视图</strong>：均在交换机 CLI 配置、OV 只读展示；SPB 数据每 3 小时自动轮询；ERP 按 Ring ID 过滤（principles·P157，&lt;&lt;<PAGE 565-574>&gt;&gt;）</li>
-<li><strong>Geo 站点</strong>：Site 自动生成同名逻辑图；Sub-Site=Building/Floor；设备只属一个 Site/Sub-Site；推荐先建空 Site 再建 Sub-Site 时分配设备（principles·P158，&lt;&lt;<PAGE 575-578>&gt;&gt;）</li>
+<li><strong>执行发现</strong>：Discovery→Managed Devices→Discover New Devices→Ranges List：现有 Range 直接 Discover Now 或 Add 新建（Start/End IP/Subnet Mask + 勾选 Discovery Profiles，可拖拽排序）→完成后设备入 Managed Devices；更新单台用 Rediscover（cases·C26， <code>&lt;span class="pg"&gt;原文p256&lt;/span&gt;</code> ）</li>
+<li><strong>手工添加/克隆/多选编辑</strong>：Add 填 General(IP/Site/CLI-FTP 凭据)+SNMP+Advanced(Trap Station User/Discover Link/Shell Preference/Get Bulk)；Clone 后改 IP 密码；多选编辑用 Click to Overwrite 统一赋值、Retain Original Values 反悔（cases·C27， <code>&lt;span class="pg"&gt;原文p257-261&lt;/span&gt;</code> ）</li>
+<li><strong>设备操作集</strong>：Ping/Poll For Traps/Poll Links/Configure Health Thresholds/Locate End Stations/Webpage/Device Inventory/Backup Device/SSH/SSH Custom(SecureCRT)/Configure Traps/View Traps/Reboot(选目录+延迟)/Copy Working↔Certified/Save to Running/Scheduled Upgrades（cases·C28， <code>&lt;span class="pg"&gt;原文p262-264&lt;/span&gt;</code> ）</li>
+<li><strong>MIB 导入</strong>：先在 Third-Party Devices Support 建 OID 条目（只填 enterprises 后段）→Import MIBs→Upload Files→箭头调编译顺序→Apply（cases·C31， <code>&lt;span class="pg"&gt;原文p288&lt;/span&gt;</code> ）</li>
+<li><strong>Network Advisor 启用</strong>：先在 Global Dashboard 的 NA widget 声明实例（Name/URL/Application UUID）→选设备→Features→Enable→选实例（cases·C30， <code>&lt;span class="pg"&gt;原文p264-267&lt;/span&gt;</code> ）</li>
+<li><strong>手工链路</strong>：持久显示、断链变红，适合核心链路监控；自动链路不可达时从拓扑消失（principles·P83， <code>&lt;span class="pg"&gt;原文p290&lt;/span&gt;</code> ）</li>
+<li><strong>Locator 定位</strong>：Search by IP/Host Name、MAC、Auth User→Historical/Live 切换（Live 可 1st Match Only/All Matches）→看 ARP 表 + Netforward 表；行内 Action 可 Locate On Map/Quarantine Manager/端口启停（cases·C35， <code>&lt;span class="pg"&gt;原文p337-339&lt;/span&gt;</code> ）</li>
+<li><strong>状态颜色</strong>：设备绿=Up（AOS 的 Up 不代表可管理，看 SNMP Status）/橙=Warning/红=不可达；通知圈橙 Warning/紫 Minor/黄 Major/红 Critical；ping sweep 后链路等下次轮询或手动 Poll Links（principles·P156， <code>&lt;span class="pg"&gt;原文p554-561&lt;/span&gt;</code> ）</li>
+<li><strong>SPB/ERP 专题视图</strong>：均在交换机 CLI 配置、OV 只读展示；SPB 数据每 3 小时自动轮询；ERP 按 Ring ID 过滤（principles·P157， <code>&lt;span class="pg"&gt;原文p565-574&lt;/span&gt;</code> ）</li>
+<li><strong>Geo 站点</strong>：Site 自动生成同名逻辑图；Sub-Site=Building/Floor；设备只属一个 Site/Sub-Site；推荐先建空 Site 再建 Sub-Site 时分配设备（principles·P158， <code>&lt;span class="pg"&gt;原文p575-578&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>首次纳管设备五步法全流程（cases·C1，&lt;&lt;<PAGE 40-44>&gt;&gt;）</li>
-<li>Range+Profile 执行发现（cases·C26，&lt;&lt;<PAGE 256>&gt;&gt;）</li>
-<li>SecureCRT 作为 SSH Custom 客户端（cases·C29，&lt;&lt;<PAGE 268-270>&gt;&gt;）</li>
-<li>Locator 定位终端 + Netforward 多视图（cases·C35，&lt;&lt;<PAGE 337-339>&gt;&gt;）</li>
+<li>首次纳管设备五步法全流程（cases·C1， <code>&lt;span class="pg"&gt;原文p40-44&lt;/span&gt;</code> ）</li>
+<li>Range+Profile 执行发现（cases·C26， <code>&lt;span class="pg"&gt;原文p256&lt;/span&gt;</code> ）</li>
+<li>SecureCRT 作为 SSH Custom 客户端（cases·C29， <code>&lt;span class="pg"&gt;原文p268-270&lt;/span&gt;</code> ）</li>
+<li>Locator 定位终端 + Netforward 多视图（cases·C35， <code>&lt;span class="pg"&gt;原文p337-339&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="b">B（反例/坑）</h2>
 <ul>
-<li>IP 范围不得含广播地址：划了子网就一子网一个 Range（principles·P71，&lt;&lt;<PAGE 255>&gt;&gt;）</li>
-<li>多 VLAN 设备发现时主 IP 可能选错（第一个响应 ping 的 IP），需手工 Edit 修正（principles·P4，&lt;&lt;<PAGE 42>&gt;&gt;）</li>
-<li>write community 发现后默认 public，且不能从 OV 改——只能登录交换机本端配（principles·P5，&lt;&lt;<PAGE 42>&gt;&gt;）</li>
-<li>CLI/FTP 凭据只用于 FTP，不用于 Telnet（principles·P6，&lt;&lt;<PAGE 43>&gt;&gt;）</li>
-<li>重新发现不会用新档案参数覆盖已录入的设备级参数（principles·P72，&lt;&lt;<PAGE 256>&gt;&gt;）</li>
-<li>手工添加 Down 状态的 Stellar AP 会占用第三方 License 且 AP Up 后无法释放——正确做法走 AP Registration 的 Unmanaged 页签（counter·X29 / principles·P73，&lt;&lt;<PAGE 257-258>&gt;&gt;）</li>
-<li>REST API 轮询凭据错误会引发 trap 风暴（counter·X30 / principles·P86，&lt;&lt;<PAGE 300>&gt;&gt;）</li>
-<li>Discovery 设备可见性按用户角色过滤：非 Admin/Netadmin 只看到其角色关联地图里的设备（principles·P70，&lt;&lt;<PAGE 255>&gt;&gt;）</li>
-<li>Locator Live Search 不轮询 Stellar AP（找不到其客户端）；仅支持 IPv4（principles·P95，&lt;&lt;<PAGE 336-339>&gt;&gt;）</li>
-<li>自定义 Netforward 视图每用户最多 2 个，新建替换旧的（principles·P96，&lt;&lt;<PAGE 341>&gt;&gt;）</li>
-<li>MIB 导入后不立即解析——发现对应 OID 设备或重启服务器时才解析（principles·P81，&lt;&lt;<PAGE 287-288>&gt;&gt;）</li>
+<li>IP 范围不得含广播地址：划了子网就一子网一个 Range（principles·P71， <code>&lt;span class="pg"&gt;原文p255&lt;/span&gt;</code> ）</li>
+<li>多 VLAN 设备发现时主 IP 可能选错（第一个响应 ping 的 IP），需手工 Edit 修正（principles·P4， <code>&lt;span class="pg"&gt;原文p42&lt;/span&gt;</code> ）</li>
+<li>write community 发现后默认 public，且不能从 OV 改——只能登录交换机本端配（principles·P5， <code>&lt;span class="pg"&gt;原文p42&lt;/span&gt;</code> ）</li>
+<li>CLI/FTP 凭据只用于 FTP，不用于 Telnet（principles·P6， <code>&lt;span class="pg"&gt;原文p43&lt;/span&gt;</code> ）</li>
+<li>重新发现不会用新档案参数覆盖已录入的设备级参数（principles·P72， <code>&lt;span class="pg"&gt;原文p256&lt;/span&gt;</code> ）</li>
+<li>手工添加 Down 状态的 Stellar AP 会占用第三方 License 且 AP Up 后无法释放——正确做法走 AP Registration 的 Unmanaged 页签（counter·X29 / principles·P73， <code>&lt;span class="pg"&gt;原文p257-258&lt;/span&gt;</code> ）</li>
+<li>REST API 轮询凭据错误会引发 trap 风暴（counter·X30 / principles·P86， <code>&lt;span class="pg"&gt;原文p300&lt;/span&gt;</code> ）</li>
+<li>Discovery 设备可见性按用户角色过滤：非 Admin/Netadmin 只看到其角色关联地图里的设备（principles·P70， <code>&lt;span class="pg"&gt;原文p255&lt;/span&gt;</code> ）</li>
+<li>Locator Live Search 不轮询 Stellar AP（找不到其客户端）；仅支持 IPv4（principles·P95， <code>&lt;span class="pg"&gt;原文p336-339&lt;/span&gt;</code> ）</li>
+<li>自定义 Netforward 视图每用户最多 2 个，新建替换旧的（principles·P96， <code>&lt;span class="pg"&gt;原文p341&lt;/span&gt;</code> ）</li>
+<li>MIB 导入后不立即解析——发现对应 OID 设备或重启服务器时才解析（principles·P81， <code>&lt;span class="pg"&gt;原文p287-288&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniVista 2500 NMS 4.9R2 User Guide 第 12 章 Discovery（&lt;&lt;<PAGE 255-301>&gt;&gt;）、第 18 章 Locator（&lt;&lt;<PAGE 336-349>&gt;&gt;）、第 31 章 Topology（&lt;&lt;<PAGE 554-587>&gt;&gt;）、入门章（&lt;&lt;<PAGE 40-44>&gt;&gt;）。条目来源：frameworks F14；cases C1/C26-C31/C35；principles P4-P8/P70-P86/P95/P96/P101/P156-P158/P160；counter-examples X29/X30。</p><div class="pn"><a href="ov-analytics-reports.html">⬅ 上一单元：ov-analytics-reports</a><a class="nxt" href="ov-resource-manager-ops.html">下一单元：ov-resource-manager-ops ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<p>OmniVista 2500 NMS 4.9R2 User Guide 第 12 章 Discovery（ <code>&lt;span class="pg"&gt;原文p255-301&lt;/span&gt;</code> ）、第 18 章 Locator（ <code>&lt;span class="pg"&gt;原文p336-349&lt;/span&gt;</code> ）、第 31 章 Topology（ <code>&lt;span class="pg"&gt;原文p554-587&lt;/span&gt;</code> ）、入门章（ <code>&lt;span class="pg"&gt;原文p40-44&lt;/span&gt;</code> ）。条目来源：frameworks F14；cases C1/C26-C31/C35；principles P4-P8/P70-P86/P95/P96/P101/P156-P158/P160；counter-examples X29/X30。</p><div class="pn"><a href="ov-analytics-reports.html">⬅ 上一单元：ov-analytics-reports</a><a class="nxt" href="ov-resource-manager-ops.html">下一单元：ov-resource-manager-ops ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

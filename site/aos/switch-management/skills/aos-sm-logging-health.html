@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -71,7 +72,7 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="i">I（核心理念）</h2>
 <ul>
-<li>AOS 运维监测分四层：命令级审计（command-log 记录命令全文/用户/时间/来源 IP/结果，默认禁用，P52）→ 系统日志（swlog 落 /flash/network，&lt;&lt;<PAGE 52>&gt;&gt;）→ 诊断快照（show tech-support 按层采集基线，升级与排障前必采，P17/C3）→ 主动健康检查（fsck 文件系统修复、image integrity check 镜像校验、硬件/进程自检、show system 总览）。</li>
+<li>AOS 运维监测分四层：命令级审计（command-log 记录命令全文/用户/时间/来源 IP/结果，默认禁用，P52）→ 系统日志（swlog 落 /flash/network， <code>&lt;span class="pg"&gt;原文p52&lt;/span&gt;</code> ）→ 诊断快照（show tech-support 按层采集基线，升级与排障前必采，P17/C3）→ 主动健康检查（fsck 文件系统修复、image integrity check 镜像校验、硬件/进程自检、show system 总览）。</li>
 <li>时钟是日志可信的前提：<code>system date/timezone</code>，DST 随时区自动（P163）。</li>
 </ul>
 <h2 id="a1">A1（决策框架）</h2>
@@ -84,27 +85,27 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>命令日志</strong>：<code>command-log enable</code> → <code>show command-log status</code> → <code>show command-log</code>（降序）→ <code>command-log disable</code>（C26，&lt;&lt;<PAGE 127-128>&gt;&gt;）</li>
-<li><strong>维护例行（升级前基线）</strong>：<code>show system</code> → <code>rm *.log</code> / <code>rm *.tar</code> → 清 /pmd → <code>show running-directory</code> → <code>show tech-support [layer2|layer3|eng complete]</code>（C3，&lt;&lt;<PAGE 23>&gt;&gt;）</li>
-<li><strong>文件系统</strong>：<code>freespace</code>、<code>fsck no-repair|repair</code>（P8/P9，&lt;&lt;<PAGE 59>&gt;&gt;）</li>
-<li><strong>镜像校验</strong>：<code>image integrity check</code> / <code>image integrity get-key</code>（P92，&lt;&lt;<PAGE 118>&gt;&gt;）</li>
-<li><strong>系统时钟</strong>：<code>system date 06/23/2002</code>（mm/dd/yyyy）、<code>system timezone pst</code>、<code>system time 10:45:00</code>（C15，&lt;&lt;<PAGE 78-79>&gt;&gt;）</li>
+<li><strong>命令日志</strong>：<code>command-log enable</code> → <code>show command-log status</code> → <code>show command-log</code>（降序）→ <code>command-log disable</code>（C26， <code>&lt;span class="pg"&gt;原文p127-128&lt;/span&gt;</code> ）</li>
+<li><strong>维护例行（升级前基线）</strong>：<code>show system</code> → <code>rm *.log</code> / <code>rm *.tar</code> → 清 /pmd → <code>show running-directory</code> → <code>show tech-support [layer2|layer3|eng complete]</code>（C3， <code>&lt;span class="pg"&gt;原文p23&lt;/span&gt;</code> ）</li>
+<li><strong>文件系统</strong>：<code>freespace</code>、<code>fsck no-repair|repair</code>（P8/P9， <code>&lt;span class="pg"&gt;原文p59&lt;/span&gt;</code> ）</li>
+<li><strong>镜像校验</strong>：<code>image integrity check</code> / <code>image integrity get-key</code>（P92， <code>&lt;span class="pg"&gt;原文p118&lt;/span&gt;</code> ）</li>
+<li><strong>系统时钟</strong>：<code>system date 06/23/2002</code>（mm/dd/yyyy）、<code>system timezone pst</code>、<code>system time 10:45:00</code>（C15， <code>&lt;span class="pg"&gt;原文p78-79&lt;/span&gt;</code> ）</li>
 <li><strong>会话监控</strong>：<code>who</code> 列会话、<code>kill &lt;n&gt;</code> 终止异常会话（P84）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>命令日志启用/查看/停用（C26，&lt;&lt;<PAGE 127-128>&gt;&gt;）</li>
-<li>升级前维护例行与 tech-support 基线采集（C3，&lt;&lt;<PAGE 23>&gt;&gt;）</li>
-<li>系统时钟与时区配置（C15，&lt;&lt;<PAGE 78-79>&gt;&gt;）</li>
+<li>命令日志启用/查看/停用（C26， <code>&lt;span class="pg"&gt;原文p127-128&lt;/span&gt;</code> ）</li>
+<li>升级前维护例行与 tech-support 基线采集（C3， <code>&lt;span class="pg"&gt;原文p23&lt;/span&gt;</code> ）</li>
+<li>系统时钟与时区配置（C15， <code>&lt;span class="pg"&gt;原文p78-79&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="b">B（反例/坑）</h2>
 <ul>
-<li>command.log 在命令日志功能启用期间不可删除（X29，&lt;&lt;<PAGE 127>&gt;&gt;）</li>
-<li>增强模式下查看 swlog 需要输入用户名密码（X53，&lt;&lt;<PAGE 178>&gt;&gt;）</li>
-<li>密码策略等部分设置不自动保存，监控类改动注意落盘（X31，&lt;&lt;<PAGE 151>&gt;&gt;）</li>
-<li>swlog 位于 /flash/network，清空间时注意保留排障所需日志（&lt;&lt;<PAGE 52>&gt;&gt;）</li>
-<li><code>newfs</code> 会删除整个文件系统，仅在灾备场景使用（&lt;&lt;<PAGE 59>&gt;&gt;）</li>
-<li>时间不准时日志时间戳与证书/云认证都会连锁出问题；用户配置的时区优先于 DHCP Option-2（P163，&lt;&lt;<PAGE 78-79>&gt;&gt;）</li>
+<li>command.log 在命令日志功能启用期间不可删除（X29， <code>&lt;span class="pg"&gt;原文p127&lt;/span&gt;</code> ）</li>
+<li>增强模式下查看 swlog 需要输入用户名密码（X53， <code>&lt;span class="pg"&gt;原文p178&lt;/span&gt;</code> ）</li>
+<li>密码策略等部分设置不自动保存，监控类改动注意落盘（X31， <code>&lt;span class="pg"&gt;原文p151&lt;/span&gt;</code> ）</li>
+<li>swlog 位于 /flash/network，清空间时注意保留排障所需日志（ <code>&lt;span class="pg"&gt;原文p52&lt;/span&gt;</code> ）</li>
+<li><code>newfs</code> 会删除整个文件系统，仅在灾备场景使用（ <code>&lt;span class="pg"&gt;原文p59&lt;/span&gt;</code> ）</li>
+<li>时间不准时日志时间戳与证书/云认证都会连锁出问题；用户配置的时区优先于 DHCP Option-2（P163， <code>&lt;span class="pg"&gt;原文p78-79&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniSwitch AOS 8.10R4 Switch Management Guide 第 1 章维护例行（&lt;&lt;<PAGE 23>&gt;&gt;）、第 3 章 System Files（&lt;&lt;<PAGE 52-60, 78-79>&gt;&gt;）、第 4 章镜像完整性（&lt;&lt;<PAGE 118>&gt;&gt;）、第 5 章命令日志（&lt;&lt;<PAGE 127-128>&gt;&gt;）、第 7 章会话管理（&lt;&lt;<PAGE 163-164>&gt;&gt;）。条目来源：cases C3/C15/C26；principles P8-P10/P17/P52/P53/P84/P92/P163；counter-examples X29/X31/X53；frameworks F12（时钟部分）。</p><div class="pn"><a href="aos-sm-mgmt-services.html">⬅ 上一单元：aos-sm-mgmt-services</a><a class="nxt" href="aos-sm-chassis-cmm.html">下一单元：aos-sm-chassis-cmm ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<p>OmniSwitch AOS 8.10R4 Switch Management Guide 第 1 章维护例行（ <code>&lt;span class="pg"&gt;原文p23&lt;/span&gt;</code> ）、第 3 章 System Files（ <code>&lt;span class="pg"&gt;原文p52-60, 78-79&lt;/span&gt;</code> ）、第 4 章镜像完整性（ <code>&lt;span class="pg"&gt;原文p118&lt;/span&gt;</code> ）、第 5 章命令日志（ <code>&lt;span class="pg"&gt;原文p127-128&lt;/span&gt;</code> ）、第 7 章会话管理（ <code>&lt;span class="pg"&gt;原文p163-164&lt;/span&gt;</code> ）。条目来源：cases C3/C15/C26；principles P8-P10/P17/P52/P53/P84/P92/P163；counter-examples X29/X31/X53；frameworks F12（时钟部分）。</p><div class="pn"><a href="aos-sm-mgmt-services.html">⬅ 上一单元：aos-sm-mgmt-services</a><a class="nxt" href="aos-sm-chassis-cmm.html">下一单元：aos-sm-chassis-cmm ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

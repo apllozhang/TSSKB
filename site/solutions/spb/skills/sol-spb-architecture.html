@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -67,38 +68,38 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="i">I（核心理念）</h2>
 <ul>
-<li>双平面架构框架（F1，&lt;&lt;<PAGE 9>&gt;&gt;）：DP=802.1ah PBB（B-VID/ISID/B-SA/B-DA，只查 FDB 不做决策）+ CP=RFC 6329 IS-IS（拓扑发现、SPT 计算、服务成员泛播、FDB 预填充）。</li>
-<li>每节点以自己为根建 SPF 树，全部链路可用且路径最短（P1/P2，&lt;&lt;<PAGE 7>&gt;&gt;/&lt;&lt;<PAGE 11>&gt;&gt;）；MAC-in-MAC 把 CMAC 学习限制在 BEB 边缘，BCB 零感知（P4/P15，&lt;&lt;<PAGE 7>&gt;&gt;/&lt;&lt;<PAGE 10>&gt;&gt;）。</li>
-<li>每节点每 BVLAN 一棵树，ECT-ID 打破平局实现按服务负载分担（P17/P18，&lt;&lt;<PAGE 11-12>&gt;&gt;）；路径对称与确定性保障帧有序送达与 OAM 单向时延推算（P19/P20，&lt;&lt;<PAGE 12>&gt;&gt;）。</li>
-<li>防环分预防+缓解双机制：RPFC 校验入帧源 BMAC 与 FDB 一致性丢非合规帧（P45，&lt;&lt;<PAGE 51>&gt;&gt;）。</li>
+<li>双平面架构框架（F1， <code>&lt;span class="pg"&gt;原文p9&lt;/span&gt;</code> ）：DP=802.1ah PBB（B-VID/ISID/B-SA/B-DA，只查 FDB 不做决策）+ CP=RFC 6329 IS-IS（拓扑发现、SPT 计算、服务成员泛播、FDB 预填充）。</li>
+<li>每节点以自己为根建 SPF 树，全部链路可用且路径最短（P1/P2， <code>&lt;span class="pg"&gt;原文p7&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p11&lt;/span&gt;</code> ）；MAC-in-MAC 把 CMAC 学习限制在 BEB 边缘，BCB 零感知（P4/P15， <code>&lt;span class="pg"&gt;原文p7&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p10&lt;/span&gt;</code> ）。</li>
+<li>每节点每 BVLAN 一棵树，ECT-ID 打破平局实现按服务负载分担（P17/P18， <code>&lt;span class="pg"&gt;原文p11-12&lt;/span&gt;</code> ）；路径对称与确定性保障帧有序送达与 OAM 单向时延推算（P19/P20， <code>&lt;span class="pg"&gt;原文p12&lt;/span&gt;</code> ）。</li>
+<li>防环分预防+缓解双机制：RPFC 校验入帧源 BMAC 与 FDB 一致性丢非合规帧（P45， <code>&lt;span class="pg"&gt;原文p51&lt;/span&gt;</code> ）。</li>
 </ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
-<li>骨干搭建四步（C1，&lt;&lt;<PAGE 16>&gt;&gt;）：建 BVLAN 配 ECT-ID → 定控制 BVLAN → 定义 SPB IS-IS 接口 → 启用 SPB IS-IS</li>
-<li>BVLAN 容量规划：BVLAN 数量=物理等价路径数，不多建（P25，&lt;&lt;<PAGE 52>&gt;&gt;）；控制 BVLAN 一个（如 4000）</li>
-<li>BUM 模式选型矩阵（F3，&lt;&lt;<PAGE 16>&gt;&gt;）：低组播带宽+多源少收→head-end（+IGMP Snooping）；高组播带宽+少源多收→tandem (S,G)（默认）；根桥为源宿或第三方互通→tandem (*,G)</li>
-<li>骨干防环三件套：RPFC（对称性破瞬态环，&lt;&lt;<PAGE 51>&gt;&gt;）+ LBD 全 UNI 口启用（P46，&lt;&lt;<PAGE 51>&gt;&gt;）+ 风暴控制默认开（&lt;&lt;<PAGE 52>&gt;&gt;）</li>
+<li>骨干搭建四步（C1， <code>&lt;span class="pg"&gt;原文p16&lt;/span&gt;</code> ）：建 BVLAN 配 ECT-ID → 定控制 BVLAN → 定义 SPB IS-IS 接口 → 启用 SPB IS-IS</li>
+<li>BVLAN 容量规划：BVLAN 数量=物理等价路径数，不多建（P25， <code>&lt;span class="pg"&gt;原文p52&lt;/span&gt;</code> ）；控制 BVLAN 一个（如 4000）</li>
+<li>BUM 模式选型矩阵（F3， <code>&lt;span class="pg"&gt;原文p16&lt;/span&gt;</code> ）：低组播带宽+多源少收→head-end（+IGMP Snooping）；高组播带宽+少源多收→tandem (S,G)（默认）；根桥为源宿或第三方互通→tandem (*,G)</li>
+<li>骨干防环三件套：RPFC（对称性破瞬态环， <code>&lt;span class="pg"&gt;原文p51&lt;/span&gt;</code> ）+ LBD 全 UNI 口启用（P46， <code>&lt;span class="pg"&gt;原文p51&lt;/span&gt;</code> ）+ 风暴控制默认开（ <code>&lt;span class="pg"&gt;原文p52&lt;/span&gt;</code> ）</li>
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>骨干验证命令族</strong>（C2，&lt;&lt;<PAGE 18>&gt;&gt;）：<code>show spb isis interface</code>（L1 邻接、metric=10、Hello 9s/持失 27s）→ <code>show spb isis nodes</code>（system ID=BMAC、source ID、bridge priority）→ <code>show spb isis adjacency</code> → <code>show spb isis bvlans</code>（ECT 算法、(S,G)/(*,G)）→ <code>show spb isis unicast-table</code> → <code>show spb isis spf bvlan</code></li>
-<li><strong>链路度量调优</strong>（P49/P50，&lt;&lt;<PAGE 54>&gt;&gt;）：按速率反比设置（100G=1000…1G=100000），引导流量走高容量链路；必须两端同时改</li>
-<li><strong>LAG 哈希补熵</strong>（P48，&lt;&lt;<PAGE 53>&gt;&gt;）：MAC-in-MAC 外层只剩 BMAC 缺熵，启用 tunnel-protocol 后可按 CMAC 或 IP+端口哈希</li>
-<li><strong>无扰维护</strong>（P41/P42，&lt;&lt;<PAGE 48>&gt;&gt;）：overload 状态让节点退出中转（可定时回退）；graceful restart 保邻接平滑主备切换</li>
+<li><strong>骨干验证命令族</strong>（C2， <code>&lt;span class="pg"&gt;原文p18&lt;/span&gt;</code> ）：<code>show spb isis interface</code>（L1 邻接、metric=10、Hello 9s/持失 27s）→ <code>show spb isis nodes</code>（system ID=BMAC、source ID、bridge priority）→ <code>show spb isis adjacency</code> → <code>show spb isis bvlans</code>（ECT 算法、(S,G)/(*,G)）→ <code>show spb isis unicast-table</code> → <code>show spb isis spf bvlan</code></li>
+<li><strong>链路度量调优</strong>（P49/P50， <code>&lt;span class="pg"&gt;原文p54&lt;/span&gt;</code> ）：按速率反比设置（100G=1000…1G=100000），引导流量走高容量链路；必须两端同时改</li>
+<li><strong>LAG 哈希补熵</strong>（P48， <code>&lt;span class="pg"&gt;原文p53&lt;/span&gt;</code> ）：MAC-in-MAC 外层只剩 BMAC 缺熵，启用 tunnel-protocol 后可按 CMAC 或 IP+端口哈希</li>
+<li><strong>无扰维护</strong>（P41/P42， <code>&lt;span class="pg"&gt;原文p48&lt;/span&gt;</code> ）：overload 状态让节点退出中转（可定时回退）；graceful restart 保邻接平滑主备切换</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>3 条等价路径样例拓扑建 4 个 BVLAN（4000-4003，4000 控制专用）（C1，&lt;&lt;<PAGE 16>&gt;&gt;）</li>
-<li>骨干全套 show 命令逐项验证（C2，&lt;&lt;<PAGE 18>&gt;&gt;）</li>
+<li>3 条等价路径样例拓扑建 4 个 BVLAN（4000-4003，4000 控制专用）（C1， <code>&lt;span class="pg"&gt;原文p16&lt;/span&gt;</code> ）</li>
+<li>骨干全套 show 命令逐项验证（C2， <code>&lt;span class="pg"&gt;原文p18&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>
-<li>STP 三宗罪：禁链路费带宽、非根间绕行次优路径、秒级收敛且瞬态成环（X1/X2/X3，&lt;&lt;<PAGE 5>&gt;&gt;）</li>
-<li>以太网泛洪学习+全网学 MAC 不可扩展；Q-in-Q 服务实例上限 4096（X4/X5/X6，&lt;&lt;<PAGE 6>&gt;&gt;）</li>
-<li>MPLS 需协议栈（LDP/OSPF/MP-BGP），SPB 单协议搞定（X7，&lt;&lt;<PAGE 6>&gt;&gt;）</li>
-<li>BUM 模式取舍：head-end 复制费带宽、tandem (S,G) 每服务多耗 SPT/组播 FDB、tandem (*,G) 共享树不走最短路（X8/X9/X10，&lt;&lt;<PAGE 15-16>&gt;&gt;）</li>
-<li>BVLAN 超过等价路径数徒增控制面负担与收敛时间（X20，&lt;&lt;<PAGE 52>&gt;&gt;）</li>
-<li>overload 后若无备选路径则流量中断，维护前先确认替代路径（X19，&lt;&lt;<PAGE 48>&gt;&gt;）</li>
-<li>客户网配置错误可引发跨 SPB+接入网的广播风暴，LBD 是最后防线（X29，&lt;&lt;<PAGE 51>&gt;&gt;）</li>
+<li>STP 三宗罪：禁链路费带宽、非根间绕行次优路径、秒级收敛且瞬态成环（X1/X2/X3， <code>&lt;span class="pg"&gt;原文p5&lt;/span&gt;</code> ）</li>
+<li>以太网泛洪学习+全网学 MAC 不可扩展；Q-in-Q 服务实例上限 4096（X4/X5/X6， <code>&lt;span class="pg"&gt;原文p6&lt;/span&gt;</code> ）</li>
+<li>MPLS 需协议栈（LDP/OSPF/MP-BGP），SPB 单协议搞定（X7， <code>&lt;span class="pg"&gt;原文p6&lt;/span&gt;</code> ）</li>
+<li>BUM 模式取舍：head-end 复制费带宽、tandem (S,G) 每服务多耗 SPT/组播 FDB、tandem (*,G) 共享树不走最短路（X8/X9/X10， <code>&lt;span class="pg"&gt;原文p15-16&lt;/span&gt;</code> ）</li>
+<li>BVLAN 超过等价路径数徒增控制面负担与收敛时间（X20， <code>&lt;span class="pg"&gt;原文p52&lt;/span&gt;</code> ）</li>
+<li>overload 后若无备选路径则流量中断，维护前先确认替代路径（X19， <code>&lt;span class="pg"&gt;原文p48&lt;/span&gt;</code> ）</li>
+<li>客户网配置错误可引发跨 SPB+接入网的广播风暴，LBD 是最后防线（X29， <code>&lt;span class="pg"&gt;原文p51&lt;/span&gt;</code> ）</li>
 </ul>
 <p>来源：SPB Architecture Tech Brief（sol-spb DOC1，p5-56）</p><div class="pn"><a href="../index.html">⬅ 返回课程首页</a><a class="nxt" href="sol-spb-l2-l3-services.html">下一单元：sol-spb-l2-l3-services ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

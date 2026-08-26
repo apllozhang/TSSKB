@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -66,42 +67,42 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="i">I（核心理念）</h2>
 <ul>
-<li>IRB 模型选型框架（F3，&lt;&lt;<PAGE 24>&gt;&gt;）：对称 IRB 配置简、扩展好、是主流推荐（P9）；每 PE 只维护本地 ARP/MAC-VRF（P10，&lt;&lt;<PAGE 25>&gt;&gt;）；每 VRF 一个 L3EVI（SBD/AOS 中记 Fabric-VPN）提供跨 EVI 可达（P11，&lt;&lt;<PAGE 25>&gt;&gt;）。</li>
-<li>DAG（&lt;&lt;<PAGE 28>&gt;&gt;）：所有共 EVI 的 PE 配同一 anycast IP+MAC（每 VRF 一个 VMAC），网关全分布式、同 PE 主机间流量不过 fabric（P8，&lt;&lt;<PAGE 22>&gt;&gt;），免 VRRP 类冗余协议。</li>
-<li>外部连通框架（F5，&lt;&lt;<PAGE 29>&gt;&gt;/&lt;&lt;<PAGE 48>&gt;&gt;）：border leaf+Fabric-VPN+GRM 注入；对外只重分发聚合路由（P34）；双 border leaf 调 import 路由优先级防 OSPF 回声（P35）。</li>
+<li>IRB 模型选型框架（F3， <code>&lt;span class="pg"&gt;原文p24&lt;/span&gt;</code> ）：对称 IRB 配置简、扩展好、是主流推荐（P9）；每 PE 只维护本地 ARP/MAC-VRF（P10， <code>&lt;span class="pg"&gt;原文p25&lt;/span&gt;</code> ）；每 VRF 一个 L3EVI（SBD/AOS 中记 Fabric-VPN）提供跨 EVI 可达（P11， <code>&lt;span class="pg"&gt;原文p25&lt;/span&gt;</code> ）。</li>
+<li>DAG（ <code>&lt;span class="pg"&gt;原文p28&lt;/span&gt;</code> ）：所有共 EVI 的 PE 配同一 anycast IP+MAC（每 VRF 一个 VMAC），网关全分布式、同 PE 主机间流量不过 fabric（P8， <code>&lt;span class="pg"&gt;原文p22&lt;/span&gt;</code> ），免 VRRP 类冗余协议。</li>
+<li>外部连通框架（F5， <code>&lt;span class="pg"&gt;原文p29&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p48&lt;/span&gt;</code> ）：border leaf+Fabric-VPN+GRM 注入；对外只重分发聚合路由（P34）；双 border leaf 调 import 路由优先级防 OSPF 回声（P35）。</li>
 </ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
-<li>IRB 选型判定（F3）：host-based（R-T2 /32，对称/非对称皆可）vs prefix-based（R-T5，仅对称）；对称 IRB 下服务只配在主机接入 PE（C14，&lt;&lt;<PAGE 48-72>&gt;&gt;）</li>
-<li>DAG 部署：anycast MAC 每 VRF 一个、同 VRF 全子网共用（P42，&lt;&lt;<PAGE 28>&gt;&gt;）；自动派生规则 00:00:5e:00:01:<VRF-ID>（C17，&lt;&lt;<PAGE 69>&gt;&gt;），须确认不与在用 MAC 碰撞（X10，&lt;&lt;<PAGE 29>&gt;&gt;）</li>
-<li>BUM 复制选型（F5，&lt;&lt;<PAGE 29>&gt;&gt;）：AOS 仅支持 ingress replication（R-T3 构建列表，简单但单播复制低效）；tandem replication 需组播底层、核心高效但复杂</li>
-<li>跨子网组播：OISM（RFC 9625，Fabric-VPN+R-T6，无需 PIM，8.10R3 EA）为主；源发现选 R-T10 而非 (<em>,</em>) 默认 SBD-SMET 省带宽（P40，&lt;&lt;<PAGE 38-39>&gt;&gt;）</li>
-<li>外部连通五要素（P33-P35，&lt;&lt;<PAGE 46-48>&gt;&gt;）：对称 IRB+Fabric-VPN 强制 → border leaf 做 GRM 注入 → route-map+ACL 只放聚合路由 → 双 leaf 防回声 → PEG 对接外部 PIM</li>
+<li>IRB 选型判定（F3）：host-based（R-T2 /32，对称/非对称皆可）vs prefix-based（R-T5，仅对称）；对称 IRB 下服务只配在主机接入 PE（C14， <code>&lt;span class="pg"&gt;原文p48-72&lt;/span&gt;</code> ）</li>
+<li>DAG 部署：anycast MAC 每 VRF 一个、同 VRF 全子网共用（P42， <code>&lt;span class="pg"&gt;原文p28&lt;/span&gt;</code> ）；自动派生规则 00:00:5e:00:01:<VRF-ID>（C17， <code>&lt;span class="pg"&gt;原文p69&lt;/span&gt;</code> ），须确认不与在用 MAC 碰撞（X10， <code>&lt;span class="pg"&gt;原文p29&lt;/span&gt;</code> ）</li>
+<li>BUM 复制选型（F5， <code>&lt;span class="pg"&gt;原文p29&lt;/span&gt;</code> ）：AOS 仅支持 ingress replication（R-T3 构建列表，简单但单播复制低效）；tandem replication 需组播底层、核心高效但复杂</li>
+<li>跨子网组播：OISM（RFC 9625，Fabric-VPN+R-T6，无需 PIM，8.10R3 EA）为主；源发现选 R-T10 而非 (<em>,</em>) 默认 SBD-SMET 省带宽（P40， <code>&lt;span class="pg"&gt;原文p38-39&lt;/span&gt;</code> ）</li>
+<li>外部连通五要素（P33-P35， <code>&lt;span class="pg"&gt;原文p46-48&lt;/span&gt;</code> ）：对称 IRB+Fabric-VPN 强制 → border leaf 做 GRM 注入 → route-map+ACL 只放聚合路由 → 双 leaf 防回声 → PEG 对接外部 PIM</li>
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>Inter-subnet 对称 IRB 走包</strong>（C4，&lt;&lt;<PAGE 31-32>&gt;&gt;）：ARP 网关→IP-VRF 查 SBD overlay index→递归解析对端 IRB MAC→VXLAN 封装→对端 SBD IP-VRF→MAC-VRF 下发</li>
-<li><strong>Intra-subnet 走包</strong>（C3，&lt;&lt;<PAGE 31>&gt;&gt;）：ARP request→源 PE 查 proxy ARP 缓存代答→单播 VXLAN→对端解封装桥接</li>
-<li><strong>OISM 转发</strong>（C7，&lt;&lt;<PAGE 37-38>&gt;&gt;）：IGMP join→R-T6 带 Fabric-VPN RT→源 PE IPMS 建组表项→隧道转发</li>
-<li><strong>PEG 外部互通</strong>（C8/C9，&lt;&lt;<PAGE 38-39>&gt;&gt;）：双 PEG 冗余+按 VRF 负载分担，PEG 间用专用 L3 链路保 RP 可达；R-T10 源发现：首包→R-T10(S,G)→DR PEG 注册外部 RP→PIM join 回来→PEG 发 R-T6 拉流</li>
-<li><strong>路由汇总实操</strong>（P34，&lt;&lt;<PAGE 48>&gt;&gt;）：IRB 子网下主机路由聚合，route-map 绑 ACL 只放行聚合路由对外重分发</li>
+<li><strong>Inter-subnet 对称 IRB 走包</strong>（C4， <code>&lt;span class="pg"&gt;原文p31-32&lt;/span&gt;</code> ）：ARP 网关→IP-VRF 查 SBD overlay index→递归解析对端 IRB MAC→VXLAN 封装→对端 SBD IP-VRF→MAC-VRF 下发</li>
+<li><strong>Intra-subnet 走包</strong>（C3， <code>&lt;span class="pg"&gt;原文p31&lt;/span&gt;</code> ）：ARP request→源 PE 查 proxy ARP 缓存代答→单播 VXLAN→对端解封装桥接</li>
+<li><strong>OISM 转发</strong>（C7， <code>&lt;span class="pg"&gt;原文p37-38&lt;/span&gt;</code> ）：IGMP join→R-T6 带 Fabric-VPN RT→源 PE IPMS 建组表项→隧道转发</li>
+<li><strong>PEG 外部互通</strong>（C8/C9， <code>&lt;span class="pg"&gt;原文p38-39&lt;/span&gt;</code> ）：双 PEG 冗余+按 VRF 负载分担，PEG 间用专用 L3 链路保 RP 可达；R-T10 源发现：首包→R-T10(S,G)→DR PEG 注册外部 RP→PIM join 回来→PEG 发 R-T6 拉流</li>
+<li><strong>路由汇总实操</strong>（P34， <code>&lt;span class="pg"&gt;原文p48&lt;/span&gt;</code> ）：IRB 子网下主机路由聚合，route-map 绑 ACL 只放行聚合路由对外重分发</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>Intra-subnet 五步/Inter-subnet 六步走包分析（C3/C4，&lt;&lt;<PAGE 31-32>&gt;&gt;）</li>
-<li>OISM 跨子网组播与双 PEG 冗余案例（C7/C8，&lt;&lt;<PAGE 37-38>&gt;&gt;）</li>
-<li>border leaf+GRM 外部路由注入（C13，&lt;&lt;<PAGE 47>&gt;&gt;）</li>
-<li>Duplicate IP（DAD）场景：新 ARP 同 IP 视为 IP Mobility，Confirm 探测旧主（C11，&lt;&lt;<PAGE 39-40>&gt;&gt;）；静默主机静态绑 MAC+sticky 位防误迁移（C12/P21，&lt;&lt;<PAGE 40>&gt;&gt;）</li>
+<li>Intra-subnet 五步/Inter-subnet 六步走包分析（C3/C4， <code>&lt;span class="pg"&gt;原文p31-32&lt;/span&gt;</code> ）</li>
+<li>OISM 跨子网组播与双 PEG 冗余案例（C7/C8， <code>&lt;span class="pg"&gt;原文p37-38&lt;/span&gt;</code> ）</li>
+<li>border leaf+GRM 外部路由注入（C13， <code>&lt;span class="pg"&gt;原文p47&lt;/span&gt;</code> ）</li>
+<li>Duplicate IP（DAD）场景：新 ARP 同 IP 视为 IP Mobility，Confirm 探测旧主（C11， <code>&lt;span class="pg"&gt;原文p39-40&lt;/span&gt;</code> ）；静默主机静态绑 MAC+sticky 位防误迁移（C12/P21， <code>&lt;span class="pg"&gt;原文p40&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>
-<li>非对称 IRB 全 PE 维护全网 ARP/MAC-VRF/IRB 接口，资源与配置密集（X12，&lt;&lt;<PAGE 24>&gt;&gt;）</li>
-<li>VRRP 集中网关低效：tromboning+控制面开销——用 DAG（X9，&lt;&lt;<PAGE 28>&gt;&gt;）</li>
-<li>自动派生 anycast MAC 有碰撞风险，不确定时手工指定（X10，&lt;&lt;<PAGE 29>&gt;&gt;）</li>
-<li>(<em>,</em>) 默认 SBD-SMET 让 PEG 收全部组播流量，核心带宽浪费（X19/P40，&lt;&lt;<PAGE 38-39>&gt;&gt;）</li>
-<li>R-T10 源发现建流有少量额外时延（X23，&lt;&lt;<PAGE 39>&gt;&gt;）</li>
-<li>border leaf 泄漏主机路由压垮外部路由器控制/数据面（X20，&lt;&lt;<PAGE 48>&gt;&gt;）</li>
-<li>双 border leaf 路由回声：import 路由优先级须高于 OSPF（数值更低）（X21/P35，&lt;&lt;<PAGE 48>&gt;&gt;）</li>
-<li>IP+MAC 同迁（VM motion）不算 DAD，勿误报（P38，&lt;&lt;<PAGE 40>&gt;&gt;）</li>
+<li>非对称 IRB 全 PE 维护全网 ARP/MAC-VRF/IRB 接口，资源与配置密集（X12， <code>&lt;span class="pg"&gt;原文p24&lt;/span&gt;</code> ）</li>
+<li>VRRP 集中网关低效：tromboning+控制面开销——用 DAG（X9， <code>&lt;span class="pg"&gt;原文p28&lt;/span&gt;</code> ）</li>
+<li>自动派生 anycast MAC 有碰撞风险，不确定时手工指定（X10， <code>&lt;span class="pg"&gt;原文p29&lt;/span&gt;</code> ）</li>
+<li>(<em>,</em>) 默认 SBD-SMET 让 PEG 收全部组播流量，核心带宽浪费（X19/P40， <code>&lt;span class="pg"&gt;原文p38-39&lt;/span&gt;</code> ）</li>
+<li>R-T10 源发现建流有少量额外时延（X23， <code>&lt;span class="pg"&gt;原文p39&lt;/span&gt;</code> ）</li>
+<li>border leaf 泄漏主机路由压垮外部路由器控制/数据面（X20， <code>&lt;span class="pg"&gt;原文p48&lt;/span&gt;</code> ）</li>
+<li>双 border leaf 路由回声：import 路由优先级须高于 OSPF（数值更低）（X21/P35， <code>&lt;span class="pg"&gt;原文p48&lt;/span&gt;</code> ）</li>
+<li>IP+MAC 同迁（VM motion）不算 DAD，勿误报（P38， <code>&lt;span class="pg"&gt;原文p40&lt;/span&gt;</code> ）</li>
 </ul>
 <p>来源：EVPN Architecture Guide（p23-48）</p><div class="pn"><a href="sol-evpn-multi-homing.html">⬅ 上一单元：sol-evpn-multi-homing</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

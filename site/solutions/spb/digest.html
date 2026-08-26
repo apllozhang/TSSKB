@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -69,13 +70,37 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="_2">二、四单元要点串讲</h2>
 <h3 id="1-spb-stp">1. 架构：为什么 SPB 能取代 STP</h3>
-<p>STP 三宗罪：禁链路费带宽、非根间绕次优路径、秒级收敛且瞬态成环（&lt;&lt;<PAGE 5>&gt;&gt;）。SPB 由 IS-IS 跑 Dijkstra，每节点以自己为根建树，"no network link is disabled, all paths are available"（&lt;&lt;<PAGE 7>&gt;&gt;）。数据面只查 FDB（BVLAN 域 FDB 由控制面预填充，不泛洪学习）；骨干内只按 BMAC 转发，CMAC 只在 BEB 学（&lt;&lt;<PAGE 9>&gt;&gt;）。每节点每 BVLAN 一棵 SPF 树，ECT-ID 打破平局（&lt;&lt;<PAGE 11-12>&gt;&gt;）。BUM 三模式选型（&lt;&lt;<PAGE 16>&gt;&gt;）：head-end 省资源费带宽、tandem (S,G) 默认、tandem (*,G) 共享树不走最短路。防环双机制：预防（ECT 树）+缓解（RPFC 按对称性校验源 BMAC，&lt;&lt;<PAGE 51>&gt;&gt;）。</p>
+<ul>
+<li>STP 三宗罪：禁链路费带宽、非根间绕次优路径、秒级收敛且瞬态成环（ <code>&lt;span class="pg"&gt;原文p5&lt;/span&gt;</code> ）。</li>
+<li>SPB 由 IS-IS 跑 Dijkstra，每节点以自己为根建树，"no network link is disabled, all paths are available"（ <code>&lt;span class="pg"&gt;原文p7&lt;/span&gt;</code> ）。</li>
+<li>数据面只查 FDB（BVLAN 域 FDB 由控制面预填充，不泛洪学习）；骨干内只按 BMAC 转发，CMAC 只在 BEB 学（ <code>&lt;span class="pg"&gt;原文p9&lt;/span&gt;</code> ）。</li>
+<li>每节点每 BVLAN 一棵 SPF 树，ECT-ID 打破平局（ <code>&lt;span class="pg"&gt;原文p11-12&lt;/span&gt;</code> ）。</li>
+<li>BUM 三模式选型（ <code>&lt;span class="pg"&gt;原文p16&lt;/span&gt;</code> ）：head-end 省资源费带宽、tandem (S,G) 默认、tandem (*,G) 共享树不走最短路。</li>
+<li>防环双机制：预防（ECT 树）+缓解（RPFC 按对称性校验源 BMAC， <code>&lt;span class="pg"&gt;原文p51&lt;/span&gt;</code> ）。</li>
+</ul>
 <h3 id="2-l2l3">2. 服务：三层标识与 L2/L3 分档</h3>
-<p>Service（本地）→ISID（全局 24 位）→BVLAN（承载）；SAP 是 UNI 侧虚拟端口，SDP 动态生成；服务只在 BEB 配、BCB 零感知（&lt;&lt;<PAGE 13>&gt;&gt;）。L2 服务三步：<code>service N spb isid X bvlan Y</code>+SAP（&lt;&lt;<PAGE 20>&gt;&gt;）。L3 两档：域内 L3 VPN（IS-IS TLV 直传 VRF 路由，单协议）；边界 VPN Lite（叠 OSPF，4 服务×8 BEB=64 个 OSPF 配置的爆炸是其代价，&lt;&lt;<PAGE 34>&gt;&gt;）。共享服务走 VRF 路由泄漏，前提地址不重叠。两代 ASIC：新代单次直通路由，老代需外部/内部回环经 dummy VLAN（&lt;&lt;<PAGE 26>&gt;&gt;）。</p>
+<ul>
+<li>Service（本地）→ISID（全局 24 位）→BVLAN（承载）；SAP 是 UNI 侧虚拟端口，SDP 动态生成；服务只在 BEB 配、BCB 零感知（ <code>&lt;span class="pg"&gt;原文p13&lt;/span&gt;</code> ）。</li>
+<li>L2 服务三步：<code>service N spb isid X bvlan Y</code>+SAP（ <code>&lt;span class="pg"&gt;原文p20&lt;/span&gt;</code> ）。</li>
+<li>L3 两档：域内 L3 VPN（IS-IS TLV 直传 VRF 路由，单协议）；边界 VPN Lite（叠 OSPF，4 服务×8 BEB=64 个 OSPF 配置的爆炸是其代价， <code>&lt;span class="pg"&gt;原文p34&lt;/span&gt;</code> ）。</li>
+<li>共享服务走 VRF 路由泄漏，前提地址不重叠。</li>
+<li>两代 ASIC：新代单次直通路由，老代需外部/内部回环经 dummy VLAN（ <code>&lt;span class="pg"&gt;原文p26&lt;/span&gt;</code> ）。</li>
+</ul>
 <h3 id="3-11">3. 部署：11 步与自动化</h3>
-<p>参考架构 2×BCB 全网格+N×BEB 双归 LAG+PBR（&lt;&lt;<PAGE 63>&gt;&gt;）。11 步：拓扑/LAG→VLAN→LBD→BVLAN→服务→SAP→VRF→VRRP→/30 连 PBR→VRRP tracking→OSPF→策略（&lt;&lt;<PAGE 62>&gt;&gt;）。VRRP 虚地址统一 .1、末位=BEB 号；上行断优先级 120−25=95 触发切换（&lt;&lt;<PAGE 74>&gt;&gt;/&lt;&lt;<PAGE 78>&gt;&gt;）。混代场景 S-Hook：VLAN 域 LAG 与服务域 LAG 挂接（&lt;&lt;<PAGE 81>&gt;&gt;）。iFab 自动化：Auto-VC/RCD/LACP/SPB/MVRP/IP 六阶段+动态服务（ISID=BSN+Domain ID+VLAN%Modulo，默认 BSN 10,000,000；Modulo 隔离需求从 512 调 4096，&lt;&lt;<PAGE 42-43>&gt;&gt;）。</p>
+<ul>
+<li>参考架构 2×BCB 全网格+N×BEB 双归 LAG+PBR（ <code>&lt;span class="pg"&gt;原文p63&lt;/span&gt;</code> ）。</li>
+<li>11 步：拓扑/LAG→VLAN→LBD→BVLAN→服务→SAP→VRF→VRRP→/30 连 PBR→VRRP tracking→OSPF→策略（ <code>&lt;span class="pg"&gt;原文p62&lt;/span&gt;</code> ）。</li>
+<li>VRRP 虚地址统一 .1、末位=BEB 号；上行断优先级 120−25=95 触发切换（ <code>&lt;span class="pg"&gt;原文p74&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p78&lt;/span&gt;</code> ）。</li>
+<li>混代场景 S-Hook：VLAN 域 LAG 与服务域 LAG 挂接（ <code>&lt;span class="pg"&gt;原文p81&lt;/span&gt;</code> ）。</li>
+<li>iFab 自动化：Auto-VC/RCD/LACP/SPB/MVRP/IP 六阶段+动态服务（ISID=BSN+Domain ID+VLAN%Modulo，默认 BSN 10,000,000；Modulo 隔离需求从 512 调 4096， <code>&lt;span class="pg"&gt;原文p42-43&lt;/span&gt;</code> ）。</li>
+</ul>
 <h3 id="4">4. 定位：卖点与案例</h3>
-<p>收敛 2-3s→100ms；对标 MPLS 话术=单协议 vs 协议栈（&lt;&lt;<PAGE 83>&gt;&gt;）。四大价值：可扩展/安全（ZTNA 构件）/简单/可靠（&lt;&lt;<PAGE 84>&gt;&gt;）。三场景：园区 STP 替代、DC any-to-any+私有云、MAN 对标 MPLS。七行业用例（&lt;&lt;<PAGE 85>&gt;&gt;）；NDOT（可扩展+快速上线）、IDC Frontier（扩展性+SLA 弹性）证言（&lt;&lt;<PAGE 86>&gt;&gt;）。</p>
+<ul>
+<li>收敛 2-3s→100ms；对标 MPLS 话术=单协议 vs 协议栈（ <code>&lt;span class="pg"&gt;原文p83&lt;/span&gt;</code> ）。</li>
+<li>四大价值：可扩展/安全（ZTNA 构件）/简单/可靠（ <code>&lt;span class="pg"&gt;原文p84&lt;/span&gt;</code> ）。</li>
+<li>三场景：园区 STP 替代、DC any-to-any+私有云、MAN 对标 MPLS。</li>
+<li>七行业用例（ <code>&lt;span class="pg"&gt;原文p85&lt;/span&gt;</code> ）；NDOT（可扩展+快速上线）、IDC Frontier（扩展性+SLA 弹性）证言（ <code>&lt;span class="pg"&gt;原文p86&lt;/span&gt;</code> ）。</li>
+</ul>
 <h2 id="_3">三、本书在知识库中的位置</h2>
 <p>与 os-lan-spb-impl（配置实现细节）、spb-presales（售前材料）互补：本书是"架构原理+官方部署流程+价值主张"的一手来源。跨书易混点：tandem (S,G) 为默认 BUM 模式（按服务选择），tandem (*,G) 按 BVLAN 选择且不保证最短路；EVPN 书的 ingress replication 对应本书 head-end 复制思路但机制不同（BGP vs IS-IS）。</p>
 <h2 id="_4">来源</h2>

@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -81,34 +82,34 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
-<li><strong>VM 纳管前置</strong>（principles·P191，&lt;&lt;<PAGE 830-840>&gt;&gt;）：vCenter URL 需 /sdk 后缀；所有 Hypervisor 系统时间必须与 OV 同步；Hypervisor 连接口或本身须关链路发现协议（否则发 LLDP 被当成桥设备）</li>
+<li><strong>VM 纳管前置</strong>（principles·P191， <code>&lt;span class="pg"&gt;原文p830-840&lt;/span&gt;</code> ）：vCenter URL 需 /sdk 后缀；所有 Hypervisor 系统时间必须与 OV 同步；Hypervisor 连接口或本身须关链路发现协议（否则发 LLDP 被当成桥设备）</li>
 <li><strong>Fabric 选型</strong>：SPB 路线（OS10K/6900 AOS 7.3.1.R01+，需 Advanced License，One-Touch 自动生成）vs VXLAN 路线（OS6900-Q32/X72，ECMP 提升利用率）（principles·P192/P193）</li>
-<li><strong>VM Snooping 模式</strong>：Basic（UDP 端口+VNI+内层源 MAC+IPv4）vs Advanced（加 IP 协议+L4 端口，IPv6）（principles·P194，&lt;&lt;<PAGE 855-860>&gt;&gt;）</li>
+<li><strong>VM Snooping 模式</strong>：Basic（UDP 端口+VNI+内层源 MAC+IPv4）vs Advanced（加 IP 协议+L4 端口，IPv6）（principles·P194， <code>&lt;span class="pg"&gt;原文p855-860&lt;/span&gt;</code> ）</li>
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>VM VLAN 配置与 One-Touch SPB</strong>：Exclude VLAN 让 OV 忽略管理类 VM VLAN；VLAN Notification 的 Active/Ignored 两列（有替代配置可 Ignore）；Resolve 向导自动修复缺失 Tag 规则——自动生成 UNP Profile 名 "UNP XX"（XX=VLAN ID）；SPB Profile 的 ISID=Starting ISID+VM VLAN ID（改起始值可建独立 L2 域），BVLAN 4 个轮转+各自 ECT ID；自动生成的 Profile Policy List 留空仅保连通，后续手工补（principles·P192，&lt;&lt;<PAGE 841-847>&gt;&gt;）</li>
-<li><strong>VXLAN 核心</strong>：VXLAN Service=VFI；VNID 置 0 自动生成；删除 Service 须先禁用 Service 及关联 SAP/SDP；SDP 隧道须设备有 Loopback0（可跳转 VLANs 应用创建）；Unicast 隧道 Bidirectional（两端建 SDP）/Unidirectional；Multicast 隧道要求全部节点入同一 PIM 组（缺 PIM 配置会警告，可一键套默认）；SAP 每端口最多 8 个，Trusted 默认 True（principles·P193，&lt;&lt;<PAGE 848-852>&gt;&gt;）</li>
-<li><strong>VM Snooping</strong>：Policy Mode Basic/Advanced；Policy Resource Default/Extended（策略数翻倍）；Aging 0-86400 默认 300（0=永不老化）；Trap Threshold 默认 80%；UDP 目的端口默认 4789 可加最多 7 个附加端口（多端口降低速度）；统计经 FTP/SFTP 收集（设备须配 CLI/FTP 凭据）；VSnoop Purge Scheduler 默认每 15 分钟（principles·P194，&lt;&lt;<PAGE 855-860>&gt;&gt;）</li>
+<li><strong>VM VLAN 配置与 One-Touch SPB</strong>：Exclude VLAN 让 OV 忽略管理类 VM VLAN；VLAN Notification 的 Active/Ignored 两列（有替代配置可 Ignore）；Resolve 向导自动修复缺失 Tag 规则——自动生成 UNP Profile 名 "UNP XX"（XX=VLAN ID）；SPB Profile 的 ISID=Starting ISID+VM VLAN ID（改起始值可建独立 L2 域），BVLAN 4 个轮转+各自 ECT ID；自动生成的 Profile Policy List 留空仅保连通，后续手工补（principles·P192， <code>&lt;span class="pg"&gt;原文p841-847&lt;/span&gt;</code> ）</li>
+<li><strong>VXLAN 核心</strong>：VXLAN Service=VFI；VNID 置 0 自动生成；删除 Service 须先禁用 Service 及关联 SAP/SDP；SDP 隧道须设备有 Loopback0（可跳转 VLANs 应用创建）；Unicast 隧道 Bidirectional（两端建 SDP）/Unidirectional；Multicast 隧道要求全部节点入同一 PIM 组（缺 PIM 配置会警告，可一键套默认）；SAP 每端口最多 8 个，Trusted 默认 True（principles·P193， <code>&lt;span class="pg"&gt;原文p848-852&lt;/span&gt;</code> ）</li>
+<li><strong>VM Snooping</strong>：Policy Mode Basic/Advanced；Policy Resource Default/Extended（策略数翻倍）；Aging 0-86400 默认 300（0=永不老化）；Trap Threshold 默认 80%；UDP 目的端口默认 4789 可加最多 7 个附加端口（多端口降低速度）；统计经 FTP/SFTP 收集（设备须配 CLI/FTP 凭据）；VSnoop Purge Scheduler 默认每 15 分钟（principles·P194， <code>&lt;span class="pg"&gt;原文p855-860&lt;/span&gt;</code> ）</li>
 <li><strong>VM 定位</strong>：Live Search 查实时位置；历史搜索有 false positive（旧 uplink 信息持久，用 Locator timestamp 判断）；连 Host 的交换机应加入 VMM Devices List 保证数据最新（principles·P191）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>VM 跨 Host 迁移免改配置的完整链路（Tag→UNP 映射→分类规则）（principles·P191，&lt;&lt;<PAGE 830-840>&gt;&gt;）</li>
-<li>One-Touch SPB 自动生成 ISID/BVLAN/ECT 布局（principles·P192，&lt;&lt;<PAGE 841-847>&gt;&gt;）</li>
+<li>VM 跨 Host 迁移免改配置的完整链路（Tag→UNP 映射→分类规则）（principles·P191， <code>&lt;span class="pg"&gt;原文p830-840&lt;/span&gt;</code> ）</li>
+<li>One-Touch SPB 自动生成 ISID/BVLAN/ECT 布局（principles·P192， <code>&lt;span class="pg"&gt;原文p841-847&lt;/span&gt;</code> ）</li>
 <li>Resolve 向导修复缺失 Tag 规则（principles·P192）</li>
 </ul>
 <h2 id="b">B（反例/坑）</h2>
 <ul>
-<li>OV 自身跑在 VM 上时，VM 迁移可能丢 UDP（SNMP）流量（principles·P191，&lt;&lt;<PAGE 830-840>&gt;&gt;）</li>
+<li>OV 自身跑在 VM 上时，VM 迁移可能丢 UDP（SNMP）流量（principles·P191， <code>&lt;span class="pg"&gt;原文p830-840&lt;/span&gt;</code> ）</li>
 <li>历史 VM 位置搜索有 false positive——旧 uplink 信息持久，须用 Locator timestamp 判断（principles·P191）</li>
 <li>VM Server 建后仅密码可编辑（principles·P191）</li>
-<li>SPB 自动生成依赖 One-Touch SPB 首配参数未被改动，改过须重新执行；同 Hypervisor 网络不同 ISID 的 VM 互不通信（principles·P192，&lt;&lt;<PAGE 841-847>&gt;&gt;）</li>
+<li>SPB 自动生成依赖 One-Touch SPB 首配参数未被改动，改过须重新执行；同 Hypervisor 网络不同 ISID 的 VM 互不通信（principles·P192， <code>&lt;span class="pg"&gt;原文p841-847&lt;/span&gt;</code> ）</li>
 <li>非 SPB 设备自动跳过 SPB 属性仅更新桥接 UNP；VM Polling 间隔建议与 Discovery Regular Updates 一致（principles·P192）</li>
-<li>VXLAN Reapply 仅中间步骤失败可用——远端或首步失败则设备被移出且不可 Reapply（principles·P193，&lt;&lt;<PAGE 848-852>&gt;&gt;）</li>
-<li>Locator 的 802.1q Port Filtering 须用 Standard 模式否则 VM 检测不到（VM 用 tagged 包通信）（principles·P101，&lt;&lt;<PAGE 348-349>&gt;&gt;）</li>
-<li>附加 Snooping UDP 端口勿用 IANA 保留口；多端口降低速度（principles·P194，&lt;&lt;<PAGE 855-860>&gt;&gt;）</li>
-<li>VXLAN 组播隧道要求全网 Multicast Mode 统一（Headend/Tandem 同 BVLAN 必须一致）（principles·P152，&lt;&lt;<PAGE 523-525>&gt;&gt;）</li>
+<li>VXLAN Reapply 仅中间步骤失败可用——远端或首步失败则设备被移出且不可 Reapply（principles·P193， <code>&lt;span class="pg"&gt;原文p848-852&lt;/span&gt;</code> ）</li>
+<li>Locator 的 802.1q Port Filtering 须用 Standard 模式否则 VM 检测不到（VM 用 tagged 包通信）（principles·P101， <code>&lt;span class="pg"&gt;原文p348-349&lt;/span&gt;</code> ）</li>
+<li>附加 Snooping UDP 端口勿用 IANA 保留口；多端口降低速度（principles·P194， <code>&lt;span class="pg"&gt;原文p855-860&lt;/span&gt;</code> ）</li>
+<li>VXLAN 组播隧道要求全网 Multicast Mode 统一（Headend/Tandem 同 BVLAN 必须一致）（principles·P152， <code>&lt;span class="pg"&gt;原文p523-525&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniVista 2500 NMS 4.9R2 User Guide 第 36 章 VM Manager（&lt;&lt;<PAGE 830-847>&gt;&gt;）、第 37 章 VXLAN（&lt;&lt;<PAGE 848-860>&gt;&gt;）、SPB 概念（&lt;&lt;<PAGE 523-525>&gt;&gt;）。条目来源：principles P101/P152/P191-P194。</p><div class="pn"><a href="ov-wlan-ssid-advanced.html">⬅ 上一单元：ov-wlan-ssid-advanced</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<p>OmniVista 2500 NMS 4.9R2 User Guide 第 36 章 VM Manager（ <code>&lt;span class="pg"&gt;原文p830-847&lt;/span&gt;</code> ）、第 37 章 VXLAN（ <code>&lt;span class="pg"&gt;原文p848-860&lt;/span&gt;</code> ）、SPB 概念（ <code>&lt;span class="pg"&gt;原文p523-525&lt;/span&gt;</code> ）。条目来源：principles P101/P152/P191-P194。</p><div class="pn"><a href="ov-wlan-ssid-advanced.html">⬅ 上一单元：ov-wlan-ssid-advanced</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

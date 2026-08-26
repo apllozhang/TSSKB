@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -77,46 +78,46 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="i">I（核心理念）</h2>
 <ul>
-<li>IP 接口绑定 VLAN 是三层路由基本模型：<code>ip interface &lt;name&gt; address &lt;ip&gt; vlan &lt;vid&gt;</code>（P109，&lt;&lt;<PAGE 709>&gt;&gt;）。</li>
-<li>VRF 类比 VLAN 分割 L2，用来分割 L3：每 VRF 独立路由表+独立路由协议实例，可重复用 IP 地址空间；AOS VRF 不要求 BGP/MPLS 骨干，可经 GRE/IP-IP 隧道承载（P111-P113，&lt;&lt;<PAGE 756>&gt;&gt;）。</li>
-<li>DHCP 全栈框架（F12，&lt;&lt;<PAGE 903>&gt;&gt;/&lt;&lt;<PAGE 925>&gt;&gt;）：外部 relay（路由器）→内部 relay（global/per-interface、Option-82）→Generic UDP Relay→内部 DHCP Server（policy/配置/数据库文件）→Snooping（L2/L3、绑定表、信任口）→DHCPv6（relay/snooping/RA guard/ISF）。</li>
-<li>IPsec 只支持传输模式（P119，&lt;&lt;<PAGE 819>&gt;&gt;）。</li>
+<li>IP 接口绑定 VLAN 是三层路由基本模型：<code>ip interface &lt;name&gt; address &lt;ip&gt; vlan &lt;vid&gt;</code>（P109， <code>&lt;span class="pg"&gt;原文p709&lt;/span&gt;</code> ）。</li>
+<li>VRF 类比 VLAN 分割 L2，用来分割 L3：每 VRF 独立路由表+独立路由协议实例，可重复用 IP 地址空间；AOS VRF 不要求 BGP/MPLS 骨干，可经 GRE/IP-IP 隧道承载（P111-P113， <code>&lt;span class="pg"&gt;原文p756&lt;/span&gt;</code> ）。</li>
+<li>DHCP 全栈框架（F12， <code>&lt;span class="pg"&gt;原文p903&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p925&lt;/span&gt;</code> ）：外部 relay（路由器）→内部 relay（global/per-interface、Option-82）→Generic UDP Relay→内部 DHCP Server（policy/配置/数据库文件）→Snooping（L2/L3、绑定表、信任口）→DHCPv6（relay/snooping/RA guard/ISF）。</li>
+<li>IPsec 只支持传输模式（P119， <code>&lt;span class="pg"&gt;原文p819&lt;/span&gt;</code> ）。</li>
 </ul>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
-<li><strong>基础三层</strong>：建 VLAN→加端口→<code>ip interface ... vlan</code>→静态/默认/黑洞路由（<code>ip static-route</code> 系列，P110，&lt;&lt;<PAGE 709>&gt;&gt;）</li>
-<li><strong>租户隔离选 VRF</strong>：跨 VRF 通信必须显式 route leak，天然隔离导致"配了通不了"的常见误判（X43，&lt;&lt;<PAGE 756>&gt;&gt;）；管理流量可划 Management VRF（&lt;&lt;<PAGE 759>&gt;&gt;）</li>
+<li><strong>基础三层</strong>：建 VLAN→加端口→<code>ip interface ... vlan</code>→静态/默认/黑洞路由（<code>ip static-route</code> 系列，P110， <code>&lt;span class="pg"&gt;原文p709&lt;/span&gt;</code> ）</li>
+<li><strong>租户隔离选 VRF</strong>：跨 VRF 通信必须显式 route leak，天然隔离导致"配了通不了"的常见误判（X43， <code>&lt;span class="pg"&gt;原文p756&lt;/span&gt;</code> ）；管理流量可划 Management VRF（ <code>&lt;span class="pg"&gt;原文p759&lt;/span&gt;</code> ）</li>
 <li><strong>DHCP 场景分档</strong>：跨 VLAN 中继选内部 relay（global 或 per-interface 模式）；要定位用户加 Option-82（Circuit ID/Remote ID）；要防私接服务器加 Snooping+信任口</li>
-<li><strong>IPv6 地址类型</strong>：link-local（仅链路内不可路由）跨链路通信必须配全局单播地址（X44，&lt;&lt;<PAGE 774>&gt;&gt;）；防恶意 RA 用 RA Guard/RA Filtering</li>
-<li><strong>加密选型</strong>：机密性必须 ESP；AH 只认证不加密，误当机密性方案是典型错用（X47，&lt;&lt;<PAGE 819>&gt;&gt;）</li>
+<li><strong>IPv6 地址类型</strong>：link-local（仅链路内不可路由）跨链路通信必须配全局单播地址（X44， <code>&lt;span class="pg"&gt;原文p774&lt;/span&gt;</code> ）；防恶意 RA 用 RA Guard/RA Filtering</li>
+<li><strong>加密选型</strong>：机密性必须 ESP；AH 只认证不加密，误当机密性方案是典型错用（X47， <code>&lt;span class="pg"&gt;原文p819&lt;/span&gt;</code> ）</li>
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>IP 转发快配</strong>：建 VLAN→加端口→<code>ip interface vlan-20 address 171.11.1.1 vlan 20</code>→静态/默认/黑洞路由（cases·C34，&lt;&lt;<PAGE 709>&gt;&gt;）</li>
-<li><strong>VRF 部署</strong>：<code>vrf &lt;name&gt;</code>→VRF profile→IP 接口划入 VRF→VRF 内路由协议实例；验证 show vrf（cases·C35，&lt;&lt;<PAGE 756>&gt;&gt;）；跨 VRF 泄露走 VRF Route Leak 快配步骤（cases·C36，&lt;&lt;<PAGE 712>&gt;&gt;）</li>
-<li><strong>IPsec AH 策略</strong>：<code>ipsec</code> master key→policy（AH/HMAC-SHA1）→SA→绑定接口/流（cases·C38，&lt;&lt;<PAGE 819>&gt;&gt;）</li>
-<li><strong>DHCP Relay 六步</strong>：<code>ip dhcp relay admin-state enable</code>→<code>ip dhcp relay destination 128.100.16.1</code>→（可选）<code>ip dhcp relay per-interface-mode</code>→接口级 destination→<code>ip dhcp relay forward-delay 30</code>+<code>ip dhcp relay maximum-hops 10</code>→<code>ip dhcp relay insert-agent-information</code>；验证 <code>show ip dhcp relay interface</code>（cases·C42，&lt;&lt;<PAGE 902>&gt;&gt;）</li>
-<li><strong>内部 DHCP Server</strong>：写 policy file+dhcpd 配置文件→数据库文件路径→使能；验证 show dhcp server（cases·C44，&lt;&lt;<PAGE 893>&gt;&gt;）</li>
-<li><strong>DHCPv6 Relay/Snooping/RA Guard</strong>：使能 relay 服务→relay 接口→max hops；snooping 绑定表+ISF 源过滤；RA guard 端口策略（cases·C45，&lt;&lt;<PAGE 917>&gt;&gt;）</li>
-<li><strong>GRE/IP-IP 隧道</strong>：IP over IP 封装（&lt;&lt;<PAGE 721>&gt;&gt;），可作 VRF 点对点承载</li>
-<li><strong>Generic UDP Relay</strong>：按预配端口转 UDP 到 VLAN/service/IP（P132，&lt;&lt;<PAGE 904>&gt;&gt;）</li>
+<li><strong>IP 转发快配</strong>：建 VLAN→加端口→<code>ip interface vlan-20 address 171.11.1.1 vlan 20</code>→静态/默认/黑洞路由（cases·C34， <code>&lt;span class="pg"&gt;原文p709&lt;/span&gt;</code> ）</li>
+<li><strong>VRF 部署</strong>：<code>vrf &lt;name&gt;</code>→VRF profile→IP 接口划入 VRF→VRF 内路由协议实例；验证 show vrf（cases·C35， <code>&lt;span class="pg"&gt;原文p756&lt;/span&gt;</code> ）；跨 VRF 泄露走 VRF Route Leak 快配步骤（cases·C36， <code>&lt;span class="pg"&gt;原文p712&lt;/span&gt;</code> ）</li>
+<li><strong>IPsec AH 策略</strong>：<code>ipsec</code> master key→policy（AH/HMAC-SHA1）→SA→绑定接口/流（cases·C38， <code>&lt;span class="pg"&gt;原文p819&lt;/span&gt;</code> ）</li>
+<li><strong>DHCP Relay 六步</strong>：<code>ip dhcp relay admin-state enable</code>→<code>ip dhcp relay destination 128.100.16.1</code>→（可选）<code>ip dhcp relay per-interface-mode</code>→接口级 destination→<code>ip dhcp relay forward-delay 30</code>+<code>ip dhcp relay maximum-hops 10</code>→<code>ip dhcp relay insert-agent-information</code>；验证 <code>show ip dhcp relay interface</code>（cases·C42， <code>&lt;span class="pg"&gt;原文p902&lt;/span&gt;</code> ）</li>
+<li><strong>内部 DHCP Server</strong>：写 policy file+dhcpd 配置文件→数据库文件路径→使能；验证 show dhcp server（cases·C44， <code>&lt;span class="pg"&gt;原文p893&lt;/span&gt;</code> ）</li>
+<li><strong>DHCPv6 Relay/Snooping/RA Guard</strong>：使能 relay 服务→relay 接口→max hops；snooping 绑定表+ISF 源过滤；RA guard 端口策略（cases·C45， <code>&lt;span class="pg"&gt;原文p917&lt;/span&gt;</code> ）</li>
+<li><strong>GRE/IP-IP 隧道</strong>：IP over IP 封装（ <code>&lt;span class="pg"&gt;原文p721&lt;/span&gt;</code> ），可作 VRF 点对点承载</li>
+<li><strong>Generic UDP Relay</strong>：按预配端口转 UDP 到 VLAN/service/IP（P132， <code>&lt;span class="pg"&gt;原文p904&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>DHCP Relay 六步全流程（C42，&lt;&lt;<PAGE 902>&gt;&gt;）</li>
-<li>VRF 部署与 VRF Route Leak（C35/C36，&lt;&lt;<PAGE 756>&gt;&gt;/&lt;&lt;<PAGE 712>&gt;&gt;）</li>
-<li>IPsec AH 策略（C38，&lt;&lt;<PAGE 819>&gt;&gt;）</li>
+<li>DHCP Relay 六步全流程（C42， <code>&lt;span class="pg"&gt;原文p902&lt;/span&gt;</code> ）</li>
+<li>VRF 部署与 VRF Route Leak（C35/C36， <code>&lt;span class="pg"&gt;原文p756&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p712&lt;/span&gt;</code> ）</li>
+<li>IPsec AH 策略（C38， <code>&lt;span class="pg"&gt;原文p819&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="b">B（反例/坑）</h2>
 <ul>
-<li>L3 Snooping 必须让客户端与服务器分居不同 VLAN，否则 relay 不介入、snooping 失效（X52/P134，&lt;&lt;<PAGE 925>&gt;&gt;）</li>
-<li>全局 Option-82 使能时任意级别 DHCP Snooping 都不可用；交换机级与 VLAN 级 Snooping 互斥（X53/P137，&lt;&lt;<PAGE 925>&gt;&gt;）</li>
-<li>非信任口带 Option-82 的包默认丢弃（X55，&lt;&lt;<PAGE 925>&gt;&gt;）</li>
-<li>relay 校验 forward-delay 与 maximum-hops，不满足即丢弃；多目的地址时全发（P129，&lt;&lt;<PAGE 903>&gt;&gt;）</li>
-<li>内部 DHCP Server 由 policy file+配置文件+数据库文件驱动，注意与 VRF/Snooping/IP 接口交互（P138，&lt;&lt;<PAGE 894>&gt;&gt;）</li>
-<li>OmniSwitch IPsec 只支持传输模式，无隧道模式（X46/P119，&lt;&lt;<PAGE 819>&gt;&gt;）</li>
-<li>JITC 模式下 FEC0::/10 Site-Local 地址禁配（X45/P117，&lt;&lt;<PAGE 774>&gt;&gt;）</li>
-<li>IPv6 ND 替代 ARP/广播；RA Filtering 过滤恶意/多余 RA（P114/P115，&lt;&lt;<PAGE 773-777>&gt;&gt;）</li>
+<li>L3 Snooping 必须让客户端与服务器分居不同 VLAN，否则 relay 不介入、snooping 失效（X52/P134， <code>&lt;span class="pg"&gt;原文p925&lt;/span&gt;</code> ）</li>
+<li>全局 Option-82 使能时任意级别 DHCP Snooping 都不可用；交换机级与 VLAN 级 Snooping 互斥（X53/P137， <code>&lt;span class="pg"&gt;原文p925&lt;/span&gt;</code> ）</li>
+<li>非信任口带 Option-82 的包默认丢弃（X55， <code>&lt;span class="pg"&gt;原文p925&lt;/span&gt;</code> ）</li>
+<li>relay 校验 forward-delay 与 maximum-hops，不满足即丢弃；多目的地址时全发（P129， <code>&lt;span class="pg"&gt;原文p903&lt;/span&gt;</code> ）</li>
+<li>内部 DHCP Server 由 policy file+配置文件+数据库文件驱动，注意与 VRF/Snooping/IP 接口交互（P138， <code>&lt;span class="pg"&gt;原文p894&lt;/span&gt;</code> ）</li>
+<li>OmniSwitch IPsec 只支持传输模式，无隧道模式（X46/P119， <code>&lt;span class="pg"&gt;原文p819&lt;/span&gt;</code> ）</li>
+<li>JITC 模式下 FEC0::/10 Site-Local 地址禁配（X45/P117， <code>&lt;span class="pg"&gt;原文p774&lt;/span&gt;</code> ）</li>
+<li>IPv6 ND 替代 ARP/广播；RA Filtering 过滤恶意/多余 RA（P114/P115， <code>&lt;span class="pg"&gt;原文p773-777&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniSwitch AOS 8.10R4 Network Configuration Guide 第 21 章 IP（&lt;&lt;<PAGE 709-721>&gt;&gt;）、第 22 章 VRF（&lt;&lt;<PAGE 756-759>&gt;&gt;）、第 23 章 IPv6（&lt;&lt;<PAGE 773-777>&gt;&gt;）、第 24 章 IPsec（&lt;&lt;<PAGE 819-823>&gt;&gt;）、第 27 章 DHCP Relay/Snooping（&lt;&lt;<PAGE 902-926>&gt;&gt;）、第 28 章 Internal DHCP Server（&lt;&lt;<PAGE 893-894>&gt;&gt;）。条目来源：cases C34-C36/C38/C42/C44/C45；principles P108-P138；counter-examples X43-X47/X52-X55；frameworks F12。（注：DNS 在本书 verified 条目中无独立内容，如需 DNS 配置需另查原书。）</p><div class="pn"><a href="aos-nc-fabric-backbone.html">⬅ 上一单元：aos-nc-fabric-backbone</a><a class="nxt" href="aos-nc-routing.html">下一单元：aos-nc-routing ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<p>OmniSwitch AOS 8.10R4 Network Configuration Guide 第 21 章 IP（ <code>&lt;span class="pg"&gt;原文p709-721&lt;/span&gt;</code> ）、第 22 章 VRF（ <code>&lt;span class="pg"&gt;原文p756-759&lt;/span&gt;</code> ）、第 23 章 IPv6（ <code>&lt;span class="pg"&gt;原文p773-777&lt;/span&gt;</code> ）、第 24 章 IPsec（ <code>&lt;span class="pg"&gt;原文p819-823&lt;/span&gt;</code> ）、第 27 章 DHCP Relay/Snooping（ <code>&lt;span class="pg"&gt;原文p902-926&lt;/span&gt;</code> ）、第 28 章 Internal DHCP Server（ <code>&lt;span class="pg"&gt;原文p893-894&lt;/span&gt;</code> ）。条目来源：cases C34-C36/C38/C42/C44/C45；principles P108-P138；counter-examples X43-X47/X52-X55；frameworks F12。（注：DNS 在本书 verified 条目中无独立内容，如需 DNS 配置需另查原书。）</p><div class="pn"><a href="aos-nc-fabric-backbone.html">⬅ 上一单元：aos-nc-fabric-backbone</a><a class="nxt" href="aos-nc-routing.html">下一单元：aos-nc-routing ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

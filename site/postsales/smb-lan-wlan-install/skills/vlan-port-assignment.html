@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -84,44 +85,44 @@ blockquote p{margin:6px 0}
    <code>-&gt; vlan 10 name Management-AP
    -&gt; vlan 20 name Employees
    -&gt; vlan 30 name Guests</code>
-   （P21，&lt;&lt;<PAGE 159>&gt;&gt;–&lt;&lt;<PAGE 160>&gt;&gt;）</li>
+   （P21， <code>&lt;span class="pg"&gt;原文p159&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p160&lt;/span&gt;</code> ）</li>
 <li>上联口打标：<code>-&gt; vlan 10|20|30 members port 1/1/3 tagged</code></li>
 <li>AP 口混合模式：
    <code>-&gt; vlan 10 members port 1/1/6 untagged
    -&gt; vlan 20 members port 1/1/6 tagged
    -&gt; vlan 30 members port 1/1/6 tagged
    -&gt; show vlan members port 1/1/6    // 验证</code>
-   （C09，&lt;&lt;<PAGE 173>&gt;&gt;–&lt;&lt;<PAGE 175>&gt;&gt;）</li>
-<li>激活 VLAN 间路由：<code>-&gt; ip interface &lt;name&gt; address &lt;ip/mask&gt; vlan &lt;vlan_id&gt;</code>，任一 IP 接口绑定即开启路由（P22，&lt;&lt;<PAGE 162>&gt;&gt;）。</li>
-<li>WebView 路线：Layer 2 &gt; VLAN &gt; "+" &gt; 填 VLAN 59 / 描述 Student &gt; SUBMIT &gt; Save &gt; CLI <code>show vlan</code> 交叉验证；删除同理（勾选后点 Delete 图标）（C06，&lt;&lt;<PAGE 113>&gt;&gt;–&lt;&lt;<PAGE 114>&gt;&gt;）。</li>
+   （C09， <code>&lt;span class="pg"&gt;原文p173&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p175&lt;/span&gt;</code> ）</li>
+<li>激活 VLAN 间路由：<code>-&gt; ip interface &lt;name&gt; address &lt;ip/mask&gt; vlan &lt;vlan_id&gt;</code>，任一 IP 接口绑定即开启路由（P22， <code>&lt;span class="pg"&gt;原文p162&lt;/span&gt;</code> ）。</li>
+<li>WebView 路线：Layer 2 &gt; VLAN &gt; "+" &gt; 填 VLAN 59 / 描述 Student &gt; SUBMIT &gt; Save &gt; CLI <code>show vlan</code> 交叉验证；删除同理（勾选后点 Delete 图标）（C06， <code>&lt;span class="pg"&gt;原文p113&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p114&lt;/span&gt;</code> ）。</li>
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
-<li>端口入组四途径：Static Configuration / Mobility（含认证）/ 802.1Q / VLAN Mobile Tag（P20，&lt;&lt;<PAGE 158>&gt;&gt;）。</li>
-<li>802.1Q 标签结构：4 字节 = 12bit VLAN ID（共 4096 个）+ 3bit 802.1p 优先级（8 级 CoS）（P23，&lt;&lt;<PAGE 166>&gt;&gt;）。</li>
-<li>Mobile Tag 允许移动端口收带标签帧并按 VID 动态入组，优先级高于一切 VLAN 规则；802.1Q 静态打标不支持移动端口（P24，&lt;&lt;<PAGE 170>&gt;&gt;）。</li>
-<li>DHCP 地址规划参考（实验基线）：VLAN10 管理 192.168.10.70-79 / VLAN20 员工 192.168.20.70-79 / VLAN30 访客 192.168.30.70-79（C30，&lt;&lt;<PAGE 88>&gt;&gt;）。</li>
-<li>客户端定位：<code>-&gt; show mac-learning</code> 按 MAC 找端口（如 dc:08:56:00:0c:e0 在 1/1/6）（C10，&lt;&lt;<PAGE 181>&gt;&gt;）。</li>
+<li>端口入组四途径：Static Configuration / Mobility（含认证）/ 802.1Q / VLAN Mobile Tag（P20， <code>&lt;span class="pg"&gt;原文p158&lt;/span&gt;</code> ）。</li>
+<li>802.1Q 标签结构：4 字节 = 12bit VLAN ID（共 4096 个）+ 3bit 802.1p 优先级（8 级 CoS）（P23， <code>&lt;span class="pg"&gt;原文p166&lt;/span&gt;</code> ）。</li>
+<li>Mobile Tag 允许移动端口收带标签帧并按 VID 动态入组，优先级高于一切 VLAN 规则；802.1Q 静态打标不支持移动端口（P24， <code>&lt;span class="pg"&gt;原文p170&lt;/span&gt;</code> ）。</li>
+<li>DHCP 地址规划参考（实验基线）：VLAN10 管理 192.168.10.70-79 / VLAN20 员工 192.168.20.70-79 / VLAN30 访客 192.168.30.70-79（C30， <code>&lt;span class="pg"&gt;原文p88&lt;/span&gt;</code> ）。</li>
+<li>客户端定位：<code>-&gt; show mac-learning</code> 按 MAC 找端口（如 dc:08:56:00:0c:e0 在 1/1/6）（C10， <code>&lt;span class="pg"&gt;原文p181&lt;/span&gt;</code> ）。</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>三 VLAN 规划：vlan 10 Management-AP / 20 Employees / 30 Guests，上联 1/1/3 全 tagged，AP 口 1/1/6 为 VLAN10 untagged + VLAN20/30 tagged，<code>show vlan members port 1/1/6</code> 验证（C09，&lt;&lt;<PAGE 173>&gt;&gt;–&lt;&lt;<PAGE 175>&gt;&gt;）。</li>
-<li>WebView 建 VLAN 59（Student）后用 <code>show vlan</code> 交叉验证（C06，&lt;&lt;<PAGE 113>&gt;&gt;–&lt;&lt;<PAGE 114>&gt;&gt;）。</li>
-<li>员工 SSID 客户端落在 192.168.20.70-79，网关 192.168.20.7 是交换机 VLAN20 的 IP 接口地址（C11，&lt;&lt;<PAGE 221>&gt;&gt;–&lt;&lt;<PAGE 224>&gt;&gt;）。</li>
+<li>三 VLAN 规划：vlan 10 Management-AP / 20 Employees / 30 Guests，上联 1/1/3 全 tagged，AP 口 1/1/6 为 VLAN10 untagged + VLAN20/30 tagged，<code>show vlan members port 1/1/6</code> 验证（C09， <code>&lt;span class="pg"&gt;原文p173&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p175&lt;/span&gt;</code> ）。</li>
+<li>WebView 建 VLAN 59（Student）后用 <code>show vlan</code> 交叉验证（C06， <code>&lt;span class="pg"&gt;原文p113&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p114&lt;/span&gt;</code> ）。</li>
+<li>员工 SSID 客户端落在 192.168.20.70-79，网关 192.168.20.7 是交换机 VLAN20 的 IP 接口地址（C11， <code>&lt;span class="pg"&gt;原文p221&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p224&lt;/span&gt;</code> ）。</li>
 </ul>
 <h2 id="b">B（边界与陷阱）</h2>
 <ul>
 <li>端口对某 VLAN 是 untagged 的只能有一个（即 default VLAN），其余必须 tagged，混用会导致 AP 拿错网段地址。</li>
-<li>多词 VLAN 名必须加引号（P21，&lt;&lt;<PAGE 159>&gt;&gt;–&lt;&lt;<PAGE 160>&gt;&gt;）。</li>
-<li>未 <code>write memory</code> 的 VLAN 修改重启即丢（CE04，&lt;&lt;<PAGE 133>&gt;&gt;）。</li>
-<li>OS2360（AOS 5.2）无法 onboard Cirrus，其 VLAN 只能手工 CLI 配置（CE16，&lt;&lt;<PAGE 337>&gt;&gt;）。</li>
+<li>多词 VLAN 名必须加引号（P21， <code>&lt;span class="pg"&gt;原文p159&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p160&lt;/span&gt;</code> ）。</li>
+<li>未 <code>write memory</code> 的 VLAN 修改重启即丢（CE04， <code>&lt;span class="pg"&gt;原文p133&lt;/span&gt;</code> ）。</li>
+<li>OS2360（AOS 5.2）无法 onboard Cirrus，其 VLAN 只能手工 CLI 配置（CE16， <code>&lt;span class="pg"&gt;原文p337&lt;/span&gt;</code> ）。</li>
 </ul>
 <h2 id="_1">来源</h2>
 <ul>
-<li>case·三 VLAN 规划与端口分配（&lt;&lt;<PAGE 173>&gt;&gt;–&lt;&lt;<PAGE 175>&gt;&gt;）</li>
-<li>case·WebView 建/删 VLAN（&lt;&lt;<PAGE 113>&gt;&gt;–&lt;&lt;<PAGE 114>&gt;&gt;）</li>
-<li>principle·默认 VLAN 与静态端口分配（&lt;&lt;<PAGE 159>&gt;&gt;–&lt;&lt;<PAGE 160>&gt;&gt;）</li>
-<li>principle·VLAN 间路由触发条件（&lt;&lt;<PAGE 162>&gt;&gt;）</li>
-<li>principle·802.1Q 标签结构（&lt;&lt;<PAGE 166>&gt;&gt;）</li>
-<li>principle·端口入组四途径（&lt;&lt;<PAGE 158>&gt;&gt;）</li>
+<li>case·三 VLAN 规划与端口分配（ <code>&lt;span class="pg"&gt;原文p173&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p175&lt;/span&gt;</code> ）</li>
+<li>case·WebView 建/删 VLAN（ <code>&lt;span class="pg"&gt;原文p113&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p114&lt;/span&gt;</code> ）</li>
+<li>principle·默认 VLAN 与静态端口分配（ <code>&lt;span class="pg"&gt;原文p159&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p160&lt;/span&gt;</code> ）</li>
+<li>principle·VLAN 间路由触发条件（ <code>&lt;span class="pg"&gt;原文p162&lt;/span&gt;</code> ）</li>
+<li>principle·802.1Q 标签结构（ <code>&lt;span class="pg"&gt;原文p166&lt;/span&gt;</code> ）</li>
+<li>principle·端口入组四途径（ <code>&lt;span class="pg"&gt;原文p158&lt;/span&gt;</code> ）</li>
 </ul><div class="pn"><a href="aos-config-management.html">⬅ 上一单元：aos-config-management</a><a class="nxt" href="poe-power-design.html">下一单元：poe-power-design ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

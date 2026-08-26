@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -67,38 +68,38 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="i">I（核心理念）</h2>
 <ul>
-<li>十机型选型矩阵（F1，&lt;&lt;<PAGE 12>&gt;&gt;/&lt;&lt;<PAGE 28>&gt;&gt;-&lt;&lt;<PAGE 47>&gt;&gt;）：介质（T=10GBaseT/X=SFP+/V=SFP28）×速率档（10G/25G/100G/400G）×机架深度三档，决策三问——铜还是光、速率档位、机架能否容纳 51.5-59cm 深机箱。</li>
-<li>三件套气流一致性框架（F2，&lt;&lt;<PAGE 50>&gt;&gt;/&lt;&lt;<PAGE 52>&gt;&gt;）：风扇托盘+电源1+电源2 必须同方向（F=前→后标准色/R=后→前紫色标识），失配即 trap→循环重启。</li>
-<li>端口速率的约束单元是端口组而非单口：4 口一组锁速，组内 10G 与 25G 不可混（P 系原则，&lt;&lt;<PAGE 28>&gt;&gt;/&lt;&lt;<PAGE 38>&gt;&gt;/&lt;&lt;<PAGE 40>&gt;&gt;）。</li>
+<li>十机型选型矩阵（F1， <code>&lt;span class="pg"&gt;原文p12&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p28&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p47&lt;/span&gt;</code> ）：介质（T=10GBaseT/X=SFP+/V=SFP28）×速率档（10G/25G/100G/400G）×机架深度三档，决策三问——铜还是光、速率档位、机架能否容纳 51.5-59cm 深机箱。</li>
+<li>三件套气流一致性框架（F2， <code>&lt;span class="pg"&gt;原文p50&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p52&lt;/span&gt;</code> ）：风扇托盘+电源1+电源2 必须同方向（F=前→后标准色/R=后→前紫色标识），失配即 trap→循环重启。</li>
+<li>端口速率的约束单元是端口组而非单口：4 口一组锁速，组内 10G 与 25G 不可混（P 系原则， <code>&lt;span class="pg"&gt;原文p28&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p38&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p40&lt;/span&gt;</code> ）。</li>
 </ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>选型走 F1 矩阵：铜口入门 T24C2/X24C2（47.3cm）→ 10G 汇聚 T48C6/X48C6 → 25G V48C8/V72 → 100G C32/C32E → 400G OS6920-D32（59cm）</li>
-<li>规划 25G 口位前先查分组表：V72 端口 1-48 十二个 4 口组；X48C4E 端口 41-48 分 2 组；V48C8 端口组编号非连续（X3/X4，&lt;&lt;<PAGE 28>&gt;&gt;/&lt;&lt;<PAGE 38>&gt;&gt;/&lt;&lt;<PAGE 40>&gt;&gt;）</li>
-<li>OS6920-D32 用 QSFP-DD 多形态规划：单口 400G/2X200G/4X100G，向下兼容 QSFP56/28/+（P4，&lt;&lt;<PAGE 46>&gt;&gt;）</li>
-<li>气流方向定调：按机房冷热通道选 F 或 R 后缀部件，三件套逐一对齐（P14，&lt;&lt;<PAGE 50>&gt;&gt;）</li>
+<li>规划 25G 口位前先查分组表：V72 端口 1-48 十二个 4 口组；X48C4E 端口 41-48 分 2 组；V48C8 端口组编号非连续（X3/X4， <code>&lt;span class="pg"&gt;原文p28&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p38&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p40&lt;/span&gt;</code> ）</li>
+<li>OS6920-D32 用 QSFP-DD 多形态规划：单口 400G/2X200G/4X100G，向下兼容 QSFP56/28/+（P4， <code>&lt;span class="pg"&gt;原文p46&lt;/span&gt;</code> ）</li>
+<li>气流方向定调：按机房冷热通道选 F 或 R 后缀部件，三件套逐一对齐（P14， <code>&lt;span class="pg"&gt;原文p50&lt;/span&gt;</code> ）</li>
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>核对机型端口构成</strong>：V72=48×SFP28+6×QSFP28；C32/C32E=32×QSFP28；V48C8=48×SFP28+8×QSFP28+2×SFP+；T48C6=48×10GBaseT+6×QSFP28（P3，&lt;&lt;<PAGE 12>&gt;&gt;）</li>
-<li><strong>混合速率口规划</strong>：端口组内 1G 与 10G 可混、10G 与 25G 不可混（X4，&lt;&lt;<PAGE 38>&gt;&gt;/&lt;&lt;<PAGE 40>&gt;&gt;）</li>
-<li><strong>T48C6/X48C6 上行口</strong>：51/54 口支持 splitter 一拆四；52/53 口 DAC 与 QSFP 必须同型（X5，&lt;&lt;<PAGE 34>&gt;&gt;/&lt;&lt;<PAGE 36>&gt;&gt;）</li>
-<li><strong>风扇托盘选型</strong>：按机型+气流方向选专用型号（OS6900V-FT/T48C6-FT/V48C8-FT/OS6920-FT 的 F/R 版），V/C 系 6 托盘、T/X 系 5 托盘（P27/P29，&lt;&lt;<PAGE 28>&gt;&gt;等/&lt;&lt;<PAGE 70>&gt;&gt;/&lt;&lt;<PAGE 71>&gt;&gt;）</li>
-<li><strong>LED 判读准备</strong>：QSFP-DD 十二态色表（青=400G/紫=200G/蓝=100G/红=故障等）与 QSFP28 分色（蓝=100G/琥珀=40G）（P32/P33，&lt;&lt;<PAGE 48>&gt;&gt;）</li>
+<li><strong>核对机型端口构成</strong>：V72=48×SFP28+6×QSFP28；C32/C32E=32×QSFP28；V48C8=48×SFP28+8×QSFP28+2×SFP+；T48C6=48×10GBaseT+6×QSFP28（P3， <code>&lt;span class="pg"&gt;原文p12&lt;/span&gt;</code> ）</li>
+<li><strong>混合速率口规划</strong>：端口组内 1G 与 10G 可混、10G 与 25G 不可混（X4， <code>&lt;span class="pg"&gt;原文p38&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p40&lt;/span&gt;</code> ）</li>
+<li><strong>T48C6/X48C6 上行口</strong>：51/54 口支持 splitter 一拆四；52/53 口 DAC 与 QSFP 必须同型（X5， <code>&lt;span class="pg"&gt;原文p34&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p36&lt;/span&gt;</code> ）</li>
+<li><strong>风扇托盘选型</strong>：按机型+气流方向选专用型号（OS6900V-FT/T48C6-FT/V48C8-FT/OS6920-FT 的 F/R 版），V/C 系 6 托盘、T/X 系 5 托盘（P27/P29， <code>&lt;span class="pg"&gt;原文p28&lt;/span&gt;</code> 等/ <code>&lt;span class="pg"&gt;原文p70&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p71&lt;/span&gt;</code> ）</li>
+<li><strong>LED 判读准备</strong>：QSFP-DD 十二态色表（青=400G/紫=200G/蓝=100G/红=故障等）与 QSFP28 分色（蓝=100G/琥珀=40G）（P32/P33， <code>&lt;span class="pg"&gt;原文p48&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>OS6920-D32 单口多形态部署：QSFP-DD 兼容 QSFP56/QSFP28/QSFP+，400G 核心一步到位（P4，&lt;&lt;<PAGE 46>&gt;&gt;）</li>
-<li>V48C8 端口组编号非连续，规划前必查分组表防锁速踩坑（X4，&lt;&lt;<PAGE 40>&gt;&gt;）</li>
-<li>后→前气流（R 后缀紫色部件）部署与识别（P 系/紫色编码，&lt;&lt;<PAGE 51>&gt;&gt;/&lt;&lt;<PAGE 52>&gt;&gt;）</li>
+<li>OS6920-D32 单口多形态部署：QSFP-DD 兼容 QSFP56/QSFP28/QSFP+，400G 核心一步到位（P4， <code>&lt;span class="pg"&gt;原文p46&lt;/span&gt;</code> ）</li>
+<li>V48C8 端口组编号非连续，规划前必查分组表防锁速踩坑（X4， <code>&lt;span class="pg"&gt;原文p40&lt;/span&gt;</code> ）</li>
+<li>后→前气流（R 后缀紫色部件）部署与识别（P 系/紫色编码， <code>&lt;span class="pg"&gt;原文p51&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p52&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>
-<li>端口组内 10G 与 25G 混速：V72 与 X48C4E/V48C8 明令不支持，组是锁定单元（X3/X4，&lt;&lt;<PAGE 28>&gt;&gt;/&lt;&lt;<PAGE 38>&gt;&gt;/&lt;&lt;<PAGE 40>&gt;&gt;）</li>
-<li>T48C6/X48C6 的 52/53 口 DAC 与 QSFP 光模块混插禁令，两口同插必须同型（X5，&lt;&lt;<PAGE 34>&gt;&gt;/&lt;&lt;<PAGE 36>&gt;&gt;）</li>
-<li>预留口不可当可用口：C32E/V48C8 的 SFP+ 口（33/34、57/58）与 OS6920 的 33 口 "Not currently functional"（X30，&lt;&lt;<PAGE 32>&gt;&gt;/&lt;&lt;<PAGE 40>&gt;&gt;/&lt;&lt;<PAGE 46>&gt;&gt;）</li>
-<li>T48C6/X48C6 双 EMP 口仅顶部可用（X31，&lt;&lt;<PAGE 34>&gt;&gt;/&lt;&lt;<PAGE 36>&gt;&gt;）</li>
-<li>OS6920 后→前气流 Tmra 降额至 0-35°C（前→后为 0-45°C），机柜规划按 35°C 校验（X6，&lt;&lt;<PAGE 14>&gt;&gt;/&lt;&lt;<PAGE 47>&gt;&gt;）</li>
-<li>深机箱 51.5-59cm 必须配后支撑，机架深度先量再选型（P8/X25，&lt;&lt;<PAGE 29>&gt;&gt;等/&lt;&lt;<PAGE 54>&gt;&gt;）</li>
+<li>端口组内 10G 与 25G 混速：V72 与 X48C4E/V48C8 明令不支持，组是锁定单元（X3/X4， <code>&lt;span class="pg"&gt;原文p28&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p38&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p40&lt;/span&gt;</code> ）</li>
+<li>T48C6/X48C6 的 52/53 口 DAC 与 QSFP 光模块混插禁令，两口同插必须同型（X5， <code>&lt;span class="pg"&gt;原文p34&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p36&lt;/span&gt;</code> ）</li>
+<li>预留口不可当可用口：C32E/V48C8 的 SFP+ 口（33/34、57/58）与 OS6920 的 33 口 "Not currently functional"（X30， <code>&lt;span class="pg"&gt;原文p32&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p40&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p46&lt;/span&gt;</code> ）</li>
+<li>T48C6/X48C6 双 EMP 口仅顶部可用（X31， <code>&lt;span class="pg"&gt;原文p34&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p36&lt;/span&gt;</code> ）</li>
+<li>OS6920 后→前气流 Tmra 降额至 0-35°C（前→后为 0-45°C），机柜规划按 35°C 校验（X6， <code>&lt;span class="pg"&gt;原文p14&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p47&lt;/span&gt;</code> ）</li>
+<li>深机箱 51.5-59cm 必须配后支撑，机架深度先量再选型（P8/X25， <code>&lt;span class="pg"&gt;原文p29&lt;/span&gt;</code> 等/ <code>&lt;span class="pg"&gt;原文p54&lt;/span&gt;</code> ）</li>
 </ul>
 <p>来源：OmniSwitch 6900 Hardware Users Guide（Ch1 机型总表 + Ch3 机型面板/规格，p12-47）</p><div class="pn"><a href="../index.html">⬅ 返回课程首页</a><a class="nxt" href="os6900-install-power.html">下一单元：os6900-install-power ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

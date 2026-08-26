@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -67,40 +68,40 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="i">I（核心理念）</h2>
 <ul>
-<li>电源-PoE 预算联动框架（F2，&lt;&lt;<PAGE 60>&gt;&gt;/&lt;&lt;<PAGE 87>&gt;&gt;/&lt;&lt;<PAGE 88>&gt;&gt;）：单电源预算≈wattage−系统 110W 封顶，双电源负载分担预算≈2×单电源（P48X4 双 PX=1440W）。</li>
-<li>部署三查：一查机型×电源×数量预算表；二查 PN 版本（老 903852/903853 vs 新 904071/904072/904073，新件需 AOS ≥8.8R1，P8/P9，&lt;&lt;<PAGE 60-63>&gt;&gt;）；三查混插规则（wattage 禁混 X4，BP+BP-D 唯一例外 X6，混插发 trap X5）。</li>
-<li>DNV 船用体系仅限 P48X4/X10：OS-DNV-MNT 套件+OS-DNV-FILTER EMC 滤波器串接电源与机箱之间，滤除 10kHz-150kHz 传导发射（P19/P20，&lt;&lt;<PAGE 58>&gt;&gt;/&lt;&lt;<PAGE 67>&gt;&gt;）。</li>
+<li>电源-PoE 预算联动框架（F2， <code>&lt;span class="pg"&gt;原文p60&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p87&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p88&lt;/span&gt;</code> ）：单电源预算≈wattage−系统 110W 封顶，双电源负载分担预算≈2×单电源（P48X4 双 PX=1440W）。</li>
+<li>部署三查：一查机型×电源×数量预算表；二查 PN 版本（老 903852/903853 vs 新 904071/904072/904073，新件需 AOS ≥8.8R1，P8/P9， <code>&lt;span class="pg"&gt;原文p60-63&lt;/span&gt;</code> ）；三查混插规则（wattage 禁混 X4，BP+BP-D 唯一例外 X6，混插发 trap X5）。</li>
+<li>DNV 船用体系仅限 P48X4/X10：OS-DNV-MNT 套件+OS-DNV-FILTER EMC 滤波器串接电源与机箱之间，滤除 10kHz-150kHz 传导发射（P19/P20， <code>&lt;span class="pg"&gt;原文p58&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p67&lt;/span&gt;</code> ）。</li>
 </ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>安装形态选择：标准机架（法兰 C3/C4）→桌面（C5，禁倒放侧放）→DNV 船用（C7）</li>
 <li>电源选型：非 PoE 机型=内置 65W+BPS 槽；PoE 机型按预算表选 P/PH/PX（F2）</li>
 <li>供电冗余：双电源各接独立电路+UPS（911 纪律 P33）；无电源开关语义=接电即开机（P12）</li>
-<li>DC 场景：BP-D（-36~-72V）三芯 12AWG 线束+15A 过流+SELV+CBN 接地（P14，&lt;&lt;<PAGE 65-69>&gt;&gt;）</li>
+<li>DC 场景：BP-D（-36~-72V）三芯 12AWG 线束+15A 过流+SELV+CBN 接地（P14， <code>&lt;span class="pg"&gt;原文p65-69&lt;/span&gt;</code> ）</li>
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>机架安装</strong>：法兰弹簧夹 out→tab 入槽→CLICK→螺丝固定（C3，&lt;&lt;<PAGE 54-55>&gt;&gt;）；整机双人作业、重物下置（C4/P27，&lt;&lt;<PAGE 53>&gt;&gt;/&lt;&lt;<PAGE 56>&gt;&gt;）</li>
-<li><strong>DNV 安装</strong>：OS-DNV-MNT 侧轨+后托架固定→前托架入位→滤波器 C14 入/C15 出串接（C7，&lt;&lt;<PAGE 58-59>&gt;&gt;）</li>
-<li><strong>电源插拔</strong>：插入至背板 click 锁定（C9）；拆=按锁扣向中心直拉（C10，&lt;&lt;<PAGE 70-73>&gt;&gt;）</li>
-<li><strong>DC 接线</strong>：绿黄=地/黑=return/红=-48VDC；前提五条（X20，&lt;&lt;<PAGE 68>&gt;&gt;）</li>
-<li><strong>supplemental 接地</strong>：LCD8-10A-L 接地耳+8AWG+30-60 in-lb（C8，&lt;&lt;<PAGE 74>&gt;&gt;）</li>
-<li><strong>盲板</strong>：空槽常装、箭头朝上（C6/X17，&lt;&lt;<PAGE 52>&gt;&gt;）</li>
-<li><strong>PoE 激活</strong>：show powersupply 确认→lanpower slot service start→逐项核对（C14，&lt;&lt;<PAGE 87-89>&gt;&gt;）</li>
+<li><strong>机架安装</strong>：法兰弹簧夹 out→tab 入槽→CLICK→螺丝固定（C3， <code>&lt;span class="pg"&gt;原文p54-55&lt;/span&gt;</code> ）；整机双人作业、重物下置（C4/P27， <code>&lt;span class="pg"&gt;原文p53&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p56&lt;/span&gt;</code> ）</li>
+<li><strong>DNV 安装</strong>：OS-DNV-MNT 侧轨+后托架固定→前托架入位→滤波器 C14 入/C15 出串接（C7， <code>&lt;span class="pg"&gt;原文p58-59&lt;/span&gt;</code> ）</li>
+<li><strong>电源插拔</strong>：插入至背板 click 锁定（C9）；拆=按锁扣向中心直拉（C10， <code>&lt;span class="pg"&gt;原文p70-73&lt;/span&gt;</code> ）</li>
+<li><strong>DC 接线</strong>：绿黄=地/黑=return/红=-48VDC；前提五条（X20， <code>&lt;span class="pg"&gt;原文p68&lt;/span&gt;</code> ）</li>
+<li><strong>supplemental 接地</strong>：LCD8-10A-L 接地耳+8AWG+30-60 in-lb（C8， <code>&lt;span class="pg"&gt;原文p74&lt;/span&gt;</code> ）</li>
+<li><strong>盲板</strong>：空槽常装、箭头朝上（C6/X17， <code>&lt;span class="pg"&gt;原文p52&lt;/span&gt;</code> ）</li>
+<li><strong>PoE 激活</strong>：show powersupply 确认→lanpower slot service start→逐项核对（C14， <code>&lt;span class="pg"&gt;原文p87-89&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>PoE 首次激活与逐口核对流程（C14，&lt;&lt;<PAGE 87-89>&gt;&gt;）</li>
-<li>Guard Band 拒载处置：降口上限放行 4W PD（C18，&lt;&lt;<PAGE 92>&gt;&gt;）</li>
-<li>DC 线束接线全流程（C11，&lt;&lt;<PAGE 68-69>&gt;&gt;）</li>
+<li>PoE 首次激活与逐口核对流程（C14， <code>&lt;span class="pg"&gt;原文p87-89&lt;/span&gt;</code> ）</li>
+<li>Guard Band 拒载处置：降口上限放行 4W PD（C18， <code>&lt;span class="pg"&gt;原文p92&lt;/span&gt;</code> ）</li>
+<li>DC 线束接线全流程（C11， <code>&lt;span class="pg"&gt;原文p68-69&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>
-<li>wattage 禁混：300/600/920 之间不可混插，混插或不支持电源发 console 告警+trap（X4/X5，&lt;&lt;<PAGE 61-63>&gt;&gt;/&lt;&lt;<PAGE 88>&gt;&gt;）</li>
-<li>BP-P 300W 不配 E 机型与新 PN 的 P48Z16（X2，&lt;&lt;<PAGE 60>&gt;&gt;/&lt;&lt;<PAGE 87>&gt;&gt;）</li>
-<li>新 PN 电源需 AOS ≥8.8R1（X3，&lt;&lt;<PAGE 60>&gt;&gt;）</li>
-<li>气流遮挡致过热失效；盲板必须常装（X15/X17，&lt;&lt;<PAGE 17>&gt;&gt;/&lt;&lt;<PAGE 52>&gt;&gt;）</li>
-<li>禁延长线；电涌五条军规违反可能失保（X13/X14，&lt;&lt;<PAGE 15-16>&gt;&gt;）</li>
-<li>DC 维护红线：运行中勿触电源舱/背板；雷暴禁作业（X21/X18，&lt;&lt;<PAGE 106-107>&gt;&gt;）</li>
+<li>wattage 禁混：300/600/920 之间不可混插，混插或不支持电源发 console 告警+trap（X4/X5， <code>&lt;span class="pg"&gt;原文p61-63&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p88&lt;/span&gt;</code> ）</li>
+<li>BP-P 300W 不配 E 机型与新 PN 的 P48Z16（X2， <code>&lt;span class="pg"&gt;原文p60&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p87&lt;/span&gt;</code> ）</li>
+<li>新 PN 电源需 AOS ≥8.8R1（X3， <code>&lt;span class="pg"&gt;原文p60&lt;/span&gt;</code> ）</li>
+<li>气流遮挡致过热失效；盲板必须常装（X15/X17， <code>&lt;span class="pg"&gt;原文p17&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p52&lt;/span&gt;</code> ）</li>
+<li>禁延长线；电涌五条军规违反可能失保（X13/X14， <code>&lt;span class="pg"&gt;原文p15-16&lt;/span&gt;</code> ）</li>
+<li>DC 维护红线：运行中勿触电源舱/背板；雷暴禁作业（X21/X18， <code>&lt;span class="pg"&gt;原文p106-107&lt;/span&gt;</code> ）</li>
 </ul>
 <p>来源：OmniSwitch 6560 Hardware Users Guide（安装 Ch3 + PoE Ch4，p51-95）</p><div class="pn"><a href="os6560-model-ports.html">⬅ 上一单元：os6560-model-ports</a><a class="nxt" href="os6560-ops-troubleshoot.html">下一单元：os6560-ops-troubleshoot ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

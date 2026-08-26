@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -80,7 +81,7 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
-<li>Console 连接：串口参数 115200 / 8N1 / 无流控（P12，&lt;&lt;<PAGE 65>&gt;&gt;），Tera Term/Putty 登录 admin/switch（P06，&lt;&lt;<PAGE 60>&gt;&gt;）。</li>
+<li>Console 连接：串口参数 115200 / 8N1 / 无流控（P12， <code>&lt;span class="pg"&gt;原文p65&lt;/span&gt;</code> ），Tera Term/Putty 登录 admin/switch（P06， <code>&lt;span class="pg"&gt;原文p60&lt;/span&gt;</code> ）。</li>
 <li>开通端口：
    <code>-&gt; interfaces 1/1/6 admin-state enable
    -&gt; interfaces 1/1/1 admin-state enable</code></li>
@@ -88,47 +89,47 @@ blockquote p{margin:6px 0}
    <code>-&gt; ip interface int_1 address 192.168.1.2/24 vlan 1
    -&gt; show ip interface
    -&gt; write memory flash-synchro</code>
-   （C01，&lt;&lt;<PAGE 95>&gt;&gt;–&lt;&lt;<PAGE 96>&gt;&gt;）</li>
+   （C01， <code>&lt;span class="pg"&gt;原文p95&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p96&lt;/span&gt;</code> ）</li>
 <li>开远程管理：
    <code>-&gt; aaa authentication ssh local
    -&gt; aaa authentication http local
    -&gt; show aaa authentication
    -&gt; show webview
    -&gt; show session config   // Inactivity Timer：CLI 45 / HTTP 15 分钟</code>
-   （C05，&lt;&lt;<PAGE 107>&gt;&gt;–&lt;&lt;<PAGE 111>&gt;&gt;）</li>
-<li>Lightning Config 路线（新机开箱）：笔记本设 DHCP → 网线接 port 1 → 上电等 3 分钟 → Chrome 访问 <code>https://192.168.0.1/</code>（本机约获 192.168.0.200）→ admin/switch + 接受自签证书 → RECOMMENDED DEFAULTS → LIGHTNING CONFIG 填 IP/网关 → 改 admin 密码（8 位以上含大小写/数字/特殊字符，勿用 <code>!</code> 或 <code>$</code>）→ 保存为 working（C26，&lt;&lt;<PAGE 481>&gt;&gt;–&lt;&lt;<PAGE 490>&gt;&gt;）。</li>
+   （C05， <code>&lt;span class="pg"&gt;原文p107&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p111&lt;/span&gt;</code> ）</li>
+<li>Lightning Config 路线（新机开箱）：笔记本设 DHCP → 网线接 port 1 → 上电等 3 分钟 → Chrome 访问 <code>https://192.168.0.1/</code>（本机约获 192.168.0.200）→ admin/switch + 接受自签证书 → RECOMMENDED DEFAULTS → LIGHTNING CONFIG 填 IP/网关 → 改 admin 密码（8 位以上含大小写/数字/特殊字符，勿用 <code>!</code> 或 <code>$</code>）→ 保存为 working（C26， <code>&lt;span class="pg"&gt;原文p481&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p490&lt;/span&gt;</code> ）。</li>
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
-<li>Lightning Config 触发有五项前置：仅第 1/2 物理口接客户端、无既有配置、上电后无 DHCP 分配、无 RCL/OmniVista NMS 连接（F07，&lt;&lt;<PAGE 75>&gt;&gt;）；任一不满足则退回常规配置。</li>
-<li>模板批量交付：IMPORT .json 模板 → Lightning Config → SAVE CONFIGURATION（C26，&lt;&lt;<PAGE 481>&gt;&gt;–&lt;&lt;<PAGE 490>&gt;&gt;）。</li>
-<li>多服务器认证链：<code>aaa authentication console server1 [server2...] [local] [exit-on-fail {enable|disable}]</code>；exit-on-fail enable 时只查首台可用服务器，disable 时逐台回退（P08，&lt;&lt;<PAGE 63>&gt;&gt;）。</li>
-<li>会话规格上限：Telnet 6 / FTP 4 / SSH+SFTP 8 / HTTP 4 / 总 20 / SNMP 50（P10，&lt;&lt;<PAGE 67>&gt;&gt;）。</li>
-<li>EMP 带外管理口绕过业务板直连 CMM：<code>ip interface master emp address 172.25.167.203 mask 255.255.255.224</code>；无 EMP 机型可用 USB Ethernet Dongle 等效（P11，&lt;&lt;<PAGE 66>&gt;&gt;）。</li>
-<li>WebView 默认强制 HTTPS/TLS1.2（<code>webview force-ssl enable</code>，P09，&lt;&lt;<PAGE 68>&gt;&gt;–&lt;&lt;<PAGE 69>&gt;&gt;）。</li>
+<li>Lightning Config 触发有五项前置：仅第 1/2 物理口接客户端、无既有配置、上电后无 DHCP 分配、无 RCL/OmniVista NMS 连接（F07， <code>&lt;span class="pg"&gt;原文p75&lt;/span&gt;</code> ）；任一不满足则退回常规配置。</li>
+<li>模板批量交付：IMPORT .json 模板 → Lightning Config → SAVE CONFIGURATION（C26， <code>&lt;span class="pg"&gt;原文p481&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p490&lt;/span&gt;</code> ）。</li>
+<li>多服务器认证链：<code>aaa authentication console server1 [server2...] [local] [exit-on-fail {enable|disable}]</code>；exit-on-fail enable 时只查首台可用服务器，disable 时逐台回退（P08， <code>&lt;span class="pg"&gt;原文p63&lt;/span&gt;</code> ）。</li>
+<li>会话规格上限：Telnet 6 / FTP 4 / SSH+SFTP 8 / HTTP 4 / 总 20 / SNMP 50（P10， <code>&lt;span class="pg"&gt;原文p67&lt;/span&gt;</code> ）。</li>
+<li>EMP 带外管理口绕过业务板直连 CMM：<code>ip interface master emp address 172.25.167.203 mask 255.255.255.224</code>；无 EMP 机型可用 USB Ethernet Dongle 等效（P11， <code>&lt;span class="pg"&gt;原文p66&lt;/span&gt;</code> ）。</li>
+<li>WebView 默认强制 HTTPS/TLS1.2（<code>webview force-ssl enable</code>，P09， <code>&lt;span class="pg"&gt;原文p68&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p69&lt;/span&gt;</code> ）。</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>首次登录 OS6360 开通 1/1/6（AP 口）与 1/1/1（客户端口），配 192.168.1.2/24 后 <code>show ip interface</code> 验证、<code>write memory flash-synchro</code> 保存（C01，&lt;&lt;<PAGE 95>&gt;&gt;–&lt;&lt;<PAGE 96>&gt;&gt;）。</li>
-<li><code>aaa authentication ssh local</code> 前 SSH 默认被 deny，配置后经 <code>show aaa authentication</code> 确认（C05，&lt;&lt;<PAGE 107>&gt;&gt;–&lt;&lt;<PAGE 109>&gt;&gt;）。</li>
-<li>Lightning Config 全流程含 .json 模板导入（C26，&lt;&lt;<PAGE 481>&gt;&gt;–&lt;&lt;<PAGE 490>&gt;&gt;）。</li>
+<li>首次登录 OS6360 开通 1/1/6（AP 口）与 1/1/1（客户端口），配 192.168.1.2/24 后 <code>show ip interface</code> 验证、<code>write memory flash-synchro</code> 保存（C01， <code>&lt;span class="pg"&gt;原文p95&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p96&lt;/span&gt;</code> ）。</li>
+<li><code>aaa authentication ssh local</code> 前 SSH 默认被 deny，配置后经 <code>show aaa authentication</code> 确认（C05， <code>&lt;span class="pg"&gt;原文p107&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p109&lt;/span&gt;</code> ）。</li>
+<li>Lightning Config 全流程含 .json 模板导入（C26， <code>&lt;span class="pg"&gt;原文p481&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p490&lt;/span&gt;</code> ）。</li>
 </ul>
 <h2 id="b">B（边界与陷阱）</h2>
 <ul>
-<li>Lightning Config 前禁止把新交换机接入网络/互联/接 DHCP 服务器：多台未配置交换机默认都是 192.168.0.1 会 IP 冲突；且"Do NOT skip the Recommended Defaults!"（CE13，&lt;&lt;<PAGE 477>&gt;&gt;、&lt;&lt;<PAGE 486>&gt;&gt;、&lt;&lt;<PAGE 484>&gt;&gt;）。</li>
-<li>教学或托管环境的"默认配置"并非空配置，重置后所有端口 disabled，不通时先 <code>interfaces x admin-state enable</code>（CE01，&lt;&lt;<PAGE 89>&gt;&gt;）。</li>
-<li>密码勿用 <code>!</code> 或 <code>$</code> 字符（C26，&lt;&lt;<PAGE 481>&gt;&gt;–&lt;&lt;<PAGE 490>&gt;&gt;）。</li>
-<li>本地用户库 userTable9 存于 flash/system，最多 64 用户（P06，&lt;&lt;<PAGE 60>&gt;&gt;–&lt;&lt;<PAGE 61>&gt;&gt;）。</li>
+<li>Lightning Config 前禁止把新交换机接入网络/互联/接 DHCP 服务器：多台未配置交换机默认都是 192.168.0.1 会 IP 冲突；且"Do NOT skip the Recommended Defaults!"（CE13， <code>&lt;span class="pg"&gt;原文p477&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p486&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p484&lt;/span&gt;</code> ）。</li>
+<li>教学或托管环境的"默认配置"并非空配置，重置后所有端口 disabled，不通时先 <code>interfaces x admin-state enable</code>（CE01， <code>&lt;span class="pg"&gt;原文p89&lt;/span&gt;</code> ）。</li>
+<li>密码勿用 <code>!</code> 或 <code>$</code> 字符（C26， <code>&lt;span class="pg"&gt;原文p481&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p490&lt;/span&gt;</code> ）。</li>
+<li>本地用户库 userTable9 存于 flash/system，最多 64 用户（P06， <code>&lt;span class="pg"&gt;原文p60&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p61&lt;/span&gt;</code> ）。</li>
 </ul>
 <h2 id="_1">来源</h2>
 <ul>
-<li>case·首次登录并开通 OS6360 端口与管理 IP（&lt;&lt;<PAGE 95>&gt;&gt;–&lt;&lt;<PAGE 96>&gt;&gt;）</li>
-<li>case·开启 SSH/HTTP 远程管理（&lt;&lt;<PAGE 107>&gt;&gt;–&lt;&lt;<PAGE 111>&gt;&gt;）</li>
-<li>case·Lightning Config 完整实操含模板导入（&lt;&lt;<PAGE 481>&gt;&gt;–&lt;&lt;<PAGE 490>&gt;&gt;）</li>
-<li>framework·Lightning Config 触发条件与部署流程（&lt;&lt;<PAGE 75>&gt;&gt;、&lt;&lt;<PAGE 474>&gt;&gt;–&lt;&lt;<PAGE 490>&gt;&gt;）</li>
-<li>principle·默认凭据与强制改密策略（&lt;&lt;<PAGE 60>&gt;&gt;–&lt;&lt;<PAGE 61>&gt;&gt;）</li>
-<li>principle·ASA 认证服务禁用语义（&lt;&lt;<PAGE 58>&gt;&gt;–&lt;&lt;<PAGE 59>&gt;&gt;）</li>
-<li>principle·WebView 安全默认（&lt;&lt;<PAGE 68>&gt;&gt;–&lt;&lt;<PAGE 69>&gt;&gt;）</li>
-<li>counter·Lightning Config 前禁止接入网络（&lt;&lt;<PAGE 477>&gt;&gt;、&lt;&lt;<PAGE 486>&gt;&gt;）</li>
-<li>counter·R-Lab 重置后端口全禁用（&lt;&lt;<PAGE 89>&gt;&gt;）</li>
+<li>case·首次登录并开通 OS6360 端口与管理 IP（ <code>&lt;span class="pg"&gt;原文p95&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p96&lt;/span&gt;</code> ）</li>
+<li>case·开启 SSH/HTTP 远程管理（ <code>&lt;span class="pg"&gt;原文p107&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p111&lt;/span&gt;</code> ）</li>
+<li>case·Lightning Config 完整实操含模板导入（ <code>&lt;span class="pg"&gt;原文p481&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p490&lt;/span&gt;</code> ）</li>
+<li>framework·Lightning Config 触发条件与部署流程（ <code>&lt;span class="pg"&gt;原文p75&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p474&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p490&lt;/span&gt;</code> ）</li>
+<li>principle·默认凭据与强制改密策略（ <code>&lt;span class="pg"&gt;原文p60&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p61&lt;/span&gt;</code> ）</li>
+<li>principle·ASA 认证服务禁用语义（ <code>&lt;span class="pg"&gt;原文p58&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p59&lt;/span&gt;</code> ）</li>
+<li>principle·WebView 安全默认（ <code>&lt;span class="pg"&gt;原文p68&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p69&lt;/span&gt;</code> ）</li>
+<li>counter·Lightning Config 前禁止接入网络（ <code>&lt;span class="pg"&gt;原文p477&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p486&lt;/span&gt;</code> ）</li>
+<li>counter·R-Lab 重置后端口全禁用（ <code>&lt;span class="pg"&gt;原文p89&lt;/span&gt;</code> ）</li>
 </ul><div class="pn"><a href="../index.html">⬅ 返回课程首页</a><a class="nxt" href="aos-config-management.html">下一单元：aos-config-management ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -76,37 +77,37 @@ blockquote p{margin:6px 0}
 <p>PoE 管理的本质是"功率也是一种资源预算"：802.3af/at/bt 四档标准决定单口上限，整机 Power Budget 决定总量，Dynamic PoE Allocation 按需分配提升效率，端口优先级（low/high/critical）决定功率不足时谁先被断电。</p>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
-<li><strong>查电源与预算</strong>：<code>show powersupply</code>；<code>show lanpower slot 1/1</code> 看 Actual Used / Power Budget（实例：AP 口 Actual Used 7000mW、Class 4，&lt;&lt;<PAGE 176>&gt;&gt;）。</li>
+<li><strong>查电源与预算</strong>：<code>show powersupply</code>；<code>show lanpower slot 1/1</code> 看 Actual Used / Power Budget（实例：AP 口 Actual Used 7000mW、Class 4， <code>&lt;span class="pg"&gt;原文p176&lt;/span&gt;</code> ）。</li>
 <li><strong>启动槽位 PoE 服务</strong>：<code>lanpower slot 1/1 service start</code>。</li>
 <li><strong>端口级开关</strong>：<code>lanpower port 1/1/1 admin-state enable</code>。</li>
 <li><strong>设定单口功率（mW）</strong>：<code>lanpower port 1/1/24 power 18000</code>。</li>
 <li><strong>设定槽位预算上限（W）</strong>：<code>lanpower slot 1/1 maxpower 400</code>。</li>
-<li><strong>设定端口优先级</strong>：<code>lanpower port 1/1/6 priority critical</code>（&lt;&lt;<PAGE 153>&gt;&gt;-&lt;&lt;<PAGE 157>&gt;&gt;）。</li>
+<li><strong>设定端口优先级</strong>：<code>lanpower port 1/1/6 priority critical</code>（ <code>&lt;span class="pg"&gt;原文p153&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p157&lt;/span&gt;</code> ）。</li>
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
-<li><strong>标准选型对照</strong>（&lt;&lt;<PAGE 150>&gt;&gt;）：802.3af（PD 12.95W / PSE 15.40W / 350mA）→ 802.3at Type2（25.50/30.0W / 600mA）→ 802.3bt Type3（51/60W）→ Type4（71/100W / 960mA per pair）；Energy Management 分 class 三/四/六/八级。</li>
-<li><strong>动态分配</strong>：Dynamic PoE Allocation 只下发 PD 实际需要的功率，直到总预算封顶，是最省电的用法（&lt;&lt;<PAGE 150>&gt;&gt;）。</li>
-<li><strong>Fast PoE / Perpetual PoE</strong>：开机未完成启动即供电 / 交换机重启期间不断电；两者都需升级 FPGA/CPLD，OS6360-P10A 不支持（&lt;&lt;<PAGE 147>&gt;&gt;-&lt;&lt;<PAGE 148>&gt;&gt;）。</li>
-<li><strong>EEE 节能（802.3az）</strong>：空闲时芯片低功耗；仅铜口 100/1000M 适用，光口 U 型号不支持（&lt;&lt;<PAGE 149>&gt;&gt;）。</li>
+<li><strong>标准选型对照</strong>（ <code>&lt;span class="pg"&gt;原文p150&lt;/span&gt;</code> ）：802.3af（PD 12.95W / PSE 15.40W / 350mA）→ 802.3at Type2（25.50/30.0W / 600mA）→ 802.3bt Type3（51/60W）→ Type4（71/100W / 960mA per pair）；Energy Management 分 class 三/四/六/八级。</li>
+<li><strong>动态分配</strong>：Dynamic PoE Allocation 只下发 PD 实际需要的功率，直到总预算封顶，是最省电的用法（ <code>&lt;span class="pg"&gt;原文p150&lt;/span&gt;</code> ）。</li>
+<li><strong>Fast PoE / Perpetual PoE</strong>：开机未完成启动即供电 / 交换机重启期间不断电；两者都需升级 FPGA/CPLD，OS6360-P10A 不支持（ <code>&lt;span class="pg"&gt;原文p147&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p148&lt;/span&gt;</code> ）。</li>
+<li><strong>EEE 节能（802.3az）</strong>：空闲时芯片低功耗；仅铜口 100/1000M 适用，光口 U 型号不支持（ <code>&lt;span class="pg"&gt;原文p149&lt;/span&gt;</code> ）。</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>PoE 管理命令集实战：service start → 端口 enable → 单口 18000mW → 槽位 maxpower 400W → critical 优先级 → show 验证（&lt;&lt;<PAGE 153>&gt;&gt;-&lt;&lt;<PAGE 157>&gt;&gt;）。</li>
-<li>AP 上线时观测到 Actual Used 7000mW、Class 4，用于验证 PD 分级协商（&lt;&lt;<PAGE 176>&gt;&gt;）。</li>
+<li>PoE 管理命令集实战：service start → 端口 enable → 单口 18000mW → 槽位 maxpower 400W → critical 优先级 → show 验证（ <code>&lt;span class="pg"&gt;原文p153&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p157&lt;/span&gt;</code> ）。</li>
+<li>AP 上线时观测到 Actual Used 7000mW、Class 4，用于验证 PD 分级协商（ <code>&lt;span class="pg"&gt;原文p176&lt;/span&gt;</code> ）。</li>
 </ul>
 <h2 id="b">B（边界与陷阱）</h2>
 <ul>
-<li>功率不足时按 low → high → critical 顺序断电，默认 low；关键上联/话机口务必显式设 critical（&lt;&lt;<PAGE 154>&gt;&gt;）。</li>
-<li>Fast PoE / Perpetual PoE 依赖 FPGA/CPLD 升级，且 OS6360-P10A 不支持（&lt;&lt;<PAGE 147>&gt;&gt;-&lt;&lt;<PAGE 148>&gt;&gt;）。</li>
-<li>EEE 只对铜口 100/1000M 生效（&lt;&lt;<PAGE 149>&gt;&gt;）。</li>
+<li>功率不足时按 low → high → critical 顺序断电，默认 low；关键上联/话机口务必显式设 critical（ <code>&lt;span class="pg"&gt;原文p154&lt;/span&gt;</code> ）。</li>
+<li>Fast PoE / Perpetual PoE 依赖 FPGA/CPLD 升级，且 OS6360-P10A 不支持（ <code>&lt;span class="pg"&gt;原文p147&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p148&lt;/span&gt;</code> ）。</li>
+<li>EEE 只对铜口 100/1000M 生效（ <code>&lt;span class="pg"&gt;原文p149&lt;/span&gt;</code> ）。</li>
 </ul>
 <h2 id="_1">来源</h2>
 <ul>
-<li>cases·C9 PoE 管理与监控命令集（&lt;&lt;<PAGE 153>&gt;&gt;-&lt;&lt;<PAGE 157>&gt;&gt;、&lt;&lt;<PAGE 176>&gt;&gt;）</li>
-<li>principles·P5 PoE 标准演进与功率预算（&lt;&lt;<PAGE 150>&gt;&gt;）</li>
-<li>principles·P6 端口优先级与断电顺序（&lt;&lt;<PAGE 154>&gt;&gt;）</li>
-<li>principles·P7 动态分配（&lt;&lt;<PAGE 150>&gt;&gt;）</li>
-<li>principles·P8 Fast PoE / Perpetual PoE（&lt;&lt;<PAGE 147>&gt;&gt;-&lt;&lt;<PAGE 148>&gt;&gt;）</li>
-<li>principles·P9 EEE 节能以太网（&lt;&lt;<PAGE 149>&gt;&gt;）</li>
+<li>cases·C9 PoE 管理与监控命令集（ <code>&lt;span class="pg"&gt;原文p153&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p157&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p176&lt;/span&gt;</code> ）</li>
+<li>principles·P5 PoE 标准演进与功率预算（ <code>&lt;span class="pg"&gt;原文p150&lt;/span&gt;</code> ）</li>
+<li>principles·P6 端口优先级与断电顺序（ <code>&lt;span class="pg"&gt;原文p154&lt;/span&gt;</code> ）</li>
+<li>principles·P7 动态分配（ <code>&lt;span class="pg"&gt;原文p150&lt;/span&gt;</code> ）</li>
+<li>principles·P8 Fast PoE / Perpetual PoE（ <code>&lt;span class="pg"&gt;原文p147&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p148&lt;/span&gt;</code> ）</li>
+<li>principles·P9 EEE 节能以太网（ <code>&lt;span class="pg"&gt;原文p149&lt;/span&gt;</code> ）</li>
 </ul><div class="pn"><a href="aos-dual-partition-config-management.html">⬅ 上一单元：aos-dual-partition-config-management</a><a class="nxt" href="vlan-inter-vlan-routing.html">下一单元：vlan-inter-vlan-routing ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

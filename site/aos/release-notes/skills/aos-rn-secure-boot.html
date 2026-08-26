@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -68,43 +69,43 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="i">I（核心理念）</h2>
 <ul>
-<li>Secure Boot 通过启动期认证校验保证只运行可信软件，需 U-Boot/ONIE/BIOS 升级 + Secure Boot 专用镜像三件配合（P1，&lt;&lt;<PAGE 34>&gt;&gt;）。</li>
-<li>平台分型框架（F3，&lt;&lt;<PAGE 104-105>&gt;&gt;）：U-Boot 型（6360/6465/6560/6570M——先升 U-Boot 再升镜像，之后只认 Secure Boot 镜像）／ONIE 型（6860N/6870/6900-X 系列——BIOS 使能+ONIE 包）／例外型（6860(E)/6865/9900/6900-V72·C32·V48C8·C32E 不支持或需 BIOS）；混 VC 用"最小公分母"（非 Secure Boot 镜像）。</li>
-<li>证书与密码治理是配套安全层：ALE CA 设备证书（每台唯一密钥对+内部 CA 签 X.509，5 年有效、到期前 1 年更新，P5，&lt;&lt;<PAGE 27>&gt;&gt;）、首访强制改密（P3，&lt;&lt;<PAGE 27>&gt;&gt;）、su 口令不可恢复（P4，&lt;&lt;<PAGE 26>&gt;&gt;）、弱加密禁用（P6，&lt;&lt;<PAGE 28>&gt;&gt;）、TLS 默认 1.2（P8，&lt;&lt;<PAGE 33>&gt;&gt;）。</li>
+<li>Secure Boot 通过启动期认证校验保证只运行可信软件，需 U-Boot/ONIE/BIOS 升级 + Secure Boot 专用镜像三件配合（P1， <code>&lt;span class="pg"&gt;原文p34&lt;/span&gt;</code> ）。</li>
+<li>平台分型框架（F3， <code>&lt;span class="pg"&gt;原文p104-105&lt;/span&gt;</code> ）：U-Boot 型（6360/6465/6560/6570M——先升 U-Boot 再升镜像，之后只认 Secure Boot 镜像）／ONIE 型（6860N/6870/6900-X 系列——BIOS 使能+ONIE 包）／例外型（6860(E)/6865/9900/6900-V72·C32·V48C8·C32E 不支持或需 BIOS）；混 VC 用"最小公分母"（非 Secure Boot 镜像）。</li>
+<li>证书与密码治理是配套安全层：ALE CA 设备证书（每台唯一密钥对+内部 CA 签 X.509，5 年有效、到期前 1 年更新，P5， <code>&lt;span class="pg"&gt;原文p27&lt;/span&gt;</code> ）、首访强制改密（P3， <code>&lt;span class="pg"&gt;原文p27&lt;/span&gt;</code> ）、su 口令不可恢复（P4， <code>&lt;span class="pg"&gt;原文p26&lt;/span&gt;</code> ）、弱加密禁用（P6， <code>&lt;span class="pg"&gt;原文p28&lt;/span&gt;</code> ）、TLS 默认 1.2（P8， <code>&lt;span class="pg"&gt;原文p33&lt;/span&gt;</code> ）。</li>
 </ul>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>先查平台属于哪一型</strong>：U-Boot 型先 <code>update uboot</code> 到 8.10.37.R04 再升 Secure Boot 镜像；ONIE 型升镜像→重启进 BIOS 启用→（6860N/6870）装 onie deb 包；例外型用非 Secure Boot 镜像</li>
-<li><strong>混 VC 判定</strong>：含 6900-V72/C32/V48C8/C32E 的混合 VC 全网必须用非 Secure Boot 镜像（X3，&lt;&lt;<PAGE 104>&gt;&gt;）</li>
+<li><strong>混 VC 判定</strong>：含 6900-V72/C32/V48C8/C32E 的混合 VC 全网必须用非 Secure Boot 镜像（X3， <code>&lt;span class="pg"&gt;原文p104&lt;/span&gt;</code> ）</li>
 <li><strong>证书策略</strong>：默认走 ALE CA（升级自动获得）；已装自定义 CA 证书的升级后继续沿用不替换（P5）</li>
-<li><strong>包管理纪律</strong>：pkgmgr install 后必须 <code>write memory</code> commit，否则 reload 时镜像校验失败（X16，&lt;&lt;<PAGE 101>&gt;&gt;）</li>
+<li><strong>包管理纪律</strong>：pkgmgr install 后必须 <code>write memory</code> commit，否则 reload 时镜像校验失败（X16， <code>&lt;span class="pg"&gt;原文p101&lt;/span&gt;</code> ）</li>
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>U-Boot 平台启用（6360/6465/6560/6570M）</strong>：先 <code>update uboot</code> 到 8.10.37.R04 → 再用 Secure Boot 镜像升 AOS（C9，&lt;&lt;<PAGE 105>&gt;&gt;）</li>
-<li><strong>ONIE 平台启用（6860N/6870/6900-X48C6 等）</strong>：Secure Boot 镜像升 AOS → 重启进 BIOS 启用 Secure Boot →（仅 6860N/6870）<code>pkgmgr install uosn-onie-v1.deb</code> + <code>write memory flash-synchro</code> 升 ONIE/Diag（C10，&lt;&lt;<PAGE 105>&gt;&gt;）</li>
-<li><strong>6900-V48C8/C32E</strong>：先升 BIOS（C32E v40.01.01.03 / V48C8 v40.01.01.04，联系 Support）→ 再升 Secure Boot 镜像 → 重启进 BIOS 启用（C11，&lt;&lt;<PAGE 105>&gt;&gt;）</li>
-<li><strong>包安装/卸载</strong>：<code>pkgmgr verify nos-mrp-v1.deb</code>（MD5）→ <code>pkgmgr install nos-mrp-v1.deb</code> → <code>write memory</code> → <code>show pkgmgr</code>（+ 未保存、* 待 reload）；卸载 <code>pkgmgr remove mrp</code> → <code>write memory</code> → <code>rm /flash/working/pkg/nos-mrp-v#.deb</code>（C12，&lt;&lt;<PAGE 101-102>&gt;&gt;）</li>
-<li><strong>弱加密禁用与查看</strong>：<code>system security crypto-strong-security enable</code> + <code>show system security</code>；弱密钥探测 <code>ssh strong-hmacs enable</code>（C16，&lt;&lt;<PAGE 28>&gt;&gt;/&lt;&lt;<PAGE 16>&gt;&gt;）</li>
-<li><strong>升级前 AMS/IoT-Profiler 密码加密化</strong>：升 8.7R1+ 前删 <code>/flash/&lt;running&gt;/pkg/ams/ams-broker.cfg</code>（每台 VC 成员）→ 升级 → 重配 broker；AMS-APPS 同理删 <code>pkg/ams-apps/install.sh</code>（C13，&lt;&lt;<PAGE 102>&gt;&gt;）</li>
+<li><strong>U-Boot 平台启用（6360/6465/6560/6570M）</strong>：先 <code>update uboot</code> 到 8.10.37.R04 → 再用 Secure Boot 镜像升 AOS（C9， <code>&lt;span class="pg"&gt;原文p105&lt;/span&gt;</code> ）</li>
+<li><strong>ONIE 平台启用（6860N/6870/6900-X48C6 等）</strong>：Secure Boot 镜像升 AOS → 重启进 BIOS 启用 Secure Boot →（仅 6860N/6870）<code>pkgmgr install uosn-onie-v1.deb</code> + <code>write memory flash-synchro</code> 升 ONIE/Diag（C10， <code>&lt;span class="pg"&gt;原文p105&lt;/span&gt;</code> ）</li>
+<li><strong>6900-V48C8/C32E</strong>：先升 BIOS（C32E v40.01.01.03 / V48C8 v40.01.01.04，联系 Support）→ 再升 Secure Boot 镜像 → 重启进 BIOS 启用（C11， <code>&lt;span class="pg"&gt;原文p105&lt;/span&gt;</code> ）</li>
+<li><strong>包安装/卸载</strong>：<code>pkgmgr verify nos-mrp-v1.deb</code>（MD5）→ <code>pkgmgr install nos-mrp-v1.deb</code> → <code>write memory</code> → <code>show pkgmgr</code>（+ 未保存、* 待 reload）；卸载 <code>pkgmgr remove mrp</code> → <code>write memory</code> → <code>rm /flash/working/pkg/nos-mrp-v#.deb</code>（C12， <code>&lt;span class="pg"&gt;原文p101-102&lt;/span&gt;</code> ）</li>
+<li><strong>弱加密禁用与查看</strong>：<code>system security crypto-strong-security enable</code> + <code>show system security</code>；弱密钥探测 <code>ssh strong-hmacs enable</code>（C16， <code>&lt;span class="pg"&gt;原文p28&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p16&lt;/span&gt;</code> ）</li>
+<li><strong>升级前 AMS/IoT-Profiler 密码加密化</strong>：升 8.7R1+ 前删 <code>/flash/&lt;running&gt;/pkg/ams/ams-broker.cfg</code>（每台 VC 成员）→ 升级 → 重配 broker；AMS-APPS 同理删 <code>pkg/ams-apps/install.sh</code>（C13， <code>&lt;span class="pg"&gt;原文p102&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>三类平台 Secure Boot 启用路径（C9/C10/C11，&lt;&lt;<PAGE 105>&gt;&gt;）</li>
-<li>pkgmgr 包生命周期管理（C12，&lt;&lt;<PAGE 101-102>&gt;&gt;）</li>
-<li>升级前 AMS 明文密码治理（C13，&lt;&lt;<PAGE 102>&gt;&gt;）</li>
+<li>三类平台 Secure Boot 启用路径（C9/C10/C11， <code>&lt;span class="pg"&gt;原文p105&lt;/span&gt;</code> ）</li>
+<li>pkgmgr 包生命周期管理（C12， <code>&lt;span class="pg"&gt;原文p101-102&lt;/span&gt;</code> ）</li>
+<li>升级前 AMS 明文密码治理（C13， <code>&lt;span class="pg"&gt;原文p102&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="b">B（反例/坑）</h2>
 <ul>
-<li>次序颠倒装了 Secure Boot 镜像会重启回落 Certified 镜像：6360/6465/6560/6570M 必须 U-Boot ≥8.10.37.R04 才能升 8.10R4（X1/P2，&lt;&lt;<PAGE 18>&gt;&gt;/&lt;&lt;<PAGE 104>&gt;&gt;）</li>
-<li>6570M 出厂 U-Boot 8.10.42.R02 只认签名镜像（8.9R4+），降级到更早 AOS 必须先降 U-Boot 到 &lt;8.9.70.R04（X7，&lt;&lt;<PAGE 18>&gt;&gt;）</li>
-<li>Secure Boot 不支持平台清单：6860(E)、6865、6900-V72/C32/V48C8/C32E（无 BIOS 升级时）、9900（X4，&lt;&lt;<PAGE 104>&gt;&gt;）</li>
-<li>8.10R4 首访强制改密会打断自动化：admin 默认口令的 REST API/脚本必须改（X8/P3，&lt;&lt;<PAGE 18>&gt;&gt;/&lt;&lt;<PAGE 27>&gt;&gt;）</li>
-<li>8.7R2 起新用户口令策略默认收紧（禁含用户名、大写/小写/数字/非字母各≥1），存量用户不受影响（X9，&lt;&lt;<PAGE 17>&gt;&gt;）</li>
-<li>包未 commit 引发镜像校验错误：pkgmgr install 后必须 write memory（X16，&lt;&lt;<PAGE 101>&gt;&gt;）</li>
-<li>升级前未删 ams-broker.cfg / install.sh 则密码不会转加密（X17，&lt;&lt;<PAGE 102>&gt;&gt;）</li>
-<li>ssh-rsa（SHA-1）默认禁用，替代 rsa-sha2-256/512 与 ecdsa（P7，&lt;&lt;<PAGE 16>&gt;&gt;）</li>
-<li>PKI 私钥与 installsshkey 曾不随 VC 主备同步（8.10R4 修复，复制到 /flash/switch/.profiles 并全机箱应用）（X35，&lt;&lt;<PAGE 87>&gt;&gt;）</li>
+<li>次序颠倒装了 Secure Boot 镜像会重启回落 Certified 镜像：6360/6465/6560/6570M 必须 U-Boot ≥8.10.37.R04 才能升 8.10R4（X1/P2， <code>&lt;span class="pg"&gt;原文p18&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p104&lt;/span&gt;</code> ）</li>
+<li>6570M 出厂 U-Boot 8.10.42.R02 只认签名镜像（8.9R4+），降级到更早 AOS 必须先降 U-Boot 到 &lt;8.9.70.R04（X7， <code>&lt;span class="pg"&gt;原文p18&lt;/span&gt;</code> ）</li>
+<li>Secure Boot 不支持平台清单：6860(E)、6865、6900-V72/C32/V48C8/C32E（无 BIOS 升级时）、9900（X4， <code>&lt;span class="pg"&gt;原文p104&lt;/span&gt;</code> ）</li>
+<li>8.10R4 首访强制改密会打断自动化：admin 默认口令的 REST API/脚本必须改（X8/P3， <code>&lt;span class="pg"&gt;原文p18&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p27&lt;/span&gt;</code> ）</li>
+<li>8.7R2 起新用户口令策略默认收紧（禁含用户名、大写/小写/数字/非字母各≥1），存量用户不受影响（X9， <code>&lt;span class="pg"&gt;原文p17&lt;/span&gt;</code> ）</li>
+<li>包未 commit 引发镜像校验错误：pkgmgr install 后必须 write memory（X16， <code>&lt;span class="pg"&gt;原文p101&lt;/span&gt;</code> ）</li>
+<li>升级前未删 ams-broker.cfg / install.sh 则密码不会转加密（X17， <code>&lt;span class="pg"&gt;原文p102&lt;/span&gt;</code> ）</li>
+<li>ssh-rsa（SHA-1）默认禁用，替代 rsa-sha2-256/512 与 ecdsa（P7， <code>&lt;span class="pg"&gt;原文p16&lt;/span&gt;</code> ）</li>
+<li>PKI 私钥与 installsshkey 曾不随 VC 主备同步（8.10R4 修复，复制到 /flash/switch/.profiles 并全机箱应用）（X35， <code>&lt;span class="pg"&gt;原文p87&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniSwitch AOS Release 8.10R4 Release Notes Appendix L（&lt;&lt;<PAGE 104-105>&gt;&gt;）、Prerequisites（&lt;&lt;<PAGE 15-18>&gt;&gt;）、New Features 安全类（&lt;&lt;<PAGE 26-34>&gt;&gt;）、Appendix J（&lt;&lt;<PAGE 101-102>&gt;&gt;）。条目来源：cases C9-C13/C16；principles P1-P9/P5；counter-examples X1/X3/X4/X7/X8/X9/X16/X17/X35；frameworks F3。</p><div class="pn"><a href="aos-rn-upgrade-path.html">⬅ 上一单元：aos-rn-upgrade-path</a><a class="nxt" href="aos-rn-known-issues.html">下一单元：aos-rn-known-issues ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<p>OmniSwitch AOS Release 8.10R4 Release Notes Appendix L（ <code>&lt;span class="pg"&gt;原文p104-105&lt;/span&gt;</code> ）、Prerequisites（ <code>&lt;span class="pg"&gt;原文p15-18&lt;/span&gt;</code> ）、New Features 安全类（ <code>&lt;span class="pg"&gt;原文p26-34&lt;/span&gt;</code> ）、Appendix J（ <code>&lt;span class="pg"&gt;原文p101-102&lt;/span&gt;</code> ）。条目来源：cases C9-C13/C16；principles P1-P9/P5；counter-examples X1/X3/X4/X7/X8/X9/X16/X17/X35；frameworks F3。</p><div class="pn"><a href="aos-rn-upgrade-path.html">⬅ 上一单元：aos-rn-upgrade-path</a><a class="nxt" href="aos-rn-known-issues.html">下一单元：aos-rn-known-issues ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

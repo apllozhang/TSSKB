@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -84,56 +85,56 @@ blockquote p{margin:6px 0}
    <code>-&gt; ls -l /flash/working          // 或 /flash/certified
    -&gt; show microcode working | certified | loaded
    -&gt; show running-directory        // RUNNING / CERTIFY NEEDED / SYNCHRONIZED</code></li>
-<li>修改配置后判断状态：改 RAM（如 <code>vlan 2</code>）后 running-directory 变 NOT SYNCHRONIZED；保存 <code>-&gt; write memory</code>；验证新配置重启用 <code>-&gt; reload from working no rollback-timeout</code>（C07，&lt;&lt;<PAGE 131>&gt;&gt;–&lt;&lt;<PAGE 137>&gt;&gt;）。</li>
-<li>一步保存+认证：<code>-&gt; write memory flash-synchro</code>（= write memory + copy running certified，P16，&lt;&lt;<PAGE 122>&gt;&gt;）。</li>
-<li>自建目录实验：<code>mkdir lab</code> → <code>cp working/*.* lab</code> → <code>reload from lab no rollback-timeout</code> → <code>copy running certified</code> / <code>modify running-directory working</code>（C07，&lt;&lt;<PAGE 131>&gt;&gt;–&lt;&lt;<PAGE 137>&gt;&gt;）。</li>
+<li>修改配置后判断状态：改 RAM（如 <code>vlan 2</code>）后 running-directory 变 NOT SYNCHRONIZED；保存 <code>-&gt; write memory</code>；验证新配置重启用 <code>-&gt; reload from working no rollback-timeout</code>（C07， <code>&lt;span class="pg"&gt;原文p131&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p137&lt;/span&gt;</code> ）。</li>
+<li>一步保存+认证：<code>-&gt; write memory flash-synchro</code>（= write memory + copy running certified，P16， <code>&lt;span class="pg"&gt;原文p122&lt;/span&gt;</code> ）。</li>
+<li>自建目录实验：<code>mkdir lab</code> → <code>cp working/*.* lab</code> → <code>reload from lab no rollback-timeout</code> → <code>copy running certified</code> / <code>modify running-directory working</code>（C07， <code>&lt;span class="pg"&gt;原文p131&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p137&lt;/span&gt;</code> ）。</li>
 <li>USB 自动备份：
    <code>-&gt; usb enable
    -&gt; usb backup admin-state enable
    -&gt; write memory        // 自动同步到 /uflash
    -&gt; cd /uflash; ls      // 验证 certified/working 目录</code>
-   拔出前必须 <code>usb disable</code>（C08，&lt;&lt;<PAGE 138>&gt;&gt;–&lt;&lt;<PAGE 139>&gt;&gt;）。</li>
-<li>镜像升级七步：读 release note → 下载 → FTP 传到交换机 → 升级镜像 → 验证 → <code>copy running certified</code> 固化 → 按需升 uboot/FPGA（F03，&lt;&lt;<PAGE 465>&gt;&gt;–&lt;&lt;<PAGE 469>&gt;&gt;）：
+   拔出前必须 <code>usb disable</code>（C08， <code>&lt;span class="pg"&gt;原文p138&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p139&lt;/span&gt;</code> ）。</li>
+<li>镜像升级七步：读 release note → 下载 → FTP 传到交换机 → 升级镜像 → 验证 → <code>copy running certified</code> 固化 → 按需升 uboot/FPGA（F03， <code>&lt;span class="pg"&gt;原文p465&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p469&lt;/span&gt;</code> ）：
    <code>-&gt; update uboot cmm all file u-boot.8.4.1.R03.141.tar.gz
    -&gt; update fpga-cpld cmm all file fpga_kit_3312
    -&gt; reload from working no rollback-timeout
    -&gt; copy running certified
    -&gt; show running-directory</code>
-   （C25，&lt;&lt;<PAGE 469>&gt;&gt;）</li>
-<li>恢复出厂（仅自有设备）：<code>-&gt; rm /flash/working/vcboot.cfg</code> → <code>-&gt; reload from working no rollback-timeout</code>，约 5 分钟（C04，&lt;&lt;<PAGE 105>&gt;&gt;）。</li>
+   （C25， <code>&lt;span class="pg"&gt;原文p469&lt;/span&gt;</code> ）</li>
+<li>恢复出厂（仅自有设备）：<code>-&gt; rm /flash/working/vcboot.cfg</code> → <code>-&gt; reload from working no rollback-timeout</code>，约 5 分钟（C04， <code>&lt;span class="pg"&gt;原文p105&lt;/span&gt;</code> ）。</li>
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
-<li>冷启动目录选择规则：running 与 certified 内容一致则从 running 启动，不一致回退 certified（P14，&lt;&lt;<PAGE 132>&gt;&gt;）。</li>
-<li>启动序列：U-Boot 引导 → 硬件初始化 → 内存诊断 → 镜像选择 → AOS 拷入 RAM 运行（P13，&lt;&lt;<PAGE 119>&gt;&gt;）。</li>
-<li>Thin Client 模式：本地不存配置，全部从 OV2500 拉取，<code>write memory</code> 可执行但不生效（P18，&lt;&lt;<PAGE 127>&gt;&gt;）。</li>
-<li>USB 备份可设密码加密，且 <code>write memory</code> / <code>copy running certified</code> 触发自动镜像（P17，&lt;&lt;<PAGE 126>&gt;&gt;、&lt;&lt;<PAGE 138>&gt;&gt;）。</li>
-<li>CLI 效率技巧：部分关键字补全（<code>sh vl</code>）、<code>| grep &lt;MAC&gt;</code> 过滤、<code>?</code> 在线帮助（P19，&lt;&lt;<PAGE 128>&gt;&gt;）。</li>
+<li>冷启动目录选择规则：running 与 certified 内容一致则从 running 启动，不一致回退 certified（P14， <code>&lt;span class="pg"&gt;原文p132&lt;/span&gt;</code> ）。</li>
+<li>启动序列：U-Boot 引导 → 硬件初始化 → 内存诊断 → 镜像选择 → AOS 拷入 RAM 运行（P13， <code>&lt;span class="pg"&gt;原文p119&lt;/span&gt;</code> ）。</li>
+<li>Thin Client 模式：本地不存配置，全部从 OV2500 拉取，<code>write memory</code> 可执行但不生效（P18， <code>&lt;span class="pg"&gt;原文p127&lt;/span&gt;</code> ）。</li>
+<li>USB 备份可设密码加密，且 <code>write memory</code> / <code>copy running certified</code> 触发自动镜像（P17， <code>&lt;span class="pg"&gt;原文p126&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p138&lt;/span&gt;</code> ）。</li>
+<li>CLI 效率技巧：部分关键字补全（<code>sh vl</code>）、<code>| grep &lt;MAC&gt;</code> 过滤、<code>?</code> 在线帮助（P19， <code>&lt;span class="pg"&gt;原文p128&lt;/span&gt;</code> ）。</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>目录管理全流程实验：改 VLAN 后状态变 NOT SYNCHRONIZED，经 write memory / reload / copy running certified / modify running-directory 完整走一遍状态机（C07，&lt;&lt;<PAGE 131>&gt;&gt;–&lt;&lt;<PAGE 137>&gt;&gt;）。</li>
-<li>USB 备份启用后 write memory 自动同步，<code>cd /uflash; ls</code> 见到 certified/working（C08，&lt;&lt;<PAGE 138>&gt;&gt;–&lt;&lt;<PAGE 139>&gt;&gt;）。</li>
-<li>AOS 升级命令链 uboot → fpga-cpld → reload → certify（C25，&lt;&lt;<PAGE 469>&gt;&gt;）。</li>
+<li>目录管理全流程实验：改 VLAN 后状态变 NOT SYNCHRONIZED，经 write memory / reload / copy running certified / modify running-directory 完整走一遍状态机（C07， <code>&lt;span class="pg"&gt;原文p131&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p137&lt;/span&gt;</code> ）。</li>
+<li>USB 备份启用后 write memory 自动同步，<code>cd /uflash; ls</code> 见到 certified/working（C08， <code>&lt;span class="pg"&gt;原文p138&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p139&lt;/span&gt;</code> ）。</li>
+<li>AOS 升级命令链 uboot → fpga-cpld → reload → certify（C25， <code>&lt;span class="pg"&gt;原文p469&lt;/span&gt;</code> ）。</li>
 </ul>
 <h2 id="b">B（边界与陷阱）</h2>
 <ul>
-<li><code>reload all</code> 无条件从 certified 启动，会回退到旧配置；验证新配置必须 <code>reload from working no rollback-timeout</code>（CE03，&lt;&lt;<PAGE 132>&gt;&gt;）。</li>
-<li>RAM 中未 <code>write memory</code> 的修改重启即丢（CE04，&lt;&lt;<PAGE 133>&gt;&gt;）。</li>
-<li>从 certified 目录运行时 <code>write memory</code> 报错 "not permitted"，须先 <code>modify running-directory working</code>（CE05/P15，&lt;&lt;<PAGE 135>&gt;&gt;、&lt;&lt;<PAGE 124>&gt;&gt;）。</li>
-<li>拷贝 working 目录时 boot.md5 报 Permission denied 属正常（自动生成文件），忽略继续（CE21，&lt;&lt;<PAGE 136>&gt;&gt;）。</li>
-<li>教学/托管环境不要做真恢复出厂（<code>rm vcboot.cfg</code> + reload 会破坏预置基线）（CE02，&lt;&lt;<PAGE 105>&gt;&gt;）。</li>
+<li><code>reload all</code> 无条件从 certified 启动，会回退到旧配置；验证新配置必须 <code>reload from working no rollback-timeout</code>（CE03， <code>&lt;span class="pg"&gt;原文p132&lt;/span&gt;</code> ）。</li>
+<li>RAM 中未 <code>write memory</code> 的修改重启即丢（CE04， <code>&lt;span class="pg"&gt;原文p133&lt;/span&gt;</code> ）。</li>
+<li>从 certified 目录运行时 <code>write memory</code> 报错 "not permitted"，须先 <code>modify running-directory working</code>（CE05/P15， <code>&lt;span class="pg"&gt;原文p135&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p124&lt;/span&gt;</code> ）。</li>
+<li>拷贝 working 目录时 boot.md5 报 Permission denied 属正常（自动生成文件），忽略继续（CE21， <code>&lt;span class="pg"&gt;原文p136&lt;/span&gt;</code> ）。</li>
+<li>教学/托管环境不要做真恢复出厂（<code>rm vcboot.cfg</code> + reload 会破坏预置基线）（CE02， <code>&lt;span class="pg"&gt;原文p105&lt;/span&gt;</code> ）。</li>
 </ul>
 <h2 id="_1">来源</h2>
 <ul>
-<li>case·目录管理全流程实验（&lt;&lt;<PAGE 131>&gt;&gt;–&lt;&lt;<PAGE 137>&gt;&gt;）</li>
-<li>case·USB 备份与查看 uflash（&lt;&lt;<PAGE 138>&gt;&gt;–&lt;&lt;<PAGE 139>&gt;&gt;）</li>
-<li>case·OS6360 恢复出厂（&lt;&lt;<PAGE 105>&gt;&gt;）</li>
-<li>case·AOS 镜像升级实操命令链（&lt;&lt;<PAGE 469>&gt;&gt;）</li>
-<li>framework·AOS 软件升级七步流程（&lt;&lt;<PAGE 465>&gt;&gt;–&lt;&lt;<PAGE 469>&gt;&gt;）</li>
-<li>framework·Flash 目录与回滚模型（&lt;&lt;<PAGE 118>&gt;&gt;–&lt;&lt;<PAGE 124>&gt;&gt;）</li>
-<li>principle·write memory flash-synchro 组合语义（&lt;&lt;<PAGE 122>&gt;&gt;）</li>
-<li>counter·reload all 回退 certified（&lt;&lt;<PAGE 132>&gt;&gt;）</li>
-<li>counter·未保存配置重启丢失（&lt;&lt;<PAGE 133>&gt;&gt;）</li>
-<li>counter·certified 模式无法保存（&lt;&lt;<PAGE 135>&gt;&gt;）</li>
+<li>case·目录管理全流程实验（ <code>&lt;span class="pg"&gt;原文p131&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p137&lt;/span&gt;</code> ）</li>
+<li>case·USB 备份与查看 uflash（ <code>&lt;span class="pg"&gt;原文p138&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p139&lt;/span&gt;</code> ）</li>
+<li>case·OS6360 恢复出厂（ <code>&lt;span class="pg"&gt;原文p105&lt;/span&gt;</code> ）</li>
+<li>case·AOS 镜像升级实操命令链（ <code>&lt;span class="pg"&gt;原文p469&lt;/span&gt;</code> ）</li>
+<li>framework·AOS 软件升级七步流程（ <code>&lt;span class="pg"&gt;原文p465&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p469&lt;/span&gt;</code> ）</li>
+<li>framework·Flash 目录与回滚模型（ <code>&lt;span class="pg"&gt;原文p118&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p124&lt;/span&gt;</code> ）</li>
+<li>principle·write memory flash-synchro 组合语义（ <code>&lt;span class="pg"&gt;原文p122&lt;/span&gt;</code> ）</li>
+<li>counter·reload all 回退 certified（ <code>&lt;span class="pg"&gt;原文p132&lt;/span&gt;</code> ）</li>
+<li>counter·未保存配置重启丢失（ <code>&lt;span class="pg"&gt;原文p133&lt;/span&gt;</code> ）</li>
+<li>counter·certified 模式无法保存（ <code>&lt;span class="pg"&gt;原文p135&lt;/span&gt;</code> ）</li>
 </ul><div class="pn"><a href="switch-first-setup.html">⬅ 上一单元：switch-first-setup</a><a class="nxt" href="vlan-port-assignment.html">下一单元：vlan-port-assignment ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

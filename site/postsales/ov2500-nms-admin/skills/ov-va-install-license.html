@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -79,35 +80,35 @@ blockquote p{margin:6px 0}
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li><strong>容量选型</strong>：按设备数定档——Low &lt;500 / Medium 500-2000 / High 2000-5000 / Very High 5000-10000 台；上限 10000 devices、4000 Stellar APs、5000 VMs（&lt;&lt;<PAGE 45/58/44>&gt;&gt;）</li>
-<li><strong>部署 OVF</strong>：vCenter → vSphere Client → File &gt; Deploy OVF Template；Disk Formatting 选 Thick Provision（推荐）；部署完成后如未自动开机则手动 Power on（&lt;&lt;<PAGE 54>&gt;&gt;）</li>
-<li><strong>控制台初始化</strong>：Hypervisor Console 依次填——cliadmin 密码 → IP Settings（OV IP、HTTP/HTTPS 端口、Captive Portal IP/端口、Additional OV Web）→ Network Size → Hostname/DNS/NTP/Timezone/Routes → Exit &amp; Reboot（&lt;&lt;<PAGE 56-60>&gt;&gt;）</li>
+<li><strong>部署 OVF</strong>：vCenter → vSphere Client → File &gt; Deploy OVF Template；Disk Formatting 选 Thick Provision（推荐）；部署完成后如未自动开机则手动 Power on（ <code>&lt;span class="pg"&gt;原文p54&lt;/span&gt;</code> ）</li>
+<li><strong>控制台初始化</strong>：Hypervisor Console 依次填——cliadmin 密码 → IP Settings（OV IP、HTTP/HTTPS 端口、Captive Portal IP/端口、Additional OV Web）→ Network Size → Hostname/DNS/NTP/Timezone/Routes → Exit &amp; Reboot（ <code>&lt;span class="pg"&gt;原文p56-60&lt;/span&gt;</code> ）</li>
 <li><strong>首登与改密</strong>：浏览器访问 <code>https://&lt;IP&gt;</code>，首次登录强制修改默认密码（admin/switch），否则无法进入系统（&lt;&lt;<PAGE 61/101-102>&gt;&gt;）</li>
-<li><strong>申请 EVAL License</strong>：https://lds.al-enterprise.com/ → OmniVista 2500 NMS → Customer ID 99999 / Order Number "evaluation" → License Type EVAL-OV2500-ALL-TYPE_1 / Passcode omnivista → Generate License 保存文件（&lt;&lt;<PAGE 103-104>&gt;&gt;）</li>
-<li><strong>安装 License</strong>：Add License → Browse 上传文件，<strong>或</strong>手输 License Keys（二选一）；EULA 勾 OK、<strong>不勾</strong> Enable Fleet Supervision；装好后删除本地 EVAL 许可文件（&lt;&lt;<PAGE 104-105>&gt;&gt;）</li>
+<li><strong>申请 EVAL License</strong>：https://lds.al-enterprise.com/ → OmniVista 2500 NMS → Customer ID 99999 / Order Number "evaluation" → License Type EVAL-OV2500-ALL-TYPE_1 / Passcode omnivista → Generate License 保存文件（ <code>&lt;span class="pg"&gt;原文p103-104&lt;/span&gt;</code> ）</li>
+<li><strong>安装 License</strong>：Add License → Browse 上传文件，<strong>或</strong>手输 License Keys（二选一）；EULA 勾 OK、<strong>不勾</strong> Enable Fleet Supervision；装好后删除本地 EVAL 许可文件（ <code>&lt;span class="pg"&gt;原文p104-105&lt;/span&gt;</code> ）</li>
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
-<li>HA 场景许可：自 4.3R1 起 "you don't have to double the licenses on the redundant system"；节点计数规则：VC 内每台物理设备占 1 个 license（"VC of 2 = 2 license units"）（&lt;&lt;<PAGE 50-51>&gt;&gt;）</li>
-<li>带 4000 Stellar AP 时：High 档仅支持到 500 台 AOS 交换机，Very High 档到 1000 台——AP 多的无线重环境要升档（&lt;&lt;<PAGE 45>&gt;&gt;）</li>
-<li>标称容量受环境变量影响（VLAN 数、客户端数、开放的应用数等），"Specific configurations may vary"（&lt;&lt;<PAGE 45>&gt;&gt;）</li>
+<li>HA 场景许可：自 4.3R1 起 "you don't have to double the licenses on the redundant system"；节点计数规则：VC 内每台物理设备占 1 个 license（"VC of 2 = 2 license units"）（ <code>&lt;span class="pg"&gt;原文p50-51&lt;/span&gt;</code> ）</li>
+<li>带 4000 Stellar AP 时：High 档仅支持到 500 台 AOS 交换机，Very High 档到 1000 台——AP 多的无线重环境要升档（ <code>&lt;span class="pg"&gt;原文p45&lt;/span&gt;</code> ）</li>
+<li>标称容量受环境变量影响（VLAN 数、客户端数、开放的应用数等），"Specific configurations may vary"（ <code>&lt;span class="pg"&gt;原文p45&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>部署 Virtual Appliance（vSphere OVF 全流程，Thick Provision 推荐）——cases·OVF 部署（&lt;&lt;<PAGE 54>&gt;&gt;）</li>
+<li>部署 Virtual Appliance（vSphere OVF 全流程，Thick Provision 推荐）——cases·OVF 部署（ <code>&lt;span class="pg"&gt;原文p54&lt;/span&gt;</code> ）</li>
 <li>安装序列：控制台初始化 → 重启 → 首登改密 → License 弹窗——cases·安装序列（&lt;&lt;<PAGE 56-60/61/101-102>&gt;&gt;）</li>
-<li>生成并安装 Evaluation License 全流程——cases·EVAL 许可（&lt;&lt;<PAGE 103-105>&gt;&gt;）</li>
+<li>生成并安装 Evaluation License 全流程——cases·EVAL 许可（ <code>&lt;span class="pg"&gt;原文p103-105&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="b">B（边界与陷阱）</h2>
 <ul>
-<li>License 文件与 License Keys 不可同时安装："Don't do both!"（&lt;&lt;<PAGE 104>&gt;&gt;）</li>
-<li>粘贴 Key 时只取逗号后的 key 部分，整行粘贴会把许可名带进去（&lt;&lt;<PAGE 104>&gt;&gt;）</li>
-<li>接受 EULA 时不要勾 Enable Fleet Supervision，书中两次强调（&lt;&lt;<PAGE 104>&gt;&gt;）</li>
-<li>装完许可务必删除本地 EVAL 文件，防止外泄（&lt;&lt;<PAGE 105>&gt;&gt;）</li>
-<li>无可用快照时无法恢复 OV 初始配置（快照含 IP/网关/network size），只能联系培训师/支持（&lt;&lt;<PAGE 100>&gt;&gt;）</li>
+<li>License 文件与 License Keys 不可同时安装："Don't do both!"（ <code>&lt;span class="pg"&gt;原文p104&lt;/span&gt;</code> ）</li>
+<li>粘贴 Key 时只取逗号后的 key 部分，整行粘贴会把许可名带进去（ <code>&lt;span class="pg"&gt;原文p104&lt;/span&gt;</code> ）</li>
+<li>接受 EULA 时不要勾 Enable Fleet Supervision，书中两次强调（ <code>&lt;span class="pg"&gt;原文p104&lt;/span&gt;</code> ）</li>
+<li>装完许可务必删除本地 EVAL 文件，防止外泄（ <code>&lt;span class="pg"&gt;原文p105&lt;/span&gt;</code> ）</li>
+<li>无可用快照时无法恢复 OV 初始配置（快照含 IP/网关/network size），只能联系培训师/支持（ <code>&lt;span class="pg"&gt;原文p100&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
 <ul>
-<li>frameworks·Sizing 四档决策（&lt;&lt;<PAGE 45/58/44>&gt;&gt;）、VA 部署序列（&lt;&lt;<PAGE 55-60/54>&gt;&gt;）、License 类型决策（&lt;&lt;<PAGE 46-51>&gt;&gt;）</li>
+<li>frameworks·Sizing 四档决策（&lt;&lt;<PAGE 45/58/44>&gt;&gt;）、VA 部署序列（&lt;&lt;<PAGE 55-60/54>&gt;&gt;）、License 类型决策（ <code>&lt;span class="pg"&gt;原文p46-51&lt;/span&gt;</code> ）</li>
 <li>principles·纯虚机形态（&lt;&lt;<PAGE 25/44>&gt;&gt;）</li>
 <li>cases·OVF 部署/安装序列/EVAL 许可（&lt;&lt;<PAGE 54/56-61/97/101-105>&gt;&gt;）</li>
 <li>counter-examples·许可二选一/粘贴反例/Fleet Supervision/快照缺失/容量骤降（&lt;&lt;<PAGE 100-105/45>&gt;&gt;）</li>

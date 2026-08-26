@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -68,40 +69,40 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="i">I（核心理念）</h2>
 <ul>
-<li>失电感知与告警双体系（F3，&lt;&lt;<PAGE 63>&gt;&gt;/&lt;&lt;<PAGE 65>&gt;&gt;/&lt;&lt;<PAGE 68>&gt;&gt;/&lt;&lt;<PAGE 69>&gt;&gt;）：预防侧=告警继电器（外部传感器输入 5-12VDC+8 类系统事件，独立/VC 两模式，映射到 NO/C/NC 输出，条件恢复自动清除）；亡故侧=Dying Gasp（残电三通道：SNMP trap 前 3 站+Syslog 前 3 服务器+4 个 802.3ah OAM PDU 上联口优先）。</li>
+<li>失电感知与告警双体系（F3， <code>&lt;span class="pg"&gt;原文p63&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p65&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p68&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p69&lt;/span&gt;</code> ）：预防侧=告警继电器（外部传感器输入 5-12VDC+8 类系统事件，独立/VC 两模式，映射到 NO/C/NC 输出，条件恢复自动清除）；亡故侧=Dying Gasp（残电三通道：SNMP trap 前 3 站+Syslog 前 3 服务器+4 个 802.3ah OAM PDU 上联口优先）。</li>
 <li>告警 VC 同步机制（P19）：VC 中任一机的输入/事件可驱动任一机的输出。</li>
 <li>温度双阈值与 6360 同构（P24）：Warning trap 不停机/Danger 自动关机需手动重启且不可配；各机型阈值梯度不同（P8：75-95/83-97°C）。</li>
 </ul>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
-<li><strong>本地告警选继电器输出</strong>：传感器/事件→alarm map→NO/C/NC 干接点（220VDC/250VAC·2A·60W）接声光/PLC（P18，&lt;&lt;<PAGE 63>&gt;&gt;）</li>
-<li><strong>远端失电感知选 DG</strong>：SNMP trap+Syslog 站点配置+上联口 efm-oam PDU 三通道并行（P21，&lt;&lt;<PAGE 68>&gt;&gt;）</li>
-<li><strong>VC 部署告警同步</strong>：跨机箱输入/事件同步，支持多对一/一对多映射（P19，&lt;&lt;<PAGE 63>&gt;&gt;）</li>
-<li><strong>告警不清自愈</strong>：8 类事件条件恢复自动清除；其余 <code>alarm clear status</code> 手工清（P20，&lt;&lt;<PAGE 65>&gt;&gt;）</li>
-<li><strong>LED 分层诊断</strong>：OK（绿/闪绿/琥珀=失败）、PS1/PS2（绿/琥珀/灭）、Alarm In/Out（琥珀=检测到）（&lt;&lt;<PAGE 36-37>&gt;&gt;）</li>
+<li><strong>本地告警选继电器输出</strong>：传感器/事件→alarm map→NO/C/NC 干接点（220VDC/250VAC·2A·60W）接声光/PLC（P18， <code>&lt;span class="pg"&gt;原文p63&lt;/span&gt;</code> ）</li>
+<li><strong>远端失电感知选 DG</strong>：SNMP trap+Syslog 站点配置+上联口 efm-oam PDU 三通道并行（P21， <code>&lt;span class="pg"&gt;原文p68&lt;/span&gt;</code> ）</li>
+<li><strong>VC 部署告警同步</strong>：跨机箱输入/事件同步，支持多对一/一对多映射（P19， <code>&lt;span class="pg"&gt;原文p63&lt;/span&gt;</code> ）</li>
+<li><strong>告警不清自愈</strong>：8 类事件条件恢复自动清除；其余 <code>alarm clear status</code> 手工清（P20， <code>&lt;span class="pg"&gt;原文p65&lt;/span&gt;</code> ）</li>
+<li><strong>LED 分层诊断</strong>：OK（绿/闪绿/琥珀=失败）、PS1/PS2（绿/琥珀/灭）、Alarm In/Out（琥珀=检测到）（ <code>&lt;span class="pg"&gt;原文p36-37&lt;/span&gt;</code> ）</li>
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>告警输入→输出映射</strong>：<code>alarm in temperature-alarm-in action alarm-out admin-state enable</code>→<code>alarm out alarm-out-1 admin-state enable</code>→<code>alarm map temperature-alarm-in out alarm-out-1</code>（C16，&lt;&lt;<PAGE 64>&gt;&gt;）</li>
-<li><strong>系统事件→输出</strong>：<code>alarm event auth-fail-event event authentication-failure admin-state enable</code>→<code>alarm out ...</code>→<code>alarm map ...</code>→<code>show alarm event config</code>/<code>show alarm status</code> 核对（C17，&lt;&lt;<PAGE 64>&gt;&gt;）</li>
-<li><strong>手工清除</strong>：<code>alarm clear status</code>（C18，&lt;&lt;<PAGE 65>&gt;&gt;）</li>
-<li><strong>DG OAM 通告</strong>：<code>efm-oam admin-state enable</code>→<code>efm-oam port 1/1/23-24 admin-state enable</code>→<code>efm-oam port 1/1/23-24 propagate-events dying-gasp enable</code>（PDU 上联口优先）（C19，&lt;&lt;<PAGE 68-69>&gt;&gt;）</li>
-<li><strong>DG 接收端</strong>：<code>snmp station</code> 配 trap 站（前 3 站生效）；<code>swlog output socket</code> 加 Syslog 服务器（&lt;&lt;<PAGE 68>&gt;&gt;）</li>
-<li><strong>硬件巡检</strong>：show module/long→show temperature（UNDER THRESHOLD 正常）→Danger 关机处理后手动启动（C20，&lt;&lt;<PAGE 66-67>&gt;&gt;）</li>
+<li><strong>告警输入→输出映射</strong>：<code>alarm in temperature-alarm-in action alarm-out admin-state enable</code>→<code>alarm out alarm-out-1 admin-state enable</code>→<code>alarm map temperature-alarm-in out alarm-out-1</code>（C16， <code>&lt;span class="pg"&gt;原文p64&lt;/span&gt;</code> ）</li>
+<li><strong>系统事件→输出</strong>：<code>alarm event auth-fail-event event authentication-failure admin-state enable</code>→<code>alarm out ...</code>→<code>alarm map ...</code>→<code>show alarm event config</code>/<code>show alarm status</code> 核对（C17， <code>&lt;span class="pg"&gt;原文p64&lt;/span&gt;</code> ）</li>
+<li><strong>手工清除</strong>：<code>alarm clear status</code>（C18， <code>&lt;span class="pg"&gt;原文p65&lt;/span&gt;</code> ）</li>
+<li><strong>DG OAM 通告</strong>：<code>efm-oam admin-state enable</code>→<code>efm-oam port 1/1/23-24 admin-state enable</code>→<code>efm-oam port 1/1/23-24 propagate-events dying-gasp enable</code>（PDU 上联口优先）（C19， <code>&lt;span class="pg"&gt;原文p68-69&lt;/span&gt;</code> ）</li>
+<li><strong>DG 接收端</strong>：<code>snmp station</code> 配 trap 站（前 3 站生效）；<code>swlog output socket</code> 加 Syslog 服务器（ <code>&lt;span class="pg"&gt;原文p68&lt;/span&gt;</code> ）</li>
+<li><strong>硬件巡检</strong>：show module/long→show temperature（UNDER THRESHOLD 正常）→Danger 关机处理后手动启动（C20， <code>&lt;span class="pg"&gt;原文p66-67&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>认证失败事件驱动告警输出全流程（C17，&lt;&lt;<PAGE 64>&gt;&gt;）</li>
-<li>DG 触发场景：单电源失效/主备先后全失——双电源分独立电路降低触发概率（C1，&lt;&lt;<PAGE 15>&gt;&gt;）</li>
-<li>各机型 Warning/Danger 阈值梯度：P6 93/94、P12 95/97、ENH-240 84/89、P28 80/86、T-12 75/83、T-P12 78/85°C（P8，&lt;&lt;<PAGE 24-36>&gt;&gt;）</li>
+<li>认证失败事件驱动告警输出全流程（C17， <code>&lt;span class="pg"&gt;原文p64&lt;/span&gt;</code> ）</li>
+<li>DG 触发场景：单电源失效/主备先后全失——双电源分独立电路降低触发概率（C1， <code>&lt;span class="pg"&gt;原文p15&lt;/span&gt;</code> ）</li>
+<li>各机型 Warning/Danger 阈值梯度：P6 93/94、P12 95/97、ENH-240 84/89、P28 80/86、T-12 75/83、T-P12 78/85°C（P8， <code>&lt;span class="pg"&gt;原文p24-36&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="b">B（反例/坑）</h2>
 <ul>
-<li><strong>本机型注意</strong>：Danger 阈值出厂固化不可配（X25，&lt;&lt;<PAGE 67>&gt;&gt;）；且本机 24V 输入存在检测电路缺陷——PS LED 不亮不代表电源真坏（X1，&lt;&lt;<PAGE 24>&gt;&gt;）</li>
+<li><strong>本机型注意</strong>：Danger 阈值出厂固化不可配（X25， <code>&lt;span class="pg"&gt;原文p67&lt;/span&gt;</code> ）；且本机 24V 输入存在检测电路缺陷——PS LED 不亮不代表电源真坏（X1， <code>&lt;span class="pg"&gt;原文p24&lt;/span&gt;</code> ）</li>
 <li>DG 的 OAM PDU 通道需先在端口使能 efm-oam 并开 propagate-events dying-gasp，否则对端收不到失电通告（C19）</li>
 <li>告警输出触点上限 220VDC/250VAC·2A·60W，超限外接会损坏继电器（P18）</li>
-<li>NEBS 红线：楼内端口禁金属直连 OSP 室外线路，加 Primary Protectors 也不够；AC 须接 SPD（X17，&lt;&lt;<PAGE 93>&gt;&gt;）</li>
+<li>NEBS 红线：楼内端口禁金属直连 OSP 室外线路，加 Primary Protectors 也不够；AC 须接 SPD（X17， <code>&lt;span class="pg"&gt;原文p93&lt;/span&gt;</code> ）</li>
 <li>T 机型不满足工业认证清单（X7）；Class A 住宅禁用（X23）；雷暴禁作业（X16）；锂电池更换须返厂（X22）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniSwitch 6465 Hardware Users Guide Ch3 告警/温度/DG（&lt;&lt;<PAGE 63-69>&gt;&gt;）、Ch4 PoE（&lt;&lt;<PAGE 70-84>&gt;&gt;）、附录 A 工业认证与 NEBS（&lt;&lt;<PAGE 85-99>&gt;&gt;）。条目来源：cases C1/C16-C20；principles P8/P17-P24/P26；counter-examples X1/X7/X16/X17/X22/X23/X25；frameworks F3。</p><div class="pn"><a href="os6465-install-power.html">⬅ 上一单元：os6465-install-power</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<p>OmniSwitch 6465 Hardware Users Guide Ch3 告警/温度/DG（ <code>&lt;span class="pg"&gt;原文p63-69&lt;/span&gt;</code> ）、Ch4 PoE（ <code>&lt;span class="pg"&gt;原文p70-84&lt;/span&gt;</code> ）、附录 A 工业认证与 NEBS（ <code>&lt;span class="pg"&gt;原文p85-99&lt;/span&gt;</code> ）。条目来源：cases C1/C16-C20；principles P8/P17-P24/P26；counter-examples X1/X7/X16/X17/X22/X23/X25；frameworks F3。</p><div class="pn"><a href="os6465-install-power.html">⬅ 上一单元：os6465-install-power</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

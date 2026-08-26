@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -68,39 +69,39 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="i">I（核心理念）</h2>
 <ul>
-<li>高可用双支柱框架（F3，&lt;&lt;<PAGE 12>&gt;&gt;/&lt;&lt;<PAGE 35>&gt;&gt;/&lt;&lt;<PAGE 46>&gt;&gt;/&lt;&lt;<PAGE 47>&gt;&gt;）：供电侧=电源冗余+独立电路+Dying Gasp 三通道通告；运行侧=温度双阈值固化+LED 三层+show 巡检。</li>
-<li>DG 三通道语义（P28，&lt;&lt;<PAGE 46>&gt;&gt;/&lt;&lt;<PAGE 47>&gt;&gt;）：SNMP trap（前 3 站，含槽号/主备电源类型/失效时间）+Syslog"Dying Gasp Power Failure Event Occurred"（前 3 服务器）+4 个 802.3ah OAM Information PDU（Dying Gasp 位置位）；PDU 按端口优先级"上联口优先"发送（P29）。</li>
+<li>高可用双支柱框架（F3， <code>&lt;span class="pg"&gt;原文p12&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p35&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p46&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p47&lt;/span&gt;</code> ）：供电侧=电源冗余+独立电路+Dying Gasp 三通道通告；运行侧=温度双阈值固化+LED 三层+show 巡检。</li>
+<li>DG 三通道语义（P28， <code>&lt;span class="pg"&gt;原文p46&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p47&lt;/span&gt;</code> ）：SNMP trap（前 3 站，含槽号/主备电源类型/失效时间）+Syslog"Dying Gasp Power Failure Event Occurred"（前 3 服务器）+4 个 802.3ah OAM Information PDU（Dying Gasp 位置位）；PDU 按端口优先级"上联口优先"发送（P29）。</li>
 <li>温度双阈值固化不可改（P12/X3）：Warning 发 trap 业务不停；Danger 自动关机且必须手动重启（X4）。</li>
 </ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
-<li>巡检三步：show module 查槽位→show temperature 查五列（Current/Range/Danger/Thresh/Status）→UNDER THRESHOLD 即正常（C14/P13，&lt;&lt;<PAGE 45>&gt;&gt;）</li>
-<li>温度超限分诊（C15，&lt;&lt;<PAGE 45>&gt;&gt;/&lt;&lt;<PAGE 46>&gt;&gt;）：Warning=查气流遮挡+查室温；Danger=已关机，先处理诱因再手动重启</li>
+<li>巡检三步：show module 查槽位→show temperature 查五列（Current/Range/Danger/Thresh/Status）→UNDER THRESHOLD 即正常（C14/P13， <code>&lt;span class="pg"&gt;原文p45&lt;/span&gt;</code> ）</li>
+<li>温度超限分诊（C15， <code>&lt;span class="pg"&gt;原文p45&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p46&lt;/span&gt;</code> ）：Warning=查气流遮挡+查室温；Danger=已关机，先处理诱因再手动重启</li>
 <li>DG 接收端建设（C17）：snmp station 配 SNMP 站+swlog output socket 加 Syslog 服务器，各前 3 目标生效</li>
-<li>DG 触发三场景预防（P30，&lt;&lt;<PAGE 46>&gt;&gt;）：唯一电源失效/主备先后失效/后备主先后失效——每电源接独立电源源</li>
-<li>LED 三层诊断（P26，&lt;&lt;<PAGE 27>&gt;&gt;）：OK 灯（稳绿 OK/闪绿进行中/稳琥珀失败）→VC 灯（角色与 unit 号）→PS 灯（U28 三态/12 口两态）</li>
+<li>DG 触发三场景预防（P30， <code>&lt;span class="pg"&gt;原文p46&lt;/span&gt;</code> ）：唯一电源失效/主备先后失效/后备主先后失效——每电源接独立电源源</li>
+<li>LED 三层诊断（P26， <code>&lt;span class="pg"&gt;原文p27&lt;/span&gt;</code> ）：OK 灯（稳绿 OK/闪绿进行中/稳琥珀失败）→VC 灯（角色与 unit 号）→PS 灯（U28 三态/12 口两态）</li>
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>DG OAM 配置</strong>：efm-oam admin-state enable→efm-oam port 1/1/23-24 admin-state enable→efm-oam port 1/1/23-24 propagate-events dying-gasp enable（C16，&lt;&lt;<PAGE 47>&gt;&gt;）</li>
-<li><strong>DG 告警接收配置</strong>：snmp station+swlog output socket（C17，&lt;&lt;<PAGE 46>&gt;&gt;/&lt;&lt;<PAGE 47>&gt;&gt;）</li>
-<li><strong>首次登录六步</strong>：console（9600-8N1，DCE）→admin/switch→aaa authentication 解锁会话→password 改密→system timezone/contact 等→show system→write memory（C2，&lt;&lt;<PAGE 16>&gt;&gt;-&lt;&lt;<PAGE 19>&gt;&gt;）</li>
-<li><strong>150W 电源六态灯判读</strong>：稳绿=正常/闪绿=待机可接管/闪红=本舱无 AC 邻舱有电/闪绿红=告警/稳红=故障/灭=全机无输入（P19，&lt;&lt;<PAGE 38>&gt;&gt;/&lt;&lt;<PAGE 39>&gt;&gt;）</li>
-<li><strong>EMP 带外管理</strong>：对交换机用直通线、对计算机用交叉线（P35，&lt;&lt;<PAGE 16>&gt;&gt;）</li>
+<li><strong>DG OAM 配置</strong>：efm-oam admin-state enable→efm-oam port 1/1/23-24 admin-state enable→efm-oam port 1/1/23-24 propagate-events dying-gasp enable（C16， <code>&lt;span class="pg"&gt;原文p47&lt;/span&gt;</code> ）</li>
+<li><strong>DG 告警接收配置</strong>：snmp station+swlog output socket（C17， <code>&lt;span class="pg"&gt;原文p46&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p47&lt;/span&gt;</code> ）</li>
+<li><strong>首次登录六步</strong>：console（9600-8N1，DCE）→admin/switch→aaa authentication 解锁会话→password 改密→system timezone/contact 等→show system→write memory（C2， <code>&lt;span class="pg"&gt;原文p16&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p19&lt;/span&gt;</code> ）</li>
+<li><strong>150W 电源六态灯判读</strong>：稳绿=正常/闪绿=待机可接管/闪红=本舱无 AC 邻舱有电/闪绿红=告警/稳红=故障/灭=全机无输入（P19， <code>&lt;span class="pg"&gt;原文p38&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p39&lt;/span&gt;</code> ）</li>
+<li><strong>EMP 带外管理</strong>：对交换机用直通线、对计算机用交叉线（P35， <code>&lt;span class="pg"&gt;原文p16&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>DG 三通道完整配置与上联口 PDU 优先（C16/C17/P28/P29，&lt;&lt;<PAGE 46>&gt;&gt;/&lt;&lt;<PAGE 47>&gt;&gt;）</li>
-<li>温度 Warning/Danger 双阈值处置流程（C15，&lt;&lt;<PAGE 45>&gt;&gt;/&lt;&lt;<PAGE 46>&gt;&gt;）</li>
-<li>12/12D 与 U28 阈值分化排障：12 口机 85/88°C vs U28 69/74°C——光口机热预算更紧（P9，&lt;&lt;<PAGE 22>&gt;&gt;/&lt;&lt;<PAGE 24>&gt;&gt;/&lt;&lt;<PAGE 26>&gt;&gt;）</li>
+<li>DG 三通道完整配置与上联口 PDU 优先（C16/C17/P28/P29， <code>&lt;span class="pg"&gt;原文p46&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p47&lt;/span&gt;</code> ）</li>
+<li>温度 Warning/Danger 双阈值处置流程（C15， <code>&lt;span class="pg"&gt;原文p45&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p46&lt;/span&gt;</code> ）</li>
+<li>12/12D 与 U28 阈值分化排障：12 口机 85/88°C vs U28 69/74°C——光口机热预算更紧（P9， <code>&lt;span class="pg"&gt;原文p22&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p24&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p26&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>
-<li>阈值固化不可改（Warning/Danger 均出厂设定）；Danger 关机不会自动恢复，须手动重启（X3/X4，&lt;&lt;<PAGE 45>&gt;&gt;/&lt;&lt;<PAGE 46>&gt;&gt;）</li>
-<li>aaa authentication 一次只能指定一类会话；密码覆盖受限，忘记密码恢复困难（X5/X6，&lt;&lt;<PAGE 18>&gt;&gt;）</li>
-<li>锂电池更换须返厂 ALE，错换有爆炸风险（X22，&lt;&lt;<PAGE 58>&gt;&gt;）</li>
-<li>Class 1M 激光开盖勿用光学仪器直视；空光口勿直视并加盖（X23/X24，&lt;&lt;<PAGE 54>&gt;&gt;/&lt;&lt;<PAGE 55>&gt;&gt;）</li>
-<li>雷暴禁作业；运行中勿触背板与电源舱；搬运前断全部电源（X16/X17/X18，&lt;&lt;<PAGE 55>&gt;&gt;-&lt;&lt;<PAGE 56>&gt;&gt;）</li>
-<li>ESD 防护强制，操作组件前消除人体静电（X21，&lt;&lt;<PAGE 57>&gt;&gt;）</li>
+<li>阈值固化不可改（Warning/Danger 均出厂设定）；Danger 关机不会自动恢复，须手动重启（X3/X4， <code>&lt;span class="pg"&gt;原文p45&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p46&lt;/span&gt;</code> ）</li>
+<li>aaa authentication 一次只能指定一类会话；密码覆盖受限，忘记密码恢复困难（X5/X6， <code>&lt;span class="pg"&gt;原文p18&lt;/span&gt;</code> ）</li>
+<li>锂电池更换须返厂 ALE，错换有爆炸风险（X22， <code>&lt;span class="pg"&gt;原文p58&lt;/span&gt;</code> ）</li>
+<li>Class 1M 激光开盖勿用光学仪器直视；空光口勿直视并加盖（X23/X24， <code>&lt;span class="pg"&gt;原文p54&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p55&lt;/span&gt;</code> ）</li>
+<li>雷暴禁作业；运行中勿触背板与电源舱；搬运前断全部电源（X16/X17/X18， <code>&lt;span class="pg"&gt;原文p55&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p56&lt;/span&gt;</code> ）</li>
+<li>ESD 防护强制，操作组件前消除人体静电（X21， <code>&lt;span class="pg"&gt;原文p57&lt;/span&gt;</code> ）</li>
 </ul>
 <p>来源：OmniSwitch 6570M Hardware Users Guide（Ch2-Ch3+附录 A，p16-58）</p><div class="pn"><a href="os6570-install-power.html">⬅ 上一单元：os6570-install-power</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

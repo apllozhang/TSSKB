@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -83,34 +84,34 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
-<li>预检：<code>show interfaces 1/1/27 capability</code>（MACsec Supported、256-bit）、<code>show license-info</code>（&lt;&lt;<PAGE 87>&gt;&gt;）；无 license 时安装：<code>license apply file licence.dat order-id "..."</code> → <code>show license-info</code> 出现 MACSEC PERM（&lt;&lt;<PAGE 91>&gt;&gt;）</li>
-<li>建密钥与密钥链：<code>security key 1 algorithm aes-cmac-128 hex-key 0x... keyed-name 0x...</code> → <code>security key-chain 1</code> → <code>security key-chain 1 key 1</code>（&lt;&lt;<PAGE 89>&gt;&gt;）</li>
-<li>Dynamic PSK 模式：<code>interfaces port 1/1/27 macsec mode dynamic key-chain 1 encryption</code> + <code>key-rotation max-session-time 10</code> + <code>max-exchange-data 20</code> + <code>macsec admin-state enable</code>；验证 <code>show interfaces macsec dynamic</code>（Operation Status UP）（&lt;&lt;<PAGE 87>&gt;&gt;-&lt;&lt;<PAGE 90>&gt;&gt;）</li>
-<li>Static SA 模式：本端 <code>interface 1/1/25 macsec admin-state enable sci-tx key-chain 1 encryption sci-rx key-chain 2 encryption</code>，对端 tx/rx 互换；随机密钥 <code>security key-chain gen-random-key</code>；删除顺序 disable → no macsec → no key-chain（&lt;&lt;<PAGE 92>&gt;&gt;-&lt;&lt;<PAGE 94>&gt;&gt;）</li>
+<li>预检：<code>show interfaces 1/1/27 capability</code>（MACsec Supported、256-bit）、<code>show license-info</code>（ <code>&lt;span class="pg"&gt;原文p87&lt;/span&gt;</code> ）；无 license 时安装：<code>license apply file licence.dat order-id "..."</code> → <code>show license-info</code> 出现 MACSEC PERM（ <code>&lt;span class="pg"&gt;原文p91&lt;/span&gt;</code> ）</li>
+<li>建密钥与密钥链：<code>security key 1 algorithm aes-cmac-128 hex-key 0x... keyed-name 0x...</code> → <code>security key-chain 1</code> → <code>security key-chain 1 key 1</code>（ <code>&lt;span class="pg"&gt;原文p89&lt;/span&gt;</code> ）</li>
+<li>Dynamic PSK 模式：<code>interfaces port 1/1/27 macsec mode dynamic key-chain 1 encryption</code> + <code>key-rotation max-session-time 10</code> + <code>max-exchange-data 20</code> + <code>macsec admin-state enable</code>；验证 <code>show interfaces macsec dynamic</code>（Operation Status UP）（ <code>&lt;span class="pg"&gt;原文p87&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p90&lt;/span&gt;</code> ）</li>
+<li>Static SA 模式：本端 <code>interface 1/1/25 macsec admin-state enable sci-tx key-chain 1 encryption sci-rx key-chain 2 encryption</code>，对端 tx/rx 互换；随机密钥 <code>security key-chain gen-random-key</code>；删除顺序 disable → no macsec → no key-chain（ <code>&lt;span class="pg"&gt;原文p92&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p94&lt;/span&gt;</code> ）</li>
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
-<li>模式决策树：交换机间可用 Static 或 Dynamic；交换机到主机用 EAP（802.1X/RADIUS VSAs 下发 CAK）（&lt;&lt;<PAGE 67>&gt;&gt;、&lt;&lt;<PAGE 76>&gt;&gt;、&lt;&lt;<PAGE 79>&gt;&gt;）</li>
-<li>SAK 轮换双门限：会话时长 5-120 分钟与流量 5-1000GB 同时配置，先到先触发（&lt;&lt;<PAGE 77>&gt;&gt;、&lt;&lt;<PAGE 89>&gt;&gt;）</li>
-<li>MKA 双密钥体系：CAK 保护控制平面，key server 动态生成 SAK（&lt;&lt;<PAGE 76>&gt;&gt;）</li>
-<li>权限：MACsec 命令纳入 security 域（securityadmin read-write MACsec）（&lt;&lt;<PAGE 82>&gt;&gt;）</li>
+<li>模式决策树：交换机间可用 Static 或 Dynamic；交换机到主机用 EAP（802.1X/RADIUS VSAs 下发 CAK）（ <code>&lt;span class="pg"&gt;原文p67&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p76&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p79&lt;/span&gt;</code> ）</li>
+<li>SAK 轮换双门限：会话时长 5-120 分钟与流量 5-1000GB 同时配置，先到先触发（ <code>&lt;span class="pg"&gt;原文p77&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p89&lt;/span&gt;</code> ）</li>
+<li>MKA 双密钥体系：CAK 保护控制平面，key server 动态生成 SAK（ <code>&lt;span class="pg"&gt;原文p76&lt;/span&gt;</code> ）</li>
+<li>权限：MACsec 命令纳入 security 域（securityadmin read-write MACsec）（ <code>&lt;span class="pg"&gt;原文p82&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>C-04 Dynamic PSK 全流程（6870-A↔6860-B）：PSK 双端一致，轮换 10 分钟/20GB（&lt;&lt;<PAGE 87>&gt;&gt;-&lt;&lt;<PAGE 90>&gt;&gt;）</li>
-<li>C-05 Static SA：4 把 aes-gcm-128 密钥组成两条 key-chain，本端 tx=对端 rx（&lt;&lt;<PAGE 92>&gt;&gt;-&lt;&lt;<PAGE 94>&gt;&gt;）</li>
-<li>C-06 免费 site license 手工安装（&lt;&lt;<PAGE 91>&gt;&gt;）</li>
+<li>C-04 Dynamic PSK 全流程（6870-A↔6860-B）：PSK 双端一致，轮换 10 分钟/20GB（ <code>&lt;span class="pg"&gt;原文p87&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p90&lt;/span&gt;</code> ）</li>
+<li>C-05 Static SA：4 把 aes-gcm-128 密钥组成两条 key-chain，本端 tx=对端 rx（ <code>&lt;span class="pg"&gt;原文p92&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p94&lt;/span&gt;</code> ）</li>
+<li>C-06 免费 site license 手工安装（ <code>&lt;span class="pg"&gt;原文p91&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="b">B（边界与陷阱）</h2>
 <ul>
-<li>Static 模式不支持 OS6860N；OS6870 VFL 堆叠口（24 口机型 25/26、48 口机型 49/50）不支持 MACsec（&lt;&lt;<PAGE 75>&gt;&gt;、&lt;&lt;<PAGE 72>&gt;&gt;）</li>
-<li>板卡差异大：64X10G 分支光模块/扩展模块不支持；OS9900 部分板卡仅 Static——部署前逐板卡核对平台矩阵（&lt;&lt;<PAGE 71>&gt;&gt;）</li>
-<li>无 license 时功能不可用，先 <code>show license-info</code> 预检避免配到一半失败（&lt;&lt;<PAGE 87>&gt;&gt;）</li>
+<li>Static 模式不支持 OS6860N；OS6870 VFL 堆叠口（24 口机型 25/26、48 口机型 49/50）不支持 MACsec（ <code>&lt;span class="pg"&gt;原文p75&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p72&lt;/span&gt;</code> ）</li>
+<li>板卡差异大：64X10G 分支光模块/扩展模块不支持；OS9900 部分板卡仅 Static——部署前逐板卡核对平台矩阵（ <code>&lt;span class="pg"&gt;原文p71&lt;/span&gt;</code> ）</li>
+<li>无 license 时功能不可用，先 <code>show license-info</code> 预检避免配到一半失败（ <code>&lt;span class="pg"&gt;原文p87&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
 <ul>
-<li>framework·F-03 模式决策树（&lt;&lt;<PAGE 67>&gt;&gt;、&lt;&lt;<PAGE 75>&gt;&gt;、&lt;&lt;<PAGE 76>&gt;&gt;、&lt;&lt;<PAGE 78>&gt;&gt;-&lt;&lt;<PAGE 80>&gt;&gt;）</li>
-<li>framework·F-04 密钥轮换策略（&lt;&lt;<PAGE 77>&gt;&gt;、&lt;&lt;<PAGE 89>&gt;&gt;）</li>
-<li>principle·P-06/P-07/P-08/P-09/P-10/P-11（&lt;&lt;<PAGE 67>&gt;&gt;-&lt;&lt;<PAGE 82>&gt;&gt;）</li>
+<li>framework·F-03 模式决策树（ <code>&lt;span class="pg"&gt;原文p67&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p75&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p76&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p78&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p80&lt;/span&gt;</code> ）</li>
+<li>framework·F-04 密钥轮换策略（ <code>&lt;span class="pg"&gt;原文p77&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p89&lt;/span&gt;</code> ）</li>
+<li>principle·P-06/P-07/P-08/P-09/P-10/P-11（ <code>&lt;span class="pg"&gt;原文p67&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p82&lt;/span&gt;</code> ）</li>
 <li>case·C-04/C-05/C-06；counter·X-03/X-04/X-21</li>
 </ul><div class="pn"><a href="erp-ring-protection.html">⬅ 上一单元：erp-ring-protection</a><a class="nxt" href="private-vlan-isolation.html">下一单元：private-vlan-isolation ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

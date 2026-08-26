@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -79,46 +80,46 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
-<li><strong>硬件与环境核对</strong>（&lt;&lt;<PAGE 75>&gt;&gt;）：</li>
+<li><strong>硬件与环境核对</strong>（ <code>&lt;span class="pg"&gt;原文p75&lt;/span&gt;</code> ）：</li>
 <li>3 台 VM；ESXi 最低 8.0；每台 8 vCPU @3GHz、RAM 32GB、SSD（≥50MB/s）、System Disk 200GB、Data Disk 3TB</li>
 <li>CPU 必须支持 AVX/AVX2；vCenter 集群需开 EVC，基线推荐 Ice Lake，最低 Broadwell</li>
-<li><strong>部署 OVA</strong>：下载 OmniVista Terra OVA 与 build (.7z)，部署时输入 Name、选 NIC card，上电（&lt;&lt;<PAGE 76>&gt;&gt;&lt;&lt;<PAGE 77>&gt;&gt;）。</li>
-<li><strong>控制台初始化</strong>（每节点）：键盘布局 → hostname（如 ovtx-100）→ IP/掩码/网关/主备 DNS（必须能解析 myovterra.myovcloud.com）→ ovtx 用户密码 → 应用配置重启 → <code>ip addr</code> 验证；第 2/3 节点换 hostname/IP 重复（&lt;&lt;<PAGE 78>&gt;&gt;&lt;&lt;<PAGE 79>&gt;&gt;&lt;&lt;<PAGE 80>&gt;&gt;）。</li>
-<li><strong>WebAdmin 首次设置</strong>：浏览器访问 <code>&lt;Node_IP&gt;:3000</code> → 创建 admin 账号 → General Info（Email/Company/Country/Timezone/预期 AP 与交换机数量）→ 输入第 2/3 节点 IP 并确认可达 → 定义 4 个 IP（Main / VPN / UPAM Captive Portal / UPAM Radius）→ SMTP（示例 smtp.gmail.com:465，TLS/StartTLS + SMTP 认证）（&lt;&lt;<PAGE 82>&gt;&gt;&lt;&lt;<PAGE 83>&gt;&gt;&lt;&lt;<PAGE 84>&gt;&gt;&lt;&lt;<PAGE 85>&gt;&gt;&lt;&lt;<PAGE 86>&gt;&gt;）。</li>
-<li><strong>部署 Build</strong>：选 build release file (.7z) 上传 → Done → Confirm the deployment；完成后刷新 admin center 看 Dashboard 的 Nodes 与 Pods 状态（&lt;&lt;<PAGE 87>&gt;&gt;&lt;&lt;<PAGE 88>&gt;&gt;&lt;&lt;<PAGE 89>&gt;&gt;）。</li>
-<li><strong>配置 DNS 四域名</strong>（在客户 DNS 服务器，如 Windows DNS）（&lt;&lt;<PAGE 90>&gt;&gt;）：</li>
+<li><strong>部署 OVA</strong>：下载 OmniVista Terra OVA 与 build (.7z)，部署时输入 Name、选 NIC card，上电（ <code>&lt;span class="pg"&gt;原文p76&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p77&lt;/span&gt;</code> ）。</li>
+<li><strong>控制台初始化</strong>（每节点）：键盘布局 → hostname（如 ovtx-100）→ IP/掩码/网关/主备 DNS（必须能解析 myovterra.myovcloud.com）→ ovtx 用户密码 → 应用配置重启 → <code>ip addr</code> 验证；第 2/3 节点换 hostname/IP 重复（ <code>&lt;span class="pg"&gt;原文p78&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p79&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p80&lt;/span&gt;</code> ）。</li>
+<li><strong>WebAdmin 首次设置</strong>：浏览器访问 <code>&lt;Node_IP&gt;:3000</code> → 创建 admin 账号 → General Info（Email/Company/Country/Timezone/预期 AP 与交换机数量）→ 输入第 2/3 节点 IP 并确认可达 → 定义 4 个 IP（Main / VPN / UPAM Captive Portal / UPAM Radius）→ SMTP（示例 smtp.gmail.com:465，TLS/StartTLS + SMTP 认证）（ <code>&lt;span class="pg"&gt;原文p82&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p83&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p84&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p85&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p86&lt;/span&gt;</code> ）。</li>
+<li><strong>部署 Build</strong>：选 build release file (.7z) 上传 → Done → Confirm the deployment；完成后刷新 admin center 看 Dashboard 的 Nodes 与 Pods 状态（ <code>&lt;span class="pg"&gt;原文p87&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p88&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p89&lt;/span&gt;</code> ）。</li>
+<li><strong>配置 DNS 四域名</strong>（在客户 DNS 服务器，如 Windows DNS）（ <code>&lt;span class="pg"&gt;原文p90&lt;/span&gt;</code> ）：</li>
 <li>activation.myovterra.com / as.myovterra.com → Main IP（activation server）</li>
 <li>vpn.myovterra.com → VPN IP</li>
 <li>images.myovterra.com → Main IP（Image Server）</li>
 <li>myovterra.myovcloud.com → Main IP（主 URL）</li>
-<li><strong>首次登录</strong>：以 myovterra.myovcloud.com 登录（&lt;&lt;<PAGE 91>&gt;&gt;）。</li>
+<li><strong>首次登录</strong>：以 myovterra.myovcloud.com 登录（ <code>&lt;span class="pg"&gt;原文p91&lt;/span&gt;</code> ）。</li>
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
-<li>Terra 组织创建后自动激活 90 天 Trial（&lt;&lt;<PAGE 110>&gt;&gt;），可边试用边完成生产 License 导入。</li>
-<li>高层架构：VMware 多服务器高可用（Active-Active L3）、Kubernetes 集群、VM×3、VPN Server/Load balancer、Kafka/MQTT、HTTPS（&lt;&lt;<PAGE 17>&gt;&gt;）。</li>
-<li>部署失败时在 Install 菜单看状态（Success/Failure/In Progress），点 "Download the logs" 取安装日志（&lt;&lt;<PAGE 89>&gt;&gt;）。</li>
+<li>Terra 组织创建后自动激活 90 天 Trial（ <code>&lt;span class="pg"&gt;原文p110&lt;/span&gt;</code> ），可边试用边完成生产 License 导入。</li>
+<li>高层架构：VMware 多服务器高可用（Active-Active L3）、Kubernetes 集群、VM×3、VPN Server/Load balancer、Kafka/MQTT、HTTPS（ <code>&lt;span class="pg"&gt;原文p17&lt;/span&gt;</code> ）。</li>
+<li>部署失败时在 Install 菜单看状态（Success/Failure/In Progress），点 "Download the logs" 取安装日志（ <code>&lt;span class="pg"&gt;原文p89&lt;/span&gt;</code> ）。</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li><strong>案例 1</strong>：vCenter 集群 EVC 基线设为低于 Broadwell 的老基线，Terra 部署失败——CPU AVX/AVX2 指令集不满足；改基线为 Ice Lake（或最低 Broadwell）后成功（&lt;&lt;<PAGE 75>&gt;&gt;）。</li>
-<li><strong>案例 2</strong>：节点 DNS 无法解析 myovterra.myovcloud.com，控制台配置卡住——配置 DNS 前必须确保解析可行（&lt;&lt;<PAGE 78>&gt;&gt;）。</li>
+<li><strong>案例 1</strong>：vCenter 集群 EVC 基线设为低于 Broadwell 的老基线，Terra 部署失败——CPU AVX/AVX2 指令集不满足；改基线为 Ice Lake（或最低 Broadwell）后成功（ <code>&lt;span class="pg"&gt;原文p75&lt;/span&gt;</code> ）。</li>
+<li><strong>案例 2</strong>：节点 DNS 无法解析 myovterra.myovcloud.com，控制台配置卡住——配置 DNS 前必须确保解析可行（ <code>&lt;span class="pg"&gt;原文p78&lt;/span&gt;</code> ）。</li>
 </ul>
 <h2 id="b">B（边界与陷阱）</h2>
 <ul>
-<li><strong>EVC 基线禁区</strong>：低于 Broadwell 的基线必失败（&lt;&lt;<PAGE 75>&gt;&gt;）。</li>
-<li><strong>不要靠猜排障</strong>：部署失败先 Download the logs 取证，不要盲目重部署（&lt;&lt;<PAGE 89>&gt;&gt;）。</li>
+<li><strong>EVC 基线禁区</strong>：低于 Broadwell 的基线必失败（ <code>&lt;span class="pg"&gt;原文p75&lt;/span&gt;</code> ）。</li>
+<li><strong>不要靠猜排障</strong>：部署失败先 Download the logs 取证，不要盲目重部署（ <code>&lt;span class="pg"&gt;原文p89&lt;/span&gt;</code> ）。</li>
 </ul>
 <h2 id="_1">来源</h2>
 <ul>
-<li>frameworks·Terra 3-VM 部署全流程（&lt;&lt;<PAGE 76>&gt;&gt;&lt;&lt;<PAGE 77>&gt;&gt;&lt;&lt;<PAGE 78>&gt;&gt;&lt;&lt;<PAGE 79>&gt;&gt;&lt;&lt;<PAGE 80>&gt;&gt;&lt;&lt;<PAGE 82>&gt;&gt;&lt;&lt;<PAGE 83>&gt;&gt;&lt;&lt;<PAGE 84>&gt;&gt;&lt;&lt;<PAGE 87>&gt;&gt;&lt;&lt;<PAGE 90>&gt;&gt;&lt;&lt;<PAGE 91>&gt;&gt;）</li>
-<li>principles·Terra 高层架构 3-VM Kubernetes（&lt;&lt;<PAGE 17>&gt;&gt;&lt;&lt;<PAGE 75>&gt;&gt;）</li>
-<li>principles·Terra VM 硬件要求（&lt;&lt;<PAGE 75>&gt;&gt;）</li>
-<li>principles·Terra DNS 四域名映射（&lt;&lt;<PAGE 90>&gt;&gt;）</li>
-<li>cases·Terra 部署 VM OVA 与控制台初始化（&lt;&lt;<PAGE 76>&gt;&gt;&lt;&lt;<PAGE 77>&gt;&gt;&lt;&lt;<PAGE 78>&gt;&gt;&lt;&lt;<PAGE 79>&gt;&gt;&lt;&lt;<PAGE 80>&gt;&gt;）</li>
-<li>cases·WebAdmin 首次设置（&lt;&lt;<PAGE 82>&gt;&gt;&lt;&lt;<PAGE 83>&gt;&gt;&lt;&lt;<PAGE 84>&gt;&gt;&lt;&lt;<PAGE 85>&gt;&gt;&lt;&lt;<PAGE 86>&gt;&gt;）</li>
-<li>cases·Terra Build 部署与状态检查（&lt;&lt;<PAGE 87>&gt;&gt;&lt;&lt;<PAGE 88>&gt;&gt;&lt;&lt;<PAGE 89>&gt;&gt;）</li>
-<li>cases·Terra DNS 配置（&lt;&lt;<PAGE 90>&gt;&gt;&lt;&lt;<PAGE 91>&gt;&gt;）</li>
-<li>counter-examples·CPU AVX/AVX2 与 EVC 基线陷阱（&lt;&lt;<PAGE 75>&gt;&gt;）</li>
-<li>counter-examples·部署失败时的取证路径（&lt;&lt;<PAGE 89>&gt;&gt;）</li>
+<li>frameworks·Terra 3-VM 部署全流程（ <code>&lt;span class="pg"&gt;原文p76&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p77&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p78&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p79&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p80&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p82&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p83&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p84&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p87&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p90&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p91&lt;/span&gt;</code> ）</li>
+<li>principles·Terra 高层架构 3-VM Kubernetes（ <code>&lt;span class="pg"&gt;原文p17&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p75&lt;/span&gt;</code> ）</li>
+<li>principles·Terra VM 硬件要求（ <code>&lt;span class="pg"&gt;原文p75&lt;/span&gt;</code> ）</li>
+<li>principles·Terra DNS 四域名映射（ <code>&lt;span class="pg"&gt;原文p90&lt;/span&gt;</code> ）</li>
+<li>cases·Terra 部署 VM OVA 与控制台初始化（ <code>&lt;span class="pg"&gt;原文p76&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p77&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p78&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p79&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p80&lt;/span&gt;</code> ）</li>
+<li>cases·WebAdmin 首次设置（ <code>&lt;span class="pg"&gt;原文p82&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p83&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p84&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p85&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p86&lt;/span&gt;</code> ）</li>
+<li>cases·Terra Build 部署与状态检查（ <code>&lt;span class="pg"&gt;原文p87&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p88&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p89&lt;/span&gt;</code> ）</li>
+<li>cases·Terra DNS 配置（ <code>&lt;span class="pg"&gt;原文p90&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p91&lt;/span&gt;</code> ）</li>
+<li>counter-examples·CPU AVX/AVX2 与 EVC 基线陷阱（ <code>&lt;span class="pg"&gt;原文p75&lt;/span&gt;</code> ）</li>
+<li>counter-examples·部署失败时的取证路径（ <code>&lt;span class="pg"&gt;原文p89&lt;/span&gt;</code> ）</li>
 </ul><div class="pn"><a href="account-org-system.html">⬅ 上一单元：account-org-system</a><a class="nxt" href="license-and-trial.html">下一单元：license-and-trial ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -83,33 +84,33 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
-<li>定义主/从 VLAN：<code>pvlan 100 admin-state enable</code> / <code>pvlan 100 secondary 101 type community</code> / <code>pvlan 100 secondary 103 type isolated</code>（&lt;&lt;<PAGE 103>&gt;&gt;）</li>
-<li>加成员端口：<code>pvlan 100 members port 1/1/20 untagged</code>（&lt;&lt;<PAGE 103>&gt;&gt;）</li>
-<li>验证：<code>show pvlan mapping</code>、<code>show pvlan members</code>（port-type: promiscuous/community/isolated）、<code>show mac-learning</code>（全部学在 VLAN 100）（&lt;&lt;<PAGE 103>&gt;&gt;）</li>
-<li>跨交换机：ISL 口 <code>pvlan 100 members linkagg 1 isl</code>，可先用 <code>linkagg lacp agg 1 size 2...</code> 建聚合承载（&lt;&lt;<PAGE 105>&gt;&gt;）</li>
-<li>删除顺序：先清成员（<code>no pvlan 252 members port ...</code>、<code>no pvlan 250 members linkagg ...</code>）再 <code>no pvlan 250</code>；收尾 <code>write memory flash-synchro</code>（&lt;&lt;<PAGE 112>&gt;&gt;）</li>
+<li>定义主/从 VLAN：<code>pvlan 100 admin-state enable</code> / <code>pvlan 100 secondary 101 type community</code> / <code>pvlan 100 secondary 103 type isolated</code>（ <code>&lt;span class="pg"&gt;原文p103&lt;/span&gt;</code> ）</li>
+<li>加成员端口：<code>pvlan 100 members port 1/1/20 untagged</code>（ <code>&lt;span class="pg"&gt;原文p103&lt;/span&gt;</code> ）</li>
+<li>验证：<code>show pvlan mapping</code>、<code>show pvlan members</code>（port-type: promiscuous/community/isolated）、<code>show mac-learning</code>（全部学在 VLAN 100）（ <code>&lt;span class="pg"&gt;原文p103&lt;/span&gt;</code> ）</li>
+<li>跨交换机：ISL 口 <code>pvlan 100 members linkagg 1 isl</code>，可先用 <code>linkagg lacp agg 1 size 2...</code> 建聚合承载（ <code>&lt;span class="pg"&gt;原文p105&lt;/span&gt;</code> ）</li>
+<li>删除顺序：先清成员（<code>no pvlan 252 members port ...</code>、<code>no pvlan 250 members linkagg ...</code>）再 <code>no pvlan 250</code>；收尾 <code>write memory flash-synchro</code>（ <code>&lt;span class="pg"&gt;原文p112&lt;/span&gt;</code> ）</li>
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
-<li>端口四角色：promiscuous（属 primary，全通）/ isolated（仅到 promiscuous）/ community（限本社区）/ ISL（跨交换机承载主+从全部流量）（&lt;&lt;<PAGE 100>&gt;&gt;）</li>
-<li>UNP 端口运行时按首个学到的 MAC 的 VLAN 分类决定 isolated/community 角色；若首 MAC 落在非 PVLAN 的标准 VLAN，则无法指定角色（&lt;&lt;<PAGE 106>&gt;&gt;）</li>
-<li>需要多组互不相通的用户时用多个 community，因为一个 Primary 只能有一个 Isolated VLAN（&lt;&lt;<PAGE 109>&gt;&gt;）</li>
+<li>端口四角色：promiscuous（属 primary，全通）/ isolated（仅到 promiscuous）/ community（限本社区）/ ISL（跨交换机承载主+从全部流量）（ <code>&lt;span class="pg"&gt;原文p100&lt;/span&gt;</code> ）</li>
+<li>UNP 端口运行时按首个学到的 MAC 的 VLAN 分类决定 isolated/community 角色；若首 MAC 落在非 PVLAN 的标准 VLAN，则无法指定角色（ <code>&lt;span class="pg"&gt;原文p106&lt;/span&gt;</code> ）</li>
+<li>需要多组互不相通的用户时用多个 community，因为一个 Primary 只能有一个 Isolated VLAN（ <code>&lt;span class="pg"&gt;原文p109&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>C-07 双交换机部署：<code>pvlan 250 members linkagg 78 isl</code>，端口改入 community 251 后 Client7 ping Client8 成功，改入 isolated 252 后 ping 失败（&lt;&lt;<PAGE 110>&gt;&gt;-&lt;&lt;<PAGE 112>&gt;&gt;）</li>
-<li>C-08 域内配置示例：<code>show mac-learning</code> 证明 secondary 的 MAC 学在 VLAN 100（&lt;&lt;<PAGE 103>&gt;&gt;）</li>
+<li>C-07 双交换机部署：<code>pvlan 250 members linkagg 78 isl</code>，端口改入 community 251 后 Client7 ping Client8 成功，改入 isolated 252 后 ping 失败（ <code>&lt;span class="pg"&gt;原文p110&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p112&lt;/span&gt;</code> ）</li>
+<li>C-08 域内配置示例：<code>show mac-learning</code> 证明 secondary 的 MAC 学在 VLAN 100（ <code>&lt;span class="pg"&gt;原文p103&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="b">B（边界与陷阱）</h2>
 <ul>
-<li>一个 Primary VLAN 只能有一个 Isolated VLAN（&lt;&lt;<PAGE 109>&gt;&gt;）</li>
-<li>直接删 primary 前必须清理成员引用，否则删不掉（&lt;&lt;<PAGE 112>&gt;&gt;）</li>
+<li>一个 Primary VLAN 只能有一个 Isolated VLAN（ <code>&lt;span class="pg"&gt;原文p109&lt;/span&gt;</code> ）</li>
+<li>直接删 primary 前必须清理成员引用，否则删不掉（ <code>&lt;span class="pg"&gt;原文p112&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
 <ul>
-<li>principle·P-12 域模型（&lt;&lt;<PAGE 98>&gt;&gt;、&lt;&lt;<PAGE 99>&gt;&gt;、&lt;&lt;<PAGE 109>&gt;&gt;）</li>
-<li>principle·P-13 四类端口角色（&lt;&lt;<PAGE 100>&gt;&gt;）</li>
-<li>principle·P-14 二层透传规则（&lt;&lt;<PAGE 104>&gt;&gt;）</li>
-<li>principle·P-15 UNP 运行时角色（&lt;&lt;<PAGE 106>&gt;&gt;）</li>
+<li>principle·P-12 域模型（ <code>&lt;span class="pg"&gt;原文p98&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p99&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p109&lt;/span&gt;</code> ）</li>
+<li>principle·P-13 四类端口角色（ <code>&lt;span class="pg"&gt;原文p100&lt;/span&gt;</code> ）</li>
+<li>principle·P-14 二层透传规则（ <code>&lt;span class="pg"&gt;原文p104&lt;/span&gt;</code> ）</li>
+<li>principle·P-15 UNP 运行时角色（ <code>&lt;span class="pg"&gt;原文p106&lt;/span&gt;</code> ）</li>
 <li>case·C-07/C-08/C-09；counter·X-19/X-20</li>
 </ul><div class="pn"><a href="macsec-link-encryption.html">⬅ 上一单元：macsec-link-encryption</a><a class="nxt" href="mstp-load-sharing.html">下一单元：mstp-load-sharing ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

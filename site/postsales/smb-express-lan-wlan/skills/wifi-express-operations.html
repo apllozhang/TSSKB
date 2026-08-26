@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -79,37 +80,37 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
-<li><strong>首次向导</strong>：浏览器访问 <code>192.168.1.254:8080</code> → admin/admin → Wizard 改 superuser 密码 → 国家/时区 → 建 SSID（替换默认 mywifi-XXXX）→ AP &gt; IP Mode &gt; Edit 改静态 IP 与网关（&lt;&lt;<PAGE 117>&gt;&gt;-&lt;&lt;<PAGE 121>&gt;&gt;）。</li>
-<li><strong>员工 SSID</strong>：WLAN &gt; New → 名称/Personal/密码 → Advanced 里 VLAN ID 20 → 客户端连接验证拿到对应网段地址（如 192.168.20.7x）（&lt;&lt;<PAGE 224>&gt;&gt;-&lt;&lt;<PAGE 231>&gt;&gt;）。</li>
-<li><strong>访客 SSID</strong>：Open + Captive Portal:Yes + VLAN 30 → Access &gt; Authentication 选 Account 模式建 Guest 账号（密码区分大小写）→ 客户端浏览器访问任一 http URL 跳转 Portal（&lt;&lt;<PAGE 224>&gt;&gt;-&lt;&lt;<PAGE 231>&gt;&gt;）。</li>
-<li><strong>内置 DHCP</strong>：Network &gt; AP Networks &gt; vlan10 Manage 配 IP → Service &gt; DHCP Create（Pool、Range、DNS）→ Action &gt; Bind Network（&lt;&lt;<PAGE 232>&gt;&gt;-&lt;&lt;<PAGE 236>&gt;&gt;）。</li>
-<li><strong>行为日志</strong>：Access &gt; Authentication &gt; Client Behavior Tracking，日志行含 Event date / client MAC / IP / AP MAC / SSID / ONLINE-OFFLINE（&lt;&lt;<PAGE 236>&gt;&gt;-&lt;&lt;<PAGE 237>&gt;&gt;）。</li>
+<li><strong>首次向导</strong>：浏览器访问 <code>192.168.1.254:8080</code> → admin/admin → Wizard 改 superuser 密码 → 国家/时区 → 建 SSID（替换默认 mywifi-XXXX）→ AP &gt; IP Mode &gt; Edit 改静态 IP 与网关（ <code>&lt;span class="pg"&gt;原文p117&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p121&lt;/span&gt;</code> ）。</li>
+<li><strong>员工 SSID</strong>：WLAN &gt; New → 名称/Personal/密码 → Advanced 里 VLAN ID 20 → 客户端连接验证拿到对应网段地址（如 192.168.20.7x）（ <code>&lt;span class="pg"&gt;原文p224&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p231&lt;/span&gt;</code> ）。</li>
+<li><strong>访客 SSID</strong>：Open + Captive Portal:Yes + VLAN 30 → Access &gt; Authentication 选 Account 模式建 Guest 账号（密码区分大小写）→ 客户端浏览器访问任一 http URL 跳转 Portal（ <code>&lt;span class="pg"&gt;原文p224&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p231&lt;/span&gt;</code> ）。</li>
+<li><strong>内置 DHCP</strong>：Network &gt; AP Networks &gt; vlan10 Manage 配 IP → Service &gt; DHCP Create（Pool、Range、DNS）→ Action &gt; Bind Network（ <code>&lt;span class="pg"&gt;原文p232&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p236&lt;/span&gt;</code> ）。</li>
+<li><strong>行为日志</strong>：Access &gt; Authentication &gt; Client Behavior Tracking，日志行含 Event date / client MAC / IP / AP MAC / SSID / ONLINE-OFFLINE（ <code>&lt;span class="pg"&gt;原文p236&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p237&lt;/span&gt;</code> ）。</li>
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
-<li><strong>GuestOperator 前台账号</strong>：System &gt; General &gt; Account Management &gt; Operator: Enable + 密码，用 GuestOperator 登录仅可管理访客账号（&lt;&lt;<PAGE 237>&gt;&gt;）。</li>
-<li><strong>外部 RADIUS 员工 SSID</strong>：Create WLAN → Security: Enterprise → AuthServer IP + AuthSecret → Advanced VLAN ID（&lt;&lt;<PAGE 238>&gt;&gt;）。</li>
-<li><strong>DHCP 池容量意识</strong>：Range 40 个地址即 40 台并发设备上限（&lt;&lt;<PAGE 232>&gt;&gt;-&lt;&lt;<PAGE 236>&gt;&gt;）。</li>
+<li><strong>GuestOperator 前台账号</strong>：System &gt; General &gt; Account Management &gt; Operator: Enable + 密码，用 GuestOperator 登录仅可管理访客账号（ <code>&lt;span class="pg"&gt;原文p237&lt;/span&gt;</code> ）。</li>
+<li><strong>外部 RADIUS 员工 SSID</strong>：Create WLAN → Security: Enterprise → AuthServer IP + AuthSecret → Advanced VLAN ID（ <code>&lt;span class="pg"&gt;原文p238&lt;/span&gt;</code> ）。</li>
+<li><strong>DHCP 池容量意识</strong>：Range 40 个地址即 40 台并发设备上限（ <code>&lt;span class="pg"&gt;原文p232&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p236&lt;/span&gt;</code> ）。</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>员工+访客 SSID 创建：EmployeesX（WPA2+VLAN 20）验证拿 192.168.20.7x；Guests（Open+Portal+VLAN 30）经 Account 账号认证（&lt;&lt;<PAGE 224>&gt;&gt;-&lt;&lt;<PAGE 231>&gt;&gt;）。</li>
-<li>AP 内置 DHCP：Pool Employees，Range 192.168.10.10-50，DNS 指向自身，Bind 到 vlan10（&lt;&lt;<PAGE 232>&gt;&gt;-&lt;&lt;<PAGE 236>&gt;&gt;）。</li>
+<li>员工+访客 SSID 创建：EmployeesX（WPA2+VLAN 20）验证拿 192.168.20.7x；Guests（Open+Portal+VLAN 30）经 Account 账号认证（ <code>&lt;span class="pg"&gt;原文p224&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p231&lt;/span&gt;</code> ）。</li>
+<li>AP 内置 DHCP：Pool Employees，Range 192.168.10.10-50，DNS 指向自身，Bind 到 vlan10（ <code>&lt;span class="pg"&gt;原文p232&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p236&lt;/span&gt;</code> ）。</li>
 </ul>
 <h2 id="b">B（边界与陷阱）</h2>
 <ul>
-<li><strong>默认口令基线</strong>：admin/switch（交换机侧为 admin/switch，AP 侧 admin/admin）；8.10R3 起告警催改默认密码，8.10R4 起强制修改（&lt;&lt;<PAGE 64>&gt;&gt;-&lt;&lt;<PAGE 65>&gt;&gt;）——上线第一步就改密。</li>
-<li>Guest 账号密码区分大小写（&lt;&lt;<PAGE 224>&gt;&gt;-&lt;&lt;<PAGE 231>&gt;&gt;）。</li>
-<li>内置 DHCP 的 Range 长度就是并发设备上限（&lt;&lt;<PAGE 232>&gt;&gt;-&lt;&lt;<PAGE 236>&gt;&gt;）。</li>
-<li>访客 Portal 依赖 DNS 正常（排障前置检查 <code>cat /etc/resolv.conf</code>，&lt;&lt;<PAGE 444>&gt;&gt;-&lt;&lt;<PAGE 448>&gt;&gt;）。</li>
+<li><strong>默认口令基线</strong>：admin/switch（交换机侧为 admin/switch，AP 侧 admin/admin）；8.10R3 起告警催改默认密码，8.10R4 起强制修改（ <code>&lt;span class="pg"&gt;原文p64&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p65&lt;/span&gt;</code> ）——上线第一步就改密。</li>
+<li>Guest 账号密码区分大小写（ <code>&lt;span class="pg"&gt;原文p224&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p231&lt;/span&gt;</code> ）。</li>
+<li>内置 DHCP 的 Range 长度就是并发设备上限（ <code>&lt;span class="pg"&gt;原文p232&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p236&lt;/span&gt;</code> ）。</li>
+<li>访客 Portal 依赖 DNS 正常（排障前置检查 <code>cat /etc/resolv.conf</code>， <code>&lt;span class="pg"&gt;原文p444&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p448&lt;/span&gt;</code> ）。</li>
 </ul>
 <h2 id="_1">来源</h2>
 <ul>
-<li>cases·C4 Stellar AP 首次向导配置（&lt;&lt;<PAGE 117>&gt;&gt;-&lt;&lt;<PAGE 121>&gt;&gt;）</li>
-<li>cases·C11 员工/访客 SSID 创建（&lt;&lt;<PAGE 224>&gt;&gt;-&lt;&lt;<PAGE 231>&gt;&gt;）</li>
-<li>cases·C12 AP 内置 DHCP（&lt;&lt;<PAGE 232>&gt;&gt;-&lt;&lt;<PAGE 236>&gt;&gt;）</li>
-<li>cases·C13 用户行为日志（&lt;&lt;<PAGE 236>&gt;&gt;-&lt;&lt;<PAGE 237>&gt;&gt;）</li>
-<li>cases·C14 GuestOperator（&lt;&lt;<PAGE 237>&gt;&gt;）</li>
-<li>cases·C15 外部 RADIUS 员工 SSID（&lt;&lt;<PAGE 238>&gt;&gt;）</li>
-<li>counter-examples·X6 默认口令安全基线（&lt;&lt;<PAGE 64>&gt;&gt;-&lt;&lt;<PAGE 65>&gt;&gt;）</li>
+<li>cases·C4 Stellar AP 首次向导配置（ <code>&lt;span class="pg"&gt;原文p117&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p121&lt;/span&gt;</code> ）</li>
+<li>cases·C11 员工/访客 SSID 创建（ <code>&lt;span class="pg"&gt;原文p224&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p231&lt;/span&gt;</code> ）</li>
+<li>cases·C12 AP 内置 DHCP（ <code>&lt;span class="pg"&gt;原文p232&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p236&lt;/span&gt;</code> ）</li>
+<li>cases·C13 用户行为日志（ <code>&lt;span class="pg"&gt;原文p236&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p237&lt;/span&gt;</code> ）</li>
+<li>cases·C14 GuestOperator（ <code>&lt;span class="pg"&gt;原文p237&lt;/span&gt;</code> ）</li>
+<li>cases·C15 外部 RADIUS 员工 SSID（ <code>&lt;span class="pg"&gt;原文p238&lt;/span&gt;</code> ）</li>
+<li>counter-examples·X6 默认口令安全基线（ <code>&lt;span class="pg"&gt;原文p64&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p65&lt;/span&gt;</code> ）</li>
 </ul><div class="pn"><a href="stellar-deployment-mode-selection.html">⬅ 上一单元：stellar-deployment-mode-selection</a><a class="nxt" href="cirrus-cloud-management.html">下一单元：cirrus-cloud-management ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

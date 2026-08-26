@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -80,47 +81,47 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="i">I（核心理念）</h2>
 <ul>
-<li>网络准入框架（F9，&lt;&lt;<PAGE 1212>&gt;&gt;）：认证（802.1X/MAC/Captive Portal→RADIUS/UPAM/CPPM）→分类（UNP 规则/端口默认）→角色（profile：VLAN/service 映射+QoS 列表）→限制/隔离（QMR 隔离修复）；BYOD（mDNS/SSDP）与 IoT profiling 是外延。</li>
-<li>AAA 服务器选型矩阵（F10，&lt;&lt;<PAGE 1475>&gt;&gt;）：RADIUS（管理+准入）/TACACS+（管理含 SNMP）/LDAP（管理含 SNMP）。</li>
-<li>应用感知框架（F11，&lt;&lt;<PAGE 1431>&gt;&gt;/&lt;&lt;<PAGE 1457>&gt;&gt;）：AppMon（DPI 签名+应用列表+QoS 执行）与 AFP（REGEX 指纹+分类器库+trap/UNP 列表）互补。</li>
-<li>安全纵深四层（F18，&lt;&lt;<PAGE 83>&gt;&gt;/&lt;&lt;<PAGE 1536>&gt;&gt;/&lt;&lt;<PAGE 819>&gt;&gt;/&lt;&lt;<PAGE 1212>&gt;&gt;）：端口级（LPS/风暴控制）→链路级（MACsec）→网络级（IPsec/DoS）→身份级（AG/UNP）。</li>
+<li>网络准入框架（F9， <code>&lt;span class="pg"&gt;原文p1212&lt;/span&gt;</code> ）：认证（802.1X/MAC/Captive Portal→RADIUS/UPAM/CPPM）→分类（UNP 规则/端口默认）→角色（profile：VLAN/service 映射+QoS 列表）→限制/隔离（QMR 隔离修复）；BYOD（mDNS/SSDP）与 IoT profiling 是外延。</li>
+<li>AAA 服务器选型矩阵（F10， <code>&lt;span class="pg"&gt;原文p1475&lt;/span&gt;</code> ）：RADIUS（管理+准入）/TACACS+（管理含 SNMP）/LDAP（管理含 SNMP）。</li>
+<li>应用感知框架（F11， <code>&lt;span class="pg"&gt;原文p1431&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p1457&lt;/span&gt;</code> ）：AppMon（DPI 签名+应用列表+QoS 执行）与 AFP（REGEX 指纹+分类器库+trap/UNP 列表）互补。</li>
+<li>安全纵深四层（F18， <code>&lt;span class="pg"&gt;原文p83&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p1536&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p819&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p1212&lt;/span&gt;</code> ）：端口级（LPS/风暴控制）→链路级（MACsec）→网络级（IPsec/DoS）→身份级（AG/UNP）。</li>
 </ul>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
-<li><strong>准入路径</strong>：supplicant 用 802.1X（EAP over RADIUS）；非 supplicant 用 MAC 认证（MAC 作 username/password）；无认证场景用 UNP 分类规则（源 MAC/IP/domain 等）（P167/P169，&lt;&lt;<PAGE 1213>&gt;&gt;）</li>
-<li><strong>标准次序</strong>：先配 RADIUS→profile→映射→分类规则→端口→认证/分类使能→默认 profile（P171，&lt;&lt;<PAGE 1211>&gt;&gt;）</li>
+<li><strong>准入路径</strong>：supplicant 用 802.1X（EAP over RADIUS）；非 supplicant 用 MAC 认证（MAC 作 username/password）；无认证场景用 UNP 分类规则（源 MAC/IP/domain 等）（P167/P169， <code>&lt;span class="pg"&gt;原文p1213&lt;/span&gt;</code> ）</li>
+<li><strong>标准次序</strong>：先配 RADIUS→profile→映射→分类规则→端口→认证/分类使能→默认 profile（P171， <code>&lt;span class="pg"&gt;原文p1211&lt;/span&gt;</code> ）</li>
 <li><strong>AAA 选型</strong>：端口准入只认 RADIUS（TACACS+/LDAP 不支持，X71）；管理授权优先从服务器取，未配置回落本地用户库（P180）</li>
 <li><strong>应用识别</strong>：面向 OVNG DPI 生态选 AppMon；面向服务器侧端口行为选 AFP（F11）</li>
 <li><strong>观测面选型</strong>：抓包分析端口镜像/端口监控；采样统计 sFlow；SNMP 探针 RMON（F15）</li>
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>Access Guardian 十二步</strong>：<code>aaa radius-server rad1_mac host 10.135.60.44 hash-key secret ...</code>→<code>aaa device-authentication mac rad1_mac</code>→<code>aaa mac session-timeout enable</code>→<code>unp profile na_employee</code>→<code>unp profile na_employee qos-policy-list naEmpList</code>→默认 profile <code>unp profile def_unp</code>→<code>unp profile map na_employee vlan 100</code>→<code>unp classification mac-range ... profile1 na_employee</code>→<code>unp port 1/1/20 port-type bridge</code>→<code>unp port 1/1/1 mac-authentication</code>→<code>unp port 1/1/1 classification</code>→端口默认 profile；验证 show unp 系列（cases·C55，&lt;&lt;<PAGE 1210>&gt;&gt;）</li>
-<li><strong>Captive Portal</strong>：操作模式→配置 profile→替换证书→自定义 web 页→认证流程（cases·C56，&lt;&lt;<PAGE 1303>&gt;&gt;）</li>
-<li><strong>L2 GRE 隧道（BYOD/AP 流量）</strong>：tunnel access switch 与 tunnel aggregation switch 两侧配置+外部环回 SAP+SDP 绑定（cases·C57，&lt;&lt;<PAGE 1353>&gt;&gt;）</li>
-<li><strong>mDNS/SSDP 零配置</strong>：使能 relay→VLAN/service 域配置→（可选）filtering 规则（cases·C58，&lt;&lt;<PAGE 1400>&gt;&gt;）</li>
-<li><strong>AppMon</strong>：签名 kit 文件→应用池→应用列表→应用组→QoS 策略；监控流程=端口采样→签名匹配→更新流数据库→应用记录，强制流程再叠加 QoS 执行（P174/P175，&lt;&lt;<PAGE 1431-1432>&gt;&gt;）</li>
-<li><strong>AFP</strong>：REGEX 签名文件（/flash/app-signature/app-regex.txt）匹配采样 IP 包，命中生成分类器入库并联动 QoS/trap/UNP 列表；默认全局使能但所有端口禁用，端口使能才采样（P176/P177，&lt;&lt;<PAGE 1457>&gt;&gt;）</li>
-<li><strong>LPS</strong>：学习窗口时长+最大 bridged/filtered 数量+授权 MAC 范围；违规处理三选一（阻断违规流量/停止学习/管理关闭端口）（P182/P183，&lt;&lt;<PAGE 1536>&gt;&gt;）</li>
-<li><strong>端口镜像</strong>：<code>port-mirroring 6 source 1/2/3-9 destination 1/2/10 unblocked-vlan 7</code>；验证 <code>show port-mirroring status 6</code>（cases·C59，&lt;&lt;<PAGE 1558>&gt;&gt;）</li>
-<li><strong>sFlow 三段</strong>：<code>sflow receiver 1 name Golden address 198.206.181.3</code>→<code>sflow sampler 1 port 2/1/1-5 receiver 1 rate 2048 sample-hdr-size 128</code>→<code>sflow poller 1 port 1/2/6-10 receiver 1 interval 30</code>；验证 <code>show sflow receiver</code>（cases·C60，&lt;&lt;<PAGE 1561>&gt;&gt;）</li>
+<li><strong>Access Guardian 十二步</strong>：<code>aaa radius-server rad1_mac host 10.135.60.44 hash-key secret ...</code>→<code>aaa device-authentication mac rad1_mac</code>→<code>aaa mac session-timeout enable</code>→<code>unp profile na_employee</code>→<code>unp profile na_employee qos-policy-list naEmpList</code>→默认 profile <code>unp profile def_unp</code>→<code>unp profile map na_employee vlan 100</code>→<code>unp classification mac-range ... profile1 na_employee</code>→<code>unp port 1/1/20 port-type bridge</code>→<code>unp port 1/1/1 mac-authentication</code>→<code>unp port 1/1/1 classification</code>→端口默认 profile；验证 show unp 系列（cases·C55， <code>&lt;span class="pg"&gt;原文p1210&lt;/span&gt;</code> ）</li>
+<li><strong>Captive Portal</strong>：操作模式→配置 profile→替换证书→自定义 web 页→认证流程（cases·C56， <code>&lt;span class="pg"&gt;原文p1303&lt;/span&gt;</code> ）</li>
+<li><strong>L2 GRE 隧道（BYOD/AP 流量）</strong>：tunnel access switch 与 tunnel aggregation switch 两侧配置+外部环回 SAP+SDP 绑定（cases·C57， <code>&lt;span class="pg"&gt;原文p1353&lt;/span&gt;</code> ）</li>
+<li><strong>mDNS/SSDP 零配置</strong>：使能 relay→VLAN/service 域配置→（可选）filtering 规则（cases·C58， <code>&lt;span class="pg"&gt;原文p1400&lt;/span&gt;</code> ）</li>
+<li><strong>AppMon</strong>：签名 kit 文件→应用池→应用列表→应用组→QoS 策略；监控流程=端口采样→签名匹配→更新流数据库→应用记录，强制流程再叠加 QoS 执行（P174/P175， <code>&lt;span class="pg"&gt;原文p1431-1432&lt;/span&gt;</code> ）</li>
+<li><strong>AFP</strong>：REGEX 签名文件（/flash/app-signature/app-regex.txt）匹配采样 IP 包，命中生成分类器入库并联动 QoS/trap/UNP 列表；默认全局使能但所有端口禁用，端口使能才采样（P176/P177， <code>&lt;span class="pg"&gt;原文p1457&lt;/span&gt;</code> ）</li>
+<li><strong>LPS</strong>：学习窗口时长+最大 bridged/filtered 数量+授权 MAC 范围；违规处理三选一（阻断违规流量/停止学习/管理关闭端口）（P182/P183， <code>&lt;span class="pg"&gt;原文p1536&lt;/span&gt;</code> ）</li>
+<li><strong>端口镜像</strong>：<code>port-mirroring 6 source 1/2/3-9 destination 1/2/10 unblocked-vlan 7</code>；验证 <code>show port-mirroring status 6</code>（cases·C59， <code>&lt;span class="pg"&gt;原文p1558&lt;/span&gt;</code> ）</li>
+<li><strong>sFlow 三段</strong>：<code>sflow receiver 1 name Golden address 198.206.181.3</code>→<code>sflow sampler 1 port 2/1/1-5 receiver 1 rate 2048 sample-hdr-size 128</code>→<code>sflow poller 1 port 1/2/6-10 receiver 1 interval 30</code>；验证 <code>show sflow receiver</code>（cases·C60， <code>&lt;span class="pg"&gt;原文p1561&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>Access Guardian 十二步快配（C55，&lt;&lt;<PAGE 1210>&gt;&gt;）</li>
-<li>Captive Portal 五步（C56，&lt;&lt;<PAGE 1303>&gt;&gt;）</li>
-<li>sFlow 三段配置（C60，&lt;&lt;<PAGE 1561>&gt;&gt;）</li>
+<li>Access Guardian 十二步快配（C55， <code>&lt;span class="pg"&gt;原文p1210&lt;/span&gt;</code> ）</li>
+<li>Captive Portal 五步（C56， <code>&lt;span class="pg"&gt;原文p1303&lt;/span&gt;</code> ）</li>
+<li>sFlow 三段配置（C60， <code>&lt;span class="pg"&gt;原文p1561&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="b">B（反例/坑）</h2>
 <ul>
-<li>认证服务器不逐台轮询：第一台可用服务器上找不到用户即判失败，不自动试下台（X70/P179，&lt;&lt;<PAGE 1475>&gt;&gt;）</li>
-<li>TACACS+/LDAP 不支持端口准入，Access Guardian 只认 RADIUS（X71，&lt;&lt;<PAGE 1475>&gt;&gt;）</li>
-<li>MAC 认证把 MAC 同时作用户名密码，服务器侧格式不匹配（大小写/分隔符）会全军覆没（X74，&lt;&lt;<PAGE 1214>&gt;&gt;）</li>
-<li>认证失败或无 profile 返回时回落到 UNP 端口默认 profile 与分类规则（P168，&lt;&lt;<PAGE 1213>&gt;&gt;）；MAC 会话定时器默认 12 小时（P172，&lt;&lt;<PAGE 1210>&gt;&gt;）</li>
-<li>LPS 不支持 linkagg/聚合成员口；学习窗口全局生效不能按口调（X69/P184，&lt;&lt;<PAGE 1536>&gt;&gt;）；MAC 四类型中 bridged 满后新地址按 filtered 学（P185，&lt;&lt;<PAGE 1537>&gt;&gt;）</li>
-<li>sFlow 三件套默认 UDP 6343、datagram 1400 字节、版本 5；端口镜像加 unblocked-vlan 防 STP 变化中断镜像会话（P188/P187，&lt;&lt;<PAGE 1561, 1558>&gt;&gt;）</li>
-<li>端口监控（port-monitoring）持久会话落盘数据文件默认 64K、可覆盖、capture brief（P189，&lt;&lt;<PAGE 1559>&gt;&gt;）</li>
-<li>802.1Q tagged 口默认 untrusted，上联口标记不生效（X64，&lt;&lt;<PAGE 1134>&gt;&gt;，详见 aos-nc-qos-policy）</li>
+<li>认证服务器不逐台轮询：第一台可用服务器上找不到用户即判失败，不自动试下台（X70/P179， <code>&lt;span class="pg"&gt;原文p1475&lt;/span&gt;</code> ）</li>
+<li>TACACS+/LDAP 不支持端口准入，Access Guardian 只认 RADIUS（X71， <code>&lt;span class="pg"&gt;原文p1475&lt;/span&gt;</code> ）</li>
+<li>MAC 认证把 MAC 同时作用户名密码，服务器侧格式不匹配（大小写/分隔符）会全军覆没（X74， <code>&lt;span class="pg"&gt;原文p1214&lt;/span&gt;</code> ）</li>
+<li>认证失败或无 profile 返回时回落到 UNP 端口默认 profile 与分类规则（P168， <code>&lt;span class="pg"&gt;原文p1213&lt;/span&gt;</code> ）；MAC 会话定时器默认 12 小时（P172， <code>&lt;span class="pg"&gt;原文p1210&lt;/span&gt;</code> ）</li>
+<li>LPS 不支持 linkagg/聚合成员口；学习窗口全局生效不能按口调（X69/P184， <code>&lt;span class="pg"&gt;原文p1536&lt;/span&gt;</code> ）；MAC 四类型中 bridged 满后新地址按 filtered 学（P185， <code>&lt;span class="pg"&gt;原文p1537&lt;/span&gt;</code> ）</li>
+<li>sFlow 三件套默认 UDP 6343、datagram 1400 字节、版本 5；端口镜像加 unblocked-vlan 防 STP 变化中断镜像会话（P188/P187， <code>&lt;span class="pg"&gt;原文p1561, 1558&lt;/span&gt;</code> ）</li>
+<li>端口监控（port-monitoring）持久会话落盘数据文件默认 64K、可覆盖、capture brief（P189， <code>&lt;span class="pg"&gt;原文p1559&lt;/span&gt;</code> ）</li>
+<li>802.1Q tagged 口默认 untrusted，上联口标记不生效（X64， <code>&lt;span class="pg"&gt;原文p1134&lt;/span&gt;</code> ，详见 aos-nc-qos-policy）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniSwitch AOS 8.10R4 Network Configuration Guide 第 35 章 Access Guardian（&lt;&lt;<PAGE 1210-1400>&gt;&gt;）、第 36 章 AppMon（&lt;&lt;<PAGE 1431-1449>&gt;&gt;）、第 37 章 AFP（&lt;&lt;<PAGE 1457-1458>&gt;&gt;）、第 38 章 Authentication Servers（&lt;&lt;<PAGE 1475-1525>&gt;&gt;）、第 40 章 LPS（&lt;&lt;<PAGE 1536-1542>&gt;&gt;）、第 41 章端口镜像/sFlow/RMON（&lt;&lt;<PAGE 1558-1567>&gt;&gt;）。条目来源：cases C55-C60；principles P167-P190；counter-examples X69-X71/X74；frameworks F9-F11/F15/F18。</p><div class="pn"><a href="aos-nc-qos-policy.html">⬅ 上一单元：aos-nc-qos-policy</a><a class="nxt" href="aos-nc-oam-monitoring.html">下一单元：aos-nc-oam-monitoring ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<p>OmniSwitch AOS 8.10R4 Network Configuration Guide 第 35 章 Access Guardian（ <code>&lt;span class="pg"&gt;原文p1210-1400&lt;/span&gt;</code> ）、第 36 章 AppMon（ <code>&lt;span class="pg"&gt;原文p1431-1449&lt;/span&gt;</code> ）、第 37 章 AFP（ <code>&lt;span class="pg"&gt;原文p1457-1458&lt;/span&gt;</code> ）、第 38 章 Authentication Servers（ <code>&lt;span class="pg"&gt;原文p1475-1525&lt;/span&gt;</code> ）、第 40 章 LPS（ <code>&lt;span class="pg"&gt;原文p1536-1542&lt;/span&gt;</code> ）、第 41 章端口镜像/sFlow/RMON（ <code>&lt;span class="pg"&gt;原文p1558-1567&lt;/span&gt;</code> ）。条目来源：cases C55-C60；principles P167-P190；counter-examples X69-X71/X74；frameworks F9-F11/F15/F18。</p><div class="pn"><a href="aos-nc-qos-policy.html">⬅ 上一单元：aos-nc-qos-policy</a><a class="nxt" href="aos-nc-oam-monitoring.html">下一单元：aos-nc-oam-monitoring ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

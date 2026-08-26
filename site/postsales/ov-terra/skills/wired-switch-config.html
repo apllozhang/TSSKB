@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -82,42 +83,42 @@ blockquote p{margin:6px 0}
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li><strong>CLI 模板化配置</strong>：</li>
-<li>Initial 模板：在设备 onboarding 时的 "Initial Configuration" 应用（设备变 managed 前）（&lt;&lt;<PAGE 174>&gt;&gt;）</li>
-<li>Value Mappings：将模板变量映射到值（&lt;&lt;<PAGE 175>&gt;&gt;）</li>
-<li>Incremental 模板：Save and Assign 或 Actions &gt; Assign → Step1 选站点/单机 → Step2 选 Value mapping（&lt;&lt;<PAGE 176>&gt;&gt;&lt;&lt;<PAGE 177>&gt;&gt;&lt;&lt;<PAGE 178>&gt;&gt;&lt;&lt;<PAGE 179>&gt;&gt;&lt;&lt;<PAGE 180>&gt;&gt;）</li>
-<li><strong>L2：创建 VLAN</strong>（VLAN Manager）：VLAN IDs、Default VLAN ID、Default Ports Template（VLAN 在默认端口 untagged）、Q Tagged Ports Template、Switch selection；可顺带配 Spanning Tree（Summary/Bridge/Port）与 IP Router（&lt;&lt;<PAGE 182>&gt;&gt;&lt;&lt;<PAGE 183>&gt;&gt;&lt;&lt;<PAGE 184>&gt;&gt;）</li>
-<li><strong>L3：创建 IP Interface</strong>：IP interface name、IP Address/Mask、Device type（Unbound/EMP/VLAN/Tunnel…）、VRF IP、Enable/Disable（Admin State、IP Forward、Local Proxy ARP、Primary Interface）、Switch selection（&lt;&lt;<PAGE 187>&gt;&gt;&lt;&lt;<PAGE 188>&gt;&gt;）</li>
-<li><strong>有线客户端 MAC 认证四步</strong>（路径 Configure &gt; Network Access &gt; Unified Access / UPAM-NAC / Accounts）（&lt;&lt;<PAGE 451>&gt;&gt;~&lt;&lt;<PAGE 456>&gt;&gt;）：</li>
+<li>Initial 模板：在设备 onboarding 时的 "Initial Configuration" 应用（设备变 managed 前）（ <code>&lt;span class="pg"&gt;原文p174&lt;/span&gt;</code> ）</li>
+<li>Value Mappings：将模板变量映射到值（ <code>&lt;span class="pg"&gt;原文p175&lt;/span&gt;</code> ）</li>
+<li>Incremental 模板：Save and Assign 或 Actions &gt; Assign → Step1 选站点/单机 → Step2 选 Value mapping（ <code>&lt;span class="pg"&gt;原文p176&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p177&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p178&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p179&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p180&lt;/span&gt;</code> ）</li>
+<li><strong>L2：创建 VLAN</strong>（VLAN Manager）：VLAN IDs、Default VLAN ID、Default Ports Template（VLAN 在默认端口 untagged）、Q Tagged Ports Template、Switch selection；可顺带配 Spanning Tree（Summary/Bridge/Port）与 IP Router（ <code>&lt;span class="pg"&gt;原文p182&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p183&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p184&lt;/span&gt;</code> ）</li>
+<li><strong>L3：创建 IP Interface</strong>：IP interface name、IP Address/Mask、Device type（Unbound/EMP/VLAN/Tunnel…）、VRF IP、Enable/Disable（Admin State、IP Forward、Local Proxy ARP、Primary Interface）、Switch selection（ <code>&lt;span class="pg"&gt;原文p187&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p188&lt;/span&gt;</code> ）</li>
+<li><strong>有线客户端 MAC 认证四步</strong>（路径 Configure &gt; Network Access &gt; Unified Access / UPAM-NAC / Accounts）（ <code>&lt;span class="pg"&gt;原文p451&lt;/span&gt;</code> ~ <code>&lt;span class="pg"&gt;原文p456&lt;/span&gt;</code> ）：</li>
 <li>[PRE] 预配 ARP_DEFAULT / ARP_PASS</li>
 <li>① AAA Server Profile（UPAMRadiusServer, MAC）</li>
 <li>② Access Auth Profile（MAC 方法 + AAA Profile + 默认 ARP + AP Group + 端口 Eth1）</li>
 <li>③ Access Policy（Auth Type=MAC, Local-Database, ARP_PASS，无重定向）</li>
 <li>④ 本地数据库建 MAC 条目（Company Property）</li>
-<li><strong>Golden Configuration 合规审计</strong>：以备份作为基准，交换机配置意外变更可用于恢复；Status 为 Compliant 表示无偏离；支持周期审计与即时审计（&lt;&lt;<PAGE 195>&gt;&gt;&lt;&lt;<PAGE 196>&gt;&gt;&lt;&lt;<PAGE 351>&gt;&gt;）</li>
+<li><strong>Golden Configuration 合规审计</strong>：以备份作为基准，交换机配置意外变更可用于恢复；Status 为 Compliant 表示无偏离；支持周期审计与即时审计（ <code>&lt;span class="pg"&gt;原文p195&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p196&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p351&lt;/span&gt;</code> ）</li>
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
-<li>模板 + Value Mappings 实现多站点差异化：一套模板，每站点一套映射值（&lt;&lt;<PAGE 175>&gt;&gt;）。</li>
-<li>IoT 设备识别（Device Profiling）：基于 MAC OUI 与 DHCP 指纹（option 55 参数请求列表 / option 60 厂商标识）分类，再按设备类别映射 ARP 执行 Enforcement（&lt;&lt;<PAGE 464>&gt;&gt;&lt;&lt;<PAGE 465>&gt;&gt;）。</li>
-<li>UNP（Unified Network Policy）：OmniSwitch 上的统一网络策略，可在有线客户端/port 视图应用（&lt;&lt;<PAGE 193>&gt;&gt;&lt;&lt;<PAGE 313>&gt;&gt;）。</li>
+<li>模板 + Value Mappings 实现多站点差异化：一套模板，每站点一套映射值（ <code>&lt;span class="pg"&gt;原文p175&lt;/span&gt;</code> ）。</li>
+<li>IoT 设备识别（Device Profiling）：基于 MAC OUI 与 DHCP 指纹（option 55 参数请求列表 / option 60 厂商标识）分类，再按设备类别映射 ARP 执行 Enforcement（ <code>&lt;span class="pg"&gt;原文p464&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p465&lt;/span&gt;</code> ）。</li>
+<li>UNP（Unified Network Policy）：OmniSwitch 上的统一网络策略，可在有线客户端/port 视图应用（ <code>&lt;span class="pg"&gt;原文p193&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p313&lt;/span&gt;</code> ）。</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li><strong>案例 1</strong>：多站点 rollout，同一份 Initial 模板配多套 Value Mappings，onboarding 时自动注入站点差异参数（&lt;&lt;<PAGE 174>&gt;&gt;&lt;&lt;<PAGE 175>&gt;&gt;）。</li>
-<li><strong>案例 2</strong>：打印机等哑终端接交换机 Eth1 需要认证，走 UPAM 内置 MAC 认证服务器 + 本地 MAC 数据库（ARP_PASS），四步完成（&lt;&lt;<PAGE 451>&gt;&gt;~&lt;&lt;<PAGE 456>&gt;&gt;）。</li>
+<li><strong>案例 1</strong>：多站点 rollout，同一份 Initial 模板配多套 Value Mappings，onboarding 时自动注入站点差异参数（ <code>&lt;span class="pg"&gt;原文p174&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p175&lt;/span&gt;</code> ）。</li>
+<li><strong>案例 2</strong>：打印机等哑终端接交换机 Eth1 需要认证，走 UPAM 内置 MAC 认证服务器 + 本地 MAC 数据库（ARP_PASS），四步完成（ <code>&lt;span class="pg"&gt;原文p451&lt;/span&gt;</code> ~ <code>&lt;span class="pg"&gt;原文p456&lt;/span&gt;</code> ）。</li>
 </ul>
 <h2 id="b">B（边界与陷阱）</h2>
 <ul>
-<li>Initial 与 Incremental 应用时机不同：Initial 只在设备变 managed 前的 onboarding 环节生效，错过就要用 Incremental（&lt;&lt;<PAGE 174>&gt;&gt;）。</li>
-<li>审计基准更新要及时：Golden Configuration 偏离即 Non-Compliant，计划内变更后需刷新基准（&lt;&lt;<PAGE 195>&gt;&gt;&lt;&lt;<PAGE 196>&gt;&gt;）。</li>
+<li>Initial 与 Incremental 应用时机不同：Initial 只在设备变 managed 前的 onboarding 环节生效，错过就要用 Incremental（ <code>&lt;span class="pg"&gt;原文p174&lt;/span&gt;</code> ）。</li>
+<li>审计基准更新要及时：Golden Configuration 偏离即 Non-Compliant，计划内变更后需刷新基准（ <code>&lt;span class="pg"&gt;原文p195&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p196&lt;/span&gt;</code> ）。</li>
 </ul>
 <h2 id="_1">来源</h2>
 <ul>
-<li>cases·CLI 模板化配置 Initial/Incremental（&lt;&lt;<PAGE 174>&gt;&gt;~&lt;&lt;<PAGE 180>&gt;&gt;）</li>
-<li>cases·VLAN Manager 创建 VLAN（&lt;&lt;<PAGE 182>&gt;&gt;&lt;&lt;<PAGE 183>&gt;&gt;&lt;&lt;<PAGE 184>&gt;&gt;）</li>
-<li>cases·创建 IP Interface（&lt;&lt;<PAGE 187>&gt;&gt;&lt;&lt;<PAGE 188>&gt;&gt;）</li>
-<li>frameworks·有线客户端 MAC 认证四步配置流程（&lt;&lt;<PAGE 451>&gt;&gt;~&lt;&lt;<PAGE 456>&gt;&gt;）</li>
-<li>principles·Golden Configuration 合规检查（&lt;&lt;<PAGE 195>&gt;&gt;&lt;&lt;<PAGE 196>&gt;&gt;&lt;&lt;<PAGE 351>&gt;&gt;）</li>
-<li>principles·IoT 设备识别原理（&lt;&lt;<PAGE 464>&gt;&gt;&lt;&lt;<PAGE 465>&gt;&gt;）</li>
-<li>glossary·UNP（&lt;&lt;<PAGE 193>&gt;&gt;&lt;&lt;<PAGE 313>&gt;&gt;）</li>
+<li>cases·CLI 模板化配置 Initial/Incremental（ <code>&lt;span class="pg"&gt;原文p174&lt;/span&gt;</code> ~ <code>&lt;span class="pg"&gt;原文p180&lt;/span&gt;</code> ）</li>
+<li>cases·VLAN Manager 创建 VLAN（ <code>&lt;span class="pg"&gt;原文p182&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p183&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p184&lt;/span&gt;</code> ）</li>
+<li>cases·创建 IP Interface（ <code>&lt;span class="pg"&gt;原文p187&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p188&lt;/span&gt;</code> ）</li>
+<li>frameworks·有线客户端 MAC 认证四步配置流程（ <code>&lt;span class="pg"&gt;原文p451&lt;/span&gt;</code> ~ <code>&lt;span class="pg"&gt;原文p456&lt;/span&gt;</code> ）</li>
+<li>principles·Golden Configuration 合规检查（ <code>&lt;span class="pg"&gt;原文p195&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p196&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p351&lt;/span&gt;</code> ）</li>
+<li>principles·IoT 设备识别原理（ <code>&lt;span class="pg"&gt;原文p464&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p465&lt;/span&gt;</code> ）</li>
+<li>glossary·UNP（ <code>&lt;span class="pg"&gt;原文p193&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p313&lt;/span&gt;</code> ）</li>
 </ul><div class="pn"><a href="switch-onboarding.html">⬅ 上一单元：switch-onboarding</a><a class="nxt" href="wireless-service-delivery.html">下一单元：wireless-service-delivery ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

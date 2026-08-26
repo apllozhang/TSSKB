@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -68,10 +69,10 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="i">I（核心理念）</h2>
 <ul>
-<li>热插拔节律双标准（P37，&lt;&lt;<PAGE 63>&gt;&gt;）：所有拆件间隔 30 秒；所有插件间隔 5 分钟且 LED 无错才能进行下一件——这是 9900 区别于 1U 交换机的机箱级纪律。</li>
-<li>三重热换限制（P38-P40，&lt;&lt;<PAGE 63>&gt;&gt;）：单件不可热拆；CFM 热换 120 秒窗口且风扇全在位、一次一块；NI 只能同类热换（先断网线拔光模块等 30 秒）。</li>
-<li>LED 组合诊断语义（P12，&lt;&lt;<PAGE 18>&gt;&gt;）：PRI/FAB 状态编码故障域，五灯同闪=全部 CFM PCIe 硬链路失效（拒绝登录、console 每 5 秒报错）。</li>
-<li>PoE 机制三要点：默认 operational disabled（装好不等于供电）；功率上限只设限不预留；Priority Disconnect 端口优先方向为 <strong>48（最高）→1（最低）</strong>，与接入系列相反（P31/P32/X37/X38，&lt;&lt;<PAGE 50>&gt;&gt;/&lt;&lt;<PAGE 52>&gt;&gt;/&lt;&lt;<PAGE 53>&gt;&gt;/&lt;&lt;<PAGE 55>&gt;&gt;）。</li>
+<li>热插拔节律双标准（P37， <code>&lt;span class="pg"&gt;原文p63&lt;/span&gt;</code> ）：所有拆件间隔 30 秒；所有插件间隔 5 分钟且 LED 无错才能进行下一件——这是 9900 区别于 1U 交换机的机箱级纪律。</li>
+<li>三重热换限制（P38-P40， <code>&lt;span class="pg"&gt;原文p63&lt;/span&gt;</code> ）：单件不可热拆；CFM 热换 120 秒窗口且风扇全在位、一次一块；NI 只能同类热换（先断网线拔光模块等 30 秒）。</li>
+<li>LED 组合诊断语义（P12， <code>&lt;span class="pg"&gt;原文p18&lt;/span&gt;</code> ）：PRI/FAB 状态编码故障域，五灯同闪=全部 CFM PCIe 硬链路失效（拒绝登录、console 每 5 秒报错）。</li>
+<li>PoE 机制三要点：默认 operational disabled（装好不等于供电）；功率上限只设限不预留；Priority Disconnect 端口优先方向为 <strong>48（最高）→1（最低）</strong>，与接入系列相反（P31/P32/X37/X38， <code>&lt;span class="pg"&gt;原文p50&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p52&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p53&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p55&lt;/span&gt;</code> ）。</li>
 </ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
@@ -82,35 +83,35 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>NI 热换完整流程</strong>：断模块全部网线→拔全部光模块→等 30 秒→插同类替代模块→回插光模块→重接网线（C27，&lt;&lt;<PAGE 63>&gt;&gt;）</li>
-<li><strong>CFM 热换</strong>：一次只换一个、风扇托盘全数在位、120 秒内完成（P39/X20，&lt;&lt;<PAGE 63>&gt;&gt;）</li>
-<li><strong>拆 CFM</strong>：先拆遮挡的风扇托盘→松上下拇指螺丝、锁杆外拉释放→滑出并全程托承重量（C25，&lt;&lt;<PAGE 59>&gt;&gt;-&lt;&lt;<PAGE 61>&gt;&gt;）</li>
-<li><strong>拆电源四步</strong>：双端拔线→松拇指螺丝→手柄下拉 open→一手拉一手托底取出；空槽装盲板（C23，&lt;&lt;<PAGE 57>&gt;&gt;/&lt;&lt;<PAGE 58>&gt;&gt;）</li>
-<li><strong>拆风扇托盘</strong>：松拇指螺丝→拉出下把手脱开底部→向外向下拉出脱离顶部 tab；尽快装回（C24，&lt;&lt;<PAGE 58>&gt;&gt;/&lt;&lt;<PAGE 59>&gt;&gt;）</li>
-<li><strong>PoE 首次激活</strong>：<code>lanpower slot 2/1 service start</code>（唯一途径，admin-state 不能首启）（C15/X33，&lt;&lt;<PAGE 52>&gt;&gt;）</li>
-<li><strong>PoE 调整</strong>：单口 <code>lanpower port 1/1/6 priority critical</code>；槽上限 <code>lanpower slot 3/1 maxpower 400</code>（上限不预留）（C17/C18，&lt;&lt;<PAGE 53>&gt;&gt;/&lt;&lt;<PAGE 54>&gt;&gt;）</li>
-<li><strong>Priority Disconnect 开关</strong>：<code>lanpower slot 2/1 priority-disconnect disable|enable</code>（默认启用）（C20，&lt;&lt;<PAGE 55>&gt;&gt;）</li>
-<li><strong>状态查看</strong>：<code>show powersupply</code>（逐槽 Type/Status）+ <code>show lanpower slot 1/4</code>（逐口用量/优先级/预算）（C22，&lt;&lt;<PAGE 50>&gt;&gt;/&lt;&lt;<PAGE 51>&gt;&gt;）</li>
-<li><strong>CMM LED 判读</strong>：PRI 稳绿=主/闪绿=备/稳黄=停运/闪黄=升级中；VC 稳蓝=Master；NI 背光稳蓝=HW OK/闪蓝=启动或故障；Speed LED 稳红=HW 故障（P12/P22，&lt;&lt;<PAGE 18>&gt;&gt;/&lt;&lt;<PAGE 27>&gt;&gt;）</li>
+<li><strong>NI 热换完整流程</strong>：断模块全部网线→拔全部光模块→等 30 秒→插同类替代模块→回插光模块→重接网线（C27， <code>&lt;span class="pg"&gt;原文p63&lt;/span&gt;</code> ）</li>
+<li><strong>CFM 热换</strong>：一次只换一个、风扇托盘全数在位、120 秒内完成（P39/X20， <code>&lt;span class="pg"&gt;原文p63&lt;/span&gt;</code> ）</li>
+<li><strong>拆 CFM</strong>：先拆遮挡的风扇托盘→松上下拇指螺丝、锁杆外拉释放→滑出并全程托承重量（C25， <code>&lt;span class="pg"&gt;原文p59&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p61&lt;/span&gt;</code> ）</li>
+<li><strong>拆电源四步</strong>：双端拔线→松拇指螺丝→手柄下拉 open→一手拉一手托底取出；空槽装盲板（C23， <code>&lt;span class="pg"&gt;原文p57&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p58&lt;/span&gt;</code> ）</li>
+<li><strong>拆风扇托盘</strong>：松拇指螺丝→拉出下把手脱开底部→向外向下拉出脱离顶部 tab；尽快装回（C24， <code>&lt;span class="pg"&gt;原文p58&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p59&lt;/span&gt;</code> ）</li>
+<li><strong>PoE 首次激活</strong>：<code>lanpower slot 2/1 service start</code>（唯一途径，admin-state 不能首启）（C15/X33， <code>&lt;span class="pg"&gt;原文p52&lt;/span&gt;</code> ）</li>
+<li><strong>PoE 调整</strong>：单口 <code>lanpower port 1/1/6 priority critical</code>；槽上限 <code>lanpower slot 3/1 maxpower 400</code>（上限不预留）（C17/C18， <code>&lt;span class="pg"&gt;原文p53&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p54&lt;/span&gt;</code> ）</li>
+<li><strong>Priority Disconnect 开关</strong>：<code>lanpower slot 2/1 priority-disconnect disable|enable</code>（默认启用）（C20， <code>&lt;span class="pg"&gt;原文p55&lt;/span&gt;</code> ）</li>
+<li><strong>状态查看</strong>：<code>show powersupply</code>（逐槽 Type/Status）+ <code>show lanpower slot 1/4</code>（逐口用量/优先级/预算）（C22， <code>&lt;span class="pg"&gt;原文p50&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p51&lt;/span&gt;</code> ）</li>
+<li><strong>CMM LED 判读</strong>：PRI 稳绿=主/闪绿=备/稳黄=停运/闪黄=升级中；VC 稳蓝=Master；NI 背光稳蓝=HW OK/闪蓝=启动或故障；Speed LED 稳红=HW 故障（P12/P22， <code>&lt;span class="pg"&gt;原文p18&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p27&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>Priority Disconnect 四场景裁决（P32，&lt;&lt;<PAGE 55>&gt;&gt;/&lt;&lt;<PAGE 56>&gt;&gt;）：禁用→一律拒新 PD；启用+同级→按物理端口号 48 高 1 低；启用+新 PD 最高优先级→必得电、先断最低优先级口；启用+新 PD 最低→拒</li>
-<li>调低 slot 上限致低优先级口断电（新值低于当前总消耗时）（C17/X36，&lt;&lt;<PAGE 53>&gt;&gt;）</li>
-<li>开 Class 检测复位全部 PoE 口（仅老式 IP 话机用、默认关）（C19/X34，&lt;&lt;<PAGE 52>&gt;&gt;/&lt;&lt;<PAGE 54>&gt;&gt;）</li>
-<li>FAB 闪黄时 NI 全断电但仍可 console/EMP 登录定位（P12，&lt;&lt;<PAGE 18>&gt;&gt;）</li>
+<li>Priority Disconnect 四场景裁决（P32， <code>&lt;span class="pg"&gt;原文p55&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p56&lt;/span&gt;</code> ）：禁用→一律拒新 PD；启用+同级→按物理端口号 48 高 1 低；启用+新 PD 最高优先级→必得电、先断最低优先级口；启用+新 PD 最低→拒</li>
+<li>调低 slot 上限致低优先级口断电（新值低于当前总消耗时）（C17/X36， <code>&lt;span class="pg"&gt;原文p53&lt;/span&gt;</code> ）</li>
+<li>开 Class 检测复位全部 PoE 口（仅老式 IP 话机用、默认关）（C19/X34， <code>&lt;span class="pg"&gt;原文p52&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p54&lt;/span&gt;</code> ）</li>
+<li>FAB 闪黄时 NI 全断电但仍可 console/EMP 登录定位（P12， <code>&lt;span class="pg"&gt;原文p18&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>
-<li><strong>Priority Disconnect 端口优先方向为 48（最高）→1（最低），与 6865/6870/6560 等接入系列（1 高 48 低）相反</strong>——跨平台直接套用优先级规划，预算不足时断电的口正好相反（X38/P31，&lt;&lt;<PAGE 55>&gt;&gt;）</li>
-<li>热插拔节律红线：拆件间隔不足 30 秒、插件间隔不足 5 分钟或 LED 未示无错即进行下一件（X21/P37，&lt;&lt;<PAGE 63>&gt;&gt;）</li>
-<li>单 CMM/单 CFM/单电源时热拆即断业务（X11，&lt;&lt;<PAGE 63>&gt;&gt;）</li>
-<li>CFM 热换超 120 秒、一次换多块、风扇未全在位（X20，&lt;&lt;<PAGE 63>&gt;&gt;）</li>
-<li>NI 非同类模块热换（"can only be hot swapped with like modules"）；换前不断线不拔光模块不等 30 秒（X22/C27，&lt;&lt;<PAGE 63>&gt;&gt;）</li>
-<li>三风扇托盘常驻："Three fan trays are required at all times"，运维拆除须尽快装回（X19/C24，&lt;&lt;<PAGE 28>&gt;&gt;/&lt;&lt;<PAGE 59>&gt;&gt;）</li>
-<li>PoE 默认 operational disabled，装好即供电的预期会落空；lanpower port admin-state 不能用于首次激活（X37/X33，&lt;&lt;<PAGE 50>&gt;&gt;/&lt;&lt;<PAGE 52>&gt;&gt;）</li>
-<li>开 Class 检测会复位全部 PoE 口（生产操作前评估影响面）（X34，&lt;&lt;<PAGE 52>&gt;&gt;）</li>
-<li>排障红线：运行中勿触电源内部/主板；雷暴禁插拔作业；空光口不可见激光勿直视（X40/X41/X42，&lt;&lt;<PAGE 69>&gt;&gt;/&lt;&lt;<PAGE 70>&gt;&gt;/&lt;&lt;<PAGE 73>&gt;&gt;）</li>
-<li>密码丢失后果：OmniSwitch 覆盖已配置密码受限制（X46，&lt;&lt;<PAGE 48>&gt;&gt;）；解锁远程会话即向所有持凭证者开放远程访问（X47，&lt;&lt;<PAGE 47>&gt;&gt;）</li>
+<li><strong>Priority Disconnect 端口优先方向为 48（最高）→1（最低），与 6865/6870/6560 等接入系列（1 高 48 低）相反</strong>——跨平台直接套用优先级规划，预算不足时断电的口正好相反（X38/P31， <code>&lt;span class="pg"&gt;原文p55&lt;/span&gt;</code> ）</li>
+<li>热插拔节律红线：拆件间隔不足 30 秒、插件间隔不足 5 分钟或 LED 未示无错即进行下一件（X21/P37， <code>&lt;span class="pg"&gt;原文p63&lt;/span&gt;</code> ）</li>
+<li>单 CMM/单 CFM/单电源时热拆即断业务（X11， <code>&lt;span class="pg"&gt;原文p63&lt;/span&gt;</code> ）</li>
+<li>CFM 热换超 120 秒、一次换多块、风扇未全在位（X20， <code>&lt;span class="pg"&gt;原文p63&lt;/span&gt;</code> ）</li>
+<li>NI 非同类模块热换（"can only be hot swapped with like modules"）；换前不断线不拔光模块不等 30 秒（X22/C27， <code>&lt;span class="pg"&gt;原文p63&lt;/span&gt;</code> ）</li>
+<li>三风扇托盘常驻："Three fan trays are required at all times"，运维拆除须尽快装回（X19/C24， <code>&lt;span class="pg"&gt;原文p28&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p59&lt;/span&gt;</code> ）</li>
+<li>PoE 默认 operational disabled，装好即供电的预期会落空；lanpower port admin-state 不能用于首次激活（X37/X33， <code>&lt;span class="pg"&gt;原文p50&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p52&lt;/span&gt;</code> ）</li>
+<li>开 Class 检测会复位全部 PoE 口（生产操作前评估影响面）（X34， <code>&lt;span class="pg"&gt;原文p52&lt;/span&gt;</code> ）</li>
+<li>排障红线：运行中勿触电源内部/主板；雷暴禁插拔作业；空光口不可见激光勿直视（X40/X41/X42， <code>&lt;span class="pg"&gt;原文p69&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p70&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p73&lt;/span&gt;</code> ）</li>
+<li>密码丢失后果：OmniSwitch 覆盖已配置密码受限制（X46， <code>&lt;span class="pg"&gt;原文p48&lt;/span&gt;</code> ）；解锁远程会话即向所有持凭证者开放远程访问（X47， <code>&lt;span class="pg"&gt;原文p47&lt;/span&gt;</code> ）</li>
 </ul>
 <p>来源：OmniSwitch 9900 Series Hardware Users Guide（Ch3 PoE + Ch4 拆除部件 + LED 诊断，p50-63；附录 A，p68-73）</p><div class="pn"><a href="os9900-install-power.html">⬅ 上一单元：os9900-install-power</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -87,29 +88,29 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>三段式模板（OSPF→BGP）</strong>：<code>ip route-map ospf-to-bgp sequence-number 10 action deny</code>（match tag 5 + route-type external type2）→ sequence 20 permit（match ipv4-interface intf_ospf + set metric 255）→ sequence 30 permit（set tag 8）→ <code>ip redist ospf into bgp route-map ospf-to-bgp</code>（C6，&lt;&lt;<PAGE 44-45>&gt;&gt;）</li>
-<li><strong>被动接口批量</strong>：<code>ip route-map "R1" action permit</code> + <code>match ip-address 10.10.0.0/16</code> + <code>set metric-type internal</code> → <code>ip redist local into ospf route-map R1 admin-state enable</code> → <code>show ip ospf interface</code>（C7，&lt;&lt;<PAGE 46>&gt;&gt;）</li>
-<li><strong>IS-IS L1→L2 泄漏</strong>：<code>ip route-map is2is sequence-number 1 action permit</code> + <code>match route-type level1</code> + <code>set level level2</code> → <code>ip redist isis into isis route-map is2is status enable</code>（C17，&lt;&lt;<PAGE 115>&gt;&gt;）</li>
-<li><strong>BGP 原子策略</strong>：<code>ip bgp policy aspath-list aspathfilter "^100 200$" action permit</code>；community-list + match-type exact；prefix-list + ge/le → <code>ip bgp neighbor 172.22.2.0 in-aspathlist ...</code> / <code>route-map mapfilter in|out</code> → <code>clear soft in|out</code>（C29，&lt;&lt;<PAGE 201-210>&gt;&gt;）</li>
+<li><strong>三段式模板（OSPF→BGP）</strong>：<code>ip route-map ospf-to-bgp sequence-number 10 action deny</code>（match tag 5 + route-type external type2）→ sequence 20 permit（match ipv4-interface intf_ospf + set metric 255）→ sequence 30 permit（set tag 8）→ <code>ip redist ospf into bgp route-map ospf-to-bgp</code>（C6， <code>&lt;span class="pg"&gt;原文p44-45&lt;/span&gt;</code> ）</li>
+<li><strong>被动接口批量</strong>：<code>ip route-map "R1" action permit</code> + <code>match ip-address 10.10.0.0/16</code> + <code>set metric-type internal</code> → <code>ip redist local into ospf route-map R1 admin-state enable</code> → <code>show ip ospf interface</code>（C7， <code>&lt;span class="pg"&gt;原文p46&lt;/span&gt;</code> ）</li>
+<li><strong>IS-IS L1→L2 泄漏</strong>：<code>ip route-map is2is sequence-number 1 action permit</code> + <code>match route-type level1</code> + <code>set level level2</code> → <code>ip redist isis into isis route-map is2is status enable</code>（C17， <code>&lt;span class="pg"&gt;原文p115&lt;/span&gt;</code> ）</li>
+<li><strong>BGP 原子策略</strong>：<code>ip bgp policy aspath-list aspathfilter "^100 200$" action permit</code>；community-list + match-type exact；prefix-list + ge/le → <code>ip bgp neighbor 172.22.2.0 in-aspathlist ...</code> / <code>route-map mapfilter in|out</code> → <code>clear soft in|out</code>（C29， <code>&lt;span class="pg"&gt;原文p201-210&lt;/span&gt;</code> ）</li>
 <li><strong>验证</strong>：<code>show ip route-map</code> / <code>show ip redist</code> / <code>show ip bgp policy ...</code></li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>OSPF→BGP 三段式重分发（deny→permit+set→兜底）（C6，&lt;&lt;<PAGE 44-45>&gt;&gt;）</li>
-<li>用 route map 批量生成 OSPF 被动接口（C7，&lt;&lt;<PAGE 46>&gt;&gt;）</li>
-<li>IS-IS L1→L2 泄漏（C17，&lt;&lt;<PAGE 115>&gt;&gt;）</li>
-<li>BGP 五类策略创建 + peer 绑定 + soft 重应用（C29，&lt;&lt;<PAGE 201-210>&gt;&gt;）</li>
+<li>OSPF→BGP 三段式重分发（deny→permit+set→兜底）（C6， <code>&lt;span class="pg"&gt;原文p44-45&lt;/span&gt;</code> ）</li>
+<li>用 route map 批量生成 OSPF 被动接口（C7， <code>&lt;span class="pg"&gt;原文p46&lt;/span&gt;</code> ）</li>
+<li>IS-IS L1→L2 泄漏（C17， <code>&lt;span class="pg"&gt;原文p115&lt;/span&gt;</code> ）</li>
+<li>BGP 五类策略创建 + peer 绑定 + soft 重应用（C29， <code>&lt;span class="pg"&gt;原文p201-210&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="b">B（反例/坑）</h2>
 <ul>
-<li>deny 某路由不等于默认放行其余路由，每条都要显式规则（P30，&lt;&lt;<PAGE 42, 168>&gt;&gt;）</li>
-<li>无 match 语句的 route map 会重分发所有路由（P28，&lt;&lt;<PAGE 77, 111>&gt;&gt;）</li>
-<li>route map 引用的子策略（访问列表等）必须先创建否则报错（X39，&lt;&lt;<PAGE 205>&gt;&gt;）</li>
-<li>重分发要求源/目的协议均已加载并使能（P33，&lt;&lt;<PAGE 43>&gt;&gt;）</li>
-<li>配置重分发即自动成为 ASBR（P22）；iBGP→OSPF 重分发默认禁止需显式开启（P23，&lt;&lt;<PAGE 48>&gt;&gt;）</li>
-<li>AS 正则按 token 匹配 AS 号而非字符（P76）；元字符错误：数字超 65535、逗号当分隔符、括号嵌套、^ 不在首/$ 不在尾（X28，&lt;&lt;<PAGE 136>&gt;&gt;）</li>
-<li>IS-IS route map 的 tag 参数当前版本不支持（X17，&lt;&lt;<PAGE 110>&gt;&gt;）</li>
-<li>BGP 部分 peer 命令改后须手动 clear 才生效（X35，&lt;&lt;<PAGE 149>&gt;&gt;）</li>
+<li>deny 某路由不等于默认放行其余路由，每条都要显式规则（P30， <code>&lt;span class="pg"&gt;原文p42, 168&lt;/span&gt;</code> ）</li>
+<li>无 match 语句的 route map 会重分发所有路由（P28， <code>&lt;span class="pg"&gt;原文p77, 111&lt;/span&gt;</code> ）</li>
+<li>route map 引用的子策略（访问列表等）必须先创建否则报错（X39， <code>&lt;span class="pg"&gt;原文p205&lt;/span&gt;</code> ）</li>
+<li>重分发要求源/目的协议均已加载并使能（P33， <code>&lt;span class="pg"&gt;原文p43&lt;/span&gt;</code> ）</li>
+<li>配置重分发即自动成为 ASBR（P22）；iBGP→OSPF 重分发默认禁止需显式开启（P23， <code>&lt;span class="pg"&gt;原文p48&lt;/span&gt;</code> ）</li>
+<li>AS 正则按 token 匹配 AS 号而非字符（P76）；元字符错误：数字超 65535、逗号当分隔符、括号嵌套、^ 不在首/$ 不在尾（X28， <code>&lt;span class="pg"&gt;原文p136&lt;/span&gt;</code> ）</li>
+<li>IS-IS route map 的 tag 参数当前版本不支持（X17， <code>&lt;span class="pg"&gt;原文p110&lt;/span&gt;</code> ）</li>
+<li>BGP 部分 peer 命令改后须手动 clear 才生效（X35， <code>&lt;span class="pg"&gt;原文p149&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniSwitch AOS 8.10R4 Advanced Routing Guide 第 1 章 Route Map 与重分发（&lt;&lt;<PAGE 40-48>&gt;&gt;）、第 2/3 章对应节（&lt;&lt;<PAGE 76-78, 110-115>&gt;&gt;）、第 4 章策略节（&lt;&lt;<PAGE 133-134, 166-169, 201-210>&gt;&gt;）。条目来源：cases C6/C7/C17/C29；principles P21-P33/P76/P78/P89；counter-examples X17/X28/X35/X39；frameworks F4/F5。</p><div class="pn"><a href="aos-ar-bgp.html">⬅ 上一单元：aos-ar-bgp</a><a class="nxt" href="aos-ar-multicast-advanced.html">下一单元：aos-ar-multicast-advanced ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<p>OmniSwitch AOS 8.10R4 Advanced Routing Guide 第 1 章 Route Map 与重分发（ <code>&lt;span class="pg"&gt;原文p40-48&lt;/span&gt;</code> ）、第 2/3 章对应节（ <code>&lt;span class="pg"&gt;原文p76-78, 110-115&lt;/span&gt;</code> ）、第 4 章策略节（ <code>&lt;span class="pg"&gt;原文p133-134, 166-169, 201-210&lt;/span&gt;</code> ）。条目来源：cases C6/C7/C17/C29；principles P21-P33/P76/P78/P89；counter-examples X17/X28/X35/X39；frameworks F4/F5。</p><div class="pn"><a href="aos-ar-bgp.html">⬅ 上一单元：aos-ar-bgp</a><a class="nxt" href="aos-ar-multicast-advanced.html">下一单元：aos-ar-multicast-advanced ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -70,13 +71,31 @@ DOC2 为视频监控网络全生命周期白皮书（p87-100，NLM 7 阶段方�
 </ol>
 <h2 id="_2">二、四单元要点串讲</h2>
 <h3 id="1">1. 框架层：安全是过程</h3>
-<p>"Security is not a tangible product"——多层纵深防御是唯一正道（&lt;&lt;<PAGE 5>&gt;&gt;）。ALE 五层框架从用户/设备/应用/网络到 IoT 容器隔离；Secure By Design 背书：签名镜像（RSA-4096/SHA-256）、ASLR、默认 DoS 过滤、CC EAL2/FIPS/TAA（&lt;&lt;<PAGE 6>&gt;&gt;）。补丁与物理访问是两条底线：公开漏洞即攻击武器（&lt;&lt;<PAGE 7>&gt;&gt;）；控制台直连可重置口令、插孔直通防火墙内网（&lt;&lt;<PAGE 8-11>&gt;&gt;）。</p>
+<ul>
+<li>"Security is not a tangible product"——多层纵深防御是唯一正道（ <code>&lt;span class="pg"&gt;原文p5&lt;/span&gt;</code> ）。</li>
+<li>ALE 五层框架从用户/设备/应用/网络到 IoT 容器隔离；Secure By Design 背书：签名镜像（RSA-4096/SHA-256）、ASLR、默认 DoS 过滤、CC EAL2/FIPS/TAA（ <code>&lt;span class="pg"&gt;原文p6&lt;/span&gt;</code> ）。</li>
+<li>补丁与物理访问是两条底线：公开漏洞即攻击武器（ <code>&lt;span class="pg"&gt;原文p7&lt;/span&gt;</code> ）；控制台直连可重置口令、插孔直通防火墙内网（ <code>&lt;span class="pg"&gt;原文p8-11&lt;/span&gt;</code> ）。</li>
+</ul>
 <h3 id="2">2. 协议加固：控制面+数据面清单化</h3>
-<p>开机默认全开服务端口是攻击面——先全关再按需开（&lt;&lt;<PAGE 12>&gt;&gt;）。替换表：Telnet→SSH、FTP/TFTP→SFTP/SCP、SNMPv1/2c→v3、HTTP→HTTPS。控制面：OSPF keychain 轮换（最安全）、Root Guard/TCN/BPDU 三防、LLDP Agent Security 防 rogue、ARP/GARP 防欺骗、DHCP Snooping+DAI、IPv6 三件套、NTP 认证、ICMP 裁剪。数据面：MACsec/MKA 链路加密、禁定向广播、IPv6 邻居缓存限额、边缘 LPS（&lt;&lt;<PAGE 30-47>&gt;&gt;）。</p>
+<ul>
+<li>开机默认全开服务端口是攻击面——先全关再按需开（ <code>&lt;span class="pg"&gt;原文p12&lt;/span&gt;</code> ）。</li>
+<li>替换表：Telnet→SSH、FTP/TFTP→SFTP/SCP、SNMPv1/2c→v3、HTTP→HTTPS。</li>
+<li>控制面：OSPF keychain 轮换（最安全）、Root Guard/TCN/BPDU 三防、LLDP Agent Security 防 rogue、ARP/GARP 防欺骗、DHCP Snooping+DAI、IPv6 三件套、NTP 认证、ICMP 裁剪。</li>
+<li>数据面：MACsec/MKA 链路加密、禁定向广播、IPv6 邻居缓存限额、边缘 LPS（ <code>&lt;span class="pg"&gt;原文p30-47&lt;/span&gt;</code> ）。</li>
+</ul>
 <h3 id="3">3. 管理面：三道闸与四种安全模式</h3>
-<p>物理/引导层（U-boot 口令+镜像校验）→ 通道层（OOB 优先→管理 VRF→白名单 64 IP）→ 认证层（强口令→SSH 强加密+PKA→IP 锁定 128 IP→AAA/RADIUS over TLS→MFA）。SNMPv3 按有无 PKI 选 TSM/USM。安全模式互斥四选：ASA enhanced（常规）、CC（默认 admin 仅装机）、JITC（军规：口令≥15、SSH 每小时/GB rekey）、FIPS。OmniVista：全用户 2FA、Network ID 上线、API 凭据不入代码（&lt;&lt;<PAGE 9-30、71-85>&gt;&gt;）。</p>
+<ul>
+<li>物理/引导层（U-boot 口令+镜像校验）→ 通道层（OOB 优先→管理 VRF→白名单 64 IP）→ 认证层（强口令→SSH 强加密+PKA→IP 锁定 128 IP→AAA/RADIUS over TLS→MFA）。</li>
+<li>SNMPv3 按有无 PKI 选 TSM/USM。</li>
+<li>安全模式互斥四选：ASA enhanced（常规）、CC（默认 admin 仅装机）、JITC（军规：口令≥15、SSH 每小时/GB rekey）、FIPS。</li>
+<li>OmniVista：全用户 2FA、Network ID 上线、API 凭据不入代码（&lt;&lt;<PAGE 9-30、71-85>&gt;&gt;）。</li>
+</ul>
 <h3 id="4-nlm7">4. NLM：7 阶段全程管理</h3>
-<p>"装完就不管"不成立。规划用 Five S's（Software/Surveillance IoT/Servers-Storage/Switches/Services-Support）→ 部署用 Lightning Config（50 分钟培训→5 分钟装机）与 UNP → 运营用 Milestone VMS 插件/Z-Score 异常检测/Quarantine Manager 联动 IPS 隔离 → 维护靠冗余零停机升级 → 升级引入 AI Network Advisor → 合规对接网络保险 → 退役按隐私法擦除。无线配套：wIPS rogue 治理组合拳、WPA3/SAE、OWE、客户端隔离（&lt;&lt;<PAGE 47-100>&gt;&gt;）。</p>
+<ul>
+<li>"装完就不管"不成立。</li>
+<li>规划用 Five S's（Software/Surveillance IoT/Servers-Storage/Switches/Services-Support）→ 部署用 Lightning Config（50 分钟培训→5 分钟装机）与 UNP → 运营用 Milestone VMS 插件/Z-Score 异常检测/Quarantine Manager 联动 IPS 隔离 → 维护靠冗余零停机升级 → 升级引入 AI Network Advisor → 合规对接网络保险 → 退役按隐私法擦除。</li>
+<li>无线配套：wIPS rogue 治理组合拳、WPA3/SAE、OWE、客户端隔离（ <code>&lt;span class="pg"&gt;原文p47-100&lt;/span&gt;</code> ）。</li>
+</ul>
 <h2 id="_3">三、本书在知识库中的位置</h2>
 <p>本书册是 ALE 安全域的"总纲"：交换机细节配 hw-<em> 与 aos810-switch-mgmt，无线细节配 stellar-wlan-adv-deploy / bp-stellar-ap-datasheets，网管配 ov2500-</em>。独特价值是三平面审计清单与 NLM 方法论，可直接当加固基线模板用。跨书易混点：CC/JITC/FIPS 三模式互斥且收紧力度递进；DHCP Option-82 与 Snooping 互斥。</p>
 <h2 id="_4">来源</h2>

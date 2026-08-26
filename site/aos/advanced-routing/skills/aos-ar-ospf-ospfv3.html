@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -85,36 +86,36 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>OSPF 九步上线</strong>：<code>vlan 5</code> / <code>ip interface vlan-5 ...</code> / <code>vlan 5 members port 1/2/1</code> / <code>ip router router-id 1.1.1.1</code> / <code>ip load ospf</code> + <code>ip ospf admin-state enable</code> / <code>ip ospf area 0.0.0.0</code> / <code>ip ospf interface vlan-5</code> / <code>ip ospf interface vlan-5 area 0.0.0.0</code> / <code>... admin-state enable</code> → <code>show ip ospf [area|interface]</code>（C1，&lt;&lt;<PAGE 21>&gt;&gt;）</li>
-<li><strong>OSPFv3 九步</strong>：<code>ipv6 interface test vlan 1</code> → <code>ipv6 address 2001::/64 eui-64 test</code> → router-id → <code>ipv6 load ospf</code> + enable → area → 接口挂区 enable（C10，&lt;&lt;<PAGE 57>&gt;&gt;）</li>
-<li><strong>Totally Stubby</strong>：ABR 上 <code>ip ospf area 1.1.1.1 type stub</code> + <code>summary disable</code> + <code>default-metric 0</code>；区内路由器配 <code>type stub</code>（C3，&lt;&lt;<PAGE 35-36>&gt;&gt;）</li>
-<li><strong>虚链路</strong>：Router A <code>ip ospf virtual-link 0.0.0.1 2.2.2.2</code>；Router B 互指；<code>show ip ospf virtual-link</code>（C4，&lt;&lt;<PAGE 39>&gt;&gt;）</li>
-<li><strong>认证</strong>：simple：<code>auth-type simple</code> + <code>auth-key test</code>；MD5：<code>auth-type md5</code> + <code>md5 7</code> + <code>md5 7 key "test"</code>；keychain：<code>security key ... algorithm sha256</code> + <code>security key-chain 1 key 125</code> + <code>auth-type key-chain 1</code>（C5，&lt;&lt;<PAGE 37-38>&gt;&gt;）</li>
-<li><strong>NBMA 邻居</strong>：<code>ip ospf interface vlan-213 type non-broadcast</code> → <code>ip ospf neighbor 1.1.1.8 eligible</code>（C8，&lt;&lt;<PAGE 47>&gt;&gt;）</li>
-<li><strong>GR</strong>：<code>ip ospf restart-support planned-unplanned</code>（可选 restart-interval / helper / strict-lsa-checking）（C9，&lt;&lt;<PAGE 48>&gt;&gt;）</li>
+<li><strong>OSPF 九步上线</strong>：<code>vlan 5</code> / <code>ip interface vlan-5 ...</code> / <code>vlan 5 members port 1/2/1</code> / <code>ip router router-id 1.1.1.1</code> / <code>ip load ospf</code> + <code>ip ospf admin-state enable</code> / <code>ip ospf area 0.0.0.0</code> / <code>ip ospf interface vlan-5</code> / <code>ip ospf interface vlan-5 area 0.0.0.0</code> / <code>... admin-state enable</code> → <code>show ip ospf [area|interface]</code>（C1， <code>&lt;span class="pg"&gt;原文p21&lt;/span&gt;</code> ）</li>
+<li><strong>OSPFv3 九步</strong>：<code>ipv6 interface test vlan 1</code> → <code>ipv6 address 2001::/64 eui-64 test</code> → router-id → <code>ipv6 load ospf</code> + enable → area → 接口挂区 enable（C10， <code>&lt;span class="pg"&gt;原文p57&lt;/span&gt;</code> ）</li>
+<li><strong>Totally Stubby</strong>：ABR 上 <code>ip ospf area 1.1.1.1 type stub</code> + <code>summary disable</code> + <code>default-metric 0</code>；区内路由器配 <code>type stub</code>（C3， <code>&lt;span class="pg"&gt;原文p35-36&lt;/span&gt;</code> ）</li>
+<li><strong>虚链路</strong>：Router A <code>ip ospf virtual-link 0.0.0.1 2.2.2.2</code>；Router B 互指；<code>show ip ospf virtual-link</code>（C4， <code>&lt;span class="pg"&gt;原文p39&lt;/span&gt;</code> ）</li>
+<li><strong>认证</strong>：simple：<code>auth-type simple</code> + <code>auth-key test</code>；MD5：<code>auth-type md5</code> + <code>md5 7</code> + <code>md5 7 key "test"</code>；keychain：<code>security key ... algorithm sha256</code> + <code>security key-chain 1 key 125</code> + <code>auth-type key-chain 1</code>（C5， <code>&lt;span class="pg"&gt;原文p37-38&lt;/span&gt;</code> ）</li>
+<li><strong>NBMA 邻居</strong>：<code>ip ospf interface vlan-213 type non-broadcast</code> → <code>ip ospf neighbor 1.1.1.8 eligible</code>（C8， <code>&lt;span class="pg"&gt;原文p47&lt;/span&gt;</code> ）</li>
+<li><strong>GR</strong>：<code>ip ospf restart-support planned-unplanned</code>（可选 restart-interval / helper / strict-lsa-checking）（C9， <code>&lt;span class="pg"&gt;原文p48&lt;/span&gt;</code> ）</li>
 <li><strong>OSPFv3 特有</strong>：NSSA translator 三件套 <code>nssa-translator role always|candidate</code> / <code>stab-interval 60</code> / <code>nssa-summarize c000::/64</code>（C12）；Loopback0 通告须 <code>type point-to-point</code>（P40/C13）；静态邻居用链路本地地址 fe80::（P41）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>OSPF 三区域三路由器应用例（C2，&lt;&lt;<PAGE 49-53>&gt;&gt;）</li>
-<li>Totally Stubby 两路由器配置（C3，&lt;&lt;<PAGE 35-36>&gt;&gt;）</li>
-<li>虚链路创建与验证（C4，&lt;&lt;<PAGE 39>&gt;&gt;）</li>
-<li>认证三套（simple/MD5/keychain-SHA256）（C5，&lt;&lt;<PAGE 37-38>&gt;&gt;）</li>
-<li>OSPFv3 三区域应用例（C11，&lt;&lt;<PAGE 84-88>&gt;&gt;）与 NSSA 参数（C12，&lt;&lt;<PAGE 72>&gt;&gt;）</li>
+<li>OSPF 三区域三路由器应用例（C2， <code>&lt;span class="pg"&gt;原文p49-53&lt;/span&gt;</code> ）</li>
+<li>Totally Stubby 两路由器配置（C3， <code>&lt;span class="pg"&gt;原文p35-36&lt;/span&gt;</code> ）</li>
+<li>虚链路创建与验证（C4， <code>&lt;span class="pg"&gt;原文p39&lt;/span&gt;</code> ）</li>
+<li>认证三套（simple/MD5/keychain-SHA256）（C5， <code>&lt;span class="pg"&gt;原文p37-38&lt;/span&gt;</code> ）</li>
+<li>OSPFv3 三区域应用例（C11， <code>&lt;span class="pg"&gt;原文p84-88&lt;/span&gt;</code> ）与 NSSA 参数（C12， <code>&lt;span class="pg"&gt;原文p72&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="b">B（反例/坑）</h2>
 <ul>
-<li>Stub 区域禁虚链路、禁内部 ASBR（X1，&lt;&lt;<PAGE 27, 64>&gt;&gt;）；NSSA 同样禁虚链路且区域类型必须全网一致否则邻接建不起来（X2，&lt;&lt;<PAGE 28, 65>&gt;&gt;）</li>
-<li>虚链路是最后手段，最大努力避免（X3，&lt;&lt;<PAGE 26, 39>&gt;&gt;）</li>
-<li>单路由器不建议带超过三个区域（X4，&lt;&lt;<PAGE 33, 70>&gt;&gt;）</li>
-<li>ECMP 只看度量不看线速，可能选中慢链路（X5，&lt;&lt;<PAGE 29>&gt;&gt;）</li>
-<li>接口名不能含空格（X6，&lt;&lt;<PAGE 21>&gt;&gt;）</li>
-<li>MD5 key ID 与 key string 必须两条命令分别设置（X7，&lt;&lt;<PAGE 37>&gt;&gt;）</li>
-<li>被动接口上已有邻接会立即拆除（X8）；多区域域中被动接口只生成在 Area ID 最小的区域（X9）（&lt;&lt;<PAGE 46>&gt;&gt;）</li>
-<li>从内存移除 OSPF/OSPFv3 必须手改 boot.cfg 并重启（X10，&lt;&lt;<PAGE 33, 70>&gt;&gt;）</li>
-<li>接口参数可一次配多个但只能逐个恢复默认（X11，&lt;&lt;<PAGE 39>&gt;&gt;）</li>
-<li>NBMA 邻居 eligibility 必须与其他路由器接口优先级一致（X13，&lt;&lt;<PAGE 29>&gt;&gt;）</li>
-<li>配置重分发即自动成为 ASBR（P22）；iBGP→OSPF 重分发默认禁止，需 <code>ip ospf redist-bgp-internal</code>（P23，&lt;&lt;<PAGE 48>&gt;&gt;）</li>
+<li>Stub 区域禁虚链路、禁内部 ASBR（X1， <code>&lt;span class="pg"&gt;原文p27, 64&lt;/span&gt;</code> ）；NSSA 同样禁虚链路且区域类型必须全网一致否则邻接建不起来（X2， <code>&lt;span class="pg"&gt;原文p28, 65&lt;/span&gt;</code> ）</li>
+<li>虚链路是最后手段，最大努力避免（X3， <code>&lt;span class="pg"&gt;原文p26, 39&lt;/span&gt;</code> ）</li>
+<li>单路由器不建议带超过三个区域（X4， <code>&lt;span class="pg"&gt;原文p33, 70&lt;/span&gt;</code> ）</li>
+<li>ECMP 只看度量不看线速，可能选中慢链路（X5， <code>&lt;span class="pg"&gt;原文p29&lt;/span&gt;</code> ）</li>
+<li>接口名不能含空格（X6， <code>&lt;span class="pg"&gt;原文p21&lt;/span&gt;</code> ）</li>
+<li>MD5 key ID 与 key string 必须两条命令分别设置（X7， <code>&lt;span class="pg"&gt;原文p37&lt;/span&gt;</code> ）</li>
+<li>被动接口上已有邻接会立即拆除（X8）；多区域域中被动接口只生成在 Area ID 最小的区域（X9）（ <code>&lt;span class="pg"&gt;原文p46&lt;/span&gt;</code> ）</li>
+<li>从内存移除 OSPF/OSPFv3 必须手改 boot.cfg 并重启（X10， <code>&lt;span class="pg"&gt;原文p33, 70&lt;/span&gt;</code> ）</li>
+<li>接口参数可一次配多个但只能逐个恢复默认（X11， <code>&lt;span class="pg"&gt;原文p39&lt;/span&gt;</code> ）</li>
+<li>NBMA 邻居 eligibility 必须与其他路由器接口优先级一致（X13， <code>&lt;span class="pg"&gt;原文p29&lt;/span&gt;</code> ）</li>
+<li>配置重分发即自动成为 ASBR（P22）；iBGP→OSPF 重分发默认禁止，需 <code>ip ospf redist-bgp-internal</code>（P23， <code>&lt;span class="pg"&gt;原文p48&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniSwitch AOS 8.10R4 Advanced Routing Guide 第 1 章 OSPF（&lt;&lt;<PAGE 20-53>&gt;&gt;）、第 2 章 OSPFv3（&lt;&lt;<PAGE 55-88>&gt;&gt;）。条目来源：cases C1-C13；principles P1-P25/P34-P41；counter-examples X1-X13；frameworks F1/F2/F3/F6/F10。</p><div class="pn"><a href="../index.html">⬅ 返回课程首页</a><a class="nxt" href="aos-ar-isis.html">下一单元：aos-ar-isis ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<p>OmniSwitch AOS 8.10R4 Advanced Routing Guide 第 1 章 OSPF（ <code>&lt;span class="pg"&gt;原文p20-53&lt;/span&gt;</code> ）、第 2 章 OSPFv3（ <code>&lt;span class="pg"&gt;原文p55-88&lt;/span&gt;</code> ）。条目来源：cases C1-C13；principles P1-P25/P34-P41；counter-examples X1-X13；frameworks F1/F2/F3/F6/F10。</p><div class="pn"><a href="../index.html">⬅ 返回课程首页</a><a class="nxt" href="aos-ar-isis.html">下一单元：aos-ar-isis ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

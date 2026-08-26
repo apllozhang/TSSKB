@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -66,47 +67,47 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="i">I（核心理念）</h2>
 <ul>
-<li>标签隧道换 BGP-free core（P1/P2，&lt;&lt;<PAGE 5>&gt;&gt;）：MPLS 用预分配标签做精确匹配转发，核心 LSR 无需承载大量路由。</li>
-<li>双层解耦模型（F4，&lt;&lt;<PAGE 20>&gt;&gt;）：服务标签在底、传输标签在顶，中间 LSR 只处理传输标签（P6，&lt;&lt;<PAGE 21>&gt;&gt;）。</li>
-<li>LDP 是"依 IGP 而生"的信令（P3，&lt;&lt;<PAGE 10>&gt;&gt;）：先有 IGP 全可达，LDP 才能从 eLER 向 iLER 上游泛洪标签（P19）。</li>
-<li>会话可靠性靠 hello/keepalive 双定时器双保险（P23，&lt;&lt;<PAGE 12>&gt;&gt;）。</li>
+<li>标签隧道换 BGP-free core（P1/P2， <code>&lt;span class="pg"&gt;原文p5&lt;/span&gt;</code> ）：MPLS 用预分配标签做精确匹配转发，核心 LSR 无需承载大量路由。</li>
+<li>双层解耦模型（F4， <code>&lt;span class="pg"&gt;原文p20&lt;/span&gt;</code> ）：服务标签在底、传输标签在顶，中间 LSR 只处理传输标签（P6， <code>&lt;span class="pg"&gt;原文p21&lt;/span&gt;</code> ）。</li>
+<li>LDP 是"依 IGP 而生"的信令（P3， <code>&lt;span class="pg"&gt;原文p10&lt;/span&gt;</code> ）：先有 IGP 全可达，LDP 才能从 eLER 向 iLER 上游泛洪标签（P19）。</li>
+<li>会话可靠性靠 hello/keepalive 双定时器双保险（P23， <code>&lt;span class="pg"&gt;原文p12&lt;/span&gt;</code> ）。</li>
 </ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
-<li>标签分发/控制/保留模式选型框架（F1，&lt;&lt;<PAGE 13-14>&gt;&gt;）：分发 DoD（按需）vs DU（主动）；控制 ILD（独立即刻通告）vs OLD（有序等下游）；保留 CLR（只留有效）vs LLR（全保留）。AOS 唯一组合 = DU+ILD+LLR（X16，&lt;&lt;<PAGE 13-17>&gt;&gt;）</li>
-<li>部署定位框架（F3，&lt;&lt;<PAGE 24-25>&gt;&gt;）：园区中小型网从接入到核心端到端 MPLS；城域/Smart City 核心+汇聚跑 MPLS、接入保持以太交换。共同前提：IGP + /32 loopback 唯一 Router-ID</li>
-<li>Best Practice 清单（P22，&lt;&lt;<PAGE 28>&gt;&gt;）：每台 /32 loopback → Router-ID 全网唯一 → p2p routed 接口 + BFD → /31 互联地址</li>
+<li>标签分发/控制/保留模式选型框架（F1， <code>&lt;span class="pg"&gt;原文p13-14&lt;/span&gt;</code> ）：分发 DoD（按需）vs DU（主动）；控制 ILD（独立即刻通告）vs OLD（有序等下游）；保留 CLR（只留有效）vs LLR（全保留）。AOS 唯一组合 = DU+ILD+LLR（X16， <code>&lt;span class="pg"&gt;原文p13-17&lt;/span&gt;</code> ）</li>
+<li>部署定位框架（F3， <code>&lt;span class="pg"&gt;原文p24-25&lt;/span&gt;</code> ）：园区中小型网从接入到核心端到端 MPLS；城域/Smart City 核心+汇聚跑 MPLS、接入保持以太交换。共同前提：IGP + /32 loopback 唯一 Router-ID</li>
+<li>Best Practice 清单（P22， <code>&lt;span class="pg"&gt;原文p28&lt;/span&gt;</code> ）：每台 /32 loopback → Router-ID 全网唯一 → p2p routed 接口 + BFD → /31 互联地址</li>
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>标签结构解读</strong>：32 位 = 20-bit Label（16 起步，0-15 保留）+ 3-bit EXP + 1-bit S(BoS) + 8-bit TTL；shim 头位于以太头与 IP 头之间故称 Layer 2.5（P28/P33，&lt;&lt;<PAGE 9>&gt;&gt;）</li>
-<li><strong>保留标签识别</strong>：0=IPv4 Explicit NULL、1=Router Alert、2=IPv6 Explicit NULL、3=Implicit NULL、14=OAM Alert（&lt;&lt;<PAGE 9-10>&gt;&gt;）</li>
-<li><strong>LDP 邻居发现</strong>：所有链路发 UDP 646 组播 hello（224.0.0.2）→ hello 交换后 TCP 646 建会话 → LDP Initialization 协商参数（C3，&lt;&lt;<PAGE 12>&gt;&gt;）</li>
-<li><strong>会话参数核对</strong>：show mpls ldp session 应见 "Downstream Unsolicited / Liberal / GR Enabled / Helper"（C17，&lt;&lt;<PAGE 33>&gt;&gt;）</li>
-<li><strong>MD5 认证</strong>：双方配同一 MD5 key，为每个 TCP 段附加签名；不符则静默丢弃（P18/X6/X7，&lt;&lt;<PAGE 14-15>&gt;&gt;）</li>
-<li><strong>表项验证</strong>：show mpls ftn-table（Push 条目）/ ilm-table / forwarding-table；OpCode 1=PUSH、2=POP、3=SWAP（C16，&lt;&lt;<PAGE 32>&gt;&gt;）</li>
-<li><strong>MPLS backbone 五步</strong>（R1 视角，C11，&lt;&lt;<PAGE 29-31>&gt;&gt;）：接口 → 单区域 OSPF（p2p+BFD+SPF delay 0）→ 安装 uosn-mpls-v1.deb → mpls interface → mpls ldp interface</li>
+<li><strong>标签结构解读</strong>：32 位 = 20-bit Label（16 起步，0-15 保留）+ 3-bit EXP + 1-bit S(BoS) + 8-bit TTL；shim 头位于以太头与 IP 头之间故称 Layer 2.5（P28/P33， <code>&lt;span class="pg"&gt;原文p9&lt;/span&gt;</code> ）</li>
+<li><strong>保留标签识别</strong>：0=IPv4 Explicit NULL、1=Router Alert、2=IPv6 Explicit NULL、3=Implicit NULL、14=OAM Alert（ <code>&lt;span class="pg"&gt;原文p9-10&lt;/span&gt;</code> ）</li>
+<li><strong>LDP 邻居发现</strong>：所有链路发 UDP 646 组播 hello（224.0.0.2）→ hello 交换后 TCP 646 建会话 → LDP Initialization 协商参数（C3， <code>&lt;span class="pg"&gt;原文p12&lt;/span&gt;</code> ）</li>
+<li><strong>会话参数核对</strong>：show mpls ldp session 应见 "Downstream Unsolicited / Liberal / GR Enabled / Helper"（C17， <code>&lt;span class="pg"&gt;原文p33&lt;/span&gt;</code> ）</li>
+<li><strong>MD5 认证</strong>：双方配同一 MD5 key，为每个 TCP 段附加签名；不符则静默丢弃（P18/X6/X7， <code>&lt;span class="pg"&gt;原文p14-15&lt;/span&gt;</code> ）</li>
+<li><strong>表项验证</strong>：show mpls ftn-table（Push 条目）/ ilm-table / forwarding-table；OpCode 1=PUSH、2=POP、3=SWAP（C16， <code>&lt;span class="pg"&gt;原文p32&lt;/span&gt;</code> ）</li>
+<li><strong>MPLS backbone 五步</strong>（R1 视角，C11， <code>&lt;span class="pg"&gt;原文p29-31&lt;/span&gt;</code> ）：接口 → 单区域 OSPF（p2p+BFD+SPF delay 0）→ 安装 uosn-mpls-v1.deb → mpls interface → mpls ldp interface</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>双标签封装-解封端到端流程：iLER push service 标签再 push transport 标签，eLER 依次 pop（C2，&lt;&lt;<PAGE 20-21>&gt;&gt;）</li>
-<li>push/swap/pop 三操作数据面走包（C5，&lt;&lt;<PAGE 16>&gt;&gt;）</li>
-<li>LDP 邻居发现与会话建立全流程（C3，&lt;&lt;<PAGE 12>&gt;&gt;）</li>
-<li>LDP 会话协商结果输出（DU/Liberal/GR Helper）（C17，&lt;&lt;<PAGE 33>&gt;&gt;）</li>
-<li>FTN/ILM 真实表项解读（C16，&lt;&lt;<PAGE 32>&gt;&gt;）</li>
+<li>双标签封装-解封端到端流程：iLER push service 标签再 push transport 标签，eLER 依次 pop（C2， <code>&lt;span class="pg"&gt;原文p20-21&lt;/span&gt;</code> ）</li>
+<li>push/swap/pop 三操作数据面走包（C5， <code>&lt;span class="pg"&gt;原文p16&lt;/span&gt;</code> ）</li>
+<li>LDP 邻居发现与会话建立全流程（C3， <code>&lt;span class="pg"&gt;原文p12&lt;/span&gt;</code> ）</li>
+<li>LDP 会话协商结果输出（DU/Liberal/GR Helper）（C17， <code>&lt;span class="pg"&gt;原文p33&lt;/span&gt;</code> ）</li>
+<li>FTN/ILM 真实表项解读（C16， <code>&lt;span class="pg"&gt;原文p32&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>
-<li>不用 MPLS 则核心被迫承载大量路由、成本上升（X1，&lt;&lt;<PAGE 5>&gt;&gt;）</li>
-<li>LSR ID（loopback）不唯一导致不可预测行为（X2/P15，&lt;&lt;<PAGE 13>&gt;&gt;）</li>
-<li>hello hold-timer 超时即判死邻居删 adjacency；keepalive 超时终结会话（X3/X4，&lt;&lt;<PAGE 12>&gt;&gt;）</li>
-<li>会话参数谈不拢则反复重谈，会话不稳（X5，&lt;&lt;<PAGE 12>&gt;&gt;）</li>
-<li>MD5 密钥不匹配建不起会话；MD5 本身强度不足，RFC 建议 keychain+SHA（X6/X7/X8，&lt;&lt;<PAGE 14-15>&gt;&gt;）</li>
-<li>一对 LSR 多链路仍只建一个直连会话，勿误判为故障（P20，&lt;&lt;<PAGE 13>&gt;&gt;）</li>
-<li>LSP 单向，双向流量需两条（P7，&lt;&lt;<PAGE 8>&gt;&gt;）</li>
-<li>hold-timer 取双方较低值，接口级覆盖全局（P16，&lt;&lt;<PAGE 12>&gt;&gt;）</li>
-<li>LDP 不在面向 CE 的接口使能（P17，&lt;&lt;<PAGE 12>&gt;&gt;）</li>
-<li>未装 Site/Node-based license 则 MPLS 接口起不来（X18，&lt;&lt;<PAGE 30>&gt;&gt;）</li>
-<li>AOS 不支持：DoD、OLD、CLR、非 MD5 认证、explicit NULL、QoS over EXP、TTL manipulation（X16，&lt;&lt;<PAGE 13-19>&gt;&gt;）</li>
+<li>不用 MPLS 则核心被迫承载大量路由、成本上升（X1， <code>&lt;span class="pg"&gt;原文p5&lt;/span&gt;</code> ）</li>
+<li>LSR ID（loopback）不唯一导致不可预测行为（X2/P15， <code>&lt;span class="pg"&gt;原文p13&lt;/span&gt;</code> ）</li>
+<li>hello hold-timer 超时即判死邻居删 adjacency；keepalive 超时终结会话（X3/X4， <code>&lt;span class="pg"&gt;原文p12&lt;/span&gt;</code> ）</li>
+<li>会话参数谈不拢则反复重谈，会话不稳（X5， <code>&lt;span class="pg"&gt;原文p12&lt;/span&gt;</code> ）</li>
+<li>MD5 密钥不匹配建不起会话；MD5 本身强度不足，RFC 建议 keychain+SHA（X6/X7/X8， <code>&lt;span class="pg"&gt;原文p14-15&lt;/span&gt;</code> ）</li>
+<li>一对 LSR 多链路仍只建一个直连会话，勿误判为故障（P20， <code>&lt;span class="pg"&gt;原文p13&lt;/span&gt;</code> ）</li>
+<li>LSP 单向，双向流量需两条（P7， <code>&lt;span class="pg"&gt;原文p8&lt;/span&gt;</code> ）</li>
+<li>hold-timer 取双方较低值，接口级覆盖全局（P16， <code>&lt;span class="pg"&gt;原文p12&lt;/span&gt;</code> ）</li>
+<li>LDP 不在面向 CE 的接口使能（P17， <code>&lt;span class="pg"&gt;原文p12&lt;/span&gt;</code> ）</li>
+<li>未装 Site/Node-based license 则 MPLS 接口起不来（X18， <code>&lt;span class="pg"&gt;原文p30&lt;/span&gt;</code> ）</li>
+<li>AOS 不支持：DoD、OLD、CLR、非 MD5 认证、explicit NULL、QoS over EXP、TTL manipulation（X16， <code>&lt;span class="pg"&gt;原文p13-19&lt;/span&gt;</code> ）</li>
 </ul>
 <p>来源：MPLS Reference Design Guide（Fundamentals Ch + Control Plane + Configuration 节，p5-17、p24-33）</p><div class="pn"><a href="../index.html">⬅ 返回课程首页</a><a class="nxt" href="sol-mpls-vpls-vpws.html">下一单元：sol-mpls-vpls-vpws ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

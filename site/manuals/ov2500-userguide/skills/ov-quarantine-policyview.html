@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -81,42 +82,42 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
-<li><strong>事件处理链</strong>（frameworks·F13，&lt;&lt;<PAGE 457, 460-465>&gt;&gt;）：IPS（Fortinet 2.3）/交换机发 Syslog(514)或 trap（含 IP/MAC）→规则→①Candidates（管理员 Release/Ban/Never Ban）→②Banned（Scheduled to be Banned→Completed/Partially Banned；Release 解封）→③Disabled Ports（全部条目释放端口才启用）</li>
-<li><strong>隔离基础设施三件套</strong>（principles·P137，&lt;&lt;<PAGE 473-475>&gt;&gt;）：Quarantined VLAN + "Quarantined" MAC Group + L2 Source MAC Group Drop 策略——缺一则 Banned 设备照样通流量</li>
-<li><strong>PolicyView 模式选型</strong>：One Touch（Data/ACL/Voice 简化）vs Expert（手工逐参数，仅 AOS）vs Unified Policy（有线+无线通用，不能直接下 IAP）（principles·P108-P110，&lt;&lt;<PAGE 384-389>&gt;&gt;）</li>
+<li><strong>事件处理链</strong>（frameworks·F13， <code>&lt;span class="pg"&gt;原文p457, 460-465&lt;/span&gt;</code> ）：IPS（Fortinet 2.3）/交换机发 Syslog(514)或 trap（含 IP/MAC）→规则→①Candidates（管理员 Release/Ban/Never Ban）→②Banned（Scheduled to be Banned→Completed/Partially Banned；Release 解封）→③Disabled Ports（全部条目释放端口才启用）</li>
+<li><strong>隔离基础设施三件套</strong>（principles·P137， <code>&lt;span class="pg"&gt;原文p473-475&lt;/span&gt;</code> ）：Quarantined VLAN + "Quarantined" MAC Group + L2 Source MAC Group Drop 策略——缺一则 Banned 设备照样通流量</li>
+<li><strong>PolicyView 模式选型</strong>：One Touch（Data/ACL/Voice 简化）vs Expert（手工逐参数，仅 AOS）vs Unified Policy（有线+无线通用，不能直接下 IAP）（principles·P108-P110， <code>&lt;span class="pg"&gt;原文p384-389&lt;/span&gt;</code> ）</li>
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>配置 Quarantine 基础设施</strong>：Groups 建 Quarantined MAC 组→PolicyView 建 L2 Source MAC Group+Drop 策略并 Notify→Quarantine Manager→Configuration 编辑 Quarantined VLAN（VLAN/MAC 组名/Remediation URL/IP/HTTP Proxy Port/Allow Port Disabling/Allowed Subnets ≤3 个含 Remediation Server）→Apply to Devices（cases·C45，&lt;&lt;<PAGE 473-475>&gt;&gt;）</li>
-<li><strong>创建自定义规则</strong>：Rules→Add：Name/Trigger Expression（如 log_id=0421073001）/Extraction Expression（如 src=([0-9.]*)）/Action（Candidate List/Quarantine/Release——Release 可供工单系统自动解封）/Event Type（Syslog/Trap）/Enabled→Create；ALE 下发的 .xml 规则用 Import 导入（默认 Disabled）（cases·C46，&lt;&lt;<PAGE 470-471>&gt;&gt;）</li>
-<li><strong>处理隔离事件</strong>：Candidates 选设备 Release/Ban/Never Ban；Banned 可 Add 手工封禁（IP/MAC+Reason）/Release/Retry/Redo Ban；Disabled Ports 逐条 Release；Fortinet 事件右键跳官网分析页（cases·C47，&lt;&lt;<PAGE 461-465>&gt;&gt;）</li>
-<li><strong>创建 Unified Policy 向导</strong>：PolicyView→Unified Policies→Add：Config for Policy（Name/Precedence 自动填最低未用值）→Device Selection（Devices+AP Groups）→Set Condition（L2 MACs/L3 IPs/L3 DSCP-TOS/L4 Services/L7 Application Visibility/ICMP）→Set Action（QoS/TCM）→Validity Period→Review（cases·C39，&lt;&lt;<PAGE 388-396>&gt;&gt;）</li>
-<li><strong>One Touch Data 策略</strong>：选 Priority（Platinum/Gold/Silver/Bronze）→Add 输 Server IP→Create（Unsaved）→Save 存 LDAP→Notify All 下发（触发全网 flush+reload，注意批量）（cases·C40，&lt;&lt;<PAGE 403>&gt;&gt;）</li>
-<li><strong>PolicyView 后保存配置四步</strong>：按 Changes 列排序→Unsaved 设备 Save to Running→Uncertified 设备 Copy Working/Running to Certified（cases·C38，&lt;&lt;<PAGE 386>&gt;&gt;）</li>
-<li><strong>TAD 流量异常检测</strong>：OS6850/6855/9700 AOS 6.4.6.R01+；最多 32 组、14 种异常类型（ARP×3/ICMP×3/TCP×8）；Sensitivity 默认 50；Log/Trap/Quarantine 默认全 Disabled（principles·P140/P141，&lt;&lt;<PAGE 478-479>&gt;&gt;）</li>
+<li><strong>配置 Quarantine 基础设施</strong>：Groups 建 Quarantined MAC 组→PolicyView 建 L2 Source MAC Group+Drop 策略并 Notify→Quarantine Manager→Configuration 编辑 Quarantined VLAN（VLAN/MAC 组名/Remediation URL/IP/HTTP Proxy Port/Allow Port Disabling/Allowed Subnets ≤3 个含 Remediation Server）→Apply to Devices（cases·C45， <code>&lt;span class="pg"&gt;原文p473-475&lt;/span&gt;</code> ）</li>
+<li><strong>创建自定义规则</strong>：Rules→Add：Name/Trigger Expression（如 log_id=0421073001）/Extraction Expression（如 src=([0-9.]*)）/Action（Candidate List/Quarantine/Release——Release 可供工单系统自动解封）/Event Type（Syslog/Trap）/Enabled→Create；ALE 下发的 .xml 规则用 Import 导入（默认 Disabled）（cases·C46， <code>&lt;span class="pg"&gt;原文p470-471&lt;/span&gt;</code> ）</li>
+<li><strong>处理隔离事件</strong>：Candidates 选设备 Release/Ban/Never Ban；Banned 可 Add 手工封禁（IP/MAC+Reason）/Release/Retry/Redo Ban；Disabled Ports 逐条 Release；Fortinet 事件右键跳官网分析页（cases·C47， <code>&lt;span class="pg"&gt;原文p461-465&lt;/span&gt;</code> ）</li>
+<li><strong>创建 Unified Policy 向导</strong>：PolicyView→Unified Policies→Add：Config for Policy（Name/Precedence 自动填最低未用值）→Device Selection（Devices+AP Groups）→Set Condition（L2 MACs/L3 IPs/L3 DSCP-TOS/L4 Services/L7 Application Visibility/ICMP）→Set Action（QoS/TCM）→Validity Period→Review（cases·C39， <code>&lt;span class="pg"&gt;原文p388-396&lt;/span&gt;</code> ）</li>
+<li><strong>One Touch Data 策略</strong>：选 Priority（Platinum/Gold/Silver/Bronze）→Add 输 Server IP→Create（Unsaved）→Save 存 LDAP→Notify All 下发（触发全网 flush+reload，注意批量）（cases·C40， <code>&lt;span class="pg"&gt;原文p403&lt;/span&gt;</code> ）</li>
+<li><strong>PolicyView 后保存配置四步</strong>：按 Changes 列排序→Unsaved 设备 Save to Running→Uncertified 设备 Copy Working/Running to Certified（cases·C38， <code>&lt;span class="pg"&gt;原文p386&lt;/span&gt;</code> ）</li>
+<li><strong>TAD 流量异常检测</strong>：OS6850/6855/9700 AOS 6.4.6.R01+；最多 32 组、14 种异常类型（ARP×3/ICMP×3/TCP×8）；Sensitivity 默认 50；Log/Trap/Quarantine 默认全 Disabled（principles·P140/P141， <code>&lt;span class="pg"&gt;原文p478-479&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>Quarantine 基础设施三件套 + Apply to Devices（cases·C45，&lt;&lt;<PAGE 473-475>&gt;&gt;）</li>
-<li>自定义规则（Trigger/Extraction 正则）（cases·C46，&lt;&lt;<PAGE 470-471>&gt;&gt;）</li>
-<li>Candidates/Banned/Disabled Ports 三列表处置（cases·C47，&lt;&lt;<PAGE 461-465>&gt;&gt;）</li>
-<li>Unified Policy 七步向导（cases·C39，&lt;&lt;<PAGE 388-396>&gt;&gt;）</li>
+<li>Quarantine 基础设施三件套 + Apply to Devices（cases·C45， <code>&lt;span class="pg"&gt;原文p473-475&lt;/span&gt;</code> ）</li>
+<li>自定义规则（Trigger/Extraction 正则）（cases·C46， <code>&lt;span class="pg"&gt;原文p470-471&lt;/span&gt;</code> ）</li>
+<li>Candidates/Banned/Disabled Ports 三列表处置（cases·C47， <code>&lt;span class="pg"&gt;原文p461-465&lt;/span&gt;</code> ）</li>
+<li>Unified Policy 七步向导（cases·C39， <code>&lt;span class="pg"&gt;原文p388-396&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="b">B（反例/坑）</h2>
 <ul>
-<li>未配置 VLAN/MAC 组时 Banned 设备照样能通流量——三件套缺一不可（principles·P137，&lt;&lt;<PAGE 473-475>&gt;&gt;）</li>
-<li>无线客户端不进 Banned 而进 Client Blocklist（365 天），且要求 Stellar AP 启用 IoT；4.9R1 前已在 Banned 的无线客户端不自动迁移（counter·X38 / principles·P132，&lt;&lt;<PAGE 460>&gt;&gt;）</li>
-<li>重复禁用同端口产生空 MAC 双条目；Release Banned 不会自动恢复端口——须再到 Disabled Ports List 手工释放；端口要等所有引发封禁的条目都释放才启用（counter·X39，&lt;&lt;<PAGE 465>&gt;&gt;）</li>
-<li>QMR 与 QoS inner VLAN/inner 802.1p 策略及 VLAN Stacking 互斥（counter·X40 / principles·P134，&lt;&lt;<PAGE 459>&gt;&gt;）</li>
-<li>EMP 子网设备不可隔离；OV 服务器与所有已发现交换机隐式在 Never Banned（principles·P132/P133，&lt;&lt;<PAGE 457, 464>&gt;&gt;）</li>
-<li>内置 13 条规则默认 Disabled、默认动作 Candidate，可改不可删（principles·P134/P135，&lt;&lt;<PAGE 466-467>&gt;&gt;）</li>
-<li>正则坑：[0-13] 是错误语义，扩展 DOS 类型应写 ([0|2|6|9]|1[0123])；抽取失败查 server.txt（principles·P136，&lt;&lt;<PAGE 468-470>&gt;&gt;）</li>
-<li>PolicyView QoS 执行后所有 AOS 设备进入 Unsaved 状态，不保存则配置丢失（counter·X3 / principles·P10，&lt;&lt;<PAGE 44>&gt;&gt;）</li>
-<li>Notify 代价极高：全网 QoS 交换机 flush 策略表再从 LDAP 重载，务必批量一次通知；删除策略不联动设备，须再 Notify Selected（principles·P115，&lt;&lt;<PAGE 396-397, 400>&gt;&gt;）</li>
-<li>PolicyView 优先级域 30001-65535（One Touch Voice 45000+ / Data 40000+ / Expert 30000+），外部工具切勿占用该域（principles·P109，&lt;&lt;<PAGE 387>&gt;&gt;）</li>
-<li>同时指定源+目的 IP 会被交换机拒绝（拆两条）；L2 MAC 条件过路由即失效（principles·P111/P113，&lt;&lt;<PAGE 390-395>&gt;&gt;）</li>
-<li>启用 OpenFlow 会耗尽 TCAM，之后无法再配 QoS 策略（principles·P108，&lt;&lt;<PAGE 384-385>&gt;&gt;）</li>
-<li>编辑被策略引用的 Group 后不能只 re-notify，须建新 Group 改策略（principles·P110，&lt;&lt;<PAGE 387-389>&gt;&gt;）</li>
+<li>未配置 VLAN/MAC 组时 Banned 设备照样能通流量——三件套缺一不可（principles·P137， <code>&lt;span class="pg"&gt;原文p473-475&lt;/span&gt;</code> ）</li>
+<li>无线客户端不进 Banned 而进 Client Blocklist（365 天），且要求 Stellar AP 启用 IoT；4.9R1 前已在 Banned 的无线客户端不自动迁移（counter·X38 / principles·P132， <code>&lt;span class="pg"&gt;原文p460&lt;/span&gt;</code> ）</li>
+<li>重复禁用同端口产生空 MAC 双条目；Release Banned 不会自动恢复端口——须再到 Disabled Ports List 手工释放；端口要等所有引发封禁的条目都释放才启用（counter·X39， <code>&lt;span class="pg"&gt;原文p465&lt;/span&gt;</code> ）</li>
+<li>QMR 与 QoS inner VLAN/inner 802.1p 策略及 VLAN Stacking 互斥（counter·X40 / principles·P134， <code>&lt;span class="pg"&gt;原文p459&lt;/span&gt;</code> ）</li>
+<li>EMP 子网设备不可隔离；OV 服务器与所有已发现交换机隐式在 Never Banned（principles·P132/P133， <code>&lt;span class="pg"&gt;原文p457, 464&lt;/span&gt;</code> ）</li>
+<li>内置 13 条规则默认 Disabled、默认动作 Candidate，可改不可删（principles·P134/P135， <code>&lt;span class="pg"&gt;原文p466-467&lt;/span&gt;</code> ）</li>
+<li>正则坑：[0-13] 是错误语义，扩展 DOS 类型应写 ([0|2|6|9]|1[0123])；抽取失败查 server.txt（principles·P136， <code>&lt;span class="pg"&gt;原文p468-470&lt;/span&gt;</code> ）</li>
+<li>PolicyView QoS 执行后所有 AOS 设备进入 Unsaved 状态，不保存则配置丢失（counter·X3 / principles·P10， <code>&lt;span class="pg"&gt;原文p44&lt;/span&gt;</code> ）</li>
+<li>Notify 代价极高：全网 QoS 交换机 flush 策略表再从 LDAP 重载，务必批量一次通知；删除策略不联动设备，须再 Notify Selected（principles·P115， <code>&lt;span class="pg"&gt;原文p396-397, 400&lt;/span&gt;</code> ）</li>
+<li>PolicyView 优先级域 30001-65535（One Touch Voice 45000+ / Data 40000+ / Expert 30000+），外部工具切勿占用该域（principles·P109， <code>&lt;span class="pg"&gt;原文p387&lt;/span&gt;</code> ）</li>
+<li>同时指定源+目的 IP 会被交换机拒绝（拆两条）；L2 MAC 条件过路由即失效（principles·P111/P113， <code>&lt;span class="pg"&gt;原文p390-395&lt;/span&gt;</code> ）</li>
+<li>启用 OpenFlow 会耗尽 TCAM，之后无法再配 QoS 策略（principles·P108， <code>&lt;span class="pg"&gt;原文p384-385&lt;/span&gt;</code> ）</li>
+<li>编辑被策略引用的 Group 后不能只 re-notify，须建新 Group 改策略（principles·P110， <code>&lt;span class="pg"&gt;原文p387-389&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniVista 2500 NMS 4.9R2 User Guide 第 22 章 PolicyView（&lt;&lt;<PAGE 384-412>&gt;&gt;）、第 25 章 Quarantine Manager（&lt;&lt;<PAGE 457-479>&gt;&gt;）、入门章保存流程（&lt;&lt;<PAGE 44>&gt;&gt;）。条目来源：frameworks F13；cases C38/C39/C40/C45/C46/C47；principles P108-P117/P132-P142；counter-examples X3/X38/X39/X40。</p><div class="pn"><a href="ov-upam-guest-byod.html">⬅ 上一单元：ov-upam-guest-byod</a><a class="nxt" href="ov-wlan-ssid-advanced.html">下一单元：ov-wlan-ssid-advanced ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<p>OmniVista 2500 NMS 4.9R2 User Guide 第 22 章 PolicyView（ <code>&lt;span class="pg"&gt;原文p384-412&lt;/span&gt;</code> ）、第 25 章 Quarantine Manager（ <code>&lt;span class="pg"&gt;原文p457-479&lt;/span&gt;</code> ）、入门章保存流程（ <code>&lt;span class="pg"&gt;原文p44&lt;/span&gt;</code> ）。条目来源：frameworks F13；cases C38/C39/C40/C45/C46/C47；principles P108-P117/P132-P142；counter-examples X3/X38/X39/X40。</p><div class="pn"><a href="ov-upam-guest-byod.html">⬅ 上一单元：ov-upam-guest-byod</a><a class="nxt" href="ov-wlan-ssid-advanced.html">下一单元：ov-wlan-ssid-advanced ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

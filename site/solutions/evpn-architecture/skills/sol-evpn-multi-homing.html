@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -66,37 +67,37 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="i">I（核心理念）</h2>
 <ul>
-<li>Multi-homing 框架（F4，&lt;&lt;<PAGE 32>&gt;&gt;）：模式（SH/SA/AA）→ LACP vs 静态 LAG（决定 ESI 自动/手工）→ DF 选举（service carving：DF=EVI mod N，&lt;&lt;<PAGE 33>&gt;&gt;）→ 防环三件套（split horizon/local bias/ES pruning）→ 流量优化（aliasing/backup path/mass withdraw）。</li>
-<li>LAG 是多归属防重复包与防环的前提（P13，&lt;&lt;<PAGE 32>&gt;&gt;）；DF 防止 BUM 从 fabric 到 CE 重复洪泛（P14，&lt;&lt;<PAGE 32>&gt;&gt;）。</li>
-<li>VXLAN 下 split horizon 靠维护同 ES 对端 PE IP 列表而非 ESI label（P17，&lt;&lt;<PAGE 34>&gt;&gt;）。</li>
+<li>Multi-homing 框架（F4， <code>&lt;span class="pg"&gt;原文p32&lt;/span&gt;</code> ）：模式（SH/SA/AA）→ LACP vs 静态 LAG（决定 ESI 自动/手工）→ DF 选举（service carving：DF=EVI mod N， <code>&lt;span class="pg"&gt;原文p33&lt;/span&gt;</code> ）→ 防环三件套（split horizon/local bias/ES pruning）→ 流量优化（aliasing/backup path/mass withdraw）。</li>
+<li>LAG 是多归属防重复包与防环的前提（P13， <code>&lt;span class="pg"&gt;原文p32&lt;/span&gt;</code> ）；DF 防止 BUM 从 fabric 到 CE 重复洪泛（P14， <code>&lt;span class="pg"&gt;原文p32&lt;/span&gt;</code> ）。</li>
+<li>VXLAN 下 split horizon 靠维护同 ES 对端 PE IP 列表而非 ESI label（P17， <code>&lt;span class="pg"&gt;原文p34&lt;/span&gt;</code> ）。</li>
 </ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
-<li>模式选型：全活（aliasing 按流负载分担，P19，&lt;&lt;<PAGE 34>&gt;&gt;）或单活（Primary/Backup PE 列表主撤路无缝切换，&lt;&lt;<PAGE 35-36>&gt;&gt;）；R-T1A ESI Label 扩展社区 flags=1 表 single-active、0 表 all-active（C5，&lt;&lt;<PAGE 32-33>&gt;&gt;）</li>
-<li>ESI 配置分档（P41，&lt;&lt;<PAGE 41>&gt;&gt;）：物理口 auto（0x3+Port_MAC+0xFFFFFF）；LACP LAG auto（0x3+CE_MAC+0xFF+AggID）；静态 LAG 必须手工 5 字节</li>
-<li>防环规则落地：split horizon——路由信息永不原路返回（P16，&lt;&lt;<PAGE 34>&gt;&gt;）；local bias——发往本 PE 上全活 ES 的流量总走本地接入（P18，&lt;&lt;<PAGE 34>&gt;&gt;）</li>
-<li>组播状态保障：多归属场景 R-T7/R-T8 同步 IGMP Join/Leave 防 DF 切换丢状态（P39，&lt;&lt;<PAGE 36>&gt;&gt;）</li>
+<li>模式选型：全活（aliasing 按流负载分担，P19， <code>&lt;span class="pg"&gt;原文p34&lt;/span&gt;</code> ）或单活（Primary/Backup PE 列表主撤路无缝切换， <code>&lt;span class="pg"&gt;原文p35-36&lt;/span&gt;</code> ）；R-T1A ESI Label 扩展社区 flags=1 表 single-active、0 表 all-active（C5， <code>&lt;span class="pg"&gt;原文p32-33&lt;/span&gt;</code> ）</li>
+<li>ESI 配置分档（P41， <code>&lt;span class="pg"&gt;原文p41&lt;/span&gt;</code> ）：物理口 auto（0x3+Port_MAC+0xFFFFFF）；LACP LAG auto（0x3+CE_MAC+0xFF+AggID）；静态 LAG 必须手工 5 字节</li>
+<li>防环规则落地：split horizon——路由信息永不原路返回（P16， <code>&lt;span class="pg"&gt;原文p34&lt;/span&gt;</code> ）；local bias——发往本 PE 上全活 ES 的流量总走本地接入（P18， <code>&lt;span class="pg"&gt;原文p34&lt;/span&gt;</code> ）</li>
+<li>组播状态保障：多归属场景 R-T7/R-T8 同步 IGMP Join/Leave 防 DF 切换丢状态（P39， <code>&lt;span class="pg"&gt;原文p36&lt;/span&gt;</code> ）</li>
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>静态 LAG ESI 手工配置</strong>（C15，&lt;&lt;<PAGE 64>&gt;&gt;）：<code>service access linkagg 20 vlan-xlation enable evpn-ethernet-segment enable esi 01:01:01:02:04</code></li>
-<li><strong>多归属 SAP 一致性检查</strong>（X22，&lt;&lt;<PAGE 66>&gt;&gt;）：确保 SAP 在 MH-ES 所有 peer 节点配置一致，否则 CE 侧流量哈希到缺配节点即黑洞</li>
-<li><strong>开局验证流程</strong>（C5，&lt;&lt;<PAGE 32-33>&gt;&gt;）：R-T4 发现同 ES PE→DF 选举→R-T1A/1B 通告冗余模式；<code>show service evpn ethernet-segment</code> 核对</li>
+<li><strong>静态 LAG ESI 手工配置</strong>（C15， <code>&lt;span class="pg"&gt;原文p64&lt;/span&gt;</code> ）：<code>service access linkagg 20 vlan-xlation enable evpn-ethernet-segment enable esi 01:01:01:02:04</code></li>
+<li><strong>多归属 SAP 一致性检查</strong>（X22， <code>&lt;span class="pg"&gt;原文p66&lt;/span&gt;</code> ）：确保 SAP 在 MH-ES 所有 peer 节点配置一致，否则 CE 侧流量哈希到缺配节点即黑洞</li>
+<li><strong>开局验证流程</strong>（C5， <code>&lt;span class="pg"&gt;原文p32-33&lt;/span&gt;</code> ）：R-T4 发现同 ES PE→DF 选举→R-T1A/1B 通告冗余模式；<code>show service evpn ethernet-segment</code> 核对</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>多归属开局全流程：R-T4 发现→DF 选举→冗余模式通告（C5，&lt;&lt;<PAGE 32-33>&gt;&gt;）</li>
-<li>DF change 丢包场景与 SMET-by-all-PEs 补救：远端 PE 在收到新 PE 的 SMET 路由前持续发旧 PE 致丢包（C6，&lt;&lt;<PAGE 36>&gt;&gt;）</li>
-<li>MAC duplication 场景：同 MAC 两主机/环路致反复通告-撤销拖垮控制面，靠 hold-down+retry-time 解除（C10，&lt;&lt;<PAGE 39>&gt;&gt;）</li>
+<li>多归属开局全流程：R-T4 发现→DF 选举→冗余模式通告（C5， <code>&lt;span class="pg"&gt;原文p32-33&lt;/span&gt;</code> ）</li>
+<li>DF change 丢包场景与 SMET-by-all-PEs 补救：远端 PE 在收到新 PE 的 SMET 路由前持续发旧 PE 致丢包（C6， <code>&lt;span class="pg"&gt;原文p36&lt;/span&gt;</code> ）</li>
+<li>MAC duplication 场景：同 MAC 两主机/环路致反复通告-撤销拖垮控制面，靠 hold-down+retry-time 解除（C10， <code>&lt;span class="pg"&gt;原文p39&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>
-<li>无 R-T6/7/8 时多归属 IGMP 状态问题：全活不保证 Join/Leave 到 DF；单活 DF failover 丢 IGMP 状态（X13，&lt;&lt;<PAGE 36>&gt;&gt;）</li>
-<li>DF change 期间组播丢包不可避免，需 SMET 补救（X14，&lt;&lt;<PAGE 36>&gt;&gt;）</li>
-<li>MAC duplication 连续通告/撤销降级全网性能（X15，&lt;&lt;<PAGE 39>&gt;&gt;）</li>
-<li>SAP 配置不一致导致 CE 侧黑洞（X22，&lt;&lt;<PAGE 66>&gt;&gt;）</li>
-<li>8-bit 本地段 ID 限制 ES 上限 256 个（X18，&lt;&lt;<PAGE 43>&gt;&gt;）</li>
-<li>SMET-by-all-PEs 用核心带宽换丢包，仅流量丢失敏感场景推荐（X19/P25，&lt;&lt;<PAGE 43-44>&gt;&gt;）</li>
-<li>Duplicate IP 可能是人为错误或欺骗攻击（X16，&lt;&lt;<PAGE 39>&gt;&gt;）</li>
+<li>无 R-T6/7/8 时多归属 IGMP 状态问题：全活不保证 Join/Leave 到 DF；单活 DF failover 丢 IGMP 状态（X13， <code>&lt;span class="pg"&gt;原文p36&lt;/span&gt;</code> ）</li>
+<li>DF change 期间组播丢包不可避免，需 SMET 补救（X14， <code>&lt;span class="pg"&gt;原文p36&lt;/span&gt;</code> ）</li>
+<li>MAC duplication 连续通告/撤销降级全网性能（X15， <code>&lt;span class="pg"&gt;原文p39&lt;/span&gt;</code> ）</li>
+<li>SAP 配置不一致导致 CE 侧黑洞（X22， <code>&lt;span class="pg"&gt;原文p66&lt;/span&gt;</code> ）</li>
+<li>8-bit 本地段 ID 限制 ES 上限 256 个（X18， <code>&lt;span class="pg"&gt;原文p43&lt;/span&gt;</code> ）</li>
+<li>SMET-by-all-PEs 用核心带宽换丢包，仅流量丢失敏感场景推荐（X19/P25， <code>&lt;span class="pg"&gt;原文p43-44&lt;/span&gt;</code> ）</li>
+<li>Duplicate IP 可能是人为错误或欺骗攻击（X16， <code>&lt;span class="pg"&gt;原文p39&lt;/span&gt;</code> ）</li>
 </ul>
 <p>来源：EVPN Architecture Guide（p32-44/p64-66）</p><div class="pn"><a href="sol-evpn-control-plane.html">⬅ 上一单元：sol-evpn-control-plane</a><a class="nxt" href="sol-evpn-irb-multicast.html">下一单元：sol-evpn-irb-multicast ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

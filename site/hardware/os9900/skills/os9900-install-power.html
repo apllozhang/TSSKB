@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -68,10 +69,10 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="i">I（核心理念）</h2>
 <ul>
-<li>机箱功率预算三步法（F3，&lt;&lt;<PAGE 23>&gt;&gt;-&lt;&lt;<PAGE 26>&gt;&gt;/&lt;&lt;<PAGE 29>&gt;&gt;/&lt;&lt;<PAGE 49>&gt;&gt;/&lt;&lt;<PAGE 63>&gt;&gt;）：组件一插入中板功率需求即刻生效，预算不足则新组件不上电甚至中断数据流——变更前必查 <code>show chassis</code> 的 Power Left；算增量时计入 CMM 64/74W、CFM 119/222W、NI 56-402W、风扇 112/200W 与 PoE slot 默认 1800W。</li>
-<li>组件安装/拆除标准作业序列（F4，&lt;&lt;<PAGE 36>&gt;&gt;-&lt;&lt;<PAGE 45>&gt;&gt;/&lt;&lt;<PAGE 57>&gt;&gt;-&lt;&lt;<PAGE 63>&gt;&gt;）：空机箱就位（三人）→ CFM（先拆风扇托盘）→ NI → CMM → 核功率 → 电源 → 四绿判据 → 首登。</li>
-<li>电源三不混（P24，&lt;&lt;<PAGE 29>&gt;&gt;/&lt;&lt;<PAGE 63>&gt;&gt;）：AC 与 DC 不可混、240V 与 110V 输入不可混——与 6900 家族"AC+DC 可混"相反，跨平台经验不可平移。</li>
-<li>4 电源 N+1 负载分担（P5，&lt;&lt;<PAGE 8>&gt;&gt;/&lt;&lt;<PAGE 13>&gt;&gt;），单电源不可热拆（P38）。</li>
+<li>机箱功率预算三步法（F3， <code>&lt;span class="pg"&gt;原文p23&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p26&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p29&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p49&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p63&lt;/span&gt;</code> ）：组件一插入中板功率需求即刻生效，预算不足则新组件不上电甚至中断数据流——变更前必查 <code>show chassis</code> 的 Power Left；算增量时计入 CMM 64/74W、CFM 119/222W、NI 56-402W、风扇 112/200W 与 PoE slot 默认 1800W。</li>
+<li>组件安装/拆除标准作业序列（F4， <code>&lt;span class="pg"&gt;原文p36&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p45&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p57&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p63&lt;/span&gt;</code> ）：空机箱就位（三人）→ CFM（先拆风扇托盘）→ NI → CMM → 核功率 → 电源 → 四绿判据 → 首登。</li>
+<li>电源三不混（P24， <code>&lt;span class="pg"&gt;原文p29&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p63&lt;/span&gt;</code> ）：AC 与 DC 不可混、240V 与 110V 输入不可混——与 6900 家族"AC+DC 可混"相反，跨平台经验不可平移。</li>
+<li>4 电源 N+1 负载分担（P5， <code>&lt;span class="pg"&gt;原文p8&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p13&lt;/span&gt;</code> ），单电源不可热拆（P38）。</li>
 </ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
@@ -82,33 +83,33 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>独立安装</strong>：稳固平面承满配重量；两人以上搬运；机箱正放、留气流间隙与 AC 插座可达（C2，&lt;&lt;<PAGE 36>&gt;&gt;）</li>
-<li><strong>装 CFM 六步</strong>：确认遮挡槽位风扇托盘已拆→板边入 card guides 部分推入→锁杆 open 推到停→同时压上下锁杆至竖直锁定→手紧 captive 螺丝→装回风扇托盘（C4，&lt;&lt;<PAGE 36>&gt;&gt;-&lt;&lt;<PAGE 38>&gt;&gt;）</li>
-<li><strong>装风扇托盘三步</strong>：顶部两 tab 先入槽→推底部入槽至 firmly seated→手紧底部拇指螺丝（C5，&lt;&lt;<PAGE 39>&gt;&gt;-&lt;&lt;<PAGE 41>&gt;&gt;）</li>
-<li><strong>装 NI 三步</strong>：板边入左右凹槽→锁杆 open 推至背板→拉锁杆至 90 度全闭锁，手紧左右拇指螺丝（C6，&lt;&lt;<PAGE 42>&gt;&gt;）</li>
-<li><strong>装电源四步</strong>：拆盲板→一手扶前一手托底、手柄 down 滑入至背板→手柄上翻锁定拧拇指螺丝→插电源线（禁延长线）（C7，&lt;&lt;<PAGE 43>&gt;&gt;/&lt;&lt;<PAGE 44>&gt;&gt;）</li>
-<li><strong>上电与判据</strong>：多电源数秒内相继插电；主 CMM 四绿（PRI+PS+FAB+TEMP 稳绿）为启动成功（C8/C9，&lt;&lt;<PAGE 45>&gt;&gt;）</li>
-<li><strong>首次登录七步</strong>：console（9600-8N1，admin/switch）→ 设 EMP IP → 解锁会话 → 改密码 → 时区 → 日期时间 → 可选项+<code>write memory</code>（C10-C13，&lt;&lt;<PAGE 45>&gt;&gt;-&lt;&lt;<PAGE 49>&gt;&gt;）</li>
-<li><strong>DC 接线</strong>：分支过流 75A、双 10AWG 铜导体、FCI 10080598-2ED0006LF 4P PWRBLADE 连接器；&gt;3m 长线归本地规范管辖（X13/X14/X15，&lt;&lt;<PAGE 30>&gt;&gt;/&lt;&lt;<PAGE 31>&gt;&gt;）</li>
-<li><strong>接地</strong>：Panduit LCD8-10AL lug + CT-940CH 压接 + 8AWG，扭矩 30-60 in-lb；接地点清洁打磨涂抗氧化剂（X51，&lt;&lt;<PAGE 70>&gt;&gt;/&lt;&lt;<PAGE 71>&gt;&gt;）</li>
-<li><strong>盲板常装</strong>：空模块槽与电源槽装盲板调节气流（X28，&lt;&lt;<PAGE 35>&gt;&gt;）</li>
+<li><strong>独立安装</strong>：稳固平面承满配重量；两人以上搬运；机箱正放、留气流间隙与 AC 插座可达（C2， <code>&lt;span class="pg"&gt;原文p36&lt;/span&gt;</code> ）</li>
+<li><strong>装 CFM 六步</strong>：确认遮挡槽位风扇托盘已拆→板边入 card guides 部分推入→锁杆 open 推到停→同时压上下锁杆至竖直锁定→手紧 captive 螺丝→装回风扇托盘（C4， <code>&lt;span class="pg"&gt;原文p36&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p38&lt;/span&gt;</code> ）</li>
+<li><strong>装风扇托盘三步</strong>：顶部两 tab 先入槽→推底部入槽至 firmly seated→手紧底部拇指螺丝（C5， <code>&lt;span class="pg"&gt;原文p39&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p41&lt;/span&gt;</code> ）</li>
+<li><strong>装 NI 三步</strong>：板边入左右凹槽→锁杆 open 推至背板→拉锁杆至 90 度全闭锁，手紧左右拇指螺丝（C6， <code>&lt;span class="pg"&gt;原文p42&lt;/span&gt;</code> ）</li>
+<li><strong>装电源四步</strong>：拆盲板→一手扶前一手托底、手柄 down 滑入至背板→手柄上翻锁定拧拇指螺丝→插电源线（禁延长线）（C7， <code>&lt;span class="pg"&gt;原文p43&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p44&lt;/span&gt;</code> ）</li>
+<li><strong>上电与判据</strong>：多电源数秒内相继插电；主 CMM 四绿（PRI+PS+FAB+TEMP 稳绿）为启动成功（C8/C9， <code>&lt;span class="pg"&gt;原文p45&lt;/span&gt;</code> ）</li>
+<li><strong>首次登录七步</strong>：console（9600-8N1，admin/switch）→ 设 EMP IP → 解锁会话 → 改密码 → 时区 → 日期时间 → 可选项+<code>write memory</code>（C10-C13， <code>&lt;span class="pg"&gt;原文p45&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p49&lt;/span&gt;</code> ）</li>
+<li><strong>DC 接线</strong>：分支过流 75A、双 10AWG 铜导体、FCI 10080598-2ED0006LF 4P PWRBLADE 连接器；&gt;3m 长线归本地规范管辖（X13/X14/X15， <code>&lt;span class="pg"&gt;原文p30&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p31&lt;/span&gt;</code> ）</li>
+<li><strong>接地</strong>：Panduit LCD8-10AL lug + CT-940CH 压接 + 8AWG，扭矩 30-60 in-lb；接地点清洁打磨涂抗氧化剂（X51， <code>&lt;span class="pg"&gt;原文p70&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p71&lt;/span&gt;</code> ）</li>
+<li><strong>盲板常装</strong>：空模块槽与电源槽装盲板调节气流（X28， <code>&lt;span class="pg"&gt;原文p35&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>机箱功率预算核查：变更前 <code>show chassis</code> 看 Power Left（示例输出 2041W 可用于新组件与 PD）（C14/X18，&lt;&lt;<PAGE 49>&gt;&gt;）</li>
-<li>OS99-PS-A AC 双档输出：1200W/21.4A 或 3000W/53.5A；PS-D DC 输出 2500W/44.6A@56V（P23，&lt;&lt;<PAGE 29>&gt;&gt;/&lt;&lt;<PAGE 30>&gt;&gt;）</li>
-<li>ESD 腕带生效前提：电源必须已装机并接接地插座，仅接腕带接地点无效（P8/X43，&lt;&lt;<PAGE 8>&gt;&gt;/&lt;&lt;<PAGE 9>&gt;&gt;/&lt;&lt;<PAGE 72>&gt;&gt;）</li>
+<li>机箱功率预算核查：变更前 <code>show chassis</code> 看 Power Left（示例输出 2041W 可用于新组件与 PD）（C14/X18， <code>&lt;span class="pg"&gt;原文p49&lt;/span&gt;</code> ）</li>
+<li>OS99-PS-A AC 双档输出：1200W/21.4A 或 3000W/53.5A；PS-D DC 输出 2500W/44.6A@56V（P23， <code>&lt;span class="pg"&gt;原文p29&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p30&lt;/span&gt;</code> ）</li>
+<li>ESD 腕带生效前提：电源必须已装机并接接地插座，仅接腕带接地点无效（P8/X43， <code>&lt;span class="pg"&gt;原文p8&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p9&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p72&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>
-<li>AC 与 DC 电源不可混、Hi(240V) 与 Lo(110V) 输入不可混——与 6900 家族相反，跨平台经验会翻车（X9/X10/P24，&lt;&lt;<PAGE 29>&gt;&gt;/&lt;&lt;<PAGE 63>&gt;&gt;）</li>
-<li>预算不足后果链：新组件不上电+电源错误中断数据流，加件/拔电前必查 Power Left（X18/P26，&lt;&lt;<PAGE 49>&gt;&gt;）</li>
-<li>单件不可热拆：仅一台 CMM/CFM/电源时拆即断业务（X11/P38，&lt;&lt;<PAGE 63>&gt;&gt;）</li>
-<li>不可墙装（重量+气流要求）；禁止满载机箱搬运；倒放/侧躺禁令（X24/X25/X27，&lt;&lt;<PAGE 36>&gt;&gt;/&lt;&lt;<PAGE 32>&gt;&gt;）</li>
-<li>拆装电源必须先断电源源；拆电源不托底会致电源壳尾部坠落损坏设备（X12/X23，&lt;&lt;<PAGE 43>&gt;&gt;/&lt;&lt;<PAGE 57>&gt;&gt;/&lt;&lt;<PAGE 58>&gt;&gt;）</li>
-<li>禁延长线；AC 插座各走独立电路；电涌军规违者可失保（X16/P28/X31，&lt;&lt;<PAGE 33>&gt;&gt;/&lt;&lt;<PAGE 44>&gt;&gt;）</li>
-<li>三风扇托盘常驻，拆除仅限风扇/CFM 现场更换（X19，&lt;&lt;<PAGE 28>&gt;&gt;/&lt;&lt;<PAGE 59>&gt;&gt;）</li>
-<li>气流阻塞致过热失效，"Never obstruct chassis or component air vents"（X29，&lt;&lt;<PAGE 34>&gt;&gt;）</li>
-<li>双人/三人搬运纪律（弯膝直背）；必须专业安装者作业（X26/X30，&lt;&lt;<PAGE 36>&gt;&gt;/&lt;&lt;<PAGE 69>&gt;&gt;/&lt;&lt;<PAGE 32>&gt;&gt;）</li>
+<li>AC 与 DC 电源不可混、Hi(240V) 与 Lo(110V) 输入不可混——与 6900 家族相反，跨平台经验会翻车（X9/X10/P24， <code>&lt;span class="pg"&gt;原文p29&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p63&lt;/span&gt;</code> ）</li>
+<li>预算不足后果链：新组件不上电+电源错误中断数据流，加件/拔电前必查 Power Left（X18/P26， <code>&lt;span class="pg"&gt;原文p49&lt;/span&gt;</code> ）</li>
+<li>单件不可热拆：仅一台 CMM/CFM/电源时拆即断业务（X11/P38， <code>&lt;span class="pg"&gt;原文p63&lt;/span&gt;</code> ）</li>
+<li>不可墙装（重量+气流要求）；禁止满载机箱搬运；倒放/侧躺禁令（X24/X25/X27， <code>&lt;span class="pg"&gt;原文p36&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p32&lt;/span&gt;</code> ）</li>
+<li>拆装电源必须先断电源源；拆电源不托底会致电源壳尾部坠落损坏设备（X12/X23， <code>&lt;span class="pg"&gt;原文p43&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p57&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p58&lt;/span&gt;</code> ）</li>
+<li>禁延长线；AC 插座各走独立电路；电涌军规违者可失保（X16/P28/X31， <code>&lt;span class="pg"&gt;原文p33&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p44&lt;/span&gt;</code> ）</li>
+<li>三风扇托盘常驻，拆除仅限风扇/CFM 现场更换（X19， <code>&lt;span class="pg"&gt;原文p28&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p59&lt;/span&gt;</code> ）</li>
+<li>气流阻塞致过热失效，"Never obstruct chassis or component air vents"（X29， <code>&lt;span class="pg"&gt;原文p34&lt;/span&gt;</code> ）</li>
+<li>双人/三人搬运纪律（弯膝直背）；必须专业安装者作业（X26/X30， <code>&lt;span class="pg"&gt;原文p36&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p69&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p32&lt;/span&gt;</code> ）</li>
 </ul>
 <p>来源：OmniSwitch 9900 Series Hardware Users Guide（Ch1 电源 + Ch2 安装上电，p28-49；附录 A，p69-72）</p><div class="pn"><a href="os9900-chassis-modules.html">⬅ 上一单元：os9900-chassis-modules</a><a class="nxt" href="os9900-ops-troubleshoot.html">下一单元：os9900-ops-troubleshoot ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

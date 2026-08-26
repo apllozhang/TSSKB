@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -84,41 +85,41 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
-<li>骨干四任务（&lt;&lt;<PAGE 547>&gt;&gt;-&lt;&lt;<PAGE 548>&gt;&gt;）：<code>spb bvlan 2000/2001/2002</code>（各 BVLAN 配不同 ECT-ID 最大化分流）→ 修改 control BVLAN 前先 <code>spb isis admin-state disable</code> → <code>spb isis control-bvlan 2000</code> → <code>spb isis interface port 1/1/x</code>（各骨干口）→ <code>spb isis admin-state enable</code></li>
-<li>L2 服务：<code>service spb 2001 isid 2001 bvlan 2001 description vlan2 admin-state enable</code>；接入 <code>service access port 1/1/3</code> + <code>service spb 2001 sap port 1/1/3:2 admin-state enable stats enable</code>（&lt;&lt;<PAGE 555>&gt;&gt;-&lt;&lt;<PAGE 556>&gt;&gt;）</li>
-<li>验证：<code>show mac-learning domain spb</code>（CMAC 绑定 sap:/sdp: 接口）（&lt;&lt;<PAGE 558>&gt;&gt;）；健康检查命令族 <code>show spb isis bvlans / interface / adjacency [detail] / info / unicast-table bvlan 2000 / spf bvlan 2000 / database / nodes</code>（&lt;&lt;<PAGE 549>&gt;&gt;-&lt;&lt;<PAGE 550>&gt;&gt;）</li>
+<li>骨干四任务（ <code>&lt;span class="pg"&gt;原文p547&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p548&lt;/span&gt;</code> ）：<code>spb bvlan 2000/2001/2002</code>（各 BVLAN 配不同 ECT-ID 最大化分流）→ 修改 control BVLAN 前先 <code>spb isis admin-state disable</code> → <code>spb isis control-bvlan 2000</code> → <code>spb isis interface port 1/1/x</code>（各骨干口）→ <code>spb isis admin-state enable</code></li>
+<li>L2 服务：<code>service spb 2001 isid 2001 bvlan 2001 description vlan2 admin-state enable</code>；接入 <code>service access port 1/1/3</code> + <code>service spb 2001 sap port 1/1/3:2 admin-state enable stats enable</code>（ <code>&lt;span class="pg"&gt;原文p555&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p556&lt;/span&gt;</code> ）</li>
+<li>验证：<code>show mac-learning domain spb</code>（CMAC 绑定 sap:/sdp: 接口）（ <code>&lt;span class="pg"&gt;原文p558&lt;/span&gt;</code> ）；健康检查命令族 <code>show spb isis bvlans / interface / adjacency [detail] / info / unicast-table bvlan 2000 / spf bvlan 2000 / database / nodes</code>（ <code>&lt;span class="pg"&gt;原文p549&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p550&lt;/span&gt;</code> ）</li>
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
-<li>BUM 复制模式：Head-End（默认，带宽效率低/资源高/同径）与 Tandem（带宽高/资源低；(S,G) 同径、(<em>,G) 不同径）；head-end 与 tandem 按 per-service 选，(S,G)/(</em>,G) 按 per-BVLAN 选（&lt;&lt;<PAGE 539>&gt;&gt;、&lt;&lt;<PAGE 573>&gt;&gt;-&lt;&lt;<PAGE 577>&gt;&gt;）</li>
-<li>L3 服务选型：域内用 L3 VPN（VRF 路由经 IS-IS TLV 携带，无需在 VPN 接口跑路由协议），仅边界节点对接外部用 VPN Lite（叠跑 OSPF/BGP）（&lt;&lt;<PAGE 534>&gt;&gt;-&lt;&lt;<PAGE 537>&gt;&gt;、&lt;&lt;<PAGE 592>&gt;&gt;）</li>
-<li>动态服务编号：ISID = Base Service Number + Domain ID + (VLAN % Service Modulo)，默认 Modulo 512 会让最多 8 个 VLAN 混入同一服务，需隔离时改 4096（&lt;&lt;<PAGE 600>&gt;&gt;-&lt;&lt;<PAGE 601>&gt;&gt;）</li>
-<li>iFab 七阶段零触摸（Auto-VC→RCD→LACP→Routing→SPB→Profiling→MVRP），任一阶段失败自动回退；管理命令 <code>auto-fabric protocols spb|mvrp... admin-state disable</code>、<code>show auto-fabric config</code>、<code>auto-fabric config-save admin-state enable</code>；默认 BVLAN 4000-4015/ECT 1-16、控制 BVLAN 4000（&lt;&lt;<PAGE 624>&gt;&gt;-&lt;&lt;<PAGE 638>&gt;&gt;）</li>
-<li>SPB+LAG 哈希：外层是 BMAC 熵不足，聚合口需开 tunnel-protocol 哈希内层 CMAC/IP（&lt;&lt;<PAGE 611>&gt;&gt;）</li>
-<li>Overload 硬隔离：开启后节点不转发任何穿越流量，即使无替代路径（&lt;&lt;<PAGE 605>&gt;&gt;）</li>
+<li>BUM 复制模式：Head-End（默认，带宽效率低/资源高/同径）与 Tandem（带宽高/资源低；(S,G) 同径、(<em>,G) 不同径）；head-end 与 tandem 按 per-service 选，(S,G)/(</em>,G) 按 per-BVLAN 选（ <code>&lt;span class="pg"&gt;原文p539&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p573&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p577&lt;/span&gt;</code> ）</li>
+<li>L3 服务选型：域内用 L3 VPN（VRF 路由经 IS-IS TLV 携带，无需在 VPN 接口跑路由协议），仅边界节点对接外部用 VPN Lite（叠跑 OSPF/BGP）（ <code>&lt;span class="pg"&gt;原文p534&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p537&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p592&lt;/span&gt;</code> ）</li>
+<li>动态服务编号：ISID = Base Service Number + Domain ID + (VLAN % Service Modulo)，默认 Modulo 512 会让最多 8 个 VLAN 混入同一服务，需隔离时改 4096（ <code>&lt;span class="pg"&gt;原文p600&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p601&lt;/span&gt;</code> ）</li>
+<li>iFab 七阶段零触摸（Auto-VC→RCD→LACP→Routing→SPB→Profiling→MVRP），任一阶段失败自动回退；管理命令 <code>auto-fabric protocols spb|mvrp... admin-state disable</code>、<code>show auto-fabric config</code>、<code>auto-fabric config-save admin-state enable</code>；默认 BVLAN 4000-4015/ECT 1-16、控制 BVLAN 4000（ <code>&lt;span class="pg"&gt;原文p624&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p638&lt;/span&gt;</code> ）</li>
+<li>SPB+LAG 哈希：外层是 BMAC 熵不足，聚合口需开 tunnel-protocol 哈希内层 CMAC/IP（ <code>&lt;span class="pg"&gt;原文p611&lt;/span&gt;</code> ）</li>
+<li>Overload 硬隔离：开启后节点不转发任何穿越流量，即使无替代路径（ <code>&lt;span class="pg"&gt;原文p605&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>C-35 SPB 骨干+L2 服务全流程：BVLAN/ISIS/SAP/I-SID 打通跨 BEB 的 L2 VPN，ISID 全局一致而 service 号本地有效（&lt;&lt;<PAGE 548>&gt;&gt;-&lt;&lt;<PAGE 558>&gt;&gt;）</li>
-<li>C-36 SPB 监控命令族实战输出（&lt;&lt;<PAGE 549>&gt;&gt;-&lt;&lt;<PAGE 550>&gt;&gt;）</li>
-<li>C-37 iFab Auto-Fabric 管理命令（&lt;&lt;<PAGE 639>&gt;&gt;）</li>
+<li>C-35 SPB 骨干+L2 服务全流程：BVLAN/ISIS/SAP/I-SID 打通跨 BEB 的 L2 VPN，ISID 全局一致而 service 号本地有效（ <code>&lt;span class="pg"&gt;原文p548&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p558&lt;/span&gt;</code> ）</li>
+<li>C-36 SPB 监控命令族实战输出（ <code>&lt;span class="pg"&gt;原文p549&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p550&lt;/span&gt;</code> ）</li>
+<li>C-37 iFab Auto-Fabric 管理命令（ <code>&lt;span class="pg"&gt;原文p639&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="b">B（边界与陷阱）</h2>
 <ul>
-<li>ISID 与 BVLAN 映射在所有相连 BEB 上必须全局一致，错配则服务不通；每个 ISID 只能映射一个 BVLAN（&lt;&lt;<PAGE 555>&gt;&gt;）</li>
-<li>Control BVLAN 只能在协议禁用时修改；BVLAN 上没有 STP，不要指望生成树防环（&lt;&lt;<PAGE 548>&gt;&gt;）</li>
-<li>BVLAN 数量不要超过物理等价路径数，盲目建满 16 个反而增加控制平面负载（&lt;&lt;<PAGE 610>&gt;&gt;）</li>
-<li>不同 VLAN 映射同一服务会导致 MAC 反复学习/清空（mac-move）震荡，一个 VLAN 一个 ISID/SAP（&lt;&lt;<PAGE 610>&gt;&gt;）</li>
-<li>默认 Service Modulo 512 会把不同 VLAN 混入同一 L2 域，多租户场景必改 4096（&lt;&lt;<PAGE 601>&gt;&gt;）</li>
+<li>ISID 与 BVLAN 映射在所有相连 BEB 上必须全局一致，错配则服务不通；每个 ISID 只能映射一个 BVLAN（ <code>&lt;span class="pg"&gt;原文p555&lt;/span&gt;</code> ）</li>
+<li>Control BVLAN 只能在协议禁用时修改；BVLAN 上没有 STP，不要指望生成树防环（ <code>&lt;span class="pg"&gt;原文p548&lt;/span&gt;</code> ）</li>
+<li>BVLAN 数量不要超过物理等价路径数，盲目建满 16 个反而增加控制平面负载（ <code>&lt;span class="pg"&gt;原文p610&lt;/span&gt;</code> ）</li>
+<li>不同 VLAN 映射同一服务会导致 MAC 反复学习/清空（mac-move）震荡，一个 VLAN 一个 ISID/SAP（ <code>&lt;span class="pg"&gt;原文p610&lt;/span&gt;</code> ）</li>
+<li>默认 Service Modulo 512 会把不同 VLAN 混入同一 L2 域，多租户场景必改 4096（ <code>&lt;span class="pg"&gt;原文p601&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
 <ul>
-<li>framework·F-10 STP vs SPB 选型（&lt;&lt;<PAGE 521>&gt;&gt;-&lt;&lt;<PAGE 523>&gt;&gt;、&lt;&lt;<PAGE 565>&gt;&gt;）</li>
-<li>framework·F-11 SPB 骨干四任务（&lt;&lt;<PAGE 547>&gt;&gt;、&lt;&lt;<PAGE 548>&gt;&gt;）</li>
-<li>framework·F-12 iFab 零触摸流水线（&lt;&lt;<PAGE 624>&gt;&gt;-&lt;&lt;<PAGE 638>&gt;&gt;）</li>
-<li>principle·P-62 控制平面/数据平面（&lt;&lt;<PAGE 525>&gt;&gt;、&lt;&lt;<PAGE 567>&gt;&gt;-&lt;&lt;<PAGE 570>&gt;&gt;）</li>
-<li>principle·P-63 BUM 复制模式（&lt;&lt;<PAGE 539>&gt;&gt;、&lt;&lt;<PAGE 573>&gt;&gt;、&lt;&lt;<PAGE 574>&gt;&gt;）</li>
-<li>principle·P-64 L3 服务两变体（&lt;&lt;<PAGE 534>&gt;&gt;-&lt;&lt;<PAGE 537>&gt;&gt;、&lt;&lt;<PAGE 592>&gt;&gt;）</li>
-<li>principle·P-65 动态服务编号（&lt;&lt;<PAGE 600>&gt;&gt;、&lt;&lt;<PAGE 601>&gt;&gt;）</li>
+<li>framework·F-10 STP vs SPB 选型（ <code>&lt;span class="pg"&gt;原文p521&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p523&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p565&lt;/span&gt;</code> ）</li>
+<li>framework·F-11 SPB 骨干四任务（ <code>&lt;span class="pg"&gt;原文p547&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p548&lt;/span&gt;</code> ）</li>
+<li>framework·F-12 iFab 零触摸流水线（ <code>&lt;span class="pg"&gt;原文p624&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p638&lt;/span&gt;</code> ）</li>
+<li>principle·P-62 控制平面/数据平面（ <code>&lt;span class="pg"&gt;原文p525&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p567&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p570&lt;/span&gt;</code> ）</li>
+<li>principle·P-63 BUM 复制模式（ <code>&lt;span class="pg"&gt;原文p539&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p573&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p574&lt;/span&gt;</code> ）</li>
+<li>principle·P-64 L3 服务两变体（ <code>&lt;span class="pg"&gt;原文p534&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p537&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p592&lt;/span&gt;</code> ）</li>
+<li>principle·P-65 动态服务编号（ <code>&lt;span class="pg"&gt;原文p600&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p601&lt;/span&gt;</code> ）</li>
 <li>case·C-35/C-36/C-37；counter·X-24/X-25/X-26/X-27/X-28/X-29/X-30</li>
 </ul><div class="pn"><a href="bgp-vrf-leak.html">⬅ 上一单元：bgp-vrf-leak</a><a class="nxt" href="multicast-pim.html">下一单元：multicast-pim ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

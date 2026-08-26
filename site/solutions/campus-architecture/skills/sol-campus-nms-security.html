@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -66,38 +67,38 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="i">I（核心理念）</h2>
 <ul>
-<li>统一接入安全框架（F5，&lt;&lt;<PAGE 36>&gt;&gt;）：UPAM 中央 RADIUS+captive portal → 认证谱系 → 角色（UNP/ARP）定 VLAN+ACL+QoS → 事后处置（Quarantine+QMR/WCF/wIDS/wIPS），安全贯穿"接入-授权-运行-处置"全生命周期。</li>
-<li>安全内建于网络并按角色动态施加，而非静态绑端口（P52，&lt;&lt;<PAGE 36>&gt;&gt;）；UNP/ARP 内嵌于交换机/AP 保证有线无线策略一致（P53，&lt;&lt;<PAGE 36>&gt;&gt;）。</li>
-<li>NMS 选型：L2 HA 复用原 IP 零改造（P49，&lt;&lt;<PAGE 35>&gt;&gt;）；L3 HA 跨子网但 sFlow/策略执行等功能受限（P50/X14，&lt;&lt;<PAGE 36>&gt;&gt;）。</li>
+<li>统一接入安全框架（F5， <code>&lt;span class="pg"&gt;原文p36&lt;/span&gt;</code> ）：UPAM 中央 RADIUS+captive portal → 认证谱系 → 角色（UNP/ARP）定 VLAN+ACL+QoS → 事后处置（Quarantine+QMR/WCF/wIDS/wIPS），安全贯穿"接入-授权-运行-处置"全生命周期。</li>
+<li>安全内建于网络并按角色动态施加，而非静态绑端口（P52， <code>&lt;span class="pg"&gt;原文p36&lt;/span&gt;</code> ）；UNP/ARP 内嵌于交换机/AP 保证有线无线策略一致（P53， <code>&lt;span class="pg"&gt;原文p36&lt;/span&gt;</code> ）。</li>
+<li>NMS 选型：L2 HA 复用原 IP 零改造（P49， <code>&lt;span class="pg"&gt;原文p35&lt;/span&gt;</code> ）；L3 HA 跨子网但 sFlow/策略执行等功能受限（P50/X14， <code>&lt;span class="pg"&gt;原文p36&lt;/span&gt;</code> ）。</li>
 </ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
-<li>NMS 部署选型（C10，&lt;&lt;<PAGE 35>&gt;&gt;）：单机无切换；L2 HA 双 VM 同子网+虚拟 Cluster IP（原单机 IP 可复用）；L3 HA 双节点跨子网各持 IP、设备配双地址、Preferred Node 须 CLI admin 菜单设置</li>
-<li>AP onboarding（C11/P51，&lt;&lt;<PAGE 36>&gt;&gt;）：初联自动回连 Cirrus Activation Server→序列号对 Device Catalog 校验→发证书建 VPN→按 AP 组模板下发配置</li>
-<li>认证谱系选型（P54-P57，&lt;&lt;<PAGE 37-39>&gt;&gt;）：IoT 指纹（行为特征免手工）；员工 802.1x（AD/LDAP/外部 RADIUS，可代理 ClearPass/ISE）；访客四式（自注册/社交登录/员工赞助/SMS-Plivo）+Enhanced Open 免密场景；WPA3 优先兼顾存量 WPA2</li>
-<li>分段与管控：SSID 即分段（不同 SSID 对应安全设置/VLAN/访问控制，P58，&lt;&lt;<PAGE 40>&gt;&gt;）；BYOD 公司设备预置画像、外部设备声明注册+时限/会话/1-10 台限制（P59/C15，&lt;&lt;<PAGE 40>&gt;&gt;）</li>
-<li>处置闭环（P60/P61，&lt;&lt;<PAGE 40-42>&gt;&gt;）：syslog/SNMP trap 触发 Quarantine Manager 隔离或 Candidate List，QMR 补救；流氓 AP（接有线或仿冒 SSID）才遏制——DEAUTH 帧，默认关闭</li>
+<li>NMS 部署选型（C10， <code>&lt;span class="pg"&gt;原文p35&lt;/span&gt;</code> ）：单机无切换；L2 HA 双 VM 同子网+虚拟 Cluster IP（原单机 IP 可复用）；L3 HA 双节点跨子网各持 IP、设备配双地址、Preferred Node 须 CLI admin 菜单设置</li>
+<li>AP onboarding（C11/P51， <code>&lt;span class="pg"&gt;原文p36&lt;/span&gt;</code> ）：初联自动回连 Cirrus Activation Server→序列号对 Device Catalog 校验→发证书建 VPN→按 AP 组模板下发配置</li>
+<li>认证谱系选型（P54-P57， <code>&lt;span class="pg"&gt;原文p37-39&lt;/span&gt;</code> ）：IoT 指纹（行为特征免手工）；员工 802.1x（AD/LDAP/外部 RADIUS，可代理 ClearPass/ISE）；访客四式（自注册/社交登录/员工赞助/SMS-Plivo）+Enhanced Open 免密场景；WPA3 优先兼顾存量 WPA2</li>
+<li>分段与管控：SSID 即分段（不同 SSID 对应安全设置/VLAN/访问控制，P58， <code>&lt;span class="pg"&gt;原文p40&lt;/span&gt;</code> ）；BYOD 公司设备预置画像、外部设备声明注册+时限/会话/1-10 台限制（P59/C15， <code>&lt;span class="pg"&gt;原文p40&lt;/span&gt;</code> ）</li>
+<li>处置闭环（P60/P61， <code>&lt;span class="pg"&gt;原文p40-42&lt;/span&gt;</code> ）：syslog/SNMP trap 触发 Quarantine Manager 隔离或 Candidate List，QMR 补救；流氓 AP（接有线或仿冒 SSID）才遏制——DEAUTH 帧，默认关闭</li>
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>访客认证四方式部署</strong>（C14，&lt;&lt;<PAGE 39>&gt;&gt;）：嵌入式 Captive Portal 自注册/社交登录（Facebook、Google、Rainbow、微信）/赞助审批/SMS（Plivo）取凭证；默认记录留一个月，可外接日志服务器</li>
-<li><strong>BYOD 注册管控</strong>（C15，&lt;&lt;<PAGE 40>&gt;&gt;）：UPAM Captive Portal 声明设备→挂安全策略 ARP→时限、会话超时、每人 1-10 台</li>
-<li><strong>WCF 配置三步</strong>（C12，&lt;&lt;<PAGE 41>&gt;&gt;）：建 WCF Profile（多条过滤条件）→给 ARP 或 SSID 挂 Profile→应用到 AP</li>
-<li><strong>安全动态施加</strong>（X16，&lt;&lt;<PAGE 37>&gt;&gt;）：网络边缘安全按预定义角色随用户/设备动态应用，与端口解耦</li>
+<li><strong>访客认证四方式部署</strong>（C14， <code>&lt;span class="pg"&gt;原文p39&lt;/span&gt;</code> ）：嵌入式 Captive Portal 自注册/社交登录（Facebook、Google、Rainbow、微信）/赞助审批/SMS（Plivo）取凭证；默认记录留一个月，可外接日志服务器</li>
+<li><strong>BYOD 注册管控</strong>（C15， <code>&lt;span class="pg"&gt;原文p40&lt;/span&gt;</code> ）：UPAM Captive Portal 声明设备→挂安全策略 ARP→时限、会话超时、每人 1-10 台</li>
+<li><strong>WCF 配置三步</strong>（C12， <code>&lt;span class="pg"&gt;原文p41&lt;/span&gt;</code> ）：建 WCF Profile（多条过滤条件）→给 ARP 或 SSID 挂 Profile→应用到 AP</li>
+<li><strong>安全动态施加</strong>（X16， <code>&lt;span class="pg"&gt;原文p37&lt;/span&gt;</code> ）：网络边缘安全按预定义角色随用户/设备动态应用，与端口解耦</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>OmniVista HA 三形态部署对比与 L3 HA 的 Preferred Node CLI 设置（C10/X15，&lt;&lt;<PAGE 35-36>&gt;&gt;）</li>
-<li>AP onboarding 全流程：call-home→序列号校验→证书→组模板（C11，&lt;&lt;<PAGE 36>&gt;&gt;）</li>
-<li>mDNS 网关/Responder 两模式实现跨网段服务共享并由防火墙审查（C7/C8，&lt;&lt;<PAGE 33>&gt;&gt;）</li>
+<li>OmniVista HA 三形态部署对比与 L3 HA 的 Preferred Node CLI 设置（C10/X15， <code>&lt;span class="pg"&gt;原文p35-36&lt;/span&gt;</code> ）</li>
+<li>AP onboarding 全流程：call-home→序列号校验→证书→组模板（C11， <code>&lt;span class="pg"&gt;原文p36&lt;/span&gt;</code> ）</li>
+<li>mDNS 网关/Responder 两模式实现跨网段服务共享并由防火墙审查（C7/C8， <code>&lt;span class="pg"&gt;原文p33&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>
-<li>L3 HA 不支持 sFlow、策略执行与部分设备管理功能；Preferred Node 不能走界面只能 CLI（X14/X15，&lt;&lt;<PAGE 36>&gt;&gt;）</li>
-<li>未注册设备不得入网——onboarding 按序列号白名单（X17，&lt;&lt;<PAGE 36>&gt;&gt;）</li>
-<li>mDNS 传统同网段模式有安全风险（含访客/BYOD 威胁）（X11，&lt;&lt;<PAGE 32>&gt;&gt;）</li>
-<li>干扰 AP 只造成 RF 干扰、不是直接安全威胁，勿与流氓 AP 混淆（X18，&lt;&lt;<PAGE 41>&gt;&gt;）</li>
-<li>流氓 AP 遏制默认关闭，开启后检测 AP 才发 DEAUTH（X19，&lt;&lt;<PAGE 42>&gt;&gt;）</li>
-<li>传统资产盘点靠用户反馈与猜测，易少买/多买——BLE 资产追踪替代（X20，&lt;&lt;<PAGE 34>&gt;&gt;）</li>
+<li>L3 HA 不支持 sFlow、策略执行与部分设备管理功能；Preferred Node 不能走界面只能 CLI（X14/X15， <code>&lt;span class="pg"&gt;原文p36&lt;/span&gt;</code> ）</li>
+<li>未注册设备不得入网——onboarding 按序列号白名单（X17， <code>&lt;span class="pg"&gt;原文p36&lt;/span&gt;</code> ）</li>
+<li>mDNS 传统同网段模式有安全风险（含访客/BYOD 威胁）（X11， <code>&lt;span class="pg"&gt;原文p32&lt;/span&gt;</code> ）</li>
+<li>干扰 AP 只造成 RF 干扰、不是直接安全威胁，勿与流氓 AP 混淆（X18， <code>&lt;span class="pg"&gt;原文p41&lt;/span&gt;</code> ）</li>
+<li>流氓 AP 遏制默认关闭，开启后检测 AP 才发 DEAUTH（X19， <code>&lt;span class="pg"&gt;原文p42&lt;/span&gt;</code> ）</li>
+<li>传统资产盘点靠用户反馈与猜测，易少买/多买——BLE 资产追踪替代（X20， <code>&lt;span class="pg"&gt;原文p34&lt;/span&gt;</code> ）</li>
 </ul>
 <p>来源：ALE Mobile Campus Architecture Guide（sol-campus-architecture DOC1，p33-42）</p><div class="pn"><a href="sol-campus-lan-wlan-design.html">⬅ 上一单元：sol-campus-lan-wlan-design</a><a class="nxt" href="sol-campus-hybrid-pol.html">下一单元：sol-campus-hybrid-pol ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

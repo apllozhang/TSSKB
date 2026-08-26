@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -83,25 +84,84 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="_2">二、十单元要点串讲</h2>
 <h3 id="1">1. 控制台：先拿功能地图再干活</h3>
-<p>Network / Configuration / Unified Access / Security / Administration / UPAM / WLAN 七大菜单区是全书总目录（&lt;&lt;<PAGE 31-32>&gt;&gt;）；WLAN Menu 视图仅重组入口、内容相同（&lt;&lt;<PAGE 33>&gt;&gt;）。Dashboard 分 Global/WLAN Advanced/IoT/Performance Monitoring 四标签，Performance Monitoring 挂 Analytics Chart View Profile（≤20 widget）（&lt;&lt;<PAGE 45, 54-56>&gt;&gt;）。所有页面底部有 Unacknowledged Alarm 实时告警栏。权限三维度（地图×应用读写×VLAN 对象）多角色叠加，预置 admin/netadmin/writer/user 四账号默认密码全部 switch（&lt;&lt;<PAGE 780-789>&gt;&gt;）。</p>
+<ul>
+<li>Network / Configuration / Unified Access / Security / Administration / UPAM / WLAN 七大菜单区是全书总目录（ <code>&lt;span class="pg"&gt;原文p31-32&lt;/span&gt;</code> ）；WLAN Menu 视图仅重组入口、内容相同（ <code>&lt;span class="pg"&gt;原文p33&lt;/span&gt;</code> ）。</li>
+<li>Dashboard 分 Global/WLAN Advanced/IoT/Performance Monitoring 四标签，Performance Monitoring 挂 Analytics Chart View Profile（≤20 widget）（ <code>&lt;span class="pg"&gt;原文p45, 54-56&lt;/span&gt;</code> ）。</li>
+<li>所有页面底部有 Unacknowledged Alarm 实时告警栏。</li>
+<li>权限三维度（地图×应用读写×VLAN 对象）多角色叠加，预置 admin/netadmin/writer/user 四账号默认密码全部 switch（ <code>&lt;span class="pg"&gt;原文p780-789&lt;/span&gt;</code> ）。</li>
+</ul>
 <h3 id="2-analyticsprofile-sflow">2. Analytics：Profile 驱动 + sFlow 数据面</h3>
-<p>Top N Apps/Clients/Ports 报表必须先建 Analytics Profile；Availability/Alarms/Health/SIP 免 Profile（&lt;&lt;<PAGE 66-67>&gt;&gt;）。建 Profile 时 OV 自动成为 sFlow Receiver，应用识别靠 TCP/UDP 端口（&lt;&lt;<PAGE 67, 74>&gt;&gt;）。统计采集与查看解耦（Collection Profile + View Profile ≤50 计数器）（&lt;&lt;<PAGE 117, 120-124>&gt;&gt;）。三大静默坑：SNMP 源 IP 与发现 IP 不一致收不到数据（&lt;&lt;<PAGE 119>&gt;&gt;）、删 Profile 连带删全部历史（&lt;&lt;<PAGE 121, 129>&gt;&gt;）、外部 RADIUS 用户不能排程报表（&lt;&lt;<PAGE 64>&gt;&gt;）。AppVis 是三步法（签名文件→Signature Profile→应用），一机一档且会清掉 CLI 配置（&lt;&lt;<PAGE 202-209>&gt;&gt;）。</p>
+<ul>
+<li>Top N Apps/Clients/Ports 报表必须先建 Analytics Profile；Availability/Alarms/Health/SIP 免 Profile（ <code>&lt;span class="pg"&gt;原文p66-67&lt;/span&gt;</code> ）。</li>
+<li>建 Profile 时 OV 自动成为 sFlow Receiver，应用识别靠 TCP/UDP 端口（ <code>&lt;span class="pg"&gt;原文p67, 74&lt;/span&gt;</code> ）。</li>
+<li>统计采集与查看解耦（Collection Profile + View Profile ≤50 计数器）（ <code>&lt;span class="pg"&gt;原文p117, 120-124&lt;/span&gt;</code> ）。</li>
+<li>三大静默坑：SNMP 源 IP 与发现 IP 不一致收不到数据（ <code>&lt;span class="pg"&gt;原文p119&lt;/span&gt;</code> ）、删 Profile 连带删全部历史（ <code>&lt;span class="pg"&gt;原文p121, 129&lt;/span&gt;</code> ）、外部 RADIUS 用户不能排程报表（ <code>&lt;span class="pg"&gt;原文p64&lt;/span&gt;</code> ）。</li>
+<li>AppVis 是三步法（签名文件→Signature Profile→应用），一机一档且会清掉 CLI 配置（ <code>&lt;span class="pg"&gt;原文p202-209&lt;/span&gt;</code> ）。</li>
+</ul>
 <h3 id="3-rangeprofile">3. 发现与拓扑：Range×Profile + 四级轮询</h3>
-<p>首次纳管五步法（发现→修正凭据→配 trap→保存→QoS 后再保存）是全书最常被引用的流程（&lt;&lt;<PAGE 40-44>&gt;&gt;）。多 Discovery Profile 按序回退，重新发现不覆盖已录入参数（&lt;&lt;<PAGE 256>&gt;&gt;）。四级轮询 Full⊇Occasional⊇Regular⊇Frequent，间隔随网络规模分档（&lt;&lt;<PAGE 298-299>&gt;&gt;）。拓扑三层地图：Physical（自动不可删）→Child→Logical，加 Dynamic（过滤器）；Geo Map 是默认视图，Site 自动生成同名逻辑图（&lt;&lt;<PAGE 554-581, 575-578>&gt;&gt;）。手工链路持久显示、断链变红，适合核心监控（&lt;&lt;<PAGE 290>&gt;&gt;）。Locator 一切搜索归结为 MAC，Live=最近 5 分钟（&lt;&lt;<PAGE 336-339>&gt;&gt;）。</p>
+<ul>
+<li>首次纳管五步法（发现→修正凭据→配 trap→保存→QoS 后再保存）是全书最常被引用的流程（ <code>&lt;span class="pg"&gt;原文p40-44&lt;/span&gt;</code> ）。</li>
+<li>多 Discovery Profile 按序回退，重新发现不覆盖已录入参数（ <code>&lt;span class="pg"&gt;原文p256&lt;/span&gt;</code> ）。</li>
+<li>四级轮询 Full⊇Occasional⊇Regular⊇Frequent，间隔随网络规模分档（ <code>&lt;span class="pg"&gt;原文p298-299&lt;/span&gt;</code> ）。</li>
+<li>拓扑三层地图：Physical（自动不可删）→Child→Logical，加 Dynamic（过滤器）；Geo Map 是默认视图，Site 自动生成同名逻辑图（ <code>&lt;span class="pg"&gt;原文p554-581, 575-578&lt;/span&gt;</code> ）。</li>
+<li>手工链路持久显示、断链变红，适合核心监控（ <code>&lt;span class="pg"&gt;原文p290&lt;/span&gt;</code> ）。</li>
+<li>Locator 一切搜索归结为 MAC，Live=最近 5 分钟（ <code>&lt;span class="pg"&gt;原文p336-339&lt;/span&gt;</code> ）。</li>
+</ul>
 <h3 id="4-resource-manager-ftp">4. Resource Manager：备份只记版本号，升级防 FTP 超时</h3>
-<p>Backup 三类型（Full/Config Only/Images Only），镜像不物理备份只记录版本——Restore 前必须先导镜像进 Repository（&lt;&lt;<PAGE 489-490>&gt;&gt;）。备份文件含源机器 IP/MAC 二进制信息，严禁拷给其他机器（&lt;&lt;<PAGE 493>&gt;&gt;）。升级铁律：先 Image 后 U-Boot；FTP 默认 5 分钟超时，大文件先 <code>session ftp timeout</code> 调大（&lt;&lt;<PAGE 497>&gt;&gt;）。Provisioning 是 DHCP Option 43+Cloud Agent Call-Home+SSH 推模板的零接触链路（&lt;&lt;<PAGE 430-436>&gt;&gt;）；Thin Switch write memory 失效、属性不可改（&lt;&lt;<PAGE 436-438>&gt;&gt;）。SAA 仅 MACSAA，建议 ≤50 个（&lt;&lt;<PAGE 512-514>&gt;&gt;）。</p>
+<ul>
+<li>Backup 三类型（Full/Config Only/Images Only），镜像不物理备份只记录版本——Restore 前必须先导镜像进 Repository（ <code>&lt;span class="pg"&gt;原文p489-490&lt;/span&gt;</code> ）。</li>
+<li>备份文件含源机器 IP/MAC 二进制信息，严禁拷给其他机器（ <code>&lt;span class="pg"&gt;原文p493&lt;/span&gt;</code> ）。</li>
+<li>升级铁律：先 Image 后 U-Boot；FTP 默认 5 分钟超时，大文件先 <code>session ftp timeout</code> 调大（ <code>&lt;span class="pg"&gt;原文p497&lt;/span&gt;</code> ）。</li>
+<li>Provisioning 是 DHCP Option 43+Cloud Agent Call-Home+SSH 推模板的零接触链路（ <code>&lt;span class="pg"&gt;原文p430-436&lt;/span&gt;</code> ）；Thin Switch write memory 失效、属性不可改（ <code>&lt;span class="pg"&gt;原文p436-438&lt;/span&gt;</code> ）。</li>
+<li>SAA 仅 MACSAA，建议 ≤50 个（ <code>&lt;span class="pg"&gt;原文p512-514&lt;/span&gt;</code> ）。</li>
+</ul>
 <h3 id="5-cli-scripting">5. CLI Scripting：混编脚本 + 训练技巧</h3>
-<p>.script 文件 CLI+JS 混编；内置变量 $IP_ADDRESS/$BASE_MAC 等发送时替换（&lt;&lt;<PAGE 242-243>&gt;&gt;）。三个训练技巧：expectPrompt 应答确认提示（reload 示例）、<tapps> lastcmd 防挂起、setTimeout/<tapps> set timeout 处理慢命令（&lt;&lt;<PAGE 241-244>&gt;&gt;）。脚本不能发 Stellar 无线设备（&lt;&lt;<PAGE 239>&gt;&gt;）。第三方 MIB：OID 只填 enterprises 后段，依赖顺序排好再 Apply，导入后不立即解析（&lt;&lt;<PAGE 285-288>&gt;&gt;）。</p>
+<ul>
+<li>.script 文件 CLI+JS 混编；内置变量 $IP_ADDRESS/$BASE_MAC 等发送时替换（ <code>&lt;span class="pg"&gt;原文p242-243&lt;/span&gt;</code> ）。</li>
+<li>三个训练技巧：expectPrompt 应答确认提示（reload 示例）、<tapps> lastcmd 防挂起、setTimeout/<tapps> set timeout 处理慢命令（ <code>&lt;span class="pg"&gt;原文p241-244&lt;/span&gt;</code> ）。</li>
+<li>脚本不能发 Stellar 无线设备（ <code>&lt;span class="pg"&gt;原文p239&lt;/span&gt;</code> ）。</li>
+<li>第三方 MIB：OID 只填 enterprises 后段，依赖顺序排好再 Apply，导入后不立即解析（ <code>&lt;span class="pg"&gt;原文p285-288&lt;/span&gt;</code> ）。</li>
+</ul>
 <h3 id="6-unified-access-l2l3">6. Unified Access：三途径 + L2/L3 分层</h3>
-<p>Workflow（六种引导流）/Template（批量）/Device Config（单机微调）三途径（&lt;&lt;<PAGE 592>&gt;&gt;）。L2 认证定 UNP+VLAN 之后不变，L3 动态改策略（&lt;&lt;<PAGE 591-592>&gt;&gt;）。角色分配优先级：认证返回角色 &gt; Classification Rules &gt; Default ARP（&lt;&lt;<PAGE 602-603>&gt;&gt;）。映射方法六选一（VLAN/SPB/VXLAN/Static Service/Tunnel/VLAN+Tunnel）（&lt;&lt;<PAGE 608-613>&gt;&gt;）。高频坑：AAA 超时改了不追溯在线用户（&lt;&lt;<PAGE 614-618>&gt;&gt;）、tagged 口与聚合成员不能启 UNP（&lt;&lt;<PAGE 594-601>&gt;&gt;）、Redirect 开启后只能映射 VLAN（&lt;&lt;<PAGE 608-613>&gt;&gt;）。</p>
+<ul>
+<li>Workflow（六种引导流）/Template（批量）/Device Config（单机微调）三途径（ <code>&lt;span class="pg"&gt;原文p592&lt;/span&gt;</code> ）。</li>
+<li>L2 认证定 UNP+VLAN 之后不变，L3 动态改策略（ <code>&lt;span class="pg"&gt;原文p591-592&lt;/span&gt;</code> ）。</li>
+<li>角色分配优先级：认证返回角色 &gt; Classification Rules &gt; Default ARP（ <code>&lt;span class="pg"&gt;原文p602-603&lt;/span&gt;</code> ）。</li>
+<li>映射方法六选一（VLAN/SPB/VXLAN/Static Service/Tunnel/VLAN+Tunnel）（ <code>&lt;span class="pg"&gt;原文p608-613&lt;/span&gt;</code> ）。</li>
+<li>高频坑：AAA 超时改了不追溯在线用户（ <code>&lt;span class="pg"&gt;原文p614-618&lt;/span&gt;</code> ）、tagged 口与聚合成员不能启 UNP（ <code>&lt;span class="pg"&gt;原文p594-601&lt;/span&gt;</code> ）、Redirect 开启后只能映射 VLAN（ <code>&lt;span class="pg"&gt;原文p608-613&lt;/span&gt;</code> ）。</li>
+</ul>
 <h3 id="7-upam-cpradius">7. UPAM：内置 CP+RADIUS 双角色</h3>
-<p>UPAM 同时做 Captive Portal 与 RADIUS 服务器（&lt;&lt;<PAGE 678>&gt;&gt;）。三种工作流：BYOD（MAC+CP）、Guest（MAC+CP+自助注册）、MAC or 802.1X（无 CP）（&lt;&lt;<PAGE 681-682>&gt;&gt;）。预置 All Managed Devices NAS 密钥固定 123456，托管设备每 15 分钟自动入库（&lt;&lt;<PAGE 682-684>&gt;&gt;）。Guest 策略 ≤32 条，Login Strategy 四种 + 社交登录（FB/Google/Rainbow/WeChat 需 OAuth+DNS）；WiFi4EU 专用模板且 CP 有效期 ≤24h（&lt;&lt;<PAGE 712-718>&gt;&gt;）。BYOD 无自助注册/Access Code/Data Quota，Max Device 仅 1-10（&lt;&lt;<PAGE 756-766>&gt;&gt;）。</p>
+<ul>
+<li>UPAM 同时做 Captive Portal 与 RADIUS 服务器（ <code>&lt;span class="pg"&gt;原文p678&lt;/span&gt;</code> ）。</li>
+<li>三种工作流：BYOD（MAC+CP）、Guest（MAC+CP+自助注册）、MAC or 802.1X（无 CP）（ <code>&lt;span class="pg"&gt;原文p681-682&lt;/span&gt;</code> ）。</li>
+<li>预置 All Managed Devices NAS 密钥固定 123456，托管设备每 15 分钟自动入库（ <code>&lt;span class="pg"&gt;原文p682-684&lt;/span&gt;</code> ）。</li>
+<li>Guest 策略 ≤32 条，Login Strategy 四种 + 社交登录（FB/Google/Rainbow/WeChat 需 OAuth+DNS）；WiFi4EU 专用模板且 CP 有效期 ≤24h（ <code>&lt;span class="pg"&gt;原文p712-718&lt;/span&gt;</code> ）。</li>
+<li>BYOD 无自助注册/Access Code/Data Quota，Max Device 仅 1-10（ <code>&lt;span class="pg"&gt;原文p756-766&lt;/span&gt;</code> ）。</li>
+</ul>
 <h3 id="8-ssids">8. SSIDs：一步式联动生成八对象</h3>
-<p>创建 SSID 自动派生 Access Role Profile/Access Policy/Authentication Strategy/Guest/BYOD Strategy/AAA/Tunnel Profile/Global Configuration（&lt;&lt;<PAGE 861-863>&gt;&gt;）。五种 Usage：Guest Network(Open+CP)、Employee BYOD、Enterprise 802.1X、Protected Network(PSK±CP)、Protected for Employees(PSK+BYOD Portal)。Usage 与 Strategy 不匹配的 SSID 不能编辑。安全矩阵：6GHz 强制 OWE、WPA3 不支持机型回退 WPA2、Transition Mode 需 AWOS 4.0.8+（&lt;&lt;<PAGE 649-655, 864-874>&gt;&gt;）。PPSK 每 SSID ≤16 Entry、单 AP 合计 ≤64；Device Specific PSK 仅配 UPAM RADIUS（Prefer/Force）（&lt;&lt;<PAGE 864-874>&gt;&gt;）。Stellar AP VLAN 池按机型限 2/4/7 个 WLAN（&lt;&lt;<PAGE 864-874>&gt;&gt;）。</p>
+<ul>
+<li>创建 SSID 自动派生 Access Role Profile/Access Policy/Authentication Strategy/Guest/BYOD Strategy/AAA/Tunnel Profile/Global Configuration（ <code>&lt;span class="pg"&gt;原文p861-863&lt;/span&gt;</code> ）。</li>
+<li>五种 Usage：Guest Network(Open+CP)、Employee BYOD、Enterprise 802.1X、Protected Network(PSK±CP)、Protected for Employees(PSK+BYOD Portal)。</li>
+<li>Usage 与 Strategy 不匹配的 SSID 不能编辑。</li>
+<li>安全矩阵：6GHz 强制 OWE、WPA3 不支持机型回退 WPA2、Transition Mode 需 AWOS 4.0.8+（ <code>&lt;span class="pg"&gt;原文p649-655, 864-874&lt;/span&gt;</code> ）。</li>
+<li>PPSK 每 SSID ≤16 Entry、单 AP 合计 ≤64；Device Specific PSK 仅配 UPAM RADIUS（Prefer/Force）（ <code>&lt;span class="pg"&gt;原文p864-874&lt;/span&gt;</code> ）。</li>
+<li>Stellar AP VLAN 池按机型限 2/4/7 个 WLAN（ <code>&lt;span class="pg"&gt;原文p864-874&lt;/span&gt;</code> ）。</li>
+</ul>
 <h3 id="9-quarantine-policyview-">9. Quarantine 与 PolicyView：状态机 + 通知-拉取</h3>
-<p>事件链：IPS/Syslog→规则（Banned 优先）→Candidates（流量照常）/Banned（进隔离 VLAN 走 QMR）/Disabled Ports（全部条目释放端口才启用）（&lt;&lt;<PAGE 457, 460-465>&gt;&gt;）。基础设施三件套（Quarantined VLAN+同名 MAC 组+Drop 策略）缺一则 Banned 设备照样通流量（&lt;&lt;<PAGE 473-475>&gt;&gt;）。无线客户端走 Client Blocklist（365 天）而非 Banned（&lt;&lt;<PAGE 460>&gt;&gt;）。PolicyView 策略存内置 LDAP、Notify 触发全网 flush+重载（代价高，批量一次）（&lt;&lt;<PAGE 396-397>&gt;&gt;）；优先级域 30001-65535 分段给 One Touch Voice/Data 与 Expert，外部工具勿占用（&lt;&lt;<PAGE 387>&gt;&gt;）；QoS 执行后全网 Unsaved，必须两步保存（&lt;&lt;<PAGE 44>&gt;&gt;）。</p>
+<ul>
+<li>事件链：IPS/Syslog→规则（Banned 优先）→Candidates（流量照常）/Banned（进隔离 VLAN 走 QMR）/Disabled Ports（全部条目释放端口才启用）（ <code>&lt;span class="pg"&gt;原文p457, 460-465&lt;/span&gt;</code> ）。</li>
+<li>基础设施三件套（Quarantined VLAN+同名 MAC 组+Drop 策略）缺一则 Banned 设备照样通流量（ <code>&lt;span class="pg"&gt;原文p473-475&lt;/span&gt;</code> ）。</li>
+<li>无线客户端走 Client Blocklist（365 天）而非 Banned（ <code>&lt;span class="pg"&gt;原文p460&lt;/span&gt;</code> ）。</li>
+<li>PolicyView 策略存内置 LDAP、Notify 触发全网 flush+重载（代价高，批量一次）（ <code>&lt;span class="pg"&gt;原文p396-397&lt;/span&gt;</code> ）；优先级域 30001-65535 分段给 One Touch Voice/Data 与 Expert，外部工具勿占用（ <code>&lt;span class="pg"&gt;原文p387&lt;/span&gt;</code> ）；QoS 执行后全网 Unsaved，必须两步保存（ <code>&lt;span class="pg"&gt;原文p44&lt;/span&gt;</code> ）。</li>
+</ul>
 <h3 id="10-vmvxlan">10. VM/VXLAN：塑形模型 + 大二层</h3>
-<p>vCenter(≤2)+Hyper-V 混合纳管，VM 上限 5000；Hypervisor 时间必须与 OV 同步（&lt;&lt;<PAGE 830-840>&gt;&gt;）。塑形模型：VM VLAN→UNP Tag 规则→每 VLAN 一个 UNP，vMotion 免改配置（&lt;&lt;<PAGE 830-840>&gt;&gt;）。One-Touch SPB 自动生成 UNP/ISID/BVLAN(4 轮转+ECT)（&lt;&lt;<PAGE 841-847>&gt;&gt;）。VXLAN 仅 OS6900-Q32/X72：VFI=SAP 学客户 MAC+SDP 学网络 MAC；组播隧道要求全网 PIM 统一（&lt;&lt;<PAGE 848-852>&gt;&gt;）。VM Snooping 默认 UDP 4789、Aging 300s（&lt;&lt;<PAGE 855-860>&gt;&gt;）。</p>
+<ul>
+<li>vCenter(≤2)+Hyper-V 混合纳管，VM 上限 5000；Hypervisor 时间必须与 OV 同步（ <code>&lt;span class="pg"&gt;原文p830-840&lt;/span&gt;</code> ）。</li>
+<li>塑形模型：VM VLAN→UNP Tag 规则→每 VLAN 一个 UNP，vMotion 免改配置（ <code>&lt;span class="pg"&gt;原文p830-840&lt;/span&gt;</code> ）。</li>
+<li>One-Touch SPB 自动生成 UNP/ISID/BVLAN(4 轮转+ECT)（ <code>&lt;span class="pg"&gt;原文p841-847&lt;/span&gt;</code> ）。</li>
+<li>VXLAN 仅 OS6900-Q32/X72：VFI=SAP 学客户 MAC+SDP 学网络 MAC；组播隧道要求全网 PIM 统一（ <code>&lt;span class="pg"&gt;原文p848-852&lt;/span&gt;</code> ）。</li>
+<li>VM Snooping 默认 UDP 4789、Aging 300s（ <code>&lt;span class="pg"&gt;原文p855-860&lt;/span&gt;</code> ）。</li>
+</ul>
 <h2 id="_3">三、高价值章节页码索引</h2>
 <table>
 <thead>

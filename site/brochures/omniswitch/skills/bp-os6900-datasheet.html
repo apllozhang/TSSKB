@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -83,7 +84,7 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="i">I（核心理念）</h2>
 <ul>
-<li>OS6900 是固定配置核心与 DC 交换机："compact, high-density 10, 25, 40 and 100 GigE platforms... Wire-rate non-blocking up to 6.4 Tb/s"（&lt;&lt;<PAGE 125>&gt;&gt;/&lt;&lt;<PAGE 126>&gt;&gt;）。</li>
+<li>OS6900 是固定配置核心与 DC 交换机："compact, high-density 10, 25, 40 and 100 GigE platforms... Wire-rate non-blocking up to 6.4 Tb/s"（ <code>&lt;span class="pg"&gt;原文p125&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p126&lt;/span&gt;</code> ）。</li>
 <li>层级：核心/DC 固定档，下接 6860/6870 汇聚，上对 6920（400G）与 9900（模块化）。</li>
 </ul>
 <h2 id="a1">A1（与相邻系列选型差异）</h2>
@@ -94,7 +95,7 @@ blockquote p{margin:6px 0}
 <li>vs OS6870：6870 接入/边缘（95W PoE、多千兆用户口）；6900 纯核心（无 PoE、全光口为主 + 10GBaseT 型）。</li>
 </ul>
 <h2 id="a2">A2（规格细节速查表）</h2>
-<p>机型矩阵（&lt;&lt;<PAGE 127>&gt;&gt; 型号描述 / &lt;&lt;<PAGE 131>&gt;&gt; 产品矩阵）：
+<p>机型矩阵（ <code>&lt;span class="pg"&gt;原文p127&lt;/span&gt;</code>  型号描述 /  <code>&lt;span class="pg"&gt;原文p131&lt;/span&gt;</code>  产品矩阵）：
 | 型号 | 端口 | 容量/吞吐 | 延迟 | 特点 |
 |---|---|---|---|---|
 | OS6900X24 | 24 SFP+（1/10G）+ 2 QSFP28 | 920 Gb/s / 684 Mpps | &lt;650ns | 入门 10G |
@@ -104,25 +105,25 @@ blockquote p{margin:6px 0}
 | OS6900X48E | 40 SFP+ + 8 SFP28 + 4 QSFP28 | 2.0 Tb/s / 1488 Mpps | &lt;650ns | 全口 MACsec（AES 128/256bit） |
 | OS6900V48 | 48 SFP28（1/10/25G）+ 8 QSFP28 | 4.0 Tb/s / 2976 Mpps | &lt;600ns | 25G 高密（最多 80 口） |
 | OS6900C32E | 32 QSFP28（100G 或 4x25/4x10） | 6.4 Tb/s / 4761 Mpps | &lt;600ns | 100G 旗舰 + 全口 MACsec |
-上联与堆叠：QSFP28 可拆 4x25G/4x10G；VC 最多 6 台（fabric-mesh 拓扑，&lt;&lt;<PAGE 125>&gt;&gt;/&lt;&lt;<PAGE 127>&gt;&gt;）；VC 1+N 冗余管理器 + ISSU（&lt;&lt;<PAGE 127>&gt;&gt;）。
-电源体系（&lt;&lt;<PAGE 132>&gt;&gt;）：1+1 热插拔 AC/DC、换电不断业务、全系随机双电源；OS6900C-BP/BPD 650W（V48/C32/C32E/X48E）、OS6900X-BP/BPD 400W（X48/T48/X24/T24）；正吹（-F）/反吹（-R）两种风道与风扇槽套件（&lt;&lt;<PAGE 135>&gt;&gt;）。
-Layer 特性（&lt;&lt;<PAGE 126>&gt;&gt;/&lt;&lt;<PAGE 127>&gt;&gt;）：完整 L3（OSPF/IS-IS/BGP/VRF）；SPB-M + 硬件 VXLAN VTEP + BGP-EVPN-VXLAN（RFC 7432/8365/9135/9136/9251/9625，&lt;&lt;<PAGE 130>&gt;&gt;）；MPLS l2vpn（VPLS/VPWS，LDP/BGP）"All the functionalities will be available through paid license"（&lt;&lt;<PAGE 127>&gt;&gt;）；RoCEv2 支持（&lt;&lt;<PAGE 126>&gt;&gt;）；G.8032 ERPS。硬件平台：Intel Atom C3558（Xeon D-1518 for V48/C32E）、8~16GB SDRAM、32~64GB flash（&lt;&lt;<PAGE 131>&gt;&gt;）。
-功耗/规格（&lt;&lt;<PAGE 131>&gt;&gt;）：待机 75~226W、满载 197~532W；0~45°C；MTBF 204k~788k 小时；FIPS 140-2/CC EAL2/NDcPP/JITC/TAA 联邦认证（&lt;&lt;<PAGE 128>&gt;&gt;）。
+上联与堆叠：QSFP28 可拆 4x25G/4x10G；VC 最多 6 台（fabric-mesh 拓扑， <code>&lt;span class="pg"&gt;原文p125&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p127&lt;/span&gt;</code> ）；VC 1+N 冗余管理器 + ISSU（ <code>&lt;span class="pg"&gt;原文p127&lt;/span&gt;</code> ）。
+电源体系（ <code>&lt;span class="pg"&gt;原文p132&lt;/span&gt;</code> ）：1+1 热插拔 AC/DC、换电不断业务、全系随机双电源；OS6900C-BP/BPD 650W（V48/C32/C32E/X48E）、OS6900X-BP/BPD 400W（X48/T48/X24/T24）；正吹（-F）/反吹（-R）两种风道与风扇槽套件（ <code>&lt;span class="pg"&gt;原文p135&lt;/span&gt;</code> ）。
+Layer 特性（ <code>&lt;span class="pg"&gt;原文p126&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p127&lt;/span&gt;</code> ）：完整 L3（OSPF/IS-IS/BGP/VRF）；SPB-M + 硬件 VXLAN VTEP + BGP-EVPN-VXLAN（RFC 7432/8365/9135/9136/9251/9625， <code>&lt;span class="pg"&gt;原文p130&lt;/span&gt;</code> ）；MPLS l2vpn（VPLS/VPWS，LDP/BGP）"All the functionalities will be available through paid license"（ <code>&lt;span class="pg"&gt;原文p127&lt;/span&gt;</code> ）；RoCEv2 支持（ <code>&lt;span class="pg"&gt;原文p126&lt;/span&gt;</code> ）；G.8032 ERPS。硬件平台：Intel Atom C3558（Xeon D-1518 for V48/C32E）、8~16GB SDRAM、32~64GB flash（ <code>&lt;span class="pg"&gt;原文p131&lt;/span&gt;</code> ）。
+功耗/规格（ <code>&lt;span class="pg"&gt;原文p131&lt;/span&gt;</code> ）：待机 75~226W、满载 197~532W；0~45°C；MTBF 204k~788k 小时；FIPS 140-2/CC EAL2/NDcPP/JITC/TAA 联邦认证（ <code>&lt;span class="pg"&gt;原文p128&lt;/span&gt;</code> ）。
 规格红线：无 PoE；MACsec 仅 X48E/C32E；MPLS 付费许可。</p>
 <h2 id="e">E（适用场景）</h2>
 <ul>
 <li>中型园区核心/DC ToR：1RU 128x10G（X48 拆分）或 80x25G（V48）（C3）</li>
 <li>加密核心/DC 上行：X48E/C32E 全口 MACsec（C5）</li>
 <li>升级不中断：VC + ISSU 写进医院/生产网技术条款（C10）</li>
-<li>DC fabric：BGP-EVPN-VXLAN（主机漫游/多归属/L2-L3 VPN，&lt;&lt;<PAGE 127>&gt;&gt;）；企业 MPLS 接入/汇聚/端到端 fabric（付费许可，&lt;&lt;<PAGE 126>&gt;&gt;）</li>
+<li>DC fabric：BGP-EVPN-VXLAN（主机漫游/多归属/L2-L3 VPN， <code>&lt;span class="pg"&gt;原文p127&lt;/span&gt;</code> ）；企业 MPLS 接入/汇聚/端到端 fabric（付费许可， <code>&lt;span class="pg"&gt;原文p126&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="b">B（限制与坑）</h2>
 <ul>
-<li>仅 X48E/C32E 全口 MACsec——V48/X24/T24/X48/T48 未标注（X9，&lt;&lt;<PAGE 127>&gt;&gt;），加密需求认 E 后缀</li>
-<li>MPLS 全部功能走付费许可（"through paid license"，&lt;&lt;<PAGE 127>&gt;&gt;）——报价补许可行项</li>
+<li>仅 X48E/C32E 全口 MACsec——V48/X24/T24/X48/T48 未标注（X9， <code>&lt;span class="pg"&gt;原文p127&lt;/span&gt;</code> ），加密需求认 E 后缀</li>
+<li>MPLS 全部功能走付费许可（"through paid license"， <code>&lt;span class="pg"&gt;原文p127&lt;/span&gt;</code> ）——报价补许可行项</li>
 <li>无 PoE/无铜口接入（T 型为 10GBase-T 服务器铜口）——AP 直连接入另配</li>
-<li>55°C 强制关机（风道温度，&lt;&lt;<PAGE 132>&gt;&gt;）——热通道设计注意</li>
-<li>V48/C32E 的 MTBF 约 204k/372k 小时，低于入门型（&lt;&lt;<PAGE 131>&gt;&gt;）——冗余 VC 兜底</li>
-<li>订购要指定风道方向（-F/-R）与电源制式（AC/DC），机柜冷热通道规划先行（&lt;&lt;<PAGE 133>&gt;&gt;-&lt;&lt;<PAGE 135>&gt;&gt;）</li>
+<li>55°C 强制关机（风道温度， <code>&lt;span class="pg"&gt;原文p132&lt;/span&gt;</code> ）——热通道设计注意</li>
+<li>V48/C32E 的 MTBF 约 204k/372k 小时，低于入门型（ <code>&lt;span class="pg"&gt;原文p131&lt;/span&gt;</code> ）——冗余 VC 兜底</li>
+<li>订购要指定风道方向（-F/-R）与电源制式（AC/DC），机柜冷热通道规划先行（ <code>&lt;span class="pg"&gt;原文p133&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p135&lt;/span&gt;</code> ）</li>
 </ul>
 <p>来源：bp-omniswitch-datasheets DOC 13（p125-137，DID20220704EN November 2025）；verified.md C3/C5/C10/X9/P20/P21/F2/F4/F5</p><div class="pn"><a href="bp-os6870-datasheet.html">⬅ 上一单元：bp-os6870-datasheet</a><a class="nxt" href="bp-os6920-datasheet.html">下一单元：bp-os6920-datasheet ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

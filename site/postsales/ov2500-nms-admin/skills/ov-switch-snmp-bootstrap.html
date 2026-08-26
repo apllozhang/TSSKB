@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -79,7 +80,7 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
-<li><strong>SNMPv3 准备（推荐）</strong>，逐台执行（&lt;&lt;<PAGE 97>&gt;&gt;）：
+<li><strong>SNMPv3 准备（推荐）</strong>，逐台执行（ <code>&lt;span class="pg"&gt;原文p97&lt;/span&gt;</code> ）：
    <code>aaa authentication default local
    user snmpuserv3 read-write all password "Superuser=1" sha+des
    snmp security privacy all
@@ -87,32 +88,32 @@ blockquote p{margin:6px 0}
    snmp station 192.168.100.107 snmpuserv3 v3 enable
    snmp-trap absorption enable
    snmp-trap to-webview enable</code></li>
-<li><strong>SNMPv1/v2 变体</strong>（弱安全环境）：<code>snmp community map public user test1234 enable</code> + <code>snmp security no security</code>（&lt;&lt;<PAGE 68>&gt;&gt;）</li>
-<li><strong>管理寻址</strong>：<code>snmp source ip preferred {default | no-loopback | ip_address}</code>——Default 时有 loopback0 则用其作源 IP，否则用 IP 栈第一个可用地址（&lt;&lt;<PAGE 70>&gt;&gt;）</li>
-<li><strong>基础网络初始化</strong>：逐台配置 Loopback0（<code>ip interface Loopback0 address 192.168.200.x</code>）、vlan、ip interface、OSPF（<code>ip ospf area 0.0.0.0</code> + redist）、静态默认路由、LACP（<code>linkagg lacp agg 12</code>）、dhcp relay（&lt;&lt;<PAGE 92-95>&gt;&gt;）</li>
-<li><strong>验证</strong>：<code>show ip routes</code> 必须包含全部 Loopback0/32 路由；从核心机 ping 各 192.168.200.x（&lt;&lt;<PAGE 90-91>&gt;&gt;）</li>
+<li><strong>SNMPv1/v2 变体</strong>（弱安全环境）：<code>snmp community map public user test1234 enable</code> + <code>snmp security no security</code>（ <code>&lt;span class="pg"&gt;原文p68&lt;/span&gt;</code> ）</li>
+<li><strong>管理寻址</strong>：<code>snmp source ip preferred {default | no-loopback | ip_address}</code>——Default 时有 loopback0 则用其作源 IP，否则用 IP 栈第一个可用地址（ <code>&lt;span class="pg"&gt;原文p70&lt;/span&gt;</code> ）</li>
+<li><strong>基础网络初始化</strong>：逐台配置 Loopback0（<code>ip interface Loopback0 address 192.168.200.x</code>）、vlan、ip interface、OSPF（<code>ip ospf area 0.0.0.0</code> + redist）、静态默认路由、LACP（<code>linkagg lacp agg 12</code>）、dhcp relay（ <code>&lt;span class="pg"&gt;原文p92-95&lt;/span&gt;</code> ）</li>
+<li><strong>验证</strong>：<code>show ip routes</code> 必须包含全部 Loopback0/32 路由；从核心机 ping 各 192.168.200.x（ <code>&lt;span class="pg"&gt;原文p90-91&lt;/span&gt;</code> ）</li>
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
-<li>安全级别矩阵（&lt;&lt;<PAGE 69>&gt;&gt;）：no security → 接受所有请求；authentication set → 接受 v1/v2 Get 及非认证 v3 Get；privacy all → 仅加密 v3 Set/Get；traps only → "All SNMP requests are rejected"（纯上报模式）</li>
-<li>CLI vs GUI 取舍：CLI 胜在熟练度/脚本化/"ASCII 配置文件可在交换机间复制粘贴"；GUI 胜在颜色编码、减少 fat-finger 错误、批量操作；WebView 是单设备原生网元管理器，"100% CLI equivalent features. Integrated with OmniVista"（&lt;&lt;<PAGE 22-24>&gt;&gt;）</li>
-<li>NMS 组件模型：Agents ↔ Managed Devices ↔ NMS，协议栈 SNMP、sFlow（Analytics）、MIB、Traps、RMON（&lt;&lt;<PAGE 21>&gt;&gt;）</li>
-<li>4.3R2+ 可直接 SSH/Telnet 到尚未被 SNMP 覆盖的新设备做预配置（&lt;&lt;<PAGE 164>&gt;&gt;）</li>
+<li>安全级别矩阵（ <code>&lt;span class="pg"&gt;原文p69&lt;/span&gt;</code> ）：no security → 接受所有请求；authentication set → 接受 v1/v2 Get 及非认证 v3 Get；privacy all → 仅加密 v3 Set/Get；traps only → "All SNMP requests are rejected"（纯上报模式）</li>
+<li>CLI vs GUI 取舍：CLI 胜在熟练度/脚本化/"ASCII 配置文件可在交换机间复制粘贴"；GUI 胜在颜色编码、减少 fat-finger 错误、批量操作；WebView 是单设备原生网元管理器，"100% CLI equivalent features. Integrated with OmniVista"（ <code>&lt;span class="pg"&gt;原文p22-24&lt;/span&gt;</code> ）</li>
+<li>NMS 组件模型：Agents ↔ Managed Devices ↔ NMS，协议栈 SNMP、sFlow（Analytics）、MIB、Traps、RMON（ <code>&lt;span class="pg"&gt;原文p21&lt;/span&gt;</code> ）</li>
+<li>4.3R2+ 可直接 SSH/Telnet 到尚未被 SNMP 覆盖的新设备做预配置（ <code>&lt;span class="pg"&gt;原文p164&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>六台交换机逐台执行 SNMPv3 命令序列后成功纳管——cases·SNMP 准备（&lt;&lt;<PAGE 97>&gt;&gt;）</li>
-<li>sw1(6900A) 至 sw8(6860B) 逐台初始化脚本（Loopback0+OSPF+LACP+DHCP relay）并通过 ping/路由验证——cases·基础网络初始化（&lt;&lt;<PAGE 90-95>&gt;&gt;）</li>
+<li>六台交换机逐台执行 SNMPv3 命令序列后成功纳管——cases·SNMP 准备（ <code>&lt;span class="pg"&gt;原文p97&lt;/span&gt;</code> ）</li>
+<li>sw1(6900A) 至 sw8(6860B) 逐台初始化脚本（Loopback0+OSPF+LACP+DHCP relay）并通过 ping/路由验证——cases·基础网络初始化（ <code>&lt;span class="pg"&gt;原文p90-95&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="b">B（边界与陷阱）</h2>
 <ul>
 <li>默认状态下交换机不能被 OV 管理，"SNMP users and community strings need to be configured on devices before they can be managed by OmniVista"（&lt;&lt;<PAGE 97/164>&gt;&gt;）</li>
-<li>路由表缺 Loopback0 地址属于环境级故障，不是配置失误——"IF THE ROUTING TABLE DOES NOT CONTAIN LOOPBACK0 ADDRESSES, PLEASE CONTACT THE TRAINER!"（&lt;&lt;<PAGE 90>&gt;&gt;）</li>
-<li>初始化恢复命令块仅限初次配置失败时使用，且需培训师批准（&lt;&lt;<PAGE 92>&gt;&gt;）</li>
+<li>路由表缺 Loopback0 地址属于环境级故障，不是配置失误——"IF THE ROUTING TABLE DOES NOT CONTAIN LOOPBACK0 ADDRESSES, PLEASE CONTACT THE TRAINER!"（ <code>&lt;span class="pg"&gt;原文p90&lt;/span&gt;</code> ）</li>
+<li>初始化恢复命令块仅限初次配置失败时使用，且需培训师批准（ <code>&lt;span class="pg"&gt;原文p92&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
 <ul>
-<li>principles·SNMP 安全级别矩阵（&lt;&lt;<PAGE 69>&gt;&gt;）、source address/Loopback0（&lt;&lt;<PAGE 70/90>&gt;&gt;）、NMS 组件模型（&lt;&lt;<PAGE 21>&gt;&gt;）、CLI vs GUI（&lt;&lt;<PAGE 22-24>&gt;&gt;）</li>
+<li>principles·SNMP 安全级别矩阵（ <code>&lt;span class="pg"&gt;原文p69&lt;/span&gt;</code> ）、source address/Loopback0（&lt;&lt;<PAGE 70/90>&gt;&gt;）、NMS 组件模型（ <code>&lt;span class="pg"&gt;原文p21&lt;/span&gt;</code> ）、CLI vs GUI（ <code>&lt;span class="pg"&gt;原文p22-24&lt;/span&gt;</code> ）</li>
 <li>cases·SNMP 准备/基础网络初始化/恢复命令（&lt;&lt;<PAGE 97/68/92-95/90-91>&gt;&gt;）</li>
 <li>counter-examples·默认不可管理/路由表缺 Loopback0（&lt;&lt;<PAGE 97/164/90>&gt;&gt;）</li>
 </ul><div class="pn"><a href="ov-ha-services-alerting.html">⬅ 上一单元：ov-ha-services-alerting</a><a class="nxt" href="ov-discovery-topology-locator.html">下一单元：ov-discovery-topology-locator ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

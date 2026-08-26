@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -68,11 +69,27 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="_2">二、三单元要点串讲</h2>
 <h3 id="1-poe-vs">1. 机型与端口：PoE 密度 vs 上行密度</h3>
-<p>三机型（F1，&lt;&lt;<PAGE 42>&gt;&gt;-&lt;&lt;<PAGE 48>&gt;&gt;）：P16X=半宽 2RU，2 SFP+ + 2 SFP + 4×75W HPoE/bt + 8×PoE+，供电密集；U12X=半宽 2RU，2 SFP+ + 6 SFP + 4 HPoE，光纤上行紧凑；U28X=全宽 1RU，4 SFP+ + 20 SFP + 4 HPoE + 2×QSFP+ VFL（唯一可 VC 堆叠）。无风扇（P3），TMRA 三档（P9）：有气流 74°C/无气流 65°C/DNV 盖一律 55°C；74°C 必须封闭机柜（&lt;&lt;<PAGE 9>&gt;&gt;）。1588v2 全家族支持，工业合规覆盖变电站（IEC 61850-3）/铁路（EN 50121-4）/交通（NEMA TS-2）/船用（DNV 2.4）。</p>
+<ul>
+<li>三机型（F1， <code>&lt;span class="pg"&gt;原文p42&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p48&lt;/span&gt;</code> ）：P16X=半宽 2RU，2 SFP+ + 2 SFP + 4×75W HPoE/bt + 8×PoE+，供电密集；U12X=半宽 2RU，2 SFP+ + 6 SFP + 4 HPoE，光纤上行紧凑；U28X=全宽 1RU，4 SFP+ + 20 SFP + 4 HPoE + 2×QSFP+ VFL（唯一可 VC 堆叠）。</li>
+<li>无风扇（P3），TMRA 三档（P9）：有气流 74°C/无气流 65°C/DNV 盖一律 55°C；74°C 必须封闭机柜（ <code>&lt;span class="pg"&gt;原文p9&lt;/span&gt;</code> ）。</li>
+<li>1588v2 全家族支持，工业合规覆盖变电站（IEC 61850-3）/铁路（EN 50121-4）/交通（NEMA TS-2）/船用（DNV 2.4）。</li>
+</ul>
 <h3 id="2">2. 安装与供电：五形态与三环校验</h3>
-<p>安装形态决策树（F3）：机架（侧装托盘，U28X 加 REAR-MNT）→桌面（后装托盘+桌脚，散热片面朝外）→DIN 导轨（垂直装仅限不可燃表面）→墙装→DNV 全/半架。供电=外置托盘+DB-15（P5）：AC OS6865-BP 180W / DC OS6865-BP-D（-24V 输入预算再低 20-40W）。三环校验框架（F2）：环境环（温度定气流与间隙档）→电源环（AC/DC×单双×分电路）→PoE 环（电源×温度档查表，双 BP@60°C=300W、@65°C=150W 腰斩）。DC 极性军规（P21，&lt;&lt;<PAGE 53>&gt;&gt;）：无论 -24V/-48V 一律正接正负接负，勿看标签极性符号。</p>
+<ul>
+<li>安装形态决策树（F3）：机架（侧装托盘，U28X 加 REAR-MNT）→桌面（后装托盘+桌脚，散热片面朝外）→DIN 导轨（垂直装仅限不可燃表面）→墙装→DNV 全/半架。</li>
+<li>供电=外置托盘+DB-15（P5）：AC OS6865-BP 180W / DC OS6865-BP-D（-24V 输入预算再低 20-40W）。</li>
+<li>三环校验框架（F2）：环境环（温度定气流与间隙档）→电源环（AC/DC×单双×分电路）→PoE 环（电源×温度档查表，双 BP@60°C=300W、@65°C=150W 腰斩）。</li>
+<li>DC 极性军规（P21， <code>&lt;span class="pg"&gt;原文p53&lt;/span&gt;</code> ）：无论 -24V/-48V 一律正接正负接负，勿看标签极性符号。</li>
+</ul>
 <h3 id="3-dg">3. 运维与排障：两级激活与 DG 三通道</h3>
-<p>PoE 两级激活（P27）：软件默认使能，仍须逐 slot <code>lanpower slot service start</code>。Priority Disconnect 四场景裁决（P33）：同级按物理口号 <strong>1 最高→28 最低</strong>。Guard Band：剩余预算&lt;口上限拒新 PD（调低口上限放行）；不作用已在电 PD（P35）。Fast PoE（FPGA 固化数秒供电）/Perpetual PoE（软重启不断电，MCU 升级例外，P29/P30）。DG 三通道（F4，&lt;&lt;<PAGE 54>&gt;&gt;）：SNMP 前 3 站+Syslog 前 3 服务器+4×802.3ah PDU；并发 PDU 口数=10−服务器数。LED 判读纪律：启动完成前不判断 LED 状态（&lt;&lt;<PAGE 38>&gt;&gt;）；VC LED 闪烁次数=单元号（每 5 秒停顿）。</p>
+<ul>
+<li>PoE 两级激活（P27）：软件默认使能，仍须逐 slot <code>lanpower slot service start</code>。</li>
+<li>Priority Disconnect 四场景裁决（P33）：同级按物理口号 <strong>1 最高→28 最低</strong>。</li>
+<li>Guard Band：剩余预算&lt;口上限拒新 PD（调低口上限放行）；不作用已在电 PD（P35）。</li>
+<li>Fast PoE（FPGA 固化数秒供电）/Perpetual PoE（软重启不断电，MCU 升级例外，P29/P30）。</li>
+<li>DG 三通道（F4， <code>&lt;span class="pg"&gt;原文p54&lt;/span&gt;</code> ）：SNMP 前 3 站+Syslog 前 3 服务器+4×802.3ah PDU；并发 PDU 口数=10−服务器数。</li>
+<li>LED 判读纪律：启动完成前不判断 LED 状态（ <code>&lt;span class="pg"&gt;原文p38&lt;/span&gt;</code> ）；VC LED 闪烁次数=单元号（每 5 秒停顿）。</li>
+</ul>
 <h2 id="_3">三、本书在知识库中的位置</h2>
 <p>6865 定位工业/交通/电力/船舶等严苛环境接入，与 hw-6465（工业加固）、hw-6560（多千兆办公）构成加固-办公两线。跨书易混点：①Priority Disconnect 端口号 1 高 28 低，与 6860 相反；
 ②6865 无温度双阈值（无 Danger 关机），高温防护靠 TMRA 分级+预算降额，与 6860/6870 不同；

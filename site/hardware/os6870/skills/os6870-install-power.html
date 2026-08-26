@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -68,46 +69,46 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="i">I（核心理念）</h2>
 <ul>
-<li>6870 为双电源负载分担+热插拔架构，且<strong>支持不同瓦数电源混插</strong>（P12，&lt;&lt;<PAGE 47>&gt;&gt;/&lt;&lt;<PAGE 51>&gt;&gt;："Mixing different wattage power supplies in a chassis is supported"）——扩容可先混后替，这是与 6860（wattage 禁混）的关键差异。</li>
-<li>PoE 预算四变量联动（F2，&lt;&lt;<PAGE 47>&gt;&gt;/&lt;&lt;<PAGE 63>&gt;&gt;）：①机型（定可用电源与口能力）②电源瓦数（600/1200/2000W；Z 系列上限 1200W）③单/双电源（双电负载分担、预算非简单翻倍，如 P24M 双 600W=788W）④市电电压（双值条目=低压/高压输入；1200W/2000W 需 190-240VAC 才得高 PoE 功率，P14）。</li>
+<li>6870 为双电源负载分担+热插拔架构，且<strong>支持不同瓦数电源混插</strong>（P12， <code>&lt;span class="pg"&gt;原文p47&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p51&lt;/span&gt;</code> ："Mixing different wattage power supplies in a chassis is supported"）——扩容可先混后替，这是与 6860（wattage 禁混）的关键差异。</li>
+<li>PoE 预算四变量联动（F2， <code>&lt;span class="pg"&gt;原文p47&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p63&lt;/span&gt;</code> ）：①机型（定可用电源与口能力）②电源瓦数（600/1200/2000W；Z 系列上限 1200W）③单/双电源（双电负载分担、预算非简单翻倍，如 P24M 双 600W=788W）④市电电压（双值条目=低压/高压输入；1200W/2000W 需 190-240VAC 才得高 PoE 功率，P14）。</li>
 <li>无总开关=接电即开机（P13）。</li>
 </ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
-<li>安装形态：机架（弹簧夹法兰+后支架，双人作业）→桌面（四脚垫正放，承重按满配）→空槽常装盲板（X3，&lt;&lt;<PAGE 41>&gt;&gt;）</li>
+<li>安装形态：机架（弹簧夹法兰+后支架，双人作业）→桌面（四脚垫正放，承重按满配）→空槽常装盲板（X3， <code>&lt;span class="pg"&gt;原文p41&lt;/span&gt;</code> ）</li>
 <li>电源选型（P11）：-24/-48/V12=250W AC/DC（V12 另可用 550W）；P 系列=600W/1200W/2000W（2000W 仅 M 系列）；双电负载分担</li>
 <li>混插扩容（F4）：600W 入门→1200W 中档→2000W 高密，同一机箱可先混插后替换升级</li>
-<li>供电纪律：双电分电路分源（X24）；多电源数秒内相继插电保证启动供电（X10，&lt;&lt;<PAGE 18>&gt;&gt;）</li>
-<li>现场准备：前 6"/后 6"/侧 2"、顶底免间隙（P39，&lt;&lt;<PAGE 16>&gt;&gt;/&lt;&lt;<PAGE 17>&gt;&gt;）；专业安装者负责接地合规（X6）</li>
+<li>供电纪律：双电分电路分源（X24）；多电源数秒内相继插电保证启动供电（X10， <code>&lt;span class="pg"&gt;原文p18&lt;/span&gt;</code> ）</li>
+<li>现场准备：前 6"/后 6"/侧 2"、顶底免间隙（P39， <code>&lt;span class="pg"&gt;原文p16&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p17&lt;/span&gt;</code> ）；专业安装者负责接地合规（X6）</li>
 <li>机架五大考量（P40）：Tmra/Reduced Air Flow/Mechanical Loading/Circuit Overloading/Reliable Earthing</li>
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>法兰安装五步</strong>：弹簧夹置 out→tab 插机箱槽→按压至 CLICK 入 in→螺丝固定→对侧重复（C7，&lt;&lt;<PAGE 42>&gt;&gt;/&lt;&lt;<PAGE 43>&gt;&gt;）</li>
-<li><strong>机架装机六步（双人）</strong>：预标记孔位→一人抬起贴平立柱→孔位对齐→第二人先拧每侧底部螺丝→装顶部螺丝全拧→后支架滑入导轨固定（C8，&lt;&lt;<PAGE 44>&gt;&gt;/&lt;&lt;<PAGE 45>&gt;&gt;）</li>
-<li><strong>装电源</strong>：插入后部电源槽后滑至 securely seated，锁片"咔哒"锁定→插电源线即开机（C12，&lt;&lt;<PAGE 55>&gt;&gt;）</li>
-<li><strong>拆电源</strong>：先从源侧断线→按压锁片释放→直向后拉出；不回装盖盲板（C13，&lt;&lt;<PAGE 56>&gt;&gt;）</li>
-<li><strong>DC 接线</strong>：连接器插至"clicks firmly into place"；三根 12AWG 绿黄=地/黑=return/红=-48VDC 接熔丝面板，注意极性（C14，&lt;&lt;<PAGE 54>&gt;&gt;）</li>
-<li><strong>DC 安全五则</strong>：接地 SELV 源/15A 过流/12AWG/易触及断开装置/受限场所（C15，&lt;&lt;<PAGE 54>&gt;&gt;）</li>
-<li><strong>机箱接地</strong>：后部 paint-free 双螺纹孔装 Panduit LCD8-10A-L lug+10-32 3/8" 螺丝+8AWG，30-60 in-lb（C16/X44，&lt;&lt;<PAGE 57>&gt;&gt;）</li>
-<li><strong>盲板</strong>：箭头朝上插入空槽螺丝固定（C10，&lt;&lt;<PAGE 40>&gt;&gt;/&lt;&lt;<PAGE 41>&gt;&gt;）</li>
+<li><strong>法兰安装五步</strong>：弹簧夹置 out→tab 插机箱槽→按压至 CLICK 入 in→螺丝固定→对侧重复（C7， <code>&lt;span class="pg"&gt;原文p42&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p43&lt;/span&gt;</code> ）</li>
+<li><strong>机架装机六步（双人）</strong>：预标记孔位→一人抬起贴平立柱→孔位对齐→第二人先拧每侧底部螺丝→装顶部螺丝全拧→后支架滑入导轨固定（C8， <code>&lt;span class="pg"&gt;原文p44&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p45&lt;/span&gt;</code> ）</li>
+<li><strong>装电源</strong>：插入后部电源槽后滑至 securely seated，锁片"咔哒"锁定→插电源线即开机（C12， <code>&lt;span class="pg"&gt;原文p55&lt;/span&gt;</code> ）</li>
+<li><strong>拆电源</strong>：先从源侧断线→按压锁片释放→直向后拉出；不回装盖盲板（C13， <code>&lt;span class="pg"&gt;原文p56&lt;/span&gt;</code> ）</li>
+<li><strong>DC 接线</strong>：连接器插至"clicks firmly into place"；三根 12AWG 绿黄=地/黑=return/红=-48VDC 接熔丝面板，注意极性（C14， <code>&lt;span class="pg"&gt;原文p54&lt;/span&gt;</code> ）</li>
+<li><strong>DC 安全五则</strong>：接地 SELV 源/15A 过流/12AWG/易触及断开装置/受限场所（C15， <code>&lt;span class="pg"&gt;原文p54&lt;/span&gt;</code> ）</li>
+<li><strong>机箱接地</strong>：后部 paint-free 双螺纹孔装 Panduit LCD8-10A-L lug+10-32 3/8" 螺丝+8AWG，30-60 in-lb（C16/X44， <code>&lt;span class="pg"&gt;原文p57&lt;/span&gt;</code> ）</li>
+<li><strong>盲板</strong>：箭头朝上插入空槽螺丝固定（C10， <code>&lt;span class="pg"&gt;原文p40&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p41&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>预算表查法（P27，&lt;&lt;<PAGE 63>&gt;&gt;）：P24M 双 1200W=1516W/1880W（低/高压）、双 2000W=1516W/2280W；P48M 双 2000W 最高 3309W</li>
-<li>混插扩容实战：P24M 从双 600W（788W）起步，先插一只 1200W 混跑、业务不中断，再替另一只升至双 1200W（F4/P12，&lt;&lt;<PAGE 47>&gt;&gt;/&lt;&lt;<PAGE 51>&gt;&gt;）</li>
-<li>高压输入才得全功率：1200W/2000W 电源 "High power PoE wattages available at voltage inputs between 190-240VAC"（P14/X11，&lt;&lt;<PAGE 52>&gt;&gt;/&lt;&lt;<PAGE 53>&gt;&gt;）</li>
+<li>预算表查法（P27， <code>&lt;span class="pg"&gt;原文p63&lt;/span&gt;</code> ）：P24M 双 1200W=1516W/1880W（低/高压）、双 2000W=1516W/2280W；P48M 双 2000W 最高 3309W</li>
+<li>混插扩容实战：P24M 从双 600W（788W）起步，先插一只 1200W 混跑、业务不中断，再替另一只升至双 1200W（F4/P12， <code>&lt;span class="pg"&gt;原文p47&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p51&lt;/span&gt;</code> ）</li>
+<li>高压输入才得全功率：1200W/2000W 电源 "High power PoE wattages available at voltage inputs between 190-240VAC"（P14/X11， <code>&lt;span class="pg"&gt;原文p52&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p53&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>
 <li><strong>跨书易混（本机型方向）</strong>：6870 允许不同瓦数电源混插（P12）——与 6860 的"wattage 禁混、混插发 trap"相反；但 2000W 仍仅限 P24M/P48M，Z 系列标 N/A（X30）</li>
-<li>1200W/2000W 在 100-120V 市电降额：高 PoE 功率须 190-240VAC（X11，&lt;&lt;<PAGE 52>&gt;&gt;/&lt;&lt;<PAGE 53>&gt;&gt;）</li>
-<li>多电源必须数秒内相继插电，保证启动全程供电（X10，&lt;&lt;<PAGE 18>&gt;&gt;）</li>
-<li>拆电源必先断源；运行中勿触电源槽与背板；多电源检修全断（X12/X22/X23，&lt;&lt;<PAGE 56>&gt;&gt;/&lt;&lt;<PAGE 81>&gt;&gt;）</li>
-<li>DC 强制受限场所；每个 DC 电源地线必须接大地（EMC）（X15/X17，&lt;&lt;<PAGE 54>&gt;&gt;/&lt;&lt;<PAGE 82>&gt;&gt;）</li>
-<li>气流遮挡致过热失效；盲板必须常装、电源槽箭头朝上（X2/X3/X4，&lt;&lt;<PAGE 40>&gt;&gt;/&lt;&lt;<PAGE 41>&gt;&gt;）</li>
-<li>禁倒放/侧放运行；桌面须四脚垫起、顶底免间隙但不叠压（X1/X8，&lt;&lt;<PAGE 46>&gt;&gt;/&lt;&lt;<PAGE 17>&gt;&gt;）</li>
-<li>禁延长线；电涌五条军规违反可失保（X9/X18，&lt;&lt;<PAGE 14>&gt;&gt;/&lt;&lt;<PAGE 15>&gt;&gt;）</li>
-<li>机架螺丝自备（ALE 不附）；双人机架作业强制（X5/X7，&lt;&lt;<PAGE 41>&gt;&gt;/&lt;&lt;<PAGE 42>&gt;&gt;）</li>
+<li>1200W/2000W 在 100-120V 市电降额：高 PoE 功率须 190-240VAC（X11， <code>&lt;span class="pg"&gt;原文p52&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p53&lt;/span&gt;</code> ）</li>
+<li>多电源必须数秒内相继插电，保证启动全程供电（X10， <code>&lt;span class="pg"&gt;原文p18&lt;/span&gt;</code> ）</li>
+<li>拆电源必先断源；运行中勿触电源槽与背板；多电源检修全断（X12/X22/X23， <code>&lt;span class="pg"&gt;原文p56&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p81&lt;/span&gt;</code> ）</li>
+<li>DC 强制受限场所；每个 DC 电源地线必须接大地（EMC）（X15/X17， <code>&lt;span class="pg"&gt;原文p54&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p82&lt;/span&gt;</code> ）</li>
+<li>气流遮挡致过热失效；盲板必须常装、电源槽箭头朝上（X2/X3/X4， <code>&lt;span class="pg"&gt;原文p40&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p41&lt;/span&gt;</code> ）</li>
+<li>禁倒放/侧放运行；桌面须四脚垫起、顶底免间隙但不叠压（X1/X8， <code>&lt;span class="pg"&gt;原文p46&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p17&lt;/span&gt;</code> ）</li>
+<li>禁延长线；电涌五条军规违反可失保（X9/X18， <code>&lt;span class="pg"&gt;原文p14&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p15&lt;/span&gt;</code> ）</li>
+<li>机架螺丝自备（ALE 不附）；双人机架作业强制（X5/X7， <code>&lt;span class="pg"&gt;原文p41&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p42&lt;/span&gt;</code> ）</li>
 </ul>
 <p>来源：OmniSwitch 6870 Hardware Users Guide（Ch2 p14-21 + Ch3 p39-60 + Ch4 p61-71）</p><div class="pn"><a href="os6870-model-ports.html">⬅ 上一单元：os6870-model-ports</a><a class="nxt" href="os6870-ops-troubleshoot.html">下一单元：os6870-ops-troubleshoot ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

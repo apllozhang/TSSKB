@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -67,11 +68,25 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="_2">二、三单元要点串讲</h2>
 <h3 id="1-lanwlan-wi-fi">1. LAN/WLAN：分层栈与无控制器 Wi-Fi</h3>
-<p>两层折叠核心适合中小网（少部件少跳数），三层模型适合大型复杂网（&lt;&lt;<PAGE 7>&gt;&gt;）。接入层基线：VC 堆叠、VLAN 动态分配+MVRP（勿全量建 VLAN）、Trunk/LACP（&lt;&lt;<PAGE 8-9>&gt;&gt;）。互联选型：SPB 大园区扁平 L2、EVPN 跨广域 L2+多归属、MPLS 流量工程；RIP 不推荐（&lt;&lt;<PAGE 10-12>&gt;&gt;）。Stellar 无控制器三面分离：管理面集中 OmniVista、控制面分布（AP 间 NMP over-the-air/over-the-LAN）、数据面本地桥接优先按 ARP 动态切 L2GRE（&lt;&lt;<PAGE 15-17>&gt;&gt;）。AP 发现双域命令集互为镜像：VLAN 域（bridge 口+defaultWLANProfile map vlan）vs 服务域（access 口+l2profile peer+defaultWLANAccessProfile map service-type spb）（&lt;&lt;<PAGE 23>&gt;&gt;/&lt;&lt;<PAGE 25>&gt;&gt;）。漫游三分支判定：无上下文→新客户端；上下文+ARP 匹配→L2；VLAN 不匹配→L3 漫游 L2GRE 回家乡 AP（&lt;&lt;<PAGE 26>&gt;&gt;）。用户 VLAN：/24+VLAN 池首选（&lt;&lt;<PAGE 28>&gt;&gt;）。</p>
+<ul>
+<li>两层折叠核心适合中小网（少部件少跳数），三层模型适合大型复杂网（ <code>&lt;span class="pg"&gt;原文p7&lt;/span&gt;</code> ）。</li>
+<li>接入层基线：VC 堆叠、VLAN 动态分配+MVRP（勿全量建 VLAN）、Trunk/LACP（ <code>&lt;span class="pg"&gt;原文p8-9&lt;/span&gt;</code> ）。</li>
+<li>互联选型：SPB 大园区扁平 L2、EVPN 跨广域 L2+多归属、MPLS 流量工程；RIP 不推荐（ <code>&lt;span class="pg"&gt;原文p10-12&lt;/span&gt;</code> ）。</li>
+<li>Stellar 无控制器三面分离：管理面集中 OmniVista、控制面分布（AP 间 NMP over-the-air/over-the-LAN）、数据面本地桥接优先按 ARP 动态切 L2GRE（ <code>&lt;span class="pg"&gt;原文p15-17&lt;/span&gt;</code> ）。</li>
+<li>AP 发现双域命令集互为镜像：VLAN 域（bridge 口+defaultWLANProfile map vlan）vs 服务域（access 口+l2profile peer+defaultWLANAccessProfile map service-type spb）（ <code>&lt;span class="pg"&gt;原文p23&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p25&lt;/span&gt;</code> ）。</li>
+<li>漫游三分支判定：无上下文→新客户端；上下文+ARP 匹配→L2；VLAN 不匹配→L3 漫游 L2GRE 回家乡 AP（ <code>&lt;span class="pg"&gt;原文p26&lt;/span&gt;</code> ）。</li>
+<li>用户 VLAN：/24+VLAN 池首选（ <code>&lt;span class="pg"&gt;原文p28&lt;/span&gt;</code> ）。</li>
+</ul>
 <h3 id="2-nms">2. NMS 与安全：角色化全生命周期</h3>
-<p>OmniVista 三管理模式（Express/Enterprise/Cloud）按规模递进；HA 选型：L2 HA 复用 Cluster IP 零改造，L3 HA 跨子网但 sFlow/策略执行受限、Preferred Node 走 CLI（&lt;&lt;<PAGE 35-36>&gt;&gt;）。安全框架五段：UPAM 中央认证→谱系（IoT 指纹/802.1x/访客四式/BYOD）→角色（UNP/ARP）定 VLAN+ACL+QoS→Quarantine+QMR 处置→wIDS/wIPS（干扰 AP 非威胁、流氓 AP 才遏制且默认关闭）（&lt;&lt;<PAGE 36-42>&gt;&gt;）。</p>
+<ul>
+<li>OmniVista 三管理模式（Express/Enterprise/Cloud）按规模递进；HA 选型：L2 HA 复用 Cluster IP 零改造，L3 HA 跨子网但 sFlow/策略执行受限、Preferred Node 走 CLI（ <code>&lt;span class="pg"&gt;原文p35-36&lt;/span&gt;</code> ）。</li>
+<li>安全框架五段：UPAM 中央认证→谱系（IoT 指纹/802.1x/访客四式/BYOD）→角色（UNP/ARP）定 VLAN+ACL+QoS→Quarantine+QMR 处置→wIDS/wIPS（干扰 AP 非威胁、流氓 AP 才遏制且默认关闭）（ <code>&lt;span class="pg"&gt;原文p36-42&lt;/span&gt;</code> ）。</li>
+</ul>
 <h3 id="3-hybrid-pol">3. Hybrid POL：光承载+以太边缘</h3>
-<p>Nokia POL 单纤点对多点+ONT 作承载，ALE 交换机/AP 作服务边缘；省铜缆/机房/有源设备/能耗四类成本，密集部署可去汇聚层（&lt;&lt;<PAGE 45>&gt;&gt;）。两档选型：需全层冗余/SPB/MACsec/高密 PoE→SFP ONT+OmniSwitch；基础特性→纯 ONT+Stellar AP（&lt;&lt;<PAGE 46>&gt;&gt;）。</p>
+<ul>
+<li>Nokia POL 单纤点对多点+ONT 作承载，ALE 交换机/AP 作服务边缘；省铜缆/机房/有源设备/能耗四类成本，密集部署可去汇聚层（ <code>&lt;span class="pg"&gt;原文p45&lt;/span&gt;</code> ）。</li>
+<li>两档选型：需全层冗余/SPB/MACsec/高密 PoE→SFP ONT+OmniSwitch；基础特性→纯 ONT+Stellar AP（ <code>&lt;span class="pg"&gt;原文p46&lt;/span&gt;</code> ）。</li>
+</ul>
 <h2 id="_3">三、本书在知识库中的位置</h2>
 <p>上游对接 campus-lan-presales（售前视角），下游细分到 stellar-wlan-<em> 系列（AP 部署细节）、ov2500-</em>（OmniVista 操作）、sol-spb/sol-evpn（互联技术深潜）。跨书易混点：Stellar 的 ARP（Access Role Profile）与 OmniSwitch 的 UNP 是同层概念两套实现；L2GRE 隧道功能类似 VXLAN 但用于 WLAN 漫游，勿与 EVPN VXLAN 混谈。</p>
 <h2 id="_4">来源</h2>

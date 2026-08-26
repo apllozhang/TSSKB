@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -80,49 +81,49 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
-<li>员工 SSID（Express）：WLAN &gt; New &gt; 名称 EmployeesX、Security Personal、密码 superuser &gt; Advanced &gt; VLAN ID 20 &gt; Save；客户端 <code>ifconfig</code> 确认落在 192.168.20.x（C11，&lt;&lt;<PAGE 221>&gt;&gt;–&lt;&lt;<PAGE 224>&gt;&gt;）。</li>
-<li>访客 SSID（Express）：WLAN &gt; New &gt; GuestsX、Security Open、Captive Portal Yes、VLAN 30 &gt; Access &gt; Authentication 选 Account &gt; Add 建访客账号（设起止日期）&gt; 客户端访问任意 non-https URL 触发门户 &gt; 登录后取 192.168.30.x（C12，&lt;&lt;<PAGE 225>&gt;&gt;–&lt;&lt;<PAGE 228>&gt;&gt;）。</li>
-<li>AP 内置 DHCP：AP &gt; 点 AP IP &gt; Network &gt; AP Networks &gt; vlan10 行 Manage 填 IP 192.168.10.3/24 &gt; Service &gt; DHCP &gt; Create（Pool 名、地址范围、网关/DNS）&gt; Action &gt; Bind Network 绑到 vlan（C13，&lt;&lt;<PAGE 229>&gt;&gt;–&lt;&lt;<PAGE 233>&gt;&gt;）。</li>
-<li>外部 RADIUS（Enterprise SSID）：WLAN &gt; New &gt; Security Enterprise &gt; AuthServer 填 RADIUS IP（192.168.1.250）+ AuthSecret &gt; Advanced &gt; VLAN 10 &gt; Save（C16，&lt;&lt;<PAGE 235>&gt;&gt;）。</li>
+<li>员工 SSID（Express）：WLAN &gt; New &gt; 名称 EmployeesX、Security Personal、密码 superuser &gt; Advanced &gt; VLAN ID 20 &gt; Save；客户端 <code>ifconfig</code> 确认落在 192.168.20.x（C11， <code>&lt;span class="pg"&gt;原文p221&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p224&lt;/span&gt;</code> ）。</li>
+<li>访客 SSID（Express）：WLAN &gt; New &gt; GuestsX、Security Open、Captive Portal Yes、VLAN 30 &gt; Access &gt; Authentication 选 Account &gt; Add 建访客账号（设起止日期）&gt; 客户端访问任意 non-https URL 触发门户 &gt; 登录后取 192.168.30.x（C12， <code>&lt;span class="pg"&gt;原文p225&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p228&lt;/span&gt;</code> ）。</li>
+<li>AP 内置 DHCP：AP &gt; 点 AP IP &gt; Network &gt; AP Networks &gt; vlan10 行 Manage 填 IP 192.168.10.3/24 &gt; Service &gt; DHCP &gt; Create（Pool 名、地址范围、网关/DNS）&gt; Action &gt; Bind Network 绑到 vlan（C13， <code>&lt;span class="pg"&gt;原文p229&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p233&lt;/span&gt;</code> ）。</li>
+<li>外部 RADIUS（Enterprise SSID）：WLAN &gt; New &gt; Security Enterprise &gt; AuthServer 填 RADIUS IP（192.168.1.250）+ AuthSecret &gt; Advanced &gt; VLAN 10 &gt; Save（C16， <code>&lt;span class="pg"&gt;原文p235&lt;/span&gt;</code> ）。</li>
 <li>访客审计与受限管理：</li>
-<li>Access &gt; Authentication &gt; Client Behavior Tracking，Log To 选 TFTP/SFTP/Syslog 填服务器与周期；日志含时间、客户端 MAC/IP、AP MAC、SSID、ONLINE/OFFLINE（C14，&lt;&lt;<PAGE 233>&gt;&gt;）。</li>
-<li>System &gt; General &gt; Account Management &gt; Operator Enable 设密码，重登选 GuestOperator 只管访客账号（C15，&lt;&lt;<PAGE 234>&gt;&gt;）。</li>
+<li>Access &gt; Authentication &gt; Client Behavior Tracking，Log To 选 TFTP/SFTP/Syslog 填服务器与周期；日志含时间、客户端 MAC/IP、AP MAC、SSID、ONLINE/OFFLINE（C14， <code>&lt;span class="pg"&gt;原文p233&lt;/span&gt;</code> ）。</li>
+<li>System &gt; General &gt; Account Management &gt; Operator Enable 设密码，重登选 GuestOperator 只管访客账号（C15， <code>&lt;span class="pg"&gt;原文p234&lt;/span&gt;</code> ）。</li>
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
-<li>Cirrus SSID 五步向导（F05，&lt;&lt;<PAGE 365>&gt;&gt;、&lt;&lt;<PAGE 372>&gt;&gt;、&lt;&lt;<PAGE 405>&gt;&gt;、&lt;&lt;<PAGE 413>&gt;&gt;）：通用设置（名称/Usage/频段/加密）→ 认证策略（UPAM/外部 RADIUS/LDAP）→ 访问策略 → 默认 VLAN/隧道 + ACL/QoS → AP Group 指派与排程；Guest 版增加 Guest Access Strategy（门户定制 + 登录方式）。</li>
-<li>ARP 裁决顺序（F06，&lt;&lt;<PAGE 382>&gt;&gt;、&lt;&lt;<PAGE 385>&gt;&gt;）：外部源（RADIUS Filter-ID / LDAP/AD）&gt; 内部用户库 &gt; 认证策略中的 ARP &gt; SSID 默认 ARP（<code>__SSID名</code>）。ARP 六元组 = VLAN / QoS / 防火墙 ACL / L7 应用规则 / 位置 / 时段（P41，&lt;&lt;<PAGE 376>&gt;&gt;）。</li>
-<li>三角色差异化策略（P38，&lt;&lt;<PAGE 217>&gt;&gt;）：Employees = VLAN10 全访问高带宽；Guests = VLAN20 仅 internet 常规带宽低优先级；Phones = VLAN30 话音低带宽高优先级。</li>
-<li>Walled Garden：访客认证前白名单放行指定站点（如酒店官网）（P49，&lt;&lt;<PAGE 235>&gt;&gt;、&lt;&lt;<PAGE 410>&gt;&gt;）。</li>
-<li>MAC 认证可回传 Filter-ID 指定套用的 ARP（glossary·&lt;&lt;<PAGE 384>&gt;&gt;、&lt;&lt;<PAGE 385>&gt;&gt;）。</li>
-<li>GRE Tunnel（Use Tunnel）：SSID 用户经 GRE 隧道集中到远端解封的映射方式（glossary·&lt;&lt;<PAGE 369>&gt;&gt;）。</li>
-<li>DHCP Pool 容量即并发上限：40 个地址 = 最多 40 台同时在线（C13，&lt;&lt;<PAGE 229>&gt;&gt;–&lt;&lt;<PAGE 233>&gt;&gt;）。</li>
+<li>Cirrus SSID 五步向导（F05， <code>&lt;span class="pg"&gt;原文p365&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p372&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p405&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p413&lt;/span&gt;</code> ）：通用设置（名称/Usage/频段/加密）→ 认证策略（UPAM/外部 RADIUS/LDAP）→ 访问策略 → 默认 VLAN/隧道 + ACL/QoS → AP Group 指派与排程；Guest 版增加 Guest Access Strategy（门户定制 + 登录方式）。</li>
+<li>ARP 裁决顺序（F06， <code>&lt;span class="pg"&gt;原文p382&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p385&lt;/span&gt;</code> ）：外部源（RADIUS Filter-ID / LDAP/AD）&gt; 内部用户库 &gt; 认证策略中的 ARP &gt; SSID 默认 ARP（<code>__SSID名</code>）。ARP 六元组 = VLAN / QoS / 防火墙 ACL / L7 应用规则 / 位置 / 时段（P41， <code>&lt;span class="pg"&gt;原文p376&lt;/span&gt;</code> ）。</li>
+<li>三角色差异化策略（P38， <code>&lt;span class="pg"&gt;原文p217&lt;/span&gt;</code> ）：Employees = VLAN10 全访问高带宽；Guests = VLAN20 仅 internet 常规带宽低优先级；Phones = VLAN30 话音低带宽高优先级。</li>
+<li>Walled Garden：访客认证前白名单放行指定站点（如酒店官网）（P49， <code>&lt;span class="pg"&gt;原文p235&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p410&lt;/span&gt;</code> ）。</li>
+<li>MAC 认证可回传 Filter-ID 指定套用的 ARP（glossary· <code>&lt;span class="pg"&gt;原文p384&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p385&lt;/span&gt;</code> ）。</li>
+<li>GRE Tunnel（Use Tunnel）：SSID 用户经 GRE 隧道集中到远端解封的映射方式（glossary· <code>&lt;span class="pg"&gt;原文p369&lt;/span&gt;</code> ）。</li>
+<li>DHCP Pool 容量即并发上限：40 个地址 = 最多 40 台同时在线（C13， <code>&lt;span class="pg"&gt;原文p229&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p233&lt;/span&gt;</code> ）。</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>Employees SSID 密码认证 + VLAN20，客户端落 192.168.20.70-79，网关 192.168.20.7 为交换机 VLAN20 IP 接口（C11，&lt;&lt;<PAGE 221>&gt;&gt;–&lt;&lt;<PAGE 224>&gt;&gt;）。</li>
-<li>Guests SSID 内置 Captive Portal + 访客账号 Guest/superuser，non-https URL 重定向门户（C12，&lt;&lt;<PAGE 225>&gt;&gt;–&lt;&lt;<PAGE 228>&gt;&gt;）。</li>
-<li>UPAM 统一策略认证：内嵌 RADIUS 服务器 + Captive Portal，覆盖 MAC/802.1X/Portal 三类认证（P40，&lt;&lt;<PAGE 367>&gt;&gt;、&lt;&lt;<PAGE 188>&gt;&gt;）。</li>
+<li>Employees SSID 密码认证 + VLAN20，客户端落 192.168.20.70-79，网关 192.168.20.7 为交换机 VLAN20 IP 接口（C11， <code>&lt;span class="pg"&gt;原文p221&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p224&lt;/span&gt;</code> ）。</li>
+<li>Guests SSID 内置 Captive Portal + 访客账号 Guest/superuser，non-https URL 重定向门户（C12， <code>&lt;span class="pg"&gt;原文p225&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p228&lt;/span&gt;</code> ）。</li>
+<li>UPAM 统一策略认证：内嵌 RADIUS 服务器 + Captive Portal，覆盖 MAC/802.1X/Portal 三类认证（P40， <code>&lt;span class="pg"&gt;原文p367&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p188&lt;/span&gt;</code> ）。</li>
 </ul>
 <h2 id="b">B（边界与陷阱）</h2>
 <ul>
-<li>Captive Portal 重定向必须访问 non-https URL（如 http://2.2.2.2）；访问 https 站点不触发重定向，Debian 树莓派不会自动弹门户，易误判门户故障（CE11，&lt;&lt;<PAGE 422>&gt;&gt;）。</li>
-<li>访客账号用户名/密码区分大小写（'Guest' ≠ 'guest'），大小写不符是门户登录失败首因（CE12，&lt;&lt;<PAGE 226>&gt;&gt;）。</li>
-<li>SSID→VLAN 是自动预定义映射，规划时先定 VLAN 再建 SSID，避免客户端落错网段（P36，&lt;&lt;<PAGE 215>&gt;&gt;）。</li>
+<li>Captive Portal 重定向必须访问 non-https URL（如 http://2.2.2.2）；访问 https 站点不触发重定向，Debian 树莓派不会自动弹门户，易误判门户故障（CE11， <code>&lt;span class="pg"&gt;原文p422&lt;/span&gt;</code> ）。</li>
+<li>访客账号用户名/密码区分大小写（'Guest' ≠ 'guest'），大小写不符是门户登录失败首因（CE12， <code>&lt;span class="pg"&gt;原文p226&lt;/span&gt;</code> ）。</li>
+<li>SSID→VLAN 是自动预定义映射，规划时先定 VLAN 再建 SSID，避免客户端落错网段（P36， <code>&lt;span class="pg"&gt;原文p215&lt;/span&gt;</code> ）。</li>
 </ul>
 <h2 id="_1">来源</h2>
 <ul>
-<li>case·Employees SSID 创建（&lt;&lt;<PAGE 221>&gt;&gt;–&lt;&lt;<PAGE 224>&gt;&gt;）</li>
-<li>case·Guests SSID + Captive Portal + 访客账号（&lt;&lt;<PAGE 225>&gt;&gt;–&lt;&lt;<PAGE 228>&gt;&gt;）</li>
-<li>case·AP 内置 DHCP 服务器（&lt;&lt;<PAGE 229>&gt;&gt;–&lt;&lt;<PAGE 233>&gt;&gt;）</li>
-<li>case·访客行为日志（&lt;&lt;<PAGE 233>&gt;&gt;）</li>
-<li>case·GuestOperator 受限账号（&lt;&lt;<PAGE 234>&gt;&gt;）</li>
-<li>case·外部 RADIUS 认证 SSID（&lt;&lt;<PAGE 235>&gt;&gt;）</li>
-<li>framework·SSID 创建向导五步流程（&lt;&lt;<PAGE 365>&gt;&gt;、&lt;&lt;<PAGE 372>&gt;&gt;、&lt;&lt;<PAGE 405>&gt;&gt;、&lt;&lt;<PAGE 413>&gt;&gt;）</li>
-<li>framework·ARP 优先级裁决规则（&lt;&lt;<PAGE 382>&gt;&gt;、&lt;&lt;<PAGE 385>&gt;&gt;）</li>
-<li>principle·SSID→VLAN 自动映射（&lt;&lt;<PAGE 215>&gt;&gt;）</li>
-<li>principle·AP 内置 QoS/ACL 三角色用例（&lt;&lt;<PAGE 217>&gt;&gt;）</li>
-<li>principle·Captive Portal 三种认证方式（&lt;&lt;<PAGE 226>&gt;&gt;）</li>
-<li>counter·门户重定向需 non-https（&lt;&lt;<PAGE 422>&gt;&gt;）</li>
-<li>counter·账号字段区分大小写（&lt;&lt;<PAGE 226>&gt;&gt;）</li>
+<li>case·Employees SSID 创建（ <code>&lt;span class="pg"&gt;原文p221&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p224&lt;/span&gt;</code> ）</li>
+<li>case·Guests SSID + Captive Portal + 访客账号（ <code>&lt;span class="pg"&gt;原文p225&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p228&lt;/span&gt;</code> ）</li>
+<li>case·AP 内置 DHCP 服务器（ <code>&lt;span class="pg"&gt;原文p229&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p233&lt;/span&gt;</code> ）</li>
+<li>case·访客行为日志（ <code>&lt;span class="pg"&gt;原文p233&lt;/span&gt;</code> ）</li>
+<li>case·GuestOperator 受限账号（ <code>&lt;span class="pg"&gt;原文p234&lt;/span&gt;</code> ）</li>
+<li>case·外部 RADIUS 认证 SSID（ <code>&lt;span class="pg"&gt;原文p235&lt;/span&gt;</code> ）</li>
+<li>framework·SSID 创建向导五步流程（ <code>&lt;span class="pg"&gt;原文p365&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p372&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p405&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p413&lt;/span&gt;</code> ）</li>
+<li>framework·ARP 优先级裁决规则（ <code>&lt;span class="pg"&gt;原文p382&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p385&lt;/span&gt;</code> ）</li>
+<li>principle·SSID→VLAN 自动映射（ <code>&lt;span class="pg"&gt;原文p215&lt;/span&gt;</code> ）</li>
+<li>principle·AP 内置 QoS/ACL 三角色用例（ <code>&lt;span class="pg"&gt;原文p217&lt;/span&gt;</code> ）</li>
+<li>principle·Captive Portal 三种认证方式（ <code>&lt;span class="pg"&gt;原文p226&lt;/span&gt;</code> ）</li>
+<li>counter·门户重定向需 non-https（ <code>&lt;span class="pg"&gt;原文p422&lt;/span&gt;</code> ）</li>
+<li>counter·账号字段区分大小写（ <code>&lt;span class="pg"&gt;原文p226&lt;/span&gt;</code> ）</li>
 </ul><div class="pn"><a href="stellar-mode-selection.html">⬅ 上一单元：stellar-mode-selection</a><a class="nxt" href="guest-access-design.html">下一单元：guest-access-design ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -64,96 +65,96 @@ blockquote p{margin:6px 0}
 </blockquote>
 <h2 id="ch1">机箱（Ch1）</h2>
 <ul>
-<li><strong>OS9907</strong>：11RU 模块化机箱，7 槽（2 CMM+5 NI），32.83kg，23 英寸深 &lt;&lt;<PAGE 5>&gt;&gt;/&lt;&lt;<PAGE 6>&gt;&gt;</li>
-<li><strong>OS9912</strong>：17RU 模块化机箱，12 槽（2 CMM+10 NI），64.36kg &lt;&lt;<PAGE 11>&gt;&gt;</li>
-<li><strong>slot2 双角色</strong>：9907 上 slot2 可装 CMM（1+1 冗余）或 NI（扩端口但失冗余）&lt;&lt;<PAGE 7>&gt;&gt;/&lt;&lt;<PAGE 16>&gt;&gt;/&lt;&lt;<PAGE 17>&gt;&gt;</li>
-<li><strong>中板（Mid-plane）</strong>：CFM 与机箱连接结构（NI 走 backplane）&lt;&lt;<PAGE 20>&gt;&gt;</li>
-<li><strong>VC-of-2</strong>：两台 OS9907 虚拟化为一台虚拟机箱，仅三种对称组合 &lt;&lt;<PAGE 22>&gt;&gt;</li>
-<li><strong>N+1 冗余</strong>：4 电源负载分担/3 风扇托盘冗余 &lt;&lt;<PAGE 8>&gt;&gt;/&lt;&lt;<PAGE 28>&gt;&gt;</li>
-<li><strong>铝头拇指螺丝</strong>：替代紫色塑料头的新形态，机械性能相同 &lt;&lt;<PAGE 6>&gt;&gt;/&lt;&lt;<PAGE 12>&gt;&gt;</li>
-<li><strong>Wrist Strap Grounding Connector</strong>：机箱前/后部 ESD 腕带接地点 &lt;&lt;<PAGE 8>&gt;&gt;/&lt;&lt;<PAGE 9>&gt;&gt;</li>
+<li><strong>OS9907</strong>：11RU 模块化机箱，7 槽（2 CMM+5 NI），32.83kg，23 英寸深  <code>&lt;span class="pg"&gt;原文p5&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p6&lt;/span&gt;</code> </li>
+<li><strong>OS9912</strong>：17RU 模块化机箱，12 槽（2 CMM+10 NI），64.36kg  <code>&lt;span class="pg"&gt;原文p11&lt;/span&gt;</code> </li>
+<li><strong>slot2 双角色</strong>：9907 上 slot2 可装 CMM（1+1 冗余）或 NI（扩端口但失冗余） <code>&lt;span class="pg"&gt;原文p7&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p16&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p17&lt;/span&gt;</code> </li>
+<li><strong>中板（Mid-plane）</strong>：CFM 与机箱连接结构（NI 走 backplane） <code>&lt;span class="pg"&gt;原文p20&lt;/span&gt;</code> </li>
+<li><strong>VC-of-2</strong>：两台 OS9907 虚拟化为一台虚拟机箱，仅三种对称组合  <code>&lt;span class="pg"&gt;原文p22&lt;/span&gt;</code> </li>
+<li><strong>N+1 冗余</strong>：4 电源负载分担/3 风扇托盘冗余  <code>&lt;span class="pg"&gt;原文p8&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p28&lt;/span&gt;</code> </li>
+<li><strong>铝头拇指螺丝</strong>：替代紫色塑料头的新形态，机械性能相同  <code>&lt;span class="pg"&gt;原文p6&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p12&lt;/span&gt;</code> </li>
+<li><strong>Wrist Strap Grounding Connector</strong>：机箱前/后部 ESD 腕带接地点  <code>&lt;span class="pg"&gt;原文p8&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p9&lt;/span&gt;</code> </li>
 </ul>
 <h2 id="cmm-cfmch1">CMM 与 CFM（Ch1）</h2>
 <ul>
-<li><strong>CMM（Chassis Management Module）</strong>：机箱管理模块，管控 NI/CFM/配电；2 槽 1+1 冗余 &lt;&lt;<PAGE 16>&gt;&gt;</li>
-<li><strong>OS99-CMM</strong>：初代管理模块，2×40G QSFP+ 上行，64W，仅 9907 支持 &lt;&lt;<PAGE 16>&gt;&gt;</li>
-<li><strong>OS99-CMM2</strong>：新一代管理模块，4×100G QSFP28 上行/VFL，74W，需 AOS ≥8.10R2，不可与 CMM 混插 &lt;&lt;<PAGE 17>&gt;&gt;</li>
-<li><strong>CFM（Chassis Fabric Module）</strong>：交换矩阵模块，藏于风扇托盘之后经中板连接 &lt;&lt;<PAGE 10>&gt;&gt;/&lt;&lt;<PAGE 20>&gt;&gt;</li>
-<li><strong>OS9907-CFM / CFM2</strong>：9907 矩阵（2.56T / 12.8T 每块，119W；CFM2 需 AOS ≥8.9R1）&lt;&lt;<PAGE 20>&gt;&gt;</li>
-<li><strong>OS9912-CFM</strong>：9912 矩阵（25.6T 每块，222W）&lt;&lt;<PAGE 21>&gt;&gt;</li>
-<li><strong>CFM3/4 预留</strong>：预留未激活槽位，不可当可用槽规划 &lt;&lt;<PAGE 5>&gt;&gt;/&lt;&lt;<PAGE 10>&gt;&gt;/&lt;&lt;<PAGE 15>&gt;&gt;</li>
-<li><strong>组合兼容矩阵</strong>：仅 CMM+CMM/CFM+CFM、CMM+CMM/CFM2+CFM2、CMM2+CMM2/CFM2+CFM2 三种支持 &lt;&lt;<PAGE 22>&gt;&gt;</li>
-<li><strong>PRI LED</strong>：CMM 主备灯（稳绿=主/闪绿=备/稳黄=停运/闪黄=升级中）&lt;&lt;<PAGE 18>&gt;&gt;</li>
-<li><strong>FAB LED</strong>：CFM 状态灯（稳绿=正常/稳黄=降级/闪黄=CFM 电源或 PCIe 失败）&lt;&lt;<PAGE 18>&gt;&gt;</li>
-<li><strong>五灯同闪（PCIe link failure）</strong>：PRI/VC/FAB/PS/TEMP 同闪黄=全部 CFM PCIe 硬链路失效 &lt;&lt;<PAGE 18>&gt;&gt;</li>
-<li><strong>Micro-USB console</strong>：CMM 第二 console 口，需装驱动 &lt;&lt;<PAGE 16>&gt;&gt;/&lt;&lt;<PAGE 17>&gt;&gt;</li>
+<li><strong>CMM（Chassis Management Module）</strong>：机箱管理模块，管控 NI/CFM/配电；2 槽 1+1 冗余  <code>&lt;span class="pg"&gt;原文p16&lt;/span&gt;</code> </li>
+<li><strong>OS99-CMM</strong>：初代管理模块，2×40G QSFP+ 上行，64W，仅 9907 支持  <code>&lt;span class="pg"&gt;原文p16&lt;/span&gt;</code> </li>
+<li><strong>OS99-CMM2</strong>：新一代管理模块，4×100G QSFP28 上行/VFL，74W，需 AOS ≥8.10R2，不可与 CMM 混插  <code>&lt;span class="pg"&gt;原文p17&lt;/span&gt;</code> </li>
+<li><strong>CFM（Chassis Fabric Module）</strong>：交换矩阵模块，藏于风扇托盘之后经中板连接  <code>&lt;span class="pg"&gt;原文p10&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p20&lt;/span&gt;</code> </li>
+<li><strong>OS9907-CFM / CFM2</strong>：9907 矩阵（2.56T / 12.8T 每块，119W；CFM2 需 AOS ≥8.9R1） <code>&lt;span class="pg"&gt;原文p20&lt;/span&gt;</code> </li>
+<li><strong>OS9912-CFM</strong>：9912 矩阵（25.6T 每块，222W） <code>&lt;span class="pg"&gt;原文p21&lt;/span&gt;</code> </li>
+<li><strong>CFM3/4 预留</strong>：预留未激活槽位，不可当可用槽规划  <code>&lt;span class="pg"&gt;原文p5&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p10&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p15&lt;/span&gt;</code> </li>
+<li><strong>组合兼容矩阵</strong>：仅 CMM+CMM/CFM+CFM、CMM+CMM/CFM2+CFM2、CMM2+CMM2/CFM2+CFM2 三种支持  <code>&lt;span class="pg"&gt;原文p22&lt;/span&gt;</code> </li>
+<li><strong>PRI LED</strong>：CMM 主备灯（稳绿=主/闪绿=备/稳黄=停运/闪黄=升级中） <code>&lt;span class="pg"&gt;原文p18&lt;/span&gt;</code> </li>
+<li><strong>FAB LED</strong>：CFM 状态灯（稳绿=正常/稳黄=降级/闪黄=CFM 电源或 PCIe 失败） <code>&lt;span class="pg"&gt;原文p18&lt;/span&gt;</code> </li>
+<li><strong>五灯同闪（PCIe link failure）</strong>：PRI/VC/FAB/PS/TEMP 同闪黄=全部 CFM PCIe 硬链路失效  <code>&lt;span class="pg"&gt;原文p18&lt;/span&gt;</code> </li>
+<li><strong>Micro-USB console</strong>：CMM 第二 console 口，需装驱动  <code>&lt;span class="pg"&gt;原文p16&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p17&lt;/span&gt;</code> </li>
 </ul>
 <h2 id="ni-ch1">NI 模块（Ch1）</h2>
 <ul>
-<li><strong>OS99-XNI-48</strong>：48 口 1/10GBaseT 模块，402W &lt;&lt;<PAGE 23>&gt;&gt;</li>
-<li><strong>OS99-XNI-U48</strong>：48 口 1/10G SFP+ 模块，305W（slot2 只活 8 口）&lt;&lt;<PAGE 23>&gt;&gt;/&lt;&lt;<PAGE 7>&gt;&gt;</li>
-<li><strong>OS99-GNI-48</strong>：48 口 10/100/1000BaseT + 2×10G，56W &lt;&lt;<PAGE 23>&gt;&gt;</li>
-<li><strong>OS99-GNI-P48</strong>：48 口千兆 PoE 模块（前 8 口 HPoE 75W），54W &lt;&lt;<PAGE 24>&gt;&gt;</li>
-<li><strong>OS99-GNI-U48</strong>：48 口 1G SFP 模块，70W &lt;&lt;<PAGE 24>&gt;&gt;</li>
-<li><strong>OS99-XNI-P48Z16</strong>：32 口 at PoE + 16 口多千兆 PoE，402W；不支持 9912 &lt;&lt;<PAGE 24>&gt;&gt;</li>
-<li><strong>OS99-XNI-P24Z8</strong>：16+8 口 PoE 组合模块，187W；不支持 9912 &lt;&lt;<PAGE 25>&gt;&gt;</li>
-<li><strong>OS99-XNI-U24</strong>：24 口 1/10G SFP+ 模块，153W &lt;&lt;<PAGE 25>&gt;&gt;</li>
-<li><strong>OS99-CNI-U8</strong>：8 口 10/25/40/100G QSFP28 模块，117W &lt;&lt;<PAGE 25>&gt;&gt;</li>
-<li><strong>OS99-CNI-U20</strong>：20 口 100G QSFP28（13-20 口支持 splitter），314W &lt;&lt;<PAGE 26>&gt;&gt;</li>
-<li><strong>OS99-XNI-UP24Q2</strong>：12×SFP+ +12×多千兆 HPoE +2×QSFP+；不支持 9912 &lt;&lt;<PAGE 26>&gt;&gt;</li>
-<li><strong>OS99-XNI-U12Q</strong>：12×SFP+ +1×QSFP+；不支持 9912 &lt;&lt;<PAGE 26>&gt;&gt;</li>
-<li><strong>HPoE 口</strong>：PoE 模块前 8 口、面板标 "HPoE"、75W &lt;&lt;<PAGE 24>&gt;&gt;</li>
-<li><strong>Speed LED（NI）</strong>：稳绿=HW OK/闪绿=SW 心跳/稳黄=SW 故障/稳红=HW 故障 &lt;&lt;<PAGE 27>&gt;&gt;</li>
-<li><strong>9912 不支持 NI 清单</strong>：XNI-P48Z16 / XNI-P24Z8 / XNI-UP24Q2 / XNI-U12Q &lt;&lt;<PAGE 24>&gt;&gt;-&lt;&lt;<PAGE 26>&gt;&gt;</li>
+<li><strong>OS99-XNI-48</strong>：48 口 1/10GBaseT 模块，402W  <code>&lt;span class="pg"&gt;原文p23&lt;/span&gt;</code> </li>
+<li><strong>OS99-XNI-U48</strong>：48 口 1/10G SFP+ 模块，305W（slot2 只活 8 口） <code>&lt;span class="pg"&gt;原文p23&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p7&lt;/span&gt;</code> </li>
+<li><strong>OS99-GNI-48</strong>：48 口 10/100/1000BaseT + 2×10G，56W  <code>&lt;span class="pg"&gt;原文p23&lt;/span&gt;</code> </li>
+<li><strong>OS99-GNI-P48</strong>：48 口千兆 PoE 模块（前 8 口 HPoE 75W），54W  <code>&lt;span class="pg"&gt;原文p24&lt;/span&gt;</code> </li>
+<li><strong>OS99-GNI-U48</strong>：48 口 1G SFP 模块，70W  <code>&lt;span class="pg"&gt;原文p24&lt;/span&gt;</code> </li>
+<li><strong>OS99-XNI-P48Z16</strong>：32 口 at PoE + 16 口多千兆 PoE，402W；不支持 9912  <code>&lt;span class="pg"&gt;原文p24&lt;/span&gt;</code> </li>
+<li><strong>OS99-XNI-P24Z8</strong>：16+8 口 PoE 组合模块，187W；不支持 9912  <code>&lt;span class="pg"&gt;原文p25&lt;/span&gt;</code> </li>
+<li><strong>OS99-XNI-U24</strong>：24 口 1/10G SFP+ 模块，153W  <code>&lt;span class="pg"&gt;原文p25&lt;/span&gt;</code> </li>
+<li><strong>OS99-CNI-U8</strong>：8 口 10/25/40/100G QSFP28 模块，117W  <code>&lt;span class="pg"&gt;原文p25&lt;/span&gt;</code> </li>
+<li><strong>OS99-CNI-U20</strong>：20 口 100G QSFP28（13-20 口支持 splitter），314W  <code>&lt;span class="pg"&gt;原文p26&lt;/span&gt;</code> </li>
+<li><strong>OS99-XNI-UP24Q2</strong>：12×SFP+ +12×多千兆 HPoE +2×QSFP+；不支持 9912  <code>&lt;span class="pg"&gt;原文p26&lt;/span&gt;</code> </li>
+<li><strong>OS99-XNI-U12Q</strong>：12×SFP+ +1×QSFP+；不支持 9912  <code>&lt;span class="pg"&gt;原文p26&lt;/span&gt;</code> </li>
+<li><strong>HPoE 口</strong>：PoE 模块前 8 口、面板标 "HPoE"、75W  <code>&lt;span class="pg"&gt;原文p24&lt;/span&gt;</code> </li>
+<li><strong>Speed LED（NI）</strong>：稳绿=HW OK/闪绿=SW 心跳/稳黄=SW 故障/稳红=HW 故障  <code>&lt;span class="pg"&gt;原文p27&lt;/span&gt;</code> </li>
+<li><strong>9912 不支持 NI 清单</strong>：XNI-P48Z16 / XNI-P24Z8 / XNI-UP24Q2 / XNI-U12Q  <code>&lt;span class="pg"&gt;原文p24&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p26&lt;/span&gt;</code> </li>
 </ul>
 <h2 id="ch1ch2">电源与风扇（Ch1/Ch2）</h2>
 <ul>
-<li><strong>OS99-PS-A</strong>：AC 电源（100-240V；输出 1200W/21.4A 或 3000W/53.5A 两档），System+PoE &lt;&lt;<PAGE 29>&gt;&gt;</li>
-<li><strong>OS99-PS-D</strong>：DC 电源（-40~-72VDC/75A；输出 2500W/44.6A@56V）&lt;&lt;<PAGE 30>&gt;&gt;</li>
-<li><strong>电源三不混</strong>：AC/DC 不可混、Hi(240V)/Lo(110V) 输入不可混 &lt;&lt;<PAGE 29>&gt;&gt;/&lt;&lt;<PAGE 63>&gt;&gt;</li>
-<li><strong>分路保护额定值</strong>：每电源建议 30A（AC）/110A（DC）断路器 &lt;&lt;<PAGE 29>&gt;&gt;</li>
-<li><strong>FCI 10080598-2ED0006LF</strong>：DC 电源要求的 4P PWRBLADE 专用连接器 &lt;&lt;<PAGE 31>&gt;&gt;</li>
-<li><strong>10AWG</strong>：DC 供电双铜导体线规（分支过流 75A）&lt;&lt;<PAGE 30>&gt;&gt;</li>
-<li><strong>AHJ（Authority Having Jurisdiction）</strong>：DC 线 &gt;3m 时须咨询的管辖机构 &lt;&lt;<PAGE 31>&gt;&gt;</li>
-<li><strong>风扇托盘（Fan Tray）</strong>：3 件常驻、N+1 冗余、仅前→后气流；9907 每托 3 扇、9912 每托 5 扇 &lt;&lt;<PAGE 28>&gt;&gt;</li>
+<li><strong>OS99-PS-A</strong>：AC 电源（100-240V；输出 1200W/21.4A 或 3000W/53.5A 两档），System+PoE  <code>&lt;span class="pg"&gt;原文p29&lt;/span&gt;</code> </li>
+<li><strong>OS99-PS-D</strong>：DC 电源（-40~-72VDC/75A；输出 2500W/44.6A@56V） <code>&lt;span class="pg"&gt;原文p30&lt;/span&gt;</code> </li>
+<li><strong>电源三不混</strong>：AC/DC 不可混、Hi(240V)/Lo(110V) 输入不可混  <code>&lt;span class="pg"&gt;原文p29&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p63&lt;/span&gt;</code> </li>
+<li><strong>分路保护额定值</strong>：每电源建议 30A（AC）/110A（DC）断路器  <code>&lt;span class="pg"&gt;原文p29&lt;/span&gt;</code> </li>
+<li><strong>FCI 10080598-2ED0006LF</strong>：DC 电源要求的 4P PWRBLADE 专用连接器  <code>&lt;span class="pg"&gt;原文p31&lt;/span&gt;</code> </li>
+<li><strong>10AWG</strong>：DC 供电双铜导体线规（分支过流 75A） <code>&lt;span class="pg"&gt;原文p30&lt;/span&gt;</code> </li>
+<li><strong>AHJ（Authority Having Jurisdiction）</strong>：DC 线 &gt;3m 时须咨询的管辖机构  <code>&lt;span class="pg"&gt;原文p31&lt;/span&gt;</code> </li>
+<li><strong>风扇托盘（Fan Tray）</strong>：3 件常驻、N+1 冗余、仅前→后气流；9907 每托 3 扇、9912 每托 5 扇  <code>&lt;span class="pg"&gt;原文p28&lt;/span&gt;</code> </li>
 </ul>
 <h2 id="ch2">安装与登录（Ch2）</h2>
 <ul>
-<li><strong>三人机架作业</strong>：两人抬一人拧 &lt;&lt;<PAGE 36>&gt;&gt;/&lt;&lt;<PAGE 69>&gt;&gt;</li>
-<li><strong>锁杆（Lock Levers）</strong>：CFM/NI 闭锁机构（90 度全闭锁定）&lt;&lt;<PAGE 38>&gt;&gt;/&lt;&lt;<PAGE 42>&gt;&gt;</li>
-<li><strong>满载搬运禁令</strong>："Do not attempt to move or install a fully loaded chassis" &lt;&lt;<PAGE 32>&gt;&gt;</li>
-<li><strong>9600-8N1</strong>：console 默认串口参数（RJ45 或 Micro-USB）&lt;&lt;<PAGE 44>&gt;&gt;</li>
-<li><strong>EMP 线缆规则 / 默认地址</strong>：直通线接交换机/交叉线接计算机；默认 192.168.1.1/24 &lt;&lt;<PAGE 45>&gt;&gt;/&lt;&lt;<PAGE 46>&gt;&gt;</li>
-<li><strong>admin/switch</strong>：出厂默认账号/密码 &lt;&lt;<PAGE 46>&gt;&gt;</li>
-<li><strong>aaa authentication</strong>：解锁会话类型命令族（解锁前 EMP 不能远程访问）&lt;&lt;<PAGE 47>&gt;&gt;</li>
-<li><strong>show chassis / Power Left</strong>：机箱信息与可用功率预算 &lt;&lt;<PAGE 49>&gt;&gt;</li>
-<li><strong>DB9-RJ45 Connector</strong>：随箱 console 转接头 &lt;&lt;<PAGE 34>&gt;&gt;</li>
+<li><strong>三人机架作业</strong>：两人抬一人拧  <code>&lt;span class="pg"&gt;原文p36&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p69&lt;/span&gt;</code> </li>
+<li><strong>锁杆（Lock Levers）</strong>：CFM/NI 闭锁机构（90 度全闭锁定） <code>&lt;span class="pg"&gt;原文p38&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p42&lt;/span&gt;</code> </li>
+<li><strong>满载搬运禁令</strong>："Do not attempt to move or install a fully loaded chassis"  <code>&lt;span class="pg"&gt;原文p32&lt;/span&gt;</code> </li>
+<li><strong>9600-8N1</strong>：console 默认串口参数（RJ45 或 Micro-USB） <code>&lt;span class="pg"&gt;原文p44&lt;/span&gt;</code> </li>
+<li><strong>EMP 线缆规则 / 默认地址</strong>：直通线接交换机/交叉线接计算机；默认 192.168.1.1/24  <code>&lt;span class="pg"&gt;原文p45&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p46&lt;/span&gt;</code> </li>
+<li><strong>admin/switch</strong>：出厂默认账号/密码  <code>&lt;span class="pg"&gt;原文p46&lt;/span&gt;</code> </li>
+<li><strong>aaa authentication</strong>：解锁会话类型命令族（解锁前 EMP 不能远程访问） <code>&lt;span class="pg"&gt;原文p47&lt;/span&gt;</code> </li>
+<li><strong>show chassis / Power Left</strong>：机箱信息与可用功率预算  <code>&lt;span class="pg"&gt;原文p49&lt;/span&gt;</code> </li>
+<li><strong>DB9-RJ45 Connector</strong>：随箱 console 转接头  <code>&lt;span class="pg"&gt;原文p34&lt;/span&gt;</code> </li>
 </ul>
 <h2 id="poech3">PoE（Ch3）</h2>
 <ul>
-<li><strong>lanpower slot service</strong>：逐 slot 首次激活/停止 PoE 的唯一途径 &lt;&lt;<PAGE 50>&gt;&gt;/&lt;&lt;<PAGE 52>&gt;&gt;</li>
-<li><strong>lanpower power / slot maxpower</strong>：单口/整槽功率上限（slot 默认 1800W；不预留）&lt;&lt;<PAGE 50>&gt;&gt;/&lt;&lt;<PAGE 53>&gt;&gt;</li>
-<li><strong>lanpower priority</strong>：口优先级 low/high/critical（默认 low）&lt;&lt;<PAGE 50>&gt;&gt;/&lt;&lt;<PAGE 54>&gt;&gt;</li>
-<li><strong>lanpower capacitor-detection</strong>：电容检测（仅老式 IP 话机、默认关、开启复位全部 PoE 口）&lt;&lt;<PAGE 50>&gt;&gt;/&lt;&lt;<PAGE 52>&gt;&gt;/&lt;&lt;<PAGE 54>&gt;&gt;</li>
-<li><strong>Priority Disconnect</strong>：预算不足时按优先级+物理端口号裁决——<strong>48（最高）→1（最低），与接入系列相反</strong> &lt;&lt;<PAGE 55>&gt;&gt;</li>
-<li><strong>PoE 默认 operational disabled</strong>：装好不等于供电，须 lanpower start 激活 &lt;&lt;<PAGE 50>&gt;&gt;</li>
-<li><strong>HPoE（75W）</strong>：前 8 口 75000mW；at 口 30000mW &lt;&lt;<PAGE 50>&gt;&gt;</li>
-<li><strong>show powersupply / show lanpower slot</strong>：电源与 PoE 逐口/预算状态 &lt;&lt;<PAGE 50>&gt;&gt;/&lt;&lt;<PAGE 51>&gt;&gt;</li>
+<li><strong>lanpower slot service</strong>：逐 slot 首次激活/停止 PoE 的唯一途径  <code>&lt;span class="pg"&gt;原文p50&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p52&lt;/span&gt;</code> </li>
+<li><strong>lanpower power / slot maxpower</strong>：单口/整槽功率上限（slot 默认 1800W；不预留） <code>&lt;span class="pg"&gt;原文p50&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p53&lt;/span&gt;</code> </li>
+<li><strong>lanpower priority</strong>：口优先级 low/high/critical（默认 low） <code>&lt;span class="pg"&gt;原文p50&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p54&lt;/span&gt;</code> </li>
+<li><strong>lanpower capacitor-detection</strong>：电容检测（仅老式 IP 话机、默认关、开启复位全部 PoE 口） <code>&lt;span class="pg"&gt;原文p50&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p52&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p54&lt;/span&gt;</code> </li>
+<li><strong>Priority Disconnect</strong>：预算不足时按优先级+物理端口号裁决——<strong>48（最高）→1（最低），与接入系列相反</strong>  <code>&lt;span class="pg"&gt;原文p55&lt;/span&gt;</code> </li>
+<li><strong>PoE 默认 operational disabled</strong>：装好不等于供电，须 lanpower start 激活  <code>&lt;span class="pg"&gt;原文p50&lt;/span&gt;</code> </li>
+<li><strong>HPoE（75W）</strong>：前 8 口 75000mW；at 口 30000mW  <code>&lt;span class="pg"&gt;原文p50&lt;/span&gt;</code> </li>
+<li><strong>show powersupply / show lanpower slot</strong>：电源与 PoE 逐口/预算状态  <code>&lt;span class="pg"&gt;原文p50&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p51&lt;/span&gt;</code> </li>
 </ul>
 <h2 id="ch4">热插拔（Ch4）</h2>
 <ul>
-<li><strong>热插拔节律</strong>：拆件间隔 30 秒、插件间隔 5 分钟+LED 无错 &lt;&lt;<PAGE 63>&gt;&gt;</li>
-<li><strong>同类替换（like modules）</strong>：NI 热换只能同型号 &lt;&lt;<PAGE 63>&gt;&gt;</li>
-<li><strong>CFM 120 秒窗口</strong>：CFM 热换须 120 秒内完成、一次一块 &lt;&lt;<PAGE 63>&gt;&gt;</li>
-<li><strong>单件不可热拆</strong>：单 CMM/CFM/电源拆即断业务 &lt;&lt;<PAGE 63>&gt;&gt;</li>
+<li><strong>热插拔节律</strong>：拆件间隔 30 秒、插件间隔 5 分钟+LED 无错  <code>&lt;span class="pg"&gt;原文p63&lt;/span&gt;</code> </li>
+<li><strong>同类替换（like modules）</strong>：NI 热换只能同型号  <code>&lt;span class="pg"&gt;原文p63&lt;/span&gt;</code> </li>
+<li><strong>CFM 120 秒窗口</strong>：CFM 热换须 120 秒内完成、一次一块  <code>&lt;span class="pg"&gt;原文p63&lt;/span&gt;</code> </li>
+<li><strong>单件不可热拆</strong>：单 CMM/CFM/电源拆即断业务  <code>&lt;span class="pg"&gt;原文p63&lt;/span&gt;</code> </li>
 </ul>
 <h2 id="a">安全与法规（附录 A）</h2>
 <ul>
-<li><strong>Panduit LCD8-10AL / CT-940CH</strong>：接地 lug 及压接工具，8AWG、30-60 in-lb &lt;&lt;<PAGE 70>&gt;&gt;/&lt;&lt;<PAGE 71>&gt;&gt;</li>
-<li><strong>ESD 腕带生效条件</strong>：电源已装机并接接地插座才有效 &lt;&lt;<PAGE 72>&gt;&gt;</li>
-<li><strong>受限场所（Restricted Access Location）</strong>：仅限持钥匙/安保措施的维护人员进入 &lt;&lt;<PAGE 71>&gt;&gt;</li>
-<li><strong>CLASS 1 LASER PRODUCT</strong>：CMM/NI 面板激光标识；空口勿直视 &lt;&lt;<PAGE 16>&gt;&gt;等/&lt;&lt;<PAGE 70>&gt;&gt;</li>
-<li><strong>Tmra</strong>：最大额定环境温度 &lt;&lt;<PAGE 32>&gt;&gt;</li>
+<li><strong>Panduit LCD8-10AL / CT-940CH</strong>：接地 lug 及压接工具，8AWG、30-60 in-lb  <code>&lt;span class="pg"&gt;原文p70&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p71&lt;/span&gt;</code> </li>
+<li><strong>ESD 腕带生效条件</strong>：电源已装机并接接地插座才有效  <code>&lt;span class="pg"&gt;原文p72&lt;/span&gt;</code> </li>
+<li><strong>受限场所（Restricted Access Location）</strong>：仅限持钥匙/安保措施的维护人员进入  <code>&lt;span class="pg"&gt;原文p71&lt;/span&gt;</code> </li>
+<li><strong>CLASS 1 LASER PRODUCT</strong>：CMM/NI 面板激光标识；空口勿直视  <code>&lt;span class="pg"&gt;原文p16&lt;/span&gt;</code> 等/ <code>&lt;span class="pg"&gt;原文p70&lt;/span&gt;</code> </li>
+<li><strong>Tmra</strong>：最大额定环境温度  <code>&lt;span class="pg"&gt;原文p32&lt;/span&gt;</code> </li>
 </ul>
 <hr />
 <p>合计：52 条。</p><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

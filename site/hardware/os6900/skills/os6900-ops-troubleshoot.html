@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -67,10 +68,10 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="i">I（核心理念）</h2>
 <ul>
-<li>气流失配三段式后果链（P15，&lt;&lt;<PAGE 50>&gt;&gt;/&lt;&lt;<PAGE 52>&gt;&gt;）：错误+trap → 启动时失配=OK/PS 绿琥珀交替闪且持续循环重启直至纠正；运行中热插入失配件=OK/PS 闪琥珀、到温度 Danger 阈值才重启。</li>
-<li>温度双阈值机制（P34，&lt;&lt;<PAGE 75>&gt;&gt;）：Warning 可查可配、超限发 trap 业务继续；Danger 出厂固化不可配置、超限自动关机须人工处理并手动启动。</li>
-<li>LED 是第一诊断面：系统五组 LED + 端口速率分色 + QSFP-DD 十二态色表覆盖大部分硬件状态判读（P31-P33，&lt;&lt;<PAGE 48>&gt;&gt;）。</li>
-<li>EMP 远程访问有前置：设 IP 后还必须解锁会话类型，否则 Telnet/SSH/HTTP/SNMP 全不通（P38/X32，&lt;&lt;<PAGE 22>&gt;&gt;）。</li>
+<li>气流失配三段式后果链（P15， <code>&lt;span class="pg"&gt;原文p50&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p52&lt;/span&gt;</code> ）：错误+trap → 启动时失配=OK/PS 绿琥珀交替闪且持续循环重启直至纠正；运行中热插入失配件=OK/PS 闪琥珀、到温度 Danger 阈值才重启。</li>
+<li>温度双阈值机制（P34， <code>&lt;span class="pg"&gt;原文p75&lt;/span&gt;</code> ）：Warning 可查可配、超限发 trap 业务继续；Danger 出厂固化不可配置、超限自动关机须人工处理并手动启动。</li>
+<li>LED 是第一诊断面：系统五组 LED + 端口速率分色 + QSFP-DD 十二态色表覆盖大部分硬件状态判读（P31-P33， <code>&lt;span class="pg"&gt;原文p48&lt;/span&gt;</code> ）。</li>
+<li>EMP 远程访问有前置：设 IP 后还必须解锁会话类型，否则 Telnet/SSH/HTTP/SNMP 全不通（P38/X32， <code>&lt;span class="pg"&gt;原文p22&lt;/span&gt;</code> ）。</li>
 </ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
@@ -81,30 +82,30 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>失配诊断</strong>：核对风扇托盘与两电源的 F/R 后缀；启动时失配=循环重启、运行中失配=琥珀闪至 Danger 重启（F2/X2，&lt;&lt;<PAGE 50>&gt;&gt;/&lt;&lt;<PAGE 52>&gt;&gt;）</li>
-<li><strong>温度处置</strong>：Warning→查气流阻塞/室温/风扇状态；Danger→查阻塞或方向失配/室温/风扇，处理后手动开机（C18，&lt;&lt;<PAGE 75>&gt;&gt;）</li>
-<li><strong>监控四命令</strong>：<code>show module</code> / <code>show module long</code> / <code>show temperature</code>（Warning/Danger 阈值与状态）/ <code>show fan</code>（C17，&lt;&lt;<PAGE 74>&gt;&gt;/&lt;&lt;<PAGE 75>&gt;&gt;）</li>
-<li><strong>首次登录七步</strong>：console（admin/switch，115200-8N1 rollover）→ 设 EMP IP（<code>ip interface emp address 168.22.2.120 mask 255.255.255.0</code>，默认 192.168.1.1/24）→ 解锁会话（<code>aaa authentication default local</code> 或逐类型）→ <code>password</code> 改密 → 时区/夏令时 → 日期时间 → 可选项+<code>write memory</code>（C3-C7，&lt;&lt;<PAGE 21>&gt;&gt;-&lt;&lt;<PAGE 25>&gt;&gt;）</li>
-<li><strong>EMP 线缆</strong>：接交换机用直通线、接计算机用交叉线（P37，&lt;&lt;<PAGE 18>&gt;&gt;）</li>
-<li><strong>LOC 定位</strong>：LOC LED 闪琥珀=远程管理已激活，用于机柜中定位单台设备（C19，&lt;&lt;<PAGE 48>&gt;&gt;）</li>
-<li><strong>风扇停转响应</strong>：任一风扇意外停转即发 trap 且 FAN LED 转琥珀（P35，&lt;&lt;<PAGE 75>&gt;&gt;）</li>
+<li><strong>失配诊断</strong>：核对风扇托盘与两电源的 F/R 后缀；启动时失配=循环重启、运行中失配=琥珀闪至 Danger 重启（F2/X2， <code>&lt;span class="pg"&gt;原文p50&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p52&lt;/span&gt;</code> ）</li>
+<li><strong>温度处置</strong>：Warning→查气流阻塞/室温/风扇状态；Danger→查阻塞或方向失配/室温/风扇，处理后手动开机（C18， <code>&lt;span class="pg"&gt;原文p75&lt;/span&gt;</code> ）</li>
+<li><strong>监控四命令</strong>：<code>show module</code> / <code>show module long</code> / <code>show temperature</code>（Warning/Danger 阈值与状态）/ <code>show fan</code>（C17， <code>&lt;span class="pg"&gt;原文p74&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p75&lt;/span&gt;</code> ）</li>
+<li><strong>首次登录七步</strong>：console（admin/switch，115200-8N1 rollover）→ 设 EMP IP（<code>ip interface emp address 168.22.2.120 mask 255.255.255.0</code>，默认 192.168.1.1/24）→ 解锁会话（<code>aaa authentication default local</code> 或逐类型）→ <code>password</code> 改密 → 时区/夏令时 → 日期时间 → 可选项+<code>write memory</code>（C3-C7， <code>&lt;span class="pg"&gt;原文p21&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p25&lt;/span&gt;</code> ）</li>
+<li><strong>EMP 线缆</strong>：接交换机用直通线、接计算机用交叉线（P37， <code>&lt;span class="pg"&gt;原文p18&lt;/span&gt;</code> ）</li>
+<li><strong>LOC 定位</strong>：LOC LED 闪琥珀=远程管理已激活，用于机柜中定位单台设备（C19， <code>&lt;span class="pg"&gt;原文p48&lt;/span&gt;</code> ）</li>
+<li><strong>风扇停转响应</strong>：任一风扇意外停转即发 trap 且 FAN LED 转琥珀（P35， <code>&lt;span class="pg"&gt;原文p75&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>气流失配两种表现对照：启动时失配循环重启 vs 运行中热插失配件达 Danger 阈值重启（X2/P15，&lt;&lt;<PAGE 50>&gt;&gt;/&lt;&lt;<PAGE 52>&gt;&gt;）</li>
-<li>EMP 设 IP 与验证全流程（console 先行 + <code>show ip interface</code> 验证）（C4，&lt;&lt;<PAGE 22>&gt;&gt;）</li>
-<li>温度告警处置两分支（Warning 排查不停机 / Danger 关机后手动恢复）（C18，&lt;&lt;<PAGE 75>&gt;&gt;）</li>
+<li>气流失配两种表现对照：启动时失配循环重启 vs 运行中热插失配件达 Danger 阈值重启（X2/P15， <code>&lt;span class="pg"&gt;原文p50&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p52&lt;/span&gt;</code> ）</li>
+<li>EMP 设 IP 与验证全流程（console 先行 + <code>show ip interface</code> 验证）（C4， <code>&lt;span class="pg"&gt;原文p22&lt;/span&gt;</code> ）</li>
+<li>温度告警处置两分支（Warning 排查不停机 / Danger 关机后手动恢复）（C18， <code>&lt;span class="pg"&gt;原文p75&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>
-<li>Danger 阈值出厂固化不可配置；超限自动关机后必须手动启动，不会自愈（X33，&lt;&lt;<PAGE 75>&gt;&gt;）</li>
-<li>配好 EMP IP 仍不能远程访问——未解锁会话类型前 Telnet/FTP/HTTP/SSH/SNMP 全不通（X32，&lt;&lt;<PAGE 22>&gt;&gt;）</li>
-<li>密码丢失后果严重：OmniSwitch 上覆盖已配置密码受限制，必须牢记或安全记录（X44，&lt;&lt;<PAGE 23>&gt;&gt;）</li>
-<li>气流阻塞可致过热失效："Never obstruct chassis air vents"，盲板缺位会加重风扇负担（X7/P18，&lt;&lt;<PAGE 17>&gt;&gt;/&lt;&lt;<PAGE 50>&gt;&gt;/&lt;&lt;<PAGE 53>&gt;&gt;）</li>
-<li>运行中勿将手指伸入电源槽或触背板；雷暴天气禁止插拔线缆与作业（X34/X36，&lt;&lt;<PAGE 86>&gt;&gt;/&lt;&lt;<PAGE 85>&gt;&gt;）</li>
-<li>光口空置时辐射不可见激光，勿直视孔口，空口装保护盖（X38/X37，&lt;&lt;<PAGE 86>&gt;&gt;/&lt;&lt;<PAGE 84>&gt;&gt;）</li>
-<li>检修/搬动前断开全部电源线（多电源可能有多根线）（X35，&lt;&lt;<PAGE 86>&gt;&gt;/&lt;&lt;<PAGE 90>&gt;&gt;）</li>
-<li>console 无硬件流控，须用软件流控 XON/XOFF（P39，&lt;&lt;<PAGE 76>&gt;&gt;）</li>
-<li>CDE 风险：Cat5e/6/6a 线可蓄大量静电，接线前先对地放电（X20/P40，&lt;&lt;<PAGE 15>&gt;&gt;/&lt;&lt;<PAGE 16>&gt;&gt;）</li>
+<li>Danger 阈值出厂固化不可配置；超限自动关机后必须手动启动，不会自愈（X33， <code>&lt;span class="pg"&gt;原文p75&lt;/span&gt;</code> ）</li>
+<li>配好 EMP IP 仍不能远程访问——未解锁会话类型前 Telnet/FTP/HTTP/SSH/SNMP 全不通（X32， <code>&lt;span class="pg"&gt;原文p22&lt;/span&gt;</code> ）</li>
+<li>密码丢失后果严重：OmniSwitch 上覆盖已配置密码受限制，必须牢记或安全记录（X44， <code>&lt;span class="pg"&gt;原文p23&lt;/span&gt;</code> ）</li>
+<li>气流阻塞可致过热失效："Never obstruct chassis air vents"，盲板缺位会加重风扇负担（X7/P18， <code>&lt;span class="pg"&gt;原文p17&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p50&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p53&lt;/span&gt;</code> ）</li>
+<li>运行中勿将手指伸入电源槽或触背板；雷暴天气禁止插拔线缆与作业（X34/X36， <code>&lt;span class="pg"&gt;原文p86&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p85&lt;/span&gt;</code> ）</li>
+<li>光口空置时辐射不可见激光，勿直视孔口，空口装保护盖（X38/X37， <code>&lt;span class="pg"&gt;原文p86&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p84&lt;/span&gt;</code> ）</li>
+<li>检修/搬动前断开全部电源线（多电源可能有多根线）（X35， <code>&lt;span class="pg"&gt;原文p86&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p90&lt;/span&gt;</code> ）</li>
+<li>console 无硬件流控，须用软件流控 XON/XOFF（P39， <code>&lt;span class="pg"&gt;原文p76&lt;/span&gt;</code> ）</li>
+<li>CDE 风险：Cat5e/6/6a 线可蓄大量静电，接线前先对地放电（X20/P40， <code>&lt;span class="pg"&gt;原文p15&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p16&lt;/span&gt;</code> ）</li>
 </ul>
 <p>来源：OmniSwitch 6900 Hardware Users Guide（Ch2 首登 + Ch3 LED/监控/气流，p18-76；附录 A 安全，p83-90）</p><div class="pn"><a href="os6900-install-power.html">⬅ 上一单元：os6900-install-power</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

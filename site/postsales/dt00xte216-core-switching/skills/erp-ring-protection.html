@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -84,38 +85,38 @@ blockquote p{margin:6px 0}
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>建环并指定 Service VLAN 与 MEG Level（全网一致，0-7）：
-   <code>erp-ring 1 port1 1/1/3 port2 1/1/27 service-vlan 1001 level 2</code>（&lt;&lt;<PAGE 53>&gt;&gt;）</li>
-<li>在 RPL Owner 上配置（必须在环未 enable 时）：<code>erp-ring 1 rpl-node port 1/1/27</code>，可选 <code>erp-ring 1 wait-to-restore-timer 1</code>（&lt;&lt;<PAGE 55>&gt;&gt;）</li>
-<li>加入受保护 VLAN：环配置中带 Protected VLAN（如 20/30），子环 VLAN 跨环打 tagged（&lt;&lt;<PAGE 59>&gt;&gt;）</li>
-<li>启用：<code>erp-ring 1 enable</code>；验证 <code>show erp</code>（Ring State: idle，Ring Node: rpl/non-rpl）（&lt;&lt;<PAGE 56>&gt;&gt;）</li>
-<li>子环：单口接入用 <code>erp-ring 2 sub-ring-port 1/1/5 service-vlan 1002 level 2</code> + <code>erp-ring 2 rpl-node port 1/1/5</code>；<code>show erp</code> 中子环只有一个 ring port（&lt;&lt;<PAGE 59>&gt;&gt;-&lt;&lt;<PAGE 60>&gt;&gt;）</li>
-<li>断链测试：<code>interfaces 1/1/3 admin-state disable</code>，持续 ping 验证不中断（&lt;&lt;<PAGE 58>&gt;&gt;）</li>
+   <code>erp-ring 1 port1 1/1/3 port2 1/1/27 service-vlan 1001 level 2</code>（ <code>&lt;span class="pg"&gt;原文p53&lt;/span&gt;</code> ）</li>
+<li>在 RPL Owner 上配置（必须在环未 enable 时）：<code>erp-ring 1 rpl-node port 1/1/27</code>，可选 <code>erp-ring 1 wait-to-restore-timer 1</code>（ <code>&lt;span class="pg"&gt;原文p55&lt;/span&gt;</code> ）</li>
+<li>加入受保护 VLAN：环配置中带 Protected VLAN（如 20/30），子环 VLAN 跨环打 tagged（ <code>&lt;span class="pg"&gt;原文p59&lt;/span&gt;</code> ）</li>
+<li>启用：<code>erp-ring 1 enable</code>；验证 <code>show erp</code>（Ring State: idle，Ring Node: rpl/non-rpl）（ <code>&lt;span class="pg"&gt;原文p56&lt;/span&gt;</code> ）</li>
+<li>子环：单口接入用 <code>erp-ring 2 sub-ring-port 1/1/5 service-vlan 1002 level 2</code> + <code>erp-ring 2 rpl-node port 1/1/5</code>；<code>show erp</code> 中子环只有一个 ring port（ <code>&lt;span class="pg"&gt;原文p59&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p60&lt;/span&gt;</code> ）</li>
+<li>断链测试：<code>interfaces 1/1/3 admin-state disable</code>，持续 ping 验证不中断（ <code>&lt;span class="pg"&gt;原文p58&lt;/span&gt;</code> ）</li>
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
-<li>状态机三态：idle（RPL 阻塞）/ Protection（故障转发）/ Pending（WTR 计时中）；稳态 NR/RB、故障 SF、恢复 NR+WTR（&lt;&lt;<PAGE 40>&gt;&gt;-&lt;&lt;<PAGE 42>&gt;&gt;、&lt;&lt;<PAGE 56>&gt;&gt;）</li>
-<li>子环借主环虚通道闭合，R-APS 用子环 Service VLAN 的 S-tag 传递（&lt;&lt;<PAGE 43>&gt;&gt;）</li>
-<li>Guard Timer 默认 50 厘秒，丢弃过期 R-APS 防误倒换（&lt;&lt;<PAGE 56>&gt;&gt;）</li>
-<li>实验回收：<code>rm -r labERP</code> → <code>reload from working no rollback-timeout</code>（&lt;&lt;<PAGE 62>&gt;&gt;-&lt;&lt;<PAGE 63>&gt;&gt;）</li>
+<li>状态机三态：idle（RPL 阻塞）/ Protection（故障转发）/ Pending（WTR 计时中）；稳态 NR/RB、故障 SF、恢复 NR+WTR（ <code>&lt;span class="pg"&gt;原文p40&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p42&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p56&lt;/span&gt;</code> ）</li>
+<li>子环借主环虚通道闭合，R-APS 用子环 Service VLAN 的 S-tag 传递（ <code>&lt;span class="pg"&gt;原文p43&lt;/span&gt;</code> ）</li>
+<li>Guard Timer 默认 50 厘秒，丢弃过期 R-APS 防误倒换（ <code>&lt;span class="pg"&gt;原文p56&lt;/span&gt;</code> ）</li>
+<li>实验回收：<code>rm -r labERP</code> → <code>reload from working no rollback-timeout</code>（ <code>&lt;span class="pg"&gt;原文p62&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p63&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>C-01 主环 4 节点全流程：建目录→VLAN 1001 Service/20/30 Protected→RPL→enable→<code>show erp</code> idle→断链 ping 不中断（&lt;&lt;<PAGE 53>&gt;&gt;-&lt;&lt;<PAGE 58>&gt;&gt;）</li>
-<li>C-02 子环 sub-ring-port 单口接入，RPL 在子环上唯一（&lt;&lt;<PAGE 59>&gt;&gt;-&lt;&lt;<PAGE 61>&gt;&gt;）</li>
+<li>C-01 主环 4 节点全流程：建目录→VLAN 1001 Service/20/30 Protected→RPL→enable→<code>show erp</code> idle→断链 ping 不中断（ <code>&lt;span class="pg"&gt;原文p53&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p58&lt;/span&gt;</code> ）</li>
+<li>C-02 子环 sub-ring-port 单口接入，RPL 在子环上唯一（ <code>&lt;span class="pg"&gt;原文p59&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p61&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="b">B（边界与陷阱）</h2>
 <ul>
-<li>RPL 缺失或多个 = 非法配置；RPL 只能配在已存在且未 enable 的环上（&lt;&lt;<PAGE 55>&gt;&gt;）</li>
-<li>每环建议最多 16 节点，环数受机型限制，超规模需查 Network Configuration Guide（&lt;&lt;<PAGE 55>&gt;&gt;）</li>
+<li>RPL 缺失或多个 = 非法配置；RPL 只能配在已存在且未 enable 的环上（ <code>&lt;span class="pg"&gt;原文p55&lt;/span&gt;</code> ）</li>
+<li>每环建议最多 16 节点，环数受机型限制，超规模需查 Network Configuration Guide（ <code>&lt;span class="pg"&gt;原文p55&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
 <ul>
-<li>framework·ERP 配置五步法（&lt;&lt;<PAGE 45>&gt;&gt;-&lt;&lt;<PAGE 49>&gt;&gt;）</li>
-<li>framework·ERP 状态机三态模型（&lt;&lt;<PAGE 40>&gt;&gt;-&lt;&lt;<PAGE 42>&gt;&gt;、&lt;&lt;<PAGE 56>&gt;&gt;）</li>
-<li>principle·P-01 RPL 阻塞机制（&lt;&lt;<PAGE 37>&gt;&gt;、&lt;&lt;<PAGE 38>&gt;&gt;、&lt;&lt;<PAGE 40>&gt;&gt;）</li>
-<li>principle·P-02 R-APS 消息体系（&lt;&lt;<PAGE 38>&gt;&gt;、&lt;&lt;<PAGE 41>&gt;&gt;、&lt;&lt;<PAGE 42>&gt;&gt;）</li>
-<li>principle·P-03 WTR/Guard 定时器（&lt;&lt;<PAGE 42>&gt;&gt;、&lt;&lt;<PAGE 56>&gt;&gt;）</li>
-<li>principle·P-04 子环虚通道（&lt;&lt;<PAGE 43>&gt;&gt;）</li>
-<li>principle·P-05 环规模与端口约束（&lt;&lt;<PAGE 55>&gt;&gt;）</li>
+<li>framework·ERP 配置五步法（ <code>&lt;span class="pg"&gt;原文p45&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p49&lt;/span&gt;</code> ）</li>
+<li>framework·ERP 状态机三态模型（ <code>&lt;span class="pg"&gt;原文p40&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p42&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p56&lt;/span&gt;</code> ）</li>
+<li>principle·P-01 RPL 阻塞机制（ <code>&lt;span class="pg"&gt;原文p37&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p38&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p40&lt;/span&gt;</code> ）</li>
+<li>principle·P-02 R-APS 消息体系（ <code>&lt;span class="pg"&gt;原文p38&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p41&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p42&lt;/span&gt;</code> ）</li>
+<li>principle·P-03 WTR/Guard 定时器（ <code>&lt;span class="pg"&gt;原文p42&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p56&lt;/span&gt;</code> ）</li>
+<li>principle·P-04 子环虚通道（ <code>&lt;span class="pg"&gt;原文p43&lt;/span&gt;</code> ）</li>
+<li>principle·P-05 环规模与端口约束（ <code>&lt;span class="pg"&gt;原文p55&lt;/span&gt;</code> ）</li>
 <li>case·C-01/C-02/C-03；counter·X-01/X-02</li>
 </ul><div class="pn"><a href="../index.html">⬅ 返回课程首页</a><a class="nxt" href="macsec-link-encryption.html">下一单元：macsec-link-encryption ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

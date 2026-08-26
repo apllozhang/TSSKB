@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -79,29 +80,29 @@ Expert Mode 面向复杂策略（含验证机制）。</li>
 </ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
-<li><strong>四步法</strong>（&lt;&lt;<PAGE 275>&gt;&gt;）："Create a Policy Condition / Create a Policy Action / Create a Policy Rule / Apply the Policy"</li>
+<li><strong>四步法</strong>（ <code>&lt;span class="pg"&gt;原文p275&lt;/span&gt;</code> ）："Create a Policy Condition / Create a Policy Action / Create a Policy Rule / Apply the Policy"</li>
 <li><strong>OneTouch</strong>（&lt;&lt;<PAGE 273/276-278>&gt;&gt;）：三子模式——Voice、Data（Platinum/Gold/Silver/Bronze 优先级）、ACL（Accept/Drop）</li>
-<li><strong>Expert Mode 向导</strong>（&lt;&lt;<PAGE 279-284>&gt;&gt;）：Create Policy（名称/Precedence/高级选项）→ Device Selection → Set Condition（L2 MAC/L3 IP/DSCP/L4/L7）→ Set Action（QoS/Disposition/TCM）→ Validity Period and Review</li>
-<li><strong>下发与确认</strong>：Existing Policies 选策略 → Select Device → "Click on Notify Selected and wait for the Notify Success! Message"（&lt;&lt;<PAGE 293>&gt;&gt;）</li>
+<li><strong>Expert Mode 向导</strong>（ <code>&lt;span class="pg"&gt;原文p279-284&lt;/span&gt;</code> ）：Create Policy（名称/Precedence/高级选项）→ Device Selection → Set Condition（L2 MAC/L3 IP/DSCP/L4/L7）→ Set Action（QoS/Disposition/TCM）→ Validity Period and Review</li>
+<li><strong>下发与确认</strong>：Existing Policies 选策略 → Select Device → "Click on Notify Selected and wait for the Notify Success! Message"（ <code>&lt;span class="pg"&gt;原文p293&lt;/span&gt;</code> ）</li>
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
-<li>策略归一化（应用侧，&lt;&lt;<PAGE 365-366>&gt;&gt;）："The Policy has to be included in a Policy List. Then, the Policy List is included as part of the Access Role Profile configuration."；Unified Policy 本身 "are part of the Access Role Profile configuration"（&lt;&lt;<PAGE 246>&gt;&gt;）</li>
+<li>策略归一化（应用侧， <code>&lt;span class="pg"&gt;原文p365-366&lt;/span&gt;</code> ）："The Policy has to be included in a Policy List. Then, the Policy List is included as part of the Access Role Profile configuration."；Unified Policy 本身 "are part of the Access Role Profile configuration"（ <code>&lt;span class="pg"&gt;原文p246&lt;/span&gt;</code> ）</li>
 <li>SIP Snooping 联动：识别并标记 SIP 及 RTP/RTCP 流（DSCP 字段），计算 Delay/Jitter/RTT/R factor/MOS；OneTouch 媒体模板固定优先级——Voice dscp 46/precedence 50000、Video dscp 34/44000、Other dscp 24/44001（&lt;&lt;<PAGE 438/442>&gt;&gt;）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>Expert Mode 阻断客户端访问 Loopback0 网段：Name=Block_Loopback0_access、Precedence=30001、Device=switch8、Condition：L3 IPs，Source 192.168.80.0/24 → Destination 192.168.200.0/24、Action：QOS + Disposition=DROP、Validity=AllTheTime；验证 ping 192.168.200.# 不通、ping 192.168.100.102 正常——cases·PolicyView Expert（&lt;&lt;<PAGE 290-293>&gt;&gt;）</li>
+<li>Expert Mode 阻断客户端访问 Loopback0 网段：Name=Block_Loopback0_access、Precedence=30001、Device=switch8、Condition：L3 IPs，Source 192.168.80.0/24 → Destination 192.168.200.0/24、Action：QOS + Disposition=DROP、Validity=AllTheTime；验证 ping 192.168.200.# 不通、ping 192.168.100.102 正常——cases·PolicyView Expert（ <code>&lt;span class="pg"&gt;原文p290-293&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="b">B（边界与陷阱）</h2>
 <ul>
-<li>下发后必须等到 "Notify Success!" 才算确认，没等到就验证会误判（&lt;&lt;<PAGE 293>&gt;&gt;）</li>
-<li>Precedence 数值决定策略优先顺序，实验用 30001，需与现网既有策略序号统筹（&lt;&lt;<PAGE 291>&gt;&gt;）</li>
+<li>下发后必须等到 "Notify Success!" 才算确认，没等到就验证会误判（ <code>&lt;span class="pg"&gt;原文p293&lt;/span&gt;</code> ）</li>
+<li>Precedence 数值决定策略优先顺序，实验用 30001，需与现网既有策略序号统筹（ <code>&lt;span class="pg"&gt;原文p291&lt;/span&gt;</code> ）</li>
 <li>策略生效依赖 LDAP 仓库链路：PolicyView 创建 → 存入 Policy Directory Server → Policy Enabled → 交换机从 LDAP 拉取（&lt;&lt;<PAGE 272/286>&gt;&gt;）</li>
 </ul>
 <h2 id="_1">来源</h2>
 <ul>
-<li>frameworks·QoS 四步法（&lt;&lt;<PAGE 275>&gt;&gt;）、双模式框架（&lt;&lt;<PAGE 273-284>&gt;&gt;）、Policy Flow（&lt;&lt;<PAGE 272/286>&gt;&gt;）</li>
+<li>frameworks·QoS 四步法（ <code>&lt;span class="pg"&gt;原文p275&lt;/span&gt;</code> ）、双模式框架（ <code>&lt;span class="pg"&gt;原文p273-284&lt;/span&gt;</code> ）、Policy Flow（&lt;&lt;<PAGE 272/286>&gt;&gt;）</li>
 <li>principles·LDAP 仓库架构（&lt;&lt;<PAGE 272/285>&gt;&gt;）、SIP Snooping（&lt;&lt;<PAGE 438/442>&gt;&gt;）</li>
-<li>cases·Expert Mode 阻断实验（&lt;&lt;<PAGE 290-293>&gt;&gt;）</li>
+<li>cases·Expert Mode 阻断实验（ <code>&lt;span class="pg"&gt;原文p290-293&lt;/span&gt;</code> ）</li>
 </ul><div class="pn"><a href="ov-unified-access.html">⬅ 上一单元：ov-unified-access</a><a class="nxt" href="ov-quarantine-manager.html">下一单元：ov-quarantine-manager ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

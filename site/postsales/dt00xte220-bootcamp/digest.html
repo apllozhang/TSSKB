@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -74,7 +75,7 @@ blockquote p{margin:6px 0}
 <p>来源：Bootcamp Issue 25 DT00CTE120（1207 页五天训练营 Participant's Guide），全部知识点带原书页码（&lt;&lt;<PAGE N>&gt;&gt; 格式）。</p>
 </blockquote>
 <h2 id="_1">一、本书定位</h2>
-<p>这是 ALE 新人 ACFE/ACSE 培养的主教材：五天全科训练营，从硬件认知一路讲到 SPB 织构，每天都是"Overview 原理 + Lab 完整 CLI 实操"的结构（F1，&lt;&lt;<PAGE 8-13>&gt;&gt;）。与参考书不同，它的最大价值在 Lab 的完整命令序列与验证输出——每个特性都能对照着敲一遍。本知识库将其聚类为 12 个技能。</p>
+<p>这是 ALE 新人 ACFE/ACSE 培养的主教材：五天全科训练营，从硬件认知一路讲到 SPB 织构，每天都是"Overview 原理 + Lab 完整 CLI 实操"的结构（F1， <code>&lt;span class="pg"&gt;原文p8-13&lt;/span&gt;</code> ）。与参考书不同，它的最大价值在 Lab 的完整命令序列与验证输出——每个特性都能对照着敲一遍。本知识库将其聚类为 12 个技能。</p>
 <h2 id="12">二、12 个技能摘要</h2>
 <table>
 <thead>
@@ -174,51 +175,51 @@ blockquote p{margin:6px 0}
 <tr>
 <td>Day 1</td>
 <td>硬件产品线 + System Management（目录/回滚/CLI/远程访问，7 个 Lab）+ Stacking R6 + Virtual Chassis + 诊断</td>
-<td>&lt;&lt;<PAGE 18-356>&gt;&gt;</td>
+<td><code>&lt;span class="pg"&gt;原文p18-356&lt;/span&gt;</code></td>
 <td>1 / 2 / 3</td>
 </tr>
 <tr>
 <td>Day 2</td>
 <td>VLAN + LACP + 802.1q + STP/MSTP + DHL + 高级 IP 接口/DHCP Relay + LLDP</td>
-<td>&lt;&lt;<PAGE 358-521>&gt;&gt;</td>
+<td><code>&lt;span class="pg"&gt;原文p358-521&lt;/span&gt;</code></td>
 <td>4 / 5</td>
 </tr>
 <tr>
 <td>Day 3</td>
 <td>VRRP + QoS + ACL + Access Guardian(UNP)/IoT + PoE</td>
-<td>&lt;&lt;<PAGE 522-710>&gt;&gt;</td>
+<td><code>&lt;span class="pg"&gt;原文p522-710&lt;/span&gt;</code></td>
 <td>6 / 7 / 8 / 9</td>
 </tr>
 <tr>
 <td>Day 4</td>
 <td>IP 路由 RIP/OSPF（GR）+ AOS 网络安全（LPS 等）+ VRF</td>
-<td>&lt;&lt;<PAGE 711-864>&gt;&gt;</td>
+<td><code>&lt;span class="pg"&gt;原文p711-864&lt;/span&gt;</code></td>
 <td>10 / 11</td>
 </tr>
 <tr>
 <td>Day 5</td>
 <td>IP 组播（PIM-SM）+ 二层高级（ERP）+ Intelligent Fabric（SPB + Lab）</td>
-<td>&lt;&lt;<PAGE 865-960>&gt;&gt;</td>
+<td><code>&lt;span class="pg"&gt;原文p865-960&lt;/span&gt;</code></td>
 <td>12</td>
 </tr>
 <tr>
 <td>扩展</td>
 <td>代码升级 / MVRP / SLB / 静态聚合 / AG Captive Portal / MACsec / BGP / ISIS / 安全认证 / IPv6</td>
-<td>&lt;&lt;<PAGE 961-1138>&gt;&gt;</td>
+<td><code>&lt;span class="pg"&gt;原文p961-1138&lt;/span&gt;</code></td>
 <td>2 / 5 / 8 / 10 / 11 / 12</td>
 </tr>
 <tr>
 <td>附录</td>
 <td>ProActive Lifecycle / CodeGuardian / 全系列机型速查</td>
-<td>&lt;&lt;<PAGE 1139-1207>&gt;&gt;</td>
+<td><code>&lt;span class="pg"&gt;原文p1139-1207&lt;/span&gt;</code></td>
 <td>1</td>
 </tr>
 </tbody>
 </table>
 <h2 id="_3">四、贯穿五天的三条主线</h2>
-<p><strong>1. 一切变更先设计回滚路径。</strong> Day 1 的 working/certified 双目录是全书的方法论地基（&lt;&lt;<PAGE 126-133>&gt;&gt;）：Lab 里每次实验都以 <code>reload working no rollback-timeout</code> 收尾、升级以"验证后才 <code>copy working certified</code>"收口（&lt;&lt;<PAGE 962-965>&gt;&gt;）。堆叠/VC 的 takeover 同样要求先 <code>copy flash-synchro</code> 同步（&lt;&lt;<PAGE 260>&gt;&gt;）。</p>
+<p><strong>1. 一切变更先设计回滚路径。</strong> Day 1 的 working/certified 双目录是全书的方法论地基（ <code>&lt;span class="pg"&gt;原文p126-133&lt;/span&gt;</code> ）：Lab 里每次实验都以 <code>reload working no rollback-timeout</code> 收尾、升级以"验证后才 <code>copy working certified</code>"收口（ <code>&lt;span class="pg"&gt;原文p962-965&lt;/span&gt;</code> ）。堆叠/VC 的 takeover 同样要求先 <code>copy flash-synchro</code> 同步（ <code>&lt;span class="pg"&gt;原文p260&lt;/span&gt;</code> ）。</p>
 <p><strong>2. enable 分层开关 + show 族验证。</strong> AOS 的配置节奏统一是"先建对象（VLAN/聚合/接口/策略）→ 挂成员 → 最后统一 admin-state enable"，验证一律走配套 show 命令族——从 <code>show stack topology</code> 到 <code>show ip pim sgroute</code>，每个特性都有状态对照表。</p>
-<p><strong>3. 默认值是最大的坑。</strong> 全书反例高度集中于默认行为：远程访问默认全关（&lt;&lt;<PAGE 184>&gt;&gt;）、IPMS 默认禁用（&lt;&lt;<PAGE 877>&gt;&gt;）、PoE 默认 oper down（&lt;&lt;<PAGE 697>&gt;&gt;）、QoS 默认全 accept 而端口默认不信任（&lt;&lt;<PAGE 558, 590>&gt;&gt;）、LPS 默认只学 1 个 MAC（&lt;&lt;<PAGE 850>&gt;&gt;）、端口默认不信任 DHCP Offer/ACK（&lt;&lt;<PAGE 830>&gt;&gt;）。上线清单的第一件事就是把这批默认值过一遍。</p>
+<p><strong>3. 默认值是最大的坑。</strong> 全书反例高度集中于默认行为：远程访问默认全关（ <code>&lt;span class="pg"&gt;原文p184&lt;/span&gt;</code> ）、IPMS 默认禁用（ <code>&lt;span class="pg"&gt;原文p877&lt;/span&gt;</code> ）、PoE 默认 oper down（ <code>&lt;span class="pg"&gt;原文p697&lt;/span&gt;</code> ）、QoS 默认全 accept 而端口默认不信任（ <code>&lt;span class="pg"&gt;原文p558, 590&lt;/span&gt;</code> ）、LPS 默认只学 1 个 MAC（ <code>&lt;span class="pg"&gt;原文p850&lt;/span&gt;</code> ）、端口默认不信任 DHCP Offer/ACK（ <code>&lt;span class="pg"&gt;原文p830&lt;/span&gt;</code> ）。上线清单的第一件事就是把这批默认值过一遍。</p>
 <h2 id="_4">五、使用建议</h2>
 <ul>
 <li>查部署步骤：进对应 skill 的 A2；查禁区先看各 skill 的 B 节。</li>

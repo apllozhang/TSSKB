@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -80,60 +81,60 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
-<li><strong>RF Profile 配置</strong>（应用于 AP Group 或 AP 级）：国家码、Smart Load Balance、扫描、信道/功率设置（&lt;&lt;<PAGE 366>&gt;&gt;&lt;&lt;<PAGE 367>&gt;&gt;）。</li>
+<li><strong>RF Profile 配置</strong>（应用于 AP Group 或 AP 级）：国家码、Smart Load Balance、扫描、信道/功率设置（ <code>&lt;span class="pg"&gt;原文p366&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p367&lt;/span&gt;</code> ）。</li>
 <li><strong>负载均衡</strong>：</li>
-<li>Band Steering：引导客户端到 5G/6GHz，推荐 RSSI 门限 2.4G=5、5G=10（&lt;&lt;<PAGE 370>&gt;&gt;）</li>
-<li>Dynamic Load Balance：信道平均介质利用率 1 分钟超 70% 判为 Overloaded；相邻 AP 各自基于负载设 timer，新客户端被引导至最轻负载 AP（&lt;&lt;<PAGE 371>&gt;&gt;&lt;&lt;<PAGE 372>&gt;&gt;）</li>
-<li><strong>背景扫描</strong>：默认间隔 20s（范围 5-10800s）、时长 50ms（范围 50-110ms）；WIPS 必需扫描；支持 Dedicated AP scanning mode 与 Voice/Video Awareness（检测 SIP/H.323 绕过扫描）（&lt;&lt;<PAGE 373>&gt;&gt;）。</li>
+<li>Band Steering：引导客户端到 5G/6GHz，推荐 RSSI 门限 2.4G=5、5G=10（ <code>&lt;span class="pg"&gt;原文p370&lt;/span&gt;</code> ）</li>
+<li>Dynamic Load Balance：信道平均介质利用率 1 分钟超 70% 判为 Overloaded；相邻 AP 各自基于负载设 timer，新客户端被引导至最轻负载 AP（ <code>&lt;span class="pg"&gt;原文p371&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p372&lt;/span&gt;</code> ）</li>
+<li><strong>背景扫描</strong>：默认间隔 20s（范围 5-10800s）、时长 50ms（范围 50-110ms）；WIPS 必需扫描；支持 Dedicated AP scanning mode 与 Voice/Video Awareness（检测 SIP/H.323 绕过扫描）（ <code>&lt;span class="pg"&gt;原文p373&lt;/span&gt;</code> ）。</li>
 <li><strong>漫游优化</strong>：</li>
-<li>Sticky Client Avoidance：802.11v（BSS Transition Management）+ 802.11k + Roaming RSSI 阈值；推荐 2.4GHz RSSI=10、5GHz RSSI=15（&lt;&lt;<PAGE 404>&gt;&gt;&lt;&lt;<PAGE 416>&gt;&gt;）</li>
-<li>RSSI 对照：OV 上是平均值、AP 上是瞬时值；RSSI 10≈-86dBm（Bad）… 25≈-71dBm（Desired and recommended）；AP CLI <code>wlanconfig ath002 list</code>，-24dBm=72 RSSI（&lt;&lt;<PAGE 378>&gt;&gt;&lt;&lt;<PAGE 379>&gt;&gt;）</li>
-<li><strong>WIPS</strong>：分类 Interfering（任何空口发现的其他 AP）/ Rogue（按 Rogue AP Policy 判定）/ Friendly；Rogue AP Containment 默认启用，向 Rogue AP 的客户端发 de-auth；Rogue 判定策略含 Signal Strength Threshold（默认 -70dBm，范围 -50~-90）、Detect Valid SSID、Rogue SSID Keyword、Rogue OUI（&lt;&lt;<PAGE 384>&gt;&gt;&lt;&lt;<PAGE 385>&gt;&gt;）。</li>
-<li><strong>Mesh/Bridge 配置</strong>：Device Catalog 选 AP → Actions &gt; Edit Device &gt; Mesh/Bridge Configuration；Mesh 监控显示拓扑、Root 角色与 Repeater 的 Parent Address（Root AP 的 MAC）（&lt;&lt;<PAGE 442>&gt;&gt;&lt;&lt;<PAGE 443>&gt;&gt;&lt;&lt;<PAGE 444>&gt;&gt;）。</li>
+<li>Sticky Client Avoidance：802.11v（BSS Transition Management）+ 802.11k + Roaming RSSI 阈值；推荐 2.4GHz RSSI=10、5GHz RSSI=15（ <code>&lt;span class="pg"&gt;原文p404&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p416&lt;/span&gt;</code> ）</li>
+<li>RSSI 对照：OV 上是平均值、AP 上是瞬时值；RSSI 10≈-86dBm（Bad）… 25≈-71dBm（Desired and recommended）；AP CLI <code>wlanconfig ath002 list</code>，-24dBm=72 RSSI（ <code>&lt;span class="pg"&gt;原文p378&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p379&lt;/span&gt;</code> ）</li>
+<li><strong>WIPS</strong>：分类 Interfering（任何空口发现的其他 AP）/ Rogue（按 Rogue AP Policy 判定）/ Friendly；Rogue AP Containment 默认启用，向 Rogue AP 的客户端发 de-auth；Rogue 判定策略含 Signal Strength Threshold（默认 -70dBm，范围 -50~-90）、Detect Valid SSID、Rogue SSID Keyword、Rogue OUI（ <code>&lt;span class="pg"&gt;原文p384&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p385&lt;/span&gt;</code> ）。</li>
+<li><strong>Mesh/Bridge 配置</strong>：Device Catalog 选 AP → Actions &gt; Edit Device &gt; Mesh/Bridge Configuration；Mesh 监控显示拓扑、Root 角色与 Repeater 的 Parent Address（Root AP 的 MAC）（ <code>&lt;span class="pg"&gt;原文p442&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p443&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p444&lt;/span&gt;</code> ）。</li>
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
-<li><strong>漫游判定</strong>：L2 或 L3 按客户端在 home/foreign AP 间 VLAN 选择：无上下文→新客户端；上下文 + WLAN/ARP 匹配 + VLAN 匹配→L2；VLAN 不匹配→L3（基于 L2 GRE 隧道）。L2 漫游始终启用，L3 默认禁用（&lt;&lt;<PAGE 394>&gt;&gt;&lt;&lt;<PAGE 400>&gt;&gt;）。</li>
-<li><strong>客户端上下文共享</strong>：客户端关联时 AP 向所有空口相邻 AP 发 Add 消息，漫游时旧 AP 收到新 AP 的 Add 后触发 Del；上下文含 VLAN ID/ARP/Policy List/PMKSA cache；与 AP Group、管理 VLAN 无关（&lt;&lt;<PAGE 397>&gt;&gt;&lt;&lt;<PAGE 399>&gt;&gt;）。</li>
-<li><strong>Mesh 拓扑限制</strong>：最多 8 台 slave AP、4 跳、单跳最多 5 AP、全网最多 16 AP；所有 AP 可广播最多 5 个 SSID；最佳实践 BAND 5GHz、CHANNEL &gt;100（&lt;&lt;<PAGE 439>&gt;&gt;）。Auto Mesh：LAN 上的 root AP 广播隐藏 SSID "Stellar-MESH"（5GHz），未连 LAN 的 AP 自动以 non-root 加入（&lt;&lt;<PAGE 440>&gt;&gt;）。</li>
-<li><strong>RAP（远程 AP）五步开通</strong>：[PRE] 管理员预录入（OV Cirrus：序列号/RAP 模式/VPN Server 公网 IP/OV2500 IP/VPN Client IP；VPN Server：公网/私网 IP/密钥；OV2500：AP 设置）→ ① AP 启动按序列号注册 → ② OV Cirrus 下发 VPN 与 OV2500 参数 → ③ 建管理流量 VPN 隧道 → ④ 从 OV2500 取配置（SSID/射频）→ ⑤ 第二条 VPN（客户端流量）+ 客户端接入。配置三块：配 OV Cirrus、部署 ALE VPN Server VM（eth0 公网/eth1 私网，导入 VPN 设置）、配 OV2500（&lt;&lt;<PAGE 423>&gt;&gt;~&lt;&lt;<PAGE 429>&gt;&gt;&lt;&lt;<PAGE 432>&gt;&gt;）。</li>
-<li><strong>Smart Air Share</strong>：SSID 级最低速率控制，2.4G 建议 12、5G/6G 建议 24，提升 802.11a/n 客户端体验（&lt;&lt;<PAGE 369>&gt;&gt;）。</li>
+<li><strong>漫游判定</strong>：L2 或 L3 按客户端在 home/foreign AP 间 VLAN 选择：无上下文→新客户端；上下文 + WLAN/ARP 匹配 + VLAN 匹配→L2；VLAN 不匹配→L3（基于 L2 GRE 隧道）。L2 漫游始终启用，L3 默认禁用（ <code>&lt;span class="pg"&gt;原文p394&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p400&lt;/span&gt;</code> ）。</li>
+<li><strong>客户端上下文共享</strong>：客户端关联时 AP 向所有空口相邻 AP 发 Add 消息，漫游时旧 AP 收到新 AP 的 Add 后触发 Del；上下文含 VLAN ID/ARP/Policy List/PMKSA cache；与 AP Group、管理 VLAN 无关（ <code>&lt;span class="pg"&gt;原文p397&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p399&lt;/span&gt;</code> ）。</li>
+<li><strong>Mesh 拓扑限制</strong>：最多 8 台 slave AP、4 跳、单跳最多 5 AP、全网最多 16 AP；所有 AP 可广播最多 5 个 SSID；最佳实践 BAND 5GHz、CHANNEL &gt;100（ <code>&lt;span class="pg"&gt;原文p439&lt;/span&gt;</code> ）。Auto Mesh：LAN 上的 root AP 广播隐藏 SSID "Stellar-MESH"（5GHz），未连 LAN 的 AP 自动以 non-root 加入（ <code>&lt;span class="pg"&gt;原文p440&lt;/span&gt;</code> ）。</li>
+<li><strong>RAP（远程 AP）五步开通</strong>：[PRE] 管理员预录入（OV Cirrus：序列号/RAP 模式/VPN Server 公网 IP/OV2500 IP/VPN Client IP；VPN Server：公网/私网 IP/密钥；OV2500：AP 设置）→ ① AP 启动按序列号注册 → ② OV Cirrus 下发 VPN 与 OV2500 参数 → ③ 建管理流量 VPN 隧道 → ④ 从 OV2500 取配置（SSID/射频）→ ⑤ 第二条 VPN（客户端流量）+ 客户端接入。配置三块：配 OV Cirrus、部署 ALE VPN Server VM（eth0 公网/eth1 私网，导入 VPN 设置）、配 OV2500（ <code>&lt;span class="pg"&gt;原文p423&lt;/span&gt;</code> ~ <code>&lt;span class="pg"&gt;原文p429&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p432&lt;/span&gt;</code> ）。</li>
+<li><strong>Smart Air Share</strong>：SSID 级最低速率控制，2.4G 建议 12、5G/6G 建议 24，提升 802.11a/n 客户端体验（ <code>&lt;span class="pg"&gt;原文p369&lt;/span&gt;</code> ）。</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li><strong>案例 1</strong>：走廊直角墙阻挡，两台地理相邻的 AP 互相看不见，客户端上下文无法共享、无法漫游——在 AP Registration &gt; Access Point 视图给两台 AP 手工互加 Neighbor AP（两端都要加）后恢复（&lt;&lt;<PAGE 415>&gt;&gt;）。</li>
-<li><strong>案例 2</strong>：Roaming RSSI 阈值设太低，客户端滞留在弱信号 AP；设太高则频繁漫游丢包——按推荐值（2.4G=10、5G=15）回调（&lt;&lt;<PAGE 416>&gt;&gt;）。</li>
-<li><strong>案例 3</strong>：仓库不便布线，用 Mesh 回程：root AP 广播 Stellar-MESH 隐藏 SSID，其余 AP 自动入网，全网 16 AP 内、4 跳内规划（&lt;&lt;<PAGE 439>&gt;&gt;&lt;&lt;<PAGE 440>&gt;&gt;）。</li>
+<li><strong>案例 1</strong>：走廊直角墙阻挡，两台地理相邻的 AP 互相看不见，客户端上下文无法共享、无法漫游——在 AP Registration &gt; Access Point 视图给两台 AP 手工互加 Neighbor AP（两端都要加）后恢复（ <code>&lt;span class="pg"&gt;原文p415&lt;/span&gt;</code> ）。</li>
+<li><strong>案例 2</strong>：Roaming RSSI 阈值设太低，客户端滞留在弱信号 AP；设太高则频繁漫游丢包——按推荐值（2.4G=10、5G=15）回调（ <code>&lt;span class="pg"&gt;原文p416&lt;/span&gt;</code> ）。</li>
+<li><strong>案例 3</strong>：仓库不便布线，用 Mesh 回程：root AP 广播 Stellar-MESH 隐藏 SSID，其余 AP 自动入网，全网 16 AP 内、4 跳内规划（ <code>&lt;span class="pg"&gt;原文p439&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p440&lt;/span&gt;</code> ）。</li>
 </ul>
 <h2 id="b">B（边界与陷阱）</h2>
 <ul>
-<li><strong>Fast Roaming 加密限制</strong>：OKC（802.11k）仅 WPA2/WPA3 Enterprise；802.11r 仅 WPA2/WPA3 加密（Personal 或 Enterprise）；未启用 Fast Roaming 则走标准漫游（&lt;&lt;<PAGE 395>&gt;&gt;&lt;&lt;<PAGE 402>&gt;&gt;）。</li>
-<li><strong>WIPS Client Blocklist 局限</strong>：默认禁用；攻击者源 MAC 可以是 AP MAC/BSSID/网卡 MAC，拉黑仅当源 MAC 是真实无线客户端时才有意义（&lt;&lt;<PAGE 387>&gt;&gt;）。</li>
-<li><strong>扫描的安全/性能权衡</strong>：扫描期间无线客户端无 802.11 数据；扫描间隔更高或时长更低→入侵更难检出但客户端性能更好（&lt;&lt;<PAGE 373>&gt;&gt;&lt;&lt;<PAGE 376>&gt;&gt;）。</li>
-<li><strong>RSSI Bad 区间</strong>：不建议跑音视频应用（&lt;&lt;<PAGE 379>&gt;&gt;）。</li>
-<li><strong>Bridge 模式 VLAN tagging 兼容性</strong>：AP1101、AP1201、AP1201H 不兼容 Bridge 上的 VLAN tagging（&lt;&lt;<PAGE 437>&gt;&gt;）。</li>
-<li><strong>AP1101 不支持 RAP</strong>（&lt;&lt;<PAGE 421>&gt;&gt;）。</li>
+<li><strong>Fast Roaming 加密限制</strong>：OKC（802.11k）仅 WPA2/WPA3 Enterprise；802.11r 仅 WPA2/WPA3 加密（Personal 或 Enterprise）；未启用 Fast Roaming 则走标准漫游（ <code>&lt;span class="pg"&gt;原文p395&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p402&lt;/span&gt;</code> ）。</li>
+<li><strong>WIPS Client Blocklist 局限</strong>：默认禁用；攻击者源 MAC 可以是 AP MAC/BSSID/网卡 MAC，拉黑仅当源 MAC 是真实无线客户端时才有意义（ <code>&lt;span class="pg"&gt;原文p387&lt;/span&gt;</code> ）。</li>
+<li><strong>扫描的安全/性能权衡</strong>：扫描期间无线客户端无 802.11 数据；扫描间隔更高或时长更低→入侵更难检出但客户端性能更好（ <code>&lt;span class="pg"&gt;原文p373&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p376&lt;/span&gt;</code> ）。</li>
+<li><strong>RSSI Bad 区间</strong>：不建议跑音视频应用（ <code>&lt;span class="pg"&gt;原文p379&lt;/span&gt;</code> ）。</li>
+<li><strong>Bridge 模式 VLAN tagging 兼容性</strong>：AP1101、AP1201、AP1201H 不兼容 Bridge 上的 VLAN tagging（ <code>&lt;span class="pg"&gt;原文p437&lt;/span&gt;</code> ）。</li>
+<li><strong>AP1101 不支持 RAP</strong>（ <code>&lt;span class="pg"&gt;原文p421&lt;/span&gt;</code> ）。</li>
 </ul>
 <h2 id="_1">来源</h2>
 <ul>
-<li>principles·DRM 分布式射频管理架构（&lt;&lt;<PAGE 364>&gt;&gt;&lt;&lt;<PAGE 365>&gt;&gt;）</li>
-<li>principles·Smart Load Balance（&lt;&lt;<PAGE 370>&gt;&gt;&lt;&lt;<PAGE 371>&gt;&gt;&lt;&lt;<PAGE 372>&gt;&gt;）</li>
-<li>principles·背景扫描机制与参数（&lt;&lt;<PAGE 373>&gt;&gt;）</li>
-<li>principles·RSSI 定义与数值对照（&lt;&lt;<PAGE 378>&gt;&gt;&lt;&lt;<PAGE 379>&gt;&gt;）</li>
-<li>principles·WIPS 分类 Interfering/Rogue/Friendly（&lt;&lt;<PAGE 384>&gt;&gt;&lt;&lt;<PAGE 385>&gt;&gt;）</li>
-<li>principles·漫游判定条件 L2/L3（&lt;&lt;<PAGE 400>&gt;&gt;&lt;&lt;<PAGE 394>&gt;&gt;）</li>
-<li>principles·客户端上下文共享机制（&lt;&lt;<PAGE 397>&gt;&gt;&lt;&lt;<PAGE 399>&gt;&gt;）</li>
-<li>principles·Fast Roaming 条件限制（&lt;&lt;<PAGE 395>&gt;&gt;&lt;&lt;<PAGE 402>&gt;&gt;）</li>
-<li>principles·Sticky Client Avoidance 与 Roaming RSSI 阈值（&lt;&lt;<PAGE 404>&gt;&gt;&lt;&lt;<PAGE 416>&gt;&gt;）</li>
-<li>principles·Mesh 拓扑限制（&lt;&lt;<PAGE 439>&gt;&gt;）</li>
-<li>principles·Auto Mesh 机制（&lt;&lt;<PAGE 440>&gt;&gt;）</li>
-<li>frameworks·RAP 远程 AP 五步开通序列（&lt;&lt;<PAGE 423>&gt;&gt;~&lt;&lt;<PAGE 432>&gt;&gt;）</li>
-<li>cases·Mesh/Bridge 配置操作路径（&lt;&lt;<PAGE 442>&gt;&gt;&lt;&lt;<PAGE 443>&gt;&gt;&lt;&lt;<PAGE 444>&gt;&gt;）</li>
-<li>counter-examples·地理相邻互相看不见的 AP（&lt;&lt;<PAGE 415>&gt;&gt;）</li>
-<li>counter-examples·Roaming RSSI 阈值设错的两类后果（&lt;&lt;<PAGE 416>&gt;&gt;）</li>
-<li>counter-examples·Fast Roaming / OKC 加密限制（&lt;&lt;<PAGE 395>&gt;&gt;&lt;&lt;<PAGE 402>&gt;&gt;）</li>
-<li>counter-examples·WIPS Client Blocklist 局限（&lt;&lt;<PAGE 387>&gt;&gt;）</li>
-<li>counter-examples·扫描参数安全/性能权衡（&lt;&lt;<PAGE 373>&gt;&gt;&lt;&lt;<PAGE 376>&gt;&gt;）</li>
-<li>counter-examples·RSSI Bad 区间不建议音视频（&lt;&lt;<PAGE 379>&gt;&gt;）</li>
-<li>counter-examples·Bridge 模式 VLAN tagging 兼容性（&lt;&lt;<PAGE 437>&gt;&gt;）</li>
+<li>principles·DRM 分布式射频管理架构（ <code>&lt;span class="pg"&gt;原文p364&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p365&lt;/span&gt;</code> ）</li>
+<li>principles·Smart Load Balance（ <code>&lt;span class="pg"&gt;原文p370&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p371&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p372&lt;/span&gt;</code> ）</li>
+<li>principles·背景扫描机制与参数（ <code>&lt;span class="pg"&gt;原文p373&lt;/span&gt;</code> ）</li>
+<li>principles·RSSI 定义与数值对照（ <code>&lt;span class="pg"&gt;原文p378&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p379&lt;/span&gt;</code> ）</li>
+<li>principles·WIPS 分类 Interfering/Rogue/Friendly（ <code>&lt;span class="pg"&gt;原文p384&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p385&lt;/span&gt;</code> ）</li>
+<li>principles·漫游判定条件 L2/L3（ <code>&lt;span class="pg"&gt;原文p400&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p394&lt;/span&gt;</code> ）</li>
+<li>principles·客户端上下文共享机制（ <code>&lt;span class="pg"&gt;原文p397&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p399&lt;/span&gt;</code> ）</li>
+<li>principles·Fast Roaming 条件限制（ <code>&lt;span class="pg"&gt;原文p395&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p402&lt;/span&gt;</code> ）</li>
+<li>principles·Sticky Client Avoidance 与 Roaming RSSI 阈值（ <code>&lt;span class="pg"&gt;原文p404&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p416&lt;/span&gt;</code> ）</li>
+<li>principles·Mesh 拓扑限制（ <code>&lt;span class="pg"&gt;原文p439&lt;/span&gt;</code> ）</li>
+<li>principles·Auto Mesh 机制（ <code>&lt;span class="pg"&gt;原文p440&lt;/span&gt;</code> ）</li>
+<li>frameworks·RAP 远程 AP 五步开通序列（ <code>&lt;span class="pg"&gt;原文p423&lt;/span&gt;</code> ~ <code>&lt;span class="pg"&gt;原文p432&lt;/span&gt;</code> ）</li>
+<li>cases·Mesh/Bridge 配置操作路径（ <code>&lt;span class="pg"&gt;原文p442&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p443&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p444&lt;/span&gt;</code> ）</li>
+<li>counter-examples·地理相邻互相看不见的 AP（ <code>&lt;span class="pg"&gt;原文p415&lt;/span&gt;</code> ）</li>
+<li>counter-examples·Roaming RSSI 阈值设错的两类后果（ <code>&lt;span class="pg"&gt;原文p416&lt;/span&gt;</code> ）</li>
+<li>counter-examples·Fast Roaming / OKC 加密限制（ <code>&lt;span class="pg"&gt;原文p395&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p402&lt;/span&gt;</code> ）</li>
+<li>counter-examples·WIPS Client Blocklist 局限（ <code>&lt;span class="pg"&gt;原文p387&lt;/span&gt;</code> ）</li>
+<li>counter-examples·扫描参数安全/性能权衡（ <code>&lt;span class="pg"&gt;原文p373&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p376&lt;/span&gt;</code> ）</li>
+<li>counter-examples·RSSI Bad 区间不建议音视频（ <code>&lt;span class="pg"&gt;原文p379&lt;/span&gt;</code> ）</li>
+<li>counter-examples·Bridge 模式 VLAN tagging 兼容性（ <code>&lt;span class="pg"&gt;原文p437&lt;/span&gt;</code> ）</li>
 </ul><div class="pn"><a href="wireless-service-delivery.html">⬅ 上一单元：wireless-service-delivery</a><a class="nxt" href="monitoring-operations.html">下一单元：monitoring-operations ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

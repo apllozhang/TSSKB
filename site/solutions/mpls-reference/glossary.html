@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -63,79 +64,79 @@ blockquote p{margin:6px 0}
 </blockquote>
 <h2 id="_1">基础术语</h2>
 <ul>
-<li><strong>MPLS (Multiprotocol Label Switching)</strong>：基于预分配标签的标签交换，转发不看内层 IP 头 &lt;&lt;<PAGE 5>&gt;&gt;</li>
-<li><strong>LER (Label Edge Router)</strong>：MPLS 域边缘路由器（即 PE），push/pop 标签；分 iLER/eLER &lt;&lt;<PAGE 7>&gt;&gt;</li>
-<li><strong>LSR (Label Switch Router)</strong>：域内路由器，执行 swap；LER 也算 LSR &lt;&lt;<PAGE 7>&gt;&gt;</li>
-<li><strong>LSP (Label Switched Path)</strong>：iLER 到 eLER 的预确定传输隧道；单向，双向需两条 &lt;&lt;<PAGE 8>&gt;&gt;</li>
-<li><strong>FEC (Forwarding Equivalence Class)</strong>：赋同一标签的相似包集合（前缀/QoS 标记等） &lt;&lt;<PAGE 8>&gt;&gt;</li>
-<li><strong>LDP (Label Distribution Protocol)</strong>：RFC 5036 标签信令，依 IGP 路由建传输 LSP &lt;&lt;<PAGE 8>&gt;&gt;</li>
-<li><strong>T-LDP (Targeted-LDP)</strong>：远端 LER 间单播 UDP/TCP 会话，交换服务标签，抗链路故障保会话 &lt;&lt;<PAGE 15>&gt;&gt;</li>
-<li><strong>MP-BGP</strong>：RFC 2283，为服务交换路由+服务标签并自动发现同服务 PE &lt;&lt;<PAGE 15>&gt;&gt;</li>
+<li><strong>MPLS (Multiprotocol Label Switching)</strong>：基于预分配标签的标签交换，转发不看内层 IP 头  <code>&lt;span class="pg"&gt;原文p5&lt;/span&gt;</code> </li>
+<li><strong>LER (Label Edge Router)</strong>：MPLS 域边缘路由器（即 PE），push/pop 标签；分 iLER/eLER  <code>&lt;span class="pg"&gt;原文p7&lt;/span&gt;</code> </li>
+<li><strong>LSR (Label Switch Router)</strong>：域内路由器，执行 swap；LER 也算 LSR  <code>&lt;span class="pg"&gt;原文p7&lt;/span&gt;</code> </li>
+<li><strong>LSP (Label Switched Path)</strong>：iLER 到 eLER 的预确定传输隧道；单向，双向需两条  <code>&lt;span class="pg"&gt;原文p8&lt;/span&gt;</code> </li>
+<li><strong>FEC (Forwarding Equivalence Class)</strong>：赋同一标签的相似包集合（前缀/QoS 标记等）  <code>&lt;span class="pg"&gt;原文p8&lt;/span&gt;</code> </li>
+<li><strong>LDP (Label Distribution Protocol)</strong>：RFC 5036 标签信令，依 IGP 路由建传输 LSP  <code>&lt;span class="pg"&gt;原文p8&lt;/span&gt;</code> </li>
+<li><strong>T-LDP (Targeted-LDP)</strong>：远端 LER 间单播 UDP/TCP 会话，交换服务标签，抗链路故障保会话  <code>&lt;span class="pg"&gt;原文p15&lt;/span&gt;</code> </li>
+<li><strong>MP-BGP</strong>：RFC 2283，为服务交换路由+服务标签并自动发现同服务 PE  <code>&lt;span class="pg"&gt;原文p15&lt;/span&gt;</code> </li>
 </ul>
 <h2 id="_2">标签结构</h2>
 <ul>
-<li><strong>MPLS 标签结构</strong>：32 位 shim 头 = 20-bit Label + 3-bit EXP + 1-bit S + 8-bit TTL；Layer 2.5 协议 &lt;&lt;<PAGE 9>&gt;&gt;</li>
-<li><strong>EXP bits</strong>：标签头 3 个实验位，承载 QoS；仅顶层标签被处理 &lt;&lt;<PAGE 9>&gt;&gt;</li>
-<li><strong>S Bit / BoS</strong>：标签栈底标志位 &lt;&lt;<PAGE 9>&gt;&gt;</li>
-<li><strong>保留标签 0-15</strong>：0=IPv4 Explicit NULL、1=Router Alert、2=IPv6 Explicit NULL、3=Implicit NULL、14=OAM Alert &lt;&lt;<PAGE 9-10>&gt;&gt;</li>
-<li><strong>标签栈 (Label Stacking)</strong>：LIFO 多标签；VPN 顶为 transport、底为 service；厂商普遍 4-6 层 &lt;&lt;<PAGE 10>&gt;&gt;</li>
-<li><strong>FTN (FEC-To-NHLFE)</strong>：FIB 中面向 Push 的条目 &lt;&lt;<PAGE 10>&gt;&gt;</li>
-<li><strong>ILM (Ingress Label Mapping)</strong>：面向 Swap/Pop 的条目；本地与远端标签绑定均存于此 &lt;&lt;<PAGE 10>&gt;&gt;</li>
-<li><strong>NHLFE</strong>：下一跳标签转发表项 &lt;&lt;<PAGE 10>&gt;&gt;</li>
-<li><strong>push / swap / pop</strong>：LSR 三种标签操作（imposition/disposition 为别称） &lt;&lt;<PAGE 16>&gt;&gt;</li>
+<li><strong>MPLS 标签结构</strong>：32 位 shim 头 = 20-bit Label + 3-bit EXP + 1-bit S + 8-bit TTL；Layer 2.5 协议  <code>&lt;span class="pg"&gt;原文p9&lt;/span&gt;</code> </li>
+<li><strong>EXP bits</strong>：标签头 3 个实验位，承载 QoS；仅顶层标签被处理  <code>&lt;span class="pg"&gt;原文p9&lt;/span&gt;</code> </li>
+<li><strong>S Bit / BoS</strong>：标签栈底标志位  <code>&lt;span class="pg"&gt;原文p9&lt;/span&gt;</code> </li>
+<li><strong>保留标签 0-15</strong>：0=IPv4 Explicit NULL、1=Router Alert、2=IPv6 Explicit NULL、3=Implicit NULL、14=OAM Alert  <code>&lt;span class="pg"&gt;原文p9-10&lt;/span&gt;</code> </li>
+<li><strong>标签栈 (Label Stacking)</strong>：LIFO 多标签；VPN 顶为 transport、底为 service；厂商普遍 4-6 层  <code>&lt;span class="pg"&gt;原文p10&lt;/span&gt;</code> </li>
+<li><strong>FTN (FEC-To-NHLFE)</strong>：FIB 中面向 Push 的条目  <code>&lt;span class="pg"&gt;原文p10&lt;/span&gt;</code> </li>
+<li><strong>ILM (Ingress Label Mapping)</strong>：面向 Swap/Pop 的条目；本地与远端标签绑定均存于此  <code>&lt;span class="pg"&gt;原文p10&lt;/span&gt;</code> </li>
+<li><strong>NHLFE</strong>：下一跳标签转发表项  <code>&lt;span class="pg"&gt;原文p10&lt;/span&gt;</code> </li>
+<li><strong>push / swap / pop</strong>：LSR 三种标签操作（imposition/disposition 为别称）  <code>&lt;span class="pg"&gt;原文p16&lt;/span&gt;</code> </li>
 </ul>
 <h2 id="ldp">LDP 体系</h2>
 <ul>
-<li><strong>LDP 消息四类</strong>：Discovery/Session/Advertisement/Notification；UDP 646 发现、TCP 646 会话、224.0.0.2 组播 hello &lt;&lt;<PAGE 11-12>&gt;&gt;</li>
-<li><strong>Label Mapping / Withdraw / Release</strong>：标签映射通告/撤销/释放三类核心通告消息 &lt;&lt;<PAGE 11-13>&gt;&gt;</li>
-<li><strong>LDP ID</strong>：6 字节 = 4 字节 LSR 标识（loopback）+ 2 字节标签空间（0=per-platform） &lt;&lt;<PAGE 13>&gt;&gt;</li>
-<li><strong>LDP MD5 认证</strong>：每 TCP 段附 MD5 签名防伪造，双方同钥；不符静默丢弃 &lt;&lt;<PAGE 14-15>&gt;&gt;</li>
-<li><strong>LDP Graceful Restart</strong>：RFC 3478，控制面重启期间保留转发状态（NSF）；仅计划内接管 &lt;&lt;<PAGE 19>&gt;&gt;</li>
-<li><strong>hold-timer / keepalive 双定时器</strong>：hello adjacency 判死 / 会话完整性监测 &lt;&lt;<PAGE 12>&gt;&gt;</li>
-<li><strong>LSR ID 唯一性</strong>：loopback 必须全网唯一，否则不可预测行为 &lt;&lt;<PAGE 13>&gt;&gt;</li>
+<li><strong>LDP 消息四类</strong>：Discovery/Session/Advertisement/Notification；UDP 646 发现、TCP 646 会话、224.0.0.2 组播 hello  <code>&lt;span class="pg"&gt;原文p11-12&lt;/span&gt;</code> </li>
+<li><strong>Label Mapping / Withdraw / Release</strong>：标签映射通告/撤销/释放三类核心通告消息  <code>&lt;span class="pg"&gt;原文p11-13&lt;/span&gt;</code> </li>
+<li><strong>LDP ID</strong>：6 字节 = 4 字节 LSR 标识（loopback）+ 2 字节标签空间（0=per-platform）  <code>&lt;span class="pg"&gt;原文p13&lt;/span&gt;</code> </li>
+<li><strong>LDP MD5 认证</strong>：每 TCP 段附 MD5 签名防伪造，双方同钥；不符静默丢弃  <code>&lt;span class="pg"&gt;原文p14-15&lt;/span&gt;</code> </li>
+<li><strong>LDP Graceful Restart</strong>：RFC 3478，控制面重启期间保留转发状态（NSF）；仅计划内接管  <code>&lt;span class="pg"&gt;原文p19&lt;/span&gt;</code> </li>
+<li><strong>hold-timer / keepalive 双定时器</strong>：hello adjacency 判死 / 会话完整性监测  <code>&lt;span class="pg"&gt;原文p12&lt;/span&gt;</code> </li>
+<li><strong>LSR ID 唯一性</strong>：loopback 必须全网唯一，否则不可预测行为  <code>&lt;span class="pg"&gt;原文p13&lt;/span&gt;</code> </li>
 </ul>
 <h2 id="_3">分发/控制/保留模式</h2>
 <ul>
-<li><strong>DoD (Downstream-on-Demand)</strong>：仅应答请求才发标签 &lt;&lt;<PAGE 13>&gt;&gt;</li>
-<li><strong>DU (Downstream Unsolicited)</strong>：主动发标签；AOS 唯一支持；常配 LLR &lt;&lt;<PAGE 13>&gt;&gt;</li>
-<li><strong>ILD (Independent Label Distribution)</strong>：随时通告标签映射；AOS 唯一支持 &lt;&lt;<PAGE 13-14>&gt;&gt;</li>
-<li><strong>OLD (Ordered Label Distribution)</strong>：收到下游标签或自身为 egress 才通告 &lt;&lt;<PAGE 14>&gt;&gt;</li>
-<li><strong>CLR (Conservative Label Retention)</strong>：只保留有效下一跳绑定 &lt;&lt;<PAGE 14>&gt;&gt;</li>
-<li><strong>LLR (Liberal Label Retention)</strong>：保留所有绑定；AOS 唯一支持 &lt;&lt;<PAGE 14>&gt;&gt;</li>
+<li><strong>DoD (Downstream-on-Demand)</strong>：仅应答请求才发标签  <code>&lt;span class="pg"&gt;原文p13&lt;/span&gt;</code> </li>
+<li><strong>DU (Downstream Unsolicited)</strong>：主动发标签；AOS 唯一支持；常配 LLR  <code>&lt;span class="pg"&gt;原文p13&lt;/span&gt;</code> </li>
+<li><strong>ILD (Independent Label Distribution)</strong>：随时通告标签映射；AOS 唯一支持  <code>&lt;span class="pg"&gt;原文p13-14&lt;/span&gt;</code> </li>
+<li><strong>OLD (Ordered Label Distribution)</strong>：收到下游标签或自身为 egress 才通告  <code>&lt;span class="pg"&gt;原文p14&lt;/span&gt;</code> </li>
+<li><strong>CLR (Conservative Label Retention)</strong>：只保留有效下一跳绑定  <code>&lt;span class="pg"&gt;原文p14&lt;/span&gt;</code> </li>
+<li><strong>LLR (Liberal Label Retention)</strong>：保留所有绑定；AOS 唯一支持  <code>&lt;span class="pg"&gt;原文p14&lt;/span&gt;</code> </li>
 </ul>
 <h2 id="qosttlphp">QoS/TTL/PHP</h2>
 <ul>
-<li><strong>PHP (Penultimate Hop Popping)</strong>：eLER 以 implicit NULL 请求倒数第二跳弹传输标签省一次查表 &lt;&lt;<PAGE 16>&gt;&gt;</li>
-<li><strong>Implicit NULL (label 3)</strong>：PHP 信号标签 &lt;&lt;<PAGE 10-16>&gt;&gt;</li>
-<li><strong>Explicit NULL (0/2)</strong>：保留 EXP 的 PHP 替代；AOS 不支持 &lt;&lt;<PAGE 16-17>&gt;&gt;</li>
-<li><strong>QoS uniform mode</strong>：客户 IP precedence 复制进 EXP，出域回写 &lt;&lt;<PAGE 18>&gt;&gt;</li>
-<li><strong>QoS pipe mode</strong>：EXP 按运营商策略设定，客户 DSCP 不动 &lt;&lt;<PAGE 18>&gt;&gt;</li>
-<li><strong>TTL uniform/pipe mode</strong>：uniform 逐跳递减；pipe 中 L3VPN 两端各减 1、L2VPN 不变 &lt;&lt;<PAGE 19>&gt;&gt;</li>
+<li><strong>PHP (Penultimate Hop Popping)</strong>：eLER 以 implicit NULL 请求倒数第二跳弹传输标签省一次查表  <code>&lt;span class="pg"&gt;原文p16&lt;/span&gt;</code> </li>
+<li><strong>Implicit NULL (label 3)</strong>：PHP 信号标签  <code>&lt;span class="pg"&gt;原文p10-16&lt;/span&gt;</code> </li>
+<li><strong>Explicit NULL (0/2)</strong>：保留 EXP 的 PHP 替代；AOS 不支持  <code>&lt;span class="pg"&gt;原文p16-17&lt;/span&gt;</code> </li>
+<li><strong>QoS uniform mode</strong>：客户 IP precedence 复制进 EXP，出域回写  <code>&lt;span class="pg"&gt;原文p18&lt;/span&gt;</code> </li>
+<li><strong>QoS pipe mode</strong>：EXP 按运营商策略设定，客户 DSCP 不动  <code>&lt;span class="pg"&gt;原文p18&lt;/span&gt;</code> </li>
+<li><strong>TTL uniform/pipe mode</strong>：uniform 逐跳递减；pipe 中 L3VPN 两端各减 1、L2VPN 不变  <code>&lt;span class="pg"&gt;原文p19&lt;/span&gt;</code> </li>
 </ul>
 <h2 id="_4">服务模型</h2>
 <ul>
-<li><strong>SAP (Service Access Point) / AC</strong>：UNI 侧逻辑端口绑定客户流量；同端口可多 SAP 复用 &lt;&lt;<PAGE 20>&gt;&gt;</li>
-<li><strong>SDP (Service Distribution Point) / VC</strong>：NNI 侧单向逻辑连接到远端；本地唯一 ID &lt;&lt;<PAGE 20>&gt;&gt;</li>
-<li><strong>Service Tunnel</strong>：传输 LSP 内承载服务流量的虚拟链路（FEC=服务标识） &lt;&lt;<PAGE 20>&gt;&gt;</li>
-<li><strong>Transport Tunnel</strong>：基于 FEC 的单向传输路径（FEC=各 LSR loopback） &lt;&lt;<PAGE 20>&gt;&gt;</li>
+<li><strong>SAP (Service Access Point) / AC</strong>：UNI 侧逻辑端口绑定客户流量；同端口可多 SAP 复用  <code>&lt;span class="pg"&gt;原文p20&lt;/span&gt;</code> </li>
+<li><strong>SDP (Service Distribution Point) / VC</strong>：NNI 侧单向逻辑连接到远端；本地唯一 ID  <code>&lt;span class="pg"&gt;原文p20&lt;/span&gt;</code> </li>
+<li><strong>Service Tunnel</strong>：传输 LSP 内承载服务流量的虚拟链路（FEC=服务标识）  <code>&lt;span class="pg"&gt;原文p20&lt;/span&gt;</code> </li>
+<li><strong>Transport Tunnel</strong>：基于 FEC 的单向传输路径（FEC=各 LSR loopback）  <code>&lt;span class="pg"&gt;原文p20&lt;/span&gt;</code> </li>
 </ul>
 <h2 id="l2vpn">L2VPN</h2>
 <ul>
-<li><strong>VPLS (Virtual Private LAN Service)</strong>：E-LAN 多点；全互联 PW + per-VPLS MAC 学习/桥接/复制 &lt;&lt;<PAGE 21>&gt;&gt;</li>
-<li><strong>PW (Pseudowire)</strong>：LER 间虚拟线路；VPLS 全互联成网；split horizon：PW 进 PW 出禁止 &lt;&lt;<PAGE 21>&gt;&gt;</li>
-<li><strong>VPWS (Virtual Private Wire Service)</strong>：E-LINE 点对点；不学 MAC 透明转发；RFC 8077 &lt;&lt;<PAGE 21-22>&gt;&gt;</li>
-<li><strong>EPL (Ethernet Private Line)</strong>：MEF 6.3 整端口 VPWS &lt;&lt;<PAGE 22>&gt;&gt;</li>
-<li><strong>EVPL (Ethernet Virtual Private Line)</strong>：按 C-VLAN 复用多条 PW 于同一端口 &lt;&lt;<PAGE 22>&gt;&gt;</li>
-<li><strong>VE-ID / VBO / VBS</strong>：BGP VPLS 站点标识与标签块偏移/尺寸参数 &lt;&lt;<PAGE 38-39>&gt;&gt;</li>
+<li><strong>VPLS (Virtual Private LAN Service)</strong>：E-LAN 多点；全互联 PW + per-VPLS MAC 学习/桥接/复制  <code>&lt;span class="pg"&gt;原文p21&lt;/span&gt;</code> </li>
+<li><strong>PW (Pseudowire)</strong>：LER 间虚拟线路；VPLS 全互联成网；split horizon：PW 进 PW 出禁止  <code>&lt;span class="pg"&gt;原文p21&lt;/span&gt;</code> </li>
+<li><strong>VPWS (Virtual Private Wire Service)</strong>：E-LINE 点对点；不学 MAC 透明转发；RFC 8077  <code>&lt;span class="pg"&gt;原文p21-22&lt;/span&gt;</code> </li>
+<li><strong>EPL (Ethernet Private Line)</strong>：MEF 6.3 整端口 VPWS  <code>&lt;span class="pg"&gt;原文p22&lt;/span&gt;</code> </li>
+<li><strong>EVPL (Ethernet Virtual Private Line)</strong>：按 C-VLAN 复用多条 PW 于同一端口  <code>&lt;span class="pg"&gt;原文p22&lt;/span&gt;</code> </li>
+<li><strong>VE-ID / VBO / VBS</strong>：BGP VPLS 站点标识与标签块偏移/尺寸参数  <code>&lt;span class="pg"&gt;原文p38-39&lt;/span&gt;</code> </li>
 </ul>
 <h2 id="oam-license">OAM 与 license</h2>
 <ul>
-<li><strong>LSP Ping / Traceroute</strong>：RFC 4379 数据面验证；目的 127/8、UDP 3503；trace 靠 TTL 递增 &lt;&lt;<PAGE 23-24>&gt;&gt;</li>
-<li><strong>show mpls ftn-table / ilm-table / forwarding-table</strong>：FTN/ILM/转发表巡检；OpCode 1=PUSH 2=POP 3=SWAP &lt;&lt;<PAGE 32>&gt;&gt;</li>
-<li><strong>show service vpls/vpws/bind-sdp/mesh-sdp + show mac-learning domain vpls</strong>：业务面验证命令族 &lt;&lt;<PAGE 31-44>&gt;&gt;</li>
-<li><strong>Site-based license</strong>：浮动共享，最多 4 节点（可为 8 单元虚拟机箱），SILOS 站点服务器管理 &lt;&lt;<PAGE 26>&gt;&gt;</li>
-<li><strong>Node-based license</strong>：绑定单 MPLS 节点、不绑硬件序列号/MAC；SWLIC 为机上客户端 &lt;&lt;<PAGE 26>&gt;&gt;</li>
-<li><strong>uosn-mpls-v1.deb</strong>：MPLS 功能 Debian 安装包（配置第一步） &lt;&lt;<PAGE 30>&gt;&gt;</li>
+<li><strong>LSP Ping / Traceroute</strong>：RFC 4379 数据面验证；目的 127/8、UDP 3503；trace 靠 TTL 递增  <code>&lt;span class="pg"&gt;原文p23-24&lt;/span&gt;</code> </li>
+<li><strong>show mpls ftn-table / ilm-table / forwarding-table</strong>：FTN/ILM/转发表巡检；OpCode 1=PUSH 2=POP 3=SWAP  <code>&lt;span class="pg"&gt;原文p32&lt;/span&gt;</code> </li>
+<li><strong>show service vpls/vpws/bind-sdp/mesh-sdp + show mac-learning domain vpls</strong>：业务面验证命令族  <code>&lt;span class="pg"&gt;原文p31-44&lt;/span&gt;</code> </li>
+<li><strong>Site-based license</strong>：浮动共享，最多 4 节点（可为 8 单元虚拟机箱），SILOS 站点服务器管理  <code>&lt;span class="pg"&gt;原文p26&lt;/span&gt;</code> </li>
+<li><strong>Node-based license</strong>：绑定单 MPLS 节点、不绑硬件序列号/MAC；SWLIC 为机上客户端  <code>&lt;span class="pg"&gt;原文p26&lt;/span&gt;</code> </li>
+<li><strong>uosn-mpls-v1.deb</strong>：MPLS 功能 Debian 安装包（配置第一步）  <code>&lt;span class="pg"&gt;原文p30&lt;/span&gt;</code> </li>
 </ul>
 <hr />
 <p>合计：45 条。</p><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

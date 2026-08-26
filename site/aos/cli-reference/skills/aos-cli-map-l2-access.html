@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -71,7 +72,7 @@ blockquote p{margin:6px 0}
 <li>CLI Reference 是 6240 页命令字典，每条命令按"语法→参数→默认值→平台矩阵→用法指南→示例→Release History→相关命令→MIB Objects"固定结构展开；
 正确用法是先定位章（按本地图），再回书按页码查命令全文，不做通读。</li>
 <li>本域覆盖接入层命令：<code>interfaces</code>（30+ 子命令）、<code>lanpower</code>、<code>vlan</code>/<code>pvlan</code>、<code>linkagg</code>、<code>spanty</code>/<code>bridge</code>、<code>erp</code>/<code>mrp</code>、<code>virtual-chassis</code>。</li>
-<li>页码取 PDF 全文标记 <code>&lt;&lt;&lt;PAGE N&gt;&gt;&gt;</code>（第 1 章始于 &lt;&lt;<PAGE 67>&gt;&gt;，对应书内页 1-1）。</li>
+<li>页码取 PDF 全文标记 <code>&lt;&lt;&lt;PAGE N&gt;&gt;&gt;</code>（第 1 章始于  <code>&lt;span class="pg"&gt;原文p67&lt;/span&gt;</code> ，对应书内页 1-1）。</li>
 </ul>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
@@ -83,21 +84,21 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a2">A2（操作步骤）·章节清单与代表命令</h2>
 <ul>
-<li><strong>Ch1 Ethernet Port（&lt;&lt;<PAGE 67>&gt;&gt;，约 85 条）</strong>：<code>interfaces &lt;port&gt; speed|duplex|fec|break-out|eee|ddm</code>、<code>interfaces link-monitoring link-flap-threshold</code>、<code>violation</code>/<code>clear violation</code>；<code>show interfaces status/counters/counters errors/ddm</code>（P1/P2）</li>
-<li><strong>Ch2 PoE（&lt;&lt;<PAGE 254>&gt;&gt;，约 38 条）</strong>：<code>lanpower slot port ...</code>（供电/预算/优先级/power rule）；802.3at 须先 <code>lanpower slot class-detection</code>，802.3bt（固件 3.xx）自动启用；power rule 先创建再绑定（P3/X7）；6465 不能自动检测电源类型，必须手工配置（P4/X9）</li>
-<li><strong>Ch3 UDLD（&lt;&lt;<PAGE 327>&gt;&gt;，约 12 条）</strong>：<code>udld port ...</code> 单向链路检测</li>
-<li><strong>Ch4 Source Learning（&lt;&lt;<PAGE 351>&gt;&gt;，约 33 条）</strong>：<code>mac-address-table</code> 学习/过滤/老化</li>
-<li><strong>Ch5 VLAN Management（&lt;&lt;<PAGE 427>&gt;&gt;，约 13 条）</strong>：<code>vlan vlan_id [admin-state {enable|disable}] [name | prompt-on-deletion]</code>（默认 enable/disable）；<code>vlan 10-15</code> 区间写法；删除 VLAN 自动剥离成员、端口回落 VLAN 1（P5/P6）；<code>pvlan</code>/<code>pvlan secondary</code>/<code>pvlan mapping</code>（P7）</li>
-<li><strong>Ch6 HA VLAN（&lt;&lt;<PAGE 455>&gt;&gt;，约 10 条）</strong>：跨机箱 VLAN 高可用同步</li>
-<li><strong>Ch7 VLAN Stacking（&lt;&lt;<PAGE 476>&gt;&gt;，约 40 条）</strong>：<code>vlan stacking</code>（QinQ 双层标签/保留 VLAN/NNI-UNI 角色）；保留 VLAN 不能用标准 vlan 命令配（X18）</li>
-<li><strong>Ch8 Distributed Spanning Tree（&lt;&lt;<PAGE 567>&gt;&gt;，约 50 条）</strong>：<code>spanty</code>/<code>bridge</code></li>
-<li><strong>Ch12 Loopback Detection（&lt;&lt;<PAGE 1070>&gt;&gt;，约 11 条）</strong>：<code>loopback-detection</code></li>
-<li><strong>Ch13 Link Aggregation（&lt;&lt;<PAGE 1092>&gt;&gt;，约 46 条）</strong>：<code>linkagg ...</code>（静态/LACP，动态仅兼容 IEEE 802.3ad）；<code>hash-control brief</code> 模式哈希退化为源 MAC（L2）/源 IP（L3）（P10/X16）；聚合不能配在 AppMon 已启用端口（X12）</li>
-<li><strong>Ch14 Virtual Chassis（&lt;&lt;<PAGE 1198>&gt;&gt;，约 32 条）</strong>：<code>virtual-chassis</code>（VFL/chassis group）；chassis id 下次重启才生效（X10）；VC 只支持同型号两台（如 6860 与 6900 之间不支持）（X20）</li>
-<li><strong>Ch15 ERP（&lt;&lt;<PAGE 1268>&gt;&gt;，约 16 条）</strong>：<code>erp</code>（ITU-T G.8032 环倒换）</li>
-<li><strong>Ch16 MRP（&lt;&lt;<PAGE 1306>&gt;&gt;，约 11 条）</strong>：<code>mrp</code>（IEC 62439-2 工业环）</li>
-<li><strong>Ch17 MVRP（&lt;&lt;<PAGE 1340>&gt;&gt;，约 23 条）</strong>：<code>mvrp</code>（802.1ak 动态 VLAN 注册）</li>
-<li><strong>Ch20 Automatic Fabric（&lt;&lt;<PAGE 1523>&gt;&gt;，约 12 条）</strong>：<code>fabric</code>/<code>auto-fabric</code></li>
+<li><strong>Ch1 Ethernet Port（ <code>&lt;span class="pg"&gt;原文p67&lt;/span&gt;</code> ，约 85 条）</strong>：<code>interfaces &lt;port&gt; speed|duplex|fec|break-out|eee|ddm</code>、<code>interfaces link-monitoring link-flap-threshold</code>、<code>violation</code>/<code>clear violation</code>；<code>show interfaces status/counters/counters errors/ddm</code>（P1/P2）</li>
+<li><strong>Ch2 PoE（ <code>&lt;span class="pg"&gt;原文p254&lt;/span&gt;</code> ，约 38 条）</strong>：<code>lanpower slot port ...</code>（供电/预算/优先级/power rule）；802.3at 须先 <code>lanpower slot class-detection</code>，802.3bt（固件 3.xx）自动启用；power rule 先创建再绑定（P3/X7）；6465 不能自动检测电源类型，必须手工配置（P4/X9）</li>
+<li><strong>Ch3 UDLD（ <code>&lt;span class="pg"&gt;原文p327&lt;/span&gt;</code> ，约 12 条）</strong>：<code>udld port ...</code> 单向链路检测</li>
+<li><strong>Ch4 Source Learning（ <code>&lt;span class="pg"&gt;原文p351&lt;/span&gt;</code> ，约 33 条）</strong>：<code>mac-address-table</code> 学习/过滤/老化</li>
+<li><strong>Ch5 VLAN Management（ <code>&lt;span class="pg"&gt;原文p427&lt;/span&gt;</code> ，约 13 条）</strong>：<code>vlan vlan_id [admin-state {enable|disable}] [name | prompt-on-deletion]</code>（默认 enable/disable）；<code>vlan 10-15</code> 区间写法；删除 VLAN 自动剥离成员、端口回落 VLAN 1（P5/P6）；<code>pvlan</code>/<code>pvlan secondary</code>/<code>pvlan mapping</code>（P7）</li>
+<li><strong>Ch6 HA VLAN（ <code>&lt;span class="pg"&gt;原文p455&lt;/span&gt;</code> ，约 10 条）</strong>：跨机箱 VLAN 高可用同步</li>
+<li><strong>Ch7 VLAN Stacking（ <code>&lt;span class="pg"&gt;原文p476&lt;/span&gt;</code> ，约 40 条）</strong>：<code>vlan stacking</code>（QinQ 双层标签/保留 VLAN/NNI-UNI 角色）；保留 VLAN 不能用标准 vlan 命令配（X18）</li>
+<li><strong>Ch8 Distributed Spanning Tree（ <code>&lt;span class="pg"&gt;原文p567&lt;/span&gt;</code> ，约 50 条）</strong>：<code>spanty</code>/<code>bridge</code></li>
+<li><strong>Ch12 Loopback Detection（ <code>&lt;span class="pg"&gt;原文p1070&lt;/span&gt;</code> ，约 11 条）</strong>：<code>loopback-detection</code></li>
+<li><strong>Ch13 Link Aggregation（ <code>&lt;span class="pg"&gt;原文p1092&lt;/span&gt;</code> ，约 46 条）</strong>：<code>linkagg ...</code>（静态/LACP，动态仅兼容 IEEE 802.3ad）；<code>hash-control brief</code> 模式哈希退化为源 MAC（L2）/源 IP（L3）（P10/X16）；聚合不能配在 AppMon 已启用端口（X12）</li>
+<li><strong>Ch14 Virtual Chassis（ <code>&lt;span class="pg"&gt;原文p1198&lt;/span&gt;</code> ，约 32 条）</strong>：<code>virtual-chassis</code>（VFL/chassis group）；chassis id 下次重启才生效（X10）；VC 只支持同型号两台（如 6860 与 6900 之间不支持）（X20）</li>
+<li><strong>Ch15 ERP（ <code>&lt;span class="pg"&gt;原文p1268&lt;/span&gt;</code> ，约 16 条）</strong>：<code>erp</code>（ITU-T G.8032 环倒换）</li>
+<li><strong>Ch16 MRP（ <code>&lt;span class="pg"&gt;原文p1306&lt;/span&gt;</code> ，约 11 条）</strong>：<code>mrp</code>（IEC 62439-2 工业环）</li>
+<li><strong>Ch17 MVRP（ <code>&lt;span class="pg"&gt;原文p1340&lt;/span&gt;</code> ，约 23 条）</strong>：<code>mvrp</code>（802.1ak 动态 VLAN 注册）</li>
+<li><strong>Ch20 Automatic Fabric（ <code>&lt;span class="pg"&gt;原文p1523&lt;/span&gt;</code> ，约 12 条）</strong>：<code>fabric</code>/<code>auto-fabric</code></li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
@@ -107,7 +108,7 @@ blockquote p{margin:6px 0}
 <ul>
 <li>802.3at 供电必须先 <code>lanpower slot class-detection</code> 启用分级检测；802.3bt 下自动启用、手工命令不受支持（X7）</li>
 <li>6465 不能自动检测电源类型，不手工配置则系统与 PoE 功率信息显示错误（X9）</li>
-<li>默认删除带成员端口的 VLAN 不弹确认——误删风险由 prompt-on-deletion 兜底，默认 disable（X22，&lt;&lt;<PAGE 428>&gt;&gt;）</li>
+<li>默认删除带成员端口的 VLAN 不弹确认——误删风险由 prompt-on-deletion 兜底，默认 disable（X22， <code>&lt;span class="pg"&gt;原文p428&lt;/span&gt;</code> ）</li>
 <li>VLAN Stacking 保留 VLAN 不可用标准 vlan 命令配置；NNI 口成为 stacking 口后 TPID（非 0x8100 时）不可再改（X18）</li>
 <li>legacy BPDU 仅 flat STP 模式支持，且只应在连 legacy 设备的 Stacking 网络端口启用（X19）</li>
 <li>VC 只支持同型号两台；<code>no virtual-chassis</code> 仅在无任何 VFL 配置时可用（X20）</li>

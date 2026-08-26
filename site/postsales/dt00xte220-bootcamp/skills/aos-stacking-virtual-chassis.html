@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -79,43 +80,43 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="i">I（核心理念）</h2>
 <ul>
-<li>堆叠把 2-8 台同家族交换机变成一个管理实体，四角色 Primary/Secondary/Idle/Pass-Through，Slot-ID 冲突时后来者进 Pass-Through（不阻流量但不成栈）（P38/P39，&lt;&lt;<PAGE 251-255>&gt;&gt;）。</li>
-<li>R8 的 Virtual Chassis 更进一步：多台物理机经 VFL 互联成单一路由器/网桥，接入-核心之间免 STP/VRRP（P46，&lt;&lt;<PAGE 290>&gt;&gt;）。</li>
-<li>两个体系共同的纪律是"切换前必须同步"（P42，&lt;&lt;<PAGE 260>&gt;&gt;）和"原主回来不重选举、MAC retention 恒开"（P50，&lt;&lt;<PAGE 297>&gt;&gt;）。</li>
-<li>脑裂是 VC 最大风险——两 Master 同 IP 同 MAC 会引发网络级故障，须用 RCD/VCSP 双保险（P53，&lt;&lt;<PAGE 306-307>&gt;&gt;）。</li>
+<li>堆叠把 2-8 台同家族交换机变成一个管理实体，四角色 Primary/Secondary/Idle/Pass-Through，Slot-ID 冲突时后来者进 Pass-Through（不阻流量但不成栈）（P38/P39， <code>&lt;span class="pg"&gt;原文p251-255&lt;/span&gt;</code> ）。</li>
+<li>R8 的 Virtual Chassis 更进一步：多台物理机经 VFL 互联成单一路由器/网桥，接入-核心之间免 STP/VRRP（P46， <code>&lt;span class="pg"&gt;原文p290&lt;/span&gt;</code> ）。</li>
+<li>两个体系共同的纪律是"切换前必须同步"（P42， <code>&lt;span class="pg"&gt;原文p260&lt;/span&gt;</code> ）和"原主回来不重选举、MAC retention 恒开"（P50， <code>&lt;span class="pg"&gt;原文p297&lt;/span&gt;</code> ）。</li>
+<li>脑裂是 VC 最大风险——两 Master 同 IP 同 MAC 会引发网络级故障，须用 RCD/VCSP 双保险（P53， <code>&lt;span class="pg"&gt;原文p306-307&lt;/span&gt;</code> ）。</li>
 </ul>
 <h2 id="a1">A1（决策/选型）</h2>
 <ol>
-<li>冗余方案定位：STP 仅 50% 带宽 → LACP 仅链路冗余 → VC 链路+设备冗余+统一管理 → DHL 链路+设备冗余 100% 带宽（F16，&lt;&lt;<PAGE 481>&gt;&gt;）</li>
-<li>机型混堆规则：仅同家族可堆叠；6450-10 只能与 6450-10 混堆、不支持远程堆叠；6350-10/P10 不支持堆叠（&lt;&lt;<PAGE 251-253>&gt;&gt;）</li>
-<li>VC 规格：6900 最多 6 台 mesh、5 VFL/机箱、16 端口/VFL；6860 最多 8 台 ring、专用 2x20G VFL 口；6860/6865 混合 VC 上限仍 8 台 ring（P51/P52，&lt;&lt;<PAGE 299-301>&gt;&gt;）</li>
-<li>防脑裂选型：有 EMP 口用 RCD（周期通告）；无 EMP（如 6860）用 VCSP（经 helper 链路聚合发 PDU）（P53，&lt;&lt;<PAGE 306-307>&gt;&gt;）</li>
+<li>冗余方案定位：STP 仅 50% 带宽 → LACP 仅链路冗余 → VC 链路+设备冗余+统一管理 → DHL 链路+设备冗余 100% 带宽（F16， <code>&lt;span class="pg"&gt;原文p481&lt;/span&gt;</code> ）</li>
+<li>机型混堆规则：仅同家族可堆叠；6450-10 只能与 6450-10 混堆、不支持远程堆叠；6350-10/P10 不支持堆叠（ <code>&lt;span class="pg"&gt;原文p251-253&lt;/span&gt;</code> ）</li>
+<li>VC 规格：6900 最多 6 台 mesh、5 VFL/机箱、16 端口/VFL；6860 最多 8 台 ring、专用 2x20G VFL 口；6860/6865 混合 VC 上限仍 8 台 ring（P51/P52， <code>&lt;span class="pg"&gt;原文p299-301&lt;/span&gt;</code> ）</li>
+<li>防脑裂选型：有 EMP 口用 RCD（周期通告）；无 EMP（如 6860）用 VCSP（经 helper 链路聚合发 PDU）（P53， <code>&lt;span class="pg"&gt;原文p306-307&lt;/span&gt;</code> ）</li>
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ol>
-<li>堆叠槽号修正：全部写 boot.slot.cfg slot 1 同时上电 → <code>show stack topology</code> 见 PASS-THRU DUP-SLOT → <code>stack set slot 1001 saved-slot 2</code>（逐台）→ <code>reload all</code> → 验证 1 PRIMARY/2 SECONDARY/3-4 IDLE（C10，&lt;&lt;<PAGE 251-262>&gt;&gt;）；无 boot.slot.cfg 时按 MAC 法（15 秒内同时上电）或 uptime 法分配（P40，&lt;&lt;<PAGE 256>&gt;&gt;）</li>
-<li>同步与切换：<code>write memory</code> → <code>copy working certified flash-synchro</code> → <code>takeover</code> → <code>show stack topology</code> 确认角色迁移、<code>show running-directory</code> 看 Flash SYNCHRONIZED（C11/P43，&lt;&lt;<PAGE 264-286>&gt;&gt;）</li>
-<li>MAC Retention：<code>mac-retention status enable</code> + <code>mac-retention dup-mac-trap enable</code>；takeover 后 <code>show mac-retention status</code> 显示 Retained；<code>mac release</code> 主动释放（C12/P44，&lt;&lt;<PAGE 273, 271-272>&gt;&gt;）</li>
-<li>拆堆叠：<code>stack set slot N mode standalone</code>（逐台）→ <code>rm boot.slot.cfg</code> → 恢复 labinit 配置 → <code>reload working no rollback-timeout</code>（C11，&lt;&lt;<PAGE 264-286>&gt;&gt;）</li>
-<li>VC 建立（R8）：vcsetup.cfg（机箱 ID/组/VFL）+ vcboot.cfg 双文件须在运行目录（P48，&lt;&lt;<PAGE 294>&gt;&gt;）；Master 选举五级：现任 Master &gt; chassis priority &gt; 最长在线 &gt; 最小 Chassis ID &gt; 最小 MAC（P49，&lt;&lt;<PAGE 296>&gt;&gt;）</li>
-<li>auto-VC 出厂流程：boot 提示 "Do you want to disable auto-configurations [Y/N]?" 输 N → 自动 VFL/Chassis ID 协商（无 vcsetup.cfg 时自动选 Chassis ID、最低 MAC 为 Master）→ <code>show stack topology</code> 查看（C13/P181，&lt;&lt;<PAGE 937-940>&gt;&gt;）</li>
-<li>禁 VC/恢复：<code>no virtual-chassis vf-link 0 member 2/1</code> 逐口删 → 恢复 <code>reload from virtual_dir no rollback-timeout</code>（C13，&lt;&lt;<PAGE 937-940>&gt;&gt;）</li>
-<li>SSP（R6 堆叠分裂保护）：堆叠链双断时备份子堆叠经 helper 收 SSP PDU 后关用户端口、不升主（P45，&lt;&lt;<PAGE 275>&gt;&gt;）</li>
+<li>堆叠槽号修正：全部写 boot.slot.cfg slot 1 同时上电 → <code>show stack topology</code> 见 PASS-THRU DUP-SLOT → <code>stack set slot 1001 saved-slot 2</code>（逐台）→ <code>reload all</code> → 验证 1 PRIMARY/2 SECONDARY/3-4 IDLE（C10， <code>&lt;span class="pg"&gt;原文p251-262&lt;/span&gt;</code> ）；无 boot.slot.cfg 时按 MAC 法（15 秒内同时上电）或 uptime 法分配（P40， <code>&lt;span class="pg"&gt;原文p256&lt;/span&gt;</code> ）</li>
+<li>同步与切换：<code>write memory</code> → <code>copy working certified flash-synchro</code> → <code>takeover</code> → <code>show stack topology</code> 确认角色迁移、<code>show running-directory</code> 看 Flash SYNCHRONIZED（C11/P43， <code>&lt;span class="pg"&gt;原文p264-286&lt;/span&gt;</code> ）</li>
+<li>MAC Retention：<code>mac-retention status enable</code> + <code>mac-retention dup-mac-trap enable</code>；takeover 后 <code>show mac-retention status</code> 显示 Retained；<code>mac release</code> 主动释放（C12/P44， <code>&lt;span class="pg"&gt;原文p273, 271-272&lt;/span&gt;</code> ）</li>
+<li>拆堆叠：<code>stack set slot N mode standalone</code>（逐台）→ <code>rm boot.slot.cfg</code> → 恢复 labinit 配置 → <code>reload working no rollback-timeout</code>（C11， <code>&lt;span class="pg"&gt;原文p264-286&lt;/span&gt;</code> ）</li>
+<li>VC 建立（R8）：vcsetup.cfg（机箱 ID/组/VFL）+ vcboot.cfg 双文件须在运行目录（P48， <code>&lt;span class="pg"&gt;原文p294&lt;/span&gt;</code> ）；Master 选举五级：现任 Master &gt; chassis priority &gt; 最长在线 &gt; 最小 Chassis ID &gt; 最小 MAC（P49， <code>&lt;span class="pg"&gt;原文p296&lt;/span&gt;</code> ）</li>
+<li>auto-VC 出厂流程：boot 提示 "Do you want to disable auto-configurations [Y/N]?" 输 N → 自动 VFL/Chassis ID 协商（无 vcsetup.cfg 时自动选 Chassis ID、最低 MAC 为 Master）→ <code>show stack topology</code> 查看（C13/P181， <code>&lt;span class="pg"&gt;原文p937-940&lt;/span&gt;</code> ）</li>
+<li>禁 VC/恢复：<code>no virtual-chassis vf-link 0 member 2/1</code> 逐口删 → 恢复 <code>reload from virtual_dir no rollback-timeout</code>（C13， <code>&lt;span class="pg"&gt;原文p937-940&lt;/span&gt;</code> ）</li>
+<li>SSP（R6 堆叠分裂保护）：堆叠链双断时备份子堆叠经 helper 收 SSP PDU 后关用户端口、不升主（P45， <code>&lt;span class="pg"&gt;原文p275&lt;/span&gt;</code> ）</li>
 </ol>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>C10 Slot-ID 选举三法对比（saved-slot/MAC/uptime）（&lt;&lt;<PAGE 251-262>&gt;&gt;）</li>
-<li>C11 同步→takeover→拆堆叠全流程（&lt;&lt;<PAGE 264-286>&gt;&gt;）</li>
-<li>C13 6900 auto-VC 与禁用恢复（&lt;&lt;<PAGE 937-940>&gt;&gt;）</li>
+<li>C10 Slot-ID 选举三法对比（saved-slot/MAC/uptime）（ <code>&lt;span class="pg"&gt;原文p251-262&lt;/span&gt;</code> ）</li>
+<li>C11 同步→takeover→拆堆叠全流程（ <code>&lt;span class="pg"&gt;原文p264-286&lt;/span&gt;</code> ）</li>
+<li>C13 6900 auto-VC 与禁用恢复（ <code>&lt;span class="pg"&gt;原文p937-940&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>
-<li>堆叠不超过 8 台且版本必须一致（X25，&lt;&lt;<PAGE 261>&gt;&gt;）；无法登录 Idle/Pass-Through 单元（X26）；Secondary 上仅允许 takeover 等极少数命令（X27，&lt;&lt;<PAGE 262>&gt;&gt;）</li>
-<li>槽号必须唯一且建议从 1 连续分配（X28，&lt;&lt;<PAGE 279>&gt;&gt;）；takeover 前必须完成同步（X29）、<code>reload all</code> 可能落在 certified 分区（X30，&lt;&lt;<PAGE 260>&gt;&gt;）</li>
-<li>6450-10 混堆限制（X4）、6350-10/P10 不可堆叠（X5）、6450-10/P10 不支持远程堆叠（X6，&lt;&lt;<PAGE 252-253>&gt;&gt;）</li>
-<li>VC 仅限 AOS R8 且须同机型（X32，&lt;&lt;<PAGE 290>&gt;&gt;）；VC 脑裂双 Master 同 IP 同 MAC（X33，&lt;&lt;<PAGE 305>&gt;&gt;）</li>
-<li>6860 无 EMP 口故不能用 RCD 防脑裂（X11，&lt;&lt;<PAGE 306>&gt;&gt;）；专用 VFL 口不能当普通口（X9，&lt;&lt;<PAGE 300>&gt;&gt;）；6900-T 固定 10GBase-T 口不能作 VFL（X10，&lt;&lt;<PAGE 299>&gt;&gt;）</li>
-<li>VC 中 write memory 在拓扑变化时受保护警告（X31/X89，&lt;&lt;<PAGE 317>&gt;&gt;）；VC 成员含非 E 型 6860 仍需有效 license（X86，&lt;&lt;<PAGE 59>&gt;&gt;）；V72/C32 用 Yos.img（X84，&lt;&lt;<PAGE 86-87>&gt;&gt;）</li>
+<li>堆叠不超过 8 台且版本必须一致（X25， <code>&lt;span class="pg"&gt;原文p261&lt;/span&gt;</code> ）；无法登录 Idle/Pass-Through 单元（X26）；Secondary 上仅允许 takeover 等极少数命令（X27， <code>&lt;span class="pg"&gt;原文p262&lt;/span&gt;</code> ）</li>
+<li>槽号必须唯一且建议从 1 连续分配（X28， <code>&lt;span class="pg"&gt;原文p279&lt;/span&gt;</code> ）；takeover 前必须完成同步（X29）、<code>reload all</code> 可能落在 certified 分区（X30， <code>&lt;span class="pg"&gt;原文p260&lt;/span&gt;</code> ）</li>
+<li>6450-10 混堆限制（X4）、6350-10/P10 不可堆叠（X5）、6450-10/P10 不支持远程堆叠（X6， <code>&lt;span class="pg"&gt;原文p252-253&lt;/span&gt;</code> ）</li>
+<li>VC 仅限 AOS R8 且须同机型（X32， <code>&lt;span class="pg"&gt;原文p290&lt;/span&gt;</code> ）；VC 脑裂双 Master 同 IP 同 MAC（X33， <code>&lt;span class="pg"&gt;原文p305&lt;/span&gt;</code> ）</li>
+<li>6860 无 EMP 口故不能用 RCD 防脑裂（X11， <code>&lt;span class="pg"&gt;原文p306&lt;/span&gt;</code> ）；专用 VFL 口不能当普通口（X9， <code>&lt;span class="pg"&gt;原文p300&lt;/span&gt;</code> ）；6900-T 固定 10GBase-T 口不能作 VFL（X10， <code>&lt;span class="pg"&gt;原文p299&lt;/span&gt;</code> ）</li>
+<li>VC 中 write memory 在拓扑变化时受保护警告（X31/X89， <code>&lt;span class="pg"&gt;原文p317&lt;/span&gt;</code> ）；VC 成员含非 E 型 6860 仍需有效 license（X86， <code>&lt;span class="pg"&gt;原文p59&lt;/span&gt;</code> ）；V72/C32 用 Yos.img（X84， <code>&lt;span class="pg"&gt;原文p86-87&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
 <ul>

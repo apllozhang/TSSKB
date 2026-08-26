@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -66,40 +67,40 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="i">I（核心理念）</h2>
 <ul>
-<li>服务与传输解耦（F4/P4，&lt;&lt;<PAGE 20>&gt;&gt;）：服务只在有站点的 LER 上创建，SAP（AC）面向 CE、SDP（VC）面向远端；传输隧道可由 LDP/RSVP-TE/静态任一种承载而不动服务层。</li>
-<li>VPLS 是 VPWS 超集（P30，&lt;&lt;<PAGE 21>&gt;&gt;）：VPLS 需全互联 PW + per-VPLS MAC 学习/桥接/复制；VPWS 点对点透明转发、不学客户 MAC。</li>
-<li>防环靠 split horizon：PW 进 PW 出禁止（P11，&lt;&lt;<PAGE 21>&gt;&gt;）。</li>
-<li>T-LDP 保会话抗链路故障（P14，&lt;&lt;<PAGE 15>&gt;&gt;）。</li>
+<li>服务与传输解耦（F4/P4， <code>&lt;span class="pg"&gt;原文p20&lt;/span&gt;</code> ）：服务只在有站点的 LER 上创建，SAP（AC）面向 CE、SDP（VC）面向远端；传输隧道可由 LDP/RSVP-TE/静态任一种承载而不动服务层。</li>
+<li>VPLS 是 VPWS 超集（P30， <code>&lt;span class="pg"&gt;原文p21&lt;/span&gt;</code> ）：VPLS 需全互联 PW + per-VPLS MAC 学习/桥接/复制；VPWS 点对点透明转发、不学客户 MAC。</li>
+<li>防环靠 split horizon：PW 进 PW 出禁止（P11， <code>&lt;span class="pg"&gt;原文p21&lt;/span&gt;</code> ）。</li>
+<li>T-LDP 保会话抗链路故障（P14， <code>&lt;span class="pg"&gt;原文p15&lt;/span&gt;</code> ）。</li>
 </ul>
 <h2 id="a1">A1（行动框架）</h2>
-<p>L2VPN 服务选型框架（F2，&lt;&lt;<PAGE 21-22>&gt;&gt;）：
+<p>L2VPN 服务选型框架（F2， <code>&lt;span class="pg"&gt;原文p21-22&lt;/span&gt;</code> ）：
 1. 连通需求：E-LAN 多点 → VPLS；E-LINE 点对点 → VPWS
 2. VPWS 细分：EPL（整端口一条 PW）vs EVPL（按外层 C-VLAN 复用多条 PW 于同一端口，P31）
 3. 信令选型：T-LDP（手工 SDP far-end，适合少量站点）vs MP-BGP l2vpn-vpls（自动发现+信令一体；单 AS 需 full-mesh 或 RR，P26）</p>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>LDP-VPLS 五步</strong>（C12，&lt;&lt;<PAGE 33-34>&gt;&gt;）：access port → SDP far-end → <code>service vpls vplsid</code> + <code>signaling ldp</code> → SAP port 1/1/4:0 → <code>bind-sdp 102 103</code>（mesh，R1/R6/R7）</li>
-<li><strong>BGP-VPLS 四步</strong>（C13，&lt;&lt;<PAGE 34-35>&gt;&gt;）：<code>ip bgp address-family l2vpn-vpls</code> → neighbor activate l2vpn-vpls → <code>service 2 vpls vplsid 11 signaling bgp ve-id 1</code> → SAP</li>
-<li><strong>VPWS 四步</strong>（C14，&lt;&lt;<PAGE 41-42>&gt;&gt;）：<code>service vpws vcid 100</code> → SDP far-end → <code>bind-sdp 20 spoke</code> → 两端 SAP port 1/1/1:0、1/1/2:0，即 PE1/PE2 端口间虚拟桥</li>
-<li><strong>BGP 自动发现验证</strong>：<code>show ip bgp l2vpn-vpls path 50</code> 看 VPLS-ID、VE Block Offset、Label Base、RT+MTU 扩展团体（C18，&lt;&lt;<PAGE 38-39>&gt;&gt;）</li>
-<li><strong>业务验证命令族</strong>（C15，&lt;&lt;<PAGE 31-44>&gt;&gt;）：<code>show service [vpls|vpws|bind-sdp|mesh-sdp]</code>、<code>show mac-learning domain vpls</code>、<code>show ip bgp l2vpn-vpls [path]</code></li>
-<li><strong>T-LDP 部署</strong>：远端 LER 间单播 UDP 发现 + 单播 TCP 会话，交换服务标签（C4，&lt;&lt;<PAGE 15>&gt;&gt;）</li>
+<li><strong>LDP-VPLS 五步</strong>（C12， <code>&lt;span class="pg"&gt;原文p33-34&lt;/span&gt;</code> ）：access port → SDP far-end → <code>service vpls vplsid</code> + <code>signaling ldp</code> → SAP port 1/1/4:0 → <code>bind-sdp 102 103</code>（mesh，R1/R6/R7）</li>
+<li><strong>BGP-VPLS 四步</strong>（C13， <code>&lt;span class="pg"&gt;原文p34-35&lt;/span&gt;</code> ）：<code>ip bgp address-family l2vpn-vpls</code> → neighbor activate l2vpn-vpls → <code>service 2 vpls vplsid 11 signaling bgp ve-id 1</code> → SAP</li>
+<li><strong>VPWS 四步</strong>（C14， <code>&lt;span class="pg"&gt;原文p41-42&lt;/span&gt;</code> ）：<code>service vpws vcid 100</code> → SDP far-end → <code>bind-sdp 20 spoke</code> → 两端 SAP port 1/1/1:0、1/1/2:0，即 PE1/PE2 端口间虚拟桥</li>
+<li><strong>BGP 自动发现验证</strong>：<code>show ip bgp l2vpn-vpls path 50</code> 看 VPLS-ID、VE Block Offset、Label Base、RT+MTU 扩展团体（C18， <code>&lt;span class="pg"&gt;原文p38-39&lt;/span&gt;</code> ）</li>
+<li><strong>业务验证命令族</strong>（C15， <code>&lt;span class="pg"&gt;原文p31-44&lt;/span&gt;</code> ）：<code>show service [vpls|vpws|bind-sdp|mesh-sdp]</code>、<code>show mac-learning domain vpls</code>、<code>show ip bgp l2vpn-vpls [path]</code></li>
+<li><strong>T-LDP 部署</strong>：远端 LER 间单播 UDP 发现 + 单播 TCP 会话，交换服务标签（C4， <code>&lt;span class="pg"&gt;原文p15&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>LDP-VPLS 五步配置（R1/R6/R7 三站 mesh）（C12，&lt;&lt;<PAGE 33-34>&gt;&gt;）</li>
-<li>BGP-VPLS 四步配置与 VE-ID 参数（C13，&lt;&lt;<PAGE 34-35>&gt;&gt;）</li>
-<li>VPWS E-Line 配置：两 SAP + spoke bind-sdp 成虚拟桥（C14，&lt;&lt;<PAGE 41-42>&gt;&gt;）</li>
-<li>BGP VPLS 自动发现 path 输出解读（VBO/Label Base 53122/MTU 9194）（C18，&lt;&lt;<PAGE 38-39>&gt;&gt;）</li>
+<li>LDP-VPLS 五步配置（R1/R6/R7 三站 mesh）（C12， <code>&lt;span class="pg"&gt;原文p33-34&lt;/span&gt;</code> ）</li>
+<li>BGP-VPLS 四步配置与 VE-ID 参数（C13， <code>&lt;span class="pg"&gt;原文p34-35&lt;/span&gt;</code> ）</li>
+<li>VPWS E-Line 配置：两 SAP + spoke bind-sdp 成虚拟桥（C14， <code>&lt;span class="pg"&gt;原文p41-42&lt;/span&gt;</code> ）</li>
+<li>BGP VPLS 自动发现 path 输出解读（VBO/Label Base 53122/MTU 9194）（C18， <code>&lt;span class="pg"&gt;原文p38-39&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>
-<li>无 split horizon 则 PW 可成骨干环路——PE 绝不从 PW 收到的包再发往 PW（X14/P11，&lt;&lt;<PAGE 21>&gt;&gt;）</li>
-<li>无 T-LDP 时两 LSR 间链路故障直接丢 LDP 会话（X13/P14，&lt;&lt;<PAGE 15>&gt;&gt;）</li>
-<li>VPWS 不提供任何 L2/L3 功能，需要 MAC 层互通就上 VPLS（P30，&lt;&lt;<PAGE 21>&gt;&gt;）</li>
-<li>VPLS PE 必须具备 per-VPLS MAC 学习/桥接/复制，低端设备需核对（P12，&lt;&lt;<PAGE 21>&gt;&gt;）</li>
-<li>T-LDP 仍依赖传输隧道（LDP/RSVP-TE/静态），传输不通则服务隧道建不起来（P24，&lt;&lt;<PAGE 15>&gt;&gt;）</li>
-<li>BGP VPLS 单 AS 不用 RR 就要 LER 全互联，站点多时扩展性差（P26，&lt;&lt;<PAGE 21>&gt;&gt;）</li>
-<li>SAP 只建在有站点的 LER 上，中间 LSR 不感知服务（P4/P6，&lt;&lt;<PAGE 20-21>&gt;&gt;）</li>
+<li>无 split horizon 则 PW 可成骨干环路——PE 绝不从 PW 收到的包再发往 PW（X14/P11， <code>&lt;span class="pg"&gt;原文p21&lt;/span&gt;</code> ）</li>
+<li>无 T-LDP 时两 LSR 间链路故障直接丢 LDP 会话（X13/P14， <code>&lt;span class="pg"&gt;原文p15&lt;/span&gt;</code> ）</li>
+<li>VPWS 不提供任何 L2/L3 功能，需要 MAC 层互通就上 VPLS（P30， <code>&lt;span class="pg"&gt;原文p21&lt;/span&gt;</code> ）</li>
+<li>VPLS PE 必须具备 per-VPLS MAC 学习/桥接/复制，低端设备需核对（P12， <code>&lt;span class="pg"&gt;原文p21&lt;/span&gt;</code> ）</li>
+<li>T-LDP 仍依赖传输隧道（LDP/RSVP-TE/静态），传输不通则服务隧道建不起来（P24， <code>&lt;span class="pg"&gt;原文p15&lt;/span&gt;</code> ）</li>
+<li>BGP VPLS 单 AS 不用 RR 就要 LER 全互联，站点多时扩展性差（P26， <code>&lt;span class="pg"&gt;原文p21&lt;/span&gt;</code> ）</li>
+<li>SAP 只建在有站点的 LER 上，中间 LSR 不感知服务（P4/P6， <code>&lt;span class="pg"&gt;原文p20-21&lt;/span&gt;</code> ）</li>
 </ul>
 <p>来源：MPLS Reference Design Guide（Service Model Ch + Configuration 节，p15-22、p33-42）</p><div class="pn"><a href="sol-mpls-foundation.html">⬅ 上一单元：sol-mpls-foundation</a><a class="nxt" href="sol-mpls-qos-oam.html">下一单元：sol-mpls-qos-oam ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -80,42 +81,42 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
-<li><strong>Terra 前置两步</strong>（&lt;&lt;<PAGE 161>&gt;&gt;）：</li>
+<li><strong>Terra 前置两步</strong>（ <code>&lt;span class="pg"&gt;原文p161&lt;/span&gt;</code> ）：</li>
 <li>删证书：<code>cd switch/cloud</code> → <code>rm -f client.crt cloudCAchain.pem csr.crt private.key public.key</code></li>
 <li>编辑 /working/cloudagent.cfg，修改首行 "Activation Server URL: activation.myovterra.com"
-   （注：同一套流程适用于 Cirrus 与 Terra 两个平台的 OmniSwitch onboarding，&lt;&lt;<PAGE 164>&gt;&gt;）</li>
-<li><strong>宣告设备</strong>：单台宣告，或用 XLSX/CSV 模板批量（&lt;&lt;<PAGE 164>&gt;&gt;）。</li>
-<li><strong>状态与排障 CLI</strong>（&lt;&lt;<PAGE 171>&gt;&gt;&lt;&lt;<PAGE 172>&gt;&gt;）：</li>
+   （注：同一套流程适用于 Cirrus 与 Terra 两个平台的 OmniSwitch onboarding， <code>&lt;span class="pg"&gt;原文p164&lt;/span&gt;</code> ）</li>
+<li><strong>宣告设备</strong>：单台宣告，或用 XLSX/CSV 模板批量（ <code>&lt;span class="pg"&gt;原文p164&lt;/span&gt;</code> ）。</li>
+<li><strong>状态与排障 CLI</strong>（ <code>&lt;span class="pg"&gt;原文p171&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p172&lt;/span&gt;</code> ）：</li>
 <li><code>cloud-agent admin-state enable/disable</code>（默认 enable）</li>
 <li><code>cloud-agent admin-state disable force</code> —— 重建 VPN</li>
 <li><code>cloud-agent discovery-interval</code>（默认 30 分钟）</li>
 <li><code>show cloud-agent status</code>：看 Activation Server State（期望 completeOK）、Device State（期望 DeviceManaged）</li>
 <li><code>show cloud-agent vpn status</code>：示例输出 Activation Server: activation.ovng.myovcloud.com:443、VPN Server: vpnb.ovng.myovcloud.com:443</li>
-<li><strong>重激活</strong>：重启 cloud-agent 进程，或手动重启设备（&lt;&lt;<PAGE 170>&gt;&gt;）。</li>
+<li><strong>重激活</strong>：重启 cloud-agent 进程，或手动重启设备（ <code>&lt;span class="pg"&gt;原文p170&lt;/span&gt;</code> ）。</li>
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
-<li>迁移等不及 30 分钟 Call Home 周期时，重启设备或 cloud-agent 立即触发（&lt;&lt;<PAGE 69>&gt;&gt;）。</li>
-<li>激活失败状态族（与 AP 共用）：Failed To Get Certificate / Upgrade Failed / Configuring VPN Failed / Provisioning Failed / Device Validation Failed / Factory Reset Required（&lt;&lt;<PAGE 146>&gt;&gt;&lt;&lt;<PAGE 147>&gt;&gt;）。</li>
+<li>迁移等不及 30 分钟 Call Home 周期时，重启设备或 cloud-agent 立即触发（ <code>&lt;span class="pg"&gt;原文p69&lt;/span&gt;</code> ）。</li>
+<li>激活失败状态族（与 AP 共用）：Failed To Get Certificate / Upgrade Failed / Configuring VPN Failed / Provisioning Failed / Device Validation Failed / Factory Reset Required（ <code>&lt;span class="pg"&gt;原文p146&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p147&lt;/span&gt;</code> ）。</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li><strong>案例 1</strong>：客户从 Cirrus 整体切换 Terra，交换机 onboard 后无反应——cloudagent.cfg 首行仍是旧 Activation Server URL，且 switch/cloud 下残留旧证书；删证书 + 改 URL 后恢复（&lt;&lt;<PAGE 161>&gt;&gt;）。</li>
-<li><strong>案例 2</strong>：<code>show cloud-agent status</code> 显示 VPN 异常，执行 <code>cloud-agent admin-state disable force</code> 强制重建 VPN 后恢复（&lt;&lt;<PAGE 171>&gt;&gt;）。</li>
+<li><strong>案例 1</strong>：客户从 Cirrus 整体切换 Terra，交换机 onboard 后无反应——cloudagent.cfg 首行仍是旧 Activation Server URL，且 switch/cloud 下残留旧证书；删证书 + 改 URL 后恢复（ <code>&lt;span class="pg"&gt;原文p161&lt;/span&gt;</code> ）。</li>
+<li><strong>案例 2</strong>：<code>show cloud-agent status</code> 显示 VPN 异常，执行 <code>cloud-agent admin-state disable force</code> 强制重建 VPN 后恢复（ <code>&lt;span class="pg"&gt;原文p171&lt;/span&gt;</code> ）。</li>
 </ul>
 <h2 id="b">B（边界与陷阱）</h2>
 <ul>
-<li><strong>切平台必清证书 + 必改 URL</strong>：只做其中一步都不够，残留证书或旧激活 URL 都会导致激活异常（&lt;&lt;<PAGE 161>&gt;&gt;）。</li>
-<li><strong>发现周期错觉</strong>：默认 30 分钟 Call Home，"宣告后没动静"可能只是在等周期，可重启进程加速（&lt;&lt;<PAGE 171>&gt;&gt;&lt;&lt;<PAGE 69>&gt;&gt;）。</li>
-<li><strong>VPN profile 变更需恢复出厂</strong>（&lt;&lt;<PAGE 147>&gt;&gt;）。</li>
+<li><strong>切平台必清证书 + 必改 URL</strong>：只做其中一步都不够，残留证书或旧激活 URL 都会导致激活异常（ <code>&lt;span class="pg"&gt;原文p161&lt;/span&gt;</code> ）。</li>
+<li><strong>发现周期错觉</strong>：默认 30 分钟 Call Home，"宣告后没动静"可能只是在等周期，可重启进程加速（ <code>&lt;span class="pg"&gt;原文p171&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p69&lt;/span&gt;</code> ）。</li>
+<li><strong>VPN profile 变更需恢复出厂</strong>（ <code>&lt;span class="pg"&gt;原文p147&lt;/span&gt;</code> ）。</li>
 </ul>
 <h2 id="_1">来源</h2>
 <ul>
-<li>frameworks·OmniSwitch Onboarding 流程（&lt;&lt;<PAGE 161>&gt;&gt;&lt;&lt;<PAGE 162>&gt;&gt;&lt;&lt;<PAGE 163>&gt;&gt;&lt;&lt;<PAGE 164>&gt;&gt;）</li>
-<li>principles·交换机激活 cloud-agent 机制（&lt;&lt;<PAGE 170>&gt;&gt;&lt;&lt;<PAGE 171>&gt;&gt;&lt;&lt;<PAGE 172>&gt;&gt;）</li>
-<li>cases·交换机 cloud-agent CLI 操作集（&lt;&lt;<PAGE 171>&gt;&gt;&lt;&lt;<PAGE 172>&gt;&gt;）</li>
-<li>cases·交换机重激活操作（&lt;&lt;<PAGE 170>&gt;&gt;）</li>
-<li>counter-examples·交换机切 Terra 需改 cloudagent.cfg 激活 URL 并删证书（&lt;&lt;<PAGE 161>&gt;&gt;）</li>
-<li>counter-examples·激活失败状态族与排查入口（&lt;&lt;<PAGE 146>&gt;&gt;&lt;&lt;<PAGE 147>&gt;&gt;）</li>
-<li>counter-examples·VPN profile 变更后设备需恢复出厂（&lt;&lt;<PAGE 147>&gt;&gt;）</li>
+<li>frameworks·OmniSwitch Onboarding 流程（ <code>&lt;span class="pg"&gt;原文p161&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p162&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p163&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p164&lt;/span&gt;</code> ）</li>
+<li>principles·交换机激活 cloud-agent 机制（ <code>&lt;span class="pg"&gt;原文p170&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p171&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p172&lt;/span&gt;</code> ）</li>
+<li>cases·交换机 cloud-agent CLI 操作集（ <code>&lt;span class="pg"&gt;原文p171&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p172&lt;/span&gt;</code> ）</li>
+<li>cases·交换机重激活操作（ <code>&lt;span class="pg"&gt;原文p170&lt;/span&gt;</code> ）</li>
+<li>counter-examples·交换机切 Terra 需改 cloudagent.cfg 激活 URL 并删证书（ <code>&lt;span class="pg"&gt;原文p161&lt;/span&gt;</code> ）</li>
+<li>counter-examples·激活失败状态族与排查入口（ <code>&lt;span class="pg"&gt;原文p146&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p147&lt;/span&gt;</code> ）</li>
+<li>counter-examples·VPN profile 变更后设备需恢复出厂（ <code>&lt;span class="pg"&gt;原文p147&lt;/span&gt;</code> ）</li>
 </ul><div class="pn"><a href="ap-onboarding.html">⬅ 上一单元：ap-onboarding</a><a class="nxt" href="wired-switch-config.html">下一单元：wired-switch-config ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

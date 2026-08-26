@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -79,50 +80,50 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
-<li><strong>按五阶段方法论推进</strong>：Prepare → Plan → Design → Implement → Operate（&lt;&lt;<PAGE 252>&gt;&gt;、&lt;&lt;<PAGE 964>&gt;&gt;）：先识别语音与音视频用途，运营阶段持续监控维护。</li>
-<li><strong>Preparation 现场勘测</strong>：Site survey → 分析 RF 环境 → 找干扰源；容量基准：办公区 1 AP / 255 m²、每 AP 平均 20-25 用户（&lt;&lt;<PAGE 253>&gt;&gt;）。</li>
-<li><strong>RF 门限设计</strong>（&lt;&lt;<PAGE 928>&gt;&gt;-&lt;&lt;<PAGE 931>&gt;&gt;）：覆盖要求 RSSI ≥ -70dBm；漫游要求 -62~-64dBm；AP 边界交叠约 8dB；SNR ≥ 25dB、Noise &lt; -92dBm、RSSI &gt; -67dBm。</li>
-<li><strong>QoS 映射</strong>：Voice DSCP 46 → 802.1p 6；Video 40 → 4；BE 0 → 0；Background 8 → 1（&lt;&lt;<PAGE 874>&gt;&gt;、&lt;&lt;<PAGE 932>&gt;&gt;）。话机侧建议 Voice 流量 DSCP 46、Voice 信令 DSCP 26（&lt;&lt;<PAGE 933>&gt;&gt;）。</li>
-<li><strong>容量核算</strong>（&lt;&lt;<PAGE 892>&gt;&gt;）：AP13XX (11ax) 每流 400Kbps、最高 35 条语音流（18 并发 G.711/Opus NB）；AP12XX (11ac) 13Mbps、32 流；Rainbow Audio/Video HD 105Mbps（3Mbps/流）/35 流。</li>
-<li><strong>验收指标</strong>：往返时延 &lt; 250ms、802.11 重传 &lt; 15%、Jitter &lt; 100ms、丢包 &lt; 2%（MOS≈4 / R-value 80-90）（&lt;&lt;<PAGE 933>&gt;&gt;、&lt;&lt;<PAGE 1007>&gt;&gt;-&lt;&lt;<PAGE 1008>&gt;&gt;）。</li>
+<li><strong>按五阶段方法论推进</strong>：Prepare → Plan → Design → Implement → Operate（ <code>&lt;span class="pg"&gt;原文p252&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p964&lt;/span&gt;</code> ）：先识别语音与音视频用途，运营阶段持续监控维护。</li>
+<li><strong>Preparation 现场勘测</strong>：Site survey → 分析 RF 环境 → 找干扰源；容量基准：办公区 1 AP / 255 m²、每 AP 平均 20-25 用户（ <code>&lt;span class="pg"&gt;原文p253&lt;/span&gt;</code> ）。</li>
+<li><strong>RF 门限设计</strong>（ <code>&lt;span class="pg"&gt;原文p928&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p931&lt;/span&gt;</code> ）：覆盖要求 RSSI ≥ -70dBm；漫游要求 -62~-64dBm；AP 边界交叠约 8dB；SNR ≥ 25dB、Noise &lt; -92dBm、RSSI &gt; -67dBm。</li>
+<li><strong>QoS 映射</strong>：Voice DSCP 46 → 802.1p 6；Video 40 → 4；BE 0 → 0；Background 8 → 1（ <code>&lt;span class="pg"&gt;原文p874&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p932&lt;/span&gt;</code> ）。话机侧建议 Voice 流量 DSCP 46、Voice 信令 DSCP 26（ <code>&lt;span class="pg"&gt;原文p933&lt;/span&gt;</code> ）。</li>
+<li><strong>容量核算</strong>（ <code>&lt;span class="pg"&gt;原文p892&lt;/span&gt;</code> ）：AP13XX (11ax) 每流 400Kbps、最高 35 条语音流（18 并发 G.711/Opus NB）；AP12XX (11ac) 13Mbps、32 流；Rainbow Audio/Video HD 105Mbps（3Mbps/流）/35 流。</li>
+<li><strong>验收指标</strong>：往返时延 &lt; 250ms、802.11 重传 &lt; 15%、Jitter &lt; 100ms、丢包 &lt; 2%（MOS≈4 / R-value 80-90）（ <code>&lt;span class="pg"&gt;原文p933&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p1007&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p1008&lt;/span&gt;</code> ）。</li>
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
-<li><strong>漫游机制</strong>：802.11r Fast Transition 先握手换钥再漫游（over-the-air FT 为默认）；802.11k 邻居报告省去全信道扫描；802.11v 由 AP 主动建议漫游目标（&lt;&lt;<PAGE 938>&gt;&gt;-&lt;&lt;<PAGE 940>&gt;&gt;）。漫游类型判定：CNC 表中 VLAN 与目标 AP Access Role VLAN 一致 → L2 漫游，否则 L3（&lt;&lt;<PAGE 917>&gt;&gt;）。</li>
-<li><strong>L3 漫游隧道</strong>：跨子网漫游时新 AP 向 Home AP 建 L2 GRE 隧道，用户 IP 不变且 QoS/ACL 策略保留（&lt;&lt;<PAGE 894>&gt;&gt;、&lt;&lt;<PAGE 843>&gt;&gt;）。</li>
-<li><strong>语音走 5GHz</strong>：2.4GHz 受蓝牙/微波炉/雷达干扰，语音实现可行但不推荐（&lt;&lt;<PAGE 908>&gt;&gt;-&lt;&lt;<PAGE 909>&gt;&gt;、&lt;&lt;<PAGE 913>&gt;&gt;）。</li>
-<li><strong>Mesh 语音限制</strong>：语音 mesh 最多 4 跳/4 方向，到达 mesh 点带宽 /3、每方向 /4，根 AP 约 15 台话机中转上限；Mesh 中 VoIP 只能 Best Effort（11r/PMK 限制）（&lt;&lt;<PAGE 899>&gt;&gt;）。</li>
-<li><strong>RAP 远程话机</strong>：Tunnel 模式全流量走 VPN（AP1201H 加密性能约 100Mbps，本部同型 433Mbps）；Local breakout 本地流量不回传（&lt;&lt;<PAGE 904>&gt;&gt;）。</li>
+<li><strong>漫游机制</strong>：802.11r Fast Transition 先握手换钥再漫游（over-the-air FT 为默认）；802.11k 邻居报告省去全信道扫描；802.11v 由 AP 主动建议漫游目标（ <code>&lt;span class="pg"&gt;原文p938&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p940&lt;/span&gt;</code> ）。漫游类型判定：CNC 表中 VLAN 与目标 AP Access Role VLAN 一致 → L2 漫游，否则 L3（ <code>&lt;span class="pg"&gt;原文p917&lt;/span&gt;</code> ）。</li>
+<li><strong>L3 漫游隧道</strong>：跨子网漫游时新 AP 向 Home AP 建 L2 GRE 隧道，用户 IP 不变且 QoS/ACL 策略保留（ <code>&lt;span class="pg"&gt;原文p894&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p843&lt;/span&gt;</code> ）。</li>
+<li><strong>语音走 5GHz</strong>：2.4GHz 受蓝牙/微波炉/雷达干扰，语音实现可行但不推荐（ <code>&lt;span class="pg"&gt;原文p908&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p909&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p913&lt;/span&gt;</code> ）。</li>
+<li><strong>Mesh 语音限制</strong>：语音 mesh 最多 4 跳/4 方向，到达 mesh 点带宽 /3、每方向 /4，根 AP 约 15 台话机中转上限；Mesh 中 VoIP 只能 Best Effort（11r/PMK 限制）（ <code>&lt;span class="pg"&gt;原文p899&lt;/span&gt;</code> ）。</li>
+<li><strong>RAP 远程话机</strong>：Tunnel 模式全流量走 VPN（AP1201H 加密性能约 100Mbps，本部同型 433Mbps）；Local breakout 本地流量不回传（ <code>&lt;span class="pg"&gt;原文p904&lt;/span&gt;</code> ）。</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>智能手机 EIRP 不对称：手机 5GHz 仅约 11dBm，是 AP 的 1/8 距离短板；降 AP 功率迁就手机会导致 AP 数量暴涨，手机 VoWLAN 只能 Best Effort（&lt;&lt;<PAGE 931>&gt;&gt;）。</li>
-<li>81x8s 话机兼容性：8158s/8168s 当前版本拒绝 AP 的 802.11v 请求，需按终端能力分 SSID（&lt;&lt;<PAGE 940>&gt;&gt;）。</li>
-<li>RAP 三禁区实例：总部勿用 RAP（VPN 隧道约束）、加密带宽约打 2.3 折、同地两台 RAP 间 8168s 不支持切换（&lt;&lt;<PAGE 904>&gt;&gt;）。</li>
+<li>智能手机 EIRP 不对称：手机 5GHz 仅约 11dBm，是 AP 的 1/8 距离短板；降 AP 功率迁就手机会导致 AP 数量暴涨，手机 VoWLAN 只能 Best Effort（ <code>&lt;span class="pg"&gt;原文p931&lt;/span&gt;</code> ）。</li>
+<li>81x8s 话机兼容性：8158s/8168s 当前版本拒绝 AP 的 802.11v 请求，需按终端能力分 SSID（ <code>&lt;span class="pg"&gt;原文p940&lt;/span&gt;</code> ）。</li>
+<li>RAP 三禁区实例：总部勿用 RAP（VPN 隧道约束）、加密带宽约打 2.3 折、同地两台 RAP 间 8168s 不支持切换（ <code>&lt;span class="pg"&gt;原文p904&lt;/span&gt;</code> ）。</li>
 </ul>
 <h2 id="b">B（边界与陷阱）</h2>
 <ul>
-<li><strong>802.11r 兼容性</strong>：不支持 11r 的设备可能无法关联 11r WLAN；ALE 建议为支持 11r/k/v 的设备单设 WLAN（&lt;&lt;<PAGE 938>&gt;&gt;）。</li>
-<li><strong>2.4GHz 信道聚合（HT40）反模式</strong>：仅适合少数 AP 的热点，多 AP 大部署因 3 信道限制自扰（&lt;&lt;<PAGE 908>&gt;&gt;-&lt;&lt;<PAGE 909>&gt;&gt;）；语音勿走 2.4GHz（&lt;&lt;<PAGE 913>&gt;&gt;）。</li>
-<li><strong>RAP 禁区</strong>：总部不建议部署 RAP；同地两台 RAP 间 8168s 无法 handover（&lt;&lt;<PAGE 904>&gt;&gt;）。</li>
-<li>话机 1x1 单天线走视距+分集，MU-MIMO 空间流复用对语音终端帮助有限（&lt;&lt;<PAGE 912>&gt;&gt;）。</li>
+<li><strong>802.11r 兼容性</strong>：不支持 11r 的设备可能无法关联 11r WLAN；ALE 建议为支持 11r/k/v 的设备单设 WLAN（ <code>&lt;span class="pg"&gt;原文p938&lt;/span&gt;</code> ）。</li>
+<li><strong>2.4GHz 信道聚合（HT40）反模式</strong>：仅适合少数 AP 的热点，多 AP 大部署因 3 信道限制自扰（ <code>&lt;span class="pg"&gt;原文p908&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p909&lt;/span&gt;</code> ）；语音勿走 2.4GHz（ <code>&lt;span class="pg"&gt;原文p913&lt;/span&gt;</code> ）。</li>
+<li><strong>RAP 禁区</strong>：总部不建议部署 RAP；同地两台 RAP 间 8168s 无法 handover（ <code>&lt;span class="pg"&gt;原文p904&lt;/span&gt;</code> ）。</li>
+<li>话机 1x1 单天线走视距+分集，MU-MIMO 空间流复用对语音终端帮助有限（ <code>&lt;span class="pg"&gt;原文p912&lt;/span&gt;</code> ）。</li>
 </ul>
 <h2 id="_1">来源</h2>
 <ul>
-<li>frameworks·F3 五阶段方法论（&lt;&lt;<PAGE 252>&gt;&gt;、&lt;&lt;<PAGE 964>&gt;&gt;）</li>
-<li>frameworks·F4 Preparation 工作框架（&lt;&lt;<PAGE 253>&gt;&gt;）</li>
-<li>principles·P4 MU-MIMO 原理（&lt;&lt;<PAGE 912>&gt;&gt;）</li>
-<li>principles·P20 802.11r/k/v（&lt;&lt;<PAGE 938>&gt;&gt;-&lt;&lt;<PAGE 940>&gt;&gt;）</li>
-<li>principles·P21 语音小区 RSSI 门限（&lt;&lt;<PAGE 928>&gt;&gt;-&lt;&lt;<PAGE 931>&gt;&gt;）</li>
-<li>principles·P22 智能手机 EIRP 不对称（&lt;&lt;<PAGE 931>&gt;&gt;）</li>
-<li>principles·P23 WMM/DSCP/802.1p 映射（&lt;&lt;<PAGE 874>&gt;&gt;、&lt;&lt;<PAGE 932>&gt;&gt;-&lt;&lt;<PAGE 933>&gt;&gt;）</li>
-<li>principles·P24 质量门限（&lt;&lt;<PAGE 933>&gt;&gt;、&lt;&lt;<PAGE 1007>&gt;&gt;-&lt;&lt;<PAGE 1008>&gt;&gt;）</li>
-<li>principles·P25 语音 AP 容量基准（&lt;&lt;<PAGE 892>&gt;&gt;）</li>
-<li>principles·P26 Mesh 带宽衰减（&lt;&lt;<PAGE 899>&gt;&gt;）</li>
-<li>principles·P19 L3 漫游 GRE 隧道（&lt;&lt;<PAGE 894>&gt;&gt;、&lt;&lt;<PAGE 843>&gt;&gt;）</li>
-<li>principles·P41 漫游判定逻辑（&lt;&lt;<PAGE 917>&gt;&gt;）</li>
-<li>principles·P42 RAP 两模式（&lt;&lt;<PAGE 904>&gt;&gt;）</li>
-<li>counter-examples·X12 802.11r 兼容性（&lt;&lt;<PAGE 938>&gt;&gt;、&lt;&lt;<PAGE 940>&gt;&gt;）</li>
-<li>counter-examples·X13 RAP 三禁区（&lt;&lt;<PAGE 904>&gt;&gt;）</li>
-<li>counter-examples·X16 2.4GHz 语音反模式（&lt;&lt;<PAGE 908>&gt;&gt;-&lt;&lt;<PAGE 909>&gt;&gt;、&lt;&lt;<PAGE 913>&gt;&gt;）</li>
+<li>frameworks·F3 五阶段方法论（ <code>&lt;span class="pg"&gt;原文p252&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p964&lt;/span&gt;</code> ）</li>
+<li>frameworks·F4 Preparation 工作框架（ <code>&lt;span class="pg"&gt;原文p253&lt;/span&gt;</code> ）</li>
+<li>principles·P4 MU-MIMO 原理（ <code>&lt;span class="pg"&gt;原文p912&lt;/span&gt;</code> ）</li>
+<li>principles·P20 802.11r/k/v（ <code>&lt;span class="pg"&gt;原文p938&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p940&lt;/span&gt;</code> ）</li>
+<li>principles·P21 语音小区 RSSI 门限（ <code>&lt;span class="pg"&gt;原文p928&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p931&lt;/span&gt;</code> ）</li>
+<li>principles·P22 智能手机 EIRP 不对称（ <code>&lt;span class="pg"&gt;原文p931&lt;/span&gt;</code> ）</li>
+<li>principles·P23 WMM/DSCP/802.1p 映射（ <code>&lt;span class="pg"&gt;原文p874&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p932&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p933&lt;/span&gt;</code> ）</li>
+<li>principles·P24 质量门限（ <code>&lt;span class="pg"&gt;原文p933&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p1007&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p1008&lt;/span&gt;</code> ）</li>
+<li>principles·P25 语音 AP 容量基准（ <code>&lt;span class="pg"&gt;原文p892&lt;/span&gt;</code> ）</li>
+<li>principles·P26 Mesh 带宽衰减（ <code>&lt;span class="pg"&gt;原文p899&lt;/span&gt;</code> ）</li>
+<li>principles·P19 L3 漫游 GRE 隧道（ <code>&lt;span class="pg"&gt;原文p894&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p843&lt;/span&gt;</code> ）</li>
+<li>principles·P41 漫游判定逻辑（ <code>&lt;span class="pg"&gt;原文p917&lt;/span&gt;</code> ）</li>
+<li>principles·P42 RAP 两模式（ <code>&lt;span class="pg"&gt;原文p904&lt;/span&gt;</code> ）</li>
+<li>counter-examples·X12 802.11r 兼容性（ <code>&lt;span class="pg"&gt;原文p938&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p940&lt;/span&gt;</code> ）</li>
+<li>counter-examples·X13 RAP 三禁区（ <code>&lt;span class="pg"&gt;原文p904&lt;/span&gt;</code> ）</li>
+<li>counter-examples·X16 2.4GHz 语音反模式（ <code>&lt;span class="pg"&gt;原文p908&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p909&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p913&lt;/span&gt;</code> ）</li>
 </ul><div class="pn"><a href="wireless-tech-fundamentals.html">⬅ 上一单元：wireless-tech-fundamentals</a><a class="nxt" href="lan-wlan-troubleshooting.html">下一单元：lan-wlan-troubleshooting ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

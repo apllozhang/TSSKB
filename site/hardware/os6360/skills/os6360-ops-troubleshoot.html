@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -68,37 +69,37 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="i">I（核心理念）</h2>
 <ul>
-<li>硬件健康监控三层框架（F3，&lt;&lt;<PAGE 15>&gt;&gt;/&lt;&lt;<PAGE 45>&gt;&gt;/&lt;&lt;<PAGE 55-57>&gt;&gt;）：物理层=面板 LED（OK/VC/PWR 三系统灯+端口灯分色）；传感层=自动监控（超 Warning 发 trap 不停机、超 Danger 自动关机不可配）；CLI 层=用户驱动四板斧（show module/show temperature/show powersupply/show lanpower）。</li>
+<li>硬件健康监控三层框架（F3， <code>&lt;span class="pg"&gt;原文p15&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p45&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p55-57&lt;/span&gt;</code> ）：物理层=面板 LED（OK/VC/PWR 三系统灯+端口灯分色）；传感层=自动监控（超 Warning 发 trap 不停机、超 Danger 自动关机不可配）；CLI 层=用户驱动四板斧（show module/show temperature/show powersupply/show lanpower）。</li>
 <li>首次登录六步闭环（P37）：console（9600-8N1）→admin/switch→解锁会话→改密→时间/可选项→write memory。</li>
 <li>会话解锁安全模型（P38）：出厂仅 console 可用，Telnet/FTP/WebView/SNMP 全锁死需 <code>aaa authentication</code> 逐类解锁。</li>
 </ul>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
-<li><strong>LED 快诊</strong>：OK 琥珀=系统/风扇/温度故障；PWR 稳琥珀=12V 故障、闪琥珀=54V/PoE 故障；VC 灭=关机或非 VC 成员（P13，&lt;&lt;<PAGE 45>&gt;&gt;）</li>
-<li><strong>端口灯分色</strong>：RJ45 绿=非 PoE 链路、琥珀=PoE 链路；SFP 口绿=上行、琥珀=VFL（P14，&lt;&lt;<PAGE 46>&gt;&gt;）</li>
-<li><strong>温度双阈值处置</strong>：Warning→发 trap 查气流/室温；Danger→已自动关机，处理后手动重启（P23，&lt;&lt;<PAGE 56-57>&gt;&gt;）</li>
-<li><strong>巡检命令分层</strong>：槽位用 show module/long、温度用 show temperature（UNDER THRESHOLD 为正常）、电源用 show powersupply、PoE 用 show lanpower（P24，&lt;&lt;<PAGE 55-57>&gt;&gt;）</li>
+<li><strong>LED 快诊</strong>：OK 琥珀=系统/风扇/温度故障；PWR 稳琥珀=12V 故障、闪琥珀=54V/PoE 故障；VC 灭=关机或非 VC 成员（P13， <code>&lt;span class="pg"&gt;原文p45&lt;/span&gt;</code> ）</li>
+<li><strong>端口灯分色</strong>：RJ45 绿=非 PoE 链路、琥珀=PoE 链路；SFP 口绿=上行、琥珀=VFL（P14， <code>&lt;span class="pg"&gt;原文p46&lt;/span&gt;</code> ）</li>
+<li><strong>温度双阈值处置</strong>：Warning→发 trap 查气流/室温；Danger→已自动关机，处理后手动重启（P23， <code>&lt;span class="pg"&gt;原文p56-57&lt;/span&gt;</code> ）</li>
+<li><strong>巡检命令分层</strong>：槽位用 show module/long、温度用 show temperature（UNDER THRESHOLD 为正常）、电源用 show powersupply、PoE 用 show lanpower（P24， <code>&lt;span class="pg"&gt;原文p55-57&lt;/span&gt;</code> ）</li>
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>首次登录六步</strong>：console→admin/switch→<code>aaa authentication default local</code>（或逐类，一次一类）→<code>password</code>（实时落盘）→<code>system timezone/time/date</code>+可选 contact/name/location→<code>show system</code>→<code>write memory</code>（C5，&lt;&lt;<PAGE 21-24>&gt;&gt;）</li>
-<li><strong>硬件巡检</strong>：<code>show module</code>/<code>show module long</code>→<code>show temperature</code> 看 Current/Range/Danger/Thresh/Status→超阈处置（C13，&lt;&lt;<PAGE 55-57>&gt;&gt;）</li>
-<li><strong>PoE 监控</strong>：<code>show lanpower 1</code> 看逐口 Maximum/Actual/Status/Priority/Class+槽预算余量；尾部 <code>*</code> 号=4pair 口跑在 2pair 模式（C24，&lt;&lt;<PAGE 61>&gt;&gt;/&lt;&lt;<PAGE 68>&gt;&gt;）</li>
-<li><strong>PoE 关断两级</strong>：单口 <code>lanpower port admin-state disable</code>；整槽 <code>lanpower slot service stop</code>；admin-state enable 仅复活（C15，&lt;&lt;<PAGE 62>&gt;&gt;）</li>
+<li><strong>首次登录六步</strong>：console→admin/switch→<code>aaa authentication default local</code>（或逐类，一次一类）→<code>password</code>（实时落盘）→<code>system timezone/time/date</code>+可选 contact/name/location→<code>show system</code>→<code>write memory</code>（C5， <code>&lt;span class="pg"&gt;原文p21-24&lt;/span&gt;</code> ）</li>
+<li><strong>硬件巡检</strong>：<code>show module</code>/<code>show module long</code>→<code>show temperature</code> 看 Current/Range/Danger/Thresh/Status→超阈处置（C13， <code>&lt;span class="pg"&gt;原文p55-57&lt;/span&gt;</code> ）</li>
+<li><strong>PoE 监控</strong>：<code>show lanpower 1</code> 看逐口 Maximum/Actual/Status/Priority/Class+槽预算余量；尾部 <code>*</code> 号=4pair 口跑在 2pair 模式（C24， <code>&lt;span class="pg"&gt;原文p61&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p68&lt;/span&gt;</code> ）</li>
+<li><strong>PoE 关断两级</strong>：单口 <code>lanpower port admin-state disable</code>；整槽 <code>lanpower slot service stop</code>；admin-state enable 仅复活（C15， <code>&lt;span class="pg"&gt;原文p62&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>无 RTC 机型用 NTP 同步时间的理由（X2，&lt;&lt;<PAGE 23>&gt;&gt;）</li>
-<li>Priority Disconnect 三场景裁决：同级按端口号（1 高 48 低）、新 PD 高级断低级口、低级被拒（P35，&lt;&lt;<PAGE 66-68>&gt;&gt;）</li>
-<li>Fast PoE 的 LLDP 盲区：LLDP 协商的 PD 要等 AOS 启动完成（X7，&lt;&lt;<PAGE 63>&gt;&gt;）</li>
+<li>无 RTC 机型用 NTP 同步时间的理由（X2， <code>&lt;span class="pg"&gt;原文p23&lt;/span&gt;</code> ）</li>
+<li>Priority Disconnect 三场景裁决：同级按端口号（1 高 48 低）、新 PD 高级断低级口、低级被拒（P35， <code>&lt;span class="pg"&gt;原文p66-68&lt;/span&gt;</code> ）</li>
+<li>Fast PoE 的 LLDP 盲区：LLDP 协商的 PD 要等 AOS 启动完成（X7， <code>&lt;span class="pg"&gt;原文p63&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="b">B（反例/坑）</h2>
 <ul>
-<li><strong>本机型注意</strong>：无实时时钟，断电重启后时间停在关机时刻——必须配 NTP（X2，&lt;&lt;<PAGE 23>&gt;&gt;）</li>
-<li>Danger 阈值出厂固化不可配（X3，&lt;&lt;<PAGE 57>&gt;&gt;）；Danger 关机后不会自动恢复，需手动重启（C13，&lt;&lt;<PAGE 57>&gt;&gt;）</li>
-<li>aaa authentication 一次只能解锁一类会话（X9，&lt;&lt;<PAGE 22>&gt;&gt;）；密码覆盖受限，丢失无法直接绕过（X10，&lt;&lt;<PAGE 22>&gt;&gt;）</li>
-<li>Class 1M 激光：开盖勿用光学仪器直视，空光口勿盯并装保护盖（X20，&lt;&lt;<PAGE 77>&gt;&gt;）</li>
+<li><strong>本机型注意</strong>：无实时时钟，断电重启后时间停在关机时刻——必须配 NTP（X2， <code>&lt;span class="pg"&gt;原文p23&lt;/span&gt;</code> ）</li>
+<li>Danger 阈值出厂固化不可配（X3， <code>&lt;span class="pg"&gt;原文p57&lt;/span&gt;</code> ）；Danger 关机后不会自动恢复，需手动重启（C13， <code>&lt;span class="pg"&gt;原文p57&lt;/span&gt;</code> ）</li>
+<li>aaa authentication 一次只能解锁一类会话（X9， <code>&lt;span class="pg"&gt;原文p22&lt;/span&gt;</code> ）；密码覆盖受限，丢失无法直接绕过（X10， <code>&lt;span class="pg"&gt;原文p22&lt;/span&gt;</code> ）</li>
+<li>Class 1M 激光：开盖勿用光学仪器直视，空光口勿盯并装保护盖（X20， <code>&lt;span class="pg"&gt;原文p77&lt;/span&gt;</code> ）</li>
 <li>ESD 腕带强制（X19）；雷暴禁止插拔线缆作业（X13）；Class A 数字设备不得用于住宅（X24）；受限访问场所安装（X25）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniSwitch 6360 Hardware Users Guide Ch2 首次登录（&lt;&lt;<PAGE 20-24>&gt;&gt;）、Ch3 监控与温度（&lt;&lt;<PAGE 55-57>&gt;&gt;）、Ch4 PoE 监控（&lt;&lt;<PAGE 60-69>&gt;&gt;）、附录 A 安全法规（&lt;&lt;<PAGE 70-83>&gt;&gt;）。条目来源：cases C5/C13/C15/C24；principles P13/P14/P23/P24/P37-P40；counter-examples X2/X3/X9/X10/X13/X19/X20/X24/X25；frameworks F3。</p><div class="pn"><a href="os6360-install-power.html">⬅ 上一单元：os6360-install-power</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<p>OmniSwitch 6360 Hardware Users Guide Ch2 首次登录（ <code>&lt;span class="pg"&gt;原文p20-24&lt;/span&gt;</code> ）、Ch3 监控与温度（ <code>&lt;span class="pg"&gt;原文p55-57&lt;/span&gt;</code> ）、Ch4 PoE 监控（ <code>&lt;span class="pg"&gt;原文p60-69&lt;/span&gt;</code> ）、附录 A 安全法规（ <code>&lt;span class="pg"&gt;原文p70-83&lt;/span&gt;</code> ）。条目来源：cases C5/C13/C15/C24；principles P13/P14/P23/P24/P37-P40；counter-examples X2/X3/X9/X10/X13/X19/X20/X24/X25；frameworks F3。</p><div class="pn"><a href="os6360-install-power.html">⬅ 上一单元：os6360-install-power</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

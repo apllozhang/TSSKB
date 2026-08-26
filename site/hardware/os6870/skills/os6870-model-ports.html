@@ -6,6 +6,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -67,36 +68,36 @@ blockquote p{margin:6px 0}
 <li>判读 RJ45 四色速率 LED 与 VFL 口状态</li>
 </ul>
 <h2 id="i">I（核心理念)</h2>
-<p>6870 是九机型三分类家族（P1，&lt;&lt;<PAGE 12>&gt;&gt;）：非 PoE 固定（-24/-48/V12/CNI-U2/LNI-U6）；P<em>M 模块化（95W bt 多千兆 + 2×QSFP56 200G + Uplink Module Slot）；P</em>Z 固定（60W bt 多千兆至 2.5G + 6×SFP28 + 2×QSFP28 100G）。上行速率阶梯（P2，&lt;&lt;<PAGE 23>&gt;&gt;/&lt;&lt;<PAGE 25>&gt;&gt;）：SFP28=1G/10G/25G（25G 推荐 VFL）→QSFP28=40G/100G→QSFP56=40G/100G/200G。选型决策三问（F1）：要不要 95W AP？→M；要不要 200G/后配上行？→M/V12；预算型 60W PoE？→Z。</p>
+<p>6870 是九机型三分类家族（P1， <code>&lt;span class="pg"&gt;原文p12&lt;/span&gt;</code> ）：非 PoE 固定（-24/-48/V12/CNI-U2/LNI-U6）；P<em>M 模块化（95W bt 多千兆 + 2×QSFP56 200G + Uplink Module Slot）；P</em>Z 固定（60W bt 多千兆至 2.5G + 6×SFP28 + 2×QSFP28 100G）。上行速率阶梯（P2， <code>&lt;span class="pg"&gt;原文p23&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p25&lt;/span&gt;</code> ）：SFP28=1G/10G/25G（25G 推荐 VFL）→QSFP28=40G/100G→QSFP56=40G/100G/200G。选型决策三问（F1）：要不要 95W AP？→M；要不要 200G/后配上行？→M/V12；预算型 60W PoE？→Z。</p>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>三分类定位（F1）：纯千兆非 PoE=24/48；95W bt+200G+模块槽=P24M/P48M；60W bt 固定=P24Z/P48Z；全光=V12；上行扩展=CNI-U2/LNI-U6</li>
 <li>下行核对：M 系列 24 口至 10G（P24M）/48 口至 5G（P48M）；Z 系列至 2.5G；下行 PoE M=95W bt、Z=60W bt</li>
 <li>上行核对：24/48=4×SFP28+2×QSFP28；Z=6×SFP28+2×QSFP28；M/V12=2×QSFP56；CNI-U2=2×QSFP28、LNI-U6=6×SFP56(50G)</li>
-<li>VFL 规划：VFL 口可作 VC 堆叠或普通上行；SFP28 口 25G 推荐用于 VFL（X45，&lt;&lt;<PAGE 23>&gt;&gt;）</li>
+<li>VFL 规划：VFL 口可作 VC 堆叠或普通上行；SFP28 口 25G 推荐用于 VFL（X45， <code>&lt;span class="pg"&gt;原文p23&lt;/span&gt;</code> ）</li>
 <li>环境包络核对：全家族 Tmra 0-45°C、1U 4.4cm、湿度 5-95%（P6）</li>
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>面板识别</strong>：逐机型端口构成查 F1 表（&lt;&lt;<PAGE 12>&gt;&gt;/&lt;&lt;<PAGE 23>&gt;&gt;-&lt;&lt;<PAGE 38>&gt;&gt;）</li>
-<li><strong>RJ45 四色速率 LED 判读</strong>：绿=10/100/1000、蓝=2.5G、品红=5G、琥珀=10G；LED2 琥珀=PoE 使能（P23，&lt;&lt;<PAGE 39>&gt;&gt;）</li>
-<li><strong>光口 LED 两色</strong>：绿=有效上行、琥珀=有效 VFL（P24，&lt;&lt;<PAGE 39>&gt;&gt;）</li>
-<li><strong>系统 LED 五组</strong>：OK（稳绿=诊断与启动 OK/闪绿=进行中/琥珀=失败）；VC（绿=Master/琥珀=Slave/灭=未知）；PS（绿=正常/琥珀=单双故障/灭=无电源）；GRN（绿=省电模式）；VC ID（多灯数值相加=单元号）（P22，&lt;&lt;<PAGE 38>&gt;&gt;/&lt;&lt;<PAGE 39>&gt;&gt;）</li>
-<li><strong>温度语义区分</strong>：chassis 温度=机箱内部传感器（恒高）；ambient=近似室温（P9，&lt;&lt;<PAGE 24>&gt;&gt;）</li>
-<li><strong>console 连接</strong>：rollover 线，115200-8N1（注意与 6360/6865 的 9600 不同）（&lt;&lt;<PAGE 17>&gt;&gt;）</li>
+<li><strong>面板识别</strong>：逐机型端口构成查 F1 表（ <code>&lt;span class="pg"&gt;原文p12&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p23&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p38&lt;/span&gt;</code> ）</li>
+<li><strong>RJ45 四色速率 LED 判读</strong>：绿=10/100/1000、蓝=2.5G、品红=5G、琥珀=10G；LED2 琥珀=PoE 使能（P23， <code>&lt;span class="pg"&gt;原文p39&lt;/span&gt;</code> ）</li>
+<li><strong>光口 LED 两色</strong>：绿=有效上行、琥珀=有效 VFL（P24， <code>&lt;span class="pg"&gt;原文p39&lt;/span&gt;</code> ）</li>
+<li><strong>系统 LED 五组</strong>：OK（稳绿=诊断与启动 OK/闪绿=进行中/琥珀=失败）；VC（绿=Master/琥珀=Slave/灭=未知）；PS（绿=正常/琥珀=单双故障/灭=无电源）；GRN（绿=省电模式）；VC ID（多灯数值相加=单元号）（P22， <code>&lt;span class="pg"&gt;原文p38&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p39&lt;/span&gt;</code> ）</li>
+<li><strong>温度语义区分</strong>：chassis 温度=机箱内部传感器（恒高）；ambient=近似室温（P9， <code>&lt;span class="pg"&gt;原文p24&lt;/span&gt;</code> ）</li>
+<li><strong>console 连接</strong>：rollover 线，115200-8N1（注意与 6360/6865 的 9600 不同）（ <code>&lt;span class="pg"&gt;原文p17&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>95W bt 高密 AP 部署：P48M 48 口多千兆（至 5G）95W bt + 2×QSFP56 + 上行模块槽，待机 251.8W、双 2000W 电源预算最高 3309W（&lt;&lt;<PAGE 31>&gt;&gt;/&lt;&lt;<PAGE 63>&gt;&gt;）</li>
-<li>预算型 60W PoE：P48Z 48 口多千兆（至 2.5G）60W bt + 6×SFP28 + 2×QSFP28，待机 92.4W，不支持 2000W 电源（X30，&lt;&lt;<PAGE 33>&gt;&gt;）</li>
-<li>全光接入：V12=12×SFP28（25G 推荐 VFL）+ 2×QSFP56 + 上行模块槽，无铜口（P4，&lt;&lt;<PAGE 35>&gt;&gt;）</li>
+<li>95W bt 高密 AP 部署：P48M 48 口多千兆（至 5G）95W bt + 2×QSFP56 + 上行模块槽，待机 251.8W、双 2000W 电源预算最高 3309W（ <code>&lt;span class="pg"&gt;原文p31&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p63&lt;/span&gt;</code> ）</li>
+<li>预算型 60W PoE：P48Z 48 口多千兆（至 2.5G）60W bt + 6×SFP28 + 2×QSFP28，待机 92.4W，不支持 2000W 电源（X30， <code>&lt;span class="pg"&gt;原文p33&lt;/span&gt;</code> ）</li>
+<li>全光接入：V12=12×SFP28（25G 推荐 VFL）+ 2×QSFP56 + 上行模块槽，无铜口（P4， <code>&lt;span class="pg"&gt;原文p35&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>
-<li>Z 系列不支持 2000W 电源（PS-2000W-AC-POE-2 仅 P24M/P48M），预算规划不可套用（X30，&lt;&lt;<PAGE 47>&gt;&gt;/&lt;&lt;<PAGE 63>&gt;&gt;）</li>
-<li>全部 RJ45 机型不支持半双工（X38，&lt;&lt;<PAGE 23>&gt;&gt;）</li>
+<li>Z 系列不支持 2000W 电源（PS-2000W-AC-POE-2 仅 P24M/P48M），预算规划不可套用（X30， <code>&lt;span class="pg"&gt;原文p47&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p63&lt;/span&gt;</code> ）</li>
+<li>全部 RJ45 机型不支持半双工（X38， <code>&lt;span class="pg"&gt;原文p23&lt;/span&gt;</code> ）</li>
 <li>待机功耗梯度大：-24=71W → P48M=251.8W，机柜供电与散热规划按 M 系列高功耗预留（P8）</li>
-<li>Class 1M 激光：空光口勿直视、禁光学仪器，加盖（X33/X34，&lt;&lt;<PAGE 23>&gt;&gt;/&lt;&lt;<PAGE 81>&gt;&gt;）</li>
+<li>Class 1M 激光：空光口勿直视、禁光学仪器，加盖（X33/X34， <code>&lt;span class="pg"&gt;原文p23&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p81&lt;/span&gt;</code> ）</li>
 <li>跨书易混：6870 的 SFP28 允许 1G/10G/25G 同口组混跑（无 6860 N 型四口组禁混速限制）；QSFP56 200G 为本家族独有上行档</li>
 <li>M 系列上联形态可后置扩展（Uplink Module Slot），但 V12/CNI/LNI 无铜口，纯光部署需另配光电转换</li>
 </ul>

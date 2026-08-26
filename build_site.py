@@ -513,6 +513,10 @@ def preprocess(text):
             return m.group(0)
         return head + '\n' + '\n'.join(f'- {s}。' for s in sents) + '\n'
     text = _re.sub(r'(## I（核心理念）\s*\n+)([^\n#]+)', bulletize, text)
+    # ### 小节下的整段串讲同样要点化（DIGEST 串讲章节等）
+    text = _re.sub(r'(###\s*[^\n]+\n+)([^\n#\-*][^\n#]*)', bulletize, text)
+    # 页码标记渲染为紧凑徽章：<<<PAGE 13>>> / <<<PAGE 13-15>>> / <<<PAGE 1, 4>>>
+    text = _re.sub(r'<<<PAGE\s+([\d,\s\-]+)>>>', lambda m: f' `<span class="pg">原文p{m.group(1).strip()}</span>` ', text)
     # 内部使用：去掉流水线署名描述
     out = []
     for ln in text.splitlines():
@@ -575,6 +579,7 @@ CSS = """
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
