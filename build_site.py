@@ -69,6 +69,22 @@ NEW_COURSES = [
         ('室外设计', ['sol-bridge-mesh-outdoor-design']),
         ('配置与运维', ['sol-bridge-mesh-config', 'sol-bridge-mesh-monitor']),
        ]),
+  dict(id='security/upam-fortinet-sso', book='sol-upam-firewall-sso', title='UPAM × Fortinet SSO 集成 · 应用笔记',
+       subtitle='Fortinet FortiGate SSO Application Note · 17 页 · Accounting 直发 / FortiAuthenticator 汇聚',
+       route=['UPAM SSO 机制：用户角色推送给防火墙', 'FortiGate 集成架构与前提',
+              'OV 侧 4 步 + FortiGate 侧 7 步配置与验证排障'],
+       groups=[
+        ('机制', ['upamfw-sso-overview']),
+        ('Fortinet 集成', ['upamfw-fortinet-arch', 'upamfw-fortinet-config']),
+       ]),
+  dict(id='security/upam-pan-sso', book='sol-upam-firewall-sso', title='UPAM × Palo Alto 集成 · 应用笔记',
+       subtitle='UPAM PAN Firewall Integration · 15 页 · User-ID / syslog 字段 / Accounting-only',
+       route=['UPAM SSO 机制：用户角色推送给防火墙', 'PAN User-ID 集成架构与前提',
+              'OV 侧 4 步 + PAN 侧 7 步配置与验证排障'],
+       groups=[
+        ('机制', ['upamfw-sso-overview']),
+        ('Palo Alto 集成', ['upamfw-pan-arch', 'upamfw-pan-config']),
+       ]),
   dict(id='postsales/acfe-wlan-basic', book='acfe-wlan', title='DT00XTE360 · ACFE WLAN Basic Deployment with OmniVista',
        subtitle='Edition 04 · 585 页 · Stellar+Cirrus 云管交付实操（AP 生命周期全流程，5 天带 Lab）',
        route=['部署模式判定与开局前置', 'Cirrus 组织与 License 生命周期', '设备 Onboarding 与激活排障',
@@ -785,7 +801,7 @@ blockquote p{margin:6px 0}
 # ============ 顶部品牌导航 / 分类 Banner ============
 NAV_ITEMS = [('首页', 'index.html'), ('学习路径', 'paths.html'), ('售前', 'presales/index.html'), ('售后', 'postsales/index.html'),
              ('无线', 'wlan/index.html'), ('AOS 手册', 'aos/index.html'), ('硬件', 'hardware/index.html'),
-             ('彩页', 'brochures/index.html'), ('解决方案', 'solutions/index.html')]
+             ('彩页', 'brochures/index.html'), ('解决方案', 'solutions/index.html'), ('安全', 'security/index.html')]
 
 def topbar(pfx='', active=''):
     def on(h):
@@ -797,7 +813,7 @@ def topbar(pfx='', active=''):
 # 分类 → Banner 图（PBG-2026 模板素材，ALE 品牌紫色调）
 CAT_BANNER = {'presales': 'banner-presales.jpg', 'postsales': 'banner-postsales.jpg', 'wlan': 'banner-wlan.jpg',
               'aos': 'banner-aos.jpg', 'hardware': 'banner-hardware.jpg', 'brochures': 'banner-brochures.jpg',
-              'manuals': 'banner-manuals.jpg', 'solutions': 'banner-solutions.jpg'}
+              'manuals': 'banner-manuals.jpg', 'solutions': 'banner-solutions.jpg', 'security': 'banner-solutions.jpg'}
 
 HERO_CSS = """
 .hero{position:relative;background:linear-gradient(118deg,#4F3478 0%,#6B489D 55%,#7E5CB4 100%);color:#fff;
@@ -1010,7 +1026,7 @@ def build_course(c):
 
     def crumbs(cur='', sub=False):
         cat = c['id'].split('/')[0]
-        cat_label = {'postsales': '售后', 'presales': '售前', 'manuals': 'OV2500 配置手册', 'aos': 'AOS 软件手册', 'hardware': '硬件手册', 'brochures': '产品彩页', 'wlan': '无线网络', 'solutions': '解决方案'}[cat]
+        cat_label = {'postsales': '售后', 'presales': '售前', 'manuals': 'OV2500 配置手册', 'aos': 'AOS 软件手册', 'hardware': '硬件手册', 'brochures': '产品彩页', 'wlan': '无线网络', 'solutions': '解决方案', 'security': '安全'}[cat]
         p = '../../../' if sub else '../../'
         q = '../' if sub else ''
         bar = f'<nav class="crumbs"><a href="{p}index.html">🏠 培训门户</a> › <a href="{p}{cat}/index.html">{cat_label}</a> › <a href="{q}index.html">{html_mod.escape(c["title"].split(" · ")[0])}</a>'
@@ -1147,7 +1163,7 @@ def build_category(dirname, label):
         f.write(page)
     print('category built:', dirname)
 
-for dirname, label in [('postsales', '售后 · Postsales'), ('presales', '售前 · Presales'), ('manuals', 'OV2500 配置手册 · Manuals'), ('aos', 'AOS 软件手册 · Software Guides'), ('hardware', '硬件手册 · Hardware Guides'), ('brochures', '产品彩页 · Product Datasheets'), ('wlan', '无线网络 · WLAN'), ('solutions', '解决方案 · Solutions')]:
+for dirname, label in [('postsales', '售后 · Postsales'), ('presales', '售前 · Presales'), ('manuals', 'OV2500 配置手册 · Manuals'), ('aos', 'AOS 软件手册 · Software Guides'), ('hardware', '硬件手册 · Hardware Guides'), ('brochures', '产品彩页 · Product Datasheets'), ('wlan', '无线网络 · WLAN'), ('solutions', '解决方案 · Solutions'), ('security', '安全 · Security')]:
     build_category(dirname, label)
 
 build_paths_page()
@@ -1238,6 +1254,8 @@ CATALOG = [
         ('QoE 与网络分析', '体验质量度量与根因分析', None),
     ]),
     ('安全 · Security', '#fb7185', [
+        ('UPAM × Fortinet SSO 集成 · 应用笔记', '17 页 · 3 个知识单元 · Accounting 直发 / FortiAuthenticator / 配置排障', 'security/upam-fortinet-sso/index.html'),
+        ('UPAM × Palo Alto 集成 · 应用笔记', '15 页 · 3 个知识单元 · User-ID / syslog / 配置排障', 'security/upam-pan-sso/index.html'),
         ('网络准入与认证', '802.1X / MAC / Captive Portal / UPAM', None),
         ('WIPS 无线入侵防护', 'Rogue 检测与抑制', None),
     ]),
