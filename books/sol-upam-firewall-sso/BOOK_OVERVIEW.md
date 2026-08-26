@@ -15,11 +15,11 @@
 
 | 单元 | 内容 | 主要来源与页码 |
 |---|---|---|
-| [upamfw-sso-overview](skills/upamfw-sso-overview.html) | SSO 机制总览：零信任动因、UPAM 能力、AD 路线与 BYOD/IoT 路线分界、两种推送机制对比 | 两份笔记 p3-5 |
-| [upamfw-fortinet-arch](skills/upamfw-fortinet-arch.html) | Fortinet 集成架构：RADIUS Accounting 直发、FortiAuthenticator 汇聚、interim interval、任务清单 | Fortinet 笔记 p4-7、p13 |
-| [upamfw-fortinet-config](skills/upamfw-fortinet-config.html) | Fortinet 集成配置：OV 侧 4 步 + FortiGate 侧 7 步全菜单路径与验证命令 | Fortinet 笔记 p5-16 |
-| [upamfw-pan-arch](skills/upamfw-pan-arch.html) | PAN 集成架构：User-ID、syslog 字段解析、Accounting-only 过滤与 45 分钟登出局限 | PAN 笔记 p3-6、p12 |
-| [upamfw-pan-config](skills/upamfw-pan-config.html) | PAN 集成配置：OV 侧 4 步 + PAN 侧 7 步全菜单路径与验证命令 | PAN 笔记 p6-14 |
+| upamfw-sso-overview | SSO 机制总览：零信任动因、UPAM 能力、AD 路线与 BYOD/IoT 路线分界、两种推送机制对比 | 两份笔记 p3-5 |
+| upamfw-fortinet-arch | Fortinet 集成架构：RADIUS Accounting 直发、FortiAuthenticator 汇聚、interim interval、任务清单 | Fortinet 笔记 p4-7、p13 |
+| upamfw-fortinet-config | Fortinet 集成配置：OV 侧 4 步 + FortiGate 侧 7 步全菜单路径与验证命令 | Fortinet 笔记 p5-16 |
+| upamfw-pan-arch | PAN 集成架构：User-ID、syslog 字段解析、Accounting-only 过滤与 45 分钟登出局限 | PAN 笔记 p3-6、p12 |
+| upamfw-pan-config | PAN 集成配置：OV 侧 4 步 + PAN 侧 7 步全菜单路径与验证命令 | PAN 笔记 p6-14 |
 
 ## 建议学习路径
 
