@@ -78,38 +78,38 @@ blockquote p{margin:6px 0}
 <li>IP 语音要按 SIP 信令识别媒体流给 QoS：SIP snooping</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>QoS 四步处理链（F8/P156， <code>&lt;span class="pg"&gt;原文p1103&lt;/span&gt;</code> ）：分类标记→拥塞管理（入队调度）→拥塞避免（随机丢弃防 tail drop）→policing/shaping。策略三元组：policy=condition+action+rule；流不匹配任何策略则用端口默认 QoS，多策略命中取最高 precedence（P158， <code>&lt;span class="pg"&gt;原文p1133&lt;/span&gt;</code> ）。每端口 8 条队列，入队依据策略+ToS/802.1p+端口信任状态（P159）。策略来源决定修改权：PolicyView(LDAP) 建的只能 PolicyView 改，CLI/WebView 建的只能本端改（P160/X61， <code>&lt;span class="pg"&gt;原文p1133&lt;/span&gt;</code> ）。四类策略列表：default/UNP/egress/AFP（AFP 仅 OS6900）（P161， <code>&lt;span class="pg"&gt;原文p1134&lt;/span&gt;</code> ）。</p>
+<p>QoS 四步处理链（F8/P156，<span class="pg">原文p1103</span> ）：分类标记→拥塞管理（入队调度）→拥塞避免（随机丢弃防 tail drop）→policing/shaping。策略三元组：policy=condition+action+rule；流不匹配任何策略则用端口默认 QoS，多策略命中取最高 precedence（P158，<span class="pg">原文p1133</span> ）。每端口 8 条队列，入队依据策略+ToS/802.1p+端口信任状态（P159）。策略来源决定修改权：PolicyView(LDAP) 建的只能 PolicyView 改，CLI/WebView 建的只能本端改（P160/X61，<span class="pg">原文p1133</span> ）。四类策略列表：default/UNP/egress/AFP（AFP 仅 OS6900）（P161，<span class="pg">原文p1134</span> ）。</p>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
-<li><strong>先定分类</strong>：信任口采信报文已有 802.1p/ToS；802.1Q tagged 口默认 untrusted——上联口语音/视频标记不生效的常见原因（X64， <code>&lt;span class="pg"&gt;原文p1134&lt;/span&gt;</code> ）</li>
+<li><strong>先定分类</strong>：信任口采信报文已有 802.1p/ToS；802.1Q tagged 口默认 untrusted——上联口语音/视频标记不生效的常见原因（X64，<span class="pg">原文p1134</span> ）</li>
 <li><strong>再定队列与限速</strong>：QSet profile 配每口调度参数；带宽控制选 policy 带宽 policing（sr/tcm 三色）或端口 bandwidth policing</li>
-<li><strong>复杂策略走 policy 体系</strong>：条件组（network/service/MAC/port group）免逐地址建条件；map group 做标记映射；ACL 条件+drop/accept 动作入 policy rule（F8， <code>&lt;span class="pg"&gt;原文p1103&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p1133&lt;/span&gt;</code> ）</li>
+<li><strong>复杂策略走 policy 体系</strong>：条件组（network/service/MAC/port group）免逐地址建条件；map group 做标记映射；ACL 条件+drop/accept 动作入 policy rule（F8，<span class="pg">原文p1103</span> /<span class="pg">原文p1133</span> ）</li>
 <li><strong>语音流识别选 SIP snooping</strong>：trusted call server+RTCP 阈值（注意一揽子限制，见 B）</li>
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>条件组与 map group</strong>：network group/service group/MAC group/port group 建好后挂到单个 condition；map group 做标记映射；验证 show policy group/map（cases·C52， <code>&lt;span class="pg"&gt;原文p1176&lt;/span&gt;</code> ）</li>
-<li><strong>ACL 安全策略</strong>：L2/L3/IPv6 ACL 条件+drop/accept 动作入 policy rule，<code>qos apply</code> 生效（cases·C53， <code>&lt;span class="pg"&gt;原文p1142&lt;/span&gt;</code> ）</li>
-<li><strong>端口限速/整形与 tri-color</strong>：policy 带宽 policing（sr/tcm 三色）+端口 bandwidth policing（cases·C54， <code>&lt;span class="pg"&gt;原文p1118&lt;/span&gt;</code> ）</li>
-<li><strong>提交</strong>：policy condition/action/rule 配置后必须 <code>qos apply</code> 才激活（P164， <code>&lt;span class="pg"&gt;原文p1149&lt;/span&gt;</code> ）</li>
-<li><strong>LDAP 策略服务器</strong>：交换机按 <code>aaa ldap-server</code> 系列配置主机/端口/检索库/SSL，策略经 PolicyView 下发（P165， <code>&lt;span class="pg"&gt;原文p1175&lt;/span&gt;</code> ）</li>
-<li><strong>SIP snooping</strong>：配 trusted SIP server、RTCP 阈值，端口使能（ <code>&lt;span class="pg"&gt;原文p704&lt;/span&gt;</code> ）</li>
+<li><strong>条件组与 map group</strong>：network group/service group/MAC group/port group 建好后挂到单个 condition；map group 做标记映射；验证 show policy group/map（cases·C52，<span class="pg">原文p1176</span> ）</li>
+<li><strong>ACL 安全策略</strong>：L2/L3/IPv6 ACL 条件+drop/accept 动作入 policy rule，<code>qos apply</code> 生效（cases·C53，<span class="pg">原文p1142</span> ）</li>
+<li><strong>端口限速/整形与 tri-color</strong>：policy 带宽 policing（sr/tcm 三色）+端口 bandwidth policing（cases·C54，<span class="pg">原文p1118</span> ）</li>
+<li><strong>提交</strong>：policy condition/action/rule 配置后必须 <code>qos apply</code> 才激活（P164，<span class="pg">原文p1149</span> ）</li>
+<li><strong>LDAP 策略服务器</strong>：交换机按 <code>aaa ldap-server</code> 系列配置主机/端口/检索库/SSL，策略经 PolicyView 下发（P165，<span class="pg">原文p1175</span> ）</li>
+<li><strong>SIP snooping</strong>：配 trusted SIP server、RTCP 阈值，端口使能（<span class="pg">原文p704</span> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>条件组复用（C52， <code>&lt;span class="pg"&gt;原文p1176&lt;/span&gt;</code> ）</li>
-<li>ACL 安全策略+qos apply（C53， <code>&lt;span class="pg"&gt;原文p1142&lt;/span&gt;</code> ）</li>
-<li>policy/端口两级带宽 policing（C54， <code>&lt;span class="pg"&gt;原文p1118&lt;/span&gt;</code> ）</li>
+<li>条件组复用（C52，<span class="pg">原文p1176</span> ）</li>
+<li>ACL 安全策略+qos apply（C53，<span class="pg">原文p1142</span> ）</li>
+<li>policy/端口两级带宽 policing（C54，<span class="pg">原文p1118</span> ）</li>
 </ul>
 <h2 id="b">B（反例/坑）</h2>
 <ul>
-<li>policy 配置后不 <code>qos apply</code> 不生效——最常见的"配了没反应"（X60， <code>&lt;span class="pg"&gt;原文p1149&lt;/span&gt;</code> ）</li>
-<li>LDAP/PolicyView 创建的 QoS 对象不能在 CLI 改，反之亦然（X61， <code>&lt;span class="pg"&gt;原文p1133&lt;/span&gt;</code> ）</li>
-<li>IPv4 与 IPv6 条件不能组合进同一 condition；destination VLAN 条件仅组播规则可用；source ip+ARP 组合仅 OS6860/E 支持（X62/P163， <code>&lt;span class="pg"&gt;原文p1135&lt;/span&gt;</code> ）</li>
-<li>有效的规则也可能因依赖功能（如路由）未开而无法执行（X63， <code>&lt;span class="pg"&gt;原文p1134&lt;/span&gt;</code> ）</li>
-<li>SIP Snooping 一揽子限制：仅 IPv4、仅 UDP（含 UDP/TCP），不支持 TLS/SCTP/MPLS、加密 RTCP/SDP、DNS/FQDN、无 VRF/NAT 感知（X65， <code>&lt;span class="pg"&gt;原文p704&lt;/span&gt;</code> ）</li>
-<li>SIP 所有初始消息必须过同一 SIP Server，端到端直连会话不支持；电话侧 outbound proxy 必须与交换机 trusted call server 一致（X66， <code>&lt;span class="pg"&gt;原文p704&lt;/span&gt;</code> ）</li>
-<li>边缘口 SIP IP 与 RTP IP 不一致时 TCAM 表项不建、QoS 不生效；TCAM 装表前的早发媒体流得不到 QoS 待遇（X67/X68， <code>&lt;span class="pg"&gt;原文p704&lt;/span&gt;</code> ）</li>
+<li>policy 配置后不 <code>qos apply</code> 不生效——最常见的"配了没反应"（X60，<span class="pg">原文p1149</span> ）</li>
+<li>LDAP/PolicyView 创建的 QoS 对象不能在 CLI 改，反之亦然（X61，<span class="pg">原文p1133</span> ）</li>
+<li>IPv4 与 IPv6 条件不能组合进同一 condition；destination VLAN 条件仅组播规则可用；source ip+ARP 组合仅 OS6860/E 支持（X62/P163，<span class="pg">原文p1135</span> ）</li>
+<li>有效的规则也可能因依赖功能（如路由）未开而无法执行（X63，<span class="pg">原文p1134</span> ）</li>
+<li>SIP Snooping 一揽子限制：仅 IPv4、仅 UDP（含 UDP/TCP），不支持 TLS/SCTP/MPLS、加密 RTCP/SDP、DNS/FQDN、无 VRF/NAT 感知（X65，<span class="pg">原文p704</span> ）</li>
+<li>SIP 所有初始消息必须过同一 SIP Server，端到端直连会话不支持；电话侧 outbound proxy 必须与交换机 trusted call server 一致（X66，<span class="pg">原文p704</span> ）</li>
+<li>边缘口 SIP IP 与 RTP IP 不一致时 TCAM 表项不建、QoS 不生效；TCAM 装表前的早发媒体流得不到 QoS 待遇（X67/X68，<span class="pg">原文p704</span> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniSwitch AOS 8.10R4 Network Configuration Guide 第 20 章 SIP Snooping（ <code>&lt;span class="pg"&gt;原文p704&lt;/span&gt;</code> ）、第 33 章 QoS（ <code>&lt;span class="pg"&gt;原文p1103-1176&lt;/span&gt;</code> ）、第 34 章 Policy Servers（ <code>&lt;span class="pg"&gt;原文p1175&lt;/span&gt;</code> ）。条目来源：cases C52-C54；principles P156-P165；counter-examples X60-X68；frameworks F8。</p><div class="pn"><a href="aos-nc-multicast.html">⬅ 上一单元：aos-nc-multicast</a><a class="nxt" href="aos-nc-access-security.html">下一单元：aos-nc-access-security ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<p>OmniSwitch AOS 8.10R4 Network Configuration Guide 第 20 章 SIP Snooping（<span class="pg">原文p704</span> ）、第 33 章 QoS（<span class="pg">原文p1103-1176</span> ）、第 34 章 Policy Servers（<span class="pg">原文p1175</span> ）。条目来源：cases C52-C54；principles P156-P165；counter-examples X60-X68；frameworks F8。</p><div class="pn"><a href="aos-nc-multicast.html">⬅ 上一单元：aos-nc-multicast</a><a class="nxt" href="aos-nc-access-security.html">下一单元：aos-nc-access-security ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

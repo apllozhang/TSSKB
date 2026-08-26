@@ -78,29 +78,29 @@ blockquote p{margin:6px 0}
 <li>多虚拟路由器负载分担规划</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>VRRP（RFC 2338）用一个虚拟 IP + 虚拟 MAC（00-00-5E-00-01-{VRID}）把多台路由器虚拟成一台，最高优先级者为 Master 负责转发与 ARP 应答，IP 拥有者直接 Master（P99/P100， <code>&lt;span class="pg"&gt;原文p524-526&lt;/span&gt;</code> ）。收敛的时钟设计是 Master_Down_Interval = 3×通告间隔 + Skew_Time，而 Skew_Time=(256-Priority)/256——优先级越低的 Backup 等得越久，天然错峰升主，防止多备同时抢占（P101， <code>&lt;span class="pg"&gt;原文p527&lt;/span&gt;</code> ）。可靠性闭环靠 Tracking：跟踪口断则按策略扣优先级触发切换（P103， <code>&lt;span class="pg"&gt;原文p531&lt;/span&gt;</code> ）。</p>
+<p>VRRP（RFC 2338）用一个虚拟 IP + 虚拟 MAC（00-00-5E-00-01-{VRID}）把多台路由器虚拟成一台，最高优先级者为 Master 负责转发与 ARP 应答，IP 拥有者直接 Master（P99/P100，<span class="pg">原文p524-526</span> ）。收敛的时钟设计是 Master_Down_Interval = 3×通告间隔 + Skew_Time，而 Skew_Time=(256-Priority)/256——优先级越低的 Backup 等得越久，天然错峰升主，防止多备同时抢占（P101，<span class="pg">原文p527</span> ）。可靠性闭环靠 Tracking：跟踪口断则按策略扣优先级触发切换（P103，<span class="pg">原文p531</span> ）。</p>
 <h2 id="a1">A1（决策/选型）</h2>
 <ol>
-<li>首跳冗余选型：VRRP 标准协议；与 Cisco HSRP 不兼容，混布网络不能两侧各跑一个（X53， <code>&lt;span class="pg"&gt;原文p524&lt;/span&gt;</code> ）</li>
-<li>负载分担：两个虚拟路由器互为主备，主机按不同默认网关分摊（P102， <code>&lt;span class="pg"&gt;原文p528&lt;/span&gt;</code> ）</li>
-<li>多虚拟路由器统一管理用 VRRP Group（组内统一改优先级/通告间隔/抢占）（P104， <code>&lt;span class="pg"&gt;原文p533&lt;/span&gt;</code> ）</li>
+<li>首跳冗余选型：VRRP 标准协议；与 Cisco HSRP 不兼容，混布网络不能两侧各跑一个（X53，<span class="pg">原文p524</span> ）</li>
+<li>负载分担：两个虚拟路由器互为主备，主机按不同默认网关分摊（P102，<span class="pg">原文p528</span> ）</li>
+<li>多虚拟路由器统一管理用 VRRP Group（组内统一改优先级/通告间隔/抢占）（P104，<span class="pg">原文p533</span> ）</li>
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ol>
-<li>基本主备（两台同配）：<code>ip vrrp 1 interface int_20</code> → <code>ip vrrp 1 interface int_20 address 192.168.20.254</code> → <code>ip vrrp 1 interface int_20 admin-state enable</code>（C25， <code>&lt;span class="pg"&gt;原文p529-537&lt;/span&gt;</code> ）</li>
-<li>验证：<code>show ip vrrp 1</code>（Priority 100、Virtual MAC 00-00-5E-00-01-01）；<code>show ip vrrp statistics</code> 看 A Master/B Backup——同优先级时比 router-id（C25， <code>&lt;span class="pg"&gt;原文p529-537&lt;/span&gt;</code> ）</li>
-<li>Tracking：<code>ip vrrp track 3 admin-state enable priority 30 port 1/1/3</code> → <code>ip vrrp 1 interface int_20 track-association 3</code>；断跟踪口后优先级 100-30=70 让位（C25/P103， <code>&lt;span class="pg"&gt;原文p529-537&lt;/span&gt;</code> ）</li>
-<li>Group：<code>ip vrrp group 2</code> + <code>group association</code> 统一参数（C25， <code>&lt;span class="pg"&gt;原文p529-537&lt;/span&gt;</code> ）</li>
+<li>基本主备（两台同配）：<code>ip vrrp 1 interface int_20</code> → <code>ip vrrp 1 interface int_20 address 192.168.20.254</code> → <code>ip vrrp 1 interface int_20 admin-state enable</code>（C25，<span class="pg">原文p529-537</span> ）</li>
+<li>验证：<code>show ip vrrp 1</code>（Priority 100、Virtual MAC 00-00-5E-00-01-01）；<code>show ip vrrp statistics</code> 看 A Master/B Backup——同优先级时比 router-id（C25，<span class="pg">原文p529-537</span> ）</li>
+<li>Tracking：<code>ip vrrp track 3 admin-state enable priority 30 port 1/1/3</code> → <code>ip vrrp 1 interface int_20 track-association 3</code>；断跟踪口后优先级 100-30=70 让位（C25/P103，<span class="pg">原文p529-537</span> ）</li>
+<li>Group：<code>ip vrrp group 2</code> + <code>group association</code> 统一参数（C25，<span class="pg">原文p529-537</span> ）</li>
 </ol>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>C25 VRRP 主备+抢占+Tracking 全流程：两台 6860 同配虚拟 IP，断跟踪口观察 Master 迁移（ <code>&lt;span class="pg"&gt;原文p529-537&lt;/span&gt;</code> ）</li>
+<li>C25 VRRP 主备+抢占+Tracking 全流程：两台 6860 同配虚拟 IP，断跟踪口观察 Master 迁移（<span class="pg">原文p529-537</span> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>
-<li>VRRP 与 HSRP 不兼容（X53， <code>&lt;span class="pg"&gt;原文p524&lt;/span&gt;</code> ）</li>
-<li>备份路由器之间优先级应彼此不同，避免 Master 故障时同时升主（X54， <code>&lt;span class="pg"&gt;原文p527&lt;/span&gt;</code> ）——Skew_Time 只能部分错峰，显式分层更稳</li>
-<li>抢占（Preempt）默认行为与通告间隔调整要在两侧一致，否则会看到意外震荡（ <code>&lt;span class="pg"&gt;原文p527, 529-530&lt;/span&gt;</code> ）</li>
+<li>VRRP 与 HSRP 不兼容（X53，<span class="pg">原文p524</span> ）</li>
+<li>备份路由器之间优先级应彼此不同，避免 Master 故障时同时升主（X54，<span class="pg">原文p527</span> ）——Skew_Time 只能部分错峰，显式分层更稳</li>
+<li>抢占（Preempt）默认行为与通告间隔调整要在两侧一致，否则会看到意外震荡（<span class="pg">原文p527, 529-530</span> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
 <ul>

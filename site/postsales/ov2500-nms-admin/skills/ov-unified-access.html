@@ -77,63 +77,63 @@ blockquote p{margin:6px 0}
 Unified Policy 挂在 Access Role Profile 之下。认证不可用时由 Access Classification 规则兜底决定 profile。</p>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
-<li><strong>建认证服务器</strong>：Security &gt; Authentication Servers &gt; RADIUS：建 RADIUS_VM（IP 192.168.100.102 / secret alcatel-lucent）（ <code>&lt;span class="pg"&gt;原文p258-259&lt;/span&gt;</code> ）</li>
-<li><strong>AAA Server Profile</strong>：Unified Access &gt; Unified Profile &gt; Templates：802.1X Primary 与 MAC Primary 均指向 RADIUS_VM（ <code>&lt;span class="pg"&gt;原文p259&lt;/span&gt;</code> ）</li>
-<li><strong>Access Role Profile</strong>：建 UNP-employee（<strong>名称必须与 RADIUS 返回的 Filter-ID 完全一致</strong>）→ Apply to Devices（Map to VLAN 80、选 6860B）（ <code>&lt;span class="pg"&gt;原文p261-263&lt;/span&gt;</code> ）</li>
-<li><strong>Access Auth Profile</strong>：建 UNP_template（AAA=AAA_RADIUS、Port Bounce/MAC Auth/802.1X Auth Enabled）→ Apply to Devices 选端口（如 6860B 1/1/1）（ <code>&lt;span class="pg"&gt;原文p264-265&lt;/span&gt;</code> ）</li>
+<li><strong>建认证服务器</strong>：Security &gt; Authentication Servers &gt; RADIUS：建 RADIUS_VM（IP 192.168.100.102 / secret alcatel-lucent）（<span class="pg">原文p258-259</span> ）</li>
+<li><strong>AAA Server Profile</strong>：Unified Access &gt; Unified Profile &gt; Templates：802.1X Primary 与 MAC Primary 均指向 RADIUS_VM（<span class="pg">原文p259</span> ）</li>
+<li><strong>Access Role Profile</strong>：建 UNP-employee（<strong>名称必须与 RADIUS 返回的 Filter-ID 完全一致</strong>）→ Apply to Devices（Map to VLAN 80、选 6860B）（<span class="pg">原文p261-263</span> ）</li>
+<li><strong>Access Auth Profile</strong>：建 UNP_template（AAA=AAA_RADIUS、Port Bounce/MAC Auth/802.1X Auth Enabled）→ Apply to Devices 选端口（如 6860B 1/1/1）（<span class="pg">原文p264-265</span> ）</li>
 <li>
 <p>验证：<code>aaa test-radius-server RADIUS_VM type authentication user employee password password</code> 应返回 Filter-ID = UNP-employee；</p>
 <ul>
 <li>客户端启用 IEEE 802.1X；</li>
 <li><code>unp user flush port 1/1/1</code> 清状态后重连；</li>
 <li><code>show unp user</code> 应显示 employee/VLAN 80/UNP-employee；</li>
-<li>Network → Locator 按 Auth. User=employee Live 查询（ <code>&lt;span class="pg"&gt;原文p263-268&lt;/span&gt;</code> ）；</li>
+<li>Network → Locator 按 Auth. User=employee Live 查询（<span class="pg">原文p263-268</span> ）；</li>
 </ul>
 </li>
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
-<li>用户角色导向策略：Employee Profile → VLAN 20/更高带宽与优先级；Guest Profile → VLAN 30/仅 Internet/更低带宽优先级，由 "OV 2500 / UPAM" 下发（ <code>&lt;span class="pg"&gt;原文p231&lt;/span&gt;</code> ）</li>
-<li>Access Auth Profile 端口行为细节（ <code>&lt;span class="pg"&gt;原文p241-242&lt;/span&gt;</code> ）：Port Bounce——COA 后客户端换 VLAN 时端口被管理性 down 以触发 DHCP 续租与重认证；</li>
+<li>用户角色导向策略：Employee Profile → VLAN 20/更高带宽与优先级；Guest Profile → VLAN 30/仅 Internet/更低带宽优先级，由 "OV 2500 / UPAM" 下发（<span class="pg">原文p231</span> ）</li>
+<li>Access Auth Profile 端口行为细节（<span class="pg">原文p241-242</span> ）：Port Bounce——COA 后客户端换 VLAN 时端口被管理性 down 以触发 DHCP 续租与重认证；</li>
 <li>802.1X Pass Alt / Bypass Status 可跳过 802.1X 直入 MAC 认证或分类；</li>
 <li>Failure Policy、MAC Pass Alt / MAC Allow EAP；</li>
 <li>
 <p>"802.1X Auth and MAC Auth only applies to wired devices."；</p>
 </li>
 <li>
-<p>Access Classification 回退规则（ <code>&lt;span class="pg"&gt;原文p243-244&lt;/span&gt;</code> ）：认证不可用时按规则定 profile；</p>
+<p>Access Classification 回退规则（<span class="pg">原文p243-244</span> ）：认证不可用时按规则定 profile；</p>
 </li>
 <li>有线规则类型 Port/MAC/MAC OUI/MAC+Port/MAC+IP+Port/LLDP/认证类型/IP+Port；</li>
 <li>
 <p>无线规则类型 MAC/BSSID/ESSID/DHCP Option/DHCP Option 77/加密类型/位置；</p>
 </li>
 <li>
-<p>Captive Portal 分层（ <code>&lt;span class="pg"&gt;原文p252-255&lt;/span&gt;</code> ）：CP Profile 仅对启用 CP 认证的 Access Role Profile 有效；</p>
+<p>Captive Portal 分层（<span class="pg">原文p252-255</span> ）：CP Profile 仅对启用 CP 认证的 Access Role Profile 有效；</p>
 </li>
 <li>Profile Domain Policy List 按登录域分配 CP Profile + QoS，Domain Policy List 按认证 realm 定义策略；</li>
 <li>
 <p>定制 html/jpeg 文件构成登录页；</p>
 </li>
 <li>
-<p>UPAM 代管交换机账号：Switch User Account 经 UPAM 建交换机用户，再建 AAA Profile 指定 UPAM 为访问服务器并指派给交换机；Switch Access Record 可查经 UPAM 的认证记录（ <code>&lt;span class="pg"&gt;原文p166-167&lt;/span&gt;</code> ）</p>
+<p>UPAM 代管交换机账号：Switch User Account 经 UPAM 建交换机用户，再建 AAA Profile 指定 UPAM 为访问服务器并指派给交换机；Switch Access Record 可查经 UPAM 的认证记录（<span class="pg">原文p166-167</span> ）</p>
 </li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>Unified Access 全流程实验（RADIUS → AAA Profile → UNP-employee → UNP_template → 端口 1/1/1，客户端验证 VLAN 80）——cases·Unified Access（ <code>&lt;span class="pg"&gt;原文p258-268&lt;/span&gt;</code> ）</li>
-<li>客户端缺认证页签：services.msc 启动 Wired AutoConfig 服务——cases·客户端排查（ <code>&lt;span class="pg"&gt;原文p266&lt;/span&gt;</code> ）</li>
+<li>Unified Access 全流程实验（RADIUS → AAA Profile → UNP-employee → UNP_template → 端口 1/1/1，客户端验证 VLAN 80）——cases·Unified Access（<span class="pg">原文p258-268</span> ）</li>
+<li>客户端缺认证页签：services.msc 启动 Wired AutoConfig 服务——cases·客户端排查（<span class="pg">原文p266</span> ）</li>
 </ul>
 <h2 id="b">B（边界与陷阱）</h2>
 <ul>
-<li>UNP 命名不一致则匹配失败："Type the UNP name as shown as it is the value returned from the RADIUS server"（ <code>&lt;span class="pg"&gt;原文p263&lt;/span&gt;</code> ）</li>
-<li>重认证前必须 <code>unp user flush port 1/1/1</code> 清残留会话；出现第二个不同 MAC 条目是物理网卡关联，勿误判异常（ <code>&lt;span class="pg"&gt;原文p268&lt;/span&gt;</code> ）</li>
-<li>客户端必须取消缓存凭据、取消自动用 Windows 登录名密码、取消 Validate server certificate，否则测试不成立（ <code>&lt;span class="pg"&gt;原文p267-268&lt;/span&gt;</code> ）</li>
-<li>客户端拿不到 DHCP 时先确认 AAA Training Server VM 已开机，再不行配 192.168.80.X 静态 IP/网关 192.168.80.8（ <code>&lt;span class="pg"&gt;原文p290&lt;/span&gt;</code> ）</li>
+<li>UNP 命名不一致则匹配失败："Type the UNP name as shown as it is the value returned from the RADIUS server"（<span class="pg">原文p263</span> ）</li>
+<li>重认证前必须 <code>unp user flush port 1/1/1</code> 清残留会话；出现第二个不同 MAC 条目是物理网卡关联，勿误判异常（<span class="pg">原文p268</span> ）</li>
+<li>客户端必须取消缓存凭据、取消自动用 Windows 登录名密码、取消 Validate server certificate，否则测试不成立（<span class="pg">原文p267-268</span> ）</li>
+<li>客户端拿不到 DHCP 时先确认 AAA Training Server VM 已开机，再不行配 192.168.80.X 静态 IP/网关 192.168.80.8（<span class="pg">原文p290</span> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
 <ul>
-<li>frameworks·三层策略模型（&lt;&lt;<PAGE 235/246/259-265>&gt;&gt;）、用户角色导向策略（ <code>&lt;span class="pg"&gt;原文p231&lt;/span&gt;</code> ）、Access Classification（ <code>&lt;span class="pg"&gt;原文p243-244&lt;/span&gt;</code> ）</li>
-<li>principles·Captive Portal 分层（ <code>&lt;span class="pg"&gt;原文p252-255&lt;/span&gt;</code> ）、Access Auth Profile 端口行为（ <code>&lt;span class="pg"&gt;原文p241-242&lt;/span&gt;</code> ）</li>
-<li>cases·Unified Access 全流程/客户端排查（ <code>&lt;span class="pg"&gt;原文p258-268&lt;/span&gt;</code> ）</li>
+<li>frameworks·三层策略模型（&lt;&lt;<PAGE 235/246/259-265>&gt;&gt;）、用户角色导向策略（<span class="pg">原文p231</span> ）、Access Classification（<span class="pg">原文p243-244</span> ）</li>
+<li>principles·Captive Portal 分层（<span class="pg">原文p252-255</span> ）、Access Auth Profile 端口行为（<span class="pg">原文p241-242</span> ）</li>
+<li>cases·Unified Access 全流程/客户端排查（<span class="pg">原文p258-268</span> ）</li>
 <li>counter-examples·认证页签不可见/未清 UNP 状态/DHCP 排障/命名不一致（&lt;&lt;<PAGE 266-268/290/263>&gt;&gt;）</li>
 </ul><div class="pn"><a href="ov-cli-scripting-batch.html">⬅ 上一单元：ov-cli-scripting-batch</a><a class="nxt" href="ov-policyview-qos.html">下一单元：ov-policyview-qos ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

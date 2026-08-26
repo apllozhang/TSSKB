@@ -87,10 +87,10 @@ EVPN 主机数与生成路由数有换算（10K 主机生成 20K RT2，P23）。
 <li>每 I-SID VLAN/SVLAN 2K-4K；</li>
 <li>SPB MTU 9K（6860 系当前不可配）（P19/P20/X49）；</li>
 <li>
-<p>RFP 域最多 8 且与其它 Ethernet OAM 域共享预算（X50， <code>&lt;span class="pg"&gt;原文p34&lt;/span&gt;</code> ）；</p>
+<p>RFP 域最多 8 且与其它 Ethernet OAM 域共享预算（X50，<span class="pg">原文p34</span> ）；</p>
 </li>
 <li>
-<p><strong>VXLAN/EVPN</strong>：见 P22/P23（ <code>&lt;span class="pg"&gt;原文p39-40&lt;/span&gt;</code> ）；Fabric VPN 4/VRF 对应 1</p>
+<p><strong>VXLAN/EVPN</strong>：见 P22/P23（<span class="pg">原文p39-40</span> ）；Fabric VPN 4/VRF 对应 1</p>
 </li>
 <li>链路层：PVLAN 每端口/聚合成员 6560/6570M/6575/6920=256、6860 系/6870/6900=1；</li>
 <li>主 VLAN 下每口共存 secondary VLAN 仅 1（X24）；</li>
@@ -133,14 +133,14 @@ EVPN 主机数与生成路由数有换算（10K 主机生成 20K RT2，P23）。
 </ul>
 <h2 id="b">B（反例/坑）</h2>
 <ul>
-<li>VC 的 ARP 容量短板效应：6900 VC 总量=最低能力模块的值（X6， <code>&lt;span class="pg"&gt;原文p42&lt;/span&gt;</code> ）</li>
-<li>UNP 用户 VC 上限两种语义：多数平台=每机箱×成员数（脚注 1），6860 系/6900/6920 为 VC 封顶不随成员增加（脚注 2）（X35， <code>&lt;span class="pg"&gt;原文p61&lt;/span&gt;</code> ）</li>
-<li>端口监控会话仅 1；镜像+监控合并会话 2-7（X38， <code>&lt;span class="pg"&gt;原文p66&lt;/span&gt;</code> ）</li>
-<li>RMON 只有 4 基础组，Host/Matrix/Filter/捕获等 RMON2 功能必须外置探针（X39， <code>&lt;span class="pg"&gt;原文p69&lt;/span&gt;</code> ）</li>
-<li>VLAN Stacking service 仅 4 个；SAP profile 一旦分配优先级/带宽，8K 降到 1K（X40， <code>&lt;span class="pg"&gt;原文p71&lt;/span&gt;</code> ）</li>
-<li>OSPF 区域上限：6560=2（AR 许可下）、6860/6870/6570M=4-8——6560 只能单区域+骨干（X46， <code>&lt;span class="pg"&gt;原文p79&lt;/span&gt;</code> ）</li>
-<li>6570M/6575 的 VRF、OSPF/OSPFv3/IS-IS、BGP 均需 Advanced Routing license；6560 的 OSPF/BGP 同（X44， <code>&lt;span class="pg"&gt;原文p44&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p79-82&lt;/span&gt;</code> ）</li>
-<li>BFD 不支持 IPv6 协议、不支持 Demand 模式（X15， <code>&lt;span class="pg"&gt;原文p49&lt;/span&gt;</code> ）；SLB 仅 6860/6860N/6865/6870/6900-X（X16）；MBR 不支持 6360/6465/6560/6570M（X18）；MRP 仅 6465/6575/6865（X19）</li>
+<li>VC 的 ARP 容量短板效应：6900 VC 总量=最低能力模块的值（X6，<span class="pg">原文p42</span> ）</li>
+<li>UNP 用户 VC 上限两种语义：多数平台=每机箱×成员数（脚注 1），6860 系/6900/6920 为 VC 封顶不随成员增加（脚注 2）（X35，<span class="pg">原文p61</span> ）</li>
+<li>端口监控会话仅 1；镜像+监控合并会话 2-7（X38，<span class="pg">原文p66</span> ）</li>
+<li>RMON 只有 4 基础组，Host/Matrix/Filter/捕获等 RMON2 功能必须外置探针（X39，<span class="pg">原文p69</span> ）</li>
+<li>VLAN Stacking service 仅 4 个；SAP profile 一旦分配优先级/带宽，8K 降到 1K（X40，<span class="pg">原文p71</span> ）</li>
+<li>OSPF 区域上限：6560=2（AR 许可下）、6860/6870/6570M=4-8——6560 只能单区域+骨干（X46，<span class="pg">原文p79</span> ）</li>
+<li>6570M/6575 的 VRF、OSPF/OSPFv3/IS-IS、BGP 均需 Advanced Routing license；6560 的 OSPF/BGP 同（X44，<span class="pg">原文p44</span> /<span class="pg">原文p79-82</span> ）</li>
+<li>BFD 不支持 IPv6 协议、不支持 Demand 模式（X15，<span class="pg">原文p49</span> ）；SLB 仅 6860/6860N/6865/6870/6900-X（X16）；MBR 不支持 6360/6465/6560/6570M（X18）；MRP 仅 6465/6575/6865（X19）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniSwitch AOS Release 8 Specifications Guide Ch2 Network Configuration（ <code>&lt;span class="pg"&gt;原文p27-76&lt;/span&gt;</code> ）、Ch3 Advanced Routing（ <code>&lt;span class="pg"&gt;原文p77-86&lt;/span&gt;</code> ）。条目来源：principles P16/P19-P31/P33-P40/P42-P44/P48/P50；counter-examples X6/X15/X16/X18/X19/X24-X28/X31-X33/X34-X40/X44/X46/X47-X50；frameworks F2/F4。</p><div class="pn"><a href="aos-spec-platform-tiers.html">⬅ 上一单元：aos-spec-platform-tiers</a><a class="nxt" href="aos-spec-tcam-features.html">下一单元：aos-spec-tcam-features ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<p>OmniSwitch AOS Release 8 Specifications Guide Ch2 Network Configuration（<span class="pg">原文p27-76</span> ）、Ch3 Advanced Routing（<span class="pg">原文p77-86</span> ）。条目来源：principles P16/P19-P31/P33-P40/P42-P44/P48/P50；counter-examples X6/X15/X16/X18/X19/X24-X28/X31-X33/X34-X40/X44/X46/X47-X50；frameworks F2/F4。</p><div class="pn"><a href="aos-spec-platform-tiers.html">⬅ 上一单元：aos-spec-platform-tiers</a><a class="nxt" href="aos-spec-tcam-features.html">下一单元：aos-spec-tcam-features ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

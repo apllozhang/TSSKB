@@ -93,41 +93,41 @@ blockquote p{margin:6px 0}
 <p>静态与默认路由：<code>ip static-route 134.1.21.0/24 gateway 10.1.1.1</code> / <code>ip static-route 0.0.0.0/0 gateway 10.1.1.1</code>；</p>
 <ul>
 <li>双默认路由用 metric 1 与 metric 2 互备；</li>
-<li><code>show ip router database</code> 可见 inactive 备份（ <code>&lt;span class="pg"&gt;原文p222&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p223&lt;/span&gt;</code> ）；</li>
+<li><code>show ip router database</code> 可见 inactive 备份（<span class="pg">原文p222</span> -<span class="pg">原文p223</span> ）；</li>
 </ul>
 </li>
 <li>
-<p>递归路由：<code>ip static-route 172.30.0.0/16 follows 2.2.2.2 metric 1</code>（ <code>&lt;span class="pg"&gt;原文p225&lt;/span&gt;</code> ）</p>
+<p>递归路由：<code>ip static-route 172.30.0.0/16 follows 2.2.2.2 metric 1</code>（<span class="pg">原文p225</span> ）</p>
 </li>
-<li>RIP 最小配置：<code>ip load rip</code> → <code>ip rip interface &lt;if&gt; admin-state enable</code> → <code>ip rip admin-state enable</code>（ <code>&lt;span class="pg"&gt;原文p228&lt;/span&gt;</code> ）</li>
-<li>RIP 重分发：<code>ip route-map rip_1 sequence-number 50 action permit / match ip-address 0.0.0.0/0</code> + <code>ip redist local into rip route-map rip_1 admin-state enable</code>（static 同理）（ <code>&lt;span class="pg"&gt;原文p228&lt;/span&gt;</code> ）</li>
-<li>IS-IS 最小配置：<code>ip load isis</code> → <code>ip isis admin-state enable</code> → <code>ip isis area-id 49.0001</code> → <code>ip isis activate-ipv4</code> → <code>ip isis vlan 5</code> → <code>ip isis vlan 5 address-family v4</code> → <code>ip isis vlan 5 admin-state enable</code>；<code>show ip isis adjacency/route/spf</code>（ <code>&lt;span class="pg"&gt;原文p697&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p698&lt;/span&gt;</code> ）</li>
+<li>RIP 最小配置：<code>ip load rip</code> → <code>ip rip interface &lt;if&gt; admin-state enable</code> → <code>ip rip admin-state enable</code>（<span class="pg">原文p228</span> ）</li>
+<li>RIP 重分发：<code>ip route-map rip_1 sequence-number 50 action permit / match ip-address 0.0.0.0/0</code> + <code>ip redist local into rip route-map rip_1 admin-state enable</code>（static 同理）（<span class="pg">原文p228</span> ）</li>
+<li>IS-IS 最小配置：<code>ip load isis</code> → <code>ip isis admin-state enable</code> → <code>ip isis area-id 49.0001</code> → <code>ip isis activate-ipv4</code> → <code>ip isis vlan 5</code> → <code>ip isis vlan 5 address-family v4</code> → <code>ip isis vlan 5 admin-state enable</code>；<code>show ip isis adjacency/route/spf</code>（<span class="pg">原文p697</span> -<span class="pg">原文p698</span> ）</li>
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
-<li>RIP 四定时器：Update 30（1..120）/ Invalid 180（3..360）/ Garbage 120（0..180）/ Hold-down 0（0..120）；约束 update ≤ invalid/3、invalid ≥ 3×update（ <code>&lt;span class="pg"&gt;原文p231&lt;/span&gt;</code> ）</li>
-<li>RIP 16 跳不可达、网络直径最大 15（ <code>&lt;span class="pg"&gt;原文p227&lt;/span&gt;</code> ）</li>
-<li>优先级可改：<code>ip route-pref BGP 8</code>（ <code>&lt;span class="pg"&gt;原文p503&lt;/span&gt;</code> ）</li>
-<li>IS-IS NSAP 结构（Area-ID/System-ID/NSEL），本地管理 AFI=49；DIS 类似 OSPF DR 但可抢占，Hello 9s（DIS 3s），按优先级+MAC 选举（ <code>&lt;span class="pg"&gt;原文p686&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p689&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p690&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p694&lt;/span&gt;</code> ）</li>
+<li>RIP 四定时器：Update 30（1..120）/ Invalid 180（3..360）/ Garbage 120（0..180）/ Hold-down 0（0..120）；约束 update ≤ invalid/3、invalid ≥ 3×update（<span class="pg">原文p231</span> ）</li>
+<li>RIP 16 跳不可达、网络直径最大 15（<span class="pg">原文p227</span> ）</li>
+<li>优先级可改：<code>ip route-pref BGP 8</code>（<span class="pg">原文p503</span> ）</li>
+<li>IS-IS NSAP 结构（Area-ID/System-ID/NSEL），本地管理 AFI=49；DIS 类似 OSPF DR 但可抢占，Hello 9s（DIS 3s），按优先级+MAC 选举（<span class="pg">原文p686</span> 、<span class="pg">原文p689</span> -<span class="pg">原文p690</span> 、<span class="pg">原文p694</span> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>C-19 双默认路由 metric 互备，database 中 inactive 展示（ <code>&lt;span class="pg"&gt;原文p222&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p223&lt;/span&gt;</code> ）</li>
-<li>C-20 RIP 最小配置与 local/static 重分发（ <code>&lt;span class="pg"&gt;原文p228&lt;/span&gt;</code> ）</li>
-<li>C-39 IS-IS 单区域启用模板（ <code>&lt;span class="pg"&gt;原文p697&lt;/span&gt;</code> ）</li>
+<li>C-19 双默认路由 metric 互备，database 中 inactive 展示（<span class="pg">原文p222</span> -<span class="pg">原文p223</span> ）</li>
+<li>C-20 RIP 最小配置与 local/static 重分发（<span class="pg">原文p228</span> ）</li>
+<li>C-39 IS-IS 单区域启用模板（<span class="pg">原文p697</span> ）</li>
 </ul>
 <h2 id="b">B（边界与陷阱）</h2>
 <ul>
-<li>RIP 默认只通告学到的 RIP 路由和 Loopback0，local/static 路由必须重分发，漏配即路由缺失（ <code>&lt;span class="pg"&gt;原文p228&lt;/span&gt;</code> ）</li>
-<li>递归静态路由的网关随 follow 目标路由变化而漂移，设计时要确保 follow 目标稳定防环路（ <code>&lt;span class="pg"&gt;原文p225&lt;/span&gt;</code> ）</li>
-<li>Loopback0 被 RIP/OSPF 自动通告但 BGP 不通告（ <code>&lt;span class="pg"&gt;原文p216&lt;/span&gt;</code> ）</li>
+<li>RIP 默认只通告学到的 RIP 路由和 Loopback0，local/static 路由必须重分发，漏配即路由缺失（<span class="pg">原文p228</span> ）</li>
+<li>递归静态路由的网关随 follow 目标路由变化而漂移，设计时要确保 follow 目标稳定防环路（<span class="pg">原文p225</span> ）</li>
+<li>Loopback0 被 RIP/OSPF 自动通告但 BGP 不通告（<span class="pg">原文p216</span> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
 <ul>
-<li>principle·P-35 IP 接口与 Loopback0（ <code>&lt;span class="pg"&gt;原文p214&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p216&lt;/span&gt;</code> ）</li>
-<li>principle·P-36 递归静态路由（ <code>&lt;span class="pg"&gt;原文p224&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p225&lt;/span&gt;</code> ）</li>
-<li>principle·P-37 RIP 规格与定时器（ <code>&lt;span class="pg"&gt;原文p227&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p231&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p232&lt;/span&gt;</code> ）</li>
-<li>principle·P-38 路由协议优先级（ <code>&lt;span class="pg"&gt;原文p299&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p503&lt;/span&gt;</code> ）</li>
-<li>principle·P-66 IS-IS NSAP 与 DIS（ <code>&lt;span class="pg"&gt;原文p686&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p694&lt;/span&gt;</code> ）</li>
+<li>principle·P-35 IP 接口与 Loopback0（<span class="pg">原文p214</span> 、<span class="pg">原文p216</span> ）</li>
+<li>principle·P-36 递归静态路由（<span class="pg">原文p224</span> 、<span class="pg">原文p225</span> ）</li>
+<li>principle·P-37 RIP 规格与定时器（<span class="pg">原文p227</span> 、<span class="pg">原文p231</span> 、<span class="pg">原文p232</span> ）</li>
+<li>principle·P-38 路由协议优先级（<span class="pg">原文p299</span> 、<span class="pg">原文p503</span> ）</li>
+<li>principle·P-66 IS-IS NSAP 与 DIS（<span class="pg">原文p686</span> -<span class="pg">原文p694</span> ）</li>
 <li>case·C-19/C-20/C-39；counter·X-17/X-18</li>
 </ul><div class="pn"><a href="learned-port-security.html">⬅ 上一单元：learned-port-security</a><a class="nxt" href="ospf-area-redistribution.html">下一单元：ospf-area-redistribution ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

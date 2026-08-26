@@ -77,51 +77,51 @@ blockquote p{margin:6px 0}
 <p>Stellar 是无控制器架构：AP 间通过空口直接交换漫游上下文、通过 LAN 交换 RF 参数，管理面按规模三选一——Express 自管理集群（255 台）、Enterprise 本地 OV2500（4000 台）、Cloud Cirrus（10000 台）。AP 上电后按"DHCP option 138 → Cirrus 注册检查 → Express"三段决策树自动落到某个模式。多台 AP 同 Group ID + 同 VLAN 即自动成组并选举 PVM/SVM 主备。</p>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
-<li>模式选型（F02， <code>&lt;span class="pg"&gt;原文p195&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p185&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p189&lt;/span&gt;</code> ）：</li>
+<li>模式选型（F02，<span class="pg">原文p195</span> 、<span class="pg">原文p185</span> –<span class="pg">原文p189</span> ）：</li>
 <li>Express：自管理独立集群、Web 向导、最多 255 AP、免许可 → SMB 小规模；</li>
 <li>Enterprise：OV2500 本地 NMS 集中管理、最多 4000 AP → 中大型/本地运维；</li>
 <li>Cloud：OmniVista Cirrus 云管、最多 10000 AP → 多分支/托管。</li>
-<li>AP 首次配置向导（C02， <code>&lt;span class="pg"&gt;原文p99&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p103&lt;/span&gt;</code> ）：浏览器访问 <code>192.168.1.254:8080</code>（默认口令 admin）→ 改管理员密码 → 选国家/时区 → 创建首个 SSID（替换默认 mywifi-XXXX）→ IP Mode 改 Static（如 192.168.1.3，网关指向交换机）→ 用新 IP 重连。</li>
-<li>模式判定（F01， <code>&lt;span class="pg"&gt;原文p198&lt;/span&gt;</code> ）：DHCP offer 带 option 138 → 向 OV2500 注册（Enterprise）；无 138 → 联系 Cirrus，MAC/SN 已注册 → Cloud；未注册 → Express。</li>
-<li>切 DHCP 模式后用域名管理：Web 界面 AP &gt; IP Mode &gt; Edit &gt; DHCP &gt; Save，此后 <code>mywifi.al-enterprise.com:8080</code> 访问；交换机侧 <code>show mac-learning</code> 交叉定位 AP（C10， <code>&lt;span class="pg"&gt;原文p176&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p181&lt;/span&gt;</code> ）。</li>
-<li>多 AP 扩容（F09， <code>&lt;span class="pg"&gt;原文p262&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p268&lt;/span&gt;</code> ）：新交换机把 AP 管理 VLAN untagged 到 AP 口、tagged 到上联 → AP 通电取 DHCP → 与既有 AP 同 VLAN + 同 Group ID 自动成组 → 统一 Web 管理，PVM 为型号最高者（本例 AP1321）。</li>
-<li>恢复出厂（C03， <code>&lt;span class="pg"&gt;原文p104&lt;/span&gt;</code> ）：Reset 键按 10 秒松开；或 Console（support/aos2016）<code>ssudo firstboot -y</code> → <code>ssudo reboot</code>。</li>
+<li>AP 首次配置向导（C02，<span class="pg">原文p99</span> –<span class="pg">原文p103</span> ）：浏览器访问 <code>192.168.1.254:8080</code>（默认口令 admin）→ 改管理员密码 → 选国家/时区 → 创建首个 SSID（替换默认 mywifi-XXXX）→ IP Mode 改 Static（如 192.168.1.3，网关指向交换机）→ 用新 IP 重连。</li>
+<li>模式判定（F01，<span class="pg">原文p198</span> ）：DHCP offer 带 option 138 → 向 OV2500 注册（Enterprise）；无 138 → 联系 Cirrus，MAC/SN 已注册 → Cloud；未注册 → Express。</li>
+<li>切 DHCP 模式后用域名管理：Web 界面 AP &gt; IP Mode &gt; Edit &gt; DHCP &gt; Save，此后 <code>mywifi.al-enterprise.com:8080</code> 访问；交换机侧 <code>show mac-learning</code> 交叉定位 AP（C10，<span class="pg">原文p176</span> –<span class="pg">原文p181</span> ）。</li>
+<li>多 AP 扩容（F09，<span class="pg">原文p262</span> –<span class="pg">原文p268</span> ）：新交换机把 AP 管理 VLAN untagged 到 AP 口、tagged 到上联 → AP 通电取 DHCP → 与既有 AP 同 VLAN + 同 Group ID 自动成组 → 统一 Web 管理，PVM 为型号最高者（本例 AP1321）。</li>
+<li>恢复出厂（C03，<span class="pg">原文p104</span> ）：Reset 键按 10 秒松开；或 Console（support/aos2016）<code>ssudo firstboot -y</code> → <code>ssudo reboot</code>。</li>
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
-<li>AP Group 出厂默认 Group ID 100、VLAN 1；改 Group 名/ID/管理 IP 在 System &gt; General（C17， <code>&lt;span class="pg"&gt;原文p264&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p268&lt;/span&gt;</code> ；P34， <code>&lt;span class="pg"&gt;原文p202&lt;/span&gt;</code> ）。</li>
-<li>PVM/SVM 选举双准则：先比 AP 型号高低，再比 MAC 大小（F15/P35， <code>&lt;span class="pg"&gt;原文p203&lt;/span&gt;</code> ）。</li>
-<li>分布式控制：空口交换漫游上下文/MAC/密钥/ARP，LAN 交换 RF 设置/功率/信道/RSSI（P47， <code>&lt;span class="pg"&gt;原文p280&lt;/span&gt;</code> ）。</li>
-<li>AP 选型速查：Wi-Fi 代际九维对照（Wi-Fi 6 = 802.11ax 9.6Gbps WPA3，Wi-Fi 7 = 802.11be 46Gbps 320MHz 16x16 MU-MIMO）（F11， <code>&lt;span class="pg"&gt;原文p45&lt;/span&gt;</code> ）；型号尾数 2 = 支持外置天线，其余内置全向（P50， <code>&lt;span class="pg"&gt;原文p41&lt;/span&gt;</code> ）。</li>
-<li>无控制器架构下 AP 自带 DHCP/DNS/NAT 三件套服务（P37， <code>&lt;span class="pg"&gt;原文p216&lt;/span&gt;</code> ）。</li>
-<li>AP LED 状态判读：绿闪 = 已启动广播默认 SSID，蓝 = 双频，蓝红闪 = 升级中，红 = 启动中（P42， <code>&lt;span class="pg"&gt;原文p52&lt;/span&gt;</code> ）。</li>
+<li>AP Group 出厂默认 Group ID 100、VLAN 1；改 Group 名/ID/管理 IP 在 System &gt; General（C17，<span class="pg">原文p264</span> –<span class="pg">原文p268</span> ；P34，<span class="pg">原文p202</span> ）。</li>
+<li>PVM/SVM 选举双准则：先比 AP 型号高低，再比 MAC 大小（F15/P35，<span class="pg">原文p203</span> ）。</li>
+<li>分布式控制：空口交换漫游上下文/MAC/密钥/ARP，LAN 交换 RF 设置/功率/信道/RSSI（P47，<span class="pg">原文p280</span> ）。</li>
+<li>AP 选型速查：Wi-Fi 代际九维对照（Wi-Fi 6 = 802.11ax 9.6Gbps WPA3，Wi-Fi 7 = 802.11be 46Gbps 320MHz 16x16 MU-MIMO）（F11，<span class="pg">原文p45</span> ）；型号尾数 2 = 支持外置天线，其余内置全向（P50，<span class="pg">原文p41</span> ）。</li>
+<li>无控制器架构下 AP 自带 DHCP/DNS/NAT 三件套服务（P37，<span class="pg">原文p216</span> ）。</li>
+<li>AP LED 状态判读：绿闪 = 已启动广播默认 SSID，蓝 = 双频，蓝红闪 = 升级中，红 = 启动中（P42，<span class="pg">原文p52</span> ）。</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>Express 向导：新建 SSID AdminX 替换默认 mywifi-XXXX，AP 改静态 IP 后用新地址重连（C02， <code>&lt;span class="pg"&gt;原文p99&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p103&lt;/span&gt;</code> ）。</li>
-<li>OS2360 接入 + AP 自动成组：两台 AP 出现在同一 AP Group，PVM 为 AP1321（C17， <code>&lt;span class="pg"&gt;原文p264&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p268&lt;/span&gt;</code> ）。</li>
-<li>AP 切 DHCP 后用 mywifi.al-enterprise.com:8080 域名访问管理页（C10， <code>&lt;span class="pg"&gt;原文p176&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p180&lt;/span&gt;</code> ）。</li>
+<li>Express 向导：新建 SSID AdminX 替换默认 mywifi-XXXX，AP 改静态 IP 后用新地址重连（C02，<span class="pg">原文p99</span> –<span class="pg">原文p103</span> ）。</li>
+<li>OS2360 接入 + AP 自动成组：两台 AP 出现在同一 AP Group，PVM 为 AP1321（C17，<span class="pg">原文p264</span> –<span class="pg">原文p268</span> ）。</li>
+<li>AP 切 DHCP 后用 mywifi.al-enterprise.com:8080 域名访问管理页（C10，<span class="pg">原文p176</span> –<span class="pg">原文p180</span> ）。</li>
 </ul>
 <h2 id="b">B（边界与陷阱）</h2>
 <ul>
-<li>多台新 AP 默认管理 IP 都是 192.168.1.254 会冲突；静态管理多台前必须逐台改 IP 或直接依赖 DHCP；AP 改 IP 后旧地址访问失效（CE20， <code>&lt;span class="pg"&gt;原文p101&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p103&lt;/span&gt;</code> ）。</li>
-<li>AP 加入 AP Group 后本地配置被清除并替换为 PVM 下发的组配置——单点调好的配置会丢（CE06， <code>&lt;span class="pg"&gt;原文p266&lt;/span&gt;</code> ）。</li>
-<li>出厂即广播 mywifi-XXXX（MAC 后四位），管理口 8080（P33， <code>&lt;span class="pg"&gt;原文p199&lt;/span&gt;</code> ）。</li>
-<li>Console 凭据 support/aos2016（C03/C19， <code>&lt;span class="pg"&gt;原文p104&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p352&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p357&lt;/span&gt;</code> ）。</li>
+<li>多台新 AP 默认管理 IP 都是 192.168.1.254 会冲突；静态管理多台前必须逐台改 IP 或直接依赖 DHCP；AP 改 IP 后旧地址访问失效（CE20，<span class="pg">原文p101</span> 、<span class="pg">原文p103</span> ）。</li>
+<li>AP 加入 AP Group 后本地配置被清除并替换为 PVM 下发的组配置——单点调好的配置会丢（CE06，<span class="pg">原文p266</span> ）。</li>
+<li>出厂即广播 mywifi-XXXX（MAC 后四位），管理口 8080（P33，<span class="pg">原文p199</span> ）。</li>
+<li>Console 凭据 support/aos2016（C03/C19，<span class="pg">原文p104</span> 、<span class="pg">原文p352</span> –<span class="pg">原文p357</span> ）。</li>
 </ul>
 <h2 id="_1">来源</h2>
 <ul>
-<li>case·Stellar AP1321 首次配置向导（ <code>&lt;span class="pg"&gt;原文p99&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p103&lt;/span&gt;</code> ）</li>
-<li>case·AP 恢复出厂两条路径（ <code>&lt;span class="pg"&gt;原文p104&lt;/span&gt;</code> ）</li>
-<li>case·AP 切 DHCP 模式与域名重连（ <code>&lt;span class="pg"&gt;原文p176&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p181&lt;/span&gt;</code> ）</li>
-<li>case·多交换机多 AP 自动成组（ <code>&lt;span class="pg"&gt;原文p264&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p268&lt;/span&gt;</code> ）</li>
-<li>framework·三模式自动选择决策树（ <code>&lt;span class="pg"&gt;原文p198&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p274&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p195&lt;/span&gt;</code> ）</li>
-<li>framework·三部署模式定位与规模选型（ <code>&lt;span class="pg"&gt;原文p195&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p185&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p189&lt;/span&gt;</code> ）</li>
-<li>framework·多 AP 环境扩展流程（ <code>&lt;span class="pg"&gt;原文p262&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p268&lt;/span&gt;</code> ）</li>
-<li>framework·PVM/SVM 选举准则（ <code>&lt;span class="pg"&gt;原文p203&lt;/span&gt;</code> ）</li>
-<li>framework·Wi-Fi 代际演进对照（ <code>&lt;span class="pg"&gt;原文p45&lt;/span&gt;</code> ）</li>
-<li>principle·AP 出厂默认行为（ <code>&lt;span class="pg"&gt;原文p199&lt;/span&gt;</code> ）</li>
-<li>principle·AP Group 成组条件（ <code>&lt;span class="pg"&gt;原文p202&lt;/span&gt;</code> ）</li>
-<li>counter·多 AP 默认 IP 冲突（ <code>&lt;span class="pg"&gt;原文p101&lt;/span&gt;</code> ）</li>
-<li>counter·入组后本地配置被清除（ <code>&lt;span class="pg"&gt;原文p266&lt;/span&gt;</code> ）</li>
+<li>case·Stellar AP1321 首次配置向导（<span class="pg">原文p99</span> –<span class="pg">原文p103</span> ）</li>
+<li>case·AP 恢复出厂两条路径（<span class="pg">原文p104</span> ）</li>
+<li>case·AP 切 DHCP 模式与域名重连（<span class="pg">原文p176</span> –<span class="pg">原文p181</span> ）</li>
+<li>case·多交换机多 AP 自动成组（<span class="pg">原文p264</span> –<span class="pg">原文p268</span> ）</li>
+<li>framework·三模式自动选择决策树（<span class="pg">原文p198</span> 、<span class="pg">原文p274</span> 、<span class="pg">原文p195</span> ）</li>
+<li>framework·三部署模式定位与规模选型（<span class="pg">原文p195</span> 、<span class="pg">原文p185</span> –<span class="pg">原文p189</span> ）</li>
+<li>framework·多 AP 环境扩展流程（<span class="pg">原文p262</span> –<span class="pg">原文p268</span> ）</li>
+<li>framework·PVM/SVM 选举准则（<span class="pg">原文p203</span> ）</li>
+<li>framework·Wi-Fi 代际演进对照（<span class="pg">原文p45</span> ）</li>
+<li>principle·AP 出厂默认行为（<span class="pg">原文p199</span> ）</li>
+<li>principle·AP Group 成组条件（<span class="pg">原文p202</span> ）</li>
+<li>counter·多 AP 默认 IP 冲突（<span class="pg">原文p101</span> ）</li>
+<li>counter·入组后本地配置被清除（<span class="pg">原文p266</span> ）</li>
 </ul><div class="pn"><a href="stp-lacp-basics.html">⬅ 上一单元：stp-lacp-basics</a><a class="nxt" href="ssid-security-design.html">下一单元：ssid-security-design ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

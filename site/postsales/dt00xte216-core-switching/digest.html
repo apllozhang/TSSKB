@@ -157,85 +157,85 @@ blockquote p{margin:6px 0}
 <h2 id="_2">二、十个最重要知识点串讲</h2>
 <ol>
 <li>
-<p>ERP 用"阻塞一条链路"换环网无环（ <code>&lt;span class="pg"&gt;原文p37&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p56&lt;/span&gt;</code> ）。</p>
+<p>ERP 用"阻塞一条链路"换环网无环（<span class="pg">原文p37</span> -<span class="pg">原文p56</span> ）。</p>
 <ul>
 <li>稳态下 RPL Owner 阻塞唯一的 RPL 端口；
 故障时 R-APS SF 消息传遍 Service VLAN，RPL 解阻塞完成约 50ms 倒换；
 恢复时 NR + WTR（默认 5 分钟）防抖回切，Guard 定时器（50 厘秒）丢弃过期 R-APS。</li>
-<li>每环有且仅有一个 RPL，且 RPL 只能配在未 enable 的环上（ <code>&lt;span class="pg"&gt;原文p55&lt;/span&gt;</code> ），否则视为非法配置。</li>
+<li>每环有且仅有一个 RPL，且 RPL 只能配在未 enable 的环上（<span class="pg">原文p55</span> ），否则视为非法配置。</li>
 </ul>
 </li>
 <li>
-<p>MSTP 同域三要素与负载分担（ <code>&lt;span class="pg"&gt;原文p117&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p146&lt;/span&gt;</code> ）。</p>
+<p>MSTP 同域三要素与负载分担（<span class="pg">原文p117</span> -<span class="pg">原文p146</span> ）。</p>
 <ul>
 <li>region name、revision level、VLAN-to-MSTI 映射三者完全一致才是同一个域，对外表现为一台交换机。</li>
 <li>CIST（实例 0）用单 BPDU 承载全部实例信息。</li>
-<li>负载分担的做法是让不同 MSTI 选不同根桥（优先级须为 4096 的倍数），例如 sw7 做 MSTI 1 根、sw8 做 MSTI 2 根，VLAN 20/30 各走一条上行（ <code>&lt;span class="pg"&gt;原文p143&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p146&lt;/span&gt;</code> ）。</li>
+<li>负载分担的做法是让不同 MSTI 选不同根桥（优先级须为 4096 的倍数），例如 sw7 做 MSTI 1 根、sw8 做 MSTI 2 根，VLAN 20/30 各走一条上行（<span class="pg">原文p143</span> 、<span class="pg">原文p146</span> ）。</li>
 </ul>
 </li>
 <li>
-<p>MVRP 只管二层，动态 VLAN 有"生命"（ <code>&lt;span class="pg"&gt;原文p152&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p163&lt;/span&gt;</code> ）。</p>
+<p>MVRP 只管二层，动态 VLAN 有"生命"（<span class="pg">原文p152</span> -<span class="pg">原文p163</span> ）。</p>
 <ul>
 <li>一个 PDU 携带端口全部 4094 个 VLAN 状态；学到的 VLAN 标记为 dyn，源端删 VLAN 或禁用 MVRP 前它删不掉且会被自动重建。</li>
 <li>动态 VLAN 不建 IP 接口、不映射 MSTI——三层和生成树分担要手工补配。</li>
-<li>MVRP 仅支持 STP flat 模式（ <code>&lt;span class="pg"&gt;原文p154&lt;/span&gt;</code> ）。</li>
+<li>MVRP 仅支持 STP flat 模式（<span class="pg">原文p154</span> ）。</li>
 </ul>
 </li>
 <li>
-<p>MACsec 的密钥模型决定配置形态（ <code>&lt;span class="pg"&gt;原文p67&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p94&lt;/span&gt;</code> ）。</p>
+<p>MACsec 的密钥模型决定配置形态（<span class="pg">原文p67</span> -<span class="pg">原文p94</span> ）。</p>
 <ul>
 <li>每节点收发各一条安全通道（SCI），通道内 SA 持有 SAK。</li>
 <li>Static 模式手工配 key-chain，本端 sci-tx 必须等于对端 sci-rx（交叉引用）；
 Dynamic PSK 由 MKA 协商 SAK，轮换双门限（会话 5-120 分钟、流量 5-1000GB）先到先触发。</li>
-<li>平台差异是最大的坑：OS6860N 不支持 Static、VFL 堆叠口不支持 MACsec、9900 部分板卡仅 Static（ <code>&lt;span class="pg"&gt;原文p71&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p75&lt;/span&gt;</code> ）。</li>
+<li>平台差异是最大的坑：OS6860N 不支持 Static、VFL 堆叠口不支持 MACsec、9900 部分板卡仅 Static（<span class="pg">原文p71</span> -<span class="pg">原文p75</span> ）。</li>
 </ul>
 </li>
 <li>
-<p>Private VLAN 的转发模型：MAC 全学在 Primary 上（ <code>&lt;span class="pg"&gt;原文p98&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p112&lt;/span&gt;</code> ）。</p>
+<p>Private VLAN 的转发模型：MAC 全学在 Primary 上（<span class="pg">原文p98</span> -<span class="pg">原文p112</span> ）。</p>
 <ul>
 <li>isolated 成员间二层完全不通、community 组内通组间不通，出向流量统一经 Primary VLAN 转发，未授权的二级 VLAN 间流量被丢弃。</li>
-<li>一个 Primary 只能有一个 Isolated，多组隔离需求应拆多个 community（ <code>&lt;span class="pg"&gt;原文p109&lt;/span&gt;</code> ）。</li>
+<li>一个 Primary 只能有一个 Isolated，多组隔离需求应拆多个 community（<span class="pg">原文p109</span> ）。</li>
 <li>跨交换机延伸用 ISL 口（可用 linkagg 承载）。</li>
 </ul>
 </li>
 <li>
-<p>AOS 路由优先级表与 Loopback0 约定（ <code>&lt;span class="pg"&gt;原文p216&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p299&lt;/span&gt;</code> ）。</p>
+<p>AOS 路由优先级表与 Loopback0 约定（<span class="pg">原文p216</span> 、<span class="pg">原文p299</span> ）。</p>
 <ul>
 <li>Local 1 / Static 2 / OSPF 110 / ISIS-L1 115 / ISIS-L2 118 / RIP 120 / EBGP 190 / IBGP 200 / Import 210，可手工调整。</li>
 <li>Loopback0 永久 up，被 RIP/OSPF 自动通告（BGP 不），是 router-id、BGP peering、PIM RP 的标准身份地址。</li>
 </ul>
 </li>
 <li>
-<p>OSPF 区域类型=允许进入的 LSA 集合（ <code>&lt;span class="pg"&gt;原文p267&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p270&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p355&lt;/span&gt;</code> ）。</p>
+<p>OSPF 区域类型=允许进入的 LSA 集合（<span class="pg">原文p267</span> -<span class="pg">原文p270</span> 、<span class="pg">原文p355</span> ）。</p>
 <ul>
 <li>Stub 拒 Type5、ABR 注入 Type3 默认路由；Totally Stubby 再拒 Type3；NSSA 用 Type7 引入外部路由（ABR 转成 Type5 出域）。</li>
-<li>配置七步法里 router-id 先行、最后统一 enable（ <code>&lt;span class="pg"&gt;原文p275&lt;/span&gt;</code> ）。</li>
-<li>两个高频故障：认证单端先开会立刻丢邻居（ <code>&lt;span class="pg"&gt;原文p353&lt;/span&gt;</code> ）；Hello interval 不一致邻居无法 Full，用 <code>swlog appid ospf_0 ... level debug3</code> 抓日志定位（ <code>&lt;span class="pg"&gt;原文p292&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p294&lt;/span&gt;</code> ）。</li>
-<li>重分发范式"先 route-map 后 redist"同样适用于 RIP/BGP（ <code>&lt;span class="pg"&gt;原文p228&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p516&lt;/span&gt;</code> ）。</li>
+<li>配置七步法里 router-id 先行、最后统一 enable（<span class="pg">原文p275</span> ）。</li>
+<li>两个高频故障：认证单端先开会立刻丢邻居（<span class="pg">原文p353</span> ）；Hello interval 不一致邻居无法 Full，用 <code>swlog appid ospf_0 ... level debug3</code> 抓日志定位（<span class="pg">原文p292</span> -<span class="pg">原文p294</span> ）。</li>
+<li>重分发范式"先 route-map 后 redist"同样适用于 RIP/BGP（<span class="pg">原文p228</span> 、<span class="pg">原文p516</span> ）。</li>
 </ul>
 </li>
 <li>
-<p>组播分两层解：IPMS 管同 VLAN，PIM-SM 管跨网段（ <code>&lt;span class="pg"&gt;原文p377&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p426&lt;/span&gt;</code> ）。</p>
+<p>组播分两层解：IPMS 管同 VLAN，PIM-SM 管跨网段（<span class="pg">原文p377</span> 、<span class="pg">原文p426</span> ）。</p>
 <ul>
-<li>IPMS 硬件侦听 IGMP，只发向加入端口（开关前后泛洪对比见  <code>&lt;span class="pg"&gt;原文p405&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p409&lt;/span&gt;</code> ）；PIM-SM 显式加入 + RP 共享树，末跳 DR 自动发起 SPT 切换。</li>
-<li>RP 冗余首选 Anycast RP（RFC 4610）：多 RP 共享一个 Loopback 任播地址，IGP 收敛即 RP 切换，static-rp 必须配到全域所有 PIM 路由器（ <code>&lt;span class="pg"&gt;原文p644&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p649&lt;/span&gt;</code> ）。</li>
+<li>IPMS 硬件侦听 IGMP，只发向加入端口（开关前后泛洪对比见 <span class="pg">原文p405</span> -<span class="pg">原文p409</span> ）；PIM-SM 显式加入 + RP 共享树，末跳 DR 自动发起 SPT 切换。</li>
+<li>RP 冗余首选 Anycast RP（RFC 4610）：多 RP 共享一个 Loopback 任播地址，IGP 收敛即 RP 切换，static-rp 必须配到全域所有 PIM 路由器（<span class="pg">原文p644</span> -<span class="pg">原文p649</span> ）。</li>
 </ul>
 </li>
 <li>
-<p>BGP 属性选路次序是排障对照表（ <code>&lt;span class="pg"&gt;原文p497&lt;/span&gt;</code> ）。</p>
+<p>BGP 属性选路次序是排障对照表（<span class="pg">原文p497</span> ）。</p>
 <ul>
 <li>Local Pref（高优）→ AS-Path（短优）→ Origin（IGP&gt;EGP&gt;Incomplete）→ MED（低优）→ Next-Hop 就近 → EBGP&gt;IBGP → RID。</li>
-<li>IBGP 水平分割是全互联需求的根因（ <code>&lt;span class="pg"&gt;原文p501&lt;/span&gt;</code> ）。</li>
-<li>VRF 隔离默认、互通例外：跨 VRF 只能经 GRT 以 route-map 过滤中转，且交换机本机跨 VRF 接口互 ping 永远不通（安全设计，  <code>&lt;span class="pg"&gt;原文p467&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p468&lt;/span&gt;</code> ）。</li>
+<li>IBGP 水平分割是全互联需求的根因（<span class="pg">原文p501</span> ）。</li>
+<li>VRF 隔离默认、互通例外：跨 VRF 只能经 GRT 以 route-map 过滤中转，且交换机本机跨 VRF 接口互 ping 永远不通（安全设计， <span class="pg">原文p467</span> -<span class="pg">原文p468</span> ）。</li>
 </ul>
 </li>
 <li>
-<p>SPB 用 IS-IS 换掉 STP 的"浪费"（ <code>&lt;span class="pg"&gt;原文p521&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p570&lt;/span&gt;</code> ）。</p>
+<p>SPB 用 IS-IS 换掉 STP 的"浪费"（<span class="pg">原文p521</span> -<span class="pg">原文p570</span> ）。</p>
 <ul>
 <li>每节点对每个 BVLAN 建自根 SPF 树，全链路可用、路径对称、帧有序，百毫秒级收敛。</li>
 <li>BCB 只按 BMAC 转发不学客户 MAC。</li>
-<li>部署四任务：建 BVLAN+ECT、定 control BVLAN（仅协议禁用时改）、配 ISIS 接口、enable（ <code>&lt;span class="pg"&gt;原文p547&lt;/span&gt;</code> ）。</li>
-<li>硬约束：ISID/BVLAN 映射全局一致；BVLAN 上无 STP；BVLAN 数别超过等价路径数；不同 VLAN 映射同一服务会引发 mac-move 震荡（ <code>&lt;span class="pg"&gt;原文p555&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p610&lt;/span&gt;</code> ）。</li>
+<li>部署四任务：建 BVLAN+ECT、定 control BVLAN（仅协议禁用时改）、配 ISIS 接口、enable（<span class="pg">原文p547</span> ）。</li>
+<li>硬约束：ISID/BVLAN 映射全局一致；BVLAN 上无 STP；BVLAN 数别超过等价路径数；不同 VLAN 映射同一服务会引发 mac-move 震荡（<span class="pg">原文p555</span> 、<span class="pg">原文p610</span> ）。</li>
 </ul>
 </li>
 </ol>
@@ -244,12 +244,12 @@ Dynamic PSK 由 MKA 协商 SAK，轮换双门限（会话 5-120 分钟、流量 
 <li>enable 之前检查全局一致性：MEG Level（ERP）、Region 三要素（MSTP）、密钥链交叉（MACsec Static）、ISID/BVLAN（SPB）、area type（OSPF stub）——凡是"多节点协同"的协议，错一处即整段不通，且报错往往不在出错的那台机器上。<ul>
 <li>
 <ol>
-<li>show 先行、swlog 兜底：每个特性都有配套 show 族（show erp/show pvlan members/show spantree msti vlan-map/show ip ospf/show spb isis adjacency），先看状态再动配置；OSPF 邻居类故障用 swlog debug3 分级日志直接抓到 "invalid helloInterval" 级别的证据（ <code>&lt;span class="pg"&gt;原文p292&lt;/span&gt;</code> ）。</li>
+<li>show 先行、swlog 兜底：每个特性都有配套 show 族（show erp/show pvlan members/show spantree msti vlan-map/show ip ospf/show spb isis adjacency），先看状态再动配置；OSPF 邻居类故障用 swlog debug3 分级日志直接抓到 "invalid helloInterval" 级别的证据（<span class="pg">原文p292</span> ）。</li>
 </ol>
 </li>
 <li>
 <ol>
-<li>回滚路径先于变更设计：working/certified 双镜像（ <code>&lt;span class="pg"&gt;原文p680&lt;/span&gt;</code> ）、reload no rollback-timeout（ <code>&lt;span class="pg"&gt;原文p62&lt;/span&gt;</code> ）、实验后删目录重载，AOS 的变更文化是"先拿到可回退状态，再推进"。</li>
+<li>回滚路径先于变更设计：working/certified 双镜像（<span class="pg">原文p680</span> ）、reload no rollback-timeout（<span class="pg">原文p62</span> ）、实验后删目录重载，AOS 的变更文化是"先拿到可回退状态，再推进"。</li>
 </ol>
 </li>
 </ul>

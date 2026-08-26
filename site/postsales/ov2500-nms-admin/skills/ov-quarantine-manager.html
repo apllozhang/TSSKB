@@ -79,43 +79,43 @@ blockquote p{margin:6px 0}
 三列表模型决定设备命运——Candidates 只是"等管理员决策"，Banned 才是真隔离。</p>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
-<li><strong>启用内置规则族</strong>（默认全禁用， <code>&lt;span class="pg"&gt;原文p304&lt;/span&gt;</code> ）：</li>
+<li><strong>启用内置规则族</strong>（默认全禁用，<span class="pg">原文p304</span> ）：</li>
 <li>Alcatel DOS Trap Rule：Teardrop / Ping of Death / Port Scan</li>
 <li>Fortinet：Anomaly / Signature / Virus（Fortigate 上配 Pass 的项会被忽略）</li>
 <li>OA WLAN：Rogue AP Active / Rogue AP Detected / Station w/ Rogue AP</li>
-<li><strong>自定义规则四要素</strong>（ <code>&lt;span class="pg"&gt;原文p305&lt;/span&gt;</code> ）：名称、描述、触发表达式、提取表达式（取源地址）、动作（入 Candidates 或 Banned）</li>
+<li><strong>自定义规则四要素</strong>（<span class="pg">原文p305</span> ）：名称、描述、触发表达式、提取表达式（取源地址）、动作（入 Candidates 或 Banned）</li>
 <li><strong>执行手段</strong>（&lt;&lt;<PAGE 307/298>&gt;&gt;）：VLAN MAC Rule（<code>vlan 999 &lt;mac_address&gt;</code>）、VLAN DHCP MAC Rule、ACL（condition IP source &lt;&gt; action &lt;&gt;）、IP&lt;-&gt;MAC 绑定、SNMP Set message；第三方交换机可 Port Shutdown，无线侧可 end user block listing</li>
 <li>
-<p>三列表处置（ <code>&lt;span class="pg"&gt;原文p308-310&lt;/span&gt;</code> ）：Candidates——流量继续放行，等管理员 Release/Ban/Never-ban；</p>
+<p>三列表处置（<span class="pg">原文p308-310</span> ）：Candidates——流量继续放行，等管理员 Release/Ban/Never-ban；</p>
 <ul>
 <li>Banned——"it remains quarantined until the Network Administrator manually releases it."；</li>
 <li>Never Banned——OV 服务器与已发现交换机被隐式加入；</li>
 </ul>
 </li>
 <li>
-<p><strong>Responder</strong>（ <code>&lt;span class="pg"&gt;原文p311&lt;/span&gt;</code> ）：配置邮件通知（可基于变量拼内容）或让 AQM 在 OV 服务器上执行外部程序/脚本</p>
+<p><strong>Responder</strong>（<span class="pg">原文p311</span> ）：配置邮件通知（可基于变量拼内容）或让 AQM 在 OV 服务器上执行外部程序/脚本</p>
 </li>
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
-<li>遏制与 UNP 体系联动：攻击检测的终端可通过 VLAN/ACL 执行手段与 Unified Access 端口策略组合（参考  <code>&lt;span class="pg"&gt;原文p303-307&lt;/span&gt;</code>  框架）</li>
-<li>邮件链路复用全局 SMTP 配置（Administration &gt; Preferences &gt; System Settings &gt; Email），先 Send Test E-mail 验证（ <code>&lt;span class="pg"&gt;原文p191&lt;/span&gt;</code> ）</li>
+<li>遏制与 UNP 体系联动：攻击检测的终端可通过 VLAN/ACL 执行手段与 Unified Access 端口策略组合（参考 <span class="pg">原文p303-307</span>  框架）</li>
+<li>邮件链路复用全局 SMTP 配置（Administration &gt; Preferences &gt; System Settings &gt; Email），先 Send Test E-mail 验证（<span class="pg">原文p191</span> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>内置规则族盘点（AlaDosTrap/Fortinet/OA WLAN）与自定义规则四要素——cases·QM 内置规则（ <code>&lt;span class="pg"&gt;原文p304-305&lt;/span&gt;</code> ）</li>
-<li>QM Responder 邮件变量与外部程序执行——cases·QM Responder（ <code>&lt;span class="pg"&gt;原文p311&lt;/span&gt;</code> ）</li>
+<li>内置规则族盘点（AlaDosTrap/Fortinet/OA WLAN）与自定义规则四要素——cases·QM 内置规则（<span class="pg">原文p304-305</span> ）</li>
+<li>QM Responder 邮件变量与外部程序执行——cases·QM Responder（<span class="pg">原文p311</span> ）</li>
 </ul>
 <h2 id="b">B（边界与陷阱）</h2>
 <ul>
-<li>"By Default all of the rules are disabled."——以为开了其实没开是最常见错觉（ <code>&lt;span class="pg"&gt;原文p304&lt;/span&gt;</code> ）</li>
-<li>Candidates 语义陷阱："If a device is placed on the Candidates List, traffic to and from that device will continue until the Network Administrator decides what action should take place."（ <code>&lt;span class="pg"&gt;原文p308&lt;/span&gt;</code> ）</li>
-<li>Banned 不会自动解封，必须管理员手动 Release（ <code>&lt;span class="pg"&gt;原文p309&lt;/span&gt;</code> ）</li>
+<li>"By Default all of the rules are disabled."——以为开了其实没开是最常见错觉（<span class="pg">原文p304</span> ）</li>
+<li>Candidates 语义陷阱："If a device is placed on the Candidates List, traffic to and from that device will continue until the Network Administrator decides what action should take place."（<span class="pg">原文p308</span> ）</li>
+<li>Banned 不会自动解封，必须管理员手动 Release（<span class="pg">原文p309</span> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
 <ul>
-<li>frameworks·检测-规则-执行-Responder 框架（ <code>&lt;span class="pg"&gt;原文p303-310&lt;/span&gt;</code> ）</li>
-<li>principles·遏制执行机制（&lt;&lt;<PAGE 307/298>&gt;&gt;）、三列表语义（ <code>&lt;span class="pg"&gt;原文p308-310&lt;/span&gt;</code> ）</li>
+<li>frameworks·检测-规则-执行-Responder 框架（<span class="pg">原文p303-310</span> ）</li>
+<li>principles·遏制执行机制（&lt;&lt;<PAGE 307/298>&gt;&gt;）、三列表语义（<span class="pg">原文p308-310</span> ）</li>
 <li>cases·内置规则族/Responder（&lt;&lt;<PAGE 304-305/311>&gt;&gt;）</li>
 <li>counter-examples·默认禁用/Candidates 语义（&lt;&lt;<PAGE 304/308>&gt;&gt;）</li>
 </ul><div class="pn"><a href="ov-policyview-qos.html">⬅ 上一单元：ov-policyview-qos</a><a class="nxt" href="ov-analytics-appvis-iot.html">下一单元：ov-analytics-appvis-iot ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

@@ -68,7 +68,7 @@ blockquote p{margin:6px 0}
 <li>判断"这是缺陷还是配置问题"——先查 Open CR 再排障</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>Release Notes 的 Open Problem Reports 是手册里没有的独占排障库：按 CRAOS8X-xxxxx 编号索引，Fixed CR（Appendix I， <code>&lt;span class="pg"&gt;原文p83-100&lt;/span&gt;</code> ）为已修，Open CR（ <code>&lt;span class="pg"&gt;原文p41-46&lt;/span&gt;</code> ）为发布时未修、多数"无解"只能绕行。排障口诀：现象先对号 Open CR（避免无效变更）→ 不是 CR 再走配置排障；硬件类 CR 多与光模块速率协商/批次相关，软件类 CR 多与 toggle/admin-state 操作触发相关。平台端口级限制（MACsec 端口矩阵、快速收敛例外、性能许可口）是"设计即如此"，升级不能解决。</p>
+<p>Release Notes 的 Open Problem Reports 是手册里没有的独占排障库：按 CRAOS8X-xxxxx 编号索引，Fixed CR（Appendix I，<span class="pg">原文p83-100</span> ）为已修，Open CR（<span class="pg">原文p41-46</span> ）为发布时未修、多数"无解"只能绕行。排障口诀：现象先对号 Open CR（避免无效变更）→ 不是 CR 再走配置排障；硬件类 CR 多与光模块速率协商/批次相关，软件类 CR 多与 toggle/admin-state 操作触发相关。平台端口级限制（MACsec 端口矩阵、快速收敛例外、性能许可口）是"设计即如此"，升级不能解决。</p>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>光模块/链路类故障</strong>：对号 X38-X44 清单——多数 workaround 是换模块类型、固定速率、调 inter-frame-gap/FEC</li>
@@ -78,12 +78,12 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li>光模块 CR 绕行：SFP-10G-T 对端强制 10G（X38， <code>&lt;span class="pg"&gt;原文p42&lt;/span&gt;</code> ）；</li>
-<li>SFP-GIG-T 避开 10M 配置下的反复 admin disable/enable（X39， <code>&lt;span class="pg"&gt;原文p42&lt;/span&gt;</code> ）；</li>
-<li>OS99-CNI-U8 4x25G DAC 起 lane 不来换 QSFP-100G-SR4 光纤（X40， <code>&lt;span class="pg"&gt;原文p42&lt;/span&gt;</code> ）；</li>
-<li>SFP-DUAL-BX-U/D 只用于 6870-24/48/V12 的 1G（X41， <code>&lt;span class="pg"&gt;原文p43&lt;/span&gt;</code> ）；</li>
+<li>光模块 CR 绕行：SFP-10G-T 对端强制 10G（X38，<span class="pg">原文p42</span> ）；</li>
+<li>SFP-GIG-T 避开 10M 配置下的反复 admin disable/enable（X39，<span class="pg">原文p42</span> ）；</li>
+<li>OS99-CNI-U8 4x25G DAC 起 lane 不来换 QSFP-100G-SR4 光纤（X40，<span class="pg">原文p42</span> ）；</li>
+<li>SFP-DUAL-BX-U/D 只用于 6870-24/48/V12 的 1G（X41，<span class="pg">原文p43</span> ）；</li>
 <li>
-<p>VFL 4X25G splitter CRC 两侧 inter-frame-gap=13 或 FEC FC+关自协商（X44， <code>&lt;span class="pg"&gt;原文p42&lt;/span&gt;</code> ）；</p>
+<p>VFL 4X25G splitter CRC 两侧 inter-frame-gap=13 或 FEC FC+关自协商（X44，<span class="pg">原文p42</span> ）；</p>
 </li>
 <li>
 <p>MACsec 部署核对：端口矩阵例外——6870-24 口 25-26、6870-48 口 49-50 不支持；</p>
@@ -92,42 +92,42 @@ blockquote p{margin:6px 0}
 <li>6900 仅 X48C4E（Dynamic only）；</li>
 <li>6860N 仅 Dynamic 128-bit 且 splitter 光模块不支持；</li>
 <li>
-<p>9900 CNI-U8 不支持（X22/X23， <code>&lt;span class="pg"&gt;原文p62&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p17&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p63&lt;/span&gt;</code> ）；</p>
+<p>9900 CNI-U8 不支持（X22/X23，<span class="pg">原文p62</span> /<span class="pg">原文p17</span> /<span class="pg">原文p63</span> ）；</p>
 </li>
 <li>
-<p>平台缺口预查：6920 本版无 VC、不支持 IP-IP/GRE/IPv6 隧道（X28， <code>&lt;span class="pg"&gt;原文p21&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p43&lt;/span&gt;</code> ）；</p>
+<p>平台缺口预查：6920 本版无 VC、不支持 IP-IP/GRE/IPv6 隧道（X28，<span class="pg">原文p21</span> /<span class="pg">原文p43</span> ）；</p>
 </li>
-<li>6575-MP16 无 VC（X29， <code>&lt;span class="pg"&gt;原文p21&lt;/span&gt;</code> ）；</li>
-<li>P48Z16(903954-90) 1G 口 1-32 不支持聚合，只能靠 PN 区分（X21， <code>&lt;span class="pg"&gt;原文p15&lt;/span&gt;</code> ）；</li>
+<li>6575-MP16 无 VC（X29，<span class="pg">原文p21</span> ）；</li>
+<li>P48Z16(903954-90) 1G 口 1-32 不支持聚合，只能靠 PN 区分（X21，<span class="pg">原文p15</span> ）；</li>
 <li>
-<p>快速收敛例外：铜口/VFL/splitter 口、6865-P16X·U12X 口 3/4、6570M-12/12D 口 9/10（X24， <code>&lt;span class="pg"&gt;原文p15&lt;/span&gt;</code> ）；</p>
+<p>快速收敛例外：铜口/VFL/splitter 口、6865-P16X·U12X 口 3/4、6570M-12/12D 口 9/10（X24，<span class="pg">原文p15</span> ）；</p>
 </li>
 <li>
-<p><strong>6560 X4 系列 10G 解锁口</strong>：24X4/P24X4 口 25/26、48X4/P48X4 口 49/50（默认 1G）；6570M-U28 口 25-28、6870-LNI-U6（50G）同理（X25， <code>&lt;span class="pg"&gt;原文p19&lt;/span&gt;</code> ）</p>
+<p><strong>6560 X4 系列 10G 解锁口</strong>：24X4/P24X4 口 25/26、48X4/P48X4 口 49/50（默认 1G）；6570M-U28 口 25-28、6870-LNI-U6（50G）同理（X25，<span class="pg">原文p19</span> ）</p>
 </li>
-<li><strong>SPB BVLAN 收敛运维</strong>：<code>show spb isis bvlans</code> 查全网 In Use → 维护窗内业务删除重建到 4 条 BVLAN → 空闲 BVLAN 全网删除（在线改不支持）（C17， <code>&lt;span class="pg"&gt;原文p66&lt;/span&gt;</code> /X31  <code>&lt;span class="pg"&gt;原文p65&lt;/span&gt;</code> ）</li>
+<li><strong>SPB BVLAN 收敛运维</strong>：<code>show spb isis bvlans</code> 查全网 In Use → 维护窗内业务删除重建到 4 条 BVLAN → 空闲 BVLAN 全网删除（在线改不支持）（C17，<span class="pg">原文p66</span> /X31 <span class="pg">原文p65</span> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>SPB BVLAN 收敛到 4 条的运维操作（C17， <code>&lt;span class="pg"&gt;原文p66&lt;/span&gt;</code> ）</li>
-<li>Celona PD 降级规避：<code>lanpower {slot | port} autoclass disable</code>（C18， <code>&lt;span class="pg"&gt;原文p34&lt;/span&gt;</code> ）</li>
-<li>MKA VLAN 隧道化：<code>interfaces &lt;c/s/p&gt; macsec mode dynamic mka-vlan &lt;vid&gt; [mka-tpid &lt;tpid&gt;]</code>，验证 <code>show interfaces macsec mka-info</code>（C19， <code>&lt;span class="pg"&gt;原文p35&lt;/span&gt;</code> ）</li>
-<li>模块热插拔规程：拔线→拔光模块→拔板卡等 ≥30 秒再插同型号（CMM 15-20 分钟；新模块插入间隔 5 分钟且 LED 回正常）→重插光模块→接线；CFM 一次只换一个、120 秒内完成（C14， <code>&lt;span class="pg"&gt;原文p47-48&lt;/span&gt;</code> ）</li>
+<li>SPB BVLAN 收敛到 4 条的运维操作（C17，<span class="pg">原文p66</span> ）</li>
+<li>Celona PD 降级规避：<code>lanpower {slot | port} autoclass disable</code>（C18，<span class="pg">原文p34</span> ）</li>
+<li>MKA VLAN 隧道化：<code>interfaces &lt;c/s/p&gt; macsec mode dynamic mka-vlan &lt;vid&gt; [mka-tpid &lt;tpid&gt;]</code>，验证 <code>show interfaces macsec mka-info</code>（C19，<span class="pg">原文p35</span> ）</li>
+<li>模块热插拔规程：拔线→拔光模块→拔板卡等 ≥30 秒再插同型号（CMM 15-20 分钟；新模块插入间隔 5 分钟且 LED 回正常）→重插光模块→接线；CFM 一次只换一个、120 秒内完成（C14，<span class="pg">原文p47-48</span> ）</li>
 </ul>
 <h2 id="b">B（反例/坑）</h2>
 <ul>
-<li>SFP-GIG-T 对端从 10M 变 100M/1G 间歇性链路 down：U28 热插拔模块恢复，12/12D 可能要整机重启（X43， <code>&lt;span class="pg"&gt;原文p42&lt;/span&gt;</code> ）；6570M-U28 口 25 + SFP-10G-T 对端反复 admin 翻动出现仅本地 linkup（X42， <code>&lt;span class="pg"&gt;原文p42&lt;/span&gt;</code> ）</li>
-<li>OS9912 聚合口禁用某成员后哈希失衡，流量可能全压一条剩余链路，无解（X47， <code>&lt;span class="pg"&gt;原文p41&lt;/span&gt;</code> ）</li>
-<li>PTP 打戳 PHY 口↔PHYless 口交叉时不正确（6870-V12 1-12↔13-14/CNI/LNI；6570-U28 1-24↔25-30），无解（X48， <code>&lt;span class="pg"&gt;原文p41&lt;/span&gt;</code> ）</li>
-<li>BFD 在 VRRP VLAN 接口 toggle 时丢包，无解（X50， <code>&lt;span class="pg"&gt;原文p41&lt;/span&gt;</code> ）</li>
-<li>EVPN 一组 toggle 触发掉流：对称 IRB service toggle、PIM+非对称 BGP admin-state toggle、非对称 OSPF admin-state toggle（X54， <code>&lt;span class="pg"&gt;原文p44&lt;/span&gt;</code> ）</li>
-<li>OS6920 多项协议缺口：ICMP redirect 不转发、Snap 头 ARP 解析失败、IPv6 隧道不转发 ICMPv6、组播 MAC 广播不转发等（X53， <code>&lt;span class="pg"&gt;原文p43-44&lt;/span&gt;</code> ）</li>
-<li>二次 vc-takeover 后 sdp/sap MAC 可能从 show mac-learning 丢失，重发流量可恢复（X56， <code>&lt;span class="pg"&gt;原文p45&lt;/span&gt;</code> ）；OS9900 chassis-2 偶发 cmm-takeover 后 VC 分裂，无解（X57， <code>&lt;span class="pg"&gt;原文p45&lt;/span&gt;</code> ）</li>
-<li>静态 MACsec 无加密时 key 不匹配流量仍通——安全审计注意（X60， <code>&lt;span class="pg"&gt;原文p45&lt;/span&gt;</code> ）</li>
-<li>OS99-XNI-P24Z8 前 8 口 dynamic MACsec reload 后状态 down，需手动 toggle admin state（X59， <code>&lt;span class="pg"&gt;原文p45&lt;/span&gt;</code> ）</li>
-<li>OS6900-V48 无损 TC 上限 40：全 TC 无损 DCB profile 最多 5 端口，更多需自定义 QSP 只配必要无损 TC（X62， <code>&lt;span class="pg"&gt;原文p45-46&lt;/span&gt;</code> ）</li>
-<li>OS6575 启用 policy rule Redirect_All 后掉流量，无解（X63， <code>&lt;span class="pg"&gt;原文p46&lt;/span&gt;</code> ）；8 成员 LAG 禁主口后组播/广播负载失衡（X52， <code>&lt;span class="pg"&gt;原文p41&lt;/span&gt;</code> ）</li>
-<li>OS6860N-U28 控制台 smgrOpenLicenseFile 错误无功能影响（X46， <code>&lt;span class="pg"&gt;原文p43&lt;/span&gt;</code> ）；CMM2+XNI-U48 板违规恢复比 WTR 多约 2 分钟（X51， <code>&lt;span class="pg"&gt;原文p41&lt;/span&gt;</code> ）</li>
+<li>SFP-GIG-T 对端从 10M 变 100M/1G 间歇性链路 down：U28 热插拔模块恢复，12/12D 可能要整机重启（X43，<span class="pg">原文p42</span> ）；6570M-U28 口 25 + SFP-10G-T 对端反复 admin 翻动出现仅本地 linkup（X42，<span class="pg">原文p42</span> ）</li>
+<li>OS9912 聚合口禁用某成员后哈希失衡，流量可能全压一条剩余链路，无解（X47，<span class="pg">原文p41</span> ）</li>
+<li>PTP 打戳 PHY 口↔PHYless 口交叉时不正确（6870-V12 1-12↔13-14/CNI/LNI；6570-U28 1-24↔25-30），无解（X48，<span class="pg">原文p41</span> ）</li>
+<li>BFD 在 VRRP VLAN 接口 toggle 时丢包，无解（X50，<span class="pg">原文p41</span> ）</li>
+<li>EVPN 一组 toggle 触发掉流：对称 IRB service toggle、PIM+非对称 BGP admin-state toggle、非对称 OSPF admin-state toggle（X54，<span class="pg">原文p44</span> ）</li>
+<li>OS6920 多项协议缺口：ICMP redirect 不转发、Snap 头 ARP 解析失败、IPv6 隧道不转发 ICMPv6、组播 MAC 广播不转发等（X53，<span class="pg">原文p43-44</span> ）</li>
+<li>二次 vc-takeover 后 sdp/sap MAC 可能从 show mac-learning 丢失，重发流量可恢复（X56，<span class="pg">原文p45</span> ）；OS9900 chassis-2 偶发 cmm-takeover 后 VC 分裂，无解（X57，<span class="pg">原文p45</span> ）</li>
+<li>静态 MACsec 无加密时 key 不匹配流量仍通——安全审计注意（X60，<span class="pg">原文p45</span> ）</li>
+<li>OS99-XNI-P24Z8 前 8 口 dynamic MACsec reload 后状态 down，需手动 toggle admin state（X59，<span class="pg">原文p45</span> ）</li>
+<li>OS6900-V48 无损 TC 上限 40：全 TC 无损 DCB profile 最多 5 端口，更多需自定义 QSP 只配必要无损 TC（X62，<span class="pg">原文p45-46</span> ）</li>
+<li>OS6575 启用 policy rule Redirect_All 后掉流量，无解（X63，<span class="pg">原文p46</span> ）；8 成员 LAG 禁主口后组播/广播负载失衡（X52，<span class="pg">原文p41</span> ）</li>
+<li>OS6860N-U28 控制台 smgrOpenLicenseFile 错误无功能影响（X46，<span class="pg">原文p43</span> ）；CMM2+XNI-U48 板违规恢复比 WTR 多约 2 分钟（X51，<span class="pg">原文p41</span> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniSwitch AOS Release 8.10R4 Release Notes Open Problem Reports（ <code>&lt;span class="pg"&gt;原文p41-46&lt;/span&gt;</code> ）、Prerequisites（ <code>&lt;span class="pg"&gt;原文p14-21&lt;/span&gt;</code> ）、Appendix B MACsec Platform Support（ <code>&lt;span class="pg"&gt;原文p62-63&lt;/span&gt;</code> ）、Appendix C SPB（ <code>&lt;span class="pg"&gt;原文p64-66&lt;/span&gt;</code> ）、Hot-Swap Guidelines（ <code>&lt;span class="pg"&gt;原文p47-49&lt;/span&gt;</code> ）。条目来源：counter-examples X21-X25/X28-X31/X38-X44/X46-X48/X50-X53/X54-X57/X59/X60/X62/X63/X65；cases C14/C17-C19。</p><div class="pn"><a href="aos-rn-secure-boot.html">⬅ 上一单元：aos-rn-secure-boot</a><a class="nxt" href="aos-rn-new-features-deprecations.html">下一单元：aos-rn-new-features-deprecations ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<p>OmniSwitch AOS Release 8.10R4 Release Notes Open Problem Reports（<span class="pg">原文p41-46</span> ）、Prerequisites（<span class="pg">原文p14-21</span> ）、Appendix B MACsec Platform Support（<span class="pg">原文p62-63</span> ）、Appendix C SPB（<span class="pg">原文p64-66</span> ）、Hot-Swap Guidelines（<span class="pg">原文p47-49</span> ）。条目来源：counter-examples X21-X25/X28-X31/X38-X44/X46-X48/X50-X53/X54-X57/X59/X60/X62/X63/X65；cases C14/C17-C19。</p><div class="pn"><a href="aos-rn-secure-boot.html">⬅ 上一单元：aos-rn-secure-boot</a><a class="nxt" href="aos-rn-new-features-deprecations.html">下一单元：aos-rn-new-features-deprecations ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

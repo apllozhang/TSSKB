@@ -78,9 +78,9 @@ blockquote p{margin:6px 0}
 <p>Unified Access 有三个配置途径：Workflow（六种引导流程：分类规则/802.1X/MAC/802.1X+MAC/MAC+Captive Portal/ClearPass）→ Template（Access Auth/WLAN Service/Access Role/AAA Server 等模板批量下发）→ Device Config（单设备微调）＋Profile Polling 轮询同步。认证分层：L2（802.1X/MAC/分类规则→定 UNP+VLAN，之后不变）→ L3（QMR、MAC 黑名单、位置/时间校验动态改 Policy List/Role）。</p>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
-<li><strong>途径选型</strong>（frameworks·F15， <code>&lt;span class="pg"&gt;原文p592&lt;/span&gt;</code> ）：新场景走 Workflow 向导；标准化批量走 Template；个别设备差异走 Device Config（改动只影响所选设备不回写模板）</li>
+<li><strong>途径选型</strong>（frameworks·F15，<span class="pg">原文p592</span> ）：新场景走 Workflow 向导；标准化批量走 Template；个别设备差异走 Device Config（改动只影响所选设备不回写模板）</li>
 <li>
-<p>L2 认证与分类决策流（principles·P159， <code>&lt;span class="pg"&gt;原文p591-592&lt;/span&gt;</code> ）：优先 802.1X，非 supplicant 或禁用时用 MAC；</p>
+<p>L2 认证与分类决策流（principles·P159，<span class="pg">原文p591-592</span> ）：优先 802.1X，非 supplicant 或禁用时用 MAC；</p>
 <ul>
 <li>RADIUS 返回有效 UNP→映射 Access Role Profile+VLAN；</li>
 <li>认证未启用/失败/无有效 UNP 且启用分类→按 Port/Group ID/MAC/LLDP/认证类型/IP 分类规则给 Default UNP；</li>
@@ -88,7 +88,7 @@ blockquote p{margin:6px 0}
 </ul>
 </li>
 <li>
-<p><strong>模板清单</strong>（principles·P161， <code>&lt;span class="pg"&gt;原文p593-594&lt;/span&gt;</code> ）：Access Auth Profile：</p>
+<p><strong>模板清单</strong>（principles·P161，<span class="pg">原文p593-594</span> ）：Access Auth Profile：</p>
 </li>
 <li>WLAN Service</li>
 <li>Access Role Profile</li>
@@ -106,30 +106,30 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>创建并下发 Access Role Profile</strong>：Unified Profile→Access Role Profile→Add：General（Auth Flag/Mobile Tag/Redirect Status/Policy List/Location+Period Policy/Inactivity Interval）+Bandwidth Control+Client Session Logging+WCF+Walled Garden+Allowed Contacts+CP Attributes→Create→Apply To Devices：Configure Mapping Method（Map to VLAN/SPB/VXLAN/Static Service/Tunnel/VLAN+Tunnel）→Select Devices→Apply（cases·C53， <code>&lt;span class="pg"&gt;原文p608-613&lt;/span&gt;</code> ）</li>
+<li><strong>创建并下发 Access Role Profile</strong>：Unified Profile→Access Role Profile→Add：General（Auth Flag/Mobile Tag/Redirect Status/Policy List/Location+Period Policy/Inactivity Interval）+Bandwidth Control+Client Session Logging+WCF+Walled Garden+Allowed Contacts+CP Attributes→Create→Apply To Devices：Configure Mapping Method（Map to VLAN/SPB/VXLAN/Static Service/Tunnel/VLAN+Tunnel）→Select Devices→Apply（cases·C53，<span class="pg">原文p608-613</span> ）</li>
 <li>Access Auth Profile 关键机制：Port Bounce（COA 换 VLAN 后触发 DHCP 重新，无线与 AOS 6x 恒开）；</li>
 <li>AP Mode 默认开（自动检测 Stellar AP）；</li>
 <li>Trust Tag 默认关；</li>
 <li>Bypass VLAN 芯片直通（优先于 Trust Tag，推荐 HD IPTV）；</li>
 <li>
-<p>Bypass Status/MAC Allow EAP 组合决定 802.1X 跳过逻辑（principles·P162， <code>&lt;span class="pg"&gt;原文p594-601&lt;/span&gt;</code> ）；</p>
+<p>Bypass Status/MAC Allow EAP 组合决定 802.1X 跳过逻辑（principles·P162，<span class="pg">原文p594-601</span> ）；</p>
 </li>
 <li>
 <p>无线转发模式：Tunnel（GRE 到控制器）/Bridge（AP 本地）/Split Tunnel/Decrypt Tunnel；</p>
 </li>
 <li>Drop Broadcast/Multicast 与 ARP 转 Unicast 仅限 Tunnel 模式；</li>
 <li>
-<p>Band Steering：Force/Prefer（默认）/Band Balancing（principles·P163， <code>&lt;span class="pg"&gt;原文p598-599&lt;/span&gt;</code> ）；</p>
+<p>Band Steering：Force/Prefer（默认）/Band Balancing（principles·P163，<span class="pg">原文p598-599</span> ）；</p>
 </li>
 <li>
-<p><strong>WLAN Service 角色分配优先级</strong>：802.1X/MAC 认证返回角色 &gt; Classification Rules（仅当认证未返回或未匹配时）&gt; Default Access Role Profile；ESSID ≤32 字符（principles·P164， <code>&lt;span class="pg"&gt;原文p602-603&lt;/span&gt;</code> ）</p>
+<p><strong>WLAN Service 角色分配优先级</strong>：802.1X/MAC 认证返回角色 &gt; Classification Rules（仅当认证未返回或未匹配时）&gt; Default Access Role Profile；ESSID ≤32 字符（principles·P164，<span class="pg">原文p602-603</span> ）</p>
 </li>
 <li>AAA Server Profile：每类服务器可配主+多级备份；</li>
 <li>无线 CP 主备被忽略；</li>
 <li>Session Timeout 默认 43200；</li>
 <li>Inactivity 默认 600（须大于交换机 MAC 老化时间）；</li>
 <li>
-<p>所有超时参数修改不追溯已在线用户（principles·P167， <code>&lt;span class="pg"&gt;原文p614-618&lt;/span&gt;</code> ）；</p>
+<p>所有超时参数修改不追溯已在线用户（principles·P167，<span class="pg">原文p614-618</span> ）；</p>
 </li>
 <li>
 <p>Access Classification 规则：九种类型（MAC/MAC Range/IP Address/VLAN Tag/Location(仅 Legacy AP)/ESSID/DHCP Option/DHCP Option 77/Encryption Type）；</p>
@@ -138,7 +138,7 @@ blockquote p{margin:6px 0}
 <p>均可附 VLAN Tag 与 Customer Domain ID；</p>
 </li>
 <li>
-<p>映射 VLAN/SPB/VXLAN/Static Service 四选一（principles·P168， <code>&lt;span class="pg"&gt;原文p621-623&lt;/span&gt;</code> ）；</p>
+<p>映射 VLAN/SPB/VXLAN/Static Service 四选一（principles·P168，<span class="pg">原文p621-623</span> ）；</p>
 </li>
 <li>
 <p>SPB/VXLAN/Static Service/Tunnel 映射：SPB/VXLAN Profile 设备动态入档案时自动建 SAP；</p>
@@ -146,34 +146,34 @@ blockquote p{margin:6px 0}
 <li>Tunnel Profile：Keepalive 默认 5s、MTU 建议 Raw GRE 1476；</li>
 <li>Tunnel ID 与 Entropy 只有两种合法组合（AOS 终结=非 0 ID+Entropy 开；</li>
 <li>
-<p>非 AOS/OV VPN=0 ID+Entropy 关）（principles·P170， <code>&lt;span class="pg"&gt;原文p625-630&lt;/span&gt;</code> ）；</p>
+<p>非 AOS/OV VPN=0 ID+Entropy 关）（principles·P170，<span class="pg">原文p625-630</span> ）；</p>
 </li>
 <li>
 <p>Global Configuration：Redirect Pause Timer 默认 0；</p>
 </li>
 <li>Auth Server Down Timeout 默认 60；</li>
 <li>Redirect Port Bounce 默认 Enabled；</li>
-<li>Auth Server Down Access Role Profile=RADIUS 不可达兜底角色（principles·P172， <code>&lt;span class="pg"&gt;原文p634-635&lt;/span&gt;</code> ）；</li>
+<li>Auth Server Down Access Role Profile=RADIUS 不可达兜底角色（principles·P172，<span class="pg">原文p634-635</span> ）；</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>Access Role Profile 从建档案到 Apply To Devices 全字段（cases·C53， <code>&lt;span class="pg"&gt;原文p608-613&lt;/span&gt;</code> ）</li>
-<li>L2 认证/分类决策流全链路（principles·P159， <code>&lt;span class="pg"&gt;原文p591-592&lt;/span&gt;</code> ）</li>
-<li>802.1X/MAC 无线认证 Profile 组合（principles·P171， <code>&lt;span class="pg"&gt;原文p631-633&lt;/span&gt;</code> ）</li>
+<li>Access Role Profile 从建档案到 Apply To Devices 全字段（cases·C53，<span class="pg">原文p608-613</span> ）</li>
+<li>L2 认证/分类决策流全链路（principles·P159，<span class="pg">原文p591-592</span> ）</li>
+<li>802.1X/MAC 无线认证 Profile 组合（principles·P171，<span class="pg">原文p631-633</span> ）</li>
 </ul>
 <h2 id="b">B（反例/坑）</h2>
 <ul>
-<li>Redirect 开启后 Access Role Profile 只能映射 VLAN（principles·P166， <code>&lt;span class="pg"&gt;原文p608-613&lt;/span&gt;</code> ）</li>
+<li>Redirect 开启后 Access Role Profile 只能映射 VLAN（principles·P166，<span class="pg">原文p608-613</span> ）</li>
 <li>每 Access Role Profile 仅 1 个 Policy List；PolicyView Expert 策略设备集须与档案设备集一致（principles·P166）</li>
-<li>常见分配失败：链路聚合成员/tagged 口不能启 UNP；VLAN 不存在或非 Standard VLAN；Port-Template 与 L2 Profile 冲突（principles·P162， <code>&lt;span class="pg"&gt;原文p594-601&lt;/span&gt;</code> ）</li>
+<li>常见分配失败：链路聚合成员/tagged 口不能启 UNP；VLAN 不存在或非 Standard VLAN；Port-Template 与 L2 Profile 冲突（principles·P162，<span class="pg">原文p594-601</span> ）</li>
 <li>AP Mode 的 Secure 未勾时，AP 认证失败其客户端流量仍被信任（principles·P162）</li>
 <li>取消端口分配的正规流程：Device Config 删除后重推剩余端口，不要直接改档案（principles·P162）</li>
-<li>Stellar AP VLAN 须 1-4094 或 untagged 否则忽略；Stellar AP 的 VLAN 只能经 Access Role Profile 映射创建（principles·P166 / P188， <code>&lt;span class="pg"&gt;原文p608-613, 790-808&lt;/span&gt;</code> ）</li>
-<li>分类规则（MAC 规则）改动会 flush 已分类 MAC；Location 分类仅 Legacy AP，Stellar 不支持（principles·P168， <code>&lt;span class="pg"&gt;原文p621-623&lt;/span&gt;</code> ）</li>
-<li>AAA 超时参数改了不追溯已在线用户，要 flush 或重新认证才生效（principles·P167， <code>&lt;span class="pg"&gt;原文p614-618&lt;/span&gt;</code> ）</li>
-<li>同 AP 多 SSID 静态路由会累积且目的子网不得重复；勿手写隧道 VLAN 对应子网路由（AP 自动建，手写致性能劣化）（principles·P170， <code>&lt;span class="pg"&gt;原文p625-630&lt;/span&gt;</code> ）</li>
-<li>Captive Portal 不支持 OS6350（principles·P161， <code>&lt;span class="pg"&gt;原文p593-594&lt;/span&gt;</code> ）</li>
-<li>Hide SSID 几乎无安全价值（principles·P164， <code>&lt;span class="pg"&gt;原文p602-603&lt;/span&gt;</code> ）</li>
+<li>Stellar AP VLAN 须 1-4094 或 untagged 否则忽略；Stellar AP 的 VLAN 只能经 Access Role Profile 映射创建（principles·P166 / P188，<span class="pg">原文p608-613, 790-808</span> ）</li>
+<li>分类规则（MAC 规则）改动会 flush 已分类 MAC；Location 分类仅 Legacy AP，Stellar 不支持（principles·P168，<span class="pg">原文p621-623</span> ）</li>
+<li>AAA 超时参数改了不追溯已在线用户，要 flush 或重新认证才生效（principles·P167，<span class="pg">原文p614-618</span> ）</li>
+<li>同 AP 多 SSID 静态路由会累积且目的子网不得重复；勿手写隧道 VLAN 对应子网路由（AP 自动建，手写致性能劣化）（principles·P170，<span class="pg">原文p625-630</span> ）</li>
+<li>Captive Portal 不支持 OS6350（principles·P161，<span class="pg">原文p593-594</span> ）</li>
+<li>Hide SSID 几乎无安全价值（principles·P164，<span class="pg">原文p602-603</span> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniVista 2500 NMS 4.9R2 User Guide 第 32 章 Unified Access（ <code>&lt;span class="pg"&gt;原文p590-655&lt;/span&gt;</code> ）、Profile Polling（ <code>&lt;span class="pg"&gt;原文p677&lt;/span&gt;</code> ）、DHCP Option 82（ <code>&lt;span class="pg"&gt;原文p643-644&lt;/span&gt;</code> ）。条目来源：frameworks F15；cases C53；principles P159-P175。</p><div class="pn"><a href="ov-cli-scripting-mib.html">⬅ 上一单元：ov-cli-scripting-mib</a><a class="nxt" href="ov-upam-guest-byod.html">下一单元：ov-upam-guest-byod ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<p>OmniVista 2500 NMS 4.9R2 User Guide 第 32 章 Unified Access（<span class="pg">原文p590-655</span> ）、Profile Polling（<span class="pg">原文p677</span> ）、DHCP Option 82（<span class="pg">原文p643-644</span> ）。条目来源：frameworks F15；cases C53；principles P159-P175。</p><div class="pn"><a href="ov-cli-scripting-mib.html">⬅ 上一单元：ov-cli-scripting-mib</a><a class="nxt" href="ov-upam-guest-byod.html">下一单元：ov-upam-guest-byod ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

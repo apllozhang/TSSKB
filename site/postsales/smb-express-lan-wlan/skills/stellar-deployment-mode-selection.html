@@ -77,37 +77,37 @@ blockquote p{margin:6px 0}
 <p>Stellar 是无控制器分布式架构：AP 上电后按 "DHCP option 138（OV2500）→ Cirrus 注册（MAC/序列号）→ 都没有则 Express" 三级判定自动进入管理模式。同 Group ID + 同管理 VLAN 的 AP 自动成组并选举 PVM/SVM，从 PVM 统一下发配置。</p>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
-<li><strong>按规模选模式</strong>（ <code>&lt;span class="pg"&gt;原文p188&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p198&lt;/span&gt;</code> ）：Express 自管理 standalone 集群 ≤255 AP、免许可证；Enterprise（OV2500 本地 NMS 集中管理）≤4000 AP；Cloud（OmniVista Cirrus）≤10000 AP。</li>
-<li><strong>核对选型边界</strong>：要语音可视化/大规模就必须 Enterprise/Cloud——Express 模式无 Voice analytics 与 Voice application visibility（ <code>&lt;span class="pg"&gt;原文p875&lt;/span&gt;</code> ）；AP1101 单 AP-Group 仅支持 64 AP / 256 并发客户端，低于 AP13XX 的 255/512（ <code>&lt;span class="pg"&gt;原文p868&lt;/span&gt;</code> ）。</li>
-<li><strong>理解自动选模判定</strong>：AP 发 DHCP REQUEST → DHCP 下发 option 138（OV2500 IP）则注册 OV2500 → 已在 Cirrus 声明（MAC/SN）则从 Cirrus 取配置 → 否则进 Express 模式（ <code>&lt;span class="pg"&gt;原文p201&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p264&lt;/span&gt;</code> ）。</li>
-<li><strong>多 AP 成组</strong>：出厂默认 Group ID=100 / VLAN 1，同 VLAN+同 Group ID 自动成组；PVM/SVM 选举规则：先比最高 AP 型号、再比最高 MAC（ <code>&lt;span class="pg"&gt;原文p204&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p207&lt;/span&gt;</code> ）。</li>
-<li><strong>改组</strong>：System &gt; General 设 Group name / Management IP / Group ID（ <code>&lt;span class="pg"&gt;原文p240&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p245&lt;/span&gt;</code> ）。</li>
+<li><strong>按规模选模式</strong>（<span class="pg">原文p188</span> -<span class="pg">原文p198</span> ）：Express 自管理 standalone 集群 ≤255 AP、免许可证；Enterprise（OV2500 本地 NMS 集中管理）≤4000 AP；Cloud（OmniVista Cirrus）≤10000 AP。</li>
+<li><strong>核对选型边界</strong>：要语音可视化/大规模就必须 Enterprise/Cloud——Express 模式无 Voice analytics 与 Voice application visibility（<span class="pg">原文p875</span> ）；AP1101 单 AP-Group 仅支持 64 AP / 256 并发客户端，低于 AP13XX 的 255/512（<span class="pg">原文p868</span> ）。</li>
+<li><strong>理解自动选模判定</strong>：AP 发 DHCP REQUEST → DHCP 下发 option 138（OV2500 IP）则注册 OV2500 → 已在 Cirrus 声明（MAC/SN）则从 Cirrus 取配置 → 否则进 Express 模式（<span class="pg">原文p201</span> 、<span class="pg">原文p264</span> ）。</li>
+<li><strong>多 AP 成组</strong>：出厂默认 Group ID=100 / VLAN 1，同 VLAN+同 Group ID 自动成组；PVM/SVM 选举规则：先比最高 AP 型号、再比最高 MAC（<span class="pg">原文p204</span> -<span class="pg">原文p207</span> ）。</li>
+<li><strong>改组</strong>：System &gt; General 设 Group name / Management IP / Group ID（<span class="pg">原文p240</span> -<span class="pg">原文p245</span> ）。</li>
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
-<li><strong>分布式控制面</strong>：AP 间 Over the Air 交换 RF 设置/功率/信道/RSSI，Over the LAN 交换漫游客户端上下文（MAC、密钥、Access Role Profiles），即 CNCS（ <code>&lt;span class="pg"&gt;原文p270&lt;/span&gt;</code> ）。</li>
-<li><strong>混部组网</strong>：AP1301 + AP1321 同 VLAN+同 Group ID 自动成组，PVM 落在型号更高的 AP1321 上（ <code>&lt;span class="pg"&gt;原文p240&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p245&lt;/span&gt;</code> ）。</li>
-<li><strong>出厂默认行为速查</strong>：广播 SSID "mywifi-XXXX"、IP 192.168.1.254、Web <code>http://&lt;AP IP&gt;:8080</code>（ <code>&lt;span class="pg"&gt;原文p202&lt;/span&gt;</code> ）。</li>
+<li><strong>分布式控制面</strong>：AP 间 Over the Air 交换 RF 设置/功率/信道/RSSI，Over the LAN 交换漫游客户端上下文（MAC、密钥、Access Role Profiles），即 CNCS（<span class="pg">原文p270</span> ）。</li>
+<li><strong>混部组网</strong>：AP1301 + AP1321 同 VLAN+同 Group ID 自动成组，PVM 落在型号更高的 AP1321 上（<span class="pg">原文p240</span> -<span class="pg">原文p245</span> ）。</li>
+<li><strong>出厂默认行为速查</strong>：广播 SSID "mywifi-XXXX"、IP 192.168.1.254、Web <code>http://&lt;AP IP&gt;:8080</code>（<span class="pg">原文p202</span> ）。</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>多交换机多 AP 实验：OS2360 上配 VLAN tagged/untagged 后，两台 AP 自动成组，PVM=AP1321（型号更高），并从 System&gt;General 修改组参数（ <code>&lt;span class="pg"&gt;原文p240&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p245&lt;/span&gt;</code> ）。</li>
-<li>选型反例：需要语音可视化的项目误选 Express，只能拿到 DPI 带宽管控而拿不到 Voice analytics（ <code>&lt;span class="pg"&gt;原文p875&lt;/span&gt;</code> ）。</li>
+<li>多交换机多 AP 实验：OS2360 上配 VLAN tagged/untagged 后，两台 AP 自动成组，PVM=AP1321（型号更高），并从 System&gt;General 修改组参数（<span class="pg">原文p240</span> -<span class="pg">原文p245</span> ）。</li>
+<li>选型反例：需要语音可视化的项目误选 Express，只能拿到 DPI 带宽管控而拿不到 Voice analytics（<span class="pg">原文p875</span> ）。</li>
 </ul>
 <h2 id="b">B（边界与陷阱）</h2>
 <ul>
-<li><strong>AP 入组配置即被覆盖</strong>：AP 加入 AP Group 后，其自身配置被删除并由 PVM 下发的配置替换（ <code>&lt;span class="pg"&gt;原文p243&lt;/span&gt;</code>  WARNING）——多 AP 混部前务必先把目标配置做到 PVM。</li>
-<li>Express 无语音分析/可视化（ <code>&lt;span class="pg"&gt;原文p875&lt;/span&gt;</code> ）；AP1101 组规模腰斩（64 AP/256 客户端， <code>&lt;span class="pg"&gt;原文p868&lt;/span&gt;</code> ），选 Express 前核对 AP-Group 规模表。</li>
-<li>OVC4→OVC10 迁移时序列号不能同时在两个平台，须先在 OVC4 删干净（ <code>&lt;span class="pg"&gt;原文p318&lt;/span&gt;</code> ）。</li>
+<li><strong>AP 入组配置即被覆盖</strong>：AP 加入 AP Group 后，其自身配置被删除并由 PVM 下发的配置替换（<span class="pg">原文p243</span>  WARNING）——多 AP 混部前务必先把目标配置做到 PVM。</li>
+<li>Express 无语音分析/可视化（<span class="pg">原文p875</span> ）；AP1101 组规模腰斩（64 AP/256 客户端，<span class="pg">原文p868</span> ），选 Express 前核对 AP-Group 规模表。</li>
+<li>OVC4→OVC10 迁移时序列号不能同时在两个平台，须先在 OVC4 删干净（<span class="pg">原文p318</span> ）。</li>
 </ul>
 <h2 id="_1">来源</h2>
 <ul>
-<li>frameworks·F1 部署模式自动选择决策流程（ <code>&lt;span class="pg"&gt;原文p201&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p264&lt;/span&gt;</code> ）</li>
-<li>frameworks·F2 三模式定位与规模决策（ <code>&lt;span class="pg"&gt;原文p188&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p190&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p192&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p198&lt;/span&gt;</code> ）</li>
-<li>frameworks·F12 AP Group/PVM-SVM 选举（ <code>&lt;span class="pg"&gt;原文p204&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p207&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p270&lt;/span&gt;</code> ）</li>
-<li>principles·P17 出厂默认行为（ <code>&lt;span class="pg"&gt;原文p202&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p205&lt;/span&gt;</code> ）</li>
-<li>principles·P18 分布式控制面（ <code>&lt;span class="pg"&gt;原文p270&lt;/span&gt;</code> ）</li>
-<li>cases·C16 多交换机多 AP 自动成组（ <code>&lt;span class="pg"&gt;原文p240&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p245&lt;/span&gt;</code> ）</li>
-<li>counter-examples·X4 入组配置被覆盖（ <code>&lt;span class="pg"&gt;原文p243&lt;/span&gt;</code> ）</li>
-<li>counter-examples·X14 模式选错的功能/规模边界（ <code>&lt;span class="pg"&gt;原文p875&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p868&lt;/span&gt;</code> ）</li>
+<li>frameworks·F1 部署模式自动选择决策流程（<span class="pg">原文p201</span> 、<span class="pg">原文p264</span> ）</li>
+<li>frameworks·F2 三模式定位与规模决策（<span class="pg">原文p188</span> 、<span class="pg">原文p190</span> 、<span class="pg">原文p192</span> 、<span class="pg">原文p198</span> ）</li>
+<li>frameworks·F12 AP Group/PVM-SVM 选举（<span class="pg">原文p204</span> -<span class="pg">原文p207</span> 、<span class="pg">原文p270</span> ）</li>
+<li>principles·P17 出厂默认行为（<span class="pg">原文p202</span> 、<span class="pg">原文p205</span> ）</li>
+<li>principles·P18 分布式控制面（<span class="pg">原文p270</span> ）</li>
+<li>cases·C16 多交换机多 AP 自动成组（<span class="pg">原文p240</span> -<span class="pg">原文p245</span> ）</li>
+<li>counter-examples·X4 入组配置被覆盖（<span class="pg">原文p243</span> ）</li>
+<li>counter-examples·X14 模式选错的功能/规模边界（<span class="pg">原文p875</span> 、<span class="pg">原文p868</span> ）</li>
 </ul><div class="pn"><a href="qos-acl-access-guardian.html">⬅ 上一单元：qos-acl-access-guardian</a><a class="nxt" href="wifi-express-operations.html">下一单元：wifi-express-operations ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

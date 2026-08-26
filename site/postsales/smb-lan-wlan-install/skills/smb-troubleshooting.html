@@ -77,12 +77,12 @@ blockquote p{margin:6px 0}
 <p>排障按层走：先物理（线缆/PoE/LED），再二层（VLAN 成员/MAC 学习），再三层（IP 接口/DNS/激活域名），最后平台侧（激活日志/认证记录）。无线侧 Stellar AP 的 support 凭据下有一整套 iw*/ssudo/eag_cli 工具链可直接看客户端与认证内部状态。多数"故障"其实是环境默认行为（端口 disabled、non-https 才触发门户、会话被占用）。</p>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
-<li>设备未上 Cirrus 分层排查（C23， <code>&lt;span class="pg"&gt;原文p347&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p348&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p358&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p360&lt;/span&gt;</code> ）：</li>
+<li>设备未上 Cirrus 分层排查（C23，<span class="pg">原文p347</span> –<span class="pg">原文p348</span> 、<span class="pg">原文p358</span> –<span class="pg">原文p360</span> ）：</li>
 <li>L2：<code>show interfaces 1/1/5</code> 查线缆 → <code>show vlan members port</code> 查 VLAN → <code>show lanpower slot 1/1</code> 查 PoE</li>
 <li>L3：<code>show ip interface</code> → <code>ping eu.activation.ovng.myovcloud.com</code></li>
 <li>AP 侧：<code>getmode</code>（须 OVNG）、<code>cat /etc/config/network</code>（proto 须 dhcp）、<code>getovinfo</code></li>
 <li>Cirrus 侧：Action &gt; Diagnostic Tools &gt; View Activation Log</li>
-<li>AP 无线诊断命令集（C22， <code>&lt;span class="pg"&gt;原文p397&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p400&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p426&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p430&lt;/span&gt;</code> ，support 登录）：
+<li>AP 无线诊断命令集（C22，<span class="pg">原文p397</span> –<span class="pg">原文p400</span> 、<span class="pg">原文p426</span> –<span class="pg">原文p430</span> ，support 登录）：
    <code>iwconfig                          # ESSID/频率/功率/信号
    iwlist ath01 channel|txpower|bitrate
    ssudo sta_list                    # 客户端 + VLAN + Final_role
@@ -92,42 +92,42 @@ blockquote p{margin:6px 0}
 <li>802.1X 排查：<code>cat /var/config/wlanservice.conf</code>、<code>cat /var/config/AAA_profile.conf</code>、<code>cat /var/config/AAA_server.conf</code>；抓包 <code>tcpdump -i br-wan -s 0 host &lt;radiusIP&gt;</code>。</li>
 <li>Captive Portal 排查：<code>ps |grep eag</code>、<code>eag_cli show user all</code>、<code>eag_cli kick user index 1</code>、<code>tail -f /tmp/log/eag.log</code>。</li>
 <li>LED 快速判读：</li>
-<li>AP：绿闪 = 启动完成广播默认 SSID；蓝 = 双频；蓝红闪 = 升级中；蓝红绿闪 = 定位模式；红 = 启动中（P42， <code>&lt;span class="pg"&gt;原文p52&lt;/span&gt;</code> ）</li>
-<li>交换机 OK/PWR：OK 绿 = 自检通过，闪绿 = 进行中，琥珀 = 失败；PWR 绿 = 电源正常，闪绿 = 在位但故障（P43， <code>&lt;span class="pg"&gt;原文p50&lt;/span&gt;</code> ）</li>
-<li>PoE 口：琥珀 = 已受电，绿 = 连接未受电（P44， <code>&lt;span class="pg"&gt;原文p143&lt;/span&gt;</code> ）</li>
+<li>AP：绿闪 = 启动完成广播默认 SSID；蓝 = 双频；蓝红闪 = 升级中；蓝红绿闪 = 定位模式；红 = 启动中（P42，<span class="pg">原文p52</span> ）</li>
+<li>交换机 OK/PWR：OK 绿 = 自检通过，闪绿 = 进行中，琥珀 = 失败；PWR 绿 = 电源正常，闪绿 = 在位但故障（P43，<span class="pg">原文p50</span> ）</li>
+<li>PoE 口：琥珀 = 已受电，绿 = 连接未受电（P44，<span class="pg">原文p143</span> ）</li>
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
-<li>客户端定位链：交换机 <code>show mac-learning | grep &lt;MAC&gt;</code> 找端口（C10， <code>&lt;span class="pg"&gt;原文p181&lt;/span&gt;</code> ）→ AP <code>ssudo sta_list</code> 看 Final_role 与 VLAN（C22）。</li>
-<li>云管排障：Cirrus Device Troubleshooting 可 Assign Command 下发（如 setDateTime）并等回显；Collect Support Info 对 AP 一键 tar.gz、交换机可选 swlog/cfg/Tech Support（C24， <code>&lt;span class="pg"&gt;原文p451&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p456&lt;/span&gt;</code> ）。</li>
-<li>认证记录：Cirrus Network &gt; Access Records &gt; Authentication Records 查 802.1X 结果（C20， <code>&lt;span class="pg"&gt;原文p390&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p396&lt;/span&gt;</code> ）。</li>
-<li>踢出问题客户端：Network &gt; Analytics &gt; Clients &gt; Actions &gt; Kick Off（C21， <code>&lt;span class="pg"&gt;原文p418&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p425&lt;/span&gt;</code> ）。</li>
-<li>OmniVista Smart Tool (OST)：免费安装排障工具，含 PoE 向导、自动开票、流量分析（glossary· <code>&lt;span class="pg"&gt;原文p498&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p504&lt;/span&gt;</code> ）。</li>
-<li>R-Lab 实验环境重置：Reset_PodX 一键重置（交换机约 5 分钟、AP 约 1.5–2 分钟），WifiClientX 清已存无线网络（C30， <code>&lt;span class="pg"&gt;原文p89&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p92&lt;/span&gt;</code> ）。</li>
+<li>客户端定位链：交换机 <code>show mac-learning | grep &lt;MAC&gt;</code> 找端口（C10，<span class="pg">原文p181</span> ）→ AP <code>ssudo sta_list</code> 看 Final_role 与 VLAN（C22）。</li>
+<li>云管排障：Cirrus Device Troubleshooting 可 Assign Command 下发（如 setDateTime）并等回显；Collect Support Info 对 AP 一键 tar.gz、交换机可选 swlog/cfg/Tech Support（C24，<span class="pg">原文p451</span> –<span class="pg">原文p456</span> ）。</li>
+<li>认证记录：Cirrus Network &gt; Access Records &gt; Authentication Records 查 802.1X 结果（C20，<span class="pg">原文p390</span> –<span class="pg">原文p396</span> ）。</li>
+<li>踢出问题客户端：Network &gt; Analytics &gt; Clients &gt; Actions &gt; Kick Off（C21，<span class="pg">原文p418</span> –<span class="pg">原文p425</span> ）。</li>
+<li>OmniVista Smart Tool (OST)：免费安装排障工具，含 PoE 向导、自动开票、流量分析（glossary·<span class="pg">原文p498</span> –<span class="pg">原文p504</span> ）。</li>
+<li>R-Lab 实验环境重置：Reset_PodX 一键重置（交换机约 5 分钟、AP 约 1.5–2 分钟），WifiClientX 清已存无线网络（C30，<span class="pg">原文p89</span> –<span class="pg">原文p92</span> ）。</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>设备不上 Cirrus：沿 L2 线缆/VLAN/PoE → L3 IP 接口 → ping 激活域名 → AP getmode/getovinfo → Cirrus 激活日志逐层收敛（C23， <code>&lt;span class="pg"&gt;原文p347&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p348&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p358&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p360&lt;/span&gt;</code> ）。</li>
-<li>802.1X 失败：tcpdump 抓 RADIUS 报文 + 检查 AAA_server.conf（C22， <code>&lt;span class="pg"&gt;原文p397&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p400&lt;/span&gt;</code> ）。</li>
-<li>门户用户异常：<code>eag_cli show user all</code> 列表 + <code>tail -f /tmp/log/eag.log</code> 实时日志（C22， <code>&lt;span class="pg"&gt;原文p426&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p430&lt;/span&gt;</code> ）。</li>
+<li>设备不上 Cirrus：沿 L2 线缆/VLAN/PoE → L3 IP 接口 → ping 激活域名 → AP getmode/getovinfo → Cirrus 激活日志逐层收敛（C23，<span class="pg">原文p347</span> –<span class="pg">原文p348</span> 、<span class="pg">原文p358</span> –<span class="pg">原文p360</span> ）。</li>
+<li>802.1X 失败：tcpdump 抓 RADIUS 报文 + 检查 AAA_server.conf（C22，<span class="pg">原文p397</span> –<span class="pg">原文p400</span> ）。</li>
+<li>门户用户异常：<code>eag_cli show user all</code> 列表 + <code>tail -f /tmp/log/eag.log</code> 实时日志（C22，<span class="pg">原文p426</span> –<span class="pg">原文p430</span> ）。</li>
 </ul>
 <h2 id="b">B（边界与陷阱）</h2>
 <ul>
-<li>"Hunting Group Busy" 不是设备故障，是另一个 TeraTerm 会话已占用 console（CE08， <code>&lt;span class="pg"&gt;原文p82&lt;/span&gt;</code> ）。</li>
-<li>Firefox 从实验指南向远程终端粘贴有剪贴板问题，推荐 Chrome/Edge（CE09， <code>&lt;span class="pg"&gt;原文p79&lt;/span&gt;</code> ）。</li>
-<li>树莓派有线网卡不可改不可拔——那是唯一的管理通道（CE07， <code>&lt;span class="pg"&gt;原文p85&lt;/span&gt;</code> ）。</li>
-<li>R-Lab 重置后交换机所有端口 disabled，"端口不通"先查 admin-state（CE01， <code>&lt;span class="pg"&gt;原文p89&lt;/span&gt;</code> ）。</li>
-<li>门户不弹出多为访问了 https 站点，必须手动开 non-https URL（CE11， <code>&lt;span class="pg"&gt;原文p422&lt;/span&gt;</code> ）。</li>
+<li>"Hunting Group Busy" 不是设备故障，是另一个 TeraTerm 会话已占用 console（CE08，<span class="pg">原文p82</span> ）。</li>
+<li>Firefox 从实验指南向远程终端粘贴有剪贴板问题，推荐 Chrome/Edge（CE09，<span class="pg">原文p79</span> ）。</li>
+<li>树莓派有线网卡不可改不可拔——那是唯一的管理通道（CE07，<span class="pg">原文p85</span> ）。</li>
+<li>R-Lab 重置后交换机所有端口 disabled，"端口不通"先查 admin-state（CE01，<span class="pg">原文p89</span> ）。</li>
+<li>门户不弹出多为访问了 https 站点，必须手动开 non-https URL（CE11，<span class="pg">原文p422</span> ）。</li>
 </ul>
 <h2 id="_1">来源</h2>
 <ul>
-<li>case·设备未在 Cirrus 出现的分层排障流程（ <code>&lt;span class="pg"&gt;原文p347&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p348&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p358&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p360&lt;/span&gt;</code> ）</li>
-<li>case·Stellar AP Wi-Fi 故障诊断命令集（ <code>&lt;span class="pg"&gt;原文p397&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p400&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p426&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p430&lt;/span&gt;</code> ）</li>
-<li>case·Cirrus 运维排障命令（ <code>&lt;span class="pg"&gt;原文p451&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p456&lt;/span&gt;</code> ）</li>
-<li>case·R-Lab 环境重置（ <code>&lt;span class="pg"&gt;原文p89&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p92&lt;/span&gt;</code> ）</li>
-<li>principle·Stellar AP LED 状态语义（ <code>&lt;span class="pg"&gt;原文p52&lt;/span&gt;</code> ）</li>
-<li>principle·交换机 OK/PWR LED 语义（ <code>&lt;span class="pg"&gt;原文p50&lt;/span&gt;</code> ）</li>
-<li>principle·PoE 端口 LED 判读（ <code>&lt;span class="pg"&gt;原文p143&lt;/span&gt;</code> ）</li>
-<li>counter·Hunting Group Busy（ <code>&lt;span class="pg"&gt;原文p82&lt;/span&gt;</code> ）</li>
-<li>counter·树莓派有线网卡不可触碰（ <code>&lt;span class="pg"&gt;原文p85&lt;/span&gt;</code> ）</li>
+<li>case·设备未在 Cirrus 出现的分层排障流程（<span class="pg">原文p347</span> –<span class="pg">原文p348</span> 、<span class="pg">原文p358</span> –<span class="pg">原文p360</span> ）</li>
+<li>case·Stellar AP Wi-Fi 故障诊断命令集（<span class="pg">原文p397</span> –<span class="pg">原文p400</span> 、<span class="pg">原文p426</span> –<span class="pg">原文p430</span> ）</li>
+<li>case·Cirrus 运维排障命令（<span class="pg">原文p451</span> –<span class="pg">原文p456</span> ）</li>
+<li>case·R-Lab 环境重置（<span class="pg">原文p89</span> –<span class="pg">原文p92</span> ）</li>
+<li>principle·Stellar AP LED 状态语义（<span class="pg">原文p52</span> ）</li>
+<li>principle·交换机 OK/PWR LED 语义（<span class="pg">原文p50</span> ）</li>
+<li>principle·PoE 端口 LED 判读（<span class="pg">原文p143</span> ）</li>
+<li>counter·Hunting Group Busy（<span class="pg">原文p82</span> ）</li>
+<li>counter·树莓派有线网卡不可触碰（<span class="pg">原文p85</span> ）</li>
 </ul><div class="pn"><a href="cirrus-onboarding.html">⬅ 上一单元：cirrus-onboarding</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

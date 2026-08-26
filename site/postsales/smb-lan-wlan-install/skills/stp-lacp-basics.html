@@ -89,7 +89,7 @@ RSTP/MSTP 收敛 &lt;1 秒而老 STP 要 50 秒，无理由不用快协议。聚
    <code>-&gt; show spantree
    -&gt; show spantree vlan 20 ports active
    -&gt; show spantree ports</code>
-   （C28， <code>&lt;span class="pg"&gt;原文p243&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p247&lt;/span&gt;</code> ）</li>
+   （C28，<span class="pg">原文p243</span> –<span class="pg">原文p247</span> ）</li>
 <li>静态聚合（仅 ALE 互通）：
    <code>-&gt; linkagg static agg &lt;n&gt; size &lt;s&gt; admin-state enable
    -&gt; linkagg static port &lt;c/s/p&gt; agg &lt;n&gt;</code></li>
@@ -97,36 +97,36 @@ RSTP/MSTP 收敛 &lt;1 秒而老 STP 要 50 秒，无理由不用快协议。聚
    <code>-&gt; linkagg lacp agg &lt;n&gt; size &lt;s&gt; admin-state enable
    -&gt; linkagg lacp agg &lt;n&gt; actor admin-key &lt;k&gt;
    -&gt; linkagg lacp port &lt;c/s/p&gt; actor admin-key &lt;k&gt;</code></li>
-<li>VLAN 挂聚合口：<code>-&gt; vlan &lt;vid&gt; members linkagg &lt;n&gt; tagged|untagged</code>（C28， <code>&lt;span class="pg"&gt;原文p253&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p255&lt;/span&gt;</code> ）</li>
+<li>VLAN 挂聚合口：<code>-&gt; vlan &lt;vid&gt; members linkagg &lt;n&gt; tagged|untagged</code>（C28，<span class="pg">原文p253</span> –<span class="pg">原文p255</span> ）</li>
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
-<li>收敛时间对照：STP(802.1d) 50 秒，RSTP(802.1w)/MSTP(802.1s) &lt;1 秒（P25， <code>&lt;span class="pg"&gt;原文p238&lt;/span&gt;</code> ）。</li>
-<li>路径开销双体系：16bit（STP/RSTP）与 32bit（MSTP），如 1Gbps = 4 / 20000（P26， <code>&lt;span class="pg"&gt;原文p239&lt;/span&gt;</code> ）。</li>
-<li>哈希负载均衡：brief 不含 UDP/TCP 端口，extended 含四层端口、分担更均匀；6360/6465/6900 默认 brief，其余默认 extended，<code>hash-control extended</code> 显式开启（P29， <code>&lt;span class="pg"&gt;原文p259&lt;/span&gt;</code> ）。</li>
-<li>组播默认走聚合组主端口，需显式开启 non-ucast 哈希才全组分担（P30， <code>&lt;span class="pg"&gt;原文p260&lt;/span&gt;</code> ）。</li>
-<li>SMB 参考拓扑：中型纯二层 = Virtual Chassis 最多 8 台 + 20G 聚合；Mesh/SPB 档 = 全三层 OSPF/BGP/SPB/PIM + 双核心 100G 堆叠（F14， <code>&lt;span class="pg"&gt;原文p491&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p493&lt;/span&gt;</code> ）。</li>
+<li>收敛时间对照：STP(802.1d) 50 秒，RSTP(802.1w)/MSTP(802.1s) &lt;1 秒（P25，<span class="pg">原文p238</span> ）。</li>
+<li>路径开销双体系：16bit（STP/RSTP）与 32bit（MSTP），如 1Gbps = 4 / 20000（P26，<span class="pg">原文p239</span> ）。</li>
+<li>哈希负载均衡：brief 不含 UDP/TCP 端口，extended 含四层端口、分担更均匀；6360/6465/6900 默认 brief，其余默认 extended，<code>hash-control extended</code> 显式开启（P29，<span class="pg">原文p259</span> ）。</li>
+<li>组播默认走聚合组主端口，需显式开启 non-ucast 哈希才全组分担（P30，<span class="pg">原文p260</span> ）。</li>
+<li>SMB 参考拓扑：中型纯二层 = Virtual Chassis 最多 8 台 + 20G 聚合；Mesh/SPB 档 = 全三层 OSPF/BGP/SPB/PIM + 双核心 100G 堆叠（F14，<span class="pg">原文p491</span> –<span class="pg">原文p493</span> ）。</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li><code>spantree vlan 20 priority 20000</code> 后 VLAN 20 根桥迁移到 SW-C，与另一 VLAN 的阻塞端口错开实现负载分担（P27， <code>&lt;span class="pg"&gt;原文p240&lt;/span&gt;</code> ；C28， <code>&lt;span class="pg"&gt;原文p243&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p247&lt;/span&gt;</code> ）。</li>
-<li>LACP 聚合：建 agg + 设 actor admin-key，两端 key 一致即协商成功，再把 VLAN members linkagg 挂上（C28， <code>&lt;span class="pg"&gt;原文p253&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p255&lt;/span&gt;</code> ）。</li>
+<li><code>spantree vlan 20 priority 20000</code> 后 VLAN 20 根桥迁移到 SW-C，与另一 VLAN 的阻塞端口错开实现负载分担（P27，<span class="pg">原文p240</span> ；C28，<span class="pg">原文p243</span> –<span class="pg">原文p247</span> ）。</li>
+<li>LACP 聚合：建 agg + 设 actor admin-key，两端 key 一致即协商成功，再把 VLAN members linkagg 挂上（C28，<span class="pg">原文p253</span> –<span class="pg">原文p255</span> ）。</li>
 </ul>
 <h2 id="b">B（边界与陷阱）</h2>
 <ul>
-<li>物理环路未做防环会拖垮全网（广播帧持续绕圈、减速甚至中断通信）；按模板接线出现环路前必须 STOP 并与方案架构师确认 loop avoidance 已实施（CE14， <code>&lt;span class="pg"&gt;原文p494&lt;/span&gt;</code> ）。</li>
-<li>静态聚合只在 ALE OmniSwitch 之间工作；跨厂商必须用 LACP（P28， <code>&lt;span class="pg"&gt;原文p252&lt;/span&gt;</code> ）。</li>
-<li>Lightning Config 前禁止把未配置交换机互联（默认同 IP 192.168.0.1 会冲突）（CE13， <code>&lt;span class="pg"&gt;原文p486&lt;/span&gt;</code> ）。</li>
+<li>物理环路未做防环会拖垮全网（广播帧持续绕圈、减速甚至中断通信）；按模板接线出现环路前必须 STOP 并与方案架构师确认 loop avoidance 已实施（CE14，<span class="pg">原文p494</span> ）。</li>
+<li>静态聚合只在 ALE OmniSwitch 之间工作；跨厂商必须用 LACP（P28，<span class="pg">原文p252</span> ）。</li>
+<li>Lightning Config 前禁止把未配置交换机互联（默认同 IP 192.168.0.1 会冲突）（CE13，<span class="pg">原文p486</span> ）。</li>
 </ul>
 <h2 id="_1">来源</h2>
 <ul>
-<li>case·STP/LACP 配置命令组（ <code>&lt;span class="pg"&gt;原文p243&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p247&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p253&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p255&lt;/span&gt;</code> ）</li>
-<li>principle·STP 双模式三协议与收敛时间（ <code>&lt;span class="pg"&gt;原文p238&lt;/span&gt;</code> ）</li>
-<li>principle·STP 默认路径开销（ <code>&lt;span class="pg"&gt;原文p239&lt;/span&gt;</code> ）</li>
-<li>principle·per-VLAN STP 负载分担手法（ <code>&lt;span class="pg"&gt;原文p240&lt;/span&gt;</code> ）</li>
-<li>principle·LACP 动态聚合协商原理（ <code>&lt;span class="pg"&gt;原文p252&lt;/span&gt;</code> ）</li>
-<li>principle·哈希负载均衡 brief/extended（ <code>&lt;span class="pg"&gt;原文p259&lt;/span&gt;</code> ）</li>
-<li>principle·聚合口组播分担默认行为（ <code>&lt;span class="pg"&gt;原文p260&lt;/span&gt;</code> ）</li>
-<li>framework·SMB 标准拓扑模板（ <code>&lt;span class="pg"&gt;原文p491&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p493&lt;/span&gt;</code> ）</li>
-<li>counter·物理环路未做防环拖垮全网（ <code>&lt;span class="pg"&gt;原文p494&lt;/span&gt;</code> ）</li>
+<li>case·STP/LACP 配置命令组（<span class="pg">原文p243</span> –<span class="pg">原文p247</span> 、<span class="pg">原文p253</span> –<span class="pg">原文p255</span> ）</li>
+<li>principle·STP 双模式三协议与收敛时间（<span class="pg">原文p238</span> ）</li>
+<li>principle·STP 默认路径开销（<span class="pg">原文p239</span> ）</li>
+<li>principle·per-VLAN STP 负载分担手法（<span class="pg">原文p240</span> ）</li>
+<li>principle·LACP 动态聚合协商原理（<span class="pg">原文p252</span> ）</li>
+<li>principle·哈希负载均衡 brief/extended（<span class="pg">原文p259</span> ）</li>
+<li>principle·聚合口组播分担默认行为（<span class="pg">原文p260</span> ）</li>
+<li>framework·SMB 标准拓扑模板（<span class="pg">原文p491</span> –<span class="pg">原文p493</span> ）</li>
+<li>counter·物理环路未做防环拖垮全网（<span class="pg">原文p494</span> ）</li>
 </ul><div class="pn"><a href="poe-power-design.html">⬅ 上一单元：poe-power-design</a><a class="nxt" href="stellar-mode-selection.html">下一单元：stellar-mode-selection ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

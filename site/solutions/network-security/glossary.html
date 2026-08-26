@@ -65,82 +65,82 @@ blockquote p{margin:6px 0}
 </blockquote>
 <h2 id="_1">安全体系与认证</h2>
 <ul>
-<li><strong>PSIRT</strong>：ALE 产品安全事件响应团队，受理漏洞报告并发布安全通告  <code>&lt;span class="pg"&gt;原文p7&lt;/span&gt;</code> </li>
-<li><strong>CVE</strong>：通用漏洞披露唯一编号，与 CERT-IST/NVD/US-CERT 联动  <code>&lt;span class="pg"&gt;原文p7&lt;/span&gt;</code> </li>
-<li><strong>SA（Security Advisory）</strong>：漏洞确认后发布的含修复与缓解措施的安全通告  <code>&lt;span class="pg"&gt;原文p7&lt;/span&gt;</code> </li>
-<li><strong>签名镜像</strong>：AOS 镜像 RSA-4096+SHA-256 签名，重载时验签；U-boot ≥8.9.70.R04 仅支持签名镜像  <code>&lt;span class="pg"&gt;原文p6&lt;/span&gt;</code> </li>
-<li><strong>ASLR</strong>：每次启动生成唯一内存布局的软件多样化技术  <code>&lt;span class="pg"&gt;原文p6&lt;/span&gt;</code> </li>
-<li><strong>IV&amp;V</strong>：独立第三方源代码白盒/黑盒测试  <code>&lt;span class="pg"&gt;原文p6&lt;/span&gt;</code> </li>
-<li><strong>Common Criteria EAL2 / NDcPP</strong>：ALE 产品国际安全评估认证  <code>&lt;span class="pg"&gt;原文p6&lt;/span&gt;</code> </li>
-<li><strong>FIPS 140-2</strong>：NIST 密码模块标准；FIPS 模式下仅允许强加密算法  <code>&lt;span class="pg"&gt;原文p6, 28&lt;/span&gt;</code> </li>
-<li><strong>TAA 合规</strong>：美国供应链规定，OmniSwitch 可指定美国原产  <code>&lt;span class="pg"&gt;原文p6&lt;/span&gt;</code> </li>
-<li><strong>DPI</strong>：深度包检测，识别流量类型与异常模式  <code>&lt;span class="pg"&gt;原文p6&lt;/span&gt;</code> </li>
-<li><strong>BYOD</strong>：自带设备办公，扩大攻击面的典型场景  <code>&lt;span class="pg"&gt;原文p5&lt;/span&gt;</code> </li>
+<li><strong>PSIRT</strong>：ALE 产品安全事件响应团队，受理漏洞报告并发布安全通告 <span class="pg">原文p7</span> </li>
+<li><strong>CVE</strong>：通用漏洞披露唯一编号，与 CERT-IST/NVD/US-CERT 联动 <span class="pg">原文p7</span> </li>
+<li><strong>SA（Security Advisory）</strong>：漏洞确认后发布的含修复与缓解措施的安全通告 <span class="pg">原文p7</span> </li>
+<li><strong>签名镜像</strong>：AOS 镜像 RSA-4096+SHA-256 签名，重载时验签；U-boot ≥8.9.70.R04 仅支持签名镜像 <span class="pg">原文p6</span> </li>
+<li><strong>ASLR</strong>：每次启动生成唯一内存布局的软件多样化技术 <span class="pg">原文p6</span> </li>
+<li><strong>IV&amp;V</strong>：独立第三方源代码白盒/黑盒测试 <span class="pg">原文p6</span> </li>
+<li><strong>Common Criteria EAL2 / NDcPP</strong>：ALE 产品国际安全评估认证 <span class="pg">原文p6</span> </li>
+<li><strong>FIPS 140-2</strong>：NIST 密码模块标准；FIPS 模式下仅允许强加密算法 <span class="pg">原文p6, 28</span> </li>
+<li><strong>TAA 合规</strong>：美国供应链规定，OmniSwitch 可指定美国原产 <span class="pg">原文p6</span> </li>
+<li><strong>DPI</strong>：深度包检测，识别流量类型与异常模式 <span class="pg">原文p6</span> </li>
+<li><strong>BYOD</strong>：自带设备办公，扩大攻击面的典型场景 <span class="pg">原文p5</span> </li>
 </ul>
 <h2 id="_2">管理面</h2>
 <ul>
-<li><strong>U-boot / ONIE</strong>：两种引导加载器，可设口令防物理层篡改  <code>&lt;span class="pg"&gt;原文p9&lt;/span&gt;</code> </li>
-<li><strong>镜像完整性校验</strong>：image integrity-check 比对 SHA256 哈希与密钥文件  <code>&lt;span class="pg"&gt;原文p9&lt;/span&gt;</code> </li>
-<li><strong>EMP</strong>：专用带外以太网管理口，绕过业务 NI 直连 CMM  <code>&lt;span class="pg"&gt;原文p10&lt;/span&gt;</code> </li>
-<li><strong>管理 VRF</strong>：无带外条件时将管理协议收敛到专用 VRF 与数据隔离  <code>&lt;span class="pg"&gt;原文p10&lt;/span&gt;</code> </li>
-<li><strong>IP 管理站白名单</strong>：仅预定义 IP 可管理，上限 64 个  <code>&lt;span class="pg"&gt;原文p11&lt;/span&gt;</code> </li>
-<li><strong>secureadmin</strong>：首登强制改密的特权账户，可校验镜像与 vcboot.cfg 完整性  <code>&lt;span class="pg"&gt;原文p11&lt;/span&gt;</code> </li>
-<li><strong>SSH 强加密（strong-ciphers / strong-HMACs）</strong>：强制 hmac-sha2-256/512 等强算法  <code>&lt;span class="pg"&gt;原文p13&lt;/span&gt;</code> </li>
-<li><strong>PKA</strong>：SSH 公钥认证，installsshkey 安装公钥免口令登录  <code>&lt;span class="pg"&gt;原文p13-14&lt;/span&gt;</code> </li>
-<li><strong>login-grace-time</strong>：未完成 SSH 会话超时，默认 120 秒  <code>&lt;span class="pg"&gt;原文p14&lt;/span&gt;</code> </li>
-<li><strong>IP 锁定阈值（ip-lockout-threshold）</strong>：认证失败达阈值封禁来源 IP，清单上限 128  <code>&lt;span class="pg"&gt;原文p15&lt;/span&gt;</code> </li>
-<li><strong>MFA / 2FA</strong>：多因素认证（Google Authenticator/Duo/Email）  <code>&lt;span class="pg"&gt;原文p16, 72&lt;/span&gt;</code> </li>
-<li><strong>AAA</strong>：认证/授权/记账，RADIUS/LDAP/TACACS+ 集中化访问控制  <code>&lt;span class="pg"&gt;原文p16&lt;/span&gt;</code> </li>
-<li><strong>RADIUS over TLS / RadSec</strong>：TLS 加密 RADIUS 报文，消除 MD5 攻击风险  <code>&lt;span class="pg"&gt;原文p17, 80&lt;/span&gt;</code> </li>
-<li><strong>命令域/族（domain/family）</strong>：AOS 按 domain-network 等划分权限粒度  <code>&lt;span class="pg"&gt;原文p18&lt;/span&gt;</code> </li>
-<li><strong>command.log</strong>：全量 CLI 命令历史审计文件  <code>&lt;span class="pg"&gt;原文p19&lt;/span&gt;</code> </li>
-<li><strong>SNMPv3 三模型</strong>：VACM（视图访问）/USM（用户安全）/TSM（传输安全）  <code>&lt;span class="pg"&gt;原文p19&lt;/span&gt;</code> </li>
-<li><strong>TSM</strong>：SNMP over TLS/DTLS，需证书身份映射（tsm-map）  <code>&lt;span class="pg"&gt;原文p20&lt;/span&gt;</code> </li>
-<li><strong>PKI 三模式</strong>：No Validation（默认）/Server Cert Validation/Mutual Authentication  <code>&lt;span class="pg"&gt;原文p21&lt;/span&gt;</code> </li>
-<li><strong>OCSP / CRL</strong>：X.509 证书有效性校验，失败即断 TLS  <code>&lt;span class="pg"&gt;原文p22&lt;/span&gt;</code> </li>
-<li><strong>SWLOG</strong>：交换机日志，默认 info(6)，支持 TLS 远端发送  <code>&lt;span class="pg"&gt;原文p21&lt;/span&gt;</code> </li>
+<li><strong>U-boot / ONIE</strong>：两种引导加载器，可设口令防物理层篡改 <span class="pg">原文p9</span> </li>
+<li><strong>镜像完整性校验</strong>：image integrity-check 比对 SHA256 哈希与密钥文件 <span class="pg">原文p9</span> </li>
+<li><strong>EMP</strong>：专用带外以太网管理口，绕过业务 NI 直连 CMM <span class="pg">原文p10</span> </li>
+<li><strong>管理 VRF</strong>：无带外条件时将管理协议收敛到专用 VRF 与数据隔离 <span class="pg">原文p10</span> </li>
+<li><strong>IP 管理站白名单</strong>：仅预定义 IP 可管理，上限 64 个 <span class="pg">原文p11</span> </li>
+<li><strong>secureadmin</strong>：首登强制改密的特权账户，可校验镜像与 vcboot.cfg 完整性 <span class="pg">原文p11</span> </li>
+<li><strong>SSH 强加密（strong-ciphers / strong-HMACs）</strong>：强制 hmac-sha2-256/512 等强算法 <span class="pg">原文p13</span> </li>
+<li><strong>PKA</strong>：SSH 公钥认证，installsshkey 安装公钥免口令登录 <span class="pg">原文p13-14</span> </li>
+<li><strong>login-grace-time</strong>：未完成 SSH 会话超时，默认 120 秒 <span class="pg">原文p14</span> </li>
+<li><strong>IP 锁定阈值（ip-lockout-threshold）</strong>：认证失败达阈值封禁来源 IP，清单上限 128 <span class="pg">原文p15</span> </li>
+<li><strong>MFA / 2FA</strong>：多因素认证（Google Authenticator/Duo/Email） <span class="pg">原文p16, 72</span> </li>
+<li><strong>AAA</strong>：认证/授权/记账，RADIUS/LDAP/TACACS+ 集中化访问控制 <span class="pg">原文p16</span> </li>
+<li><strong>RADIUS over TLS / RadSec</strong>：TLS 加密 RADIUS 报文，消除 MD5 攻击风险 <span class="pg">原文p17, 80</span> </li>
+<li><strong>命令域/族（domain/family）</strong>：AOS 按 domain-network 等划分权限粒度 <span class="pg">原文p18</span> </li>
+<li><strong>command.log</strong>：全量 CLI 命令历史审计文件 <span class="pg">原文p19</span> </li>
+<li><strong>SNMPv3 三模型</strong>：VACM（视图访问）/USM（用户安全）/TSM（传输安全） <span class="pg">原文p19</span> </li>
+<li><strong>TSM</strong>：SNMP over TLS/DTLS，需证书身份映射（tsm-map） <span class="pg">原文p20</span> </li>
+<li><strong>PKI 三模式</strong>：No Validation（默认）/Server Cert Validation/Mutual Authentication <span class="pg">原文p21</span> </li>
+<li><strong>OCSP / CRL</strong>：X.509 证书有效性校验，失败即断 TLS <span class="pg">原文p22</span> </li>
+<li><strong>SWLOG</strong>：交换机日志，默认 info(6)，支持 TLS 远端发送 <span class="pg">原文p21</span> </li>
 </ul>
 <h2 id="_3">安全模式</h2>
 <ul>
-<li><strong>CC 模式（Common Criteria）</strong>：仅 console+SSH，默认禁 FTP/Telnet/WebView/HTTP/RADIUS/LDAP/SNMP；默认 admin 仅装机用  <code>&lt;span class="pg"&gt;原文p26&lt;/span&gt;</code> </li>
-<li><strong>JITC 模式</strong>：军用认证，口令≥15 字符、SSH 每小时/每 GB rekey、升级前验签；与 CC 互斥  <code>&lt;span class="pg"&gt;原文p26-27&lt;/span&gt;</code> </li>
-<li><strong>FIPS 模式</strong>：OpenSSL 层强制 FIPS 140-2 算法，SNMPv3 仅 SHA+AES，需重启  <code>&lt;span class="pg"&gt;原文p28&lt;/span&gt;</code> </li>
-<li><strong>ASA enhanced</strong>：Authenticated Switch Access 增强模式，常规加固推荐  <code>&lt;span class="pg"&gt;原文p24&lt;/span&gt;</code> </li>
+<li><strong>CC 模式（Common Criteria）</strong>：仅 console+SSH，默认禁 FTP/Telnet/WebView/HTTP/RADIUS/LDAP/SNMP；默认 admin 仅装机用 <span class="pg">原文p26</span> </li>
+<li><strong>JITC 模式</strong>：军用认证，口令≥15 字符、SSH 每小时/每 GB rekey、升级前验签；与 CC 互斥 <span class="pg">原文p26-27</span> </li>
+<li><strong>FIPS 模式</strong>：OpenSSL 层强制 FIPS 140-2 算法，SNMPv3 仅 SHA+AES，需重启 <span class="pg">原文p28</span> </li>
+<li><strong>ASA enhanced</strong>：Authenticated Switch Access 增强模式，常规加固推荐 <span class="pg">原文p24</span> </li>
 </ul>
 <h2 id="_4">控制面与数据面</h2>
 <ul>
-<li><strong>keychain 认证</strong>：带起止时间与生命周期的密钥轮换，OSPF/IS-IS 最安全选项  <code>&lt;span class="pg"&gt;原文p30&lt;/span&gt;</code> </li>
-<li><strong>Root Guard（restricted-role）</strong>：阻止端口成为根端口，防外部桥影响生成树  <code>&lt;span class="pg"&gt;原文p32&lt;/span&gt;</code> </li>
-<li><strong>TCN 限制（restricted-tcn）</strong>：阻止边缘口传播拓扑变更  <code>&lt;span class="pg"&gt;原文p32&lt;/span&gt;</code> </li>
-<li><strong>LLDP Agent Security</strong>：端口仅信一个 LLDP 远端代理，rogue 接入即 violation（trap/shutdown）  <code>&lt;span class="pg"&gt;原文p33&lt;/span&gt;</code> </li>
-<li><strong>GARP（免费 ARP）</strong>：可被伪造用于 MiTM；建议阻断入向  <code>&lt;span class="pg"&gt;原文p34-35&lt;/span&gt;</code> </li>
-<li><strong>DHCP Snooping</strong>：信任/非信任端口分类+绑定表，防 rogue DHCP  <code>&lt;span class="pg"&gt;原文p38&lt;/span&gt;</code> </li>
-<li><strong>DAI / IP Source Filtering</strong>：依 Snooping 绑定表校验源，防 ARP 欺骗  <code>&lt;span class="pg"&gt;原文p39&lt;/span&gt;</code> </li>
-<li><strong>DHCPv6 Guard / RA 过滤</strong>：IPv6 防 rogue DHCPv6 与非法 RA  <code>&lt;span class="pg"&gt;原文p40, 45-46&lt;/span&gt;</code> </li>
-<li><strong>MACsec / MKA / SAK</strong>：以太网点对点加密（0x88E5），SAK 静态四密钥或 MKA 动态轮换  <code>&lt;span class="pg"&gt;原文p43-44&lt;/span&gt;</code> </li>
-<li><strong>LPS（Learned Port Security）</strong>：边缘口 MAC 学习授权，限数/限窗/违规 shutdown  <code>&lt;span class="pg"&gt;原文p46-47&lt;/span&gt;</code> </li>
-<li><strong>DoS 过滤</strong>：默认开启，覆盖 Ping of Death/Land/ARP Flood(&gt;500/s)/Ping overload(&gt;100/s)  <code>&lt;span class="pg"&gt;原文p41&lt;/span&gt;</code> </li>
+<li><strong>keychain 认证</strong>：带起止时间与生命周期的密钥轮换，OSPF/IS-IS 最安全选项 <span class="pg">原文p30</span> </li>
+<li><strong>Root Guard（restricted-role）</strong>：阻止端口成为根端口，防外部桥影响生成树 <span class="pg">原文p32</span> </li>
+<li><strong>TCN 限制（restricted-tcn）</strong>：阻止边缘口传播拓扑变更 <span class="pg">原文p32</span> </li>
+<li><strong>LLDP Agent Security</strong>：端口仅信一个 LLDP 远端代理，rogue 接入即 violation（trap/shutdown） <span class="pg">原文p33</span> </li>
+<li><strong>GARP（免费 ARP）</strong>：可被伪造用于 MiTM；建议阻断入向 <span class="pg">原文p34-35</span> </li>
+<li><strong>DHCP Snooping</strong>：信任/非信任端口分类+绑定表，防 rogue DHCP <span class="pg">原文p38</span> </li>
+<li><strong>DAI / IP Source Filtering</strong>：依 Snooping 绑定表校验源，防 ARP 欺骗 <span class="pg">原文p39</span> </li>
+<li><strong>DHCPv6 Guard / RA 过滤</strong>：IPv6 防 rogue DHCPv6 与非法 RA <span class="pg">原文p40, 45-46</span> </li>
+<li><strong>MACsec / MKA / SAK</strong>：以太网点对点加密（0x88E5），SAK 静态四密钥或 MKA 动态轮换 <span class="pg">原文p43-44</span> </li>
+<li><strong>LPS（Learned Port Security）</strong>：边缘口 MAC 学习授权，限数/限窗/违规 shutdown <span class="pg">原文p46-47</span> </li>
+<li><strong>DoS 过滤</strong>：默认开启，覆盖 Ping of Death/Land/ARP Flood(&gt;500/s)/Ping overload(&gt;100/s) <span class="pg">原文p41</span> </li>
 </ul>
 <h2 id="_5">无线安全</h2>
 <ul>
-<li><strong>wIPS 三类 AP</strong>：interfering（未接有线，非直接威胁）/rogue（接有线，威胁）/friendly  <code>&lt;span class="pg"&gt;原文p63, 66&lt;/span&gt;</code> </li>
-<li><strong>Rogue Containment</strong>：探测 AP 向 rogue 客户端发 DEAUTH 驱离  <code>&lt;span class="pg"&gt;原文p63, 66&lt;/span&gt;</code> </li>
-<li><strong>WPA3-Personal / SAE</strong>：口令不暴露，免疫离线字典攻击；PMF 强制  <code>&lt;span class="pg"&gt;原文p68&lt;/span&gt;</code> </li>
-<li><strong>OWE / Wi-Fi Enhanced Open</strong>：开放 SSID 机会式加密，6 GHz 强制  <code>&lt;span class="pg"&gt;原文p69&lt;/span&gt;</code> </li>
-<li><strong>客户端隔离</strong>：同 AP 同 SSID 阻断互访；跨 AP 需 SSID 级 ACL  <code>&lt;span class="pg"&gt;原文p70&lt;/span&gt;</code> </li>
+<li><strong>wIPS 三类 AP</strong>：interfering（未接有线，非直接威胁）/rogue（接有线，威胁）/friendly <span class="pg">原文p63, 66</span> </li>
+<li><strong>Rogue Containment</strong>：探测 AP 向 rogue 客户端发 DEAUTH 驱离 <span class="pg">原文p63, 66</span> </li>
+<li><strong>WPA3-Personal / SAE</strong>：口令不暴露，免疫离线字典攻击；PMF 强制 <span class="pg">原文p68</span> </li>
+<li><strong>OWE / Wi-Fi Enhanced Open</strong>：开放 SSID 机会式加密，6 GHz 强制 <span class="pg">原文p69</span> </li>
+<li><strong>客户端隔离</strong>：同 AP 同 SSID 阻断互访；跨 AP 需 SSID 级 ACL <span class="pg">原文p70</span> </li>
 </ul>
 <h2 id="_6">网管与生命周期</h2>
 <ul>
-<li><strong>Network ID</strong>：DHCP Option 43 Sub-Option 133 下发的设备安全上线标识，Strict Mode 拒无 ID 设备  <code>&lt;span class="pg"&gt;原文p75-76&lt;/span&gt;</code> </li>
-<li><strong>UPAM</strong>：OmniVista 策略与接入管理，内置 RADIUS/802.1X 与证书管理  <code>&lt;span class="pg"&gt;原文p61, 80&lt;/span&gt;</code> </li>
-<li><strong>Z-Score 异常检测</strong>：30 天小时级端口利用率为基线标记偏离点  <code>&lt;span class="pg"&gt;原文p78&lt;/span&gt;</code> </li>
-<li><strong>Quarantine Manager</strong>：联动 IPS 在交换机/AP 级隔离可疑终端  <code>&lt;span class="pg"&gt;原文p83-84&lt;/span&gt;</code> </li>
-<li><strong>OAuth 2.0 / JWT</strong>：OmniVista REST API 令牌认证（RFC 7519）  <code>&lt;span class="pg"&gt;原文p84&lt;/span&gt;</code> </li>
-<li><strong>NLM</strong>：网络生命周期管理，规划到退役全程框架  <code>&lt;span class="pg"&gt;原文p89&lt;/span&gt;</code> </li>
-<li><strong>Five S's</strong>：视频监控规划五要素（Software/Surveillance IoT/Servers-Storage/Switches/Services-Support）  <code>&lt;span class="pg"&gt;原文p90&lt;/span&gt;</code> </li>
-<li><strong>UNP</strong>：通用网络档案，按用户/设备/应用动态下发网络行为  <code>&lt;span class="pg"&gt;原文p93&lt;/span&gt;</code> </li>
-<li><strong>Lightning Config</strong>：开箱即用部署，50 分钟培训的技术员 5 分钟装机  <code>&lt;span class="pg"&gt;原文p93&lt;/span&gt;</code> </li>
-<li><strong>OmniVista Network Advisor</strong>：AI 驱动实时监控、风险告警与修复  <code>&lt;span class="pg"&gt;原文p98&lt;/span&gt;</code> </li>
+<li><strong>Network ID</strong>：DHCP Option 43 Sub-Option 133 下发的设备安全上线标识，Strict Mode 拒无 ID 设备 <span class="pg">原文p75-76</span> </li>
+<li><strong>UPAM</strong>：OmniVista 策略与接入管理，内置 RADIUS/802.1X 与证书管理 <span class="pg">原文p61, 80</span> </li>
+<li><strong>Z-Score 异常检测</strong>：30 天小时级端口利用率为基线标记偏离点 <span class="pg">原文p78</span> </li>
+<li><strong>Quarantine Manager</strong>：联动 IPS 在交换机/AP 级隔离可疑终端 <span class="pg">原文p83-84</span> </li>
+<li><strong>OAuth 2.0 / JWT</strong>：OmniVista REST API 令牌认证（RFC 7519） <span class="pg">原文p84</span> </li>
+<li><strong>NLM</strong>：网络生命周期管理，规划到退役全程框架 <span class="pg">原文p89</span> </li>
+<li><strong>Five S's</strong>：视频监控规划五要素（Software/Surveillance IoT/Servers-Storage/Switches/Services-Support） <span class="pg">原文p90</span> </li>
+<li><strong>UNP</strong>：通用网络档案，按用户/设备/应用动态下发网络行为 <span class="pg">原文p93</span> </li>
+<li><strong>Lightning Config</strong>：开箱即用部署，50 分钟培训的技术员 5 分钟装机 <span class="pg">原文p93</span> </li>
+<li><strong>OmniVista Network Advisor</strong>：AI 驱动实时监控、风险告警与修复 <span class="pg">原文p98</span> </li>
 </ul>
 <hr />
 <p>合计：50 条。</p><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

@@ -76,23 +76,23 @@ blockquote p{margin:6px 0}
 <p>Resource Manager 解决"存量设备的配置与固件生命周期"（备份/恢复/升级/清单），Provisioning 解决"新设备的零接触上线"（三阶段状态模型：Factory-default → Bootstrapped → Provisioned）。核心机制是规则匹配：交换机每 5 分钟联系 OV 一次，命中 Rule（序列号/MAC/型号）即推送管理与配置模板。</p>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
-<li><strong>配置备份</strong>：Configuration → Resource Manager → Backup/Restore → Backup → Backup by Devices → Switch Picker 选设备 → （提示 FTP 认证则 Add FTP Authentication：admin/switch）→ Backup Type=Configuration Only → Backup（ <code>&lt;span class="pg"&gt;原文p197-198&lt;/span&gt;</code> ）</li>
-<li><strong>恢复配置</strong>：Restore → Add/Remove Backup Files → 选文件 → Restore → 确认 Yes（ <code>&lt;span class="pg"&gt;原文p199-201&lt;/span&gt;</code> ）</li>
-<li><strong>镜像升级</strong>：Upgrade Image → Import（<em>.zip）→ Install → 选固件 → Add/Remove Device（OV 只列出兼容该版本的交换机）→ Install Software；完成后 </em><em>SSH 到交换机从 working 目录 reload，重启后执行 Copy Working Certified</em>*（ <code>&lt;span class="pg"&gt;原文p203-206&lt;/span&gt;</code> ）</li>
-<li><strong>定时批量升级</strong>：Discovery → Scheduled Upgrades：可多台同时升级、立即或定时、每台可设不同版本与安装目录；完成后到 Managed Devices 检查安装目录与状态是否 successful（ <code>&lt;span class="pg"&gt;原文p124-126&lt;/span&gt;</code> ）</li>
-<li><strong>Inventory 报表</strong>：Resource Manager → Inventory → Create Report → Select Devices → 选报告类型 → Create → 点链接浏览器打开（ <code>&lt;span class="pg"&gt;原文p202&lt;/span&gt;</code> ）</li>
-<li><strong>Provisioning Rule</strong>：字段含 Serial Number/MAC、Switch Model、Switch Config Template（追加到现有配置）、Value Mapping（动态模板必填）、Mgmt Users Template（默认推送）、Save and Certify；Results 表查看尝试过的交换机（ <code>&lt;span class="pg"&gt;原文p461-462&lt;/span&gt;</code> ）</li>
-<li><strong>Golden Config / 强制下发</strong>：Golden Config 列点 Edit，从最近三次备份中选一并 Apply；"The Force Provisioning Config button is used to push a Provisioning Rule configuration to a matching switch the next time the switch contacts the OmniVista server."（ <code>&lt;span class="pg"&gt;原文p466-467&lt;/span&gt;</code> ）</li>
+<li><strong>配置备份</strong>：Configuration → Resource Manager → Backup/Restore → Backup → Backup by Devices → Switch Picker 选设备 → （提示 FTP 认证则 Add FTP Authentication：admin/switch）→ Backup Type=Configuration Only → Backup（<span class="pg">原文p197-198</span> ）</li>
+<li><strong>恢复配置</strong>：Restore → Add/Remove Backup Files → 选文件 → Restore → 确认 Yes（<span class="pg">原文p199-201</span> ）</li>
+<li><strong>镜像升级</strong>：Upgrade Image → Import（<em>.zip）→ Install → 选固件 → Add/Remove Device（OV 只列出兼容该版本的交换机）→ Install Software；完成后 </em><em>SSH 到交换机从 working 目录 reload，重启后执行 Copy Working Certified</em>*（<span class="pg">原文p203-206</span> ）</li>
+<li><strong>定时批量升级</strong>：Discovery → Scheduled Upgrades：可多台同时升级、立即或定时、每台可设不同版本与安装目录；完成后到 Managed Devices 检查安装目录与状态是否 successful（<span class="pg">原文p124-126</span> ）</li>
+<li><strong>Inventory 报表</strong>：Resource Manager → Inventory → Create Report → Select Devices → 选报告类型 → Create → 点链接浏览器打开（<span class="pg">原文p202</span> ）</li>
+<li><strong>Provisioning Rule</strong>：字段含 Serial Number/MAC、Switch Model、Switch Config Template（追加到现有配置）、Value Mapping（动态模板必填）、Mgmt Users Template（默认推送）、Save and Certify；Results 表查看尝试过的交换机（<span class="pg">原文p461-462</span> ）</li>
+<li><strong>Golden Config / 强制下发</strong>：Golden Config 列点 Edit，从最近三次备份中选一并 Apply；"The Force Provisioning Config button is used to push a Provisioning Rule configuration to a matching switch the next time the switch contacts the OmniVista server."（<span class="pg">原文p466-467</span> ）</li>
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
-<li>动态模板 + 值映射：模板分 Static（无变量）与 Dynamic（带 $VLAN/$PORTS 变量）；动态模板必须建 Value Mappings，由模板+变量值表推导实际下发配置（ <code>&lt;span class="pg"&gt;原文p463-464&lt;/span&gt;</code> ）</li>
-<li>引导方式：DHCP Option 43 Sub-Option 128 指向本地 OV 激活服务器（推荐），或 DNS 把 activation.myovcloud.com 解析到 OV；存量交换机改 cloudagent.cfg 的 Activation Server URL（as-lite.*.ove.local）并 <code>cloud-agent admin-state enable</code>（ <code>&lt;span class="pg"&gt;原文p460&lt;/span&gt;</code> ）</li>
+<li>动态模板 + 值映射：模板分 Static（无变量）与 Dynamic（带 $VLAN/$PORTS 变量）；动态模板必须建 Value Mappings，由模板+变量值表推导实际下发配置（<span class="pg">原文p463-464</span> ）</li>
+<li>引导方式：DHCP Option 43 Sub-Option 128 指向本地 OV 激活服务器（推荐），或 DNS 把 activation.myovcloud.com 解析到 OV；存量交换机改 cloudagent.cfg 的 Activation Server URL（as-lite.*.ove.local）并 <code>cloud-agent admin-state enable</code>（<span class="pg">原文p460</span> ）</li>
 <li>部署场景矩阵：①Mobile App 离线 ②Mobile App 在线 ③Advanced DHCP+RCL（企业/园区）④仅 Advanced DHCP；场景 1/2 依赖尚未发布的 Mobile App 功能，当前不可实施（&lt;&lt;<PAGE 418/451/415>&gt;&gt;）</li>
 <li>Thin Client 模式：交换机零本地配置（仅 vcboot.cfg 保底网络可达），开机经 activation/call-home 从 OV 取配置；</li>
-<li>Incremental Template 只在下一次周期 call-home（默认 30 分钟）应用一次（ <code>&lt;span class="pg"&gt;原文p75-77&lt;/span&gt;</code> ）；</li>
+<li>Incremental Template 只在下一次周期 call-home（默认 30 分钟）应用一次（<span class="pg">原文p75-77</span> ）；</li>
 <li>
-<p>Rule 可配 Thin Switch Yes/No 与 Desired Switch Config（Template+Incremental/最新备份快照/Golden 快照）（ <code>&lt;span class="pg"&gt;原文p76&lt;/span&gt;</code> ）；</p>
+<p>Rule 可配 Thin Switch Yes/No 与 Desired Switch Config（Template+Incremental/最新备份快照/Golden 快照）（<span class="pg">原文p76</span> ）；</p>
 </li>
 <li>
 <p>Golden Configuration 审计："Configuration selected from a list of the three most recent switch backups that can be applied to a switch in the event there is an unwanted configuration change"；可周期审计、标记 golden、偏离告警（&lt;&lt;<PAGE 467/417>&gt;&gt;）</p>
@@ -100,20 +100,20 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>配置备份与恢复（含 FTP 凭据补充）——cases·备份恢复（ <code>&lt;span class="pg"&gt;原文p197-201&lt;/span&gt;</code> ）</li>
-<li>镜像导入升级 + 升级后手工 reload/Copy Working Certified——cases·镜像升级（ <code>&lt;span class="pg"&gt;原文p203-206&lt;/span&gt;</code> ）</li>
-<li>Provisioning Rule 创建与 Golden Config/Force Provision——cases·Provisioning（ <code>&lt;span class="pg"&gt;原文p462-467&lt;/span&gt;</code> ）</li>
+<li>配置备份与恢复（含 FTP 凭据补充）——cases·备份恢复（<span class="pg">原文p197-201</span> ）</li>
+<li>镜像导入升级 + 升级后手工 reload/Copy Working Certified——cases·镜像升级（<span class="pg">原文p203-206</span> ）</li>
+<li>Provisioning Rule 创建与 Golden Config/Force Provision——cases·Provisioning（<span class="pg">原文p462-467</span> ）</li>
 </ul>
 <h2 id="b">B（边界与陷阱）</h2>
 <ul>
 <li>升级完成的收尾动作不能漏：需 SSH reload + Copy Working Certified，漏做则升级不生效；实验环境镜像升级节"DO NOT perform this section unless directed by your instructor."（&lt;&lt;<PAGE 203/206>&gt;&gt;）</li>
-<li>备份向导可能因交换机缺 FTP 凭据中断："Click on Add FTP Authentication if prompted."（ <code>&lt;span class="pg"&gt;原文p198&lt;/span&gt;</code> ）</li>
-<li>Thin Client 模式下"All configuration changes should be done in OV 2500"——本地改配置无意义/会被覆盖；且仅 AOS 8.8R1+ 支持（ <code>&lt;span class="pg"&gt;原文p75&lt;/span&gt;</code> ）</li>
+<li>备份向导可能因交换机缺 FTP 凭据中断："Click on Add FTP Authentication if prompted."（<span class="pg">原文p198</span> ）</li>
+<li>Thin Client 模式下"All configuration changes should be done in OV 2500"——本地改配置无意义/会被覆盖；且仅 AOS 8.8R1+ 支持（<span class="pg">原文p75</span> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
 <ul>
-<li>frameworks·Provisioning 四场景矩阵（&lt;&lt;<PAGE 414/418/451>&gt;&gt;）、动态模板+值映射（ <code>&lt;span class="pg"&gt;原文p463-464&lt;/span&gt;</code> ）</li>
-<li>principles·Rule 匹配机制（ <code>&lt;span class="pg"&gt;原文p461&lt;/span&gt;</code> ）、Golden Config 审计（&lt;&lt;<PAGE 417/467>&gt;&gt;）、RCL/Bootstrap（ <code>&lt;span class="pg"&gt;原文p460&lt;/span&gt;</code> ）、NaaS 许可状态（ <code>&lt;span class="pg"&gt;原文p127&lt;/span&gt;</code> ）、Thin Client（ <code>&lt;span class="pg"&gt;原文p75-77&lt;/span&gt;</code> ）</li>
+<li>frameworks·Provisioning 四场景矩阵（&lt;&lt;<PAGE 414/418/451>&gt;&gt;）、动态模板+值映射（<span class="pg">原文p463-464</span> ）</li>
+<li>principles·Rule 匹配机制（<span class="pg">原文p461</span> ）、Golden Config 审计（&lt;&lt;<PAGE 417/467>&gt;&gt;）、RCL/Bootstrap（<span class="pg">原文p460</span> ）、NaaS 许可状态（<span class="pg">原文p127</span> ）、Thin Client（<span class="pg">原文p75-77</span> ）</li>
 <li>cases·备份恢复/镜像升级/Inventory/Scheduled Upgrades/Provisioning/Thin Client 规则（&lt;&lt;<PAGE 197-206/202/124-126/462-467/76>&gt;&gt;）</li>
 <li>counter-examples·升级环境约束与收尾/FTP 凭据/Thin Client 直改配置（&lt;&lt;<PAGE 203-206/198/75>&gt;&gt;）</li>
 </ul><div class="pn"><a href="ov-discovery-topology-locator.html">⬅ 上一单元：ov-discovery-topology-locator</a><a class="nxt" href="ov-cli-scripting-batch.html">下一单元：ov-cli-scripting-batch ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

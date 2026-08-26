@@ -67,22 +67,22 @@ blockquote p{margin:6px 0}
 <li>新硬件（OS6575/OS6920-D32/400G 模块）支持情况查询</li>
 </ul>
 <h2 id="i">I（核心理念)</h2>
-<p>8.10R4 变更分三层看：新特性（管理安全类、L3/业务类、安全类、运维类）按 Feature Matrix 核对平台与首版（F4， <code>&lt;span class="pg"&gt;原文p52-61&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p19&lt;/span&gt;</code> ：Y=历来支持：
+<p>8.10R4 变更分三层看：新特性（管理安全类、L3/业务类、安全类、运维类）按 Feature Matrix 核对平台与首版（F4，<span class="pg">原文p52-61</span> /<span class="pg">原文p19</span> ：Y=历来支持：
 - N=不支持
 - 版本号=该版引入
-- EA=Early Availability 未完整验证不受支持）；许可分层模型（P48， <code>&lt;span class="pg"&gt;原文p19-20&lt;/span&gt;</code> ）：Data Center 许可（本版均不支持 DCB/FIP/FCoE）→ Feature/Performance（MACsec/10G/MPLS/50G）→ Metro（8.9R1 起 6560 收费）→ Advanced Routing（6560 版限 2 OSPF 区域；8.10R4 加 BGP）→ Premium 捆绑（单文件多子许可，VC 内 Match=全成员一致才生效
+- EA=Early Availability 未完整验证不受支持）；许可分层模型（P48，<span class="pg">原文p19-20</span> ）：Data Center 许可（本版均不支持 DCB/FIP/FCoE）→ Feature/Performance（MACsec/10G/MPLS/50G）→ Metro（8.9R1 起 6560 收费）→ Advanced Routing（6560 版限 2 OSPF 区域；8.10R4 加 BGP）→ Premium 捆绑（单文件多子许可，VC 内 Match=全成员一致才生效
 - Local-Only=仅本机，P36/X"VC Parity"）。废弃与行为变更（8.5R4-8.10R4）是升级迁移的硬前提，带 EVB 配置的交换机直接禁止升级（X6）。</p>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>升前查废弃清单</strong>：存量配置含 EVB/OVSDB/分布式 ARP/WRED/qos dscp-table/ip helper 旧格式等，先清理或改写再升级</li>
-<li><strong>8.10R3+ EVPN 强制 VRF 语境</strong>：旧版 EVPN 配置必须手工迁入对应 VRF context，否则失效（X5， <code>&lt;span class="pg"&gt;原文p18&lt;/span&gt;</code> ）</li>
+<li><strong>8.10R3+ EVPN 强制 VRF 语境</strong>：旧版 EVPN 配置必须手工迁入对应 VRF context，否则失效（X5，<span class="pg">原文p18</span> ）</li>
 <li><strong>新特性启用三步</strong>：查 Feature Matrix 定平台列→看特性行首版→对照 Licensed Features 表确认许可</li>
-<li><strong>EA 特性不上生产</strong>：可配置但未走完整验证流程、不受官方支持（glossary·EA， <code>&lt;span class="pg"&gt;原文p15&lt;/span&gt;</code> ）</li>
+<li><strong>EA 特性不上生产</strong>：可配置但未走完整验证流程、不受官方支持（glossary·EA，<span class="pg">原文p15</span> ）</li>
 <li><strong>自动化适配</strong>：首访强制改密（X8）与 TLS 默认 1.2（P8）影响 REST API/脚本</li>
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li>新特性速查（8.10R4 要点）：Router Mode/Edge-router Mode 规模切换（P16/P17， <code>&lt;span class="pg"&gt;原文p26&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p37-38&lt;/span&gt;</code> ）</li>
+<li>新特性速查（8.10R4 要点）：Router Mode/Edge-router Mode 规模切换（P16/P17，<span class="pg">原文p26</span> /<span class="pg">原文p37-38</span> ）</li>
 <li>IPv6 BGP 聚合（P19）</li>
 <li>PIM over GRE（P20）</li>
 <li>sFlow BGP Gateway（P21）</li>
@@ -104,30 +104,30 @@ blockquote p{margin:6px 0}
 <li>
 <p><strong>许可核对</strong>：Performance License 解锁端口速率（6560 10G/6570M 25G/6870 50G，默认降速）；MACsec Site License 8.6R1 起强制（免费生成、免重启，P12）；Premium 捆绑按 MAC/序列号生成</p>
 </li>
-<li><strong>新硬件</strong>：OS6575 家族三形态（P46）、OS6920-D32 32×400G（P45）、QSFPD-400G 系列（C/DR4 500m/FR4 2km/LR4 10km/A10M/SR4.2 可拆 4×100G）、QSFP-100G-SR1.2/PSM4（ <code>&lt;span class="pg"&gt;原文p21-22&lt;/span&gt;</code> ）</li>
+<li><strong>新硬件</strong>：OS6575 家族三形态（P46）、OS6920-D32 32×400G（P45）、QSFPD-400G 系列（C/DR4 500m/FR4 2km/LR4 10km/A10M/SR4.2 可拆 4×100G）、QSFP-100G-SR1.2/PSM4（<span class="pg">原文p21-22</span> ）</li>
 <li><strong>跨版本配置漂移自查</strong>：NTP <code>ip service source-ip ntp</code> 参数 8.5R4 废弃、8.6R2 恢复（X73）；DHCPv6 Guard 接口名格式改 vlan 形式（X69）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>SPB on 6570M 部署：需 premium bundle 许可，6575 默认支持；default 与 Fabric TCAM profile 都支持，推荐 Fabric 获更好性能（P26， <code>&lt;span class="pg"&gt;原文p31&lt;/span&gt;</code> ）</li>
-<li>DHL 无缝切换规模边界：4000 VLAN 场景下无缝 failover 支持 128 VLAN/1000 MAC，超出需把 pre-empt timer 从 30 秒提到 60 秒防残留 MAC（P44， <code>&lt;span class="pg"&gt;原文p97&lt;/span&gt;</code> ）</li>
-<li>ERP 与 MACsec 交互：单侧关闭 MACsec/MKA 时 R-APS 仍可交换、环可能回 Idle/RPL 阻塞——预期行为（P43， <code>&lt;span class="pg"&gt;原文p90-91&lt;/span&gt;</code> ）</li>
+<li>SPB on 6570M 部署：需 premium bundle 许可，6575 默认支持；default 与 Fabric TCAM profile 都支持，推荐 Fabric 获更好性能（P26，<span class="pg">原文p31</span> ）</li>
+<li>DHL 无缝切换规模边界：4000 VLAN 场景下无缝 failover 支持 128 VLAN/1000 MAC，超出需把 pre-empt timer 从 30 秒提到 60 秒防残留 MAC（P44，<span class="pg">原文p97</span> ）</li>
+<li>ERP 与 MACsec 交互：单侧关闭 MACsec/MKA 时 R-APS 仍可交换、环可能回 Idle/RPL 阻塞——预期行为（P43，<span class="pg">原文p90-91</span> ）</li>
 </ul>
 <h2 id="b">B（反例/坑）</h2>
 <ul>
-<li>带 EVB 配置的交换机禁止升到 8.5R4 及以上（X6， <code>&lt;span class="pg"&gt;原文p16&lt;/span&gt;</code> ）</li>
-<li>8.10R3 起旧版 EVPN 配置必须手工迁入 VRF context（X5， <code>&lt;span class="pg"&gt;原文p18&lt;/span&gt;</code> ）</li>
-<li>OVSDB 8.10R2 起移除；automatic fabric admin-state 8.10R2 起默认禁用（X68， <code>&lt;span class="pg"&gt;原文p17&lt;/span&gt;</code> ）</li>
-<li>分布式 ARP、WRED、qos dscp-table 于 8.6R2 移除；ip helper→ip dhcp relay（8.6R1，旧 vcboot.cfg 兼容）（X69， <code>&lt;span class="pg"&gt;原文p16&lt;/span&gt;</code> ）</li>
-<li>8.9R1 起 6560 Metro 特性转收费：CPE Test Head/PPPoE-IA/Ethernet OAM/SAA/Link OAM/VLAN Stacking/DPA/IPMVLAN 需 Metro 许可（X11， <code>&lt;span class="pg"&gt;原文p19&lt;/span&gt;</code> ）</li>
-<li>6560 两款电源（BP-PH 600W/BP-PX 920W）强制最低 AOS 8.8R1（X10， <code>&lt;span class="pg"&gt;原文p17&lt;/span&gt;</code> ）</li>
-<li>mrp interconnect 三条命令 8.8R1 存在但不支持（X70， <code>&lt;span class="pg"&gt;原文p17&lt;/span&gt;</code> ）；Kerberos Snooping 8.7R3 不支持 bridge mode（X71， <code>&lt;span class="pg"&gt;原文p17&lt;/span&gt;</code> ）</li>
-<li>SPB Auto Fabric BVLAN 默认 16→4（8.7R1）仅对出厂默认且无 vcboot.cfg 的设备生效，升级不改存量（X72， <code>&lt;span class="pg"&gt;原文p17&lt;/span&gt;</code> ）</li>
-<li>NTP 遵循 RFC 不再同步 stratum 16 服务器，OmniSwitch 级联对时的存量部署会断同步（P41， <code>&lt;span class="pg"&gt;原文p16&lt;/span&gt;</code> ）</li>
-<li>WebView 法语支持 8.8R2 起移除，默认法语的设备升级后回落英语（X33， <code>&lt;span class="pg"&gt;原文p17&lt;/span&gt;</code> ）</li>
-<li>6570M TDR 仅限铜口：12/12D 口 1-8；U28 仅 hybrid 口 21-24 且 hybrid-mode=copper（X34， <code>&lt;span class="pg"&gt;原文p38&lt;/span&gt;</code> ）</li>
-<li>FTP 用户名（RCD）上限 15 字符（X36， <code>&lt;span class="pg"&gt;原文p91&lt;/span&gt;</code> ）；vcboot.cfg 含明文 key 导致哈希错误，必须用交换机生成的 hash-key/hash-salt（X37， <code>&lt;span class="pg"&gt;原文p91&lt;/span&gt;</code> ）</li>
-<li>软件获取卡停止随箱附带，软件走 Business Portal（X75， <code>&lt;span class="pg"&gt;原文p16&lt;/span&gt;</code> ）；8.8R1 起 CVE-2024-6387（regreSSHion）修复默认内建（X74， <code>&lt;span class="pg"&gt;原文p17&lt;/span&gt;</code> ）</li>
+<li>带 EVB 配置的交换机禁止升到 8.5R4 及以上（X6，<span class="pg">原文p16</span> ）</li>
+<li>8.10R3 起旧版 EVPN 配置必须手工迁入 VRF context（X5，<span class="pg">原文p18</span> ）</li>
+<li>OVSDB 8.10R2 起移除；automatic fabric admin-state 8.10R2 起默认禁用（X68，<span class="pg">原文p17</span> ）</li>
+<li>分布式 ARP、WRED、qos dscp-table 于 8.6R2 移除；ip helper→ip dhcp relay（8.6R1，旧 vcboot.cfg 兼容）（X69，<span class="pg">原文p16</span> ）</li>
+<li>8.9R1 起 6560 Metro 特性转收费：CPE Test Head/PPPoE-IA/Ethernet OAM/SAA/Link OAM/VLAN Stacking/DPA/IPMVLAN 需 Metro 许可（X11，<span class="pg">原文p19</span> ）</li>
+<li>6560 两款电源（BP-PH 600W/BP-PX 920W）强制最低 AOS 8.8R1（X10，<span class="pg">原文p17</span> ）</li>
+<li>mrp interconnect 三条命令 8.8R1 存在但不支持（X70，<span class="pg">原文p17</span> ）；Kerberos Snooping 8.7R3 不支持 bridge mode（X71，<span class="pg">原文p17</span> ）</li>
+<li>SPB Auto Fabric BVLAN 默认 16→4（8.7R1）仅对出厂默认且无 vcboot.cfg 的设备生效，升级不改存量（X72，<span class="pg">原文p17</span> ）</li>
+<li>NTP 遵循 RFC 不再同步 stratum 16 服务器，OmniSwitch 级联对时的存量部署会断同步（P41，<span class="pg">原文p16</span> ）</li>
+<li>WebView 法语支持 8.8R2 起移除，默认法语的设备升级后回落英语（X33，<span class="pg">原文p17</span> ）</li>
+<li>6570M TDR 仅限铜口：12/12D 口 1-8；U28 仅 hybrid 口 21-24 且 hybrid-mode=copper（X34，<span class="pg">原文p38</span> ）</li>
+<li>FTP 用户名（RCD）上限 15 字符（X36，<span class="pg">原文p91</span> ）；vcboot.cfg 含明文 key 导致哈希错误，必须用交换机生成的 hash-key/hash-salt（X37，<span class="pg">原文p91</span> ）</li>
+<li>软件获取卡停止随箱附带，软件走 Business Portal（X75，<span class="pg">原文p16</span> ）；8.8R1 起 CVE-2024-6387（regreSSHion）修复默认内建（X74，<span class="pg">原文p17</span> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniSwitch AOS Release 8.10R4 Release Notes New Features（ <code>&lt;span class="pg"&gt;原文p23-40&lt;/span&gt;</code> ）、Licensed Features（ <code>&lt;span class="pg"&gt;原文p19-20&lt;/span&gt;</code> ）、New Hardware（ <code>&lt;span class="pg"&gt;原文p21-22&lt;/span&gt;</code> ）、Prerequisites 废弃清单（ <code>&lt;span class="pg"&gt;原文p15-19&lt;/span&gt;</code> ）、Appendix A Feature Matrix（ <code>&lt;span class="pg"&gt;原文p52-61&lt;/span&gt;</code> ）。条目来源：principles P8-P27/P31-P33/P36/P41/P43/P44/P45/P46/P48；counter-examples X5/X6/X10/X11/X33/X34/X36/X37/X68-X75；frameworks F4。</p><div class="pn"><a href="aos-rn-known-issues.html">⬅ 上一单元：aos-rn-known-issues</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<p>OmniSwitch AOS Release 8.10R4 Release Notes New Features（<span class="pg">原文p23-40</span> ）、Licensed Features（<span class="pg">原文p19-20</span> ）、New Hardware（<span class="pg">原文p21-22</span> ）、Prerequisites 废弃清单（<span class="pg">原文p15-19</span> ）、Appendix A Feature Matrix（<span class="pg">原文p52-61</span> ）。条目来源：principles P8-P27/P31-P33/P36/P41/P43/P44/P45/P46/P48；counter-examples X5/X6/X10/X11/X33/X34/X36/X37/X68-X75；frameworks F4。</p><div class="pn"><a href="aos-rn-known-issues.html">⬅ 上一单元：aos-rn-known-issues</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

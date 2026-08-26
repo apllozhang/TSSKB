@@ -67,41 +67,41 @@ blockquote p{margin:6px 0}
 <li>接地：supplemental 接地耳 + NEBS 星形垫圈细则</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>温度-PoE 预算联动框架（F2， <code>&lt;span class="pg"&gt;原文p24&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p60&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p61&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p67&lt;/span&gt;</code> ）：预算=机型×电源×数量×温度带四元函数。部署四查：一查 Tmra 温度带；二查预算表（MP16/U28+BPNSX 有机内封顶，加电源不扩容）；三查输入电压档位；四查 Guard Band。电源机制两铁律：双电源必须同 wattage 同额定电压（X2）；电源类型不能自动检测，必须 powersupply type 手动声明，否则功率信息错乱且 PoE 配置前置（P13/X3）。ROJ 接线注意本机 V-=红、V+=黑（与常规红正黑负相反）（P15， <code>&lt;span class="pg"&gt;原文p42&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p43&lt;/span&gt;</code> ）。工业高可用三支柱（F3）：链路 Bypass+供电冗余+无风扇宽温。</p>
+<p>温度-PoE 预算联动框架（F2，<span class="pg">原文p24</span> /<span class="pg">原文p60</span> /<span class="pg">原文p61</span> /<span class="pg">原文p67</span> ）：预算=机型×电源×数量×温度带四元函数。部署四查：一查 Tmra 温度带；二查预算表（MP16/U28+BPNSX 有机内封顶，加电源不扩容）；三查输入电压档位；四查 Guard Band。电源机制两铁律：双电源必须同 wattage 同额定电压（X2）；电源类型不能自动检测，必须 powersupply type 手动声明，否则功率信息错乱且 PoE 配置前置（P13/X3）。ROJ 接线注意本机 V-=红、V+=黑（与常规红正黑负相反）（P15，<span class="pg">原文p42</span> /<span class="pg">原文p43</span> ）。工业高可用三支柱（F3）：链路 Bypass+供电冗余+无风扇宽温。</p>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
-<li>按形态定安装路径（F1）：U28 前装法兰/后装套件；P12 DIN Rail Bracket 或 Wall Bracket 选件；MP16 自带 Mounting Holes 直接壁装（C4-C8， <code>&lt;span class="pg"&gt;原文p29&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p35&lt;/span&gt;</code> ）</li>
-<li>现场准备（C9， <code>&lt;span class="pg"&gt;原文p13&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p29&lt;/span&gt;</code> ）：维持 -40~75°C 温湿度域；预留通风空间；每电源一个接地插座；2 米原装电源线</li>
-<li>电源选型四矩阵（P12， <code>&lt;span class="pg"&gt;原文p36&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p40&lt;/span&gt;</code> ）：BPNS 150W（仅 P12）/BPNSX 480W（P12+U28）外置 AC；BPR 180W AC/BPRD 180W DC 模块（U28 后装最多 2）</li>
-<li>PoE 预算按温度带核对（P33， <code>&lt;span class="pg"&gt;原文p60&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p61&lt;/span&gt;</code> ）：P12+1×BPNSX 330W→140W（70-75°C）；U28+1×BPR(D) 75W→15W——高温场预算可缩水过半</li>
-<li>供电冗余：双同规格电源+独立电路+UPS（911 纪律，P39， <code>&lt;span class="pg"&gt;原文p56&lt;/span&gt;</code> ）</li>
+<li>按形态定安装路径（F1）：U28 前装法兰/后装套件；P12 DIN Rail Bracket 或 Wall Bracket 选件；MP16 自带 Mounting Holes 直接壁装（C4-C8，<span class="pg">原文p29</span> -<span class="pg">原文p35</span> ）</li>
+<li>现场准备（C9，<span class="pg">原文p13</span> /<span class="pg">原文p29</span> ）：维持 -40~75°C 温湿度域；预留通风空间；每电源一个接地插座；2 米原装电源线</li>
+<li>电源选型四矩阵（P12，<span class="pg">原文p36</span> -<span class="pg">原文p40</span> ）：BPNS 150W（仅 P12）/BPNSX 480W（P12+U28）外置 AC；BPR 180W AC/BPRD 180W DC 模块（U28 后装最多 2）</li>
+<li>PoE 预算按温度带核对（P33，<span class="pg">原文p60</span> /<span class="pg">原文p61</span> ）：P12+1×BPNSX 330W→140W（70-75°C）；U28+1×BPR(D) 75W→15W——高温场预算可缩水过半</li>
+<li>供电冗余：双同规格电源+独立电路+UPS（911 纪律，P39，<span class="pg">原文p56</span> ）</li>
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>U28 后装电源安装</strong>：DB-15 两侧导柱对准机箱后部导孔滑入→推至连接器就位→拧前端拇指螺丝；冗余在对侧重复（C11， <code>&lt;span class="pg"&gt;原文p41&lt;/span&gt;</code> ）</li>
-<li><strong>ROJ 输出线（电源→机箱）</strong>：红线插 V- 与机箱(-)端、黑线插 V+ 与(+)端、绿线 ring 端子接地端——力矩 3.5 in-lb（C12， <code>&lt;span class="pg"&gt;原文p43&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p44&lt;/span&gt;</code> ）</li>
-<li><strong>ROJ 输入线（市电→电源）</strong>：黑/棕=L、白/蓝=N、绿/绿黄条纹=PG，按电源标签力矩（C13， <code>&lt;span class="pg"&gt;原文p45&lt;/span&gt;</code> ）</li>
-<li><strong>最终上电</strong>：输出线插机箱前面板 PS1/PS2→AC 线 NEMA 5-15 插易达 AC 源；插头在接到提示前不得插入带电插座（C14/X4， <code>&lt;span class="pg"&gt;原文p43&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p45&lt;/span&gt;</code> ）</li>
-<li><strong>电源热拔</strong>：源侧拔插头→拆输入线→拆输出线→按接线流程装新电源；冗余下单电源可换不影响运行（C15， <code>&lt;span class="pg"&gt;原文p46&lt;/span&gt;</code> ）</li>
-<li><strong>电源类型声明</strong>：powersupply 1 name ALE-75W-ps1 type ale lo-ac（逐电源声明）（C16/P40， <code>&lt;span class="pg"&gt;原文p46&lt;/span&gt;</code> ）</li>
-<li><strong>supplemental 接地</strong>：LCD8-10A-L lug+10-32 螺丝+8AWG，力矩 30-60 in-lb（C17， <code>&lt;span class="pg"&gt;原文p47&lt;/span&gt;</code> ）</li>
+<li><strong>U28 后装电源安装</strong>：DB-15 两侧导柱对准机箱后部导孔滑入→推至连接器就位→拧前端拇指螺丝；冗余在对侧重复（C11，<span class="pg">原文p41</span> ）</li>
+<li><strong>ROJ 输出线（电源→机箱）</strong>：红线插 V- 与机箱(-)端、黑线插 V+ 与(+)端、绿线 ring 端子接地端——力矩 3.5 in-lb（C12，<span class="pg">原文p43</span> /<span class="pg">原文p44</span> ）</li>
+<li><strong>ROJ 输入线（市电→电源）</strong>：黑/棕=L、白/蓝=N、绿/绿黄条纹=PG，按电源标签力矩（C13，<span class="pg">原文p45</span> ）</li>
+<li><strong>最终上电</strong>：输出线插机箱前面板 PS1/PS2→AC 线 NEMA 5-15 插易达 AC 源；插头在接到提示前不得插入带电插座（C14/X4，<span class="pg">原文p43</span> /<span class="pg">原文p45</span> ）</li>
+<li><strong>电源热拔</strong>：源侧拔插头→拆输入线→拆输出线→按接线流程装新电源；冗余下单电源可换不影响运行（C15，<span class="pg">原文p46</span> ）</li>
+<li><strong>电源类型声明</strong>：powersupply 1 name ALE-75W-ps1 type ale lo-ac（逐电源声明）（C16/P40，<span class="pg">原文p46</span> ）</li>
+<li><strong>supplemental 接地</strong>：LCD8-10A-L lug+10-32 螺丝+8AWG，力矩 30-60 in-lb（C17，<span class="pg">原文p47</span> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>U28 后装套件+电源托盘全流程（C5， <code>&lt;span class="pg"&gt;原文p31&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p32&lt;/span&gt;</code> ）</li>
-<li>P12 DIN 导轨与壁装部署（C6/C7， <code>&lt;span class="pg"&gt;原文p33&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p34&lt;/span&gt;</code> ）</li>
-<li>温度阶梯预算部署：高温车间按降档预算配置 PD（P33/P34， <code>&lt;span class="pg"&gt;原文p60&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p61&lt;/span&gt;</code> ）</li>
+<li>U28 后装套件+电源托盘全流程（C5，<span class="pg">原文p31</span> /<span class="pg">原文p32</span> ）</li>
+<li>P12 DIN 导轨与壁装部署（C6/C7，<span class="pg">原文p33</span> /<span class="pg">原文p34</span> ）</li>
+<li>温度阶梯预算部署：高温车间按降档预算配置 PD（P33/P34，<span class="pg">原文p60</span> /<span class="pg">原文p61</span> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>
-<li>48VDC 以下禁 PoE；第三方电源须 ≥48V（X1， <code>&lt;span class="pg"&gt;原文p21&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p23&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p25&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p61&lt;/span&gt;</code> ）</li>
-<li>双电源禁混规格（wattage+额定电压均须一致）（X2， <code>&lt;span class="pg"&gt;原文p21&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p23&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p25&lt;/span&gt;</code> ）</li>
-<li>电源类型不能自动检测，不声明则功率显示与 PoE 利用错误（X3/P13， <code>&lt;span class="pg"&gt;原文p46&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p57&lt;/span&gt;</code> ）</li>
-<li>MP16 加电源不扩预算：150W→52W、480W→120W 恒定——叠电源只为冗余（X13/P35， <code>&lt;span class="pg"&gt;原文p61&lt;/span&gt;</code> ）</li>
-<li>NEMA 插头不得提前带电插拔，违者可能人伤/设备损坏（X4， <code>&lt;span class="pg"&gt;原文p43&lt;/span&gt;</code> ）</li>
-<li>只准用 ALE 原厂配件安装电源（X5， <code>&lt;span class="pg"&gt;原文p42&lt;/span&gt;</code> ）</li>
-<li>ROJ 极性反直觉：V-=红、V+=黑，接反烧设备（P15， <code>&lt;span class="pg"&gt;原文p42&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p43&lt;/span&gt;</code> ）</li>
-<li>高温预算降档：不得按常温满配（X12， <code>&lt;span class="pg"&gt;原文p60&lt;/span&gt;</code> ）</li>
-<li>NEBS 接地细则：星形垫圈防松、裸导体压接前清洁涂抗氧化剂、仅用铜导体、AC 须接 SPD（X26/X27， <code>&lt;span class="pg"&gt;原文p80&lt;/span&gt;</code> ）</li>
+<li>48VDC 以下禁 PoE；第三方电源须 ≥48V（X1，<span class="pg">原文p21</span> /<span class="pg">原文p23</span> /<span class="pg">原文p25</span> /<span class="pg">原文p61</span> ）</li>
+<li>双电源禁混规格（wattage+额定电压均须一致）（X2，<span class="pg">原文p21</span> /<span class="pg">原文p23</span> /<span class="pg">原文p25</span> ）</li>
+<li>电源类型不能自动检测，不声明则功率显示与 PoE 利用错误（X3/P13，<span class="pg">原文p46</span> /<span class="pg">原文p57</span> ）</li>
+<li>MP16 加电源不扩预算：150W→52W、480W→120W 恒定——叠电源只为冗余（X13/P35，<span class="pg">原文p61</span> ）</li>
+<li>NEMA 插头不得提前带电插拔，违者可能人伤/设备损坏（X4，<span class="pg">原文p43</span> ）</li>
+<li>只准用 ALE 原厂配件安装电源（X5，<span class="pg">原文p42</span> ）</li>
+<li>ROJ 极性反直觉：V-=红、V+=黑，接反烧设备（P15，<span class="pg">原文p42</span> /<span class="pg">原文p43</span> ）</li>
+<li>高温预算降档：不得按常温满配（X12，<span class="pg">原文p60</span> ）</li>
+<li>NEBS 接地细则：星形垫圈防松、裸导体压接前清洁涂抗氧化剂、仅用铜导体、AC 须接 SPD（X26/X27，<span class="pg">原文p80</span> ）</li>
 </ul>
 <p>来源：OmniSwitch 6575 Hardware Users Guide（Ch2-Ch4，p13-47、p56-68）</p><div class="pn"><a href="os6575-model-ports.html">⬅ 上一单元：os6575-model-ports</a><a class="nxt" href="os6575-ops-troubleshoot.html">下一单元：os6575-ops-troubleshoot ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

@@ -82,42 +82,42 @@ AS_PATH 承担 AS 级环路检测（P61）。选路属性体系：Local Preferen
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>七步上线</strong>：<code>ip router router-id 1.1.1.1</code> + <code>ip router primary-address 1.1.1.1</code> → <code>ip load bgp</code> → <code>ip bgp autonomous-system 100</code> → <code>ip bgp admin-state enable</code> → <code>ip bgp neighbor 198.45.16.145</code> → <code>ip bgp neighbor ... remote-as 200</code> → <code>ip bgp neighbor ... admin-state enable</code>（C20， <code>&lt;span class="pg"&gt;原文p125&lt;/span&gt;</code> ）</li>
-<li><strong>RR 四步</strong>：<code>ip bgp admin-state disable</code> → <code>ip bgp client-to-client reflection</code> → 逐 client <code>ip bgp neighbor 190.17.20.16 route-reflector-client</code> → 冗余 <code>ip bgp cluster-id 190.17.21.16</code>（C23， <code>&lt;span class="pg"&gt;原文p162-163&lt;/span&gt;</code> ）</li>
-<li><strong>联邦</strong>：<code>ip bgp confederation-identifier 2</code> → <code>ip bgp confederation neighbor 190.17.20.16</code>（逐个加全）（C24， <code>&lt;span class="pg"&gt;原文p165&lt;/span&gt;</code> ）</li>
-<li><strong>聚合</strong>：<code>ip bgp aggregate-address 172.22.2.0 255.255.255.0</code> → <code>summary-only</code> → <code>as-set</code> → community/local-preference/metric → <code>admin-state enable</code>（C22， <code>&lt;span class="pg"&gt;原文p152&lt;/span&gt;</code> ）</li>
-<li><strong>dampening</strong>：<code>ip bgp dampening half-life 500 reuse 200 suppress 300 max-suppress-time 1800</code>（改任一参数须整条按序重输）；<code>ip bgp dampening clear</code> 清历史（C25， <code>&lt;span class="pg"&gt;原文p157-159&lt;/span&gt;</code> ）</li>
-<li><strong>IPv6（v4 会话）</strong>：<code>ip bgp neighbor 23.23.23.23</code> → remote-as 200 → <code>activate-ipv6</code> → <code>ipv6-nexthop 2001:100:3:4::1</code> → enable（C26， <code>&lt;span class="pg"&gt;原文p178&lt;/span&gt;</code> ）；纯 v6 对等 <code>ipv6 bgp neighbor 2001::1</code> + update-source（C27）</li>
-<li><strong>策略绑定</strong>：<code>ip bgp policy aspath-list aspathfilter "^100 200$" action permit</code> 等四类 → <code>ip bgp neighbor 172.22.2.0 in-aspathlist|route-map mapfilter in|out</code> → <code>clear soft in|out</code>（C29， <code>&lt;span class="pg"&gt;原文p201-210&lt;/span&gt;</code> ）</li>
-<li><strong>GTSM</strong>：<code>ip bgp neighbor 10.0.0.1 ttl-security 6</code>（直连对等用 0）；<code>show ip bgp neighbors</code> 验证（C30， <code>&lt;span class="pg"&gt;原文p212-213&lt;/span&gt;</code> ）</li>
+<li><strong>七步上线</strong>：<code>ip router router-id 1.1.1.1</code> + <code>ip router primary-address 1.1.1.1</code> → <code>ip load bgp</code> → <code>ip bgp autonomous-system 100</code> → <code>ip bgp admin-state enable</code> → <code>ip bgp neighbor 198.45.16.145</code> → <code>ip bgp neighbor ... remote-as 200</code> → <code>ip bgp neighbor ... admin-state enable</code>（C20，<span class="pg">原文p125</span> ）</li>
+<li><strong>RR 四步</strong>：<code>ip bgp admin-state disable</code> → <code>ip bgp client-to-client reflection</code> → 逐 client <code>ip bgp neighbor 190.17.20.16 route-reflector-client</code> → 冗余 <code>ip bgp cluster-id 190.17.21.16</code>（C23，<span class="pg">原文p162-163</span> ）</li>
+<li><strong>联邦</strong>：<code>ip bgp confederation-identifier 2</code> → <code>ip bgp confederation neighbor 190.17.20.16</code>（逐个加全）（C24，<span class="pg">原文p165</span> ）</li>
+<li><strong>聚合</strong>：<code>ip bgp aggregate-address 172.22.2.0 255.255.255.0</code> → <code>summary-only</code> → <code>as-set</code> → community/local-preference/metric → <code>admin-state enable</code>（C22，<span class="pg">原文p152</span> ）</li>
+<li><strong>dampening</strong>：<code>ip bgp dampening half-life 500 reuse 200 suppress 300 max-suppress-time 1800</code>（改任一参数须整条按序重输）；<code>ip bgp dampening clear</code> 清历史（C25，<span class="pg">原文p157-159</span> ）</li>
+<li><strong>IPv6（v4 会话）</strong>：<code>ip bgp neighbor 23.23.23.23</code> → remote-as 200 → <code>activate-ipv6</code> → <code>ipv6-nexthop 2001:100:3:4::1</code> → enable（C26，<span class="pg">原文p178</span> ）；纯 v6 对等 <code>ipv6 bgp neighbor 2001::1</code> + update-source（C27）</li>
+<li><strong>策略绑定</strong>：<code>ip bgp policy aspath-list aspathfilter "^100 200$" action permit</code> 等四类 → <code>ip bgp neighbor 172.22.2.0 in-aspathlist|route-map mapfilter in|out</code> → <code>clear soft in|out</code>（C29，<span class="pg">原文p201-210</span> ）</li>
+<li><strong>GTSM</strong>：<code>ip bgp neighbor 10.0.0.1 ttl-security 6</code>（直连对等用 0）；<code>show ip bgp neighbors</code> 验证（C30，<span class="pg">原文p212-213</span> ）</li>
 <li>EVPN/VPLS/模板：<code>ip bgp address-family evpn</code> + <code>activate-evpn</code> + fabric 邻居 <code>evpn-nbr-type-fabric</code>；</li>
 <li>VPLS <code>address-family l2vpn-vpls</code>；</li>
-<li>模板 <code>ip bgp nbr-template Mytemplate</code>（C31， <code>&lt;span class="pg"&gt;原文p214-218&lt;/span&gt;</code> ）；</li>
+<li>模板 <code>ip bgp nbr-template Mytemplate</code>（C31，<span class="pg">原文p214-218</span> ）；</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>EBGP/IBGP 混合五 speaker 应用例（C21， <code>&lt;span class="pg"&gt;原文p173-175&lt;/span&gt;</code> ）</li>
-<li>Route Reflection 四步与冗余 RR（C23， <code>&lt;span class="pg"&gt;原文p162-163&lt;/span&gt;</code> ）</li>
-<li>IPv6 BGP 全场景应用例（双栈/纯 v6 域）（C28， <code>&lt;span class="pg"&gt;原文p195-198&lt;/span&gt;</code> ）</li>
-<li>五类策略创建 + peer 绑定 + soft 重应用（C29， <code>&lt;span class="pg"&gt;原文p201-210&lt;/span&gt;</code> ）</li>
-<li>GTSM 配置验证（C30， <code>&lt;span class="pg"&gt;原文p212-213&lt;/span&gt;</code> ）</li>
+<li>EBGP/IBGP 混合五 speaker 应用例（C21，<span class="pg">原文p173-175</span> ）</li>
+<li>Route Reflection 四步与冗余 RR（C23，<span class="pg">原文p162-163</span> ）</li>
+<li>IPv6 BGP 全场景应用例（双栈/纯 v6 域）（C28，<span class="pg">原文p195-198</span> ）</li>
+<li>五类策略创建 + peer 绑定 + soft 重应用（C29，<span class="pg">原文p201-210</span> ）</li>
+<li>GTSM 配置验证（C30，<span class="pg">原文p212-213</span> ）</li>
 </ul>
 <h2 id="b">B（反例/坑）</h2>
 <ul>
-<li>一批全局命令（AS 号、本地优先、MED、RR、cluster-id）改前必须先禁用 BGP（X25， <code>&lt;span class="pg"&gt;原文p139&lt;/span&gt;</code> ）</li>
-<li>CLI 不支持 CIDR 斜杠写法，必须写全掩码（X26， <code>&lt;span class="pg"&gt;原文p137&lt;/span&gt;</code> ）</li>
-<li>AS 正则错误：数字超 65535、逗号当分隔符、括号嵌套、^ 不在首/$ 不在尾（X28， <code>&lt;span class="pg"&gt;原文p136&lt;/span&gt;</code> ）</li>
-<li>dampening 参数必须整条按序一次输入（X29， <code>&lt;span class="pg"&gt;原文p157&lt;/span&gt;</code> ）</li>
-<li>聚合前 BGP 表内须至少一条更精确路由（X30， <code>&lt;span class="pg"&gt;原文p152&lt;/span&gt;</code> ）</li>
-<li>冗余 RR 过多推高内存（X31， <code>&lt;span class="pg"&gt;原文p163&lt;/span&gt;</code> ）；同步开启给 AS 内非 BGP 路由器带来大负担（X32， <code>&lt;span class="pg"&gt;原文p144&lt;/span&gt;</code> ）</li>
-<li>BGP 软件不随启动自动加载，须手动 ip load bgp（X33， <code>&lt;span class="pg"&gt;原文p125&lt;/span&gt;</code> ）</li>
-<li>部分 peer 命令（定时器等）不自动复位会话，须手动 clear（X35， <code>&lt;span class="pg"&gt;原文p149&lt;/span&gt;</code> ）</li>
-<li>纯 IPv6 网必须显式配 router-id 与 IPv4 primary 地址（X36）；IPv4 对等已建会话时不能关 IPv4 unicast（X37）（ <code>&lt;span class="pg"&gt;原文p179-180&lt;/span&gt;</code> ）</li>
-<li>GTSM 与 eBGP multihop 互斥，且须两端同配（X38， <code>&lt;span class="pg"&gt;原文p212&lt;/span&gt;</code> ）</li>
-<li>route map 引用的子策略必须先创建否则报错（X39， <code>&lt;span class="pg"&gt;原文p205&lt;/span&gt;</code> ）</li>
-<li>VPLS 依赖 MPLS license 与二进制，启用前须先禁 BGP（X40， <code>&lt;span class="pg"&gt;原文p214&lt;/span&gt;</code> ）</li>
-<li>邻居模板当前仅支持 EVPN 族命令（X41）；个体 peer 配置覆盖模板，想生效先删个体配置（X42）；VRF 内 peer 默认上限 32（X43）（ <code>&lt;span class="pg"&gt;原文p218, 144&lt;/span&gt;</code> ）</li>
-<li>MED 只在同一邻居 AS 间比较且绝不向下一 AS 传播（P71， <code>&lt;span class="pg"&gt;原文p143&lt;/span&gt;</code> ）</li>
+<li>一批全局命令（AS 号、本地优先、MED、RR、cluster-id）改前必须先禁用 BGP（X25，<span class="pg">原文p139</span> ）</li>
+<li>CLI 不支持 CIDR 斜杠写法，必须写全掩码（X26，<span class="pg">原文p137</span> ）</li>
+<li>AS 正则错误：数字超 65535、逗号当分隔符、括号嵌套、^ 不在首/$ 不在尾（X28，<span class="pg">原文p136</span> ）</li>
+<li>dampening 参数必须整条按序一次输入（X29，<span class="pg">原文p157</span> ）</li>
+<li>聚合前 BGP 表内须至少一条更精确路由（X30，<span class="pg">原文p152</span> ）</li>
+<li>冗余 RR 过多推高内存（X31，<span class="pg">原文p163</span> ）；同步开启给 AS 内非 BGP 路由器带来大负担（X32，<span class="pg">原文p144</span> ）</li>
+<li>BGP 软件不随启动自动加载，须手动 ip load bgp（X33，<span class="pg">原文p125</span> ）</li>
+<li>部分 peer 命令（定时器等）不自动复位会话，须手动 clear（X35，<span class="pg">原文p149</span> ）</li>
+<li>纯 IPv6 网必须显式配 router-id 与 IPv4 primary 地址（X36）；IPv4 对等已建会话时不能关 IPv4 unicast（X37）（<span class="pg">原文p179-180</span> ）</li>
+<li>GTSM 与 eBGP multihop 互斥，且须两端同配（X38，<span class="pg">原文p212</span> ）</li>
+<li>route map 引用的子策略必须先创建否则报错（X39，<span class="pg">原文p205</span> ）</li>
+<li>VPLS 依赖 MPLS license 与二进制，启用前须先禁 BGP（X40，<span class="pg">原文p214</span> ）</li>
+<li>邻居模板当前仅支持 EVPN 族命令（X41）；个体 peer 配置覆盖模板，想生效先删个体配置（X42）；VRF 内 peer 默认上限 32（X43）（<span class="pg">原文p218, 144</span> ）</li>
+<li>MED 只在同一邻居 AS 间比较且绝不向下一 AS 传播（P71，<span class="pg">原文p143</span> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniSwitch AOS 8.10R4 Advanced Routing Guide 第 4 章 BGP（ <code>&lt;span class="pg"&gt;原文p123-218&lt;/span&gt;</code> ）。条目来源：cases C20-C31；principles P60-P90；counter-examples X25-X43；frameworks F5/F6。</p><div class="pn"><a href="aos-ar-isis.html">⬅ 上一单元：aos-ar-isis</a><a class="nxt" href="aos-ar-policy-toolbox.html">下一单元：aos-ar-policy-toolbox ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<p>OmniSwitch AOS 8.10R4 Advanced Routing Guide 第 4 章 BGP（<span class="pg">原文p123-218</span> ）。条目来源：cases C20-C31；principles P60-P90；counter-examples X25-X43；frameworks F5/F6。</p><div class="pn"><a href="aos-ar-isis.html">⬅ 上一单元：aos-ar-isis</a><a class="nxt" href="aos-ar-policy-toolbox.html">下一单元：aos-ar-policy-toolbox ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

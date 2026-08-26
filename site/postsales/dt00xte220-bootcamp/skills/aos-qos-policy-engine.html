@@ -79,50 +79,50 @@ blockquote p{margin:6px 0}
 <li>排查"配了 QoS 反而全网断"类事故</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>AOS 的 QoS 与 ACL 是同一套策略引擎：解析器之后硬件分类引擎按 L2-L4 条件匹配，策略三元组 Condition+Action+Rule（可选生效时段）执行标记/限速/重定向/镜像（P105/P106/P107， <code>&lt;span class="pg"&gt;原文p542-545&lt;/span&gt;</code> ）。R8 的队列模型分层为 QSet（每口 8 单播+4 组播队列）→ QSI 实例 → QSet Profile（8SP / 1EF+7SP / 1EF+7WFQ）（P109/F8， <code>&lt;span class="pg"&gt;原文p548-552&lt;/span&gt;</code> ）。两条默认值是事故之源：未匹配流量默认全 accept（配 deny 后全断）、交换端口默认不信任任何标记（P112/P117， <code>&lt;span class="pg"&gt;原文p581-590, 610-618&lt;/span&gt;</code> ）。信任要显式给：<code>qos phones trusted</code>/<code>qos nms priority</code> 或端口级信任（P112， <code>&lt;span class="pg"&gt;原文p581-590&lt;/span&gt;</code> ）。</p>
+<p>AOS 的 QoS 与 ACL 是同一套策略引擎：解析器之后硬件分类引擎按 L2-L4 条件匹配，策略三元组 Condition+Action+Rule（可选生效时段）执行标记/限速/重定向/镜像（P105/P106/P107，<span class="pg">原文p542-545</span> ）。R8 的队列模型分层为 QSet（每口 8 单播+4 组播队列）→ QSI 实例 → QSet Profile（8SP / 1EF+7SP / 1EF+7WFQ）（P109/F8，<span class="pg">原文p548-552</span> ）。两条默认值是事故之源：未匹配流量默认全 accept（配 deny 后全断）、交换端口默认不信任任何标记（P112/P117，<span class="pg">原文p581-590, 610-618</span> ）。信任要显式给：<code>qos phones trusted</code>/<code>qos nms priority</code> 或端口级信任（P112，<span class="pg">原文p581-590</span> ）。</p>
 <h2 id="a1">A1（决策/选型）</h2>
 <ol>
-<li>R6 调度三算法：Strict Priority（低队列饿死风险）/ WRR（1-15 包，0=严格）/ DRR（按体量 1=10KB）（P108， <code>&lt;span class="pg"&gt;原文p547&lt;/span&gt;</code> ）</li>
-<li>R8 用 QSet Profile 选 8SP / 1EF+7SP（EF 带限速保护）/ 1EF+7WFQ（P109， <code>&lt;span class="pg"&gt;原文p548-552&lt;/span&gt;</code> ）</li>
-<li>ACL 即 QoS 子集：整机全局、仅入方向、L1-L4 硬件过滤、precedence 0-65535 大者先（P115/P116， <code>&lt;span class="pg"&gt;原文p607&lt;/span&gt;</code> ）</li>
-<li>黑名单（全局 accept + deny 规则）vs 白名单（全局 deny + 精确 accept，内部防火墙范式）（P119， <code>&lt;span class="pg"&gt;原文p614&lt;/span&gt;</code> ）</li>
-<li>策略组复用：network/mac/service/port group 供多条件复用（P110， <code>&lt;span class="pg"&gt;原文p569&lt;/span&gt;</code> ）</li>
+<li>R6 调度三算法：Strict Priority（低队列饿死风险）/ WRR（1-15 包，0=严格）/ DRR（按体量 1=10KB）（P108，<span class="pg">原文p547</span> ）</li>
+<li>R8 用 QSet Profile 选 8SP / 1EF+7SP（EF 带限速保护）/ 1EF+7WFQ（P109，<span class="pg">原文p548-552</span> ）</li>
+<li>ACL 即 QoS 子集：整机全局、仅入方向、L1-L4 硬件过滤、precedence 0-65535 大者先（P115/P116，<span class="pg">原文p607</span> ）</li>
+<li>黑名单（全局 accept + deny 规则）vs 白名单（全局 deny + 精确 accept，内部防火墙范式）（P119，<span class="pg">原文p614</span> ）</li>
+<li>策略组复用：network/mac/service/port group 供多条件复用（P110，<span class="pg">原文p569</span> ）</li>
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ol>
-<li>队列观察与调度：<code>qos port 1/1 monitor</code> → <code>show qos queue 1/9</code> → <code>qos stats reset egress</code>；调度 <code>qos port &lt;slot/port&gt; servicing mode wrr</code> 或 <code>qos default servicing mode wrr</code>（C26， <code>&lt;span class="pg"&gt;原文p547, 578&lt;/span&gt;</code> ）</li>
+<li>队列观察与调度：<code>qos port 1/1 monitor</code> → <code>show qos queue 1/9</code> → <code>qos stats reset egress</code>；调度 <code>qos port &lt;slot/port&gt; servicing mode wrr</code> 或 <code>qos default servicing mode wrr</code>（C26，<span class="pg">原文p547, 578</span> ）</li>
 <li>
 <p>标记策略：<code>policy condition Traffic destination port 3/2 802.1p 4</code> → <code>policy action SetBits 802.1p 7</code> → <code>policy rule Rule2 condition Traffic action SetBits</code>；</p>
 <ul>
 <li>L3 版 <code>policy condition cond3 source ip 10.10.2.3</code> + <code>policy action action2 priority 7</code>；</li>
 <li>验证 <code>show active policy rules</code>、<code>show policy classify l3 …</code>；</li>
-<li>管理 <code>qos reset</code> 清空（C27， <code>&lt;span class="pg"&gt;原文p574-593&lt;/span&gt;</code> ）；</li>
+<li>管理 <code>qos reset</code> 清空（C27，<span class="pg">原文p574-593</span> ）；</li>
 </ul>
 </li>
 <li>
-<p>Egress 策略列表（R8）：<code>policy list eggress1 type egress rules rule1 rule2 rule3</code>（C28/P111， <code>&lt;span class="pg"&gt;原文p575&lt;/span&gt;</code> ）</p>
+<p>Egress 策略列表（R8）：<code>policy list eggress1 type egress rules rule1 rule2 rule3</code>（C28/P111，<span class="pg">原文p575</span> ）</p>
 </li>
-<li>Auto-QoS：<code>policy mac group alaPhones</code> → <code>qos phones [priority|trusted]</code> → <code>qos nms priority</code>（C29， <code>&lt;span class="pg"&gt;原文p581-582&lt;/span&gt;</code> ）</li>
-<li>L2 拒绝主机：<code>qos default bridged disposition accept</code> → <code>policy condition Cond-Deny-Host1 source mac D4:85:64:EC:33:EF source vlan 5</code> → <code>policy action Act-deny-Host1 disposition deny</code> → <code>policy rule Rule-Deny-Host1 … log</code> → <code>qos apply</code>；<code>show qos log</code> 看命中（C30， <code>&lt;span class="pg"&gt;原文p612&lt;/span&gt;</code> ）</li>
-<li>L3 白名单：<code>qos default routed disposition deny</code> + 两条精确 accept 规则（allow-host1 / subnet-100）→ <code>qos apply</code>（C31， <code>&lt;span class="pg"&gt;原文p613-614&lt;/span&gt;</code> ）；黑名单用 <code>policy network group netgroup1 192.168.82.0 mask 255.255.255.0 …</code> + deny + <code>precedence 65535</code>（C31， <code>&lt;span class="pg"&gt;原文p613-614&lt;/span&gt;</code> ）</li>
-<li>服务组批量过滤：<code>policy service telnet1 protocol 6 destination ip port 23</code>、<code>policy service group tel-ftp telnet1 ftp1</code>、<code>policy port group visitor_ports 2/1 3/1-24</code>；调序 <code>policy rule telnet_rule precedence 1000 …</code>（C32， <code>&lt;span class="pg"&gt;原文p621-622&lt;/span&gt;</code> ）</li>
-<li>established 回程放行：检查 ACK/RST 位放行已建 TCP 连接（P118， <code>&lt;span class="pg"&gt;原文p615&lt;/span&gt;</code> ）</li>
-<li>SIP Snooping：硬件侦听 SIP 信令动态学习话机 RTP 流自动加 QoS；默认转发的 SIP 包不受策略（P113， <code>&lt;span class="pg"&gt;原文p601&lt;/span&gt;</code> ）</li>
+<li>Auto-QoS：<code>policy mac group alaPhones</code> → <code>qos phones [priority|trusted]</code> → <code>qos nms priority</code>（C29，<span class="pg">原文p581-582</span> ）</li>
+<li>L2 拒绝主机：<code>qos default bridged disposition accept</code> → <code>policy condition Cond-Deny-Host1 source mac D4:85:64:EC:33:EF source vlan 5</code> → <code>policy action Act-deny-Host1 disposition deny</code> → <code>policy rule Rule-Deny-Host1 … log</code> → <code>qos apply</code>；<code>show qos log</code> 看命中（C30，<span class="pg">原文p612</span> ）</li>
+<li>L3 白名单：<code>qos default routed disposition deny</code> + 两条精确 accept 规则（allow-host1 / subnet-100）→ <code>qos apply</code>（C31，<span class="pg">原文p613-614</span> ）；黑名单用 <code>policy network group netgroup1 192.168.82.0 mask 255.255.255.0 …</code> + deny + <code>precedence 65535</code>（C31，<span class="pg">原文p613-614</span> ）</li>
+<li>服务组批量过滤：<code>policy service telnet1 protocol 6 destination ip port 23</code>、<code>policy service group tel-ftp telnet1 ftp1</code>、<code>policy port group visitor_ports 2/1 3/1-24</code>；调序 <code>policy rule telnet_rule precedence 1000 …</code>（C32，<span class="pg">原文p621-622</span> ）</li>
+<li>established 回程放行：检查 ACK/RST 位放行已建 TCP 连接（P118，<span class="pg">原文p615</span> ）</li>
+<li>SIP Snooping：硬件侦听 SIP 信令动态学习话机 RTP 流自动加 QoS；默认转发的 SIP 包不受策略（P113，<span class="pg">原文p601</span> ）</li>
 </ol>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>C27 标记与限速策略：L2 802.1p 重标 + L3 源 IP 优先（ <code>&lt;span class="pg"&gt;原文p574-593&lt;/span&gt;</code> ）</li>
-<li>C31 白名单式 L3 ACL：全局 deny + 精确 accept（ <code>&lt;span class="pg"&gt;原文p613-614&lt;/span&gt;</code> ）</li>
-<li>C30 L2 拒绝主机 + qos log 命中验证（ <code>&lt;span class="pg"&gt;原文p612&lt;/span&gt;</code> ）</li>
+<li>C27 标记与限速策略：L2 802.1p 重标 + L3 源 IP 优先（<span class="pg">原文p574-593</span> ）</li>
+<li>C31 白名单式 L3 ACL：全局 deny + 精确 accept（<span class="pg">原文p613-614</span> ）</li>
+<li>C30 L2 拒绝主机 + qos log 命中验证（<span class="pg">原文p612</span> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>
-<li>QoS 默认放行一切未匹配流量；一旦把默认 disposition 配成 deny，未匹配流量全断（X55， <code>&lt;span class="pg"&gt;原文p558, 586, 620&lt;/span&gt;</code> ）</li>
-<li><code>qos phones/nms</code> 信任仅支持按 ifIndex 顺序的前 8 个接口（X56， <code>&lt;span class="pg"&gt;原文p582&lt;/span&gt;</code> ）</li>
-<li>condition/action 被规则引用时不可删；部分 action 参数只与特定 condition 参数兼容（X57/P114， <code>&lt;span class="pg"&gt;原文p593-594&lt;/span&gt;</code> ）</li>
-<li>交换端口默认不信任标记——不显式配信任，终端自带 802.1p/DSCP 会被清零（X58， <code>&lt;span class="pg"&gt;原文p590, 598&lt;/span&gt;</code> ）</li>
-<li>Egress 过滤仅限特定平台/方向（X59/P111， <code>&lt;span class="pg"&gt;原文p575&lt;/span&gt;</code> ）</li>
-<li>严格优先级下低队列有饿死（Starvation）风险，EF 队列配限速保护（ <code>&lt;span class="pg"&gt;原文p550-552&lt;/span&gt;</code> ）</li>
+<li>QoS 默认放行一切未匹配流量；一旦把默认 disposition 配成 deny，未匹配流量全断（X55，<span class="pg">原文p558, 586, 620</span> ）</li>
+<li><code>qos phones/nms</code> 信任仅支持按 ifIndex 顺序的前 8 个接口（X56，<span class="pg">原文p582</span> ）</li>
+<li>condition/action 被规则引用时不可删；部分 action 参数只与特定 condition 参数兼容（X57/P114，<span class="pg">原文p593-594</span> ）</li>
+<li>交换端口默认不信任标记——不显式配信任，终端自带 802.1p/DSCP 会被清零（X58，<span class="pg">原文p590, 598</span> ）</li>
+<li>Egress 过滤仅限特定平台/方向（X59/P111，<span class="pg">原文p575</span> ）</li>
+<li>严格优先级下低队列有饿死（Starvation）风险，EF 队列配限速保护（<span class="pg">原文p550-552</span> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
 <ul>

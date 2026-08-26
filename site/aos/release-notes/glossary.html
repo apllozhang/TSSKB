@@ -63,106 +63,106 @@ blockquote p{margin:6px 0}
 <p>从 verified 术语库精选 63 条，按主题分组。版本/固件/许可/命令保留英文，页码为原书页码。</p>
 <h2 id="_1">版本与固件体系</h2>
 <ul>
-<li><strong>GA（General Availability，正式发布版）</strong>：如 8.10.86.R04 (GA)，区别于 MR 与 EA（ <code>&lt;span class="pg"&gt;原文p4&lt;/span&gt;</code> ）</li>
-<li><strong>MR（Maintenance Release，维护版）</strong>：如 8.9.130.R04 MR1，常作为 ISSU 源版本列出（ <code>&lt;span class="pg"&gt;原文p68&lt;/span&gt;</code> ）</li>
-<li><strong>EA（Early Availability，早期可用）</strong>：可配置但未走完整验证、不受官方支持（ <code>&lt;span class="pg"&gt;原文p15&lt;/span&gt;</code> ）</li>
-<li><strong>U-Boot</strong>：嵌入式引导加载器；Secure Boot 镜像要求 8.10.37.R04（6360/6465/6560/6570M），<code>show hardware-info</code> 查版本（ <code>&lt;span class="pg"&gt;原文p4&lt;/span&gt;</code> ）</li>
-<li><strong>FPGA</strong>：承载电源/风扇/PoE/端口物理行为的固件，按机型列 Minimum/Current（ <code>&lt;span class="pg"&gt;原文p4&lt;/span&gt;</code> ）</li>
-<li><strong>ONIE（开放网络安装环境）</strong>：6860N/6870/6900/6920 等机型的引导/安装层，升级走 pkgmgr 装 deb 包（ <code>&lt;span class="pg"&gt;原文p10&lt;/span&gt;</code> ）</li>
-<li><strong>CPLD</strong>：复杂可编程逻辑器件，ONIE 机型多颗（Main/CPU/LED），updater kit 逐颗升级（ <code>&lt;span class="pg"&gt;原文p11&lt;/span&gt;</code> ）</li>
-<li><strong>Coreboot-Uboot / Control FPGA / Power FPGA</strong>：9900 平台引导与控制/电源固件三层（ <code>&lt;span class="pg"&gt;原文p13&lt;/span&gt;</code> ）</li>
-<li><strong>diag.img</strong>：出厂内部诊断镜像，可安全删除（ <code>&lt;span class="pg"&gt;原文p15&lt;/span&gt;</code> ）</li>
-<li><strong>imgsha256sum</strong>：镜像校验文件，仅 Common Criteria 模式需要（ <code>&lt;span class="pg"&gt;原文p72&lt;/span&gt;</code> ）</li>
-<li><strong>Signed AOS Image</strong>：签名 AOS 镜像（6570M 8.9R4 起，需配套 U-Boot）（ <code>&lt;span class="pg"&gt;原文p53&lt;/span&gt;</code> ）</li>
-<li><strong>HSP（Hitless Security Patch Upgrade）</strong>：不打断业务的安全补丁升级（ <code>&lt;span class="pg"&gt;原文p52&lt;/span&gt;</code> ）</li>
+<li><strong>GA（General Availability，正式发布版）</strong>：如 8.10.86.R04 (GA)，区别于 MR 与 EA（<span class="pg">原文p4</span> ）</li>
+<li><strong>MR（Maintenance Release，维护版）</strong>：如 8.9.130.R04 MR1，常作为 ISSU 源版本列出（<span class="pg">原文p68</span> ）</li>
+<li><strong>EA（Early Availability，早期可用）</strong>：可配置但未走完整验证、不受官方支持（<span class="pg">原文p15</span> ）</li>
+<li><strong>U-Boot</strong>：嵌入式引导加载器；Secure Boot 镜像要求 8.10.37.R04（6360/6465/6560/6570M），<code>show hardware-info</code> 查版本（<span class="pg">原文p4</span> ）</li>
+<li><strong>FPGA</strong>：承载电源/风扇/PoE/端口物理行为的固件，按机型列 Minimum/Current（<span class="pg">原文p4</span> ）</li>
+<li><strong>ONIE（开放网络安装环境）</strong>：6860N/6870/6900/6920 等机型的引导/安装层，升级走 pkgmgr 装 deb 包（<span class="pg">原文p10</span> ）</li>
+<li><strong>CPLD</strong>：复杂可编程逻辑器件，ONIE 机型多颗（Main/CPU/LED），updater kit 逐颗升级（<span class="pg">原文p11</span> ）</li>
+<li><strong>Coreboot-Uboot / Control FPGA / Power FPGA</strong>：9900 平台引导与控制/电源固件三层（<span class="pg">原文p13</span> ）</li>
+<li><strong>diag.img</strong>：出厂内部诊断镜像，可安全删除（<span class="pg">原文p15</span> ）</li>
+<li><strong>imgsha256sum</strong>：镜像校验文件，仅 Common Criteria 模式需要（<span class="pg">原文p72</span> ）</li>
+<li><strong>Signed AOS Image</strong>：签名 AOS 镜像（6570M 8.9R4 起，需配套 U-Boot）（<span class="pg">原文p53</span> ）</li>
+<li><strong>HSP（Hitless Security Patch Upgrade）</strong>：不打断业务的安全补丁升级（<span class="pg">原文p52</span> ）</li>
 </ul>
 <h2 id="_2">升级机制</h2>
 <ul>
-<li><strong>Standard Upgrade（标准升级）</strong>：镜像放 Running 目录整机/整 VC 重启（ <code>&lt;span class="pg"&gt;原文p67&lt;/span&gt;</code> ）</li>
-<li><strong>ISSU（In Service Software Upgrade）</strong>：在服务升级，VC 按 chassis-id 低到高逐台重启、模块化机箱先备 CMM（ <code>&lt;span class="pg"&gt;原文p67&lt;/span&gt;</code> ）</li>
-<li><strong>Certified/Working 目录</strong>：认证（回滚兜底）/工作（试验）双目录；<code>copy running certified</code> 固化、<code>reload from certified</code> 回退（ <code>&lt;span class="pg"&gt;原文p70&lt;/span&gt;</code> ）</li>
-<li><strong>rollback-timeout</strong>：reload 参数（no rollback-timeout），跳过回滚等待直接切换（ <code>&lt;span class="pg"&gt;原文p73&lt;/span&gt;</code> ）</li>
-<li><strong>write memory flash-synchro</strong>：保存配置并同步 Flash（VC/CMM 间），升级前置与 ISSU 后认证均用（ <code>&lt;span class="pg"&gt;原文p70&lt;/span&gt;</code> ）</li>
-<li><strong>issu_version</strong>：ISSU 升级包内的版本描述文件，ISSU 目录必备（ <code>&lt;span class="pg"&gt;原文p74&lt;/span&gt;</code> ）</li>
-<li><strong>VFL（Virtual Fabric Link）</strong>：VC 内部互联链路；内网固定 IP 127.10.<chassis>.65；4X25G splitter 场景需调 inter-frame-gap 防 CRC（ <code>&lt;span class="pg"&gt;原文p75, 42&lt;/span&gt;</code> ）</li>
-<li><strong>chassis-id</strong>：VC 成员编号；出厂首启自动 VC 固定为 1，可能引发冲突（ <code>&lt;span class="pg"&gt;原文p15&lt;/span&gt;</code> ）</li>
-<li><strong>vcboot.cfg / vcsetup.cfg</strong>：VC 启动/设置配置；明文 key 直接加载会导致哈希错误（ <code>&lt;span class="pg"&gt;原文p15, 91&lt;/span&gt;</code> ）</li>
-<li><strong>Secure Boot</strong>：启动期认证校验只运行可信软件，需引导件升级+专用镜像+（ONIE 型）BIOS 使能三件配合（ <code>&lt;span class="pg"&gt;原文p34, 104&lt;/span&gt;</code> ）</li>
+<li><strong>Standard Upgrade（标准升级）</strong>：镜像放 Running 目录整机/整 VC 重启（<span class="pg">原文p67</span> ）</li>
+<li><strong>ISSU（In Service Software Upgrade）</strong>：在服务升级，VC 按 chassis-id 低到高逐台重启、模块化机箱先备 CMM（<span class="pg">原文p67</span> ）</li>
+<li><strong>Certified/Working 目录</strong>：认证（回滚兜底）/工作（试验）双目录；<code>copy running certified</code> 固化、<code>reload from certified</code> 回退（<span class="pg">原文p70</span> ）</li>
+<li><strong>rollback-timeout</strong>：reload 参数（no rollback-timeout），跳过回滚等待直接切换（<span class="pg">原文p73</span> ）</li>
+<li><strong>write memory flash-synchro</strong>：保存配置并同步 Flash（VC/CMM 间），升级前置与 ISSU 后认证均用（<span class="pg">原文p70</span> ）</li>
+<li><strong>issu_version</strong>：ISSU 升级包内的版本描述文件，ISSU 目录必备（<span class="pg">原文p74</span> ）</li>
+<li><strong>VFL（Virtual Fabric Link）</strong>：VC 内部互联链路；内网固定 IP 127.10.<chassis>.65；4X25G splitter 场景需调 inter-frame-gap 防 CRC（<span class="pg">原文p75, 42</span> ）</li>
+<li><strong>chassis-id</strong>：VC 成员编号；出厂首启自动 VC 固定为 1，可能引发冲突（<span class="pg">原文p15</span> ）</li>
+<li><strong>vcboot.cfg / vcsetup.cfg</strong>：VC 启动/设置配置；明文 key 直接加载会导致哈希错误（<span class="pg">原文p15, 91</span> ）</li>
+<li><strong>Secure Boot</strong>：启动期认证校验只运行可信软件，需引导件升级+专用镜像+（ONIE 型）BIOS 使能三件配合（<span class="pg">原文p34, 104</span> ）</li>
 </ul>
 <h2 id="_3">许可体系</h2>
 <ul>
-<li><strong>CAPEX License</strong>：一次性买断型许可（ <code>&lt;span class="pg"&gt;原文p19&lt;/span&gt;</code> ）</li>
-<li><strong>MACsec Site License（OS-SW-MACSEC）</strong>：8.6R1 起 MACsec 需站点许可，免费生成、免重启生效（ <code>&lt;span class="pg"&gt;原文p15, 19&lt;/span&gt;</code> ）</li>
-<li><strong>Performance License（OS####-SW-PERF）</strong>：解锁端口速率（6560 10G、6570M 25G、6870 50G），默认降速运行（ <code>&lt;span class="pg"&gt;原文p19&lt;/span&gt;</code> ）</li>
-<li><strong>Metro License</strong>：8.9R1 起 6560 城域特性包（CPE Test Head/PPPoE-IA/OAM/SAA/VLAN Stacking/DPA/IPMVLAN 等）（ <code>&lt;span class="pg"&gt;原文p19&lt;/span&gt;</code> ）</li>
-<li><strong>Advanced Routing License</strong>：OSPF/PIM/VRF/ISIS/GRE/IP-IP/BGP；6560 版限 2 OSPF 区域、8.10R4 新增 BGP（ <code>&lt;span class="pg"&gt;原文p20&lt;/span&gt;</code> ）</li>
-<li><strong>Premium Bundle License（OS6570-SW-PRMxx / OS6870-SW-PRMx）</strong>：8.10R4 捆绑许可，单文件多子许可（SPB/AR/25G/50G/VxLAN-EVPN）（ <code>&lt;span class="pg"&gt;原文p20&lt;/span&gt;</code> ）</li>
-<li><strong>VC Parity: Match / Local-Only</strong>：子许可 VC 生效语义——Match=全成员一致才生效；Local-Only=仅本机（ <code>&lt;span class="pg"&gt;原文p20&lt;/span&gt;</code> ）</li>
-<li><strong>NAAS 2.0 Licensing</strong>：Network-as-a-Service 许可框架，8.10R4 扩到 6575（ <code>&lt;span class="pg"&gt;原文p28&lt;/span&gt;</code> ）</li>
-<li><strong>SILOS（Site License Client/Manager）</strong>：站点许可客户端/管理器，6870/6900-X 支持（ <code>&lt;span class="pg"&gt;原文p53&lt;/span&gt;</code> ）</li>
+<li><strong>CAPEX License</strong>：一次性买断型许可（<span class="pg">原文p19</span> ）</li>
+<li><strong>MACsec Site License（OS-SW-MACSEC）</strong>：8.6R1 起 MACsec 需站点许可，免费生成、免重启生效（<span class="pg">原文p15, 19</span> ）</li>
+<li><strong>Performance License（OS####-SW-PERF）</strong>：解锁端口速率（6560 10G、6570M 25G、6870 50G），默认降速运行（<span class="pg">原文p19</span> ）</li>
+<li><strong>Metro License</strong>：8.9R1 起 6560 城域特性包（CPE Test Head/PPPoE-IA/OAM/SAA/VLAN Stacking/DPA/IPMVLAN 等）（<span class="pg">原文p19</span> ）</li>
+<li><strong>Advanced Routing License</strong>：OSPF/PIM/VRF/ISIS/GRE/IP-IP/BGP；6560 版限 2 OSPF 区域、8.10R4 新增 BGP（<span class="pg">原文p20</span> ）</li>
+<li><strong>Premium Bundle License（OS6570-SW-PRMxx / OS6870-SW-PRMx）</strong>：8.10R4 捆绑许可，单文件多子许可（SPB/AR/25G/50G/VxLAN-EVPN）（<span class="pg">原文p20</span> ）</li>
+<li><strong>VC Parity: Match / Local-Only</strong>：子许可 VC 生效语义——Match=全成员一致才生效；Local-Only=仅本机（<span class="pg">原文p20</span> ）</li>
+<li><strong>NAAS 2.0 Licensing</strong>：Network-as-a-Service 许可框架，8.10R4 扩到 6575（<span class="pg">原文p28</span> ）</li>
+<li><strong>SILOS（Site License Client/Manager）</strong>：站点许可客户端/管理器，6870/6900-X 支持（<span class="pg">原文p53</span> ）</li>
 </ul>
 <h2 id="_4">管理与安全新特性</h2>
 <ul>
-<li><strong>Router Mode / Edge-router Mode</strong>：capability profile 切换的转发规模形态（6870 router mode；6900 edge-router 更大 MAC 规模，需重启生效）（ <code>&lt;span class="pg"&gt;原文p26, 37&lt;/span&gt;</code> ）</li>
-<li><strong>Secure su Account</strong>：su 超级用户提示符必须设口令，仅 admin 可配、忘却只能恢复出厂（ <code>&lt;span class="pg"&gt;原文p26&lt;/span&gt;</code> ）</li>
-<li><strong>Change Password on First Access</strong>：admin 默认口令首登强制改密（ <code>&lt;span class="pg"&gt;原文p27&lt;/span&gt;</code> ）</li>
-<li><strong>ALE CA Signed Certificate</strong>：ALE 内部 CA 签发设备 X.509 证书（5 年有效、到期前 1 年更新），存 /flash/switch/cert.d/（ <code>&lt;span class="pg"&gt;原文p27&lt;/span&gt;</code> ）</li>
-<li><strong>Crypto Strong Security</strong>：弱加密算法（SHA/MD5 等）禁用开关（ <code>&lt;span class="pg"&gt;原文p28&lt;/span&gt;</code> ）</li>
-<li><strong>Lightning Config Mode（闪电配置）</strong>：出厂/EMP 口快速开局模式；6575 支持 1/1/1-1/1/2，6920 支持 EMP 口（ <code>&lt;span class="pg"&gt;原文p28&lt;/span&gt;</code> ）</li>
-<li><strong>AAA Certificate convert-cert</strong>：CER/CRT/DER/P7B/PKCS#12 证书转 PEM（ <code>&lt;span class="pg"&gt;原文p26&lt;/span&gt;</code> ）</li>
-<li><strong>Session Prompt 64</strong>：CLI 提示符长度 32→64 字符（ <code>&lt;span class="pg"&gt;原文p26&lt;/span&gt;</code> ）</li>
-<li><strong>AOS 内嵌 Linux 命令</strong>：watch/cut/paste/tee 包装后直接在 AOS CLI 使用（ <code>&lt;span class="pg"&gt;原文p28&lt;/span&gt;</code> ）</li>
-<li><strong>TLS 1.3 / 默认 TLS 1.2</strong>：8.10R4 默认 TLS 从 1.0 升 1.2、可配 1.3（RADIUS/LDAP/SYSLOG NG/SNMP/WebView）（ <code>&lt;span class="pg"&gt;原文p33&lt;/span&gt;</code> ）</li>
-<li><strong>PKIX SSH / CAC·PIV</strong>：智能卡 X.509 证书 SSH 登录（JITC STIGS）（ <code>&lt;span class="pg"&gt;原文p33&lt;/span&gt;</code> ）</li>
-<li><strong>IP 分片攻击防护（tear-drop / icmp-frag-drop）</strong>：重叠畸形分片与分片 ICMP 丢弃（ <code>&lt;span class="pg"&gt;原文p34&lt;/span&gt;</code> ）</li>
-<li><strong>IPv6 DoS Detection</strong>：NI 上检测 8 种攻击并上报 CMM（ <code>&lt;span class="pg"&gt;原文p38&lt;/span&gt;</code> ）</li>
-<li><strong>802.1X max-req 1-50</strong>：EAP 重问次数扩容覆盖 PC 启动延迟场景（ <code>&lt;span class="pg"&gt;原文p33&lt;/span&gt;</code> ）</li>
+<li><strong>Router Mode / Edge-router Mode</strong>：capability profile 切换的转发规模形态（6870 router mode；6900 edge-router 更大 MAC 规模，需重启生效）（<span class="pg">原文p26, 37</span> ）</li>
+<li><strong>Secure su Account</strong>：su 超级用户提示符必须设口令，仅 admin 可配、忘却只能恢复出厂（<span class="pg">原文p26</span> ）</li>
+<li><strong>Change Password on First Access</strong>：admin 默认口令首登强制改密（<span class="pg">原文p27</span> ）</li>
+<li><strong>ALE CA Signed Certificate</strong>：ALE 内部 CA 签发设备 X.509 证书（5 年有效、到期前 1 年更新），存 /flash/switch/cert.d/（<span class="pg">原文p27</span> ）</li>
+<li><strong>Crypto Strong Security</strong>：弱加密算法（SHA/MD5 等）禁用开关（<span class="pg">原文p28</span> ）</li>
+<li><strong>Lightning Config Mode（闪电配置）</strong>：出厂/EMP 口快速开局模式；6575 支持 1/1/1-1/1/2，6920 支持 EMP 口（<span class="pg">原文p28</span> ）</li>
+<li><strong>AAA Certificate convert-cert</strong>：CER/CRT/DER/P7B/PKCS#12 证书转 PEM（<span class="pg">原文p26</span> ）</li>
+<li><strong>Session Prompt 64</strong>：CLI 提示符长度 32→64 字符（<span class="pg">原文p26</span> ）</li>
+<li><strong>AOS 内嵌 Linux 命令</strong>：watch/cut/paste/tee 包装后直接在 AOS CLI 使用（<span class="pg">原文p28</span> ）</li>
+<li><strong>TLS 1.3 / 默认 TLS 1.2</strong>：8.10R4 默认 TLS 从 1.0 升 1.2、可配 1.3（RADIUS/LDAP/SYSLOG NG/SNMP/WebView）（<span class="pg">原文p33</span> ）</li>
+<li><strong>PKIX SSH / CAC·PIV</strong>：智能卡 X.509 证书 SSH 登录（JITC STIGS）（<span class="pg">原文p33</span> ）</li>
+<li><strong>IP 分片攻击防护（tear-drop / icmp-frag-drop）</strong>：重叠畸形分片与分片 ICMP 丢弃（<span class="pg">原文p34</span> ）</li>
+<li><strong>IPv6 DoS Detection</strong>：NI 上检测 8 种攻击并上报 CMM（<span class="pg">原文p38</span> ）</li>
+<li><strong>802.1X max-req 1-50</strong>：EAP 重问次数扩容覆盖 PC 启动延迟场景（<span class="pg">原文p33</span> ）</li>
 </ul>
 <h2 id="l3">L3 与业务新特性</h2>
 <ul>
-<li><strong>IPv6 BGP Aggregation</strong>：合并明细为聚合路由通告（admin-state/as-set/community 等）（ <code>&lt;span class="pg"&gt;原文p29&lt;/span&gt;</code> ）</li>
-<li><strong>PIM over GRE</strong>：GRE 隧道上建 PIM 邻接转发组播（ <code>&lt;span class="pg"&gt;原文p29&lt;/span&gt;</code> ）</li>
-<li><strong>sFlow BGP Gateway</strong>：流样本携带 BGP 网关归因字段（ <code>&lt;span class="pg"&gt;原文p30&lt;/span&gt;</code> ）</li>
-<li><strong>PEG（PIM EVPN Gateway）</strong>：EVPN 网络与外部 PIM 域的网关（ <code>&lt;span class="pg"&gt;原文p31&lt;/span&gt;</code> ）</li>
-<li><strong>OISM</strong>：优化的跨子网组播，fabric 内选择性转发（ <code>&lt;span class="pg"&gt;原文p31&lt;/span&gt;</code> ）</li>
-<li><strong>EVPN 多站点模型库</strong>：Clos-3/Collapsed/Clos-5/DCI/Multi-PoD/Multi-site 选型（ <code>&lt;span class="pg"&gt;原文p30&lt;/span&gt;</code> ）</li>
-<li><strong>Manual RD/RT</strong>：EVPN 手工路由目标，支撑多站点选择性导入与 E-Tree（ <code>&lt;span class="pg"&gt;原文p33&lt;/span&gt;</code> ）</li>
-<li><strong>ERP over SPB / spb-remote-flush</strong>：ERP 环 MAC flush 传播到 SDP 端口（ <code>&lt;span class="pg"&gt;原文p31&lt;/span&gt;</code> ）</li>
-<li><strong>SPB on 6570M/6575</strong>：6570M 需 premium bundle、6575 默认支持；推荐 Fabric TCAM profile（ <code>&lt;span class="pg"&gt;原文p31&lt;/span&gt;</code> ）</li>
-<li><strong>Multi-Site SPB / SBN / site-id</strong>：站点内 ISIS L1、站点边界节点以 site-id 互联成 L2，突破 500-1000 节点上限（ <code>&lt;span class="pg"&gt;原文p40&lt;/span&gt;</code> ）</li>
-<li><strong>DPA / MAC Forced Forwarding</strong>：动态代理 ARP（6560/6570M 8.10R4）（ <code>&lt;span class="pg"&gt;原文p29&lt;/span&gt;</code> ）</li>
-<li><strong>DHL Active-Standby</strong>：双归链路 LACP 主备，standby 秒级接替+pre-empt 回切；无缝 failover 边界 128 VLAN/1000 MAC（ <code>&lt;span class="pg"&gt;原文p37, 97&lt;/span&gt;</code> ）</li>
-<li><strong>RoCEv2 / DCQCN / DCBX</strong>：RDMA over Ethernet v2 与 ECN+PFC 拥塞控制、LLDP 能力交换（6900/6920）（ <code>&lt;span class="pg"&gt;原文p36&lt;/span&gt;</code> ）</li>
-<li><strong>PROFINET</strong>：工业协议，6575 通过 IO-Device 认证（ <code>&lt;span class="pg"&gt;原文p37&lt;/span&gt;</code> ）</li>
-<li><strong>Telemetry（IPFIX 推送）</strong>：本地 Redis DPI/流数据按 IPFIX 推送到 Telegraf/InfluxDB/Grafana（ <code>&lt;span class="pg"&gt;原文p39&lt;/span&gt;</code> ）</li>
-<li><strong>Threat-Insight / DGA·MITM·JA3</strong>：AppMon 每流威胁智能三属性（ <code>&lt;span class="pg"&gt;原文p36&lt;/span&gt;</code> ）</li>
-<li><strong>MKA VLAN Tag / TPID</strong>：MKA 控制包打 VLAN 标签隧道化过中间节点（ <code>&lt;span class="pg"&gt;原文p35&lt;/span&gt;</code> ）</li>
-<li><strong>Device Profiling 自动启用</strong>：全局启用后边缘端口默认开设备画像（ <code>&lt;span class="pg"&gt;原文p37&lt;/span&gt;</code> ）</li>
-<li><strong>ISFv6 on SAPs</strong>：业务域 IPv6 源过滤（ <code>&lt;span class="pg"&gt;原文p31&lt;/span&gt;</code> ）</li>
+<li><strong>IPv6 BGP Aggregation</strong>：合并明细为聚合路由通告（admin-state/as-set/community 等）（<span class="pg">原文p29</span> ）</li>
+<li><strong>PIM over GRE</strong>：GRE 隧道上建 PIM 邻接转发组播（<span class="pg">原文p29</span> ）</li>
+<li><strong>sFlow BGP Gateway</strong>：流样本携带 BGP 网关归因字段（<span class="pg">原文p30</span> ）</li>
+<li><strong>PEG（PIM EVPN Gateway）</strong>：EVPN 网络与外部 PIM 域的网关（<span class="pg">原文p31</span> ）</li>
+<li><strong>OISM</strong>：优化的跨子网组播，fabric 内选择性转发（<span class="pg">原文p31</span> ）</li>
+<li><strong>EVPN 多站点模型库</strong>：Clos-3/Collapsed/Clos-5/DCI/Multi-PoD/Multi-site 选型（<span class="pg">原文p30</span> ）</li>
+<li><strong>Manual RD/RT</strong>：EVPN 手工路由目标，支撑多站点选择性导入与 E-Tree（<span class="pg">原文p33</span> ）</li>
+<li><strong>ERP over SPB / spb-remote-flush</strong>：ERP 环 MAC flush 传播到 SDP 端口（<span class="pg">原文p31</span> ）</li>
+<li><strong>SPB on 6570M/6575</strong>：6570M 需 premium bundle、6575 默认支持；推荐 Fabric TCAM profile（<span class="pg">原文p31</span> ）</li>
+<li><strong>Multi-Site SPB / SBN / site-id</strong>：站点内 ISIS L1、站点边界节点以 site-id 互联成 L2，突破 500-1000 节点上限（<span class="pg">原文p40</span> ）</li>
+<li><strong>DPA / MAC Forced Forwarding</strong>：动态代理 ARP（6560/6570M 8.10R4）（<span class="pg">原文p29</span> ）</li>
+<li><strong>DHL Active-Standby</strong>：双归链路 LACP 主备，standby 秒级接替+pre-empt 回切；无缝 failover 边界 128 VLAN/1000 MAC（<span class="pg">原文p37, 97</span> ）</li>
+<li><strong>RoCEv2 / DCQCN / DCBX</strong>：RDMA over Ethernet v2 与 ECN+PFC 拥塞控制、LLDP 能力交换（6900/6920）（<span class="pg">原文p36</span> ）</li>
+<li><strong>PROFINET</strong>：工业协议，6575 通过 IO-Device 认证（<span class="pg">原文p37</span> ）</li>
+<li><strong>Telemetry（IPFIX 推送）</strong>：本地 Redis DPI/流数据按 IPFIX 推送到 Telegraf/InfluxDB/Grafana（<span class="pg">原文p39</span> ）</li>
+<li><strong>Threat-Insight / DGA·MITM·JA3</strong>：AppMon 每流威胁智能三属性（<span class="pg">原文p36</span> ）</li>
+<li><strong>MKA VLAN Tag / TPID</strong>：MKA 控制包打 VLAN 标签隧道化过中间节点（<span class="pg">原文p35</span> ）</li>
+<li><strong>Device Profiling 自动启用</strong>：全局启用后边缘端口默认开设备画像（<span class="pg">原文p37</span> ）</li>
+<li><strong>ISFv6 on SAPs</strong>：业务域 IPv6 源过滤（<span class="pg">原文p31</span> ）</li>
 </ul>
 <h2 id="_5">硬件与光模块</h2>
 <ul>
-<li><strong>OS6575 家族</strong>：-40~75°C 加固工业交换机（P12/U28/MP16 三形态）（ <code>&lt;span class="pg"&gt;原文p21&lt;/span&gt;</code> ）</li>
-<li><strong>OS6920-D32</strong>：1RU 32×400G QSFP-DD 平台，本版无 VC（ <code>&lt;span class="pg"&gt;原文p21&lt;/span&gt;</code> ）</li>
-<li><strong>QSFPD-400G 系列</strong>：400G QSFP-DD 光模块/DAC/AOC（C/DR4/FR4/LR4/A10M/SR4.2，SR4.2 可 4×100G 拆分）（ <code>&lt;span class="pg"&gt;原文p22&lt;/span&gt;</code> ）</li>
-<li><strong>QSFP-100G-SR1.2 / PSM4</strong>：100G 新模块（SR1.2 配 SR4.2 拆分；PSM4 MPO 2km）（ <code>&lt;span class="pg"&gt;原文p22&lt;/span&gt;</code> ）</li>
-<li><strong>SFP-10G-T / SFP-GIG-T</strong>：10G/1G 铜口模块，Open CR 多条涉及其速率协商缺陷（ <code>&lt;span class="pg"&gt;原文p42&lt;/span&gt;</code> ）</li>
-<li><strong>Splitter（4X10G/4X25G）</strong>：高速口拆分模式，快速收敛与部分 MACsec 不支持（ <code>&lt;span class="pg"&gt;原文p15, 63&lt;/span&gt;</code> ）</li>
-<li><strong>VFL</strong>：VC 内部互联专用上行口组（6575/6570M/6870）（ <code>&lt;span class="pg"&gt;原文p15&lt;/span&gt;</code> ）</li>
-<li><strong>EMP 端口</strong>：以太网管理端口，Lightning Config 相关（ <code>&lt;span class="pg"&gt;原文p28&lt;/span&gt;</code> ）</li>
-<li><strong>RTC（实时时钟）</strong>：6360 无 RTC，断电丢时间需 NTP（ <code>&lt;span class="pg"&gt;原文p17&lt;/span&gt;</code> ）</li>
+<li><strong>OS6575 家族</strong>：-40~75°C 加固工业交换机（P12/U28/MP16 三形态）（<span class="pg">原文p21</span> ）</li>
+<li><strong>OS6920-D32</strong>：1RU 32×400G QSFP-DD 平台，本版无 VC（<span class="pg">原文p21</span> ）</li>
+<li><strong>QSFPD-400G 系列</strong>：400G QSFP-DD 光模块/DAC/AOC（C/DR4/FR4/LR4/A10M/SR4.2，SR4.2 可 4×100G 拆分）（<span class="pg">原文p22</span> ）</li>
+<li><strong>QSFP-100G-SR1.2 / PSM4</strong>：100G 新模块（SR1.2 配 SR4.2 拆分；PSM4 MPO 2km）（<span class="pg">原文p22</span> ）</li>
+<li><strong>SFP-10G-T / SFP-GIG-T</strong>：10G/1G 铜口模块，Open CR 多条涉及其速率协商缺陷（<span class="pg">原文p42</span> ）</li>
+<li><strong>Splitter（4X10G/4X25G）</strong>：高速口拆分模式，快速收敛与部分 MACsec 不支持（<span class="pg">原文p15, 63</span> ）</li>
+<li><strong>VFL</strong>：VC 内部互联专用上行口组（6575/6570M/6870）（<span class="pg">原文p15</span> ）</li>
+<li><strong>EMP 端口</strong>：以太网管理端口，Lightning Config 相关（<span class="pg">原文p28</span> ）</li>
+<li><strong>RTC（实时时钟）</strong>：6360 无 RTC，断电丢时间需 NTP（<span class="pg">原文p17</span> ）</li>
 </ul>
 <h2 id="_6">运维与支持</h2>
 <ul>
-<li><strong>Hot-Swap（热插拔）</strong>：NI 间隔 30 秒、CMM 15-20 分钟、插入后 5 分钟+LED 正常，且必须同型号（ <code>&lt;span class="pg"&gt;原文p47&lt;/span&gt;</code> ）</li>
-<li><strong>Fast PoE / Perpetual PoE（fpoe/ppoe）</strong>：快速/持续供电，换异种电源前须禁用并 reload（ <code>&lt;span class="pg"&gt;原文p48&lt;/span&gt;</code> ）</li>
-<li><strong>Dying Gasp</strong>：断电临终告警（trap/syslog）（ <code>&lt;span class="pg"&gt;原文p52, 98&lt;/span&gt;</code> ）</li>
-<li><strong>RCD（Remote Chassis Detection）</strong>：远程机箱检测/零触摸开局（ <code>&lt;span class="pg"&gt;原文p53&lt;/span&gt;</code> ）</li>
-<li><strong>AMS（AOS Micro Services）</strong>：AOS 微服务框架（deb 包形态）（ <code>&lt;span class="pg"&gt;原文p52&lt;/span&gt;</code> ）</li>
-<li><strong>pkgmgr</strong>：AOS/第三方 Debian 包管理器（verify/install/remove）（ <code>&lt;span class="pg"&gt;原文p101&lt;/span&gt;</code> ）</li>
-<li><strong>CMM / NI / CFM</strong>：机箱管理模块/网络接口模块/风扇模块（ <code>&lt;span class="pg"&gt;原文p47&lt;/span&gt;</code> ）</li>
-<li><strong>Severity 1-4</strong>：ALE 技术支持严重度分级（1=生产网中断……4=咨询）（ <code>&lt;span class="pg"&gt;原文p50&lt;/span&gt;</code> ）</li>
-<li><strong>CRAOS8X-xxxxx</strong>：ALE 问题报告编号体系，Fixed/Open CR 的索引键（ <code>&lt;span class="pg"&gt;原文p41&lt;/span&gt;</code> ）</li>
-<li><strong>show tech-support eng complete</strong>：含 SWLOG 的完整诊断 TAR，升级基线必备（ <code>&lt;span class="pg"&gt;原文p71&lt;/span&gt;</code> ）</li>
-<li><strong>FOSS（/flash/foss）</strong>：第三方开源组件许可声明目录（ <code>&lt;span class="pg"&gt;原文p51&lt;/span&gt;</code> ）</li>
+<li><strong>Hot-Swap（热插拔）</strong>：NI 间隔 30 秒、CMM 15-20 分钟、插入后 5 分钟+LED 正常，且必须同型号（<span class="pg">原文p47</span> ）</li>
+<li><strong>Fast PoE / Perpetual PoE（fpoe/ppoe）</strong>：快速/持续供电，换异种电源前须禁用并 reload（<span class="pg">原文p48</span> ）</li>
+<li><strong>Dying Gasp</strong>：断电临终告警（trap/syslog）（<span class="pg">原文p52, 98</span> ）</li>
+<li><strong>RCD（Remote Chassis Detection）</strong>：远程机箱检测/零触摸开局（<span class="pg">原文p53</span> ）</li>
+<li><strong>AMS（AOS Micro Services）</strong>：AOS 微服务框架（deb 包形态）（<span class="pg">原文p52</span> ）</li>
+<li><strong>pkgmgr</strong>：AOS/第三方 Debian 包管理器（verify/install/remove）（<span class="pg">原文p101</span> ）</li>
+<li><strong>CMM / NI / CFM</strong>：机箱管理模块/网络接口模块/风扇模块（<span class="pg">原文p47</span> ）</li>
+<li><strong>Severity 1-4</strong>：ALE 技术支持严重度分级（1=生产网中断……4=咨询）（<span class="pg">原文p50</span> ）</li>
+<li><strong>CRAOS8X-xxxxx</strong>：ALE 问题报告编号体系，Fixed/Open CR 的索引键（<span class="pg">原文p41</span> ）</li>
+<li><strong>show tech-support eng complete</strong>：含 SWLOG 的完整诊断 TAR，升级基线必备（<span class="pg">原文p71</span> ）</li>
+<li><strong>FOSS（/flash/foss）</strong>：第三方开源组件许可声明目录（<span class="pg">原文p51</span> ）</li>
 </ul><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

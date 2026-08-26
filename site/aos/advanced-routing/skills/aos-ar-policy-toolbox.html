@@ -83,13 +83,13 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>三段式模板（OSPF→BGP）</strong>：<code>ip route-map ospf-to-bgp sequence-number 10 action deny</code>（match tag 5 + route-type external type2）→ sequence 20 permit（match ipv4-interface intf_ospf + set metric 255）→ sequence 30 permit（set tag 8）→ <code>ip redist ospf into bgp route-map ospf-to-bgp</code>（C6， <code>&lt;span class="pg"&gt;原文p44-45&lt;/span&gt;</code> ）</li>
-<li><strong>被动接口批量</strong>：<code>ip route-map "R1" action permit</code> + <code>match ip-address 10.10.0.0/16</code> + <code>set metric-type internal</code> → <code>ip redist local into ospf route-map R1 admin-state enable</code> → <code>show ip ospf interface</code>（C7， <code>&lt;span class="pg"&gt;原文p46&lt;/span&gt;</code> ）</li>
-<li><strong>IS-IS L1→L2 泄漏</strong>：<code>ip route-map is2is sequence-number 1 action permit</code> + <code>match route-type level1</code> + <code>set level level2</code> → <code>ip redist isis into isis route-map is2is status enable</code>（C17， <code>&lt;span class="pg"&gt;原文p115&lt;/span&gt;</code> ）</li>
+<li><strong>三段式模板（OSPF→BGP）</strong>：<code>ip route-map ospf-to-bgp sequence-number 10 action deny</code>（match tag 5 + route-type external type2）→ sequence 20 permit（match ipv4-interface intf_ospf + set metric 255）→ sequence 30 permit（set tag 8）→ <code>ip redist ospf into bgp route-map ospf-to-bgp</code>（C6，<span class="pg">原文p44-45</span> ）</li>
+<li><strong>被动接口批量</strong>：<code>ip route-map "R1" action permit</code> + <code>match ip-address 10.10.0.0/16</code> + <code>set metric-type internal</code> → <code>ip redist local into ospf route-map R1 admin-state enable</code> → <code>show ip ospf interface</code>（C7，<span class="pg">原文p46</span> ）</li>
+<li><strong>IS-IS L1→L2 泄漏</strong>：<code>ip route-map is2is sequence-number 1 action permit</code> + <code>match route-type level1</code> + <code>set level level2</code> → <code>ip redist isis into isis route-map is2is status enable</code>（C17，<span class="pg">原文p115</span> ）</li>
 <li>BGP 原子策略：<code>ip bgp policy aspath-list aspathfilter "^100 200$" action permit</code>；</li>
 <li>community-list + match-type exact；</li>
 <li>
-<p>prefix-list + ge/le → <code>ip bgp neighbor 172.22.2.0 in-aspathlist ...</code> / <code>route-map mapfilter in|out</code> → <code>clear soft in|out</code>（C29， <code>&lt;span class="pg"&gt;原文p201-210&lt;/span&gt;</code> ）；</p>
+<p>prefix-list + ge/le → <code>ip bgp neighbor 172.22.2.0 in-aspathlist ...</code> / <code>route-map mapfilter in|out</code> → <code>clear soft in|out</code>（C29，<span class="pg">原文p201-210</span> ）；</p>
 </li>
 <li>
 <p><strong>验证</strong>：<code>show ip route-map</code> / <code>show ip redist</code> / <code>show ip bgp policy ...</code></p>
@@ -97,21 +97,21 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>OSPF→BGP 三段式重分发（deny→permit+set→兜底）（C6， <code>&lt;span class="pg"&gt;原文p44-45&lt;/span&gt;</code> ）</li>
-<li>用 route map 批量生成 OSPF 被动接口（C7， <code>&lt;span class="pg"&gt;原文p46&lt;/span&gt;</code> ）</li>
-<li>IS-IS L1→L2 泄漏（C17， <code>&lt;span class="pg"&gt;原文p115&lt;/span&gt;</code> ）</li>
-<li>BGP 五类策略创建 + peer 绑定 + soft 重应用（C29， <code>&lt;span class="pg"&gt;原文p201-210&lt;/span&gt;</code> ）</li>
+<li>OSPF→BGP 三段式重分发（deny→permit+set→兜底）（C6，<span class="pg">原文p44-45</span> ）</li>
+<li>用 route map 批量生成 OSPF 被动接口（C7，<span class="pg">原文p46</span> ）</li>
+<li>IS-IS L1→L2 泄漏（C17，<span class="pg">原文p115</span> ）</li>
+<li>BGP 五类策略创建 + peer 绑定 + soft 重应用（C29，<span class="pg">原文p201-210</span> ）</li>
 </ul>
 <h2 id="b">B（反例/坑）</h2>
 <ul>
-<li>deny 某路由不等于默认放行其余路由，每条都要显式规则（P30， <code>&lt;span class="pg"&gt;原文p42, 168&lt;/span&gt;</code> ）</li>
-<li>无 match 语句的 route map 会重分发所有路由（P28， <code>&lt;span class="pg"&gt;原文p77, 111&lt;/span&gt;</code> ）</li>
-<li>route map 引用的子策略（访问列表等）必须先创建否则报错（X39， <code>&lt;span class="pg"&gt;原文p205&lt;/span&gt;</code> ）</li>
-<li>重分发要求源/目的协议均已加载并使能（P33， <code>&lt;span class="pg"&gt;原文p43&lt;/span&gt;</code> ）</li>
-<li>配置重分发即自动成为 ASBR（P22）；iBGP→OSPF 重分发默认禁止需显式开启（P23， <code>&lt;span class="pg"&gt;原文p48&lt;/span&gt;</code> ）</li>
-<li>AS 正则按 token 匹配 AS 号而非字符（P76）；元字符错误：数字超 65535、逗号当分隔符、括号嵌套、^ 不在首/$ 不在尾（X28， <code>&lt;span class="pg"&gt;原文p136&lt;/span&gt;</code> ）</li>
-<li>IS-IS route map 的 tag 参数当前版本不支持（X17， <code>&lt;span class="pg"&gt;原文p110&lt;/span&gt;</code> ）</li>
-<li>BGP 部分 peer 命令改后须手动 clear 才生效（X35， <code>&lt;span class="pg"&gt;原文p149&lt;/span&gt;</code> ）</li>
+<li>deny 某路由不等于默认放行其余路由，每条都要显式规则（P30，<span class="pg">原文p42, 168</span> ）</li>
+<li>无 match 语句的 route map 会重分发所有路由（P28，<span class="pg">原文p77, 111</span> ）</li>
+<li>route map 引用的子策略（访问列表等）必须先创建否则报错（X39，<span class="pg">原文p205</span> ）</li>
+<li>重分发要求源/目的协议均已加载并使能（P33，<span class="pg">原文p43</span> ）</li>
+<li>配置重分发即自动成为 ASBR（P22）；iBGP→OSPF 重分发默认禁止需显式开启（P23，<span class="pg">原文p48</span> ）</li>
+<li>AS 正则按 token 匹配 AS 号而非字符（P76）；元字符错误：数字超 65535、逗号当分隔符、括号嵌套、^ 不在首/$ 不在尾（X28，<span class="pg">原文p136</span> ）</li>
+<li>IS-IS route map 的 tag 参数当前版本不支持（X17，<span class="pg">原文p110</span> ）</li>
+<li>BGP 部分 peer 命令改后须手动 clear 才生效（X35，<span class="pg">原文p149</span> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniSwitch AOS 8.10R4 Advanced Routing Guide 第 1 章 Route Map 与重分发（ <code>&lt;span class="pg"&gt;原文p40-48&lt;/span&gt;</code> ）、第 2/3 章对应节（ <code>&lt;span class="pg"&gt;原文p76-78, 110-115&lt;/span&gt;</code> ）、第 4 章策略节（ <code>&lt;span class="pg"&gt;原文p133-134, 166-169, 201-210&lt;/span&gt;</code> ）。条目来源：cases C6/C7/C17/C29；principles P21-P33/P76/P78/P89；counter-examples X17/X28/X35/X39；frameworks F4/F5。</p><div class="pn"><a href="aos-ar-bgp.html">⬅ 上一单元：aos-ar-bgp</a><a class="nxt" href="aos-ar-multicast-advanced.html">下一单元：aos-ar-multicast-advanced ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<p>OmniSwitch AOS 8.10R4 Advanced Routing Guide 第 1 章 Route Map 与重分发（<span class="pg">原文p40-48</span> ）、第 2/3 章对应节（<span class="pg">原文p76-78, 110-115</span> ）、第 4 章策略节（<span class="pg">原文p133-134, 166-169, 201-210</span> ）。条目来源：cases C6/C7/C17/C29；principles P21-P33/P76/P78/P89；counter-examples X17/X28/X35/X39；frameworks F4/F5。</p><div class="pn"><a href="aos-ar-bgp.html">⬅ 上一单元：aos-ar-bgp</a><a class="nxt" href="aos-ar-multicast-advanced.html">下一单元：aos-ar-multicast-advanced ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

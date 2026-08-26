@@ -77,52 +77,52 @@ blockquote p{margin:6px 0}
 <p>排查走"分层递进 + 分侧取证"：有线侧自下而上（电→VLAN→IP→云），无线侧在 AP CLI 用 iwconfig/sta_list 看空口与角色，认证侧核对 AAA 配置与日志进程。每层都有明确命令与预期输出，失败点即故障层。</p>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
-<li><strong>AP 上线排障五步法</strong>（ <code>&lt;span class="pg"&gt;原文p376&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p378&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p365&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p366&lt;/span&gt;</code> ）：</li>
+<li><strong>AP 上线排障五步法</strong>（<span class="pg">原文p376</span> -<span class="pg">原文p378</span> 、<span class="pg">原文p365</span> -<span class="pg">原文p366</span> ）：</li>
 <li>PoE：<code>show lanpower slot 1/1</code>；</li>
 <li>VLAN：<code>show vlan members port 1/1/6</code>（管理 VLAN 须 untagged）；</li>
 <li>AP 状态：Console 下 <code>getmode</code>（须 OVNG）、<code>cat /etc/config/network</code>（proto dhcp）、<code>getovinfo</code>；</li>
 <li>交换机 L3：<code>show ip interface</code> + <code>ping eu.activation.ovng.myovcloud.com</code>；</li>
 <li>云侧：Cirrus Action &gt; Diagnostic Tools &gt; View Activation Log。</li>
-<li><strong>员工 SSID 连接排障</strong>（AP CLI， <code>&lt;span class="pg"&gt;原文p415&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p418&lt;/span&gt;</code> ）：<code>iwconfig</code>（ESSID/Tx-Power/SNR）→ <code>iwlist ath01 channel</code> / <code>iwlist ath01 txpower</code> → <code>ssudo sta_list</code>（VLANID/Final_role）→ <code>ssudo wam_debug sta_list</code>（JSON：assignedVLAN/assignedAR）→ <code>cat /proc/kes_syslog | grep "&lt;MAC&gt;"</code> → <code>cat /var/config/AAA_profile.conf</code> + <code>AAA_server.conf</code> 核对 RADIUS IP/secret → 仍失败 <code>tcpdump -i br-wan -s 0 host &lt;radiusIP&gt;</code>。</li>
-<li><strong>Captive Portal 排障</strong>（ <code>&lt;span class="pg"&gt;原文p444&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p448&lt;/span&gt;</code> ）：前置 <code>date</code>（账号有效期）与 <code>cat /etc/resolv.conf</code>（DNS 必需）→ <code>ps | grep eag</code>（/usr/sbin/eag_app 存活）→ <code>eag_cli show user all</code> → <code>eag_cli kick user index 1</code> → <code>tail -f /tmp/log/eag.log</code>、<code>cat /var/log/eag.log</code>。</li>
-<li><strong>交换机首次接入排障</strong>（ <code>&lt;span class="pg"&gt;原文p113&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p114&lt;/span&gt;</code> ）：Console 登录 → <code>interfaces 1/1/6 admin-state enable</code>（端口默认禁用）→ <code>ip interface int_1 address 192.168.1.2/24 vlan 1</code> → <code>show ip interface</code> → <code>write memory flash-synchro</code>。</li>
-<li><strong>远程接入</strong>（ <code>&lt;span class="pg"&gt;原文p135&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p139&lt;/span&gt;</code> ）：<code>aaa authentication ssh local</code>、<code>aaa authentication http local</code> → <code>show webview</code>（Force-SSL Enabled）→ HTTPS 登录 WebView 管理。</li>
+<li><strong>员工 SSID 连接排障</strong>（AP CLI，<span class="pg">原文p415</span> -<span class="pg">原文p418</span> ）：<code>iwconfig</code>（ESSID/Tx-Power/SNR）→ <code>iwlist ath01 channel</code> / <code>iwlist ath01 txpower</code> → <code>ssudo sta_list</code>（VLANID/Final_role）→ <code>ssudo wam_debug sta_list</code>（JSON：assignedVLAN/assignedAR）→ <code>cat /proc/kes_syslog | grep "&lt;MAC&gt;"</code> → <code>cat /var/config/AAA_profile.conf</code> + <code>AAA_server.conf</code> 核对 RADIUS IP/secret → 仍失败 <code>tcpdump -i br-wan -s 0 host &lt;radiusIP&gt;</code>。</li>
+<li><strong>Captive Portal 排障</strong>（<span class="pg">原文p444</span> -<span class="pg">原文p448</span> ）：前置 <code>date</code>（账号有效期）与 <code>cat /etc/resolv.conf</code>（DNS 必需）→ <code>ps | grep eag</code>（/usr/sbin/eag_app 存活）→ <code>eag_cli show user all</code> → <code>eag_cli kick user index 1</code> → <code>tail -f /tmp/log/eag.log</code>、<code>cat /var/log/eag.log</code>。</li>
+<li><strong>交换机首次接入排障</strong>（<span class="pg">原文p113</span> -<span class="pg">原文p114</span> ）：Console 登录 → <code>interfaces 1/1/6 admin-state enable</code>（端口默认禁用）→ <code>ip interface int_1 address 192.168.1.2/24 vlan 1</code> → <code>show ip interface</code> → <code>write memory flash-synchro</code>。</li>
+<li><strong>远程接入</strong>（<span class="pg">原文p135</span> -<span class="pg">原文p139</span> ）：<code>aaa authentication ssh local</code>、<code>aaa authentication http local</code> → <code>show webview</code>（Force-SSL Enabled）→ HTTPS 登录 WebView 管理。</li>
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
-<li><strong>R-Lab 环境恢复</strong>：用 Reset_PodX 脚本一键复位，交换机约 5 分钟、AP 约 1min30-2min（ <code>&lt;span class="pg"&gt;原文p108&lt;/span&gt;</code> ）；复位后交换机加载的是"特定默认配置、所有端口禁用"，并非空配置（ <code>&lt;span class="pg"&gt;原文p107&lt;/span&gt;</code> ）。</li>
-<li><strong>Port Mirroring 抓包</strong>：镜像会话数有限——6870 上限 2（ <code>&lt;span class="pg"&gt;原文p568&lt;/span&gt;</code> ），部分新型号 8.9R3 提升到 4（ <code>&lt;span class="pg"&gt;原文p552&lt;/span&gt;</code> ）；Port Monitoring 与 Mirroring 不能配在同一端口（ <code>&lt;span class="pg"&gt;原文p554&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p718&lt;/span&gt;</code> ）。</li>
-<li><strong>AP Web 连通替代路径</strong>：AP 改 DHCP 模式后可用域名 <code>mywifi.al-enterprise.com:8080</code> 重连（ <code>&lt;span class="pg"&gt;原文p177&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p183&lt;/span&gt;</code> ）。</li>
-<li><strong>客户端行为取证</strong>：Client Behavior Tracking 日志含 Event date/client MAC/IP/AP MAC/SSID/ONLINE-OFFLINE（ <code>&lt;span class="pg"&gt;原文p236&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p237&lt;/span&gt;</code> ）。</li>
+<li><strong>R-Lab 环境恢复</strong>：用 Reset_PodX 脚本一键复位，交换机约 5 分钟、AP 约 1min30-2min（<span class="pg">原文p108</span> ）；复位后交换机加载的是"特定默认配置、所有端口禁用"，并非空配置（<span class="pg">原文p107</span> ）。</li>
+<li><strong>Port Mirroring 抓包</strong>：镜像会话数有限——6870 上限 2（<span class="pg">原文p568</span> ），部分新型号 8.9R3 提升到 4（<span class="pg">原文p552</span> ）；Port Monitoring 与 Mirroring 不能配在同一端口（<span class="pg">原文p554</span> 、<span class="pg">原文p718</span> ）。</li>
+<li><strong>AP Web 连通替代路径</strong>：AP 改 DHCP 模式后可用域名 <code>mywifi.al-enterprise.com:8080</code> 重连（<span class="pg">原文p177</span> -<span class="pg">原文p183</span> ）。</li>
+<li><strong>客户端行为取证</strong>：Client Behavior Tracking 日志含 Event date/client MAC/IP/AP MAC/SSID/ONLINE-OFFLINE（<span class="pg">原文p236</span> -<span class="pg">原文p237</span> ）。</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>上云排障五步法完整走位：PoE→VLAN（管理 VLAN untagged 检查）→getmode/cat network→ip interface+ping 激活域名→OVC Activation Log（ <code>&lt;span class="pg"&gt;原文p376&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p378&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p365&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p366&lt;/span&gt;</code> ）。</li>
-<li>802.1X 排障链：iwconfig→sta_list（看 assignedVLAN）→AAA_server.conf 核对→tcpdump 抓 RADIUS（ <code>&lt;span class="pg"&gt;原文p415&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p418&lt;/span&gt;</code> ）。</li>
-<li>Portal 排障链：date/resolv.conf 前置检查→eag 进程→eag_cli 用户列表→eag.log（ <code>&lt;span class="pg"&gt;原文p444&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p448&lt;/span&gt;</code> ）。</li>
+<li>上云排障五步法完整走位：PoE→VLAN（管理 VLAN untagged 检查）→getmode/cat network→ip interface+ping 激活域名→OVC Activation Log（<span class="pg">原文p376</span> -<span class="pg">原文p378</span> 、<span class="pg">原文p365</span> -<span class="pg">原文p366</span> ）。</li>
+<li>802.1X 排障链：iwconfig→sta_list（看 assignedVLAN）→AAA_server.conf 核对→tcpdump 抓 RADIUS（<span class="pg">原文p415</span> -<span class="pg">原文p418</span> ）。</li>
+<li>Portal 排障链：date/resolv.conf 前置检查→eag 进程→eag_cli 用户列表→eag.log（<span class="pg">原文p444</span> -<span class="pg">原文p448</span> ）。</li>
 </ul>
 <h2 id="b">B（边界与陷阱）</h2>
 <ul>
-<li><strong>不要对预配置设备恢复出厂</strong>：R-Lab 交换机装有特定默认配置，恢复出厂会破坏实验环境（ <code>&lt;span class="pg"&gt;原文p123&lt;/span&gt;</code> ）；同理不要动实验室核心 OS6900（ <code>&lt;span class="pg"&gt;原文p100&lt;/span&gt;</code> ）、不要对 Organization 用 Delete（ <code>&lt;span class="pg"&gt;原文p358&lt;/span&gt;</code> ）。</li>
-<li>Lightning Config 触发条件苛刻：仅第一/二物理口接客户端、无任何既有配置、开机后无 DHCP 分配、无 RCL/OmniVista 连接时才触发（ <code>&lt;span class="pg"&gt;原文p79&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p1025&lt;/span&gt;</code> ）；</li>
-<li>不要预先把新交换机接进网络，也不要把两台开箱交换机直连（先跑 Lightning Config， <code>&lt;span class="pg"&gt;原文p1034&lt;/span&gt;</code> ）；</li>
+<li><strong>不要对预配置设备恢复出厂</strong>：R-Lab 交换机装有特定默认配置，恢复出厂会破坏实验环境（<span class="pg">原文p123</span> ）；同理不要动实验室核心 OS6900（<span class="pg">原文p100</span> ）、不要对 Organization 用 Delete（<span class="pg">原文p358</span> ）。</li>
+<li>Lightning Config 触发条件苛刻：仅第一/二物理口接客户端、无任何既有配置、开机后无 DHCP 分配、无 RCL/OmniVista 连接时才触发（<span class="pg">原文p79</span> 、<span class="pg">原文p1025</span> ）；</li>
+<li>不要预先把新交换机接进网络，也不要把两台开箱交换机直连（先跑 Lightning Config，<span class="pg">原文p1034</span> ）；</li>
 <li>
-<p>保存配置后默认 IP 192.168.0.1 被移除（ <code>&lt;span class="pg"&gt;原文p79&lt;/span&gt;</code> ）；</p>
+<p>保存配置后默认 IP 192.168.0.1 被移除（<span class="pg">原文p79</span> ）；</p>
 </li>
 <li>
-<p><strong>镜像与监控互斥</strong>：同一端口不能同时配 Port Mirroring 和 Port Monitoring；镜像会话数有型号上限（ <code>&lt;span class="pg"&gt;原文p554&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p718&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p568&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p552&lt;/span&gt;</code> ）。</p>
+<p><strong>镜像与监控互斥</strong>：同一端口不能同时配 Port Mirroring 和 Port Monitoring；镜像会话数有型号上限（<span class="pg">原文p554</span> 、<span class="pg">原文p718</span> 、<span class="pg">原文p568</span> 、<span class="pg">原文p552</span> ）。</p>
 </li>
-<li>R-Lab 复位后所有端口禁用，需手工 <code>interfaces ... admin-state enable</code>（ <code>&lt;span class="pg"&gt;原文p107&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p113&lt;/span&gt;</code> ）。</li>
+<li>R-Lab 复位后所有端口禁用，需手工 <code>interfaces ... admin-state enable</code>（<span class="pg">原文p107</span> 、<span class="pg">原文p113</span> ）。</li>
 </ul>
 <h2 id="_1">来源</h2>
 <ul>
-<li>cases·C19 上云排障五步法（ <code>&lt;span class="pg"&gt;原文p376&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p378&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p365&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p366&lt;/span&gt;</code> ）</li>
-<li>cases·C22 员工 SSID 排障（ <code>&lt;span class="pg"&gt;原文p415&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p418&lt;/span&gt;</code> ）</li>
-<li>cases·C23 Captive Portal 排障（ <code>&lt;span class="pg"&gt;原文p444&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p448&lt;/span&gt;</code> ）</li>
-<li>cases·C2 R-Lab 一键复位（ <code>&lt;span class="pg"&gt;原文p104&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p110&lt;/span&gt;</code> ）</li>
-<li>cases·C3 首次 Console 登录（ <code>&lt;span class="pg"&gt;原文p113&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p114&lt;/span&gt;</code> ）</li>
-<li>cases·C8 SSH/WebView 远程接入（ <code>&lt;span class="pg"&gt;原文p135&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p139&lt;/span&gt;</code> ）</li>
-<li>counter-examples·X5 勿动预配置设备（ <code>&lt;span class="pg"&gt;原文p123&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p100&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p358&lt;/span&gt;</code> ）</li>
-<li>counter-examples·X15 Lightning Config 前提（ <code>&lt;span class="pg"&gt;原文p79&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p1025&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p1034&lt;/span&gt;</code> ）</li>
-<li>counter-examples·X17 镜像/监控互斥与会话上限（ <code>&lt;span class="pg"&gt;原文p554&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p718&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p568&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p552&lt;/span&gt;</code> ）</li>
+<li>cases·C19 上云排障五步法（<span class="pg">原文p376</span> -<span class="pg">原文p378</span> 、<span class="pg">原文p365</span> -<span class="pg">原文p366</span> ）</li>
+<li>cases·C22 员工 SSID 排障（<span class="pg">原文p415</span> -<span class="pg">原文p418</span> ）</li>
+<li>cases·C23 Captive Portal 排障（<span class="pg">原文p444</span> -<span class="pg">原文p448</span> ）</li>
+<li>cases·C2 R-Lab 一键复位（<span class="pg">原文p104</span> -<span class="pg">原文p110</span> ）</li>
+<li>cases·C3 首次 Console 登录（<span class="pg">原文p113</span> -<span class="pg">原文p114</span> ）</li>
+<li>cases·C8 SSH/WebView 远程接入（<span class="pg">原文p135</span> -<span class="pg">原文p139</span> ）</li>
+<li>counter-examples·X5 勿动预配置设备（<span class="pg">原文p123</span> 、<span class="pg">原文p100</span> 、<span class="pg">原文p358</span> ）</li>
+<li>counter-examples·X15 Lightning Config 前提（<span class="pg">原文p79</span> 、<span class="pg">原文p1025</span> 、<span class="pg">原文p1034</span> ）</li>
+<li>counter-examples·X17 镜像/监控互斥与会话上限（<span class="pg">原文p554</span> 、<span class="pg">原文p718</span> 、<span class="pg">原文p568</span> 、<span class="pg">原文p552</span> ）</li>
 </ul><div class="pn"><a href="voice-over-wlan-deployment.html">⬅ 上一单元：voice-over-wlan-deployment</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

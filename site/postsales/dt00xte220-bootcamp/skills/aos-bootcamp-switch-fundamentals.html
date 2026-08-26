@@ -79,36 +79,36 @@ blockquote p{margin:6px 0}
 <li>到货验收或例行巡检，需要硬件信息/电源/风扇/健康状态检查命令</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>OmniSwitch 家族分三层产品线：堆叠式（6350/6450/6560）、工业加固（6465/6865）、模块化（6900/9900）（P1， <code>&lt;span class="pg"&gt;原文p19&lt;/span&gt;</code> ）。选型沿着"速率演进主线"走：接入 100M→1G→2.5G、汇聚 1G→2.5G→10G、核心 10G→25G→40G→100G（P2/F3， <code>&lt;span class="pg"&gt;原文p21&lt;/span&gt;</code> ）。产品组合按 Size（Small/Medium/Large/Hardened）×能力（Value L2+/L2+ Basic L3/Advanced L3）放入同一矩阵（F2， <code>&lt;span class="pg"&gt;原文p23, 30, 41, 51&lt;/span&gt;</code> ）。硬件运维的底层逻辑是"系统上电优先，剩余功率全部给 PoE"（9900 最高 10800W，P14， <code>&lt;span class="pg"&gt;原文p106-107&lt;/span&gt;</code> ）；电源冗余的两种模式防的故障不同，选错模式等于没冗余（P9， <code>&lt;span class="pg"&gt;原文p63-64&lt;/span&gt;</code> ）。</p>
+<p>OmniSwitch 家族分三层产品线：堆叠式（6350/6450/6560）、工业加固（6465/6865）、模块化（6900/9900）（P1，<span class="pg">原文p19</span> ）。选型沿着"速率演进主线"走：接入 100M→1G→2.5G、汇聚 1G→2.5G→10G、核心 10G→25G→40G→100G（P2/F3，<span class="pg">原文p21</span> ）。产品组合按 Size（Small/Medium/Large/Hardened）×能力（Value L2+/L2+ Basic L3/Advanced L3）放入同一矩阵（F2，<span class="pg">原文p23, 30, 41, 51</span> ）。硬件运维的底层逻辑是"系统上电优先，剩余功率全部给 PoE"（9900 最高 10800W，P14，<span class="pg">原文p106-107</span> ）；电源冗余的两种模式防的故障不同，选错模式等于没冗余（P9，<span class="pg">原文p63-64</span> ）。</p>
 <h2 id="a1">A1（选型决策）</h2>
 <ol>
-<li>入门/SMB：6350（L2+ GE、IPv4/IPv6 基础 L3、Auto-QoS、8 硬件队列，P3， <code>&lt;span class="pg"&gt;原文p27&lt;/span&gt;</code> ）</li>
-<li>多千兆接入：6560 mGIG 机型（24Z8/24Z24/P48Z16，100/1G/2.5G + 802.3bt 75W，P4， <code>&lt;span class="pg"&gt;原文p33&lt;/span&gt;</code> ；电源复用 6860 体系 300/600/900W 负载分担，P5， <code>&lt;span class="pg"&gt;原文p39&lt;/span&gt;</code> ）</li>
-<li>高级 L3 接入/汇聚：6860/6860E——E 型带协处理器（约 1000 签名发现/100 签名线速匹配 DPI）、前 4 口 60W PoE、仅 E 型有 EMP 口（P7， <code>&lt;span class="pg"&gt;原文p52-56&lt;/span&gt;</code> ）</li>
-<li>数据中心/核心：6900 系列——2011 10G → 2015 40G → 2018 25G/100G（X72/V72/C32）（P10， <code>&lt;span class="pg"&gt;原文p78&lt;/span&gt;</code> ）；Q32 每管道 ≤240Gbps 才线速，40G 口可分裂 4x10G（a/b/c/d 子编号，P11， <code>&lt;span class="pg"&gt;原文p85&lt;/span&gt;</code> ）</li>
-<li>机箱核心：9907/9900 无背板直连架构（每槽直连 CFM 交换网板，两阶段容量翻倍，P13， <code>&lt;span class="pg"&gt;原文p98&lt;/span&gt;</code> ）</li>
-<li>工业场景：6465（-40~+75℃、DIN 导轨、1588v2/MACsec，P6， <code>&lt;span class="pg"&gt;原文p42-43&lt;/span&gt;</code> ）或 6865（SPB、75W HPoE， <code>&lt;span class="pg"&gt;原文p66-74&lt;/span&gt;</code> ）</li>
-<li>电源冗余：N+1（SINGLE）只防电源模块故障；N+N（FULL）才防市电线路故障（P9， <code>&lt;span class="pg"&gt;原文p63-64&lt;/span&gt;</code> ）；BPS 备电柜最多备 8 台、一次只备份一台交换机（ <code>&lt;span class="pg"&gt;原文p60-64&lt;/span&gt;</code> ）</li>
+<li>入门/SMB：6350（L2+ GE、IPv4/IPv6 基础 L3、Auto-QoS、8 硬件队列，P3，<span class="pg">原文p27</span> ）</li>
+<li>多千兆接入：6560 mGIG 机型（24Z8/24Z24/P48Z16，100/1G/2.5G + 802.3bt 75W，P4，<span class="pg">原文p33</span> ；电源复用 6860 体系 300/600/900W 负载分担，P5，<span class="pg">原文p39</span> ）</li>
+<li>高级 L3 接入/汇聚：6860/6860E——E 型带协处理器（约 1000 签名发现/100 签名线速匹配 DPI）、前 4 口 60W PoE、仅 E 型有 EMP 口（P7，<span class="pg">原文p52-56</span> ）</li>
+<li>数据中心/核心：6900 系列——2011 10G → 2015 40G → 2018 25G/100G（X72/V72/C32）（P10，<span class="pg">原文p78</span> ）；Q32 每管道 ≤240Gbps 才线速，40G 口可分裂 4x10G（a/b/c/d 子编号，P11，<span class="pg">原文p85</span> ）</li>
+<li>机箱核心：9907/9900 无背板直连架构（每槽直连 CFM 交换网板，两阶段容量翻倍，P13，<span class="pg">原文p98</span> ）</li>
+<li>工业场景：6465（-40~+75℃、DIN 导轨、1588v2/MACsec，P6，<span class="pg">原文p42-43</span> ）或 6865（SPB、75W HPoE，<span class="pg">原文p66-74</span> ）</li>
+<li>电源冗余：N+1（SINGLE）只防电源模块故障；N+N（FULL）才防市电线路故障（P9，<span class="pg">原文p63-64</span> ）；BPS 备电柜最多备 8 台、一次只备份一台交换机（<span class="pg">原文p60-64</span> ）</li>
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li>硬件巡检命令集：<code>show hardware info</code>(R6)/<code>show hardware-info</code>(R8)、<code>show microcode</code>、<code>show chassis</code>、<code>show cmm</code>、<code>show power</code>(R6)/<code>show powersupply</code>(R8)、<code>show fan</code>、<code>show health</code>（C1， <code>&lt;span class="pg"&gt;原文p206-209&lt;/span&gt;</code> ）</li>
-<li>端口参数：<code>interfaces 1/1 duplex full</code>(R6)/<code>interfaces 1/1/1 duplex full</code>(R8)、<code>speed 1000</code>、<code>admin up</code>(R6)/<code>admin-state enable</code>(R8)；验证 <code>show interfaces 1/1 status/accounting/counters</code>（C2， <code>&lt;span class="pg"&gt;原文p210&lt;/span&gt;</code> ）</li>
-<li>V72/C32 机型镜像为 Yos.img，与其余 6900（Tos.img）不同，升级时不可混用（P12， <code>&lt;span class="pg"&gt;原文p86-87&lt;/span&gt;</code> ）</li>
-<li>软件加固配套：CodeGuardian 三层（IV&amp;V 源码验证 → 每版本 5 种衍生镜像 → 随机下载安全交付）（P15/F17， <code>&lt;span class="pg"&gt;原文p109-111&lt;/span&gt;</code> ）；运维侧配合 ProActive Lifecycle（OmniVista 2500 每两周推送资产/软件/保修状态，F18， <code>&lt;span class="pg"&gt;原文p1139-1140&lt;/span&gt;</code> ）</li>
+<li>硬件巡检命令集：<code>show hardware info</code>(R6)/<code>show hardware-info</code>(R8)、<code>show microcode</code>、<code>show chassis</code>、<code>show cmm</code>、<code>show power</code>(R6)/<code>show powersupply</code>(R8)、<code>show fan</code>、<code>show health</code>（C1，<span class="pg">原文p206-209</span> ）</li>
+<li>端口参数：<code>interfaces 1/1 duplex full</code>(R6)/<code>interfaces 1/1/1 duplex full</code>(R8)、<code>speed 1000</code>、<code>admin up</code>(R6)/<code>admin-state enable</code>(R8)；验证 <code>show interfaces 1/1 status/accounting/counters</code>（C2，<span class="pg">原文p210</span> ）</li>
+<li>V72/C32 机型镜像为 Yos.img，与其余 6900（Tos.img）不同，升级时不可混用（P12，<span class="pg">原文p86-87</span> ）</li>
+<li>软件加固配套：CodeGuardian 三层（IV&amp;V 源码验证 → 每版本 5 种衍生镜像 → 随机下载安全交付）（P15/F17，<span class="pg">原文p109-111</span> ）；运维侧配合 ProActive Lifecycle（OmniVista 2500 每两周推送资产/软件/保修状态，F18，<span class="pg">原文p1139-1140</span> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>C1 硬件信息与运行状态检查：全家桶 show 命令 + session 超时配置对比验证（ <code>&lt;span class="pg"&gt;原文p206-209&lt;/span&gt;</code> ）</li>
-<li>C2 端口参数与计数器观察：R6/R8 双语法对照（ <code>&lt;span class="pg"&gt;原文p210&lt;/span&gt;</code> ）</li>
+<li>C1 硬件信息与运行状态检查：全家桶 show 命令 + session 超时配置对比验证（<span class="pg">原文p206-209</span> ）</li>
+<li>C2 端口参数与计数器观察：R6/R8 双语法对照（<span class="pg">原文p210</span> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>
-<li>6860 与 6850E 不可共用一台 BPS（X1， <code>&lt;span class="pg"&gt;原文p58, 61&lt;/span&gt;</code> ）；BPS 一次只备份一台交换机（X3， <code>&lt;span class="pg"&gt;原文p63&lt;/span&gt;</code> ）</li>
-<li>N+1 备电不防市电断电（X2， <code>&lt;span class="pg"&gt;原文p63&lt;/span&gt;</code> ）</li>
-<li>6860E-P24Z8 的 2.5G 口自动协商只到 1G，2.5G 须手工且成对修改（17,18）（19,20）（X7/P8， <code>&lt;span class="pg"&gt;原文p55&lt;/span&gt;</code> ）</li>
-<li>6860E 电源 600W 与 920W 不可混插（X8， <code>&lt;span class="pg"&gt;原文p55&lt;/span&gt;</code> ）</li>
-<li>CodeGuardian 美加强制一年订阅、其余地区可选（X87， <code>&lt;span class="pg"&gt;原文p111&lt;/span&gt;</code> ）；ProActive Lifecycle 需本地 OmniVista 2500（X88， <code>&lt;span class="pg"&gt;原文p1139&lt;/span&gt;</code> ）</li>
+<li>6860 与 6850E 不可共用一台 BPS（X1，<span class="pg">原文p58, 61</span> ）；BPS 一次只备份一台交换机（X3，<span class="pg">原文p63</span> ）</li>
+<li>N+1 备电不防市电断电（X2，<span class="pg">原文p63</span> ）</li>
+<li>6860E-P24Z8 的 2.5G 口自动协商只到 1G，2.5G 须手工且成对修改（17,18）（19,20）（X7/P8，<span class="pg">原文p55</span> ）</li>
+<li>6860E 电源 600W 与 920W 不可混插（X8，<span class="pg">原文p55</span> ）</li>
+<li>CodeGuardian 美加强制一年订阅、其余地区可选（X87，<span class="pg">原文p111</span> ）；ProActive Lifecycle 需本地 OmniVista 2500（X88，<span class="pg">原文p1139</span> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
 <ul>

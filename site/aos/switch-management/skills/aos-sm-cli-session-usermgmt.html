@@ -70,7 +70,7 @@ blockquote p{margin:6px 0}
 <li>要接 RADIUS/LDAP 外部认证并设计本地回退链，或部署 ASA 增强模式/JITC/FIPS</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>ASA 安全框架（F3， <code>&lt;span class="pg"&gt;原文p167-186&lt;/span&gt;</code> ）：管理接口（console/ftp/http/ssh/telnet/snmp）× 认证源（RADIUS/LDAP/local 链式故障切换）× 授权（命令域/族分区）× 计费四层，default/enhanced/JITC 三档安全模式递进。权限分区框架（F4）：命令域（domain-admin/system/network 等 12 个）下辖命令族，read-only/read-write/all/none/all-except 组合授权。默认管理面锁定（P34）：除 console 外一切管理接口需 <code>aaa authentication</code> 显式解锁；admin 恒可走 console 兜底（P36）。CLI 是单级命令体系，任意时刻可输任意命令（P46）。</p>
+<p>ASA 安全框架（F3，<span class="pg">原文p167-186</span> ）：管理接口（console/ftp/http/ssh/telnet/snmp）× 认证源（RADIUS/LDAP/local 链式故障切换）× 授权（命令域/族分区）× 计费四层，default/enhanced/JITC 三档安全模式递进。权限分区框架（F4）：命令域（domain-admin/system/network 等 12 个）下辖命令族，read-only/read-write/all/none/all-except 组合授权。默认管理面锁定（P34）：除 console 外一切管理接口需 <code>aaa authentication</code> 显式解锁；admin 恒可走 console 兜底（P36）。CLI 是单级命令体系，任意时刻可输任意命令（P46）。</p>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>首次带外接入</strong>：micro-USB/RJ-45 console（默认 9600-8-N-1）或 EMP/USB dongle/蓝牙；改串口参数走 <code>modify boot parameters</code>（C5-C7）</li>
@@ -81,36 +81,36 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>EMP/共享 IP</strong>：<code>ip interface emp address 198.51.100.100 mask 255.255.0.0</code>；CMM 私有地址在控制台 <code>boot empipaddr/empmasklength</code> + <code>commit boot</code>（C7， <code>&lt;span class="pg"&gt;原文p35-36&lt;/span&gt;</code> ）</li>
-<li><strong>SSH PKA</strong>：<code>ssh-keygen -t rsa</code> → <code>scp *.pub admin@ip:/flash/system</code> → <code>installsshkey new_ssh_user /flash/system/*.pub</code> → 客户端公钥登录；撤销 <code>revokesshkey</code>（C8， <code>&lt;span class="pg"&gt;原文p41-42&lt;/span&gt;</code> ）</li>
+<li><strong>EMP/共享 IP</strong>：<code>ip interface emp address 198.51.100.100 mask 255.255.0.0</code>；CMM 私有地址在控制台 <code>boot empipaddr/empmasklength</code> + <code>commit boot</code>（C7，<span class="pg">原文p35-36</span> ）</li>
+<li><strong>SSH PKA</strong>：<code>ssh-keygen -t rsa</code> → <code>scp *.pub admin@ip:/flash/system</code> → <code>installsshkey new_ssh_user /flash/system/*.pub</code> → 客户端公钥登录；撤销 <code>revokesshkey</code>（C8，<span class="pg">原文p41-42</span> ）</li>
 <li><strong>登录横幅/会话</strong>：<code>session {cli|ftp|http} banner /flash/switch/xxx.txt</code>（仅 ASCII .txt）；<code>session login-attempt 5</code>、<code>session cli timeout N</code>、<code>ssh login-grace-time 200</code>（C9/C10）</li>
-<li><strong>建用户授权</strong>：<code>user thomas password techpubs</code> → <code>user thomas read-write domain-network ip-helper telnet</code> → <code>show user thomas</code>；密码策略 <code>user password-size min 10</code>、<code>user password-expiration 3</code>、<code>user password-history 2</code>（C30， <code>&lt;span class="pg"&gt;原文p149-155&lt;/span&gt;</code> ）</li>
-<li><strong>锁定</strong>：<code>user lockout-window 30</code> + <code>lockout-threshold 3</code> + <code>lockout-duration 60</code>；手工 <code>user j_smith lockout|unlock</code>（C31， <code>&lt;span class="pg"&gt;原文p157-158&lt;/span&gt;</code> ）</li>
-<li><strong>AAA 快速部署</strong>：<code>aaa radius-server rad1 host 10.10.1.2 timeout 3</code> → <code>aaa authentication telnet rad1 ldap2 local</code> → <code>aaa accounting session ldap2 local</code> → <code>show aaa authentication</code>（C32， <code>&lt;span class="pg"&gt;原文p171&lt;/span&gt;</code> ）</li>
-<li><strong>增强模式</strong>：<code>aaa switch-access mode enhanced</code>（保存并重启）+ <code>ip-lockout-threshold 2</code> + 管理站白名单 <code>aaa switch-access management stations 100.15.5.9</code>（C33， <code>&lt;span class="pg"&gt;原文p176-182&lt;/span&gt;</code> ）</li>
-<li><strong>FIPS</strong>：<code>system fips admin-state enable</code> → <code>reload from working no rollback-timeout</code> → <code>show system fips</code> → 手动禁 Telnet/FTP（C12， <code>&lt;span class="pg"&gt;原文p47-48&lt;/span&gt;</code> ）</li>
+<li><strong>建用户授权</strong>：<code>user thomas password techpubs</code> → <code>user thomas read-write domain-network ip-helper telnet</code> → <code>show user thomas</code>；密码策略 <code>user password-size min 10</code>、<code>user password-expiration 3</code>、<code>user password-history 2</code>（C30，<span class="pg">原文p149-155</span> ）</li>
+<li><strong>锁定</strong>：<code>user lockout-window 30</code> + <code>lockout-threshold 3</code> + <code>lockout-duration 60</code>；手工 <code>user j_smith lockout|unlock</code>（C31，<span class="pg">原文p157-158</span> ）</li>
+<li><strong>AAA 快速部署</strong>：<code>aaa radius-server rad1 host 10.10.1.2 timeout 3</code> → <code>aaa authentication telnet rad1 ldap2 local</code> → <code>aaa accounting session ldap2 local</code> → <code>show aaa authentication</code>（C32，<span class="pg">原文p171</span> ）</li>
+<li><strong>增强模式</strong>：<code>aaa switch-access mode enhanced</code>（保存并重启）+ <code>ip-lockout-threshold 2</code> + 管理站白名单 <code>aaa switch-access management stations 100.15.5.9</code>（C33，<span class="pg">原文p176-182</span> ）</li>
+<li><strong>FIPS</strong>：<code>system fips admin-state enable</code> → <code>reload from working no rollback-timeout</code> → <code>show system fips</code> → 手动禁 Telnet/FTP（C12，<span class="pg">原文p47-48</span> ）</li>
 <li><strong>会话管理</strong>：<code>who</code> / <code>whoami</code> / <code>kill &lt;n&gt;</code>；<code>session session-limit</code> 限并发（P84/P45）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>console/蓝牙/EMP 三种带外接入定位与配置（C5-C7， <code>&lt;span class="pg"&gt;原文p33-36&lt;/span&gt;</code> ）</li>
-<li>SSH PKA 部署与撤销（C8， <code>&lt;span class="pg"&gt;原文p41-42&lt;/span&gt;</code> ）</li>
-<li>创建用户 + 密码策略 + 锁定全套（C30/C31， <code>&lt;span class="pg"&gt;原文p149-158&lt;/span&gt;</code> ）</li>
-<li>AAA 快速部署与增强模式（C32/C33， <code>&lt;span class="pg"&gt;原文p171-182&lt;/span&gt;</code> ）</li>
-<li>JITC 模式启用与验证（C34， <code>&lt;span class="pg"&gt;原文p184&lt;/span&gt;</code> ）</li>
+<li>console/蓝牙/EMP 三种带外接入定位与配置（C5-C7，<span class="pg">原文p33-36</span> ）</li>
+<li>SSH PKA 部署与撤销（C8，<span class="pg">原文p41-42</span> ）</li>
+<li>创建用户 + 密码策略 + 锁定全套（C30/C31，<span class="pg">原文p149-158</span> ）</li>
+<li>AAA 快速部署与增强模式（C32/C33，<span class="pg">原文p171-182</span> ）</li>
+<li>JITC 模式启用与验证（C34，<span class="pg">原文p184</span> ）</li>
 </ul>
 <h2 id="b">B（反例/坑）</h2>
 <ul>
-<li>Telnet/FTP 不加密，官方建议改用 SSH（X3， <code>&lt;span class="pg"&gt;原文p37-38&lt;/span&gt;</code> ）</li>
-<li><code>commit system</code> 只进运行系统不落非易失存储，重启丢失（X4， <code>&lt;span class="pg"&gt;原文p34, 36&lt;/span&gt;</code> ）</li>
-<li>EMP 无独立路由表，与业务接口共用一张表（X5， <code>&lt;span class="pg"&gt;原文p35&lt;/span&gt;</code> ）</li>
-<li>密码策略命令不自动保存到配置（X31）；全星号密码被拒（X32）；密码过期用户需 admin 重置（X33）（ <code>&lt;span class="pg"&gt;原文p151-154&lt;/span&gt;</code> ）</li>
-<li>锁定观察窗不应长于锁时长（X34， <code>&lt;span class="pg"&gt;原文p157&lt;/span&gt;</code> ）</li>
-<li>SNMP 不能配 admin 用户（X35）；secondary CMM/Slave 不支持远端认证，只能 local（X37）；SNMP 仅支持 LDAP/local（X38）（ <code>&lt;span class="pg"&gt;原文p161, 173-174&lt;/span&gt;</code> ）</li>
-<li>增强模式：非合规密码登录直接判认证失败（X39）、单用户单会话（X40）、仅 TLS1.2（X41）、新镜像必须同步更新 imgsha256sum 否则循环重启（X42）（ <code>&lt;span class="pg"&gt;原文p177-178&lt;/span&gt;</code> ）</li>
-<li>priv-mask 读写权限仅限 HTTP(S)，SSH/Telnet/Console 只能只读（X44， <code>&lt;span class="pg"&gt;原文p181&lt;/span&gt;</code> ）</li>
-<li>JITC 与增强/CC 模式互斥（X45）；超级用户密码不可恢复，遗忘只能恢复出厂（X47）（ <code>&lt;span class="pg"&gt;原文p184, 186&lt;/span&gt;</code> ）</li>
-<li>secureadmin 用户不可用 Telnet/FTP，关键 CLI 仅 console 会话可执行（X101， <code>&lt;span class="pg"&gt;原文p146&lt;/span&gt;</code> ）</li>
+<li>Telnet/FTP 不加密，官方建议改用 SSH（X3，<span class="pg">原文p37-38</span> ）</li>
+<li><code>commit system</code> 只进运行系统不落非易失存储，重启丢失（X4，<span class="pg">原文p34, 36</span> ）</li>
+<li>EMP 无独立路由表，与业务接口共用一张表（X5，<span class="pg">原文p35</span> ）</li>
+<li>密码策略命令不自动保存到配置（X31）；全星号密码被拒（X32）；密码过期用户需 admin 重置（X33）（<span class="pg">原文p151-154</span> ）</li>
+<li>锁定观察窗不应长于锁时长（X34，<span class="pg">原文p157</span> ）</li>
+<li>SNMP 不能配 admin 用户（X35）；secondary CMM/Slave 不支持远端认证，只能 local（X37）；SNMP 仅支持 LDAP/local（X38）（<span class="pg">原文p161, 173-174</span> ）</li>
+<li>增强模式：非合规密码登录直接判认证失败（X39）、单用户单会话（X40）、仅 TLS1.2（X41）、新镜像必须同步更新 imgsha256sum 否则循环重启（X42）（<span class="pg">原文p177-178</span> ）</li>
+<li>priv-mask 读写权限仅限 HTTP(S)，SSH/Telnet/Console 只能只读（X44，<span class="pg">原文p181</span> ）</li>
+<li>JITC 与增强/CC 模式互斥（X45）；超级用户密码不可恢复，遗忘只能恢复出厂（X47）（<span class="pg">原文p184, 186</span> ）</li>
+<li>secureadmin 用户不可用 Telnet/FTP，关键 CLI 仅 console 会话可执行（X101，<span class="pg">原文p146</span> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniSwitch AOS 8.10R4 Switch Management Guide 第 2 章 Logging In（ <code>&lt;span class="pg"&gt;原文p29-48&lt;/span&gt;</code> ）、第 5 章 Using the CLI（ <code>&lt;span class="pg"&gt;原文p122-130&lt;/span&gt;</code> ）、第 7 章 User Accounts（ <code>&lt;span class="pg"&gt;原文p144-166&lt;/span&gt;</code> ）、第 8 章 Switch Security（ <code>&lt;span class="pg"&gt;原文p167-186&lt;/span&gt;</code> ）。条目来源：cases C5-C12/C30-C34；principles P34-P51/P61-P84；counter-examples X3-X5/X31-X47/X101；frameworks F3/F4。</p><div class="pn"><a href="aos-sm-software-upgrade.html">⬅ 上一单元：aos-sm-software-upgrade</a><a class="nxt" href="aos-sm-mgmt-services.html">下一单元：aos-sm-mgmt-services ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<p>OmniSwitch AOS 8.10R4 Switch Management Guide 第 2 章 Logging In（<span class="pg">原文p29-48</span> ）、第 5 章 Using the CLI（<span class="pg">原文p122-130</span> ）、第 7 章 User Accounts（<span class="pg">原文p144-166</span> ）、第 8 章 Switch Security（<span class="pg">原文p167-186</span> ）。条目来源：cases C5-C12/C30-C34；principles P34-P51/P61-P84；counter-examples X3-X5/X31-X47/X101；frameworks F3/F4。</p><div class="pn"><a href="aos-sm-software-upgrade.html">⬅ 上一单元：aos-sm-software-upgrade</a><a class="nxt" href="aos-sm-mgmt-services.html">下一单元：aos-sm-mgmt-services ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

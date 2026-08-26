@@ -80,54 +80,54 @@ blockquote p{margin:6px 0}
 <li>评估用 SPB 替代 STP 做二层织构（6865/6900 iFab）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>组播分两层解（F14， <code>&lt;span class="pg"&gt;原文p874&lt;/span&gt;</code> ）：同 VLAN 用 IPMS 硬件侦听 IGMP 按端口建转发表（默认禁用，须显式开，P172， <code>&lt;span class="pg"&gt;原文p875-878&lt;/span&gt;</code> ）；跨网段用 PIM-SM 显式加入 + RP 共享树，末跳自动 SPT 切换（默认启用）（P177， <code>&lt;span class="pg"&gt;原文p908-909&lt;/span&gt;</code> ）。IGMP 本身 TTL=1 永不出本段（P170， <code>&lt;span class="pg"&gt;原文p871&lt;/span&gt;</code> ）。ERP 的机制是"牺牲一条 RPL 链路换全环无环"：APS 协议协调，RPL owner 负责阻塞/解阻塞（P178， <code>&lt;span class="pg"&gt;原文p926-929&lt;/span&gt;</code> ）。Auto-fabric 七步零接触（Auto-VC → RCL → Auto-LACP → Auto-Routing → Auto-SPB → Auto-Network Profiling → Auto-MVRP），失败即删除并禁用配置（P27/F5， <code>&lt;span class="pg"&gt;原文p155, 936&lt;/span&gt;</code> ）。SPB 用 IS-IS 替代 STP：简化业务开通、全链路可用（P186/F15， <code>&lt;span class="pg"&gt;原文p73, 68&lt;/span&gt;</code> ）。</p>
+<p>组播分两层解（F14，<span class="pg">原文p874</span> ）：同 VLAN 用 IPMS 硬件侦听 IGMP 按端口建转发表（默认禁用，须显式开，P172，<span class="pg">原文p875-878</span> ）；跨网段用 PIM-SM 显式加入 + RP 共享树，末跳自动 SPT 切换（默认启用）（P177，<span class="pg">原文p908-909</span> ）。IGMP 本身 TTL=1 永不出本段（P170，<span class="pg">原文p871</span> ）。ERP 的机制是"牺牲一条 RPL 链路换全环无环"：APS 协议协调，RPL owner 负责阻塞/解阻塞（P178，<span class="pg">原文p926-929</span> ）。Auto-fabric 七步零接触（Auto-VC → RCL → Auto-LACP → Auto-Routing → Auto-SPB → Auto-Network Profiling → Auto-MVRP），失败即删除并禁用配置（P27/F5，<span class="pg">原文p155, 936</span> ）。SPB 用 IS-IS 替代 STP：简化业务开通、全链路可用（P186/F15，<span class="pg">原文p73, 68</span> ）。</p>
 <h2 id="a1">A1（决策/选型）</h2>
 <ol>
-<li>组播地址映射：D 类 224.0.0.0-239.255.255.255，MAC 取 01:00:5e + IP 低 23 位（P169， <code>&lt;span class="pg"&gt;原文p867&lt;/span&gt;</code> ）</li>
-<li>IGMP 版本：v2 加 Leave/快速离开；v3 加源过滤 SSM（P171， <code>&lt;span class="pg"&gt;原文p872&lt;/span&gt;</code> ）</li>
-<li>组数管控：全局/VLAN/端口三级 max-group（端口级覆盖）（P174， <code>&lt;span class="pg"&gt;原文p885&lt;/span&gt;</code> ）；不跑 PIM 的孤岛可用 IGMP Relay（helper）封装转发（P175， <code>&lt;span class="pg"&gt;原文p884&lt;/span&gt;</code> ）</li>
-<li>二层冗余协议选型：STP/RSTP/MSTP vs ERPv2（F7， <code>&lt;span class="pg"&gt;原文p415&lt;/span&gt;</code> ）——环形专网/汇聚环优先 ERP</li>
-<li>MVRP 前提：全局使能 + STP flat 模式；只裁剪不建三层（P191， <code>&lt;span class="pg"&gt;原文p968&lt;/span&gt;</code> ）</li>
+<li>组播地址映射：D 类 224.0.0.0-239.255.255.255，MAC 取 01:00:5e + IP 低 23 位（P169，<span class="pg">原文p867</span> ）</li>
+<li>IGMP 版本：v2 加 Leave/快速离开；v3 加源过滤 SSM（P171，<span class="pg">原文p872</span> ）</li>
+<li>组数管控：全局/VLAN/端口三级 max-group（端口级覆盖）（P174，<span class="pg">原文p885</span> ）；不跑 PIM 的孤岛可用 IGMP Relay（helper）封装转发（P175，<span class="pg">原文p884</span> ）</li>
+<li>二层冗余协议选型：STP/RSTP/MSTP vs ERPv2（F7，<span class="pg">原文p415</span> ）——环形专网/汇聚环优先 ERP</li>
+<li>MVRP 前提：全局使能 + STP flat 模式；只裁剪不建三层（P191，<span class="pg">原文p968</span> ）</li>
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ol>
-<li>IPMS 二层组播：<code>show ip multicast</code> 确认默认 disabled → <code>ip multicast admin-state enable</code>(R8) → <code>ip multicast querying enable</code> → <code>ip multicast querier-forwarding enable</code>（流源在非查询者交换机时启用，P173， <code>&lt;span class="pg"&gt;原文p879&lt;/span&gt;</code> ）；验证 <code>show ip multicast group/neighbor/forward</code>，客户端加组后仅必要端口转发（C48， <code>&lt;span class="pg"&gt;原文p877-883, 916-918&lt;/span&gt;</code> ）</li>
-<li>PIM-SM：RP/BSR 侧 <code>ip load pim</code> → <code>ip pim sparse admin-state enable</code> → <code>ip pim interface int_217/int_218/int_110</code> → <code>ip pim cbsr 192.168.110.1</code> → <code>ip pim candidate-rp 192.168.110.1 231.1.1.0/24</code>；验证 <code>show ip pim cbsr/candidate-rp/neighbor/group-map/groute 225.0.0.101/sgroute …/mroute</code>（C49/P176/P177， <code>&lt;span class="pg"&gt;原文p908-913, 923&lt;/span&gt;</code> ）</li>
-<li>ERP 环网：各节点 <code>vlan 50 name "Ring1"</code>（Service VLAN 承载 R-APS/CCM）+ <code>vlan 60 name "subnet60"</code>（Protected VLAN），ring 口 tag 50 untag 60 → RPL owner（6900-A）：<code>erp-ring 1 port1 1/3 port2 2/1 service-vlan 50 level 2</code> → <code>erp-ring 1 rpl-node port 1/3</code> → <code>erp-ring 1 wait-to-restore-timer 1</code> → <code>erp-ring 1 enable</code>（其余节点仅 ring 定义+enable）→ 激活 ring 口 → <code>show erp</code>（Ring State Pending、rpl 标记）→ ping –t 中断链路观察切换与 WTR 恢复（C50/P178/P179， <code>&lt;span class="pg"&gt;原文p926-932&lt;/span&gt;</code> ）</li>
+<li>IPMS 二层组播：<code>show ip multicast</code> 确认默认 disabled → <code>ip multicast admin-state enable</code>(R8) → <code>ip multicast querying enable</code> → <code>ip multicast querier-forwarding enable</code>（流源在非查询者交换机时启用，P173，<span class="pg">原文p879</span> ）；验证 <code>show ip multicast group/neighbor/forward</code>，客户端加组后仅必要端口转发（C48，<span class="pg">原文p877-883, 916-918</span> ）</li>
+<li>PIM-SM：RP/BSR 侧 <code>ip load pim</code> → <code>ip pim sparse admin-state enable</code> → <code>ip pim interface int_217/int_218/int_110</code> → <code>ip pim cbsr 192.168.110.1</code> → <code>ip pim candidate-rp 192.168.110.1 231.1.1.0/24</code>；验证 <code>show ip pim cbsr/candidate-rp/neighbor/group-map/groute 225.0.0.101/sgroute …/mroute</code>（C49/P176/P177，<span class="pg">原文p908-913, 923</span> ）</li>
+<li>ERP 环网：各节点 <code>vlan 50 name "Ring1"</code>（Service VLAN 承载 R-APS/CCM）+ <code>vlan 60 name "subnet60"</code>（Protected VLAN），ring 口 tag 50 untag 60 → RPL owner（6900-A）：<code>erp-ring 1 port1 1/3 port2 2/1 service-vlan 50 level 2</code> → <code>erp-ring 1 rpl-node port 1/3</code> → <code>erp-ring 1 wait-to-restore-timer 1</code> → <code>erp-ring 1 enable</code>（其余节点仅 ring 定义+enable）→ 激活 ring 口 → <code>show erp</code>（Ring State Pending、rpl 标记）→ ping –t 中断链路观察切换与 WTR 恢复（C50/P178/P179，<span class="pg">原文p926-932</span> ）</li>
 <li>
 <p>MVRP：前置 <code>spantree mode flat</code>（R6 <code>bridge mode flat</code>）→ <code>mvrp enable</code> → <code>mvrp port 1/3 enable</code>、<code>mvrp linkagg 5 enable</code> → 限额 <code>mvrp maximum vlan 150</code>(6450)/<code>mvrp maximum-vlan 150</code>(6860)；</p>
 <ul>
 <li>对端建 VLAN + tag 后本机 <code>show vlan</code> 出现 type dyn；</li>
 <li>验证 <code>show mvrp port 1/1/4 statistics/timers/last-pdu-origin</code>；</li>
-<li>结束恢复 <code>spantree mode per-vlan</code>（C53/P191/P192， <code>&lt;span class="pg"&gt;原文p968-971&lt;/span&gt;</code> ）；</li>
+<li>结束恢复 <code>spantree mode per-vlan</code>（C53/P191/P192，<span class="pg">原文p968-971</span> ）；</li>
 </ul>
 </li>
 <li>
-<p>Auto-fabric：<code>show auto-fabric config</code> → <code>auto-fabric discovery start</code> → <code>auto-fabric admin-state enable</code> → <code>auto-fabric config-save admin-state enable</code>；验证 <code>show linkagg port</code>（Auto-LACP agg 127/admin-key 65535，P183， <code>&lt;span class="pg"&gt;原文p943&lt;/span&gt;</code> ）</p>
+<p>Auto-fabric：<code>show auto-fabric config</code> → <code>auto-fabric discovery start</code> → <code>auto-fabric admin-state enable</code> → <code>auto-fabric config-save admin-state enable</code>；验证 <code>show linkagg port</code>（Auto-LACP agg 127/admin-key 65535，P183，<span class="pg">原文p943</span> ）</p>
 <ul>
 <li><code>show vlan</code>（dyn VLAN）</li>
-<li><code>show mvrp port</code>（Discovery Status Enabled）（C51/P184/P185/P182， <code>&lt;span class="pg"&gt;原文p943-951, 941&lt;/span&gt;</code> ）</li>
+<li><code>show mvrp port</code>（Discovery Status Enabled）（C51/P184/P185/P182，<span class="pg">原文p943-951, 941</span> ）</li>
 </ul>
 </li>
 <li>
-<p>Auto-VC/Auto-Routing 原理：无 vcsetup.cfg 时自动 Chassis ID、最低 MAC 为 Master（P181， <code>&lt;span class="pg"&gt;原文p940&lt;/span&gt;</code> ）；侦听 OSPF/IS-IS Hello 学区域/类型/定时器自动建邻接（P184， <code>&lt;span class="pg"&gt;原文p944&lt;/span&gt;</code> ）</p>
+<p>Auto-VC/Auto-Routing 原理：无 vcsetup.cfg 时自动 Chassis ID、最低 MAC 为 Master（P181，<span class="pg">原文p940</span> ）；侦听 OSPF/IS-IS Hello 学区域/类型/定时器自动建邻接（P184，<span class="pg">原文p944</span> ）</p>
 </li>
 </ol>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>C48 IPMS：开启前后泛洪 vs 端口级精准转发对比（ <code>&lt;span class="pg"&gt;原文p877-883, 916-918&lt;/span&gt;</code> ）</li>
-<li>C49 PIM-SM：RP/BSR + groute/sgroute 验证（ <code>&lt;span class="pg"&gt;原文p908-913, 923&lt;/span&gt;</code> ）</li>
-<li>C50 ERP：6560x2 + 6900x2 环网故障切换与 WTR 恢复（含拆/恢复 6900 VC）（ <code>&lt;span class="pg"&gt;原文p926-932&lt;/span&gt;</code> ）</li>
-<li>C51 Auto-fabric 三件套验证（Auto-LACP/Auto-MVRP/动态 VLAN）（ <code>&lt;span class="pg"&gt;原文p943-951&lt;/span&gt;</code> ）</li>
+<li>C48 IPMS：开启前后泛洪 vs 端口级精准转发对比（<span class="pg">原文p877-883, 916-918</span> ）</li>
+<li>C49 PIM-SM：RP/BSR + groute/sgroute 验证（<span class="pg">原文p908-913, 923</span> ）</li>
+<li>C50 ERP：6560x2 + 6900x2 环网故障切换与 WTR 恢复（含拆/恢复 6900 VC）（<span class="pg">原文p926-932</span> ）</li>
+<li>C51 Auto-fabric 三件套验证（Auto-LACP/Auto-MVRP/动态 VLAN）（<span class="pg">原文p943-951</span> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>
-<li>IGMP TTL=1 永不被路由器转发；查询发 224.0.0.1、离开发 224.0.0.2（P170/X70， <code>&lt;span class="pg"&gt;原文p871&lt;/span&gt;</code> ）</li>
-<li>IPMS 默认禁用，组播交换须显式开启（X71， <code>&lt;span class="pg"&gt;原文p877, 916&lt;/span&gt;</code> ）</li>
-<li>ERP RPL 只能配在已禁用的环上；无 RPL 或多 RPL 均为错误配置（X72， <code>&lt;span class="pg"&gt;原文p929&lt;/span&gt;</code> ）；每环建议 ≤16 节点（X73/P180）；环数上限依机型（X74， <code>&lt;span class="pg"&gt;原文p929&lt;/span&gt;</code> ）</li>
-<li>PIM-SM 的 SPT 状态默认启用（X75， <code>&lt;span class="pg"&gt;原文p903&lt;/span&gt;</code> ）；rp-threshold 决定何时切源树（P177， <code>&lt;span class="pg"&gt;原文p909&lt;/span&gt;</code> ）</li>
-<li>MVRP 须 STP flat 模式且不能配在 mirror/mobile/VPLS 口（X50， <code>&lt;span class="pg"&gt;原文p968&lt;/span&gt;</code> ）；调低动态 VLAN 上限（默认 256）需重启 MVRP 生效（X51/P192， <code>&lt;span class="pg"&gt;原文p969&lt;/span&gt;</code> ）</li>
-<li>Auto-VC 依赖出厂 Demo License；Auto-LACP 默认聚合 127、admin-key 65535，与手工聚合编号错开（ <code>&lt;span class="pg"&gt;原文p938, 943&lt;/span&gt;</code> ）</li>
+<li>IGMP TTL=1 永不被路由器转发；查询发 224.0.0.1、离开发 224.0.0.2（P170/X70，<span class="pg">原文p871</span> ）</li>
+<li>IPMS 默认禁用，组播交换须显式开启（X71，<span class="pg">原文p877, 916</span> ）</li>
+<li>ERP RPL 只能配在已禁用的环上；无 RPL 或多 RPL 均为错误配置（X72，<span class="pg">原文p929</span> ）；每环建议 ≤16 节点（X73/P180）；环数上限依机型（X74，<span class="pg">原文p929</span> ）</li>
+<li>PIM-SM 的 SPT 状态默认启用（X75，<span class="pg">原文p903</span> ）；rp-threshold 决定何时切源树（P177，<span class="pg">原文p909</span> ）</li>
+<li>MVRP 须 STP flat 模式且不能配在 mirror/mobile/VPLS 口（X50，<span class="pg">原文p968</span> ）；调低动态 VLAN 上限（默认 256）需重启 MVRP 生效（X51/P192，<span class="pg">原文p969</span> ）</li>
+<li>Auto-VC 依赖出厂 Demo License；Auto-LACP 默认聚合 127、admin-key 65535，与手工聚合编号错开（<span class="pg">原文p938, 943</span> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
 <ul>

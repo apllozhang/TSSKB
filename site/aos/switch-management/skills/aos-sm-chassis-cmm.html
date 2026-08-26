@@ -71,7 +71,7 @@ blockquote p{margin:6px 0}
 <li>VC 加新成员、混合机型入组、重复 chassis ID 排障</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>VC 框架（F7， <code>&lt;span class="pg"&gt;原文p305-343&lt;/span&gt;</code> ）：vcsetup.cfg（单机入组设置：Chassis ID/Group/priority/VFL）+ vcboot.cfg（VC 整体配置）双文件体系；Master/Slave 选举五准则（现任→priority→uptime→最小 ID→最小 MAC，P130）；VFL（10/40/100G 聚合、16 字节封装头）+ 控制 VLAN（默认 4094）+ IS-IS VC 专有协议维持拓扑。分裂双保险：RCD（EMP 带外周期通告，VFL 全断时 former Slave 关全部面板口防双 IP/MAC，P134）与 VCSP（经 helper 邻机专用 linkagg 转 PDU，master MAC 不匹配即进 protection state，P135/P136）。CMM 冗余（P85-P87）：running 配置自动同步，certified 需手动 flash-synchro；takeover 断开旧主管理会话。</p>
+<p>VC 框架（F7，<span class="pg">原文p305-343</span> ）：vcsetup.cfg（单机入组设置：Chassis ID/Group/priority/VFL）+ vcboot.cfg（VC 整体配置）双文件体系；Master/Slave 选举五准则（现任→priority→uptime→最小 ID→最小 MAC，P130）；VFL（10/40/100G 聚合、16 字节封装头）+ 控制 VLAN（默认 4094）+ IS-IS VC 专有协议维持拓扑。分裂双保险：RCD（EMP 带外周期通告，VFL 全断时 former Slave 关全部面板口防双 IP/MAC，P134）与 VCSP（经 helper 邻机专用 linkagg 转 PDU，master MAC 不匹配即进 protection state，P135/P136）。CMM 冗余（P85-P87）：running 配置自动同步，certified 需手动 flash-synchro；takeover 断开旧主管理会话。</p>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>双 CMM 日常</strong>：certify + 同步一步 <code>copy running certified flash-synchro</code>；计划内切换 <code>takeover</code>（先同步）（C23）</li>
@@ -82,39 +82,39 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>CMM 同步与接管</strong>：<code>copy running certified flash-synchro</code>（或单独 <code>copy flash-synchro</code>）；<code>takeover</code>（C23， <code>&lt;span class="pg"&gt;原文p110-111&lt;/span&gt;</code> ）</li>
-<li><strong>手工组 VC</strong>：双侧 <code>virtual-chassis configured-chassis-id 1|2</code> → <code>virtual-chassis vf-link 0 create</code> + member-port → <code>ip interface local emp ...</code> → <code>write memory</code> → <code>convert-configuration to vc_dir</code> → <code>reload from vc_dir no rollback-timeout</code>；Master 上配 <code>ip interface master emp address 10.255.100.100</code>（C46， <code>&lt;span class="pg"&gt;原文p307, 328&lt;/span&gt;</code> ）</li>
-<li><strong>Auto-VFL</strong>：默认端口直连即成；<code>virtual-chassis auto-vf-link-port 1/1/25</code>；验证 <code>show virtual-chassis topology|consistency|vf-link member-port</code>（C47， <code>&lt;span class="pg"&gt;原文p304, 339&lt;/span&gt;</code> ）</li>
+<li><strong>CMM 同步与接管</strong>：<code>copy running certified flash-synchro</code>（或单独 <code>copy flash-synchro</code>）；<code>takeover</code>（C23，<span class="pg">原文p110-111</span> ）</li>
+<li><strong>手工组 VC</strong>：双侧 <code>virtual-chassis configured-chassis-id 1|2</code> → <code>virtual-chassis vf-link 0 create</code> + member-port → <code>ip interface local emp ...</code> → <code>write memory</code> → <code>convert-configuration to vc_dir</code> → <code>reload from vc_dir no rollback-timeout</code>；Master 上配 <code>ip interface master emp address 10.255.100.100</code>（C46，<span class="pg">原文p307, 328</span> ）</li>
+<li><strong>Auto-VFL</strong>：默认端口直连即成；<code>virtual-chassis auto-vf-link-port 1/1/25</code>；验证 <code>show virtual-chassis topology|consistency|vf-link member-port</code>（C47，<span class="pg">原文p304, 339</span> ）</li>
 <li>VCSP：VC 侧 <code>virtual-chassis split-protection admin-state enable</code> + <code>split-protection linkagg</code>；</li>
 <li>helper 侧 <code>split-protection helper admin-state enable</code> + helper linkagg；</li>
 <li>
-<p>guard-timer 控自动恢复（C48， <code>&lt;span class="pg"&gt;原文p341&lt;/span&gt;</code> ）；</p>
+<p>guard-timer 控自动恢复（C48，<span class="pg">原文p341</span> ）；</p>
 </li>
 <li>
-<p><strong>受控下架成员</strong>：<code>virtual-chassis shutdown</code>；跨机箱访问 <code>ssh-chassis</code>（ <code>&lt;span class="pg"&gt;原文p327&lt;/span&gt;</code> ）</p>
+<p><strong>受控下架成员</strong>：<code>virtual-chassis shutdown</code>；跨机箱访问 <code>ssh-chassis</code>（<span class="pg">原文p327</span> ）</p>
 </li>
-<li><strong>write memory 拓扑确认</strong>：拓扑元素缺失时确认 possible configuration purge（P140， <code>&lt;span class="pg"&gt;原文p313&lt;/span&gt;</code> ）</li>
+<li><strong>write memory 拓扑确认</strong>：拓扑元素缺失时确认 possible configuration purge（P140，<span class="pg">原文p313</span> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>CMM 同步与接管（C23， <code>&lt;span class="pg"&gt;原文p110-111&lt;/span&gt;</code> ）</li>
-<li>两台交换机手工组 VC 全流程（C46， <code>&lt;span class="pg"&gt;原文p307, 328&lt;/span&gt;</code> ）</li>
-<li>Auto-VFL 快速组 VC 与验证（C47， <code>&lt;span class="pg"&gt;原文p304, 339&lt;/span&gt;</code> ）</li>
-<li>VCSP 双侧配置（C48， <code>&lt;span class="pg"&gt;原文p341&lt;/span&gt;</code> ）</li>
+<li>CMM 同步与接管（C23，<span class="pg">原文p110-111</span> ）</li>
+<li>两台交换机手工组 VC 全流程（C46，<span class="pg">原文p307, 328</span> ）</li>
+<li>Auto-VFL 快速组 VC 与验证（C47，<span class="pg">原文p304, 339</span> ）</li>
+<li>VCSP 双侧配置（C48，<span class="pg">原文p341</span> ）</li>
 </ul>
 <h2 id="b">B（反例/坑）</h2>
 <ul>
-<li>VC 不能混不同家族机型（OS6900 与 OS6860 不可同 VC）（X73）；混合机型需切 mixed 模式（X70）；部分 VC 参数运行时改不生效须重启（chassis ID/priority/控制 VLAN/hello interval）（X71）（ <code>&lt;span class="pg"&gt;原文p319&lt;/span&gt;</code> ）</li>
-<li>新单元加入 VC 与现有目录/镜像/vcboot.cfg 不一致时可能重启两次（X72， <code>&lt;span class="pg"&gt;原文p319&lt;/span&gt;</code> ）</li>
-<li>重复 chassis ID 会被自动改号到 101-102，需经 EMP 本地修复（X74， <code>&lt;span class="pg"&gt;原文p324&lt;/span&gt;</code> ）</li>
-<li>组 ID 冲突不自检也不纠正，影响 RCD（X75， <code>&lt;span class="pg"&gt;原文p322&lt;/span&gt;</code> ）</li>
-<li>VFL 上禁配 SFlow/ERP/UDLD/LLDP（X76）；VFL 限 10/40/100G 不混速、10GBase-T 不可入（X77）；线速可能丢包（X78）（ <code>&lt;span class="pg"&gt;原文p322&lt;/span&gt;</code> ）</li>
-<li>hello 间隔不匹配会降级为 Inconsistent/Misconfigured-Hello-Interval（X79， <code>&lt;span class="pg"&gt;原文p324&lt;/span&gt;</code> ）</li>
-<li>EMP 直连不是推荐的分裂检测法（X80， <code>&lt;span class="pg"&gt;原文p312&lt;/span&gt;</code> ）</li>
-<li>VCSP 与 helper 不能同机、helper 与 VC 不能同 Group ID（X81， <code>&lt;span class="pg"&gt;原文p340&lt;/span&gt;</code> ）</li>
-<li>VC 分裂后配置改动不生效直到重启（X82， <code>&lt;span class="pg"&gt;原文p317&lt;/span&gt;</code> ）</li>
-<li>takeover 断开旧主上的管理会话，需重连新主（X27， <code>&lt;span class="pg"&gt;原文p47&lt;/span&gt;</code> ）</li>
-<li>Master 与 Slave 的 vcboot.cfg/镜像不一致时 Master 覆盖 Slave 并令其自动重启（P131， <code>&lt;span class="pg"&gt;原文p307&lt;/span&gt;</code> ）</li>
+<li>VC 不能混不同家族机型（OS6900 与 OS6860 不可同 VC）（X73）；混合机型需切 mixed 模式（X70）；部分 VC 参数运行时改不生效须重启（chassis ID/priority/控制 VLAN/hello interval）（X71）（<span class="pg">原文p319</span> ）</li>
+<li>新单元加入 VC 与现有目录/镜像/vcboot.cfg 不一致时可能重启两次（X72，<span class="pg">原文p319</span> ）</li>
+<li>重复 chassis ID 会被自动改号到 101-102，需经 EMP 本地修复（X74，<span class="pg">原文p324</span> ）</li>
+<li>组 ID 冲突不自检也不纠正，影响 RCD（X75，<span class="pg">原文p322</span> ）</li>
+<li>VFL 上禁配 SFlow/ERP/UDLD/LLDP（X76）；VFL 限 10/40/100G 不混速、10GBase-T 不可入（X77）；线速可能丢包（X78）（<span class="pg">原文p322</span> ）</li>
+<li>hello 间隔不匹配会降级为 Inconsistent/Misconfigured-Hello-Interval（X79，<span class="pg">原文p324</span> ）</li>
+<li>EMP 直连不是推荐的分裂检测法（X80，<span class="pg">原文p312</span> ）</li>
+<li>VCSP 与 helper 不能同机、helper 与 VC 不能同 Group ID（X81，<span class="pg">原文p340</span> ）</li>
+<li>VC 分裂后配置改动不生效直到重启（X82，<span class="pg">原文p317</span> ）</li>
+<li>takeover 断开旧主上的管理会话，需重连新主（X27，<span class="pg">原文p47</span> ）</li>
+<li>Master 与 Slave 的 vcboot.cfg/镜像不一致时 Master 覆盖 Slave 并令其自动重启（P131，<span class="pg">原文p307</span> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniSwitch AOS 8.10R4 Switch Management Guide 第 4 章 CMM 冗余（ <code>&lt;span class="pg"&gt;原文p99-111&lt;/span&gt;</code> ）、第 13 章 Virtual Chassis（ <code>&lt;span class="pg"&gt;原文p300-343&lt;/span&gt;</code> ）。条目来源：cases C23/C46/C47/C48；principles P85-P92/P128-P141；counter-examples X27/X70-X82；frameworks F7。</p><div class="pn"><a href="aos-sm-logging-health.html">⬅ 上一单元：aos-sm-logging-health</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<p>OmniSwitch AOS 8.10R4 Switch Management Guide 第 4 章 CMM 冗余（<span class="pg">原文p99-111</span> ）、第 13 章 Virtual Chassis（<span class="pg">原文p300-343</span> ）。条目来源：cases C23/C46/C47/C48；principles P85-P92/P128-P141；counter-examples X27/X70-X82；frameworks F7。</p><div class="pn"><a href="aos-sm-logging-health.html">⬅ 上一单元：aos-sm-logging-health</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

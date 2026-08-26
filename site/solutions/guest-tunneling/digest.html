@@ -98,14 +98,14 @@ N 个隧道 SSID 需 N 台交换机）、L3 hop（AP 管理 IP 与 GRE Server IP
 </table>
 <p>依赖关系：先读 architecture-config 掌握机制与五步配置；scenarios 决定架构落点；redundancy 在任何生产部署上叠加。</p>
 <h2 id="ap">三、配置主线速查（交换机五步 + AP 四要素）</h2>
-<p><strong>交换机（ <code>&lt;span class="pg"&gt;原文p9&lt;/span&gt;</code> ）</strong>：
+<p><strong>交换机（<span class="pg">原文p9</span> ）</strong>：
 1. <code>service l2profile "name" stp drop gvrp drop mvrp drop</code>
 2. <code>service access port X/X/XX vlan-xlation enable l2profile "name"</code>（SAP 口）
 3. <code>service "id" l2gre vpnid "vpn-id" stats enable vlan-xlation enable remove-ingress-tag enable</code>
 4. <code>service "id" sap port X/X/XX:"vpn-id"</code>
 5. <code>vlan "VLAN-ID" members port X/X/XX untagged</code>（ACCESS 口）</p>
-<p><strong>AP（ <code>&lt;span class="pg"&gt;原文p10&lt;/span&gt;</code> ）</strong>：SSID 创建勾 Use Tunnel → Tunnel ID（=vpnid）→ GRE Tunnel Server IP → Backup IP（可选）→ Preemption（可选）→ <strong>Entropy 必开</strong>。
-开局必查：<code>service l2gre auto-discover enable</code>（默认开， <code>&lt;span class="pg"&gt;原文p8&lt;/span&gt;</code> ）。</p>
+<p><strong>AP（<span class="pg">原文p10</span> ）</strong>：SSID 创建勾 Use Tunnel → Tunnel ID（=vpnid）→ GRE Tunnel Server IP → Backup IP（可选）→ Preemption（可选）→ <strong>Entropy 必开</strong>。
+开局必查：<code>service l2gre auto-discover enable</code>（默认开，<span class="pg">原文p8</span> ）。</p>
 <h2 id="_2">四、部署场景速查表</h2>
 <table>
 <thead>

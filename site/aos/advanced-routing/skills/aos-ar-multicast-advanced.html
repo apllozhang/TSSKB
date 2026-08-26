@@ -80,15 +80,15 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>地址边界</strong>：<code>ip load pim</code> → <code>ip mroute-boundary vlan-3 239.120.0.0 255.255.0.0</code> → <code>show ip mroute-boundary</code>；多域复用例：核心配 239.0.0.0/8，两个布线间各配 239.188.0.0/16（C32/C33， <code>&lt;span class="pg"&gt;原文p220, 226-228&lt;/span&gt;</code> ）</li>
-<li><strong>DVMRP 五步</strong>：<code>ip load dvmrp</code> → <code>ip interface vlan-2 ...</code> → <code>ip dvmrp interface vlan-2</code> → <code>ip dvmrp admin-state enable</code> → <code>write memory</code>；<code>show ip dvmrp [interface]</code>（C34， <code>&lt;span class="pg"&gt;原文p231&lt;/span&gt;</code> ）</li>
-<li><strong>DVMRP 隧道</strong>：<code>ip interface "tnl-1" tunnel source 23.23.23.1 destination 155.2.2.2</code>；源地址接口与隧道接口都要 <code>ip dvmrp interface</code> 使能（C35， <code>&lt;span class="pg"&gt;原文p244&lt;/span&gt;</code> ）</li>
-<li><strong>PIM-DM 六步</strong>：<code>ip load pim</code> → <code>ip interface vlan-2</code> → <code>ip pim interface vlan-2</code> → <code>ip pim dense group 225.0.0.0/24</code> → <code>ip pim dense admin-state enable</code> → <code>write memory</code>（C36， <code>&lt;span class="pg"&gt;原文p252&lt;/span&gt;</code> ）</li>
+<li><strong>地址边界</strong>：<code>ip load pim</code> → <code>ip mroute-boundary vlan-3 239.120.0.0 255.255.0.0</code> → <code>show ip mroute-boundary</code>；多域复用例：核心配 239.0.0.0/8，两个布线间各配 239.188.0.0/16（C32/C33，<span class="pg">原文p220, 226-228</span> ）</li>
+<li><strong>DVMRP 五步</strong>：<code>ip load dvmrp</code> → <code>ip interface vlan-2 ...</code> → <code>ip dvmrp interface vlan-2</code> → <code>ip dvmrp admin-state enable</code> → <code>write memory</code>；<code>show ip dvmrp [interface]</code>（C34，<span class="pg">原文p231</span> ）</li>
+<li><strong>DVMRP 隧道</strong>：<code>ip interface "tnl-1" tunnel source 23.23.23.1 destination 155.2.2.2</code>；源地址接口与隧道接口都要 <code>ip dvmrp interface</code> 使能（C35，<span class="pg">原文p244</span> ）</li>
+<li><strong>PIM-DM 六步</strong>：<code>ip load pim</code> → <code>ip interface vlan-2</code> → <code>ip pim interface vlan-2</code> → <code>ip pim dense group 225.0.0.0/24</code> → <code>ip pim dense admin-state enable</code> → <code>write memory</code>（C36，<span class="pg">原文p252</span> ）</li>
 <li>PIM-SM RP 体系：C-RP <code>ip pim candidate-rp 50.1.1.1 225.16.1.1/32 priority 100 interval 100</code>；</li>
 <li>C-BSR <code>ip pim cbsr 50.1.1.1 priority 100 mask-length 4</code>；</li>
 <li>静态 <code>ip pim static-rp 225.0.0.0/24 10.1.1.1 priority 10</code>；</li>
 <li>
-<p><code>show ip pim group-map/candidate-rp/cbsr</code>（C37， <code>&lt;span class="pg"&gt;原文p270-273&lt;/span&gt;</code> ）；</p>
+<p><code>show ip pim group-map/candidate-rp/cbsr</code>（C37，<span class="pg">原文p270-273</span> ）；</p>
 </li>
 <li>
 <p>Anycast RP：两 RP 各配 Loopback1=10.10.10.1（IGP 通告）；</p>
@@ -96,45 +96,45 @@ blockquote p{margin:6px 0}
 <li>全网 <code>ip pim static-rp 224.0.0.0/4 10.10.10.1</code>；</li>
 <li>两 RP 各配完整 RP set（<code>ip pim anycast-rp 10.10.10.1 192.168.1.1</code> + 对端）；</li>
 <li>
-<p><code>show ip pim anycast-rp</code>（C38， <code>&lt;span class="pg"&gt;原文p275-276&lt;/span&gt;</code> ）；</p>
+<p><code>show ip pim anycast-rp</code>（C38，<span class="pg">原文p275-276</span> ）；</p>
 </li>
 <li>
-<p><strong>Register/J-P 调优</strong>：<code>ip pim register-packing enable|force-enable</code>、<code>ip pim register-mtu 1000</code>、<code>ip pim register-delay 100</code>（C39， <code>&lt;span class="pg"&gt;原文p278-279&lt;/span&gt;</code> ）</p>
+<p><strong>Register/J-P 调优</strong>：<code>ip pim register-packing enable|force-enable</code>、<code>ip pim register-mtu 1000</code>、<code>ip pim register-delay 100</code>（C39，<span class="pg">原文p278-279</span> ）</p>
 </li>
-<li><strong>IPv6 PIM</strong>：<code>ipv6 pim interface vlan-2</code> → <code>ipv6 pim dense group ff0e::1234/128</code> → enable；SM 侧 candidate-rp/cbsr/static-rp/rp-switchover 全套（C40， <code>&lt;span class="pg"&gt;原文p283-292&lt;/span&gt;</code> ）</li>
+<li><strong>IPv6 PIM</strong>：<code>ipv6 pim interface vlan-2</code> → <code>ipv6 pim dense group ff0e::1234/128</code> → enable；SM 侧 candidate-rp/cbsr/static-rp/rp-switchover 全套（C40，<span class="pg">原文p283-292</span> ）</li>
 <li>MBR：PIM 与 DVMRP 各自 load+接口+全局使能 → <code>ip mroute mbr admin-state enable</code>；</li>
 <li>可选 DVMRP 默认路由通告（<code>ip dvmrp interface "vlan-6" mbr-default-information enable</code>）或 <code>ip pim mbr all-sources</code>；</li>
-<li><code>show ip mroute mbr</code> 看 "Protocols Registered = DVMRP PIM"（C41， <code>&lt;span class="pg"&gt;原文p298-303&lt;/span&gt;</code> ）；</li>
+<li><code>show ip mroute mbr</code> 看 "Protocols Registered = DVMRP PIM"（C41，<span class="pg">原文p298-303</span> ）；</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>组播地址边界（核心+双布线间复用 239.188/16）（C33， <code>&lt;span class="pg"&gt;原文p226-228&lt;/span&gt;</code> ）</li>
-<li>PIM-SM Bootstrap/RP 三路配置与验证（C37， <code>&lt;span class="pg"&gt;原文p270-273&lt;/span&gt;</code> ）</li>
-<li>Anycast RP 双机配置（C38， <code>&lt;span class="pg"&gt;原文p275-276&lt;/span&gt;</code> ）</li>
-<li>IPv6 PIM-DM + Bootstrap/RP 全套（C40， <code>&lt;span class="pg"&gt;原文p283-292&lt;/span&gt;</code> ）</li>
-<li>MBR 三例（默认/DVMRP 默认路由/PIM all-sources）（C41， <code>&lt;span class="pg"&gt;原文p298-303&lt;/span&gt;</code> ）</li>
+<li>组播地址边界（核心+双布线间复用 239.188/16）（C33，<span class="pg">原文p226-228</span> ）</li>
+<li>PIM-SM Bootstrap/RP 三路配置与验证（C37，<span class="pg">原文p270-273</span> ）</li>
+<li>Anycast RP 双机配置（C38，<span class="pg">原文p275-276</span> ）</li>
+<li>IPv6 PIM-DM + Bootstrap/RP 全套（C40，<span class="pg">原文p283-292</span> ）</li>
+<li>MBR 三例（默认/DVMRP 默认路由/PIM all-sources）（C41，<span class="pg">原文p298-303</span> ）</li>
 </ul>
 <h2 id="b">B（反例/坑）</h2>
 <ul>
-<li>每接口仅支持一个组播路由协议，PIM 与 DVMRP 不能同接口共存（X44， <code>&lt;span class="pg"&gt;原文p238, 266&lt;/span&gt;</code> ）</li>
-<li>协议未加载即配置报 "application is not loaded"（X45， <code>&lt;span class="pg"&gt;原文p237, 265&lt;/span&gt;</code> ）</li>
-<li>边界地址必须是 239.0.0.0-239.255.255.255 作用域段（X46， <code>&lt;span class="pg"&gt;原文p224&lt;/span&gt;</code> ）</li>
+<li>每接口仅支持一个组播路由协议，PIM 与 DVMRP 不能同接口共存（X44，<span class="pg">原文p238, 266</span> ）</li>
+<li>协议未加载即配置报 "application is not loaded"（X45，<span class="pg">原文p237, 265</span> ）</li>
+<li>边界地址必须是 239.0.0.0-239.255.255.255 作用域段（X46，<span class="pg">原文p224</span> ）</li>
 <li>DVMRP：prune-lifetime 谨慎改（X47）；</li>
 <li>show ip dvmrp prune 只显示发出的 prune（X48）；</li>
 <li>隧道两端都要使能 DVMRP 否则不 operational（X49）；</li>
 <li>flash-interval 必须小于 report-interval（X50）；</li>
 <li>
-<p>老版本用 Route Report 做邻居发现（X51）（ <code>&lt;span class="pg"&gt;原文p233-244&lt;/span&gt;</code> ）；</p>
+<p>老版本用 Route Report 做邻居发现（X51）（<span class="pg">原文p233-244</span> ）；</p>
 </li>
 <li>
-<p>OmniSwitch PIM 只兼容 SMv2 不兼容 SMv1（X53）；Hello 无法区分 DM/SM 邻居，DM 不应与 SM 直接交互（X54）（ <code>&lt;span class="pg"&gt;原文p254, 258&lt;/span&gt;</code> ）</p>
+<p>OmniSwitch PIM 只兼容 SMv2 不兼容 SMv1（X53）；Hello 无法区分 DM/SM 邻居，DM 不应与 SM 直接交互（X54）（<span class="pg">原文p254, 258</span> ）</p>
 </li>
-<li>SPT 状态关闭则 SPT 切换不发生（X55）；SSM 默认段（232/8、FF3x::/32）不自动启用须手动配置（X56）；IGMP 代理场景必须 v3 否则 SSM 不工作（X57）（ <code>&lt;span class="pg"&gt;原文p262-264, 282&lt;/span&gt;</code> ）</li>
-<li>改 max-rps 前必须全局禁用 PIM-SM（X58）；C-RP 配在未使能 PIM 的接口上会报错（X59）；每交换机只支持一个 RP 地址（X60）；priority 与 override 互斥（X61）（ <code>&lt;span class="pg"&gt;原文p268-273&lt;/span&gt;</code> ）</li>
-<li>Anycast RP 地址不能与 Router ID 相同（X62）；静态 RP 必须配在域内所有 PIM 路由器而非仅 RP 成员（X63）；register-packing 配 Anycast-RP 时仅 RP set 全体支持才启用（X64）（ <code>&lt;span class="pg"&gt;原文p275-278&lt;/span&gt;</code> ）</li>
-<li>Register/J-P 打包仅 SM/SSM/BIDIR 支持，DM 不支持（X65）；register-mtu 盲目调大会致分片重组（X66）；J/P 实际最大尺寸取接口 IP MTU 与配置值较小者（X67）（ <code>&lt;span class="pg"&gt;原文p279-280&lt;/span&gt;</code> ）</li>
-<li>MBR 不支持 PIM-SSM，也不支持 PIM 与其他协议或多个 PIM 域互通（X68）；MBR 使能但 PIM/DVMRP 未各有 enabled 接口前不 operational（X69）；DVMRP 默认路由不能向 MBONE 通告（X70）（ <code>&lt;span class="pg"&gt;原文p299-302&lt;/span&gt;</code> ）</li>
-<li>高级路由协议需购买附加包（X71， <code>&lt;span class="pg"&gt;原文p12&lt;/span&gt;</code> ）</li>
+<li>SPT 状态关闭则 SPT 切换不发生（X55）；SSM 默认段（232/8、FF3x::/32）不自动启用须手动配置（X56）；IGMP 代理场景必须 v3 否则 SSM 不工作（X57）（<span class="pg">原文p262-264, 282</span> ）</li>
+<li>改 max-rps 前必须全局禁用 PIM-SM（X58）；C-RP 配在未使能 PIM 的接口上会报错（X59）；每交换机只支持一个 RP 地址（X60）；priority 与 override 互斥（X61）（<span class="pg">原文p268-273</span> ）</li>
+<li>Anycast RP 地址不能与 Router ID 相同（X62）；静态 RP 必须配在域内所有 PIM 路由器而非仅 RP 成员（X63）；register-packing 配 Anycast-RP 时仅 RP set 全体支持才启用（X64）（<span class="pg">原文p275-278</span> ）</li>
+<li>Register/J-P 打包仅 SM/SSM/BIDIR 支持，DM 不支持（X65）；register-mtu 盲目调大会致分片重组（X66）；J/P 实际最大尺寸取接口 IP MTU 与配置值较小者（X67）（<span class="pg">原文p279-280</span> ）</li>
+<li>MBR 不支持 PIM-SSM，也不支持 PIM 与其他协议或多个 PIM 域互通（X68）；MBR 使能但 PIM/DVMRP 未各有 enabled 接口前不 operational（X69）；DVMRP 默认路由不能向 MBONE 通告（X70）（<span class="pg">原文p299-302</span> ）</li>
+<li>高级路由协议需购买附加包（X71，<span class="pg">原文p12</span> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniSwitch AOS 8.10R4 Advanced Routing Guide 第 5 章 Multicast Address Boundary（ <code>&lt;span class="pg"&gt;原文p220-228&lt;/span&gt;</code> ）、第 6 章 DVMRP（ <code>&lt;span class="pg"&gt;原文p229-244&lt;/span&gt;</code> ）、第 7 章 PIM（ <code>&lt;span class="pg"&gt;原文p247-296&lt;/span&gt;</code> ）、第 8 章 MBR（ <code>&lt;span class="pg"&gt;原文p297-303&lt;/span&gt;</code> ）。条目来源：cases C32-C41；principles P91-P127；counter-examples X44-X71；frameworks F7/F8/F9/F10（组播部分）。</p><div class="pn"><a href="aos-ar-policy-toolbox.html">⬅ 上一单元：aos-ar-policy-toolbox</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<p>OmniSwitch AOS 8.10R4 Advanced Routing Guide 第 5 章 Multicast Address Boundary（<span class="pg">原文p220-228</span> ）、第 6 章 DVMRP（<span class="pg">原文p229-244</span> ）、第 7 章 PIM（<span class="pg">原文p247-296</span> ）、第 8 章 MBR（<span class="pg">原文p297-303</span> ）。条目来源：cases C32-C41；principles P91-P127；counter-examples X44-X71；frameworks F7/F8/F9/F10（组播部分）。</p><div class="pn"><a href="aos-ar-policy-toolbox.html">⬅ 上一单元：aos-ar-policy-toolbox</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

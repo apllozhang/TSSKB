@@ -92,7 +92,7 @@ blockquote p{margin:6px 0}
 </li>
 <li>
 <ol>
-<li>横向概念：NMS 组件模型（SNMP/sFlow/MIB/Traps/RMON， <code>&lt;span class="pg"&gt;原文p21&lt;/span&gt;</code> ）与 CLI vs GUI 取舍（ <code>&lt;span class="pg"&gt;原文p22-24&lt;/span&gt;</code> ）贯穿全书。</li>
+<li>横向概念：NMS 组件模型（SNMP/sFlow/MIB/Traps/RMON，<span class="pg">原文p21</span> ）与 CLI vs GUI 取舍（<span class="pg">原文p22-24</span> ）贯穿全书。</li>
 </ol>
 </li>
 </ul>
@@ -103,61 +103,61 @@ blockquote p{margin:6px 0}
 <h3 id="1-network-size">1. 纯虚机形态与 Network Size 一次性分档</h3>
 <ul>
 <li>OV2500 没有独立安装器——"OmniVista 2500 = Virtual Appliance"，镜像内同时包含 Linux OS 和 OV 应用，跑在 ESXi/Hyper-V/KVM 上（&lt;&lt;<PAGE 25/44>&gt;&gt;）。</li>
-<li>部署即 vSphere 部署 OVF 模板（磁盘建议 Thick Provision），控制台依次填 IP、端口、<strong>Network Size</strong>、主机名/DNS/NTP 后重启（ <code>&lt;span class="pg"&gt;原文p54-60&lt;/span&gt;</code> ）。</li>
+<li>部署即 vSphere 部署 OVF 模板（磁盘建议 Thick Provision），控制台依次填 IP、端口、<strong>Network Size</strong>、主机名/DNS/NTP 后重启（<span class="pg">原文p54-60</span> ）。</li>
 <li>Network Size 是安装时锁定的容量档位（Low &lt;500 / Medium 500-2000 / High 2000-5000 / Very High 5000-10000 台），系统按档分配内存（&lt;&lt;<PAGE 45/58>&gt;&gt;）。</li>
-<li>最容易被忽略的联动：4000 台 Stellar AP 在 High 档下只能带 500 台 AOS 交换机，Very High 档才到 1000 台——无线重的环境选错档就是天花板（ <code>&lt;span class="pg"&gt;原文p45&lt;/span&gt;</code> ）。</li>
+<li>最容易被忽略的联动：4000 台 Stellar AP 在 High 档下只能带 500 台 AOS 交换机，Very High 档才到 1000 台——无线重的环境选错档就是天花板（<span class="pg">原文p45</span> ）。</li>
 </ul>
 <h3 id="2">2. 许可两条线与安装禁区</h3>
 <ul>
-<li>License 分 Device（Starter 免费 30 台 / Evaluation 90 天 60 台 / Production 最多 10000 台）与 Service（VM/Guest/On-Boarding/HA/Web Content Filtering）（ <code>&lt;span class="pg"&gt;原文p46-49&lt;/span&gt;</code> ）。</li>
-<li>HA 自 4.3R1 起不需要双倍许可；VC 内每台物理设备各占一个 license 单元（ <code>&lt;span class="pg"&gt;原文p50-51&lt;/span&gt;</code> ）。</li>
-<li>安装时两个经典翻车点：许可文件与 License Keys 二选一，"Don't do both!"；粘贴 Key 只取逗号后的部分（ <code>&lt;span class="pg"&gt;原文p104&lt;/span&gt;</code> ）。</li>
-<li>EULA 页不要勾 Enable Fleet Supervision（ <code>&lt;span class="pg"&gt;原文p104&lt;/span&gt;</code> ）。</li>
+<li>License 分 Device（Starter 免费 30 台 / Evaluation 90 天 60 台 / Production 最多 10000 台）与 Service（VM/Guest/On-Boarding/HA/Web Content Filtering）（<span class="pg">原文p46-49</span> ）。</li>
+<li>HA 自 4.3R1 起不需要双倍许可；VC 内每台物理设备各占一个 license 单元（<span class="pg">原文p50-51</span> ）。</li>
+<li>安装时两个经典翻车点：许可文件与 License Keys 二选一，"Don't do both!"；粘贴 Key 只取逗号后的部分（<span class="pg">原文p104</span> ）。</li>
+<li>EULA 页不要勾 Enable Fleet Supervision（<span class="pg">原文p104</span> ）。</li>
 </ul>
 <h3 id="3-snmp">3. 交换机默认不可管理——SNMP 是纳管的前提</h3>
 <ul>
-<li>"By default, an OmniSwitch cannot be managed by OmniVista"（ <code>&lt;span class="pg"&gt;原文p97&lt;/span&gt;</code> ）。</li>
-<li>标准准备是逐台执行 SNMPv3 序列：建 read-write 用户（SHA+DES）、<code>snmp security privacy all</code>、<code>snmp station &lt;OV IP&gt; snmpuserv3 v3 enable</code>、开 trap absorption/to-webview（ <code>&lt;span class="pg"&gt;原文p97&lt;/span&gt;</code> ）。</li>
-<li>安全档位矩阵决定接受什么：privacy all 只接受加密 v3 读写，traps only 则拒绝所有请求（ <code>&lt;span class="pg"&gt;原文p69&lt;/span&gt;</code> ）。</li>
+<li>"By default, an OmniSwitch cannot be managed by OmniVista"（<span class="pg">原文p97</span> ）。</li>
+<li>标准准备是逐台执行 SNMPv3 序列：建 read-write 用户（SHA+DES）、<code>snmp security privacy all</code>、<code>snmp station &lt;OV IP&gt; snmpuserv3 v3 enable</code>、开 trap absorption/to-webview（<span class="pg">原文p97</span> ）。</li>
+<li>安全档位矩阵决定接受什么：privacy all 只接受加密 v3 读写，traps only 则拒绝所有请求（<span class="pg">原文p69</span> ）。</li>
 <li>管理寻址用 Loopback0——snmp source ip 默认优先 loopback0，Discovery 也靠 Loopback0 地址找设备；路由表缺 Loopback0 属环境级故障（&lt;&lt;<PAGE 70/90>&gt;&gt;）。</li>
 </ul>
 <h3 id="4-discovery-profile">4. Discovery 三段式 Profile 与拓扑/定位</h3>
 <ul>
 <li>Discovery Profile 分 General（CLI/FTP 账号）、SNMP（版本/Timeout 5000/Retry 3/v3 用户）、Advanced（Trap Station User、Discover Link、Shell=SSH、GetBulk、Max Repetitions 10）三段，配 IP 范围后 Discover Now（&lt;&lt;<PAGE 110-114/170-172>&gt;&gt;）。</li>
-<li>链路靠 AMAP/LLDP 自动发现；关键链路建议手工添加——手工链路持久化、down 时显红色，监控能力更强（ <code>&lt;span class="pg"&gt;原文p117-118&lt;/span&gt;</code> ）。</li>
-<li>拓扑缺链路就用右侧 Operations 窗口的 Poll Device/Poll Link（ <code>&lt;span class="pg"&gt;原文p176&lt;/span&gt;</code> ）。</li>
+<li>链路靠 AMAP/LLDP 自动发现；关键链路建议手工添加——手工链路持久化、down 时显红色，监控能力更强（<span class="pg">原文p117-118</span> ）。</li>
+<li>拓扑缺链路就用右侧 Operations 窗口的 Poll Device/Poll Link（<span class="pg">原文p176</span> ）。</li>
 <li>Locator 按 IP/MAC/授权用户做 Live/Historical 检索，命中即在拓扑定位，是排障取证利器（&lt;&lt;<PAGE 30/187-188>&gt;&gt;）。</li>
 </ul>
 <h3 id="5-golden-configprovisioning">5. 配置生命周期：备份、升级、Golden Config、Provisioning</h3>
 <ul>
-<li>Resource Manager 管存量：Backup by Devices（提示补 FTP 凭据就补 admin/switch）→ Configuration Only 备份；Restore 选备份文件恢复（ <code>&lt;span class="pg"&gt;原文p197-201&lt;/span&gt;</code> ）。</li>
-<li>镜像升级后必须 SSH 到交换机从 working 目录 reload 并执行 Copy Working Certified，漏做升级不生效（ <code>&lt;span class="pg"&gt;原文p203-206&lt;/span&gt;</code> ）；批量场景用 Scheduled Upgrades，可多台同时、每台不同版本（ <code>&lt;span class="pg"&gt;原文p124-126&lt;/span&gt;</code> ）。</li>
-<li>新设备零接触上线走 Provisioning Rule：交换机每 5 分钟联系 OV，命中序列号/MAC/型号即推送模板；动态模板（$VLAN/$PORTS 变量）必须配 Value Mapping（ <code>&lt;span class="pg"&gt;原文p461-464&lt;/span&gt;</code> ）。</li>
-<li>配置被误改时从 Golden Configuration（最近三次备份之一）回滚，Force Provisioning 可在下次接触时强制推送（ <code>&lt;span class="pg"&gt;原文p466-467&lt;/span&gt;</code> ）。</li>
+<li>Resource Manager 管存量：Backup by Devices（提示补 FTP 凭据就补 admin/switch）→ Configuration Only 备份；Restore 选备份文件恢复（<span class="pg">原文p197-201</span> ）。</li>
+<li>镜像升级后必须 SSH 到交换机从 working 目录 reload 并执行 Copy Working Certified，漏做升级不生效（<span class="pg">原文p203-206</span> ）；批量场景用 Scheduled Upgrades，可多台同时、每台不同版本（<span class="pg">原文p124-126</span> ）。</li>
+<li>新设备零接触上线走 Provisioning Rule：交换机每 5 分钟联系 OV，命中序列号/MAC/型号即推送模板；动态模板（$VLAN/$PORTS 变量）必须配 Value Mapping（<span class="pg">原文p461-464</span> ）。</li>
+<li>配置被误改时从 Golden Configuration（最近三次备份之一）回滚，Force Provisioning 可在下次接触时强制推送（<span class="pg">原文p466-467</span> ）。</li>
 </ul>
 <h3 id="6-unified-access">6. Unified Access 三层模板模型</h3>
 <ul>
 <li>这是全书概念密度最高的部分：AAA Server Profile（认证服务器参数）→ Access Role Profile（UNP 属性：QoS 策略表、Access Policies、Captive Portal）→ Access Auth Profile（把 UNP 端口配置指派到边缘端口），Unified Policy 挂在 Access Role Profile 之下（&lt;&lt;<PAGE 235/246>&gt;&gt;）。</li>
-<li>实操链路：RADIUS_VM → AAA_RADIUS → UNP-employee（Map to VLAN 80）→ UNP_template 应用到 6860B 端口 1/1/1，验证靠 <code>aaa test-radius-server</code> 返回 Filter-ID、<code>show unp user</code>、Locator 按 Auth. User 查询（ <code>&lt;span class="pg"&gt;原文p258-268&lt;/span&gt;</code> ）。</li>
-<li>三个高频陷阱：UNP 名必须与 Filter-ID 完全一致（ <code>&lt;span class="pg"&gt;原文p263&lt;/span&gt;</code> ）；重测前 <code>unp user flush</code> 清残留（ <code>&lt;span class="pg"&gt;原文p268&lt;/span&gt;</code> ）；客户端要取消缓存凭据/自动 Windows 登录/证书校验（ <code>&lt;span class="pg"&gt;原文p267-268&lt;/span&gt;</code> ）。</li>
+<li>实操链路：RADIUS_VM → AAA_RADIUS → UNP-employee（Map to VLAN 80）→ UNP_template 应用到 6860B 端口 1/1/1，验证靠 <code>aaa test-radius-server</code> 返回 Filter-ID、<code>show unp user</code>、Locator 按 Auth. User 查询（<span class="pg">原文p258-268</span> ）。</li>
+<li>三个高频陷阱：UNP 名必须与 Filter-ID 完全一致（<span class="pg">原文p263</span> ）；重测前 <code>unp user flush</code> 清残留（<span class="pg">原文p268</span> ）；客户端要取消缓存凭据/自动 Windows 登录/证书校验（<span class="pg">原文p267-268</span> ）。</li>
 </ul>
 <h3 id="7-policyview-ldap">7. PolicyView 双模式与 LDAP 策略仓库</h3>
-<p>OneTouch 面向 Voice/Data（Platinum-Gold-Silver-Bronze）/ACL 常见场景，参数设一次同时分发（&lt;&lt;<PAGE 273/276-278>&gt;&gt;）；Expert Mode 五步向导处理复杂策略——典型实验是按源 192.168.80.0/24 → 目的 192.168.200.0/24、Action=DROP、Precedence 30001 阻断客户端访问 Loopback0 网段，下发后等 "Notify Success!" 再验证 ping（ <code>&lt;span class="pg"&gt;原文p279-293&lt;/span&gt;</code> ）。底层机制要记住：策略存于安装时配置的 LDAP 目录服务器，交换机被通知后自行拉取（&lt;&lt;<PAGE 272/286>&gt;&gt;）——解释了为什么策略下发是"通知-拉取"而非直接推送。</p>
+<p>OneTouch 面向 Voice/Data（Platinum-Gold-Silver-Bronze）/ACL 常见场景，参数设一次同时分发（&lt;&lt;<PAGE 273/276-278>&gt;&gt;）；Expert Mode 五步向导处理复杂策略——典型实验是按源 192.168.80.0/24 → 目的 192.168.200.0/24、Action=DROP、Precedence 30001 阻断客户端访问 Loopback0 网段，下发后等 "Notify Success!" 再验证 ping（<span class="pg">原文p279-293</span> ）。底层机制要记住：策略存于安装时配置的 LDAP 目录服务器，交换机被通知后自行拉取（&lt;&lt;<PAGE 272/286>&gt;&gt;）——解释了为什么策略下发是"通知-拉取"而非直接推送。</p>
 <h3 id="8-quarantine-manager">8. Quarantine Manager：默认全禁用与三列表语义</h3>
-<p>检测来源开放（AOS DoS trap、第三方 IPS、Brick Firewall、WLAN Rogue Alert），规则含内置族（AlaDosTrap/Fortinet/OA WLAN）与自定义四要素（名称/描述/触发表达式/提取表达式/动作），执行手段从 <code>vlan 999 &lt;mac&gt;</code> 隔离到 ACL、端口关断分级（ <code>&lt;span class="pg"&gt;原文p298-307&lt;/span&gt;</code> ）。两个语义关键：所有内置规则默认禁用，"以为开了其实没开"最常见（ <code>&lt;span class="pg"&gt;原文p304&lt;/span&gt;</code> ）；Candidates 名单设备流量继续放行、只是等管理员决策，Banned 才是真隔离且必须手动释放，OV 自身与已发现交换机隐式在 Never Banned（ <code>&lt;span class="pg"&gt;原文p308-310&lt;/span&gt;</code> ）。</p>
+<p>检测来源开放（AOS DoS trap、第三方 IPS、Brick Firewall、WLAN Rogue Alert），规则含内置族（AlaDosTrap/Fortinet/OA WLAN）与自定义四要素（名称/描述/触发表达式/提取表达式/动作），执行手段从 <code>vlan 999 &lt;mac&gt;</code> 隔离到 ACL、端口关断分级（<span class="pg">原文p298-307</span> ）。两个语义关键：所有内置规则默认禁用，"以为开了其实没开"最常见（<span class="pg">原文p304</span> ）；Candidates 名单设备流量继续放行、只是等管理员决策，Banned 才是真隔离且必须手动释放，OV 自身与已发现交换机隐式在 Never Banned（<span class="pg">原文p308-310</span> ）。</p>
 <h3 id="9-sflow">9. 可观测体系：sFlow 采样到应用封禁的完整链路</h3>
 <ul>
 <li>Analytics 数据面是 sFlow：交换机采样发包 → OV Analytics Service → Mongo DB → WebServer 呈现，应用识别靠 sFlow 里的 TCP/UDP 端口（&lt;&lt;<PAGE 316/322/325>&gt;&gt;）。</li>
-<li>报表分 Visibility（需先建 Analytics Profile）与 Availability（ <code>&lt;span class="pg"&gt;原文p317-318&lt;/span&gt;</code> ）。</li>
-<li>AppVis 在此之上用签名文件做深度识别并可 enforcement DROP——实验里建 MyApps 组（Facebook/Twitter/youtube/bet365）封社交游戏流量，交换机侧 <code>show app-mon</code> 命令族可验证，注意要等 15-20 分钟数据才出来（ <code>&lt;span class="pg"&gt;原文p371-383&lt;/span&gt;</code> ）。</li>
+<li>报表分 Visibility（需先建 Analytics Profile）与 Availability（<span class="pg">原文p317-318</span> ）。</li>
+<li>AppVis 在此之上用签名文件做深度识别并可 enforcement DROP——实验里建 MyApps 组（Facebook/Twitter/youtube/bet365）封社交游戏流量，交换机侧 <code>show app-mon</code> 命令族可验证，注意要等 15-20 分钟数据才出来（<span class="pg">原文p371-383</span> ）。</li>
 <li>铁律是"一机一档"：Analytics/Signature/统计 Profile 都要求一台交换机只属一个同类 Profile，新建前先解绑 Default（&lt;&lt;<PAGE 342/372/391>&gt;&gt;）。</li>
 </ul>
 <h3 id="10-ha">10. HA 与运维底座</h3>
 <ul>
-<li>单 OV 故障的后果：管理员失去监控与配置能力，UPAM 场景下新客户端无法认证（ <code>&lt;span class="pg"&gt;原文p18&lt;/span&gt;</code> ）。</li>
-<li>HA 双实例常驻、Main 保持 Standby 同步、故障时服务整体接管，Trap 双实例自动配置、failover 自动 Replay 并弹告警横幅（ <code>&lt;span class="pg"&gt;原文p17-19&lt;/span&gt;</code> ）。</li>
+<li>单 OV 故障的后果：管理员失去监控与配置能力，UPAM 场景下新客户端无法认证（<span class="pg">原文p18</span> ）。</li>
+<li>HA 双实例常驻、Main 保持 Standby 同步、故障时服务整体接管，Trap 双实例自动配置、failover 自动 Replay 并弹告警横幅（<span class="pg">原文p17-19</span> ）。</li>
 <li>应用层看 Watchdog（Control Panel 可逐服务启停、查依赖，Scheduler History 看事件历史）（&lt;&lt;<PAGE 71/221>&gt;&gt;）。</li>
-<li>告警链路是 SMTP 配置 + Trap Responder（务必禁用 Normal 级别防刷屏，交换机端口需 link-trap enable）（ <code>&lt;span class="pg"&gt;原文p191-194&lt;/span&gt;</code> ）。</li>
+<li>告警链路是 SMTP 配置 + Trap Responder（务必禁用 Normal 级别防刷屏，交换机端口需 link-trap enable）（<span class="pg">原文p191-194</span> ）。</li>
 <li>账号侧按用户组授权 + 按角色启用 2FA（Google Authenticator TOTP）（&lt;&lt;<PAGE 157-159/216-218>&gt;&gt;）。</li>
 </ul>
 <h2 id="_3">三、一句话总纲</h2>

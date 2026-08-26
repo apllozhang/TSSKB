@@ -66,46 +66,46 @@ blockquote p{margin:6px 0}
 <li>规划核心交换、NMS、Captive Portal 与 LAN 带宽</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>需求分析与容量规划先于一切（P1/P2， <code>&lt;span class="pg"&gt;原文p6&lt;/span&gt;</code> ）：先明确客户端类型、应用与并发负载再谈 AP 数。RF 管理是高密成败关键（P6， <code>&lt;span class="pg"&gt;原文p8&lt;/span&gt;</code> ）。容量型优于覆盖型（F3/P36， <code>&lt;span class="pg"&gt;原文p50-51&lt;/span&gt;</code> ）：ALE 主张更多 AP、更低功率、小蜂窝——高速率关联、更优性能；覆盖型大功率大蜂窝导致低速率关联与更多干扰（X4）。高密选型专用自治架构 + Enterprise 模式集中管理（P5， <code>&lt;span class="pg"&gt;原文p5&lt;/span&gt;</code> ）。</p>
+<p>需求分析与容量规划先于一切（P1/P2，<span class="pg">原文p6</span> ）：先明确客户端类型、应用与并发负载再谈 AP 数。RF 管理是高密成败关键（P6，<span class="pg">原文p8</span> ）。容量型优于覆盖型（F3/P36，<span class="pg">原文p50-51</span> ）：ALE 主张更多 AP、更低功率、小蜂窝——高速率关联、更优性能；覆盖型大功率大蜂窝导致低速率关联与更多干扰（X4）。高密选型专用自治架构 + Enterprise 模式集中管理（P5，<span class="pg">原文p5</span> ）。</p>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
-<li>高密 WLAN 设计五步法（F1， <code>&lt;span class="pg"&gt;原文p6-7&lt;/span&gt;</code> ）：需求分析（客户端类型/应用/并发与带宽容量/安全与 QoS）→ 设计（预测勘测定点位）→ 部署 → 验证（实时性能对比规划指标+真实用户调查）→ 交付（BOM/AP 点位图/勘测报告/安装指南/配置指南/培训）</li>
-<li>容量 vs 覆盖范式决策（F3， <code>&lt;span class="pg"&gt;原文p50-51&lt;/span&gt;</code> ）：新部署一律容量型；覆盖型仅遗留网络过渡</li>
-<li>AP 计数与并发（P22/P23， <code>&lt;span class="pg"&gt;原文p12&lt;/span&gt;</code> ）：看台 120 终端/AP（150 座/AP）；媒体/大厅/周边/服务区 1 AP/100m²；30% 并发率经验值</li>
-<li>SSID 规划（P16/P17， <code>&lt;span class="pg"&gt;原文p9-10&lt;/span&gt;</code> ）：最多 7 个 SSID（5GHz 平均利用率约 12% 前提）；按角色差异化——访客=开放+Portal+限速、媒体 VIP=802.1X+高 QoS 不限速、售票=实时+QoS、监控=802.1X+流限速</li>
+<li>高密 WLAN 设计五步法（F1，<span class="pg">原文p6-7</span> ）：需求分析（客户端类型/应用/并发与带宽容量/安全与 QoS）→ 设计（预测勘测定点位）→ 部署 → 验证（实时性能对比规划指标+真实用户调查）→ 交付（BOM/AP 点位图/勘测报告/安装指南/配置指南/培训）</li>
+<li>容量 vs 覆盖范式决策（F3，<span class="pg">原文p50-51</span> ）：新部署一律容量型；覆盖型仅遗留网络过渡</li>
+<li>AP 计数与并发（P22/P23，<span class="pg">原文p12</span> ）：看台 120 终端/AP（150 座/AP）；媒体/大厅/周边/服务区 1 AP/100m²；30% 并发率经验值</li>
+<li>SSID 规划（P16/P17，<span class="pg">原文p9-10</span> ）：最多 7 个 SSID（5GHz 平均利用率约 12% 前提）；按角色差异化——访客=开放+Portal+限速、媒体 VIP=802.1X+高 QoS 不限速、售票=实时+QoS、监控=802.1X+流限速</li>
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>VHD 吞吐基线</strong>（C2/C3， <code>&lt;span class="pg"&gt;原文p11&lt;/span&gt;</code> ）：Wi-Fi 6 HE20 单用户 80Mbps（MCS8），60 并发衰减至约 40Mbps；再乘 25% VHD 折减系数（CCI/ACI/非 Wi-Fi 干扰/中等占空比）</li>
-<li><strong>并发负载推算</strong>（C4， <code>&lt;span class="pg"&gt;原文p12&lt;/span&gt;</code> ）：52,000 座 × 30% ≈ 21,000 并发设备 ≈ 每 AP 60+ 台</li>
-<li><strong>AP 型号-场景映射</strong>（C5， <code>&lt;span class="pg"&gt;原文p13&lt;/span&gt;</code> ）：AP1360=户外周边/监控；AP1322=看台定向（&lt;15m 结构）；AP1361D=看台猫道；AP1331/AP1351=媒体/大厅/礼堂；AP1311=办公室</li>
-<li><strong>布点实施</strong>：屋顶定向 AP1322+ANT-S-M4-60/-30 扇区天线，1 AP 平均覆盖 180 座（C6， <code>&lt;span class="pg"&gt;原文p16-17&lt;/span&gt;</code> ）；座椅下/扶手安装须 NEMA 防护盒（IP3/IP4）并防人为破坏（P26/P28/X17）；物理勘测决定最终点位（P27）</li>
-<li><strong>卫星机柜</strong>：约每 3,200 座一个，配 24 口交换机（C7， <code>&lt;span class="pg"&gt;原文p17&lt;/span&gt;</code> ）</li>
-<li>端到端架构（C8， <code>&lt;span class="pg"&gt;原文p18-19&lt;/span&gt;</code> ）：双 OmniSwitch 6900 冗余核心（40G 保底/100G 峰值、虚拟机箱、autofabric、双站点）；</li>
+<li><strong>VHD 吞吐基线</strong>（C2/C3，<span class="pg">原文p11</span> ）：Wi-Fi 6 HE20 单用户 80Mbps（MCS8），60 并发衰减至约 40Mbps；再乘 25% VHD 折减系数（CCI/ACI/非 Wi-Fi 干扰/中等占空比）</li>
+<li><strong>并发负载推算</strong>（C4，<span class="pg">原文p12</span> ）：52,000 座 × 30% ≈ 21,000 并发设备 ≈ 每 AP 60+ 台</li>
+<li><strong>AP 型号-场景映射</strong>（C5，<span class="pg">原文p13</span> ）：AP1360=户外周边/监控；AP1322=看台定向（&lt;15m 结构）；AP1361D=看台猫道；AP1331/AP1351=媒体/大厅/礼堂；AP1311=办公室</li>
+<li><strong>布点实施</strong>：屋顶定向 AP1322+ANT-S-M4-60/-30 扇区天线，1 AP 平均覆盖 180 座（C6，<span class="pg">原文p16-17</span> ）；座椅下/扶手安装须 NEMA 防护盒（IP3/IP4）并防人为破坏（P26/P28/X17）；物理勘测决定最终点位（P27）</li>
+<li><strong>卫星机柜</strong>：约每 3,200 座一个，配 24 口交换机（C7，<span class="pg">原文p17</span> ）</li>
+<li>端到端架构（C8，<span class="pg">原文p18-19</span> ）：双 OmniSwitch 6900 冗余核心（40G 保底/100G 峰值、虚拟机箱、autofabric、双站点）；</li>
 <li>OmniVista 2500 HA（单机 4000 AP，C11）+ Cirrus 10 云分析互补（QoE/热图/密度图，P33）；</li>
 <li>
 <p>第三方 Captive Portal 须支撑 ≥15,000 即时用户（如 UCOPIA，C9）；</p>
 </li>
 <li>
-<p><strong>LAN 带宽估算</strong>（C10/P32， <code>&lt;span class="pg"&gt;原文p21&lt;/span&gt;</code> ）：LAN BW = 信道复用因子 × AP 数 × 每 AP 客户端 × 每客户端带宽；再加 50% 有线冗余（实例 1×260×60×2=31.2G → 47G）</p>
+<p><strong>LAN 带宽估算</strong>（C10/P32，<span class="pg">原文p21</span> ）：LAN BW = 信道复用因子 × AP 数 × 每 AP 客户端 × 每客户端带宽；再加 50% 有线冗余（实例 1×260×60×2=31.2G → 47G）</p>
 </li>
-<li><strong>复用因子目标</strong>：VHD 区力争逼近 1；座椅下部署最高 3（P31， <code>&lt;span class="pg"&gt;原文p21&lt;/span&gt;</code> ）</li>
+<li><strong>复用因子目标</strong>：VHD 区力争逼近 1；座椅下部署最高 3（P31，<span class="pg">原文p21</span> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>5 万座体育场需求画像：数万座、AP 多于 5GHz 信道数、人均 2 台设备（C1， <code>&lt;span class="pg"&gt;原文p5&lt;/span&gt;</code> ）</li>
-<li>VHD 单用户吞吐衰减基线与 25% 折减（C2/C3， <code>&lt;span class="pg"&gt;原文p11&lt;/span&gt;</code> ）</li>
-<li>52,000 座 → 21,000 并发 → 60 设备/AP（C4， <code>&lt;span class="pg"&gt;原文p12&lt;/span&gt;</code> ）</li>
-<li>260 台 AP1322 屋顶定向布点（1 AP/180 座）（C6， <code>&lt;span class="pg"&gt;原文p16-17&lt;/span&gt;</code> ）</li>
-<li>LAN 带宽估算 47Gbps 实例（C10， <code>&lt;span class="pg"&gt;原文p21&lt;/span&gt;</code> ）</li>
+<li>5 万座体育场需求画像：数万座、AP 多于 5GHz 信道数、人均 2 台设备（C1，<span class="pg">原文p5</span> ）</li>
+<li>VHD 单用户吞吐衰减基线与 25% 折减（C2/C3，<span class="pg">原文p11</span> ）</li>
+<li>52,000 座 → 21,000 并发 → 60 设备/AP（C4，<span class="pg">原文p12</span> ）</li>
+<li>260 台 AP1322 屋顶定向布点（1 AP/180 座）（C6，<span class="pg">原文p16-17</span> ）</li>
+<li>LAN 带宽估算 47Gbps 实例（C10，<span class="pg">原文p21</span> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>
-<li>覆盖型设计陷阱：大功率大蜂窝=低速率关联+更多干扰（X4， <code>&lt;span class="pg"&gt;原文p51&lt;/span&gt;</code> ）</li>
-<li>低性能 Wi-Fi 6 AP 不用于 &gt;5,000 座场馆（X16/P25， <code>&lt;span class="pg"&gt;原文p13&lt;/span&gt;</code> ）</li>
-<li>SSID 超配：12 AP 同信道 × 10 SSID 吃掉 50% 空口；2.4G 更糟（8 AP × 3 SSID 即 &gt;50%）（C13/C14/X5， <code>&lt;span class="pg"&gt;原文p53&lt;/span&gt;</code> ）</li>
-<li>宽信道（80/160MHz）带来 CCI+3dB 噪声惩罚，SNR 降、MCS 降、吞吐缩（X1， <code>&lt;span class="pg"&gt;原文p49&lt;/span&gt;</code> ）</li>
-<li>座椅下 AP 易遭破坏，须防护（X17， <code>&lt;span class="pg"&gt;原文p16&lt;/span&gt;</code> ）</li>
-<li>信道利用率 ≥50% 即显著损害容量（P40， <code>&lt;span class="pg"&gt;原文p52&lt;/span&gt;</code> ）</li>
+<li>覆盖型设计陷阱：大功率大蜂窝=低速率关联+更多干扰（X4，<span class="pg">原文p51</span> ）</li>
+<li>低性能 Wi-Fi 6 AP 不用于 &gt;5,000 座场馆（X16/P25，<span class="pg">原文p13</span> ）</li>
+<li>SSID 超配：12 AP 同信道 × 10 SSID 吃掉 50% 空口；2.4G 更糟（8 AP × 3 SSID 即 &gt;50%）（C13/C14/X5，<span class="pg">原文p53</span> ）</li>
+<li>宽信道（80/160MHz）带来 CCI+3dB 噪声惩罚，SNR 降、MCS 降、吞吐缩（X1，<span class="pg">原文p49</span> ）</li>
+<li>座椅下 AP 易遭破坏，须防护（X17，<span class="pg">原文p16</span> ）</li>
+<li>信道利用率 ≥50% 即显著损害容量（P40，<span class="pg">原文p52</span> ）</li>
 </ul>
 <p>来源：OmniAccess Stellar High-Density Design Guidelines（p5-25）</p><div class="pn"><a href="../index.html">⬅ 返回课程首页</a><a class="nxt" href="sol-wlan-fine-tuning.html">下一单元：sol-wlan-fine-tuning ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

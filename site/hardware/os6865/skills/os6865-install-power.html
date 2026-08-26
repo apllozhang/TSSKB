@@ -68,43 +68,43 @@ blockquote p{margin:6px 0}
 <li>DNV 全架/半架船用套件安装与 55°C 降额核对</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>6865 供电拓扑为"外置托盘 + DB-15 电缆"（P5， <code>&lt;span class="pg"&gt;原文p19&lt;/span&gt;</code> ）：1 主 + 1 备两电源装托盘经 DB-15 接机箱，非内置槽位。加固部署走"环境-电源-PoE 预算"三环校验（F2）：环境环定气流与间隙档；电源环选 AC BP 180W 或 DC BP-D（-24V 输入预算再低 20-40W）；PoE 环按电源组合×温度档（60/65/74°C）查表（双 BP@60°C=300W、@65°C=150W，P25， <code>&lt;span class="pg"&gt;原文p56&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p57&lt;/span&gt;</code> ）。三环铁律：任何一环升档（更热/更少电源/更大 PD）都要重查另两环。上电纪律：全部电源与电源-机箱电缆装完才接电源（X12， <code>&lt;span class="pg"&gt;原文p19&lt;/span&gt;</code> ）；无总开关，插线即开机（P16）。</p>
+<p>6865 供电拓扑为"外置托盘 + DB-15 电缆"（P5，<span class="pg">原文p19</span> ）：1 主 + 1 备两电源装托盘经 DB-15 接机箱，非内置槽位。加固部署走"环境-电源-PoE 预算"三环校验（F2）：环境环定气流与间隙档；电源环选 AC BP 180W 或 DC BP-D（-24V 输入预算再低 20-40W）；PoE 环按电源组合×温度档（60/65/74°C）查表（双 BP@60°C=300W、@65°C=150W，P25，<span class="pg">原文p56</span> /<span class="pg">原文p57</span> ）。三环铁律：任何一环升档（更热/更少电源/更大 PD）都要重查另两环。上电纪律：全部电源与电源-机箱电缆装完才接电源（X12，<span class="pg">原文p19</span> ）；无总开关，插线即开机（P16）。</p>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>安装形态决策树（F3）：机架（侧装托盘；
 U28X 加 REAR-MNT）→桌面（后装托盘+桌脚，散热片面朝外）→DIN 导轨（工业柜；
 垂直装仅限不可燃表面）→墙装（自备螺丝验强度）→DNV 船用（FRCK 全架/HRCK 半架+电源盖，温度限 55°C）</li>
-<li>电源选型：AC=OS6865-BP 180W；DC=OS6865-BP-D 180W/140W（-20~-28V 或 -36~-72V 输入）；最多 2 个、双电必须分电路分源（P15/X30， <code>&lt;span class="pg"&gt;原文p49&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p50&lt;/span&gt;</code> ）</li>
+<li>电源选型：AC=OS6865-BP 180W；DC=OS6865-BP-D 180W/140W（-20~-28V 或 -36~-72V 输入）；最多 2 个、双电必须分电路分源（P15/X30，<span class="pg">原文p49</span> /<span class="pg">原文p50</span> ）</li>
 <li>高温预算核对：按三变量模型（电源数量×类型×温度档）查表，高温按降额后预算规划（P25，X31）</li>
-<li>安全前提：拆装电源必先断源（X11）；ESD 腕带有效前提=电源已装机箱且接接地插座（X35， <code>&lt;span class="pg"&gt;原文p75&lt;/span&gt;</code> ）</li>
+<li>安全前提：拆装电源必先断源（X11）；ESD 腕带有效前提=电源已装机箱且接接地插座（X35，<span class="pg">原文p75</span> ）</li>
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>侧装托盘</strong>：核对四类支架位置（Front Chassis 与 Front Tray 对齐）→托盘与机箱孔位对齐螺丝紧固（C1， <code>&lt;span class="pg"&gt;原文p13&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p14&lt;/span&gt;</code> ）</li>
-<li><strong>后装托盘</strong>：拆侧装支架→托盘 tab 插后板槽位→贴平后拧 2×M4 + 4×M3X6（C2， <code>&lt;span class="pg"&gt;原文p14&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p15&lt;/span&gt;</code> ）</li>
-<li><strong>托盘装电源</strong>：电源滑入、底部 tab 入槽→拧前面拇指螺丝→DB-15 分别插电源与机箱→冗余在另一侧重复（C5/C6， <code>&lt;span class="pg"&gt;原文p18&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p20&lt;/span&gt;</code> ）</li>
-<li><strong>DIN 导轨装电源</strong>：DIN 卡扣 M4X6 装电源→底部钩住导轨下沿→上推压缩张力弹簧→顶部越过导轨释放锁定（C12， <code>&lt;span class="pg"&gt;原文p25&lt;/span&gt;</code> ）；拆机箱=下拉 strap 释放卡扣（C15， <code>&lt;span class="pg"&gt;原文p27&lt;/span&gt;</code> ）</li>
-<li><strong>DNV 全架</strong>：侧导轨 7×M4X8+托盘 4×M4X8+支撑板→装电源→装电源盖→总装（盖 4×M3X6、填充板 2×M3X6、滑板 2×M3X6）（C16， <code>&lt;span class="pg"&gt;原文p28&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p30&lt;/span&gt;</code> ）</li>
-<li><strong>DC 接线五步</strong>：剥线 6-7.5mm（12AWG 三线）→螺丝刀旋松开夹→地线推入触底→旋紧拉验→正/负线重复（C20， <code>&lt;span class="pg"&gt;原文p52&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p53&lt;/span&gt;</code> ）；线扎按 1.5 圈/25mm 间距（C21）</li>
-<li><strong>接地</strong>：后部两螺孔接 Panduit LCD8-10AL lug + 8AWG + 30-60 in-lb（P40/X43， <code>&lt;span class="pg"&gt;原文p73&lt;/span&gt;</code> ）</li>
-<li><strong>桌脚安装</strong>：按机型用 B/C/D+E 孔位装 4-5 颗 M4X6，提供底部 1/2 RU 间隙（C4， <code>&lt;span class="pg"&gt;原文p16&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p17&lt;/span&gt;</code> ）</li>
+<li><strong>侧装托盘</strong>：核对四类支架位置（Front Chassis 与 Front Tray 对齐）→托盘与机箱孔位对齐螺丝紧固（C1，<span class="pg">原文p13</span> /<span class="pg">原文p14</span> ）</li>
+<li><strong>后装托盘</strong>：拆侧装支架→托盘 tab 插后板槽位→贴平后拧 2×M4 + 4×M3X6（C2，<span class="pg">原文p14</span> /<span class="pg">原文p15</span> ）</li>
+<li><strong>托盘装电源</strong>：电源滑入、底部 tab 入槽→拧前面拇指螺丝→DB-15 分别插电源与机箱→冗余在另一侧重复（C5/C6，<span class="pg">原文p18</span> /<span class="pg">原文p20</span> ）</li>
+<li><strong>DIN 导轨装电源</strong>：DIN 卡扣 M4X6 装电源→底部钩住导轨下沿→上推压缩张力弹簧→顶部越过导轨释放锁定（C12，<span class="pg">原文p25</span> ）；拆机箱=下拉 strap 释放卡扣（C15，<span class="pg">原文p27</span> ）</li>
+<li><strong>DNV 全架</strong>：侧导轨 7×M4X8+托盘 4×M4X8+支撑板→装电源→装电源盖→总装（盖 4×M3X6、填充板 2×M3X6、滑板 2×M3X6）（C16，<span class="pg">原文p28</span> /<span class="pg">原文p30</span> ）</li>
+<li><strong>DC 接线五步</strong>：剥线 6-7.5mm（12AWG 三线）→螺丝刀旋松开夹→地线推入触底→旋紧拉验→正/负线重复（C20，<span class="pg">原文p52</span> /<span class="pg">原文p53</span> ）；线扎按 1.5 圈/25mm 间距（C21）</li>
+<li><strong>接地</strong>：后部两螺孔接 Panduit LCD8-10AL lug + 8AWG + 30-60 in-lb（P40/X43，<span class="pg">原文p73</span> ）</li>
+<li><strong>桌脚安装</strong>：按机型用 B/C/D+E 孔位装 4-5 颗 M4X6，提供底部 1/2 RU 间隙（C4，<span class="pg">原文p16</span> /<span class="pg">原文p17</span> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>高温预算降额实战：P16X/U12X 双 BP 电源 60°C=300W，65°C/74°C 腰斩至 150W——高温机房 PoE 规划必须按降额后数值（X31/P25， <code>&lt;span class="pg"&gt;原文p56&lt;/span&gt;</code> ）</li>
-<li>DC -24V 部署：BP-D 在 -20~-28V/12A 输入时输出预算比 -48V 输入再低 20-40W（P15， <code>&lt;span class="pg"&gt;原文p50&lt;/span&gt;</code> ）</li>
-<li>DNV 半架安装六步全流程（C17， <code>&lt;span class="pg"&gt;原文p31&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p34&lt;/span&gt;</code> ）</li>
+<li>高温预算降额实战：P16X/U12X 双 BP 电源 60°C=300W，65°C/74°C 腰斩至 150W——高温机房 PoE 规划必须按降额后数值（X31/P25，<span class="pg">原文p56</span> ）</li>
+<li>DC -24V 部署：BP-D 在 -20~-28V/12A 输入时输出预算比 -48V 输入再低 20-40W（P15，<span class="pg">原文p50</span> ）</li>
+<li>DNV 半架安装六步全流程（C17，<span class="pg">原文p31</span> -<span class="pg">原文p34</span> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>
-<li><strong>DC 极性军规（本机型易混点）</strong>：无论 -24V 还是 -48V 输入，一律源正接正、负接负，"regardless of the polarity signs shown on the power supply specification labels"——勿按电源标签上的 -48V/+24V/-24V 符号反接，错插可致损坏（X14/P21， <code>&lt;span class="pg"&gt;原文p53&lt;/span&gt;</code> ）</li>
-<li>DC 孔位错插后果：线插错孔电源不工作且可能损坏（X13， <code>&lt;span class="pg"&gt;原文p52&lt;/span&gt;</code> ）</li>
-<li>就绪前禁上电：电源与 DB-15 电缆未全部装完不得接源（X12， <code>&lt;span class="pg"&gt;原文p19&lt;/span&gt;</code> ）</li>
-<li>桌面方向军规：大散热片面必须朝外远离安装面，面贴桌面=散热失效（X4/P14， <code>&lt;span class="pg"&gt;原文p11&lt;/span&gt;</code> ）；无桌脚禁桌面运行（X5， <code>&lt;span class="pg"&gt;原文p16&lt;/span&gt;</code> ）</li>
-<li>垂直 DIN 安装仅限混凝土等不可燃表面（X7， <code>&lt;span class="pg"&gt;原文p25&lt;/span&gt;</code> ）</li>
-<li>DC 线超 3 米属本地规范管辖，须咨询电工与 AHJ（X15， <code>&lt;span class="pg"&gt;原文p51&lt;/span&gt;</code> ）；过流必须 15A+双 12AWG（X16）</li>
-<li>EMC 强制：每个 DC 电源地线必须接大地（X23， <code>&lt;span class="pg"&gt;原文p74&lt;/span&gt;</code> ）；接地引线用 22AWG（X44）</li>
-<li>禁延长线；电涌军规违反可失保（X9/X17， <code>&lt;span class="pg"&gt;原文p10&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p11&lt;/span&gt;</code> ）</li>
-<li>双人搬运（屈膝直背）；检修前断全部电源（X32/X21， <code>&lt;span class="pg"&gt;原文p72&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p73&lt;/span&gt;</code> ）</li>
+<li><strong>DC 极性军规（本机型易混点）</strong>：无论 -24V 还是 -48V 输入，一律源正接正、负接负，"regardless of the polarity signs shown on the power supply specification labels"——勿按电源标签上的 -48V/+24V/-24V 符号反接，错插可致损坏（X14/P21，<span class="pg">原文p53</span> ）</li>
+<li>DC 孔位错插后果：线插错孔电源不工作且可能损坏（X13，<span class="pg">原文p52</span> ）</li>
+<li>就绪前禁上电：电源与 DB-15 电缆未全部装完不得接源（X12，<span class="pg">原文p19</span> ）</li>
+<li>桌面方向军规：大散热片面必须朝外远离安装面，面贴桌面=散热失效（X4/P14，<span class="pg">原文p11</span> ）；无桌脚禁桌面运行（X5，<span class="pg">原文p16</span> ）</li>
+<li>垂直 DIN 安装仅限混凝土等不可燃表面（X7，<span class="pg">原文p25</span> ）</li>
+<li>DC 线超 3 米属本地规范管辖，须咨询电工与 AHJ（X15，<span class="pg">原文p51</span> ）；过流必须 15A+双 12AWG（X16）</li>
+<li>EMC 强制：每个 DC 电源地线必须接大地（X23，<span class="pg">原文p74</span> ）；接地引线用 22AWG（X44）</li>
+<li>禁延长线；电涌军规违反可失保（X9/X17，<span class="pg">原文p10</span> /<span class="pg">原文p11</span> ）</li>
+<li>双人搬运（屈膝直背）；检修前断全部电源（X32/X21，<span class="pg">原文p72</span> /<span class="pg">原文p73</span> ）</li>
 </ul>
 <p>来源：OmniSwitch 6865 Hardware Users Guide（Ch1 p9-41 + Ch2 p42-55）</p><div class="pn"><a href="os6865-model-ports.html">⬅ 上一单元：os6865-model-ports</a><a class="nxt" href="os6865-ops-troubleshoot.html">下一单元：os6865-ops-troubleshoot ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

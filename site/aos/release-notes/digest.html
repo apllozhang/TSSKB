@@ -67,20 +67,20 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="_1">一、知识地图（四技能单元）</h2>
 <ol>
-<li>升级方法论与固件三件套（aos-rn-upgrade-path）：升级前巡检/基线/固件核对、标准升级五步、ISSU 十二步、FPGA/U-Boot/CPLD/ONIE 升级、回退（Appendix D-H， <code>&lt;span class="pg"&gt;原文p67-82&lt;/span&gt;</code> ）。<ul>
+<li>升级方法论与固件三件套（aos-rn-upgrade-path）：升级前巡检/基线/固件核对、标准升级五步、ISSU 十二步、FPGA/U-Boot/CPLD/ONIE 升级、回退（Appendix D-H，<span class="pg">原文p67-82</span> ）。<ul>
 <li>
 <ol>
-<li>Secure Boot、ALE CA 与包管理（aos-rn-secure-boot）：三平台 Secure Boot 启用次序、ALE CA 证书生命周期、pkgmgr 包管理、弱加密禁用与首访改密（ <code>&lt;span class="pg"&gt;原文p26-34&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p101-105&lt;/span&gt;</code> ）。</li>
+<li>Secure Boot、ALE CA 与包管理（aos-rn-secure-boot）：三平台 Secure Boot 启用次序、ALE CA 证书生命周期、pkgmgr 包管理、弱加密禁用与首访改密（<span class="pg">原文p26-34</span> /<span class="pg">原文p101-105</span> ）。</li>
 </ol>
 </li>
 <li>
 <ol>
-<li>Open CR 已知问题排障库（aos-rn-known-issues）：光模块/链路类、软件/协议类已知未修问题与平台端口级限制（ <code>&lt;span class="pg"&gt;原文p14-21&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p41-46&lt;/span&gt;</code> ）。</li>
+<li>Open CR 已知问题排障库（aos-rn-known-issues）：光模块/链路类、软件/协议类已知未修问题与平台端口级限制（<span class="pg">原文p14-21</span> /<span class="pg">原文p41-46</span> ）。</li>
 </ol>
 </li>
 <li>
 <ol>
-<li>新特性与废弃变更（aos-rn-new-features-deprecations）：8.10R4 新特性盘点、特性许可四层模型、跨版本废弃/行为变更清单（ <code>&lt;span class="pg"&gt;原文p15-40&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p52-61&lt;/span&gt;</code> ）。</li>
+<li>新特性与废弃变更（aos-rn-new-features-deprecations）：8.10R4 新特性盘点、特性许可四层模型、跨版本废弃/行为变更清单（<span class="pg">原文p15-40</span> /<span class="pg">原文p52-61</span> ）。</li>
 </ol>
 </li>
 </ul>
@@ -88,7 +88,7 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="_2">二、四单元要点串讲</h2>
 <h3 id="1-standard-vs-issu">1. 升级方法论：Standard vs ISSU 二分 + 固件三件套</h3>
-<p>升级方法论二分（F1， <code>&lt;span class="pg"&gt;原文p67-76&lt;/span&gt;</code> ）：Standard 一次中断换确定性，ISSU 逐成员/逐 CMM 演进保业务；选型三问——平台支持否（6360/6465/6560/6570M 不支持 ISSU，X2）、源版本在支持清单否、要不要保留 running 目录名。固件三件套（F2）：AOS 镜像/U-Boot·ONIE·BIOS 引导件/FPGA·CPLD 逻辑件三者独立演进，<code>show hardware-info</code> 对 Minimum 列是升级第一动作（C3， <code>&lt;span class="pg"&gt;原文p4&lt;/span&gt;</code> ）。标准升级五步以 <code>copy running certified</code> 收尾、<code>reload from certified</code> 兜底（C4）；ISSU 十二步的灵魂是 SSH 到 Slave（VFL 内网 IP 127.10.x.65）清同名目录 + 等全部 System ready 再认证（C5， <code>&lt;span class="pg"&gt;原文p74-76&lt;/span&gt;</code> ）。ONIE 机型 CPLD 升级后只回 Certified 不回 running（X18）。</p>
+<p>升级方法论二分（F1，<span class="pg">原文p67-76</span> ）：Standard 一次中断换确定性，ISSU 逐成员/逐 CMM 演进保业务；选型三问——平台支持否（6360/6465/6560/6570M 不支持 ISSU，X2）、源版本在支持清单否、要不要保留 running 目录名。固件三件套（F2）：AOS 镜像/U-Boot·ONIE·BIOS 引导件/FPGA·CPLD 逻辑件三者独立演进，<code>show hardware-info</code> 对 Minimum 列是升级第一动作（C3，<span class="pg">原文p4</span> ）。标准升级五步以 <code>copy running certified</code> 收尾、<code>reload from certified</code> 兜底（C4）；ISSU 十二步的灵魂是 SSH 到 Slave（VFL 内网 IP 127.10.x.65）清同名目录 + 等全部 System ready 再认证（C5，<span class="pg">原文p74-76</span> ）。ONIE 机型 CPLD 升级后只回 Certified 不回 running（X18）。</p>
 <h3 id="2-secure-boot">2. Secure Boot：平台分型决定次序</h3>
 <p>Secure Boot 三件配合：引导件升级+专用镜像+（ONIE 型）BIOS 使能（P1）。U-Boot 型（6360/6465/6560/6570M）次序颠倒则重启回落 Certified（X1/P2）；
 ONIE 型升镜像→BIOS 启用→装 onie deb（C10）；
@@ -107,16 +107,16 @@ OVSDB 移除（X68）；
 6560 Metro 特性转收费（X11）。许可四层：Feature/Performance→Metro→Advanced Routing（6560 版限 2 OSPF 区域、8.10R4 加 BGP）→Premium 捆绑（VC 内 Match/Local-Only 语义，P36）。</p>
 <h2 id="_3">三、高价值页码索引</h2>
 <ul>
-<li>升级前置检查： <code>&lt;span class="pg"&gt;原文p70-71&lt;/span&gt;</code> ；标准升级： <code>&lt;span class="pg"&gt;原文p72-73&lt;/span&gt;</code> ；ISSU： <code>&lt;span class="pg"&gt;原文p74-76&lt;/span&gt;</code> ；FPGA/U-Boot： <code>&lt;span class="pg"&gt;原文p79-80&lt;/span&gt;</code> ；CPLD/ONIE： <code>&lt;span class="pg"&gt;原文p81-82&lt;/span&gt;</code> </li>
-<li>Prerequisites 必读： <code>&lt;span class="pg"&gt;原文p15-18&lt;/span&gt;</code> ；许可： <code>&lt;span class="pg"&gt;原文p19-20&lt;/span&gt;</code> ；新硬件： <code>&lt;span class="pg"&gt;原文p21-22&lt;/span&gt;</code> ；新特性： <code>&lt;span class="pg"&gt;原文p23-40&lt;/span&gt;</code> </li>
-<li>Open CR： <code>&lt;span class="pg"&gt;原文p41-46&lt;/span&gt;</code> ；</li>
-<li>热插拔： <code>&lt;span class="pg"&gt;原文p47-49&lt;/span&gt;</code> ；</li>
-<li>Feature Matrix： <code>&lt;span class="pg"&gt;原文p52-61&lt;/span&gt;</code> ；</li>
-<li>MACsec 平台： <code>&lt;span class="pg"&gt;原文p62-63&lt;/span&gt;</code> ；</li>
-<li>SPB BVLAN： <code>&lt;span class="pg"&gt;原文p64-66&lt;/span&gt;</code> ；</li>
-<li>Fixed CR： <code>&lt;span class="pg"&gt;原文p83-100&lt;/span&gt;</code> ；</li>
-<li>包管理： <code>&lt;span class="pg"&gt;原文p101-102&lt;/span&gt;</code> ；</li>
-<li>Secure Boot： <code>&lt;span class="pg"&gt;原文p104-105&lt;/span&gt;</code> ；</li>
+<li>升级前置检查：<span class="pg">原文p70-71</span> ；标准升级：<span class="pg">原文p72-73</span> ；ISSU：<span class="pg">原文p74-76</span> ；FPGA/U-Boot：<span class="pg">原文p79-80</span> ；CPLD/ONIE：<span class="pg">原文p81-82</span> </li>
+<li>Prerequisites 必读：<span class="pg">原文p15-18</span> ；许可：<span class="pg">原文p19-20</span> ；新硬件：<span class="pg">原文p21-22</span> ；新特性：<span class="pg">原文p23-40</span> </li>
+<li>Open CR：<span class="pg">原文p41-46</span> ；</li>
+<li>热插拔：<span class="pg">原文p47-49</span> ；</li>
+<li>Feature Matrix：<span class="pg">原文p52-61</span> ；</li>
+<li>MACsec 平台：<span class="pg">原文p62-63</span> ；</li>
+<li>SPB BVLAN：<span class="pg">原文p64-66</span> ；</li>
+<li>Fixed CR：<span class="pg">原文p83-100</span> ；</li>
+<li>包管理：<span class="pg">原文p101-102</span> ；</li>
+<li>Secure Boot：<span class="pg">原文p104-105</span> ；</li>
 </ul>
 <h2 id="_4">四、条目统计与技能对应</h2>
 <p>verified 计数：principles 48：

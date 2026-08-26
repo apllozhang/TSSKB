@@ -76,31 +76,31 @@ blockquote p{margin:6px 0}
 <li>多个用户 VLAN 共享一个组播 VLAN 做单向分发（MVR/IPMVLAN）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>组播分发框架（F13， <code>&lt;span class="pg"&gt;原文p1032&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p1086&lt;/span&gt;</code> ）：IPMS(IGMP)/IPMSv6(MLD) 做 VLAN/service 域内组播交换，PIM/DVMRP 做域间路由，IPMVLAN/MVR 做跨 VLAN 单向分发，EVPN RT6-8/OISM 做叠加层优化。组播组地址为 D 类 224.0.0.0-239.255.255.255，239/8 为管理域（P148， <code>&lt;span class="pg"&gt;原文p1032&lt;/span&gt;</code> ）。多个组播路由器共存时最低 IP 者当选 IGMP querier（P150， <code>&lt;span class="pg"&gt;原文p1033&lt;/span&gt;</code> ）。组播路由协议建立组播路由库，IPMS 依其决策+端口成员请求转发（P151， <code>&lt;span class="pg"&gt;原文p1033&lt;/span&gt;</code> ）。</p>
+<p>组播分发框架（F13，<span class="pg">原文p1032</span> /<span class="pg">原文p1086</span> ）：IPMS(IGMP)/IPMSv6(MLD) 做 VLAN/service 域内组播交换，PIM/DVMRP 做域间路由，IPMVLAN/MVR 做跨 VLAN 单向分发，EVPN RT6-8/OISM 做叠加层优化。组播组地址为 D 类 224.0.0.0-239.255.255.255，239/8 为管理域（P148，<span class="pg">原文p1032</span> ）。多个组播路由器共存时最低 IP 者当选 IGMP querier（P150，<span class="pg">原文p1033</span> ）。组播路由协议建立组播路由库，IPMS 依其决策+端口成员请求转发（P151，<span class="pg">原文p1033</span> ）。</p>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>域内组播交换选 IPMS/IPMSv6</strong>：IGMP 版本（v1-3）按客户端与源端能力选；querier 可静态指定；静态组用于不发 report 的接收者</li>
 <li><strong>跨域组播选路由交互</strong>：PIM-SM/DM 或 DVMRP 建路由库，IPMSR=IPMS+组播路由组合</li>
-<li><strong>跨 VLAN 分发选 IPMVLAN</strong>：普通接入口用 Enterprise 模式；QinQ/运营商口用 VLAN Stacking 模式——模式建后不可改，必须删除重建（X58， <code>&lt;span class="pg"&gt;原文p1086&lt;/span&gt;</code> ）</li>
+<li><strong>跨 VLAN 分发选 IPMVLAN</strong>：普通接入口用 Enterprise 模式；QinQ/运营商口用 VLAN Stacking 模式——模式建后不可改，必须删除重建（X58，<span class="pg">原文p1086</span> ）</li>
 <li><strong>叠加层（EVPN）组播优化</strong>：RT3 ingress replication / RT6-8 选择性组播 / OISM，详见 aos-nc-fabric-backbone</li>
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>IPMS</strong>：全局使能→IGMP 版本/静态 querier/静态组→query interval/robustness 等参数；IPMSv6 对应 MLD 系列；验证 show ipms / ipmsv6（cases·C49， <code>&lt;span class="pg"&gt;原文p1038&lt;/span&gt;</code> ）</li>
-<li><strong>IPMVLAN（MVR）</strong>：<code>ipmvlan &lt;id&gt;</code> 使能→分配 IPv4/IPv6 地址→sender 口（NNI，仅 1 个）→receiver 口/CVLAN 关联→静态 IGMP 组；验证 show ipmvlan（cases·C50， <code>&lt;span class="pg"&gt;原文p1093&lt;/span&gt;</code> ）</li>
+<li><strong>IPMS</strong>：全局使能→IGMP 版本/静态 querier/静态组→query interval/robustness 等参数；IPMSv6 对应 MLD 系列；验证 show ipms / ipmsv6（cases·C49，<span class="pg">原文p1038</span> ）</li>
+<li><strong>IPMVLAN（MVR）</strong>：<code>ipmvlan &lt;id&gt;</code> 使能→分配 IPv4/IPv6 地址→sender 口（NNI，仅 1 个）→receiver 口/CVLAN 关联→静态 IGMP 组；验证 show ipmvlan（cases·C50，<span class="pg">原文p1093</span> ）</li>
 <li><strong>组播路由交互</strong>：PIM/DVMRP 配置见原书第 31 章（本书 verified 以 IPMS/IPMVLAN 为主，PIM 细节建议结合 Advanced Routing 手册）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>IPMS 全局使能+IGMP 参数+静态组（C49， <code>&lt;span class="pg"&gt;原文p1038&lt;/span&gt;</code> ）</li>
-<li>IPMVLAN sender/receiver 分发（C50， <code>&lt;span class="pg"&gt;原文p1093&lt;/span&gt;</code> ）</li>
+<li>IPMS 全局使能+IGMP 参数+静态组（C49，<span class="pg">原文p1038</span> ）</li>
+<li>IPMVLAN sender/receiver 分发（C50，<span class="pg">原文p1093</span> ）</li>
 </ul>
 <h2 id="b">B（反例/坑）</h2>
 <ul>
-<li>IPMVLAN 模式（企业/Stacking）建后不可改，必须删除重建（X58， <code>&lt;span class="pg"&gt;原文p1086&lt;/span&gt;</code> ）</li>
-<li>Stacking 模式 IPMVLAN 仅允许一个 sender 口；IP 与 CVLAN-tag 两种绑定方式不要同时用（X59， <code>&lt;span class="pg"&gt;原文p1087&lt;/span&gt;</code> ）</li>
+<li>IPMVLAN 模式（企业/Stacking）建后不可改，必须删除重建（X58，<span class="pg">原文p1086</span> ）</li>
+<li>Stacking 模式 IPMVLAN 仅允许一个 sender 口；IP 与 CVLAN-tag 两种绑定方式不要同时用（X59，<span class="pg">原文p1087</span> ）</li>
 <li>sender 口是 NNI 且唯一，receiver 口才面向用户；模式选错只能推倒重来</li>
-<li>IGMP querier 最低 IP 当选；多路由器共存时注意 querier 漂移对转发表的影响（P150， <code>&lt;span class="pg"&gt;原文p1033&lt;/span&gt;</code> ）</li>
+<li>IGMP querier 最低 IP 当选；多路由器共存时注意 querier 漂移对转发表的影响（P150，<span class="pg">原文p1033</span> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniSwitch AOS 8.10R4 Network Configuration Guide 第 31 章 IP Multicast Switching（ <code>&lt;span class="pg"&gt;原文p1032-1038&lt;/span&gt;</code> ）、第 32 章 IP Multicast VLAN（ <code>&lt;span class="pg"&gt;原文p1086-1093&lt;/span&gt;</code> ）。条目来源：cases C49/C50；principles P148-P151；counter-examples X58/X59；frameworks F13。</p><div class="pn"><a href="aos-nc-routing.html">⬅ 上一单元：aos-nc-routing</a><a class="nxt" href="aos-nc-qos-policy.html">下一单元：aos-nc-qos-policy ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<p>OmniSwitch AOS 8.10R4 Network Configuration Guide 第 31 章 IP Multicast Switching（<span class="pg">原文p1032-1038</span> ）、第 32 章 IP Multicast VLAN（<span class="pg">原文p1086-1093</span> ）。条目来源：cases C49/C50；principles P148-P151；counter-examples X58/X59；frameworks F13。</p><div class="pn"><a href="aos-nc-routing.html">⬅ 上一单元：aos-nc-routing</a><a class="nxt" href="aos-nc-qos-policy.html">下一单元：aos-nc-qos-policy ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

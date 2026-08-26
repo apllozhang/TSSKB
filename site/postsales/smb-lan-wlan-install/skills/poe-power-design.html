@@ -95,45 +95,45 @@ blockquote p{margin:6px 0}
    -&gt; lanpower slot 1/1 priority-disconnect enable
    -&gt; lanpower slot 1/1 delayed-start enable seconds 120
    -&gt; lanpower fpoe enable / lanpower ppoe enable</code>
-   （C27， <code>&lt;span class="pg"&gt;原文p150&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p154&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p144&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p145&lt;/span&gt;</code> ）</li>
+   （C27，<span class="pg">原文p150</span> –<span class="pg">原文p154</span> 、<span class="pg">原文p144</span> –<span class="pg">原文p145</span> ）</li>
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
-<li>四标准功率对照（P01， <code>&lt;span class="pg"&gt;原文p147&lt;/span&gt;</code> ）：af Type1 = PD 12.95W / PSE 15.4W / 350mA / 3 级；</li>
+<li>四标准功率对照（P01，<span class="pg">原文p147</span> ）：af Type1 = PD 12.95W / PSE 15.4W / 350mA / 3 级；</li>
 <li>at Type2 = 25.5W / 30W / 600mA / 4 级；</li>
 <li>bt Type3 = 51W / 60W / 6 级；</li>
 <li>
 <p>bt Type4 = 71W / 100W / 8 级；</p>
 </li>
 <li>
-<p>特性选型（F10， <code>&lt;span class="pg"&gt;原文p144&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p145&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p154&lt;/span&gt;</code> ）：</p>
+<p>特性选型（F10，<span class="pg">原文p144</span> –<span class="pg">原文p145</span> 、<span class="pg">原文p154</span> ）：</p>
 </li>
 <li>Fast PoE：上电数秒即供电，不等系统完全启动；</li>
 <li>Perpetual PoE：交换机软重启期间对 PD 不断电；</li>
 <li>delayed-start：lanpower 延迟启动 120–600 秒（5 的倍数），等系统稳定再供电。</li>
-<li>PoE 端口 LED 判读：琥珀 = 已连接且受电，绿 = 已连接但未受电（P44， <code>&lt;span class="pg"&gt;原文p143&lt;/span&gt;</code> ）。</li>
-<li>非 PoE 交换机环境可用 PoE Injector / Midspan 补供电（glossary· <code>&lt;span class="pg"&gt;原文p39&lt;/span&gt;</code> ）。</li>
-<li>SMB 拓扑选型时按 PoE 能力分档（.bt 90W、最大摄像头数）（F14， <code>&lt;span class="pg"&gt;原文p491&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p493&lt;/span&gt;</code> ）。</li>
+<li>PoE 端口 LED 判读：琥珀 = 已连接且受电，绿 = 已连接但未受电（P44，<span class="pg">原文p143</span> ）。</li>
+<li>非 PoE 交换机环境可用 PoE Injector / Midspan 补供电（glossary·<span class="pg">原文p39</span> ）。</li>
+<li>SMB 拓扑选型时按 PoE 能力分档（.bt 90W、最大摄像头数）（F14，<span class="pg">原文p491</span> –<span class="pg">原文p493</span> ）。</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li><code>show lanpower slot 1/1</code> 确认 AP 口 1/1/6 Powered On、Class 4（C09， <code>&lt;span class="pg"&gt;原文p173&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p175&lt;/span&gt;</code> ）。</li>
-<li>Lightning Config 完成后主页 PoE Port Configuration 查看各口受电状态（C26， <code>&lt;span class="pg"&gt;原文p481&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p490&lt;/span&gt;</code> ）。</li>
-<li>AP 上联口设 <code>priority critical</code>，超预算时 AP 最后断电（P02， <code>&lt;span class="pg"&gt;原文p151&lt;/span&gt;</code> ）。</li>
+<li><code>show lanpower slot 1/1</code> 确认 AP 口 1/1/6 Powered On、Class 4（C09，<span class="pg">原文p173</span> –<span class="pg">原文p175</span> ）。</li>
+<li>Lightning Config 完成后主页 PoE Port Configuration 查看各口受电状态（C26，<span class="pg">原文p481</span> –<span class="pg">原文p490</span> ）。</li>
+<li>AP 上联口设 <code>priority critical</code>，超预算时 AP 最后断电（P02，<span class="pg">原文p151</span> ）。</li>
 </ul>
 <h2 id="b">B（边界与陷阱）</h2>
 <ul>
-<li>FPoE/PPoE 与 delayed-start 互斥，不能同时启用；OS6360 的 P10A 子型号不支持 FPoE/PPoE（CE18， <code>&lt;span class="pg"&gt;原文p154&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p144&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p145&lt;/span&gt;</code> ）。</li>
-<li>电容检测法不符合 802.3af 标准，只用于 legacy IP 话机，默认不开（P05， <code>&lt;span class="pg"&gt;原文p152&lt;/span&gt;</code> ）。</li>
-<li>EEE（802.3az）仅适用铜缆 100/1000M 端口，不兼容光口"U"机型（P04， <code>&lt;span class="pg"&gt;原文p146&lt;/span&gt;</code> ）。</li>
-<li>型号不带 «P» 不支持 PoE；动态分配按 PD 实际需求供电（P03， <code>&lt;span class="pg"&gt;原文p147&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p148&lt;/span&gt;</code> ）。</li>
+<li>FPoE/PPoE 与 delayed-start 互斥，不能同时启用；OS6360 的 P10A 子型号不支持 FPoE/PPoE（CE18，<span class="pg">原文p154</span> 、<span class="pg">原文p144</span> –<span class="pg">原文p145</span> ）。</li>
+<li>电容检测法不符合 802.3af 标准，只用于 legacy IP 话机，默认不开（P05，<span class="pg">原文p152</span> ）。</li>
+<li>EEE（802.3az）仅适用铜缆 100/1000M 端口，不兼容光口"U"机型（P04，<span class="pg">原文p146</span> ）。</li>
+<li>型号不带 «P» 不支持 PoE；动态分配按 PD 实际需求供电（P03，<span class="pg">原文p147</span> –<span class="pg">原文p148</span> ）。</li>
 </ul>
 <h2 id="_1">来源</h2>
 <ul>
-<li>case·PoE 端口级配置命令组（ <code>&lt;span class="pg"&gt;原文p150&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p154&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p144&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p145&lt;/span&gt;</code> ）</li>
-<li>framework·PoE 供电特性选型（ <code>&lt;span class="pg"&gt;原文p144&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p145&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p154&lt;/span&gt;</code> ）</li>
-<li>principle·PoE 四标准功率等级对照（ <code>&lt;span class="pg"&gt;原文p147&lt;/span&gt;</code> ）</li>
-<li>principle·端口优先级与断电顺序（ <code>&lt;span class="pg"&gt;原文p151&lt;/span&gt;</code> ）</li>
-<li>principle·动态分配与型号标识（ <code>&lt;span class="pg"&gt;原文p147&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p148&lt;/span&gt;</code> ）</li>
-<li>counter·FPoE/PPoE 与 delayed-start 互斥、P10A 限制（ <code>&lt;span class="pg"&gt;原文p154&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p144&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p145&lt;/span&gt;</code> ）</li>
+<li>case·PoE 端口级配置命令组（<span class="pg">原文p150</span> –<span class="pg">原文p154</span> 、<span class="pg">原文p144</span> –<span class="pg">原文p145</span> ）</li>
+<li>framework·PoE 供电特性选型（<span class="pg">原文p144</span> –<span class="pg">原文p145</span> 、<span class="pg">原文p154</span> ）</li>
+<li>principle·PoE 四标准功率等级对照（<span class="pg">原文p147</span> ）</li>
+<li>principle·端口优先级与断电顺序（<span class="pg">原文p151</span> ）</li>
+<li>principle·动态分配与型号标识（<span class="pg">原文p147</span> –<span class="pg">原文p148</span> ）</li>
+<li>counter·FPoE/PPoE 与 delayed-start 互斥、P10A 限制（<span class="pg">原文p154</span> 、<span class="pg">原文p144</span> –<span class="pg">原文p145</span> ）</li>
 </ul><div class="pn"><a href="vlan-port-assignment.html">⬅ 上一单元：vlan-port-assignment</a><a class="nxt" href="stp-lacp-basics.html">下一单元：stp-lacp-basics ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

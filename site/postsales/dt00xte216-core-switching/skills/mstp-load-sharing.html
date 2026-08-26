@@ -82,34 +82,34 @@ blockquote p{margin:6px 0}
 对外整个 region 表现为一台交换机。负载分担的本质是让不同 MSTI 选不同根桥（差异化优先级）。</p>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
-<li>切模式：<code>spantree mode flat</code> → <code>spantree mst region name lab_region</code> → <code>spantree mst region revision-level 1</code> → <code>spantree protocol mstp</code>（ <code>&lt;span class="pg"&gt;原文p141&lt;/span&gt;</code> ）</li>
-<li>建实例并映射 VLAN：<code>spantree msti 1</code> / <code>spantree msti 2</code> + <code>spantree msti 1 vlan 20</code> / <code>spantree msti 2 vlan 30</code>（ <code>&lt;span class="pg"&gt;原文p143&lt;/span&gt;</code> ）</li>
-<li>验证：<code>show spantree msti vlan-map</code>（如 CIST: 1-19,21-29,31-4094）（ <code>&lt;span class="pg"&gt;原文p143&lt;/span&gt;</code> ）</li>
-<li>负载分担：<code>spantree msti 1 priority 16384</code>（sw7）/ <code>spantree msti 2 priority 16384</code>（sw8），或官方示例 <code>spantree cist priority 4096 / msti 1 priority 4096 / msti 2 priority 8192</code> + 端口级 <code>spantree msti 1 1/1/1 priority 1</code>（ <code>&lt;span class="pg"&gt;原文p146&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p128&lt;/span&gt;</code> ）</li>
-<li>回退：<code>spantree mode per-vlan</code> + <code>no spantree mst region name</code> + <code>no spantree msti 1/2</code>（ <code>&lt;span class="pg"&gt;原文p149&lt;/span&gt;</code> ）</li>
+<li>切模式：<code>spantree mode flat</code> → <code>spantree mst region name lab_region</code> → <code>spantree mst region revision-level 1</code> → <code>spantree protocol mstp</code>（<span class="pg">原文p141</span> ）</li>
+<li>建实例并映射 VLAN：<code>spantree msti 1</code> / <code>spantree msti 2</code> + <code>spantree msti 1 vlan 20</code> / <code>spantree msti 2 vlan 30</code>（<span class="pg">原文p143</span> ）</li>
+<li>验证：<code>show spantree msti vlan-map</code>（如 CIST: 1-19,21-29,31-4094）（<span class="pg">原文p143</span> ）</li>
+<li>负载分担：<code>spantree msti 1 priority 16384</code>（sw7）/ <code>spantree msti 2 priority 16384</code>（sw8），或官方示例 <code>spantree cist priority 4096 / msti 1 priority 4096 / msti 2 priority 8192</code> + 端口级 <code>spantree msti 1 1/1/1 priority 1</code>（<span class="pg">原文p146</span> 、<span class="pg">原文p128</span> ）</li>
+<li>回退：<code>spantree mode per-vlan</code> + <code>no spantree mst region name</code> + <code>no spantree msti 1/2</code>（<span class="pg">原文p149</span> ）</li>
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
-<li>三交换机分担：A/B/C 各在一个 MSTI 上 priority 4096 做根；<code>show spantree mst port</code> 显示 DESG FORW / ALT BLK 角色分配（ <code>&lt;span class="pg"&gt;原文p130&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p129&lt;/span&gt;</code> ）</li>
-<li>开销与桥 ID 语义：MST 用 32 位路径开销（对比 802.1d/w 的 16 位）；bridge priority = 配置值 + MSTI 号（32768+1=32769）（ <code>&lt;span class="pg"&gt;原文p142&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p148&lt;/span&gt;</code> ）</li>
-<li>未映射 VLAN 自动归属 MSTI 0（IST）；hop count 最大 40、默认 20（ <code>&lt;span class="pg"&gt;原文p116&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p118&lt;/span&gt;</code> ）</li>
+<li>三交换机分担：A/B/C 各在一个 MSTI 上 priority 4096 做根；<code>show spantree mst port</code> 显示 DESG FORW / ALT BLK 角色分配（<span class="pg">原文p130</span> 、<span class="pg">原文p129</span> ）</li>
+<li>开销与桥 ID 语义：MST 用 32 位路径开销（对比 802.1d/w 的 16 位）；bridge priority = 配置值 + MSTI 号（32768+1=32769）（<span class="pg">原文p142</span> 、<span class="pg">原文p148</span> ）</li>
+<li>未映射 VLAN 自动归属 MSTI 0（IST）；hop count 最大 40、默认 20（<span class="pg">原文p116</span> 、<span class="pg">原文p118</span> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>C-10 6360 虚拟机箱 + MST 域 + 双实例负载分担全生命周期含验证与还原（ <code>&lt;span class="pg"&gt;原文p141&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p149&lt;/span&gt;</code> ）</li>
-<li>C-12 三交换机流量分担，<code>show spantree mst port</code> 输出 DESG FORW / ALT BLK（ <code>&lt;span class="pg"&gt;原文p130&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p129&lt;/span&gt;</code> ）</li>
+<li>C-10 6360 虚拟机箱 + MST 域 + 双实例负载分担全生命周期含验证与还原（<span class="pg">原文p141</span> -<span class="pg">原文p149</span> ）</li>
+<li>C-12 三交换机流量分担，<code>show spantree mst port</code> 输出 DESG FORW / ALT BLK（<span class="pg">原文p130</span> 、<span class="pg">原文p129</span> ）</li>
 </ul>
 <h2 id="b">B（边界与陷阱）</h2>
 <ul>
-<li>1x1 与 MSTP 不能共存，必须先 <code>spantree mode flat</code>；实验后记得还原 per-vlan（ <code>&lt;span class="pg"&gt;原文p143&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p149&lt;/span&gt;</code> ）</li>
-<li>优先级必须是 4096 的倍数（8192、12288…61440），随意填值不生效（ <code>&lt;span class="pg"&gt;原文p146&lt;/span&gt;</code> ）</li>
+<li>1x1 与 MSTP 不能共存，必须先 <code>spantree mode flat</code>；实验后记得还原 per-vlan（<span class="pg">原文p143</span> 、<span class="pg">原文p149</span> ）</li>
+<li>优先级必须是 4096 的倍数（8192、12288…61440），随意填值不生效（<span class="pg">原文p146</span> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
 <ul>
-<li>framework·F-08 MSTP 配置六步法（ <code>&lt;span class="pg"&gt;原文p121&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p126&lt;/span&gt;</code> ）</li>
-<li>principle·P-16 Region 三要素（ <code>&lt;span class="pg"&gt;原文p117&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p123&lt;/span&gt;</code> ）</li>
-<li>principle·P-17 MSTI/CIST 关系（ <code>&lt;span class="pg"&gt;原文p116&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p118&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p119&lt;/span&gt;</code> ）</li>
-<li>principle·P-18 32 位开销与优先级语义（ <code>&lt;span class="pg"&gt;原文p142&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p148&lt;/span&gt;</code> ）</li>
-<li>principle·P-19 负载分担设计（ <code>&lt;span class="pg"&gt;原文p126&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p130&lt;/span&gt;</code> ）</li>
+<li>framework·F-08 MSTP 配置六步法（<span class="pg">原文p121</span> -<span class="pg">原文p126</span> ）</li>
+<li>principle·P-16 Region 三要素（<span class="pg">原文p117</span> 、<span class="pg">原文p123</span> ）</li>
+<li>principle·P-17 MSTI/CIST 关系（<span class="pg">原文p116</span> 、<span class="pg">原文p118</span> 、<span class="pg">原文p119</span> ）</li>
+<li>principle·P-18 32 位开销与优先级语义（<span class="pg">原文p142</span> 、<span class="pg">原文p148</span> ）</li>
+<li>principle·P-19 负载分担设计（<span class="pg">原文p126</span> 、<span class="pg">原文p130</span> ）</li>
 <li>case·C-10/C-11/C-12；counter·X-08/X-09</li>
 </ul><div class="pn"><a href="private-vlan-isolation.html">⬅ 上一单元：private-vlan-isolation</a><a class="nxt" href="mvrp-dynamic-vlan.html">下一单元：mvrp-dynamic-vlan ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

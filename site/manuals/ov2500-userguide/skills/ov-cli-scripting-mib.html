@@ -83,42 +83,42 @@ blockquote p{margin:6px 0}
 <ul>
 <li>确认提示型（takeover/reload/fsck）须 expectPrompt 处理；</li>
 <li>慢命令（写闪）须 setTimeout/<tapps> set timeout；</li>
-<li>挂起型（reload）前加 <tapps> lastcmd（principles·P65/P66， <code>&lt;span class="pg"&gt;原文p241-244&lt;/span&gt;</code> ）；</li>
+<li>挂起型（reload）前加 <tapps> lastcmd（principles·P65/P66，<span class="pg">原文p241-244</span> ）；</li>
 </ul>
 </li>
 <li>
-<p><strong>变量化</strong>：设备属性用内置变量（$IP_ADDRESS/$BASE_MAC 等），用户输入用 User Variables（发送时填值）（principles·P64， <code>&lt;span class="pg"&gt;原文p242-243&lt;/span&gt;</code> ）</p>
+<p><strong>变量化</strong>：设备属性用内置变量（$IP_ADDRESS/$BASE_MAC 等），用户输入用 User Variables（发送时填值）（principles·P64，<span class="pg">原文p242-243</span> ）</p>
 </li>
-<li><strong>MIB 导入路径</strong>：先建 OID 条目（识别厂商/型号）→建 Mibset 目录→按依赖顺序导入（principles·P80/P81， <code>&lt;span class="pg"&gt;原文p285-288&lt;/span&gt;</code> ）</li>
+<li><strong>MIB 导入路径</strong>：先建 OID 条目（识别厂商/型号）→建 Mibset 目录→按依赖顺序导入（principles·P80/P81，<span class="pg">原文p285-288</span> ）</li>
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
 <li>创建并发送脚本：CLI Scripting→Scripts→Add：Filename（自动加 .script）</li>
 <li>勾 Shared Admin Script（前缀 shadmin）</li>
 <li>
-<p>命令区（描述用 /<em> @@desc@@ </em>/）→Add。发送：选脚本→Send Script→Script Info→Device Selection（Switch Picker 或 Topology）→Scheduler（Now / Periodically: Simple 或 Cron）→Define User Variables→Send Script；日志在 Logs 屏按命令查看（cases·C23， <code>&lt;span class="pg"&gt;原文p239-246&lt;/span&gt;</code> ）</p>
+<p>命令区（描述用 /<em> @@desc@@ </em>/）→Add。发送：选脚本→Send Script→Script Info→Device Selection（Switch Picker 或 Topology）→Scheduler（Now / Periodically: Simple 或 Cron）→Define User Variables→Send Script；日志在 Logs 屏按命令查看（cases·C23，<span class="pg">原文p239-246</span> ）</p>
 </li>
 <li>
-<p><strong>处理确认提示（reload 示例）</strong>：<code>cli.sendCmd("more"); cli.expectPrompt("Confirm Activate (Y/N):");</code> 之后 <code>cli.sendCmd("reload working no rollback-timeout in 10:10"); cli.sendCmd("y")</code>；会挂起的命令前加 <code>&lt;tapps&gt; lastcmd &lt;/tapps&gt;</code>（cases·C25， <code>&lt;span class="pg"&gt;原文p241, 244&lt;/span&gt;</code> ）</p>
+<p><strong>处理确认提示（reload 示例）</strong>：<code>cli.sendCmd("more"); cli.expectPrompt("Confirm Activate (Y/N):");</code> 之后 <code>cli.sendCmd("reload working no rollback-timeout in 10:10"); cli.sendCmd("y")</code>；会挂起的命令前加 <code>&lt;tapps&gt; lastcmd &lt;/tapps&gt;</code>（cases·C25，<span class="pg">原文p241, 244</span> ）</p>
 </li>
-<li><strong>内置变量表</strong>：$BASE_MAC/$BOOT_DIR/$CHASSIS_TYPE/$IP_ADDRESS/$LOGIN_ID/$LOGIN_PWD/$READ_PWD/$SECOND_PWD/$SYS_LOCATION/$SYS_NAME/$SYSTEM_OID/$SYS_VERSION/$WRITE_PWD；JS 中使用须加引号。cli 对象函数：sendCmd/lastResponse/setTimeout/trace/expectPrompt/deviceType/cliSleep/errorLog/forgetPrompt（principles·P64， <code>&lt;span class="pg"&gt;原文p242-243&lt;/span&gt;</code> ）</li>
-<li><strong>导入第三方 MIB</strong>：Third-Party Devices Support 建 OID 条目（OID 只填 enterprises 后段，如 Cisco=9、Extreme=1916；MIB Directory Name 可为不存在目录，导入时自动创建）→Import MIBs→选 Mibset→Upload Files（Chrome 支持 Upload Folder）→Up/Down 箭头调编译顺序→Apply（cases·C31， <code>&lt;span class="pg"&gt;原文p288&lt;/span&gt;</code> ）</li>
-<li><strong>SecureCRT 作为 SSH Custom 客户端</strong>（自定义工具菜单场景）：Options→Global Options→Web Browser→勾 Use registry setting；浏览器需支持 SSH2 且 SecureCRT 为默认 SSH2 应用（cases·C29， <code>&lt;span class="pg"&gt;原文p268-270&lt;/span&gt;</code> ）</li>
+<li><strong>内置变量表</strong>：$BASE_MAC/$BOOT_DIR/$CHASSIS_TYPE/$IP_ADDRESS/$LOGIN_ID/$LOGIN_PWD/$READ_PWD/$SECOND_PWD/$SYS_LOCATION/$SYS_NAME/$SYSTEM_OID/$SYS_VERSION/$WRITE_PWD；JS 中使用须加引号。cli 对象函数：sendCmd/lastResponse/setTimeout/trace/expectPrompt/deviceType/cliSleep/errorLog/forgetPrompt（principles·P64，<span class="pg">原文p242-243</span> ）</li>
+<li><strong>导入第三方 MIB</strong>：Third-Party Devices Support 建 OID 条目（OID 只填 enterprises 后段，如 Cisco=9、Extreme=1916；MIB Directory Name 可为不存在目录，导入时自动创建）→Import MIBs→选 Mibset→Upload Files（Chrome 支持 Upload Folder）→Up/Down 箭头调编译顺序→Apply（cases·C31，<span class="pg">原文p288</span> ）</li>
+<li><strong>SecureCRT 作为 SSH Custom 客户端</strong>（自定义工具菜单场景）：Options→Global Options→Web Browser→勾 Use registry setting；浏览器需支持 SSH2 且 SecureCRT 为默认 SSH2 应用（cases·C29，<span class="pg">原文p268-270</span> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>创建并发送 CLI 脚本（Cron 排程 + User Variables）（cases·C23， <code>&lt;span class="pg"&gt;原文p239-246&lt;/span&gt;</code> ）</li>
-<li>reload 确认提示训练（expectPrompt + y）（cases·C25， <code>&lt;span class="pg"&gt;原文p241, 244&lt;/span&gt;</code> ）</li>
-<li>第三方 MIB 导入（OID 条目 + 顺序调整）（cases·C31， <code>&lt;span class="pg"&gt;原文p288&lt;/span&gt;</code> ）</li>
+<li>创建并发送 CLI 脚本（Cron 排程 + User Variables）（cases·C23，<span class="pg">原文p239-246</span> ）</li>
+<li>reload 确认提示训练（expectPrompt + y）（cases·C25，<span class="pg">原文p241, 244</span> ）</li>
+<li>第三方 MIB 导入（OID 条目 + 顺序调整）（cases·C31，<span class="pg">原文p288</span> ）</li>
 </ul>
 <h2 id="b">B（反例/坑）</h2>
 <ul>
-<li>CLI 脚本不能发往 Stellar 无线设备；发送前 OV 必须已知每台设备 CLI/FTP 凭据（principles·P63， <code>&lt;span class="pg"&gt;原文p239&lt;/span&gt;</code> ）</li>
-<li>自动弹确认提示的操作命令（takeover、reload、fsck）不支持直接写入脚本，必须 expectPrompt/more/lastcmd 处理（principles·P66， <code>&lt;span class="pg"&gt;原文p242&lt;/span&gt;</code> ）</li>
-<li>慢命令作末条命令会话即断：write memory flash-synchro 之后要补一条命令或设 tapps 超时；setTimeout(min,sec) 仅作用于下一条命令（principles·P65， <code>&lt;span class="pg"&gt;原文p241-243&lt;/span&gt;</code> ）</li>
-<li>MIB 文件必须 .mib 扩展名；新目录须导入完整 MIB 集（含被引用标准 MIB）；依赖顺序按 import 语句排，文件名常不可信；不建议向 OV 自带 MIB 目录加文件（principles·P81， <code>&lt;span class="pg"&gt;原文p287-288&lt;/span&gt;</code> ）</li>
-<li>MIB 导入后不立即解析——发现对应 OID 设备或重启服务器才解析（principles·P81， <code>&lt;span class="pg"&gt;原文p287-288&lt;/span&gt;</code> ）</li>
-<li>脚本日志保留默认 180 天，位于 data\cli_scripting_logs 按设备 IP 分目录（principles·P67， <code>&lt;span class="pg"&gt;原文p248&lt;/span&gt;</code> ）</li>
+<li>CLI 脚本不能发往 Stellar 无线设备；发送前 OV 必须已知每台设备 CLI/FTP 凭据（principles·P63，<span class="pg">原文p239</span> ）</li>
+<li>自动弹确认提示的操作命令（takeover、reload、fsck）不支持直接写入脚本，必须 expectPrompt/more/lastcmd 处理（principles·P66，<span class="pg">原文p242</span> ）</li>
+<li>慢命令作末条命令会话即断：write memory flash-synchro 之后要补一条命令或设 tapps 超时；setTimeout(min,sec) 仅作用于下一条命令（principles·P65，<span class="pg">原文p241-243</span> ）</li>
+<li>MIB 文件必须 .mib 扩展名；新目录须导入完整 MIB 集（含被引用标准 MIB）；依赖顺序按 import 语句排，文件名常不可信；不建议向 OV 自带 MIB 目录加文件（principles·P81，<span class="pg">原文p287-288</span> ）</li>
+<li>MIB 导入后不立即解析——发现对应 OID 设备或重启服务器才解析（principles·P81，<span class="pg">原文p287-288</span> ）</li>
+<li>脚本日志保留默认 180 天，位于 data\cli_scripting_logs 按设备 IP 分目录（principles·P67，<span class="pg">原文p248</span> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniVista 2500 NMS 4.9R2 User Guide 第 10 章 CLI Scripting（ <code>&lt;span class="pg"&gt;原文p238-248&lt;/span&gt;</code> ）、第三方设备支持与 MIB 导入（ <code>&lt;span class="pg"&gt;原文p285-288&lt;/span&gt;</code> ）、SSH Custom（ <code>&lt;span class="pg"&gt;原文p268-270&lt;/span&gt;</code> ）。条目来源：cases C23/C25/C29/C31；principles P63-P67/P80/P81。</p><div class="pn"><a href="ov-resource-manager-ops.html">⬅ 上一单元：ov-resource-manager-ops</a><a class="nxt" href="ov-unified-access-profiles.html">下一单元：ov-unified-access-profiles ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<p>OmniVista 2500 NMS 4.9R2 User Guide 第 10 章 CLI Scripting（<span class="pg">原文p238-248</span> ）、第三方设备支持与 MIB 导入（<span class="pg">原文p285-288</span> ）、SSH Custom（<span class="pg">原文p268-270</span> ）。条目来源：cases C23/C25/C29/C31；principles P63-P67/P80/P81。</p><div class="pn"><a href="ov-resource-manager-ops.html">⬅ 上一单元：ov-resource-manager-ops</a><a class="nxt" href="ov-unified-access-profiles.html">下一单元：ov-unified-access-profiles ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

@@ -65,7 +65,7 @@ blockquote p{margin:6px 0}
 <ul>
 <li>本书是 ALE OmniSwitch AOS Release 8.10R4 的高级路由手册（313 页，8 个协议章），覆盖 OSPF/OSPFv3、IS-IS、BGP（含 IPv6 MP-BGP/EVPN/VPLS）、组播地址边界、DVMRP、PIM 与 MBR。</li>
 <li>全书有三条公共骨架贯穿各章：<strong>统一配置范式</strong>（准备网络 → ip load → enable → 区域/area-id → 接口挂接 → 可选特性 → show 验证）、<strong>Route Map 策略框架</strong>（Action/Match/Set 跨四章复用）、<strong>优雅重启模型</strong>（重启方通告 + helper 维持 + 宽限期）。</li>
-<li>高级路由协议需购买附加包（ <code>&lt;span class="pg"&gt;原文p12&lt;/span&gt;</code> ）。</li>
+<li>高级路由协议需购买附加包（<span class="pg">原文p12</span> ）。</li>
 <li>以下按五个技能单元摘要，页码均指原书。</li>
 </ul>
 <h2 id="_1">一、知识地图（五技能单元）</h2>
@@ -96,7 +96,7 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="_2">二、五单元要点串讲</h2>
 <h3 id="1-ospfospfv3">1. OSPF/OSPFv3：区域即知识隔离</h3>
-<p>泛洪保证全区域一致 LSDB、各自算 SPF（ <code>&lt;span class="pg"&gt;原文p24&lt;/span&gt;</code> ）。区域隔离拓扑知识，骨干区负责区间分发，ABR 每区域跑一份 SPF 并浓缩拓扑（P6-P10）。末节区域三档递进：Stub（无外部 LSA）→ Totally Stubby（再滤 Type-3，实现=Stub+<code>summary disable</code>，P19）→ NSSA（Type-7 选择性导入）。虚链路是最后手段（X3）。认证三套（simple/MD5/keychain-SHA256），MD5 的 key ID 与 key string 必须两条命令（X7）。被动接口会立即拆除已有邻接（X8），多区域域中只生成在最小 Area ID（X9）。OSPFv3 整体 ipv6 镜像（F10），但 Loopback0 不会自动通告须配 point-to-point（P40）、静态邻居用链路本地地址（P41）。</p>
+<p>泛洪保证全区域一致 LSDB、各自算 SPF（<span class="pg">原文p24</span> ）。区域隔离拓扑知识，骨干区负责区间分发，ABR 每区域跑一份 SPF 并浓缩拓扑（P6-P10）。末节区域三档递进：Stub（无外部 LSA）→ Totally Stubby（再滤 Type-3，实现=Stub+<code>summary disable</code>，P19）→ NSSA（Type-7 选择性导入）。虚链路是最后手段（X3）。认证三套（simple/MD5/keychain-SHA256），MD5 的 key ID 与 key string 必须两条命令（X7）。被动接口会立即拆除已有邻接（X8），多区域域中只生成在最小 Area ID（X9）。OSPFv3 整体 ipv6 镜像（F10），但 Loopback0 不会自动通告须配 point-to-point（P40）、静态邻居用链路本地地址（P41）。</p>
 <h3 id="2-is-is">2. IS-IS：路由器整体属单区域</h3>
 <p>两层层级（L1 区内/L2 区间），与 OSPF 最大差异是路由器不按接口分域（P47）。NSAP=Area ID+System ID+NSEL。邻接三要素：认证、IS 类型、MTU（P45）。认证四层（全局/level/电路/电路级）低层覆盖全局（P50）；点到点口 L1 未配认证则 L1 hello 裸奔（X21）。L1→L2 泄漏经 route map（C17）；内部路由不能在 L1 汇总（X20）；metric&gt;64 须先开 wide-metrics（X18）。双栈域内有 v4-only/v6-only 设备必须 M-ISIS（否则黑洞，P54），切换多拓扑会复位全部邻接（X23）。</p>
 <h3 id="3-bgp">3. BGP：策略即商业关系</h3>

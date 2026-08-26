@@ -68,7 +68,7 @@ blockquote p{margin:6px 0}
 <li>双机箱虚拟化 VC-of-2 的组合约束</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>9907 vs 9912 选型矩阵（F1， <code>&lt;span class="pg"&gt;原文p5&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p6&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p11&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p22&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p24&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p26&lt;/span&gt;</code> ）：高度（11RU/17RU）、槽位数（7/12）、重量（32.83/64.36kg）、CFM 带宽阶梯，共性为 4 电源 N+1、仅前→后气流、23 英寸深。CMM/CFM 兼容组合决策表（F2， <code>&lt;span class="pg"&gt;原文p17&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p20&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p22&lt;/span&gt;</code> ）：只有三种同箱组合支持（旧体系、CMM+CFM2、CMM2+CFM2 各自对称），一切新旧混插 Not Supported，升级路径只有整代切换。CFM 带宽叠加模型（P14， <code>&lt;span class="pg"&gt;原文p20&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p21&lt;/span&gt;</code> ）：每加一块 CFM 即增加矩阵带宽（2.56T→12.8T→25.6T），CFM 藏于风扇托盘之后、经中板连接（P4/P15）。slot2 双角色是 9907 的架构级权衡：装 NI 换端口密度，代价是 CMM 无冗余且 NI 只活前 8 口（P2/P3， <code>&lt;span class="pg"&gt;原文p7&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p16&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p17&lt;/span&gt;</code> ）。</p>
+<p>9907 vs 9912 选型矩阵（F1，<span class="pg">原文p5</span> /<span class="pg">原文p6</span> /<span class="pg">原文p11</span> /<span class="pg">原文p22</span> /<span class="pg">原文p24</span> -<span class="pg">原文p26</span> ）：高度（11RU/17RU）、槽位数（7/12）、重量（32.83/64.36kg）、CFM 带宽阶梯，共性为 4 电源 N+1、仅前→后气流、23 英寸深。CMM/CFM 兼容组合决策表（F2，<span class="pg">原文p17</span> /<span class="pg">原文p20</span> /<span class="pg">原文p22</span> ）：只有三种同箱组合支持（旧体系、CMM+CFM2、CMM2+CFM2 各自对称），一切新旧混插 Not Supported，升级路径只有整代切换。CFM 带宽叠加模型（P14，<span class="pg">原文p20</span> /<span class="pg">原文p21</span> ）：每加一块 CFM 即增加矩阵带宽（2.56T→12.8T→25.6T），CFM 藏于风扇托盘之后、经中板连接（P4/P15）。slot2 双角色是 9907 的架构级权衡：装 NI 换端口密度，代价是 CMM 无冗余且 NI 只活前 8 口（P2/P3，<span class="pg">原文p7</span> /<span class="pg">原文p16</span> /<span class="pg">原文p17</span> ）。</p>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>机箱选型走 F1：端口规模定 9907/9912 → 查 9912 不支持 NI 清单（P48Z16/P24Z8/UP24Q2/U12Q）→ 核机架承重与 23" 深度</li>
@@ -79,29 +79,29 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>核对槽位布局</strong>：9907 NI 槽 3-7、9912 NI 槽 3-12；CFM1/2 可用、CFM3/4 预留未激活不可当可用槽（X8， <code>&lt;span class="pg"&gt;原文p5&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p10&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p15&lt;/span&gt;</code> ）</li>
-<li><strong>CMM 面板核对</strong>：CMM=2×40G QSFP+ 上行 64W；CMM2=4×100G QSFP28+VFL 74W；均带 RJ45+Micro-USB 双 console 与 EMP（P9-P11， <code>&lt;span class="pg"&gt;原文p16&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p17&lt;/span&gt;</code> ）</li>
-<li><strong>CFM 带宽与功耗</strong>：OS9907-CFM=2.56T/119W、CFM2=12.8T/119W、OS9912-CFM=25.6T/222W（P14， <code>&lt;span class="pg"&gt;原文p20&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p21&lt;/span&gt;</code> ）</li>
-<li><strong>NI 规格核对</strong>：功耗谱 56-402W（XNI-48 402W 最重）；HPoE 模块前 8 口 75W 面板标 "HPoE"（P18/P19， <code>&lt;span class="pg"&gt;原文p23&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p26&lt;/span&gt;</code> ）</li>
-<li><strong>CNI-U20 分支口</strong>：13-20 口支持 splitter（P21， <code>&lt;span class="pg"&gt;原文p26&lt;/span&gt;</code> ）</li>
-<li><strong>CMM LED 诊断语义</strong>：PRI（稳绿=主/闪绿=备/稳黄=停运/闪黄=升级中）；FAB 闪黄=CFM 电源或 PCIe 失败；五灯同闪=全部 CFM PCIe 链路失效（P12， <code>&lt;span class="pg"&gt;原文p18&lt;/span&gt;</code> ）</li>
-<li><strong>拇指螺丝识别</strong>：新批次铝头替代紫色塑料头，机械性能相同勿困惑（P7， <code>&lt;span class="pg"&gt;原文p6&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p12&lt;/span&gt;</code> ）</li>
+<li><strong>核对槽位布局</strong>：9907 NI 槽 3-7、9912 NI 槽 3-12；CFM1/2 可用、CFM3/4 预留未激活不可当可用槽（X8，<span class="pg">原文p5</span> /<span class="pg">原文p10</span> /<span class="pg">原文p15</span> ）</li>
+<li><strong>CMM 面板核对</strong>：CMM=2×40G QSFP+ 上行 64W；CMM2=4×100G QSFP28+VFL 74W；均带 RJ45+Micro-USB 双 console 与 EMP（P9-P11，<span class="pg">原文p16</span> /<span class="pg">原文p17</span> ）</li>
+<li><strong>CFM 带宽与功耗</strong>：OS9907-CFM=2.56T/119W、CFM2=12.8T/119W、OS9912-CFM=25.6T/222W（P14，<span class="pg">原文p20</span> /<span class="pg">原文p21</span> ）</li>
+<li><strong>NI 规格核对</strong>：功耗谱 56-402W（XNI-48 402W 最重）；HPoE 模块前 8 口 75W 面板标 "HPoE"（P18/P19，<span class="pg">原文p23</span> -<span class="pg">原文p26</span> ）</li>
+<li><strong>CNI-U20 分支口</strong>：13-20 口支持 splitter（P21，<span class="pg">原文p26</span> ）</li>
+<li><strong>CMM LED 诊断语义</strong>：PRI（稳绿=主/闪绿=备/稳黄=停运/闪黄=升级中）；FAB 闪黄=CFM 电源或 PCIe 失败；五灯同闪=全部 CFM PCIe 链路失效（P12，<span class="pg">原文p18</span> ）</li>
+<li><strong>拇指螺丝识别</strong>：新批次铝头替代紫色塑料头，机械性能相同勿困惑（P7，<span class="pg">原文p6</span> /<span class="pg">原文p12</span> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>OS9907 组合兼容矩阵三支持三禁止：CMM+CMM/CFM+CFM、CMM+CMM/CFM2+CFM2、CMM2+CMM2/CFM2+CFM2 支持；任何混插 Not Supported（P16/X3， <code>&lt;span class="pg"&gt;原文p22&lt;/span&gt;</code> ）</li>
-<li>VC-of-2 三种对称组合（CMM+CFM ↔ CMM+CFM；CMM+CFM2 ↔ CMM+CFM2；CMM2+CFM2 ↔ CMM2+CFM2），其余 Not Supported（P17/X4， <code>&lt;span class="pg"&gt;原文p22&lt;/span&gt;</code> ）</li>
-<li>slot2 装 XNI-U48 只活前 8 口（9907），CMM 冗余同时丢失（X6/X7， <code>&lt;span class="pg"&gt;原文p7&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p16&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p17&lt;/span&gt;</code> ）</li>
-<li>QSFP 上行 LED 多维编码：Off=Down/无收发器；绿(A)=40G/100G；绿(A/B/C/D)=4X10G/4X25G 分支；蓝=VFL（P13， <code>&lt;span class="pg"&gt;原文p19&lt;/span&gt;</code> ）</li>
+<li>OS9907 组合兼容矩阵三支持三禁止：CMM+CMM/CFM+CFM、CMM+CMM/CFM2+CFM2、CMM2+CMM2/CFM2+CFM2 支持；任何混插 Not Supported（P16/X3，<span class="pg">原文p22</span> ）</li>
+<li>VC-of-2 三种对称组合（CMM+CFM ↔ CMM+CFM；CMM+CFM2 ↔ CMM+CFM2；CMM2+CFM2 ↔ CMM2+CFM2），其余 Not Supported（P17/X4，<span class="pg">原文p22</span> ）</li>
+<li>slot2 装 XNI-U48 只活前 8 口（9907），CMM 冗余同时丢失（X6/X7，<span class="pg">原文p7</span> /<span class="pg">原文p16</span> /<span class="pg">原文p17</span> ）</li>
+<li>QSFP 上行 LED 多维编码：Off=Down/无收发器；绿(A)=40G/100G；绿(A/B/C/D)=4X10G/4X25G 分支；蓝=VFL（P13，<span class="pg">原文p19</span> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>
-<li>CMM 与 CMM2 不可同箱混插（CMM2 需 AOS ≥8.10R2）；CFM 与 CFM2 不可混插（CFM2 需 ≥8.9R1）；组合矩阵三禁（X1/X2/X3， <code>&lt;span class="pg"&gt;原文p17&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p20&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p22&lt;/span&gt;</code> ）</li>
-<li>9912 不支持四种 NI：XNI-P48Z16 / XNI-P24Z8 / XNI-UP24Q2 / XNI-U12Q（X5， <code>&lt;span class="pg"&gt;原文p24&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p25&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p26&lt;/span&gt;</code> ）</li>
-<li>CFM3/4 预留未激活（"currently inactive and reserved for future use"），不可当可用槽规划（X8， <code>&lt;span class="pg"&gt;原文p5&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p10&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p15&lt;/span&gt;</code> ）</li>
-<li>slot2 装 NI 即失 CMM 冗余且 NI 只活 8 口——扩端口的隐性代价（X6/X7， <code>&lt;span class="pg"&gt;原文p7&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p16&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p17&lt;/span&gt;</code> ）</li>
-<li>VC-of-2 双机箱只允许对称组合，非对称组合 Not Supported（X4， <code>&lt;span class="pg"&gt;原文p22&lt;/span&gt;</code> ）</li>
-<li>满配重量 32.83/64.36kg 起步：禁止满载搬运，先就位空机箱再逐件装模块（X25/C3， <code>&lt;span class="pg"&gt;原文p32&lt;/span&gt;</code> ）</li>
-<li>PoE Priority Disconnect 端口优先方向为 48（最高）→1（最低），与 6865/6870/6560 等接入系列（1 高 48 低）相反——跨平台套用优先级规划会反噬，预算不足时被断电的口正好相反（X38/P31， <code>&lt;span class="pg"&gt;原文p55&lt;/span&gt;</code> ）</li>
+<li>CMM 与 CMM2 不可同箱混插（CMM2 需 AOS ≥8.10R2）；CFM 与 CFM2 不可混插（CFM2 需 ≥8.9R1）；组合矩阵三禁（X1/X2/X3，<span class="pg">原文p17</span> /<span class="pg">原文p20</span> /<span class="pg">原文p22</span> ）</li>
+<li>9912 不支持四种 NI：XNI-P48Z16 / XNI-P24Z8 / XNI-UP24Q2 / XNI-U12Q（X5，<span class="pg">原文p24</span> /<span class="pg">原文p25</span> /<span class="pg">原文p26</span> ）</li>
+<li>CFM3/4 预留未激活（"currently inactive and reserved for future use"），不可当可用槽规划（X8，<span class="pg">原文p5</span> /<span class="pg">原文p10</span> /<span class="pg">原文p15</span> ）</li>
+<li>slot2 装 NI 即失 CMM 冗余且 NI 只活 8 口——扩端口的隐性代价（X6/X7，<span class="pg">原文p7</span> /<span class="pg">原文p16</span> /<span class="pg">原文p17</span> ）</li>
+<li>VC-of-2 双机箱只允许对称组合，非对称组合 Not Supported（X4，<span class="pg">原文p22</span> ）</li>
+<li>满配重量 32.83/64.36kg 起步：禁止满载搬运，先就位空机箱再逐件装模块（X25/C3，<span class="pg">原文p32</span> ）</li>
+<li>PoE Priority Disconnect 端口优先方向为 48（最高）→1（最低），与 6865/6870/6560 等接入系列（1 高 48 低）相反——跨平台套用优先级规划会反噬，预算不足时被断电的口正好相反（X38/P31，<span class="pg">原文p55</span> ）</li>
 </ul>
 <p>来源：OmniSwitch 9900 Series Hardware Users Guide（Ch1 机箱与电源架构，p5-31）</p><div class="pn"><a href="../index.html">⬅ 返回课程首页</a><a class="nxt" href="os9900-install-power.html">下一单元：os9900-install-power ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

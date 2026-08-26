@@ -575,7 +575,7 @@ def preprocess(text):
         return parts[0] + '：\n' + '\n'.join(f'- {p}' for p in parts[1:])
     text = _re.sub(r'^[^\n#\-*|!>`][^\n]{160,}$', lambda m: slash_split(m) if ' / ' in m.group(0) else m.group(0), text, flags=_re.M)
     # 页码标记渲染为紧凑徽章：<<<PAGE 13>>> / <<<PAGE 13-15>>> / <<<PAGE 1, 4>>>
-    text = _re.sub(r'<<<PAGE\s+([\d,\s\-]+)>>>', lambda m: f' `<span class="pg">原文p{m.group(1).strip()}</span>` ', text)
+    text = _re.sub(r'<<<PAGE\s+([\d,\s\-]+)>>>', lambda m: f'<span class="pg">原文p{m.group(1).strip()}</span> ', text)
     # 内部使用：去掉流水线署名描述
     out = []
     for ln in text.splitlines():

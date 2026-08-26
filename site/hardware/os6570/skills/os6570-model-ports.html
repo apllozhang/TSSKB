@@ -67,31 +67,31 @@ blockquote p{margin:6px 0}
 <li>半宽机双机 1U 并排（DUO-MNT）的端口/空间核算</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>6570M 选型三轴矩阵（F1， <code>&lt;span class="pg"&gt;原文p11&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p22&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p26&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p35&lt;/span&gt;</code> ）：轴一=下行口形态（12/12D=8 铜口+2 SFP 混合，柜边小汇聚；U28=20 纯 SFP+4 combo 全光，光纤入柜）；轴二=供电制式（12=内置 AC、12D=内置 DC 宽压）；轴三=上联与堆叠需求（12/12D=2 个 SFP+、U28=6 个 SFP+）。核心机制：Uplink/Stacking SFP+ 口为 1G/10G 双角色——同一口既做上联又做 Virtual Chassis 堆叠链路（P2， <code>&lt;span class="pg"&gt;原文p11&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p21&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p25&lt;/span&gt;</code> ）；U28 combo 口同口位光铜互斥（P3）。本家族无 PoE、全机型不支持半双工（X1， <code>&lt;span class="pg"&gt;原文p21&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p23&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p25&lt;/span&gt;</code> ）。</p>
+<p>6570M 选型三轴矩阵（F1，<span class="pg">原文p11</span> /<span class="pg">原文p22</span> /<span class="pg">原文p26</span> /<span class="pg">原文p35</span> ）：轴一=下行口形态（12/12D=8 铜口+2 SFP 混合，柜边小汇聚；U28=20 纯 SFP+4 combo 全光，光纤入柜）；轴二=供电制式（12=内置 AC、12D=内置 DC 宽压）；轴三=上联与堆叠需求（12/12D=2 个 SFP+、U28=6 个 SFP+）。核心机制：Uplink/Stacking SFP+ 口为 1G/10G 双角色——同一口既做上联又做 Virtual Chassis 堆叠链路（P2，<span class="pg">原文p11</span> /<span class="pg">原文p21</span> /<span class="pg">原文p25</span> ）；U28 combo 口同口位光铜互斥（P3）。本家族无 PoE、全机型不支持半双工（X1，<span class="pg">原文p21</span> /<span class="pg">原文p23</span> /<span class="pg">原文p25</span> ）。</p>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
-<li>按物理环境定包络：12/12D=半宽 21.72cm×28.07cm×1.7kg；U28=全宽 44cm×35cm×4.08kg（P5， <code>&lt;span class="pg"&gt;原文p22&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p24&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p26&lt;/span&gt;</code> ）</li>
+<li>按物理环境定包络：12/12D=半宽 21.72cm×28.07cm×1.7kg；U28=全宽 44cm×35cm×4.08kg（P5，<span class="pg">原文p22</span> /<span class="pg">原文p24</span> /<span class="pg">原文p26</span> ）</li>
 <li>按业务定端口：铜口接终端选 12/12D；全光汇聚选 U28（20×SFP + 4 combo 21-24 + 6×SFP+ 25-30）</li>
 <li>按堆叠定上联口预算：12 口机堆叠占 11-12 两口；U28 有 6 个 SFP+ 可分摊上联与堆叠（P2）</li>
-<li>半宽空间利用框架（F2， <code>&lt;span class="pg"&gt;原文p28&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p34&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p5&lt;/span&gt;</code> ）：两台 12 并排=16 铜口+4 SFP+4 SFP+ 上联/堆叠口，深度 28cm 仍省机架空间</li>
-<li>按功耗定供电：待机 12=23W、12D=24W、U28=71W——光口密度推高基线（P6， <code>&lt;span class="pg"&gt;原文p22&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p24&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p26&lt;/span&gt;</code> ）</li>
+<li>半宽空间利用框架（F2，<span class="pg">原文p28</span> -<span class="pg">原文p34</span> /<span class="pg">原文p5</span> ）：两台 12 并排=16 铜口+4 SFP+4 SFP+ 上联/堆叠口，深度 28cm 仍省机架空间</li>
+<li>按功耗定供电：待机 12=23W、12D=24W、U28=71W——光口密度推高基线（P6，<span class="pg">原文p22</span> /<span class="pg">原文p24</span> /<span class="pg">原文p26</span> ）</li>
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li>面板核对：12/12D=8×10/100/1000Base-T + 2×100/1000Base-X SFP + 2×SFP+（11-12）；U28=20×SFP + 4×combo（21-24）+ 6×SFP+（25-30）（P1， <code>&lt;span class="pg"&gt;原文p11&lt;/span&gt;</code> ）</li>
-<li>combo 口使用：同口位 SFP 光口与 RJ45 铜口二选一，不可同时（P3， <code>&lt;span class="pg"&gt;原文p11&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p25&lt;/span&gt;</code> ）</li>
-<li>VC 识别：U28 独有 Virtual Chassis ID LED；VC LED 稳绿=master/稳琥珀=slave/闪琥珀以次数报 unit 号（P26， <code>&lt;span class="pg"&gt;原文p25&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p27&lt;/span&gt;</code> ）</li>
-<li>端口 LED 判读：稳绿=有效链路、闪绿=链路活动，全绿色系无 PoE 维度（P27， <code>&lt;span class="pg"&gt;原文p27&lt;/span&gt;</code> ）</li>
+<li>面板核对：12/12D=8×10/100/1000Base-T + 2×100/1000Base-X SFP + 2×SFP+（11-12）；U28=20×SFP + 4×combo（21-24）+ 6×SFP+（25-30）（P1，<span class="pg">原文p11</span> ）</li>
+<li>combo 口使用：同口位 SFP 光口与 RJ45 铜口二选一，不可同时（P3，<span class="pg">原文p11</span> /<span class="pg">原文p25</span> ）</li>
+<li>VC 识别：U28 独有 Virtual Chassis ID LED；VC LED 稳绿=master/稳琥珀=slave/闪琥珀以次数报 unit 号（P26，<span class="pg">原文p25</span> /<span class="pg">原文p27</span> ）</li>
+<li>端口 LED 判读：稳绿=有效链路、闪绿=链路活动，全绿色系无 PoE 维度（P27，<span class="pg">原文p27</span> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>U28 全光上联型面板构成与双电源舱布局（P1/P18， <code>&lt;span class="pg"&gt;原文p11&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p25&lt;/span&gt;</code> ）</li>
-<li>半宽双机并排后端口总量核算（F2， <code>&lt;span class="pg"&gt;原文p32&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p34&lt;/span&gt;</code> ）</li>
+<li>U28 全光上联型面板构成与双电源舱布局（P1/P18，<span class="pg">原文p11</span> /<span class="pg">原文p25</span> ）</li>
+<li>半宽双机并排后端口总量核算（F2，<span class="pg">原文p32</span> -<span class="pg">原文p34</span> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>
-<li>全机型不支持半双工连接（X1， <code>&lt;span class="pg"&gt;原文p21&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p23&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p25&lt;/span&gt;</code> ）</li>
-<li>combo 口光铜互斥，按两口配置会失效（P3， <code>&lt;span class="pg"&gt;原文p25&lt;/span&gt;</code> ）</li>
+<li>全机型不支持半双工连接（X1，<span class="pg">原文p21</span> /<span class="pg">原文p23</span> /<span class="pg">原文p25</span> ）</li>
+<li>combo 口光铜互斥，按两口配置会失效（P3，<span class="pg">原文p25</span> ）</li>
 <li>上联/堆叠共用 SFP+ 口：堆叠占口后上联带宽同步受挤，规划时先留堆叠口（P2）</li>
 <li>待机功耗梯度差 3 倍：U28 71W，按 12 机型 23W 估算供电会低估（P6）</li>
 </ul>

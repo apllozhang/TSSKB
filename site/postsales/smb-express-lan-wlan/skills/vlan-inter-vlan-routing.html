@@ -77,38 +77,38 @@ blockquote p{margin:6px 0}
 <p>在 AOS 上，VLAN 是二层数据结构，IP interface 绑定 VLAN 后三层路由即刻激活——"网关即虚拟路由器端口"。物理端口恒有一个默认（untagged）VLAN 桥接二层流量，802.1Q tag 则承载 4096 个 VID 与 3bit 优先级。</p>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
-<li><strong>建 VLAN 并命名</strong>：<code>vlan 10 name Management-AP</code> / <code>vlan 20 name Employees</code> / <code>vlan 30 name Guests</code>（ <code>&lt;span class="pg"&gt;原文p177&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p183&lt;/span&gt;</code> ）。</li>
+<li><strong>建 VLAN 并命名</strong>：<code>vlan 10 name Management-AP</code> / <code>vlan 20 name Employees</code> / <code>vlan 30 name Guests</code>（<span class="pg">原文p177</span> -<span class="pg">原文p183</span> ）。</li>
 <li><strong>端口成员</strong>：上行口 <code>vlan 10 members port 1/1/3 tagged</code>；AP 口 <code>vlan 10 members port 1/1/6 untagged</code> + <code>vlan 20/30 members port 1/1/6 tagged</code>（AP 口同时承载管理+业务 VLAN）。</li>
-<li><strong>验证</strong>：<code>show vlan members port 1/1/6</code>；<code>show mac-learning</code> 验证 MAC 学习（ <code>&lt;span class="pg"&gt;原文p184&lt;/span&gt;</code> ）。</li>
-<li><strong>VLAN 间路由</strong>：<code>ip interface int_1 address 192.168.1.2/24 vlan 1</code> → <code>show ip interface</code> 验证（ <code>&lt;span class="pg"&gt;原文p114&lt;/span&gt;</code> ）。</li>
-<li><strong>跨交换机 trunk</strong>：互联链路两侧打 tag，如 <code>vlan 20 members linkagg 7 tagged</code> / <code>vlan 20 members port 2/1/3 tagged</code>，<code>show vlan members port 2/1/3</code> 应见 20/30 tagged + 默认 VLAN untagged，客户端互 ping 验证 L2/L3 路径（ <code>&lt;span class="pg"&gt;原文p596&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p601&lt;/span&gt;</code> ）。</li>
+<li><strong>验证</strong>：<code>show vlan members port 1/1/6</code>；<code>show mac-learning</code> 验证 MAC 学习（<span class="pg">原文p184</span> ）。</li>
+<li><strong>VLAN 间路由</strong>：<code>ip interface int_1 address 192.168.1.2/24 vlan 1</code> → <code>show ip interface</code> 验证（<span class="pg">原文p114</span> ）。</li>
+<li><strong>跨交换机 trunk</strong>：互联链路两侧打 tag，如 <code>vlan 20 members linkagg 7 tagged</code> / <code>vlan 20 members port 2/1/3 tagged</code>，<code>show vlan members port 2/1/3</code> 应见 20/30 tagged + 默认 VLAN untagged，客户端互 ping 验证 L2/L3 路径（<span class="pg">原文p596</span> -<span class="pg">原文p601</span> ）。</li>
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
-<li><strong>VLAN 状态机制</strong>：VLAN 无活动成员端口时 IP 接口 operational inactive，不参与路由（ <code>&lt;span class="pg"&gt;原文p512&lt;/span&gt;</code> ）——排障时先查成员再查路由。</li>
-<li><strong>Mobile Tag vs 静态 Tag</strong>：Mobile Tag 允许移动口（话机口）接收 802.1Q tag 并动态加入 VLAN；静态 802.1Q Tag 在 mobile 口不支持（ <code>&lt;span class="pg"&gt;原文p173&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p793&lt;/span&gt;</code> ），话机场景配合 LLDP-MED/UNP 使用。</li>
-<li><strong>AP 管理口规则</strong>：AP 管理 VLAN 必须 untagged（上云排障经验， <code>&lt;span class="pg"&gt;原文p377&lt;/span&gt;</code> ）。</li>
-<li><strong>UNP 动态 VLAN 分类优先级</strong>：Port/Linkagg &gt; Domain &gt; MAC &gt; MAC-OUI &gt; MAC range &gt; LLDP &gt; Auth-type &gt; IP &gt; VLAN tag（ <code>&lt;span class="pg"&gt;原文p506&lt;/span&gt;</code> ），做动态分 VLAN 时按此顺序排错。</li>
+<li><strong>VLAN 状态机制</strong>：VLAN 无活动成员端口时 IP 接口 operational inactive，不参与路由（<span class="pg">原文p512</span> ）——排障时先查成员再查路由。</li>
+<li><strong>Mobile Tag vs 静态 Tag</strong>：Mobile Tag 允许移动口（话机口）接收 802.1Q tag 并动态加入 VLAN；静态 802.1Q Tag 在 mobile 口不支持（<span class="pg">原文p173</span> 、<span class="pg">原文p793</span> ），话机场景配合 LLDP-MED/UNP 使用。</li>
+<li><strong>AP 管理口规则</strong>：AP 管理 VLAN 必须 untagged（上云排障经验，<span class="pg">原文p377</span> ）。</li>
+<li><strong>UNP 动态 VLAN 分类优先级</strong>：Port/Linkagg &gt; Domain &gt; MAC &gt; MAC-OUI &gt; MAC range &gt; LLDP &gt; Auth-type &gt; IP &gt; VLAN tag（<span class="pg">原文p506</span> ），做动态分 VLAN 时按此顺序排错。</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>PoE/VLAN/DHCP 联调：三个 VLAN 划分、AP 口 tagged+untagged 组合、AP 改 DHCP 模式后用 <code>mywifi.al-enterprise.com:8080</code> 域名重连（ <code>&lt;span class="pg"&gt;原文p177&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p183&lt;/span&gt;</code> ）。</li>
-<li>802.1Q 跨三台交换机多 VLAN 打 tag，show 验证 20/30 tagged + 58 untagged 后客户端互 ping（ <code>&lt;span class="pg"&gt;原文p596&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p601&lt;/span&gt;</code> ）。</li>
+<li>PoE/VLAN/DHCP 联调：三个 VLAN 划分、AP 口 tagged+untagged 组合、AP 改 DHCP 模式后用 <code>mywifi.al-enterprise.com:8080</code> 域名重连（<span class="pg">原文p177</span> -<span class="pg">原文p183</span> ）。</li>
+<li>802.1Q 跨三台交换机多 VLAN 打 tag，show 验证 20/30 tagged + 58 untagged 后客户端互 ping（<span class="pg">原文p596</span> -<span class="pg">原文p601</span> ）。</li>
 </ul>
 <h2 id="b">B（边界与陷阱）</h2>
 <ul>
-<li>每个物理端口恒有且仅有一个默认（untagged）VLAN 做二层桥接，配 tag 前先想清默认 VLAN 是谁（ <code>&lt;span class="pg"&gt;原文p599&lt;/span&gt;</code> ）。</li>
-<li>VLAN 无活动端口时 IP interface 直接 DOWN（ <code>&lt;span class="pg"&gt;原文p512&lt;/span&gt;</code> ），ping 不通未必是路由问题。</li>
-<li>AP 管理 VLAN 必须落在 untagged 上（ <code>&lt;span class="pg"&gt;原文p377&lt;/span&gt;</code> ）。</li>
+<li>每个物理端口恒有且仅有一个默认（untagged）VLAN 做二层桥接，配 tag 前先想清默认 VLAN 是谁（<span class="pg">原文p599</span> ）。</li>
+<li>VLAN 无活动端口时 IP interface 直接 DOWN（<span class="pg">原文p512</span> ），ping 不通未必是路由问题。</li>
+<li>AP 管理 VLAN 必须落在 untagged 上（<span class="pg">原文p377</span> ）。</li>
 </ul>
 <h2 id="_1">来源</h2>
 <ul>
-<li>principles·P12 VLAN 间路由原理（ <code>&lt;span class="pg"&gt;原文p165&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p512&lt;/span&gt;</code> ）</li>
-<li>principles·P13 802.1Q Tag 帧结构（ <code>&lt;span class="pg"&gt;原文p169&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p516&lt;/span&gt;</code> ）</li>
-<li>principles·P14 物理端口默认 VLAN（ <code>&lt;span class="pg"&gt;原文p599&lt;/span&gt;</code> ）</li>
-<li>principles·P15 Mobile Tag 区别（ <code>&lt;span class="pg"&gt;原文p173&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p793&lt;/span&gt;</code> ）</li>
-<li>principles·P16 UNP 动态 VLAN 分类优先级（ <code>&lt;span class="pg"&gt;原文p506&lt;/span&gt;</code> ）</li>
-<li>cases·C10 PoE/VLAN/DHCP 联调（ <code>&lt;span class="pg"&gt;原文p177&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p184&lt;/span&gt;</code> ）</li>
-<li>cases·C26 802.1Q 跨交换机多 VLAN（ <code>&lt;span class="pg"&gt;原文p596&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p601&lt;/span&gt;</code> ）</li>
-<li>cases·C3 首次登录 ip interface 配置（ <code>&lt;span class="pg"&gt;原文p113&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p114&lt;/span&gt;</code> ）</li>
+<li>principles·P12 VLAN 间路由原理（<span class="pg">原文p165</span> 、<span class="pg">原文p512</span> ）</li>
+<li>principles·P13 802.1Q Tag 帧结构（<span class="pg">原文p169</span> 、<span class="pg">原文p516</span> ）</li>
+<li>principles·P14 物理端口默认 VLAN（<span class="pg">原文p599</span> ）</li>
+<li>principles·P15 Mobile Tag 区别（<span class="pg">原文p173</span> 、<span class="pg">原文p793</span> ）</li>
+<li>principles·P16 UNP 动态 VLAN 分类优先级（<span class="pg">原文p506</span> ）</li>
+<li>cases·C10 PoE/VLAN/DHCP 联调（<span class="pg">原文p177</span> -<span class="pg">原文p184</span> ）</li>
+<li>cases·C26 802.1Q 跨交换机多 VLAN（<span class="pg">原文p596</span> -<span class="pg">原文p601</span> ）</li>
+<li>cases·C3 首次登录 ip interface 配置（<span class="pg">原文p113</span> -<span class="pg">原文p114</span> ）</li>
 </ul><div class="pn"><a href="poe-management.html">⬅ 上一单元：poe-management</a><a class="nxt" href="switch-high-availability.html">下一单元：switch-high-availability ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

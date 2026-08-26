@@ -67,7 +67,7 @@ blockquote p{margin:6px 0}
 <li>核对模块功耗（散热预算）、温度档（商用/工业）、DDM 支持度</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>速率代际 × 距离档位矩阵（F2， <code>&lt;span class="pg"&gt;原文p18-63&lt;/span&gt;</code> ）：列=封装（SFP→SFP+→SFP28→QSFP+→SFP56→QSFP28→QSFP56→QSFP-DD），行=距离档（DAC 0.4-7m→AOC 10-20m→MMF SR 70-400m→SMF CLR/FR 2km→LR 10km→ER/LH40 40km→DR4 500m→LH70 70km→ZR 80km→EZX 120km）；选型先定距离再定封装，同距离多封装时用功耗与 DDM 支持度决胜。光模块选型三查法（F1， <code>&lt;span class="pg"&gt;原文p18-107&lt;/span&gt;</code> ）：一查 Ch1 规格表（速率/距离/连接器/DDM/功耗）→二查 Ch2 兼容矩阵（平台×最低 AOS 版本）→三查脚注排除项。距离档位体系（P26）：LR/CLR=10/2km、LH40/ER=40km、LH70=70km、ZR=80km、EZX=120km；MMF 按 OM2/OM3/OM4 递减表。单双纤配对原则（P25）：BX 系列 D/U 成对（一端 D 发 1490/收 1310，另一端 U 反之），设计单纤链路两端 PN 必须配对下单。</p>
+<p>速率代际 × 距离档位矩阵（F2，<span class="pg">原文p18-63</span> ）：列=封装（SFP→SFP+→SFP28→QSFP+→SFP56→QSFP28→QSFP56→QSFP-DD），行=距离档（DAC 0.4-7m→AOC 10-20m→MMF SR 70-400m→SMF CLR/FR 2km→LR 10km→ER/LH40 40km→DR4 500m→LH70 70km→ZR 80km→EZX 120km）；选型先定距离再定封装，同距离多封装时用功耗与 DDM 支持度决胜。光模块选型三查法（F1，<span class="pg">原文p18-107</span> ）：一查 Ch1 规格表（速率/距离/连接器/DDM/功耗）→二查 Ch2 兼容矩阵（平台×最低 AOS 版本）→三查脚注排除项。距离档位体系（P26）：LR/CLR=10/2km、LH40/ER=40km、LH70=70km、ZR=80km、EZX=120km；MMF 按 OM2/OM3/OM4 递减表。单双纤配对原则（P25）：BX 系列 D/U 成对（一端 D 发 1490/收 1310，另一端 U 反之），设计单纤链路两端 PN 必须配对下单。</p>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>先定距离与介质</strong>：机柜内（≤7m）→DAC；跨柜短距（10-20m）→AOC；楼内多模→SR/ESR（按 OM2/3/4）；园区单模→CLR/FR 2km 或 LR 10km；城域→ER/LH40 40km；长途→ZR 80km/EZX 120km（EZX 已停购）</li>
@@ -78,16 +78,16 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a2">A2（操作步骤）·速率档代表型号速查</h2>
 <ul>
-<li><strong>1G</strong>：SFP-GIG-SX（多模 300/550m）、LX（单模 10km）、LH40（40km）、LH70（70km）、EZX（120km，停购）、T（铜口 100m）、BX-D/U 及 BX20/BX40 变体（单纤配对）（ <code>&lt;span class="pg"&gt;原文p18-24&lt;/span&gt;</code> ）</li>
-<li><strong>双速/100FX</strong>：SFP-DUAL-MM/MM-N（100FX+1000LX）、DUAL-BX-D/U；SFP-100-LC-MM/SM15/SM40、BXLC-D/U（ <code>&lt;span class="pg"&gt;原文p25-31&lt;/span&gt;</code> ）</li>
-<li><strong>10G</strong>：SR（OM3 300m，1W）、LR（10km）、ER（40km，1.5W）、LRM（220m）、ZR（80km）、T（铜口 30m，2.5W）、C（DAC 0.6-7m）、GIG-SR/LR 双速过渡件、BX-D/U 10/40km、CWDM（ <code>&lt;span class="pg"&gt;原文p32-39&lt;/span&gt;</code> ）</li>
-<li><strong>25G SFP28</strong>：SR（OM4 100m）、ESR（OM4 300m）、LR（10km）、CLR（2km）、A20M、C（DAC 1/3/5m）、BX-D40/U40（ <code>&lt;span class="pg"&gt;原文p40-43&lt;/span&gt;</code> ）</li>
-<li><strong>40G QSFP+</strong>：SR（OM4 150m，4X10G 拆分）、LR（10km）、ER（40km）、CLR（2km）、PSM4（MPO 10km）、C（DAC）、4X10G-SR/C 拆分件、AOC20M、OS6860-CBL 20G VFL 专用线（ <code>&lt;span class="pg"&gt;原文p44-50&lt;/span&gt;</code> ）</li>
-<li><strong>50G SFP56</strong>：SR（OM4 100m，3.3W）、FR（2km）、LR（10km）、C（DAC）——仅 6870-LNI-U6 支持（ <code>&lt;span class="pg"&gt;原文p51-52&lt;/span&gt;</code> ）</li>
-<li><strong>100G</strong>：SR4（OM4 100m，4X25G 拆分）、LR4（10km）、CLR4（2km）、ER4（40km，4.5W）、CWDM4（2km）、A20M（20m）、C（DAC）、SR1.2/PSM4（8.10R4 新品）（ <code>&lt;span class="pg"&gt;原文p53-57&lt;/span&gt;</code> ）</li>
-<li><strong>200G</strong>：SR4（OM4 100m，4.5W）、FR4（2km，6W）、A20M、C、2XQ100/2XQ200 拆分线（ <code>&lt;span class="pg"&gt;原文p58-60&lt;/span&gt;</code> ）</li>
-<li><strong>400G QSFP-DD</strong>（均 8.10R4、仅 6920）：C（DAC 0.5-3m）、DR4（500m，10W）、FR4（2km）、LR4（10km）、A10M（10m）、SR4.2（OM4 100m，可拆 4×SR1.2，12W）、2Q100-C 拆分线（ <code>&lt;span class="pg"&gt;原文p61-63&lt;/span&gt;</code> ）</li>
-<li><strong>PON/工业</strong>：3FE46541AA（GPON ONT）、3FE49327AA（XGS-PON ONT）；iSFP 全家族 -40~85°C（配 6465/6865/6575 工业平台），iSFP-10G-C 与商用同件互换（ <code>&lt;span class="pg"&gt;原文p64-73&lt;/span&gt;</code> ）</li>
+<li><strong>1G</strong>：SFP-GIG-SX（多模 300/550m）、LX（单模 10km）、LH40（40km）、LH70（70km）、EZX（120km，停购）、T（铜口 100m）、BX-D/U 及 BX20/BX40 变体（单纤配对）（<span class="pg">原文p18-24</span> ）</li>
+<li><strong>双速/100FX</strong>：SFP-DUAL-MM/MM-N（100FX+1000LX）、DUAL-BX-D/U；SFP-100-LC-MM/SM15/SM40、BXLC-D/U（<span class="pg">原文p25-31</span> ）</li>
+<li><strong>10G</strong>：SR（OM3 300m，1W）、LR（10km）、ER（40km，1.5W）、LRM（220m）、ZR（80km）、T（铜口 30m，2.5W）、C（DAC 0.6-7m）、GIG-SR/LR 双速过渡件、BX-D/U 10/40km、CWDM（<span class="pg">原文p32-39</span> ）</li>
+<li><strong>25G SFP28</strong>：SR（OM4 100m）、ESR（OM4 300m）、LR（10km）、CLR（2km）、A20M、C（DAC 1/3/5m）、BX-D40/U40（<span class="pg">原文p40-43</span> ）</li>
+<li><strong>40G QSFP+</strong>：SR（OM4 150m，4X10G 拆分）、LR（10km）、ER（40km）、CLR（2km）、PSM4（MPO 10km）、C（DAC）、4X10G-SR/C 拆分件、AOC20M、OS6860-CBL 20G VFL 专用线（<span class="pg">原文p44-50</span> ）</li>
+<li><strong>50G SFP56</strong>：SR（OM4 100m，3.3W）、FR（2km）、LR（10km）、C（DAC）——仅 6870-LNI-U6 支持（<span class="pg">原文p51-52</span> ）</li>
+<li><strong>100G</strong>：SR4（OM4 100m，4X25G 拆分）、LR4（10km）、CLR4（2km）、ER4（40km，4.5W）、CWDM4（2km）、A20M（20m）、C（DAC）、SR1.2/PSM4（8.10R4 新品）（<span class="pg">原文p53-57</span> ）</li>
+<li><strong>200G</strong>：SR4（OM4 100m，4.5W）、FR4（2km，6W）、A20M、C、2XQ100/2XQ200 拆分线（<span class="pg">原文p58-60</span> ）</li>
+<li><strong>400G QSFP-DD</strong>（均 8.10R4、仅 6920）：C（DAC 0.5-3m）、DR4（500m，10W）、FR4（2km）、LR4（10km）、A10M（10m）、SR4.2（OM4 100m，可拆 4×SR1.2，12W）、2Q100-C 拆分线（<span class="pg">原文p61-63</span> ）</li>
+<li><strong>PON/工业</strong>：3FE46541AA（GPON ONT）、3FE49327AA（XGS-PON ONT）；iSFP 全家族 -40~85°C（配 6465/6865/6575 工业平台），iSFP-10G-C 与商用同件互换（<span class="pg">原文p64-73</span> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
@@ -95,14 +95,14 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="b">B（反例/坑）</h2>
 <ul>
-<li>使用非 ALE 认证 PN 的模块被禁止、性能无保障且失保（P2， <code>&lt;span class="pg"&gt;原文p1&lt;/span&gt;</code> ）</li>
-<li>双速模块建议两端手工配速防速率失配（P15， <code>&lt;span class="pg"&gt;原文p25&lt;/span&gt;</code> ）</li>
-<li>DAC 三级长度体系：1G 无 DAC；机柜内用 DAC、跨柜用 AOC/光纤（P11， <code>&lt;span class="pg"&gt;原文p34-63&lt;/span&gt;</code> ）</li>
+<li>使用非 ALE 认证 PN 的模块被禁止、性能无保障且失保（P2，<span class="pg">原文p1</span> ）</li>
+<li>双速模块建议两端手工配速防速率失配（P15，<span class="pg">原文p25</span> ）</li>
+<li>DAC 三级长度体系：1G 无 DAC；机柜内用 DAC、跨柜用 AOC/光纤（P11，<span class="pg">原文p34-63</span> ）</li>
 <li>长距模块温度上限收窄：LH40/LH70/EZX 上限收窄到 -10/-5~70°C（P24）</li>
-<li>10G-ER 损伤阈值 4dBm、ZR 过载 -7dBm——长距链路做光功率预算时注意（ <code>&lt;span class="pg"&gt;原文p33&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p34&lt;/span&gt;</code> ）</li>
-<li>40G SR4 的 DDM 仅 V/T/mA/Input 四项；SR-BD/A20M/铜口 T 系列等无 DDM，无法用 DDM 做光功率监控（X31， <code>&lt;span class="pg"&gt;原文p20-63&lt;/span&gt;</code> ）</li>
-<li>QSFP-QSFP MPO 直连必须 Type-B 交叉线（8 芯使用）（glossary， <code>&lt;span class="pg"&gt;原文p17&lt;/span&gt;</code> ）</li>
+<li>10G-ER 损伤阈值 4dBm、ZR 过载 -7dBm——长距链路做光功率预算时注意（<span class="pg">原文p33</span> /<span class="pg">原文p34</span> ）</li>
+<li>40G SR4 的 DDM 仅 V/T/mA/Input 四项；SR-BD/A20M/铜口 T 系列等无 DDM，无法用 DDM 做光功率监控（X31，<span class="pg">原文p20-63</span> ）</li>
+<li>QSFP-QSFP MPO 直连必须 Type-B 交叉线（8 芯使用）（glossary，<span class="pg">原文p17</span> ）</li>
 <li>10G-GIG-SR/LR 双速按光纤分级：OM1 33m@10G、OM3 300m@10G——旧布线升级的过渡件（P29）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniSwitch AOS Release 8 Transceivers Guide Ch1 各速率节（ <code>&lt;span class="pg"&gt;原文p18-73&lt;/span&gt;</code> ）。条目来源：principles P2/P11/P15/P23/P24/P25/P26/P29；counter-examples X31/X32；frameworks F1/F2；glossary 各速率组。</p><div class="pn"><a href="../index.html">⬅ 返回课程首页</a><a class="nxt" href="aos-tx-platform-compat.html">下一单元：aos-tx-platform-compat ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<p>OmniSwitch AOS Release 8 Transceivers Guide Ch1 各速率节（<span class="pg">原文p18-73</span> ）。条目来源：principles P2/P11/P15/P23/P24/P25/P26/P29；counter-examples X31/X32；frameworks F1/F2；glossary 各速率组。</p><div class="pn"><a href="../index.html">⬅ 返回课程首页</a><a class="nxt" href="aos-tx-platform-compat.html">下一单元：aos-tx-platform-compat ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

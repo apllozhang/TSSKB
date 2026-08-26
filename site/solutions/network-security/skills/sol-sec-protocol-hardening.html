@@ -68,41 +68,41 @@ blockquote p{margin:6px 0}
 <li>用安全协议替换 Telnet/FTP/TFTP/SNMPv1/HTTP</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>开机默认全开的服务端口是 DoS 攻击面（X3， <code>&lt;span class="pg"&gt;原文p12&lt;/span&gt;</code> ）：先全关服务再按需开安全协议（P19， <code>&lt;span class="pg"&gt;原文p12&lt;/span&gt;</code> ）。不安全协议仅为兼容遗留系统保留，必须替换（P20， <code>&lt;span class="pg"&gt;原文p12&lt;/span&gt;</code> ）。控制面防护逻辑 = 协议认证（谁可参与）+ 拓扑防护（防外部影响生成树）+ 地址防护（防 ARP/DHCP/RA 欺骗）。keychain 是 OSPF/IS-IS 最安全选项，密钥带起止时间定期轮换（P47， <code>&lt;span class="pg"&gt;原文p30&lt;/span&gt;</code> ）。</p>
+<p>开机默认全开的服务端口是 DoS 攻击面（X3，<span class="pg">原文p12</span> ）：先全关服务再按需开安全协议（P19，<span class="pg">原文p12</span> ）。不安全协议仅为兼容遗留系统保留，必须替换（P20，<span class="pg">原文p12</span> ）。控制面防护逻辑 = 协议认证（谁可参与）+ 拓扑防护（防外部影响生成树）+ 地址防护（防 ARP/DHCP/RA 欺骗）。keychain 是 OSPF/IS-IS 最安全选项，密钥带起止时间定期轮换（P47，<span class="pg">原文p30</span> ）。</p>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
-<li>协议替换对照框架（F3/P20， <code>&lt;span class="pg"&gt;原文p12&lt;/span&gt;</code> ）：Telnet→SSH（无加密无证书）；FTP/TFTP→SFTP/SCP；SNMPv1/v2c→SNMPv3（仅社区串认证）；HTTP→HTTPS（明文）</li>
-<li>控制面加固路线（ <code>&lt;span class="pg"&gt;原文p30-43&lt;/span&gt;</code> ）：路由/标签协议认证（P46）→ STP 三防（P48-P50）→ LLDP Agent Security（P51）→ ARP/GARP 防欺骗（P52-P54）→ NTP 认证（P55）→ ICMP 裁剪（P56）→ DHCP Snooping+DAI（P57）→ IPv6 三件套（P58）→ 不用即关 MVRP（P59）→ 交换机 supplicant（P60）</li>
-<li>数据面加固路线（ <code>&lt;span class="pg"&gt;原文p43-47&lt;/span&gt;</code> ）：MACsec 链路加密（P61）→ 禁定向广播（P62）→ IPv6 邻居缓存限额（P63）→ 边缘 LPS（P64）</li>
+<li>协议替换对照框架（F3/P20，<span class="pg">原文p12</span> ）：Telnet→SSH（无加密无证书）；FTP/TFTP→SFTP/SCP；SNMPv1/v2c→SNMPv3（仅社区串认证）；HTTP→HTTPS（明文）</li>
+<li>控制面加固路线（<span class="pg">原文p30-43</span> ）：路由/标签协议认证（P46）→ STP 三防（P48-P50）→ LLDP Agent Security（P51）→ ARP/GARP 防欺骗（P52-P54）→ NTP 认证（P55）→ ICMP 裁剪（P56）→ DHCP Snooping+DAI（P57）→ IPv6 三件套（P58）→ 不用即关 MVRP（P59）→ 交换机 supplicant（P60）</li>
+<li>数据面加固路线（<span class="pg">原文p43-47</span> ）：MACsec 链路加密（P61）→ 禁定向广播（P62）→ IPv6 邻居缓存限额（P63）→ 边缘 LPS（P64）</li>
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>OSPF keychain 三密钥轮换</strong>（C10， <code>&lt;span class="pg"&gt;原文p30&lt;/span&gt;</code> ）：<code>security key 1/2/3 algorithm sha256 ... start-time/lifetime</code> → <code>security key-chain 1 name "OSPF"</code> → <code>ip ospf interface vlan-101 auth-type key-chain 1</code></li>
-<li><strong>STP 三防</strong>（P48-P50， <code>&lt;span class="pg"&gt;原文p32-33&lt;/span&gt;</code> ）：核心下行口开 Root Guard（restricted-role）；边缘口开 TCN 限制（restricted-tcn）；用户口收 BPDU 即过滤或 shutdown</li>
-<li><strong>LLDP Agent Security</strong>：端口仅信一个 LLDP 远端代理，rogue 设备接入即触发 violation（trap/shutdown）并阻塞 NNI 口（C11/P51， <code>&lt;span class="pg"&gt;原文p33&lt;/span&gt;</code> ）</li>
-<li><strong>ARP 防欺骗组合</strong>：ARP 过滤 + 阻断入向 GARP + 对服务器/网关等关键主机配 arp-poison restricted-address 检测（P52-P54， <code>&lt;span class="pg"&gt;原文p34-35&lt;/span&gt;</code> ）</li>
-<li><strong>DHCP Snooping + DAI</strong>（C12/P57， <code>&lt;span class="pg"&gt;原文p38-39&lt;/span&gt;</code> ）：<code>dhcp-snooping vlan 140 admin-state enable</code> + 服务器端口 <code>trust</code> + <code>dhcp-snooping ip-source-filter vlan 140 admin-state enable</code>（依绑定表校验源，防 ARP 欺骗）</li>
-<li><strong>IPv6 三件套</strong>（P58， <code>&lt;span class="pg"&gt;原文p39-46&lt;/span&gt;</code> ）：DHCPv6 Snooping + IPv6 Source Filtering（需 TCAM 模式调整）；DHCPv6 Guard（仅信任口放服务器报文）；RA 过滤（ra-filter 丢非法 RA）</li>
-<li><strong>NTP 认证</strong>：/flash/network/ntp.keys 存 MD5/SHA1 密钥并设 trusted，保证日志时间可信（P55， <code>&lt;span class="pg"&gt;原文p36-37&lt;/span&gt;</code> ）</li>
-<li><strong>ICMP 裁剪</strong>：按风险表禁 Echo/Redirect/RA/Timestamp 等无用消息（P56， <code>&lt;span class="pg"&gt;原文p37-38&lt;/span&gt;</code> ）</li>
-<li><strong>MACsec/MKA</strong>：etherType 0x88E5 点对点加密；静态 SAK 四密钥（一用三备）或 MKA 动态轮换（P61， <code>&lt;span class="pg"&gt;原文p43-44&lt;/span&gt;</code> ）</li>
-<li><strong>LPS</strong>：边缘端口 MAC 学习授权，限数/限窗/违规 shutdown（P64， <code>&lt;span class="pg"&gt;原文p46-47&lt;/span&gt;</code> ）</li>
+<li><strong>OSPF keychain 三密钥轮换</strong>（C10，<span class="pg">原文p30</span> ）：<code>security key 1/2/3 algorithm sha256 ... start-time/lifetime</code> → <code>security key-chain 1 name "OSPF"</code> → <code>ip ospf interface vlan-101 auth-type key-chain 1</code></li>
+<li><strong>STP 三防</strong>（P48-P50，<span class="pg">原文p32-33</span> ）：核心下行口开 Root Guard（restricted-role）；边缘口开 TCN 限制（restricted-tcn）；用户口收 BPDU 即过滤或 shutdown</li>
+<li><strong>LLDP Agent Security</strong>：端口仅信一个 LLDP 远端代理，rogue 设备接入即触发 violation（trap/shutdown）并阻塞 NNI 口（C11/P51，<span class="pg">原文p33</span> ）</li>
+<li><strong>ARP 防欺骗组合</strong>：ARP 过滤 + 阻断入向 GARP + 对服务器/网关等关键主机配 arp-poison restricted-address 检测（P52-P54，<span class="pg">原文p34-35</span> ）</li>
+<li><strong>DHCP Snooping + DAI</strong>（C12/P57，<span class="pg">原文p38-39</span> ）：<code>dhcp-snooping vlan 140 admin-state enable</code> + 服务器端口 <code>trust</code> + <code>dhcp-snooping ip-source-filter vlan 140 admin-state enable</code>（依绑定表校验源，防 ARP 欺骗）</li>
+<li><strong>IPv6 三件套</strong>（P58，<span class="pg">原文p39-46</span> ）：DHCPv6 Snooping + IPv6 Source Filtering（需 TCAM 模式调整）；DHCPv6 Guard（仅信任口放服务器报文）；RA 过滤（ra-filter 丢非法 RA）</li>
+<li><strong>NTP 认证</strong>：/flash/network/ntp.keys 存 MD5/SHA1 密钥并设 trusted，保证日志时间可信（P55，<span class="pg">原文p36-37</span> ）</li>
+<li><strong>ICMP 裁剪</strong>：按风险表禁 Echo/Redirect/RA/Timestamp 等无用消息（P56，<span class="pg">原文p37-38</span> ）</li>
+<li><strong>MACsec/MKA</strong>：etherType 0x88E5 点对点加密；静态 SAK 四密钥（一用三备）或 MKA 动态轮换（P61，<span class="pg">原文p43-44</span> ）</li>
+<li><strong>LPS</strong>：边缘端口 MAC 学习授权，限数/限窗/违规 shutdown（P64，<span class="pg">原文p46-47</span> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>OSPF keychain 三密钥轮换配置（C10， <code>&lt;span class="pg"&gt;原文p30&lt;/span&gt;</code> ）</li>
-<li>LLDP Agent Security 检测 rogue 接入并阻塞 NNI 口（C11， <code>&lt;span class="pg"&gt;原文p33&lt;/span&gt;</code> ）</li>
-<li>DHCP Snooping + IP Source Filtering 组成 DAI（C12， <code>&lt;span class="pg"&gt;原文p39&lt;/span&gt;</code> ）</li>
-<li>DoS 过滤默认开启：Ping of Death/Land/ARP Flood(&gt;500/s)/Ping overload(&gt;100/s)；端口扫描按 penalty 累计超阈值（如 2000）发 trap（ <code>&lt;span class="pg"&gt;原文p41-42&lt;/span&gt;</code> ）</li>
+<li>OSPF keychain 三密钥轮换配置（C10，<span class="pg">原文p30</span> ）</li>
+<li>LLDP Agent Security 检测 rogue 接入并阻塞 NNI 口（C11，<span class="pg">原文p33</span> ）</li>
+<li>DHCP Snooping + IP Source Filtering 组成 DAI（C12，<span class="pg">原文p39</span> ）</li>
+<li>DoS 过滤默认开启：Ping of Death/Land/ARP Flood(&gt;500/s)/Ping overload(&gt;100/s)；端口扫描按 penalty 累计超阈值（如 2000）发 trap（<span class="pg">原文p41-42</span> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>
-<li>开机全开 TCP/UDP 知名服务端口，易被 DoS（X3， <code>&lt;span class="pg"&gt;原文p12&lt;/span&gt;</code> ）</li>
-<li>Telnet/FTP/TFTP/HTTP/明文 SNMP 均为不安全协议（X4， <code>&lt;span class="pg"&gt;原文p12&lt;/span&gt;</code> ）</li>
-<li>GARP 可被伪造用于 MiTM——阻断入向、放行出向（P53， <code>&lt;span class="pg"&gt;原文p35&lt;/span&gt;</code> ）</li>
-<li>DHCP Option-82 与 Snooping 互斥（ <code>&lt;span class="pg"&gt;原文p38&lt;/span&gt;</code> ）</li>
-<li>MVRP 不用即关（P59， <code>&lt;span class="pg"&gt;原文p41&lt;/span&gt;</code> ）</li>
-<li>定向广播默认丢弃，勿随意开受控放行（P62， <code>&lt;span class="pg"&gt;原文p45&lt;/span&gt;</code> ）</li>
-<li>IPv6 邻居缓存可被 DoS 耗尽——配限额（P63， <code>&lt;span class="pg"&gt;原文p46&lt;/span&gt;</code> ）</li>
+<li>开机全开 TCP/UDP 知名服务端口，易被 DoS（X3，<span class="pg">原文p12</span> ）</li>
+<li>Telnet/FTP/TFTP/HTTP/明文 SNMP 均为不安全协议（X4，<span class="pg">原文p12</span> ）</li>
+<li>GARP 可被伪造用于 MiTM——阻断入向、放行出向（P53，<span class="pg">原文p35</span> ）</li>
+<li>DHCP Option-82 与 Snooping 互斥（<span class="pg">原文p38</span> ）</li>
+<li>MVRP 不用即关（P59，<span class="pg">原文p41</span> ）</li>
+<li>定向广播默认丢弃，勿随意开受控放行（P62，<span class="pg">原文p45</span> ）</li>
+<li>IPv6 邻居缓存可被 DoS 耗尽——配限额（P63，<span class="pg">原文p46</span> ）</li>
 </ul>
 <p>来源：Network Security Guidelines（Control Plane + Data Plane 章，p12、30-47）</p><div class="pn"><a href="sol-sec-five-layer-framework.html">⬅ 上一单元：sol-sec-five-layer-framework</a><a class="nxt" href="sol-sec-device-access.html">下一单元：sol-sec-device-access ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

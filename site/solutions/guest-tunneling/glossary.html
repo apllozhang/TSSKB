@@ -63,29 +63,29 @@ blockquote p{margin:6px 0}
 <p>页码为原书 <code>&lt;&lt;&lt;PAGE N&gt;&gt;&gt;</code> 标记。</p>
 </blockquote>
 <ul>
-<li><strong>GTTS（Guest Traffic Tunneling Services，访客流量隧道服务）</strong>：OmniAccess Stellar 与 OmniSwitch 联合特性，把无线用户流量从 AP 灵活隧道到一台或多台 OmniSwitch 隧道聚合端点；虽名为"访客"，也用于安全策略旁挂与架构迁移。 <code>&lt;span class="pg"&gt;原文p3&lt;/span&gt;</code> </li>
-<li><strong>L2 GRE（Layer 2 Generic Routing Encapsulation，二层通用路由封装）</strong>：GTTS 底层协议，在 IP 网上承载二层 overlay，识别并隔离设备流量；以 service 形式实现，可关联 UNP profile，实现思路同 OmniSwitch VXLAN。 <code>&lt;span class="pg"&gt;原文p4&lt;/span&gt;</code> </li>
-<li><strong>tunnel aggregation switch（隧道聚合交换机）</strong>：L2 GRE 隧道的交换机侧终点，通常部署在 DMZ 等防火墙围护的安全区；解封装后经 Hairpin 把流量送入 VLAN 域。 <code>&lt;span class="pg"&gt;原文p4&lt;/span&gt;</code> </li>
-<li><strong>Hairpin</strong>：同一台交换机上两个端口用一根线自环；一侧 SAP 口出隧道，另一侧 ACCESS 口落 VLAN；其线速封顶 SSID 带宽。 <code>&lt;span class="pg"&gt;原文p4&lt;/span&gt;</code> </li>
-<li><strong>SAP port（Service Access Point port，业务接入点端口）</strong>：Hairpin 的隧道侧端口，创建 service 并映射到此口，隧道流量从此出隧道；冗余设计中可换成 linkagg。 <code>&lt;span class="pg"&gt;原文p4&lt;/span&gt;</code> </li>
-<li><strong>ACCESS port（Hairpin 的接入侧端口）</strong>：Hairpin 另一侧的普通传统接入端口，映射 VLAN；隧道流量由此进入 VLAN 域，下行流量反向先经此口进隧道。 <code>&lt;span class="pg"&gt;原文p4&lt;/span&gt;</code> </li>
-<li><strong>ARP（Access Role Profile，访问角色档案）</strong>：Stellar 的角色配置对象（含 ACL/QoS/用户 VLAN/Portal 等）；GTTS 隧道粒度可细到 ARP 级，每个 ARP 同一时刻只对应一条活跃隧道。 <code>&lt;span class="pg"&gt;原文p3&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p7&lt;/span&gt;</code> </li>
-<li><strong>Tunnel Profile（隧道档案）</strong>：包含建立 L2 GRE 隧道全部参数的配置对象；单 SSID 多 ARP 场景下每个 ARP 各映射一个 Tunnel Profile，在 OV2500 Expert 模式创建。 <code>&lt;span class="pg"&gt;原文p5&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p11&lt;/span&gt;</code> </li>
-<li><strong>VPN ID</strong>：service l2gre 的隧道标识，AP 侧 Tunnel ID、主备交换机 vpnid 必须一致，AP 依此开隧道；与 ACCESS 口 VLAN ID 不必相同。 <code>&lt;span class="pg"&gt;原文p9&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p16&lt;/span&gt;</code> </li>
-<li><strong>Tunnel ID</strong>：AP 侧 SSID 隧道配置中的隧道编号，必须与交换机侧配置一致。 <code>&lt;span class="pg"&gt;原文p10&lt;/span&gt;</code> </li>
-<li><strong>GRE Tunnel Server IP / Data VPN Server</strong>：SSID 隧道配置中主隧道聚合交换机的 IP 地址。 <code>&lt;span class="pg"&gt;原文p10&lt;/span&gt;</code> </li>
-<li><strong>Backup GRE Tunnel Server IP</strong>：备隧道聚合交换机 IP；与 Primary 无同/异网段要求，失联 Primary 时隧道切换到此机（R2 冗余）。 <code>&lt;span class="pg"&gt;原文p10&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p17&lt;/span&gt;</code> </li>
-<li><strong>Preemption（抢占）</strong>：R2 冗余选项；Primary 恢复后按 Preemption Countdown Timer 到期回收 Master 角色，AP 把全部会话迁回 Primary。 <code>&lt;span class="pg"&gt;原文p10&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p17&lt;/span&gt;</code> </li>
-<li><strong>Entropy（熵）</strong>：AP 侧 SSID 隧道配置项，文档以 Important 标注必须启用，否则 GTTS 不可用。 <code>&lt;span class="pg"&gt;原文p10&lt;/span&gt;</code> </li>
-<li><strong>auto-discover（自动发现）</strong>：交换机特性，动态接受远端 AP 发起的隧道；默认开启，关闭则需逐台手工登记 AP MAC。命令 <code>service l2gre auto-discover enable</code>。 <code>&lt;span class="pg"&gt;原文p8&lt;/span&gt;</code> </li>
-<li><strong>l2profile（L2 服务档案）</strong>：交换机侧服务端口模板，建 GTTS SAP 口时创建并丢弃 stp/gvrp/mvrp，配合 vlan-xlation 启用。 <code>&lt;span class="pg"&gt;原文p9&lt;/span&gt;</code> </li>
-<li><strong>vlan-xlation（VLAN translation，VLAN 转换）</strong>：service access port 与 service 上的开关，Hairpin 两侧 VLAN 映射所需。 <code>&lt;span class="pg"&gt;原文p9&lt;/span&gt;</code> </li>
-<li><strong>One ARP 规则</strong>：每台 AP 同一时刻对一个 ARP 只能有一条活跃隧道指向一台聚合交换机；N 个不同 ARP 的隧道 SSID 需要 N 台聚合交换机。 <code>&lt;span class="pg"&gt;原文p7&lt;/span&gt;</code> </li>
-<li><strong>Layer 3 hop（三层跳变）</strong>：强制架构前置——AP 管理 IP 与 GRE Tunnel Server IP 必须不同子网，中间存在三层路由。 <code>&lt;span class="pg"&gt;原文p7&lt;/span&gt;</code> </li>
-<li><strong>Virtual-Chassis（虚拟机箱）</strong>：OmniSwitch 堆叠技术；R3 冗余用它替代 Primary-Backup，两台聚合交换机组 VC 后配合跨成员 linkagg 实现亚秒收敛。 <code>&lt;span class="pg"&gt;原文p17&lt;/span&gt;</code> </li>
-<li><strong>DMZ（Demilitarized Zone，非军事区）</strong>：企业内网与外部网之间的缓冲区，由防火墙分隔；GTTS 聚合交换机与专属 DHCP 通常部署于此。 <code>&lt;span class="pg"&gt;原文p4&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p11&lt;/span&gt;</code> </li>
-<li><strong>Multi-tenancy（多租户）</strong>：运营商场景下多个客户的流量集中终结于同一台（或多台）GTTS 聚合交换机且保持客户间逻辑隔离；每客户一个 AP Group，链路可为 SD-WAN/SPB/MPLS。 <code>&lt;span class="pg"&gt;原文p3&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p13&lt;/span&gt;</code> </li>
-<li><strong>AP Group（接入点组）</strong>：GTTS 的配置粒度单位；组内 AP 广播同一 SSID 指向同一隧道终点，是园区多站规模化与多租户隔离的基础。 <code>&lt;span class="pg"&gt;原文p3&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p12&lt;/span&gt;</code> </li>
-<li><strong>Filter-id</strong>：802.1X 认证返回字段，可用于把一个 SSID 的用户分类到不同 ARP，进而进不同隧道。 <code>&lt;span class="pg"&gt;原文p5&lt;/span&gt;</code> </li>
-<li><strong>linkagg / LACP（链路聚合）</strong>：R1/R3 冗余中把 Hairpin 的 SAP 侧与 ACCESS 侧各自做成聚合（跨 VC 成员则双机各出一口），端口级冗余并提升 Hairpin 带宽。 <code>&lt;span class="pg"&gt;原文p15&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p17&lt;/span&gt;</code> </li>
+<li><strong>GTTS（Guest Traffic Tunneling Services，访客流量隧道服务）</strong>：OmniAccess Stellar 与 OmniSwitch 联合特性，把无线用户流量从 AP 灵活隧道到一台或多台 OmniSwitch 隧道聚合端点；虽名为"访客"，也用于安全策略旁挂与架构迁移。<span class="pg">原文p3</span> </li>
+<li><strong>L2 GRE（Layer 2 Generic Routing Encapsulation，二层通用路由封装）</strong>：GTTS 底层协议，在 IP 网上承载二层 overlay，识别并隔离设备流量；以 service 形式实现，可关联 UNP profile，实现思路同 OmniSwitch VXLAN。<span class="pg">原文p4</span> </li>
+<li><strong>tunnel aggregation switch（隧道聚合交换机）</strong>：L2 GRE 隧道的交换机侧终点，通常部署在 DMZ 等防火墙围护的安全区；解封装后经 Hairpin 把流量送入 VLAN 域。<span class="pg">原文p4</span> </li>
+<li><strong>Hairpin</strong>：同一台交换机上两个端口用一根线自环；一侧 SAP 口出隧道，另一侧 ACCESS 口落 VLAN；其线速封顶 SSID 带宽。<span class="pg">原文p4</span> </li>
+<li><strong>SAP port（Service Access Point port，业务接入点端口）</strong>：Hairpin 的隧道侧端口，创建 service 并映射到此口，隧道流量从此出隧道；冗余设计中可换成 linkagg。<span class="pg">原文p4</span> </li>
+<li><strong>ACCESS port（Hairpin 的接入侧端口）</strong>：Hairpin 另一侧的普通传统接入端口，映射 VLAN；隧道流量由此进入 VLAN 域，下行流量反向先经此口进隧道。<span class="pg">原文p4</span> </li>
+<li><strong>ARP（Access Role Profile，访问角色档案）</strong>：Stellar 的角色配置对象（含 ACL/QoS/用户 VLAN/Portal 等）；GTTS 隧道粒度可细到 ARP 级，每个 ARP 同一时刻只对应一条活跃隧道。<span class="pg">原文p3</span> <span class="pg">原文p7</span> </li>
+<li><strong>Tunnel Profile（隧道档案）</strong>：包含建立 L2 GRE 隧道全部参数的配置对象；单 SSID 多 ARP 场景下每个 ARP 各映射一个 Tunnel Profile，在 OV2500 Expert 模式创建。<span class="pg">原文p5</span> <span class="pg">原文p11</span> </li>
+<li><strong>VPN ID</strong>：service l2gre 的隧道标识，AP 侧 Tunnel ID、主备交换机 vpnid 必须一致，AP 依此开隧道；与 ACCESS 口 VLAN ID 不必相同。<span class="pg">原文p9</span> <span class="pg">原文p16</span> </li>
+<li><strong>Tunnel ID</strong>：AP 侧 SSID 隧道配置中的隧道编号，必须与交换机侧配置一致。<span class="pg">原文p10</span> </li>
+<li><strong>GRE Tunnel Server IP / Data VPN Server</strong>：SSID 隧道配置中主隧道聚合交换机的 IP 地址。<span class="pg">原文p10</span> </li>
+<li><strong>Backup GRE Tunnel Server IP</strong>：备隧道聚合交换机 IP；与 Primary 无同/异网段要求，失联 Primary 时隧道切换到此机（R2 冗余）。<span class="pg">原文p10</span> <span class="pg">原文p17</span> </li>
+<li><strong>Preemption（抢占）</strong>：R2 冗余选项；Primary 恢复后按 Preemption Countdown Timer 到期回收 Master 角色，AP 把全部会话迁回 Primary。<span class="pg">原文p10</span> <span class="pg">原文p17</span> </li>
+<li><strong>Entropy（熵）</strong>：AP 侧 SSID 隧道配置项，文档以 Important 标注必须启用，否则 GTTS 不可用。<span class="pg">原文p10</span> </li>
+<li><strong>auto-discover（自动发现）</strong>：交换机特性，动态接受远端 AP 发起的隧道；默认开启，关闭则需逐台手工登记 AP MAC。命令 <code>service l2gre auto-discover enable</code>。<span class="pg">原文p8</span> </li>
+<li><strong>l2profile（L2 服务档案）</strong>：交换机侧服务端口模板，建 GTTS SAP 口时创建并丢弃 stp/gvrp/mvrp，配合 vlan-xlation 启用。<span class="pg">原文p9</span> </li>
+<li><strong>vlan-xlation（VLAN translation，VLAN 转换）</strong>：service access port 与 service 上的开关，Hairpin 两侧 VLAN 映射所需。<span class="pg">原文p9</span> </li>
+<li><strong>One ARP 规则</strong>：每台 AP 同一时刻对一个 ARP 只能有一条活跃隧道指向一台聚合交换机；N 个不同 ARP 的隧道 SSID 需要 N 台聚合交换机。<span class="pg">原文p7</span> </li>
+<li><strong>Layer 3 hop（三层跳变）</strong>：强制架构前置——AP 管理 IP 与 GRE Tunnel Server IP 必须不同子网，中间存在三层路由。<span class="pg">原文p7</span> </li>
+<li><strong>Virtual-Chassis（虚拟机箱）</strong>：OmniSwitch 堆叠技术；R3 冗余用它替代 Primary-Backup，两台聚合交换机组 VC 后配合跨成员 linkagg 实现亚秒收敛。<span class="pg">原文p17</span> </li>
+<li><strong>DMZ（Demilitarized Zone，非军事区）</strong>：企业内网与外部网之间的缓冲区，由防火墙分隔；GTTS 聚合交换机与专属 DHCP 通常部署于此。<span class="pg">原文p4</span> <span class="pg">原文p11</span> </li>
+<li><strong>Multi-tenancy（多租户）</strong>：运营商场景下多个客户的流量集中终结于同一台（或多台）GTTS 聚合交换机且保持客户间逻辑隔离；每客户一个 AP Group，链路可为 SD-WAN/SPB/MPLS。<span class="pg">原文p3</span> <span class="pg">原文p13</span> </li>
+<li><strong>AP Group（接入点组）</strong>：GTTS 的配置粒度单位；组内 AP 广播同一 SSID 指向同一隧道终点，是园区多站规模化与多租户隔离的基础。<span class="pg">原文p3</span> <span class="pg">原文p12</span> </li>
+<li><strong>Filter-id</strong>：802.1X 认证返回字段，可用于把一个 SSID 的用户分类到不同 ARP，进而进不同隧道。<span class="pg">原文p5</span> </li>
+<li><strong>linkagg / LACP（链路聚合）</strong>：R1/R3 冗余中把 Hairpin 的 SAP 侧与 ACCESS 侧各自做成聚合（跨 VC 成员则双机各出一口），端口级冗余并提升 Hairpin 带宽。<span class="pg">原文p15</span> <span class="pg">原文p17</span> </li>
 </ul><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

@@ -66,35 +66,35 @@ blockquote p{margin:6px 0}
 <li>解读 R-T1~R-T8 路由类型与扩展社区</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>演进决策链（F1， <code>&lt;span class="pg"&gt;原文p5-9&lt;/span&gt;</code> ）：STP 阻塞链路→routed underlay；4096 VLAN 上限→24-bit VNI（约 1600 万）；洪泛学习→控制平面主动学习（"endpoint reachability information is advertised intelligently through the control plane within MP-BGP NLRI updates"，P1， <code>&lt;span class="pg"&gt;原文p7&lt;/span&gt;</code> ）；单一控制平面同时承载 L2/L3 服务（P3， <code>&lt;span class="pg"&gt;原文p9&lt;/span&gt;</code> ）。控制面学到的 MAC 不老化，以对端撤路为生命周期（P5， <code>&lt;span class="pg"&gt;原文p13&lt;/span&gt;</code> ）。设计选型框架（F2， <code>&lt;span class="pg"&gt;原文p45&lt;/span&gt;</code> ）：推荐 OSPF underlay+iBGP overlay+冗余 RR（same cluster-id 省内存，P29， <code>&lt;span class="pg"&gt;原文p46&lt;/span&gt;</code> ）。</p>
+<p>演进决策链（F1，<span class="pg">原文p5-9</span> ）：STP 阻塞链路→routed underlay；4096 VLAN 上限→24-bit VNI（约 1600 万）；洪泛学习→控制平面主动学习（"endpoint reachability information is advertised intelligently through the control plane within MP-BGP NLRI updates"，P1，<span class="pg">原文p7</span> ）；单一控制平面同时承载 L2/L3 服务（P3，<span class="pg">原文p9</span> ）。控制面学到的 MAC 不老化，以对端撤路为生命周期（P5，<span class="pg">原文p13</span> ）。设计选型框架（F2，<span class="pg">原文p45</span> ）：推荐 OSPF underlay+iBGP overlay+冗余 RR（same cluster-id 省内存，P29，<span class="pg">原文p46</span> ）。</p>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
-<li>Underlay 基线（P26/P27， <code>&lt;span class="pg"&gt;原文p45-46&lt;/span&gt;</code> ）：单区域 OSPF+p2p 网络类型（免 DR 选举等待）+BFD 毫秒收敛；EVPN-VXLAN 只跑一个 underlay VRF（默认 VRF，P32， <code>&lt;span class="pg"&gt;原文p46&lt;/span&gt;</code> ）</li>
-<li>Overlay 基线：spine 兼任 RR、冗余 RR 同 cluster-id、TTL Security max-hop 0（直连断则邻居断，P30， <code>&lt;span class="pg"&gt;原文p46&lt;/span&gt;</code> ）；VXLAN MTU 由底层承担封装开销（AOS 自动调，P31， <code>&lt;span class="pg"&gt;原文p46&lt;/span&gt;</code> ）</li>
-<li>Service 模型选择（P23， <code>&lt;span class="pg"&gt;原文p42&lt;/span&gt;</code> ）：优先 enhanced VLAN-bundle（每 EVI 仅一条 R-T3 省路由数，P24， <code>&lt;span class="pg"&gt;原文p41&lt;/span&gt;</code> ）；互操作需求回退 VLAN-based</li>
-<li>路由类型速查（ <code>&lt;span class="pg"&gt;原文p11-13&lt;/span&gt;</code> ）：R-T1（ES 可达，aliasing/split horizon/mass withdraw）、R-T2（MAC/IP，ARP 抑制）、R-T3（IMET，VTEP 自动发现+ingress replication 列表）、R-T4（ES 路由+DF 选举）、R-T5（IP 前缀）、R-T6（SMET 组播兴趣）、R-T7/8（多归属 IGMP 同步）</li>
-<li>主机/前缀路由分工：/32 用 R-T2、前缀用 R-T5（P12， <code>&lt;span class="pg"&gt;原文p15&lt;/span&gt;</code> ）</li>
+<li>Underlay 基线（P26/P27，<span class="pg">原文p45-46</span> ）：单区域 OSPF+p2p 网络类型（免 DR 选举等待）+BFD 毫秒收敛；EVPN-VXLAN 只跑一个 underlay VRF（默认 VRF，P32，<span class="pg">原文p46</span> ）</li>
+<li>Overlay 基线：spine 兼任 RR、冗余 RR 同 cluster-id、TTL Security max-hop 0（直连断则邻居断，P30，<span class="pg">原文p46</span> ）；VXLAN MTU 由底层承担封装开销（AOS 自动调，P31，<span class="pg">原文p46</span> ）</li>
+<li>Service 模型选择（P23，<span class="pg">原文p42</span> ）：优先 enhanced VLAN-bundle（每 EVI 仅一条 R-T3 省路由数，P24，<span class="pg">原文p41</span> ）；互操作需求回退 VLAN-based</li>
+<li>路由类型速查（<span class="pg">原文p11-13</span> ）：R-T1（ES 可达，aliasing/split horizon/mass withdraw）、R-T2（MAC/IP，ARP 抑制）、R-T3（IMET，VTEP 自动发现+ingress replication 列表）、R-T4（ES 路由+DF 选举）、R-T5（IP 前缀）、R-T6（SMET 组播兴趣）、R-T7/8（多归属 IGMP 同步）</li>
+<li>主机/前缀路由分工：/32 用 R-T2、前缀用 R-T5（P12，<span class="pg">原文p15</span> ）</li>
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>SPF 提速</strong>（P28， <code>&lt;span class="pg"&gt;原文p50&lt;/span&gt;</code> ）：OSPF SPF delay/hold 调 0 立即算路；BFD transmit/receive 200ms（C16， <code>&lt;span class="pg"&gt;原文p50&lt;/span&gt;</code> ）</li>
-<li><strong>ARP 抑制保持默认开启</strong>（P6， <code>&lt;span class="pg"&gt;原文p21&lt;/span&gt;</code> ）：proxy ARP 代答减少 BUM；例外场景才禁用（Gratuitous ARP/ARP probe 检测主机、排障需全可见，X8， <code>&lt;span class="pg"&gt;原文p21&lt;/span&gt;</code> ）</li>
-<li><strong>自动 RD/RT</strong>（P22， <code>&lt;span class="pg"&gt;原文p40&lt;/span&gt;</code> ）：RD=Loopback0+Type+Object（Service/ESI/Prefix）；RT 由 ASN+Etag(VNI) 派生</li>
-<li><strong>验证命令族</strong>（C18， <code>&lt;span class="pg"&gt;原文p60-71&lt;/span&gt;</code> ）：<code>show ip bgp neighbors</code> → <code>show service evpn</code> → <code>show service evpn ethernet-segment</code> → <code>show ip evpn proxy-arp</code> → <code>show ip routes</code></li>
+<li><strong>SPF 提速</strong>（P28，<span class="pg">原文p50</span> ）：OSPF SPF delay/hold 调 0 立即算路；BFD transmit/receive 200ms（C16，<span class="pg">原文p50</span> ）</li>
+<li><strong>ARP 抑制保持默认开启</strong>（P6，<span class="pg">原文p21</span> ）：proxy ARP 代答减少 BUM；例外场景才禁用（Gratuitous ARP/ARP probe 检测主机、排障需全可见，X8，<span class="pg">原文p21</span> ）</li>
+<li><strong>自动 RD/RT</strong>（P22，<span class="pg">原文p40</span> ）：RD=Loopback0+Type+Object（Service/ESI/Prefix）；RT 由 ASN+Etag(VNI) 派生</li>
+<li><strong>验证命令族</strong>（C18，<span class="pg">原文p60-71</span> ）：<code>show ip bgp neighbors</code> → <code>show service evpn</code> → <code>show service evpn ethernet-segment</code> → <code>show ip evpn proxy-arp</code> → <code>show ip routes</code></li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>DC spine-leaf 2-tier/3-tier（5-stage Super-Spine DCI）拓扑论证（C1/C2， <code>&lt;span class="pg"&gt;原文p8&lt;/span&gt;</code> ）</li>
-<li>全册端到端配置案例（2 spine+6 leaf）：OSPF underlay 10 步→BGP RR overlay 5 步→逐段验证（C14， <code>&lt;span class="pg"&gt;原文p48-72&lt;/span&gt;</code> ）</li>
-<li>Proxy ARP 表老化后的恢复：重新发起主机通信生成表项（C19， <code>&lt;span class="pg"&gt;原文p72&lt;/span&gt;</code> ）</li>
+<li>DC spine-leaf 2-tier/3-tier（5-stage Super-Spine DCI）拓扑论证（C1/C2，<span class="pg">原文p8</span> ）</li>
+<li>全册端到端配置案例（2 spine+6 leaf）：OSPF underlay 10 步→BGP RR overlay 5 步→逐段验证（C14，<span class="pg">原文p48-72</span> ）</li>
+<li>Proxy ARP 表老化后的恢复：重新发起主机通信生成表项（C19，<span class="pg">原文p72</span> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>
-<li>STP 阻塞链路浪费资源、L2 无 TTL 致环路与广播风暴、12-bit VLAN 上限（X1/X2/X3， <code>&lt;span class="pg"&gt;原文p5&lt;/span&gt;</code> ）</li>
-<li>静态首跳网关导致 traffic tromboning 绕行（X4， <code>&lt;span class="pg"&gt;原文p5&lt;/span&gt;</code> ）</li>
-<li>VXLAN 洪泛学习需组播底层且持续洪泛伤扩展性（X5/X6， <code>&lt;span class="pg"&gt;原文p7&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p9&lt;/span&gt;</code> ）</li>
-<li>广播帧走 EVI 隧道不推荐——依赖 FDB 学习与 ARP 抑制减少洪泛（X7， <code>&lt;span class="pg"&gt;原文p14&lt;/span&gt;</code> ）</li>
-<li>VLAN-aware 模型多归属两端 VLAN ID 必须一致（X24， <code>&lt;span class="pg"&gt;原文p20&lt;/span&gt;</code> ）</li>
-<li>8-bit 本地段 ID 限制 ES 数量上限 256（X18， <code>&lt;span class="pg"&gt;原文p43&lt;/span&gt;</code> ）</li>
+<li>STP 阻塞链路浪费资源、L2 无 TTL 致环路与广播风暴、12-bit VLAN 上限（X1/X2/X3，<span class="pg">原文p5</span> ）</li>
+<li>静态首跳网关导致 traffic tromboning 绕行（X4，<span class="pg">原文p5</span> ）</li>
+<li>VXLAN 洪泛学习需组播底层且持续洪泛伤扩展性（X5/X6，<span class="pg">原文p7</span> /<span class="pg">原文p9</span> ）</li>
+<li>广播帧走 EVI 隧道不推荐——依赖 FDB 学习与 ARP 抑制减少洪泛（X7，<span class="pg">原文p14</span> ）</li>
+<li>VLAN-aware 模型多归属两端 VLAN ID 必须一致（X24，<span class="pg">原文p20</span> ）</li>
+<li>8-bit 本地段 ID 限制 ES 数量上限 256（X18，<span class="pg">原文p43</span> ）</li>
 </ul>
 <p>来源：EVPN Architecture Guide（p5-46/p48-72）</p><div class="pn"><a href="../index.html">⬅ 返回课程首页</a><a class="nxt" href="sol-evpn-multi-homing.html">下一单元：sol-evpn-multi-homing ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

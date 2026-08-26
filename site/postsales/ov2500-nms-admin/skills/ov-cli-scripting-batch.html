@@ -76,31 +76,31 @@ blockquote p{margin:6px 0}
 <p>CLI Scripting 把"ASCII 配置可复制粘贴"的 CLI 优势产品化：脚本统一存于 OV，向导式选择目标设备与调度策略，支持用户变量填充，执行结果集中留日志。GUI 批量操作（如 VLAN Manager）与脚本互补——前者靠向导防错，后者靠灵活复用。</p>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
-<li><strong>查看/创建脚本</strong>：Configuration → CLI Scripting → Scripts：可查看预置脚本的命令内容（ <code>&lt;span class="pg"&gt;原文p209-214&lt;/span&gt;</code> ）</li>
-<li><strong>发送脚本</strong>：Send Script（向导）→ Add/Remove Devices 选交换机 → 立即 Send，或 Next 调度（Periodically + Simple/Cron）→ 填用户变量 → Send Script（ <code>&lt;span class="pg"&gt;原文p209-214&lt;/span&gt;</code> ）</li>
-<li><strong>终端会话</strong>：Terminal 菜单开 Telnet/SSH 会话直连设备（ <code>&lt;span class="pg"&gt;原文p209-214&lt;/span&gt;</code> ）</li>
-<li><strong>查日志</strong>：Logs 菜单查看脚本执行结果（Success/Error/语法错误）（ <code>&lt;span class="pg"&gt;原文p209-214&lt;/span&gt;</code> ）</li>
-<li><strong>VLAN Manager 批量建 VLAN</strong>：Configuration → VLANs → Create VLAN by Devices（VLAN Wizard）：填 VLAN ID → Add/Remove Devices（Add All&gt;&gt;）→ Q Tagged Ports Assignment（逐交换机 Add Port）→ Review → Create；再点 IP interface → "+" 建 IP 接口（Name/IP 192.168.VLAN#.Switch#/Mask/Device）→ Create → 控制台验证（ <code>&lt;span class="pg"&gt;原文p180-184&lt;/span&gt;</code> ）</li>
+<li><strong>查看/创建脚本</strong>：Configuration → CLI Scripting → Scripts：可查看预置脚本的命令内容（<span class="pg">原文p209-214</span> ）</li>
+<li><strong>发送脚本</strong>：Send Script（向导）→ Add/Remove Devices 选交换机 → 立即 Send，或 Next 调度（Periodically + Simple/Cron）→ 填用户变量 → Send Script（<span class="pg">原文p209-214</span> ）</li>
+<li><strong>终端会话</strong>：Terminal 菜单开 Telnet/SSH 会话直连设备（<span class="pg">原文p209-214</span> ）</li>
+<li><strong>查日志</strong>：Logs 菜单查看脚本执行结果（Success/Error/语法错误）（<span class="pg">原文p209-214</span> ）</li>
+<li><strong>VLAN Manager 批量建 VLAN</strong>：Configuration → VLANs → Create VLAN by Devices（VLAN Wizard）：填 VLAN ID → Add/Remove Devices（Add All&gt;&gt;）→ Q Tagged Ports Assignment（逐交换机 Add Port）→ Review → Create；再点 IP interface → "+" 建 IP 接口（Name/IP 192.168.VLAN#.Switch#/Mask/Device）→ Create → 控制台验证（<span class="pg">原文p180-184</span> ）</li>
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
-<li>升级后收尾也是经 CLI 会话完成：Topology 选中交换机 → CLI Scripting – SSH → 从 working 目录 reload → Copy Working Certified（ <code>&lt;span class="pg"&gt;原文p206&lt;/span&gt;</code> ）</li>
-<li>认证类排查命令可直接经终端执行，如 <code>aaa test-radius-server RADIUS_VM type authentication user employee password password</code>（ <code>&lt;span class="pg"&gt;原文p263&lt;/span&gt;</code> ）</li>
-<li>CLI vs GUI 的选择依据（ <code>&lt;span class="pg"&gt;原文p22-24&lt;/span&gt;</code> ）：CLI 胜在熟练度、脚本化、配置文件跨机复制粘贴；GUI 胜在颜色编码、易发现问题、减少 fat-finger、批量操作</li>
+<li>升级后收尾也是经 CLI 会话完成：Topology 选中交换机 → CLI Scripting – SSH → 从 working 目录 reload → Copy Working Certified（<span class="pg">原文p206</span> ）</li>
+<li>认证类排查命令可直接经终端执行，如 <code>aaa test-radius-server RADIUS_VM type authentication user employee password password</code>（<span class="pg">原文p263</span> ）</li>
+<li>CLI vs GUI 的选择依据（<span class="pg">原文p22-24</span> ）：CLI 胜在熟练度、脚本化、配置文件跨机复制粘贴；GUI 胜在颜色编码、易发现问题、减少 fat-finger、批量操作</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>创建/发送脚本与查看日志（Success/Error/语法错误分类）——cases·CLI Scripting（ <code>&lt;span class="pg"&gt;原文p209-214&lt;/span&gt;</code> ）</li>
-<li>VLAN Wizard 批量建 VLAN + IP 接口并在控制台验证——cases·VLAN Manager（ <code>&lt;span class="pg"&gt;原文p180-184&lt;/span&gt;</code> ）</li>
+<li>创建/发送脚本与查看日志（Success/Error/语法错误分类）——cases·CLI Scripting（<span class="pg">原文p209-214</span> ）</li>
+<li>VLAN Wizard 批量建 VLAN + IP 接口并在控制台验证——cases·VLAN Manager（<span class="pg">原文p180-184</span> ）</li>
 </ul>
 <h2 id="b">B（边界与陷阱）</h2>
 <ul>
-<li>脚本日志中的语法错误要逐条处理，Success 不代表语义正确，仍需设备侧验证（结合 <code>show</code> 命令）（ <code>&lt;span class="pg"&gt;原文p209-214&lt;/span&gt;</code> ）</li>
-<li>Shell 方式（Telnet/SSH）取决于 Discovery Profile Advanced 段的 Shell Preference，与设备实际配置一致（ <code>&lt;span class="pg"&gt;原文p110-112&lt;/span&gt;</code> ）</li>
+<li>脚本日志中的语法错误要逐条处理，Success 不代表语义正确，仍需设备侧验证（结合 <code>show</code> 命令）（<span class="pg">原文p209-214</span> ）</li>
+<li>Shell 方式（Telnet/SSH）取决于 Discovery Profile Advanced 段的 Shell Preference，与设备实际配置一致（<span class="pg">原文p110-112</span> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
 <ul>
-<li>cases·CLI Scripting（ <code>&lt;span class="pg"&gt;原文p209-214&lt;/span&gt;</code> ）、VLAN Manager（ <code>&lt;span class="pg"&gt;原文p180-184&lt;/span&gt;</code> ）</li>
-<li>principles·CLI vs GUI 取舍（ <code>&lt;span class="pg"&gt;原文p22-24&lt;/span&gt;</code> ）</li>
-<li>cases·镜像升级收尾经 CLI SSH（ <code>&lt;span class="pg"&gt;原文p206&lt;/span&gt;</code> ）</li>
+<li>cases·CLI Scripting（<span class="pg">原文p209-214</span> ）、VLAN Manager（<span class="pg">原文p180-184</span> ）</li>
+<li>principles·CLI vs GUI 取舍（<span class="pg">原文p22-24</span> ）</li>
+<li>cases·镜像升级收尾经 CLI SSH（<span class="pg">原文p206</span> ）</li>
 </ul><div class="pn"><a href="ov-resource-manager-provisioning.html">⬅ 上一单元：ov-resource-manager-provisioning</a><a class="nxt" href="ov-unified-access.html">下一单元：ov-unified-access ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

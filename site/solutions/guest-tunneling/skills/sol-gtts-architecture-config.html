@@ -67,19 +67,19 @@ blockquote p{margin:6px 0}
 <li>规划隧道数上限（按机型三档）与 MTU（+24 字节）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>数据路径统一模型（F3， <code>&lt;span class="pg"&gt;原文p4-5&lt;/span&gt;</code> ）：AP 收流量 → 按 ARP 分类进 L2 GRE service profile → 加 GRE 头过隧道 → 聚合交换机解封装 → 经 Hairpin（SAP 口→自环线→ACCESS 口）落 VLAN 域出 Internet。双向对称。三前置纪律：One ARP（一个 ARP 同时只有一条活跃隧道，N 个隧道 SSID 需 N 台交换机，P8/X1， <code>&lt;span class="pg"&gt;原文p7&lt;/span&gt;</code> ）；L3 hop（AP 管理 IP 与 GRE Server IP 不同子网，P9/X3， <code>&lt;span class="pg"&gt;原文p7&lt;/span&gt;</code> ）；版本（AOS ≥8.4.1.R02 / AWOS ≥3.0.2.19，P14， <code>&lt;span class="pg"&gt;原文p6&lt;/span&gt;</code> ）。两条容量红线：Hairpin 线速封顶 SSID 带宽（P10， <code>&lt;span class="pg"&gt;原文p8&lt;/span&gt;</code> ）、单机隧道数按机型 1000/2000/6000 且 VC 不抬高（P13/X6， <code>&lt;span class="pg"&gt;原文p8&lt;/span&gt;</code> ）。服务约束：DHCP 流量也在隧道内，DHCP/Portal/DNS/NTP 必须从聚合交换机可达，最佳是隧道 SSID 专属服务（P4/X10， <code>&lt;span class="pg"&gt;原文p4-5&lt;/span&gt;</code> ）。</p>
+<p>数据路径统一模型（F3，<span class="pg">原文p4-5</span> ）：AP 收流量 → 按 ARP 分类进 L2 GRE service profile → 加 GRE 头过隧道 → 聚合交换机解封装 → 经 Hairpin（SAP 口→自环线→ACCESS 口）落 VLAN 域出 Internet。双向对称。三前置纪律：One ARP（一个 ARP 同时只有一条活跃隧道，N 个隧道 SSID 需 N 台交换机，P8/X1，<span class="pg">原文p7</span> ）；L3 hop（AP 管理 IP 与 GRE Server IP 不同子网，P9/X3，<span class="pg">原文p7</span> ）；版本（AOS ≥8.4.1.R02 / AWOS ≥3.0.2.19，P14，<span class="pg">原文p6</span> ）。两条容量红线：Hairpin 线速封顶 SSID 带宽（P10，<span class="pg">原文p8</span> ）、单机隧道数按机型 1000/2000/6000 且 VC 不抬高（P13/X6，<span class="pg">原文p8</span> ）。服务约束：DHCP 流量也在隧道内，DHCP/Portal/DNS/NTP 必须从聚合交换机可达，最佳是隧道 SSID 专属服务（P4/X10，<span class="pg">原文p4-5</span> ）。</p>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
-<li>需求定位：用例三选一——访客隔离/安全策略串行/迁移免扩 VLAN（F1， <code>&lt;span class="pg"&gt;原文p3&lt;/span&gt;</code> ）</li>
+<li>需求定位：用例三选一——访客隔离/安全策略串行/迁移免扩 VLAN（F1，<span class="pg">原文p3</span> ）</li>
 <li>前置核查：版本 → One ARP 交换机数量 → L3 hop → MTU+24B（跨运营商链路提前协商）→ auto-discover 开启</li>
 <li>交换机侧：五步配置（见 A2-C1）</li>
 <li>AP 侧：SSID Use Tunnel 面板四要素 + Entropy 必开</li>
 <li>服务部署：聚合交换机同区配 DHCP/Portal/DNS/NTP（专属为佳）</li>
-<li>粒度细化（可选）：单 SSID 多 ARP——Filter-id/IoT Enforcement/设备专属 ARP，Expert 模式建 Tunnel Profile（P15， <code>&lt;span class="pg"&gt;原文p5&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p11&lt;/span&gt;</code> ）</li>
+<li>粒度细化（可选）：单 SSID 多 ARP——Filter-id/IoT Enforcement/设备专属 ARP，Expert 模式建 Tunnel Profile（P15，<span class="pg">原文p5</span> <span class="pg">原文p11</span> ）</li>
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>交换机五步</strong>（C1， <code>&lt;span class="pg"&gt;原文p9&lt;/span&gt;</code> ）：</li>
+<li><strong>交换机五步</strong>（C1，<span class="pg">原文p9</span> ）：</li>
 <li><code>service l2profile "name" stp drop gvrp drop mvrp drop</code></li>
 <li><code>service access port X/X/XX vlan-xlation enable l2profile "name"</code></li>
 <li><code>service "id" l2gre vpnid "vpn-id" stats enable vlan-xlation enable remove-ingress-tag enable</code>（vpnid 必须与 SSID 侧一致；
@@ -87,24 +87,24 @@ service 编号本机自选）</li>
 <li><code>service "id" sap port X/X/XX:"vpn-id"</code></li>
 <li><code>vlan "VLAN-ID" members port X/X/XX untagged</code>（Hairpin 另一侧 ACCESS 口）</li>
 <li>样例：SAP=1/1/49A、ACCESS=1/1/50、vpnid/VLAN=50（两 ID 一致仅为方便，不强制）</li>
-<li><strong>AP 面板</strong>（C2， <code>&lt;span class="pg"&gt;原文p10-11&lt;/span&gt;</code> ）：SSID 创建勾 Use Tunnel → Tunnel ID（=交换机 vpnid）→ GRE Tunnel Server IP → Backup GRE Tunnel Server IP（可选）→ Preemption+倒计时（可选）→ <strong>Entropy 必须启用</strong></li>
-<li><strong>auto-discover 确认</strong>（P12， <code>&lt;span class="pg"&gt;原文p8&lt;/span&gt;</code> ）：<code>service l2gre auto-discover enable</code>（默认开）</li>
-<li><strong>单 SSID 多 ARP</strong>（P15， <code>&lt;span class="pg"&gt;原文p11&lt;/span&gt;</code> ）：OV2500 Expert 模式建多 ARP → 各配 Tunnel Profile → 不同设备分类进不同隧道终点</li>
+<li><strong>AP 面板</strong>（C2，<span class="pg">原文p10-11</span> ）：SSID 创建勾 Use Tunnel → Tunnel ID（=交换机 vpnid）→ GRE Tunnel Server IP → Backup GRE Tunnel Server IP（可选）→ Preemption+倒计时（可选）→ <strong>Entropy 必须启用</strong></li>
+<li><strong>auto-discover 确认</strong>（P12，<span class="pg">原文p8</span> ）：<code>service l2gre auto-discover enable</code>（默认开）</li>
+<li><strong>单 SSID 多 ARP</strong>（P15，<span class="pg">原文p11</span> ）：OV2500 Expert 模式建多 ARP → 各配 Tunnel Profile → 不同设备分类进不同隧道终点</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>交换机完整配置样例（guest-l2profile + service 100 + vlan 50， <code>&lt;span class="pg"&gt;原文p9&lt;/span&gt;</code> ）</li>
-<li>验证环境硬件清单：OS6900-V48C8/X48C6/T48C6/T24C2/X24C2 + AOS 8.7.98/8.9.78、AP1201/AP1331 + AWOS 4.0.5.2038、OV2500 4.7R1（ <code>&lt;span class="pg"&gt;原文p7&lt;/span&gt;</code> ）</li>
+<li>交换机完整配置样例（guest-l2profile + service 100 + vlan 50，<span class="pg">原文p9</span> ）</li>
+<li>验证环境硬件清单：OS6900-V48C8/X48C6/T48C6/T24C2/X24C2 + AOS 8.7.98/8.9.78、AP1201/AP1331 + AWOS 4.0.5.2038、OV2500 4.7R1（<span class="pg">原文p7</span> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>
-<li>N 个不同 ARP 的隧道 SSID 只配 1 台交换机 → 其余隧道建不起来（X1， <code>&lt;span class="pg"&gt;原文p7&lt;/span&gt;</code> ）</li>
-<li>多 SSID 共用同一 ARP：技术上可行但零收益，配置全同（X2， <code>&lt;span class="pg"&gt;原文p7&lt;/span&gt;</code> ）</li>
-<li>AP 管理 IP 与 GRE Server IP 同网段 → 违反 L3 hop 硬前置（X3， <code>&lt;span class="pg"&gt;原文p7&lt;/span&gt;</code> ）</li>
-<li>跨公司网络未协商 MTU：+24 字节开销静默丢大包（X4， <code>&lt;span class="pg"&gt;原文p8&lt;/span&gt;</code> ）</li>
-<li>auto-discover 被关 → 逐台手工登记 AP MAC（X5， <code>&lt;span class="pg"&gt;原文p8&lt;/span&gt;</code> ）</li>
-<li>Tunnel ID/VPN ID 主备交换机与 AP 三处不一致 → 隧道对不上（X11， <code>&lt;span class="pg"&gt;原文p9-10&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p16&lt;/span&gt;</code> ）</li>
-<li>Entropy 未启用 → GTTS 不工作（文档 Important 级强制，X9， <code>&lt;span class="pg"&gt;原文p10&lt;/span&gt;</code> ）</li>
-<li>DHCP/Portal 留内网不复署 → 隧道内 DHCP 拿不到地址（X10， <code>&lt;span class="pg"&gt;原文p4-5&lt;/span&gt;</code> ）</li>
+<li>N 个不同 ARP 的隧道 SSID 只配 1 台交换机 → 其余隧道建不起来（X1，<span class="pg">原文p7</span> ）</li>
+<li>多 SSID 共用同一 ARP：技术上可行但零收益，配置全同（X2，<span class="pg">原文p7</span> ）</li>
+<li>AP 管理 IP 与 GRE Server IP 同网段 → 违反 L3 hop 硬前置（X3，<span class="pg">原文p7</span> ）</li>
+<li>跨公司网络未协商 MTU：+24 字节开销静默丢大包（X4，<span class="pg">原文p8</span> ）</li>
+<li>auto-discover 被关 → 逐台手工登记 AP MAC（X5，<span class="pg">原文p8</span> ）</li>
+<li>Tunnel ID/VPN ID 主备交换机与 AP 三处不一致 → 隧道对不上（X11，<span class="pg">原文p9-10</span> <span class="pg">原文p16</span> ）</li>
+<li>Entropy 未启用 → GTTS 不工作（文档 Important 级强制，X9，<span class="pg">原文p10</span> ）</li>
+<li>DHCP/Portal 留内网不复署 → 隧道内 DHCP 拿不到地址（X10，<span class="pg">原文p4-5</span> ）</li>
 </ul>
 <p>来源：Guest Traffic Tunnelling Services Application Note，Configuration 章（p4-11）</p><div class="pn"><a href="../index.html">⬅ 返回课程首页</a><a class="nxt" href="sol-gtts-deployment-scenarios.html">下一单元：sol-gtts-deployment-scenarios ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

@@ -101,7 +101,7 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="_2">二、六单元要点串讲</h2>
 <h3 id="1-flash">1. Flash 双目录：改动为什么会丢</h3>
-<p>certified 是已认证的可靠基线且<strong>不可直接写</strong>（ <code>&lt;span class="pg"&gt;原文p94&lt;/span&gt;</code> ）；working/用户目录是试验场；RUNNING CONFIGURATION 在 RAM（P3）。正常重启时 certified 与运行目录内容不同则从 certified 启动（P4），未保存的改动全部丢失（X2）。试验流程：<code>modify running-directory</code> 切用户目录 → <code>write memory</code> → 验证 → <code>copy running certified</code>（C20）；激进变更配 <code>reload from working rollback-timeout 5</code> 兜底（C21）。配置文件是纯 ASCII，<code>configuration syntax-check</code> 预检、<code>configuration apply</code> 支持 at/in 定时（但全网同时只允许一个定时会话，X30），<code>configuration snapshot</code> 导出非默认配置，<code>reset-to-factory</code> 三档清理（config/retain-vc/all，all 档连 license 一起清）。</p>
+<p>certified 是已认证的可靠基线且<strong>不可直接写</strong>（<span class="pg">原文p94</span> ）；working/用户目录是试验场；RUNNING CONFIGURATION 在 RAM（P3）。正常重启时 certified 与运行目录内容不同则从 certified 启动（P4），未保存的改动全部丢失（X2）。试验流程：<code>modify running-directory</code> 切用户目录 → <code>write memory</code> → 验证 → <code>copy running certified</code>（C20）；激进变更配 <code>reload from working rollback-timeout 5</code> 兜底（C21）。配置文件是纯 ASCII，<code>configuration syntax-check</code> 预检、<code>configuration apply</code> 支持 at/in 定时（但全网同时只允许一个定时会话，X30），<code>configuration snapshot</code> 导出非默认配置，<code>reset-to-factory</code> 三档清理（config/retain-vc/all，all 档连 license 一起清）。</p>
 <h3 id="2">2. 升级：两条路径一个安全链</h3>
 <p>标准升级 = 维护例行（<code>show system</code>、清旧文件、<code>show tech-support</code> 基线）→ 镜像进 Running 目录 → reload → 验证 → certify（C1/C3）；
 ISSU 按 chassis-id 从低到高逐台重启 Slave、最后 Master，结束后必须复位 NI（C2/P16）。软件安全链：ASLR → RSA-2048/SHA-256 签名镜像 → Secure Boot（P18-P20）；

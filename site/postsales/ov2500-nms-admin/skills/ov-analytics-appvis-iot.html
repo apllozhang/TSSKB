@@ -77,7 +77,7 @@ blockquote p{margin:6px 0}
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>
-<p>AppVis 配置四步（ <code>&lt;span class="pg"&gt;原文p371-375&lt;/span&gt;</code> ）：Network → Application Visibility → 先在 Devices Management 确认设备无 Profile → Signature Files 导入（如 AppSig.upgrade_kit_3）→ Signature Profiles → "+"：Name=OS6860_Profile</p>
+<p>AppVis 配置四步（<span class="pg">原文p371-375</span> ）：Network → Application Visibility → 先在 Devices Management 确认设备无 Profile → Signature Files 导入（如 AppSig.upgrade_kit_3）→ Signature Profiles → "+"：Name=OS6860_Profile</p>
 <ul>
 <li>选 Signature File → Monitor Flow Count 组建 App Group（如 MyApps：Facebook/Twitter/youtube/bet365）→ Bandwidth Usage and Enforcement 组选 MyApps</li>
 <li>ACL/QoS 字段点 N/A 设 Disposition=DROP → Create Profile → Apply to Devices（选设备与端口 1/1/1</li>
@@ -89,70 +89,70 @@ blockquote p{margin:6px 0}
 <ul>
 <li>PolicyView Users and Groups &gt; Unified Policies 出现自动生成策略（含 MyApps）；</li>
 <li>CLI：<code>show app-mon config</code>、<code>show app-mon ipv4-flow-table monitor|enforcement verbose</code>、<code>show app-mon app-record hourly</code>；</li>
-<li>客户端访问 facebook.com 被阻断（ <code>&lt;span class="pg"&gt;原文p376-382&lt;/span&gt;</code> ）；</li>
+<li>客户端访问 facebook.com 被阻断（<span class="pg">原文p376-382</span> ）；</li>
 </ul>
 </li>
 <li>
-<p><strong>Analytics Profile</strong>：Network → Analytics → Profiles → "+"：Profile Name、Profile Type（Top N Apps &amp; Clients / Top N Ports Utilization）→ 选交换机并 Add Ports → Create；Reports 页查看 Top N Clients/Ports/Applications（ <code>&lt;span class="pg"&gt;原文p384-389&lt;/span&gt;</code> ）</p>
+<p><strong>Analytics Profile</strong>：Network → Analytics → Profiles → "+"：Profile Name、Profile Type（Top N Apps &amp; Clients / Top N Ports Utilization）→ 选交换机并 Add Ports → Create；Reports 页查看 Top N Clients/Ports/Applications（<span class="pg">原文p384-389</span> ）</p>
 </li>
-<li><strong>统计采集与仪表盘</strong>：NETWORK &gt; ANALYTICS &gt; Statistics → Collection 编辑 Default Profile 属性集；Statistics → Selectors：Attributes（Switch Health CPU/内存/温度、Port Rx/Tx Bytes）+ Devices + Counters → View 图形/View Table → Save Selection As…（My_View_Profile，刷新 2 分钟）→ 首页 Performance Monitoring → Add Widget 绑定 Profile（ <code>&lt;span class="pg"&gt;原文p390-394&lt;/span&gt;</code> ）</li>
+<li><strong>统计采集与仪表盘</strong>：NETWORK &gt; ANALYTICS &gt; Statistics → Collection 编辑 Default Profile 属性集；Statistics → Selectors：Attributes（Switch Health CPU/内存/温度、Port Rx/Tx Bytes）+ Devices + Counters → View 图形/View Table → Save Selection As…（My_View_Profile，刷新 2 分钟）→ 首页 Performance Monitoring → Add Widget 绑定 Profile（<span class="pg">原文p390-394</span> ）</li>
 <li>
 <p>定期 PDF 报表：Report Configuration → Create：Report Title、Purging Policy、Schedule（Now/Periodically，Simple 或 Cron）；</p>
 <ul>
 <li>再到各报表右上 Export → Add to Report 挂入视图；</li>
-<li>Report → List 下载/删除 PDF（ <code>&lt;span class="pg"&gt;原文p354-357&lt;/span&gt;</code> ）；</li>
+<li>Report → List 下载/删除 PDF（<span class="pg">原文p354-357</span> ）；</li>
 </ul>
 </li>
 <li>
-<p><strong>IoT</strong>：Managed Devices List 勾选设备 → Enable IoT；IoT Inventory 展示 End Point MAC/IP、Status（Active/Offline/Error）、Category、Manufacturer、Port/ESSID、起止时间，可导出 .xls（ <code>&lt;span class="pg"&gt;原文p404-405&lt;/span&gt;</code> ）</p>
+<p><strong>IoT</strong>：Managed Devices List 勾选设备 → Enable IoT；IoT Inventory 展示 End Point MAC/IP、Status（Active/Offline/Error）、Category、Manufacturer、Port/ESSID、起止时间，可导出 .xls（<span class="pg">原文p404-405</span> ）</p>
 </li>
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
-<li>报表体系分两类（ <code>&lt;span class="pg"&gt;原文p317-318&lt;/span&gt;</code> ）：Visibility（Top N Apps/Clients/Ports/POE，需先建 Analytics Profile）与 Availability（设备状态/Alarms）；KPI 对应机制：Top N Apps ← sFlow 采样+端口识别、Top N Switches ← CPU/内存/温度派生指数、Top N Port ← SNMP MIB Polling（ <code>&lt;span class="pg"&gt;原文p321&lt;/span&gt;</code> ）</li>
-<li>Top N Ports 趋势预测（机器学习）：按 Training Timeout 采样历史，在 Training Error 内预测未来利用率；预测区间随查看区间变化（24h→12h、7 Days→3 Days、4 Weeks→2 Weeks）（ <code>&lt;span class="pg"&gt;原文p334&lt;/span&gt;</code> ）</li>
-<li>应用端口映射双模式：Range-Based（范围内端口被监控，未映射标 Unknown）vs Enumerated（只监控定义过的端口）；.json 映射文件导入会<strong>覆盖</strong>现有映射（ <code>&lt;span class="pg"&gt;原文p350-351&lt;/span&gt;</code> ）</li>
+<li>报表体系分两类（<span class="pg">原文p317-318</span> ）：Visibility（Top N Apps/Clients/Ports/POE，需先建 Analytics Profile）与 Availability（设备状态/Alarms）；KPI 对应机制：Top N Apps ← sFlow 采样+端口识别、Top N Switches ← CPU/内存/温度派生指数、Top N Port ← SNMP MIB Polling（<span class="pg">原文p321</span> ）</li>
+<li>Top N Ports 趋势预测（机器学习）：按 Training Timeout 采样历史，在 Training Error 内预测未来利用率；预测区间随查看区间变化（24h→12h、7 Days→3 Days、4 Weeks→2 Weeks）（<span class="pg">原文p334</span> ）</li>
+<li>应用端口映射双模式：Range-Based（范围内端口被监控，未映射标 Unknown）vs Enumerated（只监控定义过的端口）；.json 映射文件导入会<strong>覆盖</strong>现有映射（<span class="pg">原文p350-351</span> ）</li>
 <li>签名机制：Signature File → Signature Profile，一机一 Profile；OS6860E/N 支持 Auto-Update，OV 自动从 ALE 签名仓库检查下载并更新 Profile（&lt;&lt;<PAGE 360/372>&gt;&gt;）</li>
-<li>IoT 画像与执法：识别用 MAC OUI + DHCP FingerPrinting（Option 55 参数请求列表、Option 60 厂商标识）（ <code>&lt;span class="pg"&gt;原文p400&lt;/span&gt;</code> ）；Enforcement 按 Category 关联 Access Role Profile 做类级认证，可按 SSID/MAC/AP Group/IP 豁免（ <code>&lt;span class="pg"&gt;原文p408&lt;/span&gt;</code> ）</li>
+<li>IoT 画像与执法：识别用 MAC OUI + DHCP FingerPrinting（Option 55 参数请求列表、Option 60 厂商标识）（<span class="pg">原文p400</span> ）；Enforcement 按 Category 关联 Access Role Profile 做类级认证，可按 SSID/MAC/AP Group/IP 豁免（<span class="pg">原文p408</span> ）</li>
 <li>OVNA 云边协同：五步集成——OVE API Key（Security &gt; External Apps）→ OVNA UUID → OVNA 侧 Declare OVE（填 URL/API Key）→ OVE 侧 Enable OmniVista Network Advisor（填名称/IP/UUID）→ Rainbow bubble 监控；</li>
 <li>同步周期每小时；</li>
 <li>设备需配管理 IP、syslog 且可达 OVNA；</li>
 <li>
-<p>设备要求 OS 6xxx/9xxx AOS 8.7R2+、Stellar AP AWOS 4.0.3 MR-3+（ <code>&lt;span class="pg"&gt;原文p422-434&lt;/span&gt;</code> ）；</p>
+<p>设备要求 OS 6xxx/9xxx AOS 8.7R2+、Stellar AP AWOS 4.0.3 MR-3+（<span class="pg">原文p422-434</span> ）；</p>
 </li>
 <li>
-<p>VM Manager：单一 vCenter 接口跟踪 VM 及其网络关联、管理 VM 的 UNP VLAN、误配置未加入 UNP 时告警（ <code>&lt;span class="pg"&gt;原文p30&lt;/span&gt;</code> ）</p>
+<p>VM Manager：单一 vCenter 接口跟踪 VM 及其网络关联、管理 VM 的 UNP VLAN、误配置未加入 UNP 时告警（<span class="pg">原文p30</span> ）</p>
 </li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>OS6860-B 监控+封禁社交/游戏应用（MyApps → DROP，客户端访问 facebook.com 被阻断）——cases·AppVis 实验（ <code>&lt;span class="pg"&gt;原文p371-382&lt;/span&gt;</code> ）</li>
-<li>Analytics Profile 创建与报表/Widget 展示——cases·Analytics Profile（ <code>&lt;span class="pg"&gt;原文p384-389&lt;/span&gt;</code> ）</li>
-<li>统计采集自定义 View Profile 上仪表盘——cases·Statistics（ <code>&lt;span class="pg"&gt;原文p390-394&lt;/span&gt;</code> ）</li>
+<li>OS6860-B 监控+封禁社交/游戏应用（MyApps → DROP，客户端访问 facebook.com 被阻断）——cases·AppVis 实验（<span class="pg">原文p371-382</span> ）</li>
+<li>Analytics Profile 创建与报表/Widget 展示——cases·Analytics Profile（<span class="pg">原文p384-389</span> ）</li>
+<li>统计采集自定义 View Profile 上仪表盘——cases·Statistics（<span class="pg">原文p390-394</span> ）</li>
 </ul>
 <h2 id="b">B（边界与陷阱）</h2>
 <ul>
 <li>一机一档：Analytics Profile、Signature Profile、统计采集 Profile 均要求一台交换机只属于一个同类 Profile；新建前须先从 Default Profile 解绑（&lt;&lt;<PAGE 342/372/391>&gt;&gt;）</li>
 <li>"NO DATA AVAILABLE" 多为数据生成时延而非故障：App Discovery 只显示流量生成后的数据，需 "Wait for 15-20 minutes before the applications are displayed in the OV widgets."（&lt;&lt;<PAGE 380/382>&gt;&gt;）</li>
-<li>自定义数据仅存 3 个月，到达上限滚动覆盖（ <code>&lt;span class="pg"&gt;原文p324&lt;/span&gt;</code> ）</li>
+<li>自定义数据仅存 3 个月，到达上限滚动覆盖（<span class="pg">原文p324</span> ）</li>
 <li>IoT 仅 IPv4："IoT is supported on IPv4 devices only."；端点刷新周期 Stellar AP 5 分钟、AOS 交换机 15 分钟（&lt;&lt;<PAGE 404/405>&gt;&gt;）</li>
-<li>AppVis Apply 时 Check Service Stats 警告弹窗属已知提示，点 Ok 即可（ <code>&lt;span class="pg"&gt;原文p376&lt;/span&gt;</code> ）</li>
-<li>OVNA 设备不出现：等下次每小时同步，并核对设备管理 IP/syslog/可达性（ <code>&lt;span class="pg"&gt;原文p433-434&lt;/span&gt;</code> ）</li>
+<li>AppVis Apply 时 Check Service Stats 警告弹窗属已知提示，点 Ok 即可（<span class="pg">原文p376</span> ）</li>
+<li>OVNA 设备不出现：等下次每小时同步，并核对设备管理 IP/syslog/可达性（<span class="pg">原文p433-434</span> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
 <ul>
-<li>frameworks·AppVis 四步框架（&lt;&lt;<PAGE 373-375/365-366>&gt;&gt;）、Analytics 报表体系（ <code>&lt;span class="pg"&gt;原文p317-321&lt;/span&gt;</code> ）</li>
+<li>frameworks·AppVis 四步框架（&lt;&lt;<PAGE 373-375/365-366>&gt;&gt;）、Analytics 报表体系（<span class="pg">原文p317-321</span> ）</li>
 <li>principles·sFlow 原理（&lt;&lt;<PAGE 316/322/325>&gt;&gt;）</li>
-<li>采样率（ <code>&lt;span class="pg"&gt;原文p341&lt;/span&gt;</code> ）</li>
-<li>趋势预测（ <code>&lt;span class="pg"&gt;原文p334&lt;/span&gt;</code> ）</li>
-<li>端口映射双模式（ <code>&lt;span class="pg"&gt;原文p350&lt;/span&gt;</code> ）</li>
+<li>采样率（<span class="pg">原文p341</span> ）</li>
+<li>趋势预测（<span class="pg">原文p334</span> ）</li>
+<li>端口映射双模式（<span class="pg">原文p350</span> ）</li>
 <li>签名机制（&lt;&lt;<PAGE 360/372>&gt;&gt;）</li>
-<li>AppMon（ <code>&lt;span class="pg"&gt;原文p377-383&lt;/span&gt;</code> ）</li>
-<li>IoT 画像与执法（ <code>&lt;span class="pg"&gt;原文p400-408&lt;/span&gt;</code> ）</li>
-<li>OVNA（ <code>&lt;span class="pg"&gt;原文p422-423&lt;/span&gt;</code> ）</li>
+<li>AppMon（<span class="pg">原文p377-383</span> ）</li>
+<li>IoT 画像与执法（<span class="pg">原文p400-408</span> ）</li>
+<li>OVNA（<span class="pg">原文p422-423</span> ）</li>
 <li>统计采集分离（&lt;&lt;<PAGE 343/391>&gt;&gt;）</li>
 <li>
-<p>VM Manager（ <code>&lt;span class="pg"&gt;原文p30&lt;/span&gt;</code> ）</p>
+<p>VM Manager（<span class="pg">原文p30</span> ）</p>
 </li>
 <li>
 <p>cases·AppVis/Analytics/Statistics/PDF 报表/OVNA/IoT（&lt;&lt;<PAGE 371-394/354-357/424-434/404-405>&gt;&gt;）</p>

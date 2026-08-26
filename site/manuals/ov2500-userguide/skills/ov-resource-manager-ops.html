@@ -79,9 +79,9 @@ blockquote p{margin:6px 0}
 Upgrade Image 走 Repository+File Set，FTP 超时 5 分钟是大文件升级的头号坑。Provisioning 是 DHCP Option 43 + Cloud Agent Call-Home + SSH 推模板的零接触链路。SAA 是交换机侧 MACSAA 探针，OV 只做编排与展示。</p>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
-<li><strong>备份方式选型</strong>（principles·P143， <code>&lt;span class="pg"&gt;原文p488-493&lt;/span&gt;</code> ）：按设备（默认）/按地图（&gt;50 台建议）/按 AP Group（Stellar AP 只能按组备）；类型 Full（Certified 或 All）/Configuration Only（可选排除 Security Files）/Images Only</li>
-<li><strong>Provisioning 工作流</strong>（frameworks·F11， <code>&lt;span class="pg"&gt;原文p430-436&lt;/span&gt;</code> ）：DHCP（Option 43 Sub128=as-lite.myovcloud.net + Sub134=443）→DNS 解析到 OV→Cloud Agent 每 5 分钟 Call-Home→匹配 Rule（序列号/MAC/型号）→SSH 推 Management+Configuration 模板→入 Managed Devices</li>
-<li>Thin Switch 模型（frameworks·F12， <code>&lt;span class="pg"&gt;原文p436-438&lt;/span&gt;</code> ）：AOS 8.8R1+；<ul>
+<li><strong>备份方式选型</strong>（principles·P143，<span class="pg">原文p488-493</span> ）：按设备（默认）/按地图（&gt;50 台建议）/按 AP Group（Stellar AP 只能按组备）；类型 Full（Certified 或 All）/Configuration Only（可选排除 Security Files）/Images Only</li>
+<li><strong>Provisioning 工作流</strong>（frameworks·F11，<span class="pg">原文p430-436</span> ）：DHCP（Option 43 Sub128=as-lite.myovcloud.net + Sub134=443）→DNS 解析到 OV→Cloud Agent 每 5 分钟 Call-Home→匹配 Rule（序列号/MAC/型号）→SSH 推 Management+Configuration 模板→入 Managed Devices</li>
+<li>Thin Switch 模型（frameworks·F12，<span class="pg">原文p436-438</span> ）：AOS 8.8R1+；<ul>
 <li>交换机自身不知道自己是瘦模式；</li>
 <li>write memory 失效；</li>
 <li>规则只按序列号/MAC 匹配；</li>
@@ -91,36 +91,36 @@ Upgrade Image 走 Repository+File Set，FTP 超时 5 分钟是大文件升级的
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>执行备份</strong>：Resource Manager→Backup/Restore→Backup：Backup Method→Device Selection→Configuration（类型+目录+Diagnostic Dump+排程 Daily/Weekly/Monthly）→Review→Backup（cases·C49， <code>&lt;span class="pg"&gt;原文p488-491&lt;/span&gt;</code> ）</li>
-<li><strong>升级镜像</strong>：Upgrade Image→Import（ALE zip 自动解包）→选 File Set→Install→Firmware File Selection（AP 组全选不可取消）→Devices Selection→Software Installation（Upgrade BMF/Images/U-Boot all NIs/ISSU/目录）→Install→完成后到 Topology 重启设备→再 Copy Working to Certified（cases·C50， <code>&lt;span class="pg"&gt;原文p496-499&lt;/span&gt;</code> ）</li>
-<li><strong>Auto Configuration 四步</strong>：DHCP Option 66（OV TFTP 地址）+67（Instruction File 路径）→编写 Script File→文件放 FTP/SFTP→Auto Configuration→Add 建 Instruction File（.alu+主备服务器+版本号）；已部署交换机删 boot.cfg 重启触发（cases·C51， <code>&lt;span class="pg"&gt;原文p505-506&lt;/span&gt;</code> ）</li>
-<li><strong>部署新交换机（Provisioning 全流程）</strong>（cases·C42， <code>&lt;span class="pg"&gt;原文p433-434&lt;/span&gt;</code> ）：DHCP/DNS 预配置→Default Mgmt Users Template 配凭据→Add 建 Rule→控制台 reload from working no rollback-timeout→8.6R1- 需 CLI 启用 Cloud Agent→接入自动匹配</li>
-<li><strong>部署 Thin Switch</strong>（cases·C43， <code>&lt;span class="pg"&gt;原文p437-438&lt;/span&gt;</code> ）：满足 DHCP/DNS/NTP→Rules→Add（Thin Switch=Yes）→重启或 cloud-agent enable 触发 Call-Home→OV 自动备份</li>
-<li><strong>Provisioning 排障</strong>：Results 屏看 Last Provisioning Message；最常见是 SSH/SFTP 凭据错；日志 Audit→Configuration→resource-manager-client-service（cases·C44， <code>&lt;span class="pg"&gt;原文p439&lt;/span&gt;</code> ）</li>
-<li><strong>创建 SAA</strong>：前置启用 8 个 alaSaa* trap + SAA Settings；SAA→Ethernet OAM→Add：Ethernet Config（Name ≤32 字、源目的 IP、RTT/Jitter/Packet Loss 阈值、Interval）+ MAC Config（VLAN、包数、Payload）→Create（cases·C52， <code>&lt;span class="pg"&gt;原文p513-515&lt;/span&gt;</code> ）</li>
+<li><strong>执行备份</strong>：Resource Manager→Backup/Restore→Backup：Backup Method→Device Selection→Configuration（类型+目录+Diagnostic Dump+排程 Daily/Weekly/Monthly）→Review→Backup（cases·C49，<span class="pg">原文p488-491</span> ）</li>
+<li><strong>升级镜像</strong>：Upgrade Image→Import（ALE zip 自动解包）→选 File Set→Install→Firmware File Selection（AP 组全选不可取消）→Devices Selection→Software Installation（Upgrade BMF/Images/U-Boot all NIs/ISSU/目录）→Install→完成后到 Topology 重启设备→再 Copy Working to Certified（cases·C50，<span class="pg">原文p496-499</span> ）</li>
+<li><strong>Auto Configuration 四步</strong>：DHCP Option 66（OV TFTP 地址）+67（Instruction File 路径）→编写 Script File→文件放 FTP/SFTP→Auto Configuration→Add 建 Instruction File（.alu+主备服务器+版本号）；已部署交换机删 boot.cfg 重启触发（cases·C51，<span class="pg">原文p505-506</span> ）</li>
+<li><strong>部署新交换机（Provisioning 全流程）</strong>（cases·C42，<span class="pg">原文p433-434</span> ）：DHCP/DNS 预配置→Default Mgmt Users Template 配凭据→Add 建 Rule→控制台 reload from working no rollback-timeout→8.6R1- 需 CLI 启用 Cloud Agent→接入自动匹配</li>
+<li><strong>部署 Thin Switch</strong>（cases·C43，<span class="pg">原文p437-438</span> ）：满足 DHCP/DNS/NTP→Rules→Add（Thin Switch=Yes）→重启或 cloud-agent enable 触发 Call-Home→OV 自动备份</li>
+<li><strong>Provisioning 排障</strong>：Results 屏看 Last Provisioning Message；最常见是 SSH/SFTP 凭据错；日志 Audit→Configuration→resource-manager-client-service（cases·C44，<span class="pg">原文p439</span> ）</li>
+<li><strong>创建 SAA</strong>：前置启用 8 个 alaSaa* trap + SAA Settings；SAA→Ethernet OAM→Add：Ethernet Config（Name ≤32 字、源目的 IP、RTT/Jitter/Packet Loss 阈值、Interval）+ MAC Config（VLAN、包数、Payload）→Create（cases·C52，<span class="pg">原文p513-515</span> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>Backup by Devices 全流程（含排程）（cases·C49， <code>&lt;span class="pg"&gt;原文p488-491&lt;/span&gt;</code> ）</li>
-<li>镜像导入到 Install 到重启生效（cases·C50， <code>&lt;span class="pg"&gt;原文p496-499&lt;/span&gt;</code> ）</li>
-<li>Provisioning 全流程 + 排障 + Thin Switch（cases·C42/C43/C44， <code>&lt;span class="pg"&gt;原文p433-439&lt;/span&gt;</code> ）</li>
-<li>交换机间 SAA 创建（cases·C52， <code>&lt;span class="pg"&gt;原文p513-515&lt;/span&gt;</code> ）</li>
+<li>Backup by Devices 全流程（含排程）（cases·C49，<span class="pg">原文p488-491</span> ）</li>
+<li>镜像导入到 Install 到重启生效（cases·C50，<span class="pg">原文p496-499</span> ）</li>
+<li>Provisioning 全流程 + 排障 + Thin Switch（cases·C42/C43/C44，<span class="pg">原文p433-439</span> ）</li>
+<li>交换机间 SAA 创建（cases·C52，<span class="pg">原文p513-515</span> ）</li>
 </ul>
 <h2 id="b">B（反例/坑）</h2>
 <ul>
-<li>备份文件含源机器 IP/MAC 二进制信息，拷到其他机器可能搞瘫网络（counter·X41， <code>&lt;span class="pg"&gt;原文p493&lt;/span&gt;</code> ）</li>
-<li>Image 文件不真正备份；Restore 前必须先把镜像导入 Upgrade Image Repository（counter·X42， <code>&lt;span class="pg"&gt;原文p489-490&lt;/span&gt;</code> ）</li>
-<li>FTP 默认 5 分钟超时导致大镜像升级失败——先 CLI 调大 <code>session ftp timeout</code>（counter·X43， <code>&lt;span class="pg"&gt;原文p497&lt;/span&gt;</code> ）</li>
-<li>先升 Image 再升 U-Boot/Miniboot，顺序不能颠倒（counter·X44， <code>&lt;span class="pg"&gt;原文p497&lt;/span&gt;</code> ）</li>
-<li>混合地图备份漏掉 Stellar AP——Stellar AP 只能按 AP Group 备（counter·X47， <code>&lt;span class="pg"&gt;原文p488&lt;/span&gt;</code> ）</li>
-<li>Restore 只能还原到原设备；还原后必须重启（principles·P144， <code>&lt;span class="pg"&gt;原文p494&lt;/span&gt;</code> ）</li>
-<li>Scheduled Upgrade：高于目标版本的设备会被降级（有提示）；Unsaved 设备被静默跳过（counter·X27/X28 / principles·P84， <code>&lt;span class="pg"&gt;原文p292-296&lt;/span&gt;</code> ）</li>
-<li>Provisioning 模板含禁用命令（user admin password、write memory、configuration apply）必失败（counter·X34 / principles·P128， <code>&lt;span class="pg"&gt;原文p442-443&lt;/span&gt;</code> ）</li>
-<li>OV 收不到配置确认回执时谎报 Succeeded——连接丢失/SSH 超时场景要复核（counter·X35 / principles·P131， <code>&lt;span class="pg"&gt;原文p455-456&lt;/span&gt;</code> ）</li>
-<li>Certified 目录运行的交换机不能 Enforce Golden Config；从 Certified 目录 provision 的配置是临时的，重启即丢（counter·X36/X37， <code>&lt;span class="pg"&gt;原文p434-435, 452&lt;/span&gt;</code> ）</li>
-<li>Thin Switch 属性一经 provision 不可改；Incremental Template 仅首次 Periodic Call-Home 后应用一次（principles·P124， <code>&lt;span class="pg"&gt;原文p437-438&lt;/span&gt;</code> ）</li>
-<li>同一设备同时有序列号与 MAC 规则时序列号优先；序列号/MAC 与型号互斥；每型号仅一条规则（principles·P127， <code>&lt;span class="pg"&gt;原文p439-440&lt;/span&gt;</code> ）</li>
-<li>SAA：最多 127 个（建议 ≤50）；交换机未保存配置重启后 SAA 残留不可改删，需重新发现清除；运行中的 SAA 不能删（principles·P149， <code>&lt;span class="pg"&gt;原文p512-514&lt;/span&gt;</code> ）</li>
+<li>备份文件含源机器 IP/MAC 二进制信息，拷到其他机器可能搞瘫网络（counter·X41，<span class="pg">原文p493</span> ）</li>
+<li>Image 文件不真正备份；Restore 前必须先把镜像导入 Upgrade Image Repository（counter·X42，<span class="pg">原文p489-490</span> ）</li>
+<li>FTP 默认 5 分钟超时导致大镜像升级失败——先 CLI 调大 <code>session ftp timeout</code>（counter·X43，<span class="pg">原文p497</span> ）</li>
+<li>先升 Image 再升 U-Boot/Miniboot，顺序不能颠倒（counter·X44，<span class="pg">原文p497</span> ）</li>
+<li>混合地图备份漏掉 Stellar AP——Stellar AP 只能按 AP Group 备（counter·X47，<span class="pg">原文p488</span> ）</li>
+<li>Restore 只能还原到原设备；还原后必须重启（principles·P144，<span class="pg">原文p494</span> ）</li>
+<li>Scheduled Upgrade：高于目标版本的设备会被降级（有提示）；Unsaved 设备被静默跳过（counter·X27/X28 / principles·P84，<span class="pg">原文p292-296</span> ）</li>
+<li>Provisioning 模板含禁用命令（user admin password、write memory、configuration apply）必失败（counter·X34 / principles·P128，<span class="pg">原文p442-443</span> ）</li>
+<li>OV 收不到配置确认回执时谎报 Succeeded——连接丢失/SSH 超时场景要复核（counter·X35 / principles·P131，<span class="pg">原文p455-456</span> ）</li>
+<li>Certified 目录运行的交换机不能 Enforce Golden Config；从 Certified 目录 provision 的配置是临时的，重启即丢（counter·X36/X37，<span class="pg">原文p434-435, 452</span> ）</li>
+<li>Thin Switch 属性一经 provision 不可改；Incremental Template 仅首次 Periodic Call-Home 后应用一次（principles·P124，<span class="pg">原文p437-438</span> ）</li>
+<li>同一设备同时有序列号与 MAC 规则时序列号优先；序列号/MAC 与型号互斥；每型号仅一条规则（principles·P127，<span class="pg">原文p439-440</span> ）</li>
+<li>SAA：最多 127 个（建议 ≤50）；交换机未保存配置重启后 SAA 残留不可改删，需重新发现清除；运行中的 SAA 不能删（principles·P149，<span class="pg">原文p512-514</span> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniVista 2500 NMS 4.9R2 User Guide 第 24 章 Provisioning（ <code>&lt;span class="pg"&gt;原文p429-456&lt;/span&gt;</code> ）、第 27 章 Resource Manager（ <code>&lt;span class="pg"&gt;原文p487-510&lt;/span&gt;</code> ）、第 28 章 SAA（ <code>&lt;span class="pg"&gt;原文p512-521&lt;/span&gt;</code> ）、Scheduled Upgrades（ <code>&lt;span class="pg"&gt;原文p292-296&lt;/span&gt;</code> ）。条目来源：frameworks F11/F12；cases C42-C44/C49-C52；counter-examples X27/X28/X34-X37/X41-X44/X47；principles P84/P122-P131/P143-P151。</p><div class="pn"><a href="ov-discovery-topology-views.html">⬅ 上一单元：ov-discovery-topology-views</a><a class="nxt" href="ov-cli-scripting-mib.html">下一单元：ov-cli-scripting-mib ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<p>OmniVista 2500 NMS 4.9R2 User Guide 第 24 章 Provisioning（<span class="pg">原文p429-456</span> ）、第 27 章 Resource Manager（<span class="pg">原文p487-510</span> ）、第 28 章 SAA（<span class="pg">原文p512-521</span> ）、Scheduled Upgrades（<span class="pg">原文p292-296</span> ）。条目来源：frameworks F11/F12；cases C42-C44/C49-C52；counter-examples X27/X28/X34-X37/X41-X44/X47；principles P84/P122-P131/P143-P151。</p><div class="pn"><a href="ov-discovery-topology-views.html">⬅ 上一单元：ov-discovery-topology-views</a><a class="nxt" href="ov-cli-scripting-mib.html">下一单元：ov-cli-scripting-mib ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

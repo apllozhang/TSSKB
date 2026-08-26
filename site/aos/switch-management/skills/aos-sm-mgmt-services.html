@@ -81,17 +81,17 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>SNMP 管理站</strong>：<code>user NMSuserV3MD5DES md5+des password ***</code> → <code>snmp station 199.199.100.200 8010 NMSuserV3MD5DES v3 enable</code> → <code>show snmp station</code>（C36， <code>&lt;span class="pg"&gt;原文p205&lt;/span&gt;</code> ）</li>
+<li><strong>SNMP 管理站</strong>：<code>user NMSuserV3MD5DES md5+des password ***</code> → <code>snmp station 199.199.100.200 8010 NMSuserV3MD5DES v3 enable</code> → <code>show snmp station</code>（C36，<span class="pg">原文p205</span> ）</li>
 <li>SNMP community/引擎/过滤：<code>user community_user1 password * no auth read-only all</code> → <code>snmp community-map comstring2 user community_user1 enable</code> → <code>snmp community-map mode enable</code>；</li>
 <li>engineid 可改 text/mac/ipv4；</li>
 <li>
 <p><code>snmp trap filter 210.1.2.1 0 1 2 3</code>（C37）；</p>
 </li>
 <li>
-<p><strong>WebView</strong>：<code>aaa authentication http local</code> → https://<ip>/new#/；自定义证书 <code>cat wv_server.key wv_server.crt &gt; web.pem</code> → <code>aaa certificate install-certificate webview web.pem</code>（C35， <code>&lt;span class="pg"&gt;原文p192&lt;/span&gt;</code> ）</p>
+<p><strong>WebView</strong>：<code>aaa authentication http local</code> → https://<ip>/new#/；自定义证书 <code>cat wv_server.key wv_server.crt &gt; web.pem</code> → <code>aaa certificate install-certificate webview web.pem</code>（C35，<span class="pg">原文p192</span> ）</p>
 </li>
 <li>Cirrus 接入：DHCP 配 Option 43；</li>
-<li><code>cloud-agent admin-state enable</code>、<code>cloud-agent discovery-interval 60</code> → <code>show cloud-agent status</code>（C38， <code>&lt;span class="pg"&gt;原文p224&lt;/span&gt;</code> ）；</li>
+<li><code>cloud-agent admin-state enable</code>、<code>cloud-agent discovery-interval 60</code> → <code>show cloud-agent status</code>（C38，<span class="pg">原文p224</span> ）；</li>
 <li>
 <p>NaaS：<code>naas license apply file licenseFile.v2c</code>（需重启）→ <code>show naas license</code>（C39）；</p>
 </li>
@@ -100,41 +100,41 @@ blockquote p{margin:6px 0}
 </li>
 <li><code>PUT https://192.168.1.1/mib/vlanTable?mibObject0=vlanNumber:2&amp;...</code>；</li>
 <li>
-<p><code>GET .../cli/aos?&amp;cmd=show+vlan+5</code>（C40， <code>&lt;span class="pg"&gt;原文p249-259&lt;/span&gt;</code> ）；</p>
+<p><code>GET .../cli/aos?&amp;cmd=show+vlan+5</code>（C40，<span class="pg">原文p249-259</span> ）；</p>
 </li>
 <li>
-<p><strong>DNS</strong>：<code>ip domain-name mycompany1.com</code> → <code>ip domain-lookup</code> → <code>ip name-server &lt;ip&gt;</code>（C11， <code>&lt;span class="pg"&gt;原文p46&lt;/span&gt;</code> ）</p>
+<p><strong>DNS</strong>：<code>ip domain-name mycompany1.com</code> → <code>ip domain-lookup</code> → <code>ip name-server &lt;ip&gt;</code>（C11，<span class="pg">原文p46</span> ）</p>
 </li>
 <li>NTP：<code>ntp server 198.206.181.139</code> → <code>ntp client admin-state enable</code> → <code>show ntp status</code>；</li>
 <li>广播 <code>ntp broadcast-client enable</code> + <code>broadcast-delay 1000</code>；</li>
 <li>
-<p>认证 <code>ntp key load</code> → <code>ntp authentication enable</code> → <code>ntp server 1.1.1.1 key 2</code> → <code>ntp key 2 trusted</code>（C52， <code>&lt;span class="pg"&gt;原文p408-417&lt;/span&gt;</code> ）；</p>
+<p>认证 <code>ntp key load</code> → <code>ntp authentication enable</code> → <code>ntp server 1.1.1.1 key 2</code> → <code>ntp key 2 trusted</code>（C52，<span class="pg">原文p408-417</span> ）；</p>
 </li>
 <li>
-<p><strong>事件脚本</strong>：<code>event-action trap linkDown script /flash/python/link_event.py</code> → <code>show event-action statistics</code>（C41， <code>&lt;span class="pg"&gt;原文p270-271&lt;/span&gt;</code> ）</p>
+<p><strong>事件脚本</strong>：<code>event-action trap linkDown script /flash/python/link_event.py</code> → <code>show event-action statistics</code>（C41，<span class="pg">原文p270-271</span> ）</p>
 </li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>SNMP v3 管理站部署（C36， <code>&lt;span class="pg"&gt;原文p205&lt;/span&gt;</code> ）与 community/引擎/过滤（C37， <code>&lt;span class="pg"&gt;原文p207-216&lt;/span&gt;</code> ）</li>
-<li>WebView 启用与自定义证书（C35， <code>&lt;span class="pg"&gt;原文p192&lt;/span&gt;</code> ）</li>
-<li>Cirrus 快速接入（C38， <code>&lt;span class="pg"&gt;原文p224&lt;/span&gt;</code> ）与 NaaS 配置（C39， <code>&lt;span class="pg"&gt;原文p237&lt;/span&gt;</code> ）</li>
-<li>REST 登录/建 VLAN/查询三例（C40， <code>&lt;span class="pg"&gt;原文p249-259&lt;/span&gt;</code> ）</li>
-<li>NTP 客户端/广播/认证三套（C52， <code>&lt;span class="pg"&gt;原文p408-417&lt;/span&gt;</code> ）</li>
+<li>SNMP v3 管理站部署（C36，<span class="pg">原文p205</span> ）与 community/引擎/过滤（C37，<span class="pg">原文p207-216</span> ）</li>
+<li>WebView 启用与自定义证书（C35，<span class="pg">原文p192</span> ）</li>
+<li>Cirrus 快速接入（C38，<span class="pg">原文p224</span> ）与 NaaS 配置（C39，<span class="pg">原文p237</span> ）</li>
+<li>REST 登录/建 VLAN/查询三例（C40，<span class="pg">原文p249-259</span> ）</li>
+<li>NTP 客户端/广播/认证三套（C52，<span class="pg">原文p408-417</span> ）</li>
 </ul>
 <h2 id="b">B（反例/坑）</h2>
 <ul>
-<li>WebView 改 http/https 端口前必须先断开所有 WebView 会话（X48， <code>&lt;span class="pg"&gt;原文p191&lt;/span&gt;</code> ）</li>
-<li>TSM 启用后丢弃全部 v1/v2/v3 USM 请求与 trap，SNMP 仅走 IPv4（X49， <code>&lt;span class="pg"&gt;原文p209&lt;/span&gt;</code> ）</li>
-<li>证书更新须手工从 primary 拷到所有 secondary/slave 并重启（X50， <code>&lt;span class="pg"&gt;原文p210, 213&lt;/span&gt;</code> ）</li>
-<li>修改用户 SNMP 权限必须重输密码（哈希依赖认证等级）（X52， <code>&lt;span class="pg"&gt;原文p161&lt;/span&gt;</code> ）</li>
-<li>已有 (vc)boot.cfg 的存量交换机不会自动上云，需 CLI 手动启用 cloud-agent（X54， <code>&lt;span class="pg"&gt;原文p223&lt;/span&gt;</code> ）</li>
-<li>无 NTP 则设备无法连激活服务器入云（除非手工设对日期）（X55， <code>&lt;span class="pg"&gt;原文p228&lt;/span&gt;</code> ）</li>
-<li>NaaS degraded 模式禁访 certified/running 目录、禁 show/监控命令（X57）；宽限/降级模式可登录但不能执行 CLI（X58）；NaaS license 需重启激活且宽限计时依赖 NTP（X59）（ <code>&lt;span class="pg"&gt;原文p238-239&lt;/span&gt;</code> ）</li>
-<li>Thin Switch 模式不落本地配置，由 OmniVista 下发才知道自己是瘦模式（X61， <code>&lt;span class="pg"&gt;原文p240&lt;/span&gt;</code> ）</li>
-<li>REST 场景代理不遵守 Vary 头会出现 JSON/XML 串格式（X62， <code>&lt;span class="pg"&gt;原文p248&lt;/span&gt;</code> ）</li>
-<li>事件脚本单绑定（一事件一脚本），须存 /flash/python 且需 AAA 写权限（X63， <code>&lt;span class="pg"&gt;原文p270&lt;/span&gt;</code> ）</li>
-<li>NTP 不支持 2035 年以后（X97）；不同步 stratum 16 未同步服务器（X98）；peer 关联只应建在同 stratum 层（X99）（ <code>&lt;span class="pg"&gt;原文p413-414&lt;/span&gt;</code> ）</li>
+<li>WebView 改 http/https 端口前必须先断开所有 WebView 会话（X48，<span class="pg">原文p191</span> ）</li>
+<li>TSM 启用后丢弃全部 v1/v2/v3 USM 请求与 trap，SNMP 仅走 IPv4（X49，<span class="pg">原文p209</span> ）</li>
+<li>证书更新须手工从 primary 拷到所有 secondary/slave 并重启（X50，<span class="pg">原文p210, 213</span> ）</li>
+<li>修改用户 SNMP 权限必须重输密码（哈希依赖认证等级）（X52，<span class="pg">原文p161</span> ）</li>
+<li>已有 (vc)boot.cfg 的存量交换机不会自动上云，需 CLI 手动启用 cloud-agent（X54，<span class="pg">原文p223</span> ）</li>
+<li>无 NTP 则设备无法连激活服务器入云（除非手工设对日期）（X55，<span class="pg">原文p228</span> ）</li>
+<li>NaaS degraded 模式禁访 certified/running 目录、禁 show/监控命令（X57）；宽限/降级模式可登录但不能执行 CLI（X58）；NaaS license 需重启激活且宽限计时依赖 NTP（X59）（<span class="pg">原文p238-239</span> ）</li>
+<li>Thin Switch 模式不落本地配置，由 OmniVista 下发才知道自己是瘦模式（X61，<span class="pg">原文p240</span> ）</li>
+<li>REST 场景代理不遵守 Vary 头会出现 JSON/XML 串格式（X62，<span class="pg">原文p248</span> ）</li>
+<li>事件脚本单绑定（一事件一脚本），须存 /flash/python 且需 AAA 写权限（X63，<span class="pg">原文p270</span> ）</li>
+<li>NTP 不支持 2035 年以后（X97）；不同步 stratum 16 未同步服务器（X98）；peer 关联只应建在同 stratum 层（X99）（<span class="pg">原文p413-414</span> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniSwitch AOS 8.10R4 Switch Management Guide 第 2 章 DNS（ <code>&lt;span class="pg"&gt;原文p46&lt;/span&gt;</code> ）、第 9 章 WebView（ <code>&lt;span class="pg"&gt;原文p190-199&lt;/span&gt;</code> ）、第 10 章 SNMP（ <code>&lt;span class="pg"&gt;原文p203-220&lt;/span&gt;</code> ）、第 11 章 OmniVista Cirrus（ <code>&lt;span class="pg"&gt;原文p222-241&lt;/span&gt;</code> ）、第 12 章 Web Services（ <code>&lt;span class="pg"&gt;原文p246-278&lt;/span&gt;</code> ）、第 17 章 NTP（ <code>&lt;span class="pg"&gt;原文p406-417&lt;/span&gt;</code> ）。条目来源：cases C11/C35-C41/C52；principles P43/P93-P123/P158-P163；counter-examples X48-X52/X54-X62/X97-X99；frameworks F9/F10/F12。</p><div class="pn"><a href="aos-sm-cli-session-usermgmt.html">⬅ 上一单元：aos-sm-cli-session-usermgmt</a><a class="nxt" href="aos-sm-logging-health.html">下一单元：aos-sm-logging-health ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<p>OmniSwitch AOS 8.10R4 Switch Management Guide 第 2 章 DNS（<span class="pg">原文p46</span> ）、第 9 章 WebView（<span class="pg">原文p190-199</span> ）、第 10 章 SNMP（<span class="pg">原文p203-220</span> ）、第 11 章 OmniVista Cirrus（<span class="pg">原文p222-241</span> ）、第 12 章 Web Services（<span class="pg">原文p246-278</span> ）、第 17 章 NTP（<span class="pg">原文p406-417</span> ）。条目来源：cases C11/C35-C41/C52；principles P43/P93-P123/P158-P163；counter-examples X48-X52/X54-X62/X97-X99；frameworks F9/F10/F12。</p><div class="pn"><a href="aos-sm-cli-session-usermgmt.html">⬅ 上一单元：aos-sm-cli-session-usermgmt</a><a class="nxt" href="aos-sm-logging-health.html">下一单元：aos-sm-logging-health ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

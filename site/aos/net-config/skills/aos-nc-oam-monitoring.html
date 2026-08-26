@@ -78,37 +78,37 @@ blockquote p{margin:6px 0}
 <li>宽带接入要在 PPPoE 报文插用户线路标识：PPPoE-IA</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>OAM 分层框架（F14， <code>&lt;span class="pg"&gt;原文p1655&lt;/span&gt;</code> ）：LINK OAM(802.3ah，单链路发现/监控/环回) 与 Service OAM(802.1ag/Y.1731，MD/MA/MEP 层级+CC/LB/LT+时延测量) 互补，CFM MD 分层 0-7 对应运营商/客户组织边界。MD 分级：5-7 客户、3-4 运营商、0-2 操作员；MEP 发起 OAM 命令防域间泄漏，MIP 被动应答（P196， <code>&lt;span class="pg"&gt;原文p1655&lt;/span&gt;</code> ）。EFM 用慢协议 OAMPDU 承载控制与状态，单链路传递不被网桥转发；发现阶段双方能力匹配才建立 OAM 连接，5 秒无 OAMPDU 即失联（P198/P199， <code>&lt;span class="pg"&gt;原文p1673-1674&lt;/span&gt;</code> ）。</p>
+<p>OAM 分层框架（F14，<span class="pg">原文p1655</span> ）：LINK OAM(802.3ah，单链路发现/监控/环回) 与 Service OAM(802.1ag/Y.1731，MD/MA/MEP 层级+CC/LB/LT+时延测量) 互补，CFM MD 分层 0-7 对应运营商/客户组织边界。MD 分级：5-7 客户、3-4 运营商、0-2 操作员；MEP 发起 OAM 命令防域间泄漏，MIP 被动应答（P196，<span class="pg">原文p1655</span> ）。EFM 用慢协议 OAMPDU 承载控制与状态，单链路传递不被网桥转发；发现阶段双方能力匹配才建立 OAM 连接，5 秒无 OAMPDU 即失联（P198/P199，<span class="pg">原文p1673-1674</span> ）。</p>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
-<li><strong>定位故障先分层</strong>：单链路问题用 LINK OAM（发现/三窗口链路监控/远端故障/远端环回，P200， <code>&lt;span class="pg"&gt;原文p1673&lt;/span&gt;</code> ）；业务端到端问题用 Service OAM（P195， <code>&lt;span class="pg"&gt;原文p1655&lt;/span&gt;</code> ）</li>
+<li><strong>定位故障先分层</strong>：单链路问题用 LINK OAM（发现/三窗口链路监控/远端故障/远端环回，P200，<span class="pg">原文p1673</span> ）；业务端到端问题用 Service OAM（P195，<span class="pg">原文p1655</span> ）</li>
 <li><strong>MD 级别按组织边界规划</strong>：运营商侧低级别（0-4）、客户侧高级别（5-7），避免 MEP 命令跨域泄漏</li>
 <li><strong>链路劣化监控选 EFM 窗口</strong>：errored-frame / errored-frame-seconds / errored-frame-seconds-summary 三窗口阈值+notify</li>
-<li><strong>资源与运维面</strong>：Switch Health 资源阈值+采样间隔（P190， <code>&lt;span class="pg"&gt;原文p1566&lt;/span&gt;</code> ）；日志=级别筛选+输出设备+文件大小+格式+存储上限（P194， <code>&lt;span class="pg"&gt;原文p1580&lt;/span&gt;</code> ）</li>
-<li><strong>测量类</strong>：帧时延测量（Y.1731）、SAA 以 SPB 会话做服务保障测量并可生成 XML 历史（P204， <code>&lt;span class="pg"&gt;原文p1700&lt;/span&gt;</code> ）</li>
+<li><strong>资源与运维面</strong>：Switch Health 资源阈值+采样间隔（P190，<span class="pg">原文p1566</span> ）；日志=级别筛选+输出设备+文件大小+格式+存储上限（P194，<span class="pg">原文p1580</span> ）</li>
+<li><strong>测量类</strong>：帧时延测量（Y.1731）、SAA 以 SPB 会话做服务保障测量并可生成 XML 历史（P204，<span class="pg">原文p1700</span> ）</li>
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>Service OAM</strong>：<code>cfm domain</code>→MA→MEP/虚拟 MEP→loopback/linktrace/帧时延测量（cases·C62， <code>&lt;span class="pg"&gt;原文p1650&lt;/span&gt;</code> ）；RFP 把连通故障事件传播到 MEP 所在接口（P197， <code>&lt;span class="pg"&gt;原文p1655&lt;/span&gt;</code> ）</li>
-<li><strong>EFM LINK OAM</strong>：<code>efm-oam enable</code>→端口使能→errored-frame(-seconds-summary) 窗口/阈值/notify（样例 <code>efm-oam port 1/1/1 errored-frame window 32 threshold 10 notify enable</code>）→远端环回；验证 show efm-oam（cases·C63， <code>&lt;span class="pg"&gt;原文p1672&lt;/span&gt;</code> ）</li>
-<li><strong>Switch Health</strong>：资源阈值+采样间隔监控 CPU/内存等并出统计（P190， <code>&lt;span class="pg"&gt;原文p1566&lt;/span&gt;</code> ）</li>
-<li><strong>日志</strong>：级别筛选+输出设备（console/memory/remote 等）+文件大小+格式+存储上限（P194， <code>&lt;span class="pg"&gt;原文p1580&lt;/span&gt;</code> ）</li>
-<li><strong>SAA</strong>：以 SPB 会话做测量，可生成 XML 历史文件（P204， <code>&lt;span class="pg"&gt;原文p1700&lt;/span&gt;</code> ）</li>
-<li><strong>PPPoE-IA</strong>：<code>pppoe-ia enable</code>→（可选）<code>pppoe-ia ignore-slot</code>（AOS6 格式 Circuit-ID）→<code>pppoe-ia port 1/1/1 enable</code>→trust/client 口→access-node-id/circuit-id/remote-id；验证 show pppoe-ia（cases·C64， <code>&lt;span class="pg"&gt;原文p1715&lt;/span&gt;</code> ）</li>
+<li><strong>Service OAM</strong>：<code>cfm domain</code>→MA→MEP/虚拟 MEP→loopback/linktrace/帧时延测量（cases·C62，<span class="pg">原文p1650</span> ）；RFP 把连通故障事件传播到 MEP 所在接口（P197，<span class="pg">原文p1655</span> ）</li>
+<li><strong>EFM LINK OAM</strong>：<code>efm-oam enable</code>→端口使能→errored-frame(-seconds-summary) 窗口/阈值/notify（样例 <code>efm-oam port 1/1/1 errored-frame window 32 threshold 10 notify enable</code>）→远端环回；验证 show efm-oam（cases·C63，<span class="pg">原文p1672</span> ）</li>
+<li><strong>Switch Health</strong>：资源阈值+采样间隔监控 CPU/内存等并出统计（P190，<span class="pg">原文p1566</span> ）</li>
+<li><strong>日志</strong>：级别筛选+输出设备（console/memory/remote 等）+文件大小+格式+存储上限（P194，<span class="pg">原文p1580</span> ）</li>
+<li><strong>SAA</strong>：以 SPB 会话做测量，可生成 XML 历史文件（P204，<span class="pg">原文p1700</span> ）</li>
+<li><strong>PPPoE-IA</strong>：<code>pppoe-ia enable</code>→（可选）<code>pppoe-ia ignore-slot</code>（AOS6 格式 Circuit-ID）→<code>pppoe-ia port 1/1/1 enable</code>→trust/client 口→access-node-id/circuit-id/remote-id；验证 show pppoe-ia（cases·C64，<span class="pg">原文p1715</span> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>Service OAM domain→MA→MEP→测量（C62， <code>&lt;span class="pg"&gt;原文p1650&lt;/span&gt;</code> ）</li>
-<li>EFM LINK OAM 窗口阈值与远端环回（C63， <code>&lt;span class="pg"&gt;原文p1672&lt;/span&gt;</code> ）</li>
-<li>PPPoE-IA trust/client 口与线路标识（C64， <code>&lt;span class="pg"&gt;原文p1715&lt;/span&gt;</code> ）</li>
+<li>Service OAM domain→MA→MEP→测量（C62，<span class="pg">原文p1650</span> ）</li>
+<li>EFM LINK OAM 窗口阈值与远端环回（C63，<span class="pg">原文p1672</span> ）</li>
+<li>PPPoE-IA trust/client 口与线路标识（C64，<span class="pg">原文p1715</span> ）</li>
 </ul>
 <h2 id="b">B（反例/坑）</h2>
 <ul>
-<li>LINK OAM 5 秒收不到 OAMPDU 邻接即丢，keepalive 间隔配置不当会频繁掉 OAM 会话（X72/P199， <code>&lt;span class="pg"&gt;原文p1674&lt;/span&gt;</code> ）</li>
-<li>PPPoE-IA 不支持镜像目的口；全局+端口两级必须同时使能否则不生效（X73/P203， <code>&lt;span class="pg"&gt;原文p1715&lt;/span&gt;</code> ）</li>
-<li>PPPoE access loop 标识：直连用户=chassis/slot/port，多用户共享口=端口+CVLAN 组合（P202， <code>&lt;span class="pg"&gt;原文p1714&lt;/span&gt;</code> ）</li>
-<li>MD Level 分层对应组织边界，跨层规划会导致 OAM 命令泄漏或测量失效（P196， <code>&lt;span class="pg"&gt;原文p1655&lt;/span&gt;</code> ）</li>
-<li>虚拟 MEP 是虚拟端口上的 UP MEP，用于没有物理口的场景（ <code>&lt;span class="pg"&gt;原文p1655&lt;/span&gt;</code> ）</li>
+<li>LINK OAM 5 秒收不到 OAMPDU 邻接即丢，keepalive 间隔配置不当会频繁掉 OAM 会话（X72/P199，<span class="pg">原文p1674</span> ）</li>
+<li>PPPoE-IA 不支持镜像目的口；全局+端口两级必须同时使能否则不生效（X73/P203，<span class="pg">原文p1715</span> ）</li>
+<li>PPPoE access loop 标识：直连用户=chassis/slot/port，多用户共享口=端口+CVLAN 组合（P202，<span class="pg">原文p1714</span> ）</li>
+<li>MD Level 分层对应组织边界，跨层规划会导致 OAM 命令泄漏或测量失效（P196，<span class="pg">原文p1655</span> ）</li>
+<li>虚拟 MEP 是虚拟端口上的 UP MEP，用于没有物理口的场景（<span class="pg">原文p1655</span> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniSwitch AOS 8.10R4 Network Configuration Guide 第 41 章 Switch Health（ <code>&lt;span class="pg"&gt;原文p1566&lt;/span&gt;</code> ）、第 43 章 Switch Logging（ <code>&lt;span class="pg"&gt;原文p1580&lt;/span&gt;</code> ）、第 44 章 Service OAM/CFM（ <code>&lt;span class="pg"&gt;原文p1650-1665&lt;/span&gt;</code> ）、第 45 章 EFM LINK OAM（ <code>&lt;span class="pg"&gt;原文p1672-1674&lt;/span&gt;</code> ）、第 47 章 PPPoE-IA（ <code>&lt;span class="pg"&gt;原文p1714-1715&lt;/span&gt;</code> ）、第 48 章 SAA（ <code>&lt;span class="pg"&gt;原文p1700&lt;/span&gt;</code> ）。条目来源：cases C62-C64；principles P190/P194-P204；counter-examples X72/X73；frameworks F14。</p><div class="pn"><a href="aos-nc-access-security.html">⬅ 上一单元：aos-nc-access-security</a><a class="nxt" href="aos-nc-switch-foundation.html">下一单元：aos-nc-switch-foundation ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<p>OmniSwitch AOS 8.10R4 Network Configuration Guide 第 41 章 Switch Health（<span class="pg">原文p1566</span> ）、第 43 章 Switch Logging（<span class="pg">原文p1580</span> ）、第 44 章 Service OAM/CFM（<span class="pg">原文p1650-1665</span> ）、第 45 章 EFM LINK OAM（<span class="pg">原文p1672-1674</span> ）、第 47 章 PPPoE-IA（<span class="pg">原文p1714-1715</span> ）、第 48 章 SAA（<span class="pg">原文p1700</span> ）。条目来源：cases C62-C64；principles P190/P194-P204；counter-examples X72/X73；frameworks F14。</p><div class="pn"><a href="aos-nc-access-security.html">⬅ 上一单元：aos-nc-access-security</a><a class="nxt" href="aos-nc-switch-foundation.html">下一单元：aos-nc-switch-foundation ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

@@ -67,36 +67,36 @@ blockquote p{margin:6px 0}
 <li>共享服务（如公共服务器区）经 VRF 路由泄漏供多租户访问</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>三层标识体系（F2， <code>&lt;span class="pg"&gt;原文p13&lt;/span&gt;</code> ）：Service（本地有效）→ ISID（全局服务/租户标识，24 位 16M）→ BVLAN（承载与负载分担）；SAP=UNI 侧虚拟端口、SDP 由控制面动态生成只为有 SAP 的远端 BEB 创建（P22， <code>&lt;span class="pg"&gt;原文p14&lt;/span&gt;</code> ）。服务只在 BEB 实例化、BCB 零配置（P9， <code>&lt;span class="pg"&gt;原文p8&lt;/span&gt;</code> ）。L3 服务靠边缘路由：路由只发生在入/出 BEB，WAN 是单跳 L3（P28， <code>&lt;span class="pg"&gt;原文p29&lt;/span&gt;</code> ）；L3 VPN 复用 IS-IS TLV 直接传 VRF 路由，单协议更简（P29， <code>&lt;span class="pg"&gt;原文p30&lt;/span&gt;</code> ）；域内选 L3 VPN、边界对接外部才用 VPN Lite（P30， <code>&lt;span class="pg"&gt;原文p34&lt;/span&gt;</code> ）。</p>
+<p>三层标识体系（F2，<span class="pg">原文p13</span> ）：Service（本地有效）→ ISID（全局服务/租户标识，24 位 16M）→ BVLAN（承载与负载分担）；SAP=UNI 侧虚拟端口、SDP 由控制面动态生成只为有 SAP 的远端 BEB 创建（P22，<span class="pg">原文p14</span> ）。服务只在 BEB 实例化、BCB 零配置（P9，<span class="pg">原文p8</span> ）。L3 服务靠边缘路由：路由只发生在入/出 BEB，WAN 是单跳 L3（P28，<span class="pg">原文p29</span> ）；L3 VPN 复用 IS-IS TLV 直接传 VRF 路由，单协议更简（P29，<span class="pg">原文p30</span> ）；域内选 L3 VPN、边界对接外部才用 VPN Lite（P30，<span class="pg">原文p34</span> ）。</p>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
-<li>L2 服务创建三步（C3， <code>&lt;span class="pg"&gt;原文p20&lt;/span&gt;</code> ）：<code>service N spb isid X bvlan Y</code> → 物理口设为 SAP → 定义匹配客户流量的 SAP；只配相关 BEB</li>
-<li>服务号治理（P27， <code>&lt;span class="pg"&gt;原文p21&lt;/span&gt;</code> ）：service 本地有效可各节点不同；ISID 全局一致必须全 BEB 匹配</li>
-<li>L3 方案分档：域内→L3 VPN（IS-IS 带路由）；边界→VPN Lite（L2 服务上叠 OSPF/BGP）；共享服务→VRF 路由泄漏五步（C11， <code>&lt;span class="pg"&gt;原文p35&lt;/span&gt;</code> ）</li>
-<li>路由形态判定（C7， <code>&lt;span class="pg"&gt;原文p26&lt;/span&gt;</code> ）：新 ASIC 单次直通（IP 接口直接绑服务）；老 ASIC 外部物理回环或内部前面板回环（dummy VLAN 中转）</li>
+<li>L2 服务创建三步（C3，<span class="pg">原文p20</span> ）：<code>service N spb isid X bvlan Y</code> → 物理口设为 SAP → 定义匹配客户流量的 SAP；只配相关 BEB</li>
+<li>服务号治理（P27，<span class="pg">原文p21</span> ）：service 本地有效可各节点不同；ISID 全局一致必须全 BEB 匹配</li>
+<li>L3 方案分档：域内→L3 VPN（IS-IS 带路由）；边界→VPN Lite（L2 服务上叠 OSPF/BGP）；共享服务→VRF 路由泄漏五步（C11，<span class="pg">原文p35</span> ）</li>
+<li>路由形态判定（C7，<span class="pg">原文p26</span> ）：新 ASIC 单次直通（IP 接口直接绑服务）；老 ASIC 外部物理回环或内部前面板回环（dummy VLAN 中转）</li>
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>L2 服务验证</strong>（C4， <code>&lt;span class="pg"&gt;原文p22&lt;/span&gt;</code> ）：<code>show service spb</code>（BEB/BCB 视图）→ <code>show spb isis services</code> → <code>show service access</code>（SAP 类型与 L2Profile）→ <code>show service spb ports</code> → <code>show mac-learning domain spb</code>（BCB 不学 CMAC）</li>
-<li><strong>VLAN 翻译</strong>（C5， <code>&lt;span class="pg"&gt;原文p23&lt;/span&gt;</code> ）：服务级 <code>service service_id vlan-translation enable</code> + SAP 级 <code>service access port vlan-xlation enable</code> 双开关</li>
-<li><strong>L2Profile</strong>（C6， <code>&lt;span class="pg"&gt;原文p24&lt;/span&gt;</code> ）：<code>service l2profile name stp action…</code> 定义 peer/drop/tunnel</li>
-<li><strong>外部物理回环</strong>（C8， <code>&lt;span class="pg"&gt;原文p28&lt;/span&gt;</code> ）：每路由服务建 dummy VLAN；回环口一端作 VLAN 口、另一端作 SAP；IP 接口加 <code>rtr-port</code> 防 VLAN 扩散并关 STP</li>
-<li><strong>L3 VPN 五步</strong>（C9， <code>&lt;span class="pg"&gt;原文p31&lt;/span&gt;</code> ）：L2 服务 → 租户 VRF → LAN/WAN 侧 IP 接口（WAN 直挂或 dummy VLAN）→ 绑 ISID → VRF 与 IS-IS ISID 实例互导路由</li>
-<li><strong>L3 VPN 验证</strong>（C10， <code>&lt;span class="pg"&gt;原文p33&lt;/span&gt;</code> ）：远端 LAN 网段为 IMPORT 路由、下一跳指远端 BEB WAN 地址；ARP 动态学远端网关</li>
-<li><strong>路由泄漏五步</strong>（C11， <code>&lt;span class="pg"&gt;原文p35&lt;/span&gt;</code> ）：shared_services VRF 经 route-map 过滤导出全局表 → 导入客户 VRF → 客户路由导入 shared VRF → 从各客户 ISID 导入远端客户路由 → shared 路由重分发回各客户 ISID</li>
+<li><strong>L2 服务验证</strong>（C4，<span class="pg">原文p22</span> ）：<code>show service spb</code>（BEB/BCB 视图）→ <code>show spb isis services</code> → <code>show service access</code>（SAP 类型与 L2Profile）→ <code>show service spb ports</code> → <code>show mac-learning domain spb</code>（BCB 不学 CMAC）</li>
+<li><strong>VLAN 翻译</strong>（C5，<span class="pg">原文p23</span> ）：服务级 <code>service service_id vlan-translation enable</code> + SAP 级 <code>service access port vlan-xlation enable</code> 双开关</li>
+<li><strong>L2Profile</strong>（C6，<span class="pg">原文p24</span> ）：<code>service l2profile name stp action…</code> 定义 peer/drop/tunnel</li>
+<li><strong>外部物理回环</strong>（C8，<span class="pg">原文p28</span> ）：每路由服务建 dummy VLAN；回环口一端作 VLAN 口、另一端作 SAP；IP 接口加 <code>rtr-port</code> 防 VLAN 扩散并关 STP</li>
+<li><strong>L3 VPN 五步</strong>（C9，<span class="pg">原文p31</span> ）：L2 服务 → 租户 VRF → LAN/WAN 侧 IP 接口（WAN 直挂或 dummy VLAN）→ 绑 ISID → VRF 与 IS-IS ISID 实例互导路由</li>
+<li><strong>L3 VPN 验证</strong>（C10，<span class="pg">原文p33</span> ）：远端 LAN 网段为 IMPORT 路由、下一跳指远端 BEB WAN 地址；ARP 动态学远端网关</li>
+<li><strong>路由泄漏五步</strong>（C11，<span class="pg">原文p35</span> ）：shared_services VRF 经 route-map 过滤导出全局表 → 导入客户 VRF → 客户路由导入 shared VRF → 从各客户 ISID 导入远端客户路由 → shared 路由重分发回各客户 ISID</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>服务器 tagged/客户端 untagged 经 VLAN 翻译互通（C5， <code>&lt;span class="pg"&gt;原文p23&lt;/span&gt;</code> ）</li>
-<li>L3 VPN 验证输出：IMPORT 路由+远端下一跳+动态 ARP（C10， <code>&lt;span class="pg"&gt;原文p33&lt;/span&gt;</code> ）</li>
-<li>两代 ASIC 三种路由形态的判定与各自适用（C7， <code>&lt;span class="pg"&gt;原文p26&lt;/span&gt;</code> ）</li>
+<li>服务器 tagged/客户端 untagged 经 VLAN 翻译互通（C5，<span class="pg">原文p23</span> ）</li>
+<li>L3 VPN 验证输出：IMPORT 路由+远端下一跳+动态 ARP（C10，<span class="pg">原文p33</span> ）</li>
+<li>两代 ASIC 三种路由形态的判定与各自适用（C7，<span class="pg">原文p26</span> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>
-<li>VPN Lite 配置量爆炸：4 客户服务×8 BEB = 64 个 OSPF 配置；路由协议叠加收敛变慢（IS-IS 先收 OSPF 才能收）（X12/X13， <code>&lt;span class="pg"&gt;原文p34&lt;/span&gt;</code> ）</li>
-<li>L3 VPN 依赖 SPB IS-IS，无法直连外部网络——边界必配 VPN Lite（X14， <code>&lt;span class="pg"&gt;原文p34&lt;/span&gt;</code> ）</li>
-<li>路由泄漏前提：客户间及与共享服务地址空间不重叠（X15， <code>&lt;span class="pg"&gt;原文p34&lt;/span&gt;</code> ）</li>
-<li>第一代 ASIC 跨服务路由需双次过交换矩阵+外部物理回环（X11， <code>&lt;span class="pg"&gt;原文p26&lt;/span&gt;</code> ）</li>
-<li>两次路由时标准 VLAN 口应信 CoS 而非 DSCP，否则 CoS 端到端丢失（P52， <code>&lt;span class="pg"&gt;原文p54&lt;/span&gt;</code> ）</li>
+<li>VPN Lite 配置量爆炸：4 客户服务×8 BEB = 64 个 OSPF 配置；路由协议叠加收敛变慢（IS-IS 先收 OSPF 才能收）（X12/X13，<span class="pg">原文p34</span> ）</li>
+<li>L3 VPN 依赖 SPB IS-IS，无法直连外部网络——边界必配 VPN Lite（X14，<span class="pg">原文p34</span> ）</li>
+<li>路由泄漏前提：客户间及与共享服务地址空间不重叠（X15，<span class="pg">原文p34</span> ）</li>
+<li>第一代 ASIC 跨服务路由需双次过交换矩阵+外部物理回环（X11，<span class="pg">原文p26</span> ）</li>
+<li>两次路由时标准 VLAN 口应信 CoS 而非 DSCP，否则 CoS 端到端丢失（P52，<span class="pg">原文p54</span> ）</li>
 </ul>
 <p>来源：SPB Architecture Tech Brief（sol-spb DOC1，p20-35）</p><div class="pn"><a href="sol-spb-architecture.html">⬅ 上一单元：sol-spb-architecture</a><a class="nxt" href="sol-spb-deployment-flow.html">下一单元：sol-spb-deployment-flow ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

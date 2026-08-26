@@ -67,38 +67,38 @@ blockquote p{margin:6px 0}
 <li>利用出厂 Auto-Fabric/动态服务做近零接触开局</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>中型园区参考架构（F6， <code>&lt;span class="pg"&gt;原文p63&lt;/span&gt;</code> ）：2×BCB 全网格 + N×BEB 双归 LAG + PBR 策略路由器；VRF 按部门分段、VRRP 虚网关 .1（末位=BEB 号）、/30 点对点连 PBR、OSPF 按 VRF 分 area、PBR 集中策略，可平滑加 BCB 扩展。VRRP tracking 联动上行链路：上行断则优先级 120−25=95，对端接管（P59， <code>&lt;span class="pg"&gt;原文p78&lt;/span&gt;</code> ）。自动化分层（F5， <code>&lt;span class="pg"&gt;原文p36&lt;/span&gt;</code> ）：Auto-Fabric 六阶段打底 → UNP+认证动态 SAP → 动态服务按 VLAN 标签即时生成（ISID=BSN+Domain ID+VLAN%Modulo 公式，P36， <code>&lt;span class="pg"&gt;原文p42&lt;/span&gt;</code> ）。</p>
+<p>中型园区参考架构（F6，<span class="pg">原文p63</span> ）：2×BCB 全网格 + N×BEB 双归 LAG + PBR 策略路由器；VRF 按部门分段、VRRP 虚网关 .1（末位=BEB 号）、/30 点对点连 PBR、OSPF 按 VRF 分 area、PBR 集中策略，可平滑加 BCB 扩展。VRRP tracking 联动上行链路：上行断则优先级 120−25=95，对端接管（P59，<span class="pg">原文p78</span> ）。自动化分层（F5，<span class="pg">原文p36</span> ）：Auto-Fabric 六阶段打底 → UNP+认证动态 SAP → 动态服务按 VLAN 标签即时生成（ISID=BSN+Domain ID+VLAN%Modulo 公式，P36，<span class="pg">原文p42</span> ）。</p>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
-<li>部署 11 步总清单（C24， <code>&lt;span class="pg"&gt;原文p62&lt;/span&gt;</code> ）：物理拓扑/LAG → VLANs → LBD → 控制与业务 BVLAN → SPB 服务 → BEB 上 SAP → VRF 分段 → VRRP → VRF-PBR 点对点 → VRRP Tracking → OSPF → 网络策略</li>
-<li>命名规范先行（P55， <code>&lt;span class="pg"&gt;原文p64&lt;/span&gt;</code> ）：ACC-31（BEB3 第 1 台接入）、linkagg 13（BCB-1↔BEB-3）；BEB-1/2 名号让给 BCB，避免认知混淆（X30， <code>&lt;span class="pg"&gt;原文p64&lt;/span&gt;</code> ）</li>
-<li>VRF 间隔离由 PBR 强制，VRF 内再叠 DHCP snooping/DAI（P60， <code>&lt;span class="pg"&gt;原文p80&lt;/span&gt;</code> ）</li>
-<li>自动化开局：近零接触（P32， <code>&lt;span class="pg"&gt;原文p36&lt;/span&gt;</code> ）→ 动态服务避免预置全 4096 VLAN（P35， <code>&lt;span class="pg"&gt;原文p42&lt;/span&gt;</code> ）</li>
+<li>部署 11 步总清单（C24，<span class="pg">原文p62</span> ）：物理拓扑/LAG → VLANs → LBD → 控制与业务 BVLAN → SPB 服务 → BEB 上 SAP → VRF 分段 → VRRP → VRF-PBR 点对点 → VRRP Tracking → OSPF → 网络策略</li>
+<li>命名规范先行（P55，<span class="pg">原文p64</span> ）：ACC-31（BEB3 第 1 台接入）、linkagg 13（BCB-1↔BEB-3）；BEB-1/2 名号让给 BCB，避免认知混淆（X30，<span class="pg">原文p64</span> ）</li>
+<li>VRF 间隔离由 PBR 强制，VRF 内再叠 DHCP snooping/DAI（P60，<span class="pg">原文p80</span> ）</li>
+<li>自动化开局：近零接触（P32，<span class="pg">原文p36</span> ）→ 动态服务避免预置全 4096 VLAN（P35，<span class="pg">原文p42</span> ）</li>
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>落地命令链</strong>（C25， <code>&lt;span class="pg"&gt;原文p67&lt;/span&gt;</code> ）：<code>vlan 1000</code> → <code>loopback-detection enable</code> + <code>loopback-detection service-access linkagg 31 enable</code> → <code>spb bvlan 4000-4002 admin-state enable</code> → 配控制 BVLAN 前先 <code>spb isis admin-state disable</code> → <code>spb isis interface linkagg 16</code> → <code>service 1000 spb isid 1000 bvlan 4001 vlan-xlation enable</code> → <code>service access linkagg 31 vlan-xlation enable</code> → <code>service 1000 sap linkagg 31:1000</code> → ping + <code>show spb isis spf bvlan 4001</code> 验路径</li>
-<li><strong>VRF+VRRP+OSPF+策略全套</strong>（C27， <code>&lt;span class="pg"&gt;原文p74&lt;/span&gt;</code> ）：<code>vrf create corp</code> 等五 VRF → VRF 内 IP 接口挂 service → VRRP 三命令建 .1 虚网关 → PBR 侧 /30 互联（接口名 corp3-pbr 格式，P58， <code>&lt;span class="pg"&gt;原文p77&lt;/span&gt;</code> ）→ <code>ip vrrp track 1 … priority 25</code> + track-association → 各 VRF 独立 area、本地网段聚合经 route-map 重分发 → PBR 上 policy 拒 Guest 访问其它 VRF</li>
-<li><strong>AP 直挂 BEB</strong>（C26， <code>&lt;span class="pg"&gt;原文p73&lt;/span&gt;</code> ）：管理服务 <code>service 2000 sap port 1/1/31:0</code> 映射 untagged；SSID 流量另建 tagged SAP（<code>service 1016 sap port 1/1/31:1016</code>）</li>
-<li><strong>S-Hook 对接</strong>（C28， <code>&lt;span class="pg"&gt;原文p81&lt;/span&gt;</code> ）：VLAN 域 LAG-125 打 tagged VLAN，服务域 LAG-127 建 <code>service N sap linkagg 127:N</code>，实现两域 S 形挂钩</li>
-<li><strong>Auto-Fabric 序列</strong>（C12-C16， <code>&lt;span class="pg"&gt;原文p36-38&lt;/span&gt;</code> ）：Auto-VC（LLDP 选举 Master 生成 vcsetup.cfg）→ Auto-RCD（DHCP→TFTP/OmniVista 取配置固件）→ Auto-LACP（探测 LACP PDU 自动配聚合，兼容第三方）→ Auto-SPB（默认建 BVLAN 4000-4003 映射 ECT 1-4）→ Auto-IP（侦听 OSPF/IS-IS Hello 自动配平邻接）</li>
-<li>动态 SAP/服务（C17-C20， <code>&lt;span class="pg"&gt;原文p38-43&lt;/span&gt;</code> ）：六个 UNP 绑 ISID + SAMPLE_FLOW 模板走 802.1x→filter-id、MAC 兜底、无匹配落 RESTRICTED；</li>
-<li>静默设备静态绑 UNP（P34， <code>&lt;span class="pg"&gt;原文p39&lt;/span&gt;</code> ）；</li>
+<li><strong>落地命令链</strong>（C25，<span class="pg">原文p67</span> ）：<code>vlan 1000</code> → <code>loopback-detection enable</code> + <code>loopback-detection service-access linkagg 31 enable</code> → <code>spb bvlan 4000-4002 admin-state enable</code> → 配控制 BVLAN 前先 <code>spb isis admin-state disable</code> → <code>spb isis interface linkagg 16</code> → <code>service 1000 spb isid 1000 bvlan 4001 vlan-xlation enable</code> → <code>service access linkagg 31 vlan-xlation enable</code> → <code>service 1000 sap linkagg 31:1000</code> → ping + <code>show spb isis spf bvlan 4001</code> 验路径</li>
+<li><strong>VRF+VRRP+OSPF+策略全套</strong>（C27，<span class="pg">原文p74</span> ）：<code>vrf create corp</code> 等五 VRF → VRF 内 IP 接口挂 service → VRRP 三命令建 .1 虚网关 → PBR 侧 /30 互联（接口名 corp3-pbr 格式，P58，<span class="pg">原文p77</span> ）→ <code>ip vrrp track 1 … priority 25</code> + track-association → 各 VRF 独立 area、本地网段聚合经 route-map 重分发 → PBR 上 policy 拒 Guest 访问其它 VRF</li>
+<li><strong>AP 直挂 BEB</strong>（C26，<span class="pg">原文p73</span> ）：管理服务 <code>service 2000 sap port 1/1/31:0</code> 映射 untagged；SSID 流量另建 tagged SAP（<code>service 1016 sap port 1/1/31:1016</code>）</li>
+<li><strong>S-Hook 对接</strong>（C28，<span class="pg">原文p81</span> ）：VLAN 域 LAG-125 打 tagged VLAN，服务域 LAG-127 建 <code>service N sap linkagg 127:N</code>，实现两域 S 形挂钩</li>
+<li><strong>Auto-Fabric 序列</strong>（C12-C16，<span class="pg">原文p36-38</span> ）：Auto-VC（LLDP 选举 Master 生成 vcsetup.cfg）→ Auto-RCD（DHCP→TFTP/OmniVista 取配置固件）→ Auto-LACP（探测 LACP PDU 自动配聚合，兼容第三方）→ Auto-SPB（默认建 BVLAN 4000-4003 映射 ECT 1-4）→ Auto-IP（侦听 OSPF/IS-IS Hello 自动配平邻接）</li>
+<li>动态 SAP/服务（C17-C20，<span class="pg">原文p38-43</span> ）：六个 UNP 绑 ISID + SAMPLE_FLOW 模板走 802.1x→filter-id、MAC 兜底、无匹配落 RESTRICTED；</li>
+<li>静默设备静态绑 UNP（P34，<span class="pg">原文p39</span> ）；</li>
 <li>VLAN 101 默认参数演算 ISID=10,000,101→BVLAN 4001；</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>部署指南全流程命令落地与路径验证（C25， <code>&lt;span class="pg"&gt;原文p67&lt;/span&gt;</code> ）</li>
-<li>五 VRF+VRRP+PBR 策略全套配置（C27， <code>&lt;span class="pg"&gt;原文p74&lt;/span&gt;</code> ）</li>
-<li>两代 ASIC 混合场景 S-Hook 替代配置（C28， <code>&lt;span class="pg"&gt;原文p81&lt;/span&gt;</code> ）</li>
-<li>多租户 Domain ID：客户 A/B/C 建 Domain 1/2/3，VLAN 标签重叠仍隔离（C20， <code>&lt;span class="pg"&gt;原文p43&lt;/span&gt;</code> ）</li>
+<li>部署指南全流程命令落地与路径验证（C25，<span class="pg">原文p67</span> ）</li>
+<li>五 VRF+VRRP+PBR 策略全套配置（C27，<span class="pg">原文p74</span> ）</li>
+<li>两代 ASIC 混合场景 S-Hook 替代配置（C28，<span class="pg">原文p81</span> ）</li>
+<li>多租户 Domain ID：客户 A/B/C 建 Domain 1/2/3，VLAN 标签重叠仍隔离（C20，<span class="pg">原文p43</span> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>
-<li>预置全部 4096 VLAN 服务是坏实践，控制面无谓负载（X16， <code>&lt;span class="pg"&gt;原文p42&lt;/span&gt;</code> ）</li>
-<li>默认 Service Modulo 512 可致 8 个 VLAN 混桥同一 L2 域，隔离需求调 4096（X17， <code>&lt;span class="pg"&gt;原文p43&lt;/span&gt;</code> ）</li>
-<li>静默设备（节能模式）丢服务绑定致 WAKE-ON-LAN 不可达——静态绑 UNP（X18， <code>&lt;span class="pg"&gt;原文p39&lt;/span&gt;</code> ）</li>
-<li>多 VLAN 映射同一服务破坏隔离并引发 mac-move（虚拟化重复 MAC 场景尤甚）——VLAN 与服务一对一（P26/X21/X22， <code>&lt;span class="pg"&gt;原文p52&lt;/span&gt;</code> ）</li>
-<li>单链路也建 linkagg、引用逻辑名，扩成员口不改其它配置（P33， <code>&lt;span class="pg"&gt;原文p37&lt;/span&gt;</code> ）</li>
+<li>预置全部 4096 VLAN 服务是坏实践，控制面无谓负载（X16，<span class="pg">原文p42</span> ）</li>
+<li>默认 Service Modulo 512 可致 8 个 VLAN 混桥同一 L2 域，隔离需求调 4096（X17，<span class="pg">原文p43</span> ）</li>
+<li>静默设备（节能模式）丢服务绑定致 WAKE-ON-LAN 不可达——静态绑 UNP（X18，<span class="pg">原文p39</span> ）</li>
+<li>多 VLAN 映射同一服务破坏隔离并引发 mac-move（虚拟化重复 MAC 场景尤甚）——VLAN 与服务一对一（P26/X21/X22，<span class="pg">原文p52</span> ）</li>
+<li>单链路也建 linkagg、引用逻辑名，扩成员口不改其它配置（P33，<span class="pg">原文p37</span> ）</li>
 </ul>
 <p>来源：SPB Deployment Guide Ed.2025（sol-spb DOC2，p57-82）+ Tech Brief 自动化章节（p36-43）</p><div class="pn"><a href="sol-spb-l2-l3-services.html">⬅ 上一单元：sol-spb-l2-l3-services</a><a class="nxt" href="sol-spb-positioning-cases.html">下一单元：sol-spb-positioning-cases ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
