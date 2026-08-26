@@ -396,12 +396,14 @@ NEW_COURSES = [
        ]),
   dict(id='brochures/stellar-ap', book='bp-stellar-ap-datasheets', title='OmniAccess Stellar WLAN · 官方数据表',
        subtitle='2026-08 快照 · 14 份 128 页 · AP1261-AP1570 全系选型速查',
-       route=['Wi-Fi 7 旗舰（1540/1561/1570）', 'Wi-Fi 6E（1431/1451）', 'Wi-Fi 6 全家（1261-1360）', 'Wi-Fi 7 中端（1501/1511/1521） · 一表一技能'],
+       route=['Wi-Fi 7 旗舰（1540/1561/1570）', 'Wi-Fi 7 中端（1501/1511/1521）', 'Wi-Fi 6E（1431/1451）',
+              'Wi-Fi 6 系列（1301-1360）', 'Wi-Fi 5 系列（1261） · 一表一技能'],
        groups=[
-        ('Wi-Fi 7 旗舰', ['bp-ap1540-datasheet', 'bp-ap1561-datasheet', 'bp-ap1570-datasheet']),
-        ('Wi-Fi 6E', ['bp-ap1431-datasheet', 'bp-ap1451-datasheet']),
-        ('Wi-Fi 6', ['bp-ap1261-datasheet', 'bp-ap1301-datasheet', 'bp-ap1301h-datasheet', 'bp-ap1331-datasheet', 'bp-ap1351-datasheet', 'bp-ap1360-datasheet']),
-        ('Wi-Fi 7 中端', ['bp-ap1501-datasheet', 'bp-ap1511-datasheet', 'bp-ap1521-datasheet']),
+        ('Wi-Fi 7 旗舰（1540/1561/1570）', ['bp-ap1540-datasheet', 'bp-ap1561-datasheet', 'bp-ap1570-datasheet']),
+        ('Wi-Fi 7 中端（1501/1511/1521）', ['bp-ap1501-datasheet', 'bp-ap1511-datasheet', 'bp-ap1521-datasheet']),
+        ('Wi-Fi 6E（1431/1451）', ['bp-ap1431-datasheet', 'bp-ap1451-datasheet']),
+        ('Wi-Fi 6 系列（1301-1360）', ['bp-ap1301-datasheet', 'bp-ap1301h-datasheet', 'bp-ap1331-datasheet', 'bp-ap1351-datasheet', 'bp-ap1360-datasheet']),
+        ('Wi-Fi 5 系列（1261）', ['bp-ap1261-datasheet']),
        ]),
   dict(id='brochures/omniswitch', book='bp-omniswitch-datasheets', title='OmniSwitch · 官方数据表',
        subtitle='2026-08 快照 · 15 份 158 页 · OS2260-OS9900 全系选型速查',
@@ -630,7 +632,9 @@ def preprocess(text):
 
 def to_html(text):
     md.reset()
-    return md.convert(preprocess(text))
+    h = md.convert(preprocess(text))
+    # 表格包横向滚动层：窄屏滚动查看，宽屏自动占满，避免挤压变形
+    return h.replace('<table>', '<div class="twrap"><table>').replace('</table>', '</table></div>')
 
 def parse_fm(text):
     m = re.match(r'^---\n(.*?)\n---\n', text, re.S)
@@ -644,61 +648,87 @@ def parse_fm(text):
     return fm, text
 
 CSS = """
-:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+:root{--bg:#f7f7f5;--panel:#ffffff;--card:#ffffff;--tx:#1a1a1a;--mut:#75787B;--acc:#6B489D;--acc2:#4F3478;--line:#D9D9D6;
+--ale-blue:#0085CA;--ale-teal:#00B2A9;--ale-orange:#FF4500;--ale-red:#A50034;--purple-light:#F1ECF7}
 *{box-sizing:border-box}
-body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+body{margin:0;font-family:"Trebuchet MS","Noto Sans SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
-.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin:16px 0}
-.gallery figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px}
-.gallery img{width:100%;max-height:340px;object-fit:contain;background:#fff;border-radius:6px}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(480px,1fr));gap:18px;margin:16px 0}
+.gallery figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px}
+.gallery img{display:block;width:100%;height:auto;max-height:480px;object-fit:contain;background:#fff;border-radius:6px}
 .gallery figcaption{font-size:12.5px;color:var(--mut);text-align:center;margin-top:6px}
+/* 顶部品牌导航 */
+.topbar{background:#fff;border-bottom:3px solid var(--acc);padding:0 28px;display:flex;align-items:center;gap:22px;height:62px;position:sticky;top:0;z-index:50}
+.topbar img.logo{height:34px;width:auto}
+.topbar .site-name{font-size:15px;font-weight:700;color:var(--acc2);white-space:nowrap}
+.topbar nav{display:flex;gap:4px;flex-wrap:wrap;margin-left:auto}
+.topbar nav a{color:var(--tx);font-size:14px;padding:6px 12px;border-radius:6px}
+.topbar nav a:hover{background:var(--purple-light);color:var(--acc);text-decoration:none}
+.topbar nav a.on{background:var(--purple-light);color:var(--acc);font-weight:700}
+@media(max-width:860px){.topbar{flex-wrap:wrap;height:auto;padding:8px 14px}.topbar .site-name{display:none}}
 /* 侧栏折叠 + 图片灯箱 */
-.tgl{position:fixed;left:0;top:45%;z-index:60;background:var(--card);border:1px solid var(--line);border-right:none;border-radius:0 8px 8px 0;color:var(--tx);padding:10px 6px;cursor:pointer;font-size:13px;line-height:1.1;writing-mode:vertical-lr}
-.tgl:hover{background:var(--acc);color:#0f172a}
-.layout.full{grid-template-columns:0 1fr}
+.tgl{position:fixed;left:0;top:45%;z-index:60;background:#fff;border:1px solid var(--line);border-right:none;border-radius:0 8px 8px 0;color:var(--tx);padding:10px 6px;cursor:pointer;font-size:13px;line-height:1.1;writing-mode:vertical-lr}
+.tgl:hover{background:var(--acc);color:#fff}
+.layout.full{grid-template-columns:minmax(0,1fr)}
 .layout.full aside{display:none}
-.lb{position:fixed;inset:0;background:rgba(5,10,20,.92);z-index:100;display:flex;align-items:center;justify-content:center;flex-direction:column}
-.lb img{max-width:92vw;max-height:82vh;background:#fff;border-radius:6px;transition:transform .12s}
-.lb .lbb{margin-top:10px;display:flex;gap:10px}
-.lb button{background:var(--card);border:1px solid var(--line);color:var(--tx);border-radius:8px;padding:6px 14px;cursor:pointer;font-size:14px}
-.lb button:hover{background:var(--acc);color:#0f172a}
+.layout.full main{grid-column:1}
+.lb{position:fixed;inset:0;background:rgba(18,12,30,.93);backdrop-filter:blur(3px);z-index:100;display:flex;align-items:center;justify-content:center;flex-direction:column;cursor:zoom-out}
+.lb img{max-width:92vw;max-height:80vh;background:#fff;border-radius:8px;box-shadow:0 18px 60px rgba(0,0,0,.55);transition:transform .1s ease-out;cursor:grab;user-select:none;-webkit-user-drag:none}
+.lb img.grabbing{cursor:grabbing;transition:none}
+.lb .lbb{margin-top:14px;display:flex;gap:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:30px;padding:5px 8px}
+.lb button{background:transparent;border:none;color:#EDE7F6;border-radius:20px;padding:6px 14px;cursor:pointer;font-size:14px}
+.lb button:hover{background:var(--acc);color:#fff}
+.lb .zoom{color:#CBB8E8;font-size:12.5px;line-height:32px;padding:0 8px;min-width:52px;text-align:center;font-variant-numeric:tabular-nums}
 .search{margin:0 0 14px}
-.search input{width:100%;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--tx);font-size:13px;outline:none}
+.search input{width:100%;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:#fff;color:var(--tx);font-size:13px;outline:none}
 .search input:focus{border-color:var(--acc)}
 #qres{max-height:340px;overflow-y:auto;margin-top:6px}
 #qres .qi{display:block;padding:6px 8px;border-radius:6px;font-size:12.5px;color:var(--tx);border-left:2px solid transparent}
-#qres .qi:hover{background:var(--card);text-decoration:none;border-left-color:var(--acc)}
+#qres .qi:hover{background:var(--purple-light);text-decoration:none;border-left-color:var(--acc)}
 #qres .qi .qp{color:var(--mut);font-size:11px;display:block}
 #qres .qi b{color:var(--acc)}
-.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:var(--purple-light);color:var(--acc);border:1px solid #E0D3EE;vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
-.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
-aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+.layout{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:calc(100vh - 62px);max-width:1600px;margin:0 auto;width:100%}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto}
 aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
 aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
 aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
-aside a:hover{background:var(--card);text-decoration:none}
-aside a.on{background:var(--card);color:var(--acc)}
-main{padding:36px 48px;max-width:1000px}
+aside a:hover{background:var(--purple-light);text-decoration:none}
+aside a.on{background:var(--purple-light);color:var(--acc)}
+main{padding:32px 48px 48px;max-width:1120px;width:100%;justify-self:center}
 h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
 h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
 table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
 th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
-th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
-code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
-pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
-pre code{background:none;padding:0}
-blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.twrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.twrap table{margin:14px 0;min-width:640px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:#EFEFEA} tr:nth-child(even) td{background:#F4F3EF}
+code{background:var(--purple-light);padding:1px 6px;border-radius:4px;font-size:.92em;color:var(--acc2)}
+pre{background:#231a35;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0;color:#E8E1F2}
+blockquote{border-left:4px solid var(--acc);background:var(--purple-light);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
 .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
-.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
-.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s,box-shadow .15s;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.card:hover{border-color:var(--acc);box-shadow:0 3px 10px rgba(107,72,157,.14)} .card a{font-weight:600;font-size:16px;color:var(--acc2)}
 .card p{font-size:13px;color:var(--mut);margin:8px 0 0}
 .meta{font-size:13px;color:var(--mut)}
 hr{border:none;border-top:1px solid var(--line);margin:26px 0}
-.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
-.badge.soon{background:#475569;color:#cbd5e1}
+.badge{display:inline-block;background:var(--ale-teal);color:#fff;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#FFF1EB;color:var(--ale-orange);border:1px solid #FFD6C2}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px!important}
+.chip{display:inline-block;font-size:11.5px;line-height:1;padding:3px 8px;border-radius:6px;background:#F4F3EF;color:#5B5E61;border:1px solid #E4E3DE;white-space:nowrap}
+.gcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin:20px 0;align-items:start}
+.gcard{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 18px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.gcard h3{margin:0 0 10px;font-size:15px;color:var(--acc);border-left:3px solid var(--acc);padding-left:8px;line-height:1.3}
+.gskill{display:block;padding:9px 10px;border-radius:8px;font-size:14px;color:var(--tx);border:1px solid transparent}
+.gskill:hover{background:var(--purple-light);border-color:#E0D3EE;text-decoration:none}
+.gskill b{color:var(--acc2);font-weight:600}
+.gskill .gslug{display:block;font-size:11px;color:var(--mut);font-family:Consolas,monospace;margin-top:1px}
+.gskill .gdesc{display:block;font-size:12px;color:var(--mut);margin-top:3px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
 main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
-main{padding:28px 48px 40px;max-width:1040px}
+main{padding:28px 44px 40px}
 h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
 blockquote p{margin:6px 0}
 .crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
@@ -708,8 +738,199 @@ blockquote p{margin:6px 0}
 .pn a:hover{border-color:var(--acc)}
 .pn .nxt{text-align:right}
 .foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
-@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+@media(max-width:1180px){.layout{grid-template-columns:220px minmax(0,1fr)}main{padding:24px 28px}}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:16px 18px}.twrap table{min-width:520px}}
 """
+
+# ============ 顶部品牌导航 / 分类 Banner ============
+NAV_ITEMS = [('首页', 'index.html'), ('学习路径', 'paths.html'), ('售前', 'presales/index.html'), ('售后', 'postsales/index.html'),
+             ('无线', 'wlan/index.html'), ('AOS 手册', 'aos/index.html'), ('硬件', 'hardware/index.html'),
+             ('彩页', 'brochures/index.html'), ('解决方案', 'solutions/index.html')]
+
+def topbar(pfx='', active=''):
+    def on(h):
+        return ' class="on"' if (active and h != 'index.html' and h.startswith(active + '/')) or (not active and h == 'index.html') else ''
+    links = ''.join(f'<a href="{pfx}{h}"{on(h)}>{n}</a>' for n, h in NAV_ITEMS)
+    return (f'<header class="topbar"><a href="{pfx}index.html"><img class="logo" src="{pfx}assets/ale-logo-color.png" alt="Alcatel-Lucent Enterprise"></a>'
+            f'<span class="site-name">技术培训门户</span><nav>{links}</nav></header>')
+
+# 分类 → Banner 图（PBG-2026 模板素材，ALE 品牌紫色调）
+CAT_BANNER = {'presales': 'banner-presales.jpg', 'postsales': 'banner-postsales.jpg', 'wlan': 'banner-wlan.jpg',
+              'aos': 'banner-aos.jpg', 'hardware': 'banner-hardware.jpg', 'brochures': 'banner-brochures.jpg',
+              'manuals': 'banner-manuals.jpg', 'solutions': 'banner-solutions.jpg'}
+
+HERO_CSS = """
+.hero{position:relative;background:linear-gradient(118deg,#4F3478 0%,#6B489D 55%,#7E5CB4 100%);color:#fff;
+padding:56px 32px 88px;overflow:hidden}
+.hero .inner{position:relative;z-index:2;max-width:1080px;margin:0 auto;display:flex;gap:36px;align-items:center;flex-wrap:wrap}
+.hero img.hlogo{height:44px;margin-bottom:14px}
+.hero h1{font-size:36px;border:none;color:#fff;margin:0 0 6px;padding:0}
+.hero p{color:#E9E1F4;margin:6px 0 0;max-width:560px}
+.hero .cta{margin-top:22px;display:flex;gap:12px;flex-wrap:wrap}
+.hero .cta a{background:#fff;color:#4F3478;border-radius:8px;padding:10px 22px;font-weight:700;font-size:15px}
+.hero .cta a:hover{text-decoration:none;background:#F1ECF7}
+.hero .cta a.ghost{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.6)}
+.hero .cta a.ghost:hover{background:rgba(255,255,255,.12)}
+.hero .side{flex:0 0 380px;max-width:100%}
+.hero .side img{width:100%;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.28);border:none;margin:0}
+.hero svg.wave{position:absolute;left:0;right:0;bottom:-2px;width:100%;z-index:1}
+.hsearch{margin-top:18px;max-width:560px}
+.hsearch input{width:100%;padding:11px 14px;border-radius:10px;border:none;font-size:14px;outline:none;background:#fff}
+.hsearch #qres{max-height:340px;overflow-y:auto;margin-top:6px;background:#fff;border-radius:10px}
+.hsearch #qres .qi{display:block;padding:8px 12px;font-size:13px;color:var(--tx);border-left:3px solid transparent}
+.hsearch #qres .qi:hover{background:var(--purple-light);text-decoration:none;border-left-color:var(--acc)}
+.hsearch #qres .qi .qp{color:var(--mut);font-size:11px;display:block}
+.hsearch #qres .qi b{color:var(--acc)}
+.tasks{max-width:1080px;margin:-38px auto 0;padding:0 32px;position:relative;z-index:3;display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.tasks a{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px;font-size:14px;
+color:var(--tx);box-shadow:0 3px 10px rgba(79,52,120,.08)}
+.tasks a:hover{border-color:var(--acc);text-decoration:none;color:var(--acc)}
+.tasks a b{display:block;font-size:15px;color:var(--acc2)}
+.tasks a span{font-size:12px;color:var(--mut)}
+.catbanner{position:relative;border-radius:12px;overflow:hidden;margin:0 0 22px;max-height:220px}
+.catbanner img{width:100%;height:220px;object-fit:cover;display:block;margin:0;border:none;border-radius:0}
+.catbanner .ov{position:absolute;inset:0;background:linear-gradient(90deg,rgba(52,32,84,.88) 0%,rgba(79,52,120,.62) 55%,rgba(79,52,120,.15) 100%)}
+.catbanner .tt{position:absolute;left:28px;bottom:20px;color:#fff}
+.catbanner .tt h1{color:#fff;border:none;margin:0;padding:0;font-size:26px}
+.catbanner .tt p{color:#E9E1F4;margin:4px 0 0;font-size:13px}
+@media(max-width:700px){.hero{padding:36px 18px 76px}.hero .side{display:none}.tasks{padding:0 14px;margin-top:-30px}}
+"""
+
+def hero_section():
+    wave = ('<svg class="wave" viewBox="0 0 1440 90" preserveAspectRatio="none">'
+            '<path d="M0,50 C240,95 480,0 720,35 C960,70 1200,15 1440,55 L1440,90 L0,90 Z" fill="#f7f7f5"/></svg>')
+    return f"""<div class="hero"><div class="inner">
+<div><img class="hlogo" src="assets/ale-logo-white.png" alt="Alcatel-Lucent Enterprise">
+<h1>ALE Networking 技术培训门户</h1>
+<p>面向售前、售后和网络工程师的产品、部署与排障知识中心</p>
+<div class="hsearch"><input id="qk" type="search" placeholder="🔍 搜索课程编号 / 产品型号 / 技术关键词，如 DT00XTE221、SPB、OmniSwitch 6860…" autocomplete="off"><div id="qres"></div></div>
+<div class="cta"><a href="#catalog">开始学习</a><a class="ghost" href="#catalog">查找资料</a></div></div>
+<div class="side"><img src="assets/banner-wlan.jpg" alt="ALE 网络技术"></div>
+</div>{wave}</div>
+<div class="tasks">
+<a href="presales/index.html"><b>我是售前工程师</b><span>选型 · 彩页 · 方案与报价</span></a>
+<a href="postsales/index.html"><b>我是售后工程师</b><span>部署 · 配置 · 排障手册</span></a>
+<a href="hardware/os6860/index.html"><b>我要做产品选型</b><span>机型矩阵 · 硬件指南 · 数据表</span></a>
+<a href="postsales/os-lan-troubleshooting/index.html"><b>我要排查故障</b><span>有线/无线排障 · 已知问题库</span></a>
+<a href="solutions/index.html"><b>我要设计方案</b><span>SPB/EVPN/MPLS · 园区架构</span></a>
+<a href="paths.html"><b>不知道从哪学起</b><span>售前 / 售后 / WLAN 学习路径</span></a>
+</div>"""
+
+# ============ 学习路径（第二阶段） ============
+LEARNING_PATHS = [
+    ('售前工程师路径', '从产品体系到方案报价，建立卖点弹药库', 'banner-presales.jpg', [
+        ('ALE 产品体系与全系选型速查', 'OmniSwitch / Stellar AP 全系数据表，先建立产品地图', 'brochures/omniswitch/index.html'),
+        ('OmniSwitch 机型定位与选型', '机型定位表 → 功能矩阵 → VC vs 机箱', 'presales/campus-lan/index.html'),
+        ('Stellar WLAN 产品与场景', 'AP 三维选型矩阵、三管理模式、License 三体系报价法', 'presales/stellar-wlan/index.html'),
+        ('园区网络参考架构', 'SMB / 紧凑核心 / 环网 / 密集核心模板库', 'solutions/campus-architecture/index.html'),
+        ('SPB 售前与三技术对比', '为什么弃 STP 选 SPB；SPB vs EVPN vs MPLS 七维选型', 'presales/spb-presales/index.html'),
+        ('License 与 WWPL 报价规则', '报价规则与安全统一接入', 'presales/campus-lan/index.html'),
+    ]),
+    ('售后工程师路径', '从开局配置到故障排查的交付主线', 'banner-postsales.jpg', [
+        ('OmniSwitch 基础操作', '三目录配置管理模型、VLAN/LACP/STP 接入基础', 'postsales/os-lan-access/index.html'),
+        ('AOS 软件体系与升级', 'Flash 双目录、代码升级与 ISSU、日志健康', 'aos/switch-management/index.html'),
+        ('交换机开局与接入配置', 'SMB 交付两日课：开局 / PoE / VLAN / STP', 'postsales/smb-lan-wlan-install/index.html'),
+        ('WLAN 部署与云管', 'Stellar+Cirrus 云管交付，AP 生命周期全流程', 'postsales/acfe-wlan-basic/index.html'),
+        ('OmniVista 网管平台', 'OV2500 安装 / 发现 / 资源 / 统一接入 / 隔离', 'postsales/ov2500-nms-admin/index.html'),
+        ('有线排障全科', '七步方法论、五大故障域、OVNA AI 运维', 'postsales/os-lan-troubleshooting/index.html'),
+    ]),
+    ('WLAN 专项路径', '无线理论到高级排障的完整进阶线', 'banner-wlan.jpg', [
+        ('无线技术基础', '802.11 / 天线 / 安全 / 勘测理论速成', 'postsales/stellar-enterprise-basic/index.html'),
+        ('AP 部署与 Express 模式', '开箱六步、集群上线、免云管小微交付', 'postsales/stellar-express/index.html'),
+        ('SSID 全家桶与认证', 'PSK 四级体系、802.1X、Guest、UPAM 策略', 'postsales/acfe-wlan-basic/index.html'),
+        ('RF 调优与勘测三步法', 'RF 基线、勘测纠正、微调七要点', 'solutions/wlan-design/index.html'),
+        ('漫游与 RAP 远程接入', 'L2/L3 漫游、RAP 双模式、云运维三件套', 'postsales/stellar-adv-trouble-update/index.html'),
+        ('无线高级排障', '七步流程 + 三域根因地图、802.1X 排查', 'postsales/stellar-adv-trouble/index.html'),
+    ]),
+]
+
+PATH_CSS = """
+.paths{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px;margin:24px 0}
+.path{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.path .ph{position:relative;height:120px}
+.path .ph img{width:100%;height:120px;object-fit:cover;display:block;margin:0;border:none;border-radius:0}
+.path .ph .ov{position:absolute;inset:0;background:linear-gradient(90deg,rgba(52,32,84,.85),rgba(79,52,120,.35))}
+.path .ph h2{color:#fff;margin:0;position:absolute;left:20px;bottom:18px;font-size:20px;border:none;padding:0}
+.path .ph p{color:#E9E1F4;margin:0;position:absolute;left:20px;bottom:0;font-size:12px}
+.path ol{list-style:none;margin:0;padding:14px 18px;counter-reset:st}
+.path ol li{counter-increment:st;padding:9px 0 9px 38px;position:relative;border-bottom:1px dashed #E8E6E0;font-size:14px}
+.path ol li:last-child{border-bottom:none}
+.path ol li::before{content:counter(st);position:absolute;left:0;top:9px;width:24px;height:24px;border-radius:50%;
+background:var(--purple-light);color:var(--acc);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.path ol a{color:var(--acc2);font-weight:600}
+.path ol span{display:block;font-size:12px;color:var(--mut);font-weight:400}
+.recent{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px 22px;margin:30px 0}
+.recent h2{margin:0 0 6px;font-size:18px;border:none;padding:0}
+.recent .ri{display:flex;gap:12px;align-items:baseline;padding:7px 0;border-bottom:1px dashed #E8E6E0;font-size:14px}
+.recent .ri:last-child{border-bottom:none}
+.recent .rd{color:var(--mut);font-size:12px;white-space:nowrap}
+.recent a{color:var(--acc2);font-weight:600}
+.recent span{color:var(--mut);font-size:13px}
+.catfilter{margin:0 0 16px}
+.catfilter input{width:100%;max-width:420px;padding:9px 14px;border-radius:8px;border:1px solid var(--line);font-size:14px;outline:none;background:#fff}
+.catfilter input:focus{border-color:var(--acc)}
+"""
+
+def build_paths_page():
+    blocks = ''
+    for name, desc, img, steps in LEARNING_PATHS:
+        items = ''.join(f'<li><a href="{h}">{t}</a><span>{d}</span></li>' for t, d, h in steps)
+        blocks += f'''<div class="path"><div class="ph"><img src="assets/{img}" alt="" loading="lazy"><div class="ov"></div>
+<h2>{name}</h2><p>{desc} · {len(steps)} 步</p></div><ol>{items}</ol></div>'''
+    page = f"""<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>学习路径 — ALE Networking 技术培训</title><style>{CSS}{HERO_CSS}{PATH_CSS}</style></head>
+<body>{topbar('', '')}<div class="layout"><aside><h1>ALE 培训门户</h1>
+<div class="search"><input id="qk" type="search" placeholder="🔍 搜索全站…" autocomplete="off"><div id="qres"></div></div>
+<div class="sub">学习路径</div>
+<a href="index.html">⬅️ 返回培训门户</a></aside>
+<main><h1>学习路径</h1>
+<p class="meta">不知道从哪开始？按角色或专项跟着走，每条路径从入门到进阶：</p>
+<div class="paths">{blocks}</div></main></div></body></html>"""
+    with open(os.path.join(OUT, 'paths.html'), 'w', encoding='utf-8') as f:
+        f.write(page)
+    print('paths page built')
+
+# ============ 课程元数据（第二阶段：版本/页数/更新时间） ============
+import datetime as _dt
+
+def course_chips(cid):
+    """从副标题解析版本与页数 + 源文件更新时间，返回 chips 行（负责人无数据不编造）"""
+    c = course_map.get(cid)
+    if not c:
+        return ''
+    sub = c['subtitle']
+    chips = []
+    mv = _re.match(r'^(Edition\s+\S+|Issue\s+\S+|Rev\s+\S+|AWOS\s+[\d.]+|\d+\.\d+R\d+)', sub)
+    if mv:
+        chips.append(mv.group(1))
+    mp = _re.search(r'(\d[\d,]*)\s*页', sub)
+    if mp:
+        chips.append(mp.group(1) + ' 页')
+    book = os.path.join(ROOT, 'books', c['book'])
+    if os.path.isdir(book):
+        t = max(os.path.getmtime(os.path.join(r, f)) for r, _, fs in os.walk(book) for f in fs)
+        chips.append('更新 ' + _dt.date.fromtimestamp(t).isoformat())
+    if not chips:
+        return ''
+    return '<p class="chips">' + ''.join(f'<span class="chip">{x}</span>' for x in chips) + '</p>'
+
+# 最近更新（首页区块）
+RECENT = [
+    ('2026-08-26', '门户品牌化改版上线', None, 'ALE 品牌紫视觉 / 顶部导航 / 学习路径 / 全局搜索'),
+    ('2026-08-25', '产品彩页 2026-08 快照', 'brochures/omniswitch/index.html', 'OmniSwitch 15 份 · Stellar AP 14 份 · 网管安全 5 份'),
+    ('2026-08-20', 'AOS 8.10R04 软件手册全集', 'aos/net-config/index.html', 'Network Configuration 1745 页 · CLI 命令地图 70 章'),
+    ('2026-08-15', 'OV2500 4.9R2 配置手册', 'manuals/ov2500-userguide/index.html', 'User Guide 935 页 · 安装升级 · Release Notes'),
+    ('2026-08-10', '硬件手册 10 机型全覆盖', 'hardware/os6860/index.html', 'OS6360–OS9900 全系 Hardware Guide'),
+]
+
+def recent_html():
+    rows = ''
+    for d, t, h, note in RECENT:
+        link = f'<a href="{h}">{t}</a>' if h else f'<b>{t}</b>'
+        rows += f'<div class="ri"><span class="rd">{d}</span>{link}<span>{note}</span></div>'
+    return f'<div class="recent"><h2>最近更新</h2>{rows}</div>'
 
 def build_course(c):
     sub = os.path.join(OUT, c['id'].replace('/', os.sep))
@@ -757,11 +978,12 @@ def build_course(c):
 
     def page(title, body, active='', cur='', sub=False):
         foot = '<div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div>'
+        tp = '../../../' if sub else '../../'
         return f"""<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{html_mod.escape(title)} — {c['title']}</title>
 <style>{CSS}</style></head>
-<body><div class="layout"><aside><h1>{c['title']}</h1>
+<body>{topbar(tp, c['id'].split('/')[0])}<div class="layout"><aside><h1>{c['title']}</h1>
 <div class="search"><input id="qk" type="search" placeholder="🔍 搜索全站…" autocomplete="off"><div id="qres"></div></div>
 
 <div class="sub">{c['subtitle']}</div>
@@ -772,7 +994,7 @@ def build_course(c):
             h = h.replace(f'>{s}<', f'><a href="{s}.html">{s}</a><')
         return h
 
-    desc_map = {}
+    desc_map, zh_map = {}, {}
     for slug in skills:
         fm, body = parse_fm(read(os.path.join(book, slug, 'SKILL.md')))
         desc_map[slug] = fm.get('description', '')
@@ -781,6 +1003,7 @@ def build_course(c):
         # 中文标题取 H1；prev/next
         m1 = _re.search(r'^#\s+(.+)$', body, _re.M)
         zh = m1.group(1).strip() if m1 else slug
+        zh_map[slug] = zh
         idx = skills.index(slug)
         pn = '<div class="pn">'
         pn += (f'<a href="{skills[idx-1]}.html">⬅ 上一单元：{skills[idx-1]}</a>' if idx > 0
@@ -792,13 +1015,15 @@ def build_course(c):
         with open(os.path.join(sub, 'skills', slug + '.html'), 'w', encoding='utf-8') as f:
             f.write(page(slug, body_html, slug, cur=zh, sub=True))
 
-    cards = ''
+    # 分组卡：PC 端各分组一个横排（auto-fit 自适应列数），手机端竖排
+    gcards = '<div class="gcards">'
     for gname, slugs in c['groups']:
-        cards += f'<h2>{html_mod.escape(gname)}</h2><div class="cards">'
-        for s in slugs:
-            d = html_mod.escape(desc_map.get(s, '')[:150])
-            cards += f'<div class="card"><a href="skills/{s}.html">{s}</a><p>{d}…</p></div>'
-        cards += '</div>'
+        inner = ''.join(
+            f'<a class="gskill" href="skills/{s}.html"><b>{html_mod.escape(zh_map.get(s, s))}</b>'
+            f'<span class="gslug">{s}</span><span class="gdesc">{html_mod.escape(desc_map.get(s, "")[:110])}</span></a>'
+            for s in slugs)
+        gcards += f'<div class="gcard"><h3>{html_mod.escape(gname)}</h3>{inner}</div>'
+    gcards += '</div>'
     route = ''.join(f'<li>{html_mod.escape(r)}</li>' for r in c['route'])
     n = len(skills)
     gal_link = ' · <a href="gallery.html">🖼 产品外观</a>' if os.path.exists(os.path.join(book, 'GALLERY.md')) else ''
@@ -807,7 +1032,7 @@ def build_course(c):
 <p class="meta">教材: <b>{c['subtitle']}</b>。整理为 {n} 个可执行知识单元：
 每个单元含 原文引用(R) / 方法论骨架(I) / 书中案例(A1) / 触发场景(A2) / 可执行步骤(E) / 边界与陷阱(B)。</p>
 <h2>建议学习路线</h2><ol>{route}</ol>
-<h2>知识单元</h2>{cards}
+<h2>知识单元</h2>{gcards}
 <h2>全文阅读</h2>
 <p><a href="digest.html">📖 精华长文 DIGEST</a> · <a href="overview.html">📘 教书理解</a> · <a href="glossary.html">🔤 术语词典</a>{gal_link}</p>"""
     with open(os.path.join(sub, 'index.html'), 'w', encoding='utf-8') as f:
@@ -823,6 +1048,7 @@ def build_course(c):
             cap = alt.group(1) if alt else ''
             return f'<figure><img {m.group(1)} loading="lazy"><figcaption>{cap}</figcaption></figure>'
         gh = _re.sub(r'<img ([^>]*?)/?>', _fig, gh)
+        gh = gh.replace('<p><figure', '<figure').replace('</figure></p>', '</figure>')
         gh = _re.sub(r'<p>\s*</p>', '', gh)
         with open(os.path.join(sub, 'gallery.html'), 'w', encoding='utf-8') as f:
             f.write(page('产品外观', f'<h1>🖼 产品外观</h1><div class="gallery">' + gh + '</div>', cur='产品外观'))
@@ -838,6 +1064,8 @@ for c in COURSES:
     build_course(c)
 
 # ============ 分类列表页 (如 /postsales/) ============
+course_map = {c['id']: c for c in COURSES}
+
 def build_category(dirname, label):
     d = os.path.join(OUT, dirname)
     os.makedirs(d, exist_ok=True)
@@ -846,18 +1074,33 @@ def build_category(dirname, label):
         if c['id'].startswith(dirname + '/'):
             n = len([s for _, sl in c['groups'] for s in sl])
             items += f'''<div class="card"><a href="../{c['id']}/index.html">{c['title']}</a>
-<p>{c['subtitle']}</p><p style="margin-top:6px"><span class="badge">{n} 个知识单元</span></p></div>'''
+<p>{c['subtitle']}</p>{course_chips(c['id'])}
+<p style="margin-top:6px"><span class="badge">{n} 个知识单元 · 已上线</span></p></div>'''
+    banner = CAT_BANNER.get(dirname)
+    bh = (f'<div class="catbanner"><img src="../assets/{banner}" alt="" loading="lazy"><div class="ov"></div>'
+          f'<div class="tt"><h1>{label}</h1><p>该分类下的课程与资料</p></div></div>') if banner else f'<h1>{label}</h1>'
     page = f"""<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>{label} — ALE Networking 技术培训</title><style>{CSS}</style></head>
-<body><div class="layout"><aside><h1>ALE 培训门户</h1>
+<title>{label} — ALE Networking 技术培训</title><style>{CSS}{HERO_CSS}{PATH_CSS}</style></head>
+<body>{topbar('../', dirname)}<div class="layout"><aside><h1>ALE 培训门户</h1>
 <div class="search"><input id="qk" type="search" placeholder="🔍 搜索全站…" autocomplete="off"><div id="qres"></div></div>
 
 <div class="sub">{label}</div>
-<a href="../index.html">⬅️ 返回培训门户</a></aside>
-<main><h1>{label}</h1>
-<p class="meta">该分类下的课程：</p>
-<div class="cards">{items}</div></main></div></body></html>"""
+<a href="index.html">⬅️ 返回培训门户</a></aside>
+<main>{bh}
+<div class="catfilter"><input id="cf" type="search" placeholder="⏩ 在本分类中筛选：输入课程号 / 产品 / 关键词…" autocomplete="off"></div>
+<div class="cards">{items}</div></main></div>
+<script>
+(function(){{
+  var cf=document.getElementById('cf'); if(!cf)return;
+  cf.addEventListener('input',function(){{
+    var q=cf.value.trim().toLowerCase();
+    document.querySelectorAll('.cards .card').forEach(function(c){{
+      c.style.display = !q || c.textContent.toLowerCase().indexOf(q)>=0 ? '' : 'none';
+    }});
+  }});
+}})();
+</script></body></html>"""
     with open(os.path.join(d, 'index.html'), 'w', encoding='utf-8') as f:
         f.write(page)
     print('category built:', dirname)
@@ -865,8 +1108,9 @@ def build_category(dirname, label):
 for dirname, label in [('postsales', '售后 · Postsales'), ('presales', '售前 · Presales'), ('manuals', 'OV2500 配置手册 · Manuals'), ('aos', 'AOS 软件手册 · Software Guides'), ('hardware', '硬件手册 · Hardware Guides'), ('brochures', '产品彩页 · Product Datasheets'), ('wlan', '无线网络 · WLAN'), ('solutions', '解决方案 · Solutions')]:
     build_category(dirname, label)
 
+build_paths_page()
+
 # ============ 门户封面 ============
-course_map = {c['id']: c for c in COURSES}
 CATALOG = [
     ('售前 · Presales', '#38bdf8', [
         ('DT00XPS279 · OmniSwitch LAN SPB 售前', 'Issue 05 · 147 页 · 9 个知识单元 · 卖点弹药 / L3 集成 / 三技术对比', 'presales/spb-presales/index.html'),
@@ -963,37 +1207,36 @@ for gname, color, items in CATALOG:
     cards = ''
     for title, desc, href in items:
         if href:
-            n = len([s for _, sl in course_map[href.replace('/index.html','')]['groups'] for s in sl]) if href.replace('/index.html','') in course_map else 0
-            cards += f'''<div class="card" style="border-color:{color}">
-<a href="{href}">{title}</a><p>{desc}</p>
-<p style="margin-top:6px"><span class="badge">已上线</span></p></div>'''
-        else:
+            cid = href.replace('/index.html', '')
+            n = len([s for _, sl in course_map[cid]['groups'] for s in sl]) if cid in course_map else 0
             cards += f'''<div class="card">
+<a href="{href}">{title}</a><p>{desc}</p>{course_chips(cid)}
+<p style="margin-top:6px"><span class="badge">● 已上线</span>{f' <span class="meta">{n} 个知识单元</span>' if n else ''}</p></div>'''
+        else:
+            cards += f'''<div class="card" style="background:#FCFCFB">
 <a style="color:var(--mut);cursor:default" onclick="return false">{title}</a><p>{desc}</p>
-<p style="margin-top:6px"><span class="badge soon">待建设 · 教材翻译后上线</span></p></div>'''
-    cats_html += f'<h2 style="color:{color}">{gname}</h2><div class="cards">{cards}</div>'
+<p style="margin-top:6px"><span class="badge soon">◷ 待建设 · 教材翻译后上线</span></p></div>'''
+    cats_html += f'<h2 id="catalog">{gname}</h2><div class="cards">{cards}</div>'
 
 cover = f"""<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ALE Networking 技术培训</title>
-<style>{CSS}
-.hero{{text-align:center;padding:60px 20px 30px}}
-.hero h1{{font-size:40px;border:none;margin-bottom:8px}}
-.hero .en{{color:var(--acc);letter-spacing:.35em;font-size:14px;text-transform:uppercase}}
-.hero p{{color:var(--mut);max-width:640px;margin:14px auto 0}}
-main.cover{{max-width:1100px;margin:0 auto;padding:0 32px 60px}}
-</style></head><body><main class="cover">
-<div class="hero">
-<div class="en">Alcatel-Lucent Enterprise</div>
-<h1>ALE Networking 技术培训</h1>
-<p>面向售前、售后工程师的 ALE 网络技术学习门户。</p>
-<p>基于官方彩页、技术手册、培训教材整理。</p>
-<p>涵盖 部署实施 · 运维排障 · 方案设计 · 安全准入 全生命周期。</p>
-</div>
+<style>{CSS}{HERO_CSS}{PATH_CSS}
+main.cover{{max-width:1160px;margin:0 auto;padding:26px 32px 60px}}
+main.cover h2{{margin-top:44px}}
+footer.brand{{background:#fff;border-top:1px solid var(--line);padding:22px 32px;display:flex;gap:14px;align-items:center;justify-content:center;flex-wrap:wrap}}
+footer.brand img{{height:26px}}
+footer.brand span{{font-size:12px;color:var(--mut)}}
+</style></head><body>{topbar('', '')}
+{hero_section()}
+<main class="cover">
+{recent_html()}
 {cats_html}
 <h2>关于本站</h2>
 <p class="meta">内容整理自 ALE 官方培训教材与配置手册，仅供内部学习使用；教材版权归 ALE Training Services 所有，请勿外传。</p>
-</main></body></html>"""
+</main>
+<footer class="brand"><img src="assets/ale-logo-color.png" alt="Alcatel-Lucent Enterprise"><span>仅供内部学习使用 · 教材版权归 ALE Training Services 所有</span></footer>
+<script src="/search.js"></script></body></html>"""
 with open(os.path.join(OUT, 'index.html'), 'w', encoding='utf-8') as f:
     f.write(cover)
 print('portal built')
@@ -1029,7 +1272,7 @@ SEARCH_JS = """// 全站静态搜索：输入关键字 -> 章节/页面匹配 ->
   var IDX = null, box = document.getElementById('qk'), res = document.getElementById('qres');
   if (!box) return;
   function esc(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML}
-  function load(cb){ if(IDD) ; if(IDX) return cb();
+  function load(cb){ if(IDX) return cb();
     fetch('/search_index.json').then(function(r){return r.json()}).then(function(j){IDX=j;cb()}).catch(function(){res.innerHTML=''}) }
   function score(e, q){
     var s=0
@@ -1077,33 +1320,67 @@ SEARCH_JS = """// 全站静态搜索：输入关键字 -> 章节/页面匹配 ->
   sync();
 })();
 
-// ===== 图片灯箱（点击放大 + 缩放按钮） =====
+// ===== 图片灯箱（滚轮缩放 + 拖拽平移 + 双击快捷缩放） =====
 (function(){
-  var box = null, img = null, scale = 1;
+  var box=null, img=null, scale=1, tx=0, ty=0, badge=null, moved=false;
+  var MIN=0.2, MAX=8;
+  function apply(){
+    img.style.transform='translate('+tx+'px,'+ty+'px) scale('+scale+')';
+    if(badge) badge.textContent=Math.round(scale*100)+'%';
+  }
+  function clampScale(s){ return Math.min(MAX, Math.max(MIN, s)) }
   function ensure(){
     if(box) return;
-    box = document.createElement('div');
-    box.className = 'lb';
-    img = document.createElement('img');
-    var bar = document.createElement('div'); bar.className = 'lbb';
-    function mkBtn(t, fn){ var x = document.createElement('button'); x.textContent = t; x.onclick = fn; return x; }
-    function zoom(f){ scale = Math.min(6, Math.max(0.2, scale * f)); img.style.transform = 'scale(' + scale + ')'; }
-    bar.appendChild(mkBtn('\\uff0b \\u653e\\u5927', function(){ zoom(1.25) }));
-    bar.appendChild(mkBtn('\\uff0d \\u7f29\\u5c0f', function(){ zoom(0.8) }));
-    bar.appendChild(mkBtn('\\u21ba \\u590d\\u4f4d', function(){ scale = 1; img.style.transform = ''; }));
-    bar.appendChild(mkBtn('\\u2715 \\u5173\\u95ed', close));
+    box=document.createElement('div'); box.className='lb';
+    img=document.createElement('img');
+    var bar=document.createElement('div'); bar.className='lbb';
+    function mkBtn(t,fn){var x=document.createElement('button');x.textContent=t;x.onclick=function(e){e.stopPropagation();fn()};return x}
+    badge=document.createElement('span'); badge.className='zoom'; badge.textContent='100%';
+    bar.appendChild(mkBtn('\\uff0d',function(){zoomAt(0.8,0,0)}));
+    bar.appendChild(badge);
+    bar.appendChild(mkBtn('\\uff0b',function(){zoomAt(1.25,0,0)}));
+    bar.appendChild(mkBtn('\\u21fa \\u590d\\u4f4d',reset));
+    bar.appendChild(mkBtn('\\u2715 \\u5173\\u95ed',close));
     box.appendChild(img); box.appendChild(bar);
-    box.onclick = function(e){ if(e.target === box) close(); };
+    // 滚轮缩放：以鼠标位置为中心
+    box.addEventListener('wheel',function(e){
+      e.preventDefault();
+      var r=img.getBoundingClientRect();
+      var cx=e.clientX-(r.left+r.width/2), cy=e.clientY-(r.top+r.height/2);
+      zoomAt(e.deltaY<0?1.15:1/1.15, cx, cy);
+    },{passive:false});
+    // 双击：1x <-> 2x
+    img.addEventListener('dblclick',function(e){e.stopPropagation(); if(scale===1){zoomAt(2/scale,e.clientX,e.clientY)}else{reset()}});
+    // 拖拽平移
+    var drag=false,lx=0,ly=0;
+    img.addEventListener('mousedown',function(e){drag=true;moved=false;lx=e.clientX;ly=e.clientY;img.classList.add('grabbing');e.preventDefault()});
+    window.addEventListener('mousemove',function(e){
+      if(!drag)return; moved=true; tx+=e.clientX-lx; ty+=e.clientY-ly; lx=e.clientX; ly=e.clientY; apply();
+    });
+    window.addEventListener('mouseup',function(){drag=false;img.classList.remove('grabbing')});
+    box.onclick=function(e){ if(e.target===box||e.target===bar) close(); };
+    document.addEventListener('keydown',function(e){
+      if(!box||box.style.display!=='flex')return;
+      if(e.key==='Escape')close();
+      if(e.key==='+'||e.key==='=')zoomAt(1.25,0,0);
+      if(e.key==='-')zoomAt(0.8,0,0);
+      if(e.key==='0')reset();
+    });
     document.body.appendChild(box);
-    document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && box.style.display === 'flex') close(); });
-    function close(){ box.style.display = 'none'; }
+    function zoomAt(f,cx,cy){
+      var ns=clampScale(scale*f); if(ns===scale)return;
+      var k=ns/scale;
+      tx=cx-(cx-tx)*k; ty=cy-(cy-ty)*k; scale=ns; apply();
+    }
+    function reset(){ scale=1; tx=0; ty=0; apply(); }
+    function close(){ box.style.display='none'; }
   }
-  document.addEventListener('click', function(e){
-    var t = e.target;
-    if(t.tagName === 'IMG' && t.closest('main') && !t.closest('.lb')){
+  document.addEventListener('click',function(e){
+    var t=e.target;
+    if(t.tagName==='IMG' && t.closest('main') && !t.closest('.lb')){
       ensure();
-      img.src = t.src; scale = 1; img.style.transform = '';
-      box.style.display = 'flex';
+      img.src=t.src; scale=1; tx=0; ty=0; apply();
+      box.style.display='flex';
       e.preventDefault();
     }
   });

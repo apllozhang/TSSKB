@@ -54,7 +54,10 @@ for rel in pages:
     for m in re.finditer(r'src="([^"]+)"', s):
         src = m.group(1)
         if src.startswith(("http", "data:")): continue
-        t = os.path.normpath(os.path.join(os.path.dirname(rel), src))
+        if src.startswith('/'):
+            t = os.path.normpath(os.path.join(ROOT, src.lstrip('/')))
+        else:
+            t = os.path.normpath(os.path.join(os.path.dirname(rel), src))
         if not os.path.exists(t):
             img_broken += 1
             print(f"  missing asset: {src} in {rel}")
