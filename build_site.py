@@ -47,9 +47,9 @@ NEW_COURSES = [
        route=['DAN 愿景：Autonomous Network / IoT / Business Innovation 三支柱',
               '企业白皮书：全球版与 APAC 版差异', '七大行业方案：教育/企业/政府/医疗/酒店/交通'],
        groups=[
-        ('总纲', ['dan-vision']),
+        ('总纲', ['dan-vision', 'dan-vertical-enterprises']),
         ('白皮书', ['dan-wp-enterprises', 'dan-wp-apac']),
-        ('行业方案', ['dan-vertical-education', 'dan-vertical-enterprises', 'dan-vertical-government',
+        ('行业方案', ['dan-vertical-education', 'dan-vertical-government',
                    'dan-vertical-healthcare', 'dan-vertical-hospitality', 'dan-vertical-transportation']),
        ]),
   dict(id='presales/dan-cases', book='dan-cases', title='全球客户案例 · Customer Reference 2024',
