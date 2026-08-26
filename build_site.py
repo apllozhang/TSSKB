@@ -738,9 +738,12 @@ hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px!important}
 .chip{display:inline-block;font-size:11.5px;line-height:1;padding:3px 8px;border-radius:6px;background:#F4F3EF;color:#5B5E61;border:1px solid #E4E3DE;white-space:nowrap}
 .gcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin:20px 0;align-items:start}
-.gcard{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 18px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.gcard{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 18px;box-shadow:0 1px 3px rgba(0,0,0,.05);grid-column:1/-1}
 .gcard h3{margin:0 0 10px;font-size:15px;color:var(--acc);border-left:3px solid var(--acc);padding-left:8px;line-height:1.3}
-.gskill{display:block;padding:9px 10px;border-radius:8px;font-size:14px;color:var(--tx);border:1px solid transparent}
+.gcard .gwrap{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+@media(max-width:900px){.gcard .gwrap{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.gcard .gwrap{grid-template-columns:1fr}}
+.gskill{display:block;padding:9px 10px;border-radius:8px;font-size:14px;color:var(--tx);border:1px solid var(--line);background:#FBFAFD;height:100%}
 .gskill:hover{background:var(--purple-light);border-color:#E0D3EE;text-decoration:none}
 .gskill b{color:var(--acc2);font-weight:600}
 .gskill .gslug{display:block;font-size:11px;color:var(--mut);font-family:Consolas,monospace;margin-top:1px}
@@ -1042,7 +1045,7 @@ def build_course(c):
             f'<a class="gskill" href="skills/{s}.html"><b>{html_mod.escape(zh_map.get(s, s))}</b>'
             f'<span class="gslug">{s}</span><span class="gdesc">{html_mod.escape(desc_map.get(s, "")[:110])}</span></a>'
             for s in slugs)
-        gcards += f'<div class="gcard"><h3>{html_mod.escape(gname)}</h3>{inner}</div>'
+        gcards += f'<div class="gcard"><h3>{html_mod.escape(gname)}</h3><div class="gwrap">{inner}</div></div>'
     gcards += '</div>'
     route = ''.join(f'<li>{html_mod.escape(r)}</li>' for r in c['route'])
     n = len(skills)
