@@ -6,6 +6,14 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.search{margin:0 0 14px}
+.search input{width:100%;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--tx);font-size:13px;outline:none}
+.search input:focus{border-color:var(--acc)}
+#qres{max-height:340px;overflow-y:auto;margin-top:6px}
+#qres .qi{display:block;padding:6px 8px;border-radius:6px;font-size:12.5px;color:var(--tx);border-left:2px solid transparent}
+#qres .qi:hover{background:var(--card);text-decoration:none;border-left-color:var(--acc)}
+#qres .qi .qp{color:var(--mut);font-size:11px;display:block}
+#qres .qi b{color:var(--acc)}
 .pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
@@ -47,6 +55,8 @@ blockquote p{margin:6px 0}
 @media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
 </style></head>
 <body><div class="layout"><aside><h1>AOS 8.10R04 · Release Notes</h1>
+<div class="search"><input id="qk" type="search" placeholder="🔍 搜索全站…" autocomplete="off"><div id="qres"></div></div>
+
 <div class="sub">105 页 · 版本说明（升级方法论/Secure Boot/已知问题库/新特性与废弃）</div>
 <a href="index.html">🏠 课程首页</a>
 <a href="digest.html">📖 精华长文 DIGEST</a>
@@ -59,7 +69,7 @@ blockquote p{margin:6px 0}
 <a href="skills/aos-rn-secure-boot.html">aos-rn-secure-boot</a>
 <div class="grp">问题与特性</div>
 <a href="skills/aos-rn-known-issues.html">aos-rn-known-issues</a>
-<a href="skills/aos-rn-new-features-deprecations.html">aos-rn-new-features-deprecations</a></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../aos/index.html">AOS 软件手册</a> › <a href="index.html">AOS 8.10R04</a> › <span>精华长文 DIGEST</span></nav><h1>精华长文 DIGEST</h1><h1 id="digest-omniswitch-aos-release-810r4-release-notes">DIGEST — OmniSwitch AOS Release 8.10R4 Release Notes 精华</h1>
+<a href="skills/aos-rn-new-features-deprecations.html">aos-rn-new-features-deprecations</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../aos/index.html">AOS 软件手册</a> › <a href="index.html">AOS 8.10R04</a> › <span>精华长文 DIGEST</span></nav><h1>精华长文 DIGEST</h1><h1 id="digest-omniswitch-aos-release-810r4-release-notes">DIGEST — OmniSwitch AOS Release 8.10R4 Release Notes 精华</h1>
 <ul>
 <li>本书是 ALE OmniSwitch 全产品线 AOS 8.10R4 的版本发布说明（105 页），信息密度极高且大量内容为"手册里没有"的独占信息（原书自述 "Since much of the information in these release notes is not included in the hardware and software user manuals, it is important that you read all sections"）。</li>
 <li>结构上由升级前提（Prerequisites）、新特性、许可体系、Open/Fixed CR、热插拔规范与 12 个升级附录构成。</li>

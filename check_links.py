@@ -32,8 +32,10 @@ for rel in pages:
             if href[1:] and href[1:] not in ids:
                 anchors_missing.append((rel, href))
             continue
-        # 相对路径解析
-        target = os.path.normpath(os.path.join(os.path.dirname(rel), href)).replace("\\", "/")
+        # 相对路径解析（以 / 开头的按站点根）
+        base = ROOT if href.startswith('/') else os.path.dirname(rel)
+        href_rel = href.lstrip('/')
+        target = os.path.normpath(os.path.join(base, href_rel)).replace("\\", "/")
         if target not in page_set and not (os.path.exists(target) and not target.endswith('.html')):
             broken[target].append(rel)
 

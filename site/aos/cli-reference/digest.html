@@ -6,6 +6,14 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.search{margin:0 0 14px}
+.search input{width:100%;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--tx);font-size:13px;outline:none}
+.search input:focus{border-color:var(--acc)}
+#qres{max-height:340px;overflow-y:auto;margin-top:6px}
+#qres .qi{display:block;padding:6px 8px;border-radius:6px;font-size:12.5px;color:var(--tx);border-left:2px solid transparent}
+#qres .qi:hover{background:var(--card);text-decoration:none;border-left-color:var(--acc)}
+#qres .qi .qp{color:var(--mut);font-size:11px;display:block}
+#qres .qi b{color:var(--acc)}
 .pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
@@ -47,6 +55,8 @@ blockquote p{margin:6px 0}
 @media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
 </style></head>
 <body><div class="layout"><aside><h1>AOS 8.10R04 · CLI Reference 命令地图</h1>
+<div class="search"><input id="qk" type="search" placeholder="🔍 搜索全站…" autocomplete="off"><div id="qres"></div></div>
+
 <div class="sub">6240 页 · 70 章命令字典导航（约 2480 条命令，按 5 域组织）</div>
 <a href="index.html">🏠 课程首页</a>
 <a href="digest.html">📖 精华长文 DIGEST</a>
@@ -61,7 +71,7 @@ blockquote p{margin:6px 0}
 <a href="skills/aos-cli-map-routing.html">aos-cli-map-routing</a>
 <div class="grp">策略与运维</div>
 <a href="skills/aos-cli-map-multicast-qos.html">aos-cli-map-multicast-qos</a>
-<a href="skills/aos-cli-map-mgmt-oam.html">aos-cli-map-mgmt-oam</a></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../aos/index.html">AOS 软件手册</a> › <a href="index.html">AOS 8.10R04</a> › <span>精华长文 DIGEST</span></nav><h1>精华长文 DIGEST</h1><h1 id="digest-omniswitch-aos-release-810r04-cli-reference-user-guide">DIGEST · OmniSwitch AOS Release 8.10R04 CLI Reference User Guide</h1>
+<a href="skills/aos-cli-map-mgmt-oam.html">aos-cli-map-mgmt-oam</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../aos/index.html">AOS 软件手册</a> › <a href="index.html">AOS 8.10R04</a> › <span>精华长文 DIGEST</span></nav><h1>精华长文 DIGEST</h1><h1 id="digest-omniswitch-aos-release-810r04-cli-reference-user-guide">DIGEST · OmniSwitch AOS Release 8.10R04 CLI Reference User Guide</h1>
 <ul>
 <li>源文件：<code>Omniswitch AOS Release 810R04 CLI Reference User Guide.pdf</code>（6240 页，70 个命令章，约 2480 条命令）</li>
 <li>定位：<strong>命令字典，怎么查怎么用</strong>。全书按功能章组织，每条命令给语法/参数/默认值/平台支持/示例。蒸馏策略为"命令地图"——不做全量摘录，而是把 70 章归入 5 个命令域技能，每个技能给出章→页码区间导航 + 代表命令语义，需要细节时按页码回查原书。</li>

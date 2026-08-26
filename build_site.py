@@ -638,6 +638,14 @@ CSS = """
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.search{margin:0 0 14px}
+.search input{width:100%;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--tx);font-size:13px;outline:none}
+.search input:focus{border-color:var(--acc)}
+#qres{max-height:340px;overflow-y:auto;margin-top:6px}
+#qres .qi{display:block;padding:6px 8px;border-radius:6px;font-size:12.5px;color:var(--tx);border-left:2px solid transparent}
+#qres .qi:hover{background:var(--card);text-decoration:none;border-left-color:var(--acc)}
+#qres .qi .qp{color:var(--mut);font-size:11px;display:block}
+#qres .qi b{color:var(--acc)}
 .pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
@@ -724,8 +732,10 @@ def build_course(c):
 <title>{html_mod.escape(title)} — {c['title']}</title>
 <style>{CSS}</style></head>
 <body><div class="layout"><aside><h1>{c['title']}</h1>
+<div class="search"><input id="qk" type="search" placeholder="🔍 搜索全站…" autocomplete="off"><div id="qres"></div></div>
+
 <div class="sub">{c['subtitle']}</div>
-{nav(active, sub)}</aside><main>{crumbs(cur, sub)}{body}{foot}</main></div></body></html>"""
+{nav(active, sub)}<script src="/search.js"></script></aside><main>{crumbs(cur, sub)}{body}{foot}</main></div></body></html>"""
 
     def rel_links(h):
         for s in skills:
@@ -797,6 +807,8 @@ def build_category(dirname, label):
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{label} — ALE Networking 技术培训</title><style>{CSS}</style></head>
 <body><div class="layout"><aside><h1>ALE 培训门户</h1>
+<div class="search"><input id="qk" type="search" placeholder="🔍 搜索全站…" autocomplete="off"><div id="qres"></div></div>
+
 <div class="sub">{label}</div>
 <a href="../index.html">⬅️ 返回培训门户</a></aside>
 <main><h1>{label}</h1>
@@ -941,3 +953,67 @@ main.cover{{max-width:1100px;margin:0 auto;padding:0 32px 60px}}
 with open(os.path.join(OUT, 'index.html'), 'w', encoding='utf-8') as f:
     f.write(cover)
 print('portal built')
+
+# ============ 全站搜索索引 ============
+import html as _H
+def build_search_index():
+    import glob as _glob, json as _json
+    entries = []
+    pat = _re.compile(r'<h([23]) id="([^"]+)">(.*?)</h' + chr(92) + '1>(.*?)(?=<h[123] |</main>|<footer|$)', _re.S)
+    for f in _glob.glob(os.path.join(OUT, '**', '*.html'), recursive=True):
+        rel = os.path.relpath(f, OUT).replace(os.sep, '/')
+        if rel == 'index.html':
+            continue
+        t = open(f, encoding='utf-8').read()
+        mt = _re.search(r'<title>(.*?)</title>', t)
+        title = _H.unescape(mt.group(1)).strip() if mt else rel
+        for m in pat.finditer(t):
+            sec = _H.unescape(_re.sub(r'<[^>]+>', '', m.group(3))).strip()
+            body = _H.unescape(_re.sub(r'<[^>]+>', ' ', m.group(4)))
+            body = ' '.join(body.split())[:400]
+            entries.append({'u': rel, 'a': m.group(2), 's': sec, 't': title, 'x': body})
+        if not _re.search(r'<h[23] id=', t):
+            body = _H.unescape(_re.sub(r'<[^>]+>', ' ', t))
+            body = ' '.join(body.split())[:400]
+            entries.append({'u': rel, 'a': '', 's': title, 't': title, 'x': body})
+    with open(os.path.join(OUT, 'search_index.json'), 'w', encoding='utf-8') as fo:
+        _json.dump(entries, fo, ensure_ascii=False)
+    print(f'search index built: {len(entries)} sections')
+
+SEARCH_JS = """// 全站静态搜索：输入关键字 -> 章节/页面匹配 -> 直达锚点
+(function(){
+  var IDX = null, box = document.getElementById('qk'), res = document.getElementById('qres');
+  if (!box) return;
+  function esc(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML}
+  function load(cb){ if(IDD) ; if(IDX) return cb();
+    fetch('/search_index.json').then(function(r){return r.json()}).then(function(j){IDX=j;cb()}).catch(function(){res.innerHTML=''}) }
+  function score(e, q){
+    var s=0
+    if(e.t.indexOf(q)>=0) s+=10
+    if(e.s.indexOf(q)>=0) s+=8
+    if(e.x.indexOf(q)>=0) s+=3
+    return s
+  }
+  function run(){
+    var q=box.value.trim().toLowerCase()
+    if(q.length<2){res.innerHTML='';return}
+    load(function(){
+      var out=[]
+      for(var i=0;i<IDX.length;i++){var e=IDX[i];var sc=score(e,q);if(sc>0)out.push([sc,e])}
+      out.sort(function(a,b){return b[0]-a[0]})
+      var top=out.slice(0,20), h=top.map(function(p){
+        var e=p[1]
+        var url='/'+e.u+(e.a?('#'+e.a):'')
+        return '<a class="qi" href="'+url+'"><b>'+esc(e.s)+'</b><span class="qp">'+esc(e.t)+'</span></a>'
+      }).join('')
+      res.innerHTML = h || '<span class="qi">无匹配</span>'
+    })
+  }
+  box.addEventListener('input', run)
+  box.addEventListener('focus', run)
+})();
+"""
+with open(os.path.join(OUT, 'search.js'), 'w', encoding='utf-8') as fo:
+    fo.write(SEARCH_JS)
+build_search_index()
+print('search.js written')

@@ -6,6 +6,14 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.search{margin:0 0 14px}
+.search input{width:100%;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--tx);font-size:13px;outline:none}
+.search input:focus{border-color:var(--acc)}
+#qres{max-height:340px;overflow-y:auto;margin-top:6px}
+#qres .qi{display:block;padding:6px 8px;border-radius:6px;font-size:12.5px;color:var(--tx);border-left:2px solid transparent}
+#qres .qi:hover{background:var(--card);text-decoration:none;border-left-color:var(--acc)}
+#qres .qi .qp{color:var(--mut);font-size:11px;display:block}
+#qres .qi b{color:var(--acc)}
 .pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
 main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
 .layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
@@ -47,6 +55,8 @@ blockquote p{margin:6px 0}
 @media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
 </style></head>
 <body><div class="layout"><aside><h1>AOS 8.10R04 · Switch Management</h1>
+<div class="search"><input id="qk" type="search" placeholder="🔍 搜索全站…" autocomplete="off"><div id="qres"></div></div>
+
 <div class="sub">511 页 · 交换机管理（Flash/升级/CLI 用户/SNMP Web 纳管/日志健康/机箱 CMM）</div>
 <a href="../index.html">🏠 课程首页</a>
 <a href="../digest.html">📖 精华长文 DIGEST</a>
@@ -62,7 +72,7 @@ blockquote p{margin:6px 0}
 <a href="../skills/aos-sm-mgmt-services.html">aos-sm-mgmt-services</a>
 <div class="grp">运维与硬件</div>
 <a href="../skills/aos-sm-logging-health.html">aos-sm-logging-health</a>
-<a href="../skills/aos-sm-chassis-cmm.html">aos-sm-chassis-cmm</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../aos/index.html">AOS 软件手册</a> › <a href="../index.html">AOS 8.10R04</a> › <span>aos-sm-flash-config</span></nav><h1>aos-sm-flash-config</h1><p class="meta"><span class="badge">SKILL</span> aos-sm-flash-config · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<a href="../skills/aos-sm-chassis-cmm.html">aos-sm-chassis-cmm</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../aos/index.html">AOS 软件手册</a> › <a href="../index.html">AOS 8.10R04</a> › <span>aos-sm-flash-config</span></nav><h1>aos-sm-flash-config</h1><p class="meta"><span class="badge">SKILL</span> aos-sm-flash-config · 来源页码: </p><h2 id="r">R（触发场景）</h2>
 <ul>
 <li>搞不清 certified / working / RUNNING DIRECTORY / RUNNING CONFIGURATION 的关系，改动重启后丢失</li>
 <li>要把试验配置先放用户目录验证，再认证回 certified（软件回滚）</li>
