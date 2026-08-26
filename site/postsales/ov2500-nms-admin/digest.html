@@ -67,15 +67,36 @@ blockquote p{margin:6px 0}
 <a href="skills/ov-policyview-qos.html">ov-policyview-qos</a>
 <a href="skills/ov-quarantine-manager.html">ov-quarantine-manager</a>
 <a href="skills/ov-analytics-appvis-iot.html">ov-analytics-appvis-iot</a></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../postsales/index.html">售后</a> › <a href="index.html">DT00XTE311</a> › <span>精华长文 DIGEST</span></nav><h1>精华长文 DIGEST</h1><h1 id="digest-omnivista-2500-nms-administration-r4dt00xte311">DIGEST — OmniVista 2500 NMS Administration R4（DT00XTE311）精华</h1>
-<p>本书是 ALE OmniVista 2500 网管平台的管理员培训教材（581 页，讲授 + 动手实验），技术栈为 OV2500 R4 虚拟机网管 + OmniSwitch AOS R8。以下为知识地图与十个最重要知识点的串讲，页码均指原书。</p>
+<ul>
+<li>本书是 ALE OmniVista 2500 网管平台的管理员培训教材（581 页，讲授 + 动手实验），技术栈为 OV2500 R4 虚拟机网管 + OmniSwitch AOS R8。</li>
+<li>以下为知识地图与十个最重要知识点的串讲，页码均指原书。</li>
+</ul>
 <h2 id="_1">一、知识地图</h2>
 <p>全书可归为五条主线、十个技能单元：</p>
 <ol>
-<li><strong>平台线</strong>：虚机部署与许可（ov-va-install-license）→ HA 与系统运维、告警通知（ov-ha-services-alerting）。</li>
-<li><strong>纳管线</strong>：交换机侧 SNMP 与基础网络准备（ov-switch-snmp-bootstrap）→ Discovery/拓扑/Locator（ov-discovery-topology-locator）→ Resource Manager 备份升级与模板化 Provisioning（ov-resource-manager-provisioning）→ CLI Scripting 批量操作（ov-cli-scripting-batch）。</li>
-<li><strong>接入安全线</strong>：Unified Access 三层策略与 802.1X（ov-unified-access）→ PolicyView QoS（ov-policyview-qos）→ Quarantine Manager 攻击隔离（ov-quarantine-manager）。</li>
-<li><strong>可观测线</strong>：Analytics/AppVis/IoT/OVNA（ov-analytics-appvis-iot）。</li>
-<li><strong>横向概念</strong>：NMS 组件模型（SNMP/sFlow/MIB/Traps/RMON， <code>&lt;span class="pg"&gt;原文p21&lt;/span&gt;</code> ）与 CLI vs GUI 取舍（ <code>&lt;span class="pg"&gt;原文p22-24&lt;/span&gt;</code> ）贯穿全书。</li>
+<li>平台线：虚机部署与许可（ov-va-install-license）→ HA 与系统运维、告警通知（ov-ha-services-alerting）。<ul>
+<li>
+<ol>
+<li>纳管线：交换机侧 SNMP 与基础网络准备（ov-switch-snmp-bootstrap）→ Discovery/拓扑/Locator（ov-discovery-topology-locator）→ Resource Manager 备份升级与模板化 Provisioning（ov-resource-manager-provisioning）→ CLI Scripting 批量操作（ov-cli-scripting-batch）。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>接入安全线：Unified Access 三层策略与 802.1X（ov-unified-access）→ PolicyView QoS（ov-policyview-qos）→ Quarantine Manager 攻击隔离（ov-quarantine-manager）。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>可观测线：Analytics/AppVis/IoT/OVNA（ov-analytics-appvis-iot）。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>横向概念：NMS 组件模型（SNMP/sFlow/MIB/Traps/RMON， <code>&lt;span class="pg"&gt;原文p21&lt;/span&gt;</code> ）与 CLI vs GUI 取舍（ <code>&lt;span class="pg"&gt;原文p22-24&lt;/span&gt;</code> ）贯穿全书。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <p>章节分布：p42-78 安装与系统设置，p107-168 发现与资源管理，p169-224 设备配置管理，p225-256 Unified Access，p257-294 PolicyView，p295-320 Quarantine Manager，p321 起为分析、WLAN/UPAM 与综合实验。</p>
 <h2 id="_2">二、十大知识点串讲</h2>
@@ -121,15 +142,9 @@ blockquote p{margin:6px 0}
 <li>三个高频陷阱：UNP 名必须与 Filter-ID 完全一致（ <code>&lt;span class="pg"&gt;原文p263&lt;/span&gt;</code> ）；重测前 <code>unp user flush</code> 清残留（ <code>&lt;span class="pg"&gt;原文p268&lt;/span&gt;</code> ）；客户端要取消缓存凭据/自动 Windows 登录/证书校验（ <code>&lt;span class="pg"&gt;原文p267-268&lt;/span&gt;</code> ）。</li>
 </ul>
 <h3 id="7-policyview-ldap">7. PolicyView 双模式与 LDAP 策略仓库</h3>
-<ul>
-<li>OneTouch 面向 Voice/Data（Platinum-Gold-Silver-Bronze）/ACL 常见场景，参数设一次同时分发（&lt;&lt;<PAGE 273/276-278>&gt;&gt;）；Expert Mode 五步向导处理复杂策略——典型实验是按源 192.168.80.0/24 → 目的 192.168.200.0/24、Action=DROP、Precedence 30001 阻断客户端访问 Loopback0 网段，下发后等 "Notify Success!" 再验证 ping（ <code>&lt;span class="pg"&gt;原文p279-293&lt;/span&gt;</code> ）。</li>
-<li>底层机制要记住：策略存于安装时配置的 LDAP 目录服务器，交换机被通知后自行拉取（&lt;&lt;<PAGE 272/286>&gt;&gt;）——解释了为什么策略下发是"通知-拉取"而非直接推送。</li>
-</ul>
+<p>OneTouch 面向 Voice/Data（Platinum-Gold-Silver-Bronze）/ACL 常见场景，参数设一次同时分发（&lt;&lt;<PAGE 273/276-278>&gt;&gt;）；Expert Mode 五步向导处理复杂策略——典型实验是按源 192.168.80.0/24 → 目的 192.168.200.0/24、Action=DROP、Precedence 30001 阻断客户端访问 Loopback0 网段，下发后等 "Notify Success!" 再验证 ping（ <code>&lt;span class="pg"&gt;原文p279-293&lt;/span&gt;</code> ）。底层机制要记住：策略存于安装时配置的 LDAP 目录服务器，交换机被通知后自行拉取（&lt;&lt;<PAGE 272/286>&gt;&gt;）——解释了为什么策略下发是"通知-拉取"而非直接推送。</p>
 <h3 id="8-quarantine-manager">8. Quarantine Manager：默认全禁用与三列表语义</h3>
-<ul>
-<li>检测来源开放（AOS DoS trap、第三方 IPS、Brick Firewall、WLAN Rogue Alert），规则含内置族（AlaDosTrap/Fortinet/OA WLAN）与自定义四要素（名称/描述/触发表达式/提取表达式/动作），执行手段从 <code>vlan 999 &lt;mac&gt;</code> 隔离到 ACL、端口关断分级（ <code>&lt;span class="pg"&gt;原文p298-307&lt;/span&gt;</code> ）。</li>
-<li>两个语义关键：所有内置规则默认禁用，"以为开了其实没开"最常见（ <code>&lt;span class="pg"&gt;原文p304&lt;/span&gt;</code> ）；Candidates 名单设备流量继续放行、只是等管理员决策，Banned 才是真隔离且必须手动释放，OV 自身与已发现交换机隐式在 Never Banned（ <code>&lt;span class="pg"&gt;原文p308-310&lt;/span&gt;</code> ）。</li>
-</ul>
+<p>检测来源开放（AOS DoS trap、第三方 IPS、Brick Firewall、WLAN Rogue Alert），规则含内置族（AlaDosTrap/Fortinet/OA WLAN）与自定义四要素（名称/描述/触发表达式/提取表达式/动作），执行手段从 <code>vlan 999 &lt;mac&gt;</code> 隔离到 ACL、端口关断分级（ <code>&lt;span class="pg"&gt;原文p298-307&lt;/span&gt;</code> ）。两个语义关键：所有内置规则默认禁用，"以为开了其实没开"最常见（ <code>&lt;span class="pg"&gt;原文p304&lt;/span&gt;</code> ）；Candidates 名单设备流量继续放行、只是等管理员决策，Banned 才是真隔离且必须手动释放，OV 自身与已发现交换机隐式在 Never Banned（ <code>&lt;span class="pg"&gt;原文p308-310&lt;/span&gt;</code> ）。</p>
 <h3 id="9-sflow">9. 可观测体系：sFlow 采样到应用封禁的完整链路</h3>
 <ul>
 <li>Analytics 数据面是 sFlow：交换机采样发包 → OV Analytics Service → Mongo DB → WebServer 呈现，应用识别靠 sFlow 里的 TCP/UDP 端口（&lt;&lt;<PAGE 316/322/325>&gt;&gt;）。</li>

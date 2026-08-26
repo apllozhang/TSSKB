@@ -76,10 +76,28 @@ blockquote p{margin:6px 0}
 <h2 id="i">I · 方法论骨架</h2>
 <ol>
 <li><strong>UNP 决策流</strong>（f10）：UNP 口流量 → 分类规则命中 → 按 profile 建 SAP；未命中且开启动态服务 → 按 System Default 公式自动建 I-SID/Service/BVLAN。</li>
-<li><strong>三个确定性公式</strong>（p20）：I-SID = 10,000,000 + 域ID×10,000 + (VLAN tag mod 512)；Service ID 从 32768 递增；BVLAN = I-SID mod 8 做索引取已建 BVLAN。基数/模数可用 <code>unp system-default service-base/service-mod</code> 调。</li>
-<li><strong>七级分类优先序</strong>（p19）：MAC+VLAN &gt; MAC &gt; MAC段+VLAN &gt; MAC段 &gt; IP+VLAN &gt; IP &gt; VLAN tag。</li>
-<li><strong>持久 SAP 保静默设备与 VRRP</strong>（p22）：静态指派 profile 生成不老化 SAP（每口最多 8 个服务 profile）；mac-mobility 保 VRRP 主备通告不中断。</li>
-<li><strong>OV2500 上线五步</strong>（f11）：快照开机 → EVAL License → 交换机侧 SNMP → 按控制 BVLAN 网段发现 → 拓扑 Poll Latest Data。</li>
+<li>
+<p>三个确定性公式（p20）：I-SID = 10,000,000 + 域ID×10,000 + (VLAN tag mod 512)；</p>
+<ul>
+<li>Service ID 从 32768 递增；</li>
+<li>BVLAN = I-SID mod 8 做索引取已建 BVLAN。基数/模数可用 <code>unp system-default service-base/service-mod</code> 调；</li>
+</ul>
+</li>
+<li>
+<p>七级分类优先序（p19）：MAC+VLAN &gt; MAC &gt; MAC段+VLAN &gt; MAC段 &gt; IP+VLAN &gt; IP &gt; VLAN tag。</p>
+<ul>
+<li>
+<ol>
+<li>持久 SAP 保静默设备与 VRRP（p22）：静态指派 profile 生成不老化 SAP（每口最多 8 个服务 profile）；mac-mobility 保 VRRP 主备通告不中断。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>OV2500 上线五步（f11）：快照开机 → EVAL License → 交换机侧 SNMP → 按控制 BVLAN 网段发现 → 拓扑 Poll Latest Data。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="a1-lab">A1 · 书中案例（Lab 配置序列精要）</h2>
 <p>Lab8 UNP 三场景（c15，p279/281/286）：</p>
@@ -107,14 +125,44 @@ unp classification mac-address &quot;@mac Silent-A&quot; profile1 unp-profile-si
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
-<li>规划编号：确定域 ID 与 VLAN tag 空间，用公式预演 I-SID/BVLAN（如 VLAN 412 → I-SID 10,000,412）；多租户冲突则调 service-base/service-mod。</li>
+<li>规划编号：确定域 ID 与 VLAN tag 空间，用公式预演 I-SID/BVLAN（如 VLAN 412 → I-SID 10,000,412）；多租户冲突则调 service-base/service-mod。<ul>
+<li>
+<ol>
 <li>建服务 profile：<code>unp profile &lt;name&gt;</code> + <code>map service-type spb tag-value &lt;t&gt; isid &lt;i&gt; bvlan &lt;b&gt;</code>。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>声明 UNP 口：<code>unp port &lt;p&gt; port-type access</code>，按需加 <code>802.1x-authentication</code> 或静态 profile 指派。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>配分类规则（按七级优先序设计）：<code>unp classification {mac-address|mac-range|ip-address|vlan-tag} ... profile1 &lt;name&gt;</code>。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>RADIUS 联动：<code>aaa radius-server</code> + <code>aaa device-authentication 802.1x AAA</code>，<code>aaa test-radius-server</code> 单测。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>静默/VRRP 场景：静态 profile + <code>unp profile &lt;name&gt; mac-mobility</code>（先全局 <code>unp mac-mobility</code>）。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>OV2500：快照开机改密 → 生成导入 EVAL License → 交换机 SNMP 六条 → Range List 发现 → 拓扑轮询；验证 <code>show service spb</code>（Dynamic * 标记）、<code>show unp user [details]</code>。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>关闭自动建服务：<code>unp port &lt;p&gt; dynamic-service none</code>。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>

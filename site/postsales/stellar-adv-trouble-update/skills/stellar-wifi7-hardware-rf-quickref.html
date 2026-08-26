@@ -71,15 +71,40 @@ blockquote p{margin:6px 0}
 <h2 id="i">I · 方法论骨架</h2>
 <p>四组速查知识：</p>
 <ol>
-<li><strong>硬件选型</strong>：Wi-Fi 7 双雄（1511 入门 / 1521 中档）规格对比；外接天线判定规则；Mesh/Bridge 兼容红旗；DPI/WCF 排除型号。</li>
-<li><strong>模式与规模</strong>：Express（自组集群 255 AP，单交换机 32 / 单堆叠 64，每堆叠至少 2 台高端型号当 PVM/SVM）/ Enterprise（OV2500，4000 AP）/ Cloud（Cirrus）；IPv6 支持深度差异（Express 全栈，Enterprise 管理面仅 IPv4）。</li>
-<li><strong>RF 参数</strong>：RSSI↔dBm 换算（dBm = RSSI − 96）；漫游特性与安全级别绑定（OKC 仅 WPA2-Enterprise，11r 推荐且 WPA2 可用）；Roaming RSSI 阈值推荐 2.4G=10 / 5G=15。</li>
-<li><strong>Mesh/Bridge</strong>：硬限制四条 + 最佳实践（回程 5/6GHz、信道 &gt;100）；Bridge 是"无线网线"不服务客户端、单 Root；Mesh 可多 Root 可服务客户端。</li>
+<li>硬件选型：Wi-Fi 7 双雄（1511 入门 / 1521 中档）规格对比；外接天线判定规则；Mesh/Bridge 兼容红旗；DPI/WCF 排除型号。<ul>
+<li>
+<ol>
+<li>模式与规模：Express（自组集群 255 AP，单交换机 32 / 单堆叠 64，每堆叠至少 2 台高端型号当 PVM/SVM）/ Enterprise（OV2500，4000 AP）/ Cloud（Cirrus）；
+IPv6 支持深度差异（Express 全栈，Enterprise 管理面仅 IPv4）。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>RF 参数：RSSI↔dBm 换算（dBm = RSSI − 96）；
+漫游特性与安全级别绑定（OKC 仅 WPA2-Enterprise，11r 推荐且 WPA2 可用）；
+Roaming RSSI 阈值推荐 2.4G=10 / 5G=15。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>Mesh/Bridge：硬限制四条 + 最佳实践（回程 5/6GHz、信道 &gt;100）；Bridge 是"无线网线"不服务客户端、单 Root；Mesh 可多 Root 可服务客户端。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="a1-lab">A1 · 书中案例（Lab 精要）</h2>
 <ul>
-<li><strong>c08 RF Profile 阈值实验</strong>：客户端信号 -18dBm（RSSI 78），把 Association RSSI Threshold 设为 90，AP 直接忽略其关联请求（任何 SSID 都连不上）；切回默认 Profile 恢复。核验命令：<code>cat /tmp/config/rfprofile.conf</code> 看 signalStrengthThreshold / roamingSignalStrengthThreshold 实际下发值；客户端 RSSI 用 <code>wlanconfig ath102 list</code>。</li>
-<li><strong>ce01 Band Steering 默认关闭的设计权衡</strong>：假设双频同覆盖；5G 有覆盖洞时设备仍被赶去差频段，Force 5GHz 更无退路。对策：双频同覆盖设计，或 Exclude MAC OUI 排除扫描枪/MIPT 话机等设备。</li>
+<li>c08 RF Profile 阈值实验：客户端信号 -18dBm（RSSI 78），把 Association RSSI Threshold 设为 90，AP 直接忽略其关联请求（任何 SSID 都连不上）；</li>
+<li>
+<p>切回默认 Profile 恢复。核验命令：<code>cat /tmp/config/rfprofile.conf</code> 看 signalStrengthThreshold / roamingSignalStrengthThreshold 实际下发值；</p>
+</li>
+<li>
+<p>客户端 RSSI 用 <code>wlanconfig ath102 list</code>；</p>
+</li>
+<li>
+<p><strong>ce01 Band Steering 默认关闭的设计权衡</strong>：假设双频同覆盖；5G 有覆盖洞时设备仍被赶去差频段，Force 5GHz 更无退路。对策：双频同覆盖设计，或 Exclude MAC OUI 排除扫描枪/MIPT 话机等设备。</p>
+</li>
 <li><strong>ce08 漫游撞后台扫描</strong>：新 AP 正在后台扫描会打断实时业务；语音有感知豁免（检测到呼叫自动停扫），视频会议等其他实时流量无豁免。对策：敏感区域关 Background Scanning，或设专职扫描 AP。</li>
 <li><strong>ce09 Roaming 阈值两头是坑</strong>：太低→客户端粘着弱 AP；太高→漫游过度丢包。从推荐值起步小幅调。</li>
 <li><strong>p13 BLE Beaconing</strong>：AP1230/13xx 内置 BLE 可做信标，按 AP Group 配置（默认关，iBeacon 模式，UUID/Major/Minor），配合 AeroScout RTLS 做资产定位。</li>
@@ -101,11 +126,13 @@ Enterprise ≤4000 AP。IPv6 刚性项目：管理面要 IPv6 只能 Express（E
 <p><strong>RF 调优</strong>：
 5. 一切阈值先换算：dBm = RSSI − 96（OV2500 客户端列表显示 dBm，AP RF 设置用 RSSI，两侧比较前必须统一单位）。信号分档：RSSI 29+（约 -67dBm 以上）为推荐，10-19 差（别跑视频语音）。
 6. 漫游：按 home/foreign AP 是否同 VLAN 定二层/三层漫游；
-开 802.11r（WPA2 下推荐）；
-OKC 仅 WPA2-Enterprise；
-Roaming RSSI 阈值从 2.4G=10 / 5G=15 起步，配 11k/11v；
-直角走廊等射频互不可见的相邻 AP 手动互加 Neighbor AP。
-7. 阈值不生效/需核验时：AP 侧 cat rfprofile.conf 看实际下发值。</p>
+    - 开 802.11r（WPA2 下推荐）；
+    - OKC 仅 WPA2-Enterprise；
+    - Roaming RSSI 阈值从 2.4G=10 / 5G=15 起步，配 11k/11v；
+    - 直角走廊等射频互不可见的相邻 AP 手动互加 Neighbor AP；</p>
+<ol>
+<li>阈值不生效/需核验时：AP 侧 cat rfprofile.conf 看实际下发值。</li>
+</ol>
 <p><strong>Mesh/Bridge</strong>：
 8. 核对四条硬限制：≤4 跳、单跳 ≤5 台、全网 ≤16 台、每台 ≤5 个客户端 SSID。
 9. 回程用 5GHz（或 6GHz）、信道 &gt;100；两端 SSID/频段/Passphrase 一致；Bridge 恰 1 台 Root，Mesh 可多 Root。

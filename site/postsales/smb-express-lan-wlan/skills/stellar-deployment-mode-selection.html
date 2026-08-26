@@ -74,10 +74,7 @@ blockquote p{margin:6px 0}
 <li>多台 AP 需要统一成组管理（AP Group / PVM / SVM）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>Stellar 是无控制器分布式架构：AP 上电后按 "DHCP option 138（OV2500）→ Cirrus 注册（MAC/序列号）→ 都没有则 Express" 三级判定自动进入管理模式。</li>
-<li>同 Group ID + 同管理 VLAN 的 AP 自动成组并选举 PVM/SVM，从 PVM 统一下发配置。</li>
-</ul>
+<p>Stellar 是无控制器分布式架构：AP 上电后按 "DHCP option 138（OV2500）→ Cirrus 注册（MAC/序列号）→ 都没有则 Express" 三级判定自动进入管理模式。同 Group ID + 同管理 VLAN 的 AP 自动成组并选举 PVM/SVM，从 PVM 统一下发配置。</p>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li><strong>按规模选模式</strong>（ <code>&lt;span class="pg"&gt;原文p188&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p198&lt;/span&gt;</code> ）：Express 自管理 standalone 集群 ≤255 AP、免许可证；Enterprise（OV2500 本地 NMS 集中管理）≤4000 AP；Cloud（OmniVista Cirrus）≤10000 AP。</li>

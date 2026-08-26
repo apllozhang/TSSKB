@@ -66,24 +66,41 @@ blockquote p{margin:6px 0}
 <li>核对管理面资源（会话数/内存/Flash/USB 救援/镜像文件名）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>平台规模三梯队选型框架（F2， <code>&lt;span class="pg"&gt;原文p30&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p42&lt;/span&gt;</code> ）：接入级（6360/6465/6560：MAC 16K、路由 32-2K、聚合 32 组）→ 汇聚级（6570M/6575/6860 系：MAC 32-64K、路由 12-13K、聚合 128）→ 核心/数据中心级（6870/6900/6920/9900：MAC 104-228K、路由 113-384K、聚合 252+）；同级内再看 SM/RM/ER 转发 profile 二次放大。</li>
-<li>规划口诀：先选梯队、再选 profile、最后对 TCAM 档位。</li>
-<li>VC 规格解读框架（F4， <code>&lt;span class="pg"&gt;原文p12&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p23-24&lt;/span&gt;</code> ）：文档中的 maximum 默认作用于整 VC 而非单机（P13），三类例外要辨明——按机箱×成员数扩的、VC 封顶不随成员增加的（X35）、仅单机的（1588v2 VC-of-1）。</li>
-<li>文档地图四阶段法（F1， <code>&lt;span class="pg"&gt;原文p8-9&lt;/span&gt;</code> ）：本手册只答"能到多少"不答"怎么配"，配置去 Network Config / Advanced Routing / Data Center Switching，命令查 CLI Reference。</li>
-</ul>
+<p>平台规模三梯队选型框架（F2， <code>&lt;span class="pg"&gt;原文p30&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p42&lt;/span&gt;</code> ）：接入级（6360/6465/6560：MAC 16K、路由 32-2K、聚合 32 组）→ 汇聚级（6570M/6575/6860 系：MAC 32-64K、路由 12-13K、聚合 128）→ 核心/数据中心级（6870/6900/6920/9900：MAC 104-228K、路由 113-384K、聚合 252+）；同级内再看 SM/RM/ER 转发 profile 二次放大。规划口诀：先选梯队、再选 profile、最后对 TCAM 档位。VC 规格解读框架（F4， <code>&lt;span class="pg"&gt;原文p12&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p23-24&lt;/span&gt;</code> ）：文档中的 maximum 默认作用于整 VC 而非单机（P13），三类例外要辨明——按机箱×成员数扩的、VC 封顶不随成员增加的（X35）、仅单机的（1588v2 VC-of-1）。文档地图四阶段法（F1， <code>&lt;span class="pg"&gt;原文p8-9&lt;/span&gt;</code> ）：本手册只答"能到多少"不答"怎么配"，配置去 Network Config / Advanced Routing / Data Center Switching，命令查 CLI Reference。</p>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>先定梯队</strong>：按 MAC 表/路由表/聚合组三指标对号三梯队（F2）</li>
 <li><strong>再定 profile</strong>：SM/RM/ER 三态放大转发规模（如 6900-X RM 312K IPv4 路由、ER 更大 MAC 需重启生效）</li>
 <li><strong>VC 场景辨语义</strong>：默认整 VC 上限；UNP 用户看平台脚注 1（×成员数）或脚注 2（VC 封顶）；6900 VC 的 ARP=最低能力模块的值（X6， <code>&lt;span class="pg"&gt;原文p42&lt;/span&gt;</code> ）</li>
-<li><strong>混搭先查白名单</strong>：6900 系内（V72/C32(E)/X48C6/T48C6/V48C8/X24C2/T24C2，最多 6；X48C4E 需 mixed VFL 模式）、6860+6865、6465 系内（用 1G SFP）、6360 10 口型仅 4 成员；<strong>6860N 与 686x 禁止混 VC</strong>（X2， <code>&lt;span class="pg"&gt;原文p24&lt;/span&gt;</code> ）</li>
-<li><strong>管理面核对</strong>：Telnet 6 / SSH 8 / HTTP 4 全平台一致（P2）；内存/Flash 按 P4 矩阵</li>
+<li>
+<p>混搭先查白名单：6900 系内（V72/C32(E)/X48C6/T48C6/V48C8/X24C2/T24C2，最多 6；</p>
+<ul>
+<li>X48C4E 需 mixed VFL 模式）、6860+6865、6465 系内（用 1G SFP）、6360 10 口型仅 4 成员；</li>
+<li>6860N 与 686x 禁止混 VC（X2， <code>&lt;span class="pg"&gt;原文p24&lt;/span&gt;</code> ）；</li>
+</ul>
+</li>
+<li>
+<p><strong>管理面核对</strong>：Telnet 6 / SSH 8 / HTTP 4 全平台一致（P2）；内存/Flash 按 P4 矩阵</p>
+</li>
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>镜像与救援文件名核对</strong>（P1/P5， <code>&lt;span class="pg"&gt;原文p14&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p17&lt;/span&gt;</code> ）：6360=Nosa.img、6465/6560=Nos.img、6570M=Wos.img、6575=Dos.img、6860/6865=Uos.img、6860N=Uosn.img、6870=Kaos.img、6900=Yos.img、6920=Ypos.img、9900=Mhost.img+Mos.img+Meni.img；USB 救援用对应 rescue 镜像，ALE 认证 U 盘 FAT32、目录名小写</li>
-<li><strong>VC 成员数核对</strong>（P11， <code>&lt;span class="pg"&gt;原文p23&lt;/span&gt;</code> ）：6360 24/48 口=8（10 口=4）、6465=4、6560/6570M/6860/6865/6870=8、6575=4、6900-X=6、9907=2、9912/6920 不支持</li>
+<li>镜像与救援文件名核对（P1/P5， <code>&lt;span class="pg"&gt;原文p14&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p17&lt;/span&gt;</code> ）：6360=Nosa.img</li>
+<li>6465/6560=Nos.img</li>
+<li>6570M=Wos.img</li>
+<li>6575=Dos.img</li>
+<li>6860/6865=Uos.img</li>
+<li>6860N=Uosn.img</li>
+<li>6870=Kaos.img</li>
+<li>6900=Yos.img</li>
+<li>6920=Ypos.img</li>
+<li>9900=Mhost.img+Mos.img+Meni.img；USB 救援用对应 rescue 镜像，ALE 认证 U 盘 FAT32</li>
+<li>
+<p>目录名小写</p>
+</li>
+<li>
+<p><strong>VC 成员数核对</strong>（P11， <code>&lt;span class="pg"&gt;原文p23&lt;/span&gt;</code> ）：6360 24/48 口=8（10 口=4）、6465=4、6560/6570M/6860/6865/6870=8、6575=4、6900-X=6、9907=2、9912/6920 不支持</p>
+</li>
 <li><strong>VFL 规格核对</strong>（P12， <code>&lt;span class="pg"&gt;原文p23&lt;/span&gt;</code> ）：多数平台每机箱 2 peer、每 VFL 8 成员口、VFL id 0-1；6900 每 5 peer、16 成员口、VFL id 0-4</li>
 <li><strong>帧长核对</strong>（P14， <code>&lt;span class="pg"&gt;原文p29&lt;/span&gt;</code> ）：10/100M 口 1553 字节、1G+ 口 9216 字节</li>
 <li><strong>路由软超载预判</strong>（P16， <code>&lt;span class="pg"&gt;原文p43&lt;/span&gt;</code> ）：硬件路由超限时旧的不常用路由移入软件、活跃路由保硬件，超出即部分流量走软件路由</li>

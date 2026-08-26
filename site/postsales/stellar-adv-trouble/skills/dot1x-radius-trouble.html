@@ -96,10 +96,24 @@ AP 侧 cat 三份 AAA 配置文件核对绑定链与默认值（1812/1813、time
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
-<li>客户端四查：核对录入的用户名密码、加密类型、安全类型/密钥、证书。</li>
+<li>客户端四查：核对录入的用户名密码、加密类型、安全类型/密钥、证书。<ul>
+<li>
+<ol>
 <li>AP 侧：依次 <code>cat /var/config/wlanservice.conf</code>、<code>/var/config/AAA_profile.conf</code>、<code>/var/config/AAA_server.conf</code>，确认 SSID → profile → server 绑定链正确、端口 1812/1813、secret 与服务器一致。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>服务器侧按七查清单逐项比对，重点是 Radius station IP 必须包含这台 AP 的地址、防火墙放行认证与计费端口、RADIUS 服务状态。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>仍失败：AP 上 <code>ssudo tcpdump -i br-wan port 1812 or port 1813</code> 看请求是否发出、有无响应（配合 stellar-ap-toolbox）。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>

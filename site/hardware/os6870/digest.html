@@ -60,43 +60,41 @@ blockquote p{margin:6px 0}
 <a href="skills/os6870-install-power.html">os6870-install-power</a>
 <div class="grp">运维排障</div>
 <a href="skills/os6870-ops-troubleshoot.html">os6870-ops-troubleshoot</a></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../hardware/index.html">硬件手册</a> › <a href="index.html">OmniSwitch 6870 Hardware Guide</a> › <span>精华长文 DIGEST</span></nav><h1>精华长文 DIGEST</h1><h1 id="digest-omniswitch-6870-hardware-users-guide">DIGEST — OmniSwitch 6870 Hardware Users Guide 精华</h1>
-<p>本书是 ALE 千兆/多千兆接入交换机 OS6870 家族的硬件手册（85 页，9 个 1U 机型）。核心卖点：上行覆盖 SFP28(25G)/QSFP28(100G)/QSFP56(200G) 三档；
-M 系列模块化（95W bt 多千兆 + Uplink Module Slot 后配上行）；
-6 型电源（250W-2000W）支持不同瓦数混插扩容；
-PoE 802.3af/at/bt 至 Class 8（90-99W/口）。全书沿"选型→安装→上电→PoE→监控"生命周期展开。</p>
+<ul>
+<li>本书是 ALE 千兆/多千兆接入交换机 OS6870 家族的硬件手册（85 页，9 个 1U 机型）。</li>
+<li>核心卖点：上行覆盖 SFP28(25G)/QSFP28(100G)/QSFP56(200G) 三档；</li>
+<li>M 系列模块化（95W bt 多千兆 + Uplink Module Slot 后配上行）；</li>
+<li>6 型电源（250W-2000W）支持不同瓦数混插扩容；</li>
+<li>
+<p>PoE 802.3af/at/bt 至 Class 8（90-99W/口）；</p>
+</li>
+<li>
+<p>全书沿"选型→安装→上电→PoE→监控"生命周期展开。</p>
+</li>
+</ul>
 <h2 id="_1">一、知识地图（三技能单元）</h2>
 <ol>
-<li><strong>机型与端口体系</strong>（os6870-model-ports）：九机型三分类、QSFP56 200G、M/Z/V/CNI/LNI 命名、四色 RJ45 速率 LED（Ch1/Ch3，p12-39）。</li>
-<li><strong>安装与供电</strong>（os6870-install-power）：弹簧夹法兰机架、六型电源与混插扩容、PoE 预算四变量、DC 三线（Ch2-Ch4，p14-71）。</li>
-<li><strong>运维与排障</strong>（os6870-ops-troubleshoot）：lanpower+4pair/bt 使能、温度双阈值、DG 三通道、上电入网七步（Ch2-Ch4，p14-71）。</li>
+<li>机型与端口体系（os6870-model-ports）：九机型三分类、QSFP56 200G、M/Z/V/CNI/LNI 命名、四色 RJ45 速率 LED（Ch1/Ch3，p12-39）。<ul>
+<li>
+<ol>
+<li>安装与供电（os6870-install-power）：弹簧夹法兰机架、六型电源与混插扩容、PoE 预算四变量、DC 三线（Ch2-Ch4，p14-71）。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>运维与排障（os6870-ops-troubleshoot）：lanpower+4pair/bt 使能、温度双阈值、DG 三通道、上电入网七步（Ch2-Ch4，p14-71）。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="_2">二、三单元要点串讲</h2>
 <h3 id="1">1. 机型与端口：九机型三分类</h3>
-<ul>
-<li>命名（ <code>&lt;span class="pg"&gt;原文p12&lt;/span&gt;</code> ）：<code>P</code>=PoE；<code>M</code>=Modular（上行模块槽+95W bt+QSFP56 200G）；<code>Z</code>=固定多千兆 60W bt；<code>V12</code>=全光；CNI-U2/LNI-U6=上行扩展机箱。</li>
-<li>三分类（P1）：非 PoE 固定（-24/-48）→P<em>M 模块化（P24M 至 10G/P48M 至 5G，均 95W bt）→P</em>Z 固定（至 2.5G，60W bt）。</li>
-<li>上行阶梯（P2）：SFP28 1/10/25G（25G 推荐 VFL）→QSFP28 40/100G→QSFP56 40/100/200G。</li>
-<li>RJ45 四色速率 LED：绿=10/100/1000、蓝=2.5G、品红=5G、琥珀=10G（ <code>&lt;span class="pg"&gt;原文p39&lt;/span&gt;</code> ）。</li>
-<li>功耗梯度：-24=71W→P48M=251.8W。</li>
-</ul>
+<p>命名（ <code>&lt;span class="pg"&gt;原文p12&lt;/span&gt;</code> ）：<code>P</code>=PoE；<code>M</code>=Modular（上行模块槽+95W bt+QSFP56 200G）；<code>Z</code>=固定多千兆 60W bt；<code>V12</code>=全光；CNI-U2/LNI-U6=上行扩展机箱。三分类（P1）：非 PoE 固定（-24/-48）→P<em>M 模块化（P24M 至 10G/P48M 至 5G，均 95W bt）→P</em>Z 固定（至 2.5G，60W bt）。上行阶梯（P2）：SFP28 1/10/25G（25G 推荐 VFL）→QSFP28 40/100G→QSFP56 40/100/200G。RJ45 四色速率 LED：绿=10/100/1000、蓝=2.5G、品红=5G、琥珀=10G（ <code>&lt;span class="pg"&gt;原文p39&lt;/span&gt;</code> ）。功耗梯度：-24=71W→P48M=251.8W。</p>
 <h3 id="2">2. 安装与供电：混插扩容与四变量预算</h3>
-<ul>
-<li>双电源负载分担+热插拔，且<strong>支持不同瓦数混插</strong>（ <code>&lt;span class="pg"&gt;原文p47&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p51&lt;/span&gt;</code> ）——扩容可先混后替（F4：600W→1200W→2000W 平滑升级），与 6860 wattage 禁混相反。</li>
-<li>2000W 仅 P24M/P48M（Z 系列标 N/A， <code>&lt;span class="pg"&gt;原文p47&lt;/span&gt;</code> ）。</li>
-<li>PoE 预算四变量（F2， <code>&lt;span class="pg"&gt;原文p63&lt;/span&gt;</code> ）：机型×电源瓦数×单双×电压档（双值条目=低压/高压输入；1200W/2000W 需 190-240VAC 才得高 PoE 功率， <code>&lt;span class="pg"&gt;原文p52&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p53&lt;/span&gt;</code> ）；P48M 双 2000W 最高 3309W。</li>
-<li>多电源数秒内相继插电（ <code>&lt;span class="pg"&gt;原文p18&lt;/span&gt;</code> ）。</li>
-<li>DC 三线：绿黄=地/黑=return/红=-48V（ <code>&lt;span class="pg"&gt;原文p54&lt;/span&gt;</code> ）。</li>
-</ul>
+<p>双电源负载分担+热插拔，且<strong>支持不同瓦数混插</strong>（ <code>&lt;span class="pg"&gt;原文p47&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p51&lt;/span&gt;</code> ）——扩容可先混后替（F4：600W→1200W→2000W 平滑升级），与 6860 wattage 禁混相反。2000W 仅 P24M/P48M（Z 系列标 N/A， <code>&lt;span class="pg"&gt;原文p47&lt;/span&gt;</code> ）。PoE 预算四变量（F2， <code>&lt;span class="pg"&gt;原文p63&lt;/span&gt;</code> ）：机型×电源瓦数×单双×电压档（双值条目=低压/高压输入；1200W/2000W 需 190-240VAC 才得高 PoE 功率， <code>&lt;span class="pg"&gt;原文p52&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p53&lt;/span&gt;</code> ）；P48M 双 2000W 最高 3309W。多电源数秒内相继插电（ <code>&lt;span class="pg"&gt;原文p18&lt;/span&gt;</code> ）。DC 三线：绿黄=地/黑=return/红=-48V（ <code>&lt;span class="pg"&gt;原文p54&lt;/span&gt;</code> ）。</p>
 <h3 id="3-bt">3. 运维与排障：bt 全栈与双阈值</h3>
-<ul>
-<li>两级使能（ <code>&lt;span class="pg"&gt;原文p65&lt;/span&gt;</code> ）：<code>lanpower 4pair</code>（60/75/95W，at 4 对+PoH）→<code>lanpower 8023bt</code>（bt Type3/4 Class 5-8，90-99W）。</li>
-<li>首次激活必须 <code>lanpower slot service start</code>（ <code>&lt;span class="pg"&gt;原文p65&lt;/span&gt;</code> ）。</li>
-<li>Guard Band：剩余预算&lt;口上限/类最大值即拒载，调低口上限放行；不作用已在电 PD（ <code>&lt;span class="pg"&gt;原文p67&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p68&lt;/span&gt;</code> ）。</li>
-<li>Priority Disconnect：<strong>端口号 1 最高→48 最低</strong>（ <code>&lt;span class="pg"&gt;原文p68&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p69&lt;/span&gt;</code> ）。</li>
-<li>温度双阈值：Warning 可配发 trap，Danger 固化关机须手动启动（ <code>&lt;span class="pg"&gt;原文p58&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p59&lt;/span&gt;</code> ）。</li>
-<li>DG 三通道（ <code>&lt;span class="pg"&gt;原文p59&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p60&lt;/span&gt;</code> ）：SNMP 前 3 站+Syslog 前 3 服务器+4×802.3ah PDU（上联口优先）。</li>
-<li>console 全系 115200-8N1 rollover 线。</li>
-</ul>
+<p>两级使能（ <code>&lt;span class="pg"&gt;原文p65&lt;/span&gt;</code> ）：<code>lanpower 4pair</code>（60/75/95W，at 4 对+PoH）→<code>lanpower 8023bt</code>（bt Type3/4 Class 5-8，90-99W）。首次激活必须 <code>lanpower slot service start</code>（ <code>&lt;span class="pg"&gt;原文p65&lt;/span&gt;</code> ）。Guard Band：剩余预算&lt;口上限/类最大值即拒载，调低口上限放行；不作用已在电 PD（ <code>&lt;span class="pg"&gt;原文p67&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p68&lt;/span&gt;</code> ）。Priority Disconnect：<strong>端口号 1 最高→48 最低</strong>（ <code>&lt;span class="pg"&gt;原文p68&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p69&lt;/span&gt;</code> ）。温度双阈值：Warning 可配发 trap，Danger 固化关机须手动启动（ <code>&lt;span class="pg"&gt;原文p58&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p59&lt;/span&gt;</code> ）。DG 三通道（ <code>&lt;span class="pg"&gt;原文p59&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p60&lt;/span&gt;</code> ）：SNMP 前 3 站+Syslog 前 3 服务器+4×802.3ah PDU（上联口优先）。console 全系 115200-8N1 rollover 线。</p>
 <h2 id="_3">三、本书在知识库中的位置</h2>
 <p>6870 定位多千兆 bt 高端接入/楼宇汇聚，上行 25G-200G 覆盖，与 hw-6860（VC 千兆中坚）、hw-6560（多千兆办公）构成接入高、中、办公三线，上接 hw-6900v2 核心。跨书易混点：①Priority Disconnect 口号 1 高 48 低，与 6860 反向；
 ②6870 允许混插电源，6860 禁混；

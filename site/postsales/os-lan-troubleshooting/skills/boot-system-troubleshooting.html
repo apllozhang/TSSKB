@@ -76,7 +76,12 @@ blockquote p{margin:6px 0}
 <h2 id="i">I · 方法论骨架</h2>
 <ol>
 <li><strong>启动机制双路径</strong>：U-Boot 机型（6360/6560/6860）——硬件初始化→内存诊断→按 bootfile 环境变量选镜像→AOS 入 RAM（g07）；ONIE 机型（OS6860N/6900）——启动菜单选 ALE OS certified 或 ONIE（含 Install/Rescue/DIAG）（g08）。闪存双目录 certified/working 是回滚基础（g06）。</li>
-<li><strong>系统层命令链</strong>（f05）：show system（版本/uptime/时间）→ show chassis / show cmm → show running-directory + show microcode [loaded|certified] → show module status / show module long → show hardware-info（U-Boot/FPGA/CPLD/CPU/RAM，对照 release note）→ show health → show transceivers / show powersupply / show fan / show temperature → 面板 LED 判读。</li>
+<li><strong>系统层命令链</strong>（f05）：show system（版本/uptime/时间）→ show chassis：</li>
+<li>show cmm → show running-directory + show microcode [loaded|certified] → show module status</li>
+<li>show module long → show hardware-info（U-Boot/FPGA/CPLD/CPU/RAM，对照 release note）→ show health → show transceivers</li>
+<li>show powersupply</li>
+<li>show fan</li>
+<li>show temperature → 面板 LED 判读。</li>
 <li><strong>判读判据</strong>：</li>
 <li>POWER ON + operational DOWN = 软件问题优先怀疑，不是硬件返修（p05/ce05）。</li>
 <li>短 uptime = 刚发生过重启，重要线索（p04）。</li>
@@ -99,13 +104,40 @@ CPU 高伴随 MAC 漂移/DoS 刷屏 → stp-loop（先查环）；
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
-<li><strong>密码恢复（U-Boot 机型）</strong>：断电重启 → "Hit any key to stop autoboot:" 打断 → <code>setAdminPasswordDefault</code> → <code>boot</code>（6900）或 <code>reset</code>（6860，或等 90 秒）。</li>
-<li><strong>密码恢复（ONIE 机型，仅限 console）</strong>：重启选 ONIE → DIAG 模式 → <code>blkid</code> 找分区 → <code>cd /mnt/ssd5/system</code> → <code>rm userTable8</code> → <code>reboot</code> → <code>modify running working</code> 后从 certified 重启。</li>
-<li><strong>USB 恢复 CMM</strong>：Trescue.img 与交换机目录结构放 U 盘根目录 → 打断启动 → <code>run rescue</code>（重格闪存约 10 分钟）→ 验证 certified/working 微码。ONIE USB 恢复：<code>blkid</code> → <code>mount /dev/sda1</code> → cp 镜像到 /var/tmp → <code>onie-nos-install</code>。</li>
-<li><strong>改启动目录</strong>：u-boot 下 <code>setenv bootfile working/Uos.img</code> → <code>saveenv</code> → <code>run bootcmd</code>。</li>
-<li><strong>系统体检命令链</strong>：show system → show chassis/show cmm → show running-directory/show microcode loaded → show module status/long → show hardware-info（对照 release note）→ show health → show temperature/powersupply/fan/transceivers。</li>
-<li><strong>升级顺序</strong>：先 AOS → 再 <code>update uboot cmm all file ...</code> / <code>update fpga-cpld cmm all file ...</code>。</li>
-<li><strong>高 CPU</strong>：show health [all cpu] → show health slot <c/s> → su 进维护 shell（top / ps -T）→ 联系 TAC 获取处置流程，用完立即 exit。</li>
+<li>密码恢复（U-Boot 机型）：断电重启 → "Hit any key to stop autoboot:" 打断 → <code>setAdminPasswordDefault</code> → <code>boot</code>（6900）或 <code>reset</code>（6860，或等 90 秒）。<ul>
+<li>
+<ol>
+<li>密码恢复（ONIE 机型，仅限 console）：重启选 ONIE → DIAG 模式 → <code>blkid</code> 找分区 → <code>cd /mnt/ssd5/system</code> → <code>rm userTable8</code> → <code>reboot</code> → <code>modify running working</code> 后从 certified 重启。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>USB 恢复 CMM：Trescue.img 与交换机目录结构放 U 盘根目录 → 打断启动 → <code>run rescue</code>（重格闪存约 10 分钟）→ 验证 certified/working 微码。</li>
+</ol>
+</li>
+<li>ONIE USB 恢复：<code>blkid</code> → <code>mount /dev/sda1</code> → cp 镜像到 /var/tmp → <code>onie-nos-install</code>。</li>
+<li>
+<ol>
+<li>改启动目录：u-boot 下 <code>setenv bootfile working/Uos.img</code> → <code>saveenv</code> → <code>run bootcmd</code>。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>系统体检命令链：show system → show chassis/show cmm → show running-directory/show microcode loaded → show module status/long → show hardware-info（对照 release note）→ show health → show temperature/powersupply/fan/transceivers。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>升级顺序：先 AOS → 再 <code>update uboot cmm all file ...</code> / <code>update fpga-cpld cmm all file ...</code>。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>高 CPU：show health [all cpu] → show health slot <c/s> → su 进维护 shell（top / ps -T）→ 联系 TAC 获取处置流程，用完立即 exit。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>

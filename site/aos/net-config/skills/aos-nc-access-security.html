@@ -80,12 +80,7 @@ blockquote p{margin:6px 0}
 <li>取证与流量分析：端口镜像/端口监控/sFlow/RMON</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>网络准入框架（F9， <code>&lt;span class="pg"&gt;原文p1212&lt;/span&gt;</code> ）：认证（802.1X/MAC/Captive Portal→RADIUS/UPAM/CPPM）→分类（UNP 规则/端口默认）→角色（profile：VLAN/service 映射+QoS 列表）→限制/隔离（QMR 隔离修复）；BYOD（mDNS/SSDP）与 IoT profiling 是外延。</li>
-<li>AAA 服务器选型矩阵（F10， <code>&lt;span class="pg"&gt;原文p1475&lt;/span&gt;</code> ）：RADIUS（管理+准入）/TACACS+（管理含 SNMP）/LDAP（管理含 SNMP）。</li>
-<li>应用感知框架（F11， <code>&lt;span class="pg"&gt;原文p1431&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p1457&lt;/span&gt;</code> ）：AppMon（DPI 签名+应用列表+QoS 执行）与 AFP（REGEX 指纹+分类器库+trap/UNP 列表）互补。</li>
-<li>安全纵深四层（F18， <code>&lt;span class="pg"&gt;原文p83&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p1536&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p819&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p1212&lt;/span&gt;</code> ）：端口级（LPS/风暴控制）→链路级（MACsec）→网络级（IPsec/DoS）→身份级（AG/UNP）。</li>
-</ul>
+<p>网络准入框架（F9， <code>&lt;span class="pg"&gt;原文p1212&lt;/span&gt;</code> ）：认证（802.1X/MAC/Captive Portal→RADIUS/UPAM/CPPM）→分类（UNP 规则/端口默认）→角色（profile：VLAN/service 映射+QoS 列表）→限制/隔离（QMR 隔离修复）；BYOD（mDNS/SSDP）与 IoT profiling 是外延。AAA 服务器选型矩阵（F10， <code>&lt;span class="pg"&gt;原文p1475&lt;/span&gt;</code> ）：RADIUS（管理+准入）/TACACS+（管理含 SNMP）/LDAP（管理含 SNMP）。应用感知框架（F11， <code>&lt;span class="pg"&gt;原文p1431&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p1457&lt;/span&gt;</code> ）：AppMon（DPI 签名+应用列表+QoS 执行）与 AFP（REGEX 指纹+分类器库+trap/UNP 列表）互补。安全纵深四层（F18， <code>&lt;span class="pg"&gt;原文p83&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p1536&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p819&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p1212&lt;/span&gt;</code> ）：端口级（LPS/风暴控制）→链路级（MACsec）→网络级（IPsec/DoS）→身份级（AG/UNP）。</p>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>准入路径</strong>：supplicant 用 802.1X（EAP over RADIUS）；非 supplicant 用 MAC 认证（MAC 作 username/password）；无认证场景用 UNP 分类规则（源 MAC/IP/domain 等）（P167/P169， <code>&lt;span class="pg"&gt;原文p1213&lt;/span&gt;</code> ）</li>

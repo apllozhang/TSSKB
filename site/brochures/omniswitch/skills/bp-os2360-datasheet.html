@@ -82,10 +82,7 @@ blockquote p{margin:6px 0}
 <li>虚拟机箱（VC）分裂保护、配置回滚等 SMB 高可用设计</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>OS2360 是 SMB 线的"可堆叠"档：AOS 全功能 + WebView 2.0 + 10G 虚拟机箱（10 GigE virtual chassis bandwidth up to 8 units (stacking) or 216 ports， <code>&lt;span class="pg"&gt;原文p8&lt;/span&gt;</code> ），定位于分支/校园工作组"机柜外收敛方案"（工作站/AP/IP 话机）。</li>
-<li>层级：SMB 接入，介于 2260（WebSmart+）与企业价值接入 6360 之间。</li>
-</ul>
+<p>OS2360 是 SMB 线的"可堆叠"档：AOS 全功能 + WebView 2.0 + 10G 虚拟机箱（10 GigE virtual chassis bandwidth up to 8 units (stacking) or 216 ports， <code>&lt;span class="pg"&gt;原文p8&lt;/span&gt;</code> ），定位于分支/校园工作组"机柜外收敛方案"（工作站/AP/IP 话机）。层级：SMB 接入，介于 2260（WebSmart+）与企业价值接入 6360 之间。</p>
 <h2 id="a1">A1（与相邻系列选型差异）</h2>
 <ul>
 <li>vs OS2260：2360 加了堆叠（VC 8 台）、X 型 2x10G SFP+ 上联、MAC 表 32k（2260 仅 16k）、静态路由 32 条（2260 仅 2 条）；价格高于 2260。</li>
@@ -104,13 +101,15 @@ blockquote p{margin:6px 0}
 | OS2360-P48X | 48 PoE+ | 2 | 2 | 2 | 740W |
 | OS2360-U24X | 24x100/1000FX SFP | 2 | 2 | 2 | — |
 | OS2360-U48X | 48x100/1000FX SFP | 2 | 2 | 2 | — |</p>
-<p>上联与堆叠：2x10GE VFL 堆叠容量 40 Gb/s（ <code>&lt;span class="pg"&gt;原文p10&lt;/span&gt;</code> ）；VC 最多 8 台/216 口（ <code>&lt;span class="pg"&gt;原文p8&lt;/span&gt;</code> ）；1+N 冗余管理器 + Split VC 自动检测恢复（ <code>&lt;span class="pg"&gt;原文p12&lt;/span&gt;</code> ）。
-交换容量与包转发（ <code>&lt;span class="pg"&gt;原文p10&lt;/span&gt;</code> ）：全双工+堆叠 92（24 口）/144（48 口）/128（P24X）/180 Gb/s（P48X）；帧率 68.4/107.1/95.2/133.9 Mpps；ASIC 128~216 Gb/s。
-电源体系：单一内置电源、Backup N/A（ <code>&lt;span class="pg"&gt;原文p10&lt;/span&gt;</code> ）；PoE 满载 427.2W（P24X）/891.2W（P48X）；Perpetual/Fast PoE+ 全 PoE 型号（ <code>&lt;span class="pg"&gt;原文p8&lt;/span&gt;</code> ）。
-Layer 特性：L2+ 静态路由 IPv4/IPv6（32 条 IPv4 + 16 条 IPv6 静态路由、24 IPv4 + 4 IPv6 接口， <code>&lt;span class="pg"&gt;原文p13&lt;/span&gt;</code> ）；32k MAC、4k VLAN、2k+2k ACL、12KB 巨帧、&lt;4µs（ <code>&lt;span class="pg"&gt;原文p12&lt;/span&gt;</code> ）；无动态路由/SPB/VXLAN/MPLS/MACsec。
-硬件平台：全系 1GHz MIPS 双核、1GB RAM、512MB flash、16MB 包缓冲（ <code>&lt;span class="pg"&gt;原文p10&lt;/span&gt;</code> ）。
-功耗/环境：待机 13.1~37.1W；0~45°C；MTBF 565k~1632k 小时（ <code>&lt;span class="pg"&gt;原文p10&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p11&lt;/span&gt;</code> ）。
-规格红线：无备份电源；U 型无 PoE；10G 上联仅 X 型 2 口。</p>
+<ul>
+<li>上联与堆叠：2x10GE VFL 堆叠容量 40 Gb/s（ <code>&lt;span class="pg"&gt;原文p10&lt;/span&gt;</code> ）；VC 最多 8 台/216 口（ <code>&lt;span class="pg"&gt;原文p8&lt;/span&gt;</code> ）；1+N 冗余管理器 + Split VC 自动检测恢复（ <code>&lt;span class="pg"&gt;原文p12&lt;/span&gt;</code> ）。</li>
+<li>交换容量与包转发（ <code>&lt;span class="pg"&gt;原文p10&lt;/span&gt;</code> ）：全双工+堆叠 92（24 口）/144（48 口）/128（P24X）/180 Gb/s（P48X）；帧率 68.4/107.1/95.2/133.9 Mpps；ASIC 128~216 Gb/s。</li>
+<li>电源体系：单一内置电源、Backup N/A（ <code>&lt;span class="pg"&gt;原文p10&lt;/span&gt;</code> ）；PoE 满载 427.2W（P24X）/891.2W（P48X）；Perpetual/Fast PoE+ 全 PoE 型号（ <code>&lt;span class="pg"&gt;原文p8&lt;/span&gt;</code> ）。</li>
+<li>Layer 特性：L2+ 静态路由 IPv4/IPv6（32 条 IPv4 + 16 条 IPv6 静态路由、24 IPv4 + 4 IPv6 接口， <code>&lt;span class="pg"&gt;原文p13&lt;/span&gt;</code> ）；32k MAC、4k VLAN、2k+2k ACL、12KB 巨帧、&lt;4µs（ <code>&lt;span class="pg"&gt;原文p12&lt;/span&gt;</code> ）；无动态路由/SPB/VXLAN/MPLS/MACsec。</li>
+<li>硬件平台：全系 1GHz MIPS 双核、1GB RAM、512MB flash、16MB 包缓冲（ <code>&lt;span class="pg"&gt;原文p10&lt;/span&gt;</code> ）。</li>
+<li>功耗/环境：待机 13.1~37.1W；0~45°C；MTBF 565k~1632k 小时（ <code>&lt;span class="pg"&gt;原文p10&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p11&lt;/span&gt;</code> ）。</li>
+<li>规格红线：无备份电源；U 型无 PoE；10G 上联仅 X 型 2 口。</li>
+</ul>
 <h2 id="e">E（适用场景）</h2>
 <ul>
 <li>SMB/分支多交换机堆叠为一台管理（VC 8 台、216 口一个 IP）</li>

@@ -75,11 +75,8 @@ blockquote p{margin:6px 0}
 <li>做有线+无线统一 QoS 策略、按 L7 应用限速、One Touch 语音策略</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>Quarantine Manager 是事件驱动的状态机：IPS/交换机事件→规则匹配（Banned 优先于 Candidate）→ Candidates（流量照常，等决策）/ Banned（进隔离 VLAN，走 QMR）/ Disabled Ports（端口禁用，须逐条释放）/ Never Banned（OV 与交换机隐式在内）；
-无线客户端不进 Banned 而进 Client Blocklist。</li>
-<li>PolicyView 策略存 OV 内置 LDAP，交换机被 SNMP 通知后自行拉取（Notify 是"通知-拉取"不是推送）。</li>
-</ul>
+<p>Quarantine Manager 是事件驱动的状态机：IPS/交换机事件→规则匹配（Banned 优先于 Candidate）→ Candidates（流量照常，等决策）/ Banned（进隔离 VLAN，走 QMR）/ Disabled Ports（端口禁用，须逐条释放）/ Never Banned（OV 与交换机隐式在内）；
+无线客户端不进 Banned 而进 Client Blocklist。PolicyView 策略存 OV 内置 LDAP，交换机被 SNMP 通知后自行拉取（Notify 是"通知-拉取"不是推送）。</p>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li><strong>事件处理链</strong>（frameworks·F13， <code>&lt;span class="pg"&gt;原文p457, 460-465&lt;/span&gt;</code> ）：IPS（Fortinet 2.3）/交换机发 Syslog(514)或 trap（含 IP/MAC）→规则→①Candidates（管理员 Release/Ban/Never Ban）→②Banned（Scheduled to be Banned→Completed/Partially Banned；Release 解封）→③Disabled Ports（全部条目释放端口才启用）</li>
@@ -90,11 +87,21 @@ blockquote p{margin:6px 0}
 <ul>
 <li><strong>配置 Quarantine 基础设施</strong>：Groups 建 Quarantined MAC 组→PolicyView 建 L2 Source MAC Group+Drop 策略并 Notify→Quarantine Manager→Configuration 编辑 Quarantined VLAN（VLAN/MAC 组名/Remediation URL/IP/HTTP Proxy Port/Allow Port Disabling/Allowed Subnets ≤3 个含 Remediation Server）→Apply to Devices（cases·C45， <code>&lt;span class="pg"&gt;原文p473-475&lt;/span&gt;</code> ）</li>
 <li><strong>创建自定义规则</strong>：Rules→Add：Name/Trigger Expression（如 log_id=0421073001）/Extraction Expression（如 src=([0-9.]*)）/Action（Candidate List/Quarantine/Release——Release 可供工单系统自动解封）/Event Type（Syslog/Trap）/Enabled→Create；ALE 下发的 .xml 规则用 Import 导入（默认 Disabled）（cases·C46， <code>&lt;span class="pg"&gt;原文p470-471&lt;/span&gt;</code> ）</li>
-<li><strong>处理隔离事件</strong>：Candidates 选设备 Release/Ban/Never Ban；Banned 可 Add 手工封禁（IP/MAC+Reason）/Release/Retry/Redo Ban；Disabled Ports 逐条 Release；Fortinet 事件右键跳官网分析页（cases·C47， <code>&lt;span class="pg"&gt;原文p461-465&lt;/span&gt;</code> ）</li>
-<li><strong>创建 Unified Policy 向导</strong>：PolicyView→Unified Policies→Add：Config for Policy（Name/Precedence 自动填最低未用值）→Device Selection（Devices+AP Groups）→Set Condition（L2 MACs/L3 IPs/L3 DSCP-TOS/L4 Services/L7 Application Visibility/ICMP）→Set Action（QoS/TCM）→Validity Period→Review（cases·C39， <code>&lt;span class="pg"&gt;原文p388-396&lt;/span&gt;</code> ）</li>
+<li>处理隔离事件：Candidates 选设备 Release/Ban/Never Ban；</li>
+<li>Banned 可 Add 手工封禁（IP/MAC+Reason）/Release/Retry/Redo Ban；</li>
+<li>Disabled Ports 逐条 Release；</li>
+<li>
+<p>Fortinet 事件右键跳官网分析页（cases·C47， <code>&lt;span class="pg"&gt;原文p461-465&lt;/span&gt;</code> ）；</p>
+</li>
+<li>
+<p><strong>创建 Unified Policy 向导</strong>：PolicyView→Unified Policies→Add：Config for Policy（Name/Precedence 自动填最低未用值）→Device Selection（Devices+AP Groups）→Set Condition（L2 MACs/L3 IPs/L3 DSCP-TOS/L4 Services/L7 Application Visibility/ICMP）→Set Action（QoS/TCM）→Validity Period→Review（cases·C39， <code>&lt;span class="pg"&gt;原文p388-396&lt;/span&gt;</code> ）</p>
+</li>
 <li><strong>One Touch Data 策略</strong>：选 Priority（Platinum/Gold/Silver/Bronze）→Add 输 Server IP→Create（Unsaved）→Save 存 LDAP→Notify All 下发（触发全网 flush+reload，注意批量）（cases·C40， <code>&lt;span class="pg"&gt;原文p403&lt;/span&gt;</code> ）</li>
 <li><strong>PolicyView 后保存配置四步</strong>：按 Changes 列排序→Unsaved 设备 Save to Running→Uncertified 设备 Copy Working/Running to Certified（cases·C38， <code>&lt;span class="pg"&gt;原文p386&lt;/span&gt;</code> ）</li>
-<li><strong>TAD 流量异常检测</strong>：OS6850/6855/9700 AOS 6.4.6.R01+；最多 32 组、14 种异常类型（ARP×3/ICMP×3/TCP×8）；Sensitivity 默认 50；Log/Trap/Quarantine 默认全 Disabled（principles·P140/P141， <code>&lt;span class="pg"&gt;原文p478-479&lt;/span&gt;</code> ）</li>
+<li>TAD 流量异常检测：OS6850/6855/9700 AOS 6.4.6.R01+；</li>
+<li>最多 32 组、14 种异常类型（ARP×3/ICMP×3/TCP×8）；</li>
+<li>Sensitivity 默认 50；</li>
+<li>Log/Trap/Quarantine 默认全 Disabled（principles·P140/P141， <code>&lt;span class="pg"&gt;原文p478-479&lt;/span&gt;</code> ）；</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>

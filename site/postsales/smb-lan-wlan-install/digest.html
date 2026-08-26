@@ -72,35 +72,123 @@ blockquote p{margin:6px 0}
 <h2 id="_1">一、本书核心知识地图</h2>
 <p>全书沿"设备 → 交换机基础 → 无线 → 云管 → 排障"一条主线展开，可拆为六块：</p>
 <ol>
-<li><strong>产品与选型</strong>：OmniSwitch LAN 家族按"Gig/10G/Hardeded/大型 + 接入-汇聚-核心"两轴定位（ <code>&lt;span class="pg"&gt;原文p12&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p13&lt;/span&gt;</code> ）；Stellar AP 覆盖 Wi-Fi 6/6E/7（ <code>&lt;span class="pg"&gt;原文p16&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p18&lt;/span&gt;</code> ）；Wi-Fi 代际九维对照表（Wi-Fi 6 = 9.6Gbps/WPA3，Wi-Fi 7 = 46Gbps/320MHz/MLO， <code>&lt;span class="pg"&gt;原文p45&lt;/span&gt;</code> ）。</li>
-<li><strong>交换机基础管理</strong>：默认凭据 admin/switch、Console 115200 8N1（ <code>&lt;span class="pg"&gt;原文p60&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p65&lt;/span&gt;</code> ）、ASA 各管理通道独立认证开关（ <code>&lt;span class="pg"&gt;原文p58&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p59&lt;/span&gt;</code> ）、Lightning Config 开箱 5 分钟交付（ <code>&lt;span class="pg"&gt;原文p474&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p490&lt;/span&gt;</code> ）。</li>
-<li><strong>AOS 配置管理</strong>：working/certified/user-defined 三层目录 + RAM 运行配置的状态机与回滚模型（ <code>&lt;span class="pg"&gt;原文p118&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p137&lt;/span&gt;</code> ）。</li>
-<li><strong>二层/三层组网</strong>：VLAN 划分与 tagged/untagged 分配（ <code>&lt;span class="pg"&gt;原文p158&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p175&lt;/span&gt;</code> ）、PoE 四标准预算（ <code>&lt;span class="pg"&gt;原文p147&lt;/span&gt;</code> ）、STP 防环与 LACP 聚合（ <code>&lt;span class="pg"&gt;原文p238&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p260&lt;/span&gt;</code> ）。</li>
-<li><strong>无线</strong>：Stellar 三部署模式（Express/Enterprise/Cloud）与 AP Group 自动成组、PVM/SVM 选举（ <code>&lt;span class="pg"&gt;原文p185&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p268&lt;/span&gt;</code> ）、SSID→VLAN→认证策略设计（ <code>&lt;span class="pg"&gt;原文p215&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p235&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p365&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p425&lt;/span&gt;</code> ）。</li>
-<li><strong>云管与运维</strong>：OV Cirrus 上线状态机到 OV Managed（ <code>&lt;span class="pg"&gt;原文p282&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p360&lt;/span&gt;</code> ）、许可订阅生命周期（ <code>&lt;span class="pg"&gt;原文p295&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p300&lt;/span&gt;</code> ）、计划升级与支持信息收集（ <code>&lt;span class="pg"&gt;原文p451&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p456&lt;/span&gt;</code> ）。</li>
+<li>
+<p>产品与选型：OmniSwitch LAN 家族按"Gig/10G/Hardeded/大型 + 接入-汇聚-核心"两轴定位（ <code>&lt;span class="pg"&gt;原文p12&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p13&lt;/span&gt;</code> ）；</p>
+<ul>
+<li>Stellar AP 覆盖 Wi-Fi 6/6E/7（ <code>&lt;span class="pg"&gt;原文p16&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p18&lt;/span&gt;</code> ）；</li>
+<li>Wi-Fi 代际九维对照表（Wi-Fi 6 = 9.6Gbps/WPA3，Wi-Fi 7 = 46Gbps/320MHz/MLO， <code>&lt;span class="pg"&gt;原文p45&lt;/span&gt;</code> ）；</li>
+</ul>
+</li>
+<li>
+<p>交换机基础管理：默认凭据 admin/switch、Console 115200 8N1（ <code>&lt;span class="pg"&gt;原文p60&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p65&lt;/span&gt;</code> ）、ASA 各管理通道独立认证开关（ <code>&lt;span class="pg"&gt;原文p58&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p59&lt;/span&gt;</code> ）、Lightning Config 开箱 5 分钟交付（ <code>&lt;span class="pg"&gt;原文p474&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p490&lt;/span&gt;</code> ）。</p>
+<ul>
+<li>
+<ol>
+<li>AOS 配置管理：working/certified/user-defined 三层目录 + RAM 运行配置的状态机与回滚模型（ <code>&lt;span class="pg"&gt;原文p118&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p137&lt;/span&gt;</code> ）。</li>
 </ol>
-<p>对应的 9 个技能单元：switch-first-setup / aos-config-management / vlan-port-assignment / poe-power-design / stp-lacp-basics / stellar-mode-selection / ssid-security-design / guest-access-design / cirrus-onboarding / smb-troubleshooting（排障为横向技能）。</p>
+</li>
+<li>
+<ol>
+<li>二层/三层组网：VLAN 划分与 tagged/untagged 分配（ <code>&lt;span class="pg"&gt;原文p158&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p175&lt;/span&gt;</code> ）、PoE 四标准预算（ <code>&lt;span class="pg"&gt;原文p147&lt;/span&gt;</code> ）、STP 防环与 LACP 聚合（ <code>&lt;span class="pg"&gt;原文p238&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p260&lt;/span&gt;</code> ）。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>无线：Stellar 三部署模式（Express/Enterprise/Cloud）与 AP Group 自动成组、PVM/SVM 选举（ <code>&lt;span class="pg"&gt;原文p185&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p268&lt;/span&gt;</code> ）、SSID→VLAN→认证策略设计（ <code>&lt;span class="pg"&gt;原文p215&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p235&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p365&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p425&lt;/span&gt;</code> ）。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>云管与运维：OV Cirrus 上线状态机到 OV Managed（ <code>&lt;span class="pg"&gt;原文p282&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p360&lt;/span&gt;</code> ）、许可订阅生命周期（ <code>&lt;span class="pg"&gt;原文p295&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p300&lt;/span&gt;</code> ）、计划升级与支持信息收集（ <code>&lt;span class="pg"&gt;原文p451&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p456&lt;/span&gt;</code> ）。</li>
+</ol>
+</li>
+</ul>
+</li>
+</ol>
+<p>对应的 9 个技能单元：switch-first-setup：
+- aos-config-management
+- vlan-port-assignment
+- poe-power-design
+- stp-lacp-basics
+- stellar-mode-selection
+- ssid-security-design
+- guest-access-design
+- cirrus-onboarding
+- smb-troubleshooting（排障为横向技能）。</p>
 <h2 id="10">二、最重要的 10 个知识点串讲</h2>
-<p><strong>1. AOS 三层目录状态机——一切配置操作的底层模型。</strong>
-Flash 分 certified（已认证稳定目录）与 working（待验证目录），运行配置在 RAM。<code>write memory flash-synchro</code> = 保存 + 认证同步一步完成（ <code>&lt;span class="pg"&gt;原文p122&lt;/span&gt;</code> ）。三个致命特例：<code>reload all</code> 无条件从 certified 启动（ <code>&lt;span class="pg"&gt;原文p132&lt;/span&gt;</code> ）；未保存的修改重启即丢（ <code>&lt;span class="pg"&gt;原文p133&lt;/span&gt;</code> ）；从 certified 运行时 <code>write memory</code> 直接报错（ <code>&lt;span class="pg"&gt;原文p135&lt;/span&gt;</code> ）。验证新配置永远用 <code>reload from working no rollback-timeout</code>。</p>
-<p><strong>2. Lightning Config——开箱交付的标准路径。</strong>
-五项前置（仅 1/2 口接入、无既有配置、无 DHCP 分配、无 RCL/NMS）满足时，Chrome 访问 https://192.168.0.1 走向导，单台 5 分钟通流量（ <code>&lt;span class="pg"&gt;原文p75&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p474&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p490&lt;/span&gt;</code> ）。红线：配置前禁止接入网络或互联——所有新机默认同 IP 192.168.0.1 必冲突（ <code>&lt;span class="pg"&gt;原文p486&lt;/span&gt;</code> ）。</p>
-<p><strong>3. PoE 预算与优先级断电顺序。</strong>
-四标准：af 15.4W / at 30W / bt Type3 60W / Type4 100W（PD 可用 12.95/25.5/51/71W， <code>&lt;span class="pg"&gt;原文p147&lt;/span&gt;</code> ）。超预算按 Low → High → Critical 断电，AP 上联口应设 <code>priority critical</code>（ <code>&lt;span class="pg"&gt;原文p151&lt;/span&gt;</code> ）。特性三选：Fast PoE 秒级供电、Perpetual PoE 重启不断电、delayed-start 等系统稳定（但与 FPoE/PPoE 互斥， <code>&lt;span class="pg"&gt;原文p154&lt;/span&gt;</code> ）。</p>
-<p><strong>4. STP 防环是二层生存底线。</strong>
-OmniSwitch 默认 per-VLAN 模式；RSTP/MSTP 收敛 &lt;1 秒 vs STP 50 秒（ <code>&lt;span class="pg"&gt;原文p238&lt;/span&gt;</code> ）。按 VLAN 调 <code>spantree vlan 20 priority 20000</code> 可让阻塞端口错开，白拿负载分担（ <code>&lt;span class="pg"&gt;原文p240&lt;/span&gt;</code> ）。物理环路未防环会拖垮全网，接线前必须确认 loop avoidance（ <code>&lt;span class="pg"&gt;原文p494&lt;/span&gt;</code> ）。</p>
-<p><strong>5. LACP 优于静态聚合。</strong>
+<ol>
+<li>
+<p>AOS 三层目录状态机——一切配置操作的底层模型。</p>
+<ul>
+<li>Flash 分 certified（已认证稳定目录）与 working（待验证目录），运行配置在 RAM。</li>
+<li><code>write memory flash-synchro</code> = 保存 + 认证同步一步完成（ <code>&lt;span class="pg"&gt;原文p122&lt;/span&gt;</code> ）。</li>
+<li>三个致命特例：<code>reload all</code> 无条件从 certified 启动（ <code>&lt;span class="pg"&gt;原文p132&lt;/span&gt;</code> ）；未保存的修改重启即丢（ <code>&lt;span class="pg"&gt;原文p133&lt;/span&gt;</code> ）；从 certified 运行时 <code>write memory</code> 直接报错（ <code>&lt;span class="pg"&gt;原文p135&lt;/span&gt;</code> ）。</li>
+<li>验证新配置永远用 <code>reload from working no rollback-timeout</code>。</li>
+</ul>
+</li>
+<li>
+<p>Lightning Config——开箱交付的标准路径。</p>
+<ul>
+<li>五项前置（仅 1/2 口接入、无既有配置、无 DHCP 分配、无 RCL/NMS）满足时，Chrome 访问 https://192.168.0.1 走向导，单台 5 分钟通流量（ <code>&lt;span class="pg"&gt;原文p75&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p474&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p490&lt;/span&gt;</code> ）。</li>
+<li>红线：配置前禁止接入网络或互联——所有新机默认同 IP 192.168.0.1 必冲突（ <code>&lt;span class="pg"&gt;原文p486&lt;/span&gt;</code> ）。</li>
+</ul>
+</li>
+<li>
+<p>PoE 预算与优先级断电顺序。</p>
+<ul>
+<li>四标准：af 15.4W / at 30W / bt Type3 60W / Type4 100W（PD 可用 12.95/25.5/51/71W， <code>&lt;span class="pg"&gt;原文p147&lt;/span&gt;</code> ）。</li>
+<li>超预算按 Low → High → Critical 断电，AP 上联口应设 <code>priority critical</code>（ <code>&lt;span class="pg"&gt;原文p151&lt;/span&gt;</code> ）。</li>
+<li>特性三选：Fast PoE 秒级供电、Perpetual PoE 重启不断电、delayed-start 等系统稳定（但与 FPoE/PPoE 互斥， <code>&lt;span class="pg"&gt;原文p154&lt;/span&gt;</code> ）。</li>
+</ul>
+</li>
+<li>
+<p>STP 防环是二层生存底线。</p>
+<ul>
+<li>OmniSwitch 默认 per-VLAN 模式；RSTP/MSTP 收敛 &lt;1 秒 vs STP 50 秒（ <code>&lt;span class="pg"&gt;原文p238&lt;/span&gt;</code> ）。</li>
+<li>按 VLAN 调 <code>spantree vlan 20 priority 20000</code> 可让阻塞端口错开，白拿负载分担（ <code>&lt;span class="pg"&gt;原文p240&lt;/span&gt;</code> ）。</li>
+<li>物理环路未防环会拖垮全网，接线前必须确认 loop avoidance（ <code>&lt;span class="pg"&gt;原文p494&lt;/span&gt;</code> ）。</li>
+</ul>
+</li>
+<li>
+<p><strong>LACP 优于静态聚合。</strong>
 静态聚合仅 ALE 设备互通；LACP 经 LACPDU 跨厂商协商最优参数（ <code>&lt;span class="pg"&gt;原文p252&lt;/span&gt;</code> ）。<code>hash-control extended</code> 把四层端口纳入哈希、分担更均匀（ <code>&lt;span class="pg"&gt;原文p259&lt;/span&gt;</code> ）；组播默认走聚合主端口，需显式开启 non-ucast 哈希（ <code>&lt;span class="pg"&gt;原文p260&lt;/span&gt;</code> ）。</p>
-<p><strong>6. Stellar 三模式决策树——AP 上电自动选型。</strong>
+</li>
+<li>
+<p><strong>Stellar 三模式决策树——AP 上电自动选型。</strong>
 DHCP option 138 有 OV2500 地址 → Enterprise；否则联系 Cirrus，MAC/SN 已注册 → Cloud；未注册 → Express 落地（ <code>&lt;span class="pg"&gt;原文p198&lt;/span&gt;</code> ）。规模上限 255 / 4000 / 10000 台对应选型（ <code>&lt;span class="pg"&gt;原文p185&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p189&lt;/span&gt;</code> ）。</p>
-<p><strong>7. AP Group 自动成组与 PVM 选举。</strong>
-同 Group ID + 同 VLAN 即自动成组，出厂 Group ID 100（ <code>&lt;span class="pg"&gt;原文p202&lt;/span&gt;</code> ）；PVM/SVM 先比型号高低再比 MAC 大小（ <code>&lt;span class="pg"&gt;原文p203&lt;/span&gt;</code> ）。两大坑：多台新 AP 默认 IP 都是 192.168.1.254 会冲突（ <code>&lt;span class="pg"&gt;原文p101&lt;/span&gt;</code> ）；AP 入组后本地配置被 PVM 下发的组配置覆盖（ <code>&lt;span class="pg"&gt;原文p266&lt;/span&gt;</code> ）。</p>
-<p><strong>8. SSID→VLAN→认证三级分流。</strong>
-客户端连 SSID 自动落入预定义 VLAN（ <code>&lt;span class="pg"&gt;原文p215&lt;/span&gt;</code> ）；认证三档：Personal 密码、Enterprise 802.1X（UPAM 或外部 RADIUS）、Open + Captive Portal（访客）。用户策略用 ARP（Access Role Profile）六元组描述：VLAN/QoS/防火墙/L7/位置/时段（ <code>&lt;span class="pg"&gt;原文p376&lt;/span&gt;</code> ），裁决顺序外部源 &gt; 内部库 &gt; 认证策略 &gt; SSID 默认（ <code>&lt;span class="pg"&gt;原文p382&lt;/span&gt;</code> ）。三角色基线：员工全访问高带宽、访客仅 internet 低优先级、话机低带宽高优先级（ <code>&lt;span class="pg"&gt;原文p217&lt;/span&gt;</code> ）。</p>
-<p><strong>9. Cirrus 上线 = 设备 call-home + 云侧申报双向握手。</strong>
-前提：交换机 AOS ≥ 8.9R1（OS2360 不行， <code>&lt;span class="pg"&gt;原文p337&lt;/span&gt;</code> ）、AP AWOS ≥ 4.0.6 且排除 AP1101/AP1201L/H/HL（ <code>&lt;span class="pg"&gt;原文p290&lt;/span&gt;</code> ）、防火墙与 DHCP option 就绪。cloud-agent 默认 30 分钟重试（ <code>&lt;span class="pg"&gt;原文p314&lt;/span&gt;</code> ），状态机走 Registered → … → OV Managed 才算受管（ <code>&lt;span class="pg"&gt;原文p309&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p310&lt;/span&gt;</code> ）。云侧四步：申报 SN → 分组 → 下发配置 → 确认 OV Managed（ <code>&lt;span class="pg"&gt;原文p282&lt;/span&gt;</code> ）。</p>
-<p><strong>10. 分层排障方法论。</strong>
-L2（线缆/VLAN/PoE）→ L3（IP 接口/ping 激活域名）→ 设备侧（getmode/ocloud_show）→ 平台侧（激活日志/认证记录）（ <code>&lt;span class="pg"&gt;原文p347&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p360&lt;/span&gt;</code> ）。无线侧 support 凭据下有 iwconfig / ssudo sta_list / wam_debug sta_list / eag_cli / tcpdump 完整工具链（ <code>&lt;span class="pg"&gt;原文p397&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p430&lt;/span&gt;</code> ）。LED 是最快的物理层判读：AP 绿闪 = 就绪、蓝红闪 = 升级中（ <code>&lt;span class="pg"&gt;原文p52&lt;/span&gt;</code> ）；PoE 口琥珀 = 受电、绿 = 未受电（ <code>&lt;span class="pg"&gt;原文p143&lt;/span&gt;</code> ）。</p>
+</li>
+<li>
+<p>AP Group 自动成组与 PVM 选举。</p>
+<ul>
+<li>同 Group ID + 同 VLAN 即自动成组，出厂 Group ID 100（ <code>&lt;span class="pg"&gt;原文p202&lt;/span&gt;</code> ）；PVM/SVM 先比型号高低再比 MAC 大小（ <code>&lt;span class="pg"&gt;原文p203&lt;/span&gt;</code> ）。</li>
+<li>两大坑：多台新 AP 默认 IP 都是 192.168.1.254 会冲突（ <code>&lt;span class="pg"&gt;原文p101&lt;/span&gt;</code> ）；AP 入组后本地配置被 PVM 下发的组配置覆盖（ <code>&lt;span class="pg"&gt;原文p266&lt;/span&gt;</code> ）。</li>
+</ul>
+</li>
+<li>
+<p>SSID→VLAN→认证三级分流。</p>
+<ul>
+<li>客户端连 SSID 自动落入预定义 VLAN（ <code>&lt;span class="pg"&gt;原文p215&lt;/span&gt;</code> ）；认证三档：Personal 密码、Enterprise 802.1X（UPAM 或外部 RADIUS）、Open + Captive Portal（访客）。</li>
+<li>用户策略用 ARP（Access Role Profile）六元组描述：VLAN/QoS/防火墙/L7/位置/时段（ <code>&lt;span class="pg"&gt;原文p376&lt;/span&gt;</code> ），裁决顺序外部源 &gt; 内部库 &gt; 认证策略 &gt; SSID 默认（ <code>&lt;span class="pg"&gt;原文p382&lt;/span&gt;</code> ）。</li>
+<li>三角色基线：员工全访问高带宽、访客仅 internet 低优先级、话机低带宽高优先级（ <code>&lt;span class="pg"&gt;原文p217&lt;/span&gt;</code> ）。</li>
+</ul>
+</li>
+<li>
+<p>Cirrus 上线 = 设备 call-home + 云侧申报双向握手。</p>
+<ul>
+<li>前提：交换机 AOS ≥ 8.9R1（OS2360 不行， <code>&lt;span class="pg"&gt;原文p337&lt;/span&gt;</code> ）、AP AWOS ≥ 4.0.6 且排除 AP1101/AP1201L/H/HL（ <code>&lt;span class="pg"&gt;原文p290&lt;/span&gt;</code> ）、防火墙与 DHCP option 就绪。</li>
+<li>cloud-agent 默认 30 分钟重试（ <code>&lt;span class="pg"&gt;原文p314&lt;/span&gt;</code> ），状态机走 Registered → … → OV Managed 才算受管（ <code>&lt;span class="pg"&gt;原文p309&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p310&lt;/span&gt;</code> ）。</li>
+<li>云侧四步：申报 SN → 分组 → 下发配置 → 确认 OV Managed（ <code>&lt;span class="pg"&gt;原文p282&lt;/span&gt;</code> ）。</li>
+</ul>
+</li>
+<li>
+<p>分层排障方法论。</p>
+<ul>
+<li>L2（线缆/VLAN/PoE）→ L3（IP 接口/ping 激活域名）→ 设备侧（getmode/ocloud_show）→ 平台侧（激活日志/认证记录）（ <code>&lt;span class="pg"&gt;原文p347&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p360&lt;/span&gt;</code> ）。</li>
+<li>无线侧 support 凭据下有 iwconfig / ssudo sta_list / wam_debug sta_list / eag_cli / tcpdump 完整工具链（ <code>&lt;span class="pg"&gt;原文p397&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p430&lt;/span&gt;</code> ）。</li>
+<li>LED 是最快的物理层判读：AP 绿闪 = 就绪、蓝红闪 = 升级中（ <code>&lt;span class="pg"&gt;原文p52&lt;/span&gt;</code> ）；PoE 口琥珀 = 受电、绿 = 未受电（ <code>&lt;span class="pg"&gt;原文p143&lt;/span&gt;</code> ）。</li>
+</ul>
+</li>
+</ol>
 <h2 id="_2">三、一句话总结</h2>
 <p>SMB 交付的本质是三条确定性链路：配置链（Lightning Config → working/certified 状态机 → flash-synchro 固化）、供电与链路链（PoE 预算 + critical 优先级 + STP/LACP 防环扩带宽）、管理链（三模式选型 → AP Group 成组 → 按需上 Cirrus 到 OV Managed）；
 排障永远分层走，先怀疑环境默认行为（端口 disabled、non-https 门户、IP 冲突），再怀疑故障。</p>

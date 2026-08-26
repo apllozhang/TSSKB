@@ -73,11 +73,30 @@ blockquote p{margin:6px 0}
 </blockquote>
 <h2 id="i">I · 方法论骨架</h2>
 <ol>
-<li><strong>标准演进主线</strong>：802.11 基线（1997）→ b/a/g/n/ac/ax/be；与 ALE 产品对应（AP1301-1360=WiFi 6，AP1411/1431/1451=6E，AP1511/1521=WiFi 7）。</li>
-<li><strong>WiFi 6/7 技术分工</strong>：MU-MIMO 管大包高带宽（容量），OFDMA 管小包低时延（效率）；QAM 密度决定速率（256→1024→4096）；BSS Coloring/TWT/MRU/MLO 逐代叠加。</li>
-<li><strong>天线三分类</strong>：全向（内置默认，点对多点短距）/ 半定向（Patch/Yagi，点对点中短距）/ 高定向（Grid，长距）。</li>
-<li><strong>安全演进链</strong>：WEP（禁用）→ WPA/TKIP（过渡）→ WPA2/AES-CCMP（当代最低线）→ WPA3（SAE + 可选 CNSA 192 位）；认证信任梯：Open+门户 &lt; MAC &lt; PSK &lt; 802.1X。</li>
-<li><strong>监管红线</strong>：6 GHz 室外需 AFC（FCC 域 36 dBm，EU 禁标准功率室外，LPI 23 dBm / VLP 14 dBm）；换天线必须复核 EIRP。</li>
+<li>标准演进主线：802.11 基线（1997）→ b/a/g/n/ac/ax/be；与 ALE 产品对应（AP1301-1360=WiFi 6，AP1411/1431/1451=6E，AP1511/1521=WiFi 7）。<ul>
+<li>
+<ol>
+<li>WiFi 6/7 技术分工：MU-MIMO 管大包高带宽（容量），OFDMA 管小包低时延（效率）；QAM 密度决定速率（256→1024→4096）；BSS Coloring/TWT/MRU/MLO 逐代叠加。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>天线三分类：全向（内置默认，点对多点短距）/ 半定向（Patch/Yagi，点对点中短距）/ 高定向（Grid，长距）。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>安全演进链：WEP（禁用）→ WPA/TKIP（过渡）→ WPA2/AES-CCMP（当代最低线）→ WPA3（SAE + 可选 CNSA 192 位）；
+认证信任梯：Open+门户 &lt; MAC &lt; PSK &lt; 802.1X。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>监管红线：6 GHz 室外需 AFC（FCC 域 36 dBm，EU 禁标准功率室外，LPI 23 dBm / VLP 14 dBm）；换天线必须复核 EIRP。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="a1-lab">A1 · 书中案例（Lab 精要）</h2>
 <p>教材 Lab 用 WPA3_AES + 802.1X（PEAP/MSCHAPv2）构建员工 SSID（p305 起），体现理论链的落地形态：Enterprise 认证 + AES 加密 + 内置 UPAM RADIUS。WPA3 CNSA 选项开启后仅 WPA3 终端可入，AP1101 唯一不支持 CNSA。</p>
@@ -89,11 +108,29 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
-<li>判断终端/业务类型：大包高带宽看 MU-MIMO，小包低时延（IoT/语音）看 OFDMA/TWT。</li>
+<li>判断终端/业务类型：大包高带宽看 MU-MIMO，小包低时延（IoT/语音）看 OFDMA/TWT。<ul>
+<li>
+<ol>
 <li>选天线：室内覆盖用内置全向；走廊覆盖用半定向；楼宇间桥接用高定向；选型后核对法定 EIRP。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>选安全级别：员工=802.1X+WPA3；访客=门户；哑终端=MAC；遗留 WEP 立即迁移。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>部署 6E 室外前核对本地区功率等级（FCC AFC / EU LPI/VLP）。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>排障速率问题时按"SNR→QAM 回落"链解释：距离远/干扰强自动降调制阶数。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>

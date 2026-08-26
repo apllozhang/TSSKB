@@ -90,17 +90,53 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
-<li>备份基线：完成全部配置后立即在 Web UI 导出整组配置文件（单台 AP 固件升级约 5 分钟，留足窗口）。</li>
+<li>备份基线：完成全部配置后立即在 Web UI 导出整组配置文件（单台 AP 固件升级约 5 分钟，留足窗口）。<ul>
+<li>
+<ol>
 <li>升级流程：整组升级 → 完成后清浏览器 Cookies 与 Cache（官方强烈建议，否则旧资源导致界面异常）。</li>
-<li>日志与时间：组内 AP 每 15 分钟 NTP 同步；Syslog 默认级别 Notice（0-7，含更低级别）；单 AP 本地日志 1MB FIFO 滚动。SNMPv3 认证固定 sha、加密固定 aes128。</li>
-<li>换 PVM：先把 SVM 升级为 PVM（AP Window "Update to PVM"）再断开旧 PVM；换 SVM/成员可直接换，不影响其他 AP 用户。新增 AP 前确保 PVM 不处于 Down 状态。</li>
-<li>扩组三法：a) 按交换机端口默认 VLAN 划不同子网；
-b) 每组配不同 group ID；
-c) 转 OmniVista 管理扩到 4000 台。转 OV On-Premise 可用 DHCP Option 138/43 自动下发 OV 服务器地址，转换后 AP 会重启注册（留变更窗口）。</li>
-<li>Out-of-box MESH：新 AP 不接有线直接上电 → 自动用内置 SSID "Stellar-MESH"（2.4G）建链，管理员只需指定根节点。Mesh 链路根到叶必须同频段；组播速率默认 24 Mbps。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>日志与时间：组内 AP 每 15 分钟 NTP 同步；Syslog 默认级别 Notice（0-7，含更低级别）；单 AP 本地日志 1MB FIFO 滚动。</li>
+</ol>
+</li>
+<li>SNMPv3 认证固定 sha、加密固定 aes128。</li>
+<li>
+<ol>
+<li>换 PVM：先把 SVM 升级为 PVM（AP Window "Update to PVM"）再断开旧 PVM；换 SVM/成员可直接换，不影响其他 AP 用户。</li>
+</ol>
+</li>
+<li>新增 AP 前确保 PVM 不处于 Down 状态。</li>
+<li>
+<ol>
+<li>扩组三法：a) 按交换机端口默认 VLAN 划不同子网；b) 每组配不同 group ID；c) 转 OmniVista 管理扩到 4000 台。</li>
+</ol>
+</li>
+<li>转 OV On-Premise 可用 DHCP Option 138/43 自动下发 OV 服务器地址，转换后 AP 会重启注册（留变更窗口）。</li>
+<li>
+<ol>
+<li>Out-of-box MESH：新 AP 不接有线直接上电 → 自动用内置 SSID "Stellar-MESH"（2.4G）建链，管理员只需指定根节点。</li>
+</ol>
+</li>
+<li>Mesh 链路根到叶必须同频段；组播速率默认 24 Mbps。</li>
+<li>
+<ol>
 <li>Wireless Bridge：按需部署点对点网桥；桥接 AP 不服务无线客户端（与 MESH 不同）。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>崩溃取证：预先启用 PMD 并指定 TFTP 服务器。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>扫描数据采集：需要 RF Environment 数据时让 AP 进扫描模式——One Time（5 分钟自动恢复）或 Always（拒绝接入）。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>

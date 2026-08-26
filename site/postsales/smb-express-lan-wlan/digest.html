@@ -129,8 +129,15 @@ blockquote p{margin:6px 0}
 </ul>
 <h3 id="7">7. 交换机高可用：五件套按需组合</h3>
 <ul>
-<li><strong>Virtual Chassis</strong>：多台虚拟成单逻辑设备，VFL 互联，ISIS-VC 管理拓扑，免 STP/VRRP/许可证（ <code>&lt;span class="pg"&gt;原文p468&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p471&lt;/span&gt;</code> ）；Master 选举按 priority → uptime → chassis ID → MAC（ <code>&lt;span class="pg"&gt;原文p472&lt;/span&gt;</code> ）；分裂双检测 RCD（带外走 EMP，原 Slave 关全部用户口）+ VSCP（ <code>&lt;span class="pg"&gt;原文p476&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p477&lt;/span&gt;</code> ）；ISSU 逐台 slave 升级（ <code>&lt;span class="pg"&gt;原文p478&lt;/span&gt;</code> ）。</li>
-<li><strong>LACP</strong>：<code>linkagg lacp agg N size 2 actor admin-key N</code> 关联端口（ <code>&lt;span class="pg"&gt;原文p576&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p588&lt;/span&gt;</code> ）；负载哈希 extended 含四层端口更均匀（ <code>&lt;span class="pg"&gt;原文p583&lt;/span&gt;</code> ）。</li>
+<li>Virtual Chassis：多台虚拟成单逻辑设备，VFL 互联，ISIS-VC 管理拓扑，免 STP/VRRP/许可证（ <code>&lt;span class="pg"&gt;原文p468&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p471&lt;/span&gt;</code> ）；</li>
+<li>Master 选举按 priority → uptime → chassis ID → MAC（ <code>&lt;span class="pg"&gt;原文p472&lt;/span&gt;</code> ）；</li>
+<li>分裂双检测 RCD（带外走 EMP，原 Slave 关全部用户口）+ VSCP（ <code>&lt;span class="pg"&gt;原文p476&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p477&lt;/span&gt;</code> ）；</li>
+<li>
+<p>ISSU 逐台 slave 升级（ <code>&lt;span class="pg"&gt;原文p478&lt;/span&gt;</code> ）；</p>
+</li>
+<li>
+<p><strong>LACP</strong>：<code>linkagg lacp agg N size 2 actor admin-key N</code> 关联端口（ <code>&lt;span class="pg"&gt;原文p576&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p588&lt;/span&gt;</code> ）；负载哈希 extended 含四层端口更均匀（ <code>&lt;span class="pg"&gt;原文p583&lt;/span&gt;</code> ）。</p>
+</li>
 <li><strong>STP</strong>：默认 per-VLAN 模式，RSTP 亚秒收敛（ <code>&lt;span class="pg"&gt;原文p604&lt;/span&gt;</code> ）；1x1 模式按 VLAN 分根桥做负载分担（ <code>&lt;span class="pg"&gt;原文p606&lt;/span&gt;</code> ）。</li>
 <li><strong>DHL</strong>：按 VLAN 划分活跃链路的双活方案，DHL 端口自动关 STP；默认 mac-flushing=none 会留过期 MAC，生产显式配 <code>dhl 1 mac-flushing raw</code>（ <code>&lt;span class="pg"&gt;原文p628&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p630&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p642&lt;/span&gt;</code> ）。</li>
 <li><strong>VRRP</strong>：虚拟 MAC 00-00-5E-00-01-VRID，多 VRID 负载分担；改 priority 必须先 disable（ <code>&lt;span class="pg"&gt;原文p674&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p675&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p689&lt;/span&gt;</code> ）。</li>

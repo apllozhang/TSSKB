@@ -67,10 +67,7 @@ blockquote p{margin:6px 0}
 <li>Primary 恢复后需要会话回切（Preemption 规划）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>冗余五级阶梯（F2， <code>&lt;span class="pg"&gt;原文p14-19&lt;/span&gt;</code> ）：R0 单交换机+单 Hairpin，交换机/Hairpin/连接三单点任一故障 SSID 全灭（X7）；R1 给 Hairpin 两侧各建 linkagg——只修端口级故障并顺带翻倍带宽，不修整机与连接（X8），可与 R2/R3/R4 叠加；R2 SSID 填 Backup GRE Server IP，整机切换秒级收敛，备机配置=主机（VPN ID 必须一致），Preemption 可回切（P16）；R3 两机组 Virtual-Chassis + 跨成员 linkagg，亚秒收敛，Hairpin/连接/整机全覆盖；R4 每 SSID 一对交换机（建议异地），连续故障或整站宕机只伤单个 SSID，最高等级。</li>
-<li>选型主线：预算从低到高、收敛从秒到亚秒、爆炸半径从全网到单 SSID。</li>
-</ul>
+<p>冗余五级阶梯（F2， <code>&lt;span class="pg"&gt;原文p14-19&lt;/span&gt;</code> ）：R0 单交换机+单 Hairpin，交换机/Hairpin/连接三单点任一故障 SSID 全灭（X7）；R1 给 Hairpin 两侧各建 linkagg——只修端口级故障并顺带翻倍带宽，不修整机与连接（X8），可与 R2/R3/R4 叠加；R2 SSID 填 Backup GRE Server IP，整机切换秒级收敛，备机配置=主机（VPN ID 必须一致），Preemption 可回切（P16）；R3 两机组 Virtual-Chassis + 跨成员 linkagg，亚秒收敛，Hairpin/连接/整机全覆盖；R4 每 SSID 一对交换机（建议异地），连续故障或整站宕机只伤单个 SSID，最高等级。选型主线：预算从低到高、收敛从秒到亚秒、爆炸半径从全网到单 SSID。</p>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>定可用性目标：容忍秒级中断→R2；要求亚秒不中断→R3；地理容灾/按业务分级→R4</li>

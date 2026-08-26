@@ -71,11 +71,31 @@ blockquote p{margin:6px 0}
 </blockquote>
 <h2 id="i">I · 方法论骨架</h2>
 <ol>
-<li><strong>五步法主线</strong>（AOS 独有教学结构）：①Underlay（L3 路由底座）→ ②Overlay（MP-BGP EVPN）→ ③Service Access（接入口启用以太网段）→ ④Service（EVPN-VXLAN 业务实例化）→ ⑤SAP（业务接入点绑定 VLAN）。Part2-5 依次叠加 IRB/DAG、MAC 学习/Proxy ARP、RR、多归属与 RD/RT。</li>
-<li><strong>迁移论证链</strong>（给客户讲为什么）：STP+VLAN 四痛点 → VXLAN 数据面解耦（MAC-in-UDP、24bit VNI、16M 网络）→ 裸 VXLAN 仍靠 flood-and-learn → MP-BGP EVPN 补上主动式控制面。选型四收益：统一控制面、可扩展（多归属/ARP 抑制/DAG/MAC mobility）、多封装灵活、VRF+VNI+RD+RT 安全隔离。</li>
-<li><strong>AOS 实现模型四件套</strong>：全端口 ESI 实例化；ESI+ETag 粒度路由（按 ETag 汇总撤收）；RD/RT 自动生成；on-demand 按需导入（BGP RIB 全网分发，仅被查找的目的才进硬件 FDB）。</li>
-<li><strong>VXLAN 封装参数</strong>：UDP 4789、头部开销 50 字节（underlay MTU 必须预留）、24bit VNI/16M 网络、外层 IP 即两端 VTEP 的 Loopback0。</li>
-<li><strong>版本能力边界</strong>（售前/交付核对表）：EVPN 首版 8.10R1、仅 OS6900；首版不支持 RT5、对称 IRB、tandem 组播复制、all-active 多归属。</li>
+<li>五步法主线（AOS 独有教学结构）：①Underlay（L3 路由底座）→ ②Overlay（MP-BGP EVPN）→ ③Service Access（接入口启用以太网段）→ ④Service（EVPN-VXLAN 业务实例化）→ ⑤SAP（业务接入点绑定 VLAN）。<ul>
+<li>Part2-5 依次叠加 IRB/DAG、MAC 学习/Proxy ARP、RR、多归属与 RD/RT。</li>
+<li>
+<ol>
+<li>迁移论证链（给客户讲为什么）：STP+VLAN 四痛点 → VXLAN 数据面解耦（MAC-in-UDP、24bit VNI、16M 网络）→ 裸 VXLAN 仍靠 flood-and-learn → MP-BGP EVPN 补上主动式控制面。</li>
+</ol>
+</li>
+<li>选型四收益：统一控制面、可扩展（多归属/ARP 抑制/DAG/MAC mobility）、多封装灵活、VRF+VNI+RD+RT 安全隔离。</li>
+<li>
+<ol>
+<li>AOS 实现模型四件套：全端口 ESI 实例化；ESI+ETag 粒度路由（按 ETag 汇总撤收）；RD/RT 自动生成；on-demand 按需导入（BGP RIB 全网分发，仅被查找的目的才进硬件 FDB）。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>VXLAN 封装参数：UDP 4789、头部开销 50 字节（underlay MTU 必须预留）、24bit VNI/16M 网络、外层 IP 即两端 VTEP 的 Loopback0。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>版本能力边界（售前/交付核对表）：EVPN 首版 8.10R1、仅 OS6900；首版不支持 RT5、对称 IRB、tandem 组播复制、all-active 多归属。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="a1">A1 · 书中案例</h2>
 <ul>
@@ -87,16 +107,30 @@ blockquote p{margin:6px 0}
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
 <li>触发：方案论证/写迁移建议书、开局排总路线、8.10R1 能力核对、"BGP 有路由但 MAC 表没有"的正常性判读。</li>
-<li>区分：具体命令怎么配 → <code><a href="vxlan-evpn-underlay-bgp-design.html">vxlan-evpn-underlay-bgp-design</a></code>（底座）与 <code><a href="vxlan-evpn-service-provisioning.html">vxlan-evpn-service-provisioning</a></code>（业务）；
-多归属/DF → <code><a href="vxlan-evpn-multihoming-df.html">vxlan-evpn-multihoming-df</a></code>；
-BUM 与排障 → <code><a href="vxlan-evpn-bum-troubleshooting.html">vxlan-evpn-bum-troubleshooting</a></code>。本 skill 只管"路线图 + 架构论证 + 版本边界"。</li>
+<li>区分：具体命令怎么配 → <code><a href="vxlan-evpn-underlay-bgp-design.html">vxlan-evpn-underlay-bgp-design</a></code>（底座）与 <code><a href="vxlan-evpn-service-provisioning.html">vxlan-evpn-service-provisioning</a></code>（业务）；</li>
+<li>多归属/DF → <code><a href="vxlan-evpn-multihoming-df.html">vxlan-evpn-multihoming-df</a></code>；</li>
+<li>BUM 与排障 → <code><a href="vxlan-evpn-bum-troubleshooting.html">vxlan-evpn-bum-troubleshooting</a></code>。本 skill 只管"路线图 + 架构论证 + 版本边界"；</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
-<li>售前核对：客户需求若命中 RT5（L3VPN/外联汇总）、对称 IRB、组播 tandem、all-active 四项任一，标注"8.10R1 不支持"，改方案或核对目标版本 release notes。</li>
+<li>售前核对：客户需求若命中 RT5（L3VPN/外联汇总）、对称 IRB、组播 tandem、all-active 四项任一，标注"8.10R1 不支持"，改方案或核对目标版本 release notes。<ul>
+<li>
+<ol>
 <li>MTU 规划：underlay 各链路 MTU ≥ 客户帧 + 50 字节 VXLAN 开销（业务默认 MTU 9194 / VPN IP-MTU 1500）。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>开局按五步顺序推进并逐层验证：Underlay（OSPF 邻居 Full）→ Overlay（BGP established）→ Access/Service/SAP（业务 Oper Up）→ RT3/MAC/SDP 隧道。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>判读 MAC 表项少于 BGP 路由：先 <code>debug evpn show bgp route-type rt2</code> 确认控制面有路由，再按 on-demand 模型判定为正常。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>

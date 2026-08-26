@@ -76,18 +76,28 @@ blockquote p{margin:6px 0}
 <p>交付七段主线（创建顺序）：
 1. <strong>复位与连通验证</strong>（ping DHCP 服务器/外网）；
 2. <strong>组织建模</strong>：Organization &gt; Site（含预留站点）&gt; Building &gt; Floor，楼层挂平面图；设备必须归属站点；
-3. <strong>设备上线</strong>：show chassis 取序列号逐台入 Device Catalog，走 Waiting for first Contact → Connected to OV → Provisioning → OV Managed（约 2 分钟；交换机 cloud-agent admin-state restart 加速，AP 可 ssudo firstboot -y + reboot 触发）；不能上云管的型号（OS-2360）只能手工配；
-4. <strong>WLAN</strong>：多 SSID 差异化设计（见 A1）；RF Profile 开 Band Steering/Load Balance、关联门限；
-5. <strong>安全</strong>：WIPS 流氓 AP 分类规则（同 SSID 名 + 指定 MAC OUI）、认证失败黑名单（5 次/分钟）、访客客户端隔离、AP 关闭 SSH/Web 管理；
-6. <strong>运维</strong>：Golden Config、配置备份、VLAN 模板（IP 用变量）、标签、支持信息收集、周报排程、场景化监控阈值；
-7. <strong>拓扑变更</strong>：按需把部分 AP 改 Mesh。</p>
+3. 设备上线：show chassis 取序列号逐台入 Device Catalog，走 Waiting for first Contact → Connected to OV → Provisioning → OV Managed（约 2 分钟；</p>
+<pre><code>- 交换机 cloud-agent admin-state restart 加速，AP 可 ssudo firstboot -y + reboot 触发）；
+- 不能上云管的型号（OS-2360）只能手工配；
+</code></pre>
+<ol>
+<li><strong>WLAN</strong>：多 SSID 差异化设计（见 A1）；RF Profile 开 Band Steering/Load Balance、关联门限；</li>
+<li><strong>安全</strong>：WIPS 流氓 AP 分类规则（同 SSID 名 + 指定 MAC OUI）、认证失败黑名单（5 次/分钟）、访客客户端隔离、AP 关闭 SSH/Web 管理；</li>
+<li><strong>运维</strong>：Golden Config、配置备份、VLAN 模板（IP 用变量）、标签、支持信息收集、周报排程、场景化监控阈值；</li>
+<li><strong>拓扑变更</strong>：按需把部分 AP 改 Mesh。</li>
+</ol>
 <p>清理是逆向拆除（云管无一键恢复默认）：按创建的反序删——运行任务 → WIPS → AP 组/Provisioning/RF Profile 解绑 → SSID → 策略/角色/门户 → 账号/资产 → Golden Config → 报表 → 阈值重置 → 站点 → 确认设备目录空 → CLI 模板/值映射。</p>
 <h2 id="a1-lab">A1 · 书中案例（Lab 精要）</h2>
-<p>综合演练（p286-299）三个差异化 SSID：EmployeesX（WPA2-Enterprise 802.1X、仅 5GHz、VLAN 20、工作时间调度、按角色封 HTTP）；
+<ul>
+<li>综合演练（p286-299）三个差异化 SSID：EmployeesX（WPA2-Enterprise 802.1X、仅 5GHz、VLAN 20、工作时间调度、按角色封 HTTP）；
 GuestsX（内部 Captive Portal、限 1Mbit/s、封 SSH/Telnet、VLAN 30、周一至周三调度、账号限时限量）；
-PrinterX（仅 2.4GHz、最小发射功率、固定信道、WPA2 PSK + 按设备 PSK/DPSK、复用 Employee VLAN）。RF Profile：负载均衡启用、关联门限 -50dBm。监控阈值（p298）：健康 70%、2.4G 利用率 20%（只跑打印机故收紧）、2.4G 客户端健康 90%、可用容量 25%。末段两 AP 建 Mesh（AP1321 为 Root、自定义 SSID、WPA2-Personal）。
-基础 Lab（p43-73）补充上线细节：reset_PODX 复位 → My Site + Building A/Ground Floor（画约 1200-1300m² 楼层边界）→ 双交换机 + 双 AP 入目录 → 手工配 VLAN 10/20/30 → EmployeesX/GuestsX 映射 My-AP-Group → 树莓派验证（Employee 192.168.20.70-79 / Guest 192.168.30.70-79）。
-清理 Lab（p313-319）：29 步逆向拆除全量配置，清理后设备目录回空、可重新部署。</p>
+PrinterX（仅 2.4GHz、最小发射功率、固定信道、WPA2 PSK + 按设备 PSK/DPSK、复用 Employee VLAN）。</li>
+<li>RF Profile：负载均衡启用、关联门限 -50dBm。</li>
+<li>监控阈值（p298）：健康 70%、2.4G 利用率 20%（只跑打印机故收紧）、2.4G 客户端健康 90%、可用容量 25%。</li>
+<li>末段两 AP 建 Mesh（AP1321 为 Root、自定义 SSID、WPA2-Personal）。</li>
+<li>基础 Lab（p43-73）补充上线细节：reset_PODX 复位 → My Site + Building A/Ground Floor（画约 1200-1300m² 楼层边界）→ 双交换机 + 双 AP 入目录 → 手工配 VLAN 10/20/30 → EmployeesX/GuestsX 映射 My-AP-Group → 树莓派验证（Employee 192.168.20.70-79 / Guest 192.168.30.70-79）。</li>
+<li>清理 Lab（p313-319）：29 步逆向拆除全量配置，清理后设备目录回空、可重新部署。</li>
+</ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
 <li>新项目交付或交付前演练验收，需要一份覆盖组织/上线/SSID/安全/运维的 checklist → 本 skill。</li>
@@ -98,15 +108,44 @@ Mesh → stellar-bridge-mesh；
 上线后故障 → stellar-troubleshooting-cli。</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
-<p>交付（照 A1 七段主线逐项打勾）：
-1. 复位设备，ping 验证到 DHCP/外网连通。
-2. 建组织层级与站点（含预留），导入楼层平面图。
-3. 设备逐台录序列号上线，确认到 OV Managed；非云管型号手工配并记录。
-4. 配 VLAN/IP，按设计建差异化 SSID（认证/频段/VLAN/调度/限速逐项对表），映射 AP 组。
-5. 配 RF Profile（Band Steering、Load Balance、门限）并验证关联。
-6. 配 WIPS 分类规则、黑名单、访客隔离、关闭 AP 管理面。
-7. 立 Golden Config、备份计划、变量化 VLAN 模板、标签、周报、场景化阈值。
-8. 按需改造 Mesh，全量回归验证。</p>
+<ul>
+<li>交付（照 A1 七段主线逐项打勾）：1. 复位设备，ping 验证到 DHCP/外网连通。</li>
+<li>
+<ol>
+<li>建组织层级与站点（含预留），导入楼层平面图。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>设备逐台录序列号上线，确认到 OV Managed；非云管型号手工配并记录。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>配 VLAN/IP，按设计建差异化 SSID（认证/频段/VLAN/调度/限速逐项对表），映射 AP 组。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>配 RF Profile（Band Steering、Load Balance、门限）并验证关联。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>配 WIPS 分类规则、黑名单、访客隔离、关闭 AP 管理面。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>立 Golden Config、备份计划、变量化 VLAN 模板、标签、周报、场景化阈值。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>按需改造 Mesh，全量回归验证。</li>
+</ol>
+</li>
+</ul>
 <p>清理（逆向，每步确认删除成功再走下一步）：
 1. 删运行任务（升级计划/备份/排障命令）→ 2. 重置 WIPS → 3. AP 回 default device group、AP 组回 Default Provisioning → 4. 删自定义 AP 组/Provisioning/RF Profile（报错先把引用改回 Default）→ 5. 删 SSID → 6. 删策略/角色/门户 → 7. 删账号/注册 Profile/公司资产 → 8. 取消 Golden Config → 9. 删报表/支持信息 → 10. 重置分析阈值 → 11. 删站点（连带楼栋楼层）→ 12. 确认设备目录为空 → 13. 删 CLI 模板与值映射。</p>
 <h2 id="b">B · 边界与陷阱</h2>

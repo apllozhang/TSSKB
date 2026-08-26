@@ -74,11 +74,7 @@ blockquote p{margin:6px 0}
 <li>两地不便布线，需要 Mesh/Bridge 回程，或部署远程 AP（RAP）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>Stellar 射频管理是全分布式的（DRM）：每个 AP 空口发现邻居、LAN 上共享 RF 上下文、自主做射频决策，不依赖 AP Group 或管理 VLAN。</li>
-<li>漫游分 L2/L3，判定依据是 home/foreign AP 间的客户端 VLAN 是否一致，L3 漫游靠 L2 GRE 隧道。</li>
-<li>优化工作的核心抓手是 RF Profile 参数（Band Steering、DLB、扫描、Roaming RSSI 阈值）与 802.11k/v 引导。</li>
-</ul>
+<p>Stellar 射频管理是全分布式的（DRM）：每个 AP 空口发现邻居、LAN 上共享 RF 上下文、自主做射频决策，不依赖 AP Group 或管理 VLAN。漫游分 L2/L3，判定依据是 home/foreign AP 间的客户端 VLAN 是否一致，L3 漫游靠 L2 GRE 隧道。优化工作的核心抓手是 RF Profile 参数（Band Steering、DLB、扫描、Roaming RSSI 阈值）与 802.11k/v 引导。</p>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li><strong>RF Profile 配置</strong>（应用于 AP Group 或 AP 级）：国家码、Smart Load Balance、扫描、信道/功率设置（ <code>&lt;span class="pg"&gt;原文p366&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p367&lt;/span&gt;</code> ）。</li>
@@ -89,16 +85,48 @@ blockquote p{margin:6px 0}
 <li><strong>漫游优化</strong>：</li>
 <li>Sticky Client Avoidance：802.11v（BSS Transition Management）+ 802.11k + Roaming RSSI 阈值；推荐 2.4GHz RSSI=10、5GHz RSSI=15（ <code>&lt;span class="pg"&gt;原文p404&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p416&lt;/span&gt;</code> ）</li>
 <li>RSSI 对照：OV 上是平均值、AP 上是瞬时值；RSSI 10≈-86dBm（Bad）… 25≈-71dBm（Desired and recommended）；AP CLI <code>wlanconfig ath002 list</code>，-24dBm=72 RSSI（ <code>&lt;span class="pg"&gt;原文p378&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p379&lt;/span&gt;</code> ）</li>
-<li><strong>WIPS</strong>：分类 Interfering（任何空口发现的其他 AP）/ Rogue（按 Rogue AP Policy 判定）/ Friendly；Rogue AP Containment 默认启用，向 Rogue AP 的客户端发 de-auth；Rogue 判定策略含 Signal Strength Threshold（默认 -70dBm，范围 -50~-90）、Detect Valid SSID、Rogue SSID Keyword、Rogue OUI（ <code>&lt;span class="pg"&gt;原文p384&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p385&lt;/span&gt;</code> ）。</li>
-<li><strong>Mesh/Bridge 配置</strong>：Device Catalog 选 AP → Actions &gt; Edit Device &gt; Mesh/Bridge Configuration；Mesh 监控显示拓扑、Root 角色与 Repeater 的 Parent Address（Root AP 的 MAC）（ <code>&lt;span class="pg"&gt;原文p442&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p443&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p444&lt;/span&gt;</code> ）。</li>
+<li>
+<p>WIPS：分类 Interfering（任何空口发现的其他 AP）/ Rogue（按 Rogue AP Policy 判定）/ Friendly；</p>
+<ul>
+<li>Rogue AP Containment 默认启用，向 Rogue AP 的客户端发 de-auth；</li>
+<li>Rogue 判定策略含 Signal Strength Threshold（默认 -70dBm，范围 -50~-90）、Detect Valid SSID、Rogue SSID Keyword、Rogue OUI（ <code>&lt;span class="pg"&gt;原文p384&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p385&lt;/span&gt;</code> ）；</li>
+</ul>
+</li>
+<li>
+<p><strong>Mesh/Bridge 配置</strong>：Device Catalog 选 AP → Actions &gt; Edit Device &gt; Mesh/Bridge Configuration；Mesh 监控显示拓扑、Root 角色与 Repeater 的 Parent Address（Root AP 的 MAC）（ <code>&lt;span class="pg"&gt;原文p442&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p443&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p444&lt;/span&gt;</code> ）。</p>
+</li>
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
-<li><strong>漫游判定</strong>：L2 或 L3 按客户端在 home/foreign AP 间 VLAN 选择：无上下文→新客户端；上下文 + WLAN/ARP 匹配 + VLAN 匹配→L2；VLAN 不匹配→L3（基于 L2 GRE 隧道）。L2 漫游始终启用，L3 默认禁用（ <code>&lt;span class="pg"&gt;原文p394&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p400&lt;/span&gt;</code> ）。</li>
-<li><strong>客户端上下文共享</strong>：客户端关联时 AP 向所有空口相邻 AP 发 Add 消息，漫游时旧 AP 收到新 AP 的 Add 后触发 Del；上下文含 VLAN ID/ARP/Policy List/PMKSA cache；与 AP Group、管理 VLAN 无关（ <code>&lt;span class="pg"&gt;原文p397&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p399&lt;/span&gt;</code> ）。</li>
-<li><strong>Mesh 拓扑限制</strong>：最多 8 台 slave AP、4 跳、单跳最多 5 AP、全网最多 16 AP；所有 AP 可广播最多 5 个 SSID；最佳实践 BAND 5GHz、CHANNEL &gt;100（ <code>&lt;span class="pg"&gt;原文p439&lt;/span&gt;</code> ）。Auto Mesh：LAN 上的 root AP 广播隐藏 SSID "Stellar-MESH"（5GHz），未连 LAN 的 AP 自动以 non-root 加入（ <code>&lt;span class="pg"&gt;原文p440&lt;/span&gt;</code> ）。</li>
-<li><strong>RAP（远程 AP）五步开通</strong>：[PRE] 管理员预录入（OV Cirrus：序列号/RAP 模式/VPN Server 公网 IP/OV2500 IP/VPN Client IP；VPN Server：公网/私网 IP/密钥；OV2500：AP 设置）→ ① AP 启动按序列号注册 → ② OV Cirrus 下发 VPN 与 OV2500 参数 → ③ 建管理流量 VPN 隧道 → ④ 从 OV2500 取配置（SSID/射频）→ ⑤ 第二条 VPN（客户端流量）+ 客户端接入。配置三块：配 OV Cirrus、部署 ALE VPN Server VM（eth0 公网/eth1 私网，导入 VPN 设置）、配 OV2500（ <code>&lt;span class="pg"&gt;原文p423&lt;/span&gt;</code> ~ <code>&lt;span class="pg"&gt;原文p429&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p432&lt;/span&gt;</code> ）。</li>
-<li><strong>Smart Air Share</strong>：SSID 级最低速率控制，2.4G 建议 12、5G/6G 建议 24，提升 802.11a/n 客户端体验（ <code>&lt;span class="pg"&gt;原文p369&lt;/span&gt;</code> ）。</li>
+<li>漫游判定：L2 或 L3 按客户端在 home/foreign AP 间 VLAN 选择：无上下文→新客户端；</li>
+<li>上下文 + WLAN/ARP 匹配 + VLAN 匹配→L2；</li>
+<li>
+<p>VLAN 不匹配→L3（基于 L2 GRE 隧道）。L2 漫游始终启用，L3 默认禁用（ <code>&lt;span class="pg"&gt;原文p394&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p400&lt;/span&gt;</code> ）；</p>
+</li>
+<li>
+<p>客户端上下文共享：客户端关联时 AP 向所有空口相邻 AP 发 Add 消息，漫游时旧 AP 收到新 AP 的 Add 后触发 Del；</p>
+</li>
+<li>上下文含 VLAN ID/ARP/Policy List/PMKSA cache；</li>
+<li>
+<p>与 AP Group、管理 VLAN 无关（ <code>&lt;span class="pg"&gt;原文p397&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p399&lt;/span&gt;</code> ）；</p>
+</li>
+<li>
+<p>Mesh 拓扑限制：最多 8 台 slave AP、4 跳、单跳最多 5 AP、全网最多 16 AP；</p>
+</li>
+<li>所有 AP 可广播最多 5 个 SSID；</li>
+<li>
+<p>最佳实践 BAND 5GHz、CHANNEL &gt;100（ <code>&lt;span class="pg"&gt;原文p439&lt;/span&gt;</code> ）。Auto Mesh：LAN 上的 root AP 广播隐藏 SSID "Stellar-MESH"（5GHz），未连 LAN 的 AP 自动以 non-root 加入（ <code>&lt;span class="pg"&gt;原文p440&lt;/span&gt;</code> ）；</p>
+</li>
+<li>
+<p>RAP（远程 AP）五步开通：[PRE] 管理员预录入（OV Cirrus：序列号/RAP 模式/VPN Server 公网 IP/OV2500 IP/VPN Client IP；</p>
+</li>
+<li>VPN Server：公网/私网 IP/密钥；</li>
+<li>
+<p>OV2500：AP 设置）→ ① AP 启动按序列号注册 → ② OV Cirrus 下发 VPN 与 OV2500 参数 → ③ 建管理流量 VPN 隧道 → ④ 从 OV2500 取配置（SSID/射频）→ ⑤ 第二条 VPN（客户端流量）+ 客户端接入。配置三块：配 OV Cirrus、部署 ALE VPN Server VM（eth0 公网/eth1 私网，导入 VPN 设置）、配 OV2500（ <code>&lt;span class="pg"&gt;原文p423&lt;/span&gt;</code> ~ <code>&lt;span class="pg"&gt;原文p429&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p432&lt;/span&gt;</code> ）；</p>
+</li>
+<li>
+<p><strong>Smart Air Share</strong>：SSID 级最低速率控制，2.4G 建议 12、5G/6G 建议 24，提升 802.11a/n 客户端体验（ <code>&lt;span class="pg"&gt;原文p369&lt;/span&gt;</code> ）。</p>
+</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>

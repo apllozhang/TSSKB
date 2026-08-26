@@ -72,14 +72,39 @@ blockquote p{margin:6px 0}
 <p>四块运维能力：</p>
 <ol>
 <li><strong>RAP 双模式选型</strong>：Premium（只靠 Cirrus，全配置在云，四步上线）/ Freemium（Cirrus 只当引路人 + 本地 OV2500，五步双隧道：管理隧道连 OV2500，数据隧道 L2GRE 承载客户端流量）。两者都需公司侧部署 ALE VPN Server 虚机（OVF 从 BPWS 下载）；Freemium 的 VPN Server 要三块网卡（公网/管理/数据）。</li>
-<li><strong>Cirrus 上云三查</strong>：版本底线（AOS 8.4.1.R03+〔6560/6860N/6865/6870/6900〕、6.7.2.R03+〔6350/6450〕、5.1R1+〔2260/2360〕；AWOS 3.0.2+ 全部 AP）→ 账号模式（Freemium 免费受限可升 Premium；单实例 5000 设备/4000 AP）→ 注册流程（入 Catalog → 激活 → 赋许可 → 预配置）。</li>
-<li><strong>备份-恢复-升级三段</strong>：Save All 存 Running（交换机另 Copy to Certified）→ Resource Manager 备份（By Devices=交换机需 FTP；By AP Group=Stellar 唯一方式；类型 Configuration Only/Full/Images Only，可调度）→ 恢复仅对 AOS 有效且必须 reload from working；升级走 Upgrade Image 或单台 AP Web。</li>
-<li><strong>监控闭环</strong>：Topology 状态语义 + Trap Responder 按严重级别发邮件；Heat Map/Floor Plan 做 RF 现状与规划。</li>
+<li>
+<p>Cirrus 上云三查：版本底线（AOS 8.4.1.R03+〔6560/6860N/6865/6870/6900〕、6.7.2.R03+〔6350/6450〕、5.1R1+〔2260/2360〕；</p>
+<ul>
+<li>AWOS 3.0.2+ 全部 AP）→ 账号模式（Freemium 免费受限可升 Premium；</li>
+<li>单实例 5000 设备/4000 AP）→ 注册流程（入 Catalog → 激活 → 赋许可 → 预配置）；</li>
+</ul>
+</li>
+<li>
+<p>备份-恢复-升级三段：Save All 存 Running（交换机另 Copy to Certified）→ Resource Manager 备份（By Devices=交换机需 FTP；</p>
+<ul>
+<li>By AP Group=Stellar 唯一方式；</li>
+<li>类型 Configuration Only/Full/Images Only，可调度）→ 恢复仅对 AOS 有效且必须 reload from working；</li>
+<li>升级走 Upgrade Image 或单台 AP Web；</li>
+</ul>
+</li>
+<li>
+<p><strong>监控闭环</strong>：Topology 状态语义 + Trap Responder 按严重级别发邮件；Heat Map/Floor Plan 做 RF 现状与规划。</p>
+</li>
 </ol>
 <h2 id="a1-lab">A1 · 书中案例（Lab 精要）</h2>
 <ul>
-<li><strong>c09 RAP Freemium 全流程</strong>：Cirrus Device Catalog 凭序列号+MAC 声明并勾 Is this a Remote AP，配管理 VPN（公网 IP:6550、客户端池、OV2500 IP），导出 .conf 传到 VPN Server <code>/opt/OmniVista_2500_NMS/data/vpn_conf/vpn_profile</code>，建 vpn_mgmt 服务绑端点；OV2500 加默认路由（网关=VPN Server 私网 IP）后 AP 进 Managed。数据 VPN 第二条（vpn_data，端口 6551，L2GRE，绑 eth2）；SSID 的 Default VLAN 选 <strong>Use Tunnel（Tunnel ID 必须为 0）</strong>。</li>
-<li><strong>c10 备份恢复</strong>：故意建临时 VLAN 70-80 再恢复——Result 显示 SUCCESS 但 VLAN 仍在，需 <code>reload from working no rollback-timeout</code>（约 3 分钟）+ VLAN Manager Poll 刷新。</li>
+<li>
+<p>c09 RAP Freemium 全流程：Cirrus Device Catalog 凭序列号+MAC 声明并勾 Is this a Remote AP，配管理 VPN（公网 IP:6550、客户端池、OV2500 IP），导出 .conf 传到 VPN Server <code>/opt/OmniVista_2500_NMS/data/vpn_conf/vpn_profile</code>，建 vpn_mgmt 服务绑端点；</p>
+</li>
+<li>
+<p>OV2500 加默认路由（网关=VPN Server 私网 IP）后 AP 进 Managed。数据 VPN 第二条（vpn_data，端口 6551，L2GRE，绑 eth2）；</p>
+</li>
+<li>
+<p>SSID 的 Default VLAN 选 Use Tunnel（Tunnel ID 必须为 0）；</p>
+</li>
+<li>
+<p><strong>c10 备份恢复</strong>：故意建临时 VLAN 70-80 再恢复——Result 显示 SUCCESS 但 VLAN 仍在，需 <code>reload from working no rollback-timeout</code>（约 3 分钟）+ VLAN Manager Poll 刷新。</p>
+</li>
 <li><strong>c11 告警</strong>：Trap Responder 规则（Agent=AP Group、severity=Critical、发邮件，主题可用 $TrapAgent$ 变量）+ System Settings 配 SMTP；重启 AP 人为制造 Critical 验证送达。</li>
 <li><strong>c12 规划</strong>：Heat Map 画 5 米标尺线 + WallsHeavy 描墙 + 拖 AP 看真实覆盖；Floor Plan Auto Deployment（质量/型号/功率输入）算法自动布点。</li>
 </ul>

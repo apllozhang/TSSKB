@@ -86,7 +86,17 @@ P2P 链路建议 /31 地址。</p>
 <ul>
 <li>LDP 规范样例（c05，p136-138，R1 视角）：Loopback0=1.1.1.1/32（兼 router-id），SDP 102/103 指向 1.1.1.6/1.1.1.7，<code>service 1 sap port 1/1/4:0</code>，一次绑两条 SDP。</li>
 <li>BGP 规范样例（c06，p138-139）：标准序列多了 <code>ip bgp mpls</code> 全局命令（Lab 3 中没有），其余同 Lab 3；同样只配在 R1/R6/R7。</li>
-<li>验证命令族谱（p18）：<code>show pkgmgr</code>、<code>show license-server usage</code>、<code>show mpls</code>、<code>show mpls ftn-table</code>（入向 PUSH 视角）、<code>show mpls ilm-table</code>（入标签 SWAP/POP）、<code>show mpls forwarding-table</code>、<code>show mpls vpls-mesh</code>、<code>show mpls ldp session [tx-labels/rx-labels]</code>、<code>show service [vpls|sdp|bind-sdp]</code>、<code>show ip bgp l2vpn-vpls [path]</code>（path 含 VE-ID/VBO/VBS/LabelBase）、<code>show mac-learning domain vpls</code>。</li>
+<li>验证命令族谱（p18）：<code>show pkgmgr</code></li>
+<li><code>show license-server usage</code></li>
+<li><code>show mpls</code></li>
+<li><code>show mpls ftn-table</code>（入向 PUSH 视角）</li>
+<li><code>show mpls ilm-table</code>（入标签 SWAP/POP）</li>
+<li><code>show mpls forwarding-table</code></li>
+<li><code>show mpls vpls-mesh</code></li>
+<li><code>show mpls ldp session [tx-labels/rx-labels]</code></li>
+<li><code>show service [vpls|sdp|bind-sdp]</code></li>
+<li><code>show ip bgp l2vpn-vpls [path]</code>（path 含 VE-ID/VBO/VBS/LabelBase）</li>
+<li><code>show mac-learning domain vpls</code></li>
 </ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
@@ -97,20 +107,19 @@ P2P 链路建议 /31 地址。</p>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
-<li>按客户类型套模板：园区→端到端 MPLS；城域→MPLS 只到核心+汇聚，接入标准交换。</li>
-<li>基线配置（每台）：</li>
-</ol>
-<pre><code>ip interface Loopback0 address 1.1.1.1/32
-ip router router-id 1.1.1.1
-ip interface IFtoR2 address 10.1.2.1/24 vlan 12 rtr-port port 1/1/1 tagged
-ip ospf interface IFtoR2 type point-to-point
-ip bfd admin-state enable
-pkgmgr install uosn-mpls-v1.deb
-mpls ldp interface IFtoR2 admin-state enable
-</code></pre>
+<li>按客户类型套模板：园区→端到端 MPLS；城域→MPLS 只到核心+汇聚，接入标准交换。<ul>
+<li>
 <ol>
-<li>VPLS 侧按信令选型叠加 c05（LDP：SDP+bind-sdp）或 c06（BGP：含 <code>ip bgp mpls</code>）模板。</li>
+<li>基线配置（每台）： <code>ip interface Loopback0 address 1.1.1.1/32 ip router router-id 1.1.1.1 ip interface IFtoR2 address 10.1.2.1/24 vlan 12 rtr-port port 1/1/1 tagged ip ospf interface IFtoR2 type point-to-point ip bfd admin-state enable pkgmgr install uosn-mpls-v1.deb mpls ldp interface IFtoR2 admin-state enable</code> 3. VPLS 侧按信令选型叠加 c05（LDP：SDP+bind-sdp）或 c06（BGP：含 <code>ip bgp mpls</code>）模板。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>验证按族谱层次下钻：许可/包 → <code>show mpls</code> → 标签表 → LDP 会话 → <code>show service</code> → BGP → MAC 表。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>

@@ -71,10 +71,25 @@ blockquote p{margin:6px 0}
 <h2 id="i">I · 方法论骨架</h2>
 <p>Express 的业务层围绕"SSID + 认证模式 + 内置服务"三条线：</p>
 <ol>
-<li><strong>认证模式选型</strong>：员工网走 802.1X/WPA2（内置用户数据库或外接 RADIUS）；访客网走开放加密 + Captive Portal（门户认证）。AP 本地还内置 DHCP/DNS/NAT 与防火墙规则，无外部基础设施也能放号出网。</li>
-<li><strong>802.1X 失败三侧法</strong>：用户侧（账号密码、终端认证类型匹配）→ AP 侧（WLAN 配置、tools-ping 验 AP 到 RADIUS 连通性）→ 服务器侧（共享密钥、client IP/网段、认证端口、证书），三方各自排干净再对报文。</li>
-<li><strong>Portal 不弹页四查</strong>：Portal 功能开关 → 认证开关 → 白名单/walled garden 命中 → https URL 限制；仍不弹用 <code>ps | grep eag</code> 查 EAG 进程。</li>
-<li><strong>连接类排障递进</strong>：密码 → blocklist 黑名单 → MaxClients 容量 → 终端残留记录 → wam 进程。</li>
+<li>认证模式选型：员工网走 802.1X/WPA2（内置用户数据库或外接 RADIUS）；访客网走开放加密 + Captive Portal（门户认证）。<ul>
+<li>AP 本地还内置 DHCP/DNS/NAT 与防火墙规则，无外部基础设施也能放号出网。</li>
+<li>
+<ol>
+<li>802.1X 失败三侧法：用户侧（账号密码、终端认证类型匹配）→ AP 侧（WLAN 配置、tools-ping 验 AP 到 RADIUS 连通性）→ 服务器侧（共享密钥、client IP/网段、认证端口、证书），三方各自排干净再对报文。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>Portal 不弹页四查：Portal 功能开关 → 认证开关 → 白名单/walled garden 命中 → https URL 限制；仍不弹用 <code>ps | grep eag</code> 查 EAG 进程。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>连接类排障递进：密码 → blocklist 黑名单 → MaxClients 容量 → 终端残留记录 → wam 进程。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="a1">A1 · 书中案例</h2>
 <ul>
@@ -85,7 +100,9 @@ blockquote p{margin:6px 0}
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
 <li>触发：部署员工/访客 SSID、访客反映"连上了但不出登录页"、802.1X 认证失败、老用户正常新用户连不上、访客账户"消失"。</li>
-<li>区分：<strong>AP 本身</strong>上电/IP/入组故障用 <code><a href="ap-side-troubleshooting.html">ap-side-troubleshooting</a></code>；吞吐差、信号弱等射频问题用 <code><a href="rf-survey-tuning.html">rf-survey-tuning</a></code>；本 skill 只管业务层——认证、门户、账户、客户端接入策略。客户端能关联但拿不到 IP 属 VLAN/DHCP 链路问题，归 <code><a href="ap-side-troubleshooting.html">ap-side-troubleshooting</a></code>（Case 7 抓包定位法）。</li>
+<li>区分：AP 本身上电/IP/入组故障用 <code><a href="ap-side-troubleshooting.html">ap-side-troubleshooting</a></code>；</li>
+<li>吞吐差、信号弱等射频问题用 <code><a href="rf-survey-tuning.html">rf-survey-tuning</a></code>；</li>
+<li>本 skill 只管业务层——认证、门户、账户、客户端接入策略。客户端能关联但拿不到 IP 属 VLAN/DHCP 链路问题，归 <code><a href="ap-side-troubleshooting.html">ap-side-troubleshooting</a></code>（Case 7 抓包定位法）；</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <p>员工 SSID + 802.1X：

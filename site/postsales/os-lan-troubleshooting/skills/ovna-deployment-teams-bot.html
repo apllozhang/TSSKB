@@ -75,12 +75,44 @@ blockquote p{margin:6px 0}
 </blockquote>
 <h2 id="i">I · 方法论骨架</h2>
 <ol>
-<li><strong>部署三步</strong>（f15/p39）：系统要求（四核/8GB/50GB，200 台内；1000 台 120GB、2000 台 210GB；Ubuntu 22.04 / Debian 11/12 / RHEL 9.3；端口 TCP 80/443、UDP+TCP 10514、TCP 6514 TLS、TCP 22；<strong>必须可上外网</strong>）→ 包安装（Debian 系 dpkg -i ale-ovna.deb，RHEL 系 rpm -ivh 且先 systemctl disable firewalld --now；再 ale-ovna install）→ Web 向导（https://<IP> → New to OVNA：公司信息 → 2FA → 时区 → 通知渠道 → OmniVista 同步 → 许可 30 天试用）。</li>
-<li><strong>纳管与处置闭环</strong>（f16）：Add device 后自动推送三条命令（syslog 指向 10514、ddm enable、ddm-trap enable，show swlog 应出现 Log Device 2）。处置链：设备 syslog → 模式匹配 → 通知（Rainbow 气泡/Teams 频道，含设备/MAC/端口与修复建议）→ 用户选处置动作 → OVNA 经 SSH 执行 → 结果回传 → Anomaly History 留档。多 IP 设备先 <code>ip service source-ip loopback0 swlog</code> 固定源。</li>
-<li><strong>Teams Bot 四阶段</strong>（f17，须在装 OVNA <strong>前</strong>完成）：① 建 Entra 应用与 Bot（dev.teams.microsoft.com → Bot Management → New bot → 公网可达 endpoint https://.../msteams 默认端口 10510 → Client secret <strong>只显示一次</strong> → 记 Bot ID）；② 建 Teams 应用并挂 Bot（Personal+Team scope）→ Publish → Download app package；③ 取 Application (client) ID 与 Directory (tenant) ID；④ 加 Graph API 权限（Team.ReadBasic.All、Channel.Create、Group.ReadWrite.All 等）并 Grant admin consent。</li>
-<li><strong>许可与门槛</strong>（p39）：纳管需 AOS 8.7.R2+（OS6xxx/9xxx）；OS2xxx 需 5.2.R1+。许可按设备 IP 计（NETAD-SWITCH/AP-1Y/3Y/5Y），试用 5 交换机+5 AP，激活即倒计时。</li>
-<li><strong>异常对象模型</strong>（g34-g36/g37）：预置异常类别（环路/端口 flap/DDoS/风暴/VC takeover/OSPF-BGP 状态变化/电源 POE/IP 重复/高 CPU/SFP 阈值等）；可自建自定义异常；Anomaly History 供行为模式分析。三类处置动词：Disable Port（执行变更）/ Collect Logs（取证）/ Acknowledge（仅确认）。</li>
-<li><strong>无损演练</strong>（p40）：su 维护 shell 用 Linux logger 注入符合异常模式的日志（DoS ping overload / PMD generated），即可走完检测→通知→处置→留档全链路，不必制造真实故障。前置：与 OVNA/外网连通 + NTP 对时。</li>
+<li>
+<p>部署三步（f15/p39）：系统要求（四核/8GB/50GB，200 台内；</p>
+<ul>
+<li>1000 台 120GB、2000 台 210GB；</li>
+<li>Ubuntu 22.04 / Debian 11/12 / RHEL 9.3；</li>
+<li>端口 TCP 80/443、UDP+TCP 10514、TCP 6514 TLS、TCP 22；</li>
+<li>必须可上外网）→ 包安装（Debian 系 dpkg -i ale-ovna.deb，RHEL 系 rpm -ivh 且先 systemctl disable firewalld --now；</li>
+<li>再 ale-ovna install）→ Web 向导（https://<IP> → New to OVNA：公司信息 → 2FA → 时区 → 通知渠道 → OmniVista 同步 → 许可 30 天试用）；</li>
+</ul>
+</li>
+<li>
+<p>纳管与处置闭环（f16）：Add device 后自动推送三条命令（syslog 指向 10514、ddm enable、ddm-trap enable，show swlog 应出现 Log Device 2）。</p>
+<ul>
+<li>处置链：设备 syslog → 模式匹配 → 通知（Rainbow 气泡/Teams 频道，含设备/MAC/端口与修复建议）→ 用户选处置动作 → OVNA 经 SSH 执行 → 结果回传 → Anomaly History 留档。</li>
+<li>多 IP 设备先 <code>ip service source-ip loopback0 swlog</code> 固定源。</li>
+</ul>
+</li>
+<li>
+<p>Teams Bot 四阶段（f17，须在装 OVNA 前完成）：① 建 Entra 应用与 Bot（dev.teams.microsoft.com → Bot Management → New bot → 公网可达 endpoint https://.../msteams 默认端口 10510 → Client secret 只显示一次 → 记 Bot ID）；</p>
+<ul>
+<li>② 建 Teams 应用并挂 Bot（Personal+Team scope）→ Publish → Download app package；</li>
+<li>③ 取 Application (client) ID 与 Directory (tenant) ID；</li>
+<li>④ 加 Graph API 权限（Team.ReadBasic.All、Channel.Create、Group.ReadWrite.All 等）并 Grant admin consent；</li>
+</ul>
+</li>
+<li>
+<p><strong>许可与门槛</strong>（p39）：纳管需 AOS 8.7.R2+（OS6xxx/9xxx）；OS2xxx 需 5.2.R1+。许可按设备 IP 计（NETAD-SWITCH/AP-1Y/3Y/5Y），试用 5 交换机+5 AP，激活即倒计时。</p>
+</li>
+<li>
+<p>异常对象模型（g34-g36/g37）：预置异常类别（环路/端口 flap/DDoS/风暴/VC takeover/OSPF-BGP 状态变化/电源 POE/IP 重复/高 CPU/SFP 阈值等）；</p>
+<ul>
+<li>可自建自定义异常；</li>
+<li>Anomaly History 供行为模式分析。三类处置动词：Disable Port（执行变更）/ Collect Logs（取证）/ Acknowledge（仅确认）；</li>
+</ul>
+</li>
+<li>
+<p><strong>无损演练</strong>（p40）：su 维护 shell 用 Linux logger 注入符合异常模式的日志（DoS ping overload / PMD generated），即可走完检测→通知→处置→留档全链路，不必制造真实故障。前置：与 OVNA/外网连通 + NTP 对时。</p>
+</li>
 </ol>
 <h2 id="a1-lab">A1 · 书中案例（LAB 故障根因）</h2>
 <ul>
@@ -96,14 +128,37 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
-<li>部署前：若要 Teams 通知，先完成四阶段（f17）拿到 Bot ID/Client ID/Tenant ID 与 app package。</li>
+<li>部署前：若要 Teams 通知，先完成四阶段（f17）拿到 Bot ID/Client ID/Tenant ID 与 app package。<ul>
+<li>
+<ol>
 <li>装机：确认外网可达 → dpkg/rpm 安装 →（RHEL）disable firewalld → <code>ale-ovna install</code>（交互选 IP/代理/TLS）。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>Web 向导：管理员信息 → 2FA → 时区 → 通知渠道（Rainbow Bubble 或 Teams + SMTP）→ 许可激活。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>纳管：Device Management → Add device（IP/SSH 凭据）；
 多 IP 设备先在交换机 <code>ip service source-ip loopback0 swlog</code>；
 show swlog 验证 Log Device 2 出现、show log swlog 验证 syslog 外发。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>演练：su 进维护 shell → logger -t swlogd 注入目标异常日志 → show log swlog |grep 验证 → 在气泡/频道收通知并选处置 → 交换机 show interfaces status 验证动作生效 → Anomaly History 核对留档。</li>
-<li>升级：ale-ovna update（跨版本先装新包；小版本加 -c）。迁移：备份 → 新机安装 → 导入 → 补配置 → 导许可。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>升级：ale-ovna update（跨版本先装新包；小版本加 -c）。</li>
+</ol>
+</li>
+<li>迁移：备份 → 新机安装 → 导入 → 补配置 → 导许可。</li>
+</ul>
+</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>

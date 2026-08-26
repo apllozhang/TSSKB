@@ -69,11 +69,7 @@ blockquote p{margin:6px 0}
 <li>SPB 邻居发现失败、最短路径计算异常的配置一致性核对</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>SPBM 架构（P11， <code>&lt;span class="pg"&gt;原文p743&lt;/span&gt;</code> ）：SPB-M 按 IEEE 802.1aq 用 PBB（802.1ah MAC-in-MAC）封装穿越骨干，最短路径树由 ISIS-SPB（IS-IS + SPB TLV 扩展）计算；命令分两层——第 10 章 Shortest Path Bridging 管 backbone（控制面），第 11 章 Service Manager 管 services（数据面），互为配套。</li>
-<li>MPLS（第 9 章）是并列的标签转发域。</li>
-<li>查命令时先分清"骨干层还是服务层"，再到对应章。</li>
-</ul>
+<p>SPBM 架构（P11， <code>&lt;span class="pg"&gt;原文p743&lt;/span&gt;</code> ）：SPB-M 按 IEEE 802.1aq 用 PBB（802.1ah MAC-in-MAC）封装穿越骨干，最短路径树由 ISIS-SPB（IS-IS + SPB TLV 扩展）计算；命令分两层——第 10 章 Shortest Path Bridging 管 backbone（控制面），第 11 章 Service Manager 管 services（数据面），互为配套。MPLS（第 9 章）是并列的标签转发域。查命令时先分清"骨干层还是服务层"，再到对应章。</p>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>骨干控制面</strong>（BVLAN/桥优先级/ISIS-SPB 参数）→ 第 10 章</li>
@@ -85,8 +81,17 @@ blockquote p{margin:6px 0}
 <h2 id="a2">A2（操作步骤）·章节清单与代表命令</h2>
 <ul>
 <li><strong>Ch9 MPLS（ <code>&lt;span class="pg"&gt;原文p689&lt;/span&gt;</code> ，约 26 条）</strong>：<code>mpls</code> LSP 与 VPN 隧道命令族</li>
-<li><strong>Ch10 Shortest Path Bridging（ <code>&lt;span class="pg"&gt;原文p743&lt;/span&gt;</code> ，约 43 条）</strong>：<code>spb bvlan &lt;id&gt;</code>（1-4094，支持区间如 10-20；默认 admin-state=enable）（P12）；<code>spb isis bridge-priority</code>（默认 32768，越小越优；占 8 字节 Bridge ID 高 2 字节，低 6 字节为桥 MAC）（P14）；<code>spb ipvpn bind/redist</code>（P15）；BVLAN 上 STP 自动禁用、全部端口保持转发态（P13）</li>
-<li><strong>Ch11 Service Manager（ <code>&lt;span class="pg"&gt;原文p839&lt;/span&gt;</code> ，约 83 条）</strong>：<code>spbm</code> 服务层——ISID/SAP 绑定、PBB 封装业务</li>
+<li>Ch10 Shortest Path Bridging（ <code>&lt;span class="pg"&gt;原文p743&lt;/span&gt;</code> ，约 43 条）：<code>spb bvlan &lt;id&gt;</code>（1-4094，支持区间如 10-20；</li>
+<li>默认 admin-state=enable）（P12）；</li>
+<li><code>spb isis bridge-priority</code>（默认 32768，越小越优；</li>
+<li>占 8 字节 Bridge ID 高 2 字节，低 6 字节为桥 MAC）（P14）；</li>
+<li><code>spb ipvpn bind/redist</code>（P15）；</li>
+<li>
+<p>BVLAN 上 STP 自动禁用、全部端口保持转发态（P13）；</p>
+</li>
+<li>
+<p><strong>Ch11 Service Manager（ <code>&lt;span class="pg"&gt;原文p839&lt;/span&gt;</code> ，约 83 条）</strong>：<code>spbm</code> 服务层——ISID/SAP 绑定、PBB 封装业务</p>
+</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>

@@ -78,16 +78,20 @@ blockquote p{margin:6px 0}
 <li>MACsec 会话起不来或密钥轮换策略需要设计</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>MACsec（802.1AE）用 GCM-AES 对直连链路上几乎所有流量（含 LLDP/LACP/DHCP/ARP）做加密+认证，报文带 SecTag（EtherType 0x88E5）与 16 字节 ICV，按包编号防重放。</li>
-<li>密钥模型是：每节点收发各一条安全通道（SCI），通道内 SA 持有 SAK；Static 模式手工配 key-chain 交叉引用，Dynamic 模式由 MKA 协商生成 SAK。</li>
-</ul>
+<p>MACsec（802.1AE）用 GCM-AES 对直连链路上几乎所有流量（含 LLDP/LACP/DHCP/ARP）做加密+认证，报文带 SecTag（EtherType 0x88E5）与 16 字节 ICV，按包编号防重放。密钥模型是：每节点收发各一条安全通道（SCI），通道内 SA 持有 SAK；
+Static 模式手工配 key-chain 交叉引用，Dynamic 模式由 MKA 协商生成 SAK。</p>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>预检：<code>show interfaces 1/1/27 capability</code>（MACsec Supported、256-bit）、<code>show license-info</code>（ <code>&lt;span class="pg"&gt;原文p87&lt;/span&gt;</code> ）；无 license 时安装：<code>license apply file licence.dat order-id "..."</code> → <code>show license-info</code> 出现 MACSEC PERM（ <code>&lt;span class="pg"&gt;原文p91&lt;/span&gt;</code> ）</li>
 <li>建密钥与密钥链：<code>security key 1 algorithm aes-cmac-128 hex-key 0x... keyed-name 0x...</code> → <code>security key-chain 1</code> → <code>security key-chain 1 key 1</code>（ <code>&lt;span class="pg"&gt;原文p89&lt;/span&gt;</code> ）</li>
 <li>Dynamic PSK 模式：<code>interfaces port 1/1/27 macsec mode dynamic key-chain 1 encryption</code> + <code>key-rotation max-session-time 10</code> + <code>max-exchange-data 20</code> + <code>macsec admin-state enable</code>；验证 <code>show interfaces macsec dynamic</code>（Operation Status UP）（ <code>&lt;span class="pg"&gt;原文p87&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p90&lt;/span&gt;</code> ）</li>
-<li>Static SA 模式：本端 <code>interface 1/1/25 macsec admin-state enable sci-tx key-chain 1 encryption sci-rx key-chain 2 encryption</code>，对端 tx/rx 互换；随机密钥 <code>security key-chain gen-random-key</code>；删除顺序 disable → no macsec → no key-chain（ <code>&lt;span class="pg"&gt;原文p92&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p94&lt;/span&gt;</code> ）</li>
+<li>
+<p>Static SA 模式：本端 <code>interface 1/1/25 macsec admin-state enable sci-tx key-chain 1 encryption sci-rx key-chain 2 encryption</code>，对端 tx/rx 互换；</p>
+<ul>
+<li>随机密钥 <code>security key-chain gen-random-key</code>；</li>
+<li>删除顺序 disable → no macsec → no key-chain（ <code>&lt;span class="pg"&gt;原文p92&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p94&lt;/span&gt;</code> ）；</li>
+</ul>
+</li>
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>

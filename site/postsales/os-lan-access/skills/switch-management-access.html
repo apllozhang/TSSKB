@@ -90,13 +90,39 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
-<li>首登：admin/switch；8.10R4 前主动改密码（user password-refresh 可强制下次刷新）。</li>
+<li>首登：admin/switch；8.10R4 前主动改密码（user password-refresh 可强制下次刷新）。<ul>
+<li>
+<ol>
 <li>核对/配置认证链：<code>show aaa authentication</code> → <code>aaa authentication ssh|http|default &lt;srv1&gt; [&lt;srv2&gt;] [local] [exit-on-fail …]</code>；拒绝 HTTP 管理：<code>no aaa authentication http</code>。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>会话参数：<code>session cli timeout &lt;秒&gt;</code>；write memory 保存。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>远程访问：SSH（首选）/ WebView（https，R8 强制 SSL）。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>带外：EMP 口直连 CMM（无 EMP 的 6360/6465/6560 用 USB-Ethernet dongle 等效）；VC 场景配 master EMP 地址。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>新机开局：满足四条件走 Lightning Quick Config（https://192.168.0.1），完成即 write memory 固化。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>CLI 提效：缩写（sh vl）、管道过滤、? 帮助。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>

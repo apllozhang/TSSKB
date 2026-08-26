@@ -156,12 +156,34 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
-<li>到场先看 LED，按表判读单双频/升级/启动状态，免登录定性。</li>
+<li>到场先看 LED，按表判读单双频/升级/启动状态，免登录定性。<ul>
+<li>
+<ol>
 <li>SSH/串口进 CLI（见 stellar-ap-toolbox），跑 showsysinfo / showver / getmode / show_cluster，核对国家码与版本与预期一致。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>怀疑重启：date → uptime → 日志收集包按时间戳找原因。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>性能异常：top 找元凶进程（记 PID/命令名/%CPU）→ ps 查状态列扫 X/Z → 记录后随工单上报，勿自行 kill 系统进程。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>门户故障：eag_cli show user all 三查 → cat /var/log/eag.log 定位三阶段卡点 → 卡在 IP 未知转 <code><a href="client-connection-trouble.html">client-connection-trouble</a></code> 的 DHCP 排查。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>Express 集群异常：三查依次执行，两个 cluster_mgt 线程即判异常。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>

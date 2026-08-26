@@ -96,10 +96,16 @@ blockquote p{margin:6px 0}
 <li>HTTPS 管理：HTTP 用 http://AP-IP:8080 免证书；
 HTTPS 用 https://AP-IP（443），先下载根证书 ALE-OmniAccess-WLAN.CRT 装入浏览器信任库；
 自定义证书必须用域名 mywifi.al-enterprise.com（登录 URL 不可改）。</li>
-<li>ACL：规则自上而下顺序匹配，无命中默认 Accept（放行）；
-L3 ACL 支持源/目的 IP + TCP/UDP/ICMP 端口 + 通配符；
-Apply To EthPort 仅适用 AP1201H/AP1201HL/AP1311/AP1301H 下行口。L2 级 MAC 控制走 Blocklist/Allowlist，802.1p/DSCP 规则在 SSID 的 QoS 里配。</li>
-<li>wIDS/wIPS 加固（可选）：AP allowlist 信任名单、blocklist（仅 rogue 可入）、Suppress 发 DEAUTH（默认关闭）、Dynamic blocklist 自动拉黑 ad-hoc（默认关闭）。</li>
+<li>
+<p>ACL：规则自上而下顺序匹配，无命中默认 Accept（放行）；</p>
+<ul>
+<li>L3 ACL 支持源/目的 IP + TCP/UDP/ICMP 端口 + 通配符；</li>
+<li>Apply To EthPort 仅适用 AP1201H/AP1201HL/AP1311/AP1301H 下行口。L2 级 MAC 控制走 Blocklist/Allowlist，802.1p/DSCP 规则在 SSID 的 QoS 里配；</li>
+</ul>
+</li>
+<li>
+<p>wIDS/wIPS 加固（可选）：AP allowlist 信任名单、blocklist（仅 rogue 可入）、Suppress 发 DEAUTH（默认关闭）、Dynamic blocklist 自动拉黑 ad-hoc（默认关闭）。</p>
+</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>

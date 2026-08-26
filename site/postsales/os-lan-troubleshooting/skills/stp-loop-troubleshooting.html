@@ -75,37 +75,110 @@ blockquote p{margin:6px 0}
 </blockquote>
 <h2 id="i">I · 方法论骨架</h2>
 <ol>
-<li><strong>环路八步清单</strong>（f08）：① 取拓扑（逻辑 VLAN/广播域 + 物理互连端口）；② 开监控——swlog 提到 debug2（portMgrCmm/intfCmm/VlanMgrCmm/portMgrNi/VlanMgrNi）+ <code>swlog output flash-file-size 12500</code>；③ 核 MAC 反复 flush/重学；④ 收集 STP 配置——全网同一模式（1x1/FLAT/MSTP）、根桥位置、非默认 cost/priority、阻塞口位置（show spantree / show spantree vlan）；⑤ 核定时器/根 ID/根端口——timers 跨链路必须一致，Topology Changes 快速递增 = 设备无法就根桥达成一致（BPDU 可能被丢）；⑥ 本应阻塞的口变转发的两大原因（p20）；⑦ MAC flapping 三板斧（p22）；⑧ MSTP 专项三致性。应急止血：优先禁用"本应阻塞"的端口。</li>
-<li><strong>MAC flapping 检测三板斧</strong>（p22）：show mac-learning mac-address <mac> 执行两次看出端口切换；show interfaces | grep Number 找 Status Change 大数值端口；show interfaces | grep Last + show system 对时。深挖：<code>swlog appid slNi subapp macmove level debug2</code> → show log swlog | grep MACMOVE。</li>
-<li><strong>BPDU 收发统计</strong>（p23）：debug stp bpdu-stats &lt;实例&gt; start → show → stop；某端口只 tx 无 rx = 单向链路或对端不发。</li>
-<li><strong>设计期防故障九原则</strong>（p24）：priority 明确定根；记录每个 VLAN 哪些口该阻塞；尽量少阻塞口；<strong>不调 STP 定时器</strong>（只许动桥优先级与端口 cost/priority）；不用 VLAN 1；修剪 VLAN；配 Loop Guard/UDLD/LBD/Root Guard/qos user-port filter bpdu；尽量依赖 L3；单个阻塞口误转发可瘫痪大半个网络。</li>
-<li><strong>DHL（双归属链路）判据</strong>（g21/c05）：两条链路 native（untagged）VLAN 必须一致才能配对做 VLAN 分担；状态 forwarding/dhl-blocking 属正常分担，双双 blocking = native VLAN 不一致。</li>
+<li>
+<p>环路八步清单（f08）：① 取拓扑（逻辑 VLAN/广播域 + 物理互连端口）；</p>
+<ul>
+<li>② 开监控——swlog 提到 debug2（portMgrCmm/intfCmm/VlanMgrCmm/portMgrNi/VlanMgrNi）+ <code>swlog output flash-file-size 12500</code>；</li>
+<li>③ 核 MAC 反复 flush/重学；</li>
+<li>④ 收集 STP 配置——全网同一模式（1x1/FLAT/MSTP）、根桥位置、非默认 cost/priority、阻塞口位置（show spantree / show spantree vlan）；</li>
+<li>⑤ 核定时器/根 ID/根端口——timers 跨链路必须一致，Topology Changes 快速递增 = 设备无法就根桥达成一致（BPDU 可能被丢）；</li>
+<li>⑥ 本应阻塞的口变转发的两大原因（p20）；</li>
+<li>⑦ MAC flapping 三板斧（p22）；</li>
+<li>⑧ MSTP 专项三致性。应急止血：优先禁用"本应阻塞"的端口；</li>
+</ul>
+</li>
+<li>
+<p>MAC flapping 检测三板斧（p22）：show mac-learning mac-address <mac> 执行两次看出端口切换；</p>
+<ul>
+<li>show interfaces | grep Number 找 Status Change 大数值端口；</li>
+<li>show interfaces | grep Last + show system 对时。深挖：<code>swlog appid slNi subapp macmove level debug2</code> → show log swlog | grep MACMOVE；</li>
+</ul>
+</li>
+<li>
+<p><strong>BPDU 收发统计</strong>（p23）：debug stp bpdu-stats &lt;实例&gt; start → show → stop；某端口只 tx 无 rx = 单向链路或对端不发。</p>
+</li>
+<li>
+<p>设计期防故障九原则（p24）：priority 明确定根；</p>
+<ul>
+<li>记录每个 VLAN 哪些口该阻塞；</li>
+<li>尽量少阻塞口；</li>
+<li>不调 STP 定时器（只许动桥优先级与端口 cost/priority）；</li>
+<li>不用 VLAN 1；</li>
+<li>修剪 VLAN；</li>
+<li>配 Loop Guard/UDLD/LBD/Root Guard/qos user-port filter bpdu；</li>
+<li>尽量依赖 L3；</li>
+<li>单个阻塞口误转发可瘫痪大半个网络；</li>
+</ul>
+</li>
+<li>
+<p><strong>DHL（双归属链路）判据</strong>（g21/c05）：两条链路 native（untagged）VLAN 必须一致才能配对做 VLAN 分担；状态 forwarding/dhl-blocking 属正常分担，双双 blocking = native VLAN 不一致。</p>
+</li>
 <li><strong>协议背景</strong>（g15-g17）：STP/RSTP/MSTP 与 flat/per-VLAN 模式；TCN 每 1-4 分钟一次 = 频繁拓扑变化，追查从哪个 VLAN/端口进来；SPB（g41）与 ERPv2（g42）是替代性 L2 冗余方案（无 STP 阻塞）。</li>
 </ol>
 <h2 id="a1-lab">A1 · 书中案例（LAB 故障根因）</h2>
 <ul>
-<li><strong>c04（LAB2 案例2，p199-203）</strong>：6860-B 刷 "DoS type invalid ip ... to 224.0.0.18"、CPU 98%、访问迟缓。真根因：6870-A 上 VLAN 278 STP 状态 OFF，端口 1/1/15、1/1/16 直连成 L2 环，本机 VRRP 通告（源 MAC 00:00:5e:00:01:02）被环回从错误端口收回触发 invalid-ip 告警。修复：先禁两端口 → spantree Vlan 278 admin-state enable → 端口放回 vlan 1 重新 enable → 日志调回 info。判别口诀：DoS invalid ip 刷屏 + CPU 高 + 源 MAC 是 00:00:5e → 先查环，不当攻击处置（ce19）。</li>
-<li><strong>c05（LAB3 案例1，p223-226）</strong>：6360 两条 DHL 链路所有相关 VLAN 全 dhl-blocking。排查发现 6860-B 侧 vlan 57 在链路 A tagged、在链路 B untagged——两条 DHL 链路 native VLAN 不一致。修复：统一 <code>vlan 57 members linkagg 8 untagged</code> 后恢复分担。判据：DHL 排障先核两条链路 native VLAN 一致性。</li>
+<li>c04（LAB2 案例2，p199-203）：6860-B 刷 "DoS type invalid ip ... to 224.0.0.18"、CPU 98%、访问迟缓。</li>
+<li>真根因：6870-A 上 VLAN 278 STP 状态 OFF，端口 1/1/15、1/1/16 直连成 L2 环，本机 VRRP 通告（源 MAC 00:00:5e:00:01:02）被环回从错误端口收回触发 invalid-ip 告警。</li>
+<li>修复：先禁两端口 → spantree Vlan 278 admin-state enable → 端口放回 vlan 1 重新 enable → 日志调回 info。</li>
+<li>
+<p>判别口诀：DoS invalid ip 刷屏 + CPU 高 + 源 MAC 是 00:00:5e → 先查环，不当攻击处置（ce19）。</p>
+</li>
+<li>
+<p>c05（LAB3 案例1，p223-226）：6360 两条 DHL 链路所有相关 VLAN 全 dhl-blocking。</p>
+</li>
+<li>排查发现 6860-B 侧 vlan 57 在链路 A tagged、在链路 B untagged——两条 DHL 链路 native VLAN 不一致。</li>
+<li>修复：统一 <code>vlan 57 members linkagg 8 untagged</code> 后恢复分担。</li>
+<li>判据：DHL 排障先核两条链路 native VLAN 一致性。</li>
 </ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
 <li>触发：广播风暴、CPU 高 + DoS 告警、MAC 在两端口漂移、链路利用率异常高、STP 拓扑变化计数暴涨、MSTP region 行为异常、DHL 全 blocking。</li>
-<li>区分：单端口 down/错配 → l2-connectivity；
-VC 成员口/VFL 问题 → virtual-chassis；
-环路期间管理面不可达必须走 console/EMP（ce01）属本 skill 的前置动作。DoS 统计判读（g40）在本 skill，但真实攻击处置需结合 OVNA（ovna skill）。</li>
+<li>区分：单端口 down/错配 → l2-connectivity；</li>
+<li>VC 成员口/VFL 问题 → virtual-chassis；</li>
+<li>环路期间管理面不可达必须走 console/EMP（ce01）属本 skill 的前置动作。DoS 统计判读（g40）在本 skill，但真实攻击处置需结合 OVNA（ovna skill）；</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
-<li>环路疑似时：<strong>先占住 console 口</strong>（Telnet/SSH 大概率不可用；远程经 EMP IP SSH 兜底）。</li>
+<li>环路疑似时：先占住 console 口（Telnet/SSH 大概率不可用；远程经 EMP IP SSH 兜底）。<ul>
+<li>
+<ol>
 <li>应急止血：<code>interfaces &lt;本应阻塞端口&gt; admin-state disable</code>。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>执行八步清单（f08）：拓扑 → swlog debug2 + flash-file-size 12500 → MAC 重学核查 → show spantree vlan 全网核对模式/根/阻塞口 → timers/Topology Changes → 端口状态比对 → MAC flapping 三板斧 → MSTP 三致性。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>MAC 漂移确认：<code>swlog appid slNi subapp macmove level debug2</code>；<code>show log swlog | grep MACMOVE</code> 看 INS/DEL 端口交替。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>BPDU 疑似丢失：<code>debug stp bpdu-stats 1 start</code> → <code>debug stp bpdu-stats show 1</code> → stop。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>MSTP 三致性检查：region 名一致；
 <code>show spantree msti vlan-map</code> 核 VLAN-MSTI 映射；
 MSTI 内 VLAN 全部在互联链路 tagged（<code>show vlan members</code> 逐链路核端口类型）。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>DHL：<code>show vlan members</code> 比对两条链路的 untagged VLAN；不一致则 disable 链路两侧 → 统一 native VLAN → enable。</li>
-<li><strong>收尾强制项</strong>：<code>swlog appid slNi subapp macmove level info</code>（及所有调过的 appid）调回 info（ce04）。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>收尾强制项：<code>swlog appid slNi subapp macmove level info</code>（及所有调过的 appid）调回 info（ce04）。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>

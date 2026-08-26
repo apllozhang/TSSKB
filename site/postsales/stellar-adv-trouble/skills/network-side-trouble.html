@@ -128,11 +128,29 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
-<li>AP 无地址：<code>cat /etc/config/network</code> 查 proto → 不对则改回 DHCP（出厂重置或 Web UI）。</li>
+<li>AP 无地址：<code>cat /etc/config/network</code> 查 proto → 不对则改回 DHCP（出厂重置或 Web UI）。<ul>
+<li>
+<ol>
 <li>仍无地址：上联口 <code>tcpdump</code> 抓 DHCP，按 NAK 判据分流：无 NAK → 查中间链路/VLAN/中继；有 Offer 不 ACK → 查地址池。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>有地址但不通：ifconfig br-wan → route -n → ssudo ping 逐跳（网关/NTP/DNS/OmniVista）→ ssudo traceroute 看路径。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>日志缺失：syslog 三步（配置 → logread 进程 → logger 实测）。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>云管上线失败：核对防火墙端口组、出向端口、DHCP 选项、NTP、AWOS 版本与不支持型号清单。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>

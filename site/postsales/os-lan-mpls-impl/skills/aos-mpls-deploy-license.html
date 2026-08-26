@@ -81,10 +81,14 @@ blockquote p{margin:6px 0}
 - 节点许可（Node-based）：绑定单个 MPLS 节点，不绑硬件序列号/MAC</p>
 <p>版本准入：首版支持 AOS 8.9R3，平台仅 OmniSwitch 6860N。</p>
 <h2 id="a1">A1 · 书中案例</h2>
-<p>Lab 1（p83-96）：四台 OS6860 环形骨干。互联 VLAN 70/79/80/89/90（mtu-ip 4094），每台 Loopback0=192.168.254.{7-10}；
+<ul>
+<li>Lab 1（p83-96）：四台 OS6860 环形骨干。</li>
+<li>互联 VLAN 70/79/80/89/90（mtu-ip 4094），每台 Loopback0=192.168.254.{7-10}；
 OSPF area 0.0.0.0 接口 type point-to-point；
 SILOS 许可服务器 listen-port 8883，各交换机 <code>license client site-id Master server-ip ...</code>；
-<code>mpls load ldp</code> 后逐接口 <code>mpls ldp interface "int_79" admin-state enable</code>。初始四台 show license-server info 均 NO LICENSE，接入 SILOS 后拿到 15/23 天 DEMO 许可。</p>
+<code>mpls load ldp</code> 后逐接口 <code>mpls ldp interface "int_79" admin-state enable</code>。</li>
+<li>初始四台 show license-server info 均 NO LICENSE，接入 SILOS 后拿到 15/23 天 DEMO 许可。</li>
+</ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
 <li>新项目在 OmniSwitch 上开 MPLS：本 skill 给出前置与顺序骨架。</li>

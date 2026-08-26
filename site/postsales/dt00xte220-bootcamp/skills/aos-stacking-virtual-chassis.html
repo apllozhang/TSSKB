@@ -79,12 +79,7 @@ blockquote p{margin:6px 0}
 <li>VFL 断裂担心双 Master 脑裂（同 IP 同 MAC 冲突）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>堆叠把 2-8 台同家族交换机变成一个管理实体，四角色 Primary/Secondary/Idle/Pass-Through，Slot-ID 冲突时后来者进 Pass-Through（不阻流量但不成栈）（P38/P39， <code>&lt;span class="pg"&gt;原文p251-255&lt;/span&gt;</code> ）。</li>
-<li>R8 的 Virtual Chassis 更进一步：多台物理机经 VFL 互联成单一路由器/网桥，接入-核心之间免 STP/VRRP（P46， <code>&lt;span class="pg"&gt;原文p290&lt;/span&gt;</code> ）。</li>
-<li>两个体系共同的纪律是"切换前必须同步"（P42， <code>&lt;span class="pg"&gt;原文p260&lt;/span&gt;</code> ）和"原主回来不重选举、MAC retention 恒开"（P50， <code>&lt;span class="pg"&gt;原文p297&lt;/span&gt;</code> ）。</li>
-<li>脑裂是 VC 最大风险——两 Master 同 IP 同 MAC 会引发网络级故障，须用 RCD/VCSP 双保险（P53， <code>&lt;span class="pg"&gt;原文p306-307&lt;/span&gt;</code> ）。</li>
-</ul>
+<p>堆叠把 2-8 台同家族交换机变成一个管理实体，四角色 Primary/Secondary/Idle/Pass-Through，Slot-ID 冲突时后来者进 Pass-Through（不阻流量但不成栈）（P38/P39， <code>&lt;span class="pg"&gt;原文p251-255&lt;/span&gt;</code> ）。R8 的 Virtual Chassis 更进一步：多台物理机经 VFL 互联成单一路由器/网桥，接入-核心之间免 STP/VRRP（P46， <code>&lt;span class="pg"&gt;原文p290&lt;/span&gt;</code> ）。两个体系共同的纪律是"切换前必须同步"（P42， <code>&lt;span class="pg"&gt;原文p260&lt;/span&gt;</code> ）和"原主回来不重选举、MAC retention 恒开"（P50， <code>&lt;span class="pg"&gt;原文p297&lt;/span&gt;</code> ）。脑裂是 VC 最大风险——两 Master 同 IP 同 MAC 会引发网络级故障，须用 RCD/VCSP 双保险（P53， <code>&lt;span class="pg"&gt;原文p306-307&lt;/span&gt;</code> ）。</p>
 <h2 id="a1">A1（决策/选型）</h2>
 <ol>
 <li>冗余方案定位：STP 仅 50% 带宽 → LACP 仅链路冗余 → VC 链路+设备冗余+统一管理 → DHL 链路+设备冗余 100% 带宽（F16， <code>&lt;span class="pg"&gt;原文p481&lt;/span&gt;</code> ）</li>
@@ -96,8 +91,16 @@ blockquote p{margin:6px 0}
 <ol>
 <li>堆叠槽号修正：全部写 boot.slot.cfg slot 1 同时上电 → <code>show stack topology</code> 见 PASS-THRU DUP-SLOT → <code>stack set slot 1001 saved-slot 2</code>（逐台）→ <code>reload all</code> → 验证 1 PRIMARY/2 SECONDARY/3-4 IDLE（C10， <code>&lt;span class="pg"&gt;原文p251-262&lt;/span&gt;</code> ）；无 boot.slot.cfg 时按 MAC 法（15 秒内同时上电）或 uptime 法分配（P40， <code>&lt;span class="pg"&gt;原文p256&lt;/span&gt;</code> ）</li>
 <li>同步与切换：<code>write memory</code> → <code>copy working certified flash-synchro</code> → <code>takeover</code> → <code>show stack topology</code> 确认角色迁移、<code>show running-directory</code> 看 Flash SYNCHRONIZED（C11/P43， <code>&lt;span class="pg"&gt;原文p264-286&lt;/span&gt;</code> ）</li>
-<li>MAC Retention：<code>mac-retention status enable</code> + <code>mac-retention dup-mac-trap enable</code>；takeover 后 <code>show mac-retention status</code> 显示 Retained；<code>mac release</code> 主动释放（C12/P44， <code>&lt;span class="pg"&gt;原文p273, 271-272&lt;/span&gt;</code> ）</li>
-<li>拆堆叠：<code>stack set slot N mode standalone</code>（逐台）→ <code>rm boot.slot.cfg</code> → 恢复 labinit 配置 → <code>reload working no rollback-timeout</code>（C11， <code>&lt;span class="pg"&gt;原文p264-286&lt;/span&gt;</code> ）</li>
+<li>
+<p>MAC Retention：<code>mac-retention status enable</code> + <code>mac-retention dup-mac-trap enable</code>；</p>
+<ul>
+<li>takeover 后 <code>show mac-retention status</code> 显示 Retained；</li>
+<li><code>mac release</code> 主动释放（C12/P44， <code>&lt;span class="pg"&gt;原文p273, 271-272&lt;/span&gt;</code> ）；</li>
+</ul>
+</li>
+<li>
+<p>拆堆叠：<code>stack set slot N mode standalone</code>（逐台）→ <code>rm boot.slot.cfg</code> → 恢复 labinit 配置 → <code>reload working no rollback-timeout</code>（C11， <code>&lt;span class="pg"&gt;原文p264-286&lt;/span&gt;</code> ）</p>
+</li>
 <li>VC 建立（R8）：vcsetup.cfg（机箱 ID/组/VFL）+ vcboot.cfg 双文件须在运行目录（P48， <code>&lt;span class="pg"&gt;原文p294&lt;/span&gt;</code> ）；Master 选举五级：现任 Master &gt; chassis priority &gt; 最长在线 &gt; 最小 Chassis ID &gt; 最小 MAC（P49， <code>&lt;span class="pg"&gt;原文p296&lt;/span&gt;</code> ）</li>
 <li>auto-VC 出厂流程：boot 提示 "Do you want to disable auto-configurations [Y/N]?" 输 N → 自动 VFL/Chassis ID 协商（无 vcsetup.cfg 时自动选 Chassis ID、最低 MAC 为 Master）→ <code>show stack topology</code> 查看（C13/P181， <code>&lt;span class="pg"&gt;原文p937-940&lt;/span&gt;</code> ）</li>
 <li>禁 VC/恢复：<code>no virtual-chassis vf-link 0 member 2/1</code> 逐口删 → 恢复 <code>reload from virtual_dir no rollback-timeout</code>（C13， <code>&lt;span class="pg"&gt;原文p937-940&lt;/span&gt;</code> ）</li>

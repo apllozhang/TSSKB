@@ -67,12 +67,7 @@ blockquote p{margin:6px 0}
 <li>排查骨干环路、瞬态环、广播风暴类问题（RPFC/LBD/风暴控制）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>双平面架构框架（F1， <code>&lt;span class="pg"&gt;原文p9&lt;/span&gt;</code> ）：DP=802.1ah PBB（B-VID/ISID/B-SA/B-DA，只查 FDB 不做决策）+ CP=RFC 6329 IS-IS（拓扑发现、SPT 计算、服务成员泛播、FDB 预填充）。</li>
-<li>每节点以自己为根建 SPF 树，全部链路可用且路径最短（P1/P2， <code>&lt;span class="pg"&gt;原文p7&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p11&lt;/span&gt;</code> ）；MAC-in-MAC 把 CMAC 学习限制在 BEB 边缘，BCB 零感知（P4/P15， <code>&lt;span class="pg"&gt;原文p7&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p10&lt;/span&gt;</code> ）。</li>
-<li>每节点每 BVLAN 一棵树，ECT-ID 打破平局实现按服务负载分担（P17/P18， <code>&lt;span class="pg"&gt;原文p11-12&lt;/span&gt;</code> ）；路径对称与确定性保障帧有序送达与 OAM 单向时延推算（P19/P20， <code>&lt;span class="pg"&gt;原文p12&lt;/span&gt;</code> ）。</li>
-<li>防环分预防+缓解双机制：RPFC 校验入帧源 BMAC 与 FDB 一致性丢非合规帧（P45， <code>&lt;span class="pg"&gt;原文p51&lt;/span&gt;</code> ）。</li>
-</ul>
+<p>双平面架构框架（F1， <code>&lt;span class="pg"&gt;原文p9&lt;/span&gt;</code> ）：DP=802.1ah PBB（B-VID/ISID/B-SA/B-DA，只查 FDB 不做决策）+ CP=RFC 6329 IS-IS（拓扑发现、SPT 计算、服务成员泛播、FDB 预填充）。每节点以自己为根建 SPF 树，全部链路可用且路径最短（P1/P2， <code>&lt;span class="pg"&gt;原文p7&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p11&lt;/span&gt;</code> ）；MAC-in-MAC 把 CMAC 学习限制在 BEB 边缘，BCB 零感知（P4/P15， <code>&lt;span class="pg"&gt;原文p7&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p10&lt;/span&gt;</code> ）。每节点每 BVLAN 一棵树，ECT-ID 打破平局实现按服务负载分担（P17/P18， <code>&lt;span class="pg"&gt;原文p11-12&lt;/span&gt;</code> ）；路径对称与确定性保障帧有序送达与 OAM 单向时延推算（P19/P20， <code>&lt;span class="pg"&gt;原文p12&lt;/span&gt;</code> ）。防环分预防+缓解双机制：RPFC 校验入帧源 BMAC 与 FDB 一致性丢非合规帧（P45， <code>&lt;span class="pg"&gt;原文p51&lt;/span&gt;</code> ）。</p>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>骨干搭建四步（C1， <code>&lt;span class="pg"&gt;原文p16&lt;/span&gt;</code> ）：建 BVLAN 配 ECT-ID → 定控制 BVLAN → 定义 SPB IS-IS 接口 → 启用 SPB IS-IS</li>
@@ -82,8 +77,17 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>骨干验证命令族</strong>（C2， <code>&lt;span class="pg"&gt;原文p18&lt;/span&gt;</code> ）：<code>show spb isis interface</code>（L1 邻接、metric=10、Hello 9s/持失 27s）→ <code>show spb isis nodes</code>（system ID=BMAC、source ID、bridge priority）→ <code>show spb isis adjacency</code> → <code>show spb isis bvlans</code>（ECT 算法、(S,G)/(*,G)）→ <code>show spb isis unicast-table</code> → <code>show spb isis spf bvlan</code></li>
-<li><strong>链路度量调优</strong>（P49/P50， <code>&lt;span class="pg"&gt;原文p54&lt;/span&gt;</code> ）：按速率反比设置（100G=1000…1G=100000），引导流量走高容量链路；必须两端同时改</li>
+<li>骨干验证命令族（C2， <code>&lt;span class="pg"&gt;原文p18&lt;/span&gt;</code> ）：<code>show spb isis interface</code>（L1 邻接</li>
+<li>metric=10</li>
+<li>Hello 9s/持失 27s）→ <code>show spb isis nodes</code>（system ID=BMAC</li>
+<li>source ID</li>
+<li>bridge priority）→ <code>show spb isis adjacency</code> → <code>show spb isis bvlans</code>（ECT 算法</li>
+<li>
+<p>(S,G)/(*,G)）→ <code>show spb isis unicast-table</code> → <code>show spb isis spf bvlan</code></p>
+</li>
+<li>
+<p><strong>链路度量调优</strong>（P49/P50， <code>&lt;span class="pg"&gt;原文p54&lt;/span&gt;</code> ）：按速率反比设置（100G=1000…1G=100000），引导流量走高容量链路；必须两端同时改</p>
+</li>
 <li><strong>LAG 哈希补熵</strong>（P48， <code>&lt;span class="pg"&gt;原文p53&lt;/span&gt;</code> ）：MAC-in-MAC 外层只剩 BMAC 缺熵，启用 tunnel-protocol 后可按 CMAC 或 IP+端口哈希</li>
 <li><strong>无扰维护</strong>（P41/P42， <code>&lt;span class="pg"&gt;原文p48&lt;/span&gt;</code> ）：overload 状态让节点退出中转（可定时回退）；graceful restart 保邻接平滑主备切换</li>
 </ul>

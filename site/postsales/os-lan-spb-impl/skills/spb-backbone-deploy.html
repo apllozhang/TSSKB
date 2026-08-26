@@ -75,11 +75,30 @@ blockquote p{margin:6px 0}
 </blockquote>
 <h2 id="i">I · 方法论骨架</h2>
 <ol>
-<li><strong>职责分层</strong>（f01）：控制面（BVLAN + IS-IS + NNI 口）配在 BEB 与 BCB；数据面（access 口 + SAP）只配在 BEB。BCB 永不感知服务。</li>
-<li><strong>拓扑选型</strong>（f06）：小网两层——BEB 全互联，无需 BCB，冗余靠 VC 双机；大网三层——BCB 居核心，BEB 做汇聚，冗余靠双 BCB。</li>
-<li><strong>路径选优三级序</strong>（p05）：metric 低者优先 → 跳数少者优先 → ECT 平局裁决；两侧 metric 不一致取最大值（p06）。</li>
-<li><strong>部署四步</strong>（f02）：建 BVLAN（含 ECT）→ 定控制 BVLAN → 配 IS-IS 接口 → 全局启用 IS-IS。</li>
-<li><strong>带内管理</strong>（p32）：控制 BVLAN 上挂 IP 接口，ISIS-SPB 直接通告路由并做 MAC-IP 映射（免 ARP）。</li>
+<li>职责分层（f01）：控制面（BVLAN + IS-IS + NNI 口）配在 BEB 与 BCB；数据面（access 口 + SAP）只配在 BEB。<ul>
+<li>BCB 永不感知服务。</li>
+<li>
+<ol>
+<li>拓扑选型（f06）：小网两层——BEB 全互联，无需 BCB，冗余靠 VC 双机；大网三层——BCB 居核心，BEB 做汇聚，冗余靠双 BCB。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>路径选优三级序（p05）：metric 低者优先 → 跳数少者优先 → ECT 平局裁决；两侧 metric 不一致取最大值（p06）。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>部署四步（f02）：建 BVLAN（含 ECT）→ 定控制 BVLAN → 配 IS-IS 接口 → 全局启用 IS-IS。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>带内管理（p32）：控制 BVLAN 上挂 IP 接口，ISIS-SPB 直接通告路由并做 MAC-IP 映射（免 ARP）。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="a1-lab">A1 · 书中案例（Lab 配置序列精要）</h2>
 <p>Lab1 骨干从零部署（c01，p83，每节点执行）：</p>
@@ -105,12 +124,34 @@ spb isis admin-state enable
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
-<li>定拓扑：估规模，小网两层（BEB 互联）或大网三层（引入 BCB）。</li>
+<li>定拓扑：估规模，小网两层（BEB 互联）或大网三层（引入 BCB）。<ul>
+<li>
+<ol>
 <li>规划 BVLAN：≤16 个，每 BVLAN 不同 ECT-ID（如 2000/ect1、2001/ect2、2002/ect3），控制 BVLAN 单独一个。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>每节点执行 f02 四步命令序列（见 A1）。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>启用后按 f04 验证链自底向上检查：<code>show spb isis bvlans</code> → <code>interface</code> → <code>adjacency</code> → <code>info</code> → <code>unicast-table bvlan X</code> → <code>spf bvlan X</code> → <code>database</code>/<code>nodes</code>。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>配控制 BVLAN 带内管理 IP（为后续 OV2500 纳管铺路）。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>调路径：两端同步改 <code>spb isis interface port X metric N</code>（默认 10），改完看 <code>show spb isis spf</code>，做完两端同步恢复。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>

@@ -70,12 +70,25 @@ blockquote p{margin:6px 0}
 </blockquote>
 <h2 id="i">I · 方法论骨架</h2>
 <ol>
-<li><strong>勘测类型 × 项目阶段映射</strong>：部署前规划用预测勘测（软件仿真，导入平面图建模，无实测）；部署后看射频环境用被动勘测（只听不关联，测信号/噪声/发现 AP）；部署后看客户端真实性能用主动勘测（关联 AP，加测丢包/重传/物理速率）。工具：Ekahau（Windows）、WiFi Analyzer（Android）。</li>
-<li><strong>现场排障三步 SOP</strong>：Step1 拿平面图（标障碍/墙/层高，圈需 WiFi 区域，定位 AP）→ Step2 观测五问（型号是否与设计一致？RF 是否重叠？无覆盖是缺 AP 还是掉电？功率默认还是改过？位置是否别扭？）→ Step3 纠正措施。</li>
+<li>
+<p>勘测类型 × 项目阶段映射：部署前规划用预测勘测（软件仿真，导入平面图建模，无实测）；</p>
+<ul>
+<li>部署后看射频环境用被动勘测（只听不关联，测信号/噪声/发现 AP）；</li>
+<li>部署后看客户端真实性能用主动勘测（关联 AP，加测丢包/重传/物理速率）。工具：Ekahau（Windows）、WiFi Analyzer（Android）；</li>
+</ul>
+</li>
+<li>
+<p><strong>现场排障三步 SOP</strong>：Step1 拿平面图（标障碍/墙/层高，圈需 WiFi 区域，定位 AP）→ Step2 观测五问（型号是否与设计一致？RF 是否重叠？无覆盖是缺 AP 还是掉电？功率默认还是改过？位置是否别扭？）→ Step3 纠正措施。</p>
+</li>
 <li><strong>量化基准</strong>：默认发射功率 17dBm（覆盖不足应上调）；4 米穿 1-4 堵墙 RSSI 掉到 -70dBm，已不够 VoWLAN；衰减大户按材质排序为混凝土/木材/金属/钢构/玻璃镜面/砖/水。</li>
 <li><strong>覆盖优化五招</strong>：换 AP 型号（更好天线/户外型）、重做射频设计（功率/信道）、收窄信道宽度压干扰、<strong>删低速率逼终端贴近期 AP</strong>（反直觉但最有效）、优化布放。</li>
 <li><strong>性能五查（低吞吐/高时延）</strong>：WLAN 限速 → 客户端模式与协商速率 → ACS 开关（没开就开）→ 空中干扰换信道 → ISP 带宽。由近及远，先排配置再怀疑空口与出口。</li>
-<li><strong>选型基线</strong>：SSID/客户端数按档位走（入门 16 SSID/512 客户端、中端 32/1024、高端 24-48/1536）；供电入门 802.3af 全功能、中高端 802.3at/bt；上联 1GE→10GE 分档；多数型号含 BLE5.1/ZigBee 射频与专用扫描射频。外置天线型号尾数为 2（如 AP1322/1362），全系标配内置全向天线。</li>
+<li>选型基线：SSID/客户端数按档位走（入门 16 SSID/512 客户端、中端 32/1024、高端 24-48/1536）；<ul>
+<li>供电入门 802.3af 全功能、中高端 802.3at/bt；</li>
+<li>上联 1GE→10GE 分档；</li>
+<li>多数型号含 BLE5.1/ZigBee 射频与专用扫描射频。外置天线型号尾数为 2（如 AP1322/1362），全系标配内置全向天线；</li>
+</ul>
+</li>
 </ol>
 <h2 id="a1">A1 · 书中案例</h2>
 <ul>
@@ -90,7 +103,10 @@ blockquote p{margin:6px 0}
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
 <li>触发："WiFi 表现不佳"类工单、新建网部署前规划、部署后验收、客户问"该买哪档 AP/要不要换 Wi-Fi 7"。</li>
-<li>区分：认证失败、Portal 不弹等业务问题用 <code><a href="ssid-portal-auth.html">ssid-portal-auth</a></code>；AP 不上电、拿不到 IP 等单体故障用 <code><a href="ap-side-troubleshooting.html">ap-side-troubleshooting</a></code>；<strong>回程要用无线解决</strong>（桥接/组网）用 <code><a href="bridge-mesh-deployment.html">bridge-mesh-deployment</a></code>。本 skill 管覆盖、信号、干扰、信道与硬件选型；同频/邻频干扰对策（换信道）与 ACS 检查也在此。</li>
+<li>区分：认证失败、Portal 不弹等业务问题用 <code><a href="ssid-portal-auth.html">ssid-portal-auth</a></code>；</li>
+<li>AP 不上电、拿不到 IP 等单体故障用 <code><a href="ap-side-troubleshooting.html">ap-side-troubleshooting</a></code>；</li>
+<li>回程要用无线解决（桥接/组网）用 <code><a href="bridge-mesh-deployment.html">bridge-mesh-deployment</a></code>。本 skill 管覆盖、信号、干扰、信道与硬件选型；</li>
+<li>同频/邻频干扰对策（换信道）与 ACS 检查也在此；</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <p>部署前：

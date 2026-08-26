@@ -94,12 +94,34 @@ P 节点 sw9/sw10 该表为空——服务只存在 LER 的直接证据。</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
-<li>读 forwarding-table：Out-Label=3 → 直连+PHP；16+ 大标签 → 远端 FEC，正常。</li>
+<li>读 forwarding-table：Out-Label=3 → 直连+PHP；16+ 大标签 → 远端 FEC，正常。<ul>
+<li>
+<ol>
 <li>读 LDP 邻居：LDP ID 为 loopback:0 属 per-platform；两 LSR 间只有一个会话（多物理链路）属正常。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>调 hold-time：两端同时改（取小者生效），需要区分接口时用接口级覆盖全局。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>判断配置落点：先列出哪些 PE 是 LER；service/sap/sdp 只配 LER，P 节点零 service 配置。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>验证 VPLS 转发：<code>show mac-learning domain vpls</code> 应同时出现 sap:（本端）与 sdp:（远端）接口 MAC。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>互通排障：标签逐跳核对传输标签 swap 路径，两端核对服务标签（vplsid 一致）。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>

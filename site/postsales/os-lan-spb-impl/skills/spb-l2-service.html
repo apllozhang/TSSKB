@@ -75,12 +75,35 @@ blockquote p{margin:6px 0}
 </blockquote>
 <h2 id="i">I · 方法论骨架</h2>
 <ol>
-<li><strong>五步开通序</strong>（f03）：接入交换机建客户 VLAN → BEB 声明 service access port → 可选 L2 Profile → 建 service（spb X isid Y bvlan Z）→ 挂 SAP。服务只建在需要交付的 BEB 上，不建在 BCB。</li>
-<li><strong>编号三纪律</strong>（p07）：service 号本机有效；I-SID 与 BVLAN 全网一致；一个 I-SID 只绑一个 BVLAN；不同服务映射不同 BVLAN 实现负载分担。</li>
-<li><strong>SAP 封装语法</strong>（p08）：SAP = access 口（物理口或 linkagg）+ 封装标识；同一口可多 SAP 分属不同服务。</li>
-<li><strong>vlan-xlation</strong>（p09）：两端 CVLAN 不同时出向改写 tag；服务级与口级均可配，默认关。</li>
-<li><strong>控制帧治理</strong>（p10）：L2 Profile 决定 STP/GVRP/MVRP tunnel、802.1X/LLDP/AMAP drop、LACP peer。</li>
-<li><strong>QoS 只在边缘</strong>（p11）：分类只在 SAP 完成，进骨干后 MAC-in-MAC 不再重分类。</li>
+<li>五步开通序（f03）：接入交换机建客户 VLAN → BEB 声明 service access port → 可选 L2 Profile → 建 service（spb X isid Y bvlan Z）→ 挂 SAP。<ul>
+<li>服务只建在需要交付的 BEB 上，不建在 BCB。</li>
+<li>
+<ol>
+<li>编号三纪律（p07）：service 号本机有效；I-SID 与 BVLAN 全网一致；一个 I-SID 只绑一个 BVLAN；不同服务映射不同 BVLAN 实现负载分担。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>SAP 封装语法（p08）：SAP = access 口（物理口或 linkagg）+ 封装标识；同一口可多 SAP 分属不同服务。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>vlan-xlation（p09）：两端 CVLAN 不同时出向改写 tag；服务级与口级均可配，默认关。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>控制帧治理（p10）：L2 Profile 决定 STP/GVRP/MVRP tunnel、802.1X/LLDP/AMAP drop、LACP peer。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>QoS 只在边缘（p11）：分类只在 SAP 完成，进骨干后 MAC-in-MAC 不再重分类。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="a1-lab">A1 · 书中案例（Lab 配置序列精要）</h2>
 <p>Lab2 L2 服务部署（c02，p108）：</p>
@@ -100,19 +123,45 @@ disable 恢复 E-LAN）。</p>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
 <li>新 VLAN 跨骨干延伸、两站点 CVLAN 编号不一致、客户控制帧要透传或拦截、点对点透明电路需求时用本 skill。</li>
-<li>与 <code><a href="spb-backbone-deploy.html">spb-backbone-deploy</a></code> 的区分：本 skill 前提是骨干已建好（IS-IS 邻接 UP）；
-与 <code><a href="ip-over-spb.html">ip-over-spb</a></code> 的区分：本 skill 只做 L2 透传，一旦要配 IP 接口/网关即转 <code><a href="ip-over-spb.html">ip-over-spb</a></code>；
-与 <code><a href="unp-dynamic-ov2500.html">unp-dynamic-ov2500</a></code> 的区分：本 skill 是静态 SAP，终端动态归档归 UNP。</li>
+<li>与 <code><a href="spb-backbone-deploy.html">spb-backbone-deploy</a></code> 的区分：本 skill 前提是骨干已建好（IS-IS 邻接 UP）；</li>
+<li>与 <code><a href="ip-over-spb.html">ip-over-spb</a></code> 的区分：本 skill 只做 L2 透传，一旦要配 IP 接口/网关即转 <code><a href="ip-over-spb.html">ip-over-spb</a></code>；</li>
+<li>与 <code><a href="unp-dynamic-ov2500.html">unp-dynamic-ov2500</a></code> 的区分：本 skill 是静态 SAP，终端动态归档归 UNP；</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
-<li>接入交换机：建客户 VLAN，用户口 untagged、上联口 tagged。</li>
+<li>接入交换机：建客户 VLAN，用户口 untagged、上联口 tagged。<ul>
+<li>
+<ol>
 <li>BEB：<code>service access port &lt;p&gt;</code> 声明接入侧端口。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>（可选）<code>service l2profile &lt;name&gt; &lt;proto&gt; {tunnel|peer|drop}</code> + <code>service access port &lt;p&gt; l2profile &lt;name&gt;</code>。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li><code>service spb &lt;svc&gt; isid &lt;isid&gt; bvlan &lt;bvid&gt; admin-state enable</code>（I-SID/BVLAN 全网一致；范围语法 <code>service spb 11-13 isid 1001-1003 bvlan 4001:3</code>）。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li><code>service spb &lt;svc&gt; sap port &lt;p&gt;:&lt;encap&gt; admin-state enable stats enable</code>。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>两端 CVLAN 不同则配 <code>service &lt;svc&gt; vlan-xlation enable</code>（或口级）。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>验证：<code>show spb isis services</code>、<code>show service sdp spb</code>、<code>show mac-learning domain spb</code>（本地 MAC 落 sap:、远端 MAC 落 sdp:）。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>

@@ -67,19 +67,24 @@ blockquote p{margin:6px 0}
 <li>高密 400G/长距模块上线前的电源与风冷预算核算</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>SFP MSA 标准接口是识别与监控的物理基础（P1， <code>&lt;span class="pg"&gt;原文p13&lt;/span&gt;</code> ）：20 针插座+笼式外壳，模块内置串行接口提供能力/接口/厂商识别信息——交换机据此识别模块并读 DDM。</li>
-<li>安装纪律四条（P4-P8， <code>&lt;span class="pg"&gt;原文p14-16&lt;/span&gt;</code> ）：拔出后同端口至少等 10 秒再插；三种释放机构（铰链面开到 90°、bail wire 压杆、弹出器按钮）各有操作法，任何时候不得强行插拔；ESD 腕带+防尘帽+Class 1 激光安全。</li>
-<li>DDM 并非人人都有：全部 DAC、铜口 T 系列、SFP-GIG-。</li>
-</ul>
-<h2 id="cwdsfp-100-lc-mmsm15sfp-dual-sm10qsfp-40g-sr-bdqsfp-100g-a20m-ddmx31-ddm-vfl-4x10g4x25g2xq1002xq2002q100vfl-p21">CWD、SFP-100-LC-MM/SM15、SFP-DUAL-SM10、QSFP-40G-SR-BD、QSFP-100G-A20M 无 DDM（X31）——这些口无法用 DDM 做光功率监控，排障要靠替代手段。拆分与 VFL 是两类特殊连接形态：拆分线家族（4X10G/4X25G/2XQ100/2XQ200/2Q100）物理拆带宽；VFL 连接有专用件与禁用件清单（P21）。</h2>
+<p>SFP MSA 标准接口是识别与监控的物理基础（P1， <code>&lt;span class="pg"&gt;原文p13&lt;/span&gt;</code> ）：20 针插座+笼式外壳，模块内置串行接口提供能力/接口/厂商识别信息——交换机据此识别模块并读 DDM。安装纪律四条（P4-P8， <code>&lt;span class="pg"&gt;原文p14-16&lt;/span&gt;</code> ）：拔出后同端口至少等 10 秒再插；三种释放机构（铰链面开到 90°、bail wire 压杆、弹出器按钮）各有操作法，任何时候不得强行插拔；ESD 腕带+防尘帽+Class 1 激光安全。DDM 并非人人都有：全部 DAC、铜口 T 系列、SFP-GIG-##CWD、SFP-100-LC-MM/SM15、SFP-DUAL-SM10、QSFP-40G-SR-BD、QSFP-100G-A20M 无 DDM（X31）——这些口无法用 DDM 做光功率监控，排障要靠替代手段。拆分与 VFL 是两类特殊连接形态：拆分线家族（4X10G/4X25G/2XQ100/2XQ200/2Q100）物理拆带宽；VFL 连接有专用件与禁用件清单（P21）。</p>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>插拔先看释放机构类型</strong>：铰链式/ bail wire /弹出器按钮三选一，禁止蛮力</li>
 <li><strong>监控选型</strong>：需要光功率监控的链路避开无 DDM 模块清单（X31）</li>
 <li><strong>VFL 口选件</strong>：QSFP-40G-AOC20M 与 OS6860-CBL 系列为 VFL 专用（仅 20G VFL）；SFP-10G-BX 系列与 QSFP-40G-SR-BD 明确不支持 VFL——VFL 口选件先查此标注（P21， <code>&lt;span class="pg"&gt;原文p88&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p49&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p37&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p44&lt;/span&gt;</code> ）</li>
-<li><strong>拆分场景</strong>：40G→4×10G 用 MPO-LC splitter 或 QSFP-4X10G；100G→4×25G 用 QSFP-4X25G-C；200G→2×100G 用 2XQ100；400G→2×200G 用 2XQ200、→2×100G 用 2Q100；400G-SR4.2 可拆 4×QSFP-100G-SR1.2</li>
-<li><strong>功耗温度预算</strong>：按 P23 梯度（1G/10G ≤1-1.5W … 400G 10-12W）核电源；按 P24 温度档（商用 0-70°C / 工业 -40~85°C / 长距收窄）选址</li>
+<li>
+<p>拆分场景：40G→4×10G 用 MPO-LC splitter 或 QSFP-4X10G；</p>
+<ul>
+<li>100G→4×25G 用 QSFP-4X25G-C；</li>
+<li>200G→2×100G 用 2XQ100；</li>
+<li>400G→2×200G 用 2XQ200、→2×100G 用 2Q100；</li>
+<li>400G-SR4.2 可拆 4×QSFP-100G-SR1.2；</li>
+</ul>
+</li>
+<li>
+<p><strong>功耗温度预算</strong>：按 P23 梯度（1G/10G ≤1-1.5W … 400G 10-12W）核电源；按 P24 温度档（商用 0-70°C / 工业 -40~85°C / 长距收窄）选址</p>
+</li>
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>

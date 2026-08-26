@@ -75,10 +75,28 @@ blockquote p{margin:6px 0}
 <h2 id="i">I · 方法论骨架</h2>
 <ol>
 <li><strong>BUM 三模式选型</strong>（f09）：Head-End（默认，稀疏场景省资源）→ Tandem S,G（每 I-SID 每源建树，带宽效率高）→ Tandem *,G（每 BVLAN 共享一棵树，资源最省）。</li>
-<li><strong>配置层级</strong>（p15）：<code>service spb [X|all] multicast-mode {head-end|tandem}</code> 逐服务或全局；tandem 子模式逐 BVLAN 配 <code>spb isis bvlan N tandem-multicast-mode {sgmode|gmode}</code>；同一 BVLAN 全网必须同模式。</li>
-<li><strong>IPMS 逐服务显式启用</strong>（p17）：不开则组播无差别泛洪到全部 SAP/SDP。</li>
-<li><strong>LBD 三件套</strong>（p12）：全局 enable → 端口 enable → show statistics；封口裁决可预判（ce04）。</li>
-<li><strong>Overload 两用法</strong>（p14）：维护引流（<code>spb isis overload timeout N</code>）与开机保护（<code>overload-on-boot</code>）。</li>
+<li>
+<p>配置层级（p15）：<code>service spb [X|all] multicast-mode {head-end|tandem}</code> 逐服务或全局；</p>
+<ul>
+<li>tandem 子模式逐 BVLAN 配 <code>spb isis bvlan N tandem-multicast-mode {sgmode|gmode}</code>；</li>
+<li>同一 BVLAN 全网必须同模式；</li>
+</ul>
+</li>
+<li>
+<p>IPMS 逐服务显式启用（p17）：不开则组播无差别泛洪到全部 SAP/SDP。</p>
+<ul>
+<li>
+<ol>
+<li>LBD 三件套（p12）：全局 enable → 端口 enable → show statistics；封口裁决可预判（ce04）。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>Overload 两用法（p14）：维护引流（<code>spb isis overload timeout N</code>）与开机保护（<code>overload-on-boot</code>）。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="a1-lab">A1 · 书中案例（Lab 配置序列精要）</h2>
 <p>Lab3 保护实验组合（c03，p127-132）：</p>
@@ -98,17 +116,35 @@ service access port 1/1/3 l2profile Drop-GVRP
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
 <li>组播流量大要优化复制、ARP/DHCP 泛洪要抑制、接入口可能成环、核心要下电维护先引流时用本 skill。</li>
-<li>与 <code><a href="spb-backbone-deploy.html">spb-backbone-deploy</a></code> 的区分：metric/ECT 选路调优归骨干 skill，本 skill 管 BUM 复制与环路防护；
-与 <code><a href="spb-access-ring-redundancy.html">spb-access-ring-redundancy</a></code> 的区分：DHL/ERP 是双上联的成套冗余方案，LBD 是兜底检测——教材实验里 LBD 用在无冗余方案的并行路径上；
-与 <code><a href="spb-oam-troubleshoot.html">spb-oam-troubleshoot</a></code> 的区分：本 skill 是预防性配置，连通性验证（mac-ping/SAA）归 OAM。</li>
+<li>与 <code><a href="spb-backbone-deploy.html">spb-backbone-deploy</a></code> 的区分：metric/ECT 选路调优归骨干 skill，本 skill 管 BUM 复制与环路防护；</li>
+<li>与 <code><a href="spb-access-ring-redundancy.html">spb-access-ring-redundancy</a></code> 的区分：DHL/ERP 是双上联的成套冗余方案，LBD 是兜底检测——教材实验里 LBD 用在无冗余方案的并行路径上；</li>
+<li>与 <code><a href="spb-oam-troubleshoot.html">spb-oam-troubleshoot</a></code> 的区分：本 skill 是预防性配置，连通性验证（mac-ping/SAA）归 OAM；</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
-<li>评估组播规模：稀疏/低带宽保持默认 head-end；高带宽组播改 tandem 并逐 BVLAN 选 sgmode/gmode。</li>
+<li>评估组播规模：稀疏/低带宽保持默认 head-end；高带宽组播改 tandem 并逐 BVLAN 选 sgmode/gmode。<ul>
+<li>
+<ol>
 <li>开 IPMS：<code>ip multicast service &lt;svc&gt; admin-state enable</code>（逐服务，两端 BEB 都要）。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>部署 LBD：全局 <code>loopback-detection enable</code> → 接入口 <code>loopback-detection service access port &lt;p&gt; enable</code> → <code>show loopback-detection statistics port &lt;p&gt;</code>。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>维护前引流：路径外节点无关，路径上的核心执行 <code>spb isis overload timeout 120</code>，permanent ping 验证无感切换。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>排查组播路径：<code>show spb isis multicast-table</code>，按组 B-MAC 反推源节点与 I-SID（p16 编码规则）。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>

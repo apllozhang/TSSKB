@@ -68,11 +68,7 @@ blockquote p{margin:6px 0}
 <li>用 pkgmgr 安装/卸载功能包，或升级前处理 AMS 明文密码</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>Secure Boot 通过启动期认证校验保证只运行可信软件，需 U-Boot/ONIE/BIOS 升级 + Secure Boot 专用镜像三件配合（P1， <code>&lt;span class="pg"&gt;原文p34&lt;/span&gt;</code> ）。</li>
-<li>平台分型框架（F3， <code>&lt;span class="pg"&gt;原文p104-105&lt;/span&gt;</code> ）：U-Boot 型（6360/6465/6560/6570M——先升 U-Boot 再升镜像，之后只认 Secure Boot 镜像）／ONIE 型（6860N/6870/6900-X 系列——BIOS 使能+ONIE 包）／例外型（6860(E)/6865/9900/6900-V72·C32·V48C8·C32E 不支持或需 BIOS）；混 VC 用"最小公分母"（非 Secure Boot 镜像）。</li>
-<li>证书与密码治理是配套安全层：ALE CA 设备证书（每台唯一密钥对+内部 CA 签 X.509，5 年有效、到期前 1 年更新，P5， <code>&lt;span class="pg"&gt;原文p27&lt;/span&gt;</code> ）、首访强制改密（P3， <code>&lt;span class="pg"&gt;原文p27&lt;/span&gt;</code> ）、su 口令不可恢复（P4， <code>&lt;span class="pg"&gt;原文p26&lt;/span&gt;</code> ）、弱加密禁用（P6， <code>&lt;span class="pg"&gt;原文p28&lt;/span&gt;</code> ）、TLS 默认 1.2（P8， <code>&lt;span class="pg"&gt;原文p33&lt;/span&gt;</code> ）。</li>
-</ul>
+<p>Secure Boot 通过启动期认证校验保证只运行可信软件，需 U-Boot/ONIE/BIOS 升级 + Secure Boot 专用镜像三件配合（P1， <code>&lt;span class="pg"&gt;原文p34&lt;/span&gt;</code> ）。平台分型框架（F3， <code>&lt;span class="pg"&gt;原文p104-105&lt;/span&gt;</code> ）：U-Boot 型（6360/6465/6560/6570M——先升 U-Boot 再升镜像，之后只认 Secure Boot 镜像）／ONIE 型（6860N/6870/6900-X 系列——BIOS 使能+ONIE 包）／例外型（6860(E)/6865/9900/6900-V72·C32·V48C8·C32E 不支持或需 BIOS）；混 VC 用"最小公分母"（非 Secure Boot 镜像）。证书与密码治理是配套安全层：ALE CA 设备证书（每台唯一密钥对+内部 CA 签 X.509，5 年有效、到期前 1 年更新，P5， <code>&lt;span class="pg"&gt;原文p27&lt;/span&gt;</code> ）、首访强制改密（P3， <code>&lt;span class="pg"&gt;原文p27&lt;/span&gt;</code> ）、su 口令不可恢复（P4， <code>&lt;span class="pg"&gt;原文p26&lt;/span&gt;</code> ）、弱加密禁用（P6， <code>&lt;span class="pg"&gt;原文p28&lt;/span&gt;</code> ）、TLS 默认 1.2（P8， <code>&lt;span class="pg"&gt;原文p33&lt;/span&gt;</code> ）。</p>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>先查平台属于哪一型</strong>：U-Boot 型先 <code>update uboot</code> 到 8.10.37.R04 再升 Secure Boot 镜像；ONIE 型升镜像→重启进 BIOS 启用→（6860N/6870）装 onie deb 包；例外型用非 Secure Boot 镜像</li>

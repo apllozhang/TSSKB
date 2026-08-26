@@ -73,23 +73,71 @@ blockquote p{margin:6px 0}
 <p>"ssudo tcpdump –i br-wan -w test-capture.pcap udp port 53 ... All the traffic exchanged between the AP and the access switch is going through this interface." (p238)</p>
 </blockquote>
 <h2 id="i">I · 方法论骨架</h2>
-<p>排障前置铁律：<strong>先 NTP 全网同步</strong>（AP、OmniVista、交换机同一台 NTP），否则跨设备日志时间戳对不上。
-接入手段：SSH（企业/云管模式需先在 AP 组 Provisioning 里启用并设密码）或串口（115200 8N1，无校验无流控；默认账号 support/aos2016）。
-按层检查：
-1. <strong>无线配置</strong>：iwconfig 看 SSID 是否在目标射频广播、功率与 RF Profile 一致、加密开启、BSSID 存在。接口命名 athXYY：X=0/1/2 对应 2.4/5/6GHz，YY=SSID 编号（ath001=2.4G 的 1 号 SSID）。
-2. <strong>RF 配置</strong>：cat /tmp/config/rfprofile.conf 对照 Band Steering/Load Balance/扫描/国家码/信道/功率/门限。
-3. <strong>客户端</strong>：ssudo sta_list（第一命令——VLAN/IP/时长/收发计数/认证方式/Final_role）；cat /proc/kes_syslog 看 DHCP 与关联；ssudo wlanconfig athXX list 看 RSSI/SNR（RSSI 值 29≈-67dBm、20≈-76dBm、10≈-86dBm）。
-4. <strong>漫游</strong>：adme show 看邻居与 RSSI；wam.log 搜 L2/L3 roaming-start/success。漫游失败三判据：邻居互相可见；untagged/tagged VLAN 间不能漫游；源/目标 AP 间 RSSI 过低。
-5. <strong>门户</strong>：eag_cli show user all；/var/log/eag.log——首连 IP 为 0.0.0.0 发不出重定向是正常时序，先查 IP 再查门户。
-6. <strong>抓包</strong>：有线侧 ssudo tcpdump -i br-wan（AP 与接入交换机全部流量走 br-wan），pcap 经 SFTP 取出用 Wireshark；空口抓包在 Provisioning 启 "AP web" → RF Environment 选信道过滤，文件送 TFTP。
-7. <strong>系统</strong>：top 看单进程 %CPU（案例 drm 81% 为死循环/软件问题）；ps 看 R/S 正常、X(Dead)/Z(Zombie) 异常——僵尸进程吃内存；date/uptime 核对 NTP 与意外重启。</p>
+<ul>
+<li>排障前置铁律：<strong>先 NTP 全网同步</strong>（AP、OmniVista、交换机同一台 NTP），否则跨设备日志时间戳对不上。</li>
+<li>接入手段：SSH（企业/云管模式需先在 AP 组 Provisioning 里启用并设密码）或串口（115200 8N1，无校验无流控；默认账号 support/aos2016）。</li>
+<li>按层检查：1. <strong>无线配置</strong>：iwconfig 看 SSID 是否在目标射频广播、功率与 RF Profile 一致、加密开启、BSSID 存在。</li>
+<li>接口命名 athXYY：X=0/1/2 对应 2.4/5/6GHz，YY=SSID 编号（ath001=2.4G 的 1 号 SSID）。</li>
+<li>
+<ol>
+<li><strong>RF 配置</strong>：cat /tmp/config/rfprofile.conf 对照 Band Steering/Load Balance/扫描/国家码/信道/功率/门限。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>客户端：ssudo sta_list（第一命令——VLAN/IP/时长/收发计数/认证方式/Final_role）；</li>
+<li>cat /proc/kes_syslog 看 DHCP 与关联；</li>
+<li>ssudo wlanconfig athXX list 看 RSSI/SNR（RSSI 值 29≈-67dBm、20≈-76dBm、10≈-86dBm）；
+。</li>
+</ol>
+</li>
+<li>
+<p>漫游：adme show 看邻居与 RSSI；wam.log 搜 L2/L3 roaming-start/success。</p>
+<ul>
+<li>漫游失败三判据：邻居互相可见；untagged/tagged VLAN 间不能漫游；源/目标 AP 间 RSSI 过低。</li>
+<li>
+<ol>
+<li>门户：eag_cli show user all；/var/log/eag.log——首连 IP 为 0.0.0.0 发不出重定向是正常时序，先查 IP 再查门户。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>抓包：有线侧 ssudo tcpdump -i br-wan（AP 与接入交换机全部流量走 br-wan），pcap 经 SFTP 取出用 Wireshark；
+空口抓包在 Provisioning 启 "AP web" → RF Environment 选信道过滤，文件送 TFTP。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>系统：top 看单进程 %CPU（案例 drm 81% 为死循环/软件问题）；ps 看 R/S 正常、X(Dead)/Z(Zombie) 异常——僵尸进程吃内存；date/uptime 核对 NTP 与意外重启。</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
 <h2 id="a1-lab">A1 · 书中案例（Lab 精要）</h2>
-<p>四个排障用例（p276-284、p214-217）：
-- <strong>看不到 SSID</strong> 三问：SSID 是否真在该射频广播（iwconfig）？客户端射频与 SSID 频段兼容？AP 国家码被客户端支持？国家码错误的规避法：RF Profile 里手工指定一个双方兼容的信道，无需改国家码。
-- <strong>拿不到 IP</strong>：客户端 Wireshark + AP tcpdump 双侧抓 DHCP 看丢在哪侧，sta_list 核对 VLAN 与 Final_role 是否过滤 DHCP。
-- <strong>频繁掉线</strong>：iwlist txpower 查功率（案例 Tx-Power=3dBm 压到最小，RSSI 16/SNR 30 临近掉线）；RF Profile 的 signalStrengthThreshold 案例设 70，低于门限的客户端被主动踢——下调；空口抓包看去关联/去认证帧。
-- <strong>802.1X 失败</strong>三段对照：客户端（账号/加密/证书）↔ AP（AAA_server.conf 的 IP/端口/共享密钥、wlanservice.conf 绑定的 aaaProfile）↔ RADIUS 服务器（用户库、共享密钥、NAS IP、防火墙放行 1812/1813）。
-- <strong>高 CPU/僵尸进程</strong>：top 定位异常进程（81% 的 drm）→ 收集进程清单开票，不要只重启了事。</p>
+<ul>
+<li>四个排障用例（p276-284、p214-217）：- <strong>看不到 SSID</strong> 三问：SSID 是否真在该射频广播（iwconfig）？客户端射频与 SSID 频段兼容？AP 国家码被客户端支持？国家码错误的规避法：RF Profile 里手工指定一个双方兼容的信道，无需改国家码。</li>
+<li>
+<ul>
+<li><strong>拿不到 IP</strong>：客户端 Wireshark + AP tcpdump 双侧抓 DHCP 看丢在哪侧，sta_list 核对 VLAN 与 Final_role 是否过滤 DHCP。</li>
+</ul>
+</li>
+<li>
+<ul>
+<li><strong>频繁掉线</strong>：iwlist txpower 查功率（案例 Tx-Power=3dBm 压到最小，RSSI 16/SNR 30 临近掉线）；RF Profile 的 signalStrengthThreshold 案例设 70，低于门限的客户端被主动踢——下调；空口抓包看去关联/去认证帧。</li>
+</ul>
+</li>
+<li>
+<ul>
+<li><strong>802.1X 失败</strong>三段对照：客户端（账号/加密/证书）↔ AP（AAA_server.conf 的 IP/端口/共享密钥、wlanservice.conf 绑定的 aaaProfile）↔ RADIUS 服务器（用户库、共享密钥、NAS IP、防火墙放行 1812/1813）。</li>
+</ul>
+</li>
+<li>
+<ul>
+<li><strong>高 CPU/僵尸进程</strong>：top 定位异常进程（81% 的 drm）→ 收集进程清单开票，不要只重启了事。</li>
+</ul>
+</li>
+</ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
 <li>现象明确（看不到 SSID、拿不到 IP、掉线、802.1X 失败、漫游断、门户打不开、CPU 高）→ 本 skill 对应用例。</li>

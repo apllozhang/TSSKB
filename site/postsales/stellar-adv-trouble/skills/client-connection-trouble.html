@@ -173,11 +173,29 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
-<li>搜不到 SSID：iwconfig 查该 SSID 的 BSSID 是否存在（无 MAC=未广播）→ 核对客户端支持频段 → showsysinfo 查国家码；国家码不匹配时在 RF profile 手动指定双方兼容信道。</li>
+<li>搜不到 SSID：iwconfig 查该 SSID 的 BSSID 是否存在（无 MAC=未广播）→ 核对客户端支持频段 → showsysinfo 查国家码；国家码不匹配时在 RF profile 手动指定双方兼容信道。<ul>
+<li>
+<ol>
 <li>连不上先跑 <code>ssudo sta_list</code> 六字段核对，再 <code>wam_debug sta_list</code> 看认证 JSON。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>没地址：双端抓包比对 DHCP 四步 → 正常则查 VLANID 与 Final_role 是否滤 DHCP。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>掉线：iwlist txpower → wlanconfig list 看 RSSI → cat /tmp/config/rfprofile.conf 查 signalStrengthThreshold → grep 客户端 MAC 读 disassoc reason（reason 8 直接结案为负载均衡）。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>慢/语音差：wlanconfig list 的 RSSI/SNR 对照阈值表，低于 29/25 即覆盖不达标。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>

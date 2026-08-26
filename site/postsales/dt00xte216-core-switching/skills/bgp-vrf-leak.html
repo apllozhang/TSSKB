@@ -78,17 +78,29 @@ blockquote p{margin:6px 0}
 <li>部分租户间需要受控互访（VRF Route Leak）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>BGP 是路径矢量协议（TCP 179），靠属性而非单纯度量选路：Local Pref 选出口、AS-Path 防环、MED 引导入流量、Community 控制通告范围。</li>
-<li>VRF 在一台物理设备上切出多张路由表，隔离是默认、互通是例外——跨 VRF 流量必须经 GRT（全局路由表）以 route-map 为过滤器中转。</li>
-</ul>
+<p>BGP 是路径矢量协议（TCP 179），靠属性而非单纯度量选路：Local Pref 选出口、AS-Path 防环、MED 引导入流量、Community 控制通告范围。VRF 在一台物理设备上切出多张路由表，隔离是默认、互通是例外——跨 VRF 流量必须经 GRT（全局路由表）以 route-map 为过滤器中转。</p>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>eBGP 基础：<code>ip load bgp</code> → <code>ip bgp autonomous-system 100</code> → <code>ip bgp neighbor 192.168.12.2 remote-as 200</code> → <code>admin-state enable</code> → <code>ip bgp admin-state enable</code>；注入本 AS 路由：<code>ip route-map switch1bgp sequence-number 10 action permit</code> + <code>ip redist ospf into bgp route-map switch1bgp</code> + <code>ip redist local into bgp ...</code>（ <code>&lt;span class="pg"&gt;原文p512&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p517&lt;/span&gt;</code> ）</li>
-<li>邻居加固：<code>ip bgp neighbor 100.10.1.1 update-source Loopback0</code> / <code>ebgp-multihop</code>；<code>ip bgp neighbor &lt;ip&gt; md5 key</code> + <code>status enable</code>；<code>show ip bgp neighbors</code>（Oper state: estab）（ <code>&lt;span class="pg"&gt;原文p499&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p500&lt;/span&gt;</code> ）</li>
-<li>策略：aspath-list/community-list/prefix-list 定义匹配 → route-map 组合 → <code>ip bgp neighbor &lt;ip&gt; route-map &lt;name&gt; in|out</code>（ <code>&lt;span class="pg"&gt;原文p505&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p508&lt;/span&gt;</code> ）</li>
+<li>
+<p>邻居加固：<code>ip bgp neighbor 100.10.1.1 update-source Loopback0</code> / <code>ebgp-multihop</code>；</p>
+<ul>
+<li><code>ip bgp neighbor &lt;ip&gt; md5 key</code> + <code>status enable</code>；</li>
+<li><code>show ip bgp neighbors</code>（Oper state: estab）（ <code>&lt;span class="pg"&gt;原文p499&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p500&lt;/span&gt;</code> ）；</li>
+</ul>
+</li>
+<li>
+<p>策略：aspath-list/community-list/prefix-list 定义匹配 → route-map 组合 → <code>ip bgp neighbor &lt;ip&gt; route-map &lt;name&gt; in|out</code>（ <code>&lt;span class="pg"&gt;原文p505&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p508&lt;/span&gt;</code> ）</p>
+</li>
 <li>VRF 创建：<code>vrf create ipone</code> → <code>ip interface int_190 address 192.168.190.1/24 vlan 190</code>（ <code>&lt;span class="pg"&gt;原文p466&lt;/span&gt;</code> ）</li>
-<li>路由泄漏：源 VRF <code>ip route-map "vlan190" sequence-number 50 action permit / match ip-address 192.168.190.0/24 redist-control all-subnets permit</code> + <code>ip export route-map vlan190</code>；目标 VRF <code>ip import vrf iptwo route-map vlan200</code>；验证 <code>show ip global-route-table</code>；default↔VRF 用 <code>ip import vrf default all-routes</code>（ <code>&lt;span class="pg"&gt;原文p468&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p470&lt;/span&gt;</code> ）</li>
+<li>
+<p>路由泄漏：源 VRF <code>ip route-map "vlan190" sequence-number 50 action permit / match ip-address 192.168.190.0/24 redist-control all-subnets permit</code> + <code>ip export route-map vlan190</code>；</p>
+<ul>
+<li>目标 VRF <code>ip import vrf iptwo route-map vlan200</code>；</li>
+<li>验证 <code>show ip global-route-table</code>；</li>
+<li>default↔VRF 用 <code>ip import vrf default all-routes</code>（ <code>&lt;span class="pg"&gt;原文p468&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p470&lt;/span&gt;</code> ）；</li>
+</ul>
+</li>
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>

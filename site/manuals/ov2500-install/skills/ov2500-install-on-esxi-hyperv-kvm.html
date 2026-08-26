@@ -70,10 +70,24 @@ blockquote p{margin:6px 0}
 </blockquote>
 <h2 id="i">I · 方法论骨架</h2>
 <ol>
-<li><strong>导 VA</strong>：按平台取对应包（ESXi 用 OVF+VMDK；Hyper-V 用导入包；KVM 用 qcow2 双盘），部署 VM 但<strong>不提前挂扩展盘</strong>。</li>
-<li><strong>初始向导</strong>：开机进 VM Console 向导——设 Technical Support Code 密码 → 设 cliadmin 密码 → 主机名（≤15 字符小写）→ 网络（OV IP / Captive Portal IP / 附加 Web IP，推荐独立子网+独立网卡）→ NTP。</li>
-<li><strong>配完重启后</strong>再做加盘、加额外 NIC 等硬件动作。</li>
-<li><strong>装机后基础运维</strong>全部经 VA 菜单（Console 或 SSH 2222/cliadmin）：Watchdog 管服务、Service Profile 裁剪省内存、改 IP、加网卡、NTP、关机流程。</li>
+<li>导 VA：按平台取对应包（ESXi 用 OVF+VMDK；Hyper-V 用导入包；KVM 用 qcow2 双盘），部署 VM 但不提前挂扩展盘。<ul>
+<li>
+<ol>
+<li>初始向导：开机进 VM Console 向导——设 Technical Support Code 密码 → 设 cliadmin 密码 → 主机名（≤15 字符小写）→ 网络（OV IP / Captive Portal IP / 附加 Web IP，推荐独立子网+独立网卡）→ NTP。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>配完重启后再做加盘、加额外 NIC 等硬件动作。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>装机后基础运维全部经 VA 菜单（Console 或 SSH 2222/cliadmin）：Watchdog 管服务、Service Profile 裁剪省内存、改 IP、加网卡、NTP、关机流程。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="a1">A1 · 书中案例</h2>
 <ul>
@@ -97,13 +111,23 @@ blockquote p{margin:6px 0}
 <li>等 OmniVista 配置完成并重启，之后再从 Hypervisor 添加扩展盘/额外 NIC，回到 VA 菜单继续 Completing the OmniVista Installation。</li>
 <li>首次登录 Web UI（https://&lt;服务器IP&gt;），导入正式或评估许可（评估：lds.al-enterprise.com，99999/evaluation/omnivista，90 天）。</li>
 <li>日常菜单入口：Console 或 SSH 2222 端口 cliadmin 登录 VA 菜单；SFTP 22 端口用于传证书、取备份/日志。</li>
-<li>服务运维用 Watchdog（菜单 3/5）：查全部服务状态；
-Choose Service Profile 按需裁剪（2-不开 Stellar/UPAM，3-不开应用可视化，4-不开 IoT，5-不开 sFlow，可多选如 "2 4 5"）；
-可加 1-4096MB swap。注意停 ActiveMQ/Tomcat 会连带关 Web 服务器，需手动恢复。</li>
-<li>改 OV IP（如必要）：记住网络侧不受影响，须手动同步——有线设备重配 sFlow 接收器、policy server、SNMP trap station 并从 Analytics/Policy View QoS/Notification 重推；
-Stellar AP 重配 DHCP 服务器并在 Unified Access 重应用 WLAN 服务与全局配置；
-改后不可达就重启服务器。</li>
-<li>标准关机：Watchdog → Stop All Services → VA 菜单 Power Off/Reboot。任何情况下不得直接关宿主机断电。</li>
+<li>
+<p>服务运维用 Watchdog（菜单 3/5）：查全部服务状态；</p>
+<ul>
+<li>Choose Service Profile 按需裁剪（2-不开 Stellar/UPAM，3-不开应用可视化，4-不开 IoT，5-不开 sFlow，可多选如 "2 4 5"）；</li>
+<li>可加 1-4096MB swap。注意停 ActiveMQ/Tomcat 会连带关 Web 服务器，需手动恢复；</li>
+</ul>
+</li>
+<li>
+<p>改 OV IP（如必要）：记住网络侧不受影响，须手动同步——有线设备重配 sFlow 接收器、policy server、SNMP trap station 并从 Analytics/Policy View QoS/Notification 重推；</p>
+<ul>
+<li>Stellar AP 重配 DHCP 服务器并在 Unified Access 重应用 WLAN 服务与全局配置；</li>
+<li>改后不可达就重启服务器；</li>
+</ul>
+</li>
+<li>
+<p>标准关机：Watchdog → Stop All Services → VA 菜单 Power Off/Reboot。任何情况下不得直接关宿主机断电。</p>
+</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>

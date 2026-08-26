@@ -129,15 +129,36 @@ blockquote p{margin:6px 0}
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
 <li>触发：客户要"多台当一台管"、跨楼宇远程堆叠、或高密度接入边缘（8 台 VC）；售前防守"堆叠不如机箱"。</li>
-<li>区分：本 skill 管 <strong>VC/VFL 机制与台数设计</strong>；"要不要选 VC 这个路线"的高可用对比在 <code><a href="campus-design-tiering-and-ha.html">campus-design-tiering-and-ha</a></code>；具体机型容量在 <code><a href="omniswitch-model-selection.html">omniswitch-model-selection</a></code>；auto-VC 开箱自动组网行为在 <code><a href="ifab-zero-touch-automation.html">ifab-zero-touch-automation</a></code>。</li>
+<li>区分：本 skill 管 VC/VFL 机制与台数设计；</li>
+<li>"要不要选 VC 这个路线"的高可用对比在 <code><a href="campus-design-tiering-and-ha.html">campus-design-tiering-and-ha</a></code>；</li>
+<li>具体机型容量在 <code><a href="omniswitch-model-selection.html">omniswitch-model-selection</a></code>；</li>
+<li>auto-VC 开箱自动组网行为在 <code><a href="ifab-zero-touch-automation.html">ifab-zero-touch-automation</a></code>；</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
-<li>按机型查台数上限与拓扑（mesh 还是 ring），确认家族可否混插。</li>
+<li>按机型查台数上限与拓扑（mesh 还是 ring），确认家族可否混插。<ul>
+<li>
+<ol>
 <li>规划 VFL：同速率、专用口或指定口、按跨堆叠流量定成员口数；远程堆叠选对光模块（6860N 100G 用暗光纤）。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>定主备：目标 master 配最高优先级；9900 阵营逐台写 vcsetup.cfg 静态 chassis-id。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>预置防脑裂：有 EMP 口走 RCD；无 EMP 口加 USB 适配器（ASIX 8817/RTL8153）或改 VCSP + helper LAG。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>输出 VC 设计页：台数/拓扑/VFL 口与速率/主备优先级/防裂机制，交 BOM（适配器别漏）。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>

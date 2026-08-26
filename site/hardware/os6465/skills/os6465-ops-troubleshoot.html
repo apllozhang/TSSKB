@@ -68,11 +68,7 @@ blockquote p{margin:6px 0}
 <li>处置温度 Warning trap 或 Danger 关机；核对 NEBS/OSP 接线红线</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>失电感知与告警双体系（F3， <code>&lt;span class="pg"&gt;原文p63&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p65&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p68&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p69&lt;/span&gt;</code> ）：预防侧=告警继电器（外部传感器输入 5-12VDC+8 类系统事件，独立/VC 两模式，映射到 NO/C/NC 输出，条件恢复自动清除）；亡故侧=Dying Gasp（残电三通道：SNMP trap 前 3 站+Syslog 前 3 服务器+4 个 802.3ah OAM PDU 上联口优先）。</li>
-<li>告警 VC 同步机制（P19）：VC 中任一机的输入/事件可驱动任一机的输出。</li>
-<li>温度双阈值与 6360 同构（P24）：Warning trap 不停机/Danger 自动关机需手动重启且不可配；各机型阈值梯度不同（P8：75-95/83-97°C）。</li>
-</ul>
+<p>失电感知与告警双体系（F3， <code>&lt;span class="pg"&gt;原文p63&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p65&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p68&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p69&lt;/span&gt;</code> ）：预防侧=告警继电器（外部传感器输入 5-12VDC+8 类系统事件，独立/VC 两模式，映射到 NO/C/NC 输出，条件恢复自动清除）；亡故侧=Dying Gasp（残电三通道：SNMP trap 前 3 站+Syslog 前 3 服务器+4 个 802.3ah OAM PDU 上联口优先）。告警 VC 同步机制（P19）：VC 中任一机的输入/事件可驱动任一机的输出。温度双阈值与 6360 同构（P24）：Warning trap 不停机/Danger 自动关机需手动重启且不可配；各机型阈值梯度不同（P8：75-95/83-97°C）。</p>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>本地告警选继电器输出</strong>：传感器/事件→alarm map→NO/C/NC 干接点（220VDC/250VAC·2A·60W）接声光/PLC（P18， <code>&lt;span class="pg"&gt;原文p63&lt;/span&gt;</code> ）</li>

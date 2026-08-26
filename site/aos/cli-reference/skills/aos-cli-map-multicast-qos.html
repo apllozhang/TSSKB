@@ -69,12 +69,7 @@ blockquote p{margin:6px 0}
 <li>策略经 PolicyView 创建后 CLI 改不动——优先级与只读规则核对</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>策略模型（P23， <code>&lt;span class="pg"&gt;原文p3953&lt;/span&gt;</code> ）：policy rule = policy condition + policy action；rule 编入 policy list 后生效；策略可经 CLI/SNMP/PolicyView（LDAP 端 GUI）三种途径创建。</li>
-<li>Access Guardian 架构（P29， <code>&lt;span class="pg"&gt;原文p4470&lt;/span&gt;</code> ）：UNP（Universal Network Profile）为统一框架——端口使能 UNP 后对用户认证/分类进 profile，profile 映射 VLAN 或 SAP；组件含 BYOD（UPAM/ClearPass，含 mDNS/SSDP GRE 隧道）、Captive Portal、QMR、IoT Device Profiling；199 条为全书最大命令章。</li>
-<li>组播分层（F7）：三层组播（PIM/DVMRP/IGMP）与二层组播交换（MCS/MVR）分层。</li>
-<li>QoS 双章分工（P28）：第 38 章管硬件队列/调度/端口参数，第 39 章管策略软件模型。</li>
-</ul>
+<p>策略模型（P23， <code>&lt;span class="pg"&gt;原文p3953&lt;/span&gt;</code> ）：policy rule = policy condition + policy action；rule 编入 policy list 后生效；策略可经 CLI/SNMP/PolicyView（LDAP 端 GUI）三种途径创建。Access Guardian 架构（P29， <code>&lt;span class="pg"&gt;原文p4470&lt;/span&gt;</code> ）：UNP（Universal Network Profile）为统一框架——端口使能 UNP 后对用户认证/分类进 profile，profile 映射 VLAN 或 SAP；组件含 BYOD（UPAM/ClearPass，含 mDNS/SSDP GRE 隧道）、Captive Portal、QMR、IoT Device Profiling；199 条为全书最大命令章。组播分层（F7）：三层组播（PIM/DVMRP/IGMP）与二层组播交换（MCS/MVR）分层。QoS 双章分工（P28）：第 38 章管硬件队列/调度/端口参数，第 39 章管策略软件模型。</p>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>二层组播</strong>→ 第 33 章（IPMS/MCS，106 条）/第 34 章（MVR）</li>
@@ -91,8 +86,16 @@ blockquote p{margin:6px 0}
 <li><strong>Ch36 PIM（ <code>&lt;span class="pg"&gt;原文p3542&lt;/span&gt;</code> ，约 99 条）</strong>：<code>ip pim</code>（PIM-SM/SSM/DM）</li>
 <li><strong>Ch37 Multicast Routing（ <code>&lt;span class="pg"&gt;原文p3769&lt;/span&gt;</code> ，约 14 条）</strong>：组播路由全局/边界/静态</li>
 <li><strong>Ch38 QoS（ <code>&lt;span class="pg"&gt;原文p3797&lt;/span&gt;</code> ，约 70 条）</strong>：硬件队列/调度/端口 QoS 参数（P28）</li>
-<li><strong>Ch39 QoS Policy（ <code>&lt;span class="pg"&gt;原文p3953&lt;/span&gt;</code> ，约 111 条）</strong>：<code>policy condition</code>（40+ 子命令：ip/ipv6/ip-port/tcp-port/udp-port/ethertype/tcpflags/service/icmp/tos/dscp/mac/vlan/802.1p/port/vrf/fragments/app-mon 等，inner 前缀支持 QinQ 内层字段）（P25）；<code>policy action</code>（disposition accept/drop/deny、cir+cbs/pir/pbs、802.1p/dscp 改写、redirect、mirror、port-disable 等）（P26）；<code>policy rule</code> 绑 condition+action；<code>policy list</code> 编排；<code>policy network/mac/port/vlan/map/service group</code> 成组复用（P27）</li>
-<li><strong>Ch40 Policy Server（ <code>&lt;span class="pg"&gt;原文p4190&lt;/span&gt;</code> ，约 9 条）</strong>：LDAP 端 PolicyView 联动</li>
+<li>Ch39 QoS Policy（ <code>&lt;span class="pg"&gt;原文p3953&lt;/span&gt;</code> ，约 111 条）：<code>policy condition</code>（40+ 子命令：ip/ipv6/ip-port/tcp-port/udp-port/ethertype/tcpflags/service/icmp/tos/dscp/mac/vlan/802.1p/port/vrf/fragments/app-mon 等，inner 前缀支持 QinQ 内层字段）（P25）；</li>
+<li><code>policy action</code>（disposition accept/drop/deny、cir+cbs/pir/pbs、802.1p/dscp 改写、redirect、mirror、port-disable 等）（P26）；</li>
+<li><code>policy rule</code> 绑 condition+action；</li>
+<li><code>policy list</code> 编排；</li>
+<li>
+<p><code>policy network/mac/port/vlan/map/service group</code> 成组复用（P27）；</p>
+</li>
+<li>
+<p><strong>Ch40 Policy Server（ <code>&lt;span class="pg"&gt;原文p4190&lt;/span&gt;</code> ，约 9 条）</strong>：LDAP 端 PolicyView 联动</p>
+</li>
 <li><strong>Ch41 AAA（ <code>&lt;span class="pg"&gt;原文p4205&lt;/span&gt;</code> ，约 119 条）</strong>：<code>aaa</code>/<code>radius</code>/<code>tacacs</code>（服务器组与认证方法链，为 AG 提供底座）（P31）</li>
 <li><strong>Ch42 Access Guardian（ <code>&lt;span class="pg"&gt;原文p4470&lt;/span&gt;</code> ，约 199 条）</strong>：<code>unp</code> 全局配置（dynamic-vlan-configuration、auth-server-down、redirect 族、mac-mobility 等）与 profile 配置（trust-tagged-vlans、qos-policy-list、captive-portal 等），另加 port/domain/user/show 组（P29/P30）</li>
 <li><strong>Ch43 AppMon（ <code>&lt;span class="pg"&gt;原文p4934&lt;/span&gt;</code> ，约 37 条）</strong>：应用识别与流量管控</li>

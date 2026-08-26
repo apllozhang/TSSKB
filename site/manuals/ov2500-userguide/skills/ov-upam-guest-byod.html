@@ -75,26 +75,73 @@ blockquote p{margin:6px 0}
 <li>社交账号（Facebook/Google/Rainbow/WeChat）登录 Guest Wi-Fi</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>UPAM 同时充当 Captive Portal 服务器与 RADIUS 服务器，应用分为 Summary / Authentication / Guest Access / BYOD Access / Settings 五区。</li>
-<li>认证策略双层：Access Policy（Priority 1-99 匹配）→ Authentication Strategy（认证源 × Web 认证四组合）。</li>
-<li>Guest 与 BYOD 是两套独立策略体系（各 ≤32 条含 Default），账号、有效期、设备数上限语义不同。</li>
-</ul>
+<p>UPAM 同时充当 Captive Portal 服务器与 RADIUS 服务器，应用分为 Summary：
+- Authentication
+- Guest Access
+- BYOD Access
+- Settings 五区。认证策略双层：Access Policy（Priority 1-99 匹配）→ Authentication Strategy（认证源 × Web 认证四组合）。Guest 与 BYOD 是两套独立策略体系（各 ≤32 条含 Default），账号、有效期、设备数上限语义不同。</p>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li><strong>UPAM 应用地图</strong>（frameworks·F16， <code>&lt;span class="pg"&gt;原文p678&lt;/span&gt;</code> ）：Authentication 子屏含 Summary/Workflow/NAS Clients/Access Policy/Authentication Strategy/Role Mapping for LDAP/Employee Account/Company Property/Switch User Account/Authentication Record/Captive Portal Access Record/Switch Access Record</li>
-<li><strong>三种认证工作流选型</strong>（frameworks·F17， <code>&lt;span class="pg"&gt;原文p681-682&lt;/span&gt;</code> ）：BYOD（MAC+CP 对本地/外部库：SSID→MAC 的 Network Enforcement→认证源→Portal 页→Login Strategy→Web 认证 Enforcement）；Guest（MAC+CP 对 Guest 账号库，多一步 Self-Registration）；MAC or 802.1X（无 CP：SSID→认证源→Network Enforcement 三步）</li>
-<li><strong>ASA 用例矩阵</strong>（principles·P173， <code>&lt;span class="pg"&gt;原文p641-642&lt;/span&gt;</code> ）：支持 UPAM 库同时做 ASA+客户端认证、UPAM 做 ASA+外部 RADIUS 做客户端；不支持外部 RADIUS 做 ASA+UPAM 做客户端</li>
+<li>
+<p>三种认证工作流选型（frameworks·F17， <code>&lt;span class="pg"&gt;原文p681-682&lt;/span&gt;</code> ）：BYOD（MAC+CP 对本地/外部库：SSID→MAC 的 Network Enforcement→认证源→Portal 页→Login Strategy→Web 认证 Enforcement）；</p>
+<ul>
+<li>Guest（MAC+CP 对 Guest 账号库，多一步 Self-Registration）；</li>
+<li>MAC or 802.1X（无 CP：SSID→认证源→Network Enforcement 三步）；</li>
+</ul>
+</li>
+<li>
+<p><strong>ASA 用例矩阵</strong>（principles·P173， <code>&lt;span class="pg"&gt;原文p641-642&lt;/span&gt;</code> ）：支持 UPAM 库同时做 ASA+客户端认证、UPAM 做 ASA+外部 RADIUS 做客户端；不支持外部 RADIUS 做 ASA+UPAM 做客户端</p>
+</li>
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>NAS Client</strong>：系统预置 All Managed Devices NAS（不可删），托管设备每 15 分钟自动入库，共享密钥固定 123456，与 UPAMRadiusServer 配套经 WLAN Service 下发；NAS IP 必须等于设备管理 IP；UPAM 作代理时 Shared Secret 四处一致（NAS Client+UPAM RADIUS+UPAM External RADIUS+第三方 RADIUS）（principles·P176， <code>&lt;span class="pg"&gt;原文p682-684&lt;/span&gt;</code> ）</li>
-<li><strong>Access Policy / Authentication Strategy</strong>：Access Policy Priority 1-99（1 最高）按 Basic+Advanced 属性匹配；Strategy 认证源四选（None/Local DB/External LDAP-AD/External RADIUS）× Web 认证（None/Guest/Employee/两者）四推荐组合；Employee Account 上绑定的 Access Role Profile/Policy List 优先于 Strategy（principles·P178， <code>&lt;span class="pg"&gt;原文p687-693&lt;/span&gt;</code> ）</li>
-<li><strong>Guest Access Strategy</strong>（frameworks·F18， <code>&lt;span class="pg"&gt;原文p712-718&lt;/span&gt;</code> ）：General（Portal 模板+FQDN/IP）→Login Strategy（账密/条款/Access Code/Simple Persona 四种；社交登录 FB/Google/Rainbow/WeChat 需 OAuth ID+DNS 解析）→Registration Strategy（Remember Device+有效期）→Post Portal Enforcement（固定 ARP+Policy List+数据配额）→Self-Registration（审批 Employee Sponsor 或 Guest Operator；≤20 自定义属性）→Service Level（多档绑定不同 ARP）→WiFi4EU（专用模板+有效期 ≤24h）</li>
-<li><strong>Guest Account 机制</strong>：Account 与 Access Code 两类；Data Quota 默认 1MB；批量创建一次最多 5000 个（前置 Global Configuration 启用）；打印凭据票；xls/csv/xlsx 导入（principles·P183， <code>&lt;span class="pg"&gt;原文p742-745&lt;/span&gt;</code> ）</li>
-<li><strong>Company Property / Device Specific PSK</strong>：公司资产设备清单绑定 ARP/Policy List 优先于 Strategy；每台设备按 MAC 派发不同 PSK；Online Devices 可 Kick Off（principles·P179， <code>&lt;span class="pg"&gt;原文p697-702&lt;/span&gt;</code> ）</li>
-<li><strong>Switch User Account (ASA)</strong>：建用户→AAA Profile（Unified Profile-Global Configuration-AAA）→Apply to Devices；权限三级 Read-Write/Read Only/Advanced（BitMap Calculator）（principles·P180， <code>&lt;span class="pg"&gt;原文p703-706&lt;/span&gt;</code> ）</li>
-<li><strong>UPAM Settings 集成</strong>：Email SMTP；External Log Server（MySQL/MSSQL/Syslog，本地日志仅存 1 个月）；LDAP/AD（AD 须设为 DNS 服务器）；External RADIUS；Captive Portal 页六种布局+自定义 Logo/广告；RADIUS 服务器证书六步 openssl 流程（principles·P186， <code>&lt;span class="pg"&gt;原文p767-778&lt;/span&gt;</code> ）</li>
+<li>NAS Client：系统预置 All Managed Devices NAS（不可删），托管设备每 15 分钟自动入库，共享密钥固定 123456，与 UPAMRadiusServer 配套经 WLAN Service 下发；</li>
+<li>NAS IP 必须等于设备管理 IP；</li>
+<li>
+<p>UPAM 作代理时 Shared Secret 四处一致（NAS Client+UPAM RADIUS+UPAM External RADIUS+第三方 RADIUS）（principles·P176， <code>&lt;span class="pg"&gt;原文p682-684&lt;/span&gt;</code> ）；</p>
+</li>
+<li>
+<p>Access Policy / Authentication Strategy：Access Policy Priority 1-99（1 最高）按 Basic+Advanced 属性匹配；</p>
+</li>
+<li>Strategy 认证源四选（None/Local DB/External LDAP-AD/External RADIUS）× Web 认证（None/Guest/Employee/两者）四推荐组合；</li>
+<li>
+<p>Employee Account 上绑定的 Access Role Profile/Policy List 优先于 Strategy（principles·P178， <code>&lt;span class="pg"&gt;原文p687-693&lt;/span&gt;</code> ）；</p>
+</li>
+<li>
+<p>Guest Access Strategy（frameworks·F18， <code>&lt;span class="pg"&gt;原文p712-718&lt;/span&gt;</code> ）：General（Portal 模板+FQDN/IP）→Login Strategy（账密/条款/Access Code/Simple Persona 四种；</p>
+</li>
+<li>
+<p>社交登录 FB/Google/Rainbow/WeChat 需 OAuth ID+DNS 解析）→Registration Strategy（Remember Device+有效期）→Post Portal Enforcement（固定 ARP+Policy List+数据配额）→Self-Registration（审批 Employee Sponsor 或 Guest Operator；</p>
+</li>
+<li>
+<p>≤20 自定义属性）→Service Level（多档绑定不同 ARP）→WiFi4EU（专用模板+有效期 ≤24h）；</p>
+</li>
+<li>
+<p>Guest Account 机制：Account 与 Access Code 两类；</p>
+</li>
+<li>Data Quota 默认 1MB；</li>
+<li>批量创建一次最多 5000 个（前置 Global Configuration 启用）；</li>
+<li>打印凭据票；</li>
+<li>
+<p>xls/csv/xlsx 导入（principles·P183， <code>&lt;span class="pg"&gt;原文p742-745&lt;/span&gt;</code> ）；</p>
+</li>
+<li>
+<p>Company Property / Device Specific PSK：公司资产设备清单绑定 ARP/Policy List 优先于 Strategy；</p>
+</li>
+<li>每台设备按 MAC 派发不同 PSK；</li>
+<li>
+<p>Online Devices 可 Kick Off（principles·P179， <code>&lt;span class="pg"&gt;原文p697-702&lt;/span&gt;</code> ）；</p>
+</li>
+<li>
+<p><strong>Switch User Account (ASA)</strong>：建用户→AAA Profile（Unified Profile-Global Configuration-AAA）→Apply to Devices；权限三级 Read-Write/Read Only/Advanced（BitMap Calculator）（principles·P180， <code>&lt;span class="pg"&gt;原文p703-706&lt;/span&gt;</code> ）</p>
+</li>
+<li>UPAM Settings 集成：Email SMTP；</li>
+<li>External Log Server（MySQL/MSSQL/Syslog，本地日志仅存 1 个月）；</li>
+<li>LDAP/AD（AD 须设为 DNS 服务器）；</li>
+<li>External RADIUS；</li>
+<li>Captive Portal 页六种布局+自定义 Logo/广告；</li>
+<li>RADIUS 服务器证书六步 openssl 流程（principles·P186， <code>&lt;span class="pg"&gt;原文p767-778&lt;/span&gt;</code> ）；</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>

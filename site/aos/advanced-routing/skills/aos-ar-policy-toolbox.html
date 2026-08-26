@@ -69,15 +69,10 @@ blockquote p{margin:6px 0}
 <li>排查"重分发没生效/多分发了"：deny 语义、无 match 兜底、子策略未建等坑</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>Route Map 重分发统一模型（F4，跨 OSPF/OSPFv3/IS-IS/BGP 四章复用）：route map 由 Action（名称+序列号+permit/deny）/Match/Set 三类语句构成（P26）；
+<p>Route Map 重分发统一模型（F4，跨 OSPF/OSPFv3/IS-IS/BGP 四章复用）：route map 由 Action（名称+序列号+permit/deny）/Match/Set 三类语句构成（P26）；
 序列之间隐含 OR，同类型 match 之间 OR、不同类型之间 AND（P27）；
 无 match 语句则重分发所有路由（P28）；
-未配序列号默认取 50（P29）。</li>
-<li>deny 某路由不等于默认放行其余——每条路由都要有明确的 permit/deny 规则（P30）。</li>
-<li>set metric 支持 add/subtract/replace/none 四种效果（P31）。</li>
-<li>BGP 策略体系（F5）在此之上加四类原子策略列表 + peer 的 in/out 绑定（P78）。</li>
-</ul>
+未配序列号默认取 50（P29）。deny 某路由不等于默认放行其余——每条路由都要有明确的 permit/deny 规则（P30）。set metric 支持 add/subtract/replace/none 四种效果（P31）。BGP 策略体系（F5）在此之上加四类原子策略列表 + peer 的 in/out 绑定（P78）。</p>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>先建原子件再组 route map</strong>：IP 访问列表/prefix-list/aspath-list 先创建，route map 引用不存在的子策略直接报错（X39）</li>
@@ -91,8 +86,14 @@ blockquote p{margin:6px 0}
 <li><strong>三段式模板（OSPF→BGP）</strong>：<code>ip route-map ospf-to-bgp sequence-number 10 action deny</code>（match tag 5 + route-type external type2）→ sequence 20 permit（match ipv4-interface intf_ospf + set metric 255）→ sequence 30 permit（set tag 8）→ <code>ip redist ospf into bgp route-map ospf-to-bgp</code>（C6， <code>&lt;span class="pg"&gt;原文p44-45&lt;/span&gt;</code> ）</li>
 <li><strong>被动接口批量</strong>：<code>ip route-map "R1" action permit</code> + <code>match ip-address 10.10.0.0/16</code> + <code>set metric-type internal</code> → <code>ip redist local into ospf route-map R1 admin-state enable</code> → <code>show ip ospf interface</code>（C7， <code>&lt;span class="pg"&gt;原文p46&lt;/span&gt;</code> ）</li>
 <li><strong>IS-IS L1→L2 泄漏</strong>：<code>ip route-map is2is sequence-number 1 action permit</code> + <code>match route-type level1</code> + <code>set level level2</code> → <code>ip redist isis into isis route-map is2is status enable</code>（C17， <code>&lt;span class="pg"&gt;原文p115&lt;/span&gt;</code> ）</li>
-<li><strong>BGP 原子策略</strong>：<code>ip bgp policy aspath-list aspathfilter "^100 200$" action permit</code>；community-list + match-type exact；prefix-list + ge/le → <code>ip bgp neighbor 172.22.2.0 in-aspathlist ...</code> / <code>route-map mapfilter in|out</code> → <code>clear soft in|out</code>（C29， <code>&lt;span class="pg"&gt;原文p201-210&lt;/span&gt;</code> ）</li>
-<li><strong>验证</strong>：<code>show ip route-map</code> / <code>show ip redist</code> / <code>show ip bgp policy ...</code></li>
+<li>BGP 原子策略：<code>ip bgp policy aspath-list aspathfilter "^100 200$" action permit</code>；</li>
+<li>community-list + match-type exact；</li>
+<li>
+<p>prefix-list + ge/le → <code>ip bgp neighbor 172.22.2.0 in-aspathlist ...</code> / <code>route-map mapfilter in|out</code> → <code>clear soft in|out</code>（C29， <code>&lt;span class="pg"&gt;原文p201-210&lt;/span&gt;</code> ）；</p>
+</li>
+<li>
+<p><strong>验证</strong>：<code>show ip route-map</code> / <code>show ip redist</code> / <code>show ip bgp policy ...</code></p>
+</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>

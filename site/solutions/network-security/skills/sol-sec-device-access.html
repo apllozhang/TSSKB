@@ -69,11 +69,7 @@ blockquote p{margin:6px 0}
 <li>加固 OmniVista：2FA、Network ID、REST API 凭据管理</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>管理面三道闸（F2， <code>&lt;span class="pg"&gt;原文p9-30&lt;/span&gt;</code> ）：物理/引导层（U-boot 口令+镜像校验）→ 通道层（OOB 优先、管理 VRF 隔离、白名单）→ 认证层（强加密 SSH+PKA+AAA+MFA）。</li>
-<li>密码认证固有弱点（可预测、重用、共享、钓鱼、暴力破解、长期有效，X5， <code>&lt;span class="pg"&gt;原文p16&lt;/span&gt;</code> ）——公钥+多因素是出路（P22/P27）。</li>
-<li>安全模式是成套收紧：CC 仅 console+SSH、JITC 军规、FIPS 强算法，互斥选用。</li>
-</ul>
+<p>管理面三道闸（F2， <code>&lt;span class="pg"&gt;原文p9-30&lt;/span&gt;</code> ）：物理/引导层（U-boot 口令+镜像校验）→ 通道层（OOB 优先、管理 VRF 隔离、白名单）→ 认证层（强加密 SSH+PKA+AAA+MFA）。密码认证固有弱点（可预测、重用、共享、钓鱼、暴力破解、长期有效，X5， <code>&lt;span class="pg"&gt;原文p16&lt;/span&gt;</code> ）——公钥+多因素是出路（P22/P27）。安全模式是成套收紧：CC 仅 console+SSH、JITC 军规、FIPS 强算法，互斥选用。</p>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>管理通道选型：专用物理 OOB（最优，P14）→ 不行则带内专用 VLAN/VRF（次优）→ 数据 VRF 内逐项关闭管理服务兜底（P15/C5， <code>&lt;span class="pg"&gt;原文p10&lt;/span&gt;</code> ）</li>
@@ -88,12 +84,34 @@ blockquote p{margin:6px 0}
 <li><strong>管理站白名单</strong>：仅预定义 IP 可管理，上限 64 个（P16， <code>&lt;span class="pg"&gt;原文p11&lt;/span&gt;</code> ）</li>
 <li><strong>SSH PKA 七步</strong>（C6， <code>&lt;span class="pg"&gt;原文p14&lt;/span&gt;</code> ）：ssh-keygen 生成对→保存私钥→scp 公钥上机→建用户→installsshkey→公钥登录→<code>ssh enforce-pubkey-auth</code></li>
 <li><strong>暴力破解防护</strong>：限登录尝试次数（P23）+ 收敛 login-grace-time（默认 120s）与会话超时（P24）+ IP 锁定阈值（认证失败达阈值永久封禁，清单上限 128 IP）（C7/P25， <code>&lt;span class="pg"&gt;原文p14-15&lt;/span&gt;</code> ）</li>
-<li><strong>AAA 回退链</strong>（C8， <code>&lt;span class="pg"&gt;原文p16&lt;/span&gt;</code> ）：<code>aaa authentication ssh rad1 ldap2 local</code>——顺序可用性回退，rad1 挂走 ldap2，再挂走本地库；RADIUS over TLS 消除 MD5 风险（P29， <code>&lt;span class="pg"&gt;原文p17&lt;/span&gt;</code> ）；按命令域/族做 RBAC（P30， <code>&lt;span class="pg"&gt;原文p17-18&lt;/span&gt;</code> ）并开记账与 command.log（P31/P32， <code>&lt;span class="pg"&gt;原文p18-19&lt;/span&gt;</code> ）</li>
-<li><strong>SNMPv3</strong>：VACM 视图访问 + USM 用户安全 + TSM（over TLS/DTLS，已有 PKI 则用 TSM，否则 USM）；SNMP 专用账户禁 SSH；开认证陷阱（P33-P36， <code>&lt;span class="pg"&gt;原文p19-20&lt;/span&gt;</code> ）；TSM 需 <code>snmp tsm-map remote-identity manager.crt user ...</code> 证书映射（C9， <code>&lt;span class="pg"&gt;原文p20&lt;/span&gt;</code> ）</li>
-<li><strong>PKI/SSL</strong>：三模式 No Validation（默认，不校验）/Server Cert Validation/Mutual Auth（P38， <code>&lt;span class="pg"&gt;原文p21&lt;/span&gt;</code> ）；cipher 设 high（CC 模式强制 high）；WebView 换自定义证书勿依赖自签默认（P39/P40/X11， <code>&lt;span class="pg"&gt;原文p22-23&lt;/span&gt;</code> ）；OCSP/CRL 校验失败即断 TLS（ <code>&lt;span class="pg"&gt;原文p22&lt;/span&gt;</code> ）</li>
-<li><strong>JITC 细则</strong>（C13， <code>&lt;span class="pg"&gt;原文p27&lt;/span&gt;</code> ）：口令≥15 字符；SSH 每 GB 或每 60 分钟 rekey；升级前必须验签</li>
+<li>AAA 回退链（C8， <code>&lt;span class="pg"&gt;原文p16&lt;/span&gt;</code> ）：<code>aaa authentication ssh rad1 ldap2 local</code>——顺序可用性回退，rad1 挂走 ldap2，再挂走本地库；</li>
+<li>RADIUS over TLS 消除 MD5 风险（P29， <code>&lt;span class="pg"&gt;原文p17&lt;/span&gt;</code> ）；</li>
+<li>
+<p>按命令域/族做 RBAC（P30， <code>&lt;span class="pg"&gt;原文p17-18&lt;/span&gt;</code> ）并开记账与 command.log（P31/P32， <code>&lt;span class="pg"&gt;原文p18-19&lt;/span&gt;</code> ）；</p>
+</li>
+<li>
+<p>SNMPv3：VACM 视图访问 + USM 用户安全 + TSM（over TLS/DTLS，已有 PKI 则用 TSM，否则 USM）；</p>
+</li>
+<li>SNMP 专用账户禁 SSH；</li>
+<li>开认证陷阱（P33-P36， <code>&lt;span class="pg"&gt;原文p19-20&lt;/span&gt;</code> ）；</li>
+<li>
+<p>TSM 需 <code>snmp tsm-map remote-identity manager.crt user ...</code> 证书映射（C9， <code>&lt;span class="pg"&gt;原文p20&lt;/span&gt;</code> ）；</p>
+</li>
+<li>
+<p>PKI/SSL：三模式 No Validation（默认，不校验）/Server Cert Validation/Mutual Auth（P38， <code>&lt;span class="pg"&gt;原文p21&lt;/span&gt;</code> ）；</p>
+</li>
+<li>cipher 设 high（CC 模式强制 high）；</li>
+<li>WebView 换自定义证书勿依赖自签默认（P39/P40/X11， <code>&lt;span class="pg"&gt;原文p22-23&lt;/span&gt;</code> ）；</li>
+<li>
+<p>OCSP/CRL 校验失败即断 TLS（ <code>&lt;span class="pg"&gt;原文p22&lt;/span&gt;</code> ）；</p>
+</li>
+<li>
+<p><strong>JITC 细则</strong>（C13， <code>&lt;span class="pg"&gt;原文p27&lt;/span&gt;</code> ）：口令≥15 字符；SSH 每 GB 或每 60 分钟 rekey；升级前必须验签</p>
+</li>
 <li><strong>日志</strong>：集中 syslog + TLS 加密 + 第二服务器冗余（P37， <code>&lt;span class="pg"&gt;原文p21&lt;/span&gt;</code> ）</li>
-<li><strong>OmniVista</strong>：MSP/Organization 两级用户均开 2FA（P74， <code>&lt;span class="pg"&gt;原文p72&lt;/span&gt;</code> ）；DHCP Option 43 Sub-Option 133 下发 Network ID，Strict Mode 拒绝无 ID 设备（P76， <code>&lt;span class="pg"&gt;原文p75-76&lt;/span&gt;</code> ）；API 凭据用第三方保管、专用账户、最小权限、勿暴露公网（P80/X23/X24， <code>&lt;span class="pg"&gt;原文p84&lt;/span&gt;</code> ）</li>
+<li>OmniVista：MSP/Organization 两级用户均开 2FA（P74， <code>&lt;span class="pg"&gt;原文p72&lt;/span&gt;</code> ）；</li>
+<li>DHCP Option 43 Sub-Option 133 下发 Network ID，Strict Mode 拒绝无 ID 设备（P76， <code>&lt;span class="pg"&gt;原文p75-76&lt;/span&gt;</code> ）；</li>
+<li>API 凭据用第三方保管、专用账户、最小权限、勿暴露公网（P80/X23/X24， <code>&lt;span class="pg"&gt;原文p84&lt;/span&gt;</code> ）；</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>

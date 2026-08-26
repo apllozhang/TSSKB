@@ -82,7 +82,12 @@ blockquote p{margin:6px 0}
 <li><strong>Auto Mesh</strong>：免配置快速组网——接 LAN 且设为 Root 的 AP 广播隐藏 SSID "Stellar-MESH"（5GHz），未接 LAN 的 AP 自动入网。</li>
 </ul>
 <h2 id="a1-lab">A1 · 书中案例（Lab 精要）</h2>
-<p>Lab（p117-121）：Device Catalog 选中 AP → Actions &gt; Edit Device &gt; Mesh/Bridge Configuration → 填模式/频段/SSID/密钥管理与密码（Mesh 多一个 Is Root 选项）→ 保存后两端生效。监控：Mesh Topology 列表显示每台 AP 的 MAC、角色（Root/Repeater）、Level、BSSID、频段、SSID 与 Parent Address（即上游 Root AP 的 MAC），用于确认拓扑按预期成链。Auto Mesh（p116）演示免配置组网。综合演练末段（p299）把两台 AP 改成 Mesh：AP1321 为 Root、自定义 Mesh SSID、WPA2-Personal。</p>
+<ul>
+<li>Lab（p117-121）：Device Catalog 选中 AP → Actions &gt; Edit Device &gt; Mesh/Bridge Configuration → 填模式/频段/SSID/密钥管理与密码（Mesh 多一个 Is Root 选项）→ 保存后两端生效。</li>
+<li>监控：Mesh Topology 列表显示每台 AP 的 MAC、角色（Root/Repeater）、Level、BSSID、频段、SSID 与 Parent Address（即上游 Root AP 的 MAC），用于确认拓扑按预期成链。</li>
+<li>Auto Mesh（p116）演示免配置组网。</li>
+<li>综合演练末段（p299）把两台 AP 改成 Mesh：AP1321 为 Root、自定义 Mesh SSID、WPA2-Personal。</li>
+</ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
 <li>跨楼宇/厂房拉线困难，需要无线桥或回传组网 → 本 skill。</li>
@@ -92,13 +97,40 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
-<li>选型确认：需要桥上 VLAN 打标时避开 AP1101/AP1201/AP1201H。</li>
+<li>选型确认：需要桥上 VLAN 打标时避开 AP1101/AP1201/AP1201H。<ul>
+<li>
+<ol>
 <li>核对规模：对照容量红线（16/8/4/5）确认 AP 数与跳数可行。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>Device Catalog 选参与 AP → Actions &gt; Edit Device &gt; Mesh/Bridge Configuration。</li>
-<li>填参数：模式（Bridge 或 Mesh）、频段（建议 5GHz、信道&gt;100）、SSID、密钥管理、密码；Mesh 指定 Is Root。两端三要素逐项核对一致。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>填参数：模式（Bridge 或 Mesh）、频段（建议 5GHz、信道&gt;100）、SSID、密钥管理、密码；Mesh 指定 Is Root。</li>
+</ol>
+</li>
+<li>两端三要素逐项核对一致。</li>
+<li>
+<ol>
 <li>保存后到 Mesh Topology 看角色与 Parent Address，确认成链。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>（可选）快速部署场景用 Auto Mesh：一台接 LAN 设 Root，其余开机自动入网。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>验证业务：Repeater 侧关联客户端，确认能拿到正确 VLAN 的 IP。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>

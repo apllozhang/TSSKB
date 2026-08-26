@@ -73,14 +73,20 @@ blockquote p{margin:6px 0}
 <li>需要把设备 Trap 转成邮件告警，或按用户角色收紧权限、启用 2FA</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>OV2500 的可用性分两层：服务器层靠 HA 双实例（Main/Standby 常驻、状态同步、故障自动接管），应用层靠 Watchdog 管理各个服务。</li>
-<li>告警链路是"设备 Trap → Trap Responder 匹配 → 邮件/声音"，账号安全则由用户组权限 + 按角色的 2FA（TOTP）构成。</li>
-</ul>
+<p>OV2500 的可用性分两层：服务器层靠 HA 双实例（Main/Standby 常驻、状态同步、故障自动接管），应用层靠 Watchdog 管理各个服务。告警链路是"设备 Trap → Trap Responder 匹配 → 邮件/声音"，账号安全则由用户组权限 + 按角色的 2FA（TOTP）构成。</p>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
-<li><strong>HA 部署</strong>：购买 HA Service License，Main/Standby 双实例常驻；"All functions are handled by the Main OV. The Main OV keeps the standby OV in sync"；安装设置只填一次，后台磁盘同步；Trap 自动为双实例配置，failover 时自动 Trap Replay 并显示告警横幅（ <code>&lt;span class="pg"&gt;原文p17-19&lt;/span&gt;</code> ）</li>
-<li><strong>服务排查</strong>：Administrator → Control Panel → Watchdog Screen：查看所有 OV 服务状态、点服务看描述/状态/依赖、滑块启停，或 Start All/Restart All/Shutdown（&lt;&lt;<PAGE 71/221>&gt;&gt;）；Scheduler → Scheduler History 查看 Asset Management 事件历史（ <code>&lt;span class="pg"&gt;原文p221&lt;/span&gt;</code> ）</li>
+<li>
+<p>HA 部署：购买 HA Service License，Main/Standby 双实例常驻；</p>
+<ul>
+<li>"All functions are handled by the Main OV. The Main OV keeps the standby OV in sync"；</li>
+<li>安装设置只填一次，后台磁盘同步；</li>
+<li>Trap 自动为双实例配置，failover 时自动 Trap Replay 并显示告警横幅（ <code>&lt;span class="pg"&gt;原文p17-19&lt;/span&gt;</code> ）；</li>
+</ul>
+</li>
+<li>
+<p><strong>服务排查</strong>：Administrator → Control Panel → Watchdog Screen：查看所有 OV 服务状态、点服务看描述/状态/依赖、滑块启停，或 Start All/Restart All/Shutdown（&lt;&lt;<PAGE 71/221>&gt;&gt;）；Scheduler → Scheduler History 查看 Asset Management 事件历史（ <code>&lt;span class="pg"&gt;原文p221&lt;/span&gt;</code> ）</p>
+</li>
 <li><strong>邮件告警</strong>：Administration &gt; Preferences &gt; System Settings &gt; Email：填 SMTP 服务器（如 10.130.5.6）、From 地址、Send Test E-mail 验证（ <code>&lt;span class="pg"&gt;原文p191&lt;/span&gt;</code> ）</li>
 <li><strong>Trap Responder</strong>：Network → Notifications → Trap Responders → "+"：Agent Type=Device、IP 范围（如 192.168.200.1-8）→ Trap Type 关掉 Normal → Response=Send an e-mail → Create；拔链路触发 trap 后到邮箱验证（ <code>&lt;span class="pg"&gt;原文p192-194&lt;/span&gt;</code> ）</li>
 <li><strong>告警声音</strong>：Administration – Preferences – User Settings – Sounds → Alarm Sounds 启用 Notifications → For All Severities → Apply（可按级别分设）（ <code>&lt;span class="pg"&gt;原文p195&lt;/span&gt;</code> ）</li>

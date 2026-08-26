@@ -64,14 +64,54 @@ blockquote p{margin:6px 0}
 <h2 id="_2">骨架</h2>
 <ol>
 <li><strong>Why（p5-6）</strong>：MPLS 五收益——BGP-free core、简单精确匹配查找、自愈高可用、流量工程、统一基础设施多业务。</li>
-<li><strong>Fundamentals（p7-10）</strong>：术语（LER/LSR/LSP/FEC/LDP）；32-bit 标签结构（20-bit Label/EXP/S-bit/TTL）；保留标签 0-15（IPv4/IPv6 Explicit NULL、Router Alert、Implicit NULL）；LIFO 标签栈（transport top + service bottom，厂商普遍支持 4-6 层）。</li>
-<li><strong>Control Plane（p10-15）</strong>：IGP（OSPF/IS-IS）为前提；标签分配静态或动态（LDP/RSVP/BGP/SR）；FIB=FTN+ILM；LDP 消息体系/发现（UDP 646）/会话（TCP 646）/hold-timer 协商；LDP ID；DoD vs DU、ILD vs OLD、CLR vs LLR；LDP MD5 认证；T-LDP（远端 LER 间服务标签、单播发现、抗链路故障保会话）；MP-BGP 分发服务路由+标签与自动发现。</li>
-<li><strong>Data Plane（p16-19）</strong>：push/swap/pop；PHP（implicit NULL 3）与 explicit NULL 保 EXP；QoS uniform/pipe 模式；TTL uniform/pipe；LDP Graceful Restart（仅计划内接管）。</li>
-<li><strong>Service Model（p20-23）</strong>：SAP（AC）/SDP（VC）/service tunnel/transport tunnel 双 FEC 双标签封装流程；VPLS（E-LAN、全互联 PW、split horizon、MAC 学习）与 VPWS（E-LINE、EPL/EVPL、无 MAC 学习）；OAM（LSP ping/traceroute，RFC 4379，127/8 目的、UDP 3503、TTL 递增）。</li>
-<li><strong>Positioning（p24-25）</strong>：园区二/三层全 MPLS；Smart City 城域网核心+汇聚 MPLS、接入以太交换。</li>
+<li>
+<p>Fundamentals（p7-10）：术语（LER/LSR/LSP/FEC/LDP）；</p>
+<ul>
+<li>32-bit 标签结构（20-bit Label/EXP/S-bit/TTL）；</li>
+<li>保留标签 0-15（IPv4/IPv6 Explicit NULL、Router Alert、Implicit NULL）；</li>
+<li>LIFO 标签栈（transport top + service bottom，厂商普遍支持 4-6 层）；</li>
+</ul>
+</li>
+<li>
+<p>Control Plane（p10-15）：IGP（OSPF/IS-IS）为前提；</p>
+<ul>
+<li>标签分配静态或动态（LDP/RSVP/BGP/SR）；</li>
+<li>FIB=FTN+ILM；</li>
+<li>LDP 消息体系/发现（UDP 646）/会话（TCP 646）/hold-timer 协商；</li>
+<li>LDP ID；</li>
+<li>DoD vs DU、ILD vs OLD、CLR vs LLR；</li>
+<li>LDP MD5 认证；</li>
+<li>T-LDP（远端 LER 间服务标签、单播发现、抗链路故障保会话）；</li>
+<li>MP-BGP 分发服务路由+标签与自动发现；</li>
+</ul>
+</li>
+<li>
+<p><strong>Data Plane（p16-19）</strong>：push/swap/pop；PHP（implicit NULL 3）与 explicit NULL 保 EXP；QoS uniform/pipe 模式；TTL uniform/pipe；LDP Graceful Restart（仅计划内接管）。</p>
+</li>
+<li>
+<p>Service Model（p20-23）：SAP（AC）/SDP（VC）/service tunnel/transport tunnel 双 FEC 双标签封装流程；</p>
+<ul>
+<li>VPLS（E-LAN、全互联 PW、split horizon、MAC 学习）与 VPWS（E-LINE、EPL/EVPL、无 MAC 学习）；</li>
+<li>OAM（LSP ping/traceroute，RFC 4379，127/8 目的、UDP 3503、TTL 递增）；</li>
+</ul>
+</li>
+<li>
+<p><strong>Positioning（p24-25）</strong>：园区二/三层全 MPLS；Smart City 城域网核心+汇聚 MPLS、接入以太交换。</p>
+</li>
 <li><strong>Licensing（p26）</strong>：Debian 包安装 + Site-based（浮动最多 4 节点）/Node-based license；SILOS 服务器/SWLIC 客户端。</li>
-<li><strong>Configuration（p26-44）</strong>：Best Practices（/32 loopback、p2p、BFD、/31 互联地址）；LDP backbone 五步；LDP-VPLS 五步（SDP/SAP/bind-sdp）；BGP-VPLS 四步（l2vpn-vpls AF、VE-ID）；VPWS 四步（vcid、spoke bind-sdp）；验证命令族（show mpls <em>、show service </em>、show ip bgp l2vpn-vpls、show mac-learning、mpls ping/trace）。</li>
-<li><strong>Conclusion + References（p44-45）</strong>。</li>
+<li>
+<p>Configuration（p26-44）：Best Practices（/32 loopback、p2p、BFD、/31 互联地址）；</p>
+<ul>
+<li>LDP backbone 五步；</li>
+<li>LDP-VPLS 五步（SDP/SAP/bind-sdp）；</li>
+<li>BGP-VPLS 四步（l2vpn-vpls AF、VE-ID）；</li>
+<li>VPWS 四步（vcid、spoke bind-sdp）；</li>
+<li>验证命令族（show mpls <em>、show service </em>、show ip bgp l2vpn-vpls、show mac-learning、mpls ping/trace）；</li>
+</ul>
+</li>
+<li>
+<p><strong>Conclusion + References（p44-45）</strong>。</p>
+</li>
 </ol>
 <h2 id="_3">批判与局限</h2>
 <ul>

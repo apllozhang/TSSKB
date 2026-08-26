@@ -69,11 +69,7 @@ blockquote p{margin:6px 0}
 <li>DHCP Relay / IPsec / VRRP / BFD / SLB 章节定位</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>本域是全书体量最大的命令域（ <code>&lt;span class="pg"&gt;原文p1549-3227&lt;/span&gt;</code> ），两条通用规律：其一，路由协议命令生效前需 <code>ip load &lt;protocol&gt;</code> 加载对应模块（X8，RIP/OSPF/IS-IS/BGP/VRRP）；其二，部分全局参数类命令要求先停协议再改。</li>
-<li>BGP 章 194 条为全书第二大章，命令分 Global/Aggregate/Network/Neighbor/Address-family/VRF 组（P20）；
-OSPF 章按 Global/Area/Interface/BFD/VRF 分组（P17）。</li>
-</ul>
+<p>本域是全书体量最大的命令域（ <code>&lt;span class="pg"&gt;原文p1549-3227&lt;/span&gt;</code> ），两条通用规律：其一，路由协议命令生效前需 <code>ip load &lt;protocol&gt;</code> 加载对应模块（X8，RIP/OSPF/IS-IS/BGP/VRRP）；其二，部分全局参数类命令要求先停协议再改。BGP 章 194 条为全书第二大章，命令分 Global/Aggregate/Network/Neighbor/Address-family/VRF 组（P20）；OSPF 章按 Global/Area/Interface/BFD/VRF 分组（P17）。</p>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>单播底座</strong>（接口/静态路由/ARP/DNS/UDP 中继）→ 第 21 章 IP（113 条）</li>
@@ -92,11 +88,26 @@ OSPF 章按 Global/Area/Interface/BFD/VRF 分组（P17）。</li>
 <li><strong>Ch25 BFD（ <code>&lt;span class="pg"&gt;原文p2058&lt;/span&gt;</code> ，约 16 条）</strong>：<code>ip bfd</code>（为路由协议提供毫秒级故障检测）</li>
 <li><strong>Ch26 DHCP Relay（ <code>&lt;span class="pg"&gt;原文p2092&lt;/span&gt;</code> ，约 116 条）</strong>：<code>bootp relay</code>/DHCP 中继、option82、监督</li>
 <li><strong>Ch27 VRRP（ <code>&lt;span class="pg"&gt;原文p2334&lt;/span&gt;</code> ，约 24 条）</strong>：<code>ip vrrp</code>（首跳网关备份）</li>
-<li><strong>Ch28 OSPF（ <code>&lt;span class="pg"&gt;原文p2392&lt;/span&gt;</code> ，约 57 条）</strong>：<code>ip ospf spf-timer [delay seconds] [hold seconds]</code>（0-65535，默认 delay=5/hold=10；任一为 0 则立即触发 SPF）（P18）；<code>ip ospf interface hello-interval</code>（0-65535 秒，默认 broadcast/P2P=10、NBMA/P2MP=30）（P19）；<code>ip load ospf</code> 前置（X8）</li>
-<li><strong>Ch29 OSPFv3（ <code>&lt;span class="pg"&gt;原文p2513&lt;/span&gt;</code> ，约 46 条）</strong></li>
+<li>Ch28 OSPF（ <code>&lt;span class="pg"&gt;原文p2392&lt;/span&gt;</code> ，约 57 条）：<code>ip ospf spf-timer [delay seconds] [hold seconds]</code>（0-65535，默认 delay=5/hold=10；</li>
+<li>任一为 0 则立即触发 SPF）（P18）；</li>
+<li><code>ip ospf interface hello-interval</code>（0-65535 秒，默认 broadcast/P2P=10、NBMA/P2MP=30）（P19）；</li>
+<li>
+<p><code>ip load ospf</code> 前置（X8）；</p>
+</li>
+<li>
+<p><strong>Ch29 OSPFv3（ <code>&lt;span class="pg"&gt;原文p2513&lt;/span&gt;</code> ，约 46 条）</strong></p>
+</li>
 <li><strong>Ch30 IS-IS（ <code>&lt;span class="pg"&gt;原文p2610&lt;/span&gt;</code> ，约 62 条）</strong>：SPB 控制面基础</li>
-<li><strong>Ch31 BGP（ <code>&lt;span class="pg"&gt;原文p2744&lt;/span&gt;</code> ，约 194 条）</strong>：<code>ip bgp maximum-paths</code>（ECMP 开关，默认 disabled；启用后忽略 router-id 判等装全部等价路径；要求先停 BGP）（P22）；<code>ip bgp default local-preference</code>；BGP-4+MP-BGP（IPv6 前缀与邻居），peer 与 neighbor 术语互换（P20）</li>
-<li><strong>Ch32 SLB（ <code>&lt;span class="pg"&gt;原文p3160&lt;/span&gt;</code> ，约 31 条）</strong>：<code>slb</code>（VIP/实服务组/健康检查）</li>
+<li>Ch31 BGP（ <code>&lt;span class="pg"&gt;原文p2744&lt;/span&gt;</code> ，约 194 条）：<code>ip bgp maximum-paths</code>（ECMP 开关，默认 disabled；</li>
+<li>启用后忽略 router-id 判等装全部等价路径；</li>
+<li>要求先停 BGP）（P22）；</li>
+<li><code>ip bgp default local-preference</code>；</li>
+<li>
+<p>BGP-4+MP-BGP（IPv6 前缀与邻居），peer 与 neighbor 术语互换（P20）；</p>
+</li>
+<li>
+<p><strong>Ch32 SLB（ <code>&lt;span class="pg"&gt;原文p3160&lt;/span&gt;</code> ，约 31 条）</strong>：<code>slb</code>（VIP/实服务组/健康检查）</p>
+</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>

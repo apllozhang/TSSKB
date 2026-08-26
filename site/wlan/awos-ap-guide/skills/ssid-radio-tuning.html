@@ -88,17 +88,48 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
-<li>盘点默认值：Beacon 100ms（60-500 可调）、CSA 默认启用（计数 1-10）、Short GI 启用、DTIM=1、UAPSD 启用、后台扫描 20s（5s-3h）。</li>
-<li>手动指定信道/功率：先在该 AP 上关闭 ACS/APC → 两个频段分别设 → 功率按 1 dB 步进。160MHz 仅静态、仅 5G/6G、仅支持机型（AP1451/AP1431/AP1411/AP132X/AP136X/AP1351）。</li>
+<li>盘点默认值：Beacon 100ms（60-500 可调）、CSA 默认启用（计数 1-10）、Short GI 启用、DTIM=1、UAPSD 启用、后台扫描 20s（5s-3h）。<ul>
+<li>
+<ol>
+<li>手动指定信道/功率：先在该 AP 上关闭 ACS/APC → 两个频段分别设 → 功率按 1 dB 步进。</li>
+</ol>
+</li>
+<li>160MHz 仅静态、仅 5G/6G、仅支持机型（AP1451/AP1431/AP1411/AP132X/AP136X/AP1351）。</li>
+<li>
+<ol>
 <li>高密优化：开 RSSI Threshold 配推荐值；
 开 Roaming RSSI 配推荐值并确认 802.11k/v；
 Band Steering 保持默认 Prefer 5G，双频强制上 5G 才用 Force 5G；
 Load Balance 默认已开（密度阈值 10、利用率 70%）。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>速率准入：2.4G 最低 12 Mbps、5G/6G 最低 24 Mbps；管理帧速率避开 2.4G Beacon 的 9/18 Mbps（会自动改用 11/24）与 5G 的 9 Mbps（自动改 12）。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>客户端管理：空闲超时关闭时固定 600s，开启可配 60-12000s；每 BSSID 最大客户端 1-256，默认 64；健康度 Best&gt;30 / Good 15~30 / Fair&lt;15；监控刷新默认 30s（30/60/120 可选）。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>AP 侧 DHCP（Service → DHCP）：租约默认 24h；DHCP 池只能绑定配了静态 IP 的 Network，且 VLAN 须先映射到 SSID 才出现。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>内置 Portal：本地库 ≤2000 账户（支持 Excel 模板导入）；行为日志上传 TFTP/SFTP/Syslog，FTP 周期 1/2/4 小时。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>Walled Garden：认证前要放行的资源须预先知道 IP/域名并加入。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>

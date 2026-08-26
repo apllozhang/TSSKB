@@ -73,11 +73,8 @@ blockquote p{margin:6px 0}
 <li>策略下发后不确定交换机是怎么拿到策略的（Policy Flow）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>PolicyView 双模式：OneTouch 面向常见场景（Voice/Data/ACL），"Sets parameters once, Distributed to devices at the same time"；
-Expert Mode 面向复杂策略（含验证机制）。</li>
-<li>底层架构是 LDAP 策略仓库：策略创建后存入安装时配置的 LDAP 服务器，交换机被通知后自行拉取。</li>
-</ul>
+<p>PolicyView 双模式：OneTouch 面向常见场景（Voice/Data/ACL），"Sets parameters once, Distributed to devices at the same time"；
+Expert Mode 面向复杂策略（含验证机制）。底层架构是 LDAP 策略仓库：策略创建后存入安装时配置的 LDAP 服务器，交换机被通知后自行拉取。</p>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li><strong>四步法</strong>（ <code>&lt;span class="pg"&gt;原文p275&lt;/span&gt;</code> ）："Create a Policy Condition / Create a Policy Action / Create a Policy Rule / Apply the Policy"</li>
@@ -92,7 +89,13 @@ Expert Mode 面向复杂策略（含验证机制）。</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>Expert Mode 阻断客户端访问 Loopback0 网段：Name=Block_Loopback0_access、Precedence=30001、Device=switch8、Condition：L3 IPs，Source 192.168.80.0/24 → Destination 192.168.200.0/24、Action：QOS + Disposition=DROP、Validity=AllTheTime；验证 ping 192.168.200.# 不通、ping 192.168.100.102 正常——cases·PolicyView Expert（ <code>&lt;span class="pg"&gt;原文p290-293&lt;/span&gt;</code> ）</li>
+<li>Expert Mode 阻断客户端访问 Loopback0 网段：Name=Block_Loopback0_access</li>
+<li>Precedence=30001</li>
+<li>Device=switch8</li>
+<li>Condition：L3 IPs，Source 192.168.80.0/24 → Destination 192.168.200.0/24</li>
+<li>Action：QOS + Disposition=DROP</li>
+<li>Validity=AllTheTime；验证 ping 192.168.200.# 不通</li>
+<li>ping 192.168.100.102 正常——cases·PolicyView Expert（ <code>&lt;span class="pg"&gt;原文p290-293&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="b">B（边界与陷阱）</h2>
 <ul>

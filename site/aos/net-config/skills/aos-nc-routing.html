@@ -76,12 +76,7 @@ blockquote p{margin:6px 0}
 <li>本地服务器池要做负载均衡：SLB 集群 + 健康探测</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>静态路由/递归静态路由/默认路由/黑洞路由均由 <code>ip static-route</code> 系列配置（P110， <code>&lt;span class="pg"&gt;原文p709&lt;/span&gt;</code> ），是其余动态路由的底座。</li>
-<li>VRRP 选举虚拟路由器 master 转发虚拟 IP 流量，master 失效由最高优先级 backup 接管（P139， <code>&lt;span class="pg"&gt;原文p979&lt;/span&gt;</code> ）；时序公式 Master_Down_Interval=(3×Adv_Interval)+Skew_Time、Skew=(256-Priority)/256，优先级越低等待越长避免抖动（P141， <code>&lt;span class="pg"&gt;原文p980&lt;/span&gt;</code> ）。</li>
-<li>BFD 毫秒级检测转发面故障，异步控制包与 Echo 两种模式分工：VRRP/静态路由只用 Echo，OSPF/IS-IS/BGP 用控制包；Echo 单跳、控制包可多跳（P127， <code>&lt;span class="pg"&gt;原文p870&lt;/span&gt;</code> ）。</li>
-<li>SLB 集群以 VIP（L3）或 QoS condition（L2/L3）标识虚拟服务器，分发算法为加权轮询 WRR（P145/P147， <code>&lt;span class="pg"&gt;原文p1012&lt;/span&gt;</code> ）。</li>
-</ul>
+<p>静态路由/递归静态路由/默认路由/黑洞路由均由 <code>ip static-route</code> 系列配置（P110， <code>&lt;span class="pg"&gt;原文p709&lt;/span&gt;</code> ），是其余动态路由的底座。VRRP 选举虚拟路由器 master 转发虚拟 IP 流量，master 失效由最高优先级 backup 接管（P139， <code>&lt;span class="pg"&gt;原文p979&lt;/span&gt;</code> ）；时序公式 Master_Down_Interval=(3×Adv_Interval)+Skew_Time、Skew=(256-Priority)/256，优先级越低等待越长避免抖动（P141， <code>&lt;span class="pg"&gt;原文p980&lt;/span&gt;</code> ）。BFD 毫秒级检测转发面故障，异步控制包与 Echo 两种模式分工：VRRP/静态路由只用 Echo，OSPF/IS-IS/BGP 用控制包；Echo 单跳、控制包可多跳（P127， <code>&lt;span class="pg"&gt;原文p870&lt;/span&gt;</code> ）。SLB 集群以 VIP（L3）或 QoS condition（L2/L3）标识虚拟服务器，分发算法为加权轮询 WRR（P145/P147， <code>&lt;span class="pg"&gt;原文p1012&lt;/span&gt;</code> ）。</p>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>路由选型</strong>：小网/分支 RIP（15 跳上限与 120 秒 hold-down 慢收敛，大网不适用，X48， <code>&lt;span class="pg"&gt;原文p842&lt;/span&gt;</code> ）；OSPF/IS-IS/BGP 主体配置另查 Advanced Routing 手册，本书提供 VRF 内路由实例与重分发基础</li>

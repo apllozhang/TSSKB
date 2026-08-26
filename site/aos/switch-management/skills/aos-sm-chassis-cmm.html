@@ -71,11 +71,7 @@ blockquote p{margin:6px 0}
 <li>VC 加新成员、混合机型入组、重复 chassis ID 排障</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>VC 框架（F7， <code>&lt;span class="pg"&gt;原文p305-343&lt;/span&gt;</code> ）：vcsetup.cfg（单机入组设置：Chassis ID/Group/priority/VFL）+ vcboot.cfg（VC 整体配置）双文件体系；Master/Slave 选举五准则（现任→priority→uptime→最小 ID→最小 MAC，P130）；VFL（10/40/100G 聚合、16 字节封装头）+ 控制 VLAN（默认 4094）+ IS-IS VC 专有协议维持拓扑。</li>
-<li>分裂双保险：RCD（EMP 带外周期通告，VFL 全断时 former Slave 关全部面板口防双 IP/MAC，P134）与 VCSP（经 helper 邻机专用 linkagg 转 PDU，master MAC 不匹配即进 protection state，P135/P136）。</li>
-<li>CMM 冗余（P85-P87）：running 配置自动同步，certified 需手动 flash-synchro；takeover 断开旧主管理会话。</li>
-</ul>
+<p>VC 框架（F7， <code>&lt;span class="pg"&gt;原文p305-343&lt;/span&gt;</code> ）：vcsetup.cfg（单机入组设置：Chassis ID/Group/priority/VFL）+ vcboot.cfg（VC 整体配置）双文件体系；Master/Slave 选举五准则（现任→priority→uptime→最小 ID→最小 MAC，P130）；VFL（10/40/100G 聚合、16 字节封装头）+ 控制 VLAN（默认 4094）+ IS-IS VC 专有协议维持拓扑。分裂双保险：RCD（EMP 带外周期通告，VFL 全断时 former Slave 关全部面板口防双 IP/MAC，P134）与 VCSP（经 helper 邻机专用 linkagg 转 PDU，master MAC 不匹配即进 protection state，P135/P136）。CMM 冗余（P85-P87）：running 配置自动同步，certified 需手动 flash-synchro；takeover 断开旧主管理会话。</p>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>双 CMM 日常</strong>：certify + 同步一步 <code>copy running certified flash-synchro</code>；计划内切换 <code>takeover</code>（先同步）（C23）</li>
@@ -89,8 +85,14 @@ blockquote p{margin:6px 0}
 <li><strong>CMM 同步与接管</strong>：<code>copy running certified flash-synchro</code>（或单独 <code>copy flash-synchro</code>）；<code>takeover</code>（C23， <code>&lt;span class="pg"&gt;原文p110-111&lt;/span&gt;</code> ）</li>
 <li><strong>手工组 VC</strong>：双侧 <code>virtual-chassis configured-chassis-id 1|2</code> → <code>virtual-chassis vf-link 0 create</code> + member-port → <code>ip interface local emp ...</code> → <code>write memory</code> → <code>convert-configuration to vc_dir</code> → <code>reload from vc_dir no rollback-timeout</code>；Master 上配 <code>ip interface master emp address 10.255.100.100</code>（C46， <code>&lt;span class="pg"&gt;原文p307, 328&lt;/span&gt;</code> ）</li>
 <li><strong>Auto-VFL</strong>：默认端口直连即成；<code>virtual-chassis auto-vf-link-port 1/1/25</code>；验证 <code>show virtual-chassis topology|consistency|vf-link member-port</code>（C47， <code>&lt;span class="pg"&gt;原文p304, 339&lt;/span&gt;</code> ）</li>
-<li><strong>VCSP</strong>：VC 侧 <code>virtual-chassis split-protection admin-state enable</code> + <code>split-protection linkagg</code>；helper 侧 <code>split-protection helper admin-state enable</code> + helper linkagg；guard-timer 控自动恢复（C48， <code>&lt;span class="pg"&gt;原文p341&lt;/span&gt;</code> ）</li>
-<li><strong>受控下架成员</strong>：<code>virtual-chassis shutdown</code>；跨机箱访问 <code>ssh-chassis</code>（ <code>&lt;span class="pg"&gt;原文p327&lt;/span&gt;</code> ）</li>
+<li>VCSP：VC 侧 <code>virtual-chassis split-protection admin-state enable</code> + <code>split-protection linkagg</code>；</li>
+<li>helper 侧 <code>split-protection helper admin-state enable</code> + helper linkagg；</li>
+<li>
+<p>guard-timer 控自动恢复（C48， <code>&lt;span class="pg"&gt;原文p341&lt;/span&gt;</code> ）；</p>
+</li>
+<li>
+<p><strong>受控下架成员</strong>：<code>virtual-chassis shutdown</code>；跨机箱访问 <code>ssh-chassis</code>（ <code>&lt;span class="pg"&gt;原文p327&lt;/span&gt;</code> ）</p>
+</li>
 <li><strong>write memory 拓扑确认</strong>：拓扑元素缺失时确认 possible configuration purge（P140， <code>&lt;span class="pg"&gt;原文p313&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>

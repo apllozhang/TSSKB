@@ -66,12 +66,7 @@ blockquote p{margin:6px 0}
 <li>确认 AOS 8.9R3+ 的 LDP 模式支持边界（仅 DU+ILD+LLR+MD5）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>标签隧道换 BGP-free core（P1/P2， <code>&lt;span class="pg"&gt;原文p5&lt;/span&gt;</code> ）：MPLS 用预分配标签做精确匹配转发，核心 LSR 无需承载大量路由。</li>
-<li>双层解耦模型（F4， <code>&lt;span class="pg"&gt;原文p20&lt;/span&gt;</code> ）：服务标签在底、传输标签在顶，中间 LSR 只处理传输标签（P6， <code>&lt;span class="pg"&gt;原文p21&lt;/span&gt;</code> ）。</li>
-<li>LDP 是"依 IGP 而生"的信令（P3， <code>&lt;span class="pg"&gt;原文p10&lt;/span&gt;</code> ）：先有 IGP 全可达，LDP 才能从 eLER 向 iLER 上游泛洪标签（P19）。</li>
-<li>会话可靠性靠 hello/keepalive 双定时器双保险（P23， <code>&lt;span class="pg"&gt;原文p12&lt;/span&gt;</code> ）。</li>
-</ul>
+<p>标签隧道换 BGP-free core（P1/P2， <code>&lt;span class="pg"&gt;原文p5&lt;/span&gt;</code> ）：MPLS 用预分配标签做精确匹配转发，核心 LSR 无需承载大量路由。双层解耦模型（F4， <code>&lt;span class="pg"&gt;原文p20&lt;/span&gt;</code> ）：服务标签在底、传输标签在顶，中间 LSR 只处理传输标签（P6， <code>&lt;span class="pg"&gt;原文p21&lt;/span&gt;</code> ）。LDP 是"依 IGP 而生"的信令（P3， <code>&lt;span class="pg"&gt;原文p10&lt;/span&gt;</code> ）：先有 IGP 全可达，LDP 才能从 eLER 向 iLER 上游泛洪标签（P19）。会话可靠性靠 hello/keepalive 双定时器双保险（P23， <code>&lt;span class="pg"&gt;原文p12&lt;/span&gt;</code> ）。</p>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>标签分发/控制/保留模式选型框架（F1， <code>&lt;span class="pg"&gt;原文p13-14&lt;/span&gt;</code> ）：分发 DoD（按需）vs DU（主动）；控制 ILD（独立即刻通告）vs OLD（有序等下游）；保留 CLR（只留有效）vs LLR（全保留）。AOS 唯一组合 = DU+ILD+LLR（X16， <code>&lt;span class="pg"&gt;原文p13-17&lt;/span&gt;</code> ）</li>

@@ -73,12 +73,34 @@ blockquote p{margin:6px 0}
 </blockquote>
 <h2 id="i">I · 方法论骨架</h2>
 <ol>
-<li><strong>模式选型</strong>：Express（自组集群，PVM 选举，上限 255）/ Enterprise（OV2500 本地管，上限 4000）/ Cloud（Cirrus）；本 skill 主线为 Enterprise。</li>
-<li><strong>四件套最低要求</strong>：AP（出厂净化态）+ PoE 交换机（管理 VLAN + dhcp-relay）+ DHCP 服务器（管理 VLAN 作用域带 option 138 + 业务 VLAN 地址池）+ OV2500（IP 配置 + 许可）。</li>
-<li><strong>上线四步</strong>：上电 LLDP 选管理 VLAN → DHCP option 138 切 Enterprise → 向 OV2500 注册 → 分配 AP Group 下发配置。</li>
-<li><strong>受管三条件</strong>：Trusted + Licensed + 国家码匹配 RF Profile；任一失败即 Unmanaged、配置不下发、射频全关。</li>
-<li><strong>三平面规则</strong>（排障抓包必背）：管理流量不打标、业务流量在 AP 上联口打标、无隧道模式、数据面纯 L2。</li>
-<li><strong>配置模型</strong>：一切以 AP Group 为单位；UNP 让接入口免预配置（LLDP 分类→分管理 VLAN→上报位置）。</li>
+<li>模式选型：Express（自组集群，PVM 选举，上限 255）/ Enterprise（OV2500 本地管，上限 4000）/ Cloud（Cirrus）；本 skill 主线为 Enterprise。<ul>
+<li>
+<ol>
+<li>四件套最低要求：AP（出厂净化态）+ PoE 交换机（管理 VLAN + dhcp-relay）+ DHCP 服务器（管理 VLAN 作用域带 option 138 + 业务 VLAN 地址池）+ OV2500（IP 配置 + 许可）。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>上线四步：上电 LLDP 选管理 VLAN → DHCP option 138 切 Enterprise → 向 OV2500 注册 → 分配 AP Group 下发配置。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>受管三条件：Trusted + Licensed + 国家码匹配 RF Profile；任一失败即 Unmanaged、配置不下发、射频全关。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>三平面规则（排障抓包必背）：管理流量不打标、业务流量在 AP 上联口打标、无隧道模式、数据面纯 L2。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>配置模型：一切以 AP Group 为单位；UNP 让接入口免预配置（LLDP 分类→分管理 VLAN→上报位置）。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="a1-lab">A1 · 书中案例（Lab 精要）</h2>
 <ul>
@@ -95,14 +117,38 @@ blockquote p{margin:6px 0}
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
 <li>核对四件套与最低配置清单（p16 条目：PoE/管理 VLAN/ip dhcp-relay/option 138/地址池/OV 许可）。</li>
-<li>DHCP 配 option 138=OV2500 IP：isc-dhcp 先 <code>option ovwma code 138 = ip-address;</code>（vendor-class 以 "HAP." 开头可分类）；
-OmniSwitch 直接 <code>option 138 x.x.x.x</code>；
-Windows Server 走预定义选项 Code 138。</li>
-<li>导入 OV2500 许可：AP 许可数 &gt; 待部署 AP 总数；HA 每对服务器一枚；WCF 按 1:10 AP。</li>
+<li>
+<p>DHCP 配 option 138=OV2500 IP：isc-dhcp 先 <code>option ovwma code 138 = ip-address;</code>（vendor-class 以 "HAP." 开头可分类）；</p>
+<ul>
+<li>OmniSwitch 直接 <code>option 138 x.x.x.x</code>；</li>
+<li>Windows Server 走预定义选项 Code 138；</li>
+</ul>
+</li>
+<li>
+<p>导入 OV2500 许可：AP 许可数 &gt; 待部署 AP 总数；HA 每对服务器一枚；WCF 按 1:10 AP。</p>
+<ul>
+<li>
+<ol>
 <li>交换机侧（可选 UNP 自动化）：接入口配 UNP port-type bridge、关 trust-tag、建 LLDP 分类规则映射管理 VLAN。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>AP 上电后按四步链路验证；注册失败查三条件（Trust/License/国家码）。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>AP Location 语义化：接入口配 port alias &gt; system location &gt; system name &gt; 默认机箱 MAC:端口。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>HA 规划：主备 OV 经二层（或 VxLAN/SPB）互联，设备对虚拟 IP 通信。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>

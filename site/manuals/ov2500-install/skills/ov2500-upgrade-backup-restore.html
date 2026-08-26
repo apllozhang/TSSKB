@@ -97,15 +97,54 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
-<li><strong>定路径</strong>：记录当前 Build 号，对照升级矩阵列出剩余跳数；旧于 4.5R1 则切换为"备份+全新安装"方案。</li>
-<li><strong>前置检查</strong>：HA 确认 Data Sync "Up to Date"；从 4.6R1/4.5Rx 升 4.6R2+ 前先关机扩内存（Standalone Medium 36GB / HA 40GB）；网络可达 ALE Central Repo 或已配代理。</li>
-<li><strong>保护动作</strong>：VA 菜单做一次内置备份；删除全部旧 VM 快照，拍新快照。</li>
-<li><strong>执行环境</strong>：全程 VM Console（Hypervisor 控制台），禁止 SSH（确需则配 keepalive）；HA 转换同理。升级选项必须选 "2 - Download and Upgrade"（选项 4 不受支持；离线仓库场景例外，Download and Upgrade 是唯一方式）。</li>
-<li><strong>逐级升级</strong>：每级完成后验证——Watchdog 全服务 Running、Build 号正确、能登录 Web GUI——再进下一级。4.7R1 Patch 2 一级记得 PatchRepo 建仓/切回；4.9R1→4.9R2 一级执行 "3 - To New Release → 0 - Exit → 2 - To 4.9R1" 特殊序列。</li>
-<li><strong>HA 按"先 Standby"新流程</strong>（≥4.8R1）：Active 启维护模式（一次双节点）→ 升 Standby → 立即重启 failover → 等新 Active 全服务起来 → 升原 Active。窗口内冻结一切配置变更；Standby 升完出现的"请禁用维护模式"提醒不要立即执行，等两节点都完成。</li>
-<li><strong>后置动作</strong>：&gt;256 台 Stellar AP 时重应用 VA 内存设置（Configure Network Size 重选同档位并重启 Watchdog）；拍新快照删旧快照；按需刷 Stellar AP 固件（Resource Manager - Upgrade Image）。</li>
-<li><strong>扩盘（需扩容时）</strong>：停服务→备份/快照→VA 菜单关机→Hypervisor 加新虚拟盘（KVM：SATA 总线+占位盘 workaround）→开机→VA 菜单 Extend Data Partition（HA 两节点都做，全程不断电）。</li>
-<li><strong>备份常态化</strong>：配置保留天数（1-30，默认 7）与份数（1-30，默认 5），按需 Backup Now 或定时；恢复前确认目标机与备份同版本，跨系统恢复需先改目标机 IP/端口与来源机一致，恢复后再改回。</li>
+<li>定路径：记录当前 Build 号，对照升级矩阵列出剩余跳数；旧于 4.5R1 则切换为"备份+全新安装"方案。<ul>
+<li>
+<ol>
+<li>前置检查：HA 确认 Data Sync "Up to Date"；
+从 4.6R1/4.5Rx 升 4.6R2+ 前先关机扩内存（Standalone Medium 36GB / HA 40GB）；
+网络可达 ALE Central Repo 或已配代理。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>保护动作：VA 菜单做一次内置备份；删除全部旧 VM 快照，拍新快照。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>执行环境：全程 VM Console（Hypervisor 控制台），禁止 SSH（确需则配 keepalive）；HA 转换同理。</li>
+</ol>
+</li>
+<li>升级选项必须选 "2 - Download and Upgrade"（选项 4 不受支持；离线仓库场景例外，Download and Upgrade 是唯一方式）。</li>
+<li>
+<ol>
+<li>逐级升级：每级完成后验证——Watchdog 全服务 Running、Build 号正确、能登录 Web GUI——再进下一级。</li>
+</ol>
+</li>
+<li>4.7R1 Patch 2 一级记得 PatchRepo 建仓/切回；4.9R1→4.9R2 一级执行 "3 - To New Release → 0 - Exit → 2 - To 4.9R1" 特殊序列。</li>
+<li>
+<ol>
+<li>HA 按"先 Standby"新流程（≥4.8R1）：Active 启维护模式（一次双节点）→ 升 Standby → 立即重启 failover → 等新 Active 全服务起来 → 升原 Active。</li>
+</ol>
+</li>
+<li>窗口内冻结一切配置变更；Standby 升完出现的"请禁用维护模式"提醒不要立即执行，等两节点都完成。</li>
+<li>
+<ol>
+<li>后置动作：&gt;256 台 Stellar AP 时重应用 VA 内存设置（Configure Network Size 重选同档位并重启 Watchdog）；拍新快照删旧快照；按需刷 Stellar AP 固件（Resource Manager - Upgrade Image）。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>扩盘（需扩容时）：停服务→备份/快照→VA 菜单关机→Hypervisor 加新虚拟盘（KVM：SATA 总线+占位盘 workaround）→开机→VA 菜单 Extend Data Partition（HA 两节点都做，全程不断电）。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>备份常态化：配置保留天数（1-30，默认 7）与份数（1-30，默认 5），按需 Backup Now 或定时；恢复前确认目标机与备份同版本，跨系统恢复需先改目标机 IP/端口与来源机一致，恢复后再改回。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>

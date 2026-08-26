@@ -71,13 +71,9 @@ blockquote p{margin:6px 0}
 <li>用 USB 闪存做自动批量升级、备份或灾难恢复（含 ONIE 设备）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>标准升级模型（P13）：上传新镜像到 Running 目录 → reload → 验证 → certify；VC 场景 Master 先把镜像拷给 Slave 再统一重启。</li>
-<li>ISSU（P14）按 chassis-id 从低到高逐台重启 Slave、最后重启 Master，实现最小网络 disruption。</li>
-<li>目录结构即回滚体系（certified 保底）。</li>
-<li>安全链：ALE Secured Code + ASLR（P18）→ RSA-2048/SHA-256 签名镜像（P19）→ Secure Boot 启动链验证（P20）。</li>
-<li>包管理双组件（P21）：pkgmgr 管验证/安装/移除，appmgr 管免重启启停；安装必须 <code>write memory</code> 持久化（P23）。</li>
-</ul>
+<p>标准升级模型（P13）：上传新镜像到 Running 目录 → reload → 验证 → certify；
+VC 场景 Master 先把镜像拷给 Slave 再统一重启。ISSU（P14）按 chassis-id 从低到高逐台重启 Slave、最后重启 Master，实现最小网络 disruption。目录结构即回滚体系（certified 保底）。安全链：ALE Secured Code + ASLR（P18）→ RSA-2048/SHA-256 签名镜像（P19）→ Secure Boot 启动链验证（P20）。包管理双组件（P21）：pkgmgr 管验证/安装/移除，appmgr 管免重启启停；
+安装必须 <code>write memory</code> 持久化（P23）。</p>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>standalone/普通 VC 选标准升级</strong>：维护前置 → 下载 → FTP 到 RUNNING 目录 → reload → 验证 → certify（C1， <code>&lt;span class="pg"&gt;原文p23-24&lt;/span&gt;</code> ）</li>
@@ -115,4 +111,7 @@ blockquote p{margin:6px 0}
 <li>USB 自动拷贝重启后自动关闭；auto-copy 与 backup 互斥（P90， <code>&lt;span class="pg"&gt;原文p113-114&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniSwitch AOS 8.10R4 Switch Management Guide 第 1 章 Upgrading AOS（ <code>&lt;span class="pg"&gt;原文p21-24&lt;/span&gt;</code> ）、第 3 章 Loading Software / Secured Code / Package Management / U-boot &amp; ONIE（ <code>&lt;span class="pg"&gt;原文p62-92&lt;/span&gt;</code> ）、第 4 章 USB（ <code>&lt;span class="pg"&gt;原文p113-118&lt;/span&gt;</code> ）。条目来源：cases C1/C2/C3/C17/C18/C24/C25；principles P13-P25/P90-P92；counter-examples X9/X16-X21；frameworks F6。</p><div class="pn"><a href="aos-sm-flash-config.html">⬅ 上一单元：aos-sm-flash-config</a><a class="nxt" href="aos-sm-cli-session-usermgmt.html">下一单元：aos-sm-cli-session-usermgmt ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<p>OmniSwitch AOS 8.10R4 Switch Management Guide 第 1 章 Upgrading AOS（ <code>&lt;span class="pg"&gt;原文p21-24&lt;/span&gt;</code> ）、第 3 章 Loading Software：
+- Secured Code
+- Package Management
+- U-boot &amp; ONIE（ <code>&lt;span class="pg"&gt;原文p62-92&lt;/span&gt;</code> ）、第 4 章 USB（ <code>&lt;span class="pg"&gt;原文p113-118&lt;/span&gt;</code> ）。条目来源：cases C1/C2/C3/C17/C18/C24/C25；principles P13-P25/P90-P92；counter-examples X9/X16-X21；frameworks F6。</p><div class="pn"><a href="aos-sm-flash-config.html">⬅ 上一单元：aos-sm-flash-config</a><a class="nxt" href="aos-sm-cli-session-usermgmt.html">下一单元：aos-sm-cli-session-usermgmt ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

@@ -76,8 +76,16 @@ blockquote p{margin:6px 0}
 <p>顺序错一步，隧道就建不起来。主线五段：</p>
 <ol>
 <li><strong>账号</strong>：注册 registration.ovcirrus.com 建 Cirrus Freemium 账号（验证邮件来自 noreply@ovcirrus.com，正文含设备 OS 下载链接）（p6-7）。</li>
-<li><strong>目录</strong>：先定 VPN Server 四参数——Public IP、Port、VPN IP（私网地址，必须与客户端池同网段）、Client VPN IP Pool（p10-11）——再把 AP 加进 Device Catalog 并预置 Security Keys。首次 VPN Settings 用 Create New，后续 AP 用 Choose Existing 复用。CSV 批量导入时 RAP 列必须为 TRUE。</li>
-<li><strong>VPN VA</strong>：按 RAP 台数选容量档（p13）：</li>
+<li>
+<p>目录：先定 VPN Server 四参数——Public IP、Port、VPN IP（私网地址，必须与客户端池同网段）、Client VPN IP Pool（p10-11）——再把 AP 加进 Device Catalog 并预置 Security Keys。</p>
+<ul>
+<li>首次 VPN Settings 用 Create New，后续 AP 用 Choose Existing 复用。</li>
+<li>CSV 批量导入时 RAP 列必须为 TRUE。</li>
+</ul>
+</li>
+<li>
+<p><strong>VPN VA</strong>：按 RAP 台数选容量档（p13）：</p>
+</li>
 </ol>
 <table>
 <thead>
@@ -117,25 +125,61 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="local-breakout">三、配置文件与 Local Breakout 要点</h2>
 <p><strong>设置文件是这套方案的命门</strong>（p62-63）：Device Catalog/Data VPN Server 界面导出（AP 入目录即可，无需等 Registered），SFTP 上传到 VA 的 /opt/OmniVista_2500_NMS/data/vpn_conf/vpn_profile 目录，<strong>文件名不可改</strong>；任何配置变更或新加 AP，都必须重走"导出→SFTP→VA 重配"全流程——旧文件里没有新 AP 的 WireGuard 公钥。</p>
-<p>Data VPN 五步链：建 Data VPN Server → <strong>绑 AP Group（p68 明确 mandatory，不绑隧道建不起来）</strong> → 导出文件 → SFTP 上传 → 配 VPN Service 与 Endpoint（管理隧道接口选 None，数据隧道选无 IP 的 eth2）。隧道 SSID 参数块：Use Tunnel 勾选、Tunnel ID=0、选 Data VPN Server profile、WPA3_AES、Entropy 禁用（p71）。最终 RAP 与 VPN Server 间建 L2GRE 隧道（p67-68）。</p>
+<ul>
+<li>Data VPN 五步链：建 Data VPN Server → <strong>绑 AP Group（p68 明确 mandatory，不绑隧道建不起来）</strong> → 导出文件 → SFTP 上传 → 配 VPN Service 与 Endpoint（管理隧道接口选 None，数据隧道选无 IP 的 eth2）。</li>
+<li>隧道 SSID 参数块：Use Tunnel 勾选、Tunnel ID=0、选 Data VPN Server profile、WPA3_AES、Entropy 禁用（p71）。</li>
+<li>
+<p>最终 RAP 与 VPN Server 间建 L2GRE 隧道（p67-68）。</p>
+</li>
+<li>
 <p>Local Breakout 三条路由红线（p73-74）：只有 Tunnel ID=0 且隧道内单 VLAN 才能开；
 静态路由跨 SSID 累积（SSID1 配 A/B、SSID2 配 C/D，四条对两个 SSID 都生效），子网必须唯一；
-隧道 VLAN 网段禁手工配路由。DNS 故障统一解法是配正确的总部 DNS（p83-84）。DS-Lite 环境按参数表调 TCPMSS/MTU（1352/1300/1376 一组）。1201H 下行口认证仅限 Premium/Business 账号、仅 AP1201H/1201HL/AP1311、最多 Eth1-Eth3 三口（p75）。</p>
+隧道 VLAN 网段禁手工配路由。</p>
+</li>
+<li>DNS 故障统一解法是配正确的总部 DNS（p83-84）。</li>
+<li>DS-Lite 环境按参数表调 TCPMSS/MTU（1352/1300/1376 一组）。</li>
+<li>1201H 下行口认证仅限 Premium/Business 账号、仅 AP1201H/1201HL/AP1311、最多 Eth1-Eth3 三口（p75）。</li>
+</ul>
 <h2 id="_2">四、排障决策树</h2>
 <p>按四层下钻，先看隧道再查其上的业务：</p>
 <ol>
-<li><strong>隧道层</strong>：wg 查接口在不在；管理隧道 down → grep AP IP 是否在 VPN.conf、防火墙双向放行；数据隧道 down → cat /tmp/config/datavpn.conf 看配置推没推、Data VPN Server 绑没绑 AP Group、ifconfig wg1 有没有 IP（p81）。</li>
-<li><strong>注册层</strong>：隧道 up 但 OV 里没 AP → OV ping AP，加 OV 到 AP wg0 子网的静态路由（p81）。</li>
-<li><strong>DHCP 层</strong>：双隧道 up 客户端拿不到 IP → AP 上 sta_list 查关联与 TUNNELID/FARENDIP，brctl show 确认 ath0x 桥到 br-g1，再查交换机 MAC 表与 DHCP relay（p81）。</li>
-<li><strong>LAN 层</strong>：客户端 ping 不通同网段设备/网关——<strong>vSwitch 混杂模式默认 Reject 是头号原因</strong>（p20/p81 两处强调）；勾了 Override 则 Promiscuous Mode、MAC address changes、Forged transmits 三项全 Accept，端口组继承时确认 vSwitch0。</li>
+<li>
+<p>隧道层：wg 查接口在不在；</p>
+<ul>
+<li>管理隧道 down → grep AP IP 是否在 VPN.conf、防火墙双向放行；</li>
+<li>数据隧道 down → cat /tmp/config/datavpn.conf 看配置推没推、Data VPN Server 绑没绑 AP Group、ifconfig wg1 有没有 IP（p81）；</li>
+</ul>
+</li>
+<li>
+<p>注册层：隧道 up 但 OV 里没 AP → OV ping AP，加 OV 到 AP wg0 子网的静态路由（p81）。</p>
+<ul>
+<li>
+<ol>
+<li>DHCP 层：双隧道 up 客户端拿不到 IP → AP 上 sta_list 查关联与 TUNNELID/FARENDIP，brctl show 确认 ath0x 桥到 br-g1，再查交换机 MAC 表与 DHCP relay（p81）。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>LAN 层：客户端 ping 不通同网段设备/网关——vSwitch 混杂模式默认 Reject 是头号原因（p20/p81 两处强调）；
+勾了 Override 则 Promiscuous Mode、MAC address changes、Forged transmits 三项全 Accept，端口组继承时确认 vSwitch0。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <p>排障前先问"最近改过什么"：加 AP 没重传设置文件、改配置没重新导出、VA 升级后 profile 没回导（升级停机约 5 分钟，p19），都是高发根因。</p>
 <h2 id="_3">五、端口与版本红线清单</h2>
 <ul>
 <li><strong>hypervisor</strong>：ESXi 6.5/6.7/7.0.2/8.0，<strong>5.5 明确不支持</strong>；Hyper-V 2016/2019/2022；另支持 Ubuntu 22.04 LTS + KVM（p5）。</li>
 <li><strong>版本配套</strong>：AWOS ≥5.0.2（文档三处口径打架：p7 邮件写 5.0.1、p71 写 4.0.1 疑笔误，按最严 5.0.2+ 核对）；VPN VA 4.9.2.2 配 OV2500 4.9R2 / OVC 4.9.2（p5）。</li>
-<li><strong>网卡与端口</strong>：Eth0 公网口/Eth1 私网口/Eth2 桥接口（L2 隧道禁配 IP）；Hyper-V Teaming 仅 Switch Independent + Address Hash 实测可用（Switch Independent 下另两种不通过）；KVM 安装前必须对 VirtIO 盘设 Discard=unmap，点完 Begin Installation 就无法回头。</li>
-<li><strong>导入红线</strong>：解压后先删 *.mf 再导 OVF，否则 VMware/Hyper-V 都会卡在导入步骤。</li>
+<li>网卡与端口：Eth0 公网口/Eth1 私网口/Eth2 桥接口（L2 隧道禁配 IP）；</li>
+<li>Hyper-V Teaming 仅 Switch Independent + Address Hash 实测可用（Switch Independent 下另两种不通过）；</li>
+<li>
+<p>KVM 安装前必须对 VirtIO 盘设 Discard=unmap，点完 Begin Installation 就无法回头；</p>
+</li>
+<li>
+<p><strong>导入红线</strong>：解压后先删 *.mf 再导 OVF，否则 VMware/Hyper-V 都会卡在导入步骤。</p>
+</li>
 <li><strong>License 红线</strong>：下行口认证需 Premium/Business 账号；CSV 的 RAP 列留空或 FALSE，导入看似成功但 AP 不带隧道配置。</li>
 </ul>
 <hr />

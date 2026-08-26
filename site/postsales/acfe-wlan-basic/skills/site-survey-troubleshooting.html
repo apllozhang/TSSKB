@@ -75,7 +75,9 @@ blockquote p{margin:6px 0}
 <p>"Signal degrades when going through: Concrete (walls), Wood (doors), Metal (cabinet, shelves…), Steel (building structure), Glass &amp; Mirrors, Brick (fireplace), Water (liquid: fish tank; vapor: bathroom)" (p533)</p>
 </blockquote>
 <h2 id="i">I · 方法论骨架</h2>
-<p><strong>1. 勘测类型选型矩阵（按项目阶段）</strong></p>
+<ol>
+<li><strong>勘测类型选型矩阵（按项目阶段）</strong></li>
+</ol>
 <table>
 <thead>
 <tr>
@@ -108,16 +110,22 @@ blockquote p{margin:6px 0}
 </table>
 <p>排障项目用被动+主动组合。工具：Ekahau Site Survey（Windows）、WiFi Analyzer（Android）。
 判读标尺（ALE）：dBm=RSSI−96；约 RSSI&lt;20（−76dBm 以下）Bad 不宜音视频；&gt;30 为 Desired。</p>
-<p><strong>2. 四类信号杀手（归因清单）</strong>
-1. AP 摆位：正对墙/柱自己挡自己——障碍物两侧各放一台
-2. 材质衰减：混凝土/木门/金属柜架/钢结构/玻璃镜面/砖/水体；实例：4 米穿 1-4 面墙 RSSI 掉到 −70dBm，不够 VoWLAN
-3. 天线选错：定向=小扇区、全向=整圆，按覆盖形状选（外置天线 AP 型号尾数带 2，如 AP1322）
-4. 同频/邻频干扰：吞吐下降、丢包、数据损坏——换信道</p>
-<p><strong>3. 现场三步法 SOP</strong>
-- Step 0：定义问题（Where/When/Who/How 圈定范围与测试点）
-- Step 1：拿平面图——标障碍物、需求区域（按优先级分级）、现有 AP 位置
-- Step 2：实地观察五项——AP 型号与设计一致？AP 间 RF 重叠/同邻频干扰？覆盖空洞（AP 掉线/缺位）？发射功率是默认还是改过（默认 17dBm）？安装位置是否别扭？
-- Step 3：纠正措施——换 AP 型号 / 改功率信道 / 收窄信道宽度 / 砍低速率逼终端贴近 AP / 挪 AP 或新增</p>
+<ol>
+<li><strong>四类信号杀手（归因清单）</strong></li>
+<li>AP 摆位：正对墙/柱自己挡自己——障碍物两侧各放一台</li>
+<li>材质衰减：混凝土/木门/金属柜架/钢结构/玻璃镜面/砖/水体；实例：4 米穿 1-4 面墙 RSSI 掉到 −70dBm，不够 VoWLAN</li>
+<li>天线选错：定向=小扇区、全向=整圆，按覆盖形状选（外置天线 AP 型号尾数带 2，如 AP1322）</li>
+<li>
+<p>同频/邻频干扰：吞吐下降、丢包、数据损坏——换信道</p>
+</li>
+<li>
+<p><strong>现场三步法 SOP</strong></p>
+</li>
+<li>Step 0：定义问题（Where/When/Who/How 圈定范围与测试点）</li>
+<li>Step 1：拿平面图——标障碍物、需求区域（按优先级分级）、现有 AP 位置</li>
+<li>Step 2：实地观察五项——AP 型号与设计一致？AP 间 RF 重叠/同邻频干扰？覆盖空洞（AP 掉线/缺位）？发射功率是默认还是改过（默认 17dBm）？安装位置是否别扭？</li>
+<li>Step 3：纠正措施——换 AP 型号 / 改功率信道 / 收窄信道宽度 / 砍低速率逼终端贴近 AP / 挪 AP 或新增</li>
+</ol>
 <h2 id="a1-lab">A1 · 书中案例（Lab 步骤精要）</h2>
 <ul>
 <li><strong>c22/p526-540</strong>：课程演示全流程——Predictive+Passive 组合开局 → Ekahau 被动勘测热图分析 → 按四类根因定位（摆位/材质/天线/干扰）→ 三步法出整改（含修改单 AP 发射功率、新增 Stellar AP、挪 AP 三个用例）→ 热图复验：干扰消除、盲区消除、RSSI 回推荐区间。</li>
@@ -125,7 +133,10 @@ blockquote p{margin:6px 0}
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
 <li>"Wi-Fi 慢/掉线/有死角"类投诉上门处理，或新建网前的勘测规划时用。</li>
-<li><strong>区分</strong>：参数层调优（阈值/负载均衡/扫描）→ <code><a href="rf-optimization-baseline.html">rf-optimization-baseline</a></code>；漫游切换问题 → <code><a href="roaming-rap-design.html">roaming-rap-design</a></code>；认证连不上（有信号但进门失败）→ <code><a href="ssid-authentication-suite.html">ssid-authentication-suite</a></code> 的 CLI 链；本 skill 管"物理层与覆盖层的现场归因"。</li>
+<li>区分：参数层调优（阈值/负载均衡/扫描）→ <code><a href="rf-optimization-baseline.html">rf-optimization-baseline</a></code>；</li>
+<li>漫游切换问题 → <code><a href="roaming-rap-design.html">roaming-rap-design</a></code>；</li>
+<li>认证连不上（有信号但进门失败）→ <code><a href="ssid-authentication-suite.html">ssid-authentication-suite</a></code> 的 CLI 链；</li>
+<li>本 skill 管"物理层与覆盖层的现场归因"；</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>

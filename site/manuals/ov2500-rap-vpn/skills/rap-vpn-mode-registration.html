@@ -72,8 +72,18 @@ blockquote p{margin:6px 0}
 <ol>
 <li><strong>第一道分岔——管理模式决定隧道数量</strong>：AP 由企业本地 OVE 管理 → 真 RAP，需管理隧道（WireGuard）+ 数据隧道两条 VPN；AP 由 OVC 云管理 → 技术上不算 RAP，管理通道走 OVC 云内 OpenVPN，仅在数据流量需回传总部时才另建 Data VPN。</li>
 <li><strong>可达性判断</strong>：本地 AP 经 DHCP option 138 拿到 OV 地址直接管理；远程站点 AP 对企业 OV 不可直达，连接与管理通信必须走 VPN 隧道。</li>
-<li><strong>版本前置核对</strong>（任何一项不满足即返工）：ESXi 6.5/6.7/7.0.2/8.0（5.5 排除）；Hyper-V 2016/2019/2022；AWOS 5.0.2+；VPN VA 4.9.2.2（与 OV2500 4.9R2、OVC 4.9.2 认证配套）；另支持 Ubuntu 22.04 LTS + KVM。</li>
-<li><strong>注册顺序约束</strong>：先建 OmniVista Cirrus Freemium 账号 → 先确定 VPN Server 四参数再往 Device Catalog 加 AP → 加 AP 时预置 VPN VA 公网 IP / OVE 内网 IP / Security Keys。</li>
+<li>
+<p>版本前置核对（任何一项不满足即返工）：ESXi 6.5/6.7/7.0.2/8.0（5.5 排除）；</p>
+<ul>
+<li>Hyper-V 2016/2019/2022；</li>
+<li>AWOS 5.0.2+；</li>
+<li>VPN VA 4.9.2.2（与 OV2500 4.9R2、OVC 4.9.2 认证配套）；</li>
+<li>另支持 Ubuntu 22.04 LTS + KVM；</li>
+</ul>
+</li>
+<li>
+<p><strong>注册顺序约束</strong>：先建 OmniVista Cirrus Freemium 账号 → 先确定 VPN Server 四参数再往 Device Catalog 加 AP → 加 AP 时预置 VPN VA 公网 IP / OVE 内网 IP / Security Keys。</p>
+</li>
 <li><strong>四个 VPN Server 参数语义</strong>：Public IP = 公网出口；Port = 公网端口；VPN IP = 虚拟网络私网 IP，必须与客户端池同网段；Client VPN IP Pool = 分给 RAP 的地址段。</li>
 </ol>
 <h2 id="a1">A1 · 书中案例</h2>
@@ -91,14 +101,37 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
-<li>判断管理模式：远程 AP 归 OVE 管 → 规划两条隧道（WireGuard 管理 + L2GRE 数据）；归 OVC 管 → 规划零或一条隧道（仅数据回传时建 Data VPN）。</li>
+<li>判断管理模式：远程 AP 归 OVE 管 → 规划两条隧道（WireGuard 管理 + L2GRE 数据）；归 OVC 管 → 规划零或一条隧道（仅数据回传时建 Data VPN）。<ul>
+<li>
+<ol>
 <li>核对版本矩阵：ESXi 6.5/6.7/7.0.2/8.0 或 Hyper-V 2016/2019/2022 或 Ubuntu 22.04+KVM；
 AWOS ≥5.0.2；
 VPN VA 4.9.2.2 配 OV2500 4.9R2 / OVC 4.9.2。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>注册 registration.ovcirrus.com 建 Freemium 账号（验证邮件来自 noreply@ovcirrus.com，正文含设备 OS 下载链接）。</li>
-<li>先定 VPN Server 四参数（Public IP / Port / VPN IP 与客户端池同网段 / Client Pool），再到 Network→Inventory→Device Catalog 加 AP 并预置 Security Keys；
-首次 VPN Settings 用 Create New，后续 AP 用 Choose Existing 复用。</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>
+<ol>
+<li>先定 VPN Server 四参数（Public IP：</li>
+</ol>
+</li>
+<li>Port</li>
+<li>VPN IP 与客户端池同网段</li>
+<li>Client Pool），再到 Network→Inventory→Device Catalog 加 AP 并预置 Security Keys；
+首次 VPN Settings 用 Create New，后续 AP 用 Choose Existing 复用。<ul>
+<li>
+<ol>
 <li>批量场景：下载 CSV 模板，确认 RAP 列 = TRUE 后导入。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>

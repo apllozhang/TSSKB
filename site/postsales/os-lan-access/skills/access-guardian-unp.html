@@ -67,7 +67,12 @@ blockquote p{margin:6px 0}
 <div class="grp">运维</div>
 <a href="../skills/poe-ops-diagnostics.html">poe-ops-diagnostics</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../postsales/index.html">售后</a> › <a href="../index.html">DT00XTE215</a> › <span>接入安全与准入：UNP / Access Guardian / LLDP</span></nav><h1>接入安全与准入：UNP / Access Guardian / LLDP</h1><p class="meta"><span class="badge">SKILL</span> access-guardian-unp · 来源页码: </p><h1 id="unp-access-guardian-lldp">接入安全与准入：UNP / Access Guardian / LLDP</h1>
 <h2 id="r">R · 原文引用</h2>
-<p>"-&gt; aaa radius-server my_radius host 192.168.100.102 key alcatel-lucent / -&gt; aaa authentication 802.1x my_radius / -&gt; unp profile corporate / -&gt; unp profile corporate map vlan 20 / -&gt; unp port 1/1/1 port-type bridge / -&gt; unp port 1/1/1 default-profile def_unp"（p389）</p>
+<p>"-&gt; aaa radius-server my_radius host 192.168.100.102 key alcatel-lucent：
+- -&gt; aaa authentication 802.1x my_radius
+- -&gt; unp profile corporate
+- -&gt; unp profile corporate map vlan 20
+- -&gt; unp port 1/1/1 port-type bridge
+- -&gt; unp port 1/1/1 default-profile def_unp"（p389）</p>
 <p>"UNP Port classification rules: 1. Port/Linkagg 2. Domain 3. MAC address 4. MAC-OUI 5. MAC address range 6. LLDP 7. Auth-type 8. IP address 9. VLAN tag. Precedence: Extended rule &gt; Binding Rule &gt; Simple Rule"（p129-132）</p>
 <p>"IEEE 802.1AB - Link Layer Discovery Protocol (LLDP) / L2 discovery protocol / Enabled by default on the OmniSwitches. LLDP is configured at port level (or NI or chassis), but not at linkagg level."（p409/423）</p>
 <h2 id="i">I · 方法论骨架</h2>
@@ -78,9 +83,21 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="a1-lab">A1 · 书中案例（Lab 配置精要）</h2>
 <ul>
-<li><strong>Access Guardian 完整流（p397-406）</strong>：<code>aaa radius-server my_radius host 192.168.100.102 key alcatel-lucent</code> + <code>aaa device-authentication 802.1x my_radius</code> + <code>aaa accounting mac my_radius</code>；ACL 规则装 <code>policy list deny_employees type unp enable</code>；<code>unp profile UNP-employee qos-policy-list deny_employees</code> + <code>map vlan 20</code>（contractor→vlan 30）；端口 <code>unp port 1/1/1 802.1x-authentication</code> + <code>mac-authentication</code>。客户端启 PEAP-MSCHAPv2 后 <code>unp user flush port 1/1/1</code> 重认证：employee 进 VLAN20+角色、contractor 进 VLAN30；RADIUS 无条目则 Status=Block。<code>aaa test-radius-server my_radius type authentication user …</code> 独立验证服务器。</li>
-<li><strong>动态 VLAN（p133/p144-157）</strong>：<code>unp profile employee</code> + <code>map vlan 40</code> → <code>unp classification mac-address 00:50:56:90:ee:0a profile1 employee</code> → <code>unp port 2/1/1 port-type bridge</code> → <code>unp user flush port 2/1/1</code> → show unp user 见端口自动进 VLAN 40（unpUntag）。</li>
-<li><strong>LLDP（p422-426）</strong>：<code>lldp port 1/1/3 notification enable</code> + <code>tlv management port-description enable</code>；chassis 级开 system-name/system-description/management-address；show lldp remote-system 对比开 TLV 前后（System Name 从 (null) 变 Pod20sw7）。</li>
+<li>Access Guardian 完整流（p397-406）：<code>aaa radius-server my_radius host 192.168.100.102 key alcatel-lucent</code> + <code>aaa device-authentication 802.1x my_radius</code> + <code>aaa accounting mac my_radius</code>；
+ACL 规则装 <code>policy list deny_employees type unp enable</code>；
+<code>unp profile UNP-employee qos-policy-list deny_employees</code> + <code>map vlan 20</code>（contractor→vlan 30）；
+端口 <code>unp port 1/1/1 802.1x-authentication</code> + <code>mac-authentication</code>。</li>
+<li>客户端启 PEAP-MSCHAPv2 后 <code>unp user flush port 1/1/1</code> 重认证：employee 进 VLAN20+角色、contractor 进 VLAN30；
+RADIUS 无条目则 Status=Block。</li>
+<li>
+<p><code>aaa test-radius-server my_radius type authentication user …</code> 独立验证服务器。</p>
+</li>
+<li>
+<p><strong>动态 VLAN（p133/p144-157）</strong>：<code>unp profile employee</code> + <code>map vlan 40</code> → <code>unp classification mac-address 00:50:56:90:ee:0a profile1 employee</code> → <code>unp port 2/1/1 port-type bridge</code> → <code>unp user flush port 2/1/1</code> → show unp user 见端口自动进 VLAN 40（unpUntag）。</p>
+</li>
+<li>LLDP（p422-426）：<code>lldp port 1/1/3 notification enable</code> + <code>tlv management port-description enable</code>；</li>
+<li>chassis 级开 system-name/system-description/management-address；</li>
+<li>show lldp remote-system 对比开 TLV 前后（System Name 从 (null) 变 Pod20sw7）；</li>
 </ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
@@ -90,22 +107,62 @@ blockquote p{margin:6px 0}
 <li>管理员登录交换机的 AAA（ASA）→ switch-management-access。</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
-<p>动态 VLAN（免认证）：
-1. 建 VLAN（vlan 20）。
-2. <code>unp profile &lt;名&gt;</code> → <code>unp profile &lt;名&gt; map vlan 20</code>。
-3. 兜底：<code>unp profile def_unp</code> + map vlan 10。
-4. <code>unp classification-rule &lt;规则&gt; mac-address-range &lt;起&gt; &lt;止&gt;</code>（或 MAC/OUI/IP/LLDP 等）+ <code>… profile1 &lt;名&gt;</code>。
-5. <code>unp port &lt;口&gt; port-type bridge</code> + <code>unp port &lt;口&gt; default-profile def_unp</code>。
-6. <code>unp user flush port &lt;口&gt;</code> → <code>show unp user</code> 验证。
-Access Guardian：
-1. 声明 RADIUS：aaa radius-server …；挂认证：aaa authentication 802.1x / aaa device-authentication 802.1x、aaa accounting mac。
-2. 建 VLAN + UNP profile（map vlan、可挂 qos-policy-list/location-policy）。
-3. 端口 port-type bridge + 802.1x-authentication / mac-authentication + default-profile（兜底）。
-4. 可选 port-template 批量下发认证参数与 pass-alternate profile。
-5. 验证：aaa test-radius-server → unp user flush → show unp user [status|details]。
-LLDP：
-1. <code>lldp port &lt;口&gt; notification enable</code>；按需开管理 TLV（system-name/management-address 等，chassis 级）。
-2. <code>show lldp remote-system</code> / <code>show lldp statistics</code> 验证。</p>
+<ul>
+<li>动态 VLAN（免认证）：1. 建 VLAN（vlan 20）。</li>
+<li>
+<ol>
+<li><code>unp profile &lt;名&gt;</code> → <code>unp profile &lt;名&gt; map vlan 20</code>。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>兜底：<code>unp profile def_unp</code> + map vlan 10。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li><code>unp classification-rule &lt;规则&gt; mac-address-range &lt;起&gt; &lt;止&gt;</code>（或 MAC/OUI/IP/LLDP 等）+ <code>… profile1 &lt;名&gt;</code>。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li><code>unp port &lt;口&gt; port-type bridge</code> + <code>unp port &lt;口&gt; default-profile def_unp</code>。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li><code>unp user flush port &lt;口&gt;</code> → <code>show unp user</code> 验证。</li>
+</ol>
+</li>
+<li>Access Guardian：1. 声明 RADIUS：aaa radius-server …；
+挂认证：aaa authentication 802.1x / aaa device-authentication 802.1x、aaa accounting mac。</li>
+<li>
+<ol>
+<li>建 VLAN + UNP profile（map vlan、可挂 qos-policy-list/location-policy）。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>端口 port-type bridge + 802.1x-authentication / mac-authentication + default-profile（兜底）。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>可选 port-template 批量下发认证参数与 pass-alternate profile。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>验证：aaa test-radius-server → unp user flush → show unp user [status|details]。</li>
+</ol>
+</li>
+<li>LLDP：1. <code>lldp port &lt;口&gt; notification enable</code>；按需开管理 TLV（system-name/management-address 等，chassis 级）。</li>
+<li>
+<ol>
+<li><code>show lldp remote-system</code> / <code>show lldp statistics</code> 验证。</li>
+</ol>
+</li>
+</ul>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>
 <li><strong>LLDP 不能配在 linkagg 级</strong>：只能端口/槽位/整机，聚合口要逐成员口配。</li>

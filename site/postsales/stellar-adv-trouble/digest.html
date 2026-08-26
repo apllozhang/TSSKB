@@ -280,16 +280,54 @@ blockquote p{margin:6px 0}
 <p>空口抓包硬上限 <strong>10MB / 5 分钟</strong>（p31），规划过滤条件按此预算。</p>
 <h2 id="_4">四、十大高频故障根因清单</h2>
 <ol>
-<li><strong>交换机 tagged VLAN 与 SSID 映射不一致</strong>（p11-18）——全员连不上而 AP 正常，先查这里。</li>
-<li><strong>Final_role 滤掉 DHCP</strong>（p84）——最隐蔽的"永远拿不到 IP"：报文路径全正常，角色里没放行 DHCP。</li>
-<li><strong>AP 发射功率被压到最小</strong>（p85-86）——<code>iwlist txpower</code> 见 3dBm（1mW）+ RSSI 16，去 RF profile 调大。</li>
-<li><strong>signalStrengthThreshold 过高</strong>（p87）——阈值 70（约 −26dBm）时正常信号也被踢，功率再对也掉线。</li>
-<li><strong>RADIUS 共享密钥不匹配</strong>（p89）——静默失败：不报错、只见超时，逐字符比。</li>
-<li><strong>RADIUS station IP 未登记 AP 地址</strong>（p90）——请求被服务器直接丢，客户端只见超时。</li>
-<li><strong>国家码不兼容导致搜不到 SSID</strong>（p82）——showsysinfo 查国家码，不匹配就在 RF profile 手动指定兼容信道。</li>
-<li><strong>untagged↔tagged VLAN 之间不漫游</strong>（p69）——产品限制，信号再好也漫不过去；同 SSID 各 AP 的 VLAN 封装必须一致。</li>
-<li><strong>地理邻居互相看不见</strong>（p70）——直角走廊等建筑阻挡；两台 AP <strong>对称</strong>静态互加邻居，上下文改走 LAN。</li>
-<li><strong>同频/邻频干扰</strong>（p112）——吞吐下降、丢包、数据损坏三症状，换信道；用 Ekahau/WiFi Analyzer 定位重叠。</li>
+<li>交换机 tagged VLAN 与 SSID 映射不一致（p11-18）——全员连不上而 AP 正常，先查这里。<ul>
+<li>
+<ol>
+<li>Final_role 滤掉 DHCP（p84）——最隐蔽的"永远拿不到 IP"：报文路径全正常，角色里没放行 DHCP。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>AP 发射功率被压到最小（p85-86）——<code>iwlist txpower</code> 见 3dBm（1mW）+ RSSI 16，去 RF profile 调大。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>signalStrengthThreshold 过高（p87）——阈值 70（约 −26dBm）时正常信号也被踢，功率再对也掉线。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>RADIUS 共享密钥不匹配（p89）——静默失败：不报错、只见超时，逐字符比。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>RADIUS station IP 未登记 AP 地址（p90）——请求被服务器直接丢，客户端只见超时。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>国家码不兼容导致搜不到 SSID（p82）——showsysinfo 查国家码，不匹配就在 RF profile 手动指定兼容信道。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>untagged↔tagged VLAN 之间不漫游（p69）——产品限制，信号再好也漫不过去；同 SSID 各 AP 的 VLAN 封装必须一致。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>地理邻居互相看不见（p70）——直角走廊等建筑阻挡；两台 AP 对称静态互加邻居，上下文改走 LAN。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>同频/邻频干扰（p112）——吞吐下降、丢包、数据损坏三症状，换信道；用 Ekahau/WiFi Analyzer 定位重叠。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <p>另有两条"别误判"：reason 8 掉线是系统负载均衡行为，不按故障修（p80）；AP 拿不到地址时"连 DHCP-NAK 都没有"说明报文根本没到服务器（链路/VLAN/中继问题），别当地址池耗尽（p100）。</p>
 <h2 id="_5">五、勘测三步法与五发现五动作</h2>
@@ -303,14 +341,45 @@ blockquote p{margin:6px 0}
 <p>材料衰减要有敬畏（p110）：4 米穿 1-4 面墙 RSSI 就掉到 −70dBm——上网够、语音不够（语音要 −67dBm 以上）。衰减大户：混凝土墙、金属柜、钢结构、玻璃镜、砖体、水。天线装反（定向进开放区、全向进走廊）会造出"一半没信号、一半过剩"，盲区先查天线。</p>
 <h2 id="8-skill">六、学习路径（8 个 skill 的顺序）</h2>
 <ol>
-<li><strong>wlan-trouble-methodology</strong>——总纲：七步流程、三域地图、访谈四问。任何故障先过这里。</li>
-<li><strong>stellar-ap-toolbox</strong>——取证手段：串口/SSH/Web 登录、tcpdump 与空口抓包、配置备份。</li>
-<li><strong>stellar-ap-system-health</strong>——基础层：LED、系统、进程、门户（eag）、Express 集群。</li>
-<li><strong>wireless-rf-roaming-trouble</strong>——无线层：athXYY 接口、RF profile 落地、邻居表、漫游验证。</li>
-<li><strong>client-connection-trouble</strong>——客户端层：搜不到/连不上/没地址/掉线四条决策链。</li>
-<li><strong>dot1x-radius-trouble</strong>——认证专项：客户端→AP→RADIUS 三段十三查。</li>
-<li><strong>network-side-trouble</strong>——网络层：AP 取址、连通性、syslog、云管上线前置。</li>
-<li><strong>site-survey-remediation</strong>——收口：整网表现不佳时的勘测与整改。</li>
+<li>wlan-trouble-methodology——总纲：七步流程、三域地图、访谈四问。<ul>
+<li>任何故障先过这里。</li>
+<li>
+<ol>
+<li>stellar-ap-toolbox——取证手段：串口/SSH/Web 登录、tcpdump 与空口抓包、配置备份。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>stellar-ap-system-health——基础层：LED、系统、进程、门户（eag）、Express 集群。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>wireless-rf-roaming-trouble——无线层：athXYY 接口、RF profile 落地、邻居表、漫游验证。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>client-connection-trouble——客户端层：搜不到/连不上/没地址/掉线四条决策链。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>dot1x-radius-trouble——认证专项：客户端→AP→RADIUS 三段十三查。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>network-side-trouble——网络层：AP 取址、连通性、syslog、云管上线前置。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>site-survey-remediation——收口：整网表现不佳时的勘测与整改。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <p>前两个是通用底座，中间四个按 OSI 分层对应症状，最后一个是面状问题的收口。</p>
 <h2 id="tac-tkc">七、边界提醒：何时升级 TAC / TKC 怎么用</h2>

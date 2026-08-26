@@ -100,11 +100,17 @@ blockquote p{margin:6px 0}
 <li>规划地址清单：两节点物理 IP；L2 的 Cluster IP（建议用原 Standalone IP）及可选虚拟 IP；主机名（≤15 字符小写）。</li>
 <li>备份 + 快照后执行转换：Node 1 菜单 12 Convert to Cluster（Captive Portal 已配置则保持默认回车）；
 Node 2 菜单 13 Join Cluster。转换全程在 Console 做，禁止 SSH。</li>
-<li>验证：Show OV Cluster Status 确认 Data Sync "Up to Date"、集群状态正常；
-L3 集群注意 Active 由系统随机指派，确认谁是 Active。健康判据：Active 全服务 Running；
-Standby 除 upam/nginx（及自定义 RADIUS 证书时的 ovradius）外全 Running。</li>
-<li>日常运维：任何配置/升级/扩盘前先确认 "Up to Date"（同步中严禁操作）；
-集群级参数（Cluster IP、Manual Failover、Maintenance Mode、Preferred Active Node）只在 Active 节点改。</li>
+<li>
+<p>验证：Show OV Cluster Status 确认 Data Sync "Up to Date"、集群状态正常；</p>
+<ul>
+<li>L3 集群注意 Active 由系统随机指派，确认谁是 Active。健康判据：Active 全服务 Running；</li>
+<li>Standby 除 upam/nginx（及自定义 RADIUS 证书时的 ovradius）外全 Running；</li>
+</ul>
+</li>
+<li>
+<p>日常运维：任何配置/升级/扩盘前先确认 "Up to Date"（同步中严禁操作）；
+集群级参数（Cluster IP、Manual Failover、Maintenance Mode、Preferred Active Node）只在 Active 节点改。</p>
+</li>
 <li>节点故障替换：Remove Peer Node From Cluster（仅 Active 可发）后该节点即报废不可复用——只能新起 VM、扩数据分区到与旧节点一致后 Join Cluster。</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>

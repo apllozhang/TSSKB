@@ -126,9 +126,19 @@ blockquote p{margin:6px 0}
 </table>
 <p><strong>决策树与红线</strong>：</p>
 <ol>
-<li>客户只要简单 WiFi → Express 零软件成本起步；但记住 255 上限的坑——<strong>第 256 台 AP 静默卡在 joining 状态，不报任何错</strong>（p46），扩容前必须拆 Group 或升级模式。</li>
+<li>客户只要简单 WiFi → Express 零软件成本起步；但记住 255 上限的坑——第 256 台 AP 静默卡在 joining 状态，不报任何错（p46），扩容前必须拆 Group 或升级模式。<ul>
+<li>
+<ol>
 <li>合规要求本地部署 → OV2500；注意管理面只支持 IPv4（Express 反而支持 v6，ce16），纯 v6 管理的客户别硬应标。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>多分支 / 有远程运维诉求 → Cirrus 云管（文理学院案例 c04 就是 BP 用 Cirrus 远程运维）。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <p><strong>两个工程细节</strong>：Express 集群里，OmniSwitch 每台 ≤32 AP、每堆叠 ≤64 台且至少 2 台可任 PVM/SVM；模式判定开关是 DHCP 有无 Option 138——出厂即 Express，切换模式必须恢复出厂，<strong>集群配置全部丢失、不迁移</strong>（p66），"Easy conversion"话术与这个现实冲突，割接方案要单独报实施工作量。</p>
 <p><strong>排障口诀</strong>（AP 上线但射频全关）：查 License 数量 → 查 Trust 手动确认（批量开局"全部没信号"最常见根因就是没点 Trust）→ 查国家码与 RF Profile 匹配（p68）。</p>
@@ -268,8 +278,23 @@ blockquote p{margin:6px 0}
 <p>给读者的三句提醒，也是这套书的坑位图：</p>
 <ol>
 <li><strong>三套 License 并存本身就是最大的乱</strong>。OV2500 永久、Cirrus 4 过渡云、Cirrus 10 新 SaaS 同场销售，教材花了 40 多页教"怎么报价不出错"，但 Cirrus 4 存量客户怎么迁到 Cirrus 10，书里没讲清（ce01）——续约场景须单独向 ALE 确认迁移政策，别替厂家承诺。</li>
-<li><strong>机型例外清单要背</strong>：Zigbee 不支持 AP1301/AP1230（IoT 项目报入门机型会侵蚀利润）；RAP 不支持 AP1101；AP1101/AP1201/AP1201H 桥接不打 VLAN 标；Cirrus 10 排除 AP1101/AP1201H/L/LH；Mesh 红线 16 台/4 跳/8 从 AP。</li>
-<li><strong>教材本身有笔误</strong>：p243 把 AP1301H 误标为 802.11ac（应以 p17 硬件章的 Wi-Fi 6 为准）；p95 出现不存在的"AP1421"（应为 AP1521）；p155 把 Premium 缩写误印为 BAS。另外全部案例只讲赢、无翻车复盘，引用时补自己的风险披露反而更可信；所有美元/欧元价均为目录价。</li>
+<li>
+<p>机型例外清单要背：Zigbee 不支持 AP1301/AP1230（IoT 项目报入门机型会侵蚀利润）；</p>
+<ul>
+<li>RAP 不支持 AP1101；</li>
+<li>AP1101/AP1201/AP1201H 桥接不打 VLAN 标；</li>
+<li>Cirrus 10 排除 AP1101/AP1201H/L/LH；</li>
+<li>Mesh 红线 16 台/4 跳/8 从 AP；</li>
+</ul>
+</li>
+<li>
+<p>教材本身有笔误：p243 把 AP1301H 误标为 802.11ac（应以 p17 硬件章的 Wi-Fi 6 为准）；</p>
+<ul>
+<li>p95 出现不存在的"AP1421"（应为 AP1521）；</li>
+<li>p155 把 Premium 缩写误印为 BAS。另外全部案例只讲赢、无翻车复盘，引用时补自己的风险披露反而更可信；</li>
+<li>所有美元/欧元价均为目录价；</li>
+</ul>
+</li>
 </ol>
 <hr />
 <p><em>本文。</em></p><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

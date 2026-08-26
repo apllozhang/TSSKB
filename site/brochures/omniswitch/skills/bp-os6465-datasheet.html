@@ -82,10 +82,7 @@ blockquote p{margin:6px 0}
 <li>工业电源体系（端子块双输入/BPN/BPR 电源、DC 版）规划</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>OS6465 是"加固、全管理、无风扇"的工业 GbE 家族（ <code>&lt;span class="pg"&gt;原文p36&lt;/span&gt;</code> ："ruggedized, fully manageable and fan-less... Intelligent Transportation, Railway, smart cities and Utilities"），全系 802.3bt 60W PoE、1588v2 PTP、MACsec、告警继电器、6KV 铜口防雷。</li>
-<li>层级：工业加固接入/小汇聚，与 6465T（宽温城域 L3）、6575（壁挂）、6865（工业 L3 旗舰）同阵营。</li>
-</ul>
+<p>OS6465 是"加固、全管理、无风扇"的工业 GbE 家族（ <code>&lt;span class="pg"&gt;原文p36&lt;/span&gt;</code> ："ruggedized, fully manageable and fan-less... Intelligent Transportation, Railway, smart cities and Utilities"），全系 802.3bt 60W PoE、1588v2 PTP、MACsec、告警继电器、6KV 铜口防雷。层级：工业加固接入/小汇聚，与 6465T（宽温城域 L3）、6575（壁挂）、6865（工业 L3 旗舰）同阵营。</p>
 <h2 id="a1">A1（与相邻系列选型差异）</h2>
 <ul>
 <li>vs OS6575-MP16：6575 壁挂小盒（VC 4 台、路由表 8K）；6465 有 19" P28 大机型（22 口 + 4x10G），机柜内多口选 6465、轨旁小点位选 6575（C6）。</li>
@@ -99,13 +96,15 @@ blockquote p{margin:6px 0}
 | OS6465-P6 | 4 PoE+ | 2 | 0 | 2/2 | 150W | DIN/壁挂/面板 |
 | OS6465H-P12 | 8 PoE+ | 4 | 0 | 4/4 | 240W（ENH-240 新硬件） | DIN/壁挂/面板 |
 | OS6465-P28 | 22 PoE+ | 2 | 4 | 8/14 | 285W | 19" 机架 1U |</p>
-<p>上联与堆叠：VC 用 1G SFP 口（P28 用 10G SFP+）；当前最多 4 台，"option to scale up to 8 in future"（ <code>&lt;span class="pg"&gt;原文p37&lt;/span&gt;</code> ）。
-交换容量与包转发（ <code>&lt;span class="pg"&gt;原文p38&lt;/span&gt;</code> ）：P6 12 Gb/s / 8.9 Mpps；P12 24 Gb/s / 17.9 Mpps；P28 128 Gb/s / 95.3 Mpps。
-电源体系：P6/P12 双冗余 1x3 端子块输入（+VDC/-VDC/地，54.5~57V/3.5A 供 bt 60W， <code>&lt;span class="pg"&gt;原文p39&lt;/span&gt;</code> ）；P28 双可插拔电源（BPR 180W AC / BPRD 180W@48V DC， <code>&lt;span class="pg"&gt;原文p40&lt;/span&gt;</code> ）；AC 电源 BPN 75W / BPN-H 180W / BPNX 240W（仅 H-P12）；冗余配置可 AC+AC、AC+DC、DC+DC（ <code>&lt;span class="pg"&gt;原文p39&lt;/span&gt;</code> ）。
-Layer 特性：L3 固定（RIPv1/v2、静态、VRRPv2/v3、PBR、Q-in-Q 802.1ad、Eth OAM 802.1ag/Y.1731/802.3ah、G.8032 环保护、IEC 62439-2 MRP， <code>&lt;span class="pg"&gt;原文p42&lt;/span&gt;</code> ）；128 条 IPv4 路由（ <code>&lt;span class="pg"&gt;原文p40&lt;/span&gt;</code> ）；1588v2 PTP 全系（P6/P12 全口、P28 除 27/28 口， <code>&lt;span class="pg"&gt;原文p37&lt;/span&gt;</code> ）；MACsec 全系（P28 除 27/28 口），需免费站点许可 OS-SW-MACSEC（ <code>&lt;span class="pg"&gt;原文p45&lt;/span&gt;</code> ）；无 SPB/VXLAN/MPLS。
-功耗/环境：-40~75°C 运行、存储 -40~85°C、海拔 13000ft；待机 9.72~29W（ <code>&lt;span class="pg"&gt;原文p38&lt;/span&gt;</code> ）；MTBF 单机 1.42M~2.10M 小时。
-工业认证（ <code>&lt;span class="pg"&gt;原文p41&lt;/span&gt;</code> ）：EN 50155/EN 61373（铁路）、IEEE 1613/IEC 61850-3（变电站）、NEMA TS-2（交通）、UL 508/Class I Div 2 危险场所、DNV 船用（需 DNV 套件）；TAA 版 TA6465-*。
-规格红线：P28 的 27/28 口无 1588v2/MACsec；VC 当前 4 台；MACsec 要领许可。</p>
+<ul>
+<li>上联与堆叠：VC 用 1G SFP 口（P28 用 10G SFP+）；当前最多 4 台，"option to scale up to 8 in future"（ <code>&lt;span class="pg"&gt;原文p37&lt;/span&gt;</code> ）。</li>
+<li>交换容量与包转发（ <code>&lt;span class="pg"&gt;原文p38&lt;/span&gt;</code> ）：P6 12 Gb/s / 8.9 Mpps；P12 24 Gb/s / 17.9 Mpps；P28 128 Gb/s / 95.3 Mpps。</li>
+<li>电源体系：P6/P12 双冗余 1x3 端子块输入（+VDC/-VDC/地，54.5~57V/3.5A 供 bt 60W， <code>&lt;span class="pg"&gt;原文p39&lt;/span&gt;</code> ）；P28 双可插拔电源（BPR 180W AC / BPRD 180W@48V DC， <code>&lt;span class="pg"&gt;原文p40&lt;/span&gt;</code> ）；AC 电源 BPN 75W / BPN-H 180W / BPNX 240W（仅 H-P12）；冗余配置可 AC+AC、AC+DC、DC+DC（ <code>&lt;span class="pg"&gt;原文p39&lt;/span&gt;</code> ）。</li>
+<li>Layer 特性：L3 固定（RIPv1/v2、静态、VRRPv2/v3、PBR、Q-in-Q 802.1ad、Eth OAM 802.1ag/Y.1731/802.3ah、G.8032 环保护、IEC 62439-2 MRP， <code>&lt;span class="pg"&gt;原文p42&lt;/span&gt;</code> ）；128 条 IPv4 路由（ <code>&lt;span class="pg"&gt;原文p40&lt;/span&gt;</code> ）；1588v2 PTP 全系（P6/P12 全口、P28 除 27/28 口， <code>&lt;span class="pg"&gt;原文p37&lt;/span&gt;</code> ）；MACsec 全系（P28 除 27/28 口），需免费站点许可 OS-SW-MACSEC（ <code>&lt;span class="pg"&gt;原文p45&lt;/span&gt;</code> ）；无 SPB/VXLAN/MPLS。</li>
+<li>功耗/环境：-40~75°C 运行、存储 -40~85°C、海拔 13000ft；待机 9.72~29W（ <code>&lt;span class="pg"&gt;原文p38&lt;/span&gt;</code> ）；MTBF 单机 1.42M~2.10M 小时。</li>
+<li>工业认证（ <code>&lt;span class="pg"&gt;原文p41&lt;/span&gt;</code> ）：EN 50155/EN 61373（铁路）、IEEE 1613/IEC 61850-3（变电站）、NEMA TS-2（交通）、UL 508/Class I Div 2 危险场所、DNV 船用（需 DNV 套件）；TAA 版 TA6465-*。</li>
+<li>规格红线：P28 的 27/28 口无 1588v2/MACsec；VC 当前 4 台；MACsec 要领许可。</li>
+</ul>
 <h2 id="e">E（适用场景）</h2>
 <ul>
 <li>交通/轨道沿线机柜多口汇聚（P28，22 口 + 4x10G 上联 + 60W bt）</li>

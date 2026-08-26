@@ -75,7 +75,9 @@ blockquote p{margin:6px 0}
 <p>"Defines, per user, a validity period, a time and data quota and an exhaustion handling, when the quotas are reached. ▪Data Quota ▪Time Quota ▪Exhaustion Handling: Block for remaining Duration (Redirection URL) / Reduced up/down bandwidth (in kB/s)" (p429)</p>
 </blockquote>
 <h2 id="i">I · 方法论骨架</h2>
-<p><strong>1. Unified Policy 配置流程（顺序固定：先策略后绑定）</strong></p>
+<ol>
+<li><strong>Unified Policy 配置流程（顺序固定：先策略后绑定）</strong></li>
+</ol>
 <pre><code>1. Policy Condition（L3 目的子网 + L4 服务端口；端口对象不存在先建 Service Port）
 2. Action（Accept/Drop、优先级标记 802.1p/DSCP、限速、三色标记 TCM）——双向执行
 3. Group Assignment（指定生效的 AP Group，勿含 default）
@@ -83,7 +85,9 @@ blockquote p{margin:6px 0}
 </code></pre>
 <p>另有 Location Policy（限定接入位置）与 Period Policy（限定日/时段）。
 验证手法：先测基线（ping/SSH 通）→ 挂策略 → 复测对比。</p>
-<p><strong>2. 三层带宽控制与执行优先级</strong></p>
+<ol>
+<li><strong>三层带宽控制与执行优先级</strong></li>
+</ol>
 <table>
 <thead>
 <tr>
@@ -112,15 +116,21 @@ blockquote p{margin:6px 0}
 </table>
 <p>执行判定序：<strong>策略 &gt; 角色 &gt; SSID</strong>——先匹配 Policy List 命中即按 ACL；未命中看 ARP；再无看 SSID 合同；都无则不限速。
 套餐设计映射：全员总量=SSID 合同，身份差异化=ARP，应用级=策略。</p>
-<p><strong>3. 访客账号体系（四类账号）</strong>
-- Employee：登录/密码必填；可配 Session timeout、计费间隔、上下行带宽上限
-- Company Property：MAC 必填，用于 BYOD/DSPSK，可绑员工账号/ARP/Policy List，可下发专属 PSK
-- Guest：登录/密码/失效日期/Service Level 或 Registration Profile 必填；支持批量建号与票据打印
-- Guest Operator：前台账号，专属门户只管访客开户/审批自注册/批量导入 XLSX/CSV</p>
-<p><strong>4. 三层治理对象</strong>
-- Registration Profile：数据配额（MB）+ 时间配额（每日小时/总小时）+ 有效期 + Remember Device/最大设备数 + 耗尽处理（阻断可加重定向 URL，或降速分设上行/下行 kB/s）
-- Service Level（最多 5 档）：打包 ARP + Unified Policy List + Registration Profile + 有效期 + 删除策略
-- 全局设置：批量生成、过期删除策略（Never/到期/N 天后）、密码策略</p>
+<ol>
+<li><strong>访客账号体系（四类账号）</strong></li>
+<li>Employee：登录/密码必填；可配 Session timeout、计费间隔、上下行带宽上限</li>
+<li>Company Property：MAC 必填，用于 BYOD/DSPSK，可绑员工账号/ARP/Policy List，可下发专属 PSK</li>
+<li>Guest：登录/密码/失效日期/Service Level 或 Registration Profile 必填；支持批量建号与票据打印</li>
+<li>
+<p>Guest Operator：前台账号，专属门户只管访客开户/审批自注册/批量导入 XLSX/CSV</p>
+</li>
+<li>
+<p><strong>三层治理对象</strong></p>
+</li>
+<li>Registration Profile：数据配额（MB）+ 时间配额（每日小时/总小时）+ 有效期 + Remember Device/最大设备数 + 耗尽处理（阻断可加重定向 URL，或降速分设上行/下行 kB/s）</li>
+<li>Service Level（最多 5 档）：打包 ARP + Unified Policy List + Registration Profile + 有效期 + 删除策略</li>
+<li>全局设置：批量生成、过期删除策略（Never/到期/N 天后）、密码策略</li>
+</ol>
 <p>书中配额实例：100MB + 每天 4h；耗尽降速 UP=100kB/s、DOWN=1000kB/s；Day1 用 90MB/3h 无动作，Day2 累计 115MB 触发。</p>
 <h2 id="a1-lab">A1 · 书中案例（Lab 步骤精要）</h2>
 <ul>

@@ -67,20 +67,51 @@ blockquote p{margin:6px 0}
 <div class="grp">运维</div>
 <a href="../skills/poe-ops-diagnostics.html">poe-ops-diagnostics</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../postsales/index.html">售后</a> › <a href="../index.html">DT00XTE215</a> › <span>IP 服务基础：IP 接口 / DHCP / 静态路由 / VRRP</span></nav><h1>IP 服务基础：IP 接口 / DHCP / 静态路由 / VRRP</h1><p class="meta"><span class="badge">SKILL</span> ip-services-basic · 来源页码: </p><h1 id="ip-ip-dhcp-vrrp">IP 服务基础：IP 接口 / DHCP / 静态路由 / VRRP</h1>
 <h2 id="r">R · 原文引用</h2>
-<p>"ip vrrp 1 interface int_20 / ip vrrp 1 interface int_20 address 192.168.20.254 / ip vrrp 1 interface int_20 priority 100 preempt interval 100 / ip vrrp 1 interface int_20 admin-state enable / -&gt; ip vrrp track 3 admin-state enable priority 30 port 1/1/3 / -&gt; ip vrrp 1 interface int_20 track-association 3"（p301-303）</p>
+<p>"ip vrrp 1 interface int_20：
+- ip vrrp 1 interface int_20 address 192.168.20.254
+- ip vrrp 1 interface int_20 priority 100 preempt interval 100
+- ip vrrp 1 interface int_20 admin-state enable
+- -&gt; ip vrrp track 3 admin-state enable priority 30 port 1/1/3
+- -&gt; ip vrrp 1 interface int_20 track-association 3"（p301-303）</p>
 <p>"Two types of DHCP relay agents: global and per-interface... They are mutually exclusive. By default, the DHCP Relay feature is disabled. Max number of hops = 16, Forward Delay(seconds) = 0, DHCP Relay Opt82 Format = Base MAC"（p275-277）</p>
 <p>"Multicast - 224.0.0.18 / Virtual MAC address: 00-00-5E-00-01-{VRID} / At least two virtual routers must be configured on the LAN - a master router and a backup router."（p297-302）</p>
 <h2 id="i">I · 方法论骨架</h2>
-<p>L3 服务三件套 + 冗余：
-- <strong>IP 接口</strong>：<code>ip interface &lt;名&gt; address &lt;IP/掩码&gt; vlan &lt;N&gt;</code>（可合写一条）；IP routing 只要有任一 IP 接口绑定 VLAN 即激活。
-- <strong>Loopback0</strong>：名字固定即 /32 环回口，不绑 VLAN、有任一 active VLAN 即恒 UP，创建即被 RIP/OSPF 宣告（BGP 除外）；作 NMS/RADIUS/NTP/sFlow 稳定源地址（ip service source-ip loopback0 &lt;应用&gt;）。
-- <strong>静态路由</strong>：<code>ip static-route 0.0.0.0/0 gateway &lt;下一跳&gt; metric N</code>；下一跳接口必须 up；静态默认优于动态；metric 定主备。
-- <strong>VRRP</strong>：VRID+虚拟 IP 共享，priority 大者为 master（默认 100）；虚拟 MAC 00-00-5E-00-01-{VRID} 保证切换不需终端重 ARP；track 策略可联动端口故障降优先级。
-- <strong>DHCP Relay</strong>：global 与 per-interface 两模式互斥，默认关闭，默认跳数 16、Option-82 格式 Base MAC。</p>
+<ul>
+<li>L3 服务三件套 + 冗余：- <strong>IP 接口</strong>：<code>ip interface &lt;名&gt; address &lt;IP/掩码&gt; vlan &lt;N&gt;</code>（可合写一条）；IP routing 只要有任一 IP 接口绑定 VLAN 即激活。</li>
+<li>
+<ul>
+<li><strong>Loopback0</strong>：名字固定即 /32 环回口，不绑 VLAN、有任一 active VLAN 即恒 UP，创建即被 RIP/OSPF 宣告（BGP 除外）；作 NMS/RADIUS/NTP/sFlow 稳定源地址（ip service source-ip loopback0 &lt;应用&gt;）。</li>
+</ul>
+</li>
+<li>
+<ul>
+<li><strong>静态路由</strong>：<code>ip static-route 0.0.0.0/0 gateway &lt;下一跳&gt; metric N</code>；下一跳接口必须 up；静态默认优于动态；metric 定主备。</li>
+</ul>
+</li>
+<li>
+<ul>
+<li><strong>VRRP</strong>：VRID+虚拟 IP 共享，priority 大者为 master（默认 100）；虚拟 MAC 00-00-5E-00-01-{VRID} 保证切换不需终端重 ARP；track 策略可联动端口故障降优先级。</li>
+</ul>
+</li>
+<li>
+<ul>
+<li><strong>DHCP Relay</strong>：global 与 per-interface 两模式互斥，默认关闭，默认跳数 16、Option-82 格式 Base MAC。</li>
+</ul>
+</li>
+</ul>
 <h2 id="a1-lab">A1 · 书中案例（Lab 配置精要）</h2>
 <ul>
-<li><strong>VRRP 主备（p305-312）</strong>：6870/6860 各建 VRID 1（int_20，虚 IP 192.168.20.254）与 VRID 2（int_30，.30.254）。默认优先级同为 100 时比 router ID，6870 全 Master；客户端网关改 .254 后 arp -a 见 00-00-5E-00-01-01。改优先级三步：admin-state disable → priority 150 → enable，实现 6870 主 VLAN20、6860 主 VLAN30 的分担；重启 Master 演示 Backup 秒级接管（Become Master 计数 +1）。</li>
-<li><strong>DHCP Relay（p289-293）</strong>：先 show ip routes + ping 确认两核心可达服务器 192.168.100.102；两台分别 <code>ip dhcp relay destination 192.168.100.102</code> + <code>ip dhcp relay admin-state enable</code>（全局模式）；客户端改自动获取后 show ip dhcp relay statistics 的 Reception/Tx 计数增长验证。</li>
+<li>VRRP 主备（p305-312）：6870/6860 各建 VRID 1（int_20，虚 IP 192.168.20.254）与 VRID 2（int_30，.30.254）。</li>
+<li>默认优先级同为 100 时比 router ID，6870 全 Master；客户端网关改 .254 后 arp -a 见 00-00-5E-00-01-01。</li>
+<li>
+<p>改优先级三步：admin-state disable → priority 150 → enable，实现 6870 主 VLAN20、6860 主 VLAN30 的分担；
+重启 Master 演示 Backup 秒级接管（Become Master 计数 +1）。</p>
+</li>
+<li>
+<p>DHCP Relay（p289-293）：先 show ip routes + ping 确认两核心可达服务器 192.168.100.102；</p>
+</li>
+<li>两台分别 <code>ip dhcp relay destination 192.168.100.102</code> + <code>ip dhcp relay admin-state enable</code>（全局模式）；</li>
+<li>客户端改自动获取后 show ip dhcp relay statistics 的 Reception/Tx 计数增长验证；</li>
 </ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
@@ -90,20 +121,38 @@ blockquote p{margin:6px 0}
 <li>按流量条件改转发路径（PBR）→ qos-acl-policy。</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
-<p>IP 接口与环回：
-1. <code>ip interface int_20 address 192.168.20.7/24 vlan 20</code>。
-2. 管理地址：<code>ip interface Loopback0 address 10.0.0.1/32</code>；<code>ip service source-ip loopback0 &lt;应用&gt;</code>。
-3. <code>show ip interfaces</code> / <code>show ip routes</code>（LOCAL 网段即 VLAN 间路由）。
-静态路由（主备默认路由）：
-1. <code>ip static-route 0.0.0.0/0 gateway 1.1.1.1 metric 1</code>
-2. <code>ip static-route 0.0.0.0/0 gateway 2.2.2.2 metric 2</code>；show ip router database 可见 inactive 备路。
-VRRP：
-1. <code>ip vrrp 1 interface int_20</code> → <code>… address &lt;虚IP&gt;</code> →（可选）<code>… priority 150 preempt interval 100</code> → <code>… admin-state enable</code>。
-2. 跟踪：<code>ip vrrp track 3 admin-state enable priority 30 port 1/1/3</code> → <code>ip vrrp 1 interface int_20 track-association 3</code>。
-3. 验证：<code>show ip vrrp [statistics]</code>、终端 arp -a 查虚拟 MAC。
-DHCP Relay：
-1. <code>ip dhcp relay destination &lt;服务器IP&gt;</code> → <code>ip dhcp relay admin-state enable</code>（全局）；或 per-interface 模式（两者互斥）。
-2. <code>show ip dhcp relay statistics</code> 看收发计数。</p>
+<ul>
+<li>IP 接口与环回：1. <code>ip interface int_20 address 192.168.20.7/24 vlan 20</code>。</li>
+<li>
+<ol>
+<li>管理地址：<code>ip interface Loopback0 address 10.0.0.1/32</code>；<code>ip service source-ip loopback0 &lt;应用&gt;</code>。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li><code>show ip interfaces</code> / <code>show ip routes</code>（LOCAL 网段即 VLAN 间路由）。</li>
+</ol>
+</li>
+<li>静态路由（主备默认路由）：1. <code>ip static-route 0.0.0.0/0 gateway 1.1.1.1 metric 1</code>2. <code>ip static-route 0.0.0.0/0 gateway 2.2.2.2 metric 2</code>；
+show ip router database 可见 inactive 备路。</li>
+<li>VRRP：1. <code>ip vrrp 1 interface int_20</code> → <code>… address &lt;虚IP&gt;</code> →（可选）<code>… priority 150 preempt interval 100</code> → <code>… admin-state enable</code>。</li>
+<li>
+<ol>
+<li>跟踪：<code>ip vrrp track 3 admin-state enable priority 30 port 1/1/3</code> → <code>ip vrrp 1 interface int_20 track-association 3</code>。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>验证：<code>show ip vrrp [statistics]</code>、终端 arp -a 查虚拟 MAC。</li>
+</ol>
+</li>
+<li>DHCP Relay：1. <code>ip dhcp relay destination &lt;服务器IP&gt;</code> → <code>ip dhcp relay admin-state enable</code>（全局）；或 per-interface 模式（两者互斥）。</li>
+<li>
+<ol>
+<li><code>show ip dhcp relay statistics</code> 看收发计数。</li>
+</ol>
+</li>
+</ul>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>
 <li><strong>VRRP 优先级在实例运行中改无效</strong>：必须先 admin-state disable → 改 → enable（教材大写 Warning）。</li>

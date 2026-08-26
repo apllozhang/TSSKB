@@ -89,8 +89,14 @@ VRRP 用虚拟 MAC 提供网关冗余。</p>
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
-<li><strong>VC 进阶</strong>：Master 选举顺序为最高 priority → 最长 uptime（&gt;10min 差）→ 最小 chassis ID → 最小 MAC（ <code>&lt;span class="pg"&gt;原文p472&lt;/span&gt;</code> ）；分裂双检测：out-of-band RCD（走 EMP，原 Slave 关闭全部前面板口防 IP/MAC 冲突）+ in-band VSCP（需上游/下游 helper switch）（ <code>&lt;span class="pg"&gt;原文p476&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p477&lt;/span&gt;</code> ）；ISSU 逐台 slave 从低到高 chassis ID 依次重启升级（ <code>&lt;span class="pg"&gt;原文p478&lt;/span&gt;</code> ）。</li>
-<li><strong>STP 模式</strong>：flat（单实例）/ per-VLAN（OmniSwitch 默认）× STP(802.1d, 50s) / RSTP(802.1w, &lt;1s) / MSTP(802.1s)（ <code>&lt;span class="pg"&gt;原文p604&lt;/span&gt;</code> ）。</li>
+<li>VC 进阶：Master 选举顺序为最高 priority → 最长 uptime（&gt;10min 差）→ 最小 chassis ID → 最小 MAC（ <code>&lt;span class="pg"&gt;原文p472&lt;/span&gt;</code> ）；</li>
+<li>分裂双检测：out-of-band RCD（走 EMP，原 Slave 关闭全部前面板口防 IP/MAC 冲突）+ in-band VSCP（需上游/下游 helper switch）（ <code>&lt;span class="pg"&gt;原文p476&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p477&lt;/span&gt;</code> ）；</li>
+<li>
+<p>ISSU 逐台 slave 从低到高 chassis ID 依次重启升级（ <code>&lt;span class="pg"&gt;原文p478&lt;/span&gt;</code> ）；</p>
+</li>
+<li>
+<p><strong>STP 模式</strong>：flat（单实例）/ per-VLAN（OmniSwitch 默认）× STP(802.1d, 50s) / RSTP(802.1w, &lt;1s) / MSTP(802.1s)（ <code>&lt;span class="pg"&gt;原文p604&lt;/span&gt;</code> ）。</p>
+</li>
 <li><strong>负载分担哈希</strong>：brief 模式不含 UDP/TCP 端口，extended 含之、分流更均匀；6900/6465/6360 默认 brief，其余默认 extended（ <code>&lt;span class="pg"&gt;原文p583&lt;/span&gt;</code> ）。</li>
 <li><strong>LACP 细节</strong>：Dynamic（802.3ad LACPDU 协商）与 Static（仅 OmniSwitch 间）两种；actor admin key 仅本地有效（ <code>&lt;span class="pg"&gt;原文p576&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p588&lt;/span&gt;</code> ）。</li>
 <li><strong>VRRP 负载分担</strong>：双 VRID 各主一个 VLAN（VRID1 主 VLAN20、VRID2 主 VLAN30）；虚拟 MAC 00-00-5E-00-01-{VRID}，组播 224.0.0.18（ <code>&lt;span class="pg"&gt;原文p674&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p675&lt;/span&gt;</code> ）。</li>

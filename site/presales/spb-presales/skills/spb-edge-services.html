@@ -154,9 +154,19 @@ L3 路由叠加走 <code><a href="spb-l3-integration.html">spb-l3-integration</a
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
-<li>逐 SAP 列三张表：封装（Untagged/Tagged/QinQ + VLAN 映射）、控制帧处置（Tunnel/Drop/Peer）、QoS 信任模式（Trusted/Untrusted + CoS）。</li>
+<li>逐 SAP 列三张表：封装（Untagged/Tagged/QinQ + VLAN 映射）、控制帧处置（Tunnel/Drop/Peer）、QoS 信任模式（Trusted/Untrusted + CoS）。<ul>
+<li>
+<ol>
 <li>按业务选 BUM 模式：两点透明互联用 E-LINE；稀疏组播 Head-End + IGMP snooping；密集组播 Tandem（带宽紧选 S,G、表项紧选 *,G）。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>开局启用 LBD（桥口+业务接入口），配自动恢复定时器与告警，列入标准开局清单。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>

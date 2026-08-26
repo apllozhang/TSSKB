@@ -77,12 +77,7 @@ blockquote p{margin:6px 0}
 <li>互联口上希望 VLAN 成员随对端自动声明/撤销（MVRP），不想手工配两边 trunk</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>VLAN 演进框架（F17， <code>&lt;span class="pg"&gt;原文p115&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p1606&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p583&lt;/span&gt;</code> ）：标准 VLAN→802.1Q trunk→PVLAN（子域隔离）→VLAN Stacking/QinQ（运营商隧道）→VXLAN/EVI（数据中心叠加）→EVPN（控制面化），按规模与隔离需求逐级选用。</li>
-<li>基本模型：端口只能属于一个 untagged VLAN（默认 VLAN）+任意多个 tagged VLAN；VLAN 在有活动端口前 oper 状态一直是 inactive（P31/P34， <code>&lt;span class="pg"&gt;原文p115, 118&lt;/span&gt;</code> ）。</li>
-<li>QinQ 的隧道 ID 与 VLAN ID 一一对应，"tunnel and VLAN are interchangeable terms"（P192， <code>&lt;span class="pg"&gt;原文p1608&lt;/span&gt;</code> ）。</li>
-<li>MVRP 是 MRP 应用，动态声明/撤销 VLAN 成员，学到的动态 VLAN 所有端口都是 tagged（P83/P84， <code>&lt;span class="pg"&gt;原文p442&lt;/span&gt;</code> ）。</li>
-</ul>
+<p>VLAN 演进框架（F17， <code>&lt;span class="pg"&gt;原文p115&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p1606&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p583&lt;/span&gt;</code> ）：标准 VLAN→802.1Q trunk→PVLAN（子域隔离）→VLAN Stacking/QinQ（运营商隧道）→VXLAN/EVI（数据中心叠加）→EVPN（控制面化），按规模与隔离需求逐级选用。基本模型：端口只能属于一个 untagged VLAN（默认 VLAN）+任意多个 tagged VLAN；VLAN 在有活动端口前 oper 状态一直是 inactive（P31/P34， <code>&lt;span class="pg"&gt;原文p115, 118&lt;/span&gt;</code> ）。QinQ 的隧道 ID 与 VLAN ID 一一对应，"tunnel and VLAN are interchangeable terms"（P192， <code>&lt;span class="pg"&gt;原文p1608&lt;/span&gt;</code> ）。MVRP 是 MRP 应用，动态声明/撤销 VLAN 成员，学到的动态 VLAN 所有端口都是 tagged（P83/P84， <code>&lt;span class="pg"&gt;原文p442&lt;/span&gt;</code> ）。</p>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>普通隔离选标准 VLAN + 802.1Q</strong>：单链多 VLAN 用 tagged 口（P32/P33：入向分类规则，带 tag 必须匹配端口默认 VLAN 或已打标 VLAN 否则丢弃， <code>&lt;span class="pg"&gt;原文p118&lt;/span&gt;</code> ）</li>

@@ -71,15 +71,41 @@ blockquote p{margin:6px 0}
 <h2 id="i">I · 方法论骨架</h2>
 <ol>
 <li><strong>Usage 模板定骨架</strong>：向导选 Usage = 选安全模板（Guest=Open/MAC+门户；Employee BYOD=802.1X+BYOD 注册；Enterprise for Employees=纯 802.1X；Protected=PSK+可选门户），再逐步微调。</li>
-<li><strong>必填项清单</strong>：Enterprise 级 AAA Profile 必填（加密六选一至 WPA3_AES）；Personal 级 Passphrase+Key Format 必填（含 WPA3_SAE_AES）；Default Access Role Profile（承载 QoS/门户/带宽并映射 VLAN）一律必填。</li>
-<li><strong>认证源三级</strong>：UPAM 本地库 → 企业 AD（LDAP/AD Configuration 两步切换）→ 外部 RADIUS。</li>
-<li><strong>限速四层判定</strong>（从细到粗）：DPI 应用规则 → ACL 规则 → 用户级 Access Role → SSID 共享；配置入口分别在 Unified Policy Policy List / Advanced Access Role / Advanced WLAN Service。</li>
-<li><strong>变更闭环三步</strong>：改配置 → Apply/Notify 推送 → 受影响客户端断开重连强制重认证（策略只在认证瞬间应用）。</li>
+<li>
+<p>必填项清单：Enterprise 级 AAA Profile 必填（加密六选一至 WPA3_AES）；</p>
+<ul>
+<li>Personal 级 Passphrase+Key Format 必填（含 WPA3_SAE_AES）；</li>
+<li>Default Access Role Profile（承载 QoS/门户/带宽并映射 VLAN）一律必填；</li>
+</ul>
+</li>
+<li>
+<p>认证源三级：UPAM 本地库 → 企业 AD（LDAP/AD Configuration 两步切换）→ 外部 RADIUS。</p>
+<ul>
+<li>
+<ol>
+<li>限速四层判定（从细到粗）：DPI 应用规则 → ACL 规则 → 用户级 Access Role → SSID 共享；
+配置入口分别在 Unified Policy Policy List / Advanced Access Role / Advanced WLAN Service。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>变更闭环三步：改配置 → Apply/Notify 推送 → 受影响客户端断开重连强制重认证（策略只在认证瞬间应用）。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="a1-lab">A1 · 书中案例（Lab 精要）</h2>
 <ul>
-<li><strong>c03 员工 SSID</strong>：EmployeesX，Usage 选 Enterprise Network for Employees，WPA3_AES + UPAMRadiusServer，默认 VLAN 20；客户端 PEAP/MSCHAPv2（不校验 CA）接入。Expert 模式等价七对象：WLAN Service → AAA Server Profile → Access Role Profile（Apply to Devices 映射 VLAN）→ Authentication Strategy → Access Policy（条件 SSID=xxx）→ 部署。AP 侧排障：<code>cat wlanservice.conf</code> / <code>AAA_server.conf</code> 核对 RADIUS 参数，<code>tcpdump -i br-wan host &lt;radiusIP&gt;</code> 抓认证报文。</li>
-<li><strong>c04 对接 AD</strong>：UPAM &gt; SETTINGS &gt; LDAP/AD Configuration 填 Server Type=AD、NETBIOS/DNS 域名、域控 IP、绑定账号、端口 389，Test Connection 后 Apply；再把 SSID 的 Authentication Strategy 从本地库改 External LDAP/AD。</li>
+<li>c03 员工 SSID：EmployeesX，Usage 选 Enterprise Network for Employees，WPA3_AES + UPAMRadiusServer，默认 VLAN 20；
+客户端 PEAP/MSCHAPv2（不校验 CA）接入。</li>
+<li>Expert 模式等价七对象：WLAN Service → AAA Server Profile → Access Role Profile（Apply to Devices 映射 VLAN）→ Authentication Strategy → Access Policy（条件 SSID=xxx）→ 部署。</li>
+<li>
+<p>AP 侧排障：<code>cat wlanservice.conf</code> / <code>AAA_server.conf</code> 核对 RADIUS 参数，<code>tcpdump -i br-wan host &lt;radiusIP&gt;</code> 抓认证报文。</p>
+</li>
+<li>
+<p><strong>c04 对接 AD</strong>：UPAM &gt; SETTINGS &gt; LDAP/AD Configuration 填 Server Type=AD、NETBIOS/DNS 域名、域控 IP、绑定账号、端口 389，Test Connection 后 Apply；再把 SSID 的 Authentication Strategy 从本地库改 External LDAP/AD。</p>
+</li>
 <li><strong>c05 访客门户</strong>：GuestsX 启用 OV-UPAM 门户；重定向验证用 http://非HTTPS URL；KickOff 踢线可重连、Add to Blocklist 拉黑不可重连。</li>
 <li><strong>c06 WCF</strong>：AP Group 激活 WCF → UPAM 建 WCF-guests（Social Networking/Gambling=Reject）→ 绑到 __GuestsX 角色档案 → <strong>Apply to Devices</strong>（否则只改在服务器本地）。原理：AP 窥探 DNS 取 FQDN → Brightcloud 分类 → 生成针对解析 IP 的阻断 ACL。</li>
 <li><strong>c07 BYOD 动态 VLAN</strong>：不建新 VLAN——预认证落 Guest VLAN 30，门户认证（Post Portal Authentication Enforcement 设 Fixed Access Role=_EmployeesX）后动态迁到 Employee VLAN 20。</li>
@@ -93,14 +119,44 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
-<li>向导建 SSID：服务名 + 空口名（可多服务共用）→ 选 Usage 模板 → 频段/加密/PSK/默认 VLAN/认证策略 → 绑 AP Group（可调度广播时段）。</li>
+<li>向导建 SSID：服务名 + 空口名（可多服务共用）→ 选 Usage 模板 → 频段/加密/PSK/默认 VLAN/认证策略 → 绑 AP Group（可调度广播时段）。<ul>
+<li>
+<ol>
 <li>802.1X：AAA Profile 选 UPAMRadiusServer（内嵌 UPAM）或外部；建员工账号或接 AD。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>接 AD：UPAM LDAP/AD Configuration 填域信息 → Test Connection → Apply → SSID 认证策略切 External LDAP/AD。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>访客：启用 OV-UPAM 门户 + Guest 账号（注意有效期）；管理动作用 KickOff/Blocklist。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>WCF：AP Group 激活+Commit → 建档案 → 绑角色 → Apply to Devices；前置检查 OV2500 DNS。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>BYOD：Post Portal Enforcement 设员工角色，默认 VLAN 放访客段，靠动态迁移。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>限速：按四层判定选入口配置（DPI/ACL → Access Role → SSID 共享）。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>每次改完：Apply to Devices/Notify All → 客户端断开重连验证。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>

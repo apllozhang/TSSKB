@@ -75,10 +75,8 @@ blockquote p{margin:6px 0}
 <li>每台设备派发独立 PSK（Device Specific PSK）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>SSIDs 应用是一步式配置模型：创建 SSID 时自动派生并联动创建 Access Role Profile/Access Policy/Authentication Strategy/Guest/BYOD Access Strategy/AAA Server Profile/Tunnel Profile/Global Configuration（以 SSID 派生名命名）。</li>
-<li>五种 Usage 预设决定认证形态；SSID 也可在 WLAN Service (Expert) 里配，两种入口的编辑权随 Origin 而定。</li>
-</ul>
+<p>SSIDs 应用是一步式配置模型：创建 SSID 时自动派生并联动创建 Access Role Profile/Access Policy/Authentication Strategy/Guest/BYOD Access Strategy/AAA Server Profile/Tunnel Profile/Global Configuration（以 SSID 派生名命名）。五种 Usage 预设决定认证形态；
+SSID 也可在 WLAN Service (Expert) 里配，两种入口的编辑权随 Origin 而定。</p>
 <h2 id="a1">A1（行动框架）</h2>
 <p>Usage 预设选型（principles·P195， <code>&lt;span class="pg"&gt;原文p861-863&lt;/span&gt;</code> ）：
 1. <strong>Guest Network</strong>：Open + Captive Portal（CP 二选 OV-UPAM / External）
@@ -89,13 +87,37 @@ blockquote p{margin:6px 0}
 约束：SSID ≤31 字符；一屏最多 15 个 SSID；Usage 与 Authentication Strategy 不匹配的 SSID 不能编辑。</p>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>安全等级矩阵</strong>（principles·P175， <code>&lt;span class="pg"&gt;原文p649-655&lt;/span&gt;</code> ）：Open / Enhanced Open（OWE；Transition Mode 双 BSSID 兼容旧客户端，仅 AWOS 4.0.8+）/ Enterprise（DYNAMIC_WEP~WPA3_AES256 六种）/ Personal（STATIC_WEP~WPA3_PSK_SAE_AES 七种）；PMF 三态 Disabled/Optional/Required；Hotspot 2.0 仅 Enterprise WPA2_AES/WPA3_AES256</li>
-<li><strong>6GHz 规则</strong>：Enhanced Open 在 6GHz 强制启用且不可关；6GHz SSID 的 2.4/5G 自动继承 WPA3_SAE_AES，开 Backward Compatibility 后用混合 WPA3_PSK_SAE_AES（MLO 含 6GHz 时自动禁用）（principles·P175/P196， <code>&lt;span class="pg"&gt;原文p649-655, 864-874&lt;/span&gt;</code> ）</li>
+<li>安全等级矩阵（principles·P175， <code>&lt;span class="pg"&gt;原文p649-655&lt;/span&gt;</code> ）：Open / Enhanced Open（OWE；</li>
+<li>
+<p>Transition Mode 双 BSSID 兼容旧客户端，仅 AWOS 4.0.8+）/ Enterprise（DYNAMIC_WEP~WPA3_AES256 六种）/ Personal（STATIC_WEP~WPA3_PSK_SAE_AES 七种）；</p>
+</li>
+<li>
+<p>PMF 三态 Disabled/Optional/Required；</p>
+</li>
+<li>
+<p>Hotspot 2.0 仅 Enterprise WPA2_AES/WPA3_AES256；</p>
+</li>
+<li>
+<p><strong>6GHz 规则</strong>：Enhanced Open 在 6GHz 强制启用且不可关；6GHz SSID 的 2.4/5G 自动继承 WPA3_SAE_AES，开 Backward Compatibility 后用混合 WPA3_PSK_SAE_AES（MLO 含 6GHz 时自动禁用）（principles·P175/P196， <code>&lt;span class="pg"&gt;原文p649-655, 864-874&lt;/span&gt;</code> ）</p>
+</li>
 <li><strong>WPA3 兼容回退</strong>：WPA3_AES256 不支持的 AP 自动回退 WPA2_AES（AP1101 全频段、AP1201H 2.4G 不支持）；AUTO_WPA_WPA2 混合模式两谱系均可用（principles·P196， <code>&lt;span class="pg"&gt;原文p864-874&lt;/span&gt;</code> ）</li>
-<li><strong>Device Specific PSK</strong>：每台设备按 MAC 派发不同 PSK，须同时在 SSIDs/WLAN Service (Expert) 与设备上启用；仅配 UPAM RADIUS：Prefer（无 AES-CBC-128 属性时用 SSID key）/Force（恒用 AAA 返回值，隐藏 Private Group PSK 配置）；可打印 PSK 或二维码（principles·P179/P196， <code>&lt;span class="pg"&gt;原文p697-702, 864-874&lt;/span&gt;</code> ）</li>
-<li><strong>Private Group PSK (PPSK)</strong>：按不同口令分组建组入不同 Access Role Profile；每 SSID ≤16 条 Entry，单 AP 全部 SSID 合计 ≤64 条；Entry 名与口令均不可重复（principles·P196， <code>&lt;span class="pg"&gt;原文p864-874&lt;/span&gt;</code> ）</li>
-<li><strong>WLAN Service 无线参数默认值</strong>：Max Clients Per Band 1-128 默认 64；最小客户端速率建议 2.4G=12、5G=24；Broadcast Key Rotation 默认 15 分钟；802.1p/DSCP 映射（Voice 上行 6/下行 6,7、Video 上 4/下 4,5）（principles·P165， <code>&lt;span class="pg"&gt;原文p603-606&lt;/span&gt;</code> ）</li>
-<li><strong>TLS RADIUS</strong>：选 TLS 服务器的 SSID 生成 AAA 仅含 802.1X 主服务器；TLS 服务器不支持 CP/MAC 认证；自动生成的 AAA Profile 与 SSID 同名——要换 RADIUS 应改 SSID 而非直接改该 Profile（principles·P196）</li>
+<li>Device Specific PSK：每台设备按 MAC 派发不同 PSK，须同时在 SSIDs/WLAN Service (Expert) 与设备上启用；</li>
+<li>仅配 UPAM RADIUS：Prefer（无 AES-CBC-128 属性时用 SSID key）/Force（恒用 AAA 返回值，隐藏 Private Group PSK 配置）；</li>
+<li>
+<p>可打印 PSK 或二维码（principles·P179/P196， <code>&lt;span class="pg"&gt;原文p697-702, 864-874&lt;/span&gt;</code> ）；</p>
+</li>
+<li>
+<p><strong>Private Group PSK (PPSK)</strong>：按不同口令分组建组入不同 Access Role Profile；每 SSID ≤16 条 Entry，单 AP 全部 SSID 合计 ≤64 条；Entry 名与口令均不可重复（principles·P196， <code>&lt;span class="pg"&gt;原文p864-874&lt;/span&gt;</code> ）</p>
+</li>
+<li>WLAN Service 无线参数默认值：Max Clients Per Band 1-128 默认 64；</li>
+<li>最小客户端速率建议 2.4G=12、5G=24；</li>
+<li>Broadcast Key Rotation 默认 15 分钟；</li>
+<li>
+<p>802.1p/DSCP 映射（Voice 上行 6/下行 6,7、Video 上 4/下 4,5）（principles·P165， <code>&lt;span class="pg"&gt;原文p603-606&lt;/span&gt;</code> ）；</p>
+</li>
+<li>
+<p><strong>TLS RADIUS</strong>：选 TLS 服务器的 SSID 生成 AAA 仅含 802.1X 主服务器；TLS 服务器不支持 CP/MAC 认证；自动生成的 AAA Profile 与 SSID 同名——要换 RADIUS 应改 SSID 而非直接改该 Profile（principles·P196）</p>
+</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>

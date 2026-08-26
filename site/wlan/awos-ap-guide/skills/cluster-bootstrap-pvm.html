@@ -72,10 +72,24 @@ blockquote p{margin:6px 0}
 <h2 id="i">I · 方法论骨架</h2>
 <p>开局三部曲：<strong>物理接入 → 初始化向导 → 组管理入口固化</strong>。</p>
 <ol>
-<li>组网前提先行核对：同 VLAN、同 cluster ID（默认 100）、≤255 台（低端机型当 PVM 时 ≤32 台）。</li>
+<li>组网前提先行核对：同 VLAN、同 cluster ID（默认 100）、≤255 台（低端机型当 PVM 时 ≤32 台）。<ul>
+<li>
+<ol>
 <li>一次只上一台 AP 完成向导，再逐台加入同步。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>向导后用 GMIP（默认 10.0.0.1）替代漂移的 DHCP 地址做长期管理入口。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>PVM/SVM 由机型优先级链 + MAC 最大者自动选举，可预判、也可手动 "Update to PVM" 干预。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="a1">A1 · 书中案例</h2>
 <ul>
@@ -93,15 +107,50 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
-<li>核对组网前提：全部 AP 同 VLAN、同 cluster ID（默认 100）、机型容量满足 255/32 分级。</li>
+<li>核对组网前提：全部 AP 同 VLAN、同 cluster ID（默认 100）、机型容量满足 255/32 分级。<ul>
+<li>
+<ol>
 <li>按机型优先级链预判 PVM；混入 AP1201 时若被选为 PVM，手动把 AP1220/1230/1251 提升为 PVM。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>单台 AP 上电，终端连预置 SSID <code>mywifi-xxxx</code>，访问 http://mywifi.al-enterprise.com:8080（或 http://AP-IP:8080）。</li>
-<li>走完五步向导：改管理员密码（默认 admin）→ 国家码/时区（-RW 机型）→ 建 WLAN。全程终端不得离开 mywifi-xxxx。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>走完五步向导：改管理员密码（默认 admin）→ 国家码/时区（-RW 机型）→ 建 WLAN。</li>
+</ol>
+</li>
+<li>全程终端不得离开 mywifi-xxxx。</li>
+<li>
+<ol>
 <li>向导完成后补 VLAN 映射（向导阶段不可配，走 "Modify Your WLAN"）。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>规划 GMIP：从 AP 网段选空闲 IP（默认 10.0.0.1），确保管理终端可路由，此后统一用 http://GMIP:8080 管理。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>改密清单：Web Administrator/Viewer/GuestOperator + CLI root 与 support（root 凭据由 AP 生成、仅客户持有）。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>逐台插入其余 AP 等待配置同步。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>双上行机型：上游交换机确认 LACP；AP1351/AP1451 Class 7 需 802.3bt 交换机 + PoE 固件 3.XX。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>

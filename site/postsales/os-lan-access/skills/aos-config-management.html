@@ -72,12 +72,31 @@ blockquote p{margin:6px 0}
 <p>"sw7 (OS6860-A) -&gt; write memory / -&gt; copy running certified / -&gt; write memory flash-synchro = write memory + copy running certified"（p70-71）</p>
 <p>"IF THE OMNISWITCH IS REBOOTED WITH THE 'RELOAD ALL' COMMAND, IT WILL REBOOT FROM THE CERTIFIED DIRECTORY, NO MATTER WHAT THE CONTENT OF THE RUNNING DIRECTORY IS."（p81）</p>
 <h2 id="i">I · 方法论骨架</h2>
-<p>AOS 用"目录式配置"而非单一 startup-config：
-- <strong>三个候选启动目录</strong>：certified（认证基线）、working（测试暂存）、user-defined（用户自建，可多套）。每个目录 = AOS 镜像 + vcboot.cfg（启动配置）+ vcsetup.cfg（VC 参数）三件套。
-- <strong>running configuration</strong> 在 RAM：启动目录内容 + 未保存改动。改动立即生效但重启即丢。
-- <strong>保存语义层级</strong>：write memory（RAM→running 目录）→ copy running certified（固化基线）→ write memory flash-synchro（一步做两件事）。
-- <strong>回滚即重启</strong>：冷启动时比较 running 目录与 certified 的镜像+vcboot.cfg，不一致自动回退 certified。
-- 判断状态看 <code>show running-directory</code>：NOT SYNCHRONIZED / CERTIFY NEEDED / CERTIFIED。</p>
+<ul>
+<li>AOS 用"目录式配置"而非单一 startup-config：- <strong>三个候选启动目录</strong>：certified（认证基线）、working（测试暂存）、user-defined（用户自建，可多套）。</li>
+<li>每个目录 = AOS 镜像 + vcboot.cfg（启动配置）+ vcsetup.cfg（VC 参数）三件套。</li>
+<li>
+<ul>
+<li><strong>running configuration</strong> 在 RAM：启动目录内容 + 未保存改动。</li>
+</ul>
+</li>
+<li>改动立即生效但重启即丢。</li>
+<li>
+<ul>
+<li><strong>保存语义层级</strong>：write memory（RAM→running 目录）→ copy running certified（固化基线）→ write memory flash-synchro（一步做两件事）。</li>
+</ul>
+</li>
+<li>
+<ul>
+<li><strong>回滚即重启</strong>：冷启动时比较 running 目录与 certified 的镜像+vcboot.cfg，不一致自动回退 certified。</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>判断状态看 <code>show running-directory</code>：NOT SYNCHRONIZED / CERTIFY NEEDED / CERTIFIED。</li>
+</ul>
+</li>
+</ul>
 <h2 id="a1-lab">A1 · 书中案例（Lab 配置精要）</h2>
 <p>Lab 目录全流程（p79-88）：建 VLAN 2/3/99（只在 RAM）→ show running-directory 见 NOT SYNCHRONIZED → write memory 变 CERTIFY NEEDED → reload all 回退 certified、VLAN 全丢 → reload from working 找回 → certified 模式下 write memory 报错 "Write memory is not permitted when switch is running in certified mode" → mkdir lab + cp working/<em>.</em> lab（boot.md5 Permission denied 可忽略）→ reload from lab no rollback-timeout → copy running certified 固化。附 USB 备份：usb enable → usb backup admin-state enable → write memory flash-synchro（拔 U 盘前必须 usb disable）。</p>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
@@ -88,14 +107,40 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
-<li>改动前：<code>show running-directory</code> 确认当前运行目录与 Certify/Restore Status。</li>
+<li>改动前：<code>show running-directory</code> 确认当前运行目录与 Certify/Restore Status。<ul>
+<li>
+<ol>
 <li>改配置（RAM 立即生效）。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>保存：<code>write memory</code>（写回 running 目录）。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>验证通过后固化：<code>copy running certified</code>；或一步到位 <code>write memory flash-synchro</code>。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>想测试新目录：<code>reload from &lt;目录名&gt; no rollback-timeout</code>，绝不用 <code>reload all</code>。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>备份：configuration backup 命令生成 configuration_backup.tar（/flash/config-backup-recovery，上限 10 份）；
 或 usb backup admin-state enable [key …]。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>user 目录操作：mkdir <name> → cp working/<em>.</em> <name> → reload from <name>。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>

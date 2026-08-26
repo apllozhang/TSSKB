@@ -72,16 +72,40 @@ blockquote p{margin:6px 0}
 </blockquote>
 <h2 id="i">I · 方法论骨架</h2>
 <ol>
-<li><strong>Guest 工作流</strong>：Guest Usage 建 SSID → 勾强制门户 → 认证选 RADIUS（内置 UPAMRadiusServer）→ 建 Guest 账号（可配数据配额）→ Guest Access Strategy 定登录方式与 Post Portal 角色 → 绑 Guest VLAN。</li>
-<li><strong>带宽四级判定链</strong>（细→粗）：DPI 应用规则 → ACL 规则 → Access Role 按用户 → SSID 射频共享；设计限速按此反推放哪层。</li>
-<li><strong>User Role = Policy List</strong>：有序规则（Accept/Drop、限速、802.1p/DSCP、DPI），双向执行；来源 RADIUS 或 Access Role Profile 默认。</li>
-<li><strong>WCF 链路</strong>：AP DNS 嗅探 → OV2500（Brightcloud）查类目 → 回发 AP 生成阻断 ACL 本地拦截；Profile 绑 Access Role（一对一）。</li>
-<li><strong>UPAM 边界</strong>：Guest/BYOD 许可均按接入设备数计，与账号数无关。</li>
+<li>Guest 工作流：Guest Usage 建 SSID → 勾强制门户 → 认证选 RADIUS（内置 UPAMRadiusServer）→ 建 Guest 账号（可配数据配额）→ Guest Access Strategy 定登录方式与 Post Portal 角色 → 绑 Guest VLAN。<ul>
+<li>
+<ol>
+<li>带宽四级判定链（细→粗）：DPI 应用规则 → ACL 规则 → Access Role 按用户 → SSID 射频共享；设计限速按此反推放哪层。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>User Role = Policy List：有序规则（Accept/Drop、限速、802.1p/DSCP、DPI），双向执行；来源 RADIUS 或 Access Role Profile 默认。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>WCF 链路：AP DNS 嗅探 → OV2500（Brightcloud）查类目 → 回发 AP 生成阻断 ACL 本地拦截；Profile 绑 Access Role（一对一）。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>UPAM 边界：Guest/BYOD 许可均按接入设备数计，与账号数无关。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="a1-lab">A1 · 书中案例（Lab 精要）</h2>
 <ul>
-<li>c07：建 GuestsX（Usage=Guest Network、OV-UPAM 门户、VLAN 30），访客 Guest/password；客户端访问任意非 HTTPS URL（http://2.2.2.2）触发门户重定向。管控：UPAM &gt; Guest Device 踢线 KickOff；WLAN &gt; Client List 拉黑 Blocklist。</li>
-<li>c08：Unified Policy 拒 telnet/SSH——建 Service Group（TCP23/22）→ Policy 动作 QoS Disposition=DROP → Policy List 顺序 DeniedServ + OV-L3-AcceptAllPolicy → 塞进访客角色 __GuestsX → Apply to Devices（VLAN 30，OS6870+APGX）。</li>
+<li>c07：建 GuestsX（Usage=Guest Network、OV-UPAM 门户、VLAN 30），访客 Guest/password；</li>
+<li>客户端访问任意非 HTTPS URL（http://2.2.2.2）触发门户重定向。管控：UPAM &gt; Guest Device 踢线 KickOff；</li>
+<li>
+<p>WLAN &gt; Client List 拉黑 Blocklist；</p>
+</li>
+<li>
+<p>c08：Unified Policy 拒 telnet/SSH——建 Service Group（TCP23/22）→ Policy 动作 QoS Disposition=DROP → Policy List 顺序 DeniedServ + OV-L3-AcceptAllPolicy → 塞进访客角色 __GuestsX → Apply to Devices（VLAN 30，OS6870+APGX）。</p>
+</li>
 <li>c09：WCF-guests 拒 Social Networking 与 Gambling 类目，绑 __GuestsX 后必须 Apply to Devices 才推到 AP；google.com 通、facebook.com 拒。</li>
 </ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
@@ -91,13 +115,39 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
-<li>建 Guest VLAN（如 VLAN 30），核心交换机配 IP 接口。</li>
+<li>建 Guest VLAN（如 VLAN 30），核心交换机配 IP 接口。<ul>
+<li>
+<ol>
 <li>向导建 GuestsX：Usage=Guest Network，勾 Captive Portal（类型 OV-UPAM），频段 2.4+5。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>Manage Guest Accounts 建访客账号（可设 Data Quota 与有效期）。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>Guest Access Strategy：门户页、登录方式（账密/接入码/条款）、Post Portal 角色；默认 VLAN 30，绑 AP Group。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>限速设计：访客按人限速放 Access Role 级；SSID 级做整体兜底；精确应用用 DPI 规则。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>策略限制：Unified Policy 建条件（如 L4 Services）+动作（DROP/限速/标记）→ 组 Policy List（拒绝规则在前、AcceptAll 兜底）→ 绑 Access Role Profile → Apply to Devices → Notify All。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>WCF：AP Group 勾启用 WCF → 建 WCF Profile 设类目 Reject → 绑访客角色 → Apply to Devices → 验证 Profile 页运行状态为 in service。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>

@@ -67,11 +67,10 @@ blockquote p{margin:6px 0}
 <li>扩展模块（OS68-XNI/VNI/QNI/CNI、6870 CNI/LNI、9900 板卡）选件核对</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>兼容矩阵平台分型框架（F3， <code>&lt;span class="pg"&gt;原文p75-107&lt;/span&gt;</code> ）：全谱系型（6860N/6870/6900-X：1G~200G 全列）／上联收窄型（6560：1G+10G+40G-SR/AOC；6570M：+25G）／工业型（6465/6865/6575 用 iSFP PN 体系）／40G+ 专用型（6920 只有 QSFP；V72/C32 无 1G）／板卡拼图型（9900/6860N 按板卡逐列）。</li>
-<li>矩阵单元格语义=该平台支持该模块的最低 AOS 版本；"or"双值为硬件代次分界（前者老硬件、后者新硬件修订，满足其一即可，P30）。</li>
-<li>同一模块跨平台最低版本差异大（如 100G-SR4：6860N 8.7R2 / 6900 8.5R2 / 6870 8.10R2 / 6920 8.10R4），多平台混采按最高版本对齐。</li>
-</ul>
+<p>兼容矩阵平台分型框架（F3， <code>&lt;span class="pg"&gt;原文p75-107&lt;/span&gt;</code> ）：全谱系型（6860N/6870/6900-X：1G~200G 全列）／上联收窄型（6560：1G+10G+40G-SR/AOC；6570M：+25G）／工业型（6465/6865/6575 用 iSFP PN 体系）／40G+ 专用型（6920 只有 QSFP；V72/C32 无 1G）／板卡拼图型（9900/6860N 按板卡逐列）。矩阵单元格语义=该平台支持该模块的最低 AOS 版本；"or"双值为硬件代次分界（前者老硬件、后者新硬件修订，满足其一即可，P30）。同一模块跨平台最低版本差异大（如 100G-SR4：6860N 8.7R2：
+- 6900 8.5R2
+- 6870 8.10R2
+- 6920 8.10R4），多平台混采按最高版本对齐。</p>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>查矩阵定"支持 + 最低版本"</strong>：平台列 × 模块行，单元格 N/S 即换模块或换平台</li>
@@ -85,11 +84,38 @@ blockquote p{margin:6px 0}
 <li><strong>6920</strong>：只认 40G 及以上——全部 SFP/SFP+/SFP28 与 50G SFP56 均 N/S，仅 QSFP+/QSFP28/QSFP56/QSFP-DD 可用（8.10R4 起）；400G 全系仅 6920（X10/X19， <code>&lt;span class="pg"&gt;原文p103-104&lt;/span&gt;</code> ）</li>
 <li><strong>6900-V72/C32/C32E</strong>：不支持任何 1G/100FX SFP；10G SFP 仅 V72 支持（X11， <code>&lt;span class="pg"&gt;原文p97-98&lt;/span&gt;</code> ）</li>
 <li><strong>6900 整机</strong>：每机箱 SFP-10G-T 上限 38 只（X7， <code>&lt;span class="pg"&gt;原文p102&lt;/span&gt;</code> ）</li>
-<li><strong>6560</strong>：不支持 40G LR/ER/CLR/PSM4/LM4 光模块与 QSFP-4X10G 拆分（仅 SR/AOC/VFL 用 DAC）；LRM 仅 48X4/P48X4 口 49-50（需 PERF 许可）与 51/52、P48Z16(904044-90) 49-52、X10 口 1-8；C7M 排除 (P)24Z24/24Z8/24X4 与 48X4 口 53/54；X10 整机不支持 40G DAC（X2/X3/X12， <code>&lt;span class="pg"&gt;原文p81-82&lt;/span&gt;</code> ）</li>
-<li><strong>6860 系</strong>：上行口 SFP-GIG-T 只跑 1G（用户口 1-28 支持 10/100/1000）；U28 上 DUAL 系列仅用户口 100/1000、SFP-10G-GIG-SR/LR 不支持 U28 的 1G 用户口；DUAL/100 系列主型 N/S 而 U28 支持（X4/X5/X13， <code>&lt;span class="pg"&gt;原文p87-89&lt;/span&gt;</code> ）</li>
-<li><strong>6860N</strong>：SFP28 口 SFP-GIG-T/SFP-1G-T 不支持；DUAL-BX/SFP-100 系列在 SFP28 口仅 1G；SFP-10G-T 在 SFP28 口支持 1G+10G；25G 模块在 OS68-XNI-U4 扩展卡上 N/S（仅主板 SFP28）；100/DUAL 系列 P24Z/P48Z 不支持——同家族清单不通用（X6/X33/X34， <code>&lt;span class="pg"&gt;原文p90-92&lt;/span&gt;</code> ）</li>
-<li><strong>6870</strong>：P24M/P48M（万兆铜主机型）不支持任何 1G/100 SFP——1G 接入靠 P24Z/48/V12；SFP-50G 系列仅 LNI-U6（8.10R2）；QSFP-200G 仅 P24M/P48M/V12 上联口（24/48/P24Z/P48Z 数据口不支持）（X16/X17/X18， <code>&lt;span class="pg"&gt;原文p94-96&lt;/span&gt;</code> ）</li>
-<li><strong>6360</strong>：10G 口位因型号而异（P10 11-12/P24 25-28/P48 49-52…），另一组口位适用 XGS-PON ONT——插错口位不识别（X8， <code>&lt;span class="pg"&gt;原文p76&lt;/span&gt;</code> ）</li>
+<li>6560：不支持 40G LR/ER/CLR/PSM4/LM4 光模块与 QSFP-4X10G 拆分（仅 SR/AOC/VFL 用 DAC）；</li>
+<li>LRM 仅 48X4/P48X4 口 49-50（需 PERF 许可）与 51/52、P48Z16(904044-90) 49-52、X10 口 1-8；</li>
+<li>C7M 排除 (P)24Z24/24Z8/24X4 与 48X4 口 53/54；</li>
+<li>
+<p>X10 整机不支持 40G DAC（X2/X3/X12， <code>&lt;span class="pg"&gt;原文p81-82&lt;/span&gt;</code> ）；</p>
+</li>
+<li>
+<p>6860 系：上行口 SFP-GIG-T 只跑 1G（用户口 1-28 支持 10/100/1000）；</p>
+</li>
+<li>U28 上 DUAL 系列仅用户口 100/1000、SFP-10G-GIG-SR/LR 不支持 U28 的 1G 用户口；</li>
+<li>
+<p>DUAL/100 系列主型 N/S 而 U28 支持（X4/X5/X13， <code>&lt;span class="pg"&gt;原文p87-89&lt;/span&gt;</code> ）；</p>
+</li>
+<li>
+<p>6860N：SFP28 口 SFP-GIG-T/SFP-1G-T 不支持；</p>
+</li>
+<li>DUAL-BX/SFP-100 系列在 SFP28 口仅 1G；</li>
+<li>SFP-10G-T 在 SFP28 口支持 1G+10G；</li>
+<li>25G 模块在 OS68-XNI-U4 扩展卡上 N/S（仅主板 SFP28）；</li>
+<li>
+<p>100/DUAL 系列 P24Z/P48Z 不支持——同家族清单不通用（X6/X33/X34， <code>&lt;span class="pg"&gt;原文p90-92&lt;/span&gt;</code> ）；</p>
+</li>
+<li>
+<p>6870：P24M/P48M（万兆铜主机型）不支持任何 1G/100 SFP——1G 接入靠 P24Z/48/V12；</p>
+</li>
+<li>SFP-50G 系列仅 LNI-U6（8.10R2）；</li>
+<li>
+<p>QSFP-200G 仅 P24M/P48M/V12 上联口（24/48/P24Z/P48Z 数据口不支持）（X16/X17/X18， <code>&lt;span class="pg"&gt;原文p94-96&lt;/span&gt;</code> ）；</p>
+</li>
+<li>
+<p><strong>6360</strong>：10G 口位因型号而异（P10 11-12/P24 25-28/P48 49-52…），另一组口位适用 XGS-PON ONT——插错口位不识别（X8， <code>&lt;span class="pg"&gt;原文p76&lt;/span&gt;</code> ）</p>
+</li>
 <li><strong>6570M</strong>：10G 仅 U28 口 25-30 支持 XGS-PON ONT；SFP-GIG-T 不支持 U28 combo 口（X9， <code>&lt;span class="pg"&gt;原文p84-85&lt;/span&gt;</code> ）</li>
 <li><strong>9900 板卡</strong>：1G SFP 仅 XNI-U48/GNI-U48/XNI-U24；100G QSFP 仅 CMM2/CNI-U8/CNI-U20（CMM/CMM2 的 QSFP 要 8.9R3）（X22， <code>&lt;span class="pg"&gt;原文p105-107&lt;/span&gt;</code> ）</li>
 <li><strong>PON</strong>：GPON ONT（3FE46541AA）在 6860/6865/6870/6920/9900 全不支持；XGS ONT（3FE49327AA）仅 6360/6465T/6560/6570M(U28)/6860N-P48M+XNI-U4（X21， <code>&lt;span class="pg"&gt;原文p89&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p93&lt;/span&gt;</code> ）</li>

@@ -76,12 +76,45 @@ blockquote p{margin:6px 0}
 <h2 id="i">I · 方法论骨架</h2>
 <ol>
 <li><strong>swlog 架构</strong>（p15/g19）：三目的地——console、本地 flash（R8 默认 1250KB/文件，swlog output flash-file-size 12500 可改；/flash/swlog_chassis1~.6 共 8 个滚动文件 + swlog_archive 40 个归档）、远程 syslog（最多 12 台，需 Loopback0 源）。show swlog 看状态与 90% 覆盖告警阈值。</li>
-<li><strong>调级机制</strong>（p16）：默认全局 info（=6）。<code>swlog appid &lt;appid&gt; subapp &lt;all|子应用|编号&gt; level &lt;级别&gt;</code> 按应用单独调级。OSPF 子应用编号表：3=RECV 4=SEND 5=FLOOD 6=SPF 7=LSDB 13=DBEXCH 14=HELLO 15=AUTH 16=STATE 28=AUTOCONFIG 等（p151/p244）。<strong>排障后必须调回 info</strong>。</li>
-<li><strong>日志检索三板斧</strong>（p17）：grep（show log swlog |grep ospf，可级联）；时间戳（timestamp mm/dd/yyyy hh:mm:ss，前提 show system 核对时钟）；reverse（最新在前）。可读事件层：swlog appid all subapp all level event + show log events 输出 CUSTLOG 格式。</li>
-<li><strong>QoS 生命周期四命令</strong>（p35）：qos apply（生效并写 flash）/ qos revert（删未 apply 的）/ qos flush（清全部待定）/ qos reset（恢复默认）。监测：show active policy rule（命中计数）、show qos log（命中明细，上限 10000 行）、qos log level 1-8（默认 5）。</li>
-<li><strong>镜像工具边界</strong>（p37/ce14）：RPM 专用镜像 VLAN 不能捎带业务流量；六类流量设计上不被镜像——LACP、LLDP、802.1X、OAM、L3 控制报文、GARP；"抓不到"不等于"不存在"。策略镜像同时只支持 1 会话；端口镜像与端口监控不能同端口。</li>
-<li><strong>UNP/802.1X 认证排障</strong>（p36/g23/g24）：RADIUS 连通性测试先行（aaa test-radius-server）；随后 show unp user（Active/In progress）→ show unp port/profile map/classification → show aaa/captive-portal/quarantine。Access Guardian 框架四块：认证/分类/角色访问/限制阻断。</li>
-<li><strong>源地址固定</strong>（p38）：多 IP 设备用 <code>ip service source-ip loopback0 swlog</code> 等命令把 syslog/radius/snmp/ssh 等应用发包源固定，防火墙/ACL 场景防丢包，OVNA 纳管时必须与登记 IP 一致。</li>
+<li>
+<p>调级机制（p16）：默认全局 info（=6）。</p>
+<ul>
+<li><code>swlog appid &lt;appid&gt; subapp &lt;all|子应用|编号&gt; level &lt;级别&gt;</code> 按应用单独调级。</li>
+<li>OSPF 子应用编号表：3=RECV 4=SEND 5=FLOOD 6=SPF 7=LSDB 13=DBEXCH 14=HELLO 15=AUTH 16=STATE 28=AUTOCONFIG 等（p151/p244）。</li>
+<li>排障后必须调回 info。</li>
+</ul>
+</li>
+<li>
+<p>日志检索三板斧（p17）：grep（show log swlog |grep ospf，可级联）；</p>
+<ul>
+<li>时间戳（timestamp mm/dd/yyyy hh:mm:ss，前提 show system 核对时钟）；</li>
+<li>reverse（最新在前）。可读事件层：swlog appid all subapp all level event + show log events 输出 CUSTLOG 格式；</li>
+</ul>
+</li>
+<li>
+<p>QoS 生命周期四命令（p35）：qos apply（生效并写 flash）/ qos revert（删未 apply 的）/ qos flush（清全部待定）/ qos reset（恢复默认）。</p>
+<ul>
+<li>监测：show active policy rule（命中计数）、show qos log（命中明细，上限 10000 行）、qos log level 1-8（默认 5）。</li>
+<li>
+<ol>
+<li>镜像工具边界（p37/ce14）：RPM 专用镜像 VLAN 不能捎带业务流量；六类流量设计上不被镜像——LACP、LLDP、802.1X、OAM、L3 控制报文、GARP；"抓不到"不等于"不存在"。</li>
+</ol>
+</li>
+<li>策略镜像同时只支持 1 会话；端口镜像与端口监控不能同端口。</li>
+<li>
+<ol>
+<li>UNP/802.1X 认证排障（p36/g23/g24）：RADIUS 连通性测试先行（aaa test-radius-server）；
+随后 show unp user（Active/In progress）→ show unp port/profile map/classification → show aaa/captive-portal/quarantine。</li>
+</ol>
+</li>
+<li>Access Guardian 框架四块：认证/分类/角色访问/限制阻断。</li>
+<li>
+<ol>
+<li>源地址固定（p38）：多 IP 设备用 <code>ip service source-ip loopback0 swlog</code> 等命令把 syslog/radius/snmp/ssh 等应用发包源固定，防火墙/ACL 场景防丢包，OVNA 纳管时必须与登记 IP 一致。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="a1-lab">A1 · 书中案例（LAB 故障根因）</h2>
 <ul>
@@ -96,14 +129,41 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
-<li>排障前：show system 核对时钟 → show swlog 确认日志输出目的地。</li>
+<li>排障前：show system 核对时钟 → show swlog 确认日志输出目的地。<ul>
+<li>
+<ol>
 <li>检索：show log swlog |grep <appid> [timestamp ...] [reverse]；要人可读事件用 level event + show log events。</li>
-<li>调级：<code>swlog appid &lt;appid&gt; subapp &lt;subapp&gt; level debug2|debug3</code> → 复现 → 检索 → <strong><code>... level info</code> 收尾</strong>（写进 SOP）。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>调级：<code>swlog appid &lt;appid&gt; subapp &lt;subapp&gt; level debug2|debug3</code> → 复现 → 检索 → <code>... level info</code> 收尾（写进 SOP）。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>丢包计数：policy condition（source ip + icmptype）→ policy action → policy rule ... log → qos apply → show active policy rule / show qos log；
 改配置后 clear qos log 清旧日志。</li>
-<li>抓包：<code>port-monitoring 1 source port &lt;口&gt; capture-type full enable file /flash/capture.cap</code> → FTP 取回 Wireshark 分析 → <code>no port-monitoring 1</code>。远程用 RPM 专用 VLAN。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>抓包：<code>port-monitoring 1 source port &lt;口&gt; capture-type full enable file /flash/capture.cap</code> → FTP 取回 Wireshark 分析 → <code>no port-monitoring 1</code>。</li>
+</ol>
+</li>
+<li>远程用 RPM 专用 VLAN。</li>
+<li>
+<ol>
 <li>认证排障：<code>aaa test-radius-server &lt;srv&gt; type authentication user &lt;u&gt; password &lt;p&gt; method pap</code> → show unp user → show unp port/profile/classification → 服务器侧日志佐证。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>固定源地址：<code>ip service source-ip loopback0 swlog</code>，show ip service source-ip 核对各应用绑定。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>

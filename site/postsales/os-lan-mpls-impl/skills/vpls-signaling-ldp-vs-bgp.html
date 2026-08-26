@@ -69,19 +69,37 @@ blockquote p{margin:6px 0}
 <p>"ip bgp autonomous-system 65724 / ip bgp address-family l2vpn-vpls / ip bgp neighbor 192.168.254.8 remote-as 65724 / ip bgp neighbor 192.168.254.8 update-source Loopback0 / ip bgp neighbor 192.168.254.8 activate l2vpn-vpls"（p74, p110）</p>
 </blockquote>
 <h2 id="i">I · 方法论骨架</h2>
-<p>选型决策（f04 + ce07）：
-- LDP 信令（T-LDP）：配置简单，无自动发现——n 台 PE 需 n(n-1)/2 条伪线、每端 n-1 条 SDP；新增站点要改所有旧站点。3-4 站点以内可选。
-- BGP 信令：自动发现+信令一步完成，扩容只加邻居；但 AOS 不支持 RR，IBGP 邻居仍须全互联。
-- 分界线：多站点/会持续扩容选 BGP；少量站点、想省 BGP 运维选 LDP。</p>
+<ul>
+<li>选型决策（f04 + ce07）：- LDP 信令（T-LDP）：配置简单，无自动发现——n 台 PE 需 n(n-1)/2 条伪线、每端 n-1 条 SDP；新增站点要改所有旧站点。</li>
+<li>3-4 站点以内可选。</li>
+<li>
+<ul>
+<li>BGP 信令：自动发现+信令一步完成，扩容只加邻居；但 AOS 不支持 RR，IBGP 邻居仍须全互联。</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>分界线：多站点/会持续扩容选 BGP；少量站点、想省 BGP 运维选 LDP。</li>
+</ul>
+</li>
+</ul>
 <p>LDP 信令四步（f02）：建服务 → 静态 SDP 互指对端 loopback（触发 T-LDP 定向会话）→ bind-sdp 协商 VC 标签 → access port + SAP 接入。</p>
-<p>BGP 信令路径（f03）：<code>ip load bgp</code> → AS 号 + address-family l2vpn-vpls + 全互联邻居（五要素：同 AS / 对端 loopback / update-source Loopback0 / 每邻居 activate l2vpn-vpls / admin-state enable）→ <code>service N vpls vplsid X signaling bgp ve-id Y</code>，无需手工 SDP，BGP 自动生成绑定（显示为 sdp:32768:x）。</p>
+<p>BGP 信令路径（f03）：<code>ip load bgp</code> → AS 号 + address-family l2vpn-vpls + 全互联邻居（五要素：同 AS：
+- 对端 loopback
+- update-source Loopback0
+- 每邻居 activate l2vpn-vpls
+- admin-state enable）→ <code>service N vpls vplsid X signaling bgp ve-id Y</code>，无需手工 SDP，BGP 自动生成绑定（显示为 sdp:32768:x）。</p>
 <h2 id="a1">A1 · 书中案例</h2>
 <ul>
-<li>Lab 2（p97-105，LDP）：sw7/sw8 各建服务 2/3（vplsid 200/300），SDP 78 互指对端 192.168.254.x，bind-sdp 后 SAP <code>1/1/3:2</code>；
-跨站点 VLAN 对不齐时补两级 vlan-xlation 恢复。验证：<code>show mac-learning domain vpls</code> 看到远端 MAC 从 sdp: 接口学到；
-P 节点 sw9/sw10 该表为空。</li>
-<li>Lab 3（p106-114，BGP）：恢复 Lab 1 备份后，sw7/sw8 配 IBGP（AS 65724），服务定义换 <code>signaling bgp</code>，sw7 全部 ve-id 1、sw8 ve-id 2；
-MAC 表远端接口显示 sdp:32768:2/3。</li>
+<li>Lab 2（p97-105，LDP）：sw7/sw8 各建服务 2/3（vplsid 200/300），SDP 78 互指对端 192.168.254.x，bind-sdp 后 SAP <code>1/1/3:2</code>；</li>
+<li>跨站点 VLAN 对不齐时补两级 vlan-xlation 恢复。验证：<code>show mac-learning domain vpls</code> 看到远端 MAC 从 sdp: 接口学到；</li>
+<li>
+<p>P 节点 sw9/sw10 该表为空；</p>
+</li>
+<li>
+<p>Lab 3（p106-114，BGP）：恢复 Lab 1 备份后，sw7/sw8 配 IBGP（AS 65724），服务定义换 <code>signaling bgp</code>，sw7 全部 ve-id 1、sw8 ve-id 2；
+MAC 表远端接口显示 sdp:32768:2/3。</p>
+</li>
 <li>SDP 复用（p78）：一服务绑多 SDP（<code>service 1 bind-sdp 20 30</code> 一次绑两条）；一条 SDP 被多服务复用（同一对 PE 多个 VPLS 共一条 T-LDP 会话）。</li>
 <li>实验环境：R-Lab POD（8 交换机 + 10 VM，p16-19），6860-A/B 即 sw7/sw8，RDP 接入 rdp.al-mydemo.com。</li>
 </ul>

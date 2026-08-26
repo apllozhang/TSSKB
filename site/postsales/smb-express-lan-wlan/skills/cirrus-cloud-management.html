@@ -74,10 +74,7 @@ blockquote p{margin:6px 0}
 <li>云管下要创建带 802.1X（UPAM RADIUS）的员工 SSID 或访客 Captive Portal SSID</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>云管上线是一条"许可证→订阅→组织/站点→SN 宣告→call home→OV Managed"的流水线，每一步中间态（Registered / Obtaining Certificate / VPN Configuring…）都有明确定义。</li>
-<li>SSID 下发共用五步向导，用户策略通过 ARP（Access Role Profile）三级优先级裁决。</li>
-</ul>
+<p>云管上线是一条"许可证→订阅→组织/站点→SN 宣告→call home→OV Managed"的流水线，每一步中间态（Registered / Obtaining Certificate / VPN Configuring…）都有明确定义。SSID 下发共用五步向导，用户策略通过 ARP（Access Role Profile）三级优先级裁决。</p>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li><strong>订阅准备</strong>：License（如 OVCX-68-BAS-3Y：BASE 级 / 3 年）→ eBuy → OVC Subscription Manager 导入 Subscription ID + Activation Code（ <code>&lt;span class="pg"&gt;原文p285&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p312&lt;/span&gt;</code> ）。</li>
@@ -100,8 +97,17 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
-<li><strong>激活状态机排障</strong>（ <code>&lt;span class="pg"&gt;原文p327&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p328&lt;/span&gt;</code> ）：中间态 Registered / Obtaining Certificate / Upgrade / Assigned / VPN Configuring / Connected to OV → OV Managed；失败态含 Failed To Get Certificate、Upgrade Failed、Configuring VPN Failed、Provisioning Failed、Device Validation Failed、Factory Reset Required（VPN profile 变更需恢复出厂）。</li>
-<li><strong>ARP 三级优先级</strong>：外部 RADIUS/LDAP Filter-ID 下发的 ARP &gt; 认证策略内 ARP &gt; SSID 默认 ARP（__SSIDname）（ <code>&lt;span class="pg"&gt;原文p394&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p400&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p403&lt;/span&gt;</code> ）。ARP 内容 = VLAN tag / QoS policy / 防火墙 ACL / L7 规则 / 位置 / 时段。</li>
+<li>激活状态机排障（ <code>&lt;span class="pg"&gt;原文p327&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p328&lt;/span&gt;</code> ）：中间态 Registered / Obtaining Certificate / Upgrade / Assigned / VPN Configuring / Connected to OV → OV Managed；失败态含 Failed To Get Certificate</li>
+<li>Upgrade Failed</li>
+<li>Configuring VPN Failed</li>
+<li>Provisioning Failed</li>
+<li>Device Validation Failed</li>
+<li>
+<p>Factory Reset Required（VPN profile 变更需恢复出厂）</p>
+</li>
+<li>
+<p><strong>ARP 三级优先级</strong>：外部 RADIUS/LDAP Filter-ID 下发的 ARP &gt; 认证策略内 ARP &gt; SSID 默认 ARP（__SSIDname）（ <code>&lt;span class="pg"&gt;原文p394&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p400&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p403&lt;/span&gt;</code> ）。ARP 内容 = VLAN tag / QoS policy / 防火墙 ACL / L7 规则 / 位置 / 时段。</p>
+</li>
 <li><strong>DHCP option 138/43</strong>：DHCP Server 通过 option 138/43 把管理平台 IP 告知 AP（ <code>&lt;span class="pg"&gt;原文p280&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p377&lt;/span&gt;</code> ）；DHCP proxy 场景注意透传 129-133/138。</li>
 <li><strong>云管 VLAN 可视化</strong>：Cirrus 建 VLAN20 时可 GUI 点选 6360 端口 tagged，但 OS2360 等仍需手工 CLI（ <code>&lt;span class="pg"&gt;原文p407&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p414&lt;/span&gt;</code> ）。</li>
 </ul>

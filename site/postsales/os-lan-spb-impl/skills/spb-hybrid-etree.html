@@ -73,9 +73,20 @@ blockquote p{margin:6px 0}
 </blockquote>
 <h2 id="i">I · 方法论骨架</h2>
 <ol>
-<li><strong>Hybrid 一口双角色</strong>（p24）：分类发生在入口——SAP VLAN 打标流量按服务域处理，常规打标/未打标流量按 VLAN 域桥接；解决聚合交换机下联口不再拆两个物理口。</li>
-<li><strong>E-Tree 隔离语义</strong>（p25）：Leaf↔Leaf 不通，Leaf↔Root 与 Root↔Root 全通（SAP 级 PVLAN）；<code>service X spb isid N bvlan V e-tree enable</code> 或 UNP profile 的 e-tree 选项。</li>
-<li><strong>Root 落点规则</strong>：8.9.R03 起 e-tree 服务新建 SAP 全为 Leaf；Root 侧必须落在对端 BEB 上、以同 I-SID 的普通（非 e-tree）服务形态出现。</li>
+<li>Hybrid 一口双角色（p24）：分类发生在入口——SAP VLAN 打标流量按服务域处理，常规打标/未打标流量按 VLAN 域桥接；解决聚合交换机下联口不再拆两个物理口。<ul>
+<li>
+<ol>
+<li>E-Tree 隔离语义（p25）：Leaf↔Leaf 不通，Leaf↔Root 与 Root↔Root 全通（SAP 级 PVLAN）；
+<code>service X spb isid N bvlan V e-tree enable</code> 或 UNP profile 的 e-tree 选项。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>Root 落点规则：8.9.R03 起 e-tree 服务新建 SAP 全为 Leaf；Root 侧必须落在对端 BEB 上、以同 I-SID 的普通（非 e-tree）服务形态出现。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="a1-lab">A1 · 书中案例（Lab 配置序列精要）</h2>
 <p>Lab10（c17，p328/331）：</p>
@@ -98,10 +109,24 @@ service 2004 spb isid 2004 bvlan 2004 description vlan4 admin-state enable
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
-<li><strong>Hybrid</strong>：BEB 上 <code>service access port &lt;p&gt; hybrid enable</code> → 同一口照常挂 SAP（<code>service spb X sap port &lt;p&gt;:&lt;vid&gt;</code>）→ 桥接 VLAN 正常配 vlan members。</li>
-<li><strong>E-Tree</strong>：Leaf 侧 BEB 建 <code>service &lt;id&gt; spb isid &lt;n&gt; bvlan &lt;v&gt; e-tree enable</code> + SAP；Root 侧 BEB 用同 I-SID/BVLAN 建普通服务（不加 e-tree）+ SAP。</li>
+<li>Hybrid：BEB 上 <code>service access port &lt;p&gt; hybrid enable</code> → 同一口照常挂 SAP（<code>service spb X sap port &lt;p&gt;:&lt;vid&gt;</code>）→ 桥接 VLAN 正常配 vlan members。<ul>
+<li>
+<ol>
+<li>E-Tree：Leaf 侧 BEB 建 <code>service &lt;id&gt; spb isid &lt;n&gt; bvlan &lt;v&gt; e-tree enable</code> + SAP；Root 侧 BEB 用同 I-SID/BVLAN 建普通服务（不加 e-tree）+ SAP。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>验证：<code>show spb isis services</code> 确认两形态并存；按 ping 矩阵测 Leaf↔Leaf（应断）与 Leaf↔Root（应通）。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>关闭：<code>service access port &lt;p&gt; hybrid disable</code>；E-Tree 逆向改造需重建服务。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>

@@ -120,15 +120,36 @@ blockquote p{margin:6px 0}
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
 <li>触发：客户光纤资源呈环形（校园/厂区/轨道交通沿线），或招标书写"故障倒换 ≤50ms"的电信级 SLA；接入交换机不想堆叠但要双活上联。</li>
-<li>区分：本 skill 管 <strong>DHL 与 ERP 的机制与规则</strong>；整体架构模板（环网+接入机型组合）走 <code><a href="campus-reference-architectures.html">campus-reference-architectures</a></code>；"六种高可用方案选哪条路线"的横比走 <code><a href="campus-design-tiering-and-ha.html">campus-design-tiering-and-ha</a></code>；SPB 场景（非时敏大网）走 <code><a href="spb-vxlan-core-fabric.html">spb-vxlan-core-fabric</a></code>。</li>
+<li>区分：本 skill 管 DHL 与 ERP 的机制与规则；</li>
+<li>整体架构模板（环网+接入机型组合）走 <code><a href="campus-reference-architectures.html">campus-reference-architectures</a></code>；</li>
+<li>"六种高可用方案选哪条路线"的横比走 <code><a href="campus-design-tiering-and-ha.html">campus-design-tiering-and-ha</a></code>；</li>
+<li>SPB 场景（非时敏大网）走 <code><a href="spb-vxlan-core-fabric.html">spb-vxlan-core-fabric</a></code>；</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
-<li>判 SLA：要求 50ms → ERPv2；只要接入双活不要堆叠 → DHL；两者可叠加（环骨干 + DHL 接入）。</li>
+<li>判 SLA：要求 50ms → ERPv2；只要接入双活不要堆叠 → DHL；两者可叠加（环骨干 + DHL 接入）。<ul>
+<li>
+<ol>
 <li>DHL 设计：确认接入机型在支持列（6360/6465/6560/6860N/6870 等），划 VLAN 到 Link A/B，接入侧开三件套。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>ERP 设计：拿光纤路由图切主环/子环，核 &lt;16 节点、&lt;1200km 周长、&lt;4094 VLAN、单机 &lt;64 环。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>逐环放 RPL（唯一性检查，子环避开共享链路），定回切模式。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>输出环网设计稿 + 施工规范（禁止 DHL 上联互接非核心设备）。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>

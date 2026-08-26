@@ -67,8 +67,15 @@ blockquote p{margin:6px 0}
 <p>4.9R2 是 OmniVista 2500 网管平台的维护增强版，只以虚拟设备（VA）形态交付，支持的宿主机：VMware ESXi 6.5/6.7/7.0.2/8.0、Hyper-V 2012R2-2022、Win10 Pro Hyper-V、KVM Ubuntu 22.04（p5）。</p>
 <p>这版值得升的理由集中在安全与无线两块：</p>
 <ul>
-<li><strong>安全加固</strong>：Blast-RADIUS 防护（新增 Require Message Authenticator 校验，解决 CVE-2024-3596，p8-9）；SNMPv3 全量加密组合；密码有效期策略 + CLI 管理员密码找回（p7）；底层换 Oracle Linux 8.10 并修 10 项 CVE（p9）。</li>
-<li><strong>无线能力</strong>：Enhanced Open 过渡模式（需 AP AWOS 4.0.8+，p7）、6GHz Backward Compatibility（注意与 MLO 互斥，p7-8）、Stellar AP 全面支持 AWOS 5.0.2（p6）。</li>
+<li>安全加固：Blast-RADIUS 防护（新增 Require Message Authenticator 校验，解决 CVE-2024-3596，p8-9）；</li>
+<li>SNMPv3 全量加密组合；</li>
+<li>密码有效期策略 + CLI 管理员密码找回（p7）；</li>
+<li>
+<p>底层换 Oracle Linux 8.10 并修 10 项 CVE（p9）；</p>
+</li>
+<li>
+<p><strong>无线能力</strong>：Enhanced Open 过渡模式（需 AP AWOS 4.0.8+，p7）、6GHz Backward Compatibility（注意与 MLO 互斥，p7-8）、Stellar AP 全面支持 AWOS 5.0.2（p6）。</p>
+</li>
 <li><strong>新机型</strong>：新增 OS6870 纳管等一批交换机型号认证（p6）。</li>
 </ul>
 <p><strong>谁应该升</strong>：有安全合规压力（CVE 清单要过）、Stellar 无线网规模大、或现网在 4.9R1 想吃维护红利的用户。<strong>谁缓一缓</strong>：强依赖 PALM 的流程（已下线，须迁移到 Fleet Supervision，p04）、Hyper-V 2019+ 上依赖 VMM 应用的场景（VMM 只支持到 Hyper-V 2016，p10-13）。</p>
@@ -83,12 +90,31 @@ blockquote p{margin:6px 0}
 <li><strong>容量</strong>：四档 500/2000/5000/10000 设备，单机 RAM 20/36/64/64GB；HA 上限 4000 台且须 Medium 档以上（p17-19）。</li>
 </ul>
 <h2 id="_2">三、三大危险陷阱详解（升级前必读）</h2>
-<p><strong>1. OS6570M U-Boot 签名门闩——变砖级、不可逆（p37-38, PR# OVE-13356）</strong>
-U-Boot 和 AOS 升到 8.9R4 及以上后，再降回 8.9R3 并重启，交换机将无法重启。原因：8.9R4 的 U-Boot 只接受签名镜像，而 OS6570M 是唯一"只有签名镜像、没有非签名镜像"的机型——过了这道门就回不去。其他机型 8.9R4+ U-Boot 虽也只认签名镜像，但仍有非签名镜像可救。前置措施：凡涉及 OS6570M 固件升级的变更单，必须标注"过 8.9R4 即单向、不可回退"。</p>
-<p><strong>2. 强口令自动启用——全员锁出（p38-39, PR# OVE-13859）</strong>
-在 4.9R1 里关闭了 Enforce Strong Password 的环境，升级到 4.9R2 后该设置会被自动重新启用，OmniVista 把所有用户登出并强制改密。这是版本行为，没有开关可以关闭。前置措施：升级公告必发项，预告所有用户"升级后首次登录须改密"，避免升级当晚工单爆炸。注意别和密码有效期策略（p05，新用户立即生效、老用户下次改密生效）混为一谈。</p>
-<p><strong>3. HA 同步期 failover——备节点缺数据升不了主（p35, PR# OVE-1629）</strong>
-数据同步进行中发生主备切换，会打断同步，Standby 节点因缺最新数据无法成为 Active。前置措施：变更窗口避开同步期。已经发生的恢复路径：SSH 到备节点，进 HA Virtual Appliance 菜单，选 3 – Configure Cluster，再选 14 – Cluster Error Check。</p>
+<ol>
+<li>
+<p>OS6570M U-Boot 签名门闩——变砖级、不可逆（p37-38, PR# OVE-13356） U-Boot 和 AOS 升到 8.9R4 及以上后，再降回 8.9R3 并重启，交换机将无法重启。</p>
+<ul>
+<li>原因：8.9R4 的 U-Boot 只接受签名镜像，而 OS6570M 是唯一"只有签名镜像、没有非签名镜像"的机型——过了这道门就回不去。</li>
+<li>其他机型 8.9R4+ U-Boot 虽也只认签名镜像，但仍有非签名镜像可救。</li>
+<li>前置措施：凡涉及 OS6570M 固件升级的变更单，必须标注"过 8.9R4 即单向、不可回退"。</li>
+</ul>
+</li>
+<li>
+<p>强口令自动启用——全员锁出（p38-39, PR# OVE-13859） 在 4.9R1 里关闭了 Enforce Strong Password 的环境，升级到 4.9R2 后该设置会被自动重新启用，OmniVista 把所有用户登出并强制改密。</p>
+<ul>
+<li>这是版本行为，没有开关可以关闭。</li>
+<li>前置措施：升级公告必发项，预告所有用户"升级后首次登录须改密"，避免升级当晚工单爆炸。</li>
+<li>注意别和密码有效期策略（p05，新用户立即生效、老用户下次改密生效）混为一谈。</li>
+</ul>
+</li>
+<li>
+<p>HA 同步期 failover——备节点缺数据升不了主（p35, PR# OVE-1629） 数据同步进行中发生主备切换，会打断同步，Standby 节点因缺最新数据无法成为 Active。</p>
+<ul>
+<li>前置措施：变更窗口避开同步期。</li>
+<li>已经发生的恢复路径：SSH 到备节点，进 HA Virtual Appliance 菜单，选 3 – Configure Cluster，再选 14 – Cluster Error Check。</li>
+</ul>
+</li>
+</ol>
 <h2 id="_3">四、已知问题检索指南</h2>
 <p>全书已知问题 63 条排障条目，按 13 个模块分组，排障时"先定模块、再对症状"：</p>
 <p>① AP 注册（p24）② Discovery（p24）③ Locator（p25，OS2200 不支持定位属功能边界）④ mDNS（p25-26）⑤ PolicyView（p26）⑥ Resource Manager（p26-27）⑦ Topology（p27）⑧ Unified Access（p28-29）⑨ UPAM（p29-31，条目最多）⑩ VMM（p31-32）⑪ WCF（p32-33）⑫ WLAN（p33-34）⑬ 其他/系统（p34-39）。完整症状-处置表见 <code>ov2500-known-issues</code> skill。</p>
@@ -108,8 +134,17 @@ U-Boot 和 AOS 升到 8.9R4 及以上后，再降回 8.9R3 并重启，交换机
 No workaround 条目转为预期管理（估算窗口、告警降噪）。每条带 PR 号，可向 ALE TAC 交叉确认修复版本。</p>
 <h2 id="_4">五、兼容矩阵要点</h2>
 <ul>
-<li><strong>交换机固件</strong>（p13-14）：OS2260/2360 = 5.2R5-R7；OS6350/6450 = 6.7.2.R06-R08；OS6360/6465/6560/6570M/6860E/6860N/6865 = 8.9R4 / 8.10R2 / 8.10R3；<strong>OS6870 特殊，只有 8.10R2/R3，没有 8.9R4 档</strong>；OS6900-X20/X40/T20/T40/Q32/X72 = 仅 8.9R4；OS9907/9912 = 8.9R4 / 8.10R2 / 8.10R3。Stellar AP 推荐 AWOS 5.0.2。</li>
-<li><strong>浏览器</strong>：仅 Chrome / Firefox / Edge，IE 已弃用（p18）；Firefox 处理大列表有已知性能问题。</li>
+<li>交换机固件（p13-14）：OS2260/2360 = 5.2R5-R7；</li>
+<li>OS6350/6450 = 6.7.2.R06-R08；</li>
+<li>OS6360/6465/6560/6570M/6860E/6860N/6865 = 8.9R4 / 8.10R2 / 8.10R3；</li>
+<li>OS6870 特殊，只有 8.10R2/R3，没有 8.9R4 档；</li>
+<li>OS6900-X20/X40/T20/T40/Q32/X72 = 仅 8.9R4；</li>
+<li>
+<p>OS9907/9912 = 8.9R4 / 8.10R2 / 8.10R3。Stellar AP 推荐 AWOS 5.0.2；</p>
+</li>
+<li>
+<p><strong>浏览器</strong>：仅 Chrome / Firefox / Edge，IE 已弃用（p18）；Firefox 处理大列表有已知性能问题。</p>
+</li>
 <li><strong>OS/宿主机</strong>：ESXi 6.5-8.0、Hyper-V 2012R2-2022、Win10 Pro、KVM Ubuntu 22.04（p5）；底层操作系统 Oracle Linux 8.10（p9）。VMM 应用锁死在 Hyper-V 2012/2012R2/2016。</li>
 <li><strong>新特性依赖</strong>：Enhanced Open 需 AP AWOS 4.0.8+；Blast-RADIUS 交换机侧命令 <code>aaa radius message-authenticator</code> 需 AOS 8.10R2+；Message-Authenticator 响应校验需 AWOS 5.0.2+。</li>
 </ul>

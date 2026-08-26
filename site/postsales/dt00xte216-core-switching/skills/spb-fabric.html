@@ -78,24 +78,39 @@ blockquote p{margin:6px 0}
 <li>iFab 零触摸部署的动态服务编号/隔离策略需要设计或排障</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>SPB（802.1aq）用 IS-IS 做控制平面、MAC-in-MAC（PBB，802.1ah）做数据平面：BCB 只按 BMAC 转发不学客户 MAC，每节点对每个 BVLAN 建一棵以自己为根的 SPF 树，全链路可用、路径对称、帧有序。</li>
-<li>服务标识 I-SID 全局强一致，service 号仅本地有效。</li>
-<li>相比 STP 的"闲置链路+次优路径+慢收敛"，SPB 换来全链路利用与百毫秒级收敛。</li>
-</ul>
+<p>SPB（802.1aq）用 IS-IS 做控制平面、MAC-in-MAC（PBB，802.1ah）做数据平面：BCB 只按 BMAC 转发不学客户 MAC，每节点对每个 BVLAN 建一棵以自己为根的 SPF 树，全链路可用、路径对称、帧有序。服务标识 I-SID 全局强一致，service 号仅本地有效。相比 STP 的"闲置链路+次优路径+慢收敛"，SPB 换来全链路利用与百毫秒级收敛。</p>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>骨干四任务（ <code>&lt;span class="pg"&gt;原文p547&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p548&lt;/span&gt;</code> ）：<code>spb bvlan 2000/2001/2002</code>（各 BVLAN 配不同 ECT-ID 最大化分流）→ 修改 control BVLAN 前先 <code>spb isis admin-state disable</code> → <code>spb isis control-bvlan 2000</code> → <code>spb isis interface port 1/1/x</code>（各骨干口）→ <code>spb isis admin-state enable</code></li>
 <li>L2 服务：<code>service spb 2001 isid 2001 bvlan 2001 description vlan2 admin-state enable</code>；接入 <code>service access port 1/1/3</code> + <code>service spb 2001 sap port 1/1/3:2 admin-state enable stats enable</code>（ <code>&lt;span class="pg"&gt;原文p555&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p556&lt;/span&gt;</code> ）</li>
-<li>验证：<code>show mac-learning domain spb</code>（CMAC 绑定 sap:/sdp: 接口）（ <code>&lt;span class="pg"&gt;原文p558&lt;/span&gt;</code> ）；健康检查命令族 <code>show spb isis bvlans / interface / adjacency [detail] / info / unicast-table bvlan 2000 / spf bvlan 2000 / database / nodes</code>（ <code>&lt;span class="pg"&gt;原文p549&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p550&lt;/span&gt;</code> ）</li>
+<li>验证：<code>show mac-learning domain spb</code>（CMAC 绑定 sap:/sdp: 接口）（ <code>&lt;span class="pg"&gt;原文p558&lt;/span&gt;</code> ）；健康检查命令族 `show spb isis bvlans：</li>
+<li>interface</li>
+<li>adjacency [detail]</li>
+<li>info</li>
+<li>unicast-table bvlan 2000</li>
+<li>spf bvlan 2000</li>
+<li>database</li>
+<li>nodes<code>（</code><span class="pg">原文p549</span><code>-</code><span class="pg">原文p550</span>` ）</li>
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
-<li>BUM 复制模式：Head-End（默认，带宽效率低/资源高/同径）与 Tandem（带宽高/资源低；(S,G) 同径、(<em>,G) 不同径）；head-end 与 tandem 按 per-service 选，(S,G)/(</em>,G) 按 per-BVLAN 选（ <code>&lt;span class="pg"&gt;原文p539&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p573&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p577&lt;/span&gt;</code> ）</li>
-<li>L3 服务选型：域内用 L3 VPN（VRF 路由经 IS-IS TLV 携带，无需在 VPN 接口跑路由协议），仅边界节点对接外部用 VPN Lite（叠跑 OSPF/BGP）（ <code>&lt;span class="pg"&gt;原文p534&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p537&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p592&lt;/span&gt;</code> ）</li>
+<li>BUM 复制模式：Head-End（默认，带宽效率低/资源高/同径）与 Tandem（带宽高/资源低；</li>
+<li>(S,G) 同径、(*,G) 不同径）；</li>
+<li>
+<p>head-end 与 tandem 按 per-service 选，(S,G)/(*,G) 按 per-BVLAN 选（ <code>&lt;span class="pg"&gt;原文p539&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p573&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p577&lt;/span&gt;</code> ）；</p>
+</li>
+<li>
+<p>L3 服务选型：域内用 L3 VPN（VRF 路由经 IS-IS TLV 携带，无需在 VPN 接口跑路由协议），仅边界节点对接外部用 VPN Lite（叠跑 OSPF/BGP）（ <code>&lt;span class="pg"&gt;原文p534&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p537&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p592&lt;/span&gt;</code> ）</p>
+</li>
 <li>动态服务编号：ISID = Base Service Number + Domain ID + (VLAN % Service Modulo)，默认 Modulo 512 会让最多 8 个 VLAN 混入同一服务，需隔离时改 4096（ <code>&lt;span class="pg"&gt;原文p600&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p601&lt;/span&gt;</code> ）</li>
-<li>iFab 七阶段零触摸（Auto-VC→RCD→LACP→Routing→SPB→Profiling→MVRP），任一阶段失败自动回退；管理命令 <code>auto-fabric protocols spb|mvrp... admin-state disable</code>、<code>show auto-fabric config</code>、<code>auto-fabric config-save admin-state enable</code>；默认 BVLAN 4000-4015/ECT 1-16、控制 BVLAN 4000（ <code>&lt;span class="pg"&gt;原文p624&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p638&lt;/span&gt;</code> ）</li>
-<li>SPB+LAG 哈希：外层是 BMAC 熵不足，聚合口需开 tunnel-protocol 哈希内层 CMAC/IP（ <code>&lt;span class="pg"&gt;原文p611&lt;/span&gt;</code> ）</li>
+<li>iFab 七阶段零触摸（Auto-VC→RCD→LACP→Routing→SPB→Profiling→MVRP），任一阶段失败自动回退；</li>
+<li>管理命令 <code>auto-fabric protocols spb|mvrp... admin-state disable</code>、<code>show auto-fabric config</code>、<code>auto-fabric config-save admin-state enable</code>；</li>
+<li>
+<p>默认 BVLAN 4000-4015/ECT 1-16、控制 BVLAN 4000（ <code>&lt;span class="pg"&gt;原文p624&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p638&lt;/span&gt;</code> ）；</p>
+</li>
+<li>
+<p>SPB+LAG 哈希：外层是 BMAC 熵不足，聚合口需开 tunnel-protocol 哈希内层 CMAC/IP（ <code>&lt;span class="pg"&gt;原文p611&lt;/span&gt;</code> ）</p>
+</li>
 <li>Overload 硬隔离：开启后节点不转发任何穿越流量，即使无替代路径（ <code>&lt;span class="pg"&gt;原文p605&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>

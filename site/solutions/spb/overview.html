@@ -89,14 +89,44 @@ blockquote p{margin:6px 0}
 </table>
 <h2 id="_2">核心主线</h2>
 <ol>
-<li><strong>为什么替代 STP</strong>（p5–6）：STP 禁用链路、次优路径、秒级收敛；以太网泛洪学习与扁平地址空间限制扩展性；Q-in-Q 上限 4096 服务实例。</li>
-<li><strong>SPB 本质</strong>（p6–9）：IS-IS 单协议控制面 + 802.1ah MAC-in-MAC 数据面；多租户（24 位 ISID，16M 服务）；动态服务实例化；仅边缘供给；微分段（UNP/ACL）；非 IP 核心。</li>
-<li><strong>机制细节</strong>（p9–16）：BEB/BCB、BVLAN/ISID/BMAC、ECT 等价树、路径对称性与确定性、SAP/SDP 虚拟端口、三种 BUM 复制模式（head-end / tandem (S,G) / tandem (*,G)）。</li>
-<li><strong>配置路径</strong>（p16–35）：建骨干（BVLAN+ECT+IS-IS 接口）→ L2 服务（service+ISID+BVLAN+SAP）→ 路由概念（两代 ASIC 的单次/两次路由）→ L3 服务（VPN Lite vs L3 VPN）→ 共享服务与路由泄漏。</li>
-<li><strong>自动化</strong>（p36–43）：iFab（Auto-VC/RCD/LACP/SPB/MVRP/IP）、动态 SAP（UNP+802.1x/MAC 认证）、动态服务（ISID/BSN/Domain ID 公式）。</li>
-<li><strong>运维与设计准则</strong>（p43–56）：带内管理、802.1ag OAM、SAA、overload/graceful restart、CE 接入冗余四档、RPFC/LBD/风暴控制、BVLAN 数量=等价路径数、VLAN→Service 一对一映射、VC/LAG/链路度量/QoS、管理 VRF/MACSec/NAC/路由认证。</li>
-<li><strong>部署指南实践</strong>（p57–82）：2 BCB + 4 BEB 样例；命名规范（ACC-31、linkagg 13）；VRF+VRRP+PBR+OSPF 全套命令；Guest 拒绝策略示例；S-Hook 替代配置。</li>
-<li><strong>方案简报</strong>（p83–86）：收敛 2-3s→100ms；三大落地场景；7 个行业用例；NDOT/IDC Frontier/UTS 客户证言。</li>
+<li>为什么替代 STP（p5–6）：STP 禁用链路、次优路径、秒级收敛；以太网泛洪学习与扁平地址空间限制扩展性；Q-in-Q 上限 4096 服务实例。<ul>
+<li>
+<ol>
+<li>SPB 本质（p6–9）：IS-IS 单协议控制面 + 802.1ah MAC-in-MAC 数据面；多租户（24 位 ISID，16M 服务）；动态服务实例化；仅边缘供给；微分段（UNP/ACL）；非 IP 核心。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>机制细节（p9–16）：BEB/BCB、BVLAN/ISID/BMAC、ECT 等价树、路径对称性与确定性、SAP/SDP 虚拟端口、三种 BUM 复制模式（head-end / tandem (S,G) / tandem (*,G)）。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>配置路径（p16–35）：建骨干（BVLAN+ECT+IS-IS 接口）→ L2 服务（service+ISID+BVLAN+SAP）→ 路由概念（两代 ASIC 的单次/两次路由）→ L3 服务（VPN Lite vs L3 VPN）→ 共享服务与路由泄漏。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>自动化（p36–43）：iFab（Auto-VC/RCD/LACP/SPB/MVRP/IP）、动态 SAP（UNP+802.1x/MAC 认证）、动态服务（ISID/BSN/Domain ID 公式）。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>运维与设计准则（p43–56）：带内管理、802.1ag OAM、SAA、overload/graceful restart、CE 接入冗余四档、RPFC/LBD/风暴控制、BVLAN 数量=等价路径数、VLAN→Service 一对一映射、VC/LAG/链路度量/QoS、管理 VRF/MACSec/NAC/路由认证。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>部署指南实践（p57–82）：2 BCB + 4 BEB 样例；命名规范（ACC-31、linkagg 13）；VRF+VRRP+PBR+OSPF 全套命令；Guest 拒绝策略示例；S-Hook 替代配置。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>方案简报（p83–86）：收敛 2-3s→100ms；三大落地场景；7 个行业用例；NDOT/IDC Frontier/UTS 客户证言。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="_3">候选提取状态</h2>
 <ul>

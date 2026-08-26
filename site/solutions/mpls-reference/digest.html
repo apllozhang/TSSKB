@@ -59,38 +59,34 @@ blockquote p{margin:6px 0}
 <a href="skills/sol-mpls-vpls-vpws.html">sol-mpls-vpls-vpws</a>
 <div class="grp">运维</div>
 <a href="skills/sol-mpls-qos-oam.html">sol-mpls-qos-oam</a></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../solutions/index.html">解决方案</a> › <a href="index.html">MPLS 参考设计指南</a> › <span>精华长文 DIGEST</span></nav><h1>精华长文 DIGEST</h1><h1 id="digest-mpls-reference-design-guide">DIGEST — MPLS Reference Design Guide 精华</h1>
-<p>本书是 AOS 的 IP/MPLS 参考设计指南（45 页，首支持 8.9R3/OmniSwitch 6860N，8.10R2 起支持 6900）。主线为 L2VPN（VPLS/VPWS）：从标签基础、LDP/T-LDP/MP-BGP 控制面、数据面操作、QoS/TTL 透明性、OAM，到 license 与全套配置验证。定位覆盖园区端到端与城域核心+汇聚两种形态。</p>
+<ul>
+<li>本书是 AOS 的 IP/MPLS 参考设计指南（45 页，首支持 8.9R3/OmniSwitch 6860N，8.10R2 起支持 6900）。</li>
+<li>主线为 L2VPN（VPLS/VPWS）：从标签基础、LDP/T-LDP/MP-BGP 控制面、数据面操作、QoS/TTL 透明性、OAM，到 license 与全套配置验证。</li>
+<li>定位覆盖园区端到端与城域核心+汇聚两种形态。</li>
+</ul>
 <h2 id="_1">一、知识地图（三技能单元）</h2>
 <ol>
-<li><strong>MPLS 基础体系</strong>（sol-mpls-foundation）：32 位标签结构、双标签封装、LDP 发现/会话/模式（DU+ILD+LLR）、PHP、MD5 认证、AOS 支持边界（p5-17、p24-33）。</li>
-<li><strong>L2VPN 业务</strong>（sol-mpls-vpls-vpws）：VPLS/VPWS（EPL/EVPL）、SAP/SDP 服务模型、T-LDP vs BGP 信令、五步/四步配置（p15-22、p33-42）。</li>
-<li><strong>QoS 与 OAM</strong>（sol-mpls-qos-oam）：EXP uniform/pipe、TTL 透明性、PHP 与 explicit NULL 的 EXP 保留、LSP ping/traceroute、AOS 不支持清单（p16-19、p23-24、p44）。</li>
+<li>MPLS 基础体系（sol-mpls-foundation）：32 位标签结构、双标签封装、LDP 发现/会话/模式（DU+ILD+LLR）、PHP、MD5 认证、AOS 支持边界（p5-17、p24-33）。<ul>
+<li>
+<ol>
+<li>L2VPN 业务（sol-mpls-vpls-vpws）：VPLS/VPWS（EPL/EVPL）、SAP/SDP 服务模型、T-LDP vs BGP 信令、五步/四步配置（p15-22、p33-42）。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>QoS 与 OAM（sol-mpls-qos-oam）：EXP uniform/pipe、TTL 透明性、PHP 与 explicit NULL 的 EXP 保留、LSP ping/traceroute、AOS 不支持清单（p16-19、p23-24、p44）。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="_2">二、三单元要点串讲</h2>
 <h3 id="1-bgp-free-core">1. 基础：标签隧道换 BGP-free core</h3>
-<ul>
-<li>MPLS 用预分配标签做精确匹配转发，核心不承载大量路由（ <code>&lt;span class="pg"&gt;原文p5&lt;/span&gt;</code> ）。</li>
-<li>shim 标签 32 位（20-bit Label/EXP/S/TTL），Layer 2.5 协议（ <code>&lt;span class="pg"&gt;原文p9&lt;/span&gt;</code> ）。</li>
-<li>VPN 双层栈：transport 在顶、service 在底，中间 LSR 只看传输标签（ <code>&lt;span class="pg"&gt;原文p10-21&lt;/span&gt;</code> ）。</li>
-<li>LDP 依 IGP 而生：UDP 646 组播 hello 发现 → TCP 646 会话 → Initialization 协商；可靠性靠 hello/keepalive 双定时器（ <code>&lt;span class="pg"&gt;原文p12&lt;/span&gt;</code> ）。</li>
-<li>AOS 唯一支持 DU+ILD+LLR+MD5（ <code>&lt;span class="pg"&gt;原文p13-17&lt;/span&gt;</code> ）。</li>
-<li>部署前提：/32 loopback 唯一 Router-ID + p2p + BFD + /31 互联（ <code>&lt;span class="pg"&gt;原文p28&lt;/span&gt;</code> ）。</li>
-</ul>
+<p>MPLS 用预分配标签做精确匹配转发，核心不承载大量路由（ <code>&lt;span class="pg"&gt;原文p5&lt;/span&gt;</code> ）。shim 标签 32 位（20-bit Label/EXP/S/TTL），Layer 2.5 协议（ <code>&lt;span class="pg"&gt;原文p9&lt;/span&gt;</code> ）。VPN 双层栈：transport 在顶、service 在底，中间 LSR 只看传输标签（ <code>&lt;span class="pg"&gt;原文p10-21&lt;/span&gt;</code> ）。LDP 依 IGP 而生：UDP 646 组播 hello 发现 → TCP 646 会话 → Initialization 协商；可靠性靠 hello/keepalive 双定时器（ <code>&lt;span class="pg"&gt;原文p12&lt;/span&gt;</code> ）。AOS 唯一支持 DU+ILD+LLR+MD5（ <code>&lt;span class="pg"&gt;原文p13-17&lt;/span&gt;</code> ）。部署前提：/32 loopback 唯一 Router-ID + p2p + BFD + /31 互联（ <code>&lt;span class="pg"&gt;原文p28&lt;/span&gt;</code> ）。</p>
 <h3 id="2">2. 业务：服务与传输解耦</h3>
-<ul>
-<li>服务只在有站点的 LER 创建：SAP 面向 CE、SDP 面向远端（ <code>&lt;span class="pg"&gt;原文p20&lt;/span&gt;</code> ）。</li>
-<li>VPLS（E-LAN）需全互联 PW + per-VPLS MAC 学习，防环靠 split horizon（PW 进 PW 出禁止）；VPWS（E-LINE）点对点透明转发不学 MAC，分 EPL/EVPL（C-VLAN 复用）（ <code>&lt;span class="pg"&gt;原文p21-22&lt;/span&gt;</code> ）。</li>
-<li>信令二选一：T-LDP 手工 SDP（抗链路故障保会话）或 MP-BGP l2vpn-vpls（自动发现+信令一体，单 AS 需 full-mesh 或 RR）。</li>
-<li>配置五步（LDP-VPLS）/四步（BGP-VPLS、VPWS）见  <code>&lt;span class="pg"&gt;原文p33-42&lt;/span&gt;</code> 。</li>
-</ul>
+<p>服务只在有站点的 LER 创建：SAP 面向 CE、SDP 面向远端（ <code>&lt;span class="pg"&gt;原文p20&lt;/span&gt;</code> ）。VPLS（E-LAN）需全互联 PW + per-VPLS MAC 学习，防环靠 split horizon（PW 进 PW 出禁止）；VPWS（E-LINE）点对点透明转发不学 MAC，分 EPL/EVPL（C-VLAN 复用）（ <code>&lt;span class="pg"&gt;原文p21-22&lt;/span&gt;</code> ）。信令二选一：T-LDP 手工 SDP（抗链路故障保会话）或 MP-BGP l2vpn-vpls（自动发现+信令一体，单 AS 需 full-mesh 或 RR）。配置五步（LDP-VPLS）/四步（BGP-VPLS、VPWS）见  <code>&lt;span class="pg"&gt;原文p33-42&lt;/span&gt;</code> 。</p>
 <h3 id="3-qosoam">3. QoS/OAM：透明性选型与数据面验证</h3>
-<ul>
-<li>只有顶层标签的 EXP/TTL 被处理（ <code>&lt;span class="pg"&gt;原文p18-19&lt;/span&gt;</code> ）。</li>
-<li>uniform 客户标记穿透、pipe 运营商自定；TTL pipe 模式下 L3VPN 两端各减 1、L2VPN 完全不变。</li>
-<li>PHP 用 implicit NULL 省 eLER 查表但丢 EXP；explicit NULL 可保 EXP 但 AOS 不支持。</li>
-<li>数据面验证用 <code>mpls ping/trace ldp</code>（RFC 4379，127/8 目的、UDP 3503），控制面正常仍可测出转发故障（&lt;&lt;<PAGE 23-24、44>&gt;&gt;）。</li>
-<li>GR 仅保计划内接管（ <code>&lt;span class="pg"&gt;原文p19&lt;/span&gt;</code> ）。</li>
-</ul>
+<p>只有顶层标签的 EXP/TTL 被处理（ <code>&lt;span class="pg"&gt;原文p18-19&lt;/span&gt;</code> ）。uniform 客户标记穿透、pipe 运营商自定；TTL pipe 模式下 L3VPN 两端各减 1、L2VPN 完全不变。PHP 用 implicit NULL 省 eLER 查表但丢 EXP；explicit NULL 可保 EXP 但 AOS 不支持。数据面验证用 <code>mpls ping/trace ldp</code>（RFC 4379，127/8 目的、UDP 3503），控制面正常仍可测出转发故障（&lt;&lt;<PAGE 23-24、44>&gt;&gt;）。GR 仅保计划内接管（ <code>&lt;span class="pg"&gt;原文p19&lt;/span&gt;</code> ）。</p>
 <h2 id="_3">三、本书在知识库中的位置</h2>
 <p>与 os-lan-mpls-impl（实现手册）、os-lan-spb-impl / sol-spb（SPM/SPB 替代路线）、os-lan-vxlan-evpn（数据中心 overlay）构成 ALE 二三层隧道全家桶。本书的独特价值是"为什么"与选型框架（五收益、F1-F5），以及明确的 AOS 能力边界清单。跨书易混点：explicit NULL、QoS over EXP、TTL manipulation 在 AOS 均不支持，规划时勿照搬通用 MPLS 教材。</p>
 <h2 id="_4">来源</h2>

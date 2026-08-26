@@ -70,12 +70,7 @@ blockquote p{margin:6px 0}
 <li>要接 RADIUS/LDAP 外部认证并设计本地回退链，或部署 ASA 增强模式/JITC/FIPS</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>ASA 安全框架（F3， <code>&lt;span class="pg"&gt;原文p167-186&lt;/span&gt;</code> ）：管理接口（console/ftp/http/ssh/telnet/snmp）× 认证源（RADIUS/LDAP/local 链式故障切换）× 授权（命令域/族分区）× 计费四层，default/enhanced/JITC 三档安全模式递进。</li>
-<li>权限分区框架（F4）：命令域（domain-admin/system/network 等 12 个）下辖命令族，read-only/read-write/all/none/all-except 组合授权。</li>
-<li>默认管理面锁定（P34）：除 console 外一切管理接口需 <code>aaa authentication</code> 显式解锁；admin 恒可走 console 兜底（P36）。</li>
-<li>CLI 是单级命令体系，任意时刻可输任意命令（P46）。</li>
-</ul>
+<p>ASA 安全框架（F3， <code>&lt;span class="pg"&gt;原文p167-186&lt;/span&gt;</code> ）：管理接口（console/ftp/http/ssh/telnet/snmp）× 认证源（RADIUS/LDAP/local 链式故障切换）× 授权（命令域/族分区）× 计费四层，default/enhanced/JITC 三档安全模式递进。权限分区框架（F4）：命令域（domain-admin/system/network 等 12 个）下辖命令族，read-only/read-write/all/none/all-except 组合授权。默认管理面锁定（P34）：除 console 外一切管理接口需 <code>aaa authentication</code> 显式解锁；admin 恒可走 console 兜底（P36）。CLI 是单级命令体系，任意时刻可输任意命令（P46）。</p>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>首次带外接入</strong>：micro-USB/RJ-45 console（默认 9600-8-N-1）或 EMP/USB dongle/蓝牙；改串口参数走 <code>modify boot parameters</code>（C5-C7）</li>

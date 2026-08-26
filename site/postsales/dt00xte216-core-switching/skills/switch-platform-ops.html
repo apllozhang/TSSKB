@@ -78,15 +78,21 @@ blockquote p{margin:6px 0}
 <li>计划升级 AOS 版本，要求可回滚、含 uboot/FPGA 的完整流程</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>平台层三件事的共同底座是 working/certified 双镜像目录：升级先落在 working、验证无误再 <code>copy running certified</code>，出问题 reload 即回滚。</li>
-<li>SLB 的本质是"交换机用 proxy ARP 截住发往 VIP 的桥接流量并强制路由"，配合权重轮询与探测实现本地容灾；WRR 权重 0 表示备份服务器，总权重不超过 32。</li>
-</ul>
+<p>平台层三件事的共同底座是 working/certified 双镜像目录：升级先落在 working、验证无误再 <code>copy running certified</code>，出问题 reload 即回滚。SLB 的本质是"交换机用 proxy ARP 截住发往 VIP 的桥接流量并强制路由"，配合权重轮询与探测实现本地容灾；
+WRR 权重 0 表示备份服务器，总权重不超过 32。</p>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>链路聚合：<code>linkagg lacp agg 1 size 2...</code>；加口前必须先清掉端口上的 VLAN 配置（<code>no vlan 58/20/30 members port 2/1/3</code>），否则报 "Port cannot be added to Linkagg, please remove other configuration on this port"（ <code>&lt;span class="pg"&gt;原文p316&lt;/span&gt;</code> ）</li>
-<li>SLB：<code>ip slb admin-state enable</code> → <code>ip slb cluster Web vip 128.241.130.204</code> → <code>ip slb server ip 128.241.130.127 cluster Web</code>；备份用 <code>weight 0</code>（主 <code>weight 1</code>）；探测 <code>ip slb probe http_test http</code> + <code>ip slb server ip ... probe http_test</code>（ <code>&lt;span class="pg"&gt;原文p655&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p658&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p667&lt;/span&gt;</code> ）</li>
-<li>服务器侧：在服务器 loopback 接口上配 VIP（Windows/Linux 附录 p671-672）；VIP 必须与服务器同网段（ <code>&lt;span class="pg"&gt;原文p653&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p654&lt;/span&gt;</code> ）</li>
+<li>
+<p>SLB：<code>ip slb admin-state enable</code> → <code>ip slb cluster Web vip 128.241.130.204</code> → <code>ip slb server ip 128.241.130.127 cluster Web</code>；</p>
+<ul>
+<li>备份用 <code>weight 0</code>（主 <code>weight 1</code>）；</li>
+<li>探测 <code>ip slb probe http_test http</code> + <code>ip slb server ip ... probe http_test</code>（ <code>&lt;span class="pg"&gt;原文p655&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p658&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p667&lt;/span&gt;</code> ）；</li>
+</ul>
+</li>
+<li>
+<p>服务器侧：在服务器 loopback 接口上配 VIP（Windows/Linux 附录 p671-672）；VIP 必须与服务器同网段（ <code>&lt;span class="pg"&gt;原文p653&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p654&lt;/span&gt;</code> ）</p>
+</li>
 <li>软件升级流程链：读 release note → FTP 上传 → 升级 image → 验证 → certified → 按需升 uboot/FPGA：<code>update uboot cmm all file u-boot.8.4.1.R03.141.tar.gz</code> / <code>update fpga-cpld cmm all file fpga_kit_3312</code> → <code>reload from working no rollback-timeout</code> → <code>copy running certified</code>（ <code>&lt;span class="pg"&gt;原文p676&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p680&lt;/span&gt;</code> ）</li>
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>

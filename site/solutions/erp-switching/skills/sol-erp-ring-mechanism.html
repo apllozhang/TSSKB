@@ -65,11 +65,7 @@ blockquote p{margin:6px 0}
 <li>决定 revertive（自动回切）还是 non-revertive（管理员 clear）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>防环靠"任一时刻只阻塞一条环链路"（P1， <code>&lt;span class="pg"&gt;原文p7&lt;/span&gt;</code> ）：正常态 RPL Owner 阻塞 RPL 并周期发 (NR, RB)（P2）；故障时解阻 RPL 保连通。</li>
-<li>故障处理是"检测节点三连动作 + 全环两次 flush"（P4/P5， <code>&lt;span class="pg"&gt;原文p8-9&lt;/span&gt;</code> ）：本地阻塞、FDB flush、双向发 SF；其余节点收首个 SF 即 flush，靠 (Node ID, Blocked Port ID) 二元组去重防反复 flush。</li>
-<li>定时器体系各司其职：hold-off 过滤间歇故障、guard 屏蔽过期 R-APS 防环、WTR（须长于 guard）防抖后回切（P3/P8/P10）。</li>
-</ul>
+<p>防环靠"任一时刻只阻塞一条环链路"（P1， <code>&lt;span class="pg"&gt;原文p7&lt;/span&gt;</code> ）：正常态 RPL Owner 阻塞 RPL 并周期发 (NR, RB)（P2）；故障时解阻 RPL 保连通。故障处理是"检测节点三连动作 + 全环两次 flush"（P4/P5， <code>&lt;span class="pg"&gt;原文p8-9&lt;/span&gt;</code> ）：本地阻塞、FDB flush、双向发 SF；其余节点收首个 SF 即 flush，靠 (Node ID, Blocked Port ID) 二元组去重防反复 flush。定时器体系各司其职：hold-off 过滤间歇故障、guard 屏蔽过期 R-APS 防环、WTR（须长于 guard）防抖后回切（P3/P8/P10）。</p>
 <p><img alt="环形网络与 RPL 阻塞示意（原文 p5）" src="images/fig01-rpl-blocked.png" /></p>
 <p><img alt="环结构、节点与数据转发路径（原文 p6）" src="images/fig02-ring-structure.jpeg" /></p>
 <p><img alt="RPL Owner 节点角色（原文 p7）" src="images/fig04-rpl-owner.jpeg" /></p>

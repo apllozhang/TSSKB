@@ -79,13 +79,7 @@ blockquote p{margin:6px 0}
 <li>堆叠/VC 场景外的二层冗余选型对比</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>聚合把多物理口合成单逻辑链路：静态 OmniChannel 仅限 OmniSwitch 间且两端参数必须完全一致；LACP（802.3ad）用 LACPDU 协商可跨厂商（P74， <code>&lt;span class="pg"&gt;原文p396&lt;/span&gt;</code> ），关联靠 actor admin key 两端同值（P75， <code>&lt;span class="pg"&gt;原文p398-404&lt;/span&gt;</code> ）。</li>
-<li>STP 家族的选型矩阵：协议 802.1D/802.1w（默认）/802.1s/ERPv2 × 模式 flat/1x1（默认）（F7， <code>&lt;span class="pg"&gt;原文p415&lt;/span&gt;</code> ）。</li>
-<li>MSTP 的精髓是"同域三要素（域名+修订级+VLAN-实例映射）一致才是一个域，一帧 BPDU 携带全部实例"（P86/P87， <code>&lt;span class="pg"&gt;原文p438-443&lt;/span&gt;</code> ），负载分担靠不同 MSTI 选不同根桥。</li>
-<li>DHL 用 VLAN-链路映射代替 STP 防环，两条上行都活跃、100% 带宽（P90/P93， <code>&lt;span class="pg"&gt;原文p477-481&lt;/span&gt;</code> ）。</li>
-<li>冗余方案横向对比：STP 50% 带宽 &lt; LACP 仅链路 &lt; VC 全冗余 &lt; DHL 链路+设备冗余 100% 带宽（F16， <code>&lt;span class="pg"&gt;原文p481&lt;/span&gt;</code> ）。</li>
-</ul>
+<p>聚合把多物理口合成单逻辑链路：静态 OmniChannel 仅限 OmniSwitch 间且两端参数必须完全一致；LACP（802.3ad）用 LACPDU 协商可跨厂商（P74， <code>&lt;span class="pg"&gt;原文p396&lt;/span&gt;</code> ），关联靠 actor admin key 两端同值（P75， <code>&lt;span class="pg"&gt;原文p398-404&lt;/span&gt;</code> ）。STP 家族的选型矩阵：协议 802.1D/802.1w（默认）/802.1s/ERPv2 × 模式 flat/1x1（默认）（F7， <code>&lt;span class="pg"&gt;原文p415&lt;/span&gt;</code> ）。MSTP 的精髓是"同域三要素（域名+修订级+VLAN-实例映射）一致才是一个域，一帧 BPDU 携带全部实例"（P86/P87， <code>&lt;span class="pg"&gt;原文p438-443&lt;/span&gt;</code> ），负载分担靠不同 MSTI 选不同根桥。DHL 用 VLAN-链路映射代替 STP 防环，两条上行都活跃、100% 带宽（P90/P93， <code>&lt;span class="pg"&gt;原文p477-481&lt;/span&gt;</code> ）。冗余方案横向对比：STP 50% 带宽 &lt; LACP 仅链路 &lt; VC 全冗余 &lt; DHL 链路+设备冗余 100% 带宽（F16， <code>&lt;span class="pg"&gt;原文p481&lt;/span&gt;</code> ）。</p>
 <h2 id="a1">A1（决策/选型）</h2>
 <ol>
 <li>动态 vs 静态聚合：跨厂商/防误配用 LACP；纯 OmniSwitch 间可用静态</li>
@@ -98,10 +92,30 @@ blockquote p{margin:6px 0}
 <ol>
 <li>LACP 聚合：6450 <code>lacp linkagg 5 size 2 actor admin key 5</code> + <code>lacp agg 1/11 actor admin key 5</code>；6860(R8) <code>linkagg lacp agg 5 size 2 actor admin-key 5</code> + <code>linkagg lacp port 1/1/23-24 actor admin-key 5</code> → 激活端口 → <code>show linkagg</code>（Oper UP、Att/Sel 2/2）→ down 一成员口 ping 不丢验证（C17， <code>&lt;span class="pg"&gt;原文p404-406&lt;/span&gt;</code> ）</li>
 <li>静态聚合：6860 <code>linkagg static agg 5 size 2</code> → <code>linkagg static port 1/1/23-24 agg 5</code>；删除须先清成员口再删组（直接删非空组报 LAERR53）（C19/P198， <code>&lt;span class="pg"&gt;原文p999-1002&lt;/span&gt;</code> ）</li>
-<li>STP 根桥控制：<code>show spantree</code>（默认 RSTP、priority 32768）→ <code>bridge 1x1 vid priority</code> / <code>spantree vlan instance {port|linkagg} priority</code>；GE cost=4 推断根口（C20/P79， <code>&lt;span class="pg"&gt;原文p418-464&lt;/span&gt;</code> ）；根桥选举四判据：最低 Root Bridge ID &gt; 最低路径开销 &gt; 最低发送者 Bridge ID &gt; 最低端口 ID（P79， <code>&lt;span class="pg"&gt;原文p420-425&lt;/span&gt;</code> ）</li>
-<li>MSTP 双实例负载分担：<code>bridge mode flat</code> → <code>bridge protocol mstp</code> → <code>bridge mst region name myregion</code> + <code>revision level 1</code> → <code>bridge cist protocol mstp</code> → <code>bridge msti 1 vlan 1-15</code>、<code>bridge msti 2 vlan 16-20</code>；A 机 cist/msti1 优先级 4096、msti2 8192，B 机对调；验证 <code>show spantree mst port 1/1</code>（MST1 ROOT/FORW、MST2 ALT/BLK）（C21/P89， <code>&lt;span class="pg"&gt;原文p444-472&lt;/span&gt;</code> ）</li>
-<li>DHL Active-Active：双上行打标签 → <code>dhl num 1</code> → <code>dhl num 1 linka port 1/3 linkb port 1/4</code> → <code>dhl num 1 vlan-map linkb 30</code> → <code>dhl num 1 admin-state enable</code>；验证 <code>show dhl num 1</code>（LinkA Active 1 20 / LinkB Active 30）；故障演练 <code>dhl num 1 mac-flushing raw</code> + ping –t（C22， <code>&lt;span class="pg"&gt;原文p487-489&lt;/span&gt;</code> ）</li>
-<li>PVST+ 互操作：用户口自动检测 PVST+ BPDU 转为 PVST+ 口；端口必须 1x1 模式（P85， <code>&lt;span class="pg"&gt;原文p433-434&lt;/span&gt;</code> ）</li>
+<li>
+<p>STP 根桥控制：<code>show spantree</code>（默认 RSTP、priority 32768）→ <code>bridge 1x1 vid priority</code> / <code>spantree vlan instance {port|linkagg} priority</code>；</p>
+<ul>
+<li>GE cost=4 推断根口（C20/P79， <code>&lt;span class="pg"&gt;原文p418-464&lt;/span&gt;</code> ）；</li>
+<li>根桥选举四判据：最低 Root Bridge ID &gt; 最低路径开销 &gt; 最低发送者 Bridge ID &gt; 最低端口 ID（P79， <code>&lt;span class="pg"&gt;原文p420-425&lt;/span&gt;</code> ）；</li>
+</ul>
+</li>
+<li>
+<p>MSTP 双实例负载分担：<code>bridge mode flat</code> → <code>bridge protocol mstp</code> → <code>bridge mst region name myregion</code> + <code>revision level 1</code> → <code>bridge cist protocol mstp</code> → <code>bridge msti 1 vlan 1-15</code>、<code>bridge msti 2 vlan 16-20</code>；</p>
+<ul>
+<li>A 机 cist/msti1 优先级 4096、msti2 8192，B 机对调；</li>
+<li>验证 <code>show spantree mst port 1/1</code>（MST1 ROOT/FORW、MST2 ALT/BLK）（C21/P89， <code>&lt;span class="pg"&gt;原文p444-472&lt;/span&gt;</code> ）；</li>
+</ul>
+</li>
+<li>
+<p>DHL Active-Active：双上行打标签 → <code>dhl num 1</code> → <code>dhl num 1 linka port 1/3 linkb port 1/4</code> → <code>dhl num 1 vlan-map linkb 30</code> → <code>dhl num 1 admin-state enable</code>；</p>
+<ul>
+<li>验证 <code>show dhl num 1</code>（LinkA Active 1 20 / LinkB Active 30）；</li>
+<li>故障演练 <code>dhl num 1 mac-flushing raw</code> + ping –t（C22， <code>&lt;span class="pg"&gt;原文p487-489&lt;/span&gt;</code> ）；</li>
+</ul>
+</li>
+<li>
+<p>PVST+ 互操作：用户口自动检测 PVST+ BPDU 转为 PVST+ 口；端口必须 1x1 模式（P85， <code>&lt;span class="pg"&gt;原文p433-434&lt;/span&gt;</code> ）</p>
+</li>
 </ol>
 <h2 id="e">E（实证案例）</h2>
 <ul>

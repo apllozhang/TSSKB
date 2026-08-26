@@ -72,16 +72,41 @@ blockquote p{margin:6px 0}
 </blockquote>
 <h2 id="i">I · 方法论骨架</h2>
 <ol>
-<li><strong>向导三步</strong>：命名/选 Usage（模板决定认证+门户组合）→ 定制（频段/加密/默认 VLAN 或 VLAN 池/Access Role/认证策略）→ 绑 AP Group + 广播排程。</li>
-<li><strong>Usage 模板矩阵</strong>：Employee 企业网=纯 802.1X；Employee BYOD=802.1X/MAC+BYOD 门户；Guest=Open/MAC+门户；Protected=纯 PSK。</li>
-<li><strong>专家模式七步</strong>（对象模型）：WLAN Service → AAA Server Profile → Access Role Profile（映射 VLAN）→ Authentication Strategy → Access Policy → 本地员工账号 → 下发 AP Group。</li>
-<li><strong>认证源解耦</strong>：SSID 与 VLAN 不动，认证策略可从 UPAM 本地库一键切到 External LDAP/AD。</li>
-<li><strong>VLAN Pooling</strong>：高密场景用 VLAN 池避免单一大广播域。</li>
+<li>向导三步：命名/选 Usage（模板决定认证+门户组合）→ 定制（频段/加密/默认 VLAN 或 VLAN 池/Access Role/认证策略）→ 绑 AP Group + 广播排程。<ul>
+<li>
+<ol>
+<li>Usage 模板矩阵：Employee 企业网=纯 802.1X；Employee BYOD=802.1X/MAC+BYOD 门户；Guest=Open/MAC+门户；Protected=纯 PSK。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>专家模式七步（对象模型）：WLAN Service → AAA Server Profile → Access Role Profile（映射 VLAN）→ Authentication Strategy → Access Policy → 本地员工账号 → 下发 AP Group。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>认证源解耦：SSID 与 VLAN 不动，认证策略可从 UPAM 本地库一键切到 External LDAP/AD。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>VLAN Pooling：高密场景用 VLAN 池避免单一大广播域。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="a1-lab">A1 · 书中案例（Lab 精要）</h2>
 <ul>
-<li>c05：建 EmployeesX——Usage 选 Enterprise Network for Employees，2.4+5 GHz，WPA3_AES，RADIUS=UPAMRadiusServer，账号 Employee/password（UPAM &gt; Authentication &gt; Employee Account，支持 xls/csv 批量导入），VLAN 20，绑 APGX。验证：树莓派 PEAP/MSCHAPv2/不校验 CA，IP 落 10.7.X.32/27。内置 NAS 条目 All Managed Devices 共享密钥 123456。排障：<code>ssudo sta_list</code>/<code>wam_debug sta_list</code> 看 JSON（含 assignedVLAN/assignedAR）、<code>cat /var/config/wlanservice.conf</code> 与 <code>AAA_server.conf</code> 核对 1812/1813，必要时 tcpdump 抓 RADIUS。</li>
-<li>c06：接 AD——UPAM &gt; SETTINGS &gt; LDAP/AD 声明域控（类型 AD、NETBIOS/DNS 域名、域控 IP、端口 389），Test Connection 通过再 Apply；SSID 认证源改 External LDAP/AD；客户端清已存网络后用 AD 凭据重连。</li>
+<li>c05：建 EmployeesX——Usage 选 Enterprise Network for Employees，2.4+5 GHz，WPA3_AES，RADIUS=UPAMRadiusServer，账号 Employee/password（UPAM &gt; Authentication &gt; Employee Account，支持 xls/csv 批量导入），VLAN 20，绑 APGX。</li>
+<li>验证：树莓派 PEAP/MSCHAPv2/不校验 CA，IP 落 10.7.X.32/27。</li>
+<li>内置 NAS 条目 All Managed Devices 共享密钥 123456。</li>
+<li>
+<p>排障：<code>ssudo sta_list</code>/<code>wam_debug sta_list</code> 看 JSON（含 assignedVLAN/assignedAR）、<code>cat /var/config/wlanservice.conf</code> 与 <code>AAA_server.conf</code> 核对 1812/1813，必要时 tcpdump 抓 RADIUS。</p>
+</li>
+<li>
+<p>c06：接 AD——UPAM &gt; SETTINGS &gt; LDAP/AD 声明域控（类型 AD、NETBIOS/DNS 域名、域控 IP、端口 389），Test Connection 通过再 Apply；SSID 认证源改 External LDAP/AD；客户端清已存网络后用 AD 凭据重连。</p>
+</li>
 </ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
@@ -90,14 +115,40 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
-<li>建业务 VLAN（如 VLAN 20 EMPLOYEES），核心交换机配 IP 接口。</li>
+<li>建业务 VLAN（如 VLAN 20 EMPLOYEES），核心交换机配 IP 接口。<ul>
+<li>
+<ol>
 <li>向导建 SSID：Usage=Enterprise Network for Employees，频段按需，加密优先 WPA3_AES（混合终端可 WPA2_AES）。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>认证策略选 UPAMRadiusServer；本地库用 Manage Employee Accounts 建号或批量导入。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>设默认 VLAN/VLAN 池，Save and Apply to AP Group，把 SSID 从 default 组改绑目标组。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>接 AD：LDAP/AD Configuration 声明域控 → Test Connection → Apply → SSID 认证源改 External LDAP/AD。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>客户端以 PEAP + MSCHAPv2 验证；用 WLAN &gt; Client List 与 UPAM Authentication Record 确认。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>空口优化（Advanced WLAN Service）：广播密钥轮换（Enterprise 级，默认 15 min）、Broadcast Filter ARP、组播优化（利用率 90%/客户端 6 上限自动停）；
 WMM 映射按推荐表（Voice=1p5/DSCP46-EF，Video=1p4/34-AF41）。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>

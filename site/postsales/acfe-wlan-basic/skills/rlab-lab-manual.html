@@ -76,22 +76,34 @@ blockquote p{margin:6px 0}
 <p>"Never touch the Ethernet card (configuration or disconnection), because it is from the wired network that you can join the raspberry pi desktop." (p75)</p>
 </blockquote>
 <h2 id="i">I · 方法论骨架</h2>
-<p><strong>1. 环境连接</strong>
-- 入口：https://rdp.al-mydemo.com/，账号形如 stellanpod25a（POD 25-32），密码每期由 LMS 发讲师
-- 拓扑三层：接入 OS-2360/OS-6360（学员配置）→ 汇聚 OS-6870（保留预配置）→ 核心 OS-6900（不管理）；DHCP/AAA 服务器与 pfSense NAT 禁止改动
-- 终端：桌面快捷方式 TeraTerm 开交换机控制台（"Hunting Group Busy"=被占用）；
+<ol>
+<li><strong>环境连接</strong></li>
+<li>入口：https://rdp.al-mydemo.com/，账号形如 stellanpod25a（POD 25-32），密码每期由 LMS 发讲师</li>
+<li>拓扑三层：接入 OS-2360/OS-6360（学员配置）→ 汇聚 OS-6870（保留预配置）→ 核心 OS-6900（不管理）；DHCP/AAA 服务器与 pfSense NAT 禁止改动</li>
+<li>
+<p>终端：桌面快捷方式 TeraTerm 开交换机控制台（"Hunting Group Busy"=被占用）；
 RealVNC 连树莓派 WifiClientX（user/superuser），实验前 "Clean Wireless Networks"；
 vSphere 开 client5 有线 VM</p>
-<p><strong>2. 重置流程与常数</strong>
-- 桌面 DT00CTE210 目录双击 Reset_PodX（Cirrus 系列实验前另有 "OmniVista CIRRUS 10" 目录的 reset_PODX）
-- 交换机约 5 分钟、AP 约 1.5-2 分钟；期间严禁对控制台按键
-- 重置后"默认配置"非空：脚本灌特定预配置且<strong>所有端口禁用</strong>，每个 Lab 逐个 enable 要用的端口
-- 树莓派重置：Clean Wireless Networks → Execute</p>
-<p><strong>3. 实验网 IP/DHCP 常数（全部 Lab 的判定基准）</strong>
+</li>
+<li>
+<p><strong>重置流程与常数</strong></p>
+</li>
+<li>桌面 DT00CTE210 目录双击 Reset_PodX（Cirrus 系列实验前另有 "OmniVista CIRRUS 10" 目录的 reset_PODX）</li>
+<li>交换机约 5 分钟、AP 约 1.5-2 分钟；期间严禁对控制台按键</li>
+<li>重置后"默认配置"非空：脚本灌特定预配置且<strong>所有端口禁用</strong>，每个 Lab 逐个 enable 要用的端口</li>
+<li>
+<p>树莓派重置：Clean Wireless Networks → Execute</p>
+</li>
+<li>
+<p><strong>实验网 IP/DHCP 常数（全部 Lab 的判定基准）</strong>
 VLAN10 管理 192.168.10.70-79 / VLAN20 Employees 192.168.20.70-79 / VLAN30 Guests 192.168.30.70-79；
 网关 6870 上 .7；
 DHCP/NAT 服务器 192.168.100.102 与核心 OS6900 不许改。</p>
-<p><strong>4. Lab → skill 案例库索引</strong></p>
+</li>
+<li>
+<p><strong>Lab → skill 案例库索引</strong></p>
+</li>
+</ol>
 <table>
 <thead>
 <tr>

@@ -76,9 +76,15 @@ blockquote p{margin:6px 0}
 <p>"Encryption AUTO_WPA_WPA2 is NOT supported (with Device Specific PSK); PSK/PassPhrase: only active with 'Prefer Device Specific PSK'" (p327)</p>
 </blockquote>
 <h2 id="i">I · 方法论骨架</h2>
-<p><strong>1. 认证选型（信任梯度从低到高）</strong>
+<ol>
+<li>
+<p><strong>认证选型（信任梯度从低到高）</strong>
 Open+Captive Portal（无加密、兼容一切，访客）&lt; MAC 认证（可伪造、无加密，仅哑终端）&lt; PSK（简单但全员共钥）&lt; 802.1X（最强、可管理可扩展，需 RADIUS）。产品级组合：哑设备用 DSPSK/PPSK，人员用 802.1X。</p>
-<p><strong>2. Usage 模板映射（Cirrus 选 Usage 即套模板）</strong></p>
+</li>
+<li>
+<p><strong>Usage 模板映射（Cirrus 选 Usage 即套模板）</strong></p>
+</li>
+</ol>
 <table>
 <thead>
 <tr>
@@ -105,28 +111,54 @@ Open+Captive Portal（无加密、兼容一切，访客）&lt; MAC 认证（可�
 </tr>
 </tbody>
 </table>
-<p><strong>3. 三段式创建流程（所有 SSID 复用）</strong>
-1. SSID Settings：Profile 名/广播名/Usage/认证策略/默认 VLAN/可选 ACL-QoS
-2. Network Assignments：选 Site + 一个或多个 AP Group
-3. Schedule &amp; VLAN Mappings：按组设调度 + 映射（单 VLAN / VLAN 池 ≤256 避免大广播域 / Guest 隧道）
+<ol>
+<li><strong>三段式创建流程（所有 SSID 复用）</strong></li>
+<li>SSID Settings：Profile 名/广播名/Usage/认证策略/默认 VLAN/可选 ACL-QoS</li>
+<li>Network Assignments：选 Site + 一个或多个 AP Group</li>
+<li>
+<p>Schedule &amp; VLAN Mappings：按组设调度 + 映射（单 VLAN / VLAN 池 ≤256 避免大广播域 / Guest 隧道）
 前置顺序固定：先建 VLAN 与三层接口再回来映射。</p>
-<p><strong>4. PSK 密钥体系四级选型（运维粒度递进）</strong>
-1. 全局 PSK：一钥全员
-2. DSPSK：MAC 认证 + Company Property 库按 MAC 发专属口令；Force=取消全局口令，Prefer=保留兜底
-3. PPSK：多条"名称+口令+ARP"条目，用哪条落哪个角色
-4. 动态 PPSK：口令条目直接绑 VLAN ID + ARP（同一 ARP 复用多 VLAN），配 Priority ARP/VLAN-ID 选归属</p>
-<p><strong>5. 三种 SSID 的关键开关</strong>
-- Employee：WPA2_AES + UPAMRadiusServer + Auth Source=Local Database（或外部 RADIUS）+ Web Auth=None；
+</li>
+<li>
+<p><strong>PSK 密钥体系四级选型（运维粒度递进）</strong></p>
+</li>
+<li>全局 PSK：一钥全员</li>
+<li>DSPSK：MAC 认证 + Company Property 库按 MAC 发专属口令；Force=取消全局口令，Prefer=保留兜底</li>
+<li>PPSK：多条"名称+口令+ARP"条目，用哪条落哪个角色</li>
+<li>
+<p>动态 PPSK：口令条目直接绑 VLAN ID + ARP（同一 ARP 复用多 VLAN），配 Priority ARP/VLAN-ID 选归属</p>
+</li>
+<li>
+<p><strong>三种 SSID 的关键开关</strong></p>
+</li>
+<li>Employee：WPA2_AES + UPAMRadiusServer + Auth Source=Local Database（或外部 RADIUS）+ Web Auth=None；
 客户端 PEAP/MSCHAPv2；
-UPAM 常数 1812/1813、重试 2、超时 5s
-- Guest：Captive Portal=YES（OV-UPAM 型）+ Allow All EAPs=Yes + Auth Source=None + Web Auth=Guest；
-Guest Access Strategy 定登录方式（账号/接入码/条款/自注册+审批）与 Post Portal Enforcement；
-Guest Tunneling=按 ARP 建 L2 GRE 隧道，可加备份隧道
-- BYOD：SSID 级 VLAN=Guest VLAN（预认证沙箱）→ BYOD Strategy 的 Post Portal Enforcement 绑 ARP（内配 Employee VLAN）→ 认证后从 VLAN30 切 VLAN20
-- Express 内嵌版：门户三选一（账号/接入码/条款，大小写敏感）；AP 内置 DHCP 三步：Network 配 IP → 建 Pool → Bind Network 才生效</p>
-<p><strong>6. 客户端接入排障两套命令链（AP CLI，support/aos2016）</strong>
-- 802.1X：<code>iwconfig</code> / <code>iwlist channel|txpower|bitrate</code> → <code>ssudo sta_list</code>、<code>ssudo wlanconfig athX list</code>、<code>ssudo wam_debug sta_list</code>（JSON 含 VLAN/ARP/各阶段认证结果）→ <code>cat /proc/kes_syslog | grep &lt;MAC&gt;</code> → 核对 <code>/var/config/wlanservice.conf</code>、<code>AAA_profile.conf</code>、<code>AAA_server.conf</code> → <code>tcpdump -i br-wan -s 0 host &lt;radiusIP&gt;</code>
-- 门户：<code>date</code>（账号有效期）→ <code>cat /etc/resolv.conf</code>（DNS 必需）→ <code>ps | grep eag</code> → <code>eag_cli show user all</code> / <code>eag_cli kick user index N</code> → <code>tail -f /tmp/log/eag.log</code></p>
+UPAM 常数 1812/1813、重试 2、超时 5s</li>
+<li>Guest：Captive Portal=YES（OV-UPAM 型）+ Allow All EAPs=Yes + Auth Source=None + Web Auth=Guest；</li>
+<li>Guest Access Strategy 定登录方式（账号/接入码/条款/自注册+审批）与 Post Portal Enforcement；</li>
+<li>
+<p>Guest Tunneling=按 ARP 建 L2 GRE 隧道，可加备份隧道；</p>
+</li>
+<li>
+<p>BYOD：SSID 级 VLAN=Guest VLAN（预认证沙箱）→ BYOD Strategy 的 Post Portal Enforcement 绑 ARP（内配 Employee VLAN）→ 认证后从 VLAN30 切 VLAN20</p>
+</li>
+<li>
+<p>Express 内嵌版：门户三选一（账号/接入码/条款，大小写敏感）；AP 内置 DHCP 三步：Network 配 IP → 建 Pool → Bind Network 才生效</p>
+</li>
+<li>
+<p><strong>客户端接入排障两套命令链（AP CLI，support/aos2016）</strong></p>
+</li>
+<li>802.1X：<code>iwconfig</code> / <code>iwlist channel|txpower|bitrate</code> → <code>ssudo sta_list</code></li>
+<li><code>ssudo wlanconfig athX list</code></li>
+<li><code>ssudo wam_debug sta_list</code>（JSON 含 VLAN/ARP/各阶段认证结果）→ <code>cat /proc/kes_syslog | grep &lt;MAC&gt;</code> → 核对 <code>/var/config/wlanservice.conf</code></li>
+<li><code>AAA_profile.conf</code></li>
+<li>
+<p><code>AAA_server.conf</code> → <code>tcpdump -i br-wan -s 0 host &lt;radiusIP&gt;</code></p>
+</li>
+<li>
+<p>门户：<code>date</code>（账号有效期）→ <code>cat /etc/resolv.conf</code>（DNS 必需）→ <code>ps | grep eag</code> → <code>eag_cli show user all</code> / <code>eag_cli kick user index N</code> → <code>tail -f /tmp/log/eag.log</code></p>
+</li>
+</ol>
 <h2 id="a1-lab">A1 · 书中案例（Lab 步骤精要）</h2>
 <ul>
 <li><strong>c13/p332-347</strong>：VLAN20 建好并 tagged → IP 接口 int_employees 192.168.20.7/24（IP Forward）→ SSID EmployeesX（Enterprise/802.1X/WPA2_AES）→ 建 Employee 账号 → VLAN 映射 20 → 树莓派 PEAP 连接拿 20.x → Authentication Records + Clients 监控 → 全套 CLI 排障。</li>

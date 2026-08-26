@@ -78,13 +78,10 @@ blockquote p{margin:6px 0}
 <li>运营商式小区/宿舍网要求用户彼此二层隔离、流量强制上行网关</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>AOS 交换机把二层安全做成一组可叠加的小特性：DoS Filtering 内置攻击指纹与速率检测；
+<p>AOS 交换机把二层安全做成一组可叠加的小特性：DoS Filtering 内置攻击指纹与速率检测；
 ARP 防御只认可自己发起请求的应答并主动探测受限地址；
 Port Mapping 用会话隔离 user 口；
-MFF（RFC 4562）借 DHCP ACK 里的网关 IP 把同子网 ARP 一律应答为网关 MAC，强制所有流量过网关。</li>
-<li>各特性粒度小、可组合，按威胁面逐项启用。</li>
-</ul>
+MFF（RFC 4562）借 DHCP ACK 里的网关 IP 把同子网 ARP 一律应答为网关 MAC，强制所有流量过网关。各特性粒度小、可组合，按威胁面逐项启用。</p>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>DoS 检测：<code>ip dos ...</code> 体系覆盖 PoD/SYN/Land/Teardrop/Bonk/Boink/Pepsi、无效 IP、组播 IP/MAC 不匹配、ICMP&gt;100pps 判攻击、ARP 限速到 CPU（ <code>&lt;span class="pg"&gt;原文p168&lt;/span&gt;</code> ）</li>

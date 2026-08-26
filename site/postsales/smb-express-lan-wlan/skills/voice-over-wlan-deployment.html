@@ -74,23 +74,35 @@ blockquote p{margin:6px 0}
 <li>需要决定 802.11r/k/v 开不开、2.4G 还是 5G、RAP 还是本部 AP</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>VoWLAN 是"覆盖设计 + QoS + 漫游"三件事：覆盖按 -70dBm 小区交叠 8dB 设计，QoS 把 Voice 映射到 WMM/802.1p 6 / DSCP 46，漫游靠 802.11r/k/v 与 CNCS 上下文判定 L2/L3。</li>
-<li>语音对延迟、抖动、丢包、重传有硬门限，规划阶段就要算清 AP 密度与每 AP 语音流数。</li>
-</ul>
+<p>VoWLAN 是"覆盖设计 + QoS + 漫游"三件事：覆盖按 -70dBm 小区交叠 8dB 设计，QoS 把 Voice 映射到 WMM/802.1p 6 / DSCP 46，漫游靠 802.11r/k/v 与 CNCS 上下文判定 L2/L3。语音对延迟、抖动、丢包、重传有硬门限，规划阶段就要算清 AP 密度与每 AP 语音流数。</p>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li><strong>按五阶段方法论推进</strong>：Prepare → Plan → Design → Implement → Operate（ <code>&lt;span class="pg"&gt;原文p252&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p964&lt;/span&gt;</code> ）：先识别语音与音视频用途，运营阶段持续监控维护。</li>
 <li><strong>Preparation 现场勘测</strong>：Site survey → 分析 RF 环境 → 找干扰源；容量基准：办公区 1 AP / 255 m²、每 AP 平均 20-25 用户（ <code>&lt;span class="pg"&gt;原文p253&lt;/span&gt;</code> ）。</li>
 <li><strong>RF 门限设计</strong>（ <code>&lt;span class="pg"&gt;原文p928&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p931&lt;/span&gt;</code> ）：覆盖要求 RSSI ≥ -70dBm；漫游要求 -62~-64dBm；AP 边界交叠约 8dB；SNR ≥ 25dB、Noise &lt; -92dBm、RSSI &gt; -67dBm。</li>
-<li><strong>QoS 映射</strong>：Voice DSCP 46 → 802.1p 6；Video 40 → 4；BE 0 → 0；Background 8 → 1（ <code>&lt;span class="pg"&gt;原文p874&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p932&lt;/span&gt;</code> ）。话机侧建议 Voice 流量 DSCP 46、Voice 信令 DSCP 26（ <code>&lt;span class="pg"&gt;原文p933&lt;/span&gt;</code> ）。</li>
-<li><strong>容量核算</strong>（ <code>&lt;span class="pg"&gt;原文p892&lt;/span&gt;</code> ）：AP13XX (11ax) 每流 400Kbps、最高 35 条语音流（18 并发 G.711/Opus NB）；AP12XX (11ac) 13Mbps、32 流；Rainbow Audio/Video HD 105Mbps（3Mbps/流）/35 流。</li>
+<li>
+<p>QoS 映射：Voice DSCP 46 → 802.1p 6；</p>
+<ul>
+<li>Video 40 → 4；</li>
+<li>BE 0 → 0；</li>
+<li>Background 8 → 1（ <code>&lt;span class="pg"&gt;原文p874&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p932&lt;/span&gt;</code> ）。话机侧建议 Voice 流量 DSCP 46、Voice 信令 DSCP 26（ <code>&lt;span class="pg"&gt;原文p933&lt;/span&gt;</code> ）；</li>
+</ul>
+</li>
+<li>
+<p><strong>容量核算</strong>（ <code>&lt;span class="pg"&gt;原文p892&lt;/span&gt;</code> ）：AP13XX (11ax) 每流 400Kbps、最高 35 条语音流（18 并发 G.711/Opus NB）；AP12XX (11ac) 13Mbps、32 流；Rainbow Audio/Video HD 105Mbps（3Mbps/流）/35 流。</p>
+</li>
 <li><strong>验收指标</strong>：往返时延 &lt; 250ms、802.11 重传 &lt; 15%、Jitter &lt; 100ms、丢包 &lt; 2%（MOS≈4 / R-value 80-90）（ <code>&lt;span class="pg"&gt;原文p933&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p1007&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p1008&lt;/span&gt;</code> ）。</li>
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
-<li><strong>漫游机制</strong>：802.11r Fast Transition 先握手换钥再漫游（over-the-air FT 为默认）；802.11k 邻居报告省去全信道扫描；802.11v 由 AP 主动建议漫游目标（ <code>&lt;span class="pg"&gt;原文p938&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p940&lt;/span&gt;</code> ）。漫游类型判定：CNC 表中 VLAN 与目标 AP Access Role VLAN 一致 → L2 漫游，否则 L3（ <code>&lt;span class="pg"&gt;原文p917&lt;/span&gt;</code> ）。</li>
-<li><strong>L3 漫游隧道</strong>：跨子网漫游时新 AP 向 Home AP 建 L2 GRE 隧道，用户 IP 不变且 QoS/ACL 策略保留（ <code>&lt;span class="pg"&gt;原文p894&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p843&lt;/span&gt;</code> ）。</li>
+<li>漫游机制：802.11r Fast Transition 先握手换钥再漫游（over-the-air FT 为默认）；</li>
+<li>802.11k 邻居报告省去全信道扫描；</li>
+<li>
+<p>802.11v 由 AP 主动建议漫游目标（ <code>&lt;span class="pg"&gt;原文p938&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p940&lt;/span&gt;</code> ）。漫游类型判定：CNC 表中 VLAN 与目标 AP Access Role VLAN 一致 → L2 漫游，否则 L3（ <code>&lt;span class="pg"&gt;原文p917&lt;/span&gt;</code> ）；</p>
+</li>
+<li>
+<p><strong>L3 漫游隧道</strong>：跨子网漫游时新 AP 向 Home AP 建 L2 GRE 隧道，用户 IP 不变且 QoS/ACL 策略保留（ <code>&lt;span class="pg"&gt;原文p894&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p843&lt;/span&gt;</code> ）。</p>
+</li>
 <li><strong>语音走 5GHz</strong>：2.4GHz 受蓝牙/微波炉/雷达干扰，语音实现可行但不推荐（ <code>&lt;span class="pg"&gt;原文p908&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p909&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p913&lt;/span&gt;</code> ）。</li>
 <li><strong>Mesh 语音限制</strong>：语音 mesh 最多 4 跳/4 方向，到达 mesh 点带宽 /3、每方向 /4，根 AP 约 15 台话机中转上限；Mesh 中 VoIP 只能 Best Effort（11r/PMK 限制）（ <code>&lt;span class="pg"&gt;原文p899&lt;/span&gt;</code> ）。</li>
 <li><strong>RAP 远程话机</strong>：Tunnel 模式全流量走 VPN（AP1201H 加密性能约 100Mbps，本部同型 433Mbps）；Local breakout 本地流量不回传（ <code>&lt;span class="pg"&gt;原文p904&lt;/span&gt;</code> ）。</li>

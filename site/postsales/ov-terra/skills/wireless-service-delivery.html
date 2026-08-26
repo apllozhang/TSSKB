@@ -74,21 +74,26 @@ blockquote p{margin:6px 0}
 <li>需要定制访客门户、配置访客账号运营（Guest Operator）与配额策略</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>无线配置的承载模型是"AP Group + Provisioning Configuration"：所有 AP 从其所属 AP Group 绑定的 Provisioning Configuration 取配置，SSID/RF Profile/模板均按 AP Group 管理而非物理网络。</li>
-<li>SSID 创建是向导式的，先选 Usage 预设模板（Guest/Employee/BYOD），再走认证策略 → Access Role → 网络分配。</li>
-<li>认证安全等级从 Open+CP 到 802.1X 递增，PSK 体系（DSPSK/PPSK/Dynamic PGPSK）是中间档的精细化工具。</li>
-</ul>
+<p>无线配置的承载模型是"AP Group + Provisioning Configuration"：所有 AP 从其所属 AP Group 绑定的 Provisioning Configuration 取配置，SSID/RF Profile/模板均按 AP Group 管理而非物理网络。SSID 创建是向导式的，先选 Usage 预设模板（Guest/Employee/BYOD），再走认证策略 → Access Role → 网络分配。认证安全等级从 Open+CP 到 802.1X 递增，PSK 体系（DSPSK/PPSK/Dynamic PGPSK）是中间档的精细化工具。</p>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
-<li><strong>建站点与楼层</strong>：创建 Site → Configure buildings and floors → 楼层平面图校准（Scale up/down / Rotate / Move / Move and calibrate the plan）（ <code>&lt;span class="pg"&gt;原文p124&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p125&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p126&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p127&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p128&lt;/span&gt;</code> ）。</li>
+<li><strong>建站点与楼层</strong>：创建 Site → Configure buildings and floors → 楼层平面图校准（Scale up/down：</li>
+<li>Rotate</li>
+<li>Move</li>
+<li>Move and calibrate the plan）（ <code>&lt;span class="pg"&gt;原文p124&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p125&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p126&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p127&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p128&lt;/span&gt;</code> ）。</li>
 <li><strong>建 AP Group + Provisioning Configuration</strong>：</li>
 <li>创建 AP Group（与物理网络无关，每组最多 20000 AP，可混型号）（ <code>&lt;span class="pg"&gt;原文p152&lt;/span&gt;</code> ）</li>
-<li>创建 Provisioning Configuration：必填 Name / Site / RF Profile / Timezone；另含 SSH Login、AP Web、证书、SNMP、IoT Radio、Syslog（最多4）等分节（ <code>&lt;span class="pg"&gt;原文p153&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p154&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p155&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p156&lt;/span&gt;</code> ）</li>
+<li>创建 Provisioning Configuration：必填 Name：</li>
+<li>Site</li>
+<li>RF Profile</li>
+<li>Timezone；另含 SSH Login、AP Web、证书、SNMP、IoT Radio、Syslog（最多4）等分节（ <code>&lt;span class="pg"&gt;原文p153&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p154&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p155&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p156&lt;/span&gt;</code> ）</li>
 <li><strong>Employee SSID（802.1X 示例）</strong>：Usage 选 "Enterprise Network for Employee" → Encryption → Authentication Strategy 用 UPAMRadiusServer + 内部库建 Employee → Configure Access Role Attributes（VLAN ID: Employee(20)，可加 ACL/QoS 如 Full-Access、10Mbit/s）→ Network Assignment 选 Site + AP Group(s) → Schedule / VLAN Mapping 加 VLAN 完成（ <code>&lt;span class="pg"&gt;原文p225&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p226&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p227&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p228&lt;/span&gt;</code> ）。</li>
 <li><strong>Guest SSID + UPAM Guest 策略</strong>：Usage "Guest Network" → 激活 Captive Portal 选项 → Authentication Strategy 选 RADIUS server → 用 UPAM 内部 RADIUS 则创建 Guest account → Guest Access Strategy 定义登录方式与 Post Portal enforcement → 给 Guest SSID 分配 VLAN（ <code>&lt;span class="pg"&gt;原文p249&lt;/span&gt;</code> ）。</li>
 <li><strong>Captive Portal 定制</strong>：可定制 Background Image、Login Background Color、Image Logo、Login Button 以贴合公司品牌；完成后点 apply the changes to the Devices（ <code>&lt;span class="pg"&gt;原文p258&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p259&lt;/span&gt;</code> ）。</li>
-<li><strong>访客运营</strong>：Guest Operator 门户账号可创建访客账号、审批自注册请求；门户内 Manage Guests / Create Guest Account/Access Code / Import from XLSX or CSV / 审批自注册（ <code>&lt;span class="pg"&gt;原文p287&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p288&lt;/span&gt;</code> ）。</li>
+<li><strong>访客运营</strong>：Guest Operator 门户账号可创建访客账号、审批自注册请求；门户内 Manage Guests：</li>
+<li>Create Guest Account/Access Code</li>
+<li>Import from XLSX or CSV</li>
+<li>审批自注册（ <code>&lt;span class="pg"&gt;原文p287&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p288&lt;/span&gt;</code> ）。</li>
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
@@ -99,8 +104,14 @@ blockquote p{margin:6px 0}
 <li>Dynamic Private Group PSK：条目同时绑 VLAN ID 与 ARP，免为每个 VLAN 建 ARP</li>
 <li><strong>VLAN Pooling</strong>：一个 SSID 分配最多 256 个 VLAN，避免单一大广播域（ <code>&lt;span class="pg"&gt;原文p224&lt;/span&gt;</code> ）。</li>
 <li><strong>Guest Tunneling</strong>：按 ARP 从 AP 到交换机/路由器建 L2 GRE 隧道（跨 L2/L3 网络），OmniSwitch 自动向 AP IP 建隧道简化部署，可加 GRE Backup tunnel 冗余（ <code>&lt;span class="pg"&gt;原文p256&lt;/span&gt;</code> ）。</li>
-<li><strong>带宽控制三层模型</strong>：SSID 级（per SSID per AP 共享）→ ARP 级（per user）→ Policy List ACL/QoS 规则级；判定顺序：匹配 ACL 按规则限速，否则按 ARP，再否则按 SSID；Policy List 双向执行（ <code>&lt;span class="pg"&gt;原文p268&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p269&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p264&lt;/span&gt;</code> ）。</li>
-<li><strong>访客配额</strong>：Service Level 绑定 ARP+Policy List+注册 Profile+有效期+删除策略（最多 5 个）；Registration Profile 定义 Data Quota（MB）与 Time Quota（小时/天），耗尽处理为 Block for remaining Duration（可加重定向 URL）或降速（kB/s）（ <code>&lt;span class="pg"&gt;原文p282&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p283&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p284&lt;/span&gt;</code> ）。</li>
+<li>带宽控制三层模型：SSID 级（per SSID per AP 共享）→ ARP 级（per user）→ Policy List ACL/QoS 规则级；</li>
+<li>判定顺序：匹配 ACL 按规则限速，否则按 ARP，再否则按 SSID；</li>
+<li>
+<p>Policy List 双向执行（ <code>&lt;span class="pg"&gt;原文p268&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p269&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p264&lt;/span&gt;</code> ）；</p>
+</li>
+<li>
+<p><strong>访客配额</strong>：Service Level 绑定 ARP+Policy List+注册 Profile+有效期+删除策略（最多 5 个）；Registration Profile 定义 Data Quota（MB）与 Time Quota（小时/天），耗尽处理为 Block for remaining Duration（可加重定向 URL）或降速（kB/s）（ <code>&lt;span class="pg"&gt;原文p282&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p283&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p284&lt;/span&gt;</code> ）。</p>
+</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>

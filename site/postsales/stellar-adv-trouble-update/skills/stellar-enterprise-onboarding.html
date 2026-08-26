@@ -71,16 +71,37 @@ blockquote p{margin:6px 0}
 <h2 id="i">I · 方法论骨架</h2>
 <p>四层递进，每层可独立验证后再进下一层：</p>
 <ol>
-<li><strong>网络层就绪</strong>：Backbone VLAN 互联管理设备（交换机/OV2500/DHCP），每台交换机配三层 IP 接口，互 ping 验证。</li>
-<li><strong>管理通道（交换机）</strong>：全网配 SNMPv3 → OV2500 建同参数 Discovery Profile → 按 IP 段发现。</li>
-<li><strong>AP 上线链路</strong>：AP 管理 VLAN → DHCP relay（Offer 带 option 138 = OV2500 地址）→ 静态路由 → 端口启用 + PoE 上电。</li>
-<li><strong>纳管</strong>：AP 从 Unmanaged 列表改 Trust 状态 → 加入 AP Group（OV2500 只按 AP Group 管理 AP，配置对组内全部 AP 生效）。</li>
+<li>网络层就绪：Backbone VLAN 互联管理设备（交换机/OV2500/DHCP），每台交换机配三层 IP 接口，互 ping 验证。<ul>
+<li>
+<ol>
+<li>管理通道（交换机）：全网配 SNMPv3 → OV2500 建同参数 Discovery Profile → 按 IP 段发现。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>AP 上线链路：AP 管理 VLAN → DHCP relay（Offer 带 option 138 = OV2500 地址）→ 静态路由 → 端口启用 + PoE 上电。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>纳管：AP 从 Unmanaged 列表改 Trust 状态 → 加入 AP Group（OV2500 只按 AP Group 管理 AP，配置对组内全部 AP 生效）。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="a1-lab">A1 · 书中案例（Lab 精要）</h2>
 <ul>
 <li><strong>c01 交换机发现</strong>：三台 OmniSwitch 各建 snmpuserv3（SHA+DES），trap 指向 OV2500:162；OV2500 侧 Profile 参数 Timeout 5000/Retry 3，按三个 IP 段 Discover Now。</li>
-<li><strong>c02 AP 云上线</strong>：VLAN Manager 一次给三台交换机建 VLAN 40（default 口 + Q-tag 级联）；核心 6870 配 DHCP relay 与静态路由；<code>lanpower slot 1/1 service stop/start</code> 重启 PoE 逼 AP 注册；Windows DHCP 服务器预定义 Code 138（IP Address 类型）填 OV2500 地址。</li>
-<li><strong>ce02 国家码坑</strong>：OV2500 首次 AP Registration 选国家码决定信道与功率；教材 AP 与 USA/JAPAN/ISRAEL 区域码不兼容，选错则"设备完好却拒绝工作"。</li>
+<li>c02 AP 云上线：VLAN Manager 一次给三台交换机建 VLAN 40（default 口 + Q-tag 级联）；</li>
+<li>核心 6870 配 DHCP relay 与静态路由；</li>
+<li><code>lanpower slot 1/1 service stop/start</code> 重启 PoE 逼 AP 注册；</li>
+<li>
+<p>Windows DHCP 服务器预定义 Code 138（IP Address 类型）填 OV2500 地址；</p>
+</li>
+<li>
+<p><strong>ce02 国家码坑</strong>：OV2500 首次 AP Registration 选国家码决定信道与功率；教材 AP 与 USA/JAPAN/ISRAEL 区域码不兼容，选错则"设备完好却拒绝工作"。</p>
+</li>
 <li><strong>ce03 评估许可坑</strong>：文件导入与密钥手填二选一（Don't do both）；密钥方式只贴 key 部分，整行复制必失败。</li>
 </ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
@@ -91,14 +112,44 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
-<li>建 Backbone VLAN，各交换机配 IP 接口，双向 ping 通。</li>
+<li>建 Backbone VLAN，各交换机配 IP 接口，双向 ping 通。<ul>
+<li>
+<ol>
 <li>交换机 CLI：<code>user snmpuserv3 read-write all password &lt;pwd&gt; sha+des</code>；<code>snmp station &lt;OV2500 IP&gt; 162 snmpuserv3 v3 enable</code>。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>OV2500：NETWORK &gt; DISCOVERY &gt; Managed Devices &gt; Discover New Devices，Discovery Profile 与交换机侧参数一致。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>建 AP 管理 VLAN；核心交换机配 <code>ip dhcp relay destination &lt;DHCP IP&gt;</code> + admin-state enable + 静态路由。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>DHCP 服务器预定义 option 138 = OV2500 IP。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>启用 AP 端口，<code>lanpower</code> stop/start 让 AP 重启注册。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>OV2500 选国家码（务必与 AP 硬件销售区域匹配）与时区；Unmanaged 列表 → Change to Trust Status。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>建 AP Group，把 AP Change Group 入组，配置随组下发。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <p>AP 不上线排障分层：二层 <code>show interfaces</code> / <code>show vlan members port</code> → 三层 <code>show ip interface</code>、OV2500 虚机菜单查 IP → AP 串口（support 账号）<code>getmode</code>（是否 OV 模式）/<code>getovinfo</code>（OV 地址）/tcpdump 抓 DHCP Offer 验 option 138/43 → <code>show lanpower</code> 查供电。</p>
 <h2 id="b">B · 边界与陷阱</h2>

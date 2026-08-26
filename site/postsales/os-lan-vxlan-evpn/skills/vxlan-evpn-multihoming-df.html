@@ -71,21 +71,52 @@ blockquote p{margin:6px 0}
 </blockquote>
 <h2 id="i">I · 方法论骨架</h2>
 <ol>
-<li><strong>模式选型</strong>：all-active（主主，PE-CE 间必须 LAG 防重复包防环，单播按 LACP 哈希）vs single-active（主备，DF 独占一切流量，非 DF 把口拉 down）。<strong>8.10R1 首版仅支持 single-active</strong>。</li>
-<li><strong>AOS 默认行为</strong>：物理口默认单归属（SH）；LACP 口默认 MH single-active；静态 LAG 例外——必须手工提供 ESI。</li>
-<li><strong>ESI 编码</strong>（RFC 7432 Type 0x3，MAC-based，10 字节=Type 1 + MAC 6 + 本地标识 3）：物理口 <code>03:&lt;端口MAC&gt;:ff:ff:ff</code>；LACP 口 <code>03:&lt;CE-MAC&gt;:ff:&lt;Key-Id&gt;</code>（admin-key 体现在 Key-Id）。手工 ESI 两端必须一致、全网唯一。</li>
-<li><strong>DF 选举</strong>：RT4 发现同 ES 成员后进行，避免 BUM 重复泛洪。默认过程 service carving，算法 DF = EVI mod N（N=候选 PE 数），默认抢占式；可每 VLAN 多 DF 分摊。</li>
-<li><strong>冗余接入选型</strong>：Virtual Chassis（配置简单、数据面收敛快、hypervisor 用标准 LACP）vs EVPN MH（配置排障复杂、控制面收敛慢、hypervisor 用静态 bonding）——小规模单机房优先 VC，跨 leaf/多租户用 EVPN MH。</li>
-<li><strong>机制链</strong>：RT4 发现对端 → DF 选举 → DF 管 BUM → RT1A/RT1B 支撑 aliasing（负载分担）/backup path/mass withdraw/split horizon 四特性。</li>
+<li>模式选型：all-active（主主，PE-CE 间必须 LAG 防重复包防环，单播按 LACP 哈希）vs single-active（主备，DF 独占一切流量，非 DF 把口拉 down）。<ul>
+<li>8.10R1 首版仅支持 single-active。</li>
+<li>
+<ol>
+<li>AOS 默认行为：物理口默认单归属（SH）；LACP 口默认 MH single-active；静态 LAG 例外——必须手工提供 ESI。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>ESI 编码（RFC 7432 Type 0x3，MAC-based，10 字节=Type 1 + MAC 6 + 本地标识 3）：物理口 <code>03:&lt;端口MAC&gt;:ff:ff:ff</code>；LACP 口 <code>03:&lt;CE-MAC&gt;:ff:&lt;Key-Id&gt;</code>（admin-key 体现在 Key-Id）。</li>
+</ol>
+</li>
+<li>手工 ESI 两端必须一致、全网唯一。</li>
+<li>
+<ol>
+<li>DF 选举：RT4 发现同 ES 成员后进行，避免 BUM 重复泛洪。</li>
+</ol>
+</li>
+<li>默认过程 service carving，算法 DF = EVI mod N（N=候选 PE 数），默认抢占式；可每 VLAN 多 DF 分摊。</li>
+<li>
+<ol>
+<li>冗余接入选型：Virtual Chassis（配置简单、数据面收敛快、hypervisor 用标准 LACP）vs EVPN MH（配置排障复杂、控制面收敛慢、hypervisor 用静态 bonding）——小规模单机房优先 VC，跨 leaf/多租户用 EVPN MH。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>机制链：RT4 发现对端 → DF 选举 → DF 管 BUM → RT1A/RT1B 支撑 aliasing（负载分担）/backup path/mass withdraw/split horizon 四特性。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="a1">A1 · 书中案例</h2>
 <ul>
-<li>Lab3 动态 LACP 跨设备多归属（p153-156）：两 Leaf 各建 <code>linkagg lacp agg 3 size 2</code> + <code>actor admin-key 3</code>，CE 侧同 agg 挂两口；
-<code>service access linkagg 3 evpn-ethernet-segment enable</code> 自动生成 ESI 03:2c:fa:a2:a2:f2:ad:00:03:00；
-<code>service 100 sap linkagg 3:10</code>。切换演练：断 Leaf1 的 1/1/3 后 ES 角色翻转（sw2 变 MH-SA[L-A]）、永久 ping 不中断、MAC 迁到 sw2 的 sap:0/3。</li>
-<li>Lab3 静态 LAG 手工 ESI（p156-158）：<code>linkagg static agg 7 size 2</code> → <code>service access linkagg 7 evpn-ethernet-segment enable esi 01:01:01:02:04</code>（呈现 MH-SA[L-M]）→ <code>service 200 sap linkagg 7:20</code>；
-client7 经 sap:0/7 学到、对端经 sdp:32768 学到。</li>
-<li>架构指南三视图验证（p200-201）：本地单归属 ES 用 <code>sap-info</code>（PE 列带 * 为 DF）；本地多归属 ES 用 <code>carving-info</code>（EVI 1000→DF 1.1.1.10、EVI 2000→DF 1.1.1.20，mod 分摊效果）；远端 ES 用 <code>aliasing-info</code>（Primary/Backup/Others）。</li>
+<li>Lab3 动态 LACP 跨设备多归属（p153-156）：两 Leaf 各建 <code>linkagg lacp agg 3 size 2</code> + <code>actor admin-key 3</code>，CE 侧同 agg 挂两口；</li>
+<li><code>service access linkagg 3 evpn-ethernet-segment enable</code> 自动生成 ESI 03:2c:fa:a2:a2:f2:ad:00:03:00；</li>
+<li>
+<p><code>service 100 sap linkagg 3:10</code>。切换演练：断 Leaf1 的 1/1/3 后 ES 角色翻转（sw2 变 MH-SA[L-A]）、永久 ping 不中断、MAC 迁到 sw2 的 sap:0/3；</p>
+</li>
+<li>
+<p>Lab3 静态 LAG 手工 ESI（p156-158）：<code>linkagg static agg 7 size 2</code> → <code>service access linkagg 7 evpn-ethernet-segment enable esi 01:01:01:02:04</code>（呈现 MH-SA[L-M]）→ <code>service 200 sap linkagg 7:20</code>；
+client7 经 sap:0/7 学到、对端经 sdp:32768 学到。</p>
+</li>
+<li>架构指南三视图验证（p200-201）：本地单归属 ES 用 <code>sap-info</code>（PE 列带 * 为 DF）；</li>
+<li>本地多归属 ES 用 <code>carving-info</code>（EVI 1000→DF 1.1.1.10、EVI 2000→DF 1.1.1.20，mod 分摊效果）；</li>
+<li>远端 ES 用 <code>aliasing-info</code>（Primary/Backup/Others）；</li>
 </ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
@@ -95,11 +126,29 @@ BUM 复制机制与 mac mobility 震荡 → <code><a href="vxlan-evpn-bum-troubl
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
-<li>动态 LACP：Leaf 侧 <code>linkagg lacp agg &lt;id&gt; size &lt;n&gt; admin-state enable</code> + <code>actor admin-key &lt;k&gt;</code>，成员口 <code>linkagg lacp port &lt;port&gt; actor admin-key &lt;k&gt;</code>；CE 侧同一 agg 挂多口。</li>
+<li>动态 LACP：Leaf 侧 <code>linkagg lacp agg &lt;id&gt; size &lt;n&gt; admin-state enable</code> + <code>actor admin-key &lt;k&gt;</code>，成员口 <code>linkagg lacp port &lt;port&gt; actor admin-key &lt;k&gt;</code>；CE 侧同一 agg 挂多口。<ul>
+<li>
+<ol>
 <li>启 ES：<code>service access linkagg &lt;id&gt; evpn-ethernet-segment enable</code>（LACP 自动 ESI；静态 LAG 必须追加 <code>esi &lt;10字节&gt;</code>）。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>挂业务：<code>service &lt;id&gt; sap linkagg &lt;id&gt;:&lt;VLAN&gt;</code>。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>验证三视图：<code>show service evpn ethernet-segment</code>（L/R + A/M 标志）→ 本地 <code>&lt;esi&gt; sap-info</code>（* = DF，# = 对端缺 ETag 配置）→ 本地 MH 用 <code>carving-info</code> → 远端用 <code>aliasing-info</code>。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>切换演练：断 active 侧成员口 → 确认 <code>sh linkagg port</code> 状态机（ATTACHED→CONFIGURED）、ES 角色翻转、ping 不中断、MAC 迁移。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>

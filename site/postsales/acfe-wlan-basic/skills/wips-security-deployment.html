@@ -75,7 +75,9 @@ blockquote p{margin:6px 0}
 <p>"Do not modify the parameters, unless instructed to. Actions applied to Rogue AP can have big consequences to other wireless networks. ... your Stellar Access Point sends a de-authentication packet to the Wi-Fi clients associated to rogue Access Points." (p523)</p>
 </blockquote>
 <h2 id="i">I · 方法论骨架</h2>
-<p><strong>1. 三分类框架</strong></p>
+<ol>
+<li><strong>三分类框架</strong></li>
+</ol>
 <table>
 <thead>
 <tr>
@@ -102,21 +104,33 @@ blockquote p{margin:6px 0}
 </tr>
 </tbody>
 </table>
-<p><strong>2. Rogue 判定四条件</strong>
-1. Signal Strength Threshold：信号强于阈值（默认 -70dBm，范围 -50~-90；实验界面默认 Disabled）
-2. Detect Valid SSID：广播了我方 Cirrus 里配置的合法 SSID（默认启用）
-3. Detect Rogue SSID Keyword：SSID 名含黑名单关键词
-4. Rogue OUI：MAC OUI 匹配</p>
-<p><strong>3. 攻击检测与黑名单</strong>
-- 无线攻击检测默认开启，分 AP 攻击/客户端攻击，级别 Custom/High/Medium/Low
-- Client Blocklist Policy 默认禁用；开启后触发条件 60 秒内认证失败 10 次拉黑，老化 1 天
-- 局限：攻击源 MAC 可能是 AP/BSSID/伪造网卡 MAC，只有真实无线客户端 MAC 拉黑才有意义</p>
-<p><strong>4. 前提与副作用</strong>
-- WIPS 全局作用于 OV 管理的全部 AP，且依赖背景扫描开启（见 rf-optimization-baseline 的扫描/性能权衡）
-- 每 AP 每 SSID 双频各一个 BSSID：干扰列表中同一 AP 会出现多条，加 Friendly 时按 OUI 全选</p>
+<ol>
+<li><strong>Rogue 判定四条件</strong></li>
+<li>Signal Strength Threshold：信号强于阈值（默认 -70dBm，范围 -50~-90；实验界面默认 Disabled）</li>
+<li>Detect Valid SSID：广播了我方 Cirrus 里配置的合法 SSID（默认启用）</li>
+<li>Detect Rogue SSID Keyword：SSID 名含黑名单关键词</li>
+<li>
+<p>Rogue OUI：MAC OUI 匹配</p>
+</li>
+<li>
+<p><strong>攻击检测与黑名单</strong></p>
+</li>
+<li>无线攻击检测默认开启，分 AP 攻击/客户端攻击，级别 Custom/High/Medium/Low</li>
+<li>Client Blocklist Policy 默认禁用；开启后触发条件 60 秒内认证失败 10 次拉黑，老化 1 天</li>
+<li>
+<p>局限：攻击源 MAC 可能是 AP/BSSID/伪造网卡 MAC，只有真实无线客户端 MAC 拉黑才有意义</p>
+</li>
+<li>
+<p><strong>前提与副作用</strong></p>
+</li>
+<li>WIPS 全局作用于 OV 管理的全部 AP，且依赖背景扫描开启（见 rf-optimization-baseline 的扫描/性能权衡）</li>
+<li>每 AP 每 SSID 双频各一个 BSSID：干扰列表中同一 AP 会出现多条，加 Friendly 时按 OUI 全选</li>
+</ol>
 <h2 id="a1-lab">A1 · 书中案例（Lab 步骤精要）</h2>
 <ul>
-<li><strong>c19/p521-525</strong>：策略总览（四条件默认值核对）→ Interfering AP 标签搜相邻学员 SSID "EmployeesX"，按 OUI dc:08:56 勾选全部条目 → Action &gt; Add to Friendly → 勾 Detect Rogue SSID Keyword 填 EmployeesX 验证：这些 AP 仍不进 Rogue 标签、客户端连接正常、WIPS Analytics 无 Rogue Detected/DeAuth 记录——证明 Friendly 一票豁免。</li>
+<li>c19/p521-525：策略总览（四条件默认值核对）→ Interfering AP 标签搜相邻学员 SSID "EmployeesX"，按 OUI dc:08:56 勾选全部条目 → Action &gt; Add to Friendly → 勾 Detect Rogue SSID Keyword 填 EmployeesX 验证：这些 AP 仍不进 Rogue 标签</li>
+<li>客户端连接正常</li>
+<li>WIPS Analytics 无 Rogue Detected/DeAuth 记录——证明 Friendly 一票豁免</li>
 </ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>

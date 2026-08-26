@@ -75,14 +75,43 @@ blockquote p{margin:6px 0}
 </blockquote>
 <h2 id="i">I · 方法论骨架</h2>
 <ol>
-<li><strong>分层排查</strong>（f13）：L2/IPMS 层（show ip multicast 全局开关 / group 组注册成员 / forward 转发表 / source 源表；debug ip packet show-multicast on board ni &lt;#&gt; 看 IGMP 查询收发）→ DVMRP 层（show ip dvmrp [neighbor/route/prune/interface/nexthop]；swlog appid dvmrp_0 subapp routes|ipmrm level debug3）→ PIM 层（show ip pim [neighbor/candidate-rp/interface/group-map/sgroute/notifications]；debug 按 subapp 细分：hello/boot-strap/crp/sm-join-prune）。</li>
-<li><strong>L2 设计五规则</strong>（p32）：全网只 1 个 querier；querier-forwarding 只在源与 querier 之间的交换机上启用；zapping 只在边缘设备；proxying 可全网；IGMP 报文 TTL 必须 1。监测：show ip multicast 看 Status/Querying/Proxying/Spoofing/Zapping/Robustness=2/Query Interval=125s，show interfaces flood rate。</li>
-<li><strong>DVMRP DF 选举</strong>（p33）：同网段多台 DVMRP 按（源,组）对选唯一转发者——先比最低 metric，平手比最低 IP。收不到流时从源到接收端走一遍组播路径，debug 看 tDvmrp::Lookup S,G、A new (S,G) entry、Forward 判转发向量是否建立；show ip mroute 看上游邻居。</li>
-<li><strong>PIM-SM 命令分工</strong>（p34/g28）：show ip pim（全局，Keepalive=210s）；neighbor（Hello 30s、J/P 60s）；candidate-rp（参选 RP 组范围与优先级）；interface（DR 选举）；group-map（组→RP 映射）；sgroute（(S,G) 表与 RPF 接口）；notifications（邻居丢失/非法 Register/非法 J-P）。RPF 跟随单播路由表。</li>
+<li>
+<p>分层排查（f13）：L2/IPMS 层（show ip multicast 全局开关 / group 组注册成员 / forward 转发表 / source 源表；</p>
+<ul>
+<li>debug ip packet show-multicast on board ni &lt;#&gt; 看 IGMP 查询收发）→ DVMRP 层（show ip dvmrp [neighbor/route/prune/interface/nexthop]；</li>
+<li>swlog appid dvmrp_0 subapp routes|ipmrm level debug3）→ PIM 层（show ip pim [neighbor/candidate-rp/interface/group-map/sgroute/notifications]；</li>
+<li>debug 按 subapp 细分：hello/boot-strap/crp/sm-join-prune）；</li>
+</ul>
+</li>
+<li>
+<p>L2 设计五规则（p32）：全网只 1 个 querier；</p>
+<ul>
+<li>querier-forwarding 只在源与 querier 之间的交换机上启用；</li>
+<li>zapping 只在边缘设备；</li>
+<li>proxying 可全网；</li>
+<li>IGMP 报文 TTL 必须 1。监测：show ip multicast 看 Status/Querying/Proxying/Spoofing/Zapping/Robustness=2/Query Interval=125s，show interfaces flood rate；</li>
+</ul>
+</li>
+<li>
+<p><strong>DVMRP DF 选举</strong>（p33）：同网段多台 DVMRP 按（源,组）对选唯一转发者——先比最低 metric，平手比最低 IP。收不到流时从源到接收端走一遍组播路径，debug 看 tDvmrp::Lookup S,G、A new (S,G) entry、Forward 判转发向量是否建立；show ip mroute 看上游邻居。</p>
+</li>
+<li>PIM-SM 命令分工（p34/g28）：show ip pim（全局，Keepalive=210s）；<ul>
+<li>neighbor（Hello 30s、J/P 60s）；</li>
+<li>candidate-rp（参选 RP 组范围与优先级）；</li>
+<li>interface（DR 选举）；</li>
+<li>group-map（组→RP 映射）；</li>
+<li>sgroute（(S,G) 表与 RPF 接口）；</li>
+<li>notifications（邻居丢失/非法 Register/非法 J-P）。RPF 跟随单播路由表；</li>
+</ul>
+</li>
 </ol>
 <h2 id="a1-lab">A1 · 书中案例（LAB 故障根因）</h2>
 <ul>
-<li><strong>c09（LAB4 案例3，p280-292）</strong>：Client1（监控摄像头源，组 231.1.1.1）发流，Client9 收不到；单播互 ping 正常。排查：从 6360-A traceroute 192.168.110.50 确认单播路径经 192.168.57.7→172.16.17.1（PIM-SM 的 RPF/join 沿单播路径走）；show ip pim interface 逐台核——6870-A 五个口 PIM enabled，而 6900-A 路径上的 int_217 没启用 PIM，join 到不了源侧。修复：<code>ip pim interface int_217</code>，发流验证。方法沉淀：组播不通先 traceroute 单播路径，再沿路径逐接口核 PIM 使能状态。</li>
+<li>c09（LAB4 案例3，p280-292）：Client1（监控摄像头源，组 231.1.1.1）发流，Client9 收不到；单播互 ping 正常。</li>
+<li>排查：从 6360-A traceroute 192.168.110.50 确认单播路径经 192.168.57.7→172.16.17.1（PIM-SM 的 RPF/join 沿单播路径走）；
+show ip pim interface 逐台核——6870-A 五个口 PIM enabled，而 6900-A 路径上的 int_217 没启用 PIM，join 到不了源侧。</li>
+<li>修复：<code>ip pim interface int_217</code>，发流验证。</li>
+<li>方法沉淀：组播不通先 traceroute 单播路径，再沿路径逐接口核 PIM 使能状态。</li>
 </ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
@@ -91,12 +120,34 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
-<li>先验证单播路径通（ping/traceroute 到源），不通先修单播。</li>
+<li>先验证单播路径通（ping/traceroute 到源），不通先修单播。<ul>
+<li>
+<ol>
 <li>L2 层：show ip multicast 核全局开关与 querier 位置 → show ip multicast group 核接收端加组 → show ip multicast forward/source 核转发表 → 按五规则核查设计（querier 唯一、forwarding 位置、zapping 边缘、TTL=1）。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>需要看 IGMP 报文：debug ip packet show-multicast on board ni &lt;#&gt;。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>DVMRP 环境：show ip dvmrp neighbor/route/prune → swlog appid dvmrp_0 subapp routes level debug3 看转发向量与 DF 选举。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>PIM 环境：traceroute 单播路径 → 沿路径逐台 show ip pim interface 核 PIM enabled 与 DR → show ip pim neighbor / candidate-rp / group-map 核 RP 可达 → show ip pim sgroute 核 (S,G) 与 RPF 接口 → 需要时按 subapp（hello/boot-strap/crp/sm-join-prune）分别调 debug3。</li>
-<li>修复后源发流、接收端验证，<strong>日志调回 info</strong>。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>修复后源发流、接收端验证，日志调回 info。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>

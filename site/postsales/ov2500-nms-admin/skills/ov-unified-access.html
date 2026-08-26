@@ -73,26 +73,50 @@ blockquote p{margin:6px 0}
 <li>客户端认证失败/落错 VLAN，需要排查 UNP 匹配链路</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>Unified Access 是三层模板模型：AAA Server Profile 定义认证服务器参数 → Access Role Profile 定义 UNP 属性（QoS 策略表、Access Policies、Captive Portal 认证）→ Access Auth Profile 把预定义 UNP 端口配置指派到边缘端口；
-Unified Policy 挂在 Access Role Profile 之下。</li>
-<li>认证不可用时由 Access Classification 规则兜底决定 profile。</li>
-</ul>
+<p>Unified Access 是三层模板模型：AAA Server Profile 定义认证服务器参数 → Access Role Profile 定义 UNP 属性（QoS 策略表、Access Policies、Captive Portal 认证）→ Access Auth Profile 把预定义 UNP 端口配置指派到边缘端口；
+Unified Policy 挂在 Access Role Profile 之下。认证不可用时由 Access Classification 规则兜底决定 profile。</p>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li><strong>建认证服务器</strong>：Security &gt; Authentication Servers &gt; RADIUS：建 RADIUS_VM（IP 192.168.100.102 / secret alcatel-lucent）（ <code>&lt;span class="pg"&gt;原文p258-259&lt;/span&gt;</code> ）</li>
 <li><strong>AAA Server Profile</strong>：Unified Access &gt; Unified Profile &gt; Templates：802.1X Primary 与 MAC Primary 均指向 RADIUS_VM（ <code>&lt;span class="pg"&gt;原文p259&lt;/span&gt;</code> ）</li>
 <li><strong>Access Role Profile</strong>：建 UNP-employee（<strong>名称必须与 RADIUS 返回的 Filter-ID 完全一致</strong>）→ Apply to Devices（Map to VLAN 80、选 6860B）（ <code>&lt;span class="pg"&gt;原文p261-263&lt;/span&gt;</code> ）</li>
 <li><strong>Access Auth Profile</strong>：建 UNP_template（AAA=AAA_RADIUS、Port Bounce/MAC Auth/802.1X Auth Enabled）→ Apply to Devices 选端口（如 6860B 1/1/1）（ <code>&lt;span class="pg"&gt;原文p264-265&lt;/span&gt;</code> ）</li>
-<li><strong>验证</strong>：<code>aaa test-radius-server RADIUS_VM type authentication user employee password password</code> 应返回 Filter-ID = UNP-employee；客户端启用 IEEE 802.1X；<code>unp user flush port 1/1/1</code> 清状态后重连；<code>show unp user</code> 应显示 employee/VLAN 80/UNP-employee；Network → Locator 按 Auth. User=employee Live 查询（ <code>&lt;span class="pg"&gt;原文p263-268&lt;/span&gt;</code> ）</li>
+<li>
+<p>验证：<code>aaa test-radius-server RADIUS_VM type authentication user employee password password</code> 应返回 Filter-ID = UNP-employee；</p>
+<ul>
+<li>客户端启用 IEEE 802.1X；</li>
+<li><code>unp user flush port 1/1/1</code> 清状态后重连；</li>
+<li><code>show unp user</code> 应显示 employee/VLAN 80/UNP-employee；</li>
+<li>Network → Locator 按 Auth. User=employee Live 查询（ <code>&lt;span class="pg"&gt;原文p263-268&lt;/span&gt;</code> ）；</li>
+</ul>
+</li>
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
 <li>用户角色导向策略：Employee Profile → VLAN 20/更高带宽与优先级；Guest Profile → VLAN 30/仅 Internet/更低带宽优先级，由 "OV 2500 / UPAM" 下发（ <code>&lt;span class="pg"&gt;原文p231&lt;/span&gt;</code> ）</li>
-<li>Access Auth Profile 端口行为细节（ <code>&lt;span class="pg"&gt;原文p241-242&lt;/span&gt;</code> ）：Port Bounce——COA 后客户端换 VLAN 时端口被管理性 down 以触发 DHCP 续租与重认证；802.1X Pass Alt / Bypass Status 可跳过 802.1X 直入 MAC 认证或分类；Failure Policy、MAC Pass Alt / MAC Allow EAP；"802.1X Auth and MAC Auth only applies to wired devices."</li>
-<li>Access Classification 回退规则（ <code>&lt;span class="pg"&gt;原文p243-244&lt;/span&gt;</code> ）：认证不可用时按规则定 profile；有线规则类型 Port/MAC/MAC OUI/MAC+Port/MAC+IP+Port/LLDP/认证类型/IP+Port；无线规则类型 MAC/BSSID/ESSID/DHCP Option/DHCP Option 77/加密类型/位置</li>
-<li>Captive Portal 分层（ <code>&lt;span class="pg"&gt;原文p252-255&lt;/span&gt;</code> ）：CP Profile 仅对启用 CP 认证的 Access Role Profile 有效；Profile Domain Policy List 按登录域分配 CP Profile + QoS，Domain Policy List 按认证 realm 定义策略；定制 html/jpeg 文件构成登录页</li>
-<li>UPAM 代管交换机账号：Switch User Account 经 UPAM 建交换机用户，再建 AAA Profile 指定 UPAM 为访问服务器并指派给交换机；Switch Access Record 可查经 UPAM 的认证记录（ <code>&lt;span class="pg"&gt;原文p166-167&lt;/span&gt;</code> ）</li>
+<li>Access Auth Profile 端口行为细节（ <code>&lt;span class="pg"&gt;原文p241-242&lt;/span&gt;</code> ）：Port Bounce——COA 后客户端换 VLAN 时端口被管理性 down 以触发 DHCP 续租与重认证；</li>
+<li>802.1X Pass Alt / Bypass Status 可跳过 802.1X 直入 MAC 认证或分类；</li>
+<li>Failure Policy、MAC Pass Alt / MAC Allow EAP；</li>
+<li>
+<p>"802.1X Auth and MAC Auth only applies to wired devices."；</p>
+</li>
+<li>
+<p>Access Classification 回退规则（ <code>&lt;span class="pg"&gt;原文p243-244&lt;/span&gt;</code> ）：认证不可用时按规则定 profile；</p>
+</li>
+<li>有线规则类型 Port/MAC/MAC OUI/MAC+Port/MAC+IP+Port/LLDP/认证类型/IP+Port；</li>
+<li>
+<p>无线规则类型 MAC/BSSID/ESSID/DHCP Option/DHCP Option 77/加密类型/位置；</p>
+</li>
+<li>
+<p>Captive Portal 分层（ <code>&lt;span class="pg"&gt;原文p252-255&lt;/span&gt;</code> ）：CP Profile 仅对启用 CP 认证的 Access Role Profile 有效；</p>
+</li>
+<li>Profile Domain Policy List 按登录域分配 CP Profile + QoS，Domain Policy List 按认证 realm 定义策略；</li>
+<li>
+<p>定制 html/jpeg 文件构成登录页；</p>
+</li>
+<li>
+<p>UPAM 代管交换机账号：Switch User Account 经 UPAM 建交换机用户，再建 AAA Profile 指定 UPAM 为访问服务器并指派给交换机；Switch Access Record 可查经 UPAM 的认证记录（ <code>&lt;span class="pg"&gt;原文p166-167&lt;/span&gt;</code> ）</p>
+</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>

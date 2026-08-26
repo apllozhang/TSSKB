@@ -67,7 +67,11 @@ blockquote p{margin:6px 0}
 <li>新硬件（OS6575/OS6920-D32/400G 模块）支持情况查询</li>
 </ul>
 <h2 id="i">I（核心理念)</h2>
-<p>8.10R4 变更分三层看：新特性（管理安全类、L3/业务类、安全类、运维类）按 Feature Matrix 核对平台与首版（F4， <code>&lt;span class="pg"&gt;原文p52-61&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p19&lt;/span&gt;</code> ：Y=历来支持 / N=不支持 / 版本号=该版引入 / EA=Early Availability 未完整验证不受支持）；许可分层模型（P48， <code>&lt;span class="pg"&gt;原文p19-20&lt;/span&gt;</code> ）：Data Center 许可（本版均不支持 DCB/FIP/FCoE）→ Feature/Performance（MACsec/10G/MPLS/50G）→ Metro（8.9R1 起 6560 收费）→ Advanced Routing（6560 版限 2 OSPF 区域；8.10R4 加 BGP）→ Premium 捆绑（单文件多子许可，VC 内 Match=全成员一致才生效 / Local-Only=仅本机，P36/X"VC Parity"）。废弃与行为变更（8.5R4-8.10R4）是升级迁移的硬前提，带 EVB 配置的交换机直接禁止升级（X6）。</p>
+<p>8.10R4 变更分三层看：新特性（管理安全类、L3/业务类、安全类、运维类）按 Feature Matrix 核对平台与首版（F4， <code>&lt;span class="pg"&gt;原文p52-61&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p19&lt;/span&gt;</code> ：Y=历来支持：
+- N=不支持
+- 版本号=该版引入
+- EA=Early Availability 未完整验证不受支持）；许可分层模型（P48， <code>&lt;span class="pg"&gt;原文p19-20&lt;/span&gt;</code> ）：Data Center 许可（本版均不支持 DCB/FIP/FCoE）→ Feature/Performance（MACsec/10G/MPLS/50G）→ Metro（8.9R1 起 6560 收费）→ Advanced Routing（6560 版限 2 OSPF 区域；8.10R4 加 BGP）→ Premium 捆绑（单文件多子许可，VC 内 Match=全成员一致才生效
+- Local-Only=仅本机，P36/X"VC Parity"）。废弃与行为变更（8.5R4-8.10R4）是升级迁移的硬前提，带 EVB 配置的交换机直接禁止升级（X6）。</p>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>升前查废弃清单</strong>：存量配置含 EVB/OVSDB/分布式 ARP/WRED/qos dscp-table/ip helper 旧格式等，先清理或改写再升级</li>
@@ -78,8 +82,28 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>新特性速查</strong>（8.10R4 要点）：Router Mode/Edge-router Mode 规模切换（P16/P17， <code>&lt;span class="pg"&gt;原文p26&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p37-38&lt;/span&gt;</code> ）、IPv6 BGP 聚合（P19）、PIM over GRE（P20）、sFlow BGP Gateway（P21）、EVPN 多站点模型库 Clos-3/5/Collapsed Core/DCI/Multi-PoD/Multi-site（P22）、手工 RD/RT（P23）、PEG+OISM（P24）、ERP over SPB spb-remote-flush（P25）、SPB on 6570M/6575（P26，推荐 Fabric TCAM profile）、Multi-Site SPB/SBN/site-id 突破平面 500-1000 节点上限（P27）、DHL Active-Standby（P18）、Threat-Insight DGA/MITM/JA3（P32）、RoCEv2/DCQCN（P33）、Telemetry IPFIX→Telegraf/InfluxDB/Grafana（P31）、MKA VLAN/TPID 隧道化（P13/C19）、PKIX SSH 智能卡（P9）、TLS 1.3 可配（P8）</li>
-<li><strong>许可核对</strong>：Performance License 解锁端口速率（6560 10G/6570M 25G/6870 50G，默认降速）；MACsec Site License 8.6R1 起强制（免费生成、免重启，P12）；Premium 捆绑按 MAC/序列号生成</li>
+<li>新特性速查（8.10R4 要点）：Router Mode/Edge-router Mode 规模切换（P16/P17， <code>&lt;span class="pg"&gt;原文p26&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p37-38&lt;/span&gt;</code> ）</li>
+<li>IPv6 BGP 聚合（P19）</li>
+<li>PIM over GRE（P20）</li>
+<li>sFlow BGP Gateway（P21）</li>
+<li>EVPN 多站点模型库 Clos-3/5/Collapsed Core/DCI/Multi-PoD/Multi-site（P22）</li>
+<li>手工 RD/RT（P23）</li>
+<li>PEG+OISM（P24）</li>
+<li>ERP over SPB spb-remote-flush（P25）</li>
+<li>SPB on 6570M/6575（P26，推荐 Fabric TCAM profile）</li>
+<li>Multi-Site SPB/SBN/site-id 突破平面 500-1000 节点上限（P27）</li>
+<li>DHL Active-Standby（P18）</li>
+<li>Threat-Insight DGA/MITM/JA3（P32）</li>
+<li>RoCEv2/DCQCN（P33）</li>
+<li>Telemetry IPFIX→Telegraf/InfluxDB/Grafana（P31）</li>
+<li>MKA VLAN/TPID 隧道化（P13/C19）</li>
+<li>PKIX SSH 智能卡（P9）</li>
+<li>
+<p>TLS 1.3 可配（P8）</p>
+</li>
+<li>
+<p><strong>许可核对</strong>：Performance License 解锁端口速率（6560 10G/6570M 25G/6870 50G，默认降速）；MACsec Site License 8.6R1 起强制（免费生成、免重启，P12）；Premium 捆绑按 MAC/序列号生成</p>
+</li>
 <li><strong>新硬件</strong>：OS6575 家族三形态（P46）、OS6920-D32 32×400G（P45）、QSFPD-400G 系列（C/DR4 500m/FR4 2km/LR4 10km/A10M/SR4.2 可拆 4×100G）、QSFP-100G-SR1.2/PSM4（ <code>&lt;span class="pg"&gt;原文p21-22&lt;/span&gt;</code> ）</li>
 <li><strong>跨版本配置漂移自查</strong>：NTP <code>ip service source-ip ntp</code> 参数 8.5R4 废弃、8.6R2 恢复（X73）；DHCPv6 Guard 接口名格式改 vlan 形式（X69）</li>
 </ul>

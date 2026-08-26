@@ -68,11 +68,7 @@ blockquote p{margin:6px 0}
 <li>判断"这是缺陷还是配置问题"——先查 Open CR 再排障</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>Release Notes 的 Open Problem Reports 是手册里没有的独占排障库：按 CRAOS8X-xxxxx 编号索引，Fixed CR（Appendix I， <code>&lt;span class="pg"&gt;原文p83-100&lt;/span&gt;</code> ）为已修，Open CR（ <code>&lt;span class="pg"&gt;原文p41-46&lt;/span&gt;</code> ）为发布时未修、多数"无解"只能绕行。</li>
-<li>排障口诀：现象先对号 Open CR（避免无效变更）→ 不是 CR 再走配置排障；硬件类 CR 多与光模块速率协商/批次相关，软件类 CR 多与 toggle/admin-state 操作触发相关。</li>
-<li>平台端口级限制（MACsec 端口矩阵、快速收敛例外、性能许可口）是"设计即如此"，升级不能解决。</li>
-</ul>
+<p>Release Notes 的 Open Problem Reports 是手册里没有的独占排障库：按 CRAOS8X-xxxxx 编号索引，Fixed CR（Appendix I， <code>&lt;span class="pg"&gt;原文p83-100&lt;/span&gt;</code> ）为已修，Open CR（ <code>&lt;span class="pg"&gt;原文p41-46&lt;/span&gt;</code> ）为发布时未修、多数"无解"只能绕行。排障口诀：现象先对号 Open CR（避免无效变更）→ 不是 CR 再走配置排障；硬件类 CR 多与光模块速率协商/批次相关，软件类 CR 多与 toggle/admin-state 操作触发相关。平台端口级限制（MACsec 端口矩阵、快速收敛例外、性能许可口）是"设计即如此"，升级不能解决。</p>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>光模块/链路类故障</strong>：对号 X38-X44 清单——多数 workaround 是换模块类型、固定速率、调 inter-frame-gap/FEC</li>
@@ -82,10 +78,33 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>光模块 CR 绕行</strong>：SFP-10G-T 对端强制 10G（X38， <code>&lt;span class="pg"&gt;原文p42&lt;/span&gt;</code> ）；SFP-GIG-T 避开 10M 配置下的反复 admin disable/enable（X39， <code>&lt;span class="pg"&gt;原文p42&lt;/span&gt;</code> ）；OS99-CNI-U8 4x25G DAC 起 lane 不来换 QSFP-100G-SR4 光纤（X40， <code>&lt;span class="pg"&gt;原文p42&lt;/span&gt;</code> ）；SFP-DUAL-BX-U/D 只用于 6870-24/48/V12 的 1G（X41， <code>&lt;span class="pg"&gt;原文p43&lt;/span&gt;</code> ）；VFL 4X25G splitter CRC 两侧 inter-frame-gap=13 或 FEC FC+关自协商（X44， <code>&lt;span class="pg"&gt;原文p42&lt;/span&gt;</code> ）</li>
-<li><strong>MACsec 部署核对</strong>：端口矩阵例外——6870-24 口 25-26、6870-48 口 49-50 不支持；6865 系列不支持；6900 仅 X48C4E（Dynamic only）；6860N 仅 Dynamic 128-bit 且 splitter 光模块不支持；9900 CNI-U8 不支持（X22/X23， <code>&lt;span class="pg"&gt;原文p62&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p17&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p63&lt;/span&gt;</code> ）</li>
-<li><strong>平台缺口预查</strong>：6920 本版无 VC、不支持 IP-IP/GRE/IPv6 隧道（X28， <code>&lt;span class="pg"&gt;原文p21&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p43&lt;/span&gt;</code> ）；6575-MP16 无 VC（X29， <code>&lt;span class="pg"&gt;原文p21&lt;/span&gt;</code> ）；P48Z16(903954-90) 1G 口 1-32 不支持聚合，只能靠 PN 区分（X21， <code>&lt;span class="pg"&gt;原文p15&lt;/span&gt;</code> ）；快速收敛例外：铜口/VFL/splitter 口、6865-P16X·U12X 口 3/4、6570M-12/12D 口 9/10（X24， <code>&lt;span class="pg"&gt;原文p15&lt;/span&gt;</code> ）</li>
-<li><strong>6560 X4 系列 10G 解锁口</strong>：24X4/P24X4 口 25/26、48X4/P48X4 口 49/50（默认 1G）；6570M-U28 口 25-28、6870-LNI-U6（50G）同理（X25， <code>&lt;span class="pg"&gt;原文p19&lt;/span&gt;</code> ）</li>
+<li>光模块 CR 绕行：SFP-10G-T 对端强制 10G（X38， <code>&lt;span class="pg"&gt;原文p42&lt;/span&gt;</code> ）；</li>
+<li>SFP-GIG-T 避开 10M 配置下的反复 admin disable/enable（X39， <code>&lt;span class="pg"&gt;原文p42&lt;/span&gt;</code> ）；</li>
+<li>OS99-CNI-U8 4x25G DAC 起 lane 不来换 QSFP-100G-SR4 光纤（X40， <code>&lt;span class="pg"&gt;原文p42&lt;/span&gt;</code> ）；</li>
+<li>SFP-DUAL-BX-U/D 只用于 6870-24/48/V12 的 1G（X41， <code>&lt;span class="pg"&gt;原文p43&lt;/span&gt;</code> ）；</li>
+<li>
+<p>VFL 4X25G splitter CRC 两侧 inter-frame-gap=13 或 FEC FC+关自协商（X44， <code>&lt;span class="pg"&gt;原文p42&lt;/span&gt;</code> ）；</p>
+</li>
+<li>
+<p>MACsec 部署核对：端口矩阵例外——6870-24 口 25-26、6870-48 口 49-50 不支持；</p>
+</li>
+<li>6865 系列不支持；</li>
+<li>6900 仅 X48C4E（Dynamic only）；</li>
+<li>6860N 仅 Dynamic 128-bit 且 splitter 光模块不支持；</li>
+<li>
+<p>9900 CNI-U8 不支持（X22/X23， <code>&lt;span class="pg"&gt;原文p62&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p17&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p63&lt;/span&gt;</code> ）；</p>
+</li>
+<li>
+<p>平台缺口预查：6920 本版无 VC、不支持 IP-IP/GRE/IPv6 隧道（X28， <code>&lt;span class="pg"&gt;原文p21&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p43&lt;/span&gt;</code> ）；</p>
+</li>
+<li>6575-MP16 无 VC（X29， <code>&lt;span class="pg"&gt;原文p21&lt;/span&gt;</code> ）；</li>
+<li>P48Z16(903954-90) 1G 口 1-32 不支持聚合，只能靠 PN 区分（X21， <code>&lt;span class="pg"&gt;原文p15&lt;/span&gt;</code> ）；</li>
+<li>
+<p>快速收敛例外：铜口/VFL/splitter 口、6865-P16X·U12X 口 3/4、6570M-12/12D 口 9/10（X24， <code>&lt;span class="pg"&gt;原文p15&lt;/span&gt;</code> ）；</p>
+</li>
+<li>
+<p><strong>6560 X4 系列 10G 解锁口</strong>：24X4/P24X4 口 25/26、48X4/P48X4 口 49/50（默认 1G）；6570M-U28 口 25-28、6870-LNI-U6（50G）同理（X25， <code>&lt;span class="pg"&gt;原文p19&lt;/span&gt;</code> ）</p>
+</li>
 <li><strong>SPB BVLAN 收敛运维</strong>：<code>show spb isis bvlans</code> 查全网 In Use → 维护窗内业务删除重建到 4 条 BVLAN → 空闲 BVLAN 全网删除（在线改不支持）（C17， <code>&lt;span class="pg"&gt;原文p66&lt;/span&gt;</code> /X31  <code>&lt;span class="pg"&gt;原文p65&lt;/span&gt;</code> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>

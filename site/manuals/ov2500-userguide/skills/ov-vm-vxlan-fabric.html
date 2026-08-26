@@ -75,11 +75,8 @@ blockquote p{margin:6px 0}
 <li>VXLAN 封装包识别与策略入库（VM Snooping）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>VM Manager 纳管混合 vCenter（≤2 个）+Hyper-V，总 VM 上限 5000；
-流量塑形模型：VM 打 VLAN Tag → 交换机 UNP Tag 规则把 VM VLAN 映射到 UNP+VLAN → 每 VM VLAN 一个 UNP + 一条 VLAN Tag 分类规则 → VM 跨 Host 迁移免改配置。</li>
-<li>VXLAN 仅 OS6900-Q32/X72 支持：VXLAN Service = VFI（SAP 侧学客户 MAC + SDP 侧学网络 MAC），24 位 VNI 支持 1600 万隔离段。</li>
-</ul>
+<p>VM Manager 纳管混合 vCenter（≤2 个）+Hyper-V，总 VM 上限 5000；
+流量塑形模型：VM 打 VLAN Tag → 交换机 UNP Tag 规则把 VM VLAN 映射到 UNP+VLAN → 每 VM VLAN 一个 UNP + 一条 VLAN Tag 分类规则 → VM 跨 Host 迁移免改配置。VXLAN 仅 OS6900-Q32/X72 支持：VXLAN Service = VFI（SAP 侧学客户 MAC + SDP 侧学网络 MAC），24 位 VNI 支持 1600 万隔离段。</p>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li><strong>VM 纳管前置</strong>（principles·P191， <code>&lt;span class="pg"&gt;原文p830-840&lt;/span&gt;</code> ）：vCenter URL 需 /sdk 后缀；所有 Hypervisor 系统时间必须与 OV 同步；Hypervisor 连接口或本身须关链路发现协议（否则发 LLDP 被当成桥设备）</li>
@@ -88,10 +85,38 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>VM VLAN 配置与 One-Touch SPB</strong>：Exclude VLAN 让 OV 忽略管理类 VM VLAN；VLAN Notification 的 Active/Ignored 两列（有替代配置可 Ignore）；Resolve 向导自动修复缺失 Tag 规则——自动生成 UNP Profile 名 "UNP XX"（XX=VLAN ID）；SPB Profile 的 ISID=Starting ISID+VM VLAN ID（改起始值可建独立 L2 域），BVLAN 4 个轮转+各自 ECT ID；自动生成的 Profile Policy List 留空仅保连通，后续手工补（principles·P192， <code>&lt;span class="pg"&gt;原文p841-847&lt;/span&gt;</code> ）</li>
-<li><strong>VXLAN 核心</strong>：VXLAN Service=VFI；VNID 置 0 自动生成；删除 Service 须先禁用 Service 及关联 SAP/SDP；SDP 隧道须设备有 Loopback0（可跳转 VLANs 应用创建）；Unicast 隧道 Bidirectional（两端建 SDP）/Unidirectional；Multicast 隧道要求全部节点入同一 PIM 组（缺 PIM 配置会警告，可一键套默认）；SAP 每端口最多 8 个，Trusted 默认 True（principles·P193， <code>&lt;span class="pg"&gt;原文p848-852&lt;/span&gt;</code> ）</li>
-<li><strong>VM Snooping</strong>：Policy Mode Basic/Advanced；Policy Resource Default/Extended（策略数翻倍）；Aging 0-86400 默认 300（0=永不老化）；Trap Threshold 默认 80%；UDP 目的端口默认 4789 可加最多 7 个附加端口（多端口降低速度）；统计经 FTP/SFTP 收集（设备须配 CLI/FTP 凭据）；VSnoop Purge Scheduler 默认每 15 分钟（principles·P194， <code>&lt;span class="pg"&gt;原文p855-860&lt;/span&gt;</code> ）</li>
-<li><strong>VM 定位</strong>：Live Search 查实时位置；历史搜索有 false positive（旧 uplink 信息持久，用 Locator timestamp 判断）；连 Host 的交换机应加入 VMM Devices List 保证数据最新（principles·P191）</li>
+<li>VM VLAN 配置与 One-Touch SPB：Exclude VLAN 让 OV 忽略管理类 VM VLAN；</li>
+<li>VLAN Notification 的 Active/Ignored 两列（有替代配置可 Ignore）；</li>
+<li>Resolve 向导自动修复缺失 Tag 规则——自动生成 UNP Profile 名 "UNP XX"（XX=VLAN ID）；</li>
+<li>SPB Profile 的 ISID=Starting ISID+VM VLAN ID（改起始值可建独立 L2 域），BVLAN 4 个轮转+各自 ECT ID；</li>
+<li>
+<p>自动生成的 Profile Policy List 留空仅保连通，后续手工补（principles·P192， <code>&lt;span class="pg"&gt;原文p841-847&lt;/span&gt;</code> ）；</p>
+</li>
+<li>
+<p>VXLAN 核心：VXLAN Service=VFI；</p>
+</li>
+<li>VNID 置 0 自动生成；</li>
+<li>删除 Service 须先禁用 Service 及关联 SAP/SDP；</li>
+<li>SDP 隧道须设备有 Loopback0（可跳转 VLANs 应用创建）；</li>
+<li>Unicast 隧道 Bidirectional（两端建 SDP）/Unidirectional；</li>
+<li>Multicast 隧道要求全部节点入同一 PIM 组（缺 PIM 配置会警告，可一键套默认）；</li>
+<li>
+<p>SAP 每端口最多 8 个，Trusted 默认 True（principles·P193， <code>&lt;span class="pg"&gt;原文p848-852&lt;/span&gt;</code> ）；</p>
+</li>
+<li>
+<p>VM Snooping：Policy Mode Basic/Advanced；</p>
+</li>
+<li>Policy Resource Default/Extended（策略数翻倍）；</li>
+<li>Aging 0-86400 默认 300（0=永不老化）；</li>
+<li>Trap Threshold 默认 80%；</li>
+<li>UDP 目的端口默认 4789 可加最多 7 个附加端口（多端口降低速度）；</li>
+<li>统计经 FTP/SFTP 收集（设备须配 CLI/FTP 凭据）；</li>
+<li>
+<p>VSnoop Purge Scheduler 默认每 15 分钟（principles·P194， <code>&lt;span class="pg"&gt;原文p855-860&lt;/span&gt;</code> ）；</p>
+</li>
+<li>
+<p><strong>VM 定位</strong>：Live Search 查实时位置；历史搜索有 false positive（旧 uplink 信息持久，用 Locator timestamp 判断）；连 Host 的交换机应加入 VMM Devices List 保证数据最新（principles·P191）</p>
+</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>

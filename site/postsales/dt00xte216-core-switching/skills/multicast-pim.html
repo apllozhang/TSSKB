@@ -78,17 +78,23 @@ blockquote p{margin:6px 0}
 <li>RP 单点故障风险大，需要 RP 冗余与负载分担（Anycast RP）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>组播分两层解：同 VLAN 内由 IPMS（硬件 IGMP 侦听）解决"只发给加入的端口"；跨网段才需要组播路由协议做 RPF 校验和树构建。</li>
-<li>PIM-SM 用显式加入 + RP 共享树（RPT），末跳 DR 收到首包后自动发起 SPT 切换获得最优路径；
-RP 是可用性与性能的关键点，BSR 做动态发现，Anycast RP（RFC 4610）用共享 Loopback 任播地址做到 IGP 级快速切换。</li>
-</ul>
+<p>组播分两层解：同 VLAN 内由 IPMS（硬件 IGMP 侦听）解决"只发给加入的端口"；
+跨网段才需要组播路由协议做 RPF 校验和树构建。PIM-SM 用显式加入 + RP 共享树（RPT），末跳 DR 收到首包后自动发起 SPT 切换获得最优路径；
+RP 是可用性与性能的关键点，BSR 做动态发现，Anycast RP（RFC 4610）用共享 Loopback 任播地址做到 IGP 级快速切换。</p>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>二层 IPMS：<code>ip multicast admin-state enable</code>（全网）+ 服务器侧 <code>ip multicast querying enable</code> + 其余 <code>ip multicast querier-forwarding enable</code>；验证 <code>show ip multicast group/forward</code> 精确到组地址的端口表项（ <code>&lt;span class="pg"&gt;原文p405&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p409&lt;/span&gt;</code> ）</li>
 <li>PIM-SM：<code>ip load pim</code> + <code>ip pim sparse admin-state enable</code>（全网）→ <code>ip pim interface int_217 ...</code> → <code>ip pim cbsr 192.168.110.1</code> → <code>ip pim candidate-rp 192.168.110.1 231.1.1.0/24</code>（分组 RP）；验证 <code>show ip pim neighbor / group-map / sgroute</code>（ <code>&lt;span class="pg"&gt;原文p447&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p449&lt;/span&gt;</code> ）</li>
-<li>Anycast RP：RP1/RP2 均配 <code>ip interface "Loopback1" address 10.10.10.1</code>；全网所有 PIM 路由器（含非 RP）<code>ip pim static-rp 231.0.0.0/8 10.10.10.1</code>；各 RP 上 <code>ip pim anycast-rp 10.10.10.1 &lt;自身 Loopback0&gt;</code> + 指向对端（ <code>&lt;span class="pg"&gt;原文p648&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p649&lt;/span&gt;</code> ）</li>
-<li>DVMRP（小规模备选）：<code>ip load dvmrp</code> → <code>ip dvmrp interface &lt;name&gt;</code> → <code>ip dvmrp admin-state enable</code> → <code>write memory</code>（ <code>&lt;span class="pg"&gt;原文p419&lt;/span&gt;</code> ）</li>
+<li>
+<p>Anycast RP：RP1/RP2 均配 <code>ip interface "Loopback1" address 10.10.10.1</code>；</p>
+<ul>
+<li>全网所有 PIM 路由器（含非 RP）<code>ip pim static-rp 231.0.0.0/8 10.10.10.1</code>；</li>
+<li>各 RP 上 <code>ip pim anycast-rp 10.10.10.1 &lt;自身 Loopback0&gt;</code> + 指向对端（ <code>&lt;span class="pg"&gt;原文p648&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p649&lt;/span&gt;</code> ）；</li>
+</ul>
+</li>
+<li>
+<p>DVMRP（小规模备选）：<code>ip load dvmrp</code> → <code>ip dvmrp interface &lt;name&gt;</code> → <code>ip dvmrp admin-state enable</code> → <code>write memory</code>（ <code>&lt;span class="pg"&gt;原文p419&lt;/span&gt;</code> ）</p>
+</li>
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>

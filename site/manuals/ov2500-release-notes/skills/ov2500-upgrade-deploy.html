@@ -70,12 +70,43 @@ blockquote p{margin:6px 0}
 <h2 id="i">I · 方法论骨架</h2>
 <p>升级项目分六个工作包，按序推进：</p>
 <ol>
-<li><strong>路径判定</strong>（p11）：只有 4.9R1 能直升 4.9R2；老版本先升 4.9R1。4.7R1 出发的完整链：4.7R1 Patch 2 → 4.8R1 → 4.8R2 → 4.9R1 → 4.9R2（五步）。4.9R1→4.9R2 用全新工作流，自动先打 4.9R1 Patch 1，严格按 Installation and Upgrade Guide 操作。</li>
-<li><strong>HA 顺序</strong>（p12）：先 Standby 后 Active。升完 Standby 等所有服务起来再升 Active（ce66 同步警告的解法）。</li>
-<li><strong>容量选型</strong>（p13）：四档 Low/Medium/High/Very High——设备 500/2000/5000/10000；AP 上限 500/2000/4000/4000；单机 RAM 20/36/64/64GB，HA 40/64/64GB；磁盘 HDD1:50GB + HDD2:512/1024/2048/2048GB。硬规则：HA ≤4000 台且须 Medium 以上。</li>
-<li><strong>首次部署六规则</strong>（p14）：配置并重启前不加新磁盘；RAM 不超宿主机可用；预留 RAM；CPU Shares=High；超 500 台用 VA 菜单扩 HDD2；SNMPv3+AES 建议 Intel AES-NI。</li>
-<li><strong>网络准备</strong>（p16）：放行五个外联域名（ovrepo/ep1/us.fluentnetworking.com、api.fingerbank.org、api.bcti.brightcloud.com）；关键端口：SNMP 161/162、MQTT 1883、RADIUS 1812/1813（转发 1814/1815）、CoA 3799、VMM 135+49152-65535、HA 节点间 TCP 8000/7801/2224 + UDP 5405、cliadmin SSH 2222。无直连外网必须配代理。</li>
-<li><strong>设备侧升级</strong>（p15）：先升 OV 4.9R2，再升 Stellar AP 到 AWOS 5.0.2；Mesh 网络从最末节点逐跳升级，用 AP Web GUI 而非 Resource Manager。</li>
+<li>
+<p>路径判定（p11）：只有 4.9R1 能直升 4.9R2；老版本先升 4.9R1。</p>
+<ul>
+<li>4.7R1 出发的完整链：4.7R1 Patch 2 → 4.8R1 → 4.8R2 → 4.9R1 → 4.9R2（五步）。</li>
+<li>4.9R1→4.9R2 用全新工作流，自动先打 4.9R1 Patch 1，严格按 Installation and Upgrade Guide 操作。</li>
+</ul>
+</li>
+<li>
+<p><strong>HA 顺序</strong>（p12）：先 Standby 后 Active。升完 Standby 等所有服务起来再升 Active（ce66 同步警告的解法）。</p>
+</li>
+<li>
+<p>容量选型（p13）：四档 Low/Medium/High/Very High——设备 500/2000/5000/10000；</p>
+<ul>
+<li>AP 上限 500/2000/4000/4000；</li>
+<li>单机 RAM 20/36/64/64GB，HA 40/64/64GB；</li>
+<li>磁盘 HDD1:50GB + HDD2:512/1024/2048/2048GB。硬规则：HA ≤4000 台且须 Medium 以上；</li>
+</ul>
+</li>
+<li>
+<p><strong>首次部署六规则</strong>（p14）：配置并重启前不加新磁盘；RAM 不超宿主机可用；预留 RAM；CPU Shares=High；超 500 台用 VA 菜单扩 HDD2；SNMPv3+AES 建议 Intel AES-NI。</p>
+</li>
+<li>
+<p>网络准备（p16）：放行五个外联域名（ovrepo/ep1/us.fluentnetworking.com</p>
+<ul>
+<li>api.fingerbank.org</li>
+<li>api.bcti.brightcloud.com）；关键端口：SNMP 161/162</li>
+<li>MQTT 1883</li>
+<li>RADIUS 1812/1813（转发 1814/1815）</li>
+<li>CoA 3799</li>
+<li>VMM 135+49152-65535</li>
+<li>HA 节点间 TCP 8000/7801/2224 + UDP 5405</li>
+<li>cliadmin SSH 2222。无直连外网必须配代理</li>
+</ul>
+</li>
+<li>
+<p><strong>设备侧升级</strong>（p15）：先升 OV 4.9R2，再升 Stellar AP 到 AWOS 5.0.2；Mesh 网络从最末节点逐跳升级，用 AP Web GUI 而非 Resource Manager。</p>
+</li>
 </ol>
 <h2 id="a1">A1 · 书中案例</h2>
 <ul>
@@ -93,13 +124,39 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
-<li>确认当前 OV 版本，套用路径规则得出升级步骤数；写变更计划时把 4.9R1 Patch 1 列为独立步骤。</li>
+<li>确认当前 OV 版本，套用路径规则得出升级步骤数；写变更计划时把 4.9R1 Patch 1 列为独立步骤。<ul>
+<li>
+<ol>
 <li>HA 环境：先备份点，先升 Standby → 验证服务全起 → 再升 Active → 验证 → 复查 WCF 状态（升级+failover 组合会致 WCF 失效，重启 WMA，ce40）。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>按设备数选规模档，核对 RAM/磁盘/CPU 与 HA 上限；HA 主机名 ≤15 字符且不用大写。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>首次部署按六规则执行；KVM 环境按占位盘操作法扩容。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>防火墙按端口表与五域名放行；纯内网配代理（注意：运行后改系统端口会断代理外联，改回 Proxy 端口，ce53）。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>升 AP：全网 AWOS 5.0.2，Mesh 逐跳、Web GUI 操作。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>升级完成后：验证 Watchdog 已启动（启动排障第一步，p18）、默认凭据 admin/switch 会强制改密（p19）。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>

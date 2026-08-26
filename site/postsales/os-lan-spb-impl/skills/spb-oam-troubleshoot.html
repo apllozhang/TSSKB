@@ -75,10 +75,25 @@ blockquote p{margin:6px 0}
 </blockquote>
 <h2 id="i">I · 方法论骨架</h2>
 <ol>
-<li><strong>两层排障法</strong>（f12）：第一层 mac-ping 点测（先 <code>show spb isis info</code> 拿对端 B-MAC，再按 BVLAN 测连通与时延）；第二层 SAA 持续探测（自动为每个 BVLAN/B-MAC 对建会话，分钟级统计 RTT/Jitter，写 /flash/network/saa.xml）。</li>
-<li><strong>IS-IS 逐层验证链</strong>（f04）：配置（bvlans/vlan id）→ 接口（interface）→ 邻接（adjacency）→ 节点状态（info）→ 转发表（unicast-table）→ 路径（spf）→ 数据库（database/nodes），自底向上收敛故障层。</li>
-<li><strong>前后对拍法</strong>：故障切换/调优实验用 <code>show spb isis unicast-table</code> 前后对比确认换路（教材 p127-128 即此用法）。</li>
-<li><strong>三层表对拍查路由</strong>（L3 场景，源自 c10）：<code>show spb ipvpn route-table</code> → <code>show ip global-route-table</code> → <code>show ip routes</code>（IMPORT 标记）。</li>
+<li>两层排障法（f12）：第一层 mac-ping 点测（先 <code>show spb isis info</code> 拿对端 B-MAC，再按 BVLAN 测连通与时延）；
+第二层 SAA 持续探测（自动为每个 BVLAN/B-MAC 对建会话，分钟级统计 RTT/Jitter，写 /flash/network/saa.xml）。<ul>
+<li>
+<ol>
+<li>IS-IS 逐层验证链（f04）：配置（bvlans/vlan id）→ 接口（interface）→ 邻接（adjacency）→ 节点状态（info）→ 转发表（unicast-table）→ 路径（spf）→ 数据库（database/nodes），自底向上收敛故障层。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>前后对拍法：故障切换/调优实验用 <code>show spb isis unicast-table</code> 前后对比确认换路（教材 p127-128 即此用法）。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>三层表对拍查路由（L3 场景，源自 c10）：<code>show spb ipvpn route-table</code> → <code>show ip global-route-table</code> → <code>show ip routes</code>（IMPORT 标记）。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="a1-lab">A1 · 书中案例（Lab 配置序列精要）</h2>
 <p>mac-ping 实测（p147）：</p>
@@ -91,7 +106,14 @@ mac-ping dst-mac e8:e7:32:a4:77:7d vlan 4015
 show saa spb
 show saa statistics aggregate               ! RTT/Jitter min/avg/max + 丢包
 </code></pre>
-<p>验证链示例（p85）：<code>show spb isis bvlans</code> / <code>show spb isis interface</code> / <code>show spb isis adjacency detail</code> / <code>show spb isis info</code> / <code>show spb isis unicast-table bvlan 2000</code> / <code>show spb isis spf bvlan 2000 [bmac &lt;BMAC&gt;]</code> / <code>show spb isis database [lsp-id]</code> / <code>show spb isis nodes</code>。</p>
+<p>验证链示例（p85）：<code>show spb isis bvlans</code>：
+- <code>show spb isis interface</code>
+- <code>show spb isis adjacency detail</code>
+- <code>show spb isis info</code>
+- <code>show spb isis unicast-table bvlan 2000</code>
+- <code>show spb isis spf bvlan 2000 [bmac &lt;BMAC&gt;]</code>
+- <code>show spb isis database [lsp-id]</code>
+- <code>show spb isis nodes</code>。</p>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
 <li>部署后验收（逐对测通）、长期监控（阈值告警）、故障定位（邻接/转发/路径哪层断）时用本 skill。</li>
@@ -100,11 +122,29 @@ show saa statistics aggregate               ! RTT/Jitter min/avg/max + 丢包
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
-<li>点测连通：<code>show spb isis info</code> 取对端 B-MAC → <code>mac-ping dst-mac &lt;BMAC&gt; vlan &lt;BVLAN&gt;</code>，看 reply 的出接口与 time。</li>
+<li>点测连通：<code>show spb isis info</code> 取对端 B-MAC → <code>mac-ping dst-mac &lt;BMAC&gt; vlan &lt;BVLAN&gt;</code>，看 reply 的出接口与 time。<ul>
+<li>
+<ol>
 <li>持续监控：<code>saa spb auto-start</code> → <code>show saa statistics aggregate</code> 看 RTT/Jitter/丢包；阈值默认 RTT 500us / Jitter 100us。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>故障分层：按 f04 验证链从 bvlans 往 nodes 逐层执行，第一层异常处即故障域（如 adjacency 不 UP 查接口/物理，unicast-table 缺项查 IS-IS 通告）。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>换路确认：操作（断口/metric/overload）前后各抓一次 <code>show spb isis unicast-table bvlan X</code> 对拍。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>组播路径：用 <code>show spb isis multicast-table</code> 查表（不能用 mac-ping）。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>

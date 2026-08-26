@@ -76,32 +76,81 @@ blockquote p{margin:6px 0}
 <h2 id="i">I · 方法论骨架</h2>
 <ol>
 <li><strong>三类故障源分序排查</strong>（f07）：物理（线缆/端口/LED）→ 配置（VLAN/端口类型/ACL）→ ARP（MAC 学习/网关指向/解析）。</li>
-<li><strong>端口级判读</strong>（p10）：operational status、速率双工与对端一致；多次采样 Error Frames/CRC/Alignment，持续增长→查线缆与网卡；全双工下 Collision 增长→查对端双工配置（一端被强制半双工）；互 ping 时 Bytes Received 不增长→查网卡；Last Time Link Changed 与 Number of Status Change 看链路抖动。</li>
-<li><strong>show vlan member 三要素</strong>（p12）：端口在正确 VLAN；端口类型与对端匹配（终端 default/untagged，交换机间 trunk qtagged）；STP 状态 forwarding（blocking/inactive 转 STP skill）。配合 show configuration snapshot all 排 deny ACL。</li>
-<li><strong>ARP 五步法</strong>（p13）：① show mac-learning port 确认 MAC 学在正确端口/VLAN → ② show ip interface vlan <num> 取接口名再查 Router MAC → ③ 终端网关指向正确 → ④ show arp 确认交换机生成网关 ARP 条目 → ⑤ 终端 arp -a 确认解析。MAC 已学但 ARP 不解析 → debug ip packet start ip-address <ip> start 看 1 R/1 S 行。</li>
-<li><strong>静默设备对策</strong>（p14）：不主动发流量的设备 MAC 老化后被淹——加大 mac-learning aging-time 或配 static MAC（bridging/filtering）。</li>
+<li>
+<p>端口级判读（p10）：operational status、速率双工与对端一致；</p>
+<ul>
+<li>多次采样 Error Frames/CRC/Alignment，持续增长→查线缆与网卡；</li>
+<li>全双工下 Collision 增长→查对端双工配置（一端被强制半双工）；</li>
+<li>互 ping 时 Bytes Received 不增长→查网卡；</li>
+<li>Last Time Link Changed 与 Number of Status Change 看链路抖动；</li>
+</ul>
+</li>
+<li>
+<p>show vlan member 三要素（p12）：端口在正确 VLAN；</p>
+<ul>
+<li>端口类型与对端匹配（终端 default/untagged，交换机间 trunk qtagged）；</li>
+<li>STP 状态 forwarding（blocking/inactive 转 STP skill）。配合 show configuration snapshot all 排 deny ACL；</li>
+</ul>
+</li>
+<li>
+<p>ARP 五步法（p13）：① show mac-learning port 确认 MAC 学在正确端口/VLAN → ② show ip interface vlan <num> 取接口名再查 Router MAC → ③ 终端网关指向正确 → ④ show arp 确认交换机生成网关 ARP 条目 → ⑤ 终端 arp -a 确认解析。</p>
+<ul>
+<li>MAC 已学但 ARP 不解析 → debug ip packet start ip-address <ip> start 看 1 R/1 S 行。</li>
+<li>
+<ol>
+<li>静默设备对策（p14）：不主动发流量的设备 MAC 老化后被淹——加大 mac-learning aging-time 或配 static MAC（bridging/filtering）。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="a1-lab">A1 · 书中案例（LAB 故障根因）</h2>
 <ul>
-<li><strong>c02（LAB1 主案例，p140-143）</strong>：Client10 ping 不通认证后的 Client5。三层根因叠加：① 6360-A 端口 1/1/1 在 vlan 1 中 inactive——端口被禁用，<code>interfaces 1/1/1 admin-state enable</code> 恢复；② 6860-B 上 vlan 30 的 IP 接口 int_30 未启用，到 contractor 网段无路由且 DHCP 中继无归属；③ UNP 会话卡住需 <code>unp user flush port 1/1/1</code>。教训：认证 OK 不等于路径通，逐段核 VLAN/端口/接口三元状态。</li>
+<li>c02（LAB1 主案例，p140-143）：Client10 ping 不通认证后的 Client5。</li>
+<li>三层根因叠加：① 6360-A 端口 1/1/1 在 vlan 1 中 inactive——端口被禁用，<code>interfaces 1/1/1 admin-state enable</code> 恢复；
+② 6860-B 上 vlan 30 的 IP 接口 int_30 未启用，到 contractor 网段无路由且 DHCP 中继无归属；
+③ UNP 会话卡住需 <code>unp user flush port 1/1/1</code>。</li>
+<li>教训：认证 OK 不等于路径通，逐段核 VLAN/端口/接口三元状态。</li>
 </ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
 <li>触发：终端互 ping 不通、端口 down、新接设备不通、VLAN 变更后断流、ARP 疑似异常。</li>
-<li>区分：本 skill 处理"单段二层路径"问题。出现 MAC 漂移/环路/STP 状态异常 → stp-loop；
-DHL 双上联 dhl-blocking → stp-loop（含 DHL）；
-堆叠成员口异常 → virtual-chassis；
-网关冗余/路由协议 → l3-routing；
-组播流不通但单播通 → multicast。</li>
+<li>区分：本 skill 处理"单段二层路径"问题。出现 MAC 漂移/环路/STP 状态异常 → stp-loop；</li>
+<li>DHL 双上联 dhl-blocking → stp-loop（含 DHL）；</li>
+<li>堆叠成员口异常 → virtual-chassis；</li>
+<li>网关冗余/路由协议 → l3-routing；</li>
+<li>组播流不通但单播通 → multicast；</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
-<li>物理层：沿数据路径查 LED → 每端口 <code>show interfaces</code> 判读（oper status/双工/错误计数采样两次/Bytes Received）。</li>
+<li>物理层：沿数据路径查 LED → 每端口 <code>show interfaces</code> 判读（oper status/双工/错误计数采样两次/Bytes Received）。<ul>
+<li>
+<ol>
 <li>客户端侧先自查排除本机因素：ipconfig /all、ping/tracert、arp -a、nslookup、route print。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>交换机侧：<code>show configuration snapshot all</code> 核 VLAN 创建与端口归属 → <code>show vlan member</code> 核三要素（VLAN/端口类型/STP 状态）。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>ARP 五步法走 p13 清单；需要时 <code>debug ip packet start ip-address &lt;ip&gt; start</code>（判读 1 R/1 S），用完 <code>debug ip packet stop</code>。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>交换机有回 ARP 但终端没有 → 交换机与终端间接 sniffer；全正常仍不通 → 终端配静态 MAC 试。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>静默设备：<code>mac-learning aging-time &lt;seconds&gt;</code> 或 <code>mac-learning vlan &lt;vid&gt; port &lt;c/s/p&gt; static mac-address &lt;mac&gt; bridging</code>。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>

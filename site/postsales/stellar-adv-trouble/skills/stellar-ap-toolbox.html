@@ -121,11 +121,29 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
-<li>选登录通道：无 IP 走串口（115200 8N1）；有 IP 走 SSH（确认 ssh_connect=1）或 Web（云模式先开 AP web）。</li>
+<li>选登录通道：无 IP 走串口（115200 8N1）；有 IP 走 SSH（确认 ssh_connect=1）或 Web（云模式先开 AP web）。<ul>
+<li>
+<ol>
 <li>CLI 用 support 账号登录（默认密码 aos2016；生产环境 Enterprise 模式自定义密码）。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>有线抓包：<code>ssudo tcpdump -i br-wan -w &lt;文件&gt;.pcap &lt;过滤&gt;</code>；WinSCP 回传；Wireshark 打开。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>空口抓包：Web UI → RF Environment → Start Capture → 信道 + TFTP + 过滤；预算控制在 10MB/5min 内。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>备份配置：Backup All Configuration → pub-config.tar；需要时解包 config-pub.tar 离线比对。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>

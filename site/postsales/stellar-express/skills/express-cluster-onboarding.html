@@ -72,10 +72,25 @@ blockquote p{margin:6px 0}
 <h2 id="i">I · 方法论骨架</h2>
 <p>Express 模式 = 无控制器、无云管的"AP 自组织集群"。上线主线是四层递进：</p>
 <ol>
-<li><strong>单台上线（六步）</strong>：前置条件确认 → 上电（PoE/DC）→ IP 获取（DHCP，失败兜底 192.168.1.254）→ 连出厂 SSID mywifi → 访问 Web 界面 → 向导式初始配置。</li>
-<li><strong>集群成形（三角色 + 选举）</strong>：同 VLAN 多台 AP 同时启动触发选举，判据为先比型号等级（Highest Model Type）、再比 MAC（最高者任 PVM，MAC 第二高任 SVM），PVM 产生后广播组配置 SSID（如 mywifi-0102），其余 AP 以 Member 加入。</li>
-<li><strong>分域设计（超 255 台）</strong>：口诀"一 VLAN 一 Group ID，一集群一 PVM"。集群间无 L2/L3 漫游，边界要放在低移动区域。</li>
-<li><strong>运维收敛（单 IP + 远程）</strong>：管理面收敛到 Group Mgt IP（配置同步/组管理界面/通知）；远程管理需防火墙放行该 IP，唯一例外是 AP Group 镜像升级必须本地执行。</li>
+<li>单台上线（六步）：前置条件确认 → 上电（PoE/DC）→ IP 获取（DHCP，失败兜底 192.168.1.254）→ 连出厂 SSID mywifi → 访问 Web 界面 → 向导式初始配置。<ul>
+<li>
+<ol>
+<li>集群成形（三角色 + 选举）：同 VLAN 多台 AP 同时启动触发选举，判据为先比型号等级（Highest Model Type）、再比 MAC（最高者任 PVM，MAC 第二高任 SVM），PVM 产生后广播组配置 SSID（如 mywifi-0102），其余 AP 以 Member 加入。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>分域设计（超 255 台）：口诀"一 VLAN 一 Group ID，一集群一 PVM"。</li>
+</ol>
+</li>
+<li>集群间无 L2/L3 漫游，边界要放在低移动区域。</li>
+<li>
+<ol>
+<li>运维收敛（单 IP + 远程）：管理面收敛到 Group Mgt IP（配置同步/组管理界面/通知）；远程管理需防火墙放行该 IP，唯一例外是 AP Group 镜像升级必须本地执行。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <p>选型背景：Express 上限 255 台（混合型号集群）；超此规模迁 Enterprise（OV2500）或 Cloud（Cirrus），两者均 4000 台、功能基本等同，差别只在本地/云端。</p>
 <h2 id="a1">A1 · 书中案例</h2>
@@ -87,7 +102,10 @@ blockquote p{margin:6px 0}
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
 <li>触发：新购 Stellar AP 首次上线、规划集群分域、扩容撞 255 上限、需要远程运维方案、售前被问"无网管能管到什么规模"。</li>
-<li>区分：AP 已上线但<strong>入不了集群/拿不到 IP/不上电</strong>的故障处置，用 <code><a href="ap-side-troubleshooting.html">ap-side-troubleshooting</a></code>；SSID/Portal/认证等业务配置用 <code><a href="ssid-portal-auth.html">ssid-portal-auth</a></code>；回程组网用 <code><a href="bridge-mesh-deployment.html">bridge-mesh-deployment</a></code>；覆盖与信号质量用 <code><a href="rf-survey-tuning.html">rf-survey-tuning</a></code>。本 skill 管"从零到可管"与"规模/域的规划"，不管故障与业务配置。</li>
+<li>区分：AP 已上线但入不了集群/拿不到 IP/不上电的故障处置，用 <code><a href="ap-side-troubleshooting.html">ap-side-troubleshooting</a></code>；</li>
+<li>SSID/Portal/认证等业务配置用 <code><a href="ssid-portal-auth.html">ssid-portal-auth</a></code>；</li>
+<li>回程组网用 <code><a href="bridge-mesh-deployment.html">bridge-mesh-deployment</a></code>；</li>
+<li>覆盖与信号质量用 <code><a href="rf-survey-tuning.html">rf-survey-tuning</a></code>。本 skill 管"从零到可管"与"规模/域的规划"，不管故障与业务配置；</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <p>单台上线：

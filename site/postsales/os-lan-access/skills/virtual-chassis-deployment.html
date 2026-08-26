@@ -67,16 +67,41 @@ blockquote p{margin:6px 0}
 <div class="grp">运维</div>
 <a href="../skills/poe-ops-diagnostics.html">poe-ops-diagnostics</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../postsales/index.html">售后</a> › <a href="../index.html">DT00XTE215</a> › <span>Virtual Chassis 部署与运维</span></nav><h1>Virtual Chassis 部署与运维</h1><p class="meta"><span class="badge">SKILL</span> virtual-chassis-deployment · 来源页码: </p><h1 id="virtual-chassis">Virtual Chassis 部署与运维</h1>
 <h2 id="r">R · 原文引用</h2>
-<p>"Assign a Chassis ID / Assign a Chassis Group ID and a Priority / Configure VFL link &amp; ports - Automatic or static / Restart Chassis to Virtual-Chassis Directory. Assign a Chassis Group number: Must be the same on all the switches belonging to the Virtual Chassis. Define a Priority: Between 0 to 255, switch with the highest priority is elected Master."（p105-107）</p>
-<p>"Master/Slave election based on virtual chassis protocol (ISIS-VC): Highest chassis priority value / Longest chassis uptime (if difference in uptime &gt;10 mn) / Smallest Chassis ID value / Smallest chassis MAC address"（p95）</p>
+<p>"Assign a Chassis ID：
+- Assign a Chassis Group ID and a Priority
+- Configure VFL link &amp; ports - Automatic or static
+- Restart Chassis to Virtual-Chassis Directory. Assign a Chassis Group number: Must be the same on all the switches belonging to the Virtual Chassis. Define a Priority: Between 0 to 255, switch with the highest priority is elected Master."（p105-107）</p>
+<p>"Master/Slave election based on virtual chassis protocol (ISIS-VC): Highest chassis priority value：
+- Longest chassis uptime (if difference in uptime &gt;10 mn)
+- Smallest Chassis ID value
+- Smallest chassis MAC address"（p95）</p>
 <p>"The former Slave chassis will shutdown all its front-panel user ports to prevent duplicate IP and chassis MAC addresses in the network."（p99-100）</p>
 <h2 id="i">I · 方法论骨架</h2>
-<p>VC = 多台交换机经 VFL 互联后呈现为单一逻辑设备（单管理点、免 STP/VRRP、免许可）。核心骨架：
-- <strong>静态部署五步</strong>：唯一 chassis ID → 相同 chassis-group + priority（0-255 预定 master）→ VFL（auto 端口自动检测 / static 显式建 VFL ID 挂口）→ write memory → 从含 vcsetup.cfg 的目录 reload。
-- <strong>选举链</strong>（ISIS-VC）：priority 最大 → uptime 最长（差 &gt;10 分钟才比）→ chassis ID 最小 → MAC 最小。固定 master 就显式调大 priority。
-- <strong>同步</strong>：配置只存 master；<code>write memory flash-synchro</code> 或 <code>copy running certified</code> 把镜像+配置同步到所有 slave 的 certified（show running-directory 看 SYNCHRONIZED）。
-- <strong>脑裂防护两条路</strong>：带外 RCD（EMP 口互发通告，split 时前 slave 关全部用户口、状态 Split-Topology）；带内 VCSP（成员各出一口到 helper 交换机组成 VCSP LAG）。
-- <strong>ISSU</strong>：新代码放独立目录 → issu 命令分发 → 按 chassis ID 从小到大逐台重启。</p>
+<ul>
+<li>VC = 多台交换机经 VFL 互联后呈现为单一逻辑设备（单管理点、免 STP/VRRP、免许可）。</li>
+<li>核心骨架：- <strong>静态部署五步</strong>：唯一 chassis ID → 相同 chassis-group + priority（0-255 预定 master）→ VFL（auto 端口自动检测 / static 显式建 VFL ID 挂口）→ write memory → 从含 vcsetup.cfg 的目录 reload。</li>
+<li>
+<ul>
+<li><strong>选举链</strong>（ISIS-VC）：priority 最大 → uptime 最长（差 &gt;10 分钟才比）→ chassis ID 最小 → MAC 最小。</li>
+</ul>
+</li>
+<li>固定 master 就显式调大 priority。</li>
+<li>
+<ul>
+<li><strong>同步</strong>：配置只存 master；<code>write memory flash-synchro</code> 或 <code>copy running certified</code> 把镜像+配置同步到所有 slave 的 certified（show running-directory 看 SYNCHRONIZED）。</li>
+</ul>
+</li>
+<li>
+<ul>
+<li><strong>脑裂防护两条路</strong>：带外 RCD（EMP 口互发通告，split 时前 slave 关全部用户口、状态 Split-Topology）；带内 VCSP（成员各出一口到 helper 交换机组成 VCSP LAG）。</li>
+</ul>
+</li>
+<li>
+<ul>
+<li><strong>ISSU</strong>：新代码放独立目录 → issu 命令分发 → 按 chassis ID 从小到大逐台重启。</li>
+</ul>
+</li>
+</ul>
 <h2 id="a1-lab">A1 · 书中案例（Lab 配置精要）</h2>
 <p>6360 双机 Lab（p112-122）：A 端 <code>virtual-chassis chassis-group 1</code> + <code>chassis-id 1 configured-chassis-priority 200</code>；
 B 端 <code>configured-chassis-id 2</code>；
@@ -92,13 +117,40 @@ B 端 write memory 弹 "Chassis 1 missing! Configuration associated with missing
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
-<li>规划：chassis ID 全 VC 唯一；chassis-group 全员相同；master 候选 priority 调大（如 200）。</li>
-<li>选 VFL 模式：auto（两端均须 auto 候选口；6360-24 用 27/28、6360-48 用 51/52、6900 X/T 每槽最后 5 口、9900 仅静态）或 static（vf-link ID + 成员口）。</li>
+<li>规划：chassis ID 全 VC 唯一；chassis-group 全员相同；master 候选 priority 调大（如 200）。<ul>
+<li>
+<ol>
+<li>选 VFL 模式：auto（两端均须 auto 候选口；
+6360-24 用 27/28、6360-48 用 51/52、6900 X/T 每槽最后 5 口、9900 仅静态）或 static（vf-link ID + 成员口）。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>逐台：virtual-chassis chassis-group N → chassis-id X configured-chassis-priority P → vf-link 配置 → 激活端口 → write memory → reload。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>验证：show virtual-chassis topology / consistency；ssh-chassis 登成员。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>配置同步：write memory flash-synchro。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>ISSU 升级：上传新代码+vcsetup.cfg+vcboot.cfg 到 issu_dir → issu 命令 → 等待按 chassis ID 升序逐台重启。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>启用脑裂防护：带外确认 EMP/RCD；带内 <code>virtual-chassis split-protection [helper] admin-state/linkagg</code>。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>

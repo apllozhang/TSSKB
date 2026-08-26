@@ -82,10 +82,7 @@ blockquote p{margin:6px 0}
 <li>ISSU/Split VC 保护等分支机构高可用设计</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>OS6360 是"企业价值接入"：branch/campus workgroup/enterprise value access（ <code>&lt;span class="pg"&gt;原文p15&lt;/span&gt;</code> ），AOS + WebView 2.0 + Lightning Config 开箱即配 + NDcPP (EAL1) 认证（ <code>&lt;span class="pg"&gt;原文p16&lt;/span&gt;</code> ）。</li>
-<li>层级：企业接入层入门档，上承 6370（多千兆高密）/6560（校园多千兆），下接 SMB 线 2360。</li>
-</ul>
+<p>OS6360 是"企业价值接入"：branch/campus workgroup/enterprise value access（ <code>&lt;span class="pg"&gt;原文p15&lt;/span&gt;</code> ），AOS + WebView 2.0 + Lightning Config 开箱即配 + NDcPP (EAL1) 认证（ <code>&lt;span class="pg"&gt;原文p16&lt;/span&gt;</code> ）。层级：企业接入层入门档，上承 6370（多千兆高密）/6560（校园多千兆），下接 SMB 线 2360。</p>
 <h2 id="a1">A1（与相邻系列选型差异）</h2>
 <ul>
 <li>vs OS2360：同为 VC 8 台，但 6360 规模到 416 口、有 NDcPP EAL1/多样化 AOS 镜像/BYOD CoA/ISSU、PH 型可许可升 10G（2360 无此路径）；CPU 换 ARM。</li>
@@ -104,14 +101,16 @@ blockquote p{margin:6px 0}
 | OS6360-PH48 | 46 PoE+ + 2x1G/2.5G HPoE+ 95W bt | 2 combo 1G</em> + 2 SFP+ | 760W | 1 |
 | OS6360-P24X | 24 PoE+ | 2 combo 1G/10G RJ45/SFP+ + 2 SFP+ | 380W | 1 |
 | OS6360-P48X | 46 PoE+ + 2x1G/2.5G HPoE+ 95W bt | 2 combo 1G/10G + 2 SFP+ | 760W | 1 |</p>
-<p>（<em>：PH24/PH48 的 RJ45/SFP combo 口用 OS6360-SW-PERF 许可升 10G， <code>&lt;span class="pg"&gt;原文p17&lt;/span&gt;</code>  注；P48X/PH48 多千兆口符合 802.3bt 95W + 802.3bz 2.5GE， <code>&lt;span class="pg"&gt;原文p17&lt;/span&gt;</code> 。）
-上联与堆叠：2x10GE VFL 容量 40 Gb/s（ <code>&lt;span class="pg"&gt;原文p18&lt;/span&gt;</code> ）；VC 8 台/416 口（ <code>&lt;span class="pg"&gt;原文p16&lt;/span&gt;</code> ）；VC 1+N 冗余管理器 + ISSU + Split VC 自动恢复（ <code>&lt;span class="pg"&gt;原文p21&lt;/span&gt;</code> ）。
-交换容量与包转发（ <code>&lt;span class="pg"&gt;原文p18&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p19&lt;/span&gt;</code> ）：基础型 24/92/140 Gb/s（17.9/68.5/104.2 Mpps）；PH/X 型 128~182 Gb/s（68.5~135.4 Mpps，SW-PERF 许可后最高 95.3~217 Mpps， <code>&lt;span class="pg"&gt;原文p19&lt;/span&gt;</code>  注 </em>）。
-电源体系：单一内置电源、Backup N/A（ <code>&lt;span class="pg"&gt;原文p18&lt;/span&gt;</code> ）；PoE 满载 145W（P10）/222W（P24）/484W（P48）/446W（PH24/P24X）/879W（P48X/PH48）（ <code>&lt;span class="pg"&gt;原文p18&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p19&lt;/span&gt;</code> ）。
-Layer 特性：静态路由 IPv4/IPv6（256 条 IPv4 + 32 条 IPv6、32 IPv4 + 4 IPv6 接口， <code>&lt;span class="pg"&gt;原文p22&lt;/span&gt;</code> ）；16k MAC、4k VLAN、9216B 巨帧、&lt;4µs；无动态路由/SPB/VXLAN/MPLS/MACsec；AirGroup、BYOD（UPAM/ClearPass CoA 联动， <code>&lt;span class="pg"&gt;原文p21&lt;/span&gt;</code> ）。
-硬件平台：800MHz ARM v7、1GB RAM、1GB flash、1.5MB 包缓冲（ <code>&lt;span class="pg"&gt;原文p18&lt;/span&gt;</code> ）。
-功耗/环境：待机 13~60W；0~45°C；存储 -40~85°C；MTBF 789k~2595k 小时（ <code>&lt;span class="pg"&gt;原文p18&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p19&lt;/span&gt;</code> ）。
-规格红线：无备份电源；95W bt 口仅 P48X/PH48 各 2 口；10G combo 仅 X 型原生、PH 型需许可。</p>
+<ul>
+<li>（*：PH24/PH48 的 RJ45/SFP combo 口用 OS6360-SW-PERF 许可升 10G， <code>&lt;span class="pg"&gt;原文p17&lt;/span&gt;</code>  注；P48X/PH48 多千兆口符合 802.3bt 95W + 802.3bz 2.5GE， <code>&lt;span class="pg"&gt;原文p17&lt;/span&gt;</code> 。</li>
+<li>）上联与堆叠：2x10GE VFL 容量 40 Gb/s（ <code>&lt;span class="pg"&gt;原文p18&lt;/span&gt;</code> ）；VC 8 台/416 口（ <code>&lt;span class="pg"&gt;原文p16&lt;/span&gt;</code> ）；VC 1+N 冗余管理器 + ISSU + Split VC 自动恢复（ <code>&lt;span class="pg"&gt;原文p21&lt;/span&gt;</code> ）。</li>
+<li>交换容量与包转发（ <code>&lt;span class="pg"&gt;原文p18&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p19&lt;/span&gt;</code> ）：基础型 24/92/140 Gb/s（17.9/68.5/104.2 Mpps）；PH/X 型 128~182 Gb/s（68.5~135.4 Mpps，SW-PERF 许可后最高 95.3~217 Mpps， <code>&lt;span class="pg"&gt;原文p19&lt;/span&gt;</code>  注 *）。</li>
+<li>电源体系：单一内置电源、Backup N/A（ <code>&lt;span class="pg"&gt;原文p18&lt;/span&gt;</code> ）；PoE 满载 145W（P10）/222W（P24）/484W（P48）/446W（PH24/P24X）/879W（P48X/PH48）（ <code>&lt;span class="pg"&gt;原文p18&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p19&lt;/span&gt;</code> ）。</li>
+<li>Layer 特性：静态路由 IPv4/IPv6（256 条 IPv4 + 32 条 IPv6、32 IPv4 + 4 IPv6 接口， <code>&lt;span class="pg"&gt;原文p22&lt;/span&gt;</code> ）；16k MAC、4k VLAN、9216B 巨帧、&lt;4µs；无动态路由/SPB/VXLAN/MPLS/MACsec；AirGroup、BYOD（UPAM/ClearPass CoA 联动， <code>&lt;span class="pg"&gt;原文p21&lt;/span&gt;</code> ）。</li>
+<li>硬件平台：800MHz ARM v7、1GB RAM、1GB flash、1.5MB 包缓冲（ <code>&lt;span class="pg"&gt;原文p18&lt;/span&gt;</code> ）。</li>
+<li>功耗/环境：待机 13~60W；0~45°C；存储 -40~85°C；MTBF 789k~2595k 小时（ <code>&lt;span class="pg"&gt;原文p18&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p19&lt;/span&gt;</code> ）。</li>
+<li>规格红线：无备份电源；95W bt 口仅 P48X/PH48 各 2 口；10G combo 仅 X 型原生、PH 型需许可。</li>
+</ul>
 <h2 id="e">E（适用场景）</h2>
 <ul>
 <li>教室/园区工作组、中小企业与分支办公室、企业边缘（ <code>&lt;span class="pg"&gt;原文p15&lt;/span&gt;</code>  部署建议）</li>

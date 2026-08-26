@@ -81,13 +81,50 @@ blockquote p{margin:6px 0}
 <hr />
 <h2 id="10-skill">二、交付主线七阶段（串起 10 个 skill）</h2>
 <ol>
-<li><strong>模式判定</strong>：AP 上电三级判定——DHCP offer 带 option 138（OV2500 地址）→ Enterprise；无 138 但序列号已在 Cirrus 登记 → Cloud；都不满足 → Express 默认广播 mywifi-ABCD（p100）。反向用就是模式规划。→ <code>express-mode-bootstrap</code></li>
-<li><strong>网络前置</strong>：PoE trunk（Native=管理 VLAN，SSID VLAN 全 tagged）、每个 VLAN 的 DHCP 作用域、DNS、三层路由、按型号核对供电等级（p25）。Express 集群上限 255 台、选举先比型号再比 MAC（p11）。</li>
-<li><strong>Cirrus 组织</strong>：eBuy 下单（品号 OVCX-系列-级别-年限-类别）→ Subscription Manager 建订阅（<strong>最长 24h 延迟</strong>，p175）→ 组织内 Import Licenses → 指派设备（p173）。账号层级 MSP &gt; Organization &gt; Site &gt; Building &gt; Floor。→ <code>cirrus-license-org-lifecycle</code></li>
-<li><strong>设备 Onboarding</strong>：交换机侧二选一（手动 VLAN 分类 vs UNP+LLDP 自动分类，p284）→ 取序列号声明 → 建AP Group + Provisioning（四必填：Name/Site/RF Profile/Timezone）→ 等激活状态机走到 OV Managed，每个中间态正常 ≤5 分钟（p261）。→ <code>device-cloud-onboarding</code></li>
-<li><strong>SSID 全家桶</strong>：三段式创建——SSID Settings（Usage 模板套认证模型）→ Network Assignments（Site + AP Group）→ Schedule &amp; VLAN Mappings（p312）。Employee=802.1X，Guest=门户+可选隧道，BYOD=先落 Guest VLAN、门户认证后切 Employee VLAN（p391）。→ <code>ssid-authentication-suite</code></li>
-<li><strong>策略与 RF</strong>：Unified Policy 按 Condition → Action → Group → 挂 SSID 的固定顺序（p413）；带宽三层落点执行序为策略 &gt; 角色 &gt; SSID（p408）。RF Profile 走"创建 → 绑 Provisioning → QoE 验证 → 回 Default"闭环（p463）。→ <code>upam-policy-bandwidth</code> + <code>rf-optimization-baseline</code></li>
-<li><strong>安全与验收</strong>：WIPS 三分类（Interfering/Rogue/Friendly）+ Rogue 四条件 + Containment（p514-515）；勘测三步法拿图 → 观察 → 纠正（p537-540）；漫游按三条件判定 L2/L3（p476）；RAP 五步双隧道上线（p499）。→ <code>wips-security-deployment</code> + <code>site-survey-troubleshooting</code> + <code>roaming-rap-design</code></li>
+<li>
+<p>模式判定：AP 上电三级判定——DHCP offer 带 option 138（OV2500 地址）→ Enterprise；
+无 138 但序列号已在 Cirrus 登记 → Cloud；
+都不满足 → Express 默认广播 mywifi-ABCD（p100）。</p>
+<ul>
+<li>反向用就是模式规划。</li>
+<li>→ <code>express-mode-bootstrap</code>。</li>
+</ul>
+</li>
+<li>
+<p><strong>网络前置</strong>：PoE trunk（Native=管理 VLAN，SSID VLAN 全 tagged）、每个 VLAN 的 DHCP 作用域、DNS、三层路由、按型号核对供电等级（p25）。Express 集群上限 255 台、选举先比型号再比 MAC（p11）。</p>
+</li>
+<li>
+<p>Cirrus 组织：eBuy 下单（品号 OVCX-系列-级别-年限-类别）→ Subscription Manager 建订阅（最长 24h 延迟，p175）→ 组织内 Import Licenses → 指派设备（p173）。</p>
+<ul>
+<li>账号层级 MSP &gt; Organization &gt; Site &gt; Building &gt; Floor。</li>
+<li>→ <code>cirrus-license-org-lifecycle</code>。</li>
+</ul>
+</li>
+<li>
+<p><strong>设备 Onboarding</strong>：交换机侧二选一（手动 VLAN 分类 vs UNP+LLDP 自动分类，p284）→ 取序列号声明 → 建AP Group + Provisioning（四必填：Name/Site/RF Profile/Timezone）→ 等激活状态机走到 OV Managed，每个中间态正常 ≤5 分钟（p261）。→ <code>device-cloud-onboarding</code></p>
+</li>
+<li>
+<p>SSID 全家桶：三段式创建——SSID Settings（Usage 模板套认证模型）→ Network Assignments（Site + AP Group）→ Schedule &amp; VLAN Mappings（p312）。</p>
+<ul>
+<li>Employee=802.1X，Guest=门户+可选隧道，BYOD=先落 Guest VLAN、门户认证后切 Employee VLAN（p391）。</li>
+<li>→ <code>ssid-authentication-suite</code>。</li>
+</ul>
+</li>
+<li>
+<p>策略与 RF：Unified Policy 按 Condition → Action → Group → 挂 SSID 的固定顺序（p413）；带宽三层落点执行序为策略 &gt; 角色 &gt; SSID（p408）。</p>
+<ul>
+<li>RF Profile 走"创建 → 绑 Provisioning → QoE 验证 → 回 Default"闭环（p463）。</li>
+<li>→ <code>upam-policy-bandwidth</code> + <code>rf-optimization-baseline</code>。</li>
+</ul>
+</li>
+<li>
+<p>安全与验收：WIPS 三分类（Interfering/Rogue/Friendly）+ Rogue 四条件 + Containment（p514-515）；</p>
+<ul>
+<li>勘测三步法拿图 → 观察 → 纠正（p537-540）；</li>
+<li>漫游按三条件判定 L2/L3（p476）；</li>
+<li>RAP 五步双隧道上线（p499）。→ <code>wips-security-deployment</code> + <code>site-survey-troubleshooting</code> + <code>roaming-rap-design</code>；</li>
+</ul>
+</li>
 </ol>
 <p><code>rlab-lab-manual</code> 是横向工具：管实验环境连接重置，并把 15 个 Lab 索引到上述各 skill。</p>
 <hr />
@@ -301,16 +338,56 @@ Enterprise 模式管理作用域加 option 138（isc-dhcp-server 需先声明 <c
 <hr />
 <h2 id="top10">七、交付陷阱 TOP10</h2>
 <ol>
-<li><strong>模式切换丢配置</strong>：Express → Enterprise/Cloud 无配置迁移，集群配置全丢；切换前导出全部 SSID/密码/VLAN/Portal 账号，按"重新开局"排期（ce01）。</li>
-<li><strong>255 上限</strong>：Express 单组上限 255 台 AP，&gt;64 台必须做弹性设计（每台 OmniSwitch ≤32 AP、每堆叠 ≤64，p11）。</li>
-<li><strong>国家码射频全关</strong>：AP 向导里国家码选错（或漏选），射频按法规全关、一个 SSID 都发不出来——Express 开局向导里改密/国家/建 SSID 一步都不能漏（c03/p108-119）。</li>
-<li><strong>option 138 配错/序列号未声明 → AP 静默落 Express</strong>：不报错，直接广播 mywifi-XXXX，还可能与已有集群意外成组；用 <code>getmode</code> 排查（ce02）。</li>
-<li><strong>License 24h 延迟</strong>：交付当天下单必卡现场；eBuy 订单最长 24h 才出现在 Subscription Manager（p175，ce06）。</li>
-<li><strong>删 Site 是级联删除</strong>：楼宇、楼层与设备归属连带删除，纳管关系丢失（ce36）；且云上无一键恢复，清理必须按依赖逆序拆 25 步（p544-547）。</li>
-<li><strong>关联 RSSI 阈值设高于客户端信号 = 全网拒联</strong>：隐蔽全局故障；实验里设 90 后客户端立即无法关联（c18/p456-466），变更后必看 QoE 并准备回 Default RF Profile（ce25）。</li>
-<li><strong>WIPS 遏制杀伤半径</strong>：de-auth 反制会波及邻居合法网络，参数过宽等于持续攻击别人；教材明令"未经指示不要改参数"（p523，ce32）。Friendly 一票豁免绝对有效，名单要定期复核。</li>
-<li><strong>Band Steering 默认关有原因</strong>：5G 覆盖弱/有洞时把终端逼进弱信号区；覆盖问题回勘测解决，不要用参数硬扛（p459，ce24）。</li>
-<li><strong>UNP 自动分类的安全盲区</strong>：AP 不过 802.1X，仿冒 AP 的 tagged 流量照样进内网 VLAN；高安全环境补 ACL/WIPS（p291，ce17）。另记："Factory Reset Required" 表示 VPN profile 变更过，唯一解是现场恢复出厂（ce14）。</li>
+<li>模式切换丢配置：Express → Enterprise/Cloud 无配置迁移，集群配置全丢；切换前导出全部 SSID/密码/VLAN/Portal 账号，按"重新开局"排期（ce01）。<ul>
+<li>
+<ol>
+<li>255 上限：Express 单组上限 255 台 AP，&gt;64 台必须做弹性设计（每台 OmniSwitch ≤32 AP、每堆叠 ≤64，p11）。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>国家码射频全关：AP 向导里国家码选错（或漏选），射频按法规全关、一个 SSID 都发不出来——Express 开局向导里改密/国家/建 SSID 一步都不能漏（c03/p108-119）。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>option 138 配错/序列号未声明 → AP 静默落 Express：不报错，直接广播 mywifi-XXXX，还可能与已有集群意外成组；用 <code>getmode</code> 排查（ce02）。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>License 24h 延迟：交付当天下单必卡现场；eBuy 订单最长 24h 才出现在 Subscription Manager（p175，ce06）。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>删 Site 是级联删除：楼宇、楼层与设备归属连带删除，纳管关系丢失（ce36）；且云上无一键恢复，清理必须按依赖逆序拆 25 步（p544-547）。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>关联 RSSI 阈值设高于客户端信号 = 全网拒联：隐蔽全局故障；实验里设 90 后客户端立即无法关联（c18/p456-466），变更后必看 QoE 并准备回 Default RF Profile（ce25）。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>WIPS 遏制杀伤半径：de-auth 反制会波及邻居合法网络，参数过宽等于持续攻击别人；教材明令"未经指示不要改参数"（p523，ce32）。</li>
+</ol>
+</li>
+<li>Friendly 一票豁免绝对有效，名单要定期复核。</li>
+<li>
+<ol>
+<li>Band Steering 默认关有原因：5G 覆盖弱/有洞时把终端逼进弱信号区；覆盖问题回勘测解决，不要用参数硬扛（p459，ce24）。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>UNP 自动分类的安全盲区：AP 不过 802.1X，仿冒 AP 的 tagged 流量照样进内网 VLAN；高安全环境补 ACL/WIPS（p291，ce17）。</li>
+</ol>
+</li>
+<li>另记："Factory Reset Required" 表示 VPN profile 变更过，唯一解是现场恢复出厂（ce14）。</li>
+</ul>
+</li>
 </ol>
 <hr />
 <blockquote>

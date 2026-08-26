@@ -69,12 +69,7 @@ blockquote p{margin:6px 0}
 <li>接口认证（simple/MD5/keychain-SHA256）、被动接口批量生成、CMM 冗余优雅重启（GR）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>链路状态统一原理骨架（F2）：本地状态经泛洪保证全区域一致 LSDB，各路由器以自身为根算 SPF 树得路由表（P1/P2）。</li>
-<li>区域分层体系（F3）：区域隔离拓扑知识以减少路由流量（P6），骨干区 Area 0.0.0.0 负责区间分发（P7），路由器按 Internal/ABR/Backbone/ASBR 四角色分类（P9），ABR 为每个所连区域跑一份 SPF 并浓缩拓扑（P10）。</li>
-<li>OSPFv3 是 v2 的 IPv6 扩展、GR 默认使能（P34），命令族整体 ipv6 镜像（F10）。</li>
-<li>IGP 配置统一骨架（F1）：准备网络 → ip load → admin-state enable → 建区域 → 接口挂区 → 可选特性 → show 验证。</li>
-</ul>
+<p>链路状态统一原理骨架（F2）：本地状态经泛洪保证全区域一致 LSDB，各路由器以自身为根算 SPF 树得路由表（P1/P2）。区域分层体系（F3）：区域隔离拓扑知识以减少路由流量（P6），骨干区 Area 0.0.0.0 负责区间分发（P7），路由器按 Internal/ABR/Backbone/ASBR 四角色分类（P9），ABR 为每个所连区域跑一份 SPF 并浓缩拓扑（P10）。OSPFv3 是 v2 的 IPv6 扩展、GR 默认使能（P34），命令族整体 ipv6 镜像（F10）。IGP 配置统一骨架（F1）：准备网络 → ip load → admin-state enable → 建区域 → 接口挂区 → 可选特性 → show 验证。</p>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>末节区域选型</strong>：Stub（无外部 LSA、默认路由出域，P12）→ Totally Stubby（再滤 Type-3，实现=Stub+关汇总，P19）→ NSSA（Type-7 LSA 选择性导入外部，P13）</li>
@@ -90,10 +85,18 @@ blockquote p{margin:6px 0}
 <li><strong>OSPFv3 九步</strong>：<code>ipv6 interface test vlan 1</code> → <code>ipv6 address 2001::/64 eui-64 test</code> → router-id → <code>ipv6 load ospf</code> + enable → area → 接口挂区 enable（C10， <code>&lt;span class="pg"&gt;原文p57&lt;/span&gt;</code> ）</li>
 <li><strong>Totally Stubby</strong>：ABR 上 <code>ip ospf area 1.1.1.1 type stub</code> + <code>summary disable</code> + <code>default-metric 0</code>；区内路由器配 <code>type stub</code>（C3， <code>&lt;span class="pg"&gt;原文p35-36&lt;/span&gt;</code> ）</li>
 <li><strong>虚链路</strong>：Router A <code>ip ospf virtual-link 0.0.0.1 2.2.2.2</code>；Router B 互指；<code>show ip ospf virtual-link</code>（C4， <code>&lt;span class="pg"&gt;原文p39&lt;/span&gt;</code> ）</li>
-<li><strong>认证</strong>：simple：<code>auth-type simple</code> + <code>auth-key test</code>；MD5：<code>auth-type md5</code> + <code>md5 7</code> + <code>md5 7 key "test"</code>；keychain：<code>security key ... algorithm sha256</code> + <code>security key-chain 1 key 125</code> + <code>auth-type key-chain 1</code>（C5， <code>&lt;span class="pg"&gt;原文p37-38&lt;/span&gt;</code> ）</li>
-<li><strong>NBMA 邻居</strong>：<code>ip ospf interface vlan-213 type non-broadcast</code> → <code>ip ospf neighbor 1.1.1.8 eligible</code>（C8， <code>&lt;span class="pg"&gt;原文p47&lt;/span&gt;</code> ）</li>
+<li>认证：simple：<code>auth-type simple</code> + <code>auth-key test</code>；</li>
+<li>MD5：<code>auth-type md5</code> + <code>md5 7</code> + <code>md5 7 key "test"</code>；</li>
+<li>
+<p>keychain：<code>security key ... algorithm sha256</code> + <code>security key-chain 1 key 125</code> + <code>auth-type key-chain 1</code>（C5， <code>&lt;span class="pg"&gt;原文p37-38&lt;/span&gt;</code> ）；</p>
+</li>
+<li>
+<p><strong>NBMA 邻居</strong>：<code>ip ospf interface vlan-213 type non-broadcast</code> → <code>ip ospf neighbor 1.1.1.8 eligible</code>（C8， <code>&lt;span class="pg"&gt;原文p47&lt;/span&gt;</code> ）</p>
+</li>
 <li><strong>GR</strong>：<code>ip ospf restart-support planned-unplanned</code>（可选 restart-interval / helper / strict-lsa-checking）（C9， <code>&lt;span class="pg"&gt;原文p48&lt;/span&gt;</code> ）</li>
-<li><strong>OSPFv3 特有</strong>：NSSA translator 三件套 <code>nssa-translator role always|candidate</code> / <code>stab-interval 60</code> / <code>nssa-summarize c000::/64</code>（C12）；Loopback0 通告须 <code>type point-to-point</code>（P40/C13）；静态邻居用链路本地地址 fe80::（P41）</li>
+<li>OSPFv3 特有：NSSA translator 三件套 <code>nssa-translator role always|candidate</code> / <code>stab-interval 60</code> / <code>nssa-summarize c000::/64</code>（C12）；</li>
+<li>Loopback0 通告须 <code>type point-to-point</code>（P40/C13）；</li>
+<li>静态邻居用链路本地地址 fe80::（P41）；</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>

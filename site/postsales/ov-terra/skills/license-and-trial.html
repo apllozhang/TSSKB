@@ -74,19 +74,36 @@ blockquote p{margin:6px 0}
 <li>eBuy 下单后 License 找不到，或需要导出/激活订阅</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>License 链路是三段式：eBuy 下单 → Subscription Manager 建订阅 → OV 实例（Cirrus/Terra）导入。</li>
-<li>License SKU 编码自带等级/年限/品类信息。</li>
-<li>Terra 与 Cirrus 的导入差异在于 Terra 需额外下载 license 文件 (.json)。</li>
-<li>注意两个时间陷阱：eBuy 下单后订阅最长延迟 24 小时出现；勾选 "Activate subscription" 即开始订阅倒计时。</li>
-</ul>
+<p>License 链路是三段式：eBuy 下单 → Subscription Manager 建订阅 → OV 实例（Cirrus/Terra）导入。License SKU 编码自带等级/年限/品类信息。Terra 与 Cirrus 的导入差异在于 Terra 需额外下载 license 文件 (.json)。注意两个时间陷阱：eBuy 下单后订阅最长延迟 24 小时出现；
+勾选 "Activate subscription" 即开始订阅倒计时。</p>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
-<li><strong>申请 Trial</strong>：建组织后点 "Request a trial period for this organization"（ <code>&lt;span class="pg"&gt;原文p53&lt;/span&gt;</code> ）；表单必填 ALE 销售/CSM/KAM 联系人，不知道则用通用值 "My-ALE-Contact / MyALEContact@al-enterprise.com"；Partner Name 与 CRD ID 从 eBuy 复制；预填的时长与设备数量无特殊原因不要改（ <code>&lt;span class="pg"&gt;原文p54&lt;/span&gt;</code> ）；审批通过后发起人收邮件通知，组织状态更新（ <code>&lt;span class="pg"&gt;原文p55&lt;/span&gt;</code> ）。Terra 组织则是自动激活 90 天 Trial（ <code>&lt;span class="pg"&gt;原文p110&lt;/span&gt;</code> ）。</li>
-<li><strong>eBuy 下单</strong>：https://ebuy.businesspartner.al-enterprise.com/（或 MyPortal: Other Quick Links &gt; eBuy）→ 新建购物车选 "Other Services &amp; Items Section" → 输入 license reference 与数量 → 填 Order Entry（PO、requested date）并 validate（ <code>&lt;span class="pg"&gt;原文p25&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p97&lt;/span&gt;</code> ）。</li>
+<li>
+<p>申请 Trial：建组织后点 "Request a trial period for this organization"（ <code>&lt;span class="pg"&gt;原文p53&lt;/span&gt;</code> ）；</p>
+<ul>
+<li>表单必填 ALE 销售/CSM/KAM 联系人，不知道则用通用值 "My-ALE-Contact / MyALEContact@al-enterprise.com"；</li>
+<li>Partner Name 与 CRD ID 从 eBuy 复制；</li>
+<li>预填的时长与设备数量无特殊原因不要改（ <code>&lt;span class="pg"&gt;原文p54&lt;/span&gt;</code> ）；</li>
+<li>审批通过后发起人收邮件通知，组织状态更新（ <code>&lt;span class="pg"&gt;原文p55&lt;/span&gt;</code> ）。Terra 组织则是自动激活 90 天 Trial（ <code>&lt;span class="pg"&gt;原文p110&lt;/span&gt;</code> ）；</li>
+</ul>
+</li>
+<li>
+<p><strong>eBuy 下单</strong>：https://ebuy.businesspartner.al-enterprise.com/（或 MyPortal: Other Quick Links &gt; eBuy）→ 新建购物车选 "Other Services &amp; Items Section" → 输入 license reference 与数量 → 填 Order Entry（PO、requested date）并 validate（ <code>&lt;span class="pg"&gt;原文p25&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p97&lt;/span&gt;</code> ）。</p>
+</li>
 <li>SKU 编码：如 OVCX-68-BAS-3Y = 等级 BASE(BAS)/BUSINESS(BIZ)/PREMIUM(PRM) + 年限 1Y/3Y/5Y（Terra 另有 7Y）+ 品类（APL=低端 AP1x0x/1x1x/1x2x，或 APH/63/64/65/68/69/99）（ <code>&lt;span class="pg"&gt;原文p23&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p95&lt;/span&gt;</code> ）</li>
-<li><strong>Subscription Manager 建订阅</strong>：MyPortal: Installed Base &gt; eLicensing Management &gt; OVC Subscription Manager → 选 offer → "Your purchased license" → Action "Create a subscription" → 选数量、填客户信息、同意条款 → 记录 Subscription reference；状态到 "Created / Pending activation from OVC UI" 后展开记录 Subscription 和 Order ID（ <code>&lt;span class="pg"&gt;原文p26&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p27&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p28&lt;/span&gt;</code> ）。</li>
-<li><strong>Cirrus 导入（Trial 转正）</strong>：License Management &gt; import licenses &gt; CAPEX Subscription → 输入 Subscription ID + Activation Code → 同意条款 → Import Subscription → 步骤2选自动/手动设备分配 → 步骤3 review + upgrade → Proceed 确认 paid mode → 验证 License mode / Duration / Type / 型号数量（ <code>&lt;span class="pg"&gt;原文p62&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p63&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p64&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p65&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p66&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p67&lt;/span&gt;</code> ）。</li>
+<li>
+<p>Subscription Manager 建订阅：MyPortal: Installed Base &gt; eLicensing Management &gt; OVC Subscription Manager → 选 offer → "Your purchased license" → Action "Create a subscription" → 选数量</p>
+<ul>
+<li>填客户信息</li>
+<li>同意条款 → 记录 Subscription reference；状态到 "Created / Pending activation from OVC UI" 后展开记录 Subscription 和 Order ID（ <code>&lt;span class="pg"&gt;原文p26&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p27&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p28&lt;/span&gt;</code> ）</li>
+</ul>
+</li>
+<li>
+<p><strong>Cirrus 导入（Trial 转正）</strong>：License Management &gt; import licenses &gt; CAPEX Subscription → 输入 Subscription ID + Activation Code → 同意条款 → Import Subscription → 步骤2选自动/手动设备分配 → 步骤3 review + upgrade → Proceed 确认 paid mode → 验证 License mode：</p>
+</li>
+<li>Duration</li>
+<li>Type</li>
+<li>型号数量（ <code>&lt;span class="pg"&gt;原文p62&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p63&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p64&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p65&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p66&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p67&lt;/span&gt;</code> ）。</li>
 <li><strong>Terra 导入（多一步下载文件）</strong>：Admin Center 右上角取 OmniVista ID → 在 Subscription Manager 选 "Download Licenses / Activate subscription"（同时下载 license 文件）→ 导入时输入 Subscription ID + Activation Code + License file (.json) → 同意条款 &gt; Import &gt; 选设备分配 &gt; upgrade &gt; Proceed → 验证同上（ <code>&lt;span class="pg"&gt;原文p100&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p101&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p113&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p114&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p115&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p116&lt;/span&gt;</code>  <code>&lt;span class="pg"&gt;原文p117&lt;/span&gt;</code> ）。</li>
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>

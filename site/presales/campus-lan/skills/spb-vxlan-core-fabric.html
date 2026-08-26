@@ -117,15 +117,35 @@ blockquote p{margin:6px 0}
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
 <li>触发：多部门强隔离/多校区/租户化的政企园区；客户或设计院点名 EVPN/VXLAN 需要应标话术；数据中心互联。</li>
-<li>区分：本 skill 管 <strong>SPB/VXLAN 机制与角色设计</strong>；"SPB 园区核心"整体模板在 <code><a href="campus-reference-architectures.html">campus-reference-architectures</a></code>；EVPN over I-SID 与 VXLAN EVPN 的路线取舍在本 skill 内答。时敏 50ms 场景不在 SPB 职责内（走 <code><a href="dhl-erp-ring-protection.html">dhl-erp-ring-protection</a></code>）。</li>
+<li>区分：本 skill 管 SPB/VXLAN 机制与角色设计；</li>
+<li>"SPB 园区核心"整体模板在 <code><a href="campus-reference-architectures.html">campus-reference-architectures</a></code>；</li>
+<li>EVPN over I-SID 与 VXLAN EVPN 的路线取舍在本 skill 内答。时敏 50ms 场景不在 SPB 职责内（走 <code><a href="dhl-erp-ring-protection.html">dhl-erp-ring-protection</a></code>）；</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
-<li>盘隔离需求：列部门/租户清单，一户一 I-SID；规划少量 BVLAN（如 1001/1002），业务扩张只加 I-SID。</li>
+<li>盘隔离需求：列部门/租户清单，一户一 I-SID；规划少量 BVLAN（如 1001/1002），业务扩张只加 I-SID。<ul>
+<li>
+<ol>
 <li>按角色分工表逐层指定机型：BEB/BCB 用 SPB 机型，接入层保留现网。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>定 L3 机制：VPN-Lite（简单，接口跑路由协议）vs L3/IP-VPN（ISIS-SPB 当 IGP，免配接口路由）。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>客户认 EVPN 时：接入网/园区推"SPB 达到同样效果更简单"；数据中心/DCI 走 VXLAN EVPN（6900/6870），选 Head-End 或 Tandem BUM 模式。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>输出：角色分工图 + I-SID 分配表 + 路由机制说明，写进方案分册。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>

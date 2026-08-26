@@ -69,13 +69,9 @@ blockquote p{margin:6px 0}
 <li>IPv6 对等（纯 v6 域或 IPv4 会话跑 v6 前缀）、GTSM 防攻击、EVPN/VPLS 地址族、邻居模板</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>BGP 是 AS 间 EGP，跑在 TCP 179 上，增量更新使长会话更高效（P60）；AS_PATH 承担 AS 级环路检测（P61）。</li>
-<li>选路属性体系：Local Preference（AS 内、越高越优先）与 MED（仅同一邻居 AS 间比较、绝不向下一 AS 传播）（P71/P77）。</li>
-<li>iBGP 全互联规则由 RR 放松（P65），RR 通告按路由来源决定反射范围（P66）；联邦以子 AS 间 EBGP 模拟整体 IBGP（P69）。</li>
-<li>策略体系（F5）：aspath/community/prefix(prefix6)/route-map 四类原子策略先建后绑到 peer 的 in/out 方向，改动后 clear soft 重应用（P78/C29）。</li>
-<li>IPv6 由 MP-BGP 的 MP_REACH/MP_UNREACH_NLRI 承载，v6 前缀可跑在 v4 会话上（P80/P81）。</li>
-</ul>
+<p>BGP 是 AS 间 EGP，跑在 TCP 179 上，增量更新使长会话更高效（P60）；
+AS_PATH 承担 AS 级环路检测（P61）。选路属性体系：Local Preference（AS 内、越高越优先）与 MED（仅同一邻居 AS 间比较、绝不向下一 AS 传播）（P71/P77）。iBGP 全互联规则由 RR 放松（P65），RR 通告按路由来源决定反射范围（P66）；
+联邦以子 AS 间 EBGP 模拟整体 IBGP（P69）。策略体系（F5）：aspath/community/prefix(prefix6)/route-map 四类原子策略先建后绑到 peer 的 in/out 方向，改动后 clear soft 重应用（P78/C29）。IPv6 由 MP-BGP 的 MP_REACH/MP_UNREACH_NLRI 承载，v6 前缀可跑在 v4 会话上（P80/P81）。</p>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>邻居设计</strong>：peer 必须逐个显式配置、不会动态学习（X34）；Loopback0 永久 up 适合作对等源（update-source + ebgp-multihop）（P88）</li>
@@ -94,7 +90,9 @@ blockquote p{margin:6px 0}
 <li><strong>IPv6（v4 会话）</strong>：<code>ip bgp neighbor 23.23.23.23</code> → remote-as 200 → <code>activate-ipv6</code> → <code>ipv6-nexthop 2001:100:3:4::1</code> → enable（C26， <code>&lt;span class="pg"&gt;原文p178&lt;/span&gt;</code> ）；纯 v6 对等 <code>ipv6 bgp neighbor 2001::1</code> + update-source（C27）</li>
 <li><strong>策略绑定</strong>：<code>ip bgp policy aspath-list aspathfilter "^100 200$" action permit</code> 等四类 → <code>ip bgp neighbor 172.22.2.0 in-aspathlist|route-map mapfilter in|out</code> → <code>clear soft in|out</code>（C29， <code>&lt;span class="pg"&gt;原文p201-210&lt;/span&gt;</code> ）</li>
 <li><strong>GTSM</strong>：<code>ip bgp neighbor 10.0.0.1 ttl-security 6</code>（直连对等用 0）；<code>show ip bgp neighbors</code> 验证（C30， <code>&lt;span class="pg"&gt;原文p212-213&lt;/span&gt;</code> ）</li>
-<li><strong>EVPN/VPLS/模板</strong>：<code>ip bgp address-family evpn</code> + <code>activate-evpn</code> + fabric 邻居 <code>evpn-nbr-type-fabric</code>；VPLS <code>address-family l2vpn-vpls</code>；模板 <code>ip bgp nbr-template Mytemplate</code>（C31， <code>&lt;span class="pg"&gt;原文p214-218&lt;/span&gt;</code> ）</li>
+<li>EVPN/VPLS/模板：<code>ip bgp address-family evpn</code> + <code>activate-evpn</code> + fabric 邻居 <code>evpn-nbr-type-fabric</code>；</li>
+<li>VPLS <code>address-family l2vpn-vpls</code>；</li>
+<li>模板 <code>ip bgp nbr-template Mytemplate</code>（C31， <code>&lt;span class="pg"&gt;原文p214-218&lt;/span&gt;</code> ）；</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>

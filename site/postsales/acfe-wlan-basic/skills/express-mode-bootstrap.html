@@ -76,16 +76,24 @@ blockquote p{margin:6px 0}
 <p>"PVM/SVM Election — Criteria 1: highest Stellar AP model; Criteria 2: highest MAC address ... up to 255 APs in a group." (p11)</p>
 </blockquote>
 <h2 id="i">I · 方法论骨架</h2>
-<p><strong>1. 模式决策树（上电三级判定，反向用于模式规划）</strong>
-1. DHCP offer 带 option 138（OV2500 地址）→ Enterprise 模式
-2. 无 138 → 联系 OV Cirrus，MAC/序列号已登记 → Cloud 模式
-3. 都不满足 → Express 模式（默认），广播 mywifi-XXXX</p>
+<ol>
+<li><strong>模式决策树（上电三级判定，反向用于模式规划）</strong></li>
+<li>DHCP offer 带 option 138（OV2500 地址）→ Enterprise 模式</li>
+<li>无 138 → 联系 OV Cirrus，MAC/序列号已登记 → Cloud 模式</li>
+<li>都不满足 → Express 模式（默认），广播 mywifi-XXXX</li>
+</ol>
 <p>想上云就先在 Cirrus 声明序列号；想进企业模式就在管理作用域配 option 138。</p>
-<p><strong>2. 三平面模型（端口规划与排障的根基）</strong>
-- 管理平面：集中在网管（Express=PVM / 云管=Cirrus），管理流量<strong>恒 untagged</strong>（Native VLAN）
-- 控制平面：每台 AP，空口邻居发现 + LAN 射频上下文共享
-- 数据平面：AP 本地终结，按 SSID <strong>恒 tagged</strong> 上行，纯二层、无隧道回网管，路由交给 LAN</p>
-<p><strong>3. 开局前置清单（五项逐条核对）</strong></p>
+<ol>
+<li><strong>三平面模型（端口规划与排障的根基）</strong></li>
+<li>管理平面：集中在网管（Express=PVM / 云管=Cirrus），管理流量<strong>恒 untagged</strong>（Native VLAN）</li>
+<li>控制平面：每台 AP，空口邻居发现 + LAN 射频上下文共享</li>
+<li>
+<p>数据平面：AP 本地终结，按 SSID <strong>恒 tagged</strong> 上行，纯二层、无隧道回网管，路由交给 LAN</p>
+</li>
+<li>
+<p><strong>开局前置清单（五项逐条核对）</strong></p>
+</li>
+</ol>
 <table>
 <thead>
 <tr>
@@ -116,17 +124,23 @@ blockquote p{margin:6px 0}
 </tr>
 </tbody>
 </table>
-<p><strong>4. Express 集群机制</strong>
-- 成组规则：Group ID 相同 + VLAN 相同自动同组（出厂 Group ID 100 / VLAN 1）
-- 选举：先比最高型号、再比最大 MAC → PVM；第二高 MAC → SVM；其余 Member；单组上限 255
-- 容量建议：&gt;64 台必须做弹性设计；每台 OmniSwitch ≤32 AP、每堆叠 ≤64 AP
-- 管理平台规模：OV2500 ≤4000 AP；Cirrus 单实例 12000 设备（10000 AP+2000 交换机）</p>
-<p><strong>5. 关键常数速查</strong>
-- 默认 SSID：mywifi-ABCD（MAC 末 4 位）；默认 IP 192.168.1.254；Web 管理端口 8080
-- DHCP 模式下可用域名 mywifi.al-enterprise.com:8080 访问
-- AP 控制台凭据 support/aos2016；OmniSwitch 出厂 admin/switch（仅控制台，Telnet/SSH/Web 全禁）
-- 恢复出厂：Reset 键 10 秒，或 <code>ssudo firstboot -y &amp;&amp; ssudo reboot</code>
-- isc-dhcp-server 需先声明 <code>option ovwma code 138 = ip-address;</code>，再用 vendor-class 前 4 字节 "HAP." 类匹配 Stellar AP 下发</p>
+<ol>
+<li><strong>Express 集群机制</strong></li>
+<li>成组规则：Group ID 相同 + VLAN 相同自动同组（出厂 Group ID 100 / VLAN 1）</li>
+<li>选举：先比最高型号、再比最大 MAC → PVM；第二高 MAC → SVM；其余 Member；单组上限 255</li>
+<li>容量建议：&gt;64 台必须做弹性设计；每台 OmniSwitch ≤32 AP、每堆叠 ≤64 AP</li>
+<li>
+<p>管理平台规模：OV2500 ≤4000 AP；Cirrus 单实例 12000 设备（10000 AP+2000 交换机）</p>
+</li>
+<li>
+<p><strong>关键常数速查</strong></p>
+</li>
+<li>默认 SSID：mywifi-ABCD（MAC 末 4 位）；默认 IP 192.168.1.254；Web 管理端口 8080</li>
+<li>DHCP 模式下可用域名 mywifi.al-enterprise.com:8080 访问</li>
+<li>AP 控制台凭据 support/aos2016；OmniSwitch 出厂 admin/switch（仅控制台，Telnet/SSH/Web 全禁）</li>
+<li>恢复出厂：Reset 键 10 秒，或 <code>ssudo firstboot -y &amp;&amp; ssudo reboot</code></li>
+<li>isc-dhcp-server 需先声明 <code>option ovwma code 138 = ip-address;</code>，再用 vendor-class 前 4 字节 "HAP." 类匹配 Stellar AP 下发</li>
+</ol>
 <h2 id="a1-lab">A1 · 书中案例（Lab 步骤精要）</h2>
 <ul>
 <li><strong>c03/p108-119</strong>：控制台启用端口 <code>interfaces 1/1/6 admin-state enable</code> → 建管理 IP <code>ip interface int_1 address 192.168.1.2/24 vlan 1</code> → <code>write memory flash-synchro</code> → 浏览器 192.168.1.254:8080 → 向导改密/国家/建 SSID → 改静态 IP 后用新地址重连。</li>
@@ -137,7 +151,10 @@ blockquote p{margin:6px 0}
 <ul>
 <li>新项目开局，要决定 AP 用哪种管理模式、做网络前置准备时用本 skill。</li>
 <li>现场无网管/DHCP，要先把单台 AP 配起来（Express 最小路径）。</li>
-<li><strong>区分</strong>：设备已决定上 Cirrus 云、要声明/激活/排障"不上云"→ <code><a href="device-cloud-onboarding.html">device-cloud-onboarding</a></code>；买许可/建组织/账号 → <code><a href="cirrus-license-org-lifecycle.html">cirrus-license-org-lifecycle</a></code>；建 SSID（含 Express 内嵌门户版）→ <code><a href="ssid-authentication-suite.html">ssid-authentication-suite</a></code>；本 skill 只管"模式判定 + 网络底座 + Express 集群"。</li>
+<li>区分：设备已决定上 Cirrus 云、要声明/激活/排障"不上云"→ <code><a href="device-cloud-onboarding.html">device-cloud-onboarding</a></code>；</li>
+<li>买许可/建组织/账号 → <code><a href="cirrus-license-org-lifecycle.html">cirrus-license-org-lifecycle</a></code>；</li>
+<li>建 SSID（含 Express 内嵌门户版）→ <code><a href="ssid-authentication-suite.html">ssid-authentication-suite</a></code>；</li>
+<li>本 skill 只管"模式判定 + 网络底座 + Express 集群"；</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>

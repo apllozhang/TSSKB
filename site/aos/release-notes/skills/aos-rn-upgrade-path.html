@@ -68,13 +68,7 @@ blockquote p{margin:6px 0}
 <li>升级出问题要用 Certified 目录回退</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>升级方法论二分框架（F1， <code>&lt;span class="pg"&gt;原文p67-76&lt;/span&gt;</code> ）：Standard（传镜像到 Running 目录→reload→验证→copy running certified，全程一次中断）vs ISSU（逐成员/逐 CMM 升级、双归属主机不断链）。</li>
-<li>选型三问——平台是否支持 ISSU（6360/6465/6560/6570M 不支持，X2， <code>&lt;span class="pg"&gt;原文p69&lt;/span&gt;</code> ）、源版本是否在 ISSU 支持清单、是否需要保留 running 目录名。</li>
-<li>升级前置四查：certified 配置、U-Boot/FPGA 版本、tech-support 基线、EMP/console 带外通道。</li>
-<li>固件三件套分层框架（F2， <code>&lt;span class="pg"&gt;原文p4-14&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p77-82&lt;/span&gt;</code> ）：AOS 镜像（功能性）／引导件 U-Boot·ONIE·BIOS（信任链与启动）／逻辑件 FPGA·CPLD（电源/风扇/PoE/PHY 行为）三者独立演进，版本矩阵按机型×部件列 Minimum/Current；每条 FPGA/U-Boot 升级都对应 CRAOS8X 编号，可反查"该现象要不要升固件"。</li>
-<li>ISSU 机理（P37， <code>&lt;span class="pg"&gt;原文p67&lt;/span&gt;</code> ）：VC 按 chassis-id 从低到高逐台从 ISSU 目录重启，Slave 全部完成后 Master 重启引发 takeover；模块化机箱则备 CMM 先升转主。</li>
-</ul>
+<p>升级方法论二分框架（F1， <code>&lt;span class="pg"&gt;原文p67-76&lt;/span&gt;</code> ）：Standard（传镜像到 Running 目录→reload→验证→copy running certified，全程一次中断）vs ISSU（逐成员/逐 CMM 升级、双归属主机不断链）。选型三问——平台是否支持 ISSU（6360/6465/6560/6570M 不支持，X2， <code>&lt;span class="pg"&gt;原文p69&lt;/span&gt;</code> ）、源版本是否在 ISSU 支持清单、是否需要保留 running 目录名。升级前置四查：certified 配置、U-Boot/FPGA 版本、tech-support 基线、EMP/console 带外通道。固件三件套分层框架（F2， <code>&lt;span class="pg"&gt;原文p4-14&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p77-82&lt;/span&gt;</code> ）：AOS 镜像（功能性）／引导件 U-Boot·ONIE·BIOS（信任链与启动）／逻辑件 FPGA·CPLD（电源/风扇/PoE/PHY 行为）三者独立演进，版本矩阵按机型×部件列 Minimum/Current；每条 FPGA/U-Boot 升级都对应 CRAOS8X 编号，可反查"该现象要不要升固件"。ISSU 机理（P37， <code>&lt;span class="pg"&gt;原文p67&lt;/span&gt;</code> ）：VC 按 chassis-id 从低到高逐台从 ISSU 目录重启，Slave 全部完成后 Master 重启引发 takeover；模块化机箱则备 CMM 先升转主。</p>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>先核对固件三件套版本</strong>：<code>show hardware-info</code> 查 U-Boot/FPGA 当前版本，对照 System Specifications 表 Minimum 列，低于最小值先走 FPGA/U-Boot 升级（C3， <code>&lt;span class="pg"&gt;原文p4&lt;/span&gt;</code> ）</li>
@@ -87,8 +81,19 @@ blockquote p{margin:6px 0}
 <ul>
 <li><strong>升级前巡检</strong>：<code>show system</code>（版本/Flash 余量）→ 删旧日志 <code>rm *.log</code>/<code>rm *.tar</code> → 检查 /flash/pmd 与 /flash/pmd/work（&lt;10 天的新文件先联系 Support）→ <code>show running-directory</code> 须 CERTIFIED+SYNCHRONIZED，否则 <code>write memory flash-synchro</code>（C1， <code>&lt;span class="pg"&gt;原文p70&lt;/span&gt;</code> ）</li>
 <li><strong>基线采集</strong>：<code>show tech-support</code> / layer2 / layer3 + <code>show tech-support eng complete</code>（TAR 含 SWLOG），导出留档（C2， <code>&lt;span class="pg"&gt;原文p71&lt;/span&gt;</code> ）</li>
-<li><strong>标准升级</strong>：镜像名按机型（6360=Nosa.img、6465/6560=Nos.img、6570M=Wos.img、6860/6865=Uos.img、6860N=Uosn.img、6870=Kaos.img、6900=Yos.img、9900=Mos.img+Mhost.img+Meni.img）→ <code>reload from working no rollback-timeout</code>（VC 自动复制镜像到全部 Slave 并整环重启，5-20 分钟）→ 验证 <code>show microcode</code> + <code>show running-directory</code>（CERTIFY NEEDED）→ <code>copy running certified</code>（C4， <code>&lt;span class="pg"&gt;原文p72-73&lt;/span&gt;</code> ）</li>
-<li><strong>ISSU</strong>：<code>mkdir /flash/issu_dir</code> → <code>debug show virtual-chassis connection</code> 查 Slave VFL IP（127.10.x.65）→ <code>ssh 127.10.2.65</code>（密码 switch）删 Slave 同名目录 → <code>cp /flash/working/*.cfg /flash/issu_dir</code> → FTP 镜像+issu_version → <code>issu from issu_dir</code> → <code>show issu status</code> → <code>debug show virtual-chassis topology</code> 确认全 System Ready → <code>write memory flash-synchro</code> → 可选 <code>copy certified working make-running-directory</code>（C5， <code>&lt;span class="pg"&gt;原文p74-76&lt;/span&gt;</code> ）</li>
+<li>标准升级：镜像名按机型（6360=Nosa.img</li>
+<li>6465/6560=Nos.img</li>
+<li>6570M=Wos.img</li>
+<li>6860/6865=Uos.img</li>
+<li>6860N=Uosn.img</li>
+<li>6870=Kaos.img</li>
+<li>6900=Yos.img</li>
+<li>
+<p>9900=Mos.img+Mhost.img+Meni.img）→ <code>reload from working no rollback-timeout</code>（VC 自动复制镜像到全部 Slave 并整环重启，5-20 分钟）→ 验证 <code>show microcode</code> + <code>show running-directory</code>（CERTIFY NEEDED）→ <code>copy running certified</code>（C4， <code>&lt;span class="pg"&gt;原文p72-73&lt;/span&gt;</code> ）</p>
+</li>
+<li>
+<p><strong>ISSU</strong>：<code>mkdir /flash/issu_dir</code> → <code>debug show virtual-chassis connection</code> 查 Slave VFL IP（127.10.x.65）→ <code>ssh 127.10.2.65</code>（密码 switch）删 Slave 同名目录 → <code>cp /flash/working/*.cfg /flash/issu_dir</code> → FTP 镜像+issu_version → <code>issu from issu_dir</code> → <code>show issu status</code> → <code>debug show virtual-chassis topology</code> 确认全 System Ready → <code>write memory flash-synchro</code> → 可选 <code>copy certified working make-running-directory</code>（C5， <code>&lt;span class="pg"&gt;原文p74-76&lt;/span&gt;</code> ）</p>
+</li>
 <li><strong>FPGA/CPLD</strong>：<code>update fpga-cpld cmm all file fpga_kit_9022</code>（all 覆盖 VC 全成员）→ 见 "Reload required" 后重启（C6， <code>&lt;span class="pg"&gt;原文p79-80&lt;/span&gt;</code> ）</li>
 <li><strong>U-Boot</strong>：<code>update uboot cmm all file /flash/u-boot.8.10.R04.37.tar.gz</code> → 重启生效（C7， <code>&lt;span class="pg"&gt;原文p80&lt;/span&gt;</code> ）</li>
 <li><strong>ONIE 机型 CPLD/ONIE</strong>：<code>update fpga-cpld cmm all file updater_kit_8629</code>（多 CPLD 需多次执行）→ 手动 reload 进 "ONIE: Update ONIE" 模式（勿按键）→ OS6860N（除 U28）自动 power cycle，其他手动 → <code>pkgmgr install uosn-onie-v1.deb</code>（6870 用 kaos-onie-v1.deb）→ reload 回 running（C8， <code>&lt;span class="pg"&gt;原文p81-82&lt;/span&gt;</code> ）</li>

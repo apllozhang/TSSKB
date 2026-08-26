@@ -71,11 +71,31 @@ blockquote p{margin:6px 0}
 <h2 id="i">I · 方法论骨架</h2>
 <p>先做选型判断，再套配置规则：</p>
 <ol>
-<li><strong>Bridge vs Mesh 选型口诀</strong>：只做两点连线（跨街楼宇延伸 LAN）选 Bridge；要延伸覆盖（终端也要连）选 Mesh。本质区别：Bridge 是纯回程链路、不给客户端供 WiFi；Mesh 节点回程与服务并存，允许多根（多出口），可用 VLAN 按 SSID 分离客户端流量。</li>
-<li><strong>Bridge 四属性 = 三同一根</strong>：SSID/Band/Passphrase 双方一致，Is Root 只有一端为 Yes。任何一项不满足桥建不起来。</li>
-<li><strong>Mesh 配置同理 + 多根</strong>：属性规则同 Bridge，但可定义多台 root。</li>
-<li><strong>Auto Mesh 零配置建网</strong>：只配接 LAN 的根节点（自动广播隐藏 SSID "Stellar-MESH"、5GHz），其余 AP 不接线摆到位通电即以非根身份入网。</li>
-<li><strong>回程最佳实践</strong>：频段 5GHz（或 6GHz）、信道 &gt;100，避开 2.4G 与低段 5G，不与业务信道互扰。</li>
+<li>Bridge vs Mesh 选型口诀：只做两点连线（跨街楼宇延伸 LAN）选 Bridge；要延伸覆盖（终端也要连）选 Mesh。<ul>
+<li>本质区别：Bridge 是纯回程链路、不给客户端供 WiFi；Mesh 节点回程与服务并存，允许多根（多出口），可用 VLAN 按 SSID 分离客户端流量。</li>
+<li>
+<ol>
+<li>Bridge 四属性 = 三同一根：SSID/Band/Passphrase 双方一致，Is Root 只有一端为 Yes。</li>
+</ol>
+</li>
+<li>任何一项不满足桥建不起来。</li>
+<li>
+<ol>
+<li>Mesh 配置同理 + 多根：属性规则同 Bridge，但可定义多台 root。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>Auto Mesh 零配置建网：只配接 LAN 的根节点（自动广播隐藏 SSID "Stellar-MESH"、5GHz），其余 AP 不接线摆到位通电即以非根身份入网。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>回程最佳实践：频段 5GHz（或 6GHz）、信道 &gt;100，避开 2.4G 与低段 5G，不与业务信道互扰。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="a1">A1 · 书中案例</h2>
 <ul>

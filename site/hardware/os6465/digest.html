@@ -60,36 +60,34 @@ blockquote p{margin:6px 0}
 <a href="skills/os6465-install-power.html">os6465-install-power</a>
 <div class="grp">运维排障</div>
 <a href="skills/os6465-ops-troubleshoot.html">os6465-ops-troubleshoot</a></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../hardware/index.html">硬件手册</a> › <a href="index.html">OmniSwitch 6465 Hardware Guide</a> › <span>精华长文 DIGEST</span></nav><h1>精华长文 DIGEST</h1><h1 id="digest-omniswitch-6465-hardware-users-guide">DIGEST — OmniSwitch 6465 Hardware Users Guide 精华</h1>
-<p>本书是 ALE 工业级（加固型）交换机 OS6465 的硬件手册（99 页，6 机型双线：工业线 P6/P12/P12(ENH-240)/P28 无风扇 DIN/机架 + 运输线 T-12/T-P12 半宽）。全书核心是"宽温 + 端子电源 + 告警继电器 + Dying Gasp"的工业特性栈，以及 PoE 预算随环境温度降额的独特机制。以下按三个技能单元摘要，页码均指原书。</p>
+<ul>
+<li>本书是 ALE 工业级（加固型）交换机 OS6465 的硬件手册（99 页，6 机型双线：工业线 P6/P12/P12(ENH-240)/P28 无风扇 DIN/机架 + 运输线 T-12/T-P12 半宽）。</li>
+<li>全书核心是"宽温 + 端子电源 + 告警继电器 + Dying Gasp"的工业特性栈，以及 PoE 预算随环境温度降额的独特机制。</li>
+<li>以下按三个技能单元摘要，页码均指原书。</li>
+</ul>
 <h2 id="_1">一、知识地图（三技能单元）</h2>
 <ol>
-<li><strong>机型与端口体系</strong>（os6465-model-ports）：工业线/运输线双家族、奇数口 60W bt 规律、上联分档、ENH-240 变体（Ch1/Ch3，p12-13、21-36）。</li>
-<li><strong>安装与电源</strong>（os6465-install-power）：DIN/机架/侧挂/DNV 五形态、6 款电源与 ROJ 接线、powersupply type、PoE 温度降额（Ch2-Ch4，p14-84）。</li>
-<li><strong>运维与排障</strong>（os6465-ops-troubleshoot）：告警继电器、Dying Gasp 三通道、LED/温度诊断、NEBS 红线（Ch3/附录 A，p63-99）。</li>
+<li>机型与端口体系（os6465-model-ports）：工业线/运输线双家族、奇数口 60W bt 规律、上联分档、ENH-240 变体（Ch1/Ch3，p12-13、21-36）。<ul>
+<li>
+<ol>
+<li>安装与电源（os6465-install-power）：DIN/机架/侧挂/DNV 五形态、6 款电源与 ROJ 接线、powersupply type、PoE 温度降额（Ch2-Ch4，p14-84）。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>运维与排障（os6465-ops-troubleshoot）：告警继电器、Dying Gasp 三通道、LED/温度诊断、NEBS 红线（Ch3/附录 A，p63-99）。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="_2">二、三单元要点串讲</h2>
 <h3 id="1">1. 机型与端口：双线家族</h3>
-<ul>
-<li>工业线无风扇 -40~75°C，T 运输线半宽内置电源、风扇 45°C 自启且无工业认证（ <code>&lt;span class="pg"&gt;原文p12&lt;/span&gt;</code> ）。</li>
-<li>60W 口位：P6/P12 奇数口、P28 口 1-8 支持 60W/bt，其余 at 30W（ <code>&lt;span class="pg"&gt;原文p12&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p22&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p31&lt;/span&gt;</code> ）。</li>
-<li>仅 P28 有 10G 上联（4×SFP+）与双可热换电源/负载分担（ <code>&lt;span class="pg"&gt;原文p13&lt;/span&gt;</code> ）。</li>
-<li>预算：P6=45W/P12=150W/ENH-240=240W/P28 最高 285W（ <code>&lt;span class="pg"&gt;原文p74&lt;/span&gt;</code> ）。</li>
-</ul>
+<p>工业线无风扇 -40~75°C，T 运输线半宽内置电源、风扇 45°C 自启且无工业认证（ <code>&lt;span class="pg"&gt;原文p12&lt;/span&gt;</code> ）。60W 口位：P6/P12 奇数口、P28 口 1-8 支持 60W/bt，其余 at 30W（ <code>&lt;span class="pg"&gt;原文p12&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p22&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p31&lt;/span&gt;</code> ）。仅 P28 有 10G 上联（4×SFP+）与双可热换电源/负载分担（ <code>&lt;span class="pg"&gt;原文p13&lt;/span&gt;</code> ）。预算：P6=45W/P12=150W/ENH-240=240W/P28 最高 285W（ <code>&lt;span class="pg"&gt;原文p74&lt;/span&gt;</code> ）。</p>
 <h3 id="2-roj">2. 安装与电源：ROJ 接线与温度降额</h3>
-<ul>
-<li>安装五件套：DIN 卡扣、P28 机架、T 半宽/双机 DUO 并排、WALL-MNT、DNV 三套件（装罩限温 55°C）（ <code>&lt;span class="pg"&gt;原文p38-49&lt;/span&gt;</code> ）。</li>
-<li>电源不能自动识别，必须 <code>powersupply type</code> 手工声明（ <code>&lt;span class="pg"&gt;原文p60&lt;/span&gt;</code> ）；双电源必须同 wattage 同电压，仅 P28 负载分担（ <code>&lt;span class="pg"&gt;原文p13&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p24&lt;/span&gt;</code> ）。</li>
-<li>ROJ 线色：输出红 V-/黑 V+/绿 PG、3.5 in-lb；输入黑棕 L/白蓝 N/绿绿黄 PG（ <code>&lt;span class="pg"&gt;原文p58-60&lt;/span&gt;</code> ）。</li>
-<li>PoE 降额三环：≤60°C 全额/60-70°C 降额需 100 CFM/70-75°C 停 PoE；叠加输入电压环（50-57V 满额/44-57V 限 af/24V 仅系统）（ <code>&lt;span class="pg"&gt;原文p74&lt;/span&gt;</code> ）。</li>
-<li>陷阱：24V 检测电路缺陷、BPNX 无工业认证且标签误标、BPN 配 ENH-240 需 8.9R2（ <code>&lt;span class="pg"&gt;原文p24&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p51&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p53&lt;/span&gt;</code> ）。</li>
-</ul>
+<p>安装五件套：DIN 卡扣、P28 机架、T 半宽/双机 DUO 并排、WALL-MNT、DNV 三套件（装罩限温 55°C）（ <code>&lt;span class="pg"&gt;原文p38-49&lt;/span&gt;</code> ）。电源不能自动识别，必须 <code>powersupply type</code> 手工声明（ <code>&lt;span class="pg"&gt;原文p60&lt;/span&gt;</code> ）；双电源必须同 wattage 同电压，仅 P28 负载分担（ <code>&lt;span class="pg"&gt;原文p13&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p24&lt;/span&gt;</code> ）。ROJ 线色：输出红 V-/黑 V+/绿 PG、3.5 in-lb；输入黑棕 L/白蓝 N/绿绿黄 PG（ <code>&lt;span class="pg"&gt;原文p58-60&lt;/span&gt;</code> ）。PoE 降额三环：≤60°C 全额/60-70°C 降额需 100 CFM/70-75°C 停 PoE；叠加输入电压环（50-57V 满额/44-57V 限 af/24V 仅系统）（ <code>&lt;span class="pg"&gt;原文p74&lt;/span&gt;</code> ）。陷阱：24V 检测电路缺陷、BPNX 无工业认证且标签误标、BPN 配 ENH-240 需 8.9R2（ <code>&lt;span class="pg"&gt;原文p24&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p51&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p53&lt;/span&gt;</code> ）。</p>
 <h3 id="3">3. 运维与排障：告警双体系</h3>
-<ul>
-<li>告警继电器：输入 5-12VDC 传感器+8 类系统事件→alarm map→NO/C/NC 干接点（220VDC/250VAC·2A），VC 内跨机同步，8 类事件条件恢复自动清除（ <code>&lt;span class="pg"&gt;原文p63-65&lt;/span&gt;</code> ）。</li>
-<li>Dying Gasp 三通道：SNMP trap（前 3 站）+Syslog（前 3 服务器）+4×802.3ah OAM PDU 上联口优先（ <code>&lt;span class="pg"&gt;原文p68-69&lt;/span&gt;</code> ）。</li>
-<li>温度双阈值固化，各机型梯度 75-97°C（ <code>&lt;span class="pg"&gt;原文p24-36&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p67&lt;/span&gt;</code> ）。</li>
-<li>NEBS 红线：楼内端口禁金属直连 OSP、AC 须接 SPD（ <code>&lt;span class="pg"&gt;原文p93&lt;/span&gt;</code> ）。</li>
-</ul>
+<p>告警继电器：输入 5-12VDC 传感器+8 类系统事件→alarm map→NO/C/NC 干接点（220VDC/250VAC·2A），VC 内跨机同步，8 类事件条件恢复自动清除（ <code>&lt;span class="pg"&gt;原文p63-65&lt;/span&gt;</code> ）。Dying Gasp 三通道：SNMP trap（前 3 站）+Syslog（前 3 服务器）+4×802.3ah OAM PDU 上联口优先（ <code>&lt;span class="pg"&gt;原文p68-69&lt;/span&gt;</code> ）。温度双阈值固化，各机型梯度 75-97°C（ <code>&lt;span class="pg"&gt;原文p24-36&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p67&lt;/span&gt;</code> ）。NEBS 红线：楼内端口禁金属直连 OSP、AC 须接 SPD（ <code>&lt;span class="pg"&gt;原文p93&lt;/span&gt;</code> ）。</p>
 <h2 id="_3">三、本书在知识库中的位置</h2>
 <p>与 hw-6575（工业无风扇）同属工业线：6465 为 DIN/机架混合形态+端子电源，6575 为无风扇+M12 防水连接器。跨书易混点：混插规则——6465 双电源同型号强制、无混插例外（6560 有 BP+BP-D 例外）；
 Priority Disconnect 同级裁决在 6465 为"端口号 1 高 8 低"。</p>

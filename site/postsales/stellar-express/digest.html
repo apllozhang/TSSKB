@@ -171,8 +171,14 @@ Mesh 只做最后几跳，超 16 节点回有线；
 <h2 id="15">五、排障案例地图（15 案例三域分类）</h2>
 <p>排障章 p126-160 共 15 案，接单先归域再套案例，每案固定"现象→分步检查→命令验证"。通用救援梯度：Web（默认 IP 192.168.1.254）→ Console（115200）→ tcpdump 抓包存 /tmp、tftp 上送 Wireshark（p129-132）。</p>
 <ul>
-<li><strong>AP 侧域</strong>：Case 1 不上电（LED 九态判读，p128）；Case 2 DHCP 拿不到 IP——经典根因是 <code>option proto</code> 残留 static，改过静态地址的设备入新网不发 DHCP 请求（p129-132）；Case 4 入不了集群四查：cluster ID 一致（<code>cluster_mgt -x show=self</code>）→ 32767 报文可达 → joining 需 PVM 手工批准 → 集群是否达上限 + 抓 32768 确认 AP 在发（p136-138）。</li>
-<li><strong>客户端侧域</strong>：Case 7 拿不到 IP 抓包三分法——同报文反复重发=VLAN 配错；没发=终端静态残留；发了收不到=空中抓 beacon 比信道（p144-147）；认证/Portal/黑名单类见 ssid-portal-auth skill。</li>
+<li>AP 侧域：Case 1 不上电（LED 九态判读，p128）；</li>
+<li>Case 2 DHCP 拿不到 IP——经典根因是 <code>option proto</code> 残留 static，改过静态地址的设备入新网不发 DHCP 请求（p129-132）；</li>
+<li>
+<p>Case 4 入不了集群四查：cluster ID 一致（<code>cluster_mgt -x show=self</code>）→ 32767 报文可达 → joining 需 PVM 手工批准 → 集群是否达上限 + 抓 32768 确认 AP 在发（p136-138）；</p>
+</li>
+<li>
+<p><strong>客户端侧域</strong>：Case 7 拿不到 IP 抓包三分法——同报文反复重发=VLAN 配错；没发=终端静态残留；发了收不到=空中抓 beacon 比信道（p144-147）；认证/Portal/黑名单类见 ssid-portal-auth skill。</p>
+</li>
 <li><strong>性能侧域</strong>：低吞吐/高时延五查（限速→协商速率→ACS→换信道→ISP 带宽，p155-156）；Case 13 PoE 不供电五查（开关→短线→水晶头→换交换机→对调 AP，p157）；端口三板斧（换线、<code>ifconfig br-wan</code>、<code>ethtool eth0</code>）。</li>
 </ul>
 <p>射频侧另有三步勘测 SOP：平面图 → 观测五问 → 纠正（p172-175）。量化基准：4 米穿 1-4 堵墙 RSSI 掉到 -70dBm，已不够 VoWLAN；衰减大户排序混凝土 &gt; 木材 &gt; 金属 &gt; 钢构（p168）。覆盖优化五招里最反直觉也最有效的一条：删低速率，逼边缘终端贴近期 AP（p175）。</p>

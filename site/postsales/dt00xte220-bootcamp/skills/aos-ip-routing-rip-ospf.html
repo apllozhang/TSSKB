@@ -81,13 +81,11 @@ blockquote p{margin:6px 0}
 <li>IPv6 地址规划基础</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>路由体系的骨架是偏好值：AOS 默认 Local 1 / Static 2 / OSPF 10 / RIP 100 / BGP 200，可手工调整（P147， <code>&lt;span class="pg"&gt;原文p769&lt;/span&gt;</code> ），静态永远优先于动态（P135， <code>&lt;span class="pg"&gt;原文p714-716&lt;/span&gt;</code> ）。</li>
-<li>RIP 是距离向量（跳数 16 不可达、30 秒全表更新），四定时器 update 30/invalid 180/garbage 120/holddown 0 且 invalid≥3×update 由 AOS 强制（P138/P140， <code>&lt;span class="pg"&gt;原文p724, 730-731&lt;/span&gt;</code> ）。</li>
-<li>OSPF 三数据库（邻接表/LSDB/路由表）+ SPF 并行计算（P142， <code>&lt;span class="pg"&gt;原文p753&lt;/span&gt;</code> ）；区域类型本质是"允许进入的 LSA 集合"（F13/P144， <code>&lt;span class="pg"&gt;原文p759-762&lt;/span&gt;</code> ）。</li>
-<li>GR 的契约是重启方保持转发、邻居做 helper 不重算 SPF，Grace LSA（Type 9 Opaque）携宽限期（P148/P149， <code>&lt;span class="pg"&gt;原文p772-775&lt;/span&gt;</code> ）。</li>
-<li>重分发范式全书统一："先 route-map 后 redist"（P141， <code>&lt;span class="pg"&gt;原文p726-727&lt;/span&gt;</code> ）。</li>
-</ul>
+<p>路由体系的骨架是偏好值：AOS 默认 Local 1：
+- Static 2
+- OSPF 10
+- RIP 100
+- BGP 200，可手工调整（P147， <code>&lt;span class="pg"&gt;原文p769&lt;/span&gt;</code> ），静态永远优先于动态（P135， <code>&lt;span class="pg"&gt;原文p714-716&lt;/span&gt;</code> ）。RIP 是距离向量（跳数 16 不可达、30 秒全表更新），四定时器 update 30/invalid 180/garbage 120/holddown 0 且 invalid≥3×update 由 AOS 强制（P138/P140， <code>&lt;span class="pg"&gt;原文p724, 730-731&lt;/span&gt;</code> ）。OSPF 三数据库（邻接表/LSDB/路由表）+ SPF 并行计算（P142， <code>&lt;span class="pg"&gt;原文p753&lt;/span&gt;</code> ）；区域类型本质是"允许进入的 LSA 集合"（F13/P144， <code>&lt;span class="pg"&gt;原文p759-762&lt;/span&gt;</code> ）。GR 的契约是重启方保持转发、邻居做 helper 不重算 SPF，Grace LSA（Type 9 Opaque）携宽限期（P148/P149， <code>&lt;span class="pg"&gt;原文p772-775&lt;/span&gt;</code> ）。重分发范式全书统一："先 route-map 后 redist"（P141， <code>&lt;span class="pg"&gt;原文p726-727&lt;/span&gt;</code> ）。</p>
 <h2 id="a1">A1（决策/选型）</h2>
 <ol>
 <li>IGP 选型：小网络 RIP（v2 组播 224.0.0.9、带认证，P139， <code>&lt;span class="pg"&gt;原文p724&lt;/span&gt;</code> ）；中大型 OSPF；超大型/SPB 底座用 IS-IS（直接跑在 802.3/802.2 二层，P202， <code>&lt;span class="pg"&gt;原文p1093-1096&lt;/span&gt;</code> ）</li>
@@ -98,15 +96,63 @@ blockquote p{margin:6px 0}
 <h2 id="a2">A2（操作步骤）</h2>
 <ol>
 <li>静态路由：普通下一跳 / 递归 <code>follows</code>（网关随动态路由变化，6.7.1 无此选项）/ 出接口型（P136/P137， <code>&lt;span class="pg"&gt;原文p719-721&lt;/span&gt;</code> ）；<code>show ip router database</code> 看含未用路由（ <code>&lt;span class="pg"&gt;原文p718, 720&lt;/span&gt;</code> ）</li>
-<li>RIP：<code>ip load rip</code> → <code>ip rip admin-state enable</code> → <code>ip rip interface int_217</code> + <code>admin-state enable</code>；验证 <code>show ip rip interface/peer/routes</code>；重分发 <code>ip route-map rip_1 sequence-number 50 action permit</code> + <code>match ip-address 0.0.0.0/0</code> → <code>ip redist local into rip route-map rip_1 admin-state enable</code>；定时器 <code>ip rip update-timer 45</code>/<code>invalid-timer 270</code>/<code>garbage-timer 180</code>/<code>holddown-timer 10</code>；版本/MD5 认证按需（C38， <code>&lt;span class="pg"&gt;原文p733-745&lt;/span&gt;</code> ）</li>
-<li>OSPF 骨干：<code>ip load ospf</code> → <code>ip router router-id 192.168.254.1</code>（可被 Loopback0 覆盖，P143， <code>&lt;span class="pg"&gt;原文p754&lt;/span&gt;</code> ）→ <code>ip ospf area 0.0.0.0</code> → 各接口 <code>ip ospf interface int_217</code> + area + enable → <code>ip ospf admin-state enable</code>；验证 <code>show ip ospf/area/interface/routes/lsdb/neighbor</code>；保存 <code>configuration snapshot all save-ospf-backbone</code>（C39， <code>&lt;span class="pg"&gt;原文p779-792&lt;/span&gt;</code> ）</li>
-<li>OSPF 重分发与外部聚合：localIntoOspf/staticIntoOspf route-map（match 192.168.100.0/24 与 0.0.0.0/0）→ <code>show ip ospf ext-lsdb</code>；ASBR 聚合 <code>ip access-list extip address 150.215.0.0/16 action permit redist-control aggregate</code>；虚链路 <code>ip ospf virtual-link 2.2.2.2 192.168.10.2</code>（C39/C40， <code>&lt;span class="pg"&gt;原文p763, 768, 779-792&lt;/span&gt;</code> ）</li>
-<li>OSPF 认证：simple（<code>auth-type simple</code>+<code>auth-key alcatel</code>）或 MD5（<code>md5 1</code>+<code>md5 1 key alcatel</code>）后邻居重建（C39， <code>&lt;span class="pg"&gt;原文p779-792&lt;/span&gt;</code> ）</li>
+<li>
+<p>RIP：<code>ip load rip</code> → <code>ip rip admin-state enable</code> → <code>ip rip interface int_217</code> + <code>admin-state enable</code>；</p>
+<ul>
+<li>验证 <code>show ip rip interface/peer/routes</code>；</li>
+<li>
+<p>重分发 <code>ip route-map rip_1 sequence-number 50 action permit</code> + <code>match ip-address 0.0.0.0/0</code> → <code>ip redist local into rip route-map rip_1 admin-state enable</code>；</p>
+</li>
+<li>
+<p>定时器 <code>ip rip update-timer 45</code>/<code>invalid-timer 270</code>/<code>garbage-timer 180</code>/<code>holddown-timer 10</code>；</p>
+</li>
+<li>版本/MD5 认证按需（C38， <code>&lt;span class="pg"&gt;原文p733-745&lt;/span&gt;</code> ）；</li>
+</ul>
+</li>
+<li>
+<p>OSPF 骨干：<code>ip load ospf</code> → <code>ip router router-id 192.168.254.1</code>（可被 Loopback0 覆盖，P143， <code>&lt;span class="pg"&gt;原文p754&lt;/span&gt;</code> ）→ <code>ip ospf area 0.0.0.0</code> → 各接口 <code>ip ospf interface int_217</code> + area + enable → <code>ip ospf admin-state enable</code>；</p>
+<ul>
+<li>验证 <code>show ip ospf/area/interface/routes/lsdb/neighbor</code>；</li>
+<li>保存 <code>configuration snapshot all save-ospf-backbone</code>（C39， <code>&lt;span class="pg"&gt;原文p779-792&lt;/span&gt;</code> ）；</li>
+</ul>
+</li>
+<li>
+<p>OSPF 重分发与外部聚合：localIntoOspf/staticIntoOspf route-map（match 192.168.100.0/24 与 0.0.0.0/0）→ <code>show ip ospf ext-lsdb</code>；</p>
+<ul>
+<li>ASBR 聚合 <code>ip access-list extip address 150.215.0.0/16 action permit redist-control aggregate</code>；</li>
+<li>虚链路 <code>ip ospf virtual-link 2.2.2.2 192.168.10.2</code>（C39/C40， <code>&lt;span class="pg"&gt;原文p763, 768, 779-792&lt;/span&gt;</code> ）；</li>
+</ul>
+</li>
+<li>
+<p>OSPF 认证：simple（<code>auth-type simple</code>+<code>auth-key alcatel</code>）或 MD5（<code>md5 1</code>+<code>md5 1 key alcatel</code>）后邻居重建（C39， <code>&lt;span class="pg"&gt;原文p779-792&lt;/span&gt;</code> ）</p>
+</li>
 <li>偏好调整：<code>show ip route-pref</code> → <code>ip route-pref rip 8</code>（C39， <code>&lt;span class="pg"&gt;原文p768-769&lt;/span&gt;</code> ）</li>
-<li>BGP：<code>ip router router-id</code> → <code>ip load BGP</code> → <code>ip bgp status enable</code> → <code>ip bgp autonomous-system 100</code> → <code>ip bgp neighbor 100.10.1.1</code> + remote-as + status enable（可 <code>md5 key</code>）；<code>update-source Loopback0</code>、<code>ebgp-multihop</code>；策略三列表 aspath-list/community-list/prefix-list 配合 route-map（C56/P199/P200， <code>&lt;span class="pg"&gt;原文p1080-1088&lt;/span&gt;</code> ）</li>
-<li>IS-IS：<code>ip load isis</code> → <code>ip isis admin-state enable</code> → <code>ip isis area-id 49.0001</code>（AFI=49 本地管理，P203， <code>&lt;span class="pg"&gt;原文p1094-1095&lt;/span&gt;</code> ）→ <code>ip isis activate-ipv4</code> → <code>ip isis vlan 5 address-family v4 admin-state enable</code>；层级 <code>ip isis vlan 10 level-capability level-1/2</code>；验证 <code>show isis status</code>、<code>show ip isis adjacency/route/spf</code>（C57/P206， <code>&lt;span class="pg"&gt;原文p1105-1106&lt;/span&gt;</code> ）；PDU 四类 Hello/LSP/PSNP/CSNP 与 DIS 可抢占选举（P204/P205， <code>&lt;span class="pg"&gt;原文p1096-1103&lt;/span&gt;</code> ）</li>
-<li>SLB：<code>ip slb admin-state enable</code>(R8) → <code>ip slb cluster Web vip 128.241.130.204</code>（VIP 须与服务器同网段，集群自动 proxy ARP，P194， <code>&lt;span class="pg"&gt;原文p975&lt;/span&gt;</code> ）→ <code>ip slb server ip &lt;ip&gt; cluster Web</code>；WRR <code>weight 1/3</code>、备份机 <code>weight 0</code>（总权重 ≤32，P195， <code>&lt;span class="pg"&gt;原文p977-979&lt;/span&gt;</code> ）；QoS Condition 集群 <code>ip slb cluster Firewall condition cond1 L3</code>；探针 <code>ip slb probe http_test http</code> + <code>period 10</code>（20 个/switch，P197， <code>&lt;span class="pg"&gt;原文p986-987&lt;/span&gt;</code> ）（C54， <code>&lt;span class="pg"&gt;原文p976-987, 995&lt;/span&gt;</code> ）</li>
-<li>IPv6 基础：128bit、:: 仅一次、FE80::/10 链路本地、EUI-64（插 FFFE 翻 U/L 位）（P208-P210， <code>&lt;span class="pg"&gt;原文p1133-1138&lt;/span&gt;</code> ）</li>
+<li>
+<p>BGP：<code>ip router router-id</code> → <code>ip load BGP</code> → <code>ip bgp status enable</code> → <code>ip bgp autonomous-system 100</code> → <code>ip bgp neighbor 100.10.1.1</code> + remote-as + status enable（可 <code>md5 key</code>）；</p>
+<ul>
+<li><code>update-source Loopback0</code>、<code>ebgp-multihop</code>；</li>
+<li>策略三列表 aspath-list/community-list/prefix-list 配合 route-map（C56/P199/P200， <code>&lt;span class="pg"&gt;原文p1080-1088&lt;/span&gt;</code> ）；</li>
+</ul>
+</li>
+<li>
+<p>IS-IS：<code>ip load isis</code> → <code>ip isis admin-state enable</code> → <code>ip isis area-id 49.0001</code>（AFI=49 本地管理，P203， <code>&lt;span class="pg"&gt;原文p1094-1095&lt;/span&gt;</code> ）→ <code>ip isis activate-ipv4</code> → <code>ip isis vlan 5 address-family v4 admin-state enable</code>；</p>
+<ul>
+<li>层级 <code>ip isis vlan 10 level-capability level-1/2</code>；</li>
+<li>验证 <code>show isis status</code>、<code>show ip isis adjacency/route/spf</code>（C57/P206， <code>&lt;span class="pg"&gt;原文p1105-1106&lt;/span&gt;</code> ）；</li>
+<li>PDU 四类 Hello/LSP/PSNP/CSNP 与 DIS 可抢占选举（P204/P205， <code>&lt;span class="pg"&gt;原文p1096-1103&lt;/span&gt;</code> ）；</li>
+</ul>
+</li>
+<li>
+<p>SLB：<code>ip slb admin-state enable</code>(R8) → <code>ip slb cluster Web vip 128.241.130.204</code>（VIP 须与服务器同网段，集群自动 proxy ARP，P194， <code>&lt;span class="pg"&gt;原文p975&lt;/span&gt;</code> ）→ <code>ip slb server ip &lt;ip&gt; cluster Web</code>；</p>
+<ul>
+<li>WRR <code>weight 1/3</code>、备份机 <code>weight 0</code>（总权重 ≤32，P195， <code>&lt;span class="pg"&gt;原文p977-979&lt;/span&gt;</code> ）；</li>
+<li>QoS Condition 集群 <code>ip slb cluster Firewall condition cond1 L3</code>；</li>
+<li>探针 <code>ip slb probe http_test http</code> + <code>period 10</code>（20 个/switch，P197， <code>&lt;span class="pg"&gt;原文p986-987&lt;/span&gt;</code> ）（C54， <code>&lt;span class="pg"&gt;原文p976-987, 995&lt;/span&gt;</code> ）；</li>
+</ul>
+</li>
+<li>
+<p>IPv6 基础：128bit、:: 仅一次、FE80::/10 链路本地、EUI-64（插 FFFE 翻 U/L 位）（P208-P210， <code>&lt;span class="pg"&gt;原文p1133-1138&lt;/span&gt;</code> ）</p>
+</li>
 </ol>
 <h2 id="e">E（实证案例）</h2>
 <ul>

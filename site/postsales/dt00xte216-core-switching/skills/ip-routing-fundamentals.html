@@ -78,15 +78,27 @@ blockquote p{margin:6px 0}
 <li>需要判断多协议共存时 RIB 的选路次序</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>AOS 的路由世界观是"路由数据库（router database）+ 协议优先级（route-pref）"：Local 1 / Static 2 / OSPF 110 / ISIS-L1 115 / ISIS-L2 118 / RIP 120 / EBGP 190 / IBGP 200 / Import 210。</li>
-<li>Loopback0 是全网稳定的身份地址（router-id、BGP peering、PIM RP 等），RIP/OSPF 自动通告它而 BGP 不会。</li>
-<li>静态路由的递归形式（follows）让下一跳跟随另一条路由动态解析。</li>
-</ul>
+<p>AOS 的路由世界观是"路由数据库（router database）+ 协议优先级（route-pref）"：Local 1：
+- Static 2
+- OSPF 110
+- ISIS-L1 115
+- ISIS-L2 118
+- RIP 120
+- EBGP 190
+- IBGP 200
+- Import 210。Loopback0 是全网稳定的身份地址（router-id、BGP peering、PIM RP 等），RIP/OSPF 自动通告它而 BGP 不会。静态路由的递归形式（follows）让下一跳跟随另一条路由动态解析。</p>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
-<li>静态与默认路由：<code>ip static-route 134.1.21.0/24 gateway 10.1.1.1</code> / <code>ip static-route 0.0.0.0/0 gateway 10.1.1.1</code>；双默认路由用 metric 1 与 metric 2 互备；<code>show ip router database</code> 可见 inactive 备份（ <code>&lt;span class="pg"&gt;原文p222&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p223&lt;/span&gt;</code> ）</li>
-<li>递归路由：<code>ip static-route 172.30.0.0/16 follows 2.2.2.2 metric 1</code>（ <code>&lt;span class="pg"&gt;原文p225&lt;/span&gt;</code> ）</li>
+<li>
+<p>静态与默认路由：<code>ip static-route 134.1.21.0/24 gateway 10.1.1.1</code> / <code>ip static-route 0.0.0.0/0 gateway 10.1.1.1</code>；</p>
+<ul>
+<li>双默认路由用 metric 1 与 metric 2 互备；</li>
+<li><code>show ip router database</code> 可见 inactive 备份（ <code>&lt;span class="pg"&gt;原文p222&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p223&lt;/span&gt;</code> ）；</li>
+</ul>
+</li>
+<li>
+<p>递归路由：<code>ip static-route 172.30.0.0/16 follows 2.2.2.2 metric 1</code>（ <code>&lt;span class="pg"&gt;原文p225&lt;/span&gt;</code> ）</p>
+</li>
 <li>RIP 最小配置：<code>ip load rip</code> → <code>ip rip interface &lt;if&gt; admin-state enable</code> → <code>ip rip admin-state enable</code>（ <code>&lt;span class="pg"&gt;原文p228&lt;/span&gt;</code> ）</li>
 <li>RIP 重分发：<code>ip route-map rip_1 sequence-number 50 action permit / match ip-address 0.0.0.0/0</code> + <code>ip redist local into rip route-map rip_1 admin-state enable</code>（static 同理）（ <code>&lt;span class="pg"&gt;原文p228&lt;/span&gt;</code> ）</li>
 <li>IS-IS 最小配置：<code>ip load isis</code> → <code>ip isis admin-state enable</code> → <code>ip isis area-id 49.0001</code> → <code>ip isis activate-ipv4</code> → <code>ip isis vlan 5</code> → <code>ip isis vlan 5 address-family v4</code> → <code>ip isis vlan 5 admin-state enable</code>；<code>show ip isis adjacency/route/spf</code>（ <code>&lt;span class="pg"&gt;原文p697&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p698&lt;/span&gt;</code> ）</li>

@@ -74,34 +74,41 @@ blockquote p{margin:6px 0}
 <li>需要升级 AOS 镜像（含 uboot/FPGA）或做配置的 USB 备份</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>AOS 的配置管理是"三层目录 + RAM 运行配置"的状态机：certified 是已认证的稳定目录，working 是待验证目录，还可自建 user-defined 目录。</li>
-<li>运行配置在 RAM 里，不保存就丢；<code>reload all</code> 永远从 certified 启动，验证新配置必须用 <code>reload from working no rollback-timeout</code>。</li>
-<li>升级同理：先升 working、验证无误再 <code>copy running certified</code> 固化。</li>
-</ul>
+<p>AOS 的配置管理是"三层目录 + RAM 运行配置"的状态机：certified 是已认证的稳定目录，working 是待验证目录，还可自建 user-defined 目录。运行配置在 RAM 里，不保存就丢；
+<code>reload all</code> 永远从 certified 启动，验证新配置必须用 <code>reload from working no rollback-timeout</code>。升级同理：先升 working、验证无误再 <code>copy running certified</code> 固化。</p>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>查看目录与状态：
    <code>-&gt; ls -l /flash/working          // 或 /flash/certified
    -&gt; show microcode working | certified | loaded
    -&gt; show running-directory        // RUNNING / CERTIFY NEEDED / SYNCHRONIZED</code></li>
-<li>修改配置后判断状态：改 RAM（如 <code>vlan 2</code>）后 running-directory 变 NOT SYNCHRONIZED；保存 <code>-&gt; write memory</code>；验证新配置重启用 <code>-&gt; reload from working no rollback-timeout</code>（C07， <code>&lt;span class="pg"&gt;原文p131&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p137&lt;/span&gt;</code> ）。</li>
-<li>一步保存+认证：<code>-&gt; write memory flash-synchro</code>（= write memory + copy running certified，P16， <code>&lt;span class="pg"&gt;原文p122&lt;/span&gt;</code> ）。</li>
+<li>
+<p>修改配置后判断状态：改 RAM（如 <code>vlan 2</code>）后 running-directory 变 NOT SYNCHRONIZED；</p>
+<ul>
+<li>保存 <code>-&gt; write memory</code>；</li>
+<li>验证新配置重启用 <code>-&gt; reload from working no rollback-timeout</code>（C07， <code>&lt;span class="pg"&gt;原文p131&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p137&lt;/span&gt;</code> ）；</li>
+</ul>
+</li>
+<li>
+<p>一步保存+认证：<code>-&gt; write memory flash-synchro</code>（= write memory + copy running certified，P16， <code>&lt;span class="pg"&gt;原文p122&lt;/span&gt;</code> ）。</p>
+<ul>
+<li>
+<ol>
 <li>自建目录实验：<code>mkdir lab</code> → <code>cp working/*.* lab</code> → <code>reload from lab no rollback-timeout</code> → <code>copy running certified</code> / <code>modify running-directory working</code>（C07， <code>&lt;span class="pg"&gt;原文p131&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p137&lt;/span&gt;</code> ）。</li>
-<li>USB 自动备份：
-   <code>-&gt; usb enable
-   -&gt; usb backup admin-state enable
-   -&gt; write memory        // 自动同步到 /uflash
-   -&gt; cd /uflash; ls      // 验证 certified/working 目录</code>
-   拔出前必须 <code>usb disable</code>（C08， <code>&lt;span class="pg"&gt;原文p138&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p139&lt;/span&gt;</code> ）。</li>
-<li>镜像升级七步：读 release note → 下载 → FTP 传到交换机 → 升级镜像 → 验证 → <code>copy running certified</code> 固化 → 按需升 uboot/FPGA（F03， <code>&lt;span class="pg"&gt;原文p465&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p469&lt;/span&gt;</code> ）：
-   <code>-&gt; update uboot cmm all file u-boot.8.4.1.R03.141.tar.gz
-   -&gt; update fpga-cpld cmm all file fpga_kit_3312
-   -&gt; reload from working no rollback-timeout
-   -&gt; copy running certified
-   -&gt; show running-directory</code>
-   （C25， <code>&lt;span class="pg"&gt;原文p469&lt;/span&gt;</code> ）</li>
-<li>恢复出厂（仅自有设备）：<code>-&gt; rm /flash/working/vcboot.cfg</code> → <code>-&gt; reload from working no rollback-timeout</code>，约 5 分钟（C04， <code>&lt;span class="pg"&gt;原文p105&lt;/span&gt;</code> ）。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>USB 自动备份： <code>-&gt; usb enable -&gt; usb backup admin-state enable -&gt; write memory        // 自动同步到 /uflash -&gt; cd /uflash; ls      // 验证 certified/working 目录</code> 拔出前必须 <code>usb disable</code>（C08， <code>&lt;span class="pg"&gt;原文p138&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p139&lt;/span&gt;</code> ）。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>镜像升级七步：读 release note → 下载 → FTP 传到交换机 → 升级镜像 → 验证 → <code>copy running certified</code> 固化 → 按需升 uboot/FPGA（F03， <code>&lt;span class="pg"&gt;原文p465&lt;/span&gt;</code> – <code>&lt;span class="pg"&gt;原文p469&lt;/span&gt;</code> ）： <code>-&gt; update uboot cmm all file u-boot.8.4.1.R03.141.tar.gz -&gt; update fpga-cpld cmm all file fpga_kit_3312 -&gt; reload from working no rollback-timeout -&gt; copy running certified -&gt; show running-directory</code> （C25， <code>&lt;span class="pg"&gt;原文p469&lt;/span&gt;</code> ） 7. 恢复出厂（仅自有设备）：<code>-&gt; rm /flash/working/vcboot.cfg</code> → <code>-&gt; reload from working no rollback-timeout</code>，约 5 分钟（C04， <code>&lt;span class="pg"&gt;原文p105&lt;/span&gt;</code> ）。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>

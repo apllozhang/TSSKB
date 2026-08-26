@@ -70,10 +70,24 @@ blockquote p{margin:6px 0}
 </blockquote>
 <h2 id="i">I · 方法论骨架</h2>
 <ol>
-<li><strong>定档位</strong>：按管理设备总数选 Low(&lt;500)/Medium(500-2000)/High(2000-5000)/Very High(5000-10000)，四档常数见下表。</li>
-<li><strong>定平台</strong>：仅 VA 交付、无裸机安装器；在 ESXi 6.5-8.0 / Hyper-V 2012R2-2022（含 Win10 专业版）/ KVM（Ubuntu 22.04）三平台中选，并核对不支持项。</li>
-<li><strong>配资源</strong>：CPU 2.4GHz、8 或 12 逻辑核（不超配）；内存不超宿主机实际可用、在 Hypervisor 里"预留"、CPU Shares=High；存储读写速度达标。</li>
-<li><strong>通网络</strong>：443 端口放行 6 个外部域名（或配代理）；管理端口按默认/范围规划。</li>
+<li>定档位：按管理设备总数选 Low(&lt;500)/Medium(500-2000)/High(2000-5000)/Very High(5000-10000)，四档常数见下表。<ul>
+<li>
+<ol>
+<li>定平台：仅 VA 交付、无裸机安装器；在 ESXi 6.5-8.0 / Hyper-V 2012R2-2022（含 Win10 专业版）/ KVM（Ubuntu 22.04）三平台中选，并核对不支持项。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>配资源：CPU 2.4GHz、8 或 12 逻辑核（不超配）；内存不超宿主机实际可用、在 Hypervisor 里"预留"、CPU Shares=High；存储读写速度达标。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>通网络：443 端口放行 6 个外部域名（或配代理）；管理端口按默认/范围规划。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <p>核心常数表：</p>
 <table>
@@ -172,16 +186,42 @@ ALE 门户 lds.al-enterprise.com，Customer ID=99999、Order Number=evaluation�
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
-<li>统计目标网络设备数（AOS 交换机 + 第三方 + Stellar AP），对照常数表定档位；AP 达 4000 且还需大量 AOS 时按混合换算复核。</li>
+<li>统计目标网络设备数（AOS 交换机 + 第三方 + Stellar AP），对照常数表定档位；AP 达 4000 且还需大量 AOS 时按混合换算复核。<ul>
+<li>
+<ol>
 <li>确认 Hypervisor 平台与版本在兼容矩阵内；Hyper-V 场景记录两条禁项（不支持 Live Migration；VM Manager 仅 2012/2012R2/2016）。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>按档位分配资源：2.4GHz CPU、8/12 逻辑核不超配；
 内存按 Standalone/HA 列配足并在 Hypervisor 中勾选预留（Reservation），CPU Shares 设 High；
 分区 1 50GB + 分区 2 按档；
 存储实测读写 ≥100/150/200/200 MB/s。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>Intel CPU 检查 AES-NI（SNMPv3 AES 性能依赖）：BIOS 开启且未被 Hypervisor 屏蔽（mask）。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>防火墙放行 6 个域名:443，或规划代理；记录管理端口（默认 80/443/8080/8443，如改须在 1024-65535 内且不重复）。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>试用场景走评估许可流程；正式场景提前在 ALE 门户生成许可文件。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>输出一页规划清单（档位/平台/资源/端口/代理/许可）供安装阶段照单执行。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>

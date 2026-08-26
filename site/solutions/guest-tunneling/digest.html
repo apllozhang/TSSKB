@@ -189,14 +189,44 @@ N 个隧道 SSID 需 N 台交换机）、L3 hop（AP 管理 IP 与 GRE Server IP
 </table>
 <h2 id="top8">六、交付陷阱 TOP8</h2>
 <ol>
-<li><strong>One ARB 换算错交换机数</strong>：3 个不同 ARP 的隧道 SSID 必须配 3 台聚合交换机（p7）。</li>
-<li><strong>L3 hop 违规</strong>：AP 管理 IP 与 GRE Server IP 同子网，GTTS 不工作（p7）。</li>
-<li><strong>Tunnel ID/VPN ID 三处不一致</strong>（AP/主机/备机）：隧道建不起来的第一嫌疑（p9-10/p16）。</li>
-<li><strong>Entropy 没开</strong>：文档 Important 级强制（p10）。</li>
-<li><strong>DHCP/Portal 不在隧道终点区</strong>：连 DHCP 都在隧道里跑，服务不可达=用户上不了线（p4-5）。</li>
-<li><strong>跨运营商链路 MTU</strong>：+24B 封装开销，不提前协商就静默丢大包（p8）。</li>
-<li><strong>把 R1 当整机冗余</strong>：只保端口级，交换机与连接仍单点（p15）。</li>
-<li><strong>容量两误区</strong>：Hairpin 线速封顶 SSID 带宽（多 Hairpin 扩容）；VC 不抬高单机隧道数上限（1000/2000/6000 按机型，p8）。</li>
+<li>One ARB 换算错交换机数：3 个不同 ARP 的隧道 SSID 必须配 3 台聚合交换机（p7）。<ul>
+<li>
+<ol>
+<li>L3 hop 违规：AP 管理 IP 与 GRE Server IP 同子网，GTTS 不工作（p7）。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>Tunnel ID/VPN ID 三处不一致（AP/主机/备机）：隧道建不起来的第一嫌疑（p9-10/p16）。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>Entropy 没开：文档 Important 级强制（p10）。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>DHCP/Portal 不在隧道终点区：连 DHCP 都在隧道里跑，服务不可达=用户上不了线（p4-5）。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>跨运营商链路 MTU：+24B 封装开销，不提前协商就静默丢大包（p8）。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>把 R1 当整机冗余：只保端口级，交换机与连接仍单点（p15）。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>容量两误区：Hairpin 线速封顶 SSID 带宽（多 Hairpin 扩容）；VC 不抬高单机隧道数上限（1000/2000/6000 按机型，p8）。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <hr />
 <blockquote>

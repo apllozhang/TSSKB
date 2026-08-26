@@ -70,12 +70,34 @@ blockquote p{margin:6px 0}
 </blockquote>
 <h2 id="i">I · 方法论骨架</h2>
 <ol>
-<li><strong>设置文件生命周期</strong>：Device Catalog/Data VPN Server 界面导出（AP 入目录即可，无需 Registered）→ SFTP 上传到 vpn_profile 目录 → 文件名不可改 → 任何配置变更或加 AP 都必须重走"导出→上传→VA 重配"。</li>
-<li><strong>两步服务绑定</strong>：先建 VPN Service（绑公网 IP 网卡 + 端口），再建 VPN Endpoint 挂设置文件；管理隧道接口选 None，数据隧道选无 IP 桥接网卡（eth2）。</li>
-<li><strong>Data VPN 五步链</strong>：建 Data VPN Server → 绑 AP Group（必做，不绑隧道建不起来）→ 导出文件 → SFTP 上传 → 配服务与端点。</li>
-<li><strong>隧道 SSID 参数块</strong>：Use Tunnel 勾选、Tunnel ID=0、选 Data VPN Server profile、WPA3_AES、Entropy 禁用、Local Breakout 默认禁用。</li>
-<li><strong>Local Breakout 路由三红线</strong>：单 VLAN + Tunnel ID 0；路由跨 SSID 累积、子网唯一；隧道 VLAN 网段禁手工配路由。</li>
-<li><strong>调参表</strong>：DS-Lite 场景按表改 TCPMSS/MTU；License 门槛：下行口认证需 Premium/Business。</li>
+<li>设置文件生命周期：Device Catalog/Data VPN Server 界面导出（AP 入目录即可，无需 Registered）→ SFTP 上传到 vpn_profile 目录 → 文件名不可改 → 任何配置变更或加 AP 都必须重走"导出→上传→VA 重配"。<ul>
+<li>
+<ol>
+<li>两步服务绑定：先建 VPN Service（绑公网 IP 网卡 + 端口），再建 VPN Endpoint 挂设置文件；管理隧道接口选 None，数据隧道选无 IP 桥接网卡（eth2）。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>Data VPN 五步链：建 Data VPN Server → 绑 AP Group（必做，不绑隧道建不起来）→ 导出文件 → SFTP 上传 → 配服务与端点。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>隧道 SSID 参数块：Use Tunnel 勾选、Tunnel ID=0、选 Data VPN Server profile、WPA3_AES、Entropy 禁用、Local Breakout 默认禁用。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>Local Breakout 路由三红线：单 VLAN + Tunnel ID 0；路由跨 SSID 累积、子网唯一；隧道 VLAN 网段禁手工配路由。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>调参表：DS-Lite 场景按表改 TCPMSS/MTU；License 门槛：下行口认证需 Premium/Business。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="a1">A1 · 书中案例</h2>
 <ul>
@@ -103,14 +125,30 @@ blockquote p{margin:6px 0}
 <li>绑 AP Group：Network→AP Registration→AP Group 编辑并绑定 Data VPN Server（必做）。</li>
 <li>导出设置文件：AP 加入 Device Catalog 即可 Export VPN Settings（无需等 Registered）；SFTP 到 /opt/OmniVista_2500_NMS/data/vpn_conf/vpn_profile，<strong>不改名</strong>。</li>
 <li>配 VPN Endpoint：挂设置文件到服务；管理隧道接口选 None，数据隧道选无 IP 的 eth2；Apply Configuration Changes。</li>
-<li>配隧道 SSID：Use Tunnel 勾选、Tunnel ID=0、选 Data VPN Server profile、Allowed Band=All、WPA3_AES、Support of Entropy 禁用；
-RADIUS 认证（如 UPAMRadiusServer）；
-关联 AP Group 后 OV2500 自动推送。交换机侧 VLAN：AOS 8.x <code>vlan [n] member port [p] tagged/untagged</code>；
-AOS 6.x <code>vlan [n] 802.1q [p]</code> / <code>vlan [n] port default [p]</code>。</li>
-<li>开 Local Breakout（如需）：确认 Tunnel ID=0 且隧道内仅一个 VLAN 开启；配静态路由避开三红线（见 B）。</li>
+<li>
+<p>配隧道 SSID：Use Tunnel 勾选、Tunnel ID=0、选 Data VPN Server profile、Allowed Band=All、WPA3_AES、Support of Entropy 禁用；</p>
+<ul>
+<li>RADIUS 认证（如 UPAMRadiusServer）；</li>
+<li>关联 AP Group 后 OV2500 自动推送。交换机侧 VLAN：AOS 8.x <code>vlan [n] member port [p] tagged/untagged</code>；</li>
+<li>AOS 6.x <code>vlan [n] 802.1q [p]</code> / <code>vlan [n] port default [p]</code>；</li>
+</ul>
+</li>
+<li>
+<p>开 Local Breakout（如需）：确认 Tunnel ID=0 且隧道内仅一个 VLAN 开启；配静态路由避开三红线（见 B）。</p>
+<ul>
+<li>
+<ol>
 <li>DS-Lite 调参（如需）：管理 TCPMSS 1380/1352、数据 TCPMSS 1380/1300、MTU 1500/1546/1376；
 入口分别为 Freemium VPN Servers、Data VPN Server、WLAN→SSIDs 界面。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>下行口认证（如需）：确认 Premium/Business 账号 → Tunnel Profile → Access Role Profile → Access Auth Profile 应用到 AP/AP Group（最多 Eth1-Eth3 三口）。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>

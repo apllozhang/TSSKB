@@ -102,12 +102,34 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
-<li>iwconfig 列接口，按 athXYY 解码频段与 SSID，核对四项清单（重点 BSSID 有无 MAC）。</li>
+<li>iwconfig 列接口，按 athXYY 解码频段与 SSID，核对四项清单（重点 BSSID 有无 MAC）。<ul>
+<li>
+<ol>
 <li><code>cat /tmp/config/rfprofile.conf</code> 与网管配置逐项比对（全局五项 + 每射频五项）。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li><code>iwlist athXXX channel</code> / <code>iwlist athXXX txpower</code> 确认实际信道与功率档位。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li><code>adme show</code> 查邻居表：地理邻居缺失或 RSSI&lt;20 → 挪近或加大功率；射频被建筑结构阻挡 → 双侧对称静态添加邻居。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>核对同 SSID 各 AP 的 VLAN 封装方式一致（tagged/untagged 不混用）。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>wam.log 搜三类漫游关键字定性：有 start 无 success / 完全没有 / success。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>

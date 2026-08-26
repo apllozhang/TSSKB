@@ -73,11 +73,8 @@ blockquote p{margin:6px 0}
 <li>排障时需要查"某个 IP/MAC/用户现在或历史上接在哪台交换机哪个端口"</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>Discovery 的核心是 Profile 三段式（General/SNMP/Advanced）+ IP 范围 + Discover Now；
-拓扑链路靠 AMAP/LLDP 自动发现，关键链路建议手工添加（持久化、down 时显示红色）。</li>
-<li>Locator 是取证/排障工具，支持 Live 与 Historical 两种检索，命中后可在拓扑图定位。</li>
-</ul>
+<p>Discovery 的核心是 Profile 三段式（General/SNMP/Advanced）+ IP 范围 + Discover Now；
+拓扑链路靠 AMAP/LLDP 自动发现，关键链路建议手工添加（持久化、down 时显示红色）。Locator 是取证/排障工具，支持 Live 与 Historical 两种检索，命中后可在拓扑图定位。</p>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li><strong>建 Discovery Profile</strong>：Network → Discovery → Discovery Profiles → "+"（&lt;&lt;<PAGE 170-172/110-112>&gt;&gt;）</li>
@@ -86,8 +83,16 @@ blockquote p{margin:6px 0}
 <li>Advanced：Trap Station User=admin、Discover Link=Normally、Shell=SSH、GetBulk on、Max Repetitions 10</li>
 <li><strong>发起发现</strong>：Managed Devices → Discover New Devices → Start/End IP（192.168.200.0-192.168.200.8）/Mask → 关联 Profile → Create → Discover Now → Finish（&lt;&lt;<PAGE 170-172/113-114>&gt;&gt;）</li>
 <li><strong>建拓扑</strong>：Network → Topology → Create Site（Site Name、Street Address、选交换机）→ 选中站点 → Go to Topology → 拖拽排布（ <code>&lt;span class="pg"&gt;原文p175-176&lt;/span&gt;</code> ）</li>
-<li><strong>Locator 定位</strong>：Network → Locator → 输入 IP/MAC/授权用户 → Locate（可切 Live/Historical）→ Locate on Map 跳转拓扑；Browse → ADD → Use Picker 选交换机看 MAC 表；视图含 Location/Classification/Data Center/Layer 3（&lt;&lt;<PAGE 187-188/136-137>&gt;&gt;）</li>
-<li><strong>第三方设备</strong>：建 Mibset（OID/Display Name/MIB Directory），MIB-2 兜底就填 mib-2；MIB 文件须 .mib 后缀；支持 Web/Telnet/SSH、Custom Icons、Traps、Locator（ <code>&lt;span class="pg"&gt;原文p121-123&lt;/span&gt;</code> ）</li>
+<li>
+<p>Locator 定位：Network → Locator → 输入 IP/MAC/授权用户 → Locate（可切 Live/Historical）→ Locate on Map 跳转拓扑；</p>
+<ul>
+<li>Browse → ADD → Use Picker 选交换机看 MAC 表；</li>
+<li>视图含 Location/Classification/Data Center/Layer 3（&lt;&lt;<PAGE 187-188/136-137>&gt;&gt;）；</li>
+</ul>
+</li>
+<li>
+<p><strong>第三方设备</strong>：建 Mibset（OID/Display Name/MIB Directory），MIB-2 兜底就填 mib-2；MIB 文件须 .mib 后缀；支持 Web/Telnet/SSH、Custom Icons、Traps、Locator（ <code>&lt;span class="pg"&gt;原文p121-123&lt;/span&gt;</code> ）</p>
+</li>
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>

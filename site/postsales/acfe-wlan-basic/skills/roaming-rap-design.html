@@ -75,10 +75,16 @@ blockquote p{margin:6px 0}
 <p>"[PRE] – Settings to be Entered by the Administrator: 1 – Stellar Access Point Startup &amp; Registration; 2 - VPN &amp; OmniVista 2500 Settings Retrieval; 3 - VPN Tunnel (Management Traffic) Establishment; 4 – Configuration Settings Retrieval; 5 – VPN Tunnel (Clients Traffic) &amp; Client Connection" (p499)</p>
 </blockquote>
 <h2 id="i">I · 方法论骨架</h2>
-<p><strong>1. 漫游默认状态</strong>
-- L2 漫游：恒开；L3 漫游：默认关，SSID 配置里开（home/foreign AP 间 L2 GRE 隧道）
-- Fast Roaming：默认关，按 SSID 开</p>
-<p><strong>2. L2/L3 判定表（三条件）</strong></p>
+<ol>
+<li><strong>漫游默认状态</strong></li>
+<li>L2 漫游：恒开；L3 漫游：默认关，SSID 配置里开（home/foreign AP 间 L2 GRE 隧道）</li>
+<li>
+<p>Fast Roaming：默认关，按 SSID 开</p>
+</li>
+<li>
+<p><strong>L2/L3 判定表（三条件）</strong></p>
+</li>
+</ol>
 <table>
 <thead>
 <tr>
@@ -116,15 +122,23 @@ blockquote p{margin:6px 0}
 </tbody>
 </table>
 <p>典型触发：同一 SSID 在不同 AP Group 映射了不同 VLAN。上下文的 Add/Del 消息在"新 AP 不属同一 OVC / 无相同 WLAN service"时被丢弃。</p>
-<p><strong>3. 快速漫游协议前提</strong>
-- OKC：仅 WPA2/WPA3 Enterprise
-- 802.11r（FT，省 RADIUS 重认证）：要求 WPA2/WPA3 加密（Personal 或 Enterprise）
-- 规划顺序：先按 VLAN 选 L2/L3，再按 SSID 安全级别选快漫游协议，最后 Heat Map 分频段核对覆盖重叠。</p>
-<p><strong>4. 粘滞客户端组合拳</strong>
+<ol>
+<li><strong>快速漫游协议前提</strong></li>
+<li>OKC：仅 WPA2/WPA3 Enterprise</li>
+<li>802.11r（FT，省 RADIUS 重认证）：要求 WPA2/WPA3 加密（Personal 或 Enterprise）</li>
+<li>
+<p>规划顺序：先按 VLAN 选 L2/L3，再按 SSID 安全级别选快漫游协议，最后 Heat Map 分频段核对覆盖重叠。</p>
+</li>
+<li>
+<p><strong>粘滞客户端组合拳</strong>
 Roaming RSSI Threshold（范围 0-100；
 推荐 2.4G=10、5G=15）+ 802.11v（给漫游目标）+ 802.11k（引导到最优 AP）。语义区分：关联阈值管"能不能连"，漫游阈值管"何时该走"。地理相邻但空口互不可见（直角走廊）→ 两台 AP 互加静态 Neighbor AP，上下文改走 LAN。</p>
-<p><strong>5. RAP 五步上线时序</strong>
+</li>
+<li>
+<p><strong>RAP 五步上线时序</strong>
 预置三段管理面配置后，AP 上电自动：序列号向 Cirrus 注册 → 取回 RAP 模式/VPN 公网地址/客户端池/OV2500 地址 → 建管理 VPN 隧道 → 从 OV2500 拉配置 → 建第二条客户端数据 GRE 隧道。</p>
+</li>
+</ol>
 <p>管理面三段：
 1. Cirrus：建 RAP 专用组织（trial 选 RAP=Yes）→ 声明序列号 → Mgmt VPN Settings（Server 公网 IP/端口、Server VPN IP、OV2500 IP、客户端池）→ 导出 .conf
 2. VPN Server 虚机：双网卡（公网/私网）→ .conf 上传 /opt/OmniVista_2500_NMS/data/vpn_conf/vpn_profile → Network Services 建 vpn_mgmt → endpoint 导入应用
@@ -132,7 +146,10 @@ Roaming RSSI Threshold（范围 0-100；
 参考地址（实验）：vpn_mgmt 192.168.0.1 / 池 .2-20；vpn_data 10.7.0.61 / 池 .55-60；OV2500 10.130.5.50。</p>
 <h2 id="a1-lab">A1 · 书中案例（Lab 步骤精要）</h2>
 <ul>
-<li><strong>c21/p549-572</strong>：RAP-Organization + Mgmt VPN → OVF 部署 VPN Server VA（admin 密码、双 NIC、SSH 6550、FileZilla 传 .conf）→ endpoint Apply → AP 重启建管理隧道（VA 控制台 VPN Status 见 peer/握手/字节）→ OV2500 控制台 [8]Configure Route 加 192.168.0.0/24 网关 10.130.5.251 → AP Registration 发现 RAP → Data VPN（导出第二个 .conf，端口 6551，绑 eth2）→ SSID（WPA3_AES + Use Tunnel）→ 远端 Windows 连 EmployeesX 拿员工网段地址。</li>
+<li>c21/p549-572：RAP-Organization + Mgmt VPN → OVF 部署 VPN Server VA（admin 密码</li>
+<li>双 NIC</li>
+<li>SSH 6550</li>
+<li>FileZilla 传 .conf）→ endpoint Apply → AP 重启建管理隧道（VA 控制台 VPN Status 见 peer/握手/字节）→ OV2500 控制台 [8]Configure Route 加 192.168.0.0/24 网关 10.130.5.251 → AP Registration 发现 RAP → Data VPN（导出第二个 .conf，端口 6551，绑 eth2）→ SSID（WPA3_AES + Use Tunnel）→ 远端 Windows 连 EmployeesX 拿员工网段地址</li>
 </ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>

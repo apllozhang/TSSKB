@@ -88,19 +88,38 @@ blockquote p{margin:6px 0}
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
 <li>触发：工单"AP 灯不亮/失联/进不了集群""客户端连上了没网""端口报错""PoE 不供电"。</li>
-<li>区分：这是<strong>故障处置</strong>入口——归域后部分案例会路由出去：认证/Portal/黑名单类归 <code><a href="ssid-portal-auth.html">ssid-portal-auth</a></code>；覆盖弱/吞吐低的射频侧五查归 <code><a href="rf-survey-tuning.html">rf-survey-tuning</a></code>；集群规划与 255 上限的<strong>设计层</strong>归 <code><a href="express-cluster-onboarding.html">express-cluster-onboarding</a></code>。本 skill 管单体与链路层的"救活"，不管优化与规划。</li>
+<li>区分：这是故障处置入口——归域后部分案例会路由出去：认证/Portal/黑名单类归 <code><a href="ssid-portal-auth.html">ssid-portal-auth</a></code>；</li>
+<li>覆盖弱/吞吐低的射频侧五查归 <code><a href="rf-survey-tuning.html">rf-survey-tuning</a></code>；</li>
+<li>集群规划与 255 上限的设计层归 <code><a href="express-cluster-onboarding.html">express-cluster-onboarding</a></code>。本 skill 管单体与链路层的"救活"，不管优化与规划；</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <p>通用救援梯度：
 1. Web 直连默认 IP <strong>192.168.1.254</strong>（PC 配同网段）。
 2. Web 不通走 Console：<strong>115200-8-N-1</strong>，先核线缆再怀疑设备。
 3. 仍不通 <code>cd /tmp</code> 后 <code>tcpdump -i br-wan -s 0 -w X.pcap</code> 抓包，tftp 上送 Wireshark 分析。</p>
-<p>按域套案例：
-4. 不上电：LED 判读 → 电源三参数（12W/48V DC/DC 优先）→ PoE 五查。
-5. 拿不到 IP：三步递进 + 检查 <code>option proto</code> 残留 static。
-6. 入不了集群：四查（cluster ID → 子网/32767 → joining 手工批准 → 上限/32768）。
-7. 客户端无 IP：抓包三分法（VLAN/终端残留/信道错配 beacon 比对）。
-8. 端口报错：换线 → ifconfig br-wan → ethtool eth0。</p>
+<ul>
+<li>按域套案例：4. 不上电：LED 判读 → 电源三参数（12W/48V DC/DC 优先）→ PoE 五查。</li>
+<li>
+<ol>
+<li>拿不到 IP：三步递进 + 检查 <code>option proto</code> 残留 static。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>入不了集群：四查（cluster ID → 子网/32767 → joining 手工批准 → 上限/32768）。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>客户端无 IP：抓包三分法（VLAN/终端残留/信道错配 beacon 比对）。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>端口报错：换线 → ifconfig br-wan → ethtool eth0。</li>
+</ol>
+</li>
+</ul>
 <p>Console 常用命令速查：lighttpd（Web 进程，<code>ps | grep lighttpd</code>，<code>/etc/init.d/lighttpd start</code> 重建）、wam（无线接入管理，按 athXX 端口）、<code>athstats -i wifi0/1</code>（PHY 错误）、<code>wlanconfig athXX list</code>（连接帧与信号）、sfe（会话跟踪）。</p>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>

@@ -75,13 +75,37 @@ blockquote p{margin:6px 0}
 <p>前提牢记三条（p13）：同集群最多 <strong>255 台</strong>、所有 AP 必须在<strong>同一 VLAN</strong>（组内通信走组播）、整组共用一个 cluster ID。有 OmniVista 时单网可扩到 4000 台（p86）。</p>
 <h2 id="_1">二、开局十分钟</h2>
 <ol>
-<li><strong>接一台、只接一台</strong>：多台同时首上电会各自成组（p13 附近）。</li>
+<li>接一台、只接一台：多台同时首上电会各自成组（p13 附近）。<ul>
+<li>
+<ol>
 <li>终端连预置 SSID <code>mywifi-xxxx</code>，访问 <code>http://mywifi.al-enterprise.com:8080</code> 进初始化向导；
 无 DHCP 时 AP 默认 IP 192.168.1.254，笔记本配 192.168.1.100/24 直连（p13）。</li>
-<li>走五步向导：改管理员密码（默认 admin）→ 国家码/时区 → 建 WLAN。中途终端不得切网，完成后 <code>mywifi-xxxx</code> 自动删除。</li>
-<li><strong>VLAN 向导里配不了</strong>，必须向导后在 "Modify Your WLAN" 补配。</li>
-<li><strong>PVM 选举</strong>按机型优先级链自动选出（p18）：AP1451 &gt; AP1351 &gt; AP1431/1331 &gt; AP1521 &gt; AP1320/1360 &gt; …；同优先级比 MAC 最大者。低端机当 PVM 会把集群上限拖到 32 台（AP1101/AP1201H/L/HL），混装时手动 "Update to PVM" 提升。</li>
-<li>向导后统一走 <strong>GMIP（默认 10.0.0.1）:8080</strong> 做长期管理入口，不追漂移的 DHCP 地址（p31-32）。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>走五步向导：改管理员密码（默认 admin）→ 国家码/时区 → 建 WLAN。</li>
+</ol>
+</li>
+<li>中途终端不得切网，完成后 <code>mywifi-xxxx</code> 自动删除。</li>
+<li>
+<ol>
+<li>VLAN 向导里配不了，必须向导后在 "Modify Your WLAN" 补配。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>PVM 选举按机型优先级链自动选出（p18）：AP1451 &gt; AP1351 &gt; AP1431/1331 &gt; AP1521 &gt; AP1320/1360 &gt; …；同优先级比 MAC 最大者。</li>
+</ol>
+</li>
+<li>低端机当 PVM 会把集群上限拖到 32 台（AP1101/AP1201H/L/HL），混装时手动 "Update to PVM" 提升。</li>
+<li>
+<ol>
+<li>向导后统一走 GMIP（默认 10.0.0.1）:8080 做长期管理入口，不追漂移的 DHCP 地址（p31-32）。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="_2">三、常用参数默认值速查表</h2>
 <table>

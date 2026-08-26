@@ -83,14 +83,46 @@ blockquote p{margin:6px 0}
 大网三层——BCB 居核心只学 B-MAC。</p>
 <h2 id="spb_1">二、从零搭 SPB 的八步主线</h2>
 <ol>
-<li><strong>骨干四步</strong>（Lab1，p83）：建 BVLAN（含 ECT）→ 定控制 BVLAN → 配 IS-IS 接口 → 全局启用。BVLAN/ECT 指派全网必须一致（p83），不同 BVLAN 配不同 ECT-ID 做流量分担。</li>
-<li><strong>L2 服务五步</strong>（p108）：接入机建 VLAN → BEB 声明 service access port → 可选 L2 Profile → 建 service（spb X isid Y bvlan Z）→ 挂 SAP。I-SID 与 BVLAN 全网一致、一个 I-SID 只绑一个 BVLAN（p109）。</li>
-<li><strong>叠三层</strong>（p156-202）：要 OSPF/BGP 对接选 VPN-Lite；纯 SPB 域内选 L3-VPN（IS-IS IPVPN TLV 直带 VRF 路由，免路由协议，p199）。</li>
-<li><strong>保护</strong>（p120-141）：LBD 防接入环、IPMS 抑制泛洪、BUM 三模式选型（head-end/tandem S,G/tandem *,G）、overload 维护引流。</li>
-<li><strong>冗余</strong>（p229-256）：接入双上联用 DHL，ERP 环过 SPB 用 sap-neighbor+spb-remote-system，共享网改 multi-access。</li>
-<li><strong>动态服务</strong>（p274-286）：UNP profile 驱动动态 SAP，未命中流量按公式自动建服务。</li>
-<li><strong>编排</strong>（p304-309）：OV2500 靠控制 BVLAN 带内管理 + SNMP 发现全网。</li>
-<li><strong>增强接入</strong>（p315-331）：Hybrid 一口双角色、E-Tree 客户隔离。</li>
+<li>骨干四步（Lab1，p83）：建 BVLAN（含 ECT）→ 定控制 BVLAN → 配 IS-IS 接口 → 全局启用。<ul>
+<li>BVLAN/ECT 指派全网必须一致（p83），不同 BVLAN 配不同 ECT-ID 做流量分担。</li>
+<li>
+<ol>
+<li>L2 服务五步（p108）：接入机建 VLAN → BEB 声明 service access port → 可选 L2 Profile → 建 service（spb X isid Y bvlan Z）→ 挂 SAP。</li>
+</ol>
+</li>
+<li>I-SID 与 BVLAN 全网一致、一个 I-SID 只绑一个 BVLAN（p109）。</li>
+<li>
+<ol>
+<li>叠三层（p156-202）：要 OSPF/BGP 对接选 VPN-Lite；纯 SPB 域内选 L3-VPN（IS-IS IPVPN TLV 直带 VRF 路由，免路由协议，p199）。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>保护（p120-141）：LBD 防接入环、IPMS 抑制泛洪、BUM 三模式选型（head-end/tandem S,G/tandem *,G）、overload 维护引流。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>冗余（p229-256）：接入双上联用 DHL，ERP 环过 SPB 用 sap-neighbor+spb-remote-system，共享网改 multi-access。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>动态服务（p274-286）：UNP profile 驱动动态 SAP，未命中流量按公式自动建服务。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>编排（p304-309）：OV2500 靠控制 BVLAN 带内管理 + SNMP 发现全网。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>增强接入（p315-331）：Hybrid 一口双角色、E-Tree 客户隔离。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <p>调路径的规矩：<code>spb isis interface port X metric N</code>（默认 10）<strong>必须两端同步改</strong>——单侧降级按大值算整条链路（p28）。</p>
 <h2 id="_1">三、配置模板速查</h2>
@@ -147,17 +179,47 @@ vrf 1 ip import isid 1000 all-routes
 </ol>
 <p>前 3 个是主线必读；4-6 按场景查；7-8 是 Day3 自动化增强。</p>
 <h2 id="_4">七、实施陷阱清单</h2>
-<p>骨干与服务层：
-- 控制 BVLAN 只能在 <code>spb isis admin-state disable</code> 时改（改不动先查协议状态）。
-- BVLAN 自动禁 STP、不学客户 MAC、不泛洪——别指望 STP 在骨干做环保护。
-- metric 单侧改无效，引流必须两端同步。
-- 绑 IP 接口瞬间 vlan-xlation 隐式启用且锁定不可改；规划期先定翻译需求。
-- 同一 I-SID 不能既 bind 又 redist 到同一 VRF；VPN-Lite 两个 VRF 不能共享同一 I-SID。</p>
-<p>保护与冗余：
-- LBD 在 linkagg 上封整组；封口裁决规则是跨机关较高 BridgeID、同机关较高 PortID——预判被封口，别误判设备故障。
-- 接入层并行双路径无 STP/LBD 兜底必成环：SPB 骨干无环不等于接入无环（p131 实验复现）。
-- ERP 六条铁律（p23）：BEB 不能做 RPL 节点；ERP 服务必须配在<strong>控制 BVLAN</strong>；环不能建在 802.1q tag 口；每 SVLAN 最多 2 个 ERP NNI；多环 VLAN 范围互斥。
-- DHL 每交换机只允许一个会话。</p>
+<ul>
+<li>骨干与服务层：- 控制 BVLAN 只能在 <code>spb isis admin-state disable</code> 时改（改不动先查协议状态）。</li>
+<li>
+<ul>
+<li>BVLAN 自动禁 STP、不学客户 MAC、不泛洪——别指望 STP 在骨干做环保护。</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>metric 单侧改无效，引流必须两端同步。</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>绑 IP 接口瞬间 vlan-xlation 隐式启用且锁定不可改；规划期先定翻译需求。</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>同一 I-SID 不能既 bind 又 redist 到同一 VRF；VPN-Lite 两个 VRF 不能共享同一 I-SID。</li>
+</ul>
+</li>
+<li>
+<p>保护与冗余：- LBD 在 linkagg 上封整组；封口裁决规则是跨机关较高 BridgeID、同机关较高 PortID——预判被封口，别误判设备故障。</p>
+</li>
+<li>
+<ul>
+<li>接入层并行双路径无 STP/LBD 兜底必成环：SPB 骨干无环不等于接入无环（p131 实验复现）。</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>ERP 六条铁律（p23）：BEB 不能做 RPL 节点；ERP 服务必须配在<strong>控制 BVLAN</strong>；环不能建在 802.1q tag 口；每 SVLAN 最多 2 个 ERP NNI；多环 VLAN 范围互斥。</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>DHL 每交换机只允许一个会话。</li>
+</ul>
+</li>
+</ul>
 <p>动态与增强：
 - UNP：SNMP 用户名禁用 admin/diag/user（建号失败先查保留字）；隔离用户不能靠重定向补救。
 - E-Tree：两端都配 e-tree = 全 Leaf 死网；用户报"同服务两站不通"先查是否都是 Leaf——这是设计语义，不是故障。

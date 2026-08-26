@@ -64,11 +64,44 @@ blockquote p{margin:6px 0}
 <h2 id="adler">骨架（Adler 结构四步）</h2>
 <ol>
 <li><strong>Why（p5-8）</strong>：传统 STP + VLAN 模型的五大痛点（资源低效、稳定性、4096 VLAN 上限、运维复杂度、traffic tromboning）→ VXLAN 数据面 → 洪泛学习不足 → 需要智能控制平面（EVPN）。</li>
-<li><strong>Fundamentals（p9-40）</strong>：EVPN 术语（EVI/BD/ES/ESI/ETag/MAC-VRF/IP-VRF）；控制平面（AFI 25 / SAFI 70）；8 种 Route-Types（R-T1 A-D、R-T2 MAC/IP、R-T3 IMET、R-T4 ES、R-T5 IP Prefix、R-T6 SMET、R-T7/8 IGMP 同步）；RD/RT；三种 service interface model；ARP suppression / proxy ARP；扩展社区（ES-Import、ESI Label、Tunnel Encap、MAC mobility、Default Gateway、DF Election、Router MAC）；IRB（对称/非对称、host-based/prefix-based、三种 RFC 9136 模型）；DAG；数据面（BUM 的 ingress replication、bridging、routing 步骤级 walk-through）；multi-homing（DF election/service carving、split horizon、local bias、aliasing、backup path、mass withdraw）；multicast 优化（OISM、PEG）；MAC/IP mobility（duplicate-MAC hold-down、DAD）；silent hosts。</li>
-<li><strong>AOS Differentiators（p40-44）</strong>：自动 ESI 生成（Type 0x3）、Enhanced VLAN-bundle service interface（ALE 定义）、自动 RD/RT 编码（Loopback + Object Type/ID）、SMET by all PEs。</li>
-<li><strong>Design（p44-48）</strong>：spine-leaf 拓扑、OSPF underlay + iBGP overlay（RR 冗余、TTL security）、external connectivity（border leaf + GRM、路由汇总、防 echo）。</li>
-<li><strong>Configuration Example（p48-72）</strong>：6 leaf + 2 spine 全套配置（OSPF/BFD/BGP RR/LAG/Fabric-VPN/service/SAP/IRB/DAG/OSPF 外部路由/proxy ARP），每步配 verification 命令。</li>
-<li><strong>Conclusion + References（p72-73）</strong>：EVPN 为 DC/campus/DCI 事实标准；ALE VC/UNP 等生态。</li>
+<li>
+<p>Fundamentals（p9-40）：EVPN 术语（EVI/BD/ES/ESI/ETag/MAC-VRF/IP-VRF）；</p>
+<ul>
+<li>控制平面（AFI 25 / SAFI 70）；</li>
+<li>8 种 Route-Types（R-T1 A-D、R-T2 MAC/IP、R-T3 IMET、R-T4 ES、R-T5 IP Prefix、R-T6 SMET、R-T7/8 IGMP 同步）；</li>
+<li>RD/RT；</li>
+<li>三种 service interface model；</li>
+<li>ARP suppression / proxy ARP；</li>
+<li>扩展社区（ES-Import、ESI Label、Tunnel Encap、MAC mobility、Default Gateway、DF Election、Router MAC）；</li>
+<li>IRB（对称/非对称、host-based/prefix-based、三种 RFC 9136 模型）；</li>
+<li>DAG；</li>
+<li>数据面（BUM 的 ingress replication、bridging、routing 步骤级 walk-through）；</li>
+<li>multi-homing（DF election/service carving、split horizon、local bias、aliasing、backup path、mass withdraw）；</li>
+<li>multicast 优化（OISM、PEG）；</li>
+<li>MAC/IP mobility（duplicate-MAC hold-down、DAD）；</li>
+<li>silent hosts；</li>
+</ul>
+</li>
+<li>
+<p>AOS Differentiators（p40-44）：自动 ESI 生成（Type 0x3）、Enhanced VLAN-bundle service interface（ALE 定义）、自动 RD/RT 编码（Loopback + Object Type/ID）、SMET by all PEs。</p>
+<ul>
+<li>
+<ol>
+<li>Design（p44-48）：spine-leaf 拓扑、OSPF underlay + iBGP overlay（RR 冗余、TTL security）、external connectivity（border leaf + GRM、路由汇总、防 echo）。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>Configuration Example（p48-72）：6 leaf + 2 spine 全套配置（OSPF/BFD/BGP RR/LAG/Fabric-VPN/service/SAP/IRB/DAG/OSPF 外部路由/proxy ARP），每步配 verification 命令。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>Conclusion + References（p72-73）：EVPN 为 DC/campus/DCI 事实标准；ALE VC/UNP 等生态。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="_2">关键术语群</h2>
 <p>VXLAN/VNI/VTEP/VTI；

@@ -79,13 +79,7 @@ blockquote p{margin:6px 0}
 <li>IoT 设备自动识别（DHCP Option 55/60 指纹 + MAC OUI）并自动指派档案</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>Access Guardian 的核心是"端口自动感知多客户端认证"：同一口上自动检测 802.1X 与非 802.1X 设备（P120， <code>&lt;span class="pg"&gt;原文p630&lt;/span&gt;</code> ）。</li>
-<li>身份的载体是 UNP（Universal Network Profile）= VLAN + QoS/ACL 策略列表 +（R8 加 Location/Period），档案随用户动态应用到端口（P121， <code>&lt;span class="pg"&gt;原文p631&lt;/span&gt;</code> ）。</li>
-<li>下发路径：RADIUS Access-Accept 的 Filter-ID 携 UNP 名；无返回时走降级链——分类规则 → 默认 UNP → Captive Portal → 阻断（P122/F10， <code>&lt;span class="pg"&gt;原文p632, 635-638&lt;/span&gt;</code> ）。</li>
-<li>R8 端口分类规则有 16 级固定优先序（Port &gt; Port+VLAN tag &gt; Domain 组合 &gt; MAC &gt; OUI &gt; Range &gt; LLDP &gt; Auth-type &gt; IP &gt; VLAN tag）（P124， <code>&lt;span class="pg"&gt;原文p638&lt;/span&gt;</code> ）。</li>
-<li>IoT 画像三组件：本地签名收集器 + 本地 profiler + UNP 画像，识别后自动指派 UNP（P127/P128/F11， <code>&lt;span class="pg"&gt;原文p686-690&lt;/span&gt;</code> ）。</li>
-</ul>
+<p>Access Guardian 的核心是"端口自动感知多客户端认证"：同一口上自动检测 802.1X 与非 802.1X 设备（P120， <code>&lt;span class="pg"&gt;原文p630&lt;/span&gt;</code> ）。身份的载体是 UNP（Universal Network Profile）= VLAN + QoS/ACL 策略列表 +（R8 加 Location/Period），档案随用户动态应用到端口（P121， <code>&lt;span class="pg"&gt;原文p631&lt;/span&gt;</code> ）。下发路径：RADIUS Access-Accept 的 Filter-ID 携 UNP 名；无返回时走降级链——分类规则 → 默认 UNP → Captive Portal → 阻断（P122/F10， <code>&lt;span class="pg"&gt;原文p632, 635-638&lt;/span&gt;</code> ）。R8 端口分类规则有 16 级固定优先序（Port &gt; Port+VLAN tag &gt; Domain 组合 &gt; MAC &gt; OUI &gt; Range &gt; LLDP &gt; Auth-type &gt; IP &gt; VLAN tag）（P124， <code>&lt;span class="pg"&gt;原文p638&lt;/span&gt;</code> ）。IoT 画像三组件：本地签名收集器 + 本地 profiler + UNP 画像，识别后自动指派 UNP（P127/P128/F11， <code>&lt;span class="pg"&gt;原文p686-690&lt;/span&gt;</code> ）。</p>
 <h2 id="a1">A1（决策/选型）</h2>
 <ol>
 <li>认证方式：802.1X（有 supplicant）vs MAC 认证（交换机以源 MAC 为用户名/密码构造 RADIUS 请求，P123， <code>&lt;span class="pg"&gt;原文p633&lt;/span&gt;</code> ）vs 免认证纯分类</li>
@@ -96,9 +90,28 @@ blockquote p{margin:6px 0}
 <ol>
 <li>UNP 配置五步（P125， <code>&lt;span class="pg"&gt;原文p640&lt;/span&gt;</code> ）：分类规则 → 认证服务器 → 设备分类策略 → UNP 档案 → 端口</li>
 <li>端口准备：R6 <code>vlan port mobile 3/1</code> + <code>vlan port 3/1 802.1x enable</code>；R8 <code>unp port 1/1/1 port-type BRIDGE</code>（C33， <code>&lt;span class="pg"&gt;原文p642-677&lt;/span&gt;</code> ）</li>
-<li>UNP 策略列表：<code>policy list list_name type unp</code>；R6 <code>aaa user-network-profile name profile_name policy-list-name list_name</code> / R8 <code>unp profile profile_name qos-policy-list …</code>；VLAN 映射 <code>unp profile profile_name map vlan vlan_id</code>（C33， <code>&lt;span class="pg"&gt;原文p642-677&lt;/span&gt;</code> ）</li>
-<li>分类规则（R8）：<code>unp classification mac-address 00:11:22:33:44:55 port 1/1/5 PROFILE1 Pr1</code>、<code>unp classification mac-oui 00:11:22 PROFILE1 myProfile1</code>、<code>unp classification lldp med-endpoint ip-phone p PROFILE1 myProfile1</code>、<code>unp classification authentication-type 802.1X/MAC …</code>（C33， <code>&lt;span class="pg"&gt;原文p642-677&lt;/span&gt;</code> ）</li>
-<li>RADIUS 档案：<code>aaa profile ap-1</code> → <code>aaa profile ap-1 device-authentication mac rad1 rad2</code> / <code>device-authentication 802.1x rad1 rad2</code> → <code>unp port 1/1/5 aaa-profile ap-1</code>（可按 linkagg/范围）；联调 <code>aaa test-radius-server My_radius type authentication user employee password password</code>（C33/P207， <code>&lt;span class="pg"&gt;原文p642-677&lt;/span&gt;</code> ）</li>
+<li>
+<p>UNP 策略列表：<code>policy list list_name type unp</code>；</p>
+<ul>
+<li>
+<p>R6 <code>aaa user-network-profile name profile_name policy-list-name list_name</code> / R8 <code>unp profile profile_name qos-policy-list …</code>；</p>
+</li>
+<li>
+<p>VLAN 映射 <code>unp profile profile_name map vlan vlan_id</code>（C33， <code>&lt;span class="pg"&gt;原文p642-677&lt;/span&gt;</code> ）；</p>
+</li>
+</ul>
+</li>
+<li>
+<p>分类规则（R8）：<code>unp classification mac-address 00:11:22:33:44:55 port 1/1/5 PROFILE1 Pr1</code></p>
+<ul>
+<li><code>unp classification mac-oui 00:11:22 PROFILE1 myProfile1</code></li>
+<li><code>unp classification lldp med-endpoint ip-phone p PROFILE1 myProfile1</code></li>
+<li><code>unp classification authentication-type 802.1X/MAC …</code>（C33， <code>&lt;span class="pg"&gt;原文p642-677&lt;/span&gt;</code> ）</li>
+</ul>
+</li>
+<li>
+<p>RADIUS 档案：<code>aaa profile ap-1</code> → <code>aaa profile ap-1 device-authentication mac rad1 rad2</code> / <code>device-authentication 802.1x rad1 rad2</code> → <code>unp port 1/1/5 aaa-profile ap-1</code>（可按 linkagg/范围）；联调 <code>aaa test-radius-server My_radius type authentication user employee password password</code>（C33/P207， <code>&lt;span class="pg"&gt;原文p642-677&lt;/span&gt;</code> ）</p>
+</li>
 <li>Location/Period 策略：<code>system location &lt;string&gt;</code> + <code>unp policy validity-location "Alcatel" port 1/1/10</code>；<code>unp policy validity-period "Office-Time" days MONDAY time-zone CET hours 9:00 to 17:00</code>（C34/P126， <code>&lt;span class="pg"&gt;原文p649-650&lt;/span&gt;</code> ）</li>
 <li>IoT 画像：启用签名收集（DHCP Option 55/60）与本地 profiler，比对签名库后自动指派 UNP；维护已知/未知设备库供补录（F11， <code>&lt;span class="pg"&gt;原文p686-690&lt;/span&gt;</code> ）</li>
 </ol>

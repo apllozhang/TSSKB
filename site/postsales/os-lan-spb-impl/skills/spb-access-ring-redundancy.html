@@ -73,10 +73,20 @@ blockquote p{margin:6px 0}
 <p>"-&gt; spb isis interface port 2/1 type multi-access -&gt; spb isis interface linkagg 5 priority 90 — Default: 64. DIS: Highest interface priority; Tiebreaker: highest @BMAC ... No DIS backup; New DIS election without significant disruption (3s)" (p229)</p>
 </blockquote>
 <h2 id="i">I · 方法论骨架</h2>
-<p>三种接入冗余/共享形态，按场景选：
-1. <strong>DHL</strong>（p29）：接入交换机双上联两台 BEB，不跑 STP；每机仅一个会话，linkA/linkB + vlan-map 定向 VLAN；切换时 <code>mac-flushing raw</code>。
-2. <strong>ERP（G.8032）</strong>（f13）：环网经 BEB SAP 口延伸过 SPB 云。分工：环内节点配 port1/port2 + service-vlan + MEG level，RPL owner 加 rpl-node 与 wait-to-restore-timer，靠 BEB 的节点配 sap-neighbor；BEB 侧建服务/SAP 并用 <code>access-tagged ... spb-remote-system &lt;对端 B-MAC&gt;</code> 把环另一端接过 SPB。
-3. <strong>Multi-Access 共享网</strong>（p13）：跨共享 LAN/微波 PMP/跨 SPB 域时，接口从默认 P2P 改 <code>type multi-access</code>，DIS 选举按优先级（默认 64）定、同分取最高 B-MAC，重选约 3 秒；同一台机可混配 P2P 与 multi-access。</p>
+<ul>
+<li>三种接入冗余/共享形态，按场景选：1. <strong>DHL</strong>（p29）：接入交换机双上联两台 BEB，不跑 STP；每机仅一个会话，linkA/linkB + vlan-map 定向 VLAN；切换时 <code>mac-flushing raw</code>。</li>
+<li>
+<ol>
+<li><strong>ERP（G.8032）</strong>（f13）：环网经 BEB SAP 口延伸过 SPB 云。</li>
+</ol>
+</li>
+<li>分工：环内节点配 port1/port2 + service-vlan + MEG level，RPL owner 加 rpl-node 与 wait-to-restore-timer，靠 BEB 的节点配 sap-neighbor；BEB 侧建服务/SAP 并用 <code>access-tagged ... spb-remote-system &lt;对端 B-MAC&gt;</code> 把环另一端接过 SPB。</li>
+<li>
+<ol>
+<li><strong>Multi-Access 共享网</strong>（p13）：跨共享 LAN/微波 PMP/跨 SPB 域时，接口从默认 P2P 改 <code>type multi-access</code>，DIS 选举按优先级（默认 64）定、同分取最高 B-MAC，重选约 3 秒；同一台机可混配 P2P 与 multi-access。</li>
+</ol>
+</li>
+</ul>
 <h2 id="a1-lab">A1 · 书中案例（Lab 配置序列精要）</h2>
 <p>Lab7b DHL 双归属（c13，p250）：</p>
 <pre><code>! Sw3（接入）
@@ -103,13 +113,30 @@ Lab7a 共享网（c12，p246）：先 disable 原 P2P 口，再 <code>spb isis i
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
 <li><strong>DHL 部署</strong>：接入机 <code>dhl 1</code> → 指定 linka/linkb（物理口或 linkagg）→ <code>vlan-map</code> 把定向 VLAN 绑到指定链路 → <code>mac-flushing raw</code> → <code>admin-state enable</code>；<code>show dhl 1</code> 看 Active Vlans 分配。</li>
-<li><strong>ERP 部署</strong>：环内节点按 A1 模板配 ring/rpl/sap-neighbor；BEB 侧建服务（ERP 控制 VLAN 的服务必须建在<strong>控制 BVLAN</strong> 上）+ 三类 SAP + spb-remote-system 形式；<code>show erp</code> / <code>show erp statistics</code> 验证，断纤看 RPL 阻塞恢复与 WTR 计时。</li>
-<li><strong>Multi-Access 改造</strong>：disable 原 P2P 骨干口 → 各机出线到共享网 → <code>type multi-access</code>（需要控制 DIS 则加 priority）→ 验证一口多邻接；保留回滚序列（<code>no spb isis interface port X</code> + 原口重新 enable）。</li>
+<li>
+<p>ERP 部署：环内节点按 A1 模板配 ring/rpl/sap-neighbor；</p>
+<ul>
+<li>BEB 侧建服务（ERP 控制 VLAN 的服务必须建在控制 BVLAN 上）+ 三类 SAP + spb-remote-system 形式；</li>
+<li><code>show erp</code> / <code>show erp statistics</code> 验证，断纤看 RPL 阻塞恢复与 WTR 计时；</li>
+</ul>
+</li>
+<li>
+<p><strong>Multi-Access 改造</strong>：disable 原 P2P 骨干口 → 各机出线到共享网 → <code>type multi-access</code>（需要控制 DIS 则加 priority）→ 验证一口多邻接；保留回滚序列（<code>no spb isis interface port X</code> + 原口重新 enable）。</p>
+</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>
-<li><strong>ERP/SPB 六条铁律</strong>（p23/ce08）：每 SVLAN 最多 2 个 ERP 型 NNI 关联；环不能建在 802.1q tag 口或 STP 型 NNI 上；BEB 不能做 RPL 节点；RPL 口不能在 SPB 网内也不能做 SAP neighbor；ERP 服务 VLAN 的 SPB 服务必须配在控制 BVLAN；多环共存时各环 VLAN 范围（含服务 VLAN）互斥、服务 ID 不跨环。</li>
-<li>DHL 每交换机只允许一个会话（p29）；VLAN 池需同时 tag 到两条链路。</li>
+<li>ERP/SPB 六条铁律（p23/ce08）：每 SVLAN 最多 2 个 ERP 型 NNI 关联；</li>
+<li>环不能建在 802.1q tag 口或 STP 型 NNI 上；</li>
+<li>BEB 不能做 RPL 节点；</li>
+<li>RPL 口不能在 SPB 网内也不能做 SAP neighbor；</li>
+<li>ERP 服务 VLAN 的 SPB 服务必须配在控制 BVLAN；</li>
+<li>
+<p>多环共存时各环 VLAN 范围（含服务 VLAN）互斥、服务 ID 不跨环；</p>
+</li>
+<li>
+<p>DHL 每交换机只允许一个会话（p29）；VLAN 池需同时 tag 到两条链路。</p>
+</li>
 <li>multi-access 无 DIS 备份，重选 3 秒（p13）；改 SAP 后需 disable/enable 端口重启分类（c13）。</li>
 <li>spb-remote-system 填的是对端 BEB 的 B-MAC（<code>show spb isis info</code> 获取）。</li>
 </ul>

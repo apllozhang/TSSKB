@@ -78,10 +78,8 @@ blockquote p{margin:6px 0}
 <li>需要在主环下挂子环（Laddered/Subtending）扩展覆盖范围</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>ERPv2 用"稳态阻塞唯一一条 RPL 链路"换取环内无环；故障时 R-APS SF 消息触发 RPL Owner 解阻塞倒换，恢复时靠 NR + WTR 定时器（默认 5 分钟）防抖回切。</li>
-<li>整个环是一台协同的状态机，任何一台交换机的 Service VLAN/MEG Level/RPL 配置不一致都会破坏这个协同。</li>
-</ul>
+<p>ERPv2 用"稳态阻塞唯一一条 RPL 链路"换取环内无环；
+故障时 R-APS SF 消息触发 RPL Owner 解阻塞倒换，恢复时靠 NR + WTR 定时器（默认 5 分钟）防抖回切。整个环是一台协同的状态机，任何一台交换机的 Service VLAN/MEG Level/RPL 配置不一致都会破坏这个协同。</p>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>建环并指定 Service VLAN 与 MEG Level（全网一致，0-7）：

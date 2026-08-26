@@ -73,8 +73,18 @@ blockquote p{margin:6px 0}
 </blockquote>
 <h2 id="i">I · 方法论骨架</h2>
 <p>两条主线：
-1. <strong>有线客户端 MAC 认证</strong>（AP 或 OmniSwitch 有线口）：访问角色（Access Role Profile，ARP）是策略落点——ARP_DEFAULT（受限+限带宽）为默认角色、ARP_PASS（全通）为认证通过角色；认证链 = AAA Server Profile（内置 UPAMRadiusServer，用途选 MAC）→ Access Auth Profile（方法 MAC、绑定 AP 组/端口）→ Access Policy（映射条件 Authentication Type=MAC、认证源 Local Database、角色 ARP_PASS）→ 本地数据库录 MAC。
-2. <strong>IoT 设备识别与强制</strong>：两招识别——MAC OUI（厂商前缀）+ DHCP 指纹（option 55 参数请求列表 + option 60 厂商标识）；识别结果归入预置或自定义分类，分类可绑定 Access Role Profile 做强制（Enforcement）；未知类型可向 Device Profile 服务查询。</p>
+1. 有线客户端 MAC 认证（AP 或 OmniSwitch 有线口）：访问角色（Access Role Profile，ARP）是策略落点——ARP_DEFAULT（受限+限带宽）为默认角色
+    - ARP_PASS（全通）为认证通过角色；认证链 = AAA Server Profile（内置 UPAMRadiusServer，用途选 MAC）→ Access Auth Profile（方法 MAC
+    - 绑定 AP 组/端口）→ Access Policy（映射条件 Authentication Type=MAC
+    - 认证源 Local Database
+    - 角色 ARP_PASS）→ 本地数据库录 MAC</p>
+<ol>
+<li>IoT 设备识别与强制：两招识别——MAC OUI（厂商前缀）+ DHCP 指纹（option 55 参数请求列表 + option 60 厂商标识）；<ul>
+<li>识别结果归入预置或自定义分类，分类可绑定 Access Role Profile 做强制（Enforcement）；</li>
+<li>未知类型可向 Device Profile 服务查询；</li>
+</ul>
+</li>
+</ol>
 <h2 id="a1-lab">A1 · 书中案例（Lab 精要）</h2>
 <p>Lab（p89-98）在 AP "Home-AP" 的 Eth1 口做 MAC 认证：预置两个角色 → 配 AAA Server Profile 指向 UPAMRadiusServer → Access Auth Profile 应用到 AP 组并启用端口 Eth1 → Access Policy 匹配 MAC/Local Database/ARP_PASS/Web 重定向 None → 在 Accounts &gt; Company Property 录入客户端 MAC 11:22:33:44:55:66 → 接上有线客户端验证。监控：Device Catalog &gt; Wired Ports 看端口与 UNP 客户端；Analytics &gt; Clients 看在线/历史有线会话（时间窗最近 1 小时到 1 个月）。</p>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
@@ -86,13 +96,39 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
-<li>预置角色：创建 ARP_DEFAULT（受限 ACL+限带宽）与 ARP_PASS（全通）。</li>
+<li>预置角色：创建 ARP_DEFAULT（受限 ACL+限带宽）与 ARP_PASS（全通）。<ul>
+<li>
+<ol>
 <li>配 AAA：Configure &gt; Network Access &gt; Unified Access，AAA Server Profile 指向 UPAMRadiusServer，用途选 MAC。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>配认证：Access Auth Profile——认证方法 MAC、选 AAA Profile、默认角色 ARP_DEFAULT，应用到 AP 组并启用目标端口（Eth1）；交换机则选接入端口。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>配策略：Access Policy——映射条件 Authentication Type = MAC、认证源 Local Database、角色 ARP_PASS、Web 重定向 None。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>录终端：Accounts &gt; Company Property 把客户端 MAC（如 11:22:33:44:55:66）录入本地数据库。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>验证：接上有线客户端，Wired Ports / Analytics &gt; Clients 查看会话与角色。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>IoT 侧：在 OmniVista 开启设备画像，按 MAC OUI + DHCP 指纹核对识别分类，把分类绑定到目标 Access Role Profile 实现自动强制。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>

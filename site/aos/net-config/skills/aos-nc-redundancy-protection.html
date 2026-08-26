@@ -78,11 +78,7 @@ blockquote p{margin:6px 0}
 <li>电信以太环网（G.8032 ERP）或工业环网（MRP）保护切换</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>二层高可靠防环分层选型（F3， <code>&lt;span class="pg"&gt;原文p157&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p395&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p211&lt;/span&gt;</code> ）：STP/RSTP/MSTP（通用树）→UDLD（单向链路）→LBD（环回）→ERP/MRP（电信/工业环网）→DHL（双归）→SPBM（ISIS 最短路径，见 aos-nc-fabric-backbone）。</li>
-<li>环网保护双体系（F16， <code>&lt;span class="pg"&gt;原文p395&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p426&lt;/span&gt;</code> ）：ERP(G.8032，RPL owner+WTR/Guard+R-APS) 面向电信以太，MRP(IEC 62439-2，MRM/MRC/MRA 投票+测试帧) 面向工业环。</li>
-<li>STP 拓扑计算三步：选根桥（最低桥 ID）→每桥算到根最优路径→阻塞成环节路（P43， <code>&lt;span class="pg"&gt;原文p157&lt;/span&gt;</code> ）。</li>
-</ul>
+<p>二层高可靠防环分层选型（F3， <code>&lt;span class="pg"&gt;原文p157&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p395&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p211&lt;/span&gt;</code> ）：STP/RSTP/MSTP（通用树）→UDLD（单向链路）→LBD（环回）→ERP/MRP（电信/工业环网）→DHL（双归）→SPBM（ISIS 最短路径，见 aos-nc-fabric-backbone）。环网保护双体系（F16， <code>&lt;span class="pg"&gt;原文p395&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p426&lt;/span&gt;</code> ）：ERP(G.8032，RPL owner+WTR/Guard+R-APS) 面向电信以太，MRP(IEC 62439-2，MRM/MRC/MRA 投票+测试帧) 面向工业环。STP 拓扑计算三步：选根桥（最低桥 ID）→每桥算到根最优路径→阻塞成环节路（P43， <code>&lt;span class="pg"&gt;原文p157&lt;/span&gt;</code> ）。</p>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>通用防环</strong>：小网 RSTP；多 VLAN 独立路径选 MSTP（VLAN 映射 MSTI，Flat 模式最多 17 实例含 CIST）；per-VLAN 模式是 AOS 私有，跨厂商互通受限（P45/P46/X21， <code>&lt;span class="pg"&gt;原文p164&lt;/span&gt;</code> ）</li>
@@ -93,8 +89,14 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>MST 区域</strong>：<code>spantree mst region &lt;name&gt;</code>+revision+VLAN-MSTI 映射（cases·C12， <code>&lt;span class="pg"&gt;原文p202&lt;/span&gt;</code> ）；单 MSTI 调优：对特定 MSTI 配端口 path cost/priority 使该 MSTI VLAN 走独立路径（cases·C13， <code>&lt;span class="pg"&gt;原文p205&lt;/span&gt;</code> ）；端口参数（edge port、root guard、限 TCN/BPDU）见章内 Configuring STP Port Parameters（cases·C14， <code>&lt;span class="pg"&gt;原文p189&lt;/span&gt;</code> ）</li>
-<li><strong>静态聚合</strong>：<code>linkagg static agg &lt;id&gt; size n</code>→<code>linkagg static port agg &lt;id&gt; port &lt;slot/port&gt;</code>（两端都要）；验证 show linkagg（cases·C24， <code>&lt;span class="pg"&gt;原文p342&lt;/span&gt;</code> ）</li>
+<li>MST 区域：<code>spantree mst region &lt;name&gt;</code>+revision+VLAN-MSTI 映射（cases·C12， <code>&lt;span class="pg"&gt;原文p202&lt;/span&gt;</code> ）；</li>
+<li>单 MSTI 调优：对特定 MSTI 配端口 path cost/priority 使该 MSTI VLAN 走独立路径（cases·C13， <code>&lt;span class="pg"&gt;原文p205&lt;/span&gt;</code> ）；</li>
+<li>
+<p>端口参数（edge port、root guard、限 TCN/BPDU）见章内 Configuring STP Port Parameters（cases·C14， <code>&lt;span class="pg"&gt;原文p189&lt;/span&gt;</code> ）；</p>
+</li>
+<li>
+<p><strong>静态聚合</strong>：<code>linkagg static agg &lt;id&gt; size n</code>→<code>linkagg static port agg &lt;id&gt; port &lt;slot/port&gt;</code>（两端都要）；验证 show linkagg（cases·C24， <code>&lt;span class="pg"&gt;原文p342&lt;/span&gt;</code> ）</p>
+</li>
 <li><strong>动态 LACP 聚合</strong>：建动态组→成员口 actor 参数（LACP 模式/slow-fast 超时）→partner 参数；验证 show linkagg dynamic（cases·C25， <code>&lt;span class="pg"&gt;原文p354&lt;/span&gt;</code> ）</li>
 <li><strong>DHL Active-Active 九步</strong>：<code>vlan 100-110</code>→两链路同默认 VLAN untagged→其余 VLAN tagged→<code>dhl 10</code>→<code>dhl 10 pre-emption-time 500</code>→<code>dhl 10 mac-flushing mvrp</code>→<code>dhl 10 linka linkagg 5 linkb port 1/1/10</code>→<code>dhl 10 vlan-map linkb 11-20</code>→<code>dhl 10 admin-state enable</code>（cases·C26， <code>&lt;span class="pg"&gt;原文p383&lt;/span&gt;</code> ）</li>
 <li><strong>LBD</strong>：全局 enable→边缘口 enable→（可选）remote-origin enable→transmission timer（默认 30s）→违规口 autorecovery；验证 <code>show loopback-detection</code>（cases·C19， <code>&lt;span class="pg"&gt;原文p329&lt;/span&gt;</code> ）</li>
@@ -115,8 +117,16 @@ blockquote p{margin:6px 0}
 <li>聚合组任一成员口环回，整组 shutdown（X29， <code>&lt;span class="pg"&gt;原文p328&lt;/span&gt;</code> ）；remote-origin LBD 双端都开时结果不确定（X30， <code>&lt;span class="pg"&gt;原文p327&lt;/span&gt;</code> ）</li>
 <li>聚合组成员必须同速，混速无法成组；负载分担非 IP 按 MAC、IP 报文按 IP 地址（X32/P64， <code>&lt;span class="pg"&gt;原文p341&lt;/span&gt;</code> ）</li>
 <li>静态聚合不能与部分厂商设备对接（X31， <code>&lt;span class="pg"&gt;原文p341&lt;/span&gt;</code> ）</li>
-<li>DHL：未同时挂到 linkA/linkB 的 VLAN 不受保护；每交换机仅一个会话、每会话仅两链路；VLAN 数≤128/组；raw flooding 的 MAC≤1000（X33/X34， <code>&lt;span class="pg"&gt;原文p382&lt;/span&gt;</code> ）；未映射到 linkB 的 VLAN 自动归 linkA（P70， <code>&lt;span class="pg"&gt;原文p383&lt;/span&gt;</code> ）</li>
-<li>ERP Guard Timer 必须大于 R-APS 绕环最大时延，否则可能成环（X35/P75， <code>&lt;span class="pg"&gt;原文p396&lt;/span&gt;</code> ）</li>
+<li>DHL：未同时挂到 linkA/linkB 的 VLAN 不受保护；</li>
+<li>每交换机仅一个会话、每会话仅两链路；</li>
+<li>VLAN 数≤128/组；</li>
+<li>raw flooding 的 MAC≤1000（X33/X34， <code>&lt;span class="pg"&gt;原文p382&lt;/span&gt;</code> ）；</li>
+<li>
+<p>未映射到 linkB 的 VLAN 自动归 linkA（P70， <code>&lt;span class="pg"&gt;原文p383&lt;/span&gt;</code> ）；</p>
+</li>
+<li>
+<p>ERP Guard Timer 必须大于 R-APS 绕环最大时延，否则可能成环（X35/P75， <code>&lt;span class="pg"&gt;原文p396&lt;/span&gt;</code> ）</p>
+</li>
 <li>ERPv2 子环不能使用共享链路；共享链路只能属于一个主环（X36， <code>&lt;span class="pg"&gt;原文p395&lt;/span&gt;</code> ）</li>
 <li>MSTP 仅 Flat 模式支持；MSTI 端口状态由 CST 统一算，不调 path cost 无法让单实例独立转发（X23/P47， <code>&lt;span class="pg"&gt;原文p164&lt;/span&gt;</code> ）</li>
 <li>MSTP 恢复流程要点：恢复侧发 R-APS(NR) 并启 Guard→RPL owner 启 WTR→超时阻塞 RPL 并发 R-APS(NR,RB)→各节点 flush MAC 回 idle（P74， <code>&lt;span class="pg"&gt;原文p398&lt;/span&gt;</code> ）</li>

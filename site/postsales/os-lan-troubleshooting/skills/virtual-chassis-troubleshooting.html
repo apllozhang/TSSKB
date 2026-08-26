@@ -75,32 +75,86 @@ blockquote p{margin:6px 0}
 </blockquote>
 <h2 id="i">I · 方法论骨架</h2>
 <ol>
-<li><strong>四层递进排障</strong>（f09）：① show virtual-chassis topology（角色/运行状态/Chassis ID/Priority/Group）→ ② show virtual-chassis consistency（核带星号必一致项：Chassis Type、Chas ID、Group、Hello Interval、Control Vlan、License）→ ③ 逐台 cat vcsetup.cfg 比对（chassis-id、vf-link-mode、member-port、chassis-group、EMP 地址）→ ④ debug show virtual-chassis status 按 L0-L8 层级定位失败层，对照 NOK 码。辅助：show virtual-chassis vf-link、debug show virtual-chassis connection、/flash 下 vcsetup.cfg.*.err 错误文件（含解析失败的行号与原因）。</li>
-<li><strong>启动与同步机制</strong>（p18）：开机读本地 vcsetup.cfg → VFL 连邻居 → 交换参数、发现拓扑、选举 Master → slave 的 vcboot.cfg 缺失或不一致时从 Master 下载并以它重启。Auto-VC：出厂新机无 vcsetup.cfg 时对 auto VFL 端口自动检测、自动分 VFL ID/chassis-id 并建组。</li>
+<li>
+<p>四层递进排障（f09）：① show virtual-chassis topology（角色/运行状态/Chassis ID/Priority/Group）→ ② show virtual-chassis consistency（核带星号必一致项：Chassis Type</p>
+<ul>
+<li>Chas ID</li>
+<li>Group</li>
+<li>Hello Interval</li>
+<li>Control Vlan</li>
+<li>License）→ ③ 逐台 cat vcsetup.cfg 比对（chassis-id</li>
+<li>vf-link-mode</li>
+<li>member-port</li>
+<li>chassis-group</li>
+<li>EMP 地址）→ ④ debug show virtual-chassis status 按 L0-L8 层级定位失败层，对照 NOK 码。辅助：show virtual-chassis vf-link</li>
+<li>debug show virtual-chassis connection</li>
+<li>/flash 下 vcsetup.cfg.*.err 错误文件（含解析失败的行号与原因）</li>
+</ul>
+</li>
+<li>
+<p><strong>启动与同步机制</strong>（p18）：开机读本地 vcsetup.cfg → VFL 连邻居 → 交换参数、发现拓扑、选举 Master → slave 的 vcboot.cfg 缺失或不一致时从 Master 下载并以它重启。Auto-VC：出厂新机无 vcsetup.cfg 时对 auto VFL 端口自动检测、自动分 VFL ID/chassis-id 并建组。</p>
+</li>
 <li><strong>NOK 码速查</strong>（p19）：NOK_08=没配 VFL 成员口；NOK_09=成员口没 operationally up；NOK_14=配置的 VFL 链路未全部 up（必须全 up 才 OK）；NOK_17=4 分钟发现窗口内没发现对等体（无对端/VFL 不通/VCM 协议包不通）。</li>
-<li><strong>脑裂防护</strong>（g13）：VFL 双断导致重复 MAC/IP 两套 Master。RCD（带外，经 EMP 口）与 VCSP（带内，需 helper 交换机）检测分裂；检测到后非 Master 侧自动进 Protection 模式关闭所有用户口。堆叠平台对应 SSP。EMP 管理口双重价值：带外访问 + RCD 承载（g12）。</li>
-<li><strong>背景参数</strong>（g10/g11/g14）：规模上限按机型（8×OS6560、4×OS6360、6×OS6900、2×OS9900）；Master 选举：最高优先级 → 最长 uptime（差&gt;10 分钟）→ 最小 chassis ID → 最小 MAC；VFL 内部以 LACP 聚合，速率不可混用；ISSU 按 Chassis ID 顺序逐台升级后 Master takeover。</li>
+<li>
+<p>脑裂防护（g13）：VFL 双断导致重复 MAC/IP 两套 Master。</p>
+<ul>
+<li>RCD（带外，经 EMP 口）与 VCSP（带内，需 helper 交换机）检测分裂；检测到后非 Master 侧自动进 Protection 模式关闭所有用户口。</li>
+<li>堆叠平台对应 SSP。</li>
+<li>EMP 管理口双重价值：带外访问 + RCD 承载（g12）。</li>
+</ul>
+</li>
+<li>
+<p>背景参数（g10/g11/g14）：规模上限按机型（8×OS6560、4×OS6360、6×OS6900、2×OS9900）；</p>
+<ul>
+<li>Master 选举：最高优先级 → 最长 uptime（差&gt;10 分钟）→ 最小 chassis ID → 最小 MAC；</li>
+<li>VFL 内部以 LACP 聚合，速率不可混用；</li>
+<li>ISSU 按 Chassis ID 顺序逐台升级后 Master takeover；</li>
+</ul>
+</li>
 </ol>
 <h2 id="a1-lab">A1 · 书中案例（LAB 故障根因）</h2>
 <ul>
-<li><strong>c03（LAB2 案例1，p191-198）</strong>：6360 两台组 VC 不工作。show virtual-chassis topology 各自成 Master 单机；debug status 报 NOK_08/09/14/17 链；cat vcsetup.cfg.1.err 给出确切原因——A 台 "vf-link-mode static" 在 stackport 平台不支持；B 台同样的 static 错误外加 member-port 3/1/27 与本机 chassis-id 2 不一致（应为 2/1/27）。修复：A 台改 <code>virtual-chassis vf-link-mode auto</code> → write memory（chassis 2 missing 警告确认）→ B 台重写 vcsetup.cfg（auto + auto-vf-link-port 2/1/27、2/1/28）→ reload from working no rollback-timeout → 验证 1=Master/2=Slave Running。</li>
+<li>c03（LAB2 案例1，p191-198）：6360 两台组 VC 不工作。</li>
+<li>show virtual-chassis topology 各自成 Master 单机；
+debug status 报 NOK_08/09/14/17 链；
+cat vcsetup.cfg.1.err 给出确切原因——A 台 "vf-link-mode static" 在 stackport 平台不支持；
+B 台同样的 static 错误外加 member-port 3/1/27 与本机 chassis-id 2 不一致（应为 2/1/27）。</li>
+<li>修复：A 台改 <code>virtual-chassis vf-link-mode auto</code> → write memory（chassis 2 missing 警告确认）→ B 台重写 vcsetup.cfg（auto + auto-vf-link-port 2/1/27、2/1/28）→ reload from working no rollback-timeout → 验证 1=Master/2=Slave Running。</li>
 </ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
 <li>触发：VC 建不起来、成员机箱掉线、VFL 口不 up、debug status 出 NOK 码、vcsetup.cfg 报错、ISSU/升级后 VC 异常、疑似脑裂。</li>
-<li>区分：单业务口 down → l2-connectivity；
-整机模块 DOWN/微码问题 → boot-system；
-VC 内链路聚合成员口 down 的日志因果链见 ovna skill 的 c12。VC 故障常表现为"多台同时异常"，先 show virtual-chassis topology 判断是不是 VC 层问题。</li>
+<li>区分：单业务口 down → l2-connectivity；</li>
+<li>整机模块 DOWN/微码问题 → boot-system；</li>
+<li>VC 内链路聚合成员口 down 的日志因果链见 ovna skill 的 c12。VC 故障常表现为"多台同时异常"，先 show virtual-chassis topology 判断是不是 VC 层问题；</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
 <li>show virtual-chassis topology：确认每台角色与运行状态（是否各自成 Master）。</li>
 <li>show virtual-chassis consistency：核对带星号参数是否一致。</li>
 <li>逐台 <code>cat /flash/working/vcsetup.cfg</code> 比对关键行；检查 /flash 下是否有 vcsetup.cfg.*.err 文件——有则直接按文件中的 ERROR 行定位。</li>
-<li><code>debug show virtual-chassis status</code> 按 L0-L8 看哪层 NOK，对照 NOK 码表：NOK_08 查 <code>show virtual-chassis vf-link member-port | grep "&lt;chassis-id&gt;/"</code>；NOK_09 加查 show interfaces port；NOK_17 查对端是否存在与 VFL 连通性。</li>
-<li>修复 vcsetup.cfg：用 CLI 生成或严格按模板；member-port 必须以本机 chassis-id 开头；改完 cat 复核再 reload from working。</li>
+<li>
+<p><code>debug show virtual-chassis status</code> 按 L0-L8 看哪层 NOK，对照 NOK 码表：NOK_08 查 <code>show virtual-chassis vf-link member-port | grep "&lt;chassis-id&gt;/"</code>；</p>
+<ul>
+<li>NOK_09 加查 show interfaces port；</li>
+<li>NOK_17 查对端是否存在与 VFL 连通性；</li>
+</ul>
+</li>
+<li>
+<p>修复 vcsetup.cfg：用 CLI 生成或严格按模板；member-port 必须以本机 chassis-id 开头；改完 cat 复核再 reload from working。</p>
+<ul>
+<li>
+<ol>
 <li>怀疑脑裂：查 EMP 上 RCD 通告 / VCSP helper 配置；Protection 模式的子 VC 用户口全关是设计行为，先恢复 VFL 再恢复业务。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>变更后 write memory 遇 "Chassis N missing ... erased permanently" 警告：停下确认拓扑变化是否预期再 Y。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>

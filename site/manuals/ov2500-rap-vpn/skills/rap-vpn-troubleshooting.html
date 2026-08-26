@@ -70,11 +70,29 @@ blockquote p{margin:6px 0}
 <h2 id="i">I · 方法论骨架</h2>
 <p>按"隧道状态 → 注册状态 → DHCP → LAN 可达"四层逐层下钻，先看隧道再查之上业务：</p>
 <ol>
-<li><strong>管理隧道 down</strong>：wg 查接口 → 查 AP IP 是否在导入的 VPN.conf → 防火墙双向放行。</li>
-<li><strong>管理隧道 up 但 AP 未注册到 OV</strong>：OV ping AP → OV 上配到 AP wg0 子网的静态路由。</li>
-<li><strong>数据隧道 down</strong>：两侧 wg → 配置是否推到 AP 的 /tmp/config/datavpn.conf → Data VPN Server 是否绑了 AP Group → ifconfig wg1 是否有 IP、该 IP 是否在 Data-VPN.conf → 防火墙双向。</li>
-<li><strong>双隧道 up 但客户端无 DHCP</strong>：sta_list 查关联与 TUNNELID/FARENDIP → brctl show 查桥接（ath0x 应关联 br-g1）→ 接入交换机是否学到客户端 MAC → DHCP relay（ip helper、dhcp-snooping）。</li>
-<li><strong>客户端上不了 LAN</strong>：vSwitch 混杂模式默认 Reject 改 Accept；Override 勾选时三项全 Accept。</li>
+<li>管理隧道 down：wg 查接口 → 查 AP IP 是否在导入的 VPN.conf → 防火墙双向放行。<ul>
+<li>
+<ol>
+<li>管理隧道 up 但 AP 未注册到 OV：OV ping AP → OV 上配到 AP wg0 子网的静态路由。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>数据隧道 down：两侧 wg → 配置是否推到 AP 的 /tmp/config/datavpn.conf → Data VPN Server 是否绑了 AP Group → ifconfig wg1 是否有 IP、该 IP 是否在 Data-VPN.conf → 防火墙双向。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>双隧道 up 但客户端无 DHCP：sta_list 查关联与 TUNNELID/FARENDIP → brctl show 查桥接（ath0x 应关联 br-g1）→ 接入交换机是否学到客户端 MAC → DHCP relay（ip helper、dhcp-snooping）。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>客户端上不了 LAN：vSwitch 混杂模式默认 Reject 改 Accept；Override 勾选时三项全 Accept。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="a1">A1 · 书中案例</h2>
 <ul>
@@ -93,24 +111,51 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
-<li>先定层：wg 查管理隧道接口在不在。不在 → 走第 2 步；在 → 跳第 3 步。</li>
+<li>先定层：wg 查管理隧道接口在不在。<ul>
+<li>不在 → 走第 2 步；在 → 跳第 3 步。</li>
+<li>
+<ol>
 <li>管理隧道 down：确认在 VPN VA 上执行（RAP 不可达时不在此执行）；grep AP 的 IP 是否在导入的 VPN.conf；核对防火墙双向（企业外部↔VPN-VA）。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>隧道 up 但 OV 里没 AP：从 OV ping AP 地址；检查 OV 到 AP wg0 子网的静态路由。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>数据隧道 down：两侧 wg 查接口；
 AP 上 cat /tmp/config/datavpn.conf 看配置是否推送；
 确认 Data VPN Server 已绑 AP Group；
 ifconfig wg1 看 IP 且核对在导入的 Data-VPN.conf 中；
 防火墙双向。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>双隧道 up、客户端无 DHCP：AP 上 sta_list 查关联与 TUNNELID/FARENDIP；
 brctl show 确认 ath0x 关联 br-g1；
 查企业接入交换机 MAC 表；
 查 DHCP relay（ip helper、dhcp-snooping）。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>客户端不通同网段设备/网关：vSwitch/端口组混杂模式改 Accept；
 勾了 Override 则 Promiscuous Mode、MAC address changes、Forged transmits 三项全 Accept；
 端口组继承时确认 vSwitch0。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>仍不明：wg show 对基线（endpoint/keepalive/握手/收发增量）；
 ip -d link 对 MTU 基线；
 收集 VA 菜单日志 + OV→Administration→Audit→Collect Support Info 的 RAP 日志。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>

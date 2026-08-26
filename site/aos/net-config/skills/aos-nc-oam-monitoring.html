@@ -78,11 +78,7 @@ blockquote p{margin:6px 0}
 <li>宽带接入要在 PPPoE 报文插用户线路标识：PPPoE-IA</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>OAM 分层框架（F14， <code>&lt;span class="pg"&gt;原文p1655&lt;/span&gt;</code> ）：LINK OAM(802.3ah，单链路发现/监控/环回) 与 Service OAM(802.1ag/Y.1731，MD/MA/MEP 层级+CC/LB/LT+时延测量) 互补，CFM MD 分层 0-7 对应运营商/客户组织边界。</li>
-<li>MD 分级：5-7 客户、3-4 运营商、0-2 操作员；MEP 发起 OAM 命令防域间泄漏，MIP 被动应答（P196， <code>&lt;span class="pg"&gt;原文p1655&lt;/span&gt;</code> ）。</li>
-<li>EFM 用慢协议 OAMPDU 承载控制与状态，单链路传递不被网桥转发；发现阶段双方能力匹配才建立 OAM 连接，5 秒无 OAMPDU 即失联（P198/P199， <code>&lt;span class="pg"&gt;原文p1673-1674&lt;/span&gt;</code> ）。</li>
-</ul>
+<p>OAM 分层框架（F14， <code>&lt;span class="pg"&gt;原文p1655&lt;/span&gt;</code> ）：LINK OAM(802.3ah，单链路发现/监控/环回) 与 Service OAM(802.1ag/Y.1731，MD/MA/MEP 层级+CC/LB/LT+时延测量) 互补，CFM MD 分层 0-7 对应运营商/客户组织边界。MD 分级：5-7 客户、3-4 运营商、0-2 操作员；MEP 发起 OAM 命令防域间泄漏，MIP 被动应答（P196， <code>&lt;span class="pg"&gt;原文p1655&lt;/span&gt;</code> ）。EFM 用慢协议 OAMPDU 承载控制与状态，单链路传递不被网桥转发；发现阶段双方能力匹配才建立 OAM 连接，5 秒无 OAMPDU 即失联（P198/P199， <code>&lt;span class="pg"&gt;原文p1673-1674&lt;/span&gt;</code> ）。</p>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>定位故障先分层</strong>：单链路问题用 LINK OAM（发现/三窗口链路监控/远端故障/远端环回，P200， <code>&lt;span class="pg"&gt;原文p1673&lt;/span&gt;</code> ）；业务端到端问题用 Service OAM（P195， <code>&lt;span class="pg"&gt;原文p1655&lt;/span&gt;</code> ）</li>

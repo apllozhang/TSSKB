@@ -67,20 +67,22 @@ blockquote p{margin:6px 0}
 <li>高密/语音场景 QoS 与容量约束</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>园区设计栈（F1， <code>&lt;span class="pg"&gt;原文p6&lt;/span&gt;</code> ）：四目标（可用/扩展/安全/性能）→ 拓扑模型 → 接入层构件 → 互联技术选型 → 动态路由。</li>
-<li>WLAN 框架（F2， <code>&lt;span class="pg"&gt;原文p15&lt;/span&gt;</code> ）：管理面集中（OmniVista）+ 控制面分布（AP 间 NMP 同步）+ 数据面本地桥接优先、按 ARP 动态切 L2GRE 隧道。</li>
-<li>分布式控制面消除单点/瓶颈并降 CapEx/OpEx（P22/P23， <code>&lt;span class="pg"&gt;原文p15-16&lt;/span&gt;</code> ）；数据面默认本地桥接保性能，仅安全/集中审查场景隧道化（P24/P25， <code>&lt;span class="pg"&gt;原文p16-17&lt;/span&gt;</code> ）。</li>
-<li>AP 接入双域（F3， <code>&lt;span class="pg"&gt;原文p23&lt;/span&gt;</code> ）：VLAN 域与服务域两条对称的发现-分类-映射路径。</li>
-<li>漫游框架（F4， <code>&lt;span class="pg"&gt;原文p26&lt;/span&gt;</code> ）：客户端上下文共享 → 三分支判定矩阵；子网收敛 /24 + VLAN 池是容量底座。</li>
-</ul>
+<p>园区设计栈（F1， <code>&lt;span class="pg"&gt;原文p6&lt;/span&gt;</code> ）：四目标（可用/扩展/安全/性能）→ 拓扑模型 → 接入层构件 → 互联技术选型 → 动态路由。WLAN 框架（F2， <code>&lt;span class="pg"&gt;原文p15&lt;/span&gt;</code> ）：管理面集中（OmniVista）+ 控制面分布（AP 间 NMP 同步）+ 数据面本地桥接优先、按 ARP 动态切 L2GRE 隧道。分布式控制面消除单点/瓶颈并降 CapEx/OpEx（P22/P23， <code>&lt;span class="pg"&gt;原文p15-16&lt;/span&gt;</code> ）；数据面默认本地桥接保性能，仅安全/集中审查场景隧道化（P24/P25， <code>&lt;span class="pg"&gt;原文p16-17&lt;/span&gt;</code> ）。AP 接入双域（F3， <code>&lt;span class="pg"&gt;原文p23&lt;/span&gt;</code> ）：VLAN 域与服务域两条对称的发现-分类-映射路径。漫游框架（F4， <code>&lt;span class="pg"&gt;原文p26&lt;/span&gt;</code> ）：客户端上下文共享 → 三分支判定矩阵；子网收敛 /24 + VLAN 池是容量底座。</p>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>拓扑选型：中小园区两层折叠（少跳数少部件，P3， <code>&lt;span class="pg"&gt;原文p7&lt;/span&gt;</code> ）；大型复杂园区三层（模块化可扩展，P4， <code>&lt;span class="pg"&gt;原文p7&lt;/span&gt;</code> ）</li>
 <li>接入层基线：VC/Stack 扩密度保控制面韧性（P5， <code>&lt;span class="pg"&gt;原文p8&lt;/span&gt;</code> ）+ VLAN 动态分配（P6， <code>&lt;span class="pg"&gt;原文p8&lt;/span&gt;</code> ）+ MVRP 按需传播（P7， <code>&lt;span class="pg"&gt;原文p9&lt;/span&gt;</code> ）+ Trunk/LACP（P11/P12， <code>&lt;span class="pg"&gt;原文p9&lt;/span&gt;</code> ）</li>
 <li>互联与路由选型（P13-P16， <code>&lt;span class="pg"&gt;原文p10-12&lt;/span&gt;</code> ）：大园区扁平 L2 多租户→SPB；跨广域 L2 互联+多归属→EVPN；流量工程/QoS→MPLS；OSPF 分区/BGP 互联/IS-IS 大核心，RIP 不推荐大规模</li>
-<li>WLAN 规划七要素（P17/P18， <code>&lt;span class="pg"&gt;原文p12-13&lt;/span&gt;</code> ）：覆盖/容量/信道/安装密度/功率天线/预测热图/RDA，用 OmniVista Floor Plan 仿真验证；管理模式按规模递进 Express→Enterprise→Cloud（P27， <code>&lt;span class="pg"&gt;原文p18&lt;/span&gt;</code> ）；按 AP 组+RF Profile 组织（P28/P29， <code>&lt;span class="pg"&gt;原文p18&lt;/span&gt;</code> ）</li>
-<li>用户 VLAN 规划：子网收敛 /24（P38， <code>&lt;span class="pg"&gt;原文p28&lt;/span&gt;</code> ）+ VLAN 池首选（P39， <code>&lt;span class="pg"&gt;原文p28&lt;/span&gt;</code> ）+ 无线客户端独立 VLAN ID（P9， <code>&lt;span class="pg"&gt;原文p8&lt;/span&gt;</code> ）+ AP 管理与有线管理 VLAN 分开、每 VLAN 最多 64 AP（P8， <code>&lt;span class="pg"&gt;原文p8&lt;/span&gt;</code> ）</li>
+<li>
+<p>WLAN 规划七要素（P17/P18， <code>&lt;span class="pg"&gt;原文p12-13&lt;/span&gt;</code> ）：覆盖/容量/信道/安装密度/功率天线/预测热图/RDA，用 OmniVista Floor Plan 仿真验证；</p>
+<ul>
+<li>管理模式按规模递进 Express→Enterprise→Cloud（P27， <code>&lt;span class="pg"&gt;原文p18&lt;/span&gt;</code> ）；</li>
+<li>按 AP 组+RF Profile 组织（P28/P29， <code>&lt;span class="pg"&gt;原文p18&lt;/span&gt;</code> ）；</li>
+</ul>
+</li>
+<li>
+<p>用户 VLAN 规划：子网收敛 /24（P38， <code>&lt;span class="pg"&gt;原文p28&lt;/span&gt;</code> ）+ VLAN 池首选（P39， <code>&lt;span class="pg"&gt;原文p28&lt;/span&gt;</code> ）+ 无线客户端独立 VLAN ID（P9， <code>&lt;span class="pg"&gt;原文p8&lt;/span&gt;</code> ）+ AP 管理与有线管理 VLAN 分开、每 VLAN 最多 64 AP（P8， <code>&lt;span class="pg"&gt;原文p8&lt;/span&gt;</code> ）</p>
+</li>
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>

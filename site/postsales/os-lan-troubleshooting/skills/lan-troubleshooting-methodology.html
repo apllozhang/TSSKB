@@ -75,12 +75,42 @@ blockquote p{margin:6px 0}
 </blockquote>
 <h2 id="i">I · 方法论骨架</h2>
 <ol>
-<li><strong>七步主流程</strong>（p52）：Identify → Re-Create → Isolate → Locate（用 OSI 定位层/设备/物理位置）→ Solve → Verify → Document。不可复现则回到第一步继续追问。</li>
-<li><strong>六种切入方法</strong>（p57-58）：基于 OSI 的 Bottom-Up（物理层往上，适合硬件线缆类，慢）、Top-Down（应用往下，适合软件导向）、Divide and Conquer（中间层二分，适合复杂新问题）；另外三种 Follow the path / Spot the differences（对比正常与异常设备配置差异）/ Move the problem（组件换位观察）。选择依据：老问题直接套经验，新问题按硬件/线缆/软件导向选层。</li>
-<li><strong>症状-原因索引</strong>（p61-65）：物理层（性能低于基线/断连 ← 电源、布线、衰减噪声、超设计极限）；链路层（广播过量/成帧错误 ← STP 环路、ARP 缓存、速率双工不匹配）；网络层（路由表/邻居/拓扑库、IP 重复、ACL）；传输层（重传/分片/NAT）；高层（DNS、协议故障）。</li>
-<li><strong>排障前提九类文档</strong>（p53）：没有就先用命令重建——show lldp remote-system、show vlan members、show linkagg port 画出物理/逻辑拓扑（LAB1 即如此要求）。</li>
-<li><strong>先查库再动手</strong>（p24-31）：TKC（Partner Portal / My Portal 进入）用自然语言检索，用例结构固定为 Case Description（拓扑/场景/环境/诊断）+ Resolution（配置/热补丁/固件升级）。第二渠道：Spacewalkers 开放社区（www.spacewalkers.com）论坛历史帖。</li>
-<li><strong>升级 TAC 的门槛</strong>（p54）：开 eService Request 必须备齐最小信息与 Case Severity 定义，信息齐全直接缩短处理周期。</li>
+<li>七步主流程（p52）：Identify → Re-Create → Isolate → Locate（用 OSI 定位层/设备/物理位置）→ Solve → Verify → Document。<ul>
+<li>不可复现则回到第一步继续追问。</li>
+<li>
+<ol>
+<li>六种切入方法（p57-58）：基于 OSI 的 Bottom-Up（物理层往上，适合硬件线缆类，慢）、Top-Down（应用往下，适合软件导向）、Divide and Conquer（中间层二分，适合复杂新问题）；
+另外三种 Follow the path / Spot the differences（对比正常与异常设备配置差异）/ Move the problem（组件换位观察）。</li>
+</ol>
+</li>
+<li>选择依据：老问题直接套经验，新问题按硬件/线缆/软件导向选层。</li>
+<li>
+<ol>
+<li>症状-原因索引（p61-65）：物理层（性能低于基线/断连 ← 电源、布线、衰减噪声、超设计极限）；
+链路层（广播过量/成帧错误 ← STP 环路、ARP 缓存、速率双工不匹配）；
+网络层（路由表/邻居/拓扑库、IP 重复、ACL）；
+传输层（重传/分片/NAT）；
+高层（DNS、协议故障）。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>排障前提九类文档（p53）：没有就先用命令重建——show lldp remote-system、show vlan members、show linkagg port 画出物理/逻辑拓扑（LAB1 即如此要求）。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>先查库再动手（p24-31）：TKC（Partner Portal / My Portal 进入）用自然语言检索，用例结构固定为 Case Description（拓扑/场景/环境/诊断）+ Resolution（配置/热补丁/固件升级）。</li>
+</ol>
+</li>
+<li>第二渠道：Spacewalkers 开放社区（www.spacewalkers.com）论坛历史帖。</li>
+<li>
+<ol>
+<li>升级 TAC 的门槛（p54）：开 eService Request 必须备齐最小信息与 Case Severity 定义，信息齐全直接缩短处理周期。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="a1-lab">A1 · 书中案例（LAB 故障根因）</h2>
 <ul>
@@ -93,12 +123,34 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
-<li>确认九类文档在手；缺失则用 <code>show lldp remote-system</code>、<code>show vlan members</code>、<code>show linkagg port</code> 重建拓扑基线。</li>
+<li>确认九类文档在手；缺失则用 <code>show lldp remote-system</code>、<code>show vlan members</code>、<code>show linkagg port</code> 重建拓扑基线。<ul>
+<li>
+<ol>
 <li>用自然语言把现象描述进 TKC 检索；命中则直接取 Resolution（配置/热补丁/固件升级），先试后查。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>按症状在 OSI 各层"症状→原因"表（p61-65）上初步定位故障域。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>选择切入方法：硬件/线缆线索 → Bottom-Up；应用软件线索 → Top-Down；复杂新问题 → Divide and Conquer；多设备对比 → Spot the differences。</li>
-<li>走七步流程：收集症状 → 复现 → 隔离 → 定位 → 修复 → <strong>验证</strong>（复测到基线才算修好）→ 记录方案并保存变更。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>走七步流程：收集症状 → 复现 → 隔离 → 定位 → 修复 → 验证（复测到基线才算修好）→ 记录方案并保存变更。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>无法解决准备开案：按 p54 备齐最小信息（拓扑、版本、日志、已做动作）再提 eService Request。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>

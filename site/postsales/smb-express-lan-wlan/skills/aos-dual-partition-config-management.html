@@ -74,10 +74,7 @@ blockquote p{margin:6px 0}
 <li>需要做配置备份（内置 tar / USB）或升级软件镜像并保留回退能力</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>AOS R8 用 working / certified / user-defined 三目录实现"配置即文件"的管理模型：运行配置（running）随时可写入 working，但只有 <code>copy running certified</code> 认证后才能在冷启动时稳定生效。</li>
-<li>冷启动会比较 working 与 certified 内容决定启动目录，这是一套防"半配置"开机的回滚保护机制。</li>
-</ul>
+<p>AOS R8 用 working / certified / user-defined 三目录实现"配置即文件"的管理模型：运行配置（running）随时可写入 working，但只有 <code>copy running certified</code> 认证后才能在冷启动时稳定生效。冷启动会比较 working 与 certified 内容决定启动目录，这是一套防"半配置"开机的回滚保护机制。</p>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li><strong>理解状态机</strong>：<code>write memory</code>（running→working）→ <code>copy running certified</code>（认证）→ <code>write memory flash-synchro</code>（= write memory + copy running certified 三合一， <code>&lt;span class="pg"&gt;原文p89&lt;/span&gt;</code> ）。</li>

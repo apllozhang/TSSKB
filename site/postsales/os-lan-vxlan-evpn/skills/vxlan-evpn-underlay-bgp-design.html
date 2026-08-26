@@ -73,18 +73,37 @@ blockquote p{margin:6px 0}
 <ol>
 <li><strong>身份原则</strong>：一切从 Loopback0 开始——VTEP 身份、OSPF router-id、BGP router-id、update-source 四合一复用同一 Loopback0 地址。</li>
 <li><strong>Underlay 选型</strong>：ISIS/OSPF/BGP 三选一，课程与架构指南推荐组合为 <strong>OSPF underlay + iBGP overlay</strong>（p186 原文推荐句）。若用 BGP underlay 必须 eBGP，AS 规划=所有 Spine 共享一个 AS、每台 Leaf 唯一 AS（overlay 则全网同 AS 65000，两者别混）。</li>
-<li><strong>OSPF 收敛参数包六条</strong>：单区域；互联口 router VLAN 口 + 网络类型 point-to-point（免 DR 等待）；BFD 毫秒检测（transmit/receive/echo-interval 均 200 + <code>ip ospf bfd-state enable</code>）；<code>spf-timer delay 0 / hold 0</code>；ECMP 多路径；MTU 预留 VXLAN 头 50 字节。设计指南加强版：<code>debug ip ospf set subsecond 1 / bfdsubsecond 1</code>。</li>
-<li><strong>Overlay 五要素</strong>：全网同一 ASN；<code>ip bgp address-family evpn</code>（AFI=25/SAFI=70）；邻居=对端 Loopback0；update-source Loopback0；逐邻居 <code>activate-evpn</code>（漏一条就不交换 EVPN NLRI）。</li>
-<li><strong>RR 扩展</strong>：会话数 N(N-1)/2 不可持续 → Leaf 只与 RR 建会话；RR 专属命令 <code>ip bgp client-to-client reflection</code>、<code>ip bgp cluster-id &lt;id&gt;</code>、<code>neighbor &lt;ip&gt; route-reflector-client</code>；实践惯例 Spine 兼任 RR，冗余用单集群双 RR。</li>
+<li>
+<p>OSPF 收敛参数包六条：单区域；</p>
+<ul>
+<li>互联口 router VLAN 口 + 网络类型 point-to-point（免 DR 等待）；</li>
+<li>BFD 毫秒检测（transmit/receive/echo-interval 均 200 + <code>ip ospf bfd-state enable</code>）；</li>
+<li><code>spf-timer delay 0 / hold 0</code>；</li>
+<li>ECMP 多路径；</li>
+<li>MTU 预留 VXLAN 头 50 字节。设计指南加强版：<code>debug ip ospf set subsecond 1 / bfdsubsecond 1</code>；</li>
+</ul>
+</li>
+<li>
+<p><strong>Overlay 五要素</strong>：全网同一 ASN；<code>ip bgp address-family evpn</code>（AFI=25/SAFI=70）；邻居=对端 Loopback0；update-source Loopback0；逐邻居 <code>activate-evpn</code>（漏一条就不交换 EVPN NLRI）。</p>
+</li>
+<li>RR 扩展：会话数 N(N-1)/2 不可持续 → Leaf 只与 RR 建会话；<ul>
+<li>RR 专属命令 <code>ip bgp client-to-client reflection</code>、<code>ip bgp cluster-id &lt;id&gt;</code>、<code>neighbor &lt;ip&gt; route-reflector-client</code>；</li>
+<li>实践惯例 Spine 兼任 RR，冗余用单集群双 RR；</li>
+</ul>
+</li>
 </ol>
 <h2 id="a1">A1 · 书中案例</h2>
 <ul>
-<li>Lab1 四节点底座（p78-86）：Loopback 取值 Spine-1/2=1.1.1.10/11、Leaf-1/2=1.1.1.1/2；
-互联 VLAN 110(S-S)/101/102/111/112，子网 172.16.1xy.0/24，端口号对称；
-验证链 <code>sh ip ospf neighbor</code> 全 Full → <code>sh ip routes</code> 看 Leaf 双等价路径 → <code>show ip bgp neighbors</code> established + evpn advertised。</li>
-<li>架构指南 6 节点参考设计（p187-197）：Spine=1.1.1.1/2、Leaf=1.1.1.10/20/30/40；
+<li>Lab1 四节点底座（p78-86）：Loopback 取值 Spine-1/2=1.1.1.10/11、Leaf-1/2=1.1.1.1/2；</li>
+<li>互联 VLAN 110(S-S)/101/102/111/112，子网 172.16.1xy.0/24，端口号对称；</li>
+<li>
+<p>验证链 <code>sh ip ospf neighbor</code> 全 Full → <code>sh ip routes</code> 看 Leaf 双等价路径 → <code>show ip bgp neighbors</code> established + evpn advertised；</p>
+</li>
+<li>
+<p>架构指南 6 节点参考设计（p187-197）：Spine=1.1.1.1/2、Leaf=1.1.1.10/20/30/40；
 互联口挂聚合口（如 port 1/1/50A tagged）；
-6 台全互联 iBGP EVPN（每台 5 邻居），全量 established。</li>
+6 台全互联 iBGP EVPN（每台 5 邻居），全量 established。</p>
+</li>
 </ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
@@ -96,14 +115,29 @@ blockquote p{margin:6px 0}
 <ol>
 <li>每台配 <code>ip interface "Loopback0" address &lt;x.x.x.x&gt;</code>，同地址设 OSPF/BGP router-id。</li>
 <li>逐链路建 router VLAN 口（<code>ip interface "vl101" address 172.16.101.10/24 vlan 101 rtr-port port 1/1/27 tagged</code>）。</li>
-<li>全局 <code>ip bfd transmit 200 / receive 200 / echo-interval 200</code>；
-接口 <code>ip ospf interface "vl101" type point-to-point / bfd-state enable</code>；
-全局 <code>ip ospf spf-timer delay 0 / hold 0</code>。</li>
-<li>Overlay：<code>ip load bgp</code> → <code>ip bgp autonomous-system 65000</code> → <code>ip bgp address-family evpn</code> → 对每个对端 Loopback <code>neighbor &lt;ip&gt; remote-as 65000 / update-source Loopback0 / activate-evpn / admin-state enable</code> → 全局 <code>ip bgp admin-state enable</code>。
-5.（规模化）在 Spine 上配 cluster-id 与 route-reflector-client，Leaf 改为只与 RR 建会话。</li>
+<li>
+<p>全局 <code>ip bfd transmit 200 / receive 200 / echo-interval 200</code>；</p>
+<ul>
+<li>接口 <code>ip ospf interface "vl101" type point-to-point / bfd-state enable</code>；</li>
+<li>全局 <code>ip ospf spf-timer delay 0 / hold 0</code>；</li>
+</ul>
+</li>
+<li>
+<p>Overlay：<code>ip load bgp</code> → <code>ip bgp autonomous-system 65000</code> → <code>ip bgp address-family evpn</code> → 对每个对端 Loopback `neighbor <ip> remote-as 65000：</p>
+</li>
+<li>update-source Loopback0</li>
+<li>activate-evpn</li>
+<li>admin-state enable<code>→ 全局</code>ip bgp admin-state enable`。<ul>
+<li>5.（规模化）在 Spine 上配 cluster-id 与 route-reflector-client，Leaf 改为只与 RR 建会话。</li>
+<li>
+<ol>
 <li>验证：<code>sh ip ospf neighbor</code> 全 Full；
 <code>sh ip routes</code> 等价路径；
 <code>show ip bgp neighbors</code> Oper=established 且 Activate evpn=enabled、Neighbor evpn=advertised。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>

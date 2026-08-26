@@ -67,22 +67,66 @@ blockquote p{margin:6px 0}
 <div class="grp">运维</div>
 <a href="../skills/poe-ops-diagnostics.html">poe-ops-diagnostics</a></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../postsales/index.html">售后</a> › <a href="../index.html">DT00XTE215</a> › <span>VLAN 与链路冗余：802.1Q / LACP / STP / DHL</span></nav><h1>VLAN 与链路冗余：802.1Q / LACP / STP / DHL</h1><p class="meta"><span class="badge">SKILL</span> vlan-link-redundancy · 来源页码: </p><h1 id="vlan-8021q-lacp-stp-dhl">VLAN 与链路冗余：802.1Q / LACP / STP / DHL</h1>
 <h2 id="r">R · 原文引用</h2>
-<p>"-&gt; vlan 2 members port <chassis/slot/port> untagged / -&gt; vlan 4 admin-state enable / -&gt; vlan 10-15 100-105 200 name \"Training Network\" / -&gt; show vlan members"（p127）</p>
+<p>"-&gt; vlan 2 members port <chassis/slot/port> untagged：
+- -&gt; vlan 4 admin-state enable
+- -&gt; vlan 10-15 100-105 200 name \"Training Network\"
+- -&gt; show vlan members"（p127）</p>
 <p>"-&gt; linkagg lacp agg <agg_num> size <size> admin-state enable / -&gt; linkagg lacp agg <agg_num> actor admin-key <actor_admin_key> / -&gt; linkagg lacp port <chassis/slot/port> actor admin-key <actor_admin_key>"（p201）</p>
 <p>"Supports two Spanning Tree operating modes: flat (single STP instance per switch) / per-VLAN (single STP instance per VLAN) (By default on OmniSwitch). STP (802.1d): Convergence time: 50 secs / RSTP (802.1w): &lt; 1 sec"（p227）</p>
 <p>"-&gt; dhl 1 / -&gt; dhl 1 linka linkagg 1 linkb linkagg 2 / -&gt; dhl 1 vlan-map linkb 30 / -&gt; dhl 1 admin-state enable / -&gt; dhl 1 mac-flushing raw"（p257-259）</p>
 <h2 id="i">I · 方法论骨架</h2>
-<p>L2 建网四层递进：
-- <strong>VLAN</strong>：vlan N → members port … untagged|tagged → 可批量/命名（多词加引号）。物理口恒有且仅有一个 untagged 桥接 VLAN（端口默认 VLAN），其余 VLAN tagged 传送——trunk 两端对同一组 VLAN 打标签。
-- <strong>LACP 聚合</strong>：linkagg lacp agg N size X + actor admin-key → 物理口按同 admin-key 入组。admin-key 仅本地有效，不必等于组号。VLAN 挂聚合口：vlan N members linkagg N untagged|tagged。
-- <strong>STP</strong>：模式（flat=整机单实例 / per-vlan=1x1，默认后者）→ 协议（stp/rstp/mstp）→ 按 VLAN 调 bridge priority（0-65535，默认 32768，越小越优）→ 必要时 path-cost-mode。
-- <strong>DHL</strong>：接入双上行两核心的无 STP 双活：每 VLAN 只在一条链路转发（防环），故障整体切换。每机仅 1 会话、2 链路（linkA/linkB）。</p>
+<ul>
+<li>L2 建网四层递进：- <strong>VLAN</strong>：vlan N → members port … untagged|tagged → 可批量/命名（多词加引号）。</li>
+<li>物理口恒有且仅有一个 untagged 桥接 VLAN（端口默认 VLAN），其余 VLAN tagged 传送——trunk 两端对同一组 VLAN 打标签。</li>
+<li>
+<ul>
+<li><strong>LACP 聚合</strong>：linkagg lacp agg N size X + actor admin-key → 物理口按同 admin-key 入组。</li>
+</ul>
+</li>
+<li>admin-key 仅本地有效，不必等于组号。</li>
+<li>VLAN 挂聚合口：vlan N members linkagg N untagged|tagged。</li>
+<li>
+<ul>
+<li><strong>STP</strong>：模式（flat=整机单实例 / per-vlan=1x1，默认后者）→ 协议（stp/rstp/mstp）→ 按 VLAN 调 bridge priority（0-65535，默认 32768，越小越优）→ 必要时 path-cost-mode。</li>
+</ul>
+</li>
+<li>
+<ul>
+<li><strong>DHL</strong>：接入双上行两核心的无 STP 双活：每 VLAN 只在一条链路转发（防环），故障整体切换。</li>
+</ul>
+</li>
+<li>每机仅 1 会话、2 链路（linkA/linkB）。</li>
+</ul>
 <h2 id="a1-lab">A1 · 书中案例（Lab 配置精要）</h2>
 <ul>
-<li><strong>802.1Q trunk（p218-224）</strong>：先 vlan 58 members port 2/1/3 untagged 做默认 VLAN，再 vlan 20/30 members linkagg 7 tagged 与 port 2/1/3 tagged；一口同载 tagged 20/30 + untagged 58；两端各做 VLAN 20/30 网关，Client5/6 跨 VLAN ping 验证。</li>
-<li><strong>LACP + 故障演练（p209-217）</strong>：6360 VC 侧跨机箱 linkagg lacp agg 7 size 2 actor admin-key 7（1/1/3+2/1/4），6870 侧 1/1/3-4 同 key；单边配好 show linkagg 显示 DOWN，对端配完即 UP；disable 成员口演示单链路存活。</li>
-<li><strong>STP 根桥（p238-248）</strong>：spantree vlan 20 priority 20000 设 6870 为根（Bridge ID==Designated Root）；show spantree vlan 20 ports 看 ROOT/ALT/BLK；1x1 负载分担：VLAN20 根=6870(20000)、VLAN30 根=6860，两上行口各转一个 VLAN。</li>
-<li><strong>DHL（p261-266）</strong>：清端口 VLAN 成员再入聚合；dhl 1 linka linkagg 7 linkb linkagg 8、vlan-map linkb 30、admin-state enable、mac-flushing raw；ping 中禁 linkagg 7 验证无缝切换，恢复等 30 秒 pre-emption 回切。</li>
+<li>
+<p>802.1Q trunk（p218-224）：先 vlan 58 members port 2/1/3 untagged 做默认 VLAN，再 vlan 20/30 members linkagg 7 tagged 与 port 2/1/3 tagged；</p>
+</li>
+<li>
+<p>一口同载 tagged 20/30 + untagged 58；</p>
+</li>
+<li>
+<p>两端各做 VLAN 20/30 网关，Client5/6 跨 VLAN ping 验证；</p>
+</li>
+<li>
+<p>LACP + 故障演练（p209-217）：6360 VC 侧跨机箱 linkagg lacp agg 7 size 2 actor admin-key 7（1/1/3+2/1/4），6870 侧 1/1/3-4 同 key；</p>
+</li>
+<li>单边配好 show linkagg 显示 DOWN，对端配完即 UP；</li>
+<li>
+<p>disable 成员口演示单链路存活；</p>
+</li>
+<li>
+<p>STP 根桥（p238-248）：spantree vlan 20 priority 20000 设 6870 为根（Bridge ID==Designated Root）；</p>
+</li>
+<li>show spantree vlan 20 ports 看 ROOT/ALT/BLK；</li>
+<li>
+<p>1x1 负载分担：VLAN20 根=6870(20000)、VLAN30 根=6860，两上行口各转一个 VLAN；</p>
+</li>
+<li>
+<p>DHL（p261-266）：清端口 VLAN 成员再入聚合；</p>
+</li>
+<li>dhl 1 linka linkagg 7 linkb linkagg 8、vlan-map linkb 30、admin-state enable、mac-flushing raw；</li>
+<li>ping 中禁 linkagg 7 验证无缝切换，恢复等 30 秒 pre-emption 回切；</li>
 </ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
@@ -92,19 +136,38 @@ blockquote p{margin:6px 0}
 <li>聚合两端是 VC 内跨机箱端口 → 先看 virtual-chassis-deployment。</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
-<p>VLAN：<code>vlan N</code> → <code>vlan N members port &lt;c/s/p&gt; untagged|tagged</code> → <code>show vlan members</code> 验证。
-Trunk：默认 VLAN untagged + 业务 VLAN tagged，两端对称。
-LACP：
-1. <code>linkagg lacp agg N size X admin-state enable</code>，记 admin-key。
-2. 端口清残留 VLAN 成员（no vlan N members port …）后 <code>linkagg lacp port &lt;口&gt; actor admin-key K</code>。
-3. <code>vlan N members linkagg N untagged|tagged</code>；show linkagg / show linkagg port 验证。
-STP：
-1. <code>spantree mode per-vlan</code>（默认）→ <code>spantree [cist|vlan N] protocol rstp</code>。
-2. 根桥：<code>spantree vlan N priority 20000</code>；验证 <code>show spantree vlan N ports active</code>。
-DHL：
-1. <code>dhl 1</code> → <code>dhl 1 linka linkagg A linkb linkagg B</code>（两链路同属一个默认 VLAN）。
-2. <code>dhl 1 vlan-map linkb &lt;VLAN&gt;</code>（其余自动走 A）→ <code>dhl 1 admin-state enable</code> → <code>dhl 1 mac-flushing raw|mvrp</code>。
-3. <code>show dhl 1</code> 看 Protected/Active VLAN。</p>
+<ul>
+<li>VLAN：<code>vlan N</code> → <code>vlan N members port &lt;c/s/p&gt; untagged|tagged</code> → <code>show vlan members</code> 验证。</li>
+<li>Trunk：默认 VLAN untagged + 业务 VLAN tagged，两端对称。</li>
+<li>LACP：1. <code>linkagg lacp agg N size X admin-state enable</code>，记 admin-key。</li>
+<li>
+<ol>
+<li>端口清残留 VLAN 成员（no vlan N members port …）后 <code>linkagg lacp port &lt;口&gt; actor admin-key K</code>。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li><code>vlan N members linkagg N untagged|tagged</code>；show linkagg / show linkagg port 验证。</li>
+</ol>
+</li>
+<li>STP：1. <code>spantree mode per-vlan</code>（默认）→ <code>spantree [cist|vlan N] protocol rstp</code>。</li>
+<li>
+<ol>
+<li>根桥：<code>spantree vlan N priority 20000</code>；验证 <code>show spantree vlan N ports active</code>。</li>
+</ol>
+</li>
+<li>DHL：1. <code>dhl 1</code> → <code>dhl 1 linka linkagg A linkb linkagg B</code>（两链路同属一个默认 VLAN）。</li>
+<li>
+<ol>
+<li><code>dhl 1 vlan-map linkb &lt;VLAN&gt;</code>（其余自动走 A）→ <code>dhl 1 admin-state enable</code> → <code>dhl 1 mac-flushing raw|mvrp</code>。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li><code>show dhl 1</code> 看 Protected/Active VLAN。</li>
+</ol>
+</li>
+</ul>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>
 <li><strong>端口带 VLAN 成员身份加不进 linkagg</strong>：报 "Port cannot be added to Linkagg"——先 no vlan N members port 清干净再入组。</li>

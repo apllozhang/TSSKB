@@ -87,10 +87,7 @@ blockquote p{margin:6px 0}
 <li>产品对应：AP1301-1360=WiFi 6，AP1411/1431/1451=6E，AP1511/1521=WiFi 7。</li>
 </ul>
 <h3 id="2-p49-53">2. 天线（p49-53）</h3>
-<ul>
-<li>三分类选型：<strong>全向</strong>（内置默认，点对多点短距）、<strong>半定向</strong>（Patch/Panel/Yagi，走廊覆盖、点对点中短距）、<strong>高定向</strong>（Grid，楼宇间长距桥接）。</li>
-<li>换天线必须复核法定 EIRP。</li>
-</ul>
+<p>三分类选型：<strong>全向</strong>（内置默认，点对多点短距）、<strong>半定向</strong>（Patch/Panel/Yagi，走廊覆盖、点对点中短距）、<strong>高定向</strong>（Grid，楼宇间长距桥接）。换天线必须复核法定 EIRP。</p>
 <h3 id="3-p63">3. 安全（p63 起）</h3>
 <ul>
 <li>演进链：WEP（<strong>全书唯一 NEVER 红线，任何位宽都禁用</strong>）→ WPA/TKIP（过渡）→ WPA2/AES-CCMP（当代最低线）→ WPA3（SAE + 可选 CNSA 192 位）。</li>
@@ -98,10 +95,7 @@ blockquote p{margin:6px 0}
 <li>6 GHz 室外监管：FCC 域需 AFC（36 dBm），EU 禁标准功率室外，只允许 LPI 23 dBm / VLP 14 dBm。</li>
 </ul>
 <h3 id="4-p85-141">4. 勘测基础（p85-141）</h3>
-<ul>
-<li>四阶段任务地图：PLAN（需求+预测）→ VALIDATE（预部署勘测→安装→后部署勘测）→ MONITOR/TROUBLESHOOT（频谱/抓包/巡检/持续监控）（p85）。</li>
-<li>核心认知：<strong>勘测是时间快照，快照越多越懂环境</strong>（p133）。</li>
-</ul>
+<p>四阶段任务地图：PLAN（需求+预测）→ VALIDATE（预部署勘测→安装→后部署勘测）→ MONITOR/TROUBLESHOOT（频谱/抓包/巡检/持续监控）（p85）。核心认知：<strong>勘测是时间快照，快照越多越懂环境</strong>（p133）。</p>
 <hr />
 <h2 id="enterprise-7-skill">三、Enterprise 模式交付主线（串起 7 个 skill）</h2>
 <p>标准交付顺序，就是教材 DAY 1 到 DAY 2 的展开：</p>
@@ -250,28 +244,98 @@ Guest 工作流（p343）：Guest Usage 建 SSID → 勾强制门户 → 认证�
 <hr />
 <h2 id="7-skill">六、学习路径（7 个 skill 的顺序）</h2>
 <ol>
-<li><strong>wlan-theory-fundamentals</strong> —— 理论地基。理论薄弱的先读这个：BSS/ESS、WiFi 6/7、天线、安全演进，后面所有配置都在这条理论链上落地。</li>
-<li><strong>enterprise-mode-onboarding</strong> —— 第一段实操。AP 怎么上线、OV2500 怎么发现设备，不懂三平面规则后面排障没抓手。</li>
-<li><strong>employee-ssid-8021x</strong> —— 第一个 SSID，向导三步 + AD 对接，掌握 OV2500 的对象模型。</li>
-<li><strong>upam-guest-access</strong> —— 在 SSID 基础上加门户、限速、策略、内容过滤。</li>
-<li><strong>roaming-l2-l3</strong> —— 网络成型后调漫游，判定树 + RSSI 阈值。</li>
-<li><strong>rap-remote-deployment</strong> —— 进阶场景，把企业网延伸到远程站点。</li>
-<li><strong>site-survey-ekahau</strong> —— 勘测方法贯穿项目始终，可放在最后系统学，也可在设计阶段提前用。</li>
+<li>wlan-theory-fundamentals —— 理论地基。<ul>
+<li>理论薄弱的先读这个：BSS/ESS、WiFi 6/7、天线、安全演进，后面所有配置都在这条理论链上落地。</li>
+<li>
+<ol>
+<li>enterprise-mode-onboarding —— 第一段实操。</li>
+</ol>
+</li>
+<li>AP 怎么上线、OV2500 怎么发现设备，不懂三平面规则后面排障没抓手。</li>
+<li>
+<ol>
+<li>employee-ssid-8021x —— 第一个 SSID，向导三步 + AD 对接，掌握 OV2500 的对象模型。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>upam-guest-access —— 在 SSID 基础上加门户、限速、策略、内容过滤。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>roaming-l2-l3 —— 网络成型后调漫游，判定树 + RSSI 阈值。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>rap-remote-deployment —— 进阶场景，把企业网延伸到远程站点。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>site-survey-ekahau —— 勘测方法贯穿项目始终，可放在最后系统学，也可在设计阶段提前用。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <p>最小路径建议：赶交付就 2→3→4；带新人或做售前讲解，务必从 1 开始。</p>
 <hr />
 <h2 id="top10">七、交付陷阱 TOP10</h2>
 <ol>
-<li><strong>国家码不匹配 = 射频全关</strong>（p243）。实验室禁选 USA/日本/以色列，教材统一选 FR。</li>
-<li><strong>Express 切 Enterprise 不迁移配置</strong>，集群配置全丢——变更窗口预留重建时间。</li>
-<li><strong>RADIUS 只走 IPv4</strong>，即使管理面已 IPv6 也要留 IPv4 通路。</li>
-<li><strong>改认证源后客户端要清掉已存网络重连</strong>，否则沿用旧凭据误判"认证失败"。</li>
-<li><strong>RSSI 阈值双向失败</strong>（p424）："信号差不断线"查阈值偏低（粘住弱 AP），"频繁掉线"查偏高（切换过频丢包）。漫游决定权在终端，网络只能引导。</li>
-<li><strong>L3 漫游默认关闭</strong>，忘开会把跨 VLAN 移动当新客户端处理——IP 变、会话断。直角走廊里两台 AP 电波互不可见则漫游不发生，需两边互配静态 Neighbor AP（p423）。</li>
-<li><strong>OV2500 没配 DNS，WCF 停在 Not in service</strong>——访客内容过滤验收第一步查这个；且 AP1101/AP1201H 不支持 WCF。</li>
-<li><strong>策略在认证成功时套用</strong>：改完必须断开重连强制重认证，否则误判"没生效"。门户重定向也只对 HTTP 触发，HTTPS 站点不跳门户。</li>
-<li><strong>OV2500 与 AP 时间不同步</strong>，访客账号"没过期却登不上"——两侧 <code>date</code> 核对，根治配 NTP。</li>
-<li><strong>RAP 三坑</strong>：AP1101 不兼容；Tunnel ID 必须填 0；VPN .conf 导出后丢失只能重导，立即备份。</li>
+<li>国家码不匹配 = 射频全关（p243）。<ul>
+<li>实验室禁选 USA/日本/以色列，教材统一选 FR。</li>
+<li>
+<ol>
+<li>Express 切 Enterprise 不迁移配置，集群配置全丢——变更窗口预留重建时间。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>RADIUS 只走 IPv4，即使管理面已 IPv6 也要留 IPv4 通路。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>改认证源后客户端要清掉已存网络重连，否则沿用旧凭据误判"认证失败"。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>RSSI 阈值双向失败（p424）："信号差不断线"查阈值偏低（粘住弱 AP），"频繁掉线"查偏高（切换过频丢包）。</li>
+</ol>
+</li>
+<li>漫游决定权在终端，网络只能引导。</li>
+<li>
+<ol>
+<li>L3 漫游默认关闭，忘开会把跨 VLAN 移动当新客户端处理——IP 变、会话断。</li>
+</ol>
+</li>
+<li>直角走廊里两台 AP 电波互不可见则漫游不发生，需两边互配静态 Neighbor AP（p423）。</li>
+<li>
+<ol>
+<li>OV2500 没配 DNS，WCF 停在 Not in service——访客内容过滤验收第一步查这个；且 AP1101/AP1201H 不支持 WCF。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>策略在认证成功时套用：改完必须断开重连强制重认证，否则误判"没生效"。</li>
+</ol>
+</li>
+<li>门户重定向也只对 HTTP 触发，HTTPS 站点不跳门户。</li>
+<li>
+<ol>
+<li>OV2500 与 AP 时间不同步，访客账号"没过期却登不上"——两侧 <code>date</code> 核对，根治配 NTP。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>RAP 三坑：AP1101 不兼容；Tunnel ID 必须填 0；VPN .conf 导出后丢失只能重导，立即备份。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <p>外加一条勘测红线：<strong>别承诺"测一次管五年"</strong>——勘测预测不了未来的使用模式、扩容和外部干扰。</p>
 <hr />

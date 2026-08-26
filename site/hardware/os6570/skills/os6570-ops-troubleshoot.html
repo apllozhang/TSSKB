@@ -68,11 +68,7 @@ blockquote p{margin:6px 0}
 <li>首次登录与安全红线：aaa 解锁、锂电池返厂、激光/ESD 警告</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>高可用双支柱框架（F3， <code>&lt;span class="pg"&gt;原文p12&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p35&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p46&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p47&lt;/span&gt;</code> ）：供电侧=电源冗余+独立电路+Dying Gasp 三通道通告；运行侧=温度双阈值固化+LED 三层+show 巡检。</li>
-<li>DG 三通道语义（P28， <code>&lt;span class="pg"&gt;原文p46&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p47&lt;/span&gt;</code> ）：SNMP trap（前 3 站，含槽号/主备电源类型/失效时间）+Syslog"Dying Gasp Power Failure Event Occurred"（前 3 服务器）+4 个 802.3ah OAM Information PDU（Dying Gasp 位置位）；PDU 按端口优先级"上联口优先"发送（P29）。</li>
-<li>温度双阈值固化不可改（P12/X3）：Warning 发 trap 业务不停；Danger 自动关机且必须手动重启（X4）。</li>
-</ul>
+<p>高可用双支柱框架（F3， <code>&lt;span class="pg"&gt;原文p12&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p35&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p46&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p47&lt;/span&gt;</code> ）：供电侧=电源冗余+独立电路+Dying Gasp 三通道通告；运行侧=温度双阈值固化+LED 三层+show 巡检。DG 三通道语义（P28， <code>&lt;span class="pg"&gt;原文p46&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p47&lt;/span&gt;</code> ）：SNMP trap（前 3 站，含槽号/主备电源类型/失效时间）+Syslog"Dying Gasp Power Failure Event Occurred"（前 3 服务器）+4 个 802.3ah OAM Information PDU（Dying Gasp 位置位）；PDU 按端口优先级"上联口优先"发送（P29）。温度双阈值固化不可改（P12/X3）：Warning 发 trap 业务不停；Danger 自动关机且必须手动重启（X4）。</p>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>巡检三步：show module 查槽位→show temperature 查五列（Current/Range/Danger/Thresh/Status）→UNDER THRESHOLD 即正常（C14/P13， <code>&lt;span class="pg"&gt;原文p45&lt;/span&gt;</code> ）</li>

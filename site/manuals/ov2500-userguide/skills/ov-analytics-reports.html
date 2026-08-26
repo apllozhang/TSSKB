@@ -75,12 +75,8 @@ blockquote p{margin:6px 0}
 <li>部署 Application Visibility（L7 应用识别 + Enforcement）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>Analytics 是 Profile 驱动的报表体系：Top N Apps/Clients/Ports 报表必须先建 Analytics Profile（设备+端口+信息类型），实时类报表（Availability/Alarms/Health/SIP）免 Profile；
-Top N Apps-Advanced 由 Application Visibility 的 Signature Profile 驱动。</li>
-<li>数据面是 sFlow：建 Profile 时 OV 自动成为 sFlow Receiver，应用识别靠 sFlow 包中的 TCP/UDP 端口。</li>
-<li>统计采集与查看解耦：Collection Profile（采集什么）+ View Profile（怎么看）。</li>
-</ul>
+<p>Analytics 是 Profile 驱动的报表体系：Top N Apps/Clients/Ports 报表必须先建 Analytics Profile（设备+端口+信息类型），实时类报表（Availability/Alarms/Health/SIP）免 Profile；
+Top N Apps-Advanced 由 Application Visibility 的 Signature Profile 驱动。数据面是 sFlow：建 Profile 时 OV 自动成为 sFlow Receiver，应用识别靠 sFlow 包中的 TCP/UDP 端口。统计采集与查看解耦：Collection Profile（采集什么）+ View Profile（怎么看）。</p>
 <h2 id="a1">A1（行动框架）</h2>
 <p>报表选型（frameworks·F3， <code>&lt;span class="pg"&gt;原文p66-67&lt;/span&gt;</code> ）：
 1. 要 Top N Apps/Clients/Ports Utilization/PoE → 先 Profiles 建 Analytics Profile（ <code>&lt;span class="pg"&gt;原文p130-131&lt;/span&gt;</code> ）
@@ -90,9 +86,29 @@ Top N Apps-Advanced 由 Application Visibility 的 Signature Profile 驱动。</
 5. 数据下钻粒度固定：月→周→日→时→15 分钟（frameworks·F4， <code>&lt;span class="pg"&gt;原文p72-74&lt;/span&gt;</code> ）</p>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>建 Analytics Profile</strong>：Profiles→Add→Configuration（Profile Type：Top N Apps &amp; Clients / Top N Ports Utilization / Top N PoE Ports Utilization；Sampling Rate；PoE Usage Threshold 1-99 默认 99 仅 AOS 8.x）→Device/Port Selection（可用 Default Ports Template 批量套端口如 1/1-1/10）→Create；PoE Profile 无需选端口（cases·C9， <code>&lt;span class="pg"&gt;原文p130-131&lt;/span&gt;</code> ）</li>
-<li><strong>出 Top N Applications 报表</strong>：Analytics→Reports→Top N Applications；默认 Summary 饼图（过去 24 小时）；Filter by Profile/Select Devices 过滤；点饼图扇区下钻 Clients/Switches；Configuration 配 Top 数(1-20)/Interval Type/Time Interval(24h|7d|4w)；Actions→Add to Report 转定时 PDF（cases·C4， <code>&lt;span class="pg"&gt;原文p74-82&lt;/span&gt;</code> ）</li>
-<li><strong>App Advanced 过滤</strong>：Filter Bar 设 Time Slice/Application/App Group/Source IP/Device/UNP/Time Range（Most Recent-最近 7 天 / Custom）（cases·C5， <code>&lt;span class="pg"&gt;原文p85-86, 89-90&lt;/span&gt;</code> ）</li>
+<li>
+<p>建 Analytics Profile：Profiles→Add→Configuration（Profile Type：Top N Apps &amp; Clients / Top N Ports Utilization / Top N PoE Ports Utilization；</p>
+</li>
+<li>
+<p>Sampling Rate；</p>
+</li>
+<li>PoE Usage Threshold 1-99 默认 99 仅 AOS 8.x）→Device/Port Selection（可用 Default Ports Template 批量套端口如 1/1-1/10）→Create；</li>
+<li>
+<p>PoE Profile 无需选端口（cases·C9， <code>&lt;span class="pg"&gt;原文p130-131&lt;/span&gt;</code> ）；</p>
+</li>
+<li>
+<p>出 Top N Applications 报表：Analytics→Reports→Top N Applications；</p>
+</li>
+<li>默认 Summary 饼图（过去 24 小时）；</li>
+<li>Filter by Profile/Select Devices 过滤；</li>
+<li>点饼图扇区下钻 Clients/Switches；</li>
+<li>Configuration 配 Top 数(1-20)/Interval Type/Time Interval(24h|7d|4w)；</li>
+<li>
+<p>Actions→Add to Report 转定时 PDF（cases·C4， <code>&lt;span class="pg"&gt;原文p74-82&lt;/span&gt;</code> ）；</p>
+</li>
+<li>
+<p><strong>App Advanced 过滤</strong>：Filter Bar 设 Time Slice/Application/App Group/Source IP/Device/UNP/Time Range（Most Recent-最近 7 天 / Custom）（cases·C5， <code>&lt;span class="pg"&gt;原文p85-86, 89-90&lt;/span&gt;</code> ）</p>
+</li>
 <li><strong>健康阈值</strong>：Network Health→选类别(CPU/Memory/Temperature)→ADD 选设备（一次最多 20 台）→Configure Health Thresholds→逐设备 Edit→Save；可直通 Configure Traps 向导（cases·C6， <code>&lt;span class="pg"&gt;原文p99-100&lt;/span&gt;</code> ）</li>
 <li><strong>Collection Profile</strong>：Statistics→Collection→Add：Poll Interval 1-60 默认 5 分钟、Data Retention 1-180 天默认 30、选设备+属性→Create；排程先 Stop→Schedule→重启（cases·C7， <code>&lt;span class="pg"&gt;原文p120-121&lt;/span&gt;</code> ）</li>
 <li><strong>Chart View Profile</strong>：Chart Views→Add：属性、设备、Counters（&gt;50 个时须手动挑 ≤50）、Line Options、Scale(0.001-1000)→Create；可 Switch to Table / Save to PNG（cases·C8， <code>&lt;span class="pg"&gt;原文p122-124&lt;/span&gt;</code> ）</li>

@@ -71,8 +71,19 @@ blockquote p{margin:6px 0}
 <p>评估 4.9R2 是否适合现网，按"平台 → 固件矩阵 → 新特性价值 → 功能边界"四步走：</p>
 <ol>
 <li><strong>平台核对</strong>：现有 hypervisor 是否在支持列表（ESXi 6.5-8.0 / Hyper-V 2012R2-2022 / Win10 Pro Hyper-V / KVM Ubuntu 22.04）。OV 只以虚拟设备（VA）形态交付，没有物理机安装。</li>
-<li><strong>认证固件矩阵</strong>（p13-14）：OS2260/2360=5.2R5-R7；OS6350/6450=6.7.2.R06-R08；OS6360/6465/6560/6570M/6860E/6860N/6865=8.9R4/8.10R2/8.10R3；OS6870=仅 8.10R2/R3（无 8.9R4）；OS6900-X20/X40/T20/T40/Q32/X72=仅 8.9R4；OS9907/9912=8.9R4/8.10R2/8.10R3。Stellar AP 推荐 AWOS 5.0.2。</li>
-<li><strong>新特性清单</strong>：密码有效期策略 + CLI 管理员找回（p7）、SNMPv3 全量加密组合（p7）、Enhanced Open 过渡模式（p7）、6GHz Backward Compatibility（p7-8）、Blast-RADIUS 防护（p8-9）、Oracle Linux 8.10 + 10 项 CVE（p9）。</li>
+<li>
+<p>认证固件矩阵（p13-14）：OS2260/2360=5.2R5-R7；</p>
+<ul>
+<li>OS6350/6450=6.7.2.R06-R08；</li>
+<li>OS6360/6465/6560/6570M/6860E/6860N/6865=8.9R4/8.10R2/8.10R3；</li>
+<li>OS6870=仅 8.10R2/R3（无 8.9R4）；</li>
+<li>OS6900-X20/X40/T20/T40/Q32/X72=仅 8.9R4；</li>
+<li>OS9907/9912=8.9R4/8.10R2/8.10R3。Stellar AP 推荐 AWOS 5.0.2；</li>
+</ul>
+</li>
+<li>
+<p><strong>新特性清单</strong>：密码有效期策略 + CLI 管理员找回（p7）、SNMPv3 全量加密组合（p7）、Enhanced Open 过渡模式（p7）、6GHz Backward Compatibility（p7-8）、Blast-RADIUS 防护（p8-9）、Oracle Linux 8.10 + 10 项 CVE（p9）。</p>
+</li>
 <li><strong>功能边界</strong>：逐条核对"不支持清单"，再决定方案。</li>
 </ol>
 <h2 id="a1">A1 · 书中案例</h2>
@@ -91,12 +102,18 @@ blockquote p{margin:6px 0}
 <li>列出现网 hypervisor，对照 p5 支持列表；不在列表内则 4.9R2 无法部署。</li>
 <li>导出现网设备型号 × 固件版本表，对照 p13-14 认证矩阵，标出"不认证"组合。</li>
 <li>核对新特性依赖：Enhanced Open 需 AP AWOS 4.0.8+；Blast-RADIUS CLI 命令需交换机 AOS 8.10R2+；Message-Authenticator 响应校验需 AWOS 5.0.2+。</li>
-<li>过功能边界清单：VMM 仅 Hyper-V 2012/2012R2/2016 英文版、无 VLAN 配置；
-OS2260/2360 无动态 VLAN；
-IoT Enforcement 仅 OS6560-P48Z16 部件号 904044-90；
-WCF/DPI 的 AP 排除表（AP1101/AP1201H/L/HL、AP15XX；
-AP132x/136x 签名包 ≥3.6.11，AP1301/H/1311 ≥3.8.3）。</li>
-<li>第三方纳管：Cisco/Extreme 需在 Discovery 手工提供 OID 映射 mib-2；CLI Scripting 不能下发到 Stellar AP/第三方设备。</li>
+<li>
+<p>过功能边界清单：VMM 仅 Hyper-V 2012/2012R2/2016 英文版、无 VLAN 配置；</p>
+<ul>
+<li>OS2260/2360 无动态 VLAN；</li>
+<li>IoT Enforcement 仅 OS6560-P48Z16 部件号 904044-90；</li>
+<li>WCF/DPI 的 AP 排除表（AP1101/AP1201H/L/HL、AP15XX；</li>
+<li>AP132x/136x 签名包 ≥3.6.11，AP1301/H/1311 ≥3.8.3）；</li>
+</ul>
+</li>
+<li>
+<p>第三方纳管：Cisco/Extreme 需在 Discovery 手工提供 OID 映射 mib-2；CLI Scripting 不能下发到 Stellar AP/第三方设备。</p>
+</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>

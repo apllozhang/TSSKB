@@ -73,10 +73,7 @@ blockquote p{margin:6px 0}
 <li>新交换机上线希望自动匹配规则推送配置（Template Based Provisioning）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>Resource Manager 解决"存量设备的配置与固件生命周期"（备份/恢复/升级/清单），Provisioning 解决"新设备的零接触上线"（三阶段状态模型：Factory-default → Bootstrapped → Provisioned）。</li>
-<li>核心机制是规则匹配：交换机每 5 分钟联系 OV 一次，命中 Rule（序列号/MAC/型号）即推送管理与配置模板。</li>
-</ul>
+<p>Resource Manager 解决"存量设备的配置与固件生命周期"（备份/恢复/升级/清单），Provisioning 解决"新设备的零接触上线"（三阶段状态模型：Factory-default → Bootstrapped → Provisioned）。核心机制是规则匹配：交换机每 5 分钟联系 OV 一次，命中 Rule（序列号/MAC/型号）即推送管理与配置模板。</p>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li><strong>配置备份</strong>：Configuration → Resource Manager → Backup/Restore → Backup → Backup by Devices → Switch Picker 选设备 → （提示 FTP 认证则 Add FTP Authentication：admin/switch）→ Backup Type=Configuration Only → Backup（ <code>&lt;span class="pg"&gt;原文p197-198&lt;/span&gt;</code> ）</li>
@@ -92,8 +89,14 @@ blockquote p{margin:6px 0}
 <li>动态模板 + 值映射：模板分 Static（无变量）与 Dynamic（带 $VLAN/$PORTS 变量）；动态模板必须建 Value Mappings，由模板+变量值表推导实际下发配置（ <code>&lt;span class="pg"&gt;原文p463-464&lt;/span&gt;</code> ）</li>
 <li>引导方式：DHCP Option 43 Sub-Option 128 指向本地 OV 激活服务器（推荐），或 DNS 把 activation.myovcloud.com 解析到 OV；存量交换机改 cloudagent.cfg 的 Activation Server URL（as-lite.*.ove.local）并 <code>cloud-agent admin-state enable</code>（ <code>&lt;span class="pg"&gt;原文p460&lt;/span&gt;</code> ）</li>
 <li>部署场景矩阵：①Mobile App 离线 ②Mobile App 在线 ③Advanced DHCP+RCL（企业/园区）④仅 Advanced DHCP；场景 1/2 依赖尚未发布的 Mobile App 功能，当前不可实施（&lt;&lt;<PAGE 418/451/415>&gt;&gt;）</li>
-<li>Thin Client 模式：交换机零本地配置（仅 vcboot.cfg 保底网络可达），开机经 activation/call-home 从 OV 取配置；Incremental Template 只在下一次周期 call-home（默认 30 分钟）应用一次（ <code>&lt;span class="pg"&gt;原文p75-77&lt;/span&gt;</code> ）；Rule 可配 Thin Switch Yes/No 与 Desired Switch Config（Template+Incremental/最新备份快照/Golden 快照）（ <code>&lt;span class="pg"&gt;原文p76&lt;/span&gt;</code> ）</li>
-<li>Golden Configuration 审计："Configuration selected from a list of the three most recent switch backups that can be applied to a switch in the event there is an unwanted configuration change"；可周期审计、标记 golden、偏离告警（&lt;&lt;<PAGE 467/417>&gt;&gt;）</li>
+<li>Thin Client 模式：交换机零本地配置（仅 vcboot.cfg 保底网络可达），开机经 activation/call-home 从 OV 取配置；</li>
+<li>Incremental Template 只在下一次周期 call-home（默认 30 分钟）应用一次（ <code>&lt;span class="pg"&gt;原文p75-77&lt;/span&gt;</code> ）；</li>
+<li>
+<p>Rule 可配 Thin Switch Yes/No 与 Desired Switch Config（Template+Incremental/最新备份快照/Golden 快照）（ <code>&lt;span class="pg"&gt;原文p76&lt;/span&gt;</code> ）；</p>
+</li>
+<li>
+<p>Golden Configuration 审计："Configuration selected from a list of the three most recent switch backups that can be applied to a switch in the event there is an unwanted configuration change"；可周期审计、标记 golden、偏离告警（&lt;&lt;<PAGE 467/417>&gt;&gt;）</p>
+</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>

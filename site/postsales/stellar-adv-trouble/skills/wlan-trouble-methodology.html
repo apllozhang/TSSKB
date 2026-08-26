@@ -142,7 +142,12 @@ blockquote p{margin:6px 0}
 <li>网络层（AP 取址/连通/邻居/服务器）→ <code><a href="network-side-trouble.html">network-side-trouble</a></code></li>
 </ul>
 <h2 id="a1">A1 · 书中案例</h2>
-<p>主案例（p11-18）：整栋楼客户端登不进 Employee SSID。访谈四问锁定范围后取 AP 日志与交换机配置比对：OmniVista 里 SSID 映射 VLAN 10，接入交换机 Building_A 上配的是 VLAN 20，tagged VLAN 不一致导致认证后拿不到正确子网。Resolution：更新交换机 tagged VLAN ID=20。教训：<strong>全员连不上而 AP 本身正常 → 优先怀疑交换机侧 VLAN</strong>。</p>
+<ul>
+<li>主案例（p11-18）：整栋楼客户端登不进 Employee SSID。</li>
+<li>访谈四问锁定范围后取 AP 日志与交换机配置比对：OmniVista 里 SSID 映射 VLAN 10，接入交换机 Building_A 上配的是 VLAN 20，tagged VLAN 不一致导致认证后拿不到正确子网。</li>
+<li>Resolution：更新交换机 tagged VLAN ID=20。</li>
+<li>教训：<strong>全员连不上而 AP 本身正常 → 优先怀疑交换机侧 VLAN</strong>。</li>
+</ul>
 <p>复现法案例（p12）：向客户采集四类配置——接入交换机 vcboot.cfg、OmniVista 组织配置、Stellar AP 配置备份、服务器配置备份——在自有环境 1:1 重建拓扑后重现问题，排除客户描述偏差与隐藏根因。</p>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
@@ -152,12 +157,34 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
-<li>排障前置：确认全网（AP、OmniVista、接入交换机）同步到同一 NTP 服务器，否则多设备日志无法对齐成时间线（p22）。</li>
+<li>排障前置：确认全网（AP、OmniVista、接入交换机）同步到同一 NTP 服务器，否则多设备日志无法对齐成时间线（p22）。<ul>
+<li>
+<ol>
 <li>执行访谈四问，写下每一问的答案与推断。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>对照三域根因地图列出嫌疑项，按 OSI 从低层到高层排序。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>需要复现时按四类配置清单采集（vcboot.cfg / OmniVista 组织 / AP 备份 / 服务器备份），自有环境重建并复现；复现失败回第 2 步重新提问。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>制定方案 → 先自有环境测试 → 应用到客户环境 → 让客户用日常业务（Rainbow、语音、邮件）验证稳定性。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>关单标准：方案永久有效且无副作用；记录五字段（问题描述/拓扑/固件版本/诊断/解决方案），沉淀 TKC。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>

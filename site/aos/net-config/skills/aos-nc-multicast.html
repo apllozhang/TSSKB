@@ -76,12 +76,7 @@ blockquote p{margin:6px 0}
 <li>多个用户 VLAN 共享一个组播 VLAN 做单向分发（MVR/IPMVLAN）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>组播分发框架（F13， <code>&lt;span class="pg"&gt;原文p1032&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p1086&lt;/span&gt;</code> ）：IPMS(IGMP)/IPMSv6(MLD) 做 VLAN/service 域内组播交换，PIM/DVMRP 做域间路由，IPMVLAN/MVR 做跨 VLAN 单向分发，EVPN RT6-8/OISM 做叠加层优化。</li>
-<li>组播组地址为 D 类 224.0.0.0-239.255.255.255，239/8 为管理域（P148， <code>&lt;span class="pg"&gt;原文p1032&lt;/span&gt;</code> ）。</li>
-<li>多个组播路由器共存时最低 IP 者当选 IGMP querier（P150， <code>&lt;span class="pg"&gt;原文p1033&lt;/span&gt;</code> ）。</li>
-<li>组播路由协议建立组播路由库，IPMS 依其决策+端口成员请求转发（P151， <code>&lt;span class="pg"&gt;原文p1033&lt;/span&gt;</code> ）。</li>
-</ul>
+<p>组播分发框架（F13， <code>&lt;span class="pg"&gt;原文p1032&lt;/span&gt;</code> / <code>&lt;span class="pg"&gt;原文p1086&lt;/span&gt;</code> ）：IPMS(IGMP)/IPMSv6(MLD) 做 VLAN/service 域内组播交换，PIM/DVMRP 做域间路由，IPMVLAN/MVR 做跨 VLAN 单向分发，EVPN RT6-8/OISM 做叠加层优化。组播组地址为 D 类 224.0.0.0-239.255.255.255，239/8 为管理域（P148， <code>&lt;span class="pg"&gt;原文p1032&lt;/span&gt;</code> ）。多个组播路由器共存时最低 IP 者当选 IGMP querier（P150， <code>&lt;span class="pg"&gt;原文p1033&lt;/span&gt;</code> ）。组播路由协议建立组播路由库，IPMS 依其决策+端口成员请求转发（P151， <code>&lt;span class="pg"&gt;原文p1033&lt;/span&gt;</code> ）。</p>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>域内组播交换选 IPMS/IPMSv6</strong>：IGMP 版本（v1-3）按客户端与源端能力选；querier 可静态指定；静态组用于不发 report 的接收者</li>

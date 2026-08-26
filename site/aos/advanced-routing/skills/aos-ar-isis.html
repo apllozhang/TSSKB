@@ -83,10 +83,23 @@ blockquote p{margin:6px 0}
 <ul>
 <li><strong>十步上线</strong>：<code>vlan 5</code> → <code>ip interface vlan-5 ...</code> → <code>ip load isis</code> → <code>ip isis area-id 49.0001</code> → <code>ip isis admin-state enable</code> → <code>ip isis activate-ipv4</code> → <code>ip isis vlan 5</code> + <code>address-family v4</code> → <code>ip isis vlan 5 admin-state enable</code> → <code>show ip isis status</code>（C14， <code>&lt;span class="pg"&gt;原文p92&lt;/span&gt;</code> ）</li>
 <li><strong>双栈双路由器</strong>：各建 vlan-isis（v4+v6 地址）→ <code>ip isis level-capability level-1/2</code> → <code>ip isis vlan vlan-isis address-family v4v6</code> + enable → <code>show ip isis adjacency/routes/spf</code>（C15， <code>&lt;span class="pg"&gt;原文p117-119&lt;/span&gt;</code> ）</li>
-<li><strong>认证</strong>：全局 <code>ip isis auth-type md5 key 12345</code>；level 级 <code>ip isis level 2 auth-type md5 encrypt-key ...</code>；电路级 <code>ip isis vlan 10 hello-auth-type md5 key 12345</code>；keychain <code>ip isis auth-type key-chain 2</code>（C16， <code>&lt;span class="pg"&gt;原文p106-108&lt;/span&gt;</code> ）</li>
-<li><strong>L1→L2 泄漏</strong>：<code>ip route-map is2is sequence-number 1 action permit</code> + <code>match route-type level1</code> + <code>set level level2</code> → <code>ip redist isis into isis route-map is2is status enable</code>（C17， <code>&lt;span class="pg"&gt;原文p115&lt;/span&gt;</code> ）</li>
-<li><strong>汇总</strong>：<code>ip isis summary-address 100.1.0.0/16 level-2</code>；IPv6 <code>ip isis summary-address6 4001::/16 level-1</code>；<code>show ip isis summary-address[6]</code>（C18， <code>&lt;span class="pg"&gt;原文p104-105&lt;/span&gt;</code> ）</li>
-<li><strong>M-ISIS</strong>：<code>ip isis multi-topology</code>；切换模式会复位全部邻接（C19/X23， <code>&lt;span class="pg"&gt;原文p120-121&lt;/span&gt;</code> ）</li>
+<li>认证：全局 <code>ip isis auth-type md5 key 12345</code>；</li>
+<li>level 级 <code>ip isis level 2 auth-type md5 encrypt-key ...</code>；</li>
+<li>电路级 <code>ip isis vlan 10 hello-auth-type md5 key 12345</code>；</li>
+<li>
+<p>keychain <code>ip isis auth-type key-chain 2</code>（C16， <code>&lt;span class="pg"&gt;原文p106-108&lt;/span&gt;</code> ）；</p>
+</li>
+<li>
+<p><strong>L1→L2 泄漏</strong>：<code>ip route-map is2is sequence-number 1 action permit</code> + <code>match route-type level1</code> + <code>set level level2</code> → <code>ip redist isis into isis route-map is2is status enable</code>（C17， <code>&lt;span class="pg"&gt;原文p115&lt;/span&gt;</code> ）</p>
+</li>
+<li>汇总：<code>ip isis summary-address 100.1.0.0/16 level-2</code>；</li>
+<li>IPv6 <code>ip isis summary-address6 4001::/16 level-1</code>；</li>
+<li>
+<p><code>show ip isis summary-address[6]</code>（C18， <code>&lt;span class="pg"&gt;原文p104-105&lt;/span&gt;</code> ）；</p>
+</li>
+<li>
+<p><strong>M-ISIS</strong>：<code>ip isis multi-topology</code>；切换模式会复位全部邻接（C19/X23， <code>&lt;span class="pg"&gt;原文p120-121&lt;/span&gt;</code> ）</p>
+</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>

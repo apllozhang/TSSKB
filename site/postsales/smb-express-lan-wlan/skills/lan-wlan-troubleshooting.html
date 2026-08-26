@@ -74,10 +74,7 @@ blockquote p{margin:6px 0}
 <li>访客 Captive Portal 不弹页面；需要抓包或镜像端口定位</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>排查走"分层递进 + 分侧取证"：有线侧自下而上（电→VLAN→IP→云），无线侧在 AP CLI 用 iwconfig/sta_list 看空口与角色，认证侧核对 AAA 配置与日志进程。</li>
-<li>每层都有明确命令与预期输出，失败点即故障层。</li>
-</ul>
+<p>排查走"分层递进 + 分侧取证"：有线侧自下而上（电→VLAN→IP→云），无线侧在 AP CLI 用 iwconfig/sta_list 看空口与角色，认证侧核对 AAA 配置与日志进程。每层都有明确命令与预期输出，失败点即故障层。</p>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li><strong>AP 上线排障五步法</strong>（ <code>&lt;span class="pg"&gt;原文p376&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p378&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p365&lt;/span&gt;</code> - <code>&lt;span class="pg"&gt;原文p366&lt;/span&gt;</code> ）：</li>
@@ -107,8 +104,14 @@ blockquote p{margin:6px 0}
 <h2 id="b">B（边界与陷阱）</h2>
 <ul>
 <li><strong>不要对预配置设备恢复出厂</strong>：R-Lab 交换机装有特定默认配置，恢复出厂会破坏实验环境（ <code>&lt;span class="pg"&gt;原文p123&lt;/span&gt;</code> ）；同理不要动实验室核心 OS6900（ <code>&lt;span class="pg"&gt;原文p100&lt;/span&gt;</code> ）、不要对 Organization 用 Delete（ <code>&lt;span class="pg"&gt;原文p358&lt;/span&gt;</code> ）。</li>
-<li><strong>Lightning Config 触发条件苛刻</strong>：仅第一/二物理口接客户端、无任何既有配置、开机后无 DHCP 分配、无 RCL/OmniVista 连接时才触发（ <code>&lt;span class="pg"&gt;原文p79&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p1025&lt;/span&gt;</code> ）；不要预先把新交换机接进网络，也不要把两台开箱交换机直连（先跑 Lightning Config， <code>&lt;span class="pg"&gt;原文p1034&lt;/span&gt;</code> ）；保存配置后默认 IP 192.168.0.1 被移除（ <code>&lt;span class="pg"&gt;原文p79&lt;/span&gt;</code> ）。</li>
-<li><strong>镜像与监控互斥</strong>：同一端口不能同时配 Port Mirroring 和 Port Monitoring；镜像会话数有型号上限（ <code>&lt;span class="pg"&gt;原文p554&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p718&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p568&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p552&lt;/span&gt;</code> ）。</li>
+<li>Lightning Config 触发条件苛刻：仅第一/二物理口接客户端、无任何既有配置、开机后无 DHCP 分配、无 RCL/OmniVista 连接时才触发（ <code>&lt;span class="pg"&gt;原文p79&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p1025&lt;/span&gt;</code> ）；</li>
+<li>不要预先把新交换机接进网络，也不要把两台开箱交换机直连（先跑 Lightning Config， <code>&lt;span class="pg"&gt;原文p1034&lt;/span&gt;</code> ）；</li>
+<li>
+<p>保存配置后默认 IP 192.168.0.1 被移除（ <code>&lt;span class="pg"&gt;原文p79&lt;/span&gt;</code> ）；</p>
+</li>
+<li>
+<p><strong>镜像与监控互斥</strong>：同一端口不能同时配 Port Mirroring 和 Port Monitoring；镜像会话数有型号上限（ <code>&lt;span class="pg"&gt;原文p554&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p718&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p568&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p552&lt;/span&gt;</code> ）。</p>
+</li>
 <li>R-Lab 复位后所有端口禁用，需手工 <code>interfaces ... admin-state enable</code>（ <code>&lt;span class="pg"&gt;原文p107&lt;/span&gt;</code> 、 <code>&lt;span class="pg"&gt;原文p113&lt;/span&gt;</code> ）。</li>
 </ul>
 <h2 id="_1">来源</h2>

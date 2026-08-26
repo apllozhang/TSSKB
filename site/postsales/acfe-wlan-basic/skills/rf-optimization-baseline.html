@@ -76,14 +76,22 @@ blockquote p{margin:6px 0}
 <p>"To function properly, band steering generally assumes that the coverage areas on both the 2.4 GHz bands and 5 GHz bands are the same ... band steering will prove problematic if coverage on 5 GHz is significantly weaker and has coverage holes" (p459)</p>
 </blockquote>
 <h2 id="i">I · 方法论骨架</h2>
-<p><strong>1. RF Profile 闭环：创建 → 绑定 → 验证 → 回退</strong>
-- 创建：通用设置（国家码）→ Smart Load Balance 段 → Per Band Info 按频段细配
-- 绑定：AP Group &gt; Provisioning Configuration 换 RF Profile 生效；Device Catalog 可对单 AP 覆盖
-- 验证：客户端行为 + QoE &gt; Analytics（关联失败列表）+ <code>cat /tmp/config/rfprofile.conf</code> + <code>cat /proc/kes_syslog | grep ACS</code>
-- 回退：Provisioning Config 换回 Default RF Profile</p>
-<p><strong>2. 架构原理（DRM 分布式射频管理）</strong>
+<ol>
+<li><strong>RF Profile 闭环：创建 → 绑定 → 验证 → 回退</strong></li>
+<li>创建：通用设置（国家码）→ Smart Load Balance 段 → Per Band Info 按频段细配</li>
+<li>绑定：AP Group &gt; Provisioning Configuration 换 RF Profile 生效；Device Catalog 可对单 AP 覆盖</li>
+<li>验证：客户端行为 + QoE &gt; Analytics（关联失败列表）+ <code>cat /tmp/config/rfprofile.conf</code> + <code>cat /proc/kes_syslog | grep ACS</code></li>
+<li>
+<p>回退：Provisioning Config 换回 Default RF Profile</p>
+</li>
+<li>
+<p><strong>架构原理（DRM 分布式射频管理）</strong>
 每 AP 空口做邻居发现、LAN 侧共享射频上下文（信道利用率/干扰/客户端数/功率）；每台 AP 自主采取 RF 动作（尝试-等待-重试），作用域限邻居，不依赖 AP Group 或管理 VLAN。ACS/APC 基于该上下文自动决策。</p>
-<p><strong>3. 官方参数基线表（可直接照抄）</strong></p>
+</li>
+<li>
+<p><strong>官方参数基线表（可直接照抄）</strong></p>
+</li>
+</ol>
 <table>
 <thead>
 <tr>
@@ -160,12 +168,18 @@ blockquote p{margin:6px 0}
 </tr>
 </tbody>
 </table>
-<p><strong>4. RSSI 判读标尺（ALE 专属）</strong>
+<ol>
+<li>
+<p><strong>RSSI 判读标尺（ALE 专属）</strong>
 dBm = RSSI − 96（RSSI 10=−86dBm、20=−76、43=−53）。低端（约 RSSI&lt;20）Bad 不宜音视频；&gt;30 为 Desired。口径注意：Cirrus 显示平均值，AP CLI 为瞬时值。</p>
-<p><strong>5. 开关语义</strong>
-- Client-aware 开：ACS 有在线客户端不换信道；关：换到更优信道但打断客户端
-- MU-MIMO：AP 同时多用户通信；High Efficiency 关闭时 11ax AP 降级 VHT
-- Exclude MAC OUI：把扫描枪/MIPT 话机等排除在 Band Steering 之外</p>
+</li>
+<li>
+<p><strong>开关语义</strong></p>
+</li>
+<li>Client-aware 开：ACS 有在线客户端不换信道；关：换到更优信道但打断客户端</li>
+<li>MU-MIMO：AP 同时多用户通信；High Efficiency 关闭时 11ax AP 降级 VHT</li>
+<li>Exclude MAC OUI：把扫描枪/MIPT 话机等排除在 Band Steering 之外</li>
+</ol>
 <h2 id="a1-lab">A1 · 书中案例（Lab 步骤精要）</h2>
 <ul>
 <li><strong>c18/p456-466</strong>：建 My_RF_Profile（FR-France）→ 读客户端 RSSI（-41dBm=51）→ Association RSSI Threshold 全频段设 90 保存 → 经 My-Provisioning-Config 下发 → 客户端无法关联，QoE 关联失败列表显示 "RSSI threshold not met" → 改回 Default RF Profile 恢复。</li>

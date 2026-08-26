@@ -72,12 +72,29 @@ blockquote p{margin:6px 0}
 <p>"For VoWLAN deployment in 802.11ac: RSSI must be -67dBm (or better). Meaning RSSI ≥ 29. ... For VoWLAN deployment in 802.11AC: SNR ≥ 25." (p272-273)</p>
 </blockquote>
 <h2 id="i">I · 方法论骨架</h2>
-<p>五阶段流程（Prepare → Plan → Design → Implement → Operate）：
-1. <strong>Prepare</strong>：明确覆盖/带宽需求；站点勘测分析 RF 环境与干扰源；按 1 AP/255m²、每 AP 20-25 用户算 AP 数量与布放；识别需双 AP 冗余的区域。
-2. <strong>Plan</strong>：定义语音服务与带宽、"Voice" WLAN 与安全等级；RF 管理优先 5GHz；容量 20-25 客户端/AP、36Mbps 用户吞吐；漫游开 802.11r/k/v，同能力设备放专用 SSID；保证 AP 侧网络冗余。
-3. <strong>Design</strong>：相邻 AP 用非重叠信道；QoS 端到端 WMM 队列标 DSCP/802.1p；可选 DPI 语音管控；语音专用 VLAN；接入交换机千兆端口。
-4. <strong>Implement</strong>：布线、语音服务器、RADIUS/DNS/DHCP、IMS3 批量管话机、话机 SSID 与 OmniVista 配置。
-5. <strong>Operate</strong>：监控语音覆盖（SNR/RF 扫描）、VoIP 审计、性能、勘测（Ekahau/AirMagnet）、专业服务支持。</p>
+<ul>
+<li>五阶段流程（Prepare → Plan → Design → Implement → Operate）：1. <strong>Prepare</strong>：明确覆盖/带宽需求；站点勘测分析 RF 环境与干扰源；按 1 AP/255m²、每 AP 20-25 用户算 AP 数量与布放；识别需双 AP 冗余的区域。</li>
+<li>
+<ol>
+<li><strong>Plan</strong>：定义语音服务与带宽、"Voice" WLAN 与安全等级；RF 管理优先 5GHz；容量 20-25 客户端/AP、36Mbps 用户吞吐；漫游开 802.11r/k/v，同能力设备放专用 SSID；保证 AP 侧网络冗余。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li><strong>Design</strong>：相邻 AP 用非重叠信道；QoS 端到端 WMM 队列标 DSCP/802.1p；可选 DPI 语音管控；语音专用 VLAN；接入交换机千兆端口。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li><strong>Implement</strong>：布线、语音服务器、RADIUS/DNS/DHCP、IMS3 批量管话机、话机 SSID 与 OmniVista 配置。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li><strong>Operate</strong>：监控语音覆盖（SNR/RF 扫描）、VoIP 审计、性能、勘测（Ekahau/AirMagnet）、专业服务支持。</li>
+</ol>
+</li>
+</ul>
 <p>量化标准：802.11ac 下客户端 RSSI ≥ -67dBm（wlanconfig 显示值 ≥ 29）、SNR ≥ 25；
 正确漫游一般要求 -62dBm 或更好。RSSI 换算参考：10≈-86dBm（语音不可用）、20≈-76dBm（上网可用）、29≈-67dBm（语音推荐）、35≈-61dBm（理想）。</p>
 <h2 id="a1-lab">A1 · 书中案例（Lab 精要）</h2>
@@ -94,13 +111,39 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
-<li>需求确认：话机数量、并发呼叫、覆盖区域清单。</li>
+<li>需求确认：话机数量、并发呼叫、覆盖区域清单。<ul>
+<li>
+<ol>
 <li>勘测：RF 环境与干扰源扫描；标注需双 AP 冗余的区域。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>容量计算：面积/255m² 与 20-25 用户/AP 两个口径取大者定 AP 数；布放优先 5GHz。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>设计：非重叠信道复用图；语音专用 VLAN；交换机千兆接入端口；端到端 QoS（Voice 标 EF/5）。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>SSID/漫游：建 Voice SSID，开 802.11r/k/v；同能力话机归专用 SSID。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>验收测量：wlanconfig 逐点读 RSSI（值 ≥29 即 ≥-67dBm）与 SNR ≥25；漫游路径上确认 -62dBm 重叠带。</li>
+</ol>
+</li>
+<li>
+<ol>
 <li>运营：SNR/覆盖例行监控，VoIP 审计，必要时 Ekahau/AirMagnet 复勘。</li>
+</ol>
+</li>
+</ul>
+</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>

@@ -76,30 +76,46 @@ blockquote p{margin:6px 0}
 <p>"As OmniVista Cirrus is cloud-based, it is not possible to revert the configuration back to the default parameters with one click." (p544)</p>
 </blockquote>
 <h2 id="i">I · 方法论骨架</h2>
-<p><strong>1. License 生命周期（横跨三系统）</strong></p>
+<ol>
+<li><strong>License 生命周期（横跨三系统）</strong></li>
+</ol>
 <pre><code>eBuy 下单（品号 OVCX-系列-级别-年限-类别）
   → Subscription Manager 建订阅（记 Subscription ID + Activation Code）  [最长延迟 24h]
   → Cirrus 组织内 License Management &gt; Import Licenses（选 CAPEX，填 ID+激活码）
   → 指派设备（自动/手工）→ 确认升级付费模式 → 核验模式/时长/数量
 </code></pre>
 <p>品号编码：级别 BAS/BIZ/PRM；年限 1Y/3Y/5Y；类别 APL（低端 AP1x0x/1x1x/1x2x）/APH（其余 AP）/63/64/65/68/69/99（OmniSwitch 系列）。</p>
-<p><strong>2. 账号与组织层级</strong>
-- 层级：MSP 门户 &gt; Organization &gt; Site &gt; Building &gt; Floor
-- 账号分 Customer/Partner；MSP 级权限 Admin/Viewer/Limited
-- 一邮箱（=一账号）只能绑一个 MSP 门户；多 MSP 用子地址 MyMail+tag@company.com 派生（激活邮件仍发原地址）
-- 区域入口：https://eu.manage.ovcirrus.com / https://us.manage.ovcirrus.com；密码 14-100 位含大小写+数字+特殊字符、不得含邮箱串
-- 组织可在 MSP 间迁移（Change MSP）或脱离（Disassociate——脱离后该 MSP 全部用户立即失访）</p>
-<p><strong>3. 网络前提（云开通前核查）</strong>
-- 防火墙入向：9093 / 30123 / 30124 / 30125；出向放行 443 / 80 / 123 / 53
-- DHCP 标准选项 1,3,6,28,42,43（代理场景加 129-133、138）
-- 至少 1 台 NTP；AP 固件 AWOS 4.0.6 GA+，AP1101/AP1201L/H/HL 不支持；交换机 AOS 8.9R1+（release 5 不支持）</p>
-<p><strong>4. OVC4 → OVC 迁移</strong>
-1. 在新 OVC 手工重建 AP Group/SSID/策略并比对
-2. OVC4 Device Catalog 删除全部设备（序列号禁止双登记）
-3. 新 OVC 重新声明（手工或 XLSX/CSV 模板）
-4. 等下次 Call Home：AP 最长 30 分钟（或重启 AP）；交换机重启 cloud-agent</p>
-<p><strong>5. 组织清理（无一键恢复，按依赖逆序拆）</strong>
+<ol>
+<li><strong>账号与组织层级</strong></li>
+<li>层级：MSP 门户 &gt; Organization &gt; Site &gt; Building &gt; Floor</li>
+<li>账号分 Customer/Partner；MSP 级权限 Admin/Viewer/Limited</li>
+<li>一邮箱（=一账号）只能绑一个 MSP 门户；多 MSP 用子地址 MyMail+tag@company.com 派生（激活邮件仍发原地址）</li>
+<li>区域入口：https://eu.manage.ovcirrus.com / https://us.manage.ovcirrus.com；密码 14-100 位含大小写+数字+特殊字符、不得含邮箱串</li>
+<li>
+<p>组织可在 MSP 间迁移（Change MSP）或脱离（Disassociate——脱离后该 MSP 全部用户立即失访）</p>
+</li>
+<li>
+<p><strong>网络前提（云开通前核查）</strong></p>
+</li>
+<li>防火墙入向：9093 / 30123 / 30124 / 30125；出向放行 443 / 80 / 123 / 53</li>
+<li>DHCP 标准选项 1,3,6,28,42,43（代理场景加 129-133、138）</li>
+<li>
+<p>至少 1 台 NTP；AP 固件 AWOS 4.0.6 GA+，AP1101/AP1201L/H/HL 不支持；交换机 AOS 8.9R1+（release 5 不支持）</p>
+</li>
+<li>
+<p><strong>OVC4 → OVC 迁移</strong></p>
+</li>
+<li>在新 OVC 手工重建 AP Group/SSID/策略并比对</li>
+<li>OVC4 Device Catalog 删除全部设备（序列号禁止双登记）</li>
+<li>新 OVC 重新声明（手工或 XLSX/CSV 模板）</li>
+<li>
+<p>等下次 Call Home：AP 最长 30 分钟（或重启 AP）；交换机重启 cloud-agent</p>
+</li>
+<li>
+<p><strong>组织清理（无一键恢复，按依赖逆序拆）</strong>
 任务/备份 → WIPS 复位 → AP 摘回 default device group → AP Group 换回默认 Provisioning 后删组 → 删 Provisioning（RF Profile 先改回 Default）→ 删 RF Profile → SSID → 统一策略/服务端口/BYOD/Guest 策略/门户模板/ARP/账号/报表 → 站点（级联删楼宇楼层与设备归属）→ 确认 Device Catalog 为空。</p>
+</li>
+</ol>
 <h2 id="a1-lab">A1 · 书中案例（Lab 步骤精要）</h2>
 <ul>
 <li><strong>c09/p169-238</strong>：eBuy 下单 OVCX-68-BAS-3Y → MyPortal &gt; Subscription Manager 建 CAPEX 订阅 → eu.manage.ovcirrus.com 注册（子地址技巧）→ Create Organization + Request trial period（ALE 联系人/是否 RAP/Partner CRD ID）→ Import Licenses（Subscription ID + Activation Code）→ 选设备分配 → Upgrade → 验证许可模式/时长/数量。</li>

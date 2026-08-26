@@ -73,25 +73,31 @@ blockquote p{margin:6px 0}
 <p>"When creating an IP interface for an SPB service: An SPB service with the specified ID must exist... VLAN translation is implicitly enabled when a service is assigned to an IP interface... Both an IPv4 and IPv6 interface can be assigned to the same SPB service as long as both interface types are in the same VRF instance." (p163)</p>
 </blockquote>
 <h2 id="i">I · 方法论骨架</h2>
-<p>三方案按"是否另跑路由协议"递进（f07）：
-1. <strong>方案一 VRRP 冗余</strong>：无路由协议。两台 BEB 对同一服务各建内联 IP 接口 + 交叉优先级 VRRP。
-2. <strong>方案二 VPN-Lite</strong>：在绑服务的接口上跑 OSPF/BGP/静态，SPB 当物理媒体；适合与传统路由协议对接（g39）。
-3. <strong>方案三 L3-VPN</strong>：IS-IS IPVPN TLV 直接携带 VRF 路由，免路由协议，简单性/扩展性/收敛全面占优（p199）。</p>
-<p>公共最小配置（c04）：先有服务，再 <code>ip interface &lt;name&gt; address A/M service &lt;id&gt;</code> 绑接（接口地址即网关）。
-L3-VPN 四步心法（f08）：bind → export → import → redist（可选泄漏），全程可用 route-map 过滤。
-选型判据：需要 OSPF/BGP 对接 → VPN-Lite；纯 SPB 域内 → L3-VPN。</p>
+<ul>
+<li>三方案按"是否另跑路由协议"递进（f07）：1. <strong>方案一 VRRP 冗余</strong>：无路由协议。</li>
+<li>两台 BEB 对同一服务各建内联 IP 接口 + 交叉优先级 VRRP。</li>
+<li>
+<ol>
+<li><strong>方案二 VPN-Lite</strong>：在绑服务的接口上跑 OSPF/BGP/静态，SPB 当物理媒体；适合与传统路由协议对接（g39）。</li>
+</ol>
+</li>
+<li>
+<ol>
+<li><strong>方案三 L3-VPN</strong>：IS-IS IPVPN TLV 直接携带 VRF 路由，免路由协议，简单性/扩展性/收敛全面占优（p199）。</li>
+</ol>
+</li>
+<li>
+<p>公共最小配置（c04）：先有服务，再 <code>ip interface &lt;name&gt; address A/M service &lt;id&gt;</code> 绑接（接口地址即网关）。</p>
+</li>
+<li>L3-VPN 四步心法（f08）：bind → export → import → redist（可选泄漏），全程可用 route-map 过滤。</li>
+<li>选型判据：需要 OSPF/BGP 对接 → VPN-Lite；纯 SPB 域内 → L3-VPN。</li>
+</ul>
 <h2 id="a1-lab">A1 · 书中案例（Lab 配置序列精要）</h2>
-<p>L3-VPN 最小五步（c08，p202）：</p>
-<pre><code>spb bvlan 4001
-service spb 10 isid 1000 bvlan 4001 admin-state enable
-vrf 1 ip interface L3vpn1 address 10.5.1.1/24 service 10
-spb ipvpn bind vrf 1 isid 1000 gateway 10.5.1.1 all-routes
-vrf 1 ip export all-routes
-vrf 1 ip import isid 1000 all-routes
-</code></pre>
-<p>VPN-Lite OSPF 块（c06/c07，p176/180）：<code>ip load ospf</code> → <code>ip ospf area 0.0.0.0</code> → <code>ip ospf interface L3vpn999</code> → 接口 enable + 入 area → <code>ip ospf admin-state enable</code>，加 route-map 重分发 <code>ip redist local into ospf route-map local</code>。
-VRRP 交叉优先级（c05，p169）：Sw1 <code>ip vrrp 2 interface L3vpnvlan2 priority 200 / address 192.168.2.254 / admin-state enable</code>（vlan3 prio 100），Sw2 相反。
-ECMP（c11，p219）：同一 VRF 绑两个 I-SID（各配服务+接口+bind），import 两条 I-SID 后 show ip routes 出现 "+" 双下一跳。</p>
+<ul>
+<li>L3-VPN 最小五步（c08，p202）：<code>spb bvlan 4001service spb 10 isid 1000 bvlan 4001 admin-state enablevrf 1 ip interface L3vpn1 address 10.5.1.1/24 service 10spb ipvpn bind vrf 1 isid 1000 gateway 10.5.1.1 all-routesvrf 1 ip export all-routesvrf 1 ip import isid 1000 all-routes</code>VPN-Lite OSPF 块（c06/c07，p176/180）：<code>ip load ospf</code> → <code>ip ospf area 0.0.0.0</code> → <code>ip ospf interface L3vpn999</code> → 接口 enable + 入 area → <code>ip ospf admin-state enable</code>，加 route-map 重分发 <code>ip redist local into ospf route-map local</code>。</li>
+<li>VRRP 交叉优先级（c05，p169）：Sw1 <code>ip vrrp 2 interface L3vpnvlan2 priority 200 / address 192.168.2.254 / admin-state enable</code>（vlan3 prio 100），Sw2 相反。</li>
+<li>ECMP（c11，p219）：同一 VRF 绑两个 I-SID（各配服务+接口+bind），import 两条 I-SID 后 show ip routes 出现 "+" 双下一跳。</li>
+</ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
 <li>业务要网关冗余、跨 SPB 路由互通、多 VRF 隔离、等价多路径、老平台（6900-X20 等）无内联路由能力时用本 skill。</li>

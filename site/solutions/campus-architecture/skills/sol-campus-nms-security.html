@@ -66,17 +66,22 @@ blockquote p{margin:6px 0}
 <li>无线安全：wIDS/wIPS、流氓 AP 判定与遏制、WCF 内容过滤</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<ul>
-<li>统一接入安全框架（F5， <code>&lt;span class="pg"&gt;原文p36&lt;/span&gt;</code> ）：UPAM 中央 RADIUS+captive portal → 认证谱系 → 角色（UNP/ARP）定 VLAN+ACL+QoS → 事后处置（Quarantine+QMR/WCF/wIDS/wIPS），安全贯穿"接入-授权-运行-处置"全生命周期。</li>
-<li>安全内建于网络并按角色动态施加，而非静态绑端口（P52， <code>&lt;span class="pg"&gt;原文p36&lt;/span&gt;</code> ）；UNP/ARP 内嵌于交换机/AP 保证有线无线策略一致（P53， <code>&lt;span class="pg"&gt;原文p36&lt;/span&gt;</code> ）。</li>
-<li>NMS 选型：L2 HA 复用原 IP 零改造（P49， <code>&lt;span class="pg"&gt;原文p35&lt;/span&gt;</code> ）；L3 HA 跨子网但 sFlow/策略执行等功能受限（P50/X14， <code>&lt;span class="pg"&gt;原文p36&lt;/span&gt;</code> ）。</li>
-</ul>
+<p>统一接入安全框架（F5， <code>&lt;span class="pg"&gt;原文p36&lt;/span&gt;</code> ）：UPAM 中央 RADIUS+captive portal → 认证谱系 → 角色（UNP/ARP）定 VLAN+ACL+QoS → 事后处置（Quarantine+QMR/WCF/wIDS/wIPS），安全贯穿"接入-授权-运行-处置"全生命周期。安全内建于网络并按角色动态施加，而非静态绑端口（P52， <code>&lt;span class="pg"&gt;原文p36&lt;/span&gt;</code> ）；UNP/ARP 内嵌于交换机/AP 保证有线无线策略一致（P53， <code>&lt;span class="pg"&gt;原文p36&lt;/span&gt;</code> ）。NMS 选型：L2 HA 复用原 IP 零改造（P49， <code>&lt;span class="pg"&gt;原文p35&lt;/span&gt;</code> ）；L3 HA 跨子网但 sFlow/策略执行等功能受限（P50/X14， <code>&lt;span class="pg"&gt;原文p36&lt;/span&gt;</code> ）。</p>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>NMS 部署选型（C10， <code>&lt;span class="pg"&gt;原文p35&lt;/span&gt;</code> ）：单机无切换；L2 HA 双 VM 同子网+虚拟 Cluster IP（原单机 IP 可复用）；L3 HA 双节点跨子网各持 IP、设备配双地址、Preferred Node 须 CLI admin 菜单设置</li>
 <li>AP onboarding（C11/P51， <code>&lt;span class="pg"&gt;原文p36&lt;/span&gt;</code> ）：初联自动回连 Cirrus Activation Server→序列号对 Device Catalog 校验→发证书建 VPN→按 AP 组模板下发配置</li>
-<li>认证谱系选型（P54-P57， <code>&lt;span class="pg"&gt;原文p37-39&lt;/span&gt;</code> ）：IoT 指纹（行为特征免手工）；员工 802.1x（AD/LDAP/外部 RADIUS，可代理 ClearPass/ISE）；访客四式（自注册/社交登录/员工赞助/SMS-Plivo）+Enhanced Open 免密场景；WPA3 优先兼顾存量 WPA2</li>
-<li>分段与管控：SSID 即分段（不同 SSID 对应安全设置/VLAN/访问控制，P58， <code>&lt;span class="pg"&gt;原文p40&lt;/span&gt;</code> ）；BYOD 公司设备预置画像、外部设备声明注册+时限/会话/1-10 台限制（P59/C15， <code>&lt;span class="pg"&gt;原文p40&lt;/span&gt;</code> ）</li>
+<li>
+<p>认证谱系选型（P54-P57， <code>&lt;span class="pg"&gt;原文p37-39&lt;/span&gt;</code> ）：IoT 指纹（行为特征免手工）；</p>
+<ul>
+<li>员工 802.1x（AD/LDAP/外部 RADIUS，可代理 ClearPass/ISE）；</li>
+<li>访客四式（自注册/社交登录/员工赞助/SMS-Plivo）+Enhanced Open 免密场景；</li>
+<li>WPA3 优先兼顾存量 WPA2；</li>
+</ul>
+</li>
+<li>
+<p>分段与管控：SSID 即分段（不同 SSID 对应安全设置/VLAN/访问控制，P58， <code>&lt;span class="pg"&gt;原文p40&lt;/span&gt;</code> ）；BYOD 公司设备预置画像、外部设备声明注册+时限/会话/1-10 台限制（P59/C15， <code>&lt;span class="pg"&gt;原文p40&lt;/span&gt;</code> ）</p>
+</li>
 <li>处置闭环（P60/P61， <code>&lt;span class="pg"&gt;原文p40-42&lt;/span&gt;</code> ）：syslog/SNMP trap 触发 Quarantine Manager 隔离或 Candidate List，QMR 补救；流氓 AP（接有线或仿冒 SSID）才遏制——DEAUTH 帧，默认关闭</li>
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>

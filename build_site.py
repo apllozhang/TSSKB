@@ -503,18 +503,77 @@ import re as _re
 _CIRC = "①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮"
 
 def preprocess(text):
-    # I（核心理念）段落要点化：整段长句按句号拆成 bullet，便于快速扫读
+    # 密集段落要点化（渲染层，全站生效）：标题/小节下的整段长文按句号拆成 bullet，便于扫读
     def bulletize(m):
         head, para = m.group(1), m.group(2).strip()
-        if para.startswith(('- ', '* ', '1.')):
+        if para.startswith(('- ', '* ', '1.', '|', '!', '>')):
             return m.group(0)
+        # 单句叙事短段（<100 字）保持段落原样，避免过度碎片化
         sents = [s.strip() for s in para.split('。') if s.strip()]
-        if len(sents) < 2:
+        if len(sents) < 2 or len(para) < 100:
             return m.group(0)
         return head + '\n' + '\n'.join(f'- {s}。' for s in sents) + '\n'
-    text = _re.sub(r'(## I（核心理念）\s*\n+)([^\n#]+)', bulletize, text)
-    # ### 小节下的整段串讲同样要点化（DIGEST 串讲章节等）
-    text = _re.sub(r'(###\s*[^\n]+\n+)([^\n#\-*][^\n#]*)', bulletize, text)
+    text = _re.sub(r'(^#{1,3}\s*[^\n]+\n+)([^\n#\-*|!>][^\n]*)', bulletize, text)
+    # 密集长列表项拆分：'1. **标题**——句。解释a。解释b。' → 标题句保留，其余降为嵌套子要点
+    def split_item(m):
+        prefix, content = m.group(1), m.group(2).strip()
+        if len(content) < 160 or content.startswith('!['):
+            return m.group(0)
+        def rtail(s):
+            return s.strip().rstrip('。；;、，,')
+        parts = [p.strip() for p in content.split('。') if p.strip()]
+        sep = '。'
+        if len(parts) < 3:
+            # 单句但含多个分号：按分号拆
+            parts = [p.strip() for p in content.split('；') if p.strip()]
+            sep = '；'
+        if len(parts) < 3 and len(content) >= 240:
+            # 超长枚举句：按顿号拆（不带尾标点）
+            parts = [p.strip() for p in content.split('、') if p.strip()]
+            sep = ''
+        if len(parts) < 3:
+            return m.group(0)
+        parts = [p.replace('**', '') for p in parts]
+        indent = '    ' if prefix[0].isdigit() else '   '
+        return (prefix + rtail(parts[0]) + sep + '\n'
+                + '\n'.join(f'{indent}- {rtail(p)}{sep}' for p in parts[1:]) + '\n')
+    # 粗体编号归位为真列表：'**1. 标题** 内容' → '1. **标题** 内容'
+    text = _re.sub(r'^\*\*(\d+)\.\s*([^*\n]+)\*\*', r'\1. **\2**', text, flags=_re.M)
+    text = _re.sub(r'^(?:^)(\*\*\d+\.\s*|\d+\.\s+|\-\s+)([^\n]+)$', split_item, text, flags=_re.M)
+    # 块级要点化：按空行分块；密集普通段落块转列表，多行长列表项合并后拆子要点
+    def block_bulletize(text):
+        out_blocks = []
+        for block in _re.split(r'\n\s*\n', text):
+            s = block.strip()
+            mli = _re.match(r'^(\d+\.|\-)\s+(.+)$', s, _re.S)
+            if mli and len(s) > 200 and not _re.search(r'\n\s*[-*]\s', s):
+                joined = _re.sub(r'\n\s*', ' ', s)
+                m2 = _re.match(r'^(\d+\.|\-)\s+(.+)$', joined)
+                prefix, content = m2.group(1), m2.group(2)
+                parts = [p.strip().replace('**', '') for p in content.split('。') if p.strip()]
+                if len(parts) >= 3:
+                    indent = '    ' if prefix[0].isdigit() else '   '
+                    def rt(x): return x.rstrip('。；;、，,')
+                    out_blocks.append(prefix + ' ' + rt(parts[0]) + '。\n'
+                                      + '\n'.join(f'{indent}- {rt(p)}。' for p in parts[1:]))
+                    continue
+            if (len(s) > 200 and s.count('。') >= 3
+                    and not s.startswith(('#', '|', '-', '*', '!', '>', '`', '1.', '2.', '3.', '4.'))
+                    and not _re.match(r'^\d+\.\s', s)):
+                sents = [x.strip() for x in s.replace('\n', '').split('。') if x.strip()]
+                if len(sents) >= 3:
+                    out_blocks.append('\n'.join(f'- {x}。' for x in sents))
+                    continue
+            out_blocks.append(block)
+        return '\n\n'.join(out_blocks)
+    text = block_bulletize(text)
+    # 无结构的超长普通行（技能清单/枚举）：≥4 个 ' / ' 分隔时按斜杠拆行
+    def slash_split(m):
+        parts = [p.strip() for p in m.group(0).split(' / ')]
+        if len(parts) < 4:
+            return m.group(0)
+        return parts[0] + '：\n' + '\n'.join(f'- {p}' for p in parts[1:])
+    text = _re.sub(r'^[^\n#\-*|!>`][^\n]{160,}$', lambda m: slash_split(m) if ' / ' in m.group(0) else m.group(0), text, flags=_re.M)
     # 页码标记渲染为紧凑徽章：<<<PAGE 13>>> / <<<PAGE 13-15>>> / <<<PAGE 1, 4>>>
     text = _re.sub(r'<<<PAGE\s+([\d,\s\-]+)>>>', lambda m: f' `<span class="pg">原文p{m.group(1).strip()}</span>` ', text)
     # 内部使用：去掉流水线署名描述
