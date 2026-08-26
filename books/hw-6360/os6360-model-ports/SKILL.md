@@ -21,8 +21,6 @@ source_book: OmniSwitch 6360 Hardware Users Guide
 4. **多千兆 AP 场景**：P48X/PH48 的 47-48 口为 2.5G 802.3bt 口，接 Wi-Fi6 AP（<<<PAGE 42>>>）
 5. **堆叠需求**：VC 通过 SFP+ 软件可配口建链，VC LED 闪绿=Master/闪琥珀=Slave、闪烁次数即节点 ID（P13，<<<PAGE 45>>>）
 
-![OS6360 机型前/后面板示意（原文 p26，每机型一页：p26-44）](images/fig-panel-model-p26.png)
-
 ## A2（操作步骤）
 - **机型速查**：对照 Ch1 机型总表（<<<PAGE 13-15>>>）与 Ch3 逐机型面板图/规格表（<<<PAGE 26-45>>>）
 - **combo 口使用**：RJ45 与 SFP/SFP+ 共享口对（25-26/49-50），两种介质二选一（<<<PAGE 30>>>）

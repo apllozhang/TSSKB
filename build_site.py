@@ -648,6 +648,10 @@ CSS = """
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
 a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin:16px 0}
+.gallery figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px}
+.gallery img{width:100%;max-height:340px;object-fit:contain;background:#fff;border-radius:6px}
+.gallery figcaption{font-size:12.5px;color:var(--mut);text-align:center;margin-top:6px}
 .search{margin:0 0 14px}
 .search input{width:100%;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--tx);font-size:13px;outline:none}
 .search input:focus{border-color:var(--acc)}
@@ -707,13 +711,19 @@ def build_course(c):
     if os.path.isdir(bimg):
         simg = os.path.join(sub, 'skills', 'images')
         os.makedirs(simg, exist_ok=True)
-        for fn in os.listdir(bimg):
-            shutil.copy2(os.path.join(bimg, fn), os.path.join(simg, fn))
+        for root_d, _, fns in os.walk(bimg):
+            rel_d = os.path.relpath(root_d, bimg)
+            dst_d = simg if rel_d == '.' else os.path.join(simg, rel_d)
+            os.makedirs(dst_d, exist_ok=True)
+            for fn in fns:
+                shutil.copy2(os.path.join(root_d, fn), os.path.join(dst_d, fn))
 
     def nav(active, sub=False):
         p = '../' if sub else ''
+        gal = f'<a href="{p}gallery.html">🖼 产品外观</a>' if os.path.exists(os.path.join(book, 'GALLERY.md')) else ''
         items = [f'<a href="{p}index.html">🏠 课程首页</a>',
                  f'<a href="{p}digest.html">📖 精华长文 DIGEST</a>',
+                 gal,
                  f'<a href="{p}overview.html">📘 教书理解 BOOK_OVERVIEW</a>',
                  f'<a href="{p}glossary.html">🔤 术语词典</a>',
                  f'<a href="{p}../../index.html">⬅️ 返回培训门户</a>',
@@ -781,6 +791,7 @@ def build_course(c):
         cards += '</div>'
     route = ''.join(f'<li>{html_mod.escape(r)}</li>' for r in c['route'])
     n = len(skills)
+    gal_link = ' · <a href="gallery.html">🖼 产品外观</a>' if os.path.exists(os.path.join(book, 'GALLERY.md')) else ''
     home = f"""<p><a href="../../index.html">⬅️ 返回培训门户</a></p>
 <h1>{c['title']} · 学习站</h1>
 <p class="meta">教材: <b>{c['subtitle']}</b>。整理为 {n} 个可执行知识单元：
@@ -788,10 +799,23 @@ def build_course(c):
 <h2>建议学习路线</h2><ol>{route}</ol>
 <h2>知识单元</h2>{cards}
 <h2>全文阅读</h2>
-<p><a href="digest.html">📖 精华长文 DIGEST</a> · <a href="overview.html">📘 教书理解</a> · <a href="glossary.html">🔤 术语词典</a></p>"""
+<p><a href="digest.html">📖 精华长文 DIGEST</a> · <a href="overview.html">📘 教书理解</a> · <a href="glossary.html">🔤 术语词典</a>{gal_link}</p>"""
     with open(os.path.join(sub, 'index.html'), 'w', encoding='utf-8') as f:
         f.write(page('首页', home, cur='首页'))
 
+    gsrc = os.path.join(book, 'GALLERY.md')
+    if os.path.exists(gsrc):
+        gh = to_html(read(gsrc))
+        gh = gh.replace('src="images/', 'src="skills/images/').replace('](images/', '](skills/images/')
+        # 网格卡片化：每个 <p><img></p> 转成 figure
+        def _fig(m):
+            alt = _re.search(r'alt="([^"]*)"', m.group(1))
+            cap = alt.group(1) if alt else ''
+            return f'<figure><img {m.group(1)} loading="lazy"><figcaption>{cap}</figcaption></figure>'
+        gh = _re.sub(r'<img ([^>]*?)/?>', _fig, gh)
+        gh = _re.sub(r'<p>\s*</p>', '', gh)
+        with open(os.path.join(sub, 'gallery.html'), 'w', encoding='utf-8') as f:
+            f.write(page('产品外观', f'<h1>🖼 产品外观</h1><div class="gallery">' + gh + '</div>', cur='产品外观'))
     for src, title, out in [('DIGEST.md', '精华长文 DIGEST', 'digest.html'),
                             ('BOOK_OVERVIEW.md', '教书理解 BOOK_OVERVIEW', 'overview.html'),
                             ('GLOSSARY.md', '术语词典', 'glossary.html')]:

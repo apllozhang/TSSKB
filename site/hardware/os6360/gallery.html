@@ -1,0 +1,90 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>产品外观 — OmniSwitch 6360 Hardware Guide</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
+a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin:16px 0}
+.gallery figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px}
+.gallery img{width:100%;max-height:340px;object-fit:contain;background:#fff;border-radius:6px}
+.gallery figcaption{font-size:12.5px;color:var(--mut);text-align:center;margin-top:6px}
+.search{margin:0 0 14px}
+.search input{width:100%;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--tx);font-size:13px;outline:none}
+.search input:focus{border-color:var(--acc)}
+#qres{max-height:340px;overflow-y:auto;margin-top:6px}
+#qres .qi{display:block;padding:6px 8px;border-radius:6px;font-size:12.5px;color:var(--tx);border-left:2px solid transparent}
+#qres .qi:hover{background:var(--card);text-decoration:none;border-left-color:var(--acc)}
+#qres .qi .qp{color:var(--mut);font-size:11px;display:block}
+#qres .qi b{color:var(--acc)}
+.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
+main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
+aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
+aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
+aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
+aside a:hover{background:var(--card);text-decoration:none}
+aside a.on{background:var(--card);color:var(--acc)}
+main{padding:36px 48px;max-width:1000px}
+h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
+h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
+code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
+pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
+.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.meta{font-size:13px;color:var(--mut)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
+.badge.soon{background:#475569;color:#cbd5e1}
+main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
+main{padding:28px 48px 40px;max-width:1040px}
+h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
+blockquote p{margin:6px 0}
+.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
+.crumbs a{color:var(--acc)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.pn a:hover{border-color:var(--acc)}
+.pn .nxt{text-align:right}
+.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
+</style></head>
+<body><div class="layout"><aside><h1>OmniSwitch 6360 Hardware Guide</h1>
+<div class="search"><input id="qk" type="search" placeholder="🔍 搜索全站…" autocomplete="off"><div id="qres"></div></div>
+
+<div class="sub">Rev J · 83 页 · 入门千兆接入（10 机型/内置电源/PoE 三环）</div>
+<a href="index.html">🏠 课程首页</a>
+<a href="digest.html">📖 精华长文 DIGEST</a>
+<a href="gallery.html">🖼 产品外观</a>
+<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
+<a href="glossary.html">🔤 术语词典</a>
+<a href="../../index.html">⬅️ 返回培训门户</a>
+<a href="index.html">──── Skills ────</a>
+<div class="grp">机型与端口</div>
+<a href="skills/os6360-model-ports.html">os6360-model-ports</a>
+<div class="grp">安装与电源</div>
+<a href="skills/os6360-install-power.html">os6360-install-power</a>
+<div class="grp">运维排障</div>
+<a href="skills/os6360-ops-troubleshoot.html">os6360-ops-troubleshoot</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../hardware/index.html">硬件手册</a> › <a href="index.html">OmniSwitch 6360 Hardware Guide</a> › <span>产品外观</span></nav><h1>🖼 产品外观</h1><div class="gallery"><h1 id="os6360">产品外观 · OS6360 系列</h1>
+<blockquote>
+<p>10 款机型前/后面板示意，来自 Hardware Guide 各机型页（原文p26-44）。点击图片可放大查看原尺寸。</p>
+</blockquote>
+<p><figure><img alt="OS6360-10 前/后面板" src="skills/images/panels/OS6360-10.png"  loading="lazy"><figcaption>OS6360-10 前/后面板</figcaption></figure>
+<figure><img alt="OS6360-P10 前/后面板" src="skills/images/panels/OS6360-P10.png"  loading="lazy"><figcaption>OS6360-P10 前/后面板</figcaption></figure>
+<figure><img alt="OS6360-24 前/后面板" src="skills/images/panels/OS6360-24.png"  loading="lazy"><figcaption>OS6360-24 前/后面板</figcaption></figure>
+<figure><img alt="OS6360-P24 前/后面板" src="skills/images/panels/OS6360-P24.png"  loading="lazy"><figcaption>OS6360-P24 前/后面板</figcaption></figure>
+<figure><img alt="OS6360-P24X 前/后面板" src="skills/images/panels/OS6360-P24X.png"  loading="lazy"><figcaption>OS6360-P24X 前/后面板</figcaption></figure>
+<figure><img alt="OS6360-PH24 前/后面板" src="skills/images/panels/OS6360-PH24.png"  loading="lazy"><figcaption>OS6360-PH24 前/后面板</figcaption></figure>
+<figure><img alt="OS6360-48 前/后面板" src="skills/images/panels/OS6360-48.png"  loading="lazy"><figcaption>OS6360-48 前/后面板</figcaption></figure>
+<figure><img alt="OS6360-P48 前/后面板" src="skills/images/panels/OS6360-P48.png"  loading="lazy"><figcaption>OS6360-P48 前/后面板</figcaption></figure>
+<figure><img alt="OS6360-P48X 前/后面板" src="skills/images/panels/OS6360-P48X.png"  loading="lazy"><figcaption>OS6360-P48X 前/后面板</figcaption></figure>
+<figure><img alt="OS6360-PH48 前/后面板" src="skills/images/panels/OS6360-PH48.png"  loading="lazy"><figcaption>OS6360-PH48 前/后面板</figcaption></figure></p></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
