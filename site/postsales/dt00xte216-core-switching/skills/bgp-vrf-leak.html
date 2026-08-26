@@ -88,7 +88,10 @@ blockquote p{margin:6px 0}
 <li>部分租户间需要受控互访（VRF Route Leak）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>BGP 是路径矢量协议（TCP 179），靠属性而非单纯度量选路：Local Pref 选出口、AS-Path 防环、MED 引导入流量、Community 控制通告范围。VRF 在一台物理设备上切出多张路由表，隔离是默认、互通是例外——跨 VRF 流量必须经 GRT（全局路由表）以 route-map 为过滤器中转。</p>
+<ul>
+<li><strong>BGP 是路径矢量协议（TCP 179），靠属性而非单纯度量选路</strong>：<br>Local Pref 选出口、AS-Path 防环、MED 引导入流量、Community 控制通告范围。</li>
+<li>VRF 在一台物理设备上切出多张路由表，隔离是默认、互通是例外——跨 VRF 流量必须经 GRT（全局路由表）以 route-map 为过滤器中转。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>eBGP 基础：<code>ip load bgp</code> → <code>ip bgp autonomous-system 100</code> → <code>ip bgp neighbor 192.168.12.2 remote-as 200</code> → <code>admin-state enable</code> → <code>ip bgp admin-state enable</code>；注入本 AS 路由：<code>ip route-map switch1bgp sequence-number 10 action permit</code> + <code>ip redist ospf into bgp route-map switch1bgp</code> + <code>ip redist local into bgp ...</code>（<span class="pg">原文p512</span> -<span class="pg">原文p517</span> ）</li>
@@ -114,15 +117,15 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
-<li>选路次序对照：Highest Local Pref → Shortest AS-Path → lowest Origin（IGP&gt;EGP&gt;Incomplete）→ Lowest MED → Closer Next-Hop → EBGP&gt;IBGP&gt;IGP → Lowest RID（<span class="pg">原文p497</span> ）</li>
-<li>属性作用域：Local Pref 选出口（越高越优）；MED 仅两 AS 间传递（越低越优，默认 0）；Community NO-EXPORT/NO-ADVERTISE 控制通告范围（<span class="pg">原文p488</span> 、<span class="pg">原文p492</span> 、<span class="pg">原文p496</span> ）</li>
-<li>IBGP 水平分割：IBGP 学的路由不再传给其他 IBGP 邻居（全互联需求的根因）；同步：IBGP 路由须 IGP 可达才通告给 EBGP（<span class="pg">原文p501</span> 、<span class="pg">原文p502</span> ）</li>
-<li>VRF 归属规则：一个 VLAN/IP 接口同一时间只能属于一个 VRF，一个 VRF 可挂多个 VLAN；跨 VRF 复用同 VLAN 号不支持（<span class="pg">原文p460</span> ）</li>
+<li><strong>选路次序对照</strong>：<br>Highest Local Pref → Shortest AS-Path → lowest Origin（IGP&gt;EGP&gt;Incomplete）→ Lowest MED → Closer Next-Hop → EBGP&gt;IBGP&gt;IGP → Lowest RID（<span class="pg">原文p497</span> ）</li>
+<li><strong>属性作用域</strong>：<br>Local Pref 选出口（越高越优）；MED 仅两 AS 间传递（越低越优，默认 0）；Community NO-EXPORT/NO-ADVERTISE 控制通告范围（<span class="pg">原文p488</span> 、<span class="pg">原文p492</span> 、<span class="pg">原文p496</span> ）</li>
+<li><strong>IBGP 水平分割</strong>：<br>IBGP 学的路由不再传给其他 IBGP 邻居（全互联需求的根因）；同步：IBGP 路由须 IGP 可达才通告给 EBGP（<span class="pg">原文p501</span> 、<span class="pg">原文p502</span> ）</li>
+<li><strong>VRF 归属规则</strong>：<br>一个 VLAN/IP 接口同一时间只能属于一个 VRF，一个 VRF 可挂多个 VLAN；跨 VRF 复用同 VLAN 号不支持（<span class="pg">原文p460</span> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>C-33 eBGP 双 AS 互联：AS100/AS200 各跑 OSPF，BGP 重分发 OSPF+local 路由后对端路由表出现 EBGP 路由（<span class="pg">原文p512</span> -<span class="pg">原文p517</span> ）</li>
-<li>C-32 双 VRF 隔离/泄漏：默认互 ping 失败 → route-map export/import 后 GRT 出现两侧条目（<span class="pg">原文p466</span> -<span class="pg">原文p470</span> ）</li>
+<li><strong>C-33 eBGP 双 AS 互联</strong>：<br>AS100/AS200 各跑 OSPF，BGP 重分发 OSPF+local 路由后对端路由表出现 EBGP 路由（<span class="pg">原文p512</span> -<span class="pg">原文p517</span> ）</li>
+<li><strong>C-32 双 VRF 隔离/泄漏</strong>：<br>默认互 ping 失败 → route-map export/import 后 GRT 出现两侧条目（<span class="pg">原文p466</span> -<span class="pg">原文p470</span> ）</li>
 <li>C-34 基于 Loopback0 建邻居 + MD5（<span class="pg">原文p499</span> -<span class="pg">原文p500</span> ）</li>
 </ul>
 <h2 id="b">B（边界与陷阱）</h2>

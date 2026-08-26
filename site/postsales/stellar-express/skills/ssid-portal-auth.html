@@ -103,14 +103,14 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a1">A1 · 书中案例</h2>
 <ul>
-<li>802.1X 排障（Case 5）：先验账号密码与终端认证类型，再在 Web 用 tools-ping 验 AP→RADIUS 连通，最后核 RADIUS 服务器的 client 配置四项（shared key/IP/端口/证书），必要时两侧抓包对报文（p140-141）。</li>
-<li>Portal 不弹页（Case 6）：四查之后仍不弹，Console 执行 <code>ps | grep eag</code> 确认门户重定向模块存活（p142-143）。</li>
-<li>连不上 AP/集群（Case 8）：密码核对 → Web 上查 blocklist 点红叉移除 → 看在线数是否顶到 MaxClients、顶到就调参 → 清终端保存的 WLAN 记录 → <code>ps | grep wam</code> 查 ath 端口进程，缺失用 <code>wam -P /var/run/wifi-athXX.pid -B /var/run/wam-athXX.conf</code> 重建，再不行 <code>cat /proc/kes_syslog | grep &lt;clientMAC&gt;</code> 跟踪（p148-150）。</li>
+<li><strong>802.1X 排障（Case 5）</strong>：<br>先验账号密码与终端认证类型，再在 Web 用 tools-ping 验 AP→RADIUS 连通，最后核 RADIUS 服务器的 client 配置四项（shared key/IP/端口/证书），必要时两侧抓包对报文（p140-141）。</li>
+<li><strong>Portal 不弹页（Case 6）</strong>：<br>四查之后仍不弹，Console 执行 <code>ps | grep eag</code> 确认门户重定向模块存活（p142-143）。</li>
+<li><strong>连不上 AP/集群（Case 8）</strong>：<br>密码核对 → Web 上查 blocklist 点红叉移除 → 看在线数是否顶到 MaxClients、顶到就调参 → 清终端保存的 WLAN 记录 → <code>ps | grep wam</code> 查 ath 端口进程，缺失用 <code>wam -P /var/run/wifi-athXX.pid -B /var/run/wam-athXX.conf</code> 重建，再不行 <code>cat /proc/kes_syslog | grep &lt;clientMAC&gt;</code> 跟踪（p148-150）。</li>
 </ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
-<li>触发：部署员工/访客 SSID、访客反映"连上了但不出登录页"、802.1X 认证失败、老用户正常新用户连不上、访客账户"消失"。</li>
-<li>区分：AP 本身上电/IP/入组故障用 <code><a href="ap-side-troubleshooting.html">ap-side-troubleshooting</a></code>；</li>
+<li><strong>触发</strong>：<br>部署员工/访客 SSID、访客反映"连上了但不出登录页"、802.1X 认证失败、老用户正常新用户连不上、访客账户"消失"。</li>
+<li><strong>区分</strong>：<br>AP 本身上电/IP/入组故障用 <code><a href="ap-side-troubleshooting.html">ap-side-troubleshooting</a></code>；</li>
 <li>吞吐差、信号弱等射频问题用 <code><a href="rf-survey-tuning.html">rf-survey-tuning</a></code>；</li>
 <li>本 skill 只管业务层——认证、门户、账户、客户端接入策略。客户端能关联但拿不到 IP 属 VLAN/DHCP 链路问题，归 <code><a href="ap-side-troubleshooting.html">ap-side-troubleshooting</a></code>（Case 7 抓包定位法）；</li>
 </ul>

@@ -77,10 +77,17 @@ blockquote p{margin:6px 0}
 <li>扩展模块（OS68-XNI/VNI/QNI/CNI、6870 CNI/LNI、9900 板卡）选件核对</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>兼容矩阵平台分型框架（F3，<span class="pg">原文p75-107</span> ）：全谱系型（6860N/6870/6900-X：1G~200G 全列）／上联收窄型（6560：1G+10G+40G-SR/AOC；6570M：+25G）／工业型（6465/6865/6575 用 iSFP PN 体系）／40G+ 专用型（6920 只有 QSFP；V72/C32 无 1G）／板卡拼图型（9900/6860N 按板卡逐列）。矩阵单元格语义=该平台支持该模块的最低 AOS 版本；"or"双值为硬件代次分界（前者老硬件、后者新硬件修订，满足其一即可，P30）。同一模块跨平台最低版本差异大（如 100G-SR4：6860N 8.7R2：
-- 6900 8.5R2
-- 6870 8.10R2
-- 6920 8.10R4），多平台混采按最高版本对齐。</p>
+<ul>
+<li><strong>兼容矩阵平台分型框架（F3，<span class="pg">原文p75-107</span> ）</strong>：<br>全谱系型（6860N/6870/6900-X：1G~200G 全列）／上联收窄型（6560：1G+10G+40G-SR/AOC；</li>
+<li>6570M：+25G）／工业型（6465/6865/6575 用 iSFP PN 体系）／40G+ 专用型（6920 只有 QSFP；</li>
+<li>
+<p>V72/C32 无 1G）／板卡拼图型（9900/6860N 按板卡逐列）；</p>
+</li>
+<li>
+<p>矩阵单元格语义=该平台支持该模块的最低 AOS 版本；"or"双值为硬件代次分界（前者老硬件、后者新硬件修订，满足其一即可，P30）。</p>
+</li>
+<li><strong>同一模块跨平台最低版本差异大（如 100G-SR4</strong>：<br>6860N 8.7R2 / 6900 8.5R2 / 6870 8.10R2 / 6920 8.10R4），多平台混采按最高版本对齐。</li>
+</ul>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>查矩阵定"支持 + 最低版本"</strong>：平台列 × 模块行，单元格 N/S 即换模块或换平台</li>
@@ -94,21 +101,21 @@ blockquote p{margin:6px 0}
 <li><strong>6920</strong>：只认 40G 及以上——全部 SFP/SFP+/SFP28 与 50G SFP56 均 N/S，仅 QSFP+/QSFP28/QSFP56/QSFP-DD 可用（8.10R4 起）；400G 全系仅 6920（X10/X19，<span class="pg">原文p103-104</span> ）</li>
 <li><strong>6900-V72/C32/C32E</strong>：不支持任何 1G/100FX SFP；10G SFP 仅 V72 支持（X11，<span class="pg">原文p97-98</span> ）</li>
 <li><strong>6900 整机</strong>：每机箱 SFP-10G-T 上限 38 只（X7，<span class="pg">原文p102</span> ）</li>
-<li>6560：不支持 40G LR/ER/CLR/PSM4/LM4 光模块与 QSFP-4X10G 拆分（仅 SR/AOC/VFL 用 DAC）；</li>
+<li><strong>6560</strong>：<br>不支持 40G LR/ER/CLR/PSM4/LM4 光模块与 QSFP-4X10G 拆分（仅 SR/AOC/VFL 用 DAC）；</li>
 <li>LRM 仅 48X4/P48X4 口 49-50（需 PERF 许可）与 51/52、P48Z16(904044-90) 49-52、X10 口 1-8；</li>
 <li>C7M 排除 (P)24Z24/24Z8/24X4 与 48X4 口 53/54；</li>
 <li>
 <p>X10 整机不支持 40G DAC（X2/X3/X12，<span class="pg">原文p81-82</span> ）；</p>
 </li>
 <li>
-<p>6860 系：上行口 SFP-GIG-T 只跑 1G（用户口 1-28 支持 10/100/1000）；</p>
+<p><strong>6860 系</strong>：<br>上行口 SFP-GIG-T 只跑 1G（用户口 1-28 支持 10/100/1000）；</p>
 </li>
 <li>U28 上 DUAL 系列仅用户口 100/1000、SFP-10G-GIG-SR/LR 不支持 U28 的 1G 用户口；</li>
 <li>
 <p>DUAL/100 系列主型 N/S 而 U28 支持（X4/X5/X13，<span class="pg">原文p87-89</span> ）；</p>
 </li>
 <li>
-<p>6860N：SFP28 口 SFP-GIG-T/SFP-1G-T 不支持；</p>
+<p><strong>6860N</strong>：<br>SFP28 口 SFP-GIG-T/SFP-1G-T 不支持；</p>
 </li>
 <li>DUAL-BX/SFP-100 系列在 SFP28 口仅 1G；</li>
 <li>SFP-10G-T 在 SFP28 口支持 1G+10G；</li>
@@ -117,7 +124,7 @@ blockquote p{margin:6px 0}
 <p>100/DUAL 系列 P24Z/P48Z 不支持——同家族清单不通用（X6/X33/X34，<span class="pg">原文p90-92</span> ）；</p>
 </li>
 <li>
-<p>6870：P24M/P48M（万兆铜主机型）不支持任何 1G/100 SFP——1G 接入靠 P24Z/48/V12；</p>
+<p><strong>6870</strong>：<br>P24M/P48M（万兆铜主机型）不支持任何 1G/100 SFP——1G 接入靠 P24Z/48/V12；</p>
 </li>
 <li>SFP-50G 系列仅 LNI-U6（8.10R2）；</li>
 <li>
@@ -133,18 +140,21 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>本书无配置案例；"场景"即兼容核对：F1 三查法（规格表→矩阵→脚注）完成后，若版本不够先升级 AOS（见 aos-rn-upgrade-path），若 N/S 则换 PN 或换平台</li>
+<li><strong>本书无配置案例；"场景"即兼容核对</strong>：<br>F1 三查法（规格表→矩阵→脚注）完成后，若版本不够先升级 AOS（见 aos-rn-upgrade-path），若 N/S 则换 PN 或换平台</li>
 </ul>
 <h2 id="b">B（反例/坑）</h2>
 <ul>
-<li>同型号模块不同批次最低版本不同（"or"双值）：SFP-10G-ZR 在 6560 写 8.4.1.R02 or 8.6R1、6860 写 8.2.1 or 8.6R1、6900-V72 写 8.5R2 or 8.6R1（X24，<span class="pg">原文p81</span> /<span class="pg">原文p88</span> /<span class="pg">原文p98</span> ）</li>
-<li>2019 年 5 月采购分界：BX-D/U 等模块 2019-05 之后采购的最低版本提到 8.6R1（P18，<span class="pg">原文p82</span> /<span class="pg">原文p99</span> ）</li>
-<li>SFP28 口与 1G 模块不自协商：6860N/6900 的 SFP28 口必须在对端交换机禁用自协商（P16，<span class="pg">原文p92</span> /<span class="pg">原文p102</span> ）</li>
+<li><strong>同型号模块不同批次最低版本不同（"or"双值）</strong>：<br>SFP-10G-ZR 在 6560 写 8.4.1.R02 or 8.6R1、6860 写 8.2.1 or 8.6R1、6900-V72 写 8.5R2 or 8.6R1（X24，<span class="pg">原文p81</span> /<span class="pg">原文p88</span> /<span class="pg">原文p98</span> ）</li>
+<li><strong>2019 年 5 月采购分界</strong>：<br>BX-D/U 等模块 2019-05 之后采购的最低版本提到 8.6R1（P18，<span class="pg">原文p82</span> /<span class="pg">原文p99</span> ）</li>
+<li><strong>SFP28 口与 1G 模块不自协商</strong>：<br>6860N/6900 的 SFP28 口必须在对端交换机禁用自协商（P16，<span class="pg">原文p92</span> /<span class="pg">原文p102</span> ）</li>
 <li>QSFP-40G-C 9900↔6900 互连必须关 9900 侧自协商（X26，<span class="pg">原文p48</span> ）；QSFP-100G-A20M 必须关自协商+FEC RS（X27/P27，<span class="pg">原文p55</span> ）</li>
 <li>6865 平台用 iSFP 工业 PN 体系（6575 同），商用平台用商用 PN——同代际两套 PN 并行，不可混认（P28）</li>
-<li>SFP28 自协商例外见 6860N（X6）；拆分模式牺牲自动 VFL：6870 QSFP-100G-SR4 splitter 模式不支持 Auto-VFL（P20，<span class="pg">原文p96</span> ）</li>
+<li><strong>SFP28 自协商例外见 6860N（X6）；拆分模式牺牲自动 VFL</strong>：<br>6870 QSFP-100G-SR4 splitter 模式不支持 Auto-VFL（P20，<span class="pg">原文p96</span> ）</li>
 <li>QSFP-40G-C7M 7m DAC 仅在 OmniSwitch 之间验证过，接他厂设备先验证再上量（P22，<span class="pg">原文p48</span> ）</li>
 <li>停购物料（EZX/##CWD/EXTND/DUAL-SM10/SR-BD/100-BX20 等）存量可继续用，新项目不可选（X32）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniSwitch AOS Release 8 Transceivers Guide Ch2 Compatibility Matrices（<span class="pg">原文p75-107</span> ）及 Ch1 硬件修订散点（<span class="pg">原文p20-34</span> ）。条目来源：counter-examples X1-X13/X16-X19/X21-X27/X33-X35；principles P16/P17/P18/P20/P22/P28/P30；frameworks F1/F3。</p><div class="pn"><a href="aos-tx-module-matrix.html">⬅ 上一单元：aos-tx-module-matrix</a><a class="nxt" href="aos-tx-ddm-install.html">下一单元：aos-tx-ddm-install ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<ul>
+<li>OmniSwitch AOS Release 8 Transceivers Guide Ch2 Compatibility Matrices（<span class="pg">原文p75-107</span> ）及 Ch1 硬件修订散点（<span class="pg">原文p20-34</span> ）。</li>
+<li><strong>条目来源</strong>：<br>counter-examples X1-X13/X16-X19/X21-X27/X33-X35；principles P16/P17/P18/P20/P22/P28/P30；frameworks F1/F3。</li>
+</ul><div class="pn"><a href="aos-tx-module-matrix.html">⬅ 上一单元：aos-tx-module-matrix</a><a class="nxt" href="aos-tx-ddm-install.html">下一单元：aos-tx-ddm-install ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

@@ -81,7 +81,7 @@ blockquote p{margin:6px 0}
 <ul>
 <li>两台交换机要堆叠成单逻辑设备（Virtual Chassis）并配置 VFL</li>
 <li>上行带宽不够/单链路故障，要做 LACP 聚合并验证倒换不丢包</li>
-<li>双核心冗余：STP 根桥规划、DHL 双活、VRRP 主备/负载分担</li>
+<li><strong>双核心冗余</strong>：<br>STP 根桥规划、DHL 双活、VRRP 主备/负载分担</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
 <p>高可用是一组可组合的机制：VC 把多台交换机虚拟成一台（免 STP/VRRP、免许可证）；
@@ -99,7 +99,7 @@ VRRP 用虚拟 MAC 提供网关冗余。</p>
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
-<li>VC 进阶：Master 选举顺序为最高 priority → 最长 uptime（&gt;10min 差）→ 最小 chassis ID → 最小 MAC（<span class="pg">原文p472</span> ）；</li>
+<li><strong>VC 进阶</strong>：<br>Master 选举顺序为最高 priority → 最长 uptime（&gt;10min 差）→ 最小 chassis ID → 最小 MAC（<span class="pg">原文p472</span> ）；</li>
 <li>分裂双检测：out-of-band RCD（走 EMP，原 Slave 关闭全部前面板口防 IP/MAC 冲突）+ in-band VSCP（需上游/下游 helper switch）（<span class="pg">原文p476</span> -<span class="pg">原文p477</span> ）；</li>
 <li>
 <p>ISSU 逐台 slave 从低到高 chassis ID 依次重启升级（<span class="pg">原文p478</span> ）；</p>
@@ -115,7 +115,7 @@ VRRP 用虚拟 MAC 提供网关冗余。</p>
 <ul>
 <li>6360 两台 VC 堆叠 + flash-synchro + ssh-chassis 访问从机（<span class="pg">原文p490</span> -<span class="pg">原文p497</span> ）。</li>
 <li>LACP linkagg 7 跨 VC 机箱聚合，ping -t 期间 disable 成员口不丢包（<span class="pg">原文p588</span> -<span class="pg">原文p594</span> ）。</li>
-<li>VRRP 双活：改优先级实现 6870 主 VLAN20 / 6860 主 VLAN30，重启主机 Backup 秒级接管（<span class="pg">原文p684</span> -<span class="pg">原文p689</span> ）。</li>
+<li><strong>VRRP 双活</strong>：<br>改优先级实现 6870 主 VLAN20 / 6860 主 VLAN30，重启主机 Backup 秒级接管（<span class="pg">原文p684</span> -<span class="pg">原文p689</span> ）。</li>
 </ul>
 <h2 id="b">B（边界与陷阱）</h2>
 <ul>

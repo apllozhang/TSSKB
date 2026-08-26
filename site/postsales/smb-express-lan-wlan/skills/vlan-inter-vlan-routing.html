@@ -84,7 +84,10 @@ blockquote p{margin:6px 0}
 <li>需要 VLAN 之间互相路由（单臂网关式）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>在 AOS 上，VLAN 是二层数据结构，IP interface 绑定 VLAN 后三层路由即刻激活——"网关即虚拟路由器端口"。物理端口恒有一个默认（untagged）VLAN 桥接二层流量，802.1Q tag 则承载 4096 个 VID 与 3bit 优先级。</p>
+<ul>
+<li>在 AOS 上，VLAN 是二层数据结构，IP interface 绑定 VLAN 后三层路由即刻激活——"网关即虚拟路由器端口"。</li>
+<li>物理端口恒有一个默认（untagged）VLAN 桥接二层流量，802.1Q tag 则承载 4096 个 VID 与 3bit 优先级。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li><strong>建 VLAN 并命名</strong>：<code>vlan 10 name Management-AP</code> / <code>vlan 20 name Employees</code> / <code>vlan 30 name Guests</code>（<span class="pg">原文p177</span> -<span class="pg">原文p183</span> ）。</li>
@@ -102,7 +105,7 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>PoE/VLAN/DHCP 联调：三个 VLAN 划分、AP 口 tagged+untagged 组合、AP 改 DHCP 模式后用 <code>mywifi.al-enterprise.com:8080</code> 域名重连（<span class="pg">原文p177</span> -<span class="pg">原文p183</span> ）。</li>
+<li><strong>PoE/VLAN/DHCP 联调</strong>：<br>三个 VLAN 划分、AP 口 tagged+untagged 组合、AP 改 DHCP 模式后用 <code>mywifi.al-enterprise.com:8080</code> 域名重连（<span class="pg">原文p177</span> -<span class="pg">原文p183</span> ）。</li>
 <li>802.1Q 跨三台交换机多 VLAN 打 tag，show 验证 20/30 tagged + 58 untagged 后客户端互 ping（<span class="pg">原文p596</span> -<span class="pg">原文p601</span> ）。</li>
 </ul>
 <h2 id="b">B（边界与陷阱）</h2>

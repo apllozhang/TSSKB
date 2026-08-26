@@ -75,7 +75,7 @@ blockquote p{margin:6px 0}
 <a href="skills/aos-sm-chassis-cmm.html">aos-sm-chassis-cmm</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../aos/index.html">AOS 软件手册</a> › <a href="index.html">AOS 8.10R04</a> › <span>精华长文 DIGEST</span></nav><h1>精华长文 DIGEST</h1><h1 id="digest-omniswitch-aos-810r4-switch-management-guide">DIGEST — OmniSwitch AOS 8.10R4 Switch Management Guide 精华</h1>
 <ul>
 <li>本书是 ALE OmniSwitch AOS Release 8.10R4 的 511 页交换机管理指南（17 个功能章 + 附录），覆盖从首次上电登录、文件与配置管理、用户与 AAA 安全、SNMP/WebView/云纳管，到虚拟机箱与自动化部署的全套运维底座。</li>
-<li>全书主线可以概括为三条：<strong>目录即安全网</strong>（certified/working 双目录 + 回滚）、<strong>默认即锁定</strong>（管理面默认关闭、逐层解锁）、<strong>自动化分层递进</strong>（Auto VC → RCL → Auto Fabric → Lightning/Cirrus）。</li>
+<li><strong>全书主线可以概括为三条</strong>：<br><strong>目录即安全网</strong>（certified/working 双目录 + 回滚）、<strong>默认即锁定</strong>（管理面默认关闭、逐层解锁）、<strong>自动化分层递进</strong>（Auto VC → RCL → Auto Fabric → Lightning/Cirrus）。</li>
 <li>以下按六个技能单元摘要，页码均指原书。</li>
 </ul>
 <h2 id="_1">一、知识地图（六技能单元）</h2>
@@ -111,30 +111,51 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="_2">二、六单元要点串讲</h2>
 <h3 id="1-flash">1. Flash 双目录：改动为什么会丢</h3>
-<p>certified 是已认证的可靠基线且<strong>不可直接写</strong>（<span class="pg">原文p94</span> ）；working/用户目录是试验场；RUNNING CONFIGURATION 在 RAM（P3）。正常重启时 certified 与运行目录内容不同则从 certified 启动（P4），未保存的改动全部丢失（X2）。试验流程：<code>modify running-directory</code> 切用户目录 → <code>write memory</code> → 验证 → <code>copy running certified</code>（C20）；激进变更配 <code>reload from working rollback-timeout 5</code> 兜底（C21）。配置文件是纯 ASCII，<code>configuration syntax-check</code> 预检、<code>configuration apply</code> 支持 at/in 定时（但全网同时只允许一个定时会话，X30），<code>configuration snapshot</code> 导出非默认配置，<code>reset-to-factory</code> 三档清理（config/retain-vc/all，all 档连 license 一起清）。</p>
+<ul>
+<li>certified 是已认证的可靠基线且<strong>不可直接写</strong>（<span class="pg">原文p94</span> ）；working/用户目录是试验场；RUNNING CONFIGURATION 在 RAM（P3）。</li>
+<li>正常重启时 certified 与运行目录内容不同则从 certified 启动（P4），未保存的改动全部丢失（X2）。</li>
+<li><strong>试验流程</strong>：<br><code>modify running-directory</code> 切用户目录 → <code>write memory</code> → 验证 → <code>copy running certified</code>（C20）；激进变更配 <code>reload from working rollback-timeout 5</code> 兜底（C21）。</li>
+<li>配置文件是纯 ASCII，<code>configuration syntax-check</code> 预检、<code>configuration apply</code> 支持 at/in 定时（但全网同时只允许一个定时会话，X30），<code>configuration snapshot</code> 导出非默认配置，<code>reset-to-factory</code> 三档清理（config/retain-vc/all，all 档连 license 一起清）。</li>
+</ul>
 <h3 id="2">2. 升级：两条路径一个安全链</h3>
-<p>标准升级 = 维护例行（<code>show system</code>、清旧文件、<code>show tech-support</code> 基线）→ 镜像进 Running 目录 → reload → 验证 → certify（C1/C3）；
-ISSU 按 chassis-id 从低到高逐台重启 Slave、最后 Master，结束后必须复位 NI（C2/P16）。软件安全链：ASLR → RSA-2048/SHA-256 签名镜像 → Secure Boot（P18-P20）；
-注意签名镜像机型降旧版须先降 u-boot（X9）。非 AOS 软件走 pkgmgr（verify→install→write memory，不保存则重启/takeover 丢失，X17），应用启停走 appmgr 免重启（C18）。USB：自动升级需 aossignature 空文件防误触发（P90）；
-灾难恢复传统用 Trescue.img + <code>run rescue</code>，ONIE 设备用 Onie Rescue + <code>onie-nos-install</code>（C25）。</p>
+<ul>
+<li>标准升级 = 维护例行（<code>show system</code>、清旧文件、<code>show tech-support</code> 基线）→ 镜像进 Running 目录 → reload → 验证 → certify（C1/C3）；
+ISSU 按 chassis-id 从低到高逐台重启 Slave、最后 Master，结束后必须复位 NI（C2/P16）。</li>
+<li><strong>软件安全链</strong>：<br>ASLR → RSA-2048/SHA-256 签名镜像 → Secure Boot（P18-P20）；注意签名镜像机型降旧版须先降 u-boot（X9）。</li>
+<li>非 AOS 软件走 pkgmgr（verify→install→write memory，不保存则重启/takeover 丢失，X17），应用启停走 appmgr 免重启（C18）。</li>
+<li><strong>USB</strong>：<br>自动升级需 aossignature 空文件防误触发（P90）；灾难恢复传统用 Trescue.img + <code>run rescue</code>，ONIE 设备用 Onie Rescue + <code>onie-nos-install</code>（C25）。</li>
+</ul>
 <h3 id="3-aaa">3. 用户与 AAA：默认锁定 + 分区授权</h3>
-<p>管理面默认除 console 全锁（P34），admin 恒可 console 兜底（P36）。Telnet/FTP 明文，官方建议 SSH（X3）；
-高安全用 PKA（installsshkey/revokesshkey，C8）。授权按命令域/族两级分区（12 个域，F4），read-only/read-write 组合到 user 或 aaa priv-mask。密码策略成体系（长度/禁含用户名/过期/历史），但策略命令不自动保存（X31）；
-锁定三参数 window/threshold/duration 配合手工 lockout/unlock。AAA 认证链顺序即故障切换序，local 必须最后（P70）；
-secondary CMM/Slave 不支持远端认证（X37）。安全档位递进：FIPS（切换必重启，X25）→ 增强模式（加盐/单会话/TLS1.2/imgsha256sum 校验，X39-X42）→ JITC（与增强互斥，X45）。</p>
+<ul>
+<li>管理面默认除 console 全锁（P34），admin 恒可 console 兜底（P36）。</li>
+<li>Telnet/FTP 明文，官方建议 SSH（X3）；高安全用 PKA（installsshkey/revokesshkey，C8）。</li>
+<li>授权按命令域/族两级分区（12 个域，F4），read-only/read-write 组合到 user 或 aaa priv-mask。</li>
+<li>密码策略成体系（长度/禁含用户名/过期/历史），但策略命令不自动保存（X31）；锁定三参数 window/threshold/duration 配合手工 lockout/unlock。</li>
+<li>AAA 认证链顺序即故障切换序，local 必须最后（P70）；secondary CMM/Slave 不支持远端认证（X37）。</li>
+<li><strong>安全档位递进</strong>：<br>FIPS（切换必重启，X25）→ 增强模式（加盐/单会话/TLS1.2/imgsha256sum 校验，X39-X42）→ JITC（与增强互斥，X45）。</li>
+</ul>
 <h3 id="4-snmp">4. 纳管服务：从 SNMP 轮询到云推送</h3>
-<p>SNMP：v3 用户配认证+加密组合（sha+aes），v1/v2c 靠 community-map 映射用户继承权限（P95）；
-trap 可按命令族或 trap ID 过滤、可重放、可吸收去重（P98/P99）。WebView 需 <code>aaa authentication http local</code> 解锁，自定义证书拼 web.pem 安装（C35）；
-改端口前必须断全部会话（X48）。REST 双域（mib/cli）+ JSON/XML，认证走 GET auth、配置走 PUT（C40）。Cirrus：新机无 boot.cfg 默认上云，存量机 <code>cloud-agent admin-state enable</code>（X54）；
-无 NTP 上不了云（X55）；
-NaaS license 状态机 Operational→Grace→Degraded，降级后只转发不管理（X57/X58）。NTP：minpoll/maxpoll 指数、burst/iburst 加速、MD5/SHA1 认证须 trusted key（P158-P161）。</p>
+<ul>
+<li><strong>SNMP</strong>：<br>v3 用户配认证+加密组合（sha+aes），v1/v2c 靠 community-map 映射用户继承权限（P95）；trap 可按命令族或 trap ID 过滤、可重放、可吸收去重（P98/P99）。</li>
+<li>WebView 需 <code>aaa authentication http local</code> 解锁，自定义证书拼 web.pem 安装（C35）；改端口前必须断全部会话（X48）。</li>
+<li>REST 双域（mib/cli）+ JSON/XML，认证走 GET auth、配置走 PUT（C40）。</li>
+<li><strong>Cirrus</strong>：<br>新机无 boot.cfg 默认上云，存量机 <code>cloud-agent admin-state enable</code>（X54）；无 NTP 上不了云（X55）；NaaS license 状态机 Operational→Grace→Degraded，降级后只转发不管理（X57/X58）。</li>
+<li><strong>NTP</strong>：<br>minpoll/maxpoll 指数、burst/iburst 加速、MD5/SHA1 认证须 trusted key（P158-P161）。</li>
+</ul>
 <h3 id="5">5. 日志与健康：先有基线再谈排障</h3>
-<p>command-log 默认禁用，启用后自动建 /flash/command.log，记录命令/用户/IP/结果（C26）；启用期间文件不可删（X29）。升级/排障前必采 <code>show tech-support layer2|layer3|eng complete</code> 分层基线（C3）。文件系统 fsck 两档（no-repair/repair）、镜像 <code>image integrity check</code> SHA256 校验（P92）。时钟是日志与证书可信的前提，<code>system date/timezone</code>，DST 随时区自动（P163）。</p>
+<ul>
+<li>command-log 默认禁用，启用后自动建 /flash/command.log，记录命令/用户/IP/结果（C26）；启用期间文件不可删（X29）。</li>
+<li>升级/排障前必采 <code>show tech-support layer2|layer3|eng complete</code> 分层基线（C3）。</li>
+<li>文件系统 fsck 两档（no-repair/repair）、镜像 <code>image integrity check</code> SHA256 校验（P92）。</li>
+<li>时钟是日志与证书可信的前提，<code>system date/timezone</code>，DST 随时区自动（P163）。</li>
+</ul>
 <h3 id="6-vc-ip">6. 机箱与 VC：单 IP 管理与分裂双保险</h3>
-<p>双 CMM：running 自动同步，certified 需 <code>copy running certified flash-synchro</code>；
-takeover 前先同步，接管断旧主管理会话（C23/X27）。VC：vcsetup.cfg（入组）+ vcboot.cfg（整体）双文件；
-Master 选举五准则（P130）；
-Auto-VFL 直连即成（C47），手工路径走 convert-configuration + reload from vc_dir（C46）。限制清单长：不可混家族（X73）、VFL 限 10/40/100G 不混速（X77）、新成员可能双重启（X72）、分裂后配置不生效（X82）。分裂双保险：RCD（EMP 带外，VFL 全断时 former Slave 关面板口）与 VCSP（helper 专用 linkagg，master MAC 不匹配进 protection state，guard-timer 控恢复）。</p>
+<ul>
+<li><strong>双 CMM</strong>：<br>running 自动同步，certified 需 <code>copy running certified flash-synchro</code>；takeover 前先同步，接管断旧主管理会话（C23/X27）。</li>
+<li><strong>VC</strong>：<br>vcsetup.cfg（入组）+ vcboot.cfg（整体）双文件；Master 选举五准则（P130）；Auto-VFL 直连即成（C47），手工路径走 convert-configuration + reload from vc_dir（C46）。</li>
+<li><strong>限制清单长</strong>：<br>不可混家族（X73）、VFL 限 10/40/100G 不混速（X77）、新成员可能双重启（X72）、分裂后配置不生效（X82）。</li>
+<li><strong>分裂双保险</strong>：<br>RCD（EMP 带外，VFL 全断时 former Slave 关面板口）与 VCSP（helper 专用 linkagg，master MAC 不匹配进 protection state，guard-timer 控恢复）。</li>
+</ul>
 <h2 id="_3">三、高价值章节页码索引</h2>
 <table>
 <thead>

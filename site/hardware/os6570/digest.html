@@ -71,8 +71,8 @@ blockquote p{margin:6px 0}
 <div class="grp">运维排障</div>
 <a href="skills/os6570-ops-troubleshoot.html">os6570-ops-troubleshoot</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../hardware/index.html">硬件手册</a> › <a href="index.html">OmniSwitch 6570M Hardware Guide</a> › <span>精华长文 DIGEST</span></nav><h1>精华长文 DIGEST</h1><h1 id="digest-omniswitch-6570m-hardware-users-guide">DIGEST — OmniSwitch 6570M Hardware Users Guide 精华</h1>
 <ul>
-<li>本书是 ALE 紧凑型交换机 OS6570M 家族硬件手册（59 页，3 个定配置机型：12/12D/U28）。</li>
-<li>核心卖点：半宽双机并排省机位 + 全光上联型 U28 + Dying Gasp 三通道失电通告。</li>
+<li><strong>本书是 ALE 紧凑型交换机 OS6570M 家族硬件手册（59 页，3 个定配置机型</strong>：<br>12/12D/U28）。</li>
+<li><strong>核心卖点</strong>：<br>半宽双机并排省机位 + 全光上联型 U28 + Dying Gasp 三通道失电通告。</li>
 <li>无 PoE、无光模块专章，全书沿"选型→安装→上电→监控"生命周期展开。</li>
 </ul>
 <h2 id="_1">一、知识地图（三技能单元）</h2>
@@ -93,18 +93,32 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="_2">二、三单元要点串讲</h2>
 <h3 id="1">1. 机型与端口：三轴选型矩阵</h3>
-<p>命名（<span class="pg">原文p11</span> ）：<code>12</code>=8 铜口+2 SFP+2 SFP+ 半宽机；<code>12D</code>=DC 版（内置 DC 30W，18-75VDC 宽压）；<code>U28</code>=28 口全光上联型（20×SFP+4 combo+6×SFP+，双电源舱，独有 VC ID LED）。核心机制：SFP+ 口为"Uplink/Stacking"双角色——上联与 Virtual Chassis 堆叠共用（12 口机 11-12、U28 25-30）（<span class="pg">原文p21</span> /<span class="pg">原文p25</span> ）。半宽双机并排（DUO-MNT）=16 铜口+4 SFP+4 SFP+ 上联/堆叠，仍省机架深度。陷阱：全机型不支持半双工；combo 口光铜互斥（<span class="pg">原文p21</span> -<span class="pg">原文p25</span> ）。</p>
+<ul>
+<li><strong>命名（<span class="pg">原文p11</span> ）</strong>：<br><code>12</code>=8 铜口+2 SFP+2 SFP+ 半宽机；<code>12D</code>=DC 版（内置 DC 30W，18-75VDC 宽压）；<code>U28</code>=28 口全光上联型（20×SFP+4 combo+6×SFP+，双电源舱，独有 VC ID LED）。</li>
+<li><strong>核心机制</strong>：<br>SFP+ 口为"Uplink/Stacking"双角色——上联与 Virtual Chassis 堆叠共用（12 口机 11-12、U28 25-30）（<span class="pg">原文p21</span> /<span class="pg">原文p25</span> ）。</li>
+<li>半宽双机并排（DUO-MNT）=16 铜口+4 SFP+4 SFP+ 上联/堆叠，仍省机架深度。</li>
+<li><strong>陷阱</strong>：<br>全机型不支持半双工；combo 口光铜互斥（<span class="pg">原文p21</span> -<span class="pg">原文p25</span> ）。</li>
+</ul>
 <h3 id="2">2. 安装与供电：双层电源与三套机架</h3>
-<p>12/12D 为双层电源架构：内置（AC 65W/DC 30W）+ External Power Connector 外置备份（OS6570-12-BP 60W AC / 12-BP-D 30W DC 宽压 18-75VDC）（<span class="pg">原文p35</span> -<span class="pg">原文p37</span> ）；U28 为双 150W 舱（OS6570-BP/BP-D），可冗余/负载分担，双电源必须同 wattage 同额定电压（<span class="pg">原文p24</span> ）。机架三方案：全宽法兰（U28）、单半宽 RM-19-L、双半宽 DUO-MNT 并排；一律先下孔后上孔紧固，机架螺丝自备（<span class="pg">原文p29</span> -<span class="pg">原文p34</span> ）。DC 线束三芯 12AWG（绿黄=地/黑=return/红=-48V）+15A 过流+SELV 前提五条（<span class="pg">原文p40</span> ）。</p>
+<ul>
+<li><strong>12/12D 为双层电源架构</strong>：<br>内置（AC 65W/DC 30W）+ External Power Connector 外置备份（OS6570-12-BP 60W AC / 12-BP-D 30W DC 宽压 18-75VDC）（<span class="pg">原文p35</span> -<span class="pg">原文p37</span> ）；U28 为双 150W 舱（OS6570-BP/BP-D），可冗余/负载分担，双电源必须同 wattage 同额定电压（<span class="pg">原文p24</span> ）。</li>
+<li><strong>机架三方案</strong>：<br>全宽法兰（U28）、单半宽 RM-19-L、双半宽 DUO-MNT 并排；一律先下孔后上孔紧固，机架螺丝自备（<span class="pg">原文p29</span> -<span class="pg">原文p34</span> ）。</li>
+<li>DC 线束三芯 12AWG（绿黄=地/黑=return/红=-48V）+15A 过流+SELV 前提五条（<span class="pg">原文p40</span> ）。</li>
+</ul>
 <h3 id="3-dg">3. 运维与排障：DG 三通道与温度双阈值</h3>
-<p>Dying Gasp 三通道（<span class="pg">原文p46</span> /<span class="pg">原文p47</span> ）：SNMP trap（前 3 站）+Syslog（前 3 服务器）+4 个 802.3ah OAM PDU（Dying Gasp 位置位，上联口优先发送）。温度双阈值出厂固化（<span class="pg">原文p45</span> -<span class="pg">原文p46</span> ）：Warning 超限发 trap 业务不停；Danger 超限自动关机且必须手动重启。阈值按机型分化：12/12D 85/88°C、U28 69/74°C——光口机热预算更紧（<span class="pg">原文p22</span> /<span class="pg">原文p26</span> ）。LED 三层：OK 三态/VC 四态（闪琥珀报 unit 号）/PS 按机型两套语义；150W 电源六态灯含"闪红=本舱无 AC 邻舱有电"的冗余态（<span class="pg">原文p27</span> /<span class="pg">原文p38</span> /<span class="pg">原文p39</span> ）。</p>
+<ul>
+<li><strong>Dying Gasp 三通道（<span class="pg">原文p46</span> /<span class="pg">原文p47</span> ）</strong>：<br>SNMP trap（前 3 站）+Syslog（前 3 服务器）+4 个 802.3ah OAM PDU（Dying Gasp 位置位，上联口优先发送）。</li>
+<li><strong>温度双阈值出厂固化（<span class="pg">原文p45</span> -<span class="pg">原文p46</span> ）</strong>：<br>Warning 超限发 trap 业务不停；Danger 超限自动关机且必须手动重启。</li>
+<li><strong>阈值按机型分化</strong>：<br>12/12D 85/88°C、U28 69/74°C——光口机热预算更紧（<span class="pg">原文p22</span> /<span class="pg">原文p26</span> ）。</li>
+<li><strong>LED 三层</strong>：<br>OK 三态/VC 四态（闪琥珀报 unit 号）/PS 按机型两套语义；150W 电源六态灯含"闪红=本舱无 AC 邻舱有电"的冗余态（<span class="pg">原文p27</span> /<span class="pg">原文p38</span> /<span class="pg">原文p39</span> ）。</li>
+</ul>
 <h2 id="_3">三、本书在知识库中的位置</h2>
-<p>与 hw-6560（多千兆 bt 旗舰）、hw-6575（工业无风扇）构成紧凑/专用三线——6570M 定位无 PoE 紧凑接入与全光上联。跨书易混点：6560 温度 Warning 阈值用户可配，6570M 均固化不可改；
-6560 DG 与本机同为三通道（含 OAM PDU），而 6575 仅双通道（无 OAM PDU）；
-本机 12D 的 BP-D 30W 外置备份与 U28 的 BP-D 150W 舱同名不同物，选型时按主机型号对配。</p>
+<ul>
+<li>与 hw-6560（多千兆 bt 旗舰）、hw-6575（工业无风扇）构成紧凑/专用三线——6570M 定位无 PoE 紧凑接入与全光上联。</li>
+<li><strong>跨书易混点</strong>：<br>6560 温度 Warning 阈值用户可配，6570M 均固化不可改；6560 DG 与本机同为三通道（含 OAM PDU），而 6575 仅双通道（无 OAM PDU）；本机 12D 的 BP-D 30W 外置备份与 U28 的 BP-D 150W 舱同名不同物，选型时按主机型号对配。</li>
+</ul>
 <h2 id="_4">来源</h2>
-<p>OmniSwitch 6570M Hardware Users Guide（Part No. 060828-10, Rev. G, 2025-12）。verified.md：cases C1-C17；
-principles P1-P36；
-counter-examples X1-X26；
-frameworks F1-F3；
-glossary 约 75 条。</p><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<ul>
+<li>OmniSwitch 6570M Hardware Users Guide（Part No. 060828-10, Rev. G, 2025-12）。</li>
+<li><strong>verified.md</strong>：<br>cases C1-C17；principles P1-P36；counter-examples X1-X26；frameworks F1-F3；glossary 约 75 条。</li>
+</ul><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

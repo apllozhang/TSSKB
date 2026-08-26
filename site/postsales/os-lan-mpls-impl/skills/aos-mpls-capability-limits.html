@@ -123,17 +123,15 @@ blockquote p{margin:6px 0}
 <p>用法：任何引用 MPLS 特性的方案/标书，逐条过这张表；六项之一是硬需求时，要么换方案要么确认 AOS 后续版本（教材 p118 预告"后续版本可能补充"）。</p>
 <h2 id="a1">A1 · 书中案例</h2>
 <ul>
-<li>ce03 场景：客户要求 MPLS 骨干端到端 QoS——因 PHP 弹标签丢 EXP 且显式 NULL 不支持，QoS 策略改落在 DSCP。</li>
-<li>ce07 场景：客户要做 10+ 站点 VPLS——BGP 信令本应用 RR 收敛邻居，AOS 不支持 RR，只能评估全互联邻居数是否可接受。</li>
-<li>VPWS 场景：客户要点对点二层专线——AOS 无 VPWS，用两台 PE 各配一个 VPLS（只有两个成员）模拟 E-Pipe。</li>
+<li><strong>ce03 场景</strong>：<br>客户要求 MPLS 骨干端到端 QoS——因 PHP 弹标签丢 EXP 且显式 NULL 不支持，QoS 策略改落在 DSCP。</li>
+<li><strong>ce07 场景</strong>：<br>客户要做 10+ 站点 VPLS——BGP 信令本应用 RR 收敛邻居，AOS 不支持 RR，只能评估全互联邻居数是否可接受。</li>
+<li><strong>VPWS 场景</strong>：<br>客户要点对点二层专线——AOS 无 VPWS，用两台 PE 各配一个 VPLS（只有两个成员）模拟 E-Pipe。</li>
 </ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
-<li>售前拿业界通用 MPLS 方案（常有 TE/VPWS/RR）套 AOS：本 skill 做禁引核对。</li>
-<li>交付后发现 traceroute 暴露骨干跳数、QoS 不生效：本 skill 对应行的替代方案。</li>
-<li>区分：部署怎么落地归 <code><a href="aos-mpls-deploy-license.html">aos-mpls-deploy-license</a></code>；
-信令怎么选归 <code><a href="vpls-signaling-ldp-vs-bgp.html">vpls-signaling-ldp-vs-bgp</a></code>（其中"无 RR 只能全互联"的选型约束源头在本 skill）；
-架构模板归 <code><a href="mpls-reference-design.html">mpls-reference-design</a></code>。本 skill 只回答"能不能做"。</li>
+<li><strong>售前拿业界通用 MPLS 方案（常有 TE/VPWS/RR）套 AOS</strong>：<br>本 skill 做禁引核对。</li>
+<li><strong>交付后发现 traceroute 暴露骨干跳数、QoS 不生效</strong>：<br>本 skill 对应行的替代方案。</li>
+<li><strong>区分</strong>：<br>部署怎么落地归 <code><a href="aos-mpls-deploy-license.html">aos-mpls-deploy-license</a></code>；信令怎么选归 <code><a href="vpls-signaling-ldp-vs-bgp.html">vpls-signaling-ldp-vs-bgp</a></code>（其中"无 RR 只能全互联"的选型约束源头在本 skill）；架构模板归 <code><a href="mpls-reference-design.html">mpls-reference-design</a></code>。本 skill 只回答"能不能做"。</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>

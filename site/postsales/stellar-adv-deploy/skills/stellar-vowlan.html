@@ -83,7 +83,7 @@ blockquote p{margin:6px 0}
 </blockquote>
 <h2 id="i">I · 方法论骨架</h2>
 <ul>
-<li>五阶段流程（Prepare → Plan → Design → Implement → Operate）：1. <strong>Prepare</strong>：明确覆盖/带宽需求；站点勘测分析 RF 环境与干扰源；按 1 AP/255m²、每 AP 20-25 用户算 AP 数量与布放；识别需双 AP 冗余的区域。</li>
+<li><strong>五阶段流程（Prepare → Plan → Design → Implement → Operate）</strong>：<br>1. <strong>Prepare</strong>：明确覆盖/带宽需求；站点勘测分析 RF 环境与干扰源；按 1 AP/255m²、每 AP 20-25 用户算 AP 数量与布放；识别需双 AP 冗余的区域。</li>
 <li>
 <ol>
 <li><strong>Plan</strong>：定义语音服务与带宽、"Voice" WLAN 与安全等级；RF 管理优先 5GHz；容量 20-25 客户端/AP、36Mbps 用户吞吐；漫游开 802.11r/k/v，同能力设备放专用 SSID；保证 AP 侧网络冗余。</li>
@@ -108,10 +108,17 @@ blockquote p{margin:6px 0}
 <p>量化标准：802.11ac 下客户端 RSSI ≥ -67dBm（wlanconfig 显示值 ≥ 29）、SNR ≥ 25；
 正确漫游一般要求 -62dBm 或更好。RSSI 换算参考：10≈-86dBm（语音不可用）、20≈-76dBm（上网可用）、29≈-67dBm（语音推荐）、35≈-61dBm（理想）。</p>
 <h2 id="a1-lab">A1 · 书中案例（Lab 精要）</h2>
-<p>教材语音部分为规划方法论章节（p300-311），无独立配置 Lab；
-可操作锚点：话机侧 NOE/SIP 终端（8118/8128/8158s/8168s）与 Rainbow/OTC 软终端经 IMS3 服务器批量部署管理（p302, p310）；
-话机支持 Ekahau RTLS 定位；
-排障时用 ssudo wlanconfig athXX list 直接读客户端 RSSI 值对照 29/-67dBm 门槛（p272-273）。QoS 映射沿用 WMM 推荐表（Voice 5/46-EF），见 stellar-ssid-advanced。</p>
+<ul>
+<li>教材语音部分为规划方法论章节（p300-311），无独立配置 Lab；</li>
+<li>可操作锚点：话机侧 NOE/SIP 终端（8118/8128/8158s/8168s）与 Rainbow/OTC 软终端经 IMS3 服务器批量部署管理（p302, p310）；</li>
+<li>话机支持 Ekahau RTLS 定位；</li>
+<li>
+<p>排障时用 ssudo wlanconfig athXX list 直接读客户端 RSSI 值对照 29/-67dBm 门槛（p272-273）；</p>
+</li>
+<li>
+<p>QoS 映射沿用 WMM 推荐表（Voice 5/46-EF），见 stellar-ssid-advanced。</p>
+</li>
+</ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
 <li>园区要上无线话机/软终端，需要覆盖与容量规划数字 → 本 skill 直接套常数。</li>
@@ -157,10 +164,10 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>
-<li>语音标准比数据严得多：-67dBm/SNR≥25 是 802.11ac 语音门槛，拿 -76dBm（值 20）覆盖报告交差会掉话。</li>
+<li><strong>语音标准比数据严得多</strong>：<br>-67dBm/SNR≥25 是 802.11ac 语音门槛，拿 -76dBm（值 20）覆盖报告交差会掉话。</li>
 <li>-62dBm 是漫游正确性的经验门限，规划重叠覆盖时按它留余量。</li>
 <li>每 AP 超 25 个语音客户端就难保 36Mbps/用户，宁可加 AP。</li>
-<li>802.11r/k/v 只对支持的话机有效：混接老旧终端时应分 SSID，别在公共 SSID 上强开。</li>
+<li><strong>802.11r/k/v 只对支持的话机有效</strong>：<br>混接老旧终端时应分 SSID，别在公共 SSID 上强开。</li>
 <li>QoS 只标无线侧不够，端到端（VLAN/交换机）都要认 EF/5。</li>
 </ul>
 <hr />

@@ -93,11 +93,14 @@ blockquote p{margin:6px 0}
 <p><strong>④ SPB Profile 模板（p109/p32）</strong>：Tag/ISID/BVLAN/组播模式/VLAN 翻译一次定义多处套用。参数规则：<strong>I-SID 有效范围 256-16777214</strong>（避开 0-255 保留段）；untagged 流量 SAP 封装值记 0（如 1/12:0）；BVLAN 必须填已存在的骨干 VLAN。</p>
 <p><strong>⑤ 监控面</strong>：设备/SAP/SDP 三级信息表（SDP ID 由 OV2500 动态生成）、SPB 拓扑视图含 LACP 链路明细；服务参数含 Mcast Mode（Headend/Tandem）、VLAN Translation、VPN MTU 等。</p>
 <h2 id="a1">A1 · 书中案例</h2>
-<p>p100-112 全流程 GUI 演示：Global Settings 选交换机 → 创建服务（Tunnel ID/Service ID/BVLAN/Mcast Mode 等字段）→ 创建 L2 Profile（控制帧 Tunnel/Drop/Peer 三态选择）→ 服务监控三级表 → SPB Profile 模板 → 拓扑视图。售前话术落点："边缘只配一次、核心零触碰（No-touch core），GUI 全流程可视化"。</p>
+<ul>
+<li><strong>p100-112 全流程 GUI 演示</strong>：<br>Global Settings 选交换机 → 创建服务（Tunnel ID/Service ID/BVLAN/Mcast Mode 等字段）→ 创建 L2 Profile（控制帧 Tunnel/Drop/Peer 三态选择）→ 服务监控三级表 → SPB Profile 模板 → 拓扑视图。</li>
+<li><strong>售前话术落点</strong>：<br>"边缘只配一次、核心零触碰（No-touch core），GUI 全流程可视化"。</li>
+</ul>
 <h2 id="a2">A2 · 触发场景</h2>
 <ul>
-<li>POC 或交付演示：用 OV2500 向客户展示 SPB 服务从创建到监控的全路径；</li>
-<li>实施方案排配置工作量：按 Core/Access 两张工单表分工；</li>
+<li><strong>POC 或交付演示</strong>：<br>用 OV2500 向客户展示 SPB 服务从创建到监控的全路径；</li>
+<li><strong>实施方案排配置工作量</strong>：<br>按 Core/Access 两张工单表分工；</li>
 <li>规划 SPB Profile 模板参数（I-SID 取值避开保留段）。
 与相邻 skill 区分：控制帧三态、组播模式等参数的业务含义见 <code><a href="spb-edge-services.html">spb-edge-services</a></code>；UNP 微分段机制见 <code><a href="spb-micro-segmentation.html">spb-micro-segmentation</a></code>；本 skill 只管"怎么配、在哪儿配、怎么演示"。</li>
 </ul>

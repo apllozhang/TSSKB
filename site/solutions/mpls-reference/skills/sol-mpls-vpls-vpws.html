@@ -70,13 +70,18 @@ blockquote p{margin:6px 0}
 <div class="grp">运维</div>
 <a href="../skills/sol-mpls-qos-oam.html">sol-mpls-qos-oam</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../solutions/index.html">解决方案</a> › <a href="../index.html">MPLS 参考设计指南</a> › <span>sol-mpls-vpls-vpws</span></nav><h1>sol-mpls-vpls-vpws</h1><p class="meta"><span class="badge">SKILL</span> sol-mpls-vpls-vpws · 来源页码: </p><h2 id="r">R（触发场景）</h2>
 <ul>
-<li>规划二层 VPN 业务：多点局域网互连（VPLS）或点对点专线（VPWS/EPL/EVPL）</li>
-<li>选信令：T-LDP（手工 SDP）vs MP-BGP l2vpn-vpls（自动发现+信令）</li>
+<li><strong>规划二层 VPN 业务</strong>：<br>多点局域网互连（VPLS）或点对点专线（VPWS/EPL/EVPL）</li>
+<li><strong>选信令</strong>：<br>T-LDP（手工 SDP）vs MP-BGP l2vpn-vpls（自动发现+信令）</li>
 <li>配置 SAP（面向 CE）与 SDP（面向远端 PE）、mesh/spoke bind-sdp</li>
 <li>排查 VPLS 环路、MAC 学习、PW 状态问题</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>服务与传输解耦（F4/P4，<span class="pg">原文p20</span> ）：服务只在有站点的 LER 上创建，SAP（AC）面向 CE、SDP（VC）面向远端；传输隧道可由 LDP/RSVP-TE/静态任一种承载而不动服务层。VPLS 是 VPWS 超集（P30，<span class="pg">原文p21</span> ）：VPLS 需全互联 PW + per-VPLS MAC 学习/桥接/复制；VPWS 点对点透明转发、不学客户 MAC。防环靠 split horizon：PW 进 PW 出禁止（P11，<span class="pg">原文p21</span> ）。T-LDP 保会话抗链路故障（P14，<span class="pg">原文p15</span> ）。</p>
+<ul>
+<li><strong>服务与传输解耦（F4/P4，<span class="pg">原文p20</span> ）</strong>：<br>服务只在有站点的 LER 上创建，SAP（AC）面向 CE、SDP（VC）面向远端；传输隧道可由 LDP/RSVP-TE/静态任一种承载而不动服务层。</li>
+<li><strong>VPLS 是 VPWS 超集（P30，<span class="pg">原文p21</span> ）</strong>：<br>VPLS 需全互联 PW + per-VPLS MAC 学习/桥接/复制；VPWS 点对点透明转发、不学客户 MAC。</li>
+<li><strong>防环靠 split horizon</strong>：<br>PW 进 PW 出禁止（P11，<span class="pg">原文p21</span> ）。</li>
+<li>T-LDP 保会话抗链路故障（P14，<span class="pg">原文p15</span> ）。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <p>L2VPN 服务选型框架（F2，<span class="pg">原文p21-22</span> ）：
 1. 连通需求：E-LAN 多点 → VPLS；E-LINE 点对点 → VPWS
@@ -95,7 +100,7 @@ blockquote p{margin:6px 0}
 <ul>
 <li>LDP-VPLS 五步配置（R1/R6/R7 三站 mesh）（C12，<span class="pg">原文p33-34</span> ）</li>
 <li>BGP-VPLS 四步配置与 VE-ID 参数（C13，<span class="pg">原文p34-35</span> ）</li>
-<li>VPWS E-Line 配置：两 SAP + spoke bind-sdp 成虚拟桥（C14，<span class="pg">原文p41-42</span> ）</li>
+<li><strong>VPWS E-Line 配置</strong>：<br>两 SAP + spoke bind-sdp 成虚拟桥（C14，<span class="pg">原文p41-42</span> ）</li>
 <li>BGP VPLS 自动发现 path 输出解读（VBO/Label Base 53122/MTU 9194）（C18，<span class="pg">原文p38-39</span> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>

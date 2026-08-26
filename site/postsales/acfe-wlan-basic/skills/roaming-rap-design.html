@@ -87,9 +87,9 @@ blockquote p{margin:6px 0}
 <h2 id="i">I · 方法论骨架</h2>
 <ol>
 <li><strong>漫游默认状态</strong></li>
-<li>L2 漫游：恒开；L3 漫游：默认关，SSID 配置里开（home/foreign AP 间 L2 GRE 隧道）</li>
+<li><strong>L2 漫游</strong>：<br>恒开；L3 漫游：默认关，SSID 配置里开（home/foreign AP 间 L2 GRE 隧道）</li>
 <li>
-<p>Fast Roaming：默认关，按 SSID 开</p>
+<p><strong>Fast Roaming</strong>：<br>默认关，按 SSID 开</p>
 </li>
 <li>
 <p><strong>L2/L3 判定表（三条件）</strong></p>
@@ -134,10 +134,10 @@ blockquote p{margin:6px 0}
 <p>典型触发：同一 SSID 在不同 AP Group 映射了不同 VLAN。上下文的 Add/Del 消息在"新 AP 不属同一 OVC / 无相同 WLAN service"时被丢弃。</p>
 <ol>
 <li><strong>快速漫游协议前提</strong></li>
-<li>OKC：仅 WPA2/WPA3 Enterprise</li>
-<li>802.11r（FT，省 RADIUS 重认证）：要求 WPA2/WPA3 加密（Personal 或 Enterprise）</li>
+<li><strong>OKC</strong>：<br>仅 WPA2/WPA3 Enterprise</li>
+<li><strong>802.11r（FT，省 RADIUS 重认证）</strong>：<br>要求 WPA2/WPA3 加密（Personal 或 Enterprise）</li>
 <li>
-<p>规划顺序：先按 VLAN 选 L2/L3，再按 SSID 安全级别选快漫游协议，最后 Heat Map 分频段核对覆盖重叠。</p>
+<p><strong>规划顺序</strong>：<br>先按 VLAN 选 L2/L3，再按 SSID 安全级别选快漫游协议，最后 Heat Map 分频段核对覆盖重叠。</p>
 </li>
 <li>
 <p><strong>粘滞客户端组合拳</strong>
@@ -156,7 +156,7 @@ Roaming RSSI Threshold（范围 0-100；
 参考地址（实验）：vpn_mgmt 192.168.0.1 / 池 .2-20；vpn_data 10.7.0.61 / 池 .55-60；OV2500 10.130.5.50。</p>
 <h2 id="a1-lab">A1 · 书中案例（Lab 步骤精要）</h2>
 <ul>
-<li>c21/p549-572：RAP-Organization + Mgmt VPN → OVF 部署 VPN Server VA（admin 密码</li>
+<li><strong>c21/p549-572</strong>：<br>RAP-Organization + Mgmt VPN → OVF 部署 VPN Server VA（admin 密码</li>
 <li>双 NIC</li>
 <li>SSH 6550</li>
 <li>FileZilla 传 .conf）→ endpoint Apply → AP 重启建管理隧道（VA 控制台 VPN Status 见 peer/握手/字节）→ OV2500 控制台 [8]Configure Route 加 192.168.0.0/24 网关 10.130.5.251 → AP Registration 发现 RAP → Data VPN（导出第二个 .conf，端口 6551，绑 eth2）→ SSID（WPA3_AES + Use Tunnel）→ 远端 Windows 连 EmployeesX 拿员工网段地址</li>
@@ -177,9 +177,9 @@ Roaming RSSI Threshold（范围 0-100；
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>
 <li>跨 OVC/无相同 WLAN service → Add/Del 消息被丢弃，漫游退化为全新接入（重认证重取 IP）（ce31）。</li>
-<li>Roaming RSSI 两难：太低粘滞拖垮吞吐，太高频繁切换丢包；从推荐值起步（ce30）。</li>
+<li><strong>Roaming RSSI 两难</strong>：<br>太低粘滞拖垮吞吐，太高频繁切换丢包；从推荐值起步（ce30）。</li>
 <li>地理相邻互不可见=无漫游；Heat Map 分频段核对（2.4/5/6G 覆盖不同）（ce29）。</li>
-<li>RAP 三坑：AP1101 不兼容；导出的 .conf 必须留存（要导入 VPN Server VA）；OV2500 不加回程路由 RAP 发现不了（ce34）。</li>
+<li><strong>RAP 三坑</strong>：<br>AP1101 不兼容；导出的 .conf 必须留存（要导入 VPN Server VA）；OV2500 不加回程路由 RAP 发现不了（ce34）。</li>
 <li>L3 漫游走 GRE 隧道回 home AP，路径长、依赖隧道健康，非必要不制造 VLAN 不一致。</li>
 </ul>
 <hr />

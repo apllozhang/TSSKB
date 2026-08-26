@@ -71,8 +71,8 @@ blockquote p{margin:6px 0}
 <a href="skills/sol-spb-deployment-flow.html">sol-spb-deployment-flow</a>
 <a href="skills/sol-spb-positioning-cases.html">sol-spb-positioning-cases</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../solutions/index.html">解决方案</a> › <a href="index.html">SPB 智能织构</a> › <span>精华长文 DIGEST</span></nav><h1>精华长文 DIGEST</h1><h1 id="digest-spb-sol-spb">DIGEST — SPB 解决方案（sol-spb）精华</h1>
 <ul>
-<li>本书是 ALE SPB（IEEE 802.1aq 最短路径桥接）解决方案三部曲（86 页）：架构技术白皮书（p1-56）+ 部署指南 Ed.2025（p57-82）+ 方案简报（p83-86）。</li>
-<li>核心主张：用 IS-IS 单协议控制面 + 802.1ah MAC-in-MAC 数据面取代 STP/MPLS 协议栈，全链路可用、100ms 级收敛、16M 服务实例、仅边缘供给。</li>
+<li><strong>本书是 ALE SPB（IEEE 802.1aq 最短路径桥接）解决方案三部曲（86 页）</strong>：<br>架构技术白皮书（p1-56）+ 部署指南 Ed.2025（p57-82）+ 方案简报（p83-86）。</li>
+<li><strong>核心主张</strong>：<br>用 IS-IS 单协议控制面 + 802.1ah MAC-in-MAC 数据面取代 STP/MPLS 协议栈，全链路可用、100ms 级收敛、16M 服务实例、仅边缘供给。</li>
 </ul>
 <h2 id="_1">一、知识地图（四技能单元）</h2>
 <ol>
@@ -97,18 +97,45 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="_2">二、四单元要点串讲</h2>
 <h3 id="1-spb-stp">1. 架构：为什么 SPB 能取代 STP</h3>
-<p>STP 三宗罪：禁链路费带宽、非根间绕次优路径、秒级收敛且瞬态成环（<span class="pg">原文p5</span> ）。SPB 由 IS-IS 跑 Dijkstra，每节点以自己为根建树，"no network link is disabled, all paths are available"（<span class="pg">原文p7</span> ）。数据面只查 FDB（BVLAN 域 FDB 由控制面预填充，不泛洪学习）；骨干内只按 BMAC 转发，CMAC 只在 BEB 学（<span class="pg">原文p9</span> ）。每节点每 BVLAN 一棵 SPF 树，ECT-ID 打破平局（<span class="pg">原文p11-12</span> ）。BUM 三模式选型（<span class="pg">原文p16</span> ）：head-end 省资源费带宽、tandem (S,G) 默认、tandem (*,G) 共享树不走最短路。防环双机制：预防（ECT 树）+缓解（RPFC 按对称性校验源 BMAC，<span class="pg">原文p51</span> ）。</p>
+<ul>
+<li><strong>STP 三宗罪</strong>：<br>禁链路费带宽、非根间绕次优路径、秒级收敛且瞬态成环（<span class="pg">原文p5</span> ）。</li>
+<li>SPB 由 IS-IS 跑 Dijkstra，每节点以自己为根建树，"no network link is disabled, all paths are available"（<span class="pg">原文p7</span> ）。</li>
+<li>数据面只查 FDB（BVLAN 域 FDB 由控制面预填充，不泛洪学习）；骨干内只按 BMAC 转发，CMAC 只在 BEB 学（<span class="pg">原文p9</span> ）。</li>
+<li>每节点每 BVLAN 一棵 SPF 树，ECT-ID 打破平局（<span class="pg">原文p11-12</span> ）。</li>
+<li><strong>BUM 三模式选型（<span class="pg">原文p16</span> ）</strong>：<br>head-end 省资源费带宽、tandem (S,G) 默认、tandem (*,G) 共享树不走最短路。</li>
+<li><strong>防环双机制</strong>：<br>预防（ECT 树）+缓解（RPFC 按对称性校验源 BMAC，<span class="pg">原文p51</span> ）。</li>
+</ul>
 <h3 id="2-l2l3">2. 服务：三层标识与 L2/L3 分档</h3>
-<p>Service（本地）→ISID（全局 24 位）→BVLAN（承载）；SAP 是 UNI 侧虚拟端口，SDP 动态生成；服务只在 BEB 配、BCB 零感知（<span class="pg">原文p13</span> ）。L2 服务三步：<code>service N spb isid X bvlan Y</code>+SAP（<span class="pg">原文p20</span> ）。L3 两档：域内 L3 VPN（IS-IS TLV 直传 VRF 路由，单协议）；边界 VPN Lite（叠 OSPF，4 服务×8 BEB=64 个 OSPF 配置的爆炸是其代价，<span class="pg">原文p34</span> ）。共享服务走 VRF 路由泄漏，前提地址不重叠。两代 ASIC：新代单次直通路由，老代需外部/内部回环经 dummy VLAN（<span class="pg">原文p26</span> ）。</p>
+<ul>
+<li>Service（本地）→ISID（全局 24 位）→BVLAN（承载）；SAP 是 UNI 侧虚拟端口，SDP 动态生成；服务只在 BEB 配、BCB 零感知（<span class="pg">原文p13</span> ）。</li>
+<li><strong>L2 服务三步</strong>：<br><code>service N spb isid X bvlan Y</code>+SAP（<span class="pg">原文p20</span> ）。</li>
+<li><strong>L3 两档</strong>：<br>域内 L3 VPN（IS-IS TLV 直传 VRF 路由，单协议）；边界 VPN Lite（叠 OSPF，4 服务×8 BEB=64 个 OSPF 配置的爆炸是其代价，<span class="pg">原文p34</span> ）。</li>
+<li>共享服务走 VRF 路由泄漏，前提地址不重叠。</li>
+<li><strong>两代 ASIC</strong>：<br>新代单次直通路由，老代需外部/内部回环经 dummy VLAN（<span class="pg">原文p26</span> ）。</li>
+</ul>
 <h3 id="3-11">3. 部署：11 步与自动化</h3>
-<p>参考架构 2×BCB 全网格+N×BEB 双归 LAG+PBR（<span class="pg">原文p63</span> ）。11 步：拓扑/LAG→VLAN→LBD→BVLAN→服务→SAP→VRF→VRRP→/30 连 PBR→VRRP tracking→OSPF→策略（<span class="pg">原文p62</span> ）。VRRP 虚地址统一 .1、末位=BEB 号；上行断优先级 120−25=95 触发切换（<span class="pg">原文p74</span> /<span class="pg">原文p78</span> ）。混代场景 S-Hook：VLAN 域 LAG 与服务域 LAG 挂接（<span class="pg">原文p81</span> ）。iFab 自动化：Auto-VC/RCD/LACP/SPB/MVRP/IP 六阶段+动态服务（ISID=BSN+Domain ID+VLAN%Modulo，默认 BSN 10,000,000；Modulo 隔离需求从 512 调 4096，<span class="pg">原文p42-43</span> ）。</p>
+<ul>
+<li>参考架构 2×BCB 全网格+N×BEB 双归 LAG+PBR（<span class="pg">原文p63</span> ）。</li>
+<li><strong>11 步</strong>：<br>拓扑/LAG→VLAN→LBD→BVLAN→服务→SAP→VRF→VRRP→/30 连 PBR→VRRP tracking→OSPF→策略（<span class="pg">原文p62</span> ）。</li>
+<li>VRRP 虚地址统一 .1、末位=BEB 号；上行断优先级 120−25=95 触发切换（<span class="pg">原文p74</span> /<span class="pg">原文p78</span> ）。</li>
+<li><strong>混代场景 S-Hook</strong>：<br>VLAN 域 LAG 与服务域 LAG 挂接（<span class="pg">原文p81</span> ）。</li>
+<li><strong>iFab 自动化</strong>：<br>Auto-VC/RCD/LACP/SPB/MVRP/IP 六阶段+动态服务（ISID=BSN+Domain ID+VLAN%Modulo，默认 BSN 10,000,000；Modulo 隔离需求从 512 调 4096，<span class="pg">原文p42-43</span> ）。</li>
+</ul>
 <h3 id="4">4. 定位：卖点与案例</h3>
-<p>收敛 2-3s→100ms；对标 MPLS 话术=单协议 vs 协议栈（<span class="pg">原文p83</span> ）。四大价值：可扩展/安全（ZTNA 构件）/简单/可靠（<span class="pg">原文p84</span> ）。三场景：园区 STP 替代、DC any-to-any+私有云、MAN 对标 MPLS。七行业用例（<span class="pg">原文p85</span> ）；NDOT（可扩展+快速上线）、IDC Frontier（扩展性+SLA 弹性）证言（<span class="pg">原文p86</span> ）。</p>
+<ul>
+<li>收敛 2-3s→100ms；对标 MPLS 话术=单协议 vs 协议栈（<span class="pg">原文p83</span> ）。</li>
+<li><strong>四大价值</strong>：<br>可扩展/安全（ZTNA 构件）/简单/可靠（<span class="pg">原文p84</span> ）。</li>
+<li><strong>三场景</strong>：<br>园区 STP 替代、DC any-to-any+私有云、MAN 对标 MPLS。</li>
+<li>七行业用例（<span class="pg">原文p85</span> ）；NDOT（可扩展+快速上线）、IDC Frontier（扩展性+SLA 弹性）证言（<span class="pg">原文p86</span> ）。</li>
+</ul>
 <h2 id="_3">三、本书在知识库中的位置</h2>
-<p>与 os-lan-spb-impl（配置实现细节）、spb-presales（售前材料）互补：本书是"架构原理+官方部署流程+价值主张"的一手来源。跨书易混点：tandem (S,G) 为默认 BUM 模式（按服务选择），tandem (*,G) 按 BVLAN 选择且不保证最短路；EVPN 书的 ingress replication 对应本书 head-end 复制思路但机制不同（BGP vs IS-IS）。</p>
+<ul>
+<li><strong>与 os-lan-spb-impl（配置实现细节）、spb-presales（售前材料）互补</strong>：<br>本书是"架构原理+官方部署流程+价值主张"的一手来源。</li>
+<li><strong>跨书易混点</strong>：<br>tandem (S,G) 为默认 BUM 模式（按服务选择），tandem (*,G) 按 BVLAN 选择且不保证最短路；EVPN 书的 ingress replication 对应本书 head-end 复制思路但机制不同（BGP vs IS-IS）。</li>
+</ul>
 <h2 id="_4">来源</h2>
-<p>SPB 三文档（Tech Brief + Deployment Guide Ed.2025 + Solution Brief，共 86 页）。verified.md：C1-C28；
-X1-X30；
-F1-F6；
-P1-P60；
-glossary 约 80 条。注：DOC3（p83-86）内容未入 verified.md，页码取自 fulltext.md 原文标记。</p><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<ul>
+<li>SPB 三文档（Tech Brief + Deployment Guide Ed.2025 + Solution Brief，共 86 页）。</li>
+<li><strong>verified.md</strong>：<br>C1-C28；X1-X30；F1-F6；P1-P60；glossary 约 80 条。</li>
+<li>注：DOC3（p83-86）内容未入 verified.md，页码取自 fulltext.md 原文标记。</li>
+</ul><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

@@ -113,21 +113,21 @@ blockquote p{margin:6px 0}
 </table>
 <p><strong>抓包路径二选一</strong></p>
 <ul>
-<li>有线侧（DHCP/DNS/RADIUS）：<code>ssudo tcpdump -i br-wan -w testcapture.pcap &lt;过滤式&gt;</code>，br-wan 是 AP 有线桥接口；SFTP（WinSCP）回传 → Wireshark 分析。</li>
-<li>空口侧（关联/认证/被踢）：集群 Web UI → 选 AP → RF Environment → 选射频 → Start Capture → 指定信道 + TFTP 服务器，可选 MAC/帧类型过滤。<strong>硬上限 10MB 或 5 分钟</strong>，规划过滤条件要按此预算。</li>
+<li><strong>有线侧（DHCP/DNS/RADIUS）</strong>：<br><code>ssudo tcpdump -i br-wan -w testcapture.pcap &lt;过滤式&gt;</code>，br-wan 是 AP 有线桥接口；SFTP（WinSCP）回传 → Wireshark 分析。</li>
+<li><strong>空口侧（关联/认证/被踢）</strong>：<br>集群 Web UI → 选 AP → RF Environment → 选射频 → Start Capture → 指定信道 + TFTP 服务器，可选 MAC/帧类型过滤。<strong>硬上限 10MB 或 5 分钟</strong>，规划过滤条件要按此预算。</li>
 </ul>
 <p><strong>配置备份双用途</strong>：集群 Web UI → AP 窗口 → Backup All Configuration → 下载 pub-config.tar。用途一：自有环境 Restore All Configuration 复现故障；用途二：解包 config-pub.tar 离线逐项核对；同时是技术支持工单的标准共享材料。</p>
 <h2 id="a1">A1 · 书中案例</h2>
 <ul>
 <li>tcpdump 示例用 DNS 过滤（<code>udp port 53</code>）演示三步流程，抓 DHCP/RADIUS 换过滤式即可（p30）。</li>
-<li>Air Capture 云模式同流程：先在 Cirrus 开 AP Web，再登录 AP Web UI 操作（p31-32）。</li>
+<li><strong>Air Capture 云模式同流程</strong>：<br>先在 Cirrus 开 AP Web，再登录 AP Web UI 操作（p31-32）。</li>
 <li>配置备份是 p12 复现法四类采集清单中 "Stellar AP 配置备份" 一项的标准件（p33）。</li>
 </ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
-<li>需要"看到报文"才能定性的故障：DHCP 不下发、认证无响应、疑似被踢（比对 disassoc/deauth）。</li>
-<li>与 <code><a href="network-side-trouble.html">network-side-trouble</a></code> 的区分：那边是"查连通性与配置核对"，本 skill 是"取证工具本身的参数与用法"。</li>
-<li>与 <code><a href="client-connection-trouble.html">client-connection-trouble</a></code> 的区分：那边是客户端症状决策链；本 skill 提供其依赖的 tcpdump/Air Capture 手段。</li>
+<li><strong>需要"看到报文"才能定性的故障</strong>：<br>DHCP 不下发、认证无响应、疑似被踢（比对 disassoc/deauth）。</li>
+<li><strong>与 <code><a href="network-side-trouble.html">network-side-trouble</a></code> 的区分</strong>：<br>那边是"查连通性与配置核对"，本 skill 是"取证工具本身的参数与用法"。</li>
+<li><strong>与 <code><a href="client-connection-trouble.html">client-connection-trouble</a></code> 的区分</strong>：<br>那边是客户端症状决策链；本 skill 提供其依赖的 tcpdump/Air Capture 手段。</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>

@@ -71,7 +71,7 @@ blockquote p{margin:6px 0}
 <a href="skills/sol-evpn-irb-multicast.html">sol-evpn-irb-multicast</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../solutions/index.html">解决方案</a> › <a href="index.html">EVPN 架构指南</a> › <span>精华长文 DIGEST</span></nav><h1>精华长文 DIGEST</h1><h1 id="digest-evpn-architecture-guidesol-evpn-architecture">DIGEST — EVPN Architecture Guide（sol-evpn-architecture）精华</h1>
 <ul>
 <li>本书是 AOS 8.10R1-R3 在 OmniSwitch 6900 上的 MP-BGP EVPN for VXLAN 架构指南（73 页）：fundamentals（p9-40）+ AOS 差异化（p40-44）+ 参考设计（p44-48）+ 端到端配置案例（p48-72）四位一体。</li>
-<li>核心主张：控制平面主动学习取代洪泛学习，单一 BGP EVPN 控制面同时承载 L2/L3 服务。</li>
+<li><strong>核心主张</strong>：<br>控制平面主动学习取代洪泛学习，单一 BGP EVPN 控制面同时承载 L2/L3 服务。</li>
 </ul>
 <h2 id="_1">一、知识地图（三技能单元）</h2>
 <ol>
@@ -91,14 +91,38 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="_2">二、三单元要点串讲</h2>
 <h3 id="1-nlri">1. 控制面：从洪泛学习到 NLRI 通告</h3>
-<p>传统模型五大痛点（STP 阻塞链路/L2 无 TTL 成环/4096 上限/运维复杂/tromboning，<span class="pg">原文p5</span> ）逐项映射到 VXLAN（24-bit VNI 约 1600 万）与 EVPN（MP-BGP NLRI 智能通告可达性，<span class="pg">原文p7</span> ）。控制面学的 MAC 不老化（<span class="pg">原文p13</span> ）；ARP 抑制默认开、proxy ARP 代答减 BUM（<span class="pg">原文p20-21</span> ）。路由类型分工：R-T1 ES 可达、R-T2 MAC/IP、R-T3 IMET 自动发现+ingress replication、R-T4 ES+DF 选举、R-T5 前缀、R-T6 SMET、R-T7/8 IGMP 同步（<span class="pg">原文p11-13</span> ）。推荐设计：单区域 OSPF p2p+BFD underlay+iBGP overlay+冗余 RR（同 cluster-id）+TTL security 0（<span class="pg">原文p45-46</span> ）。</p>
+<ul>
+<li>传统模型五大痛点（STP 阻塞链路/L2 无 TTL 成环/4096 上限/运维复杂/tromboning，<span class="pg">原文p5</span> ）逐项映射到 VXLAN（24-bit VNI 约 1600 万）与 EVPN（MP-BGP NLRI 智能通告可达性，<span class="pg">原文p7</span> ）。</li>
+<li>控制面学的 MAC 不老化（<span class="pg">原文p13</span> ）；ARP 抑制默认开、proxy ARP 代答减 BUM（<span class="pg">原文p20-21</span> ）。</li>
+<li><strong>路由类型分工</strong>：<br>R-T1 ES 可达、R-T2 MAC/IP、R-T3 IMET 自动发现+ingress replication、R-T4 ES+DF 选举、R-T5 前缀、R-T6 SMET、R-T7/8 IGMP 同步（<span class="pg">原文p11-13</span> ）。</li>
+<li><strong>推荐设计</strong>：<br>单区域 OSPF p2p+BFD underlay+iBGP overlay+冗余 RR（同 cluster-id）+TTL security 0（<span class="pg">原文p45-46</span> ）。</li>
+</ul>
 <h3 id="2-multi-homing">2. Multi-homing：防环防重复五机制</h3>
-<p>LAG 是前提（<span class="pg">原文p32</span> ）；DF=EVI mod N 的 service carving 按 EVI 分散 BUM 负载（<span class="pg">原文p33</span> ）；split horizon（VXLAN 下靠对端 PE IP 列表）+ local bias（本 PE 的 BUM 只从本地 ES 出）防环（<span class="pg">原文p34</span> ）；aliasing 让远端按流负载分担到全活 ES（<span class="pg">原文p34</span> ）；mass withdraw 一条 ESI 撤路批量刷新 MAC（<span class="pg">原文p36</span> ）。ESI 三档：物理口/LACP LAG 自动、静态 LAG 手工 5 字节（<span class="pg">原文p41</span> ）。坑：多归属 SAP 不一致黑洞（<span class="pg">原文p66</span> ）、DF change 丢包需 SMET 补救（<span class="pg">原文p36</span> ）。</p>
+<ul>
+<li>LAG 是前提（<span class="pg">原文p32</span> ）；</li>
+<li>DF=EVI mod N 的 service carving 按 EVI 分散 BUM 负载（<span class="pg">原文p33</span> ）；</li>
+<li>split horizon（VXLAN 下靠对端 PE IP 列表）+ local bias（本 PE 的 BUM 只从本地 ES 出）防环（<span class="pg">原文p34</span> ）；</li>
+<li>aliasing 让远端按流负载分担到全活 ES（<span class="pg">原文p34</span> ）；</li>
+<li>
+<p>mass withdraw 一条 ESI 撤路批量刷新 MAC（<span class="pg">原文p36</span> ）；</p>
+</li>
+<li>
+<p><strong>ESI 三档</strong>：<br>物理口/LACP LAG 自动、静态 LAG 手工 5 字节（<span class="pg">原文p41</span> ）。</p>
+</li>
+<li>坑：多归属 SAP 不一致黑洞（<span class="pg">原文p66</span> ）、DF change 丢包需 SMET 补救（<span class="pg">原文p36</span> ）。</li>
+</ul>
 <h3 id="3-irb-irbdag">3. IRB 与组播：对称 IRB+DAG 是主干</h3>
-<p>对称 IRB 配置简扩展好为主流推荐，每 PE 只维护本地 ARP/MAC-VRF，每 VRF 一个 Fabric-VPN(SBD) 提供跨 EVI 可达（<span class="pg">原文p24-25</span> ）。DAG 同一 anycast IP+MAC（每 VRF 一 VMAC，自动派生 00:00:5e:00:01:VRF-ID），免 VRRP、同 PE 流量不过 fabric（<span class="pg">原文p28-29</span> ）。组播：AOS 仅 ingress replication；跨子网用 OISM（RFC 9625，Fabric-VPN+R-T6，8.10R3 EA），源发现选 R-T10 省带宽；外部 PIM 互通走 PEG（双 PEG 冗余+专用 L3 互联，<span class="pg">原文p37-39</span> ）。外部连通：border leaf+GRM，对外只放聚合路由，双 leaf 调 import 优先级防回声（<span class="pg">原文p46-48</span> ）。</p>
+<ul>
+<li>对称 IRB 配置简扩展好为主流推荐，每 PE 只维护本地 ARP/MAC-VRF，每 VRF 一个 Fabric-VPN(SBD) 提供跨 EVI 可达（<span class="pg">原文p24-25</span> ）。</li>
+<li>DAG 同一 anycast IP+MAC（每 VRF 一 VMAC，自动派生 00:00:5e:00:01:VRF-ID），免 VRRP、同 PE 流量不过 fabric（<span class="pg">原文p28-29</span> ）。</li>
+<li><strong>组播</strong>：<br>AOS 仅 ingress replication；跨子网用 OISM（RFC 9625，Fabric-VPN+R-T6，8.10R3 EA），源发现选 R-T10 省带宽；外部 PIM 互通走 PEG（双 PEG 冗余+专用 L3 互联，<span class="pg">原文p37-39</span> ）。</li>
+<li><strong>外部连通</strong>：<br>border leaf+GRM，对外只放聚合路由，双 leaf 调 import 优先级防回声（<span class="pg">原文p46-48</span> ）。</li>
+</ul>
 <h2 id="_3">三、本书在知识库中的位置</h2>
-<p>与 os-lan-vxlan-evpn（配置实现）、sol-spb（另一条 L2 fabric 路线）构成三角：EVPN=数据中心/跨广域 L2 的事实标准路线，SPB=园区/MAN 单协议路线。跨书易混点：SPB 用 IS-IS 传服务成员，EVPN 用 BGP NLRI；
-SPB head-end 复制对应 EVPN ingress replication 但发现机制不同（LLDP/IS-IS vs R-T3）。版本强绑定 8.10R1-R3、OmniSwitch 6900；
-OISM/PEG 为 EA 特性。</p>
+<ul>
+<li>与 os-lan-vxlan-evpn（配置实现）、sol-spb（另一条 L2 fabric 路线）构成三角：EVPN=数据中心/跨广域 L2 的事实标准路线，SPB=园区/MAN 单协议路线。</li>
+<li><strong>跨书易混点</strong>：<br>SPB 用 IS-IS 传服务成员，EVPN 用 BGP NLRI；SPB head-end 复制对应 EVPN ingress replication 但发现机制不同（LLDP/IS-IS vs R-T3）。</li>
+<li>版本强绑定 8.10R1-R3、OmniSwitch 6900；OISM/PEG 为 EA 特性。</li>
+</ul>
 <h2 id="_4">来源</h2>
 <p>evpn-architecture-guide-en.pdf（73 页）。verified.md：C1-C20；X1-X24；F1-F5；P1-P42；glossary 约 70 条。</p><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

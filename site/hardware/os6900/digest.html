@@ -72,7 +72,7 @@ blockquote p{margin:6px 0}
 <a href="skills/os6900-ops-troubleshoot.html">os6900-ops-troubleshoot</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../hardware/index.html">硬件手册</a> › <a href="index.html">OmniSwitch 6900 Hardware Guide</a> › <span>精华长文 DIGEST</span></nav><h1>精华长文 DIGEST</h1><h1 id="digest-omniswitch-6900-hardware-users-guide">DIGEST — OmniSwitch 6900 Hardware Users Guide 精华</h1>
 <ul>
 <li>本书是 ALE 汇聚层/数据中心 ToR（Top-of-Rack）1U 交换机 OS6900 家族的硬件手册（90 页，10 个机型）。</li>
-<li>核心卖点：10G→400G 全速率谱覆盖（10GBaseT/SFP+/SFP28/QSFP28/QSFP-DD）+ 双向气流（F/R 后缀）+ 1+1 热插拔冗余电源。</li>
+<li><strong>核心卖点</strong>：<br>10G→400G 全速率谱覆盖（10GBaseT/SFP+/SFP28/QSFP28/QSFP-DD）+ 双向气流（F/R 后缀）+ 1+1 热插拔冗余电源。</li>
 <li>全书沿"选型→安装→上电→监控→安全"生命周期展开。</li>
 </ul>
 <h2 id="_1">一、知识地图（三技能单元）</h2>
@@ -93,17 +93,35 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="_2">二、三单元要点串讲</h2>
 <h3 id="1">1. 机箱与模块：十机型三档深度</h3>
-<p>选型决策三问（<span class="pg">原文p12</span> /<span class="pg">原文p28</span> -<span class="pg">原文p47</span> ）：铜还是光（T/X 前缀）；10G/25G/100G/400G 档位；机架深度是否容纳 51.5-59cm 深机箱。端口速率的约束单元是 4 口端口组：V72 端口 1-48 十二组、X48C4E 41-48 分 2 组、V48C8 分组编号非连续，组内 10G 与 25G 不可混（1G+10G 可混）（<span class="pg">原文p28</span> /<span class="pg">原文p38</span> /<span class="pg">原文p40</span> ）。T48C6/X48C6 的 52/53 口 DAC 与 QSFP 不可混插；51/54 口支持 splitter。OS6920-D32 的 QSFP-DD 单口支持 400G/2X200G/4X100G 并向下兼容 QSFP56/28/+（<span class="pg">原文p46</span> ）。预留口陷阱：C32E/V48C8 的 SFP+ 口与 OS6920 的 33 口 "Not currently functional"。</p>
+<ul>
+<li><strong>选型决策三问（<span class="pg">原文p12</span> /<span class="pg">原文p28</span> -<span class="pg">原文p47</span> ）</strong>：<br>铜还是光（T/X 前缀）；10G/25G/100G/400G 档位；机架深度是否容纳 51.5-59cm 深机箱。</li>
+<li><strong>端口速率的约束单元是 4 口端口组</strong>：<br>V72 端口 1-48 十二组、X48C4E 41-48 分 2 组、V48C8 分组编号非连续，组内 10G 与 25G 不可混（1G+10G 可混）（<span class="pg">原文p28</span> /<span class="pg">原文p38</span> /<span class="pg">原文p40</span> ）。</li>
+<li>T48C6/X48C6 的 52/53 口 DAC 与 QSFP 不可混插；51/54 口支持 splitter。</li>
+<li>OS6920-D32 的 QSFP-DD 单口支持 400G/2X200G/4X100G 并向下兼容 QSFP56/28/+（<span class="pg">原文p46</span> ）。</li>
+<li><strong>预留口陷阱</strong>：<br>C32E/V48C8 的 SFP+ 口与 OS6920 的 33 口 "Not currently functional"。</li>
+</ul>
 <h3 id="2">2. 安装与供电：两代电源阵营与深机箱纪律</h3>
-<p>深机箱（51.5-59cm）机架安装三方案：标准机架=前法兰+滑入式后支撑（强制）；中装法兰走机箱中部螺纹孔；仅前法兰被官方明令禁止（<span class="pg">原文p54-57</span> ）。电源两阵营（<span class="pg">原文p59-65</span> ）：V 系 650W（V72/C32/C32E/X48C4E/V48C8）、X 系 400W（T48C6/X48C6/T24C2/X24C2）、OS6920 1500/1600W——阵营间不可混、同箱 AC+DC 可混，每型分 F/R 气流版本。OS6920 AC 双压输入 100-127V 时输出降额且 hold time &lt;20ms（<span class="pg">原文p64</span> ）；DC 为 50A 过流+6AWG+环形端子（电源 8AWG/接地 6AWG）。风扇托盘热更换限 60 秒。</p>
+<ul>
+<li><strong>深机箱（51.5-59cm）机架安装三方案</strong>：<br>标准机架=前法兰+滑入式后支撑（强制）；中装法兰走机箱中部螺纹孔；仅前法兰被官方明令禁止（<span class="pg">原文p54-57</span> ）。</li>
+<li><strong>电源两阵营（<span class="pg">原文p59-65</span> ）</strong>：<br>V 系 650W（V72/C32/C32E/X48C4E/V48C8）、X 系 400W（T48C6/X48C6/T24C2/X24C2）、OS6920 1500/1600W——阵营间不可混、同箱 AC+DC 可混，每型分 F/R 气流版本。</li>
+<li>OS6920 AC 双压输入 100-127V 时输出降额且 hold time &lt;20ms（<span class="pg">原文p64</span> ）；DC 为 50A 过流+6AWG+环形端子（电源 8AWG/接地 6AWG）。</li>
+<li>风扇托盘热更换限 60 秒。</li>
+</ul>
 <h3 id="3">3. 运维与排障：气流失配与温度双阈值</h3>
-<p>气流三件套一致性是 6900 部署第一课（<span class="pg">原文p50</span> /<span class="pg">原文p52</span> ）：启动时失配=OK/PS 绿琥珀交替闪+循环重启；运行中热插失配件=闪琥珀+达 Danger 阈值重启。OS6920 后→前气流 Tmra 降额至 35°C。温度双阈值：Warning 可配发 trap 不停机；Danger 固化超限关机须手动启动（<span class="pg">原文p75</span> ）。LED：QSFP-DD 十二态色表（青=400G/紫=200G/蓝=100G/红=故障）+ QSFP28 蓝琥珀分色（<span class="pg">原文p48</span> ）。EMP 默认 192.168.1.1/24，设 IP 后必须解锁会话类型才能远程访问（<span class="pg">原文p22</span> ）。</p>
+<ul>
+<li><strong>气流三件套一致性是 6900 部署第一课（<span class="pg">原文p50</span> /<span class="pg">原文p52</span> ）</strong>：<br>启动时失配=OK/PS 绿琥珀交替闪+循环重启；运行中热插失配件=闪琥珀+达 Danger 阈值重启。</li>
+<li>OS6920 后→前气流 Tmra 降额至 35°C。</li>
+<li><strong>温度双阈值</strong>：<br>Warning 可配发 trap 不停机；Danger 固化超限关机须手动启动（<span class="pg">原文p75</span> ）。</li>
+<li><strong>LED</strong>：<br>QSFP-DD 十二态色表（青=400G/紫=200G/蓝=100G/红=故障）+ QSFP28 蓝琥珀分色（<span class="pg">原文p48</span> ）。</li>
+<li>EMP 默认 192.168.1.1/24，设 IP 后必须解锁会话类型才能远程访问（<span class="pg">原文p22</span> ）。</li>
+</ul>
 <h2 id="_3">三、本书在知识库中的位置</h2>
-<p>与 hw-6870（堆叠接入）、hw-6560（多千兆接入）构成园区家族线，6900 定位汇聚/ToR 高速档。跨书易混点：本家族 AC+DC 电源可同箱混插，与 hw-9900 的"AC/DC 不可混"相反；
-本家族支持前→后与后→前双向气流，9900 仅前→后。</p>
+<ul>
+<li>与 hw-6870（堆叠接入）、hw-6560（多千兆接入）构成园区家族线，6900 定位汇聚/ToR 高速档。</li>
+<li><strong>跨书易混点</strong>：<br>本家族 AC+DC 电源可同箱混插，与 hw-9900 的"AC/DC 不可混"相反；本家族支持前→后与后→前双向气流，9900 仅前→后。</li>
+</ul>
 <h2 id="_4">来源</h2>
-<p>OmniSwitch 6900 Hardware Users Guide（Rev. C, 2025-12）。verified.md：cases C1-C19；
-principles P1-P40；
-counter-examples X1-X46；
-frameworks F1-F4；
-glossary 约 75 条。</p><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<ul>
+<li>OmniSwitch 6900 Hardware Users Guide（Rev. C, 2025-12）。</li>
+<li><strong>verified.md</strong>：<br>cases C1-C19；principles P1-P40；counter-examples X1-X46；frameworks F1-F4；glossary 约 75 条。</li>
+</ul><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

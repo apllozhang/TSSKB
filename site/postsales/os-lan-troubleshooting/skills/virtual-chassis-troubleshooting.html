@@ -124,7 +124,7 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a1-lab">A1 · 书中案例（LAB 故障根因）</h2>
 <ul>
-<li>c03（LAB2 案例1，p191-198）：6360 两台组 VC 不工作。</li>
+<li><strong>c03（LAB2 案例1，p191-198）</strong>：<br>6360 两台组 VC 不工作。</li>
 <li>show virtual-chassis topology 各自成 Master 单机；
 debug status 报 NOK_08/09/14/17 链；
 cat vcsetup.cfg.1.err 给出确切原因——A 台 "vf-link-mode static" 在 stackport 平台不支持；
@@ -133,8 +133,8 @@ B 台同样的 static 错误外加 member-port 3/1/27 与本机 chassis-id 2 不
 </ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
-<li>触发：VC 建不起来、成员机箱掉线、VFL 口不 up、debug status 出 NOK 码、vcsetup.cfg 报错、ISSU/升级后 VC 异常、疑似脑裂。</li>
-<li>区分：单业务口 down → l2-connectivity；</li>
+<li><strong>触发</strong>：<br>VC 建不起来、成员机箱掉线、VFL 口不 up、debug status 出 NOK 码、vcsetup.cfg 报错、ISSU/升级后 VC 异常、疑似脑裂。</li>
+<li><strong>区分</strong>：<br>单业务口 down → l2-connectivity；</li>
 <li>整机模块 DOWN/微码问题 → boot-system；</li>
 <li>VC 内链路聚合成员口 down 的日志因果链见 ovna skill 的 c12。VC 故障常表现为"多台同时异常"，先 show virtual-chassis topology 判断是不是 VC 层问题；</li>
 </ul>

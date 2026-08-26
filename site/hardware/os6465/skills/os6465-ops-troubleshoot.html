@@ -73,12 +73,16 @@ blockquote p{margin:6px 0}
 <ul>
 <li>无人值守站点要把温度/门磁等外部传感器接告警输入、联动本地声光/PLC 输出</li>
 <li>把系统事件（认证失败/电源故障/Link-Down 等）映射到继电器输出或 trap</li>
-<li>站点失电要被网管感知：Dying Gasp 三通道（SNMP/Syslog/OAM PDU）</li>
+<li><strong>站点失电要被网管感知</strong>：<br>Dying Gasp 三通道（SNMP/Syslog/OAM PDU）</li>
 <li>日常巡检 show module/temperature/powersupply；LED 异常判断</li>
 <li>处置温度 Warning trap 或 Danger 关机；核对 NEBS/OSP 接线红线</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>失电感知与告警双体系（F3，<span class="pg">原文p63</span> /<span class="pg">原文p65</span> /<span class="pg">原文p68</span> /<span class="pg">原文p69</span> ）：预防侧=告警继电器（外部传感器输入 5-12VDC+8 类系统事件，独立/VC 两模式，映射到 NO/C/NC 输出，条件恢复自动清除）；亡故侧=Dying Gasp（残电三通道：SNMP trap 前 3 站+Syslog 前 3 服务器+4 个 802.3ah OAM PDU 上联口优先）。告警 VC 同步机制（P19）：VC 中任一机的输入/事件可驱动任一机的输出。温度双阈值与 6360 同构（P24）：Warning trap 不停机/Danger 自动关机需手动重启且不可配；各机型阈值梯度不同（P8：75-95/83-97°C）。</p>
+<ul>
+<li><strong>失电感知与告警双体系（F3，<span class="pg">原文p63</span> /<span class="pg">原文p65</span> /<span class="pg">原文p68</span> /<span class="pg">原文p69</span> ）</strong>：<br>预防侧=告警继电器（外部传感器输入 5-12VDC+8 类系统事件，独立/VC 两模式，映射到 NO/C/NC 输出，条件恢复自动清除）；亡故侧=Dying Gasp（残电三通道：SNMP trap 前 3 站+Syslog 前 3 服务器+4 个 802.3ah OAM PDU 上联口优先）。</li>
+<li><strong>告警 VC 同步机制（P19）</strong>：<br>VC 中任一机的输入/事件可驱动任一机的输出。</li>
+<li><strong>温度双阈值与 6360 同构（P24）</strong>：<br>Warning trap 不停机/Danger 自动关机需手动重启且不可配；各机型阈值梯度不同（P8：75-95/83-97°C）。</li>
+</ul>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>本地告警选继电器输出</strong>：传感器/事件→alarm map→NO/C/NC 干接点（220VDC/250VAC·2A·60W）接声光/PLC（P18，<span class="pg">原文p63</span> ）</li>
@@ -99,16 +103,19 @@ blockquote p{margin:6px 0}
 <h2 id="e">E（实证案例）</h2>
 <ul>
 <li>认证失败事件驱动告警输出全流程（C17，<span class="pg">原文p64</span> ）</li>
-<li>DG 触发场景：单电源失效/主备先后全失——双电源分独立电路降低触发概率（C1，<span class="pg">原文p15</span> ）</li>
-<li>各机型 Warning/Danger 阈值梯度：P6 93/94、P12 95/97、ENH-240 84/89、P28 80/86、T-12 75/83、T-P12 78/85°C（P8，<span class="pg">原文p24-36</span> ）</li>
+<li><strong>DG 触发场景</strong>：<br>单电源失效/主备先后全失——双电源分独立电路降低触发概率（C1，<span class="pg">原文p15</span> ）</li>
+<li><strong>各机型 Warning/Danger 阈值梯度</strong>：<br>P6 93/94、P12 95/97、ENH-240 84/89、P28 80/86、T-12 75/83、T-P12 78/85°C（P8，<span class="pg">原文p24-36</span> ）</li>
 </ul>
 <h2 id="b">B（反例/坑）</h2>
 <ul>
 <li><strong>本机型注意</strong>：Danger 阈值出厂固化不可配（X25，<span class="pg">原文p67</span> ）；且本机 24V 输入存在检测电路缺陷——PS LED 不亮不代表电源真坏（X1，<span class="pg">原文p24</span> ）</li>
 <li>DG 的 OAM PDU 通道需先在端口使能 efm-oam 并开 propagate-events dying-gasp，否则对端收不到失电通告（C19）</li>
 <li>告警输出触点上限 220VDC/250VAC·2A·60W，超限外接会损坏继电器（P18）</li>
-<li>NEBS 红线：楼内端口禁金属直连 OSP 室外线路，加 Primary Protectors 也不够；AC 须接 SPD（X17，<span class="pg">原文p93</span> ）</li>
+<li><strong>NEBS 红线</strong>：<br>楼内端口禁金属直连 OSP 室外线路，加 Primary Protectors 也不够；AC 须接 SPD（X17，<span class="pg">原文p93</span> ）</li>
 <li>T 机型不满足工业认证清单（X7）；Class A 住宅禁用（X23）；雷暴禁作业（X16）；锂电池更换须返厂（X22）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniSwitch 6465 Hardware Users Guide Ch3 告警/温度/DG（<span class="pg">原文p63-69</span> ）、Ch4 PoE（<span class="pg">原文p70-84</span> ）、附录 A 工业认证与 NEBS（<span class="pg">原文p85-99</span> ）。条目来源：cases C1/C16-C20；principles P8/P17-P24/P26；counter-examples X1/X7/X16/X17/X22/X23/X25；frameworks F3。</p><div class="pn"><a href="os6465-install-power.html">⬅ 上一单元：os6465-install-power</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<ul>
+<li>OmniSwitch 6465 Hardware Users Guide Ch3 告警/温度/DG（<span class="pg">原文p63-69</span> ）、Ch4 PoE（<span class="pg">原文p70-84</span> ）、附录 A 工业认证与 NEBS（<span class="pg">原文p85-99</span> ）。</li>
+<li><strong>条目来源</strong>：<br>cases C1/C16-C20；principles P8/P17-P24/P26；counter-examples X1/X7/X16/X17/X22/X23/X25；frameworks F3。</li>
+</ul><div class="pn"><a href="os6465-install-power.html">⬅ 上一单元：os6465-install-power</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

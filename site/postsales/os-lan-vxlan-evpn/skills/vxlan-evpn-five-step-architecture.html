@@ -109,15 +109,14 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a1">A1 · 书中案例</h2>
 <ul>
-<li>数据面学习模型（p38）：每 VNI 一个虚拟桥（service 实例），SAP/SDP 均为虚端口；EVPN 下远端 MAC 经 RT2 学到、挂 sdp:32768 虚端口；学习可禁用（禁后未知 MAC 直接丢弃）。</li>
-<li>on-demand 现象判读（p184/p117）：<code>sh mac-learning evpn-vxlan</code> 表项少于 BGP RT2 路由数属正常，用 <code>debug evpn show bgp route-type rt2</code> 对比即可，不代表路由缺失。</li>
-<li>转发流程（p181-182）：同子网 8 步（ARP 泛洪→RT2 通告→应答入表→单播直达）；
-跨子网（非对称 IRB）6 步（ARP 网关→入端 PE 查 MAC-VRF 后查 IP-VRF 跨 IRB 路由→目的 VNI 封装转发）。</li>
+<li><strong>数据面学习模型（p38）</strong>：<br>每 VNI 一个虚拟桥（service 实例），SAP/SDP 均为虚端口；EVPN 下远端 MAC 经 RT2 学到、挂 sdp:32768 虚端口；学习可禁用（禁后未知 MAC 直接丢弃）。</li>
+<li><strong>on-demand 现象判读（p184/p117）</strong>：<br><code>sh mac-learning evpn-vxlan</code> 表项少于 BGP RT2 路由数属正常，用 <code>debug evpn show bgp route-type rt2</code> 对比即可，不代表路由缺失。</li>
+<li><strong>转发流程（p181-182）</strong>：<br>同子网 8 步（ARP 泛洪→RT2 通告→应答入表→单播直达）；跨子网（非对称 IRB）6 步（ARP 网关→入端 PE 查 MAC-VRF 后查 IP-VRF 跨 IRB 路由→目的 VNI 封装转发）。</li>
 </ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
-<li>触发：方案论证/写迁移建议书、开局排总路线、8.10R1 能力核对、"BGP 有路由但 MAC 表没有"的正常性判读。</li>
-<li>区分：具体命令怎么配 → <code><a href="vxlan-evpn-underlay-bgp-design.html">vxlan-evpn-underlay-bgp-design</a></code>（底座）与 <code><a href="vxlan-evpn-service-provisioning.html">vxlan-evpn-service-provisioning</a></code>（业务）；</li>
+<li><strong>触发</strong>：<br>方案论证/写迁移建议书、开局排总路线、8.10R1 能力核对、"BGP 有路由但 MAC 表没有"的正常性判读。</li>
+<li><strong>区分</strong>：<br>具体命令怎么配 → <code><a href="vxlan-evpn-underlay-bgp-design.html">vxlan-evpn-underlay-bgp-design</a></code>（底座）与 <code><a href="vxlan-evpn-service-provisioning.html">vxlan-evpn-service-provisioning</a></code>（业务）；</li>
 <li>多归属/DF → <code><a href="vxlan-evpn-multihoming-df.html">vxlan-evpn-multihoming-df</a></code>；</li>
 <li>BUM 与排障 → <code><a href="vxlan-evpn-bum-troubleshooting.html">vxlan-evpn-bum-troubleshooting</a></code>。本 skill 只管"路线图 + 架构论证 + 版本边界"；</li>
 </ul>

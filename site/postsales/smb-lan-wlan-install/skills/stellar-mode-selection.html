@@ -84,7 +84,11 @@ blockquote p{margin:6px 0}
 <li>AP 数量增长，要多台 AP 自动成组统一管理</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>Stellar 是无控制器架构：AP 间通过空口直接交换漫游上下文、通过 LAN 交换 RF 参数，管理面按规模三选一——Express 自管理集群（255 台）、Enterprise 本地 OV2500（4000 台）、Cloud Cirrus（10000 台）。AP 上电后按"DHCP option 138 → Cirrus 注册检查 → Express"三段决策树自动落到某个模式。多台 AP 同 Group ID + 同 VLAN 即自动成组并选举 PVM/SVM 主备。</p>
+<ul>
+<li><strong>Stellar 是无控制器架构</strong>：<br>AP 间通过空口直接交换漫游上下文、通过 LAN 交换 RF 参数，管理面按规模三选一——Express 自管理集群（255 台）、Enterprise 本地 OV2500（4000 台）、Cloud Cirrus（10000 台）。</li>
+<li>AP 上电后按"DHCP option 138 → Cirrus 注册检查 → Express"三段决策树自动落到某个模式。</li>
+<li>多台 AP 同 Group ID + 同 VLAN 即自动成组并选举 PVM/SVM 主备。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>模式选型（F02，<span class="pg">原文p195</span> 、<span class="pg">原文p185</span> –<span class="pg">原文p189</span> ）：</li>
@@ -100,16 +104,16 @@ blockquote p{margin:6px 0}
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
 <li>AP Group 出厂默认 Group ID 100、VLAN 1；改 Group 名/ID/管理 IP 在 System &gt; General（C17，<span class="pg">原文p264</span> –<span class="pg">原文p268</span> ；P34，<span class="pg">原文p202</span> ）。</li>
-<li>PVM/SVM 选举双准则：先比 AP 型号高低，再比 MAC 大小（F15/P35，<span class="pg">原文p203</span> ）。</li>
-<li>分布式控制：空口交换漫游上下文/MAC/密钥/ARP，LAN 交换 RF 设置/功率/信道/RSSI（P47，<span class="pg">原文p280</span> ）。</li>
-<li>AP 选型速查：Wi-Fi 代际九维对照（Wi-Fi 6 = 802.11ax 9.6Gbps WPA3，Wi-Fi 7 = 802.11be 46Gbps 320MHz 16x16 MU-MIMO）（F11，<span class="pg">原文p45</span> ）；型号尾数 2 = 支持外置天线，其余内置全向（P50，<span class="pg">原文p41</span> ）。</li>
+<li><strong>PVM/SVM 选举双准则</strong>：<br>先比 AP 型号高低，再比 MAC 大小（F15/P35，<span class="pg">原文p203</span> ）。</li>
+<li><strong>分布式控制</strong>：<br>空口交换漫游上下文/MAC/密钥/ARP，LAN 交换 RF 设置/功率/信道/RSSI（P47，<span class="pg">原文p280</span> ）。</li>
+<li><strong>AP 选型速查</strong>：<br>Wi-Fi 代际九维对照（Wi-Fi 6 = 802.11ax 9.6Gbps WPA3，Wi-Fi 7 = 802.11be 46Gbps 320MHz 16x16 MU-MIMO）（F11，<span class="pg">原文p45</span> ）；型号尾数 2 = 支持外置天线，其余内置全向（P50，<span class="pg">原文p41</span> ）。</li>
 <li>无控制器架构下 AP 自带 DHCP/DNS/NAT 三件套服务（P37，<span class="pg">原文p216</span> ）。</li>
-<li>AP LED 状态判读：绿闪 = 已启动广播默认 SSID，蓝 = 双频，蓝红闪 = 升级中，红 = 启动中（P42，<span class="pg">原文p52</span> ）。</li>
+<li><strong>AP LED 状态判读</strong>：<br>绿闪 = 已启动广播默认 SSID，蓝 = 双频，蓝红闪 = 升级中，红 = 启动中（P42，<span class="pg">原文p52</span> ）。</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>Express 向导：新建 SSID AdminX 替换默认 mywifi-XXXX，AP 改静态 IP 后用新地址重连（C02，<span class="pg">原文p99</span> –<span class="pg">原文p103</span> ）。</li>
-<li>OS2360 接入 + AP 自动成组：两台 AP 出现在同一 AP Group，PVM 为 AP1321（C17，<span class="pg">原文p264</span> –<span class="pg">原文p268</span> ）。</li>
+<li><strong>Express 向导</strong>：<br>新建 SSID AdminX 替换默认 mywifi-XXXX，AP 改静态 IP 后用新地址重连（C02，<span class="pg">原文p99</span> –<span class="pg">原文p103</span> ）。</li>
+<li><strong>OS2360 接入 + AP 自动成组</strong>：<br>两台 AP 出现在同一 AP Group，PVM 为 AP1321（C17，<span class="pg">原文p264</span> –<span class="pg">原文p268</span> ）。</li>
 <li>AP 切 DHCP 后用 mywifi.al-enterprise.com:8080 域名访问管理页（C10，<span class="pg">原文p176</span> –<span class="pg">原文p180</span> ）。</li>
 </ul>
 <h2 id="b">B（边界与陷阱）</h2>

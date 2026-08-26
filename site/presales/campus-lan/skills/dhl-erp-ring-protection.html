@@ -90,8 +90,8 @@ blockquote p{margin:6px 0}
 <p><strong>DHL（接入双活，替代堆叠双归）</strong>
 - 作用域只管接入交换机；每台 1 会话、恰 2 条链路（可配普通口或 LAG 口）。
 - 双链路同时活跃，VLAN 分组拆到 Link A/B 负载分担，故障时改各 VLAN 转发状态切换，全程无 STP。
-- 防环红线：两台上行设备之间不得再挂核心以外的链路；接入侧配三件套 <strong>LPS / Loop Guard / BPDU Shutdown</strong>。
-- 机型口径矛盾（需注版）：p54 称"除 9900 全支持"，p301 矩阵 6570M/6900/9900 均 No——DHL 只在接入/汇聚层兑现。</p>
+- <strong>防环红线</strong>：<br>两台上行设备之间不得再挂核心以外的链路；接入侧配三件套 <strong>LPS / Loop Guard / BPDU Shutdown</strong>。
+- <strong>机型口径矛盾（需注版）</strong>：<br>p54 称"除 9900 全支持"，p301 矩阵 6570M/6900/9900 均 No——DHL 只在接入/汇聚层兑现。</p>
 <p><strong>ERPv2（G.8032 环网）关键常数</strong></p>
 <table>
 <thead>
@@ -129,8 +129,8 @@ blockquote p{margin:6px 0}
 <p>c12（p316，详见参考架构库 skill）：五楼宇 10/40G ERPv2 环 + 核心侧 DHL 接入双归的分布式环网方案。</p>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
-<li>触发：客户光纤资源呈环形（校园/厂区/轨道交通沿线），或招标书写"故障倒换 ≤50ms"的电信级 SLA；接入交换机不想堆叠但要双活上联。</li>
-<li>区分：本 skill 管 DHL 与 ERP 的机制与规则；</li>
+<li><strong>触发</strong>：<br>客户光纤资源呈环形（校园/厂区/轨道交通沿线），或招标书写"故障倒换 ≤50ms"的电信级 SLA；接入交换机不想堆叠但要双活上联。</li>
+<li><strong>区分</strong>：<br>本 skill 管 DHL 与 ERP 的机制与规则；</li>
 <li>整体架构模板（环网+接入机型组合）走 <code><a href="campus-reference-architectures.html">campus-reference-architectures</a></code>；</li>
 <li>"六种高可用方案选哪条路线"的横比走 <code><a href="campus-design-tiering-and-ha.html">campus-design-tiering-and-ha</a></code>；</li>
 <li>SPB 场景（非时敏大网）走 <code><a href="spb-vxlan-core-fabric.html">spb-vxlan-core-fabric</a></code>；</li>
@@ -163,9 +163,9 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>
-<li>ce07：SPB 约 300ms ≠ 50ms；50ms 只能用 ERPv2 兑现，且 50ms 本身有 1200km/16 节点/无拥塞前提，应标时要写条件。</li>
-<li>ce03：DHL 上联误接非核心设备即成环、广播风暴——三件套必须配进基线配置。</li>
-<li>ce04：DHL 机型支持按 p54 全承诺会翻车，以 p301 矩阵 + 最新 release notes 为准。</li>
+<li><strong>ce07</strong>：<br>SPB 约 300ms ≠ 50ms；50ms 只能用 ERPv2 兑现，且 50ms 本身有 1200km/16 节点/无拥塞前提，应标时要写条件。</li>
+<li><strong>ce03</strong>：<br>DHL 上联误接非核心设备即成环、广播风暴——三件套必须配进基线配置。</li>
+<li><strong>ce04</strong>：<br>DHL 机型支持按 p54 全承诺会翻车，以 p301 矩阵 + 最新 release notes 为准。</li>
 <li>ERPv2 除 OS2260 外全系支持（6360 起）。</li>
 </ul>
 <hr />

@@ -88,8 +88,10 @@ blockquote p{margin:6px 0}
 <li>PVLAN 域要跨多台交换机延伸</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>Private VLAN 把一个广播域切成多个子域：Primary VLAN 对外，Secondary VLAN 分 isolated（成员间二层完全不通）与 community（组内通、组间不通）。转发模型上，出向流量经 Primary VLAN 转发，未授权的二级 VLAN 间流量被丢弃；
-所有 secondary 的 MAC 实际学在 primary VLAN 上。</p>
+<ul>
+<li><strong>Private VLAN 把一个广播域切成多个子域</strong>：<br>Primary VLAN 对外，Secondary VLAN 分 isolated（成员间二层完全不通）与 community（组内通、组间不通）。</li>
+<li>转发模型上，出向流量经 Primary VLAN 转发，未授权的二级 VLAN 间流量被丢弃；所有 secondary 的 MAC 实际学在 primary VLAN 上。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>定义主/从 VLAN：<code>pvlan 100 admin-state enable</code> / <code>pvlan 100 secondary 101 type community</code> / <code>pvlan 100 secondary 103 type isolated</code>（<span class="pg">原文p103</span> ）</li>
@@ -100,14 +102,14 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
-<li>端口四角色：promiscuous（属 primary，全通）/ isolated（仅到 promiscuous）/ community（限本社区）/ ISL（跨交换机承载主+从全部流量）（<span class="pg">原文p100</span> ）</li>
+<li><strong>端口四角色</strong>：<br>promiscuous（属 primary，全通）/ isolated（仅到 promiscuous）/ community（限本社区）/ ISL（跨交换机承载主+从全部流量）（<span class="pg">原文p100</span> ）</li>
 <li>UNP 端口运行时按首个学到的 MAC 的 VLAN 分类决定 isolated/community 角色；若首 MAC 落在非 PVLAN 的标准 VLAN，则无法指定角色（<span class="pg">原文p106</span> ）</li>
 <li>需要多组互不相通的用户时用多个 community，因为一个 Primary 只能有一个 Isolated VLAN（<span class="pg">原文p109</span> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>C-07 双交换机部署：<code>pvlan 250 members linkagg 78 isl</code>，端口改入 community 251 后 Client7 ping Client8 成功，改入 isolated 252 后 ping 失败（<span class="pg">原文p110</span> -<span class="pg">原文p112</span> ）</li>
-<li>C-08 域内配置示例：<code>show mac-learning</code> 证明 secondary 的 MAC 学在 VLAN 100（<span class="pg">原文p103</span> ）</li>
+<li><strong>C-07 双交换机部署</strong>：<br><code>pvlan 250 members linkagg 78 isl</code>，端口改入 community 251 后 Client7 ping Client8 成功，改入 isolated 252 后 ping 失败（<span class="pg">原文p110</span> -<span class="pg">原文p112</span> ）</li>
+<li><strong>C-08 域内配置示例</strong>：<br><code>show mac-learning</code> 证明 secondary 的 MAC 学在 VLAN 100（<span class="pg">原文p103</span> ）</li>
 </ul>
 <h2 id="b">B（边界与陷阱）</h2>
 <ul>

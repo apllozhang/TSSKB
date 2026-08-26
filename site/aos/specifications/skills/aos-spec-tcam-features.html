@@ -76,7 +76,13 @@ blockquote p{margin:6px 0}
 <li>特性组合上线后容量莫名缩水（SAP profile 带 QoS 降容、OAM 域挤占 RFP）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>TCAM profile 零和分配框架（F3，<span class="pg">原文p87-92</span> ）：TCAM 总量固定，profile 在 QoS 入规则/SAP 分类/VSTK 翻译/业务隧道/DHCP snooping/UNP 用户/PVLAN 之间做此消彼长；配置后必须 reload 激活（P51）。选型三步——列出必开特性清单→逐 profile 核对资源列→接受牺牲项后 reload 生效。档位间是零和重分配（6870 QoS ACL 档 QoS 4096 但 SAP 从 2048 降到 1024，P52）；fabric 场景牺牲 VPN 特性换隧道容量（6570M Fabric 档 PVLAN/VSTK 归零，P53）。平台特性缺口是另一维度：N/S 矩阵项（MACsec/WRED/Fingerprinting 等）不因 TCAM 或版本改变。</p>
+<ul>
+<li><strong>TCAM profile 零和分配框架（F3，<span class="pg">原文p87-92</span> ）</strong>：<br>TCAM 总量固定，profile 在 QoS 入规则/SAP 分类/VSTK 翻译/业务隧道/DHCP snooping/UNP 用户/PVLAN 之间做此消彼长；配置后必须 reload 激活（P51）。</li>
+<li>选型三步——列出必开特性清单→逐 profile 核对资源列→接受牺牲项后 reload 生效。</li>
+<li>档位间是零和重分配（6870 QoS ACL 档 QoS 4096 但 SAP 从 2048 降到 1024，P52）；
+fabric 场景牺牲 VPN 特性换隧道容量（6570M Fabric 档 PVLAN/VSTK 归零，P53）。</li>
+<li><strong>平台特性缺口是另一维度</strong>：<br>N/S 矩阵项（MACsec/WRED/Fingerprinting 等）不因 TCAM 或版本改变。</li>
+</ul>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>列必开清单</strong>：QoS ACL 条数、SAP 分类数、IPv6 snooping、SPB 隧道数、UNP 用户数、PVLAN/VSTK 是否需要</li>
@@ -90,7 +96,7 @@ blockquote p{margin:6px 0}
 <li><strong>6870 权衡典型</strong>（P52，<span class="pg">原文p89</span> ）：QoS Ingress Default 2048→QoS ACL 4096，但 SAP 分类 2048→1024；Metro services 档 VSTK 出方向翻译升到 1024 但业务隧道降 1024、UNP 用户降 1024</li>
 <li><strong>6570M Fabric 档</strong>（P53，<span class="pg">原文p90</span> ）：服务隧道 256→513（U28 达 1536）、UNP 用户 256→750（U28），代价 QoS 入规则 384→256、PVLAN/VSTK 归零</li>
 <li><strong>6575 双 fabric 特例</strong>（P54，<span class="pg">原文p92</span> ）：Fabric 档隧道 225→512 但 DHCPv6 ISF 为 0；要 IPv6 snooping 只能选 Source IPv6 ACL 档（DHCP6_RLY_ISF 81、AntiSpoofv6 53），代价 QoS 入 384→128</li>
-<li>平台 N/S 缺口清单：MACsec——6360、6865、6900（除 X48C4E）、6920 不支持，且需站点许可（X9，<span class="pg">原文p29</span> ）；</li>
+<li><strong>平台 N/S 缺口清单</strong>：<br>MACsec——6360、6865、6900（除 X48C4E）、6920 不支持，且需站点许可（X9，<span class="pg">原文p29</span> ）；</li>
 <li>Fast/Perpetual PoE 仅 6360/6860/6860N/6865/6870，6575 无（X10）；</li>
 <li>Ethernet OAM(802.1ag/Y.1731) 不支持 6360 与 9900（X11）；</li>
 <li>Application Fingerprinting 全平台 Currently not supported（X12）；</li>
@@ -112,10 +118,13 @@ blockquote p{margin:6px 0}
 <ul>
 <li>TCAM profile 配置后不 reload 不激活（P51，<span class="pg">原文p87</span> ）</li>
 <li>Fabric 档下 PVLAN/VSTK 归零——还要用 QinQ 或 PVLAN 的节点不能上 Fabric 档（P53）</li>
-<li>6575 要 SPB fabric 与 IPv6 snooping 二选一：Fabric 档无 DHCPv6 ISF，Source IPv6 ACL 档才有（P54）</li>
+<li><strong>6575 要 SPB fabric 与 IPv6 snooping 二选一</strong>：<br>Fabric 档无 DHCPv6 ISF，Source IPv6 ACL 档才有（P54）</li>
 <li>SPB RFP 域最多 8 且与其它 Ethernet OAM 域共享预算，已有 OAM 域时更少（X50，<span class="pg">原文p34</span> ）</li>
 <li>SAP profile 一旦分配优先级/带宽，VLAN Stacking SAP 容量 8K 降到 1K（X40，<span class="pg">原文p71</span> ）</li>
 <li>6860 系 SPB MTU 当前不可配（固定 9K）（X49，<span class="pg">原文p34</span> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniSwitch AOS Release 8 Specifications Guide Ch4 TCAM Profiles（<span class="pg">原文p87-92</span> ）、Ch2 平台支持矩阵散点（<span class="pg">原文p29-76</span> ）。条目来源：principles P38/P51-P54；counter-examples X9-X13/X20-X22/X40/X49/X50；frameworks F3。</p><div class="pn"><a href="aos-spec-capacity-limits.html">⬅ 上一单元：aos-spec-capacity-limits</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<ul>
+<li>OmniSwitch AOS Release 8 Specifications Guide Ch4 TCAM Profiles（<span class="pg">原文p87-92</span> ）、Ch2 平台支持矩阵散点（<span class="pg">原文p29-76</span> ）。</li>
+<li><strong>条目来源</strong>：<br>principles P38/P51-P54；counter-examples X9-X13/X20-X22/X40/X49/X50；frameworks F3。</li>
+</ul><div class="pn"><a href="aos-spec-capacity-limits.html">⬅ 上一单元：aos-spec-capacity-limits</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

@@ -80,15 +80,21 @@ blockquote p{margin:6px 0}
 <a href="../skills/aos-nc-oam-monitoring.html">aos-nc-oam-monitoring</a>
 <a href="../skills/aos-nc-switch-foundation.html">aos-nc-switch-foundation</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../aos/index.html">AOS 软件手册</a> › <a href="../index.html">AOS 8.10R04</a> › <span>aos-nc-qos-policy</span></nav><h1>aos-nc-qos-policy</h1><p class="meta"><span class="badge">SKILL</span> aos-nc-qos-policy · 来源页码: </p><h2 id="r">R（触发场景）</h2>
 <ul>
-<li>语音/视频流量要优先转发：分类标记+队列调度</li>
-<li>某些应用/用户要限速：policing/shaping、tri-color 三色</li>
-<li>按五元组/MAC/端口做精细策略：policy condition+action+rule</li>
-<li>大量同类地址要复用条件：条件组（network/service/MAC/port group）</li>
-<li>安全需求：ACL drop/accept 规则入 policy</li>
-<li>IP 语音要按 SIP 信令识别媒体流给 QoS：SIP snooping</li>
+<li><strong>语音/视频流量要优先转发</strong>：<br>分类标记+队列调度</li>
+<li><strong>某些应用/用户要限速</strong>：<br>policing/shaping、tri-color 三色</li>
+<li><strong>按五元组/MAC/端口做精细策略</strong>：<br>policy condition+action+rule</li>
+<li><strong>大量同类地址要复用条件</strong>：<br>条件组（network/service/MAC/port group）</li>
+<li><strong>安全需求</strong>：<br>ACL drop/accept 规则入 policy</li>
+<li><strong>IP 语音要按 SIP 信令识别媒体流给 QoS</strong>：<br>SIP snooping</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>QoS 四步处理链（F8/P156，<span class="pg">原文p1103</span> ）：分类标记→拥塞管理（入队调度）→拥塞避免（随机丢弃防 tail drop）→policing/shaping。策略三元组：policy=condition+action+rule；流不匹配任何策略则用端口默认 QoS，多策略命中取最高 precedence（P158，<span class="pg">原文p1133</span> ）。每端口 8 条队列，入队依据策略+ToS/802.1p+端口信任状态（P159）。策略来源决定修改权：PolicyView(LDAP) 建的只能 PolicyView 改，CLI/WebView 建的只能本端改（P160/X61，<span class="pg">原文p1133</span> ）。四类策略列表：default/UNP/egress/AFP（AFP 仅 OS6900）（P161，<span class="pg">原文p1134</span> ）。</p>
+<ul>
+<li><strong>QoS 四步处理链（F8/P156，<span class="pg">原文p1103</span> ）</strong>：<br>分类标记→拥塞管理（入队调度）→拥塞避免（随机丢弃防 tail drop）→policing/shaping。</li>
+<li><strong>策略三元组</strong>：<br>policy=condition+action+rule；流不匹配任何策略则用端口默认 QoS，多策略命中取最高 precedence（P158，<span class="pg">原文p1133</span> ）。</li>
+<li>每端口 8 条队列，入队依据策略+ToS/802.1p+端口信任状态（P159）。</li>
+<li><strong>策略来源决定修改权</strong>：<br>PolicyView(LDAP) 建的只能 PolicyView 改，CLI/WebView 建的只能本端改（P160/X61，<span class="pg">原文p1133</span> ）。</li>
+<li><strong>四类策略列表</strong>：<br>default/UNP/egress/AFP（AFP 仅 OS6900）（P161，<span class="pg">原文p1134</span> ）。</li>
+</ul>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>先定分类</strong>：信任口采信报文已有 802.1p/ToS；802.1Q tagged 口默认 untrusted——上联口语音/视频标记不生效的常见原因（X64，<span class="pg">原文p1134</span> ）</li>
@@ -117,9 +123,12 @@ blockquote p{margin:6px 0}
 <li>LDAP/PolicyView 创建的 QoS 对象不能在 CLI 改，反之亦然（X61，<span class="pg">原文p1133</span> ）</li>
 <li>IPv4 与 IPv6 条件不能组合进同一 condition；destination VLAN 条件仅组播规则可用；source ip+ARP 组合仅 OS6860/E 支持（X62/P163，<span class="pg">原文p1135</span> ）</li>
 <li>有效的规则也可能因依赖功能（如路由）未开而无法执行（X63，<span class="pg">原文p1134</span> ）</li>
-<li>SIP Snooping 一揽子限制：仅 IPv4、仅 UDP（含 UDP/TCP），不支持 TLS/SCTP/MPLS、加密 RTCP/SDP、DNS/FQDN、无 VRF/NAT 感知（X65，<span class="pg">原文p704</span> ）</li>
+<li><strong>SIP Snooping 一揽子限制</strong>：<br>仅 IPv4、仅 UDP（含 UDP/TCP），不支持 TLS/SCTP/MPLS、加密 RTCP/SDP、DNS/FQDN、无 VRF/NAT 感知（X65，<span class="pg">原文p704</span> ）</li>
 <li>SIP 所有初始消息必须过同一 SIP Server，端到端直连会话不支持；电话侧 outbound proxy 必须与交换机 trusted call server 一致（X66，<span class="pg">原文p704</span> ）</li>
 <li>边缘口 SIP IP 与 RTP IP 不一致时 TCAM 表项不建、QoS 不生效；TCAM 装表前的早发媒体流得不到 QoS 待遇（X67/X68，<span class="pg">原文p704</span> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniSwitch AOS 8.10R4 Network Configuration Guide 第 20 章 SIP Snooping（<span class="pg">原文p704</span> ）、第 33 章 QoS（<span class="pg">原文p1103-1176</span> ）、第 34 章 Policy Servers（<span class="pg">原文p1175</span> ）。条目来源：cases C52-C54；principles P156-P165；counter-examples X60-X68；frameworks F8。</p><div class="pn"><a href="aos-nc-multicast.html">⬅ 上一单元：aos-nc-multicast</a><a class="nxt" href="aos-nc-access-security.html">下一单元：aos-nc-access-security ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<ul>
+<li>OmniSwitch AOS 8.10R4 Network Configuration Guide 第 20 章 SIP Snooping（<span class="pg">原文p704</span> ）、第 33 章 QoS（<span class="pg">原文p1103-1176</span> ）、第 34 章 Policy Servers（<span class="pg">原文p1175</span> ）。</li>
+<li><strong>条目来源</strong>：<br>cases C52-C54；principles P156-P165；counter-examples X60-X68；frameworks F8。</li>
+</ul><div class="pn"><a href="aos-nc-multicast.html">⬅ 上一单元：aos-nc-multicast</a><a class="nxt" href="aos-nc-access-security.html">下一单元：aos-nc-access-security ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

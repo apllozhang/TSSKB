@@ -136,15 +136,13 @@ blockquote p{margin:6px 0}
 <h2 id="local-breakout">三、配置文件与 Local Breakout 要点</h2>
 <p><strong>设置文件是这套方案的命门</strong>（p62-63）：Device Catalog/Data VPN Server 界面导出（AP 入目录即可，无需等 Registered），SFTP 上传到 VA 的 /opt/OmniVista_2500_NMS/data/vpn_conf/vpn_profile 目录，<strong>文件名不可改</strong>；任何配置变更或新加 AP，都必须重走"导出→SFTP→VA 重配"全流程——旧文件里没有新 AP 的 WireGuard 公钥。</p>
 <ul>
-<li>Data VPN 五步链：建 Data VPN Server → <strong>绑 AP Group（p68 明确 mandatory，不绑隧道建不起来）</strong> → 导出文件 → SFTP 上传 → 配 VPN Service 与 Endpoint（管理隧道接口选 None，数据隧道选无 IP 的 eth2）。</li>
-<li>隧道 SSID 参数块：Use Tunnel 勾选、Tunnel ID=0、选 Data VPN Server profile、WPA3_AES、Entropy 禁用（p71）。</li>
+<li><strong>Data VPN 五步链</strong>：<br>建 Data VPN Server → <strong>绑 AP Group（p68 明确 mandatory，不绑隧道建不起来）</strong> → 导出文件 → SFTP 上传 → 配 VPN Service 与 Endpoint（管理隧道接口选 None，数据隧道选无 IP 的 eth2）。</li>
+<li><strong>隧道 SSID 参数块</strong>：<br>Use Tunnel 勾选、Tunnel ID=0、选 Data VPN Server profile、WPA3_AES、Entropy 禁用（p71）。</li>
 <li>
 <p>最终 RAP 与 VPN Server 间建 L2GRE 隧道（p67-68）。</p>
 </li>
 <li>
-<p>Local Breakout 三条路由红线（p73-74）：只有 Tunnel ID=0 且隧道内单 VLAN 才能开；
-静态路由跨 SSID 累积（SSID1 配 A/B、SSID2 配 C/D，四条对两个 SSID 都生效），子网必须唯一；
-隧道 VLAN 网段禁手工配路由。</p>
+<p><strong>Local Breakout 三条路由红线（p73-74）</strong>：<br>只有 Tunnel ID=0 且隧道内单 VLAN 才能开；静态路由跨 SSID 累积（SSID1 配 A/B、SSID2 配 C/D，四条对两个 SSID 都生效），子网必须唯一；隧道 VLAN 网段禁手工配路由。</p>
 </li>
 <li>DNS 故障统一解法是配正确的总部 DNS（p83-84）。</li>
 <li>DS-Lite 环境按参数表调 TCPMSS/MTU（1352/1300/1376 一组）。</li>
@@ -182,7 +180,7 @@ blockquote p{margin:6px 0}
 <ul>
 <li><strong>hypervisor</strong>：ESXi 6.5/6.7/7.0.2/8.0，<strong>5.5 明确不支持</strong>；Hyper-V 2016/2019/2022；另支持 Ubuntu 22.04 LTS + KVM（p5）。</li>
 <li><strong>版本配套</strong>：AWOS ≥5.0.2（文档三处口径打架：p7 邮件写 5.0.1、p71 写 4.0.1 疑笔误，按最严 5.0.2+ 核对）；VPN VA 4.9.2.2 配 OV2500 4.9R2 / OVC 4.9.2（p5）。</li>
-<li>网卡与端口：Eth0 公网口/Eth1 私网口/Eth2 桥接口（L2 隧道禁配 IP）；</li>
+<li><strong>网卡与端口</strong>：<br>Eth0 公网口/Eth1 私网口/Eth2 桥接口（L2 隧道禁配 IP）；</li>
 <li>Hyper-V Teaming 仅 Switch Independent + Address Hash 实测可用（Switch Independent 下另两种不通过）；</li>
 <li>
 <p>KVM 安装前必须对 VirtIO 盘设 Discard=unmap，点完 Begin Installation 就无法回头；</p>

@@ -84,7 +84,11 @@ blockquote p{margin:6px 0}
 <li>前台需要自助开访客账号、或需要审计访客在线行为</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>访客网络的标准形态是：Open SSID + Captive Portal + 独立 VLAN + 仅 internet 访问 + 低优先级。认证方式三选一（账号 / 接入码 / 使用条款），账号可设起止日期形成自然过期。UPAM 内嵌的 Captive Portal 支持 Social Login（如 Rainbow），并可用 GuestOperator 受限账号把开号工作交给前台。</p>
+<ul>
+<li><strong>访客网络的标准形态是</strong>：<br>Open SSID + Captive Portal + 独立 VLAN + 仅 internet 访问 + 低优先级。</li>
+<li>认证方式三选一（账号 / 接入码 / 使用条款），账号可设起止日期形成自然过期。</li>
+<li>UPAM 内嵌的 Captive Portal 支持 Social Login（如 Rainbow），并可用 GuestOperator 受限账号把开号工作交给前台。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>Express 版访客 SSID：WLAN &gt; New &gt; Security Open + Captive Portal Yes + VLAN 30 &gt; Access &gt; Authentication 选 Account &gt; Add 建账号（如 Guest/superuser）并设起止日期 &gt; 客户端访问 non-https URL 触发门户 &gt; 登录后取 192.168.30.x（C12，<span class="pg">原文p225</span> –<span class="pg">原文p228</span> ）。</li>
@@ -94,22 +98,22 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
-<li>三种认证方式（P39，<span class="pg">原文p226</span> ）：account（账号密码）、access code（接入码）、terms of use（使用条款）；账号字段区分大小写，可设有效期。</li>
-<li>Walled Garden（P49，<span class="pg">原文p235</span> 、<span class="pg">原文p410</span> ）：认证前白名单放行预设站点（如酒店官网），提升访客体验。</li>
-<li>门户能力面：账号/接入码/条款/社交登录（Rainbow）/自助注册（glossary·<span class="pg">原文p213</span> 、<span class="pg">原文p409</span> ）。</li>
-<li>访客策略三维基线：仅 internet、常规带宽、低优先级（P38，<span class="pg">原文p217</span> ）。</li>
+<li><strong>三种认证方式（P39，<span class="pg">原文p226</span> ）</strong>：<br>account（账号密码）、access code（接入码）、terms of use（使用条款）；账号字段区分大小写，可设有效期。</li>
+<li><strong>Walled Garden（P49，<span class="pg">原文p235</span> 、<span class="pg">原文p410</span> ）</strong>：<br>认证前白名单放行预设站点（如酒店官网），提升访客体验。</li>
+<li><strong>门户能力面</strong>：<br>账号/接入码/条款/社交登录（Rainbow）/自助注册（glossary·<span class="pg">原文p213</span> 、<span class="pg">原文p409</span> ）。</li>
+<li><strong>访客策略三维基线</strong>：<br>仅 internet、常规带宽、低优先级（P38，<span class="pg">原文p217</span> ）。</li>
 <li>Guest 场景的 SSID 向导比员工版多一步 Guest Access Strategy（门户定制 + 登录方式）（F05，<span class="pg">原文p405</span> 、<span class="pg">原文p413</span> ）。</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>Express 访客门户：GuestX SSID + 账号 Guest/superuser，http://2.2.2.2 触发重定向，登录后取 192.168.30.x（C12，<span class="pg">原文p225</span> –<span class="pg">原文p228</span> ）。</li>
-<li>Cirrus 访客门户：Guest Access Strategy + 门户模板 + VLAN30 绑定，Analytics 里 Kick Off 踢出用户（C21，<span class="pg">原文p418</span> –<span class="pg">原文p425</span> ）。</li>
+<li><strong>Express 访客门户</strong>：<br>GuestX SSID + 账号 Guest/superuser，http://2.2.2.2 触发重定向，登录后取 192.168.30.x（C12，<span class="pg">原文p225</span> –<span class="pg">原文p228</span> ）。</li>
+<li><strong>Cirrus 访客门户</strong>：<br>Guest Access Strategy + 门户模板 + VLAN30 绑定，Analytics 里 Kick Off 踢出用户（C21，<span class="pg">原文p418</span> –<span class="pg">原文p425</span> ）。</li>
 <li>行为日志外发 Syslog，含 MAC/IP/SSID/在线状态（C14，<span class="pg">原文p233</span> ）。</li>
 </ul>
 <h2 id="b">B（边界与陷阱）</h2>
 <ul>
 <li>门户重定向只对 non-https URL 生效，Debian 树莓派不会自动弹门户，须手动开 http 站点（CE11，<span class="pg">原文p422</span> ）。</li>
-<li>账号区分大小写：'Guest' 与 'guest' 是两个账号，登录失败先查大小写（CE12，<span class="pg">原文p226</span> ）。</li>
+<li><strong>账号区分大小写</strong>：<br>'Guest' 与 'guest' 是两个账号，登录失败先查大小写（CE12，<span class="pg">原文p226</span> ）。</li>
 <li>访客 SSID 必须绑独立 VLAN（如 VLAN30），与员工网段隔离（C12/C21）。</li>
 </ul>
 <h2 id="_1">来源</h2>

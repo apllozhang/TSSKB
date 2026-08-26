@@ -102,7 +102,19 @@ blockquote p{margin:6px 0}
 </li>
 </ol>
 <h2 id="a1-lab">A1 · 书中案例（Lab 精要）</h2>
-<p>c10（p467-497）完整流程：Cirrus 4（registration.ovcirrus.com）Inventory &gt; Device Catalog 录序列号/MAC 并勾 Is this a Remote AP=YES；配管理 VPN（公网 IP:6550、Server VPN IP 192.168.0.1、客户端池 192.168.0.2-20、OV2500 IP），Export VPN Settings 导出 .conf；ALE VPN Server 虚机（OVF 部署）设双网卡（eth0 公网/eth1 私网），FileZilla 把 .conf 传到 /opt/OmniVista_2500_NMS/data/vpn_conf/vpn_profile，建 vpn_mgmt 服务导入 endpoint，Apply 后重启 AP，Maintenance &gt; VPN Status 应见 peer 握手；OV2500 虚机加默认路由（192.168.0.0/24 网关 10.130.5.251）；再建数据 VPN（10.7.0.61、客户端池 10.7.0.55-60、端口 6551 绑 eth2），AP Group 的 Data VPN Setting 选中；建 EmployeesX 时选 Use Tunnel、Tunnel ID=0。验证：远程客户端连 EmployeesX 过 802.1X，拿到员工网段地址。</p>
+<ul>
+<li><strong>c10（p467-497）完整流程</strong>：<br>Cirrus 4（registration.ovcirrus.com）Inventory &gt; Device Catalog 录序列号/MAC 并勾 Is this a Remote AP=YES；</li>
+<li>配管理 VPN（公网 IP:6550、Server VPN IP 192.168.0.1、客户端池 192.168.0.2-20、OV2500 IP），Export VPN Settings 导出 .conf；</li>
+<li>ALE VPN Server 虚机（OVF 部署）设双网卡（eth0 公网/eth1 私网），FileZilla 把 .conf 传到 /opt/OmniVista_2500_NMS/data/vpn_conf/vpn_profile，建 vpn_mgmt 服务导入 endpoint，Apply 后重启 AP，Maintenance &gt; VPN Status 应见 peer 握手；</li>
+<li>OV2500 虚机加默认路由（192.168.0.0/24 网关 10.130.5.251）；</li>
+<li>再建数据 VPN（10.7.0.61、客户端池 10.7.0.55-60、端口 6551 绑 eth2），AP Group 的 Data VPN Setting 选中；</li>
+<li>
+<p>建 EmployeesX 时选 Use Tunnel、Tunnel ID=0；</p>
+</li>
+<li>
+<p><strong>验证</strong>：<br>远程客户端连 EmployeesX 过 802.1X，拿到员工网段地址。</p>
+</li>
+</ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
 <li>分支/门店/展会/居家需要广播企业 SSID 且流量回总部——用本 skill。</li>

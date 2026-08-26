@@ -128,17 +128,17 @@ blockquote p{margin:6px 0}
 <li>无线攻击检测默认开启，分 AP 攻击/客户端攻击，级别 Custom/High/Medium/Low</li>
 <li>Client Blocklist Policy 默认禁用；开启后触发条件 60 秒内认证失败 10 次拉黑，老化 1 天</li>
 <li>
-<p>局限：攻击源 MAC 可能是 AP/BSSID/伪造网卡 MAC，只有真实无线客户端 MAC 拉黑才有意义</p>
+<p><strong>局限</strong>：<br>攻击源 MAC 可能是 AP/BSSID/伪造网卡 MAC，只有真实无线客户端 MAC 拉黑才有意义</p>
 </li>
 <li>
 <p><strong>前提与副作用</strong></p>
 </li>
 <li>WIPS 全局作用于 OV 管理的全部 AP，且依赖背景扫描开启（见 rf-optimization-baseline 的扫描/性能权衡）</li>
-<li>每 AP 每 SSID 双频各一个 BSSID：干扰列表中同一 AP 会出现多条，加 Friendly 时按 OUI 全选</li>
+<li><strong>每 AP 每 SSID 双频各一个 BSSID</strong>：<br>干扰列表中同一 AP 会出现多条，加 Friendly 时按 OUI 全选</li>
 </ol>
 <h2 id="a1-lab">A1 · 书中案例（Lab 步骤精要）</h2>
 <ul>
-<li>c19/p521-525：策略总览（四条件默认值核对）→ Interfering AP 标签搜相邻学员 SSID "EmployeesX"，按 OUI dc:08:56 勾选全部条目 → Action &gt; Add to Friendly → 勾 Detect Rogue SSID Keyword 填 EmployeesX 验证：这些 AP 仍不进 Rogue 标签</li>
+<li><strong>c19/p521-525</strong>：<br>策略总览（四条件默认值核对）→ Interfering AP 标签搜相邻学员 SSID "EmployeesX"，按 OUI dc:08:56 勾选全部条目 → Action &gt; Add to Friendly → 勾 Detect Rogue SSID Keyword 填 EmployeesX 验证：这些 AP 仍不进 Rogue 标签</li>
 <li>客户端连接正常</li>
 <li>WIPS Analytics 无 Rogue Detected/DeAuth 记录——证明 Friendly 一票豁免</li>
 </ul>
@@ -158,7 +158,7 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>
-<li>Rogue 反制杀伤半径大：de-auth 会波及邻居网络，参数过宽=持续攻击合法 AP，引发投诉甚至法律风险；教材明令"未经指示不要改参数"（ce32）。</li>
+<li><strong>Rogue 反制杀伤半径大</strong>：<br>de-auth 会波及邻居网络，参数过宽=持续攻击合法 AP，引发投诉甚至法律风险；教材明令"未经指示不要改参数"（ce32）。</li>
 <li>Friendly 一票豁免绝对有效——连 Rogue 关键字命中都不判；名单要定期复核（ce32 验证）。</li>
 <li>黑名单拉的是源 MAC，未必是真实客户端，不是万能措施（ce33）。</li>
 <li>同一 AP 多 BSSID 重复条目，加 Friendly 漏勾某个 BSSID 仍会被判 Rogue。</li>

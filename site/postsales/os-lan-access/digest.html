@@ -113,7 +113,11 @@ write memory flash-synchro    # 一步做两件事（VC 场景同步到所有成
 - 内容相同 → 从 running 目录启动。</p>
 <p>VC 场景下 flash-synchro 会把镜像+配置同步到所有 slave 的 certified（p95-99）。</p>
 <h3 id="24-p452-456">2.4 升级流程（p452-456）</h3>
-<p>读 release note → 传新镜像入 running 目录 → <code>reload from working no rollback-timeout</code> 验证 → 观察无误 → <code>copy running certified</code> 固化。固化前出问题随时回滚旧 certified。必要时先 <code>update uboot</code> / <code>update fpga-cpld</code>。</p>
+<ul>
+<li>读 release note → 传新镜像入 running 目录 → <code>reload from working no rollback-timeout</code> 验证 → 观察无误 → <code>copy running certified</code> 固化。</li>
+<li>固化前出问题随时回滚旧 certified。</li>
+<li>必要时先 <code>update uboot</code> / <code>update fpga-cpld</code>。</li>
+</ul>
 <h2 id="_1">三、功能速查表</h2>
 <table>
 <thead>

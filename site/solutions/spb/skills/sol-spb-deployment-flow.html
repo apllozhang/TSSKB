@@ -73,11 +73,15 @@ blockquote p{margin:6px 0}
 <ul>
 <li>中型园区从零部署 SPB，需要参考架构与步骤清单</li>
 <li>规划 VRF 分段、VRRP 网关冗余、PBR 集中策略与 OSPF 上联</li>
-<li>混合场景：VLAN 域老设备与 SPB 域对接（S-Hook）</li>
+<li><strong>混合场景</strong>：<br>VLAN 域老设备与 SPB 域对接（S-Hook）</li>
 <li>利用出厂 Auto-Fabric/动态服务做近零接触开局</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>中型园区参考架构（F6，<span class="pg">原文p63</span> ）：2×BCB 全网格 + N×BEB 双归 LAG + PBR 策略路由器；VRF 按部门分段、VRRP 虚网关 .1（末位=BEB 号）、/30 点对点连 PBR、OSPF 按 VRF 分 area、PBR 集中策略，可平滑加 BCB 扩展。VRRP tracking 联动上行链路：上行断则优先级 120−25=95，对端接管（P59，<span class="pg">原文p78</span> ）。自动化分层（F5，<span class="pg">原文p36</span> ）：Auto-Fabric 六阶段打底 → UNP+认证动态 SAP → 动态服务按 VLAN 标签即时生成（ISID=BSN+Domain ID+VLAN%Modulo 公式，P36，<span class="pg">原文p42</span> ）。</p>
+<ul>
+<li><strong>中型园区参考架构（F6，<span class="pg">原文p63</span> ）</strong>：<br>2×BCB 全网格 + N×BEB 双归 LAG + PBR 策略路由器；VRF 按部门分段、VRRP 虚网关 .1（末位=BEB 号）、/30 点对点连 PBR、OSPF 按 VRF 分 area、PBR 集中策略，可平滑加 BCB 扩展。</li>
+<li><strong>VRRP tracking 联动上行链路</strong>：<br>上行断则优先级 120−25=95，对端接管（P59，<span class="pg">原文p78</span> ）。</li>
+<li><strong>自动化分层（F5，<span class="pg">原文p36</span> ）</strong>：<br>Auto-Fabric 六阶段打底 → UNP+认证动态 SAP → 动态服务按 VLAN 标签即时生成（ISID=BSN+Domain ID+VLAN%Modulo 公式，P36，<span class="pg">原文p42</span> ）。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>部署 11 步总清单（C24，<span class="pg">原文p62</span> ）：物理拓扑/LAG → VLANs → LBD → 控制与业务 BVLAN → SPB 服务 → BEB 上 SAP → VRF 分段 → VRRP → VRF-PBR 点对点 → VRRP Tracking → OSPF → 网络策略</li>
@@ -92,7 +96,7 @@ blockquote p{margin:6px 0}
 <li><strong>AP 直挂 BEB</strong>（C26，<span class="pg">原文p73</span> ）：管理服务 <code>service 2000 sap port 1/1/31:0</code> 映射 untagged；SSID 流量另建 tagged SAP（<code>service 1016 sap port 1/1/31:1016</code>）</li>
 <li><strong>S-Hook 对接</strong>（C28，<span class="pg">原文p81</span> ）：VLAN 域 LAG-125 打 tagged VLAN，服务域 LAG-127 建 <code>service N sap linkagg 127:N</code>，实现两域 S 形挂钩</li>
 <li><strong>Auto-Fabric 序列</strong>（C12-C16，<span class="pg">原文p36-38</span> ）：Auto-VC（LLDP 选举 Master 生成 vcsetup.cfg）→ Auto-RCD（DHCP→TFTP/OmniVista 取配置固件）→ Auto-LACP（探测 LACP PDU 自动配聚合，兼容第三方）→ Auto-SPB（默认建 BVLAN 4000-4003 映射 ECT 1-4）→ Auto-IP（侦听 OSPF/IS-IS Hello 自动配平邻接）</li>
-<li>动态 SAP/服务（C17-C20，<span class="pg">原文p38-43</span> ）：六个 UNP 绑 ISID + SAMPLE_FLOW 模板走 802.1x→filter-id、MAC 兜底、无匹配落 RESTRICTED；</li>
+<li><strong>动态 SAP/服务（C17-C20，<span class="pg">原文p38-43</span> ）</strong>：<br>六个 UNP 绑 ISID + SAMPLE_FLOW 模板走 802.1x→filter-id、MAC 兜底、无匹配落 RESTRICTED；</li>
 <li>静默设备静态绑 UNP（P34，<span class="pg">原文p39</span> ）；</li>
 <li>VLAN 101 默认参数演算 ISID=10,000,101→BVLAN 4001；</li>
 </ul>
@@ -101,7 +105,7 @@ blockquote p{margin:6px 0}
 <li>部署指南全流程命令落地与路径验证（C25，<span class="pg">原文p67</span> ）</li>
 <li>五 VRF+VRRP+PBR 策略全套配置（C27，<span class="pg">原文p74</span> ）</li>
 <li>两代 ASIC 混合场景 S-Hook 替代配置（C28，<span class="pg">原文p81</span> ）</li>
-<li>多租户 Domain ID：客户 A/B/C 建 Domain 1/2/3，VLAN 标签重叠仍隔离（C20，<span class="pg">原文p43</span> ）</li>
+<li><strong>多租户 Domain ID</strong>：<br>客户 A/B/C 建 Domain 1/2/3，VLAN 标签重叠仍隔离（C20，<span class="pg">原文p43</span> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>

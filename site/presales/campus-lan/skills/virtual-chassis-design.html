@@ -130,16 +130,17 @@ blockquote p{margin:6px 0}
 <p><strong>两大阵营</strong>：9900/6900 阵营静态/自动 chassis-id（9900 强制静态，每台写 vcsetup.cfg）；其余阵营自动分配、2-8 台环形。默认 VFL 口号速查：6560/E 24 口型 29-30、48 口型 53-54；6465-P28 27/28；6360 11/12（10 口）、27/28（24 口）、51/52（48 口）。</p>
 <p><strong>主从选举四级判据</strong>：优先级 → uptime（差 &gt;10 分钟才算）→ 最小 chassis ID → 最小 MAC。规划主备时把目标 master 的优先级配高即可。</p>
 <p><strong>防脑裂双机制（方案必预置其一）</strong>：
-- 带外 RCD：走 EMP 口；
-选址顺序先 NVRAM 的 CMM IP、再 chassis EMP IP；
-无 EMP 口机型（6360/6560 等）须加 USB 转 Ethernet 适配器，仅支持 ASIX 8817 与 RealTek RTL8153。
-- 带内 VCSP：借上/下游 helper 交换机，建议每个 VC 成员出一个口加入 VCSP LAG。分裂后非 Master 子 VC 进 Protection 模式关闭全部用户口（保留 LAG/VFL 口）。</p>
+- <strong>带外 RCD</strong>：<br>走 EMP 口；选址顺序先 NVRAM 的 CMM IP、再 chassis EMP IP；无 EMP 口机型（6360/6560 等）须加 USB 转 Ethernet 适配器，仅支持 ASIX 8817 与 RealTek RTL8153。
+- <strong>带内 VCSP</strong>：<br>借上/下游 helper 交换机，建议每个 VC 成员出一个口加入 VCSP LAG。分裂后非 Master 子 VC 进 Protection 模式关闭全部用户口（保留 LAG/VFL 口）。</p>
 <h2 id="a1">A1 · 书中案例</h2>
-<p>c09（p309）：8×OS6860N 组 VC（100m 内远程堆叠，VFL 20/40/100G），384 千兆口或 192 多千兆口、95W PoE 供 Wi-Fi 6/7 AP，4×25G LACP 上联 OS6900 核心。c15（p79）：OS6870 中型核心 + 各楼宇接入机经 10/25/40/100G 链路做远程 VC 跨楼堆叠成单一管理实体。</p>
+<ul>
+<li><strong>c09（p309）</strong>：<br>8×OS6860N 组 VC（100m 内远程堆叠，VFL 20/40/100G），384 千兆口或 192 多千兆口、95W PoE 供 Wi-Fi 6/7 AP，4×25G LACP 上联 OS6900 核心。</li>
+<li><strong>c15（p79）</strong>：<br>OS6870 中型核心 + 各楼宇接入机经 10/25/40/100G 链路做远程 VC 跨楼堆叠成单一管理实体。</li>
+</ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
-<li>触发：客户要"多台当一台管"、跨楼宇远程堆叠、或高密度接入边缘（8 台 VC）；售前防守"堆叠不如机箱"。</li>
-<li>区分：本 skill 管 VC/VFL 机制与台数设计；</li>
+<li><strong>触发</strong>：<br>客户要"多台当一台管"、跨楼宇远程堆叠、或高密度接入边缘（8 台 VC）；售前防守"堆叠不如机箱"。</li>
+<li><strong>区分</strong>：<br>本 skill 管 VC/VFL 机制与台数设计；</li>
 <li>"要不要选 VC 这个路线"的高可用对比在 <code><a href="campus-design-tiering-and-ha.html">campus-design-tiering-and-ha</a></code>；</li>
 <li>具体机型容量在 <code><a href="omniswitch-model-selection.html">omniswitch-model-selection</a></code>；</li>
 <li>auto-VC 开箱自动组网行为在 <code><a href="ifab-zero-touch-automation.html">ifab-zero-touch-automation</a></code>；</li>
@@ -172,11 +173,11 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>
-<li>ce01：脑裂是 VC 最大单点风险——VFL 全断则 MAC/IP 双主，未预置 RCD/VCSP 即裸奔。</li>
-<li>ce02：无 EMP 机型做 RCD 必须自购指定型号 USB 适配器，售前最易漏配的小物件。</li>
-<li>ce05：VFL 速率混用不成立；6860N+6870 混 VC 不成立；6860N 100G VFL 走波分会不通。</li>
-<li>p07 矛盾标注：p59 对 6465 同时标 8 台与 4 台（p22 称 4 台），引用需注版并按 datasheet 复核。</li>
-<li>网管许可不吃 VC 的账：每台成员单独计 license（见 license skill ce15）。</li>
+<li><strong>ce01</strong>：<br>脑裂是 VC 最大单点风险——VFL 全断则 MAC/IP 双主，未预置 RCD/VCSP 即裸奔。</li>
+<li><strong>ce02</strong>：<br>无 EMP 机型做 RCD 必须自购指定型号 USB 适配器，售前最易漏配的小物件。</li>
+<li><strong>ce05</strong>：<br>VFL 速率混用不成立；6860N+6870 混 VC 不成立；6860N 100G VFL 走波分会不通。</li>
+<li><strong>p07 矛盾标注</strong>：<br>p59 对 6465 同时标 8 台与 4 台（p22 称 4 台），引用需注版并按 datasheet 复核。</li>
+<li><strong>网管许可不吃 VC 的账</strong>：<br>每台成员单独计 license（见 license skill ce15）。</li>
 </ul>
 <hr />
 <p>来源条目: p07 · p08 · p09 · p10 · p11 · c09 · c15 · ce01 · ce02 · ce05 · g35 · g43 · g44 · g45</p><div class="pn"><a href="campus-design-tiering-and-ha.html">⬅ 上一单元：campus-design-tiering-and-ha</a><a class="nxt" href="dhl-erp-ring-protection.html">下一单元：dhl-erp-ring-protection ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

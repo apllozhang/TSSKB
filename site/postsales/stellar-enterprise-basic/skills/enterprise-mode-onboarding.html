@@ -114,9 +114,9 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a1-lab">A1 · 书中案例（Lab 精要）</h2>
 <ul>
-<li>c02：OV2500 首登（admin/switch 改密），lds.al-enterprise.com 生成 EVAL 许可（Customer ID 99999 / evaluation / omnivista），文件与 key 两种装法二选一。</li>
-<li>c03：三台 OmniSwitch SNMPv3 发现——<code>user snmpuserv3 read-write all password "Superuser=1" sha+des</code> + <code>snmp station &lt;OV IP&gt; 162 snmpuserv3 v3 enable</code>，OV 侧超时 5000ms/重试 3/SHA+DES，Discover Now。</li>
-<li>c04：建管理 VLAN 40，AP 端口 enable + <code>lanpower</code> 重启 PoE，dhcp relay 回 option 138，国家码选 FR-France（实验室禁选 USA/日本/以色列），Unmanaged→Change to Trust Status，入组 APGX。串口排障链：<code>getmode</code>/<code>getovinfo</code>/<code>ssudo ifconfig br-wan</code>/<code>tcpdump</code> 抓 DHCP Offer。</li>
+<li><strong>c02</strong>：<br>OV2500 首登（admin/switch 改密），lds.al-enterprise.com 生成 EVAL 许可（Customer ID 99999 / evaluation / omnivista），文件与 key 两种装法二选一。</li>
+<li><strong>c03</strong>：<br>三台 OmniSwitch SNMPv3 发现——<code>user snmpuserv3 read-write all password "Superuser=1" sha+des</code> + <code>snmp station &lt;OV IP&gt; 162 snmpuserv3 v3 enable</code>，OV 侧超时 5000ms/重试 3/SHA+DES，Discover Now。</li>
+<li><strong>c04</strong>：<br>建管理 VLAN 40，AP 端口 enable + <code>lanpower</code> 重启 PoE，dhcp relay 回 option 138，国家码选 FR-France（实验室禁选 USA/日本/以色列），Unmanaged→Change to Trust Status，入组 APGX。串口排障链：<code>getmode</code>/<code>getovinfo</code>/<code>ssudo ifconfig br-wan</code>/<code>tcpdump</code> 抓 DHCP Offer。</li>
 </ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
@@ -163,7 +163,7 @@ blockquote p{margin:6px 0}
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>
 <li>Express 切 Enterprise 不迁移配置，集群配置全丢——变更窗口预留重建时间。</li>
-<li>AP 不出现的五查：Managed 页→option 138（缺失/填错）→网络侧（管理 VLAN/L3 路由/dhcp-relay）→OV2500 Watchdog 服务状态。</li>
+<li><strong>AP 不出现的五查</strong>：<br>Managed 页→option 138（缺失/填错）→网络侧（管理 VLAN/L3 路由/dhcp-relay）→OV2500 Watchdog 服务状态。</li>
 <li>国家码不匹配=射频全关；实验室必须选 FR。</li>
 <li>AP Group 属性里的 SSH Login 不要启用。</li>
 <li>许可 key 只贴 key 本身不贴整行；文件与 key 二选一，不可都做。</li>

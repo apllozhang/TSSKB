@@ -80,13 +80,15 @@ blockquote p{margin:6px 0}
 <a href="../skills/ov-vm-vxlan-fabric.html">ov-vm-vxlan-fabric</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../manuals/index.html">OV2500 配置手册</a> › <a href="../index.html">OmniVista 2500 4.9R2 User Guide</a> › <span>ov-wlan-ssid-advanced</span></nav><h1>ov-wlan-ssid-advanced</h1><p class="meta"><span class="badge">SKILL</span> ov-wlan-ssid-advanced · 来源页码: </p><h2 id="r">R（触发场景）</h2>
 <ul>
 <li>新建员工/访客 Wi-Fi，想一步生成认证、策略、Portal 全套配置</li>
-<li>上 Wi-Fi 6E/7：6GHz 频段的 OWE、Transition Mode 兼容</li>
+<li><strong>上 Wi-Fi 6E/7</strong>：<br>6GHz 频段的 OWE、Transition Mode 兼容</li>
 <li>不同部门共享 SSID 但口令与权限隔离（PPSK）</li>
 <li>每台设备派发独立 PSK（Device Specific PSK）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>SSIDs 应用是一步式配置模型：创建 SSID 时自动派生并联动创建 Access Role Profile/Access Policy/Authentication Strategy/Guest/BYOD Access Strategy/AAA Server Profile/Tunnel Profile/Global Configuration（以 SSID 派生名命名）。五种 Usage 预设决定认证形态；
-SSID 也可在 WLAN Service (Expert) 里配，两种入口的编辑权随 Origin 而定。</p>
+<ul>
+<li><strong>SSIDs 应用是一步式配置模型</strong>：<br>创建 SSID 时自动派生并联动创建 Access Role Profile/Access Policy/Authentication Strategy/Guest/BYOD Access Strategy/AAA Server Profile/Tunnel Profile/Global Configuration（以 SSID 派生名命名）。</li>
+<li>五种 Usage 预设决定认证形态；SSID 也可在 WLAN Service (Expert) 里配，两种入口的编辑权随 Origin 而定。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <p>Usage 预设选型（principles·P195，<span class="pg">原文p861-863</span> ）：
 1. <strong>Guest Network</strong>：Open + Captive Portal（CP 二选 OV-UPAM / External）
@@ -97,7 +99,7 @@ SSID 也可在 WLAN Service (Expert) 里配，两种入口的编辑权随 Origin
 约束：SSID ≤31 字符；一屏最多 15 个 SSID；Usage 与 Authentication Strategy 不匹配的 SSID 不能编辑。</p>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li>安全等级矩阵（principles·P175，<span class="pg">原文p649-655</span> ）：Open / Enhanced Open（OWE；</li>
+<li><strong>安全等级矩阵（principles·P175，<span class="pg">原文p649-655</span> ）</strong>：<br>Open / Enhanced Open（OWE；</li>
 <li>
 <p>Transition Mode 双 BSSID 兼容旧客户端，仅 AWOS 4.0.8+）/ Enterprise（DYNAMIC_WEP~WPA3_AES256 六种）/ Personal（STATIC_WEP~WPA3_PSK_SAE_AES 七种）；</p>
 </li>
@@ -111,7 +113,7 @@ SSID 也可在 WLAN Service (Expert) 里配，两种入口的编辑权随 Origin
 <p><strong>6GHz 规则</strong>：Enhanced Open 在 6GHz 强制启用且不可关；6GHz SSID 的 2.4/5G 自动继承 WPA3_SAE_AES，开 Backward Compatibility 后用混合 WPA3_PSK_SAE_AES（MLO 含 6GHz 时自动禁用）（principles·P175/P196，<span class="pg">原文p649-655, 864-874</span> ）</p>
 </li>
 <li><strong>WPA3 兼容回退</strong>：WPA3_AES256 不支持的 AP 自动回退 WPA2_AES（AP1101 全频段、AP1201H 2.4G 不支持）；AUTO_WPA_WPA2 混合模式两谱系均可用（principles·P196，<span class="pg">原文p864-874</span> ）</li>
-<li>Device Specific PSK：每台设备按 MAC 派发不同 PSK，须同时在 SSIDs/WLAN Service (Expert) 与设备上启用；</li>
+<li><strong>Device Specific PSK</strong>：<br>每台设备按 MAC 派发不同 PSK，须同时在 SSIDs/WLAN Service (Expert) 与设备上启用；</li>
 <li>仅配 UPAM RADIUS：Prefer（无 AES-CBC-128 属性时用 SSID key）/Force（恒用 AAA 返回值，隐藏 Private Group PSK 配置）；</li>
 <li>
 <p>可打印 PSK 或二维码（principles·P179/P196，<span class="pg">原文p697-702, 864-874</span> ）；</p>
@@ -119,7 +121,7 @@ SSID 也可在 WLAN Service (Expert) 里配，两种入口的编辑权随 Origin
 <li>
 <p><strong>Private Group PSK (PPSK)</strong>：按不同口令分组建组入不同 Access Role Profile；每 SSID ≤16 条 Entry，单 AP 全部 SSID 合计 ≤64 条；Entry 名与口令均不可重复（principles·P196，<span class="pg">原文p864-874</span> ）</p>
 </li>
-<li>WLAN Service 无线参数默认值：Max Clients Per Band 1-128 默认 64；</li>
+<li><strong>WLAN Service 无线参数默认值</strong>：<br>Max Clients Per Band 1-128 默认 64；</li>
 <li>最小客户端速率建议 2.4G=12、5G=24；</li>
 <li>Broadcast Key Rotation 默认 15 分钟；</li>
 <li>
@@ -131,7 +133,7 @@ SSID 也可在 WLAN Service (Expert) 里配，两种入口的编辑权随 Origin
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>SSID 一步式创建：选 Usage → 自动派生八个配置对象（principles·P195，<span class="pg">原文p861-863</span> ）</li>
+<li><strong>SSID 一步式创建</strong>：<br>选 Usage → 自动派生八个配置对象（principles·P195，<span class="pg">原文p861-863</span> ）</li>
 <li>PPSK 分组建组入不同 Access Role Profile（principles·P196，<span class="pg">原文p864-874</span> ）</li>
 <li>SSID 也可在 WLAN Service (Expert) 配置，WLAN Name/WLAN Service Name 即 SSID Service Name（principles·P195）</li>
 </ul>
@@ -139,12 +141,15 @@ SSID 也可在 WLAN Service (Expert) 里配，两种入口的编辑权随 Origin
 <ul>
 <li>Usage 与 Authentication Strategy 不匹配的 SSID 不能编辑（如 Guest CP 用途却配了 Local DB+无 Web 认证）（principles·P195，<span class="pg">原文p861-863</span> ）</li>
 <li>Transition Mode 需 AWOS 4.0.8+，旧版本重启后 SSID 退化为 open（principles·P196，<span class="pg">原文p864-874</span> ）</li>
-<li>Stellar AP VLAN 池按机型限 WLAN 数：AP1301H=2、AP1311/1301/1431/1411=4、AP1320/1331/1351/1451=7（各 256 VLAN/WLAN）（principles·P196，<span class="pg">原文p864-874</span> ）</li>
+<li><strong>Stellar AP VLAN 池按机型限 WLAN 数</strong>：<br>AP1301H=2、AP1311/1301/1431/1411=4、AP1320/1331/1351/1451=7（各 256 VLAN/WLAN）（principles·P196，<span class="pg">原文p864-874</span> ）</li>
 <li>事后把 TLS-disabled 服务器改开 TLS 会失败（principles·P196）</li>
-<li>WCF 首访放行陷阱：AP 对首次访问的 URL 先放行再判定，DNS 缓存过期后首个访客不受过滤（principles·P196，<span class="pg">原文p864-874</span> ）</li>
+<li><strong>WCF 首访放行陷阱</strong>：<br>AP 对首次访问的 URL 先放行再判定，DNS 缓存过期后首个访客不受过滤（principles·P196，<span class="pg">原文p864-874</span> ）</li>
 <li>Origin=SSIDs 的 WLAN Service 只能在 SSIDs 应用编辑/删除；Device Config 改动只影响所选设备不回写模板（principles·P175，<span class="pg">原文p649-655</span> ）</li>
 <li>Hide SSID 几乎无安全价值（principles·P164，<span class="pg">原文p602-603</span> ）</li>
 <li>MLO 频段取自 Allowed Band 且依赖 radio+EHT 开启；仅 Wi-Fi 7 AP（principles·P164/P44）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniVista 2500 NMS 4.9R2 User Guide SSIDs 应用（<span class="pg">原文p861-874</span> ）、WLAN Service (Device Config)（<span class="pg">原文p649-655</span> ）、WLAN Service 无线参数（<span class="pg">原文p601-606</span> ）。条目来源：principles P164/P165/P175/P179/P195/P196。</p><div class="pn"><a href="ov-quarantine-policyview.html">⬅ 上一单元：ov-quarantine-policyview</a><a class="nxt" href="ov-vm-vxlan-fabric.html">下一单元：ov-vm-vxlan-fabric ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<ul>
+<li>OmniVista 2500 NMS 4.9R2 User Guide SSIDs 应用（<span class="pg">原文p861-874</span> ）、WLAN Service (Device Config)（<span class="pg">原文p649-655</span> ）、WLAN Service 无线参数（<span class="pg">原文p601-606</span> ）。</li>
+<li><strong>条目来源</strong>：<br>principles P164/P165/P175/P179/P195/P196。</li>
+</ul><div class="pn"><a href="ov-quarantine-policyview.html">⬅ 上一单元：ov-quarantine-policyview</a><a class="nxt" href="ov-vm-vxlan-fabric.html">下一单元：ov-vm-vxlan-fabric ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

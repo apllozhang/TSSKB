@@ -111,22 +111,18 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a1">A1 · 书中案例</h2>
 <ul>
-<li>设置文件样例：LAB4.conf 内含全部 RAP 对端的 WireGuard PublicKey 与 AllowedIPs（如 10.180.2.7/32），按 VPN Settings Name 命名。</li>
-<li>五步链样例：Data VPN Server 参数 Name/公网 IP/Port/VPN IP（与客户端池同网段）/Client Pool；
-导出文件含 192.168.1.2/32 样例；
-最终 RAP↔VPN Server 间建立 L2GRE 隧道承载员工数据流量。</li>
-<li>路由累积样例：SSID1 用 T1 配路由 A/B、SSID2 用 T2 配 C/D，则 A/B/C/D 对两个 SSID 都生效。</li>
-<li>Local Breakout DNS 故障样例（p83-84）：AP 双 DNS 随机选用致 OVC 掉线；
-客户端 DNS 192.168.10.177 命中 192.168.10.0/24 路由被送进隧道变慢；
-解法统一为配正确的总部 DNS。</li>
-<li>1201H 下行口隧道化：Tunnel Profile → Access Role Profile（Map to VLAN and Tunnel）→ Access Auth Profile，应用到 AP/AP Group。</li>
+<li><strong>设置文件样例</strong>：<br>LAB4.conf 内含全部 RAP 对端的 WireGuard PublicKey 与 AllowedIPs（如 10.180.2.7/32），按 VPN Settings Name 命名。</li>
+<li><strong>五步链样例</strong>：<br>Data VPN Server 参数 Name/公网 IP/Port/VPN IP（与客户端池同网段）/Client Pool；导出文件含 192.168.1.2/32 样例；最终 RAP↔VPN Server 间建立 L2GRE 隧道承载员工数据流量。</li>
+<li><strong>路由累积样例</strong>：<br>SSID1 用 T1 配路由 A/B、SSID2 用 T2 配 C/D，则 A/B/C/D 对两个 SSID 都生效。</li>
+<li><strong>Local Breakout DNS 故障样例（p83-84）</strong>：<br>AP 双 DNS 随机选用致 OVC 掉线；客户端 DNS 192.168.10.177 命中 192.168.10.0/24 路由被送进隧道变慢；解法统一为配正确的总部 DNS。</li>
+<li><strong>1201H 下行口隧道化</strong>：<br>Tunnel Profile → Access Role Profile（Map to VLAN and Tunnel）→ Access Auth Profile，应用到 AP/AP Group。</li>
 </ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
-<li>触发：VA 部署完成（<code><a href="vpn-va-deploy-capacity.html">vpn-va-deploy-capacity</a></code> 已就绪），要打通数据隧道：建 Data VPN Server、导出/上传设置文件、配 SSID 走隧道、开 Local Breakout，或 1201H 下行口认证。</li>
-<li>与 <code><a href="vpn-va-deploy-capacity.html">vpn-va-deploy-capacity</a></code> 的区分：那边管虚拟机与网卡；本 skill 从"VA 上的 VPN 服务与 OV 侧隧道配置"开始。</li>
-<li>与 <code><a href="rap-vpn-troubleshooting.html">rap-vpn-troubleshooting</a></code> 的区分：这边是正向配置；隧道建不起来、客户端拿不到 IP 转排障 skill。</li>
-<li>与 <code><a href="rap-vpn-mode-registration.html">rap-vpn-mode-registration</a></code> 的区分：模式与注册参数已在规划期确定，本 skill 直接消费那些参数。</li>
+<li><strong>触发</strong>：<br>VA 部署完成（<code><a href="vpn-va-deploy-capacity.html">vpn-va-deploy-capacity</a></code> 已就绪），要打通数据隧道：建 Data VPN Server、导出/上传设置文件、配 SSID 走隧道、开 Local Breakout，或 1201H 下行口认证。</li>
+<li><strong>与 <code><a href="vpn-va-deploy-capacity.html">vpn-va-deploy-capacity</a></code> 的区分</strong>：<br>那边管虚拟机与网卡；本 skill 从"VA 上的 VPN 服务与 OV 侧隧道配置"开始。</li>
+<li><strong>与 <code><a href="rap-vpn-troubleshooting.html">rap-vpn-troubleshooting</a></code> 的区分</strong>：<br>这边是正向配置；隧道建不起来、客户端拿不到 IP 转排障 skill。</li>
+<li><strong>与 <code><a href="rap-vpn-mode-registration.html">rap-vpn-mode-registration</a></code> 的区分</strong>：<br>模式与注册参数已在规划期确定，本 skill 直接消费那些参数。</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>

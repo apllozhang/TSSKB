@@ -95,10 +95,10 @@ blockquote p{margin:6px 0}
 <p>想上云就先在 Cirrus 声明序列号；想进企业模式就在管理作用域配 option 138。</p>
 <ol>
 <li><strong>三平面模型（端口规划与排障的根基）</strong></li>
-<li>管理平面：集中在网管（Express=PVM / 云管=Cirrus），管理流量<strong>恒 untagged</strong>（Native VLAN）</li>
-<li>控制平面：每台 AP，空口邻居发现 + LAN 射频上下文共享</li>
+<li><strong>管理平面</strong>：<br>集中在网管（Express=PVM / 云管=Cirrus），管理流量<strong>恒 untagged</strong>（Native VLAN）</li>
+<li><strong>控制平面</strong>：<br>每台 AP，空口邻居发现 + LAN 射频上下文共享</li>
 <li>
-<p>数据平面：AP 本地终结，按 SSID <strong>恒 tagged</strong> 上行，纯二层、无隧道回网管，路由交给 LAN</p>
+<p><strong>数据平面</strong>：<br>AP 本地终结，按 SSID <strong>恒 tagged</strong> 上行，纯二层、无隧道回网管，路由交给 LAN</p>
 </li>
 <li>
 <p><strong>开局前置清单（五项逐条核对）</strong></p>
@@ -136,19 +136,19 @@ blockquote p{margin:6px 0}
 </table>
 <ol>
 <li><strong>Express 集群机制</strong></li>
-<li>成组规则：Group ID 相同 + VLAN 相同自动同组（出厂 Group ID 100 / VLAN 1）</li>
-<li>选举：先比最高型号、再比最大 MAC → PVM；第二高 MAC → SVM；其余 Member；单组上限 255</li>
-<li>容量建议：&gt;64 台必须做弹性设计；每台 OmniSwitch ≤32 AP、每堆叠 ≤64 AP</li>
+<li><strong>成组规则</strong>：<br>Group ID 相同 + VLAN 相同自动同组（出厂 Group ID 100 / VLAN 1）</li>
+<li><strong>选举</strong>：<br>先比最高型号、再比最大 MAC → PVM；第二高 MAC → SVM；其余 Member；单组上限 255</li>
+<li><strong>容量建议</strong>：<br>&gt;64 台必须做弹性设计；每台 OmniSwitch ≤32 AP、每堆叠 ≤64 AP</li>
 <li>
-<p>管理平台规模：OV2500 ≤4000 AP；Cirrus 单实例 12000 设备（10000 AP+2000 交换机）</p>
+<p><strong>管理平台规模</strong>：<br>OV2500 ≤4000 AP；Cirrus 单实例 12000 设备（10000 AP+2000 交换机）</p>
 </li>
 <li>
 <p><strong>关键常数速查</strong></p>
 </li>
-<li>默认 SSID：mywifi-ABCD（MAC 末 4 位）；默认 IP 192.168.1.254；Web 管理端口 8080</li>
+<li><strong>默认 SSID</strong>：<br>mywifi-ABCD（MAC 末 4 位）；默认 IP 192.168.1.254；Web 管理端口 8080</li>
 <li>DHCP 模式下可用域名 mywifi.al-enterprise.com:8080 访问</li>
 <li>AP 控制台凭据 support/aos2016；OmniSwitch 出厂 admin/switch（仅控制台，Telnet/SSH/Web 全禁）</li>
-<li>恢复出厂：Reset 键 10 秒，或 <code>ssudo firstboot -y &amp;&amp; ssudo reboot</code></li>
+<li><strong>恢复出厂</strong>：<br>Reset 键 10 秒，或 <code>ssudo firstboot -y &amp;&amp; ssudo reboot</code></li>
 <li>isc-dhcp-server 需先声明 <code>option ovwma code 138 = ip-address;</code>，再用 vendor-class 前 4 字节 "HAP." 类匹配 Stellar AP 下发</li>
 </ol>
 <h2 id="a1-lab">A1 · 书中案例（Lab 步骤精要）</h2>
@@ -161,7 +161,7 @@ blockquote p{margin:6px 0}
 <ul>
 <li>新项目开局，要决定 AP 用哪种管理模式、做网络前置准备时用本 skill。</li>
 <li>现场无网管/DHCP，要先把单台 AP 配起来（Express 最小路径）。</li>
-<li>区分：设备已决定上 Cirrus 云、要声明/激活/排障"不上云"→ <code><a href="device-cloud-onboarding.html">device-cloud-onboarding</a></code>；</li>
+<li><strong>区分</strong>：<br>设备已决定上 Cirrus 云、要声明/激活/排障"不上云"→ <code><a href="device-cloud-onboarding.html">device-cloud-onboarding</a></code>；</li>
 <li>买许可/建组织/账号 → <code><a href="cirrus-license-org-lifecycle.html">cirrus-license-org-lifecycle</a></code>；</li>
 <li>建 SSID（含 Express 内嵌门户版）→ <code><a href="ssid-authentication-suite.html">ssid-authentication-suite</a></code>；</li>
 <li>本 skill 只管"模式判定 + 网络底座 + Express 集群"；</li>
@@ -180,7 +180,7 @@ blockquote p{margin:6px 0}
 <li><strong>模式切换丢配置</strong>：Express → Enterprise/Cloud 无配置迁移，集群配置全部丢失；切换前导出/记录全部 SSID/密码/VLAN/Portal 账号，当"重新开局"排期（ce01）。</li>
 <li>option 138 配错/遗漏或序列号未声明 → AP 静默落 Express，可能与已有集群意外成组（ce02）；用 <code>getmode</code> 排查。</li>
 <li>isc-dhcp-server 不认识 option 138，直接写会报错（ce03）。</li>
-<li>改 AP 管理 IP 或切 DHCP 的保存瞬间即失联：立即用新 IP 或域名重连；多台 AP 默认 IP 相同会冲突，先隔离再改（ce13）。</li>
+<li><strong>改 AP 管理 IP 或切 DHCP 的保存瞬间即失联</strong>：<br>立即用新 IP 或域名重连；多台 AP 默认 IP 相同会冲突，先隔离再改（ce13）。</li>
 <li>不要对承载隐性依赖（DHCP/路由）的核心设备真恢复出厂（ce11 的生产类推）。</li>
 <li>Express 内置服务容量有限，后续 SSID/门户/策略复杂化时应整体迁云而不是硬撑。</li>
 </ul>

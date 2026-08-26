@@ -126,7 +126,10 @@ blockquote p{margin:6px 0}
 <p>可背常数（p01/p25）：<strong>1000 节点规模、突破 4096 VLAN 限制、亚秒收敛（约 100ms）、1000 节点内全链路无阻塞</strong>；SPB 还可跑在 VPLS/微波/VXLAN/IPVPN 之上（跨域组网卖点）。</p>
 <p>术语支撑：AOS（三技术同一 OS 的中立根基）、SPB/SPB-M（标书互联必写区分）、Mac-in-Mac/PBB（"三个老标准组合"降心理门槛）、B-MAC（地址隔离机制）、STP（反派索引）、VC（双机核心+LACP 免 STP 接入答案）。</p>
 <h2 id="a1">A1 · 书中案例</h2>
-<p>p23 对比页是全书攻防核心：左栏列 STP 九条罪（单树绕根桥、F 到 G 相邻也要五跳、阻塞浪费带宽、逐跳配置、链路利用率低、无最短路径、广播低效、扩展性差、收敛慢），右栏 SPB 逐条对应（每台交换机自为根、IS-IS 控制、最短路径、Mac-in-Mac 地址隔离、网状拓扑、无环、快速恢复）。p76 Key Takeaway 再用弹性/安全/可管理三类归纳收尾。</p>
+<ul>
+<li><strong>p23 对比页是全书攻防核心</strong>：<br>左栏列 STP 九条罪（单树绕根桥、F 到 G 相邻也要五跳、阻塞浪费带宽、逐跳配置、链路利用率低、无最短路径、广播低效、扩展性差、收敛慢），右栏 SPB 逐条对应（每台交换机自为根、IS-IS 控制、最短路径、Mac-in-Mac 地址隔离、网状拓扑、无环、快速恢复）。</li>
+<li>p76 Key Takeaway 再用弹性/安全/可管理三类归纳收尾。</li>
+</ul>
 <h2 id="a2">A2 · 触发场景</h2>
 <ul>
 <li>客户开场问"SPB 是什么、为什么要换"；</li>
@@ -144,7 +147,7 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>
-<li>话术精确化：说"替换 STP"指核心骨干消除阻塞链路，接入层与 legacy 域仍可能保留 STP/DHL/LBD（详见迁移 skill 的 ce14），不可承诺"全网灭 STP"。</li>
+<li><strong>话术精确化</strong>：<br>说"替换 STP"指核心骨干消除阻塞链路，接入层与 legacy 域仍可能保留 STP/DHL/LBD（详见迁移 skill 的 ce14），不可承诺"全网灭 STP"。</li>
 <li>~100ms 收敛对轨交/电力等毫秒级刚需场景不占优，勿拿 SPB 硬碰（ce13 归选型 skill）。</li>
 <li>规模超 1000 节点或超大型 DC 主动让位 EVPN，勿超界应标。</li>
 <li>免许可、全系支持等规格数字引用前按最新 AOS 规格书复核（时效纪律见 spec skill 的 ce16）。</li>

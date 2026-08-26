@@ -127,14 +127,14 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a1-lab">A1 · 书中案例（LAB 故障根因）</h2>
 <ul>
-<li>c04（LAB2 案例2，p199-203）：6860-B 刷 "DoS type invalid ip ... to 224.0.0.18"、CPU 98%、访问迟缓。</li>
+<li><strong>c04（LAB2 案例2，p199-203）</strong>：<br>6860-B 刷 "DoS type invalid ip ... to 224.0.0.18"、CPU 98%、访问迟缓。</li>
 <li>真根因：6870-A 上 VLAN 278 STP 状态 OFF，端口 1/1/15、1/1/16 直连成 L2 环，本机 VRRP 通告（源 MAC 00:00:5e:00:01:02）被环回从错误端口收回触发 invalid-ip 告警。</li>
 <li>修复：先禁两端口 → spantree Vlan 278 admin-state enable → 端口放回 vlan 1 重新 enable → 日志调回 info。</li>
 <li>
 <p>判别口诀：DoS invalid ip 刷屏 + CPU 高 + 源 MAC 是 00:00:5e → 先查环，不当攻击处置（ce19）。</p>
 </li>
 <li>
-<p>c05（LAB3 案例1，p223-226）：6360 两条 DHL 链路所有相关 VLAN 全 dhl-blocking。</p>
+<p><strong>c05（LAB3 案例1，p223-226）</strong>：<br>6360 两条 DHL 链路所有相关 VLAN 全 dhl-blocking。</p>
 </li>
 <li>排查发现 6860-B 侧 vlan 57 在链路 A tagged、在链路 B untagged——两条 DHL 链路 native VLAN 不一致。</li>
 <li>修复：统一 <code>vlan 57 members linkagg 8 untagged</code> 后恢复分担。</li>
@@ -142,8 +142,8 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
-<li>触发：广播风暴、CPU 高 + DoS 告警、MAC 在两端口漂移、链路利用率异常高、STP 拓扑变化计数暴涨、MSTP region 行为异常、DHL 全 blocking。</li>
-<li>区分：单端口 down/错配 → l2-connectivity；</li>
+<li><strong>触发</strong>：<br>广播风暴、CPU 高 + DoS 告警、MAC 在两端口漂移、链路利用率异常高、STP 拓扑变化计数暴涨、MSTP region 行为异常、DHL 全 blocking。</li>
+<li><strong>区分</strong>：<br>单端口 down/错配 → l2-connectivity；</li>
 <li>VC 成员口/VFL 问题 → virtual-chassis；</li>
 <li>环路期间管理面不可达必须走 console/EMP（ce01）属本 skill 的前置动作。DoS 统计判读（g40）在本 skill，但真实攻击处置需结合 OVNA（ovna skill）；</li>
 </ul>
@@ -198,7 +198,7 @@ MSTI 内 VLAN 全部在互联链路 tagged（<code>show vlan members</code> 逐�
 <li><strong>ce16</strong>：MSTI 的 VLAN 没在互联链路 tagged，后果是"MSTP 行为不可预测"而非报错——比直接故障更难查。</li>
 <li>debug stp bpdu-stats 输出量大，限定实例、尽快 stop。</li>
 <li>Auto Fabric 开启时 spantree 模式被强制 flat（p178 附注），核对模式前先确认该开关。</li>
-<li>阻塞口文档是排障前提：平时就要在网络图上标出每个物理环与破环的阻塞口（p20）。</li>
+<li><strong>阻塞口文档是排障前提</strong>：<br>平时就要在网络图上标出每个物理环与破环的阻塞口（p20）。</li>
 </ul>
 <hr />
 <p>来源条目: f08 · p20 · p21 · p22 · p23 · p24 · p25 · ce01 · ce16 · ce17 · ce19 · g15 · g16 · g17 · g18 · g20 · g21 · g40 · g41 · g42 · c04 · c05</p><div class="pn"><a href="l2-connectivity-troubleshooting.html">⬅ 上一单元：l2-connectivity-troubleshooting</a><a class="nxt" href="virtual-chassis-troubleshooting.html">下一单元：virtual-chassis-troubleshooting ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

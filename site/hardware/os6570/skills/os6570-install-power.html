@@ -71,13 +71,18 @@ blockquote p{margin:6px 0}
 <div class="grp">运维排障</div>
 <a href="../skills/os6570-ops-troubleshoot.html">os6570-ops-troubleshoot</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../hardware/index.html">硬件手册</a> › <a href="../index.html">OmniSwitch 6570M Hardware Guide</a> › <span>os6570-install-power</span></nav><h1>os6570-install-power</h1><p class="meta"><span class="badge">SKILL</span> os6570-install-power · 来源页码: </p><h2 id="r">R（触发场景）</h2>
 <ul>
-<li>新机安装：U28 全宽法兰上架 / 12/12D 单半宽 RM-19-L / 双半宽 DUO-MNT 并排 / 桌面脚垫</li>
-<li>供电规划：12/12D 内置电源+外置备份（BP 60W AC / BP-D 30W DC）；U28 双 150W 舱冗余或负载分担</li>
-<li>DC 场景：BP-D（-36~-72V）或 12D 内置 18-75VDC 宽压直挂电池</li>
-<li>接地：supplemental 接地耳 + DC 线束极性核对</li>
+<li><strong>新机安装</strong>：<br>U28 全宽法兰上架 / 12/12D 单半宽 RM-19-L / 双半宽 DUO-MNT 并排 / 桌面脚垫</li>
+<li><strong>供电规划</strong>：<br>12/12D 内置电源+外置备份（BP 60W AC / BP-D 30W DC）；U28 双 150W 舱冗余或负载分担</li>
+<li><strong>DC 场景</strong>：<br>BP-D（-36~-72V）或 12D 内置 18-75VDC 宽压直挂电池</li>
+<li><strong>接地</strong>：<br>supplemental 接地耳 + DC 线束极性核对</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>双层电源架构 + 双冗余同规格强制（P14/P15/P19，<span class="pg">原文p11</span> /<span class="pg">原文p35</span> -<span class="pg">原文p39</span> ）：12/12D 为"内置电源（AC 65W / DC 30W）+ External Power Connector 外置备份"两层；U28 为双 150W 电源舱（OS6570-BP AC / BP-D DC）冗余或负载分担。铁律：双电源必须同 wattage 同额定电压（X2，<span class="pg">原文p24</span> ）。无电源开关语义=接电即开机（P20）；多电源数秒内先后上电（P36，<span class="pg">原文p16</span> ）。安装三方案按包络定（P33）：全宽法兰（U28）/单半宽 L 支架/双半宽并排套件，一律"先下孔后上孔"紧固（P34，<span class="pg">原文p29</span> /<span class="pg">原文p34</span> ）。</p>
+<ul>
+<li><strong>双层电源架构 + 双冗余同规格强制（P14/P15/P19，<span class="pg">原文p11</span> /<span class="pg">原文p35</span> -<span class="pg">原文p39</span> ）</strong>：<br>12/12D 为"内置电源（AC 65W / DC 30W）+ External Power Connector 外置备份"两层；U28 为双 150W 电源舱（OS6570-BP AC / BP-D DC）冗余或负载分担。</li>
+<li><strong>铁律</strong>：<br>双电源必须同 wattage 同额定电压（X2，<span class="pg">原文p24</span> ）。</li>
+<li>无电源开关语义=接电即开机（P20）；多电源数秒内先后上电（P36，<span class="pg">原文p16</span> ）。</li>
+<li><strong>安装三方案按包络定（P33）</strong>：<br>全宽法兰（U28）/单半宽 L 支架/双半宽并排套件，一律"先下孔后上孔"紧固（P34，<span class="pg">原文p29</span> /<span class="pg">原文p34</span> ）。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>安装形态选择（F2，<span class="pg">原文p28</span> -<span class="pg">原文p34</span> ）：桌面（橡胶脚垫正放）→单半宽机架（RM-19-L）→双半宽并排 1U（DUO-MNT）→全宽机架（U28 法兰）</li>
@@ -104,7 +109,7 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>
-<li>双电源禁混规格：wattage 或额定电压不同=不支持，可能异常行为（X2，<span class="pg">原文p24</span> ）</li>
+<li><strong>双电源禁混规格</strong>：<br>wattage 或额定电压不同=不支持，可能异常行为（X2，<span class="pg">原文p24</span> ）</li>
 <li>禁延长线；非 ALE 电源线需自证合规（X8/X9，<span class="pg">原文p13</span> /<span class="pg">原文p16</span> ）</li>
 <li>违反电涌五条军规可能失保（X10，<span class="pg">原文p14</span> ）</li>
 <li>气流遮挡致过热失效；盲板空槽常装（X12/X15，<span class="pg">原文p28</span> /<span class="pg">原文p43</span> /<span class="pg">原文p54</span> ）</li>

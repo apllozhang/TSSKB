@@ -84,7 +84,11 @@ blockquote p{margin:6px 0}
 <li>需要认证后动态分配 VLAN/QoS（802.1X 或 MAC 认证），或话机上电自动进语音 VLAN</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>OmniSwitch 的策略体系是"condition + action + rule"三件套，<code>qos apply</code> 才下发硬件。角色化控制分两层：交换机侧 Access Guardian（UNP 用户网络档案），无线侧 ARP（Access Role Profile）。话机场景用 LLDP-MED Network Policy TLV 自动下发语音 VLAN + L2 priority + DSCP。</p>
+<ul>
+<li>OmniSwitch 的策略体系是"condition + action + rule"三件套，<code>qos apply</code> 才下发硬件。</li>
+<li><strong>角色化控制分两层</strong>：<br>交换机侧 Access Guardian（UNP 用户网络档案），无线侧 ARP（Access Role Profile）。</li>
+<li>话机场景用 LLDP-MED Network Policy TLV 自动下发语音 VLAN + L2 priority + DSCP。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li><strong>QoS 限速</strong>（<span class="pg">原文p724</span> -<span class="pg">原文p726</span> ）：<code>policy condition client_traffic source vlan 20</code> → <code>policy action priority_5 802.1p 5</code> → <code>policy rule rule1 &lt;condition+action&gt;</code> → <code>qos apply</code> → 大包 ping 触发 Red Packets 验证限速生效。</li>
@@ -112,7 +116,7 @@ blockquote p{margin:6px 0}
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
 <li><strong>condition/action 能力边界</strong>（<span class="pg">原文p699</span> ）：condition 可达 L1-L4（source port/MAC/VLAN/IP/DSCP/TCP-UDP port）；action 含 disposition accept|drop|deny、priority、bandwidth、mirror、redirect。规则默认 accept 不匹配流量。</li>
-<li>ACL 安全组（<span class="pg">原文p739</span> -<span class="pg">原文p740</span> ）：UserPorts 默认用于防端口 IP 欺骗：<code>qos user-port {filter | shutdown} {spoof|bgp|bpdu|rip|ospf|vrrp|…}</code>；</li>
+<li><strong>ACL 安全组（<span class="pg">原文p739</span> -<span class="pg">原文p740</span> ）</strong>：<br>UserPorts 默认用于防端口 IP 欺骗：<code>qos user-port {filter | shutdown} {spoof|bgp|bpdu|rip|ospf|vrrp|…}</code>；</li>
 <li>DropServices 保留服务组可按服务丢包；</li>
 <li>
 <p>port-disable 命中即管理关闭端口；</p>
@@ -124,8 +128,8 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>QoS 组合实战：VLAN 20 流量标记 802.1p 5 + qos apply，大包 ping 出现 Red Packets 证明限速（<span class="pg">原文p724</span> -<span class="pg">原文p726</span> ）。</li>
-<li>Access Guardian 全流程：RADIUS + 双 UNP 档案 + 802.1X/MAC 认证，show unp user details 确认服务器下发档案（<span class="pg">原文p777</span> -<span class="pg">原文p783</span> ）。</li>
+<li><strong>QoS 组合实战</strong>：<br>VLAN 20 流量标记 802.1p 5 + qos apply，大包 ping 出现 Red Packets 证明限速（<span class="pg">原文p724</span> -<span class="pg">原文p726</span> ）。</li>
+<li><strong>Access Guardian 全流程</strong>：<br>RADIUS + 双 UNP 档案 + 802.1X/MAC 认证，show unp user details 确认服务器下发档案（<span class="pg">原文p777</span> -<span class="pg">原文p783</span> ）。</li>
 <li>DHCP Relay + QoS/ACL/Access Guardian 组合部署（<span class="pg">原文p669</span> -<span class="pg">原文p670</span> 、<span class="pg">原文p724</span> -<span class="pg">原文p783</span> ）。</li>
 </ul>
 <h2 id="b">B（边界与陷阱）</h2>

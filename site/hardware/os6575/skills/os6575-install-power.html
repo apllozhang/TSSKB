@@ -71,13 +71,19 @@ blockquote p{margin:6px 0}
 <div class="grp">运维排障</div>
 <a href="../skills/os6575-ops-troubleshoot.html">os6575-ops-troubleshoot</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../hardware/index.html">硬件手册</a> › <a href="../index.html">OmniSwitch 6575 Hardware Guide</a> › <span>os6575-install-power</span></nav><h1>os6575-install-power</h1><p class="meta"><span class="badge">SKILL</span> os6575-install-power · 来源页码: </p><h2 id="r">R（触发场景）</h2>
 <ul>
-<li>新机安装：U28 前装法兰/后装 REAR-MNT+TRAY-1U、P12 DIN 导轨/壁装、MP16 直接壁装</li>
-<li>电源选型与接线：BPNS 150W/BPNSX 480W 外置、BPR/BPRD 180W 模块后装；ROJ 输入/输出线端子接线</li>
-<li>PoE 预算规划：按温度带查阶梯预算表（≤50 至 70-75°C 四档）</li>
-<li>接地：supplemental 接地耳 + NEBS 星形垫圈细则</li>
+<li><strong>新机安装</strong>：<br>U28 前装法兰/后装 REAR-MNT+TRAY-1U、P12 DIN 导轨/壁装、MP16 直接壁装</li>
+<li><strong>电源选型与接线</strong>：<br>BPNS 150W/BPNSX 480W 外置、BPR/BPRD 180W 模块后装；ROJ 输入/输出线端子接线</li>
+<li><strong>PoE 预算规划</strong>：<br>按温度带查阶梯预算表（≤50 至 70-75°C 四档）</li>
+<li><strong>接地</strong>：<br>supplemental 接地耳 + NEBS 星形垫圈细则</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>温度-PoE 预算联动框架（F2，<span class="pg">原文p24</span> /<span class="pg">原文p60</span> /<span class="pg">原文p61</span> /<span class="pg">原文p67</span> ）：预算=机型×电源×数量×温度带四元函数。部署四查：一查 Tmra 温度带；二查预算表（MP16/U28+BPNSX 有机内封顶，加电源不扩容）；三查输入电压档位；四查 Guard Band。电源机制两铁律：双电源必须同 wattage 同额定电压（X2）；电源类型不能自动检测，必须 powersupply type 手动声明，否则功率信息错乱且 PoE 配置前置（P13/X3）。ROJ 接线注意本机 V-=红、V+=黑（与常规红正黑负相反）（P15，<span class="pg">原文p42</span> /<span class="pg">原文p43</span> ）。工业高可用三支柱（F3）：链路 Bypass+供电冗余+无风扇宽温。</p>
+<ul>
+<li><strong>温度-PoE 预算联动框架（F2，<span class="pg">原文p24</span> /<span class="pg">原文p60</span> /<span class="pg">原文p61</span> /<span class="pg">原文p67</span> ）</strong>：<br>预算=机型×电源×数量×温度带四元函数。</li>
+<li><strong>部署四查</strong>：<br>一查 Tmra 温度带；二查预算表（MP16/U28+BPNSX 有机内封顶，加电源不扩容）；三查输入电压档位；四查 Guard Band。</li>
+<li><strong>电源机制两铁律</strong>：<br>双电源必须同 wattage 同额定电压（X2）；电源类型不能自动检测，必须 powersupply type 手动声明，否则功率信息错乱且 PoE 配置前置（P13/X3）。</li>
+<li>ROJ 接线注意本机 V-=红、V+=黑（与常规红正黑负相反）（P15，<span class="pg">原文p42</span> /<span class="pg">原文p43</span> ）。</li>
+<li><strong>工业高可用三支柱（F3）</strong>：<br>链路 Bypass+供电冗余+无风扇宽温。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>按形态定安装路径（F1）：U28 前装法兰/后装套件；P12 DIN Rail Bracket 或 Wall Bracket 选件；MP16 自带 Mounting Holes 直接壁装（C4-C8，<span class="pg">原文p29</span> -<span class="pg">原文p35</span> ）</li>
@@ -100,18 +106,18 @@ blockquote p{margin:6px 0}
 <ul>
 <li>U28 后装套件+电源托盘全流程（C5，<span class="pg">原文p31</span> /<span class="pg">原文p32</span> ）</li>
 <li>P12 DIN 导轨与壁装部署（C6/C7，<span class="pg">原文p33</span> /<span class="pg">原文p34</span> ）</li>
-<li>温度阶梯预算部署：高温车间按降档预算配置 PD（P33/P34，<span class="pg">原文p60</span> /<span class="pg">原文p61</span> ）</li>
+<li><strong>温度阶梯预算部署</strong>：<br>高温车间按降档预算配置 PD（P33/P34，<span class="pg">原文p60</span> /<span class="pg">原文p61</span> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>
 <li>48VDC 以下禁 PoE；第三方电源须 ≥48V（X1，<span class="pg">原文p21</span> /<span class="pg">原文p23</span> /<span class="pg">原文p25</span> /<span class="pg">原文p61</span> ）</li>
 <li>双电源禁混规格（wattage+额定电压均须一致）（X2，<span class="pg">原文p21</span> /<span class="pg">原文p23</span> /<span class="pg">原文p25</span> ）</li>
 <li>电源类型不能自动检测，不声明则功率显示与 PoE 利用错误（X3/P13，<span class="pg">原文p46</span> /<span class="pg">原文p57</span> ）</li>
-<li>MP16 加电源不扩预算：150W→52W、480W→120W 恒定——叠电源只为冗余（X13/P35，<span class="pg">原文p61</span> ）</li>
+<li><strong>MP16 加电源不扩预算</strong>：<br>150W→52W、480W→120W 恒定——叠电源只为冗余（X13/P35，<span class="pg">原文p61</span> ）</li>
 <li>NEMA 插头不得提前带电插拔，违者可能人伤/设备损坏（X4，<span class="pg">原文p43</span> ）</li>
 <li>只准用 ALE 原厂配件安装电源（X5，<span class="pg">原文p42</span> ）</li>
-<li>ROJ 极性反直觉：V-=红、V+=黑，接反烧设备（P15，<span class="pg">原文p42</span> /<span class="pg">原文p43</span> ）</li>
-<li>高温预算降档：不得按常温满配（X12，<span class="pg">原文p60</span> ）</li>
-<li>NEBS 接地细则：星形垫圈防松、裸导体压接前清洁涂抗氧化剂、仅用铜导体、AC 须接 SPD（X26/X27，<span class="pg">原文p80</span> ）</li>
+<li><strong>ROJ 极性反直觉</strong>：<br>V-=红、V+=黑，接反烧设备（P15，<span class="pg">原文p42</span> /<span class="pg">原文p43</span> ）</li>
+<li><strong>高温预算降档</strong>：<br>不得按常温满配（X12，<span class="pg">原文p60</span> ）</li>
+<li><strong>NEBS 接地细则</strong>：<br>星形垫圈防松、裸导体压接前清洁涂抗氧化剂、仅用铜导体、AC 须接 SPD（X26/X27，<span class="pg">原文p80</span> ）</li>
 </ul>
 <p>来源：OmniSwitch 6575 Hardware Users Guide（Ch2-Ch4，p13-47、p56-68）</p><div class="pn"><a href="os6575-model-ports.html">⬅ 上一单元：os6575-model-ports</a><a class="nxt" href="os6575-ops-troubleshoot.html">下一单元：os6575-ops-troubleshoot ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

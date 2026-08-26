@@ -71,7 +71,7 @@ blockquote p{margin:6px 0}
 <a href="skills/sol-campus-hybrid-pol.html">sol-campus-hybrid-pol</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../solutions/index.html">解决方案</a> › <a href="index.html">园区网络架构</a> › <span>精华长文 DIGEST</span></nav><h1>精华长文 DIGEST</h1><h1 id="digest-sol-campus-architecture">DIGEST — 园区架构指南（sol-campus-architecture）精华</h1>
 <ul>
 <li>本书是 ALE Mobile Campus Architecture Guide（p1-43）+ Hybrid POL 彩页（p44-47）合册（47 页）。</li>
-<li>主线：园区网四目标（可用/扩展/安全/性能）下，LAN 分层设计 + Stellar 无控制器 WLAN + NMS/安全 + POL 混合光园区的全栈设计参考。</li>
+<li><strong>主线</strong>：<br>园区网四目标（可用/扩展/安全/性能）下，LAN 分层设计 + Stellar 无控制器 WLAN + NMS/安全 + POL 混合光园区的全栈设计参考。</li>
 </ul>
 <h2 id="_1">一、知识地图（三技能单元）</h2>
 <ol>
@@ -91,16 +91,32 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="_2">二、三单元要点串讲</h2>
 <h3 id="1-lanwlan-wi-fi">1. LAN/WLAN：分层栈与无控制器 Wi-Fi</h3>
-<p>两层折叠核心适合中小网（少部件少跳数），三层模型适合大型复杂网（<span class="pg">原文p7</span> ）。接入层基线：VC 堆叠、VLAN 动态分配+MVRP（勿全量建 VLAN）、Trunk/LACP（<span class="pg">原文p8-9</span> ）。互联选型：SPB 大园区扁平 L2、EVPN 跨广域 L2+多归属、MPLS 流量工程；RIP 不推荐（<span class="pg">原文p10-12</span> ）。Stellar 无控制器三面分离：管理面集中 OmniVista、控制面分布（AP 间 NMP over-the-air/over-the-LAN）、数据面本地桥接优先按 ARP 动态切 L2GRE（<span class="pg">原文p15-17</span> ）。AP 发现双域命令集互为镜像：VLAN 域（bridge 口+defaultWLANProfile map vlan）vs 服务域（access 口+l2profile peer+defaultWLANAccessProfile map service-type spb）（<span class="pg">原文p23</span> /<span class="pg">原文p25</span> ）。漫游三分支判定：无上下文→新客户端；上下文+ARP 匹配→L2；VLAN 不匹配→L3 漫游 L2GRE 回家乡 AP（<span class="pg">原文p26</span> ）。用户 VLAN：/24+VLAN 池首选（<span class="pg">原文p28</span> ）。</p>
+<ul>
+<li>两层折叠核心适合中小网（少部件少跳数），三层模型适合大型复杂网（<span class="pg">原文p7</span> ）。</li>
+<li><strong>接入层基线</strong>：<br>VC 堆叠、VLAN 动态分配+MVRP（勿全量建 VLAN）、Trunk/LACP（<span class="pg">原文p8-9</span> ）。</li>
+<li><strong>互联选型</strong>：<br>SPB 大园区扁平 L2、EVPN 跨广域 L2+多归属、MPLS 流量工程；RIP 不推荐（<span class="pg">原文p10-12</span> ）。</li>
+<li><strong>Stellar 无控制器三面分离</strong>：<br>管理面集中 OmniVista、控制面分布（AP 间 NMP over-the-air/over-the-LAN）、数据面本地桥接优先按 ARP 动态切 L2GRE（<span class="pg">原文p15-17</span> ）。</li>
+<li><strong>AP 发现双域命令集互为镜像</strong>：<br>VLAN 域（bridge 口+defaultWLANProfile map vlan）vs 服务域（access 口+l2profile peer+defaultWLANAccessProfile map service-type spb）（<span class="pg">原文p23</span> /<span class="pg">原文p25</span> ）。</li>
+<li><strong>漫游三分支判定</strong>：<br>无上下文→新客户端；上下文+ARP 匹配→L2；VLAN 不匹配→L3 漫游 L2GRE 回家乡 AP（<span class="pg">原文p26</span> ）。</li>
+<li><strong>用户 VLAN</strong>：<br>/24+VLAN 池首选（<span class="pg">原文p28</span> ）。</li>
+</ul>
 <h3 id="2-nms">2. NMS 与安全：角色化全生命周期</h3>
-<p>OmniVista 三管理模式（Express/Enterprise/Cloud）按规模递进；HA 选型：L2 HA 复用 Cluster IP 零改造，L3 HA 跨子网但 sFlow/策略执行受限、Preferred Node 走 CLI（<span class="pg">原文p35-36</span> ）。安全框架五段：UPAM 中央认证→谱系（IoT 指纹/802.1x/访客四式/BYOD）→角色（UNP/ARP）定 VLAN+ACL+QoS→Quarantine+QMR 处置→wIDS/wIPS（干扰 AP 非威胁、流氓 AP 才遏制且默认关闭）（<span class="pg">原文p36-42</span> ）。</p>
+<ul>
+<li><strong>OmniVista 三管理模式（Express/Enterprise/Cloud）按规模递进；HA 选型</strong>：<br>L2 HA 复用 Cluster IP 零改造，L3 HA 跨子网但 sFlow/策略执行受限、Preferred Node 走 CLI（<span class="pg">原文p35-36</span> ）。</li>
+<li><strong>安全框架五段</strong>：<br>UPAM 中央认证→谱系（IoT 指纹/802.1x/访客四式/BYOD）→角色（UNP/ARP）定 VLAN+ACL+QoS→Quarantine+QMR 处置→wIDS/wIPS（干扰 AP 非威胁、流氓 AP 才遏制且默认关闭）（<span class="pg">原文p36-42</span> ）。</li>
+</ul>
 <h3 id="3-hybrid-pol">3. Hybrid POL：光承载+以太边缘</h3>
-<p>Nokia POL 单纤点对多点+ONT 作承载，ALE 交换机/AP 作服务边缘；省铜缆/机房/有源设备/能耗四类成本，密集部署可去汇聚层（<span class="pg">原文p45</span> ）。两档选型：需全层冗余/SPB/MACsec/高密 PoE→SFP ONT+OmniSwitch；基础特性→纯 ONT+Stellar AP（<span class="pg">原文p46</span> ）。</p>
+<ul>
+<li>Nokia POL 单纤点对多点+ONT 作承载，ALE 交换机/AP 作服务边缘；省铜缆/机房/有源设备/能耗四类成本，密集部署可去汇聚层（<span class="pg">原文p45</span> ）。</li>
+<li><strong>两档选型</strong>：<br>需全层冗余/SPB/MACsec/高密 PoE→SFP ONT+OmniSwitch；基础特性→纯 ONT+Stellar AP（<span class="pg">原文p46</span> ）。</li>
+</ul>
 <h2 id="_3">三、本书在知识库中的位置</h2>
-<p>上游对接 campus-lan-presales（售前视角），下游细分到 stellar-wlan-<em> 系列（AP 部署细节）、ov2500-</em>（OmniVista 操作）、sol-spb/sol-evpn（互联技术深潜）。跨书易混点：Stellar 的 ARP（Access Role Profile）与 OmniSwitch 的 UNP 是同层概念两套实现；L2GRE 隧道功能类似 VXLAN 但用于 WLAN 漫游，勿与 EVPN VXLAN 混谈。</p>
+<ul>
+<li>上游对接 campus-lan-presales（售前视角），下游细分到 stellar-wlan-<em> 系列（AP 部署细节）、ov2500-</em>（OmniVista 操作）、sol-spb/sol-evpn（互联技术深潜）。</li>
+<li><strong>跨书易混点</strong>：<br>Stellar 的 ARP（Access Role Profile）与 OmniSwitch 的 UNP 是同层概念两套实现；L2GRE 隧道功能类似 VXLAN 但用于 WLAN 漫游，勿与 EVPN VXLAN 混谈。</li>
+</ul>
 <h2 id="_4">来源</h2>
-<p>ale_campus-architecture-guide-en.pdf（p1-43）+ ale-hybrid-pol-solution-brochure-en.pdf（p44-47）。verified.md：C1-C15；
-X1-X22；
-F1-F6；
-P1-P66；
-glossary 约 80 条。</p><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<ul>
+<li>ale_campus-architecture-guide-en.pdf（p1-43）+ ale-hybrid-pol-solution-brochure-en.pdf（p44-47）。</li>
+<li><strong>verified.md</strong>：<br>C1-C15；X1-X22；F1-F6；P1-P66；glossary 约 80 条。</li>
+</ul><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

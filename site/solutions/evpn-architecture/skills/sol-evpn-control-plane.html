@@ -71,12 +71,23 @@ blockquote p{margin:6px 0}
 <a href="../skills/sol-evpn-irb-multicast.html">sol-evpn-irb-multicast</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../solutions/index.html">解决方案</a> › <a href="../index.html">EVPN 架构指南</a> › <span>sol-evpn-control-plane</span></nav><h1>sol-evpn-control-plane</h1><p class="meta"><span class="badge">SKILL</span> sol-evpn-control-plane · 来源页码: </p><h2 id="r">R（触发场景）</h2>
 <ul>
 <li>论证 VXLAN/EVPN 选型（对客户讲 STP/VLAN 模型五大痛点）</li>
-<li>设计 underlay/overlay：协议选型、RR 冗余、BFD/TTL security</li>
+<li><strong>设计 underlay/overlay</strong>：<br>协议选型、RR 冗余、BFD/TTL security</li>
 <li>选择 service interface 模型与 RD/RT 策略（自动派生）</li>
 <li>解读 R-T1~R-T8 路由类型与扩展社区</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>演进决策链（F1，<span class="pg">原文p5-9</span> ）：STP 阻塞链路→routed underlay；4096 VLAN 上限→24-bit VNI（约 1600 万）；洪泛学习→控制平面主动学习（"endpoint reachability information is advertised intelligently through the control plane within MP-BGP NLRI updates"，P1，<span class="pg">原文p7</span> ）；单一控制平面同时承载 L2/L3 服务（P3，<span class="pg">原文p9</span> ）。控制面学到的 MAC 不老化，以对端撤路为生命周期（P5，<span class="pg">原文p13</span> ）。设计选型框架（F2，<span class="pg">原文p45</span> ）：推荐 OSPF underlay+iBGP overlay+冗余 RR（same cluster-id 省内存，P29，<span class="pg">原文p46</span> ）。</p>
+<ul>
+<li><strong>演进决策链（F1，<span class="pg">原文p5-9</span> ）</strong>：<br>STP 阻塞链路→routed underlay；</li>
+<li>4096 VLAN 上限→24-bit VNI（约 1600 万）；</li>
+<li>洪泛学习→控制平面主动学习（"endpoint reachability information is advertised intelligently through the control plane within MP-BGP NLRI updates"，P1，<span class="pg">原文p7</span> ）；</li>
+<li>
+<p>单一控制平面同时承载 L2/L3 服务（P3，<span class="pg">原文p9</span> ）；</p>
+</li>
+<li>
+<p>控制面学到的 MAC 不老化，以对端撤路为生命周期（P5，<span class="pg">原文p13</span> ）。</p>
+</li>
+<li><strong>设计选型框架（F2，<span class="pg">原文p45</span> ）</strong>：<br>推荐 OSPF underlay+iBGP overlay+冗余 RR（same cluster-id 省内存，P29，<span class="pg">原文p46</span> ）。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>Underlay 基线（P26/P27，<span class="pg">原文p45-46</span> ）：单区域 OSPF+p2p 网络类型（免 DR 选举等待）+BFD 毫秒收敛；EVPN-VXLAN 只跑一个 underlay VRF（默认 VRF，P32，<span class="pg">原文p46</span> ）</li>
@@ -95,8 +106,8 @@ blockquote p{margin:6px 0}
 <h2 id="e">E（实证案例）</h2>
 <ul>
 <li>DC spine-leaf 2-tier/3-tier（5-stage Super-Spine DCI）拓扑论证（C1/C2，<span class="pg">原文p8</span> ）</li>
-<li>全册端到端配置案例（2 spine+6 leaf）：OSPF underlay 10 步→BGP RR overlay 5 步→逐段验证（C14，<span class="pg">原文p48-72</span> ）</li>
-<li>Proxy ARP 表老化后的恢复：重新发起主机通信生成表项（C19，<span class="pg">原文p72</span> ）</li>
+<li><strong>全册端到端配置案例（2 spine+6 leaf）</strong>：<br>OSPF underlay 10 步→BGP RR overlay 5 步→逐段验证（C14，<span class="pg">原文p48-72</span> ）</li>
+<li><strong>Proxy ARP 表老化后的恢复</strong>：<br>重新发起主机通信生成表项（C19，<span class="pg">原文p72</span> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>

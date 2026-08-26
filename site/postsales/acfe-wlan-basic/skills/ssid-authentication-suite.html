@@ -141,24 +141,22 @@ Open+Captive Portal（无加密、兼容一切，访客）&lt; MAC 认证（可�
 <li>
 <p><strong>三种 SSID 的关键开关</strong></p>
 </li>
-<li>Employee：WPA2_AES + UPAMRadiusServer + Auth Source=Local Database（或外部 RADIUS）+ Web Auth=None；
-客户端 PEAP/MSCHAPv2；
-UPAM 常数 1812/1813、重试 2、超时 5s</li>
-<li>Guest：Captive Portal=YES（OV-UPAM 型）+ Allow All EAPs=Yes + Auth Source=None + Web Auth=Guest；</li>
+<li><strong>Employee</strong>：<br>WPA2_AES + UPAMRadiusServer + Auth Source=Local Database（或外部 RADIUS）+ Web Auth=None；客户端 PEAP/MSCHAPv2；UPAM 常数 1812/1813、重试 2、超时 5s</li>
+<li><strong>Guest</strong>：<br>Captive Portal=YES（OV-UPAM 型）+ Allow All EAPs=Yes + Auth Source=None + Web Auth=Guest；</li>
 <li>Guest Access Strategy 定登录方式（账号/接入码/条款/自注册+审批）与 Post Portal Enforcement；</li>
 <li>
 <p>Guest Tunneling=按 ARP 建 L2 GRE 隧道，可加备份隧道；</p>
 </li>
 <li>
-<p>BYOD：SSID 级 VLAN=Guest VLAN（预认证沙箱）→ BYOD Strategy 的 Post Portal Enforcement 绑 ARP（内配 Employee VLAN）→ 认证后从 VLAN30 切 VLAN20</p>
+<p><strong>BYOD</strong>：<br>SSID 级 VLAN=Guest VLAN（预认证沙箱）→ BYOD Strategy 的 Post Portal Enforcement 绑 ARP（内配 Employee VLAN）→ 认证后从 VLAN30 切 VLAN20</p>
 </li>
 <li>
-<p>Express 内嵌版：门户三选一（账号/接入码/条款，大小写敏感）；AP 内置 DHCP 三步：Network 配 IP → 建 Pool → Bind Network 才生效</p>
+<p><strong>Express 内嵌版</strong>：<br>门户三选一（账号/接入码/条款，大小写敏感）；AP 内置 DHCP 三步：Network 配 IP → 建 Pool → Bind Network 才生效</p>
 </li>
 <li>
 <p><strong>客户端接入排障两套命令链（AP CLI，support/aos2016）</strong></p>
 </li>
-<li>802.1X：<code>iwconfig</code> / <code>iwlist channel|txpower|bitrate</code> → <code>ssudo sta_list</code></li>
+<li><strong>802.1X</strong>：<br><code>iwconfig</code> / <code>iwlist channel|txpower|bitrate</code> → <code>ssudo sta_list</code></li>
 <li><code>ssudo wlanconfig athX list</code></li>
 <li><code>ssudo wam_debug sta_list</code>（JSON 含 VLAN/ARP/各阶段认证结果）→ <code>cat /proc/kes_syslog | grep &lt;MAC&gt;</code> → 核对 <code>/var/config/wlanservice.conf</code></li>
 <li><code>AAA_profile.conf</code></li>
@@ -166,7 +164,7 @@ UPAM 常数 1812/1813、重试 2、超时 5s</li>
 <p><code>AAA_server.conf</code> → <code>tcpdump -i br-wan -s 0 host &lt;radiusIP&gt;</code></p>
 </li>
 <li>
-<p>门户：<code>date</code>（账号有效期）→ <code>cat /etc/resolv.conf</code>（DNS 必需）→ <code>ps | grep eag</code> → <code>eag_cli show user all</code> / <code>eag_cli kick user index N</code> → <code>tail -f /tmp/log/eag.log</code></p>
+<p><strong>门户</strong>：<br><code>date</code>（账号有效期）→ <code>cat /etc/resolv.conf</code>（DNS 必需）→ <code>ps | grep eag</code> → <code>eag_cli show user all</code> / <code>eag_cli kick user index N</code> → <code>tail -f /tmp/log/eag.log</code></p>
 </li>
 </ol>
 <h2 id="a1-lab">A1 · 书中案例（Lab 步骤精要）</h2>
@@ -195,8 +193,8 @@ UPAM 常数 1812/1813、重试 2、超时 5s</li>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>
 <li>DSPSK 与 AUTO_WPA_WPA2 互斥；全局 PSK 字段仅 Prefer 模式可填（ce20）。</li>
-<li>MAC/共享 PSK 安全弱点：MAC 可伪造、共钥泄露即全网失守且无法按人撤销——哑设备用 DSPSK/PPSK，人员用 802.1X（ce21）。</li>
-<li>门户排障三查：AP 时间（date）、DNS（resolv.conf）、必须访问非 https URL 才触发重定向；树莓派/Debian 不会自动弹浏览器（ce22）。</li>
+<li><strong>MAC/共享 PSK 安全弱点</strong>：<br>MAC 可伪造、共钥泄露即全网失守且无法按人撤销——哑设备用 DSPSK/PPSK，人员用 802.1X（ce21）。</li>
+<li><strong>门户排障三查</strong>：<br>AP 时间（date）、DNS（resolv.conf）、必须访问非 https URL 才触发重定向；树莓派/Debian 不会自动弹浏览器（ce22）。</li>
 <li>802.1X 失败先查三个 .conf（UPAM 地址/密钥由云下发，Provisioning 未生效时 AP 配置为空而界面看不出），最后 tcpdump 抓 RADIUS（ce23）。</li>
 <li>AP 内置 DHCP 池=并发上限（40 地址=40 台），"部分新设备连不上"先查 IP 再查无线（ce37）。</li>
 <li>Express 门户账号大小写敏感；访客账号有起止日期，依赖 AP 时间正确。</li>

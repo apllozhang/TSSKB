@@ -71,12 +71,16 @@ blockquote p{margin:6px 0}
 <a href="../skills/sol-campus-hybrid-pol.html">sol-campus-hybrid-pol</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../solutions/index.html">解决方案</a> › <a href="../index.html">园区网络架构</a> › <span>sol-campus-nms-security</span></nav><h1>sol-campus-nms-security</h1><p class="meta"><span class="badge">SKILL</span> sol-campus-nms-security · 来源页码: </p><h2 id="r">R（触发场景）</h2>
 <ul>
 <li>选型 OmniVista 部署形态与高可用（单机/L2 HA/L3 HA 功能取舍）</li>
-<li>规划统一接入安全：员工 802.1x、IoT 指纹、访客认证、BYOD 管控</li>
+<li><strong>规划统一接入安全</strong>：<br>员工 802.1x、IoT 指纹、访客认证、BYOD 管控</li>
 <li>设计角色化策略（安全跟人走而非绑端口）与隔离处置闭环</li>
-<li>无线安全：wIDS/wIPS、流氓 AP 判定与遏制、WCF 内容过滤</li>
+<li><strong>无线安全</strong>：<br>wIDS/wIPS、流氓 AP 判定与遏制、WCF 内容过滤</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>统一接入安全框架（F5，<span class="pg">原文p36</span> ）：UPAM 中央 RADIUS+captive portal → 认证谱系 → 角色（UNP/ARP）定 VLAN+ACL+QoS → 事后处置（Quarantine+QMR/WCF/wIDS/wIPS），安全贯穿"接入-授权-运行-处置"全生命周期。安全内建于网络并按角色动态施加，而非静态绑端口（P52，<span class="pg">原文p36</span> ）；UNP/ARP 内嵌于交换机/AP 保证有线无线策略一致（P53，<span class="pg">原文p36</span> ）。NMS 选型：L2 HA 复用原 IP 零改造（P49，<span class="pg">原文p35</span> ）；L3 HA 跨子网但 sFlow/策略执行等功能受限（P50/X14，<span class="pg">原文p36</span> ）。</p>
+<ul>
+<li><strong>统一接入安全框架（F5，<span class="pg">原文p36</span> ）</strong>：<br>UPAM 中央 RADIUS+captive portal → 认证谱系 → 角色（UNP/ARP）定 VLAN+ACL+QoS → 事后处置（Quarantine+QMR/WCF/wIDS/wIPS），安全贯穿"接入-授权-运行-处置"全生命周期。</li>
+<li>安全内建于网络并按角色动态施加，而非静态绑端口（P52，<span class="pg">原文p36</span> ）；UNP/ARP 内嵌于交换机/AP 保证有线无线策略一致（P53，<span class="pg">原文p36</span> ）。</li>
+<li><strong>NMS 选型</strong>：<br>L2 HA 复用原 IP 零改造（P49，<span class="pg">原文p35</span> ）；L3 HA 跨子网但 sFlow/策略执行等功能受限（P50/X14，<span class="pg">原文p36</span> ）。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>NMS 部署选型（C10，<span class="pg">原文p35</span> ）：单机无切换；L2 HA 双 VM 同子网+虚拟 Cluster IP（原单机 IP 可复用）；L3 HA 双节点跨子网各持 IP、设备配双地址、Preferred Node 须 CLI admin 菜单设置</li>
@@ -104,7 +108,7 @@ blockquote p{margin:6px 0}
 <h2 id="e">E（实证案例）</h2>
 <ul>
 <li>OmniVista HA 三形态部署对比与 L3 HA 的 Preferred Node CLI 设置（C10/X15，<span class="pg">原文p35-36</span> ）</li>
-<li>AP onboarding 全流程：call-home→序列号校验→证书→组模板（C11，<span class="pg">原文p36</span> ）</li>
+<li><strong>AP onboarding 全流程</strong>：<br>call-home→序列号校验→证书→组模板（C11，<span class="pg">原文p36</span> ）</li>
 <li>mDNS 网关/Responder 两模式实现跨网段服务共享并由防火墙审查（C7/C8，<span class="pg">原文p33</span> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>

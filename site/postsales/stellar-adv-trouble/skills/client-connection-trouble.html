@@ -169,9 +169,9 @@ blockquote p{margin:6px 0}
 <p><strong>掉线四分支</strong>：① <code>iwlist athXX txpower</code> 显示最小档（如 3dBm/1mW）+ 客户端 RSSI 16 → RF profile 调大功率。② rfprofile.conf 的 <code>signalStrengthThreshold</code> 过高（如 70，约 −26dBm）→ 正常信号也被踢，调低。③ 兜底空口抓包 + 日志看有无 AP 主动 disassoc/deauth，区分"被踢"与"失联"。④ reason 8 = 系统负载均衡行为，不按故障处理。</p>
 <h2 id="a1">A1 · 书中案例</h2>
 <ul>
-<li>ce09：Current Tx-Power=3dBm（1mW）+ RSSI 16，日志判读"信号质量差、断连概率高"，在 RF profile 调大功率解决（p85-86）。</li>
-<li>ce10：signalStrengthThreshold:70 → "Threshold too high. Decrease the value."（p87）。</li>
-<li>ce21：reason 8 日志原文带 recv rssi 63 / min 55 / max 64，可复核掉线瞬间信号（p80）。</li>
+<li><strong>ce09</strong>：<br>Current Tx-Power=3dBm（1mW）+ RSSI 16，日志判读"信号质量差、断连概率高"，在 RF profile 调大功率解决（p85-86）。</li>
+<li><strong>ce10</strong>：<br>signalStrengthThreshold:70 → "Threshold too high. Decrease the value."（p87）。</li>
+<li><strong>ce21</strong>：<br>reason 8 日志原文带 recv rssi 63 / min 55 / max 64，可复核掉线瞬间信号（p80）。</li>
 <li><code>cat /proc/kes_syslog | grep tid</code> 的 <code>[TID_DHCP_PROTOCOL] ip/hostname/ostype:[iOS]</code> 行可识别终端 OS 与主机名（p78）。</li>
 </ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>

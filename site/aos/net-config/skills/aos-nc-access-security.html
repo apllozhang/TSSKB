@@ -80,17 +80,22 @@ blockquote p{margin:6px 0}
 <a href="../skills/aos-nc-oam-monitoring.html">aos-nc-oam-monitoring</a>
 <a href="../skills/aos-nc-switch-foundation.html">aos-nc-switch-foundation</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../aos/index.html">AOS 软件手册</a> › <a href="../index.html">AOS 8.10R04</a> › <span>aos-nc-access-security</span></nav><h1>aos-nc-access-security</h1><p class="meta"><span class="badge">SKILL</span> aos-nc-access-security · 来源页码: </p><h2 id="r">R（触发场景）</h2>
 <ul>
-<li>边缘端口要认证准入：802.1X（supplicant）或 MAC 认证（打印机/IoT）</li>
-<li>认证后按用户/设备给不同 VLAN 与 QoS：UNP profile+分类规则</li>
-<li>访客 Web 认证：Captive Portal</li>
-<li>AAA 服务器选型与备份：RADIUS/RADSEC/TACACS+/LDAP</li>
-<li>BYOD/零配置发现：mDNS/SSDP relay；AP 流量回传：L2 GRE</li>
-<li>要按应用（DPI/REGEX 指纹）识别并施策：AppMon/AFP</li>
-<li>限制端口学习 MAC 数防私接：LPS</li>
-<li>取证与流量分析：端口镜像/端口监控/sFlow/RMON</li>
+<li><strong>边缘端口要认证准入</strong>：<br>802.1X（supplicant）或 MAC 认证（打印机/IoT）</li>
+<li><strong>认证后按用户/设备给不同 VLAN 与 QoS</strong>：<br>UNP profile+分类规则</li>
+<li><strong>访客 Web 认证</strong>：<br>Captive Portal</li>
+<li><strong>AAA 服务器选型与备份</strong>：<br>RADIUS/RADSEC/TACACS+/LDAP</li>
+<li><strong>BYOD/零配置发现</strong>：<br>mDNS/SSDP relay；AP 流量回传：L2 GRE</li>
+<li><strong>要按应用（DPI/REGEX 指纹）识别并施策</strong>：<br>AppMon/AFP</li>
+<li><strong>限制端口学习 MAC 数防私接</strong>：<br>LPS</li>
+<li><strong>取证与流量分析</strong>：<br>端口镜像/端口监控/sFlow/RMON</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>网络准入框架（F9，<span class="pg">原文p1212</span> ）：认证（802.1X/MAC/Captive Portal→RADIUS/UPAM/CPPM）→分类（UNP 规则/端口默认）→角色（profile：VLAN/service 映射+QoS 列表）→限制/隔离（QMR 隔离修复）；BYOD（mDNS/SSDP）与 IoT profiling 是外延。AAA 服务器选型矩阵（F10，<span class="pg">原文p1475</span> ）：RADIUS（管理+准入）/TACACS+（管理含 SNMP）/LDAP（管理含 SNMP）。应用感知框架（F11，<span class="pg">原文p1431</span> /<span class="pg">原文p1457</span> ）：AppMon（DPI 签名+应用列表+QoS 执行）与 AFP（REGEX 指纹+分类器库+trap/UNP 列表）互补。安全纵深四层（F18，<span class="pg">原文p83</span> /<span class="pg">原文p1536</span> /<span class="pg">原文p819</span> /<span class="pg">原文p1212</span> ）：端口级（LPS/风暴控制）→链路级（MACsec）→网络级（IPsec/DoS）→身份级（AG/UNP）。</p>
+<ul>
+<li><strong>网络准入框架（F9，<span class="pg">原文p1212</span> ）</strong>：<br>认证（802.1X/MAC/Captive Portal→RADIUS/UPAM/CPPM）→分类（UNP 规则/端口默认）→角色（profile：VLAN/service 映射+QoS 列表）→限制/隔离（QMR 隔离修复）；BYOD（mDNS/SSDP）与 IoT profiling 是外延。</li>
+<li><strong>AAA 服务器选型矩阵（F10，<span class="pg">原文p1475</span> ）</strong>：<br>RADIUS（管理+准入）/TACACS+（管理含 SNMP）/LDAP（管理含 SNMP）。</li>
+<li><strong>应用感知框架（F11，<span class="pg">原文p1431</span> /<span class="pg">原文p1457</span> ）</strong>：<br>AppMon（DPI 签名+应用列表+QoS 执行）与 AFP（REGEX 指纹+分类器库+trap/UNP 列表）互补。</li>
+<li><strong>安全纵深四层（F18，<span class="pg">原文p83</span> /<span class="pg">原文p1536</span> /<span class="pg">原文p819</span> /<span class="pg">原文p1212</span> ）</strong>：<br>端口级（LPS/风暴控制）→链路级（MACsec）→网络级（IPsec/DoS）→身份级（AG/UNP）。</li>
+</ul>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>准入路径</strong>：supplicant 用 802.1X（EAP over RADIUS）；非 supplicant 用 MAC 认证（MAC 作 username/password）；无认证场景用 UNP 分类规则（源 MAC/IP/domain 等）（P167/P169，<span class="pg">原文p1213</span> ）</li>
@@ -119,7 +124,7 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="b">B（反例/坑）</h2>
 <ul>
-<li>认证服务器不逐台轮询：第一台可用服务器上找不到用户即判失败，不自动试下台（X70/P179，<span class="pg">原文p1475</span> ）</li>
+<li><strong>认证服务器不逐台轮询</strong>：<br>第一台可用服务器上找不到用户即判失败，不自动试下台（X70/P179，<span class="pg">原文p1475</span> ）</li>
 <li>TACACS+/LDAP 不支持端口准入，Access Guardian 只认 RADIUS（X71，<span class="pg">原文p1475</span> ）</li>
 <li>MAC 认证把 MAC 同时作用户名密码，服务器侧格式不匹配（大小写/分隔符）会全军覆没（X74，<span class="pg">原文p1214</span> ）</li>
 <li>认证失败或无 profile 返回时回落到 UNP 端口默认 profile 与分类规则（P168，<span class="pg">原文p1213</span> ）；MAC 会话定时器默认 12 小时（P172，<span class="pg">原文p1210</span> ）</li>
@@ -129,4 +134,16 @@ blockquote p{margin:6px 0}
 <li>802.1Q tagged 口默认 untrusted，上联口标记不生效（X64，<span class="pg">原文p1134</span> ，详见 aos-nc-qos-policy）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniSwitch AOS 8.10R4 Network Configuration Guide 第 35 章 Access Guardian（<span class="pg">原文p1210-1400</span> ）、第 36 章 AppMon（<span class="pg">原文p1431-1449</span> ）、第 37 章 AFP（<span class="pg">原文p1457-1458</span> ）、第 38 章 Authentication Servers（<span class="pg">原文p1475-1525</span> ）、第 40 章 LPS（<span class="pg">原文p1536-1542</span> ）、第 41 章端口镜像/sFlow/RMON（<span class="pg">原文p1558-1567</span> ）。条目来源：cases C55-C60；principles P167-P190；counter-examples X69-X71/X74；frameworks F9-F11/F15/F18。</p><div class="pn"><a href="aos-nc-qos-policy.html">⬅ 上一单元：aos-nc-qos-policy</a><a class="nxt" href="aos-nc-oam-monitoring.html">下一单元：aos-nc-oam-monitoring ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<ul>
+<li>OmniSwitch AOS 8.10R4 Network Configuration Guide 第 35 章 Access Guardian（<span class="pg">原文p1210-1400</span> ）</li>
+<li>第 36 章 AppMon（<span class="pg">原文p1431-1449</span> ）</li>
+<li>第 37 章 AFP（<span class="pg">原文p1457-1458</span> ）</li>
+<li>第 38 章 Authentication Servers（<span class="pg">原文p1475-1525</span> ）</li>
+<li>第 40 章 LPS（<span class="pg">原文p1536-1542</span> ）</li>
+<li>
+<p>第 41 章端口镜像/sFlow/RMON（<span class="pg">原文p1558-1567</span> ）</p>
+</li>
+<li>
+<p><strong>条目来源</strong>：<br>cases C55-C60；principles P167-P190；counter-examples X69-X71/X74；frameworks F9-F11/F15/F18。</p>
+</li>
+</ul><div class="pn"><a href="aos-nc-qos-policy.html">⬅ 上一单元：aos-nc-qos-policy</a><a class="nxt" href="aos-nc-oam-monitoring.html">下一单元：aos-nc-oam-monitoring ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

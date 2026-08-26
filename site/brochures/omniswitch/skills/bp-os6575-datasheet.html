@@ -92,12 +92,15 @@ blockquote p{margin:6px 0}
 <li>M23 6 针双电源输入与告警继电器接线规划</li>
 </ul>
 <h2 id="i">I（核心理念)</h2>
-<p>OS6575-MP16 是"加固、全管理、无风扇的壁挂 GbE 交换机"（<span class="pg">原文p73</span> ："ruggedized, fully manageable and fan-less... wall mountable switch"），IP67 整机防护、全系 60W bt PoE、全口 MACsec-256、M23 双电源、告警继电器。层级：工业加固接入小点位档，工业阵营（6465/6465T/6865）中防护等级最高的壁挂型。</p>
+<ul>
+<li><strong>OS6575-MP16 是"加固、全管理、无风扇的壁挂 GbE 交换机"（<span class="pg">原文p73</span> </strong>：<br>"ruggedized, fully manageable and fan-less... wall mountable switch"），IP67 整机防护、全系 60W bt PoE、全口 MACsec-256、M23 双电源、告警继电器。</li>
+<li><strong>层级</strong>：<br>工业加固接入小点位档，工业阵营（6465/6465T/6865）中防护等级最高的壁挂型。</li>
+</ul>
 <h2 id="a1">A1（与相邻系列选型差异）</h2>
 <ul>
-<li>vs OS6465：6465 机柜 DIN/19"（IP44 级、VC 4 台）；6575 壁挂 IP67、单型号 16 口、路由能力更强（OSPF/IS-IS/BGP/VRF/SPB-M 内置，<span class="pg">原文p78</span> ）。机柜内多口选 6465，轨旁小点位选 6575（C6）。</li>
-<li>vs OS6865：6865 是工业 L3 旗舰（-40~74°C、75W bt、SPB-M VPN、10G 上联 U28X）；6575 仅 60W、千兆环网，胜在 IP67 与 Bypass 口。</li>
-<li>端口形态独特：D-code（M12 4 针 100M）/X-code（M12 8 针 1G）工业连接器，非 RJ45——布线成本与线缆定制要提前算。</li>
+<li><strong>vs OS6465</strong>：<br>6465 机柜 DIN/19"（IP44 级、VC 4 台）；6575 壁挂 IP67、单型号 16 口、路由能力更强（OSPF/IS-IS/BGP/VRF/SPB-M 内置，<span class="pg">原文p78</span> ）。机柜内多口选 6465，轨旁小点位选 6575（C6）。</li>
+<li><strong>vs OS6865</strong>：<br>6865 是工业 L3 旗舰（-40~74°C、75W bt、SPB-M VPN、10G 上联 U28X）；6575 仅 60W、千兆环网，胜在 IP67 与 Bypass 口。</li>
+<li><strong>端口形态独特</strong>：<br>D-code（M12 4 针 100M）/X-code（M12 8 针 1G）工业连接器，非 RJ45——布线成本与线缆定制要提前算。</li>
 </ul>
 <h2 id="a2">A2（规格细节速查表）</h2>
 <p>机型（单一型号，<span class="pg">原文p75</span> ）：
@@ -117,16 +120,16 @@ Layer 特性（<span class="pg">原文p78</span> ）：L3 内置 OSPFv2/v3、IS-
 规格红线：MTBF 仅 219k 小时（约 25 年 vs 6465 的 1.4M+）；无光口上联；交换容量小。</p>
 <h2 id="e">E（适用场景）</h2>
 <ul>
-<li>轨旁/交通控制室外小盒子：IP67 + 壁挂 + 双电源 + 告警继电器（C6）</li>
+<li><strong>轨旁/交通控制室外小盒子</strong>：<br>IP67 + 壁挂 + 双电源 + 告警继电器（C6）</li>
 <li>收费站 PTZ 摄像头/室外 AP 供电（60W bt + Fast/Perpetual PoE）</li>
-<li>对业务连续性敏感的链路：4 口 Bypass 保证设备断电时链路直通</li>
+<li><strong>对业务连续性敏感的链路</strong>：<br>4 口 Bypass 保证设备断电时链路直通</li>
 <li>需要完整动态路由 + SPB 的小型工业环网（内置 OSPF/IS-IS/BGP，无需许可，对比 6570M/6360 的许可制）</li>
 </ul>
 <h2 id="b">B（限制与坑）</h2>
 <ul>
 <li>路由表 8K IPv4 / MAC 32K——大路由表场景不适用（X7，<span class="pg">原文p76</span> ）</li>
 <li>VC 最多 4 台（<span class="pg">原文p76</span> ）——堆叠规模按 4 设计</li>
-<li>M23 双电源不支持热插拔（<span class="pg">原文p74</span> ："not hot-swappable"）——换电源要断电窗口</li>
+<li><strong>M23 双电源不支持热插拔（<span class="pg">原文p74</span> </strong>：<br>"not hot-swappable"）——换电源要断电窗口</li>
 <li>无 SFP 光口——光纤上联必须另配光电转换或选 6465/6865</li>
 <li>MTBF 219k 小时明显低于同阵营（<span class="pg">原文p75</span> ）——关键点位考虑备件</li>
 <li>M12 连接线缆需专用订购（M12-XC/M12-DC 系列，<span class="pg">原文p81</span> ），普通 RJ45 线不能直连</li>

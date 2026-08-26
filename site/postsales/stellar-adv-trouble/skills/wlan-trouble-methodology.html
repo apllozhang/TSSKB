@@ -153,17 +153,17 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="a1">A1 · 书中案例</h2>
 <ul>
-<li>主案例（p11-18）：整栋楼客户端登不进 Employee SSID。</li>
-<li>访谈四问锁定范围后取 AP 日志与交换机配置比对：OmniVista 里 SSID 映射 VLAN 10，接入交换机 Building_A 上配的是 VLAN 20，tagged VLAN 不一致导致认证后拿不到正确子网。</li>
-<li>Resolution：更新交换机 tagged VLAN ID=20。</li>
-<li>教训：<strong>全员连不上而 AP 本身正常 → 优先怀疑交换机侧 VLAN</strong>。</li>
+<li><strong>主案例（p11-18）</strong>：<br>整栋楼客户端登不进 Employee SSID。</li>
+<li><strong>访谈四问锁定范围后取 AP 日志与交换机配置比对</strong>：<br>OmniVista 里 SSID 映射 VLAN 10，接入交换机 Building_A 上配的是 VLAN 20，tagged VLAN 不一致导致认证后拿不到正确子网。</li>
+<li><strong>Resolution</strong>：<br>更新交换机 tagged VLAN ID=20。</li>
+<li><strong>教训</strong>：<br><strong>全员连不上而 AP 本身正常 → 优先怀疑交换机侧 VLAN</strong>。</li>
 </ul>
 <p>复现法案例（p12）：向客户采集四类配置——接入交换机 vcboot.cfg、OmniVista 组织配置、Stellar AP 配置备份、服务器配置备份——在自有环境 1:1 重建拓扑后重现问题，排除客户描述偏差与隐藏根因。</p>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
 <li>任何故障刚接手、还不知道从哪查起时，<strong>必先走本 skill</strong>。</li>
-<li>与专项 skill 的区分：本 skill 只负责"怎么问、怎么定层、怎么收窄、怎么收尾"；具体命令与阈值在四个分层 skill 与工具箱 skill 中。已明确是某层问题的直接进对应 skill。</li>
-<li>TKC 检索：当故障疑似已知问题时，按"版本比对三分支"查 TKC——同版本看 Resolution；案例版本更旧则可能已被新 build 修复；套用前<strong>必须亲自重复诊断步骤且结论一致</strong>，否则换用例或联系技术支持创建新用例（p127-130）。</li>
+<li><strong>与专项 skill 的区分</strong>：<br>本 skill 只负责"怎么问、怎么定层、怎么收窄、怎么收尾"；具体命令与阈值在四个分层 skill 与工具箱 skill 中。已明确是某层问题的直接进对应 skill。</li>
+<li><strong>TKC 检索</strong>：<br>当故障疑似已知问题时，按"版本比对三分支"查 TKC——同版本看 Resolution；案例版本更旧则可能已被新 build 修复；套用前<strong>必须亲自重复诊断步骤且结论一致</strong>，否则换用例或联系技术支持创建新用例（p127-130）。</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>

@@ -82,13 +82,17 @@ blockquote p{margin:6px 0}
 <div class="grp">组播与织构</div>
 <a href="../skills/aos-multicast-erp-spb.html">aos-multicast-erp-spb</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../postsales/index.html">售后</a> › <a href="../index.html">DT00XTE220</a> › <span>aos-vrrp-first-hop-redundancy</span></nav><h1>aos-vrrp-first-hop-redundancy</h1><p class="meta"><span class="badge">SKILL</span> aos-vrrp-first-hop-redundancy · 来源页码: </p><h2 id="r">R（触发场景）</h2>
 <ul>
-<li>网关冗余：两台三层交换机为同一 VLAN 提供虚拟默认网关</li>
+<li><strong>网关冗余</strong>：<br>两台三层交换机为同一 VLAN 提供虚拟默认网关</li>
 <li>主备切换演练或 Master 故障后流量未切走的排障</li>
 <li>上行口故障需要联动降优先级（Tracking）触发切换</li>
 <li>多虚拟路由器负载分担规划</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>VRRP（RFC 2338）用一个虚拟 IP + 虚拟 MAC（00-00-5E-00-01-{VRID}）把多台路由器虚拟成一台，最高优先级者为 Master 负责转发与 ARP 应答，IP 拥有者直接 Master（P99/P100，<span class="pg">原文p524-526</span> ）。收敛的时钟设计是 Master_Down_Interval = 3×通告间隔 + Skew_Time，而 Skew_Time=(256-Priority)/256——优先级越低的 Backup 等得越久，天然错峰升主，防止多备同时抢占（P101，<span class="pg">原文p527</span> ）。可靠性闭环靠 Tracking：跟踪口断则按策略扣优先级触发切换（P103，<span class="pg">原文p531</span> ）。</p>
+<ul>
+<li>VRRP（RFC 2338）用一个虚拟 IP + 虚拟 MAC（00-00-5E-00-01-{VRID}）把多台路由器虚拟成一台，最高优先级者为 Master 负责转发与 ARP 应答，IP 拥有者直接 Master（P99/P100，<span class="pg">原文p524-526</span> ）。</li>
+<li>收敛的时钟设计是 Master_Down_Interval = 3×通告间隔 + Skew_Time，而 Skew_Time=(256-Priority)/256——优先级越低的 Backup 等得越久，天然错峰升主，防止多备同时抢占（P101，<span class="pg">原文p527</span> ）。</li>
+<li><strong>可靠性闭环靠 Tracking</strong>：<br>跟踪口断则按策略扣优先级触发切换（P103，<span class="pg">原文p531</span> ）。</li>
+</ul>
 <h2 id="a1">A1（决策/选型）</h2>
 <ol>
 <li>首跳冗余选型：VRRP 标准协议；与 Cisco HSRP 不兼容，混布网络不能两侧各跑一个（X53，<span class="pg">原文p524</span> ）</li>
@@ -104,7 +108,7 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>C25 VRRP 主备+抢占+Tracking 全流程：两台 6860 同配虚拟 IP，断跟踪口观察 Master 迁移（<span class="pg">原文p529-537</span> ）</li>
+<li><strong>C25 VRRP 主备+抢占+Tracking 全流程</strong>：<br>两台 6860 同配虚拟 IP，断跟踪口观察 Master 迁移（<span class="pg">原文p529-537</span> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>

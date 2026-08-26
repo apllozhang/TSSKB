@@ -78,7 +78,12 @@ blockquote p{margin:6px 0}
 <li>用安全协议替换 Telnet/FTP/TFTP/SNMPv1/HTTP</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>开机默认全开的服务端口是 DoS 攻击面（X3，<span class="pg">原文p12</span> ）：先全关服务再按需开安全协议（P19，<span class="pg">原文p12</span> ）。不安全协议仅为兼容遗留系统保留，必须替换（P20，<span class="pg">原文p12</span> ）。控制面防护逻辑 = 协议认证（谁可参与）+ 拓扑防护（防外部影响生成树）+ 地址防护（防 ARP/DHCP/RA 欺骗）。keychain 是 OSPF/IS-IS 最安全选项，密钥带起止时间定期轮换（P47，<span class="pg">原文p30</span> ）。</p>
+<ul>
+<li><strong>开机默认全开的服务端口是 DoS 攻击面（X3，<span class="pg">原文p12</span> ）</strong>：<br>先全关服务再按需开安全协议（P19，<span class="pg">原文p12</span> ）。</li>
+<li>不安全协议仅为兼容遗留系统保留，必须替换（P20，<span class="pg">原文p12</span> ）。</li>
+<li>控制面防护逻辑 = 协议认证（谁可参与）+ 拓扑防护（防外部影响生成树）+ 地址防护（防 ARP/DHCP/RA 欺骗）。</li>
+<li>keychain 是 OSPF/IS-IS 最安全选项，密钥带起止时间定期轮换（P47，<span class="pg">原文p30</span> ）。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>协议替换对照框架（F3/P20，<span class="pg">原文p12</span> ）：Telnet→SSH（无加密无证书）；FTP/TFTP→SFTP/SCP；SNMPv1/v2c→SNMPv3（仅社区串认证）；HTTP→HTTPS（明文）</li>
@@ -103,7 +108,7 @@ blockquote p{margin:6px 0}
 <li>OSPF keychain 三密钥轮换配置（C10，<span class="pg">原文p30</span> ）</li>
 <li>LLDP Agent Security 检测 rogue 接入并阻塞 NNI 口（C11，<span class="pg">原文p33</span> ）</li>
 <li>DHCP Snooping + IP Source Filtering 组成 DAI（C12，<span class="pg">原文p39</span> ）</li>
-<li>DoS 过滤默认开启：Ping of Death/Land/ARP Flood(&gt;500/s)/Ping overload(&gt;100/s)；端口扫描按 penalty 累计超阈值（如 2000）发 trap（<span class="pg">原文p41-42</span> ）</li>
+<li><strong>DoS 过滤默认开启</strong>：<br>Ping of Death/Land/ARP Flood(&gt;500/s)/Ping overload(&gt;100/s)；端口扫描按 penalty 累计超阈值（如 2000）发 trap（<span class="pg">原文p41-42</span> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>

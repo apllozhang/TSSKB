@@ -141,14 +141,13 @@ blockquote p{margin:6px 0}
 <h2 id="_2">三、开局检查清单（可直接照抄）</h2>
 <p><strong>上电前逐项打勾：</strong></p>
 <ul>
-<li>[ ] PoE：端口供电等级满足型号（AP1311 严禁 af 下开 PSE/USB；AP1230 需 at 60W；AP1351 需 bt；<code>show lanpower</code> 核对）</li>
-<li>[ ] 端口：AP 口为 trunk，Native/untagged=管理 VLAN，全部 SSID VLAN tagged（管理 VLAN 没 untagged 到 AP 口是最常见根因）</li>
-<li>[ ] DHCP：管理 VLAN + 全部 SSID VLAN 各建作用域；
-Enterprise 模式管理作用域加 option 138（isc-dhcp-server 需先声明 <code>option ovwma code 138 = ip-address;</code> 并按 vendor-class 前 4 字节 "HAP." 匹配，p33）</li>
-<li>[ ] DNS：覆盖全部管理/SSID 子网</li>
-<li>[ ] 路由：所有 VLAN 有三层接口</li>
-<li>[ ] 云管防火墙：入向放行 9093 / 30123 / 30124 / 30125；出向放行 443 / 80 / 123 / 53；至少 1 台 NTP</li>
-<li>[ ] 版本盘点：AP 固件 AWOS 4.0.6 GA+；AP1101/AP1201L/H/HL 与 AOS release 5 交换机不被 Cirrus 支持</li>
+<li><strong>[ ] PoE</strong>：<br>端口供电等级满足型号（AP1311 严禁 af 下开 PSE/USB；AP1230 需 at 60W；AP1351 需 bt；<code>show lanpower</code> 核对）</li>
+<li><strong>[ ] 端口</strong>：<br>AP 口为 trunk，Native/untagged=管理 VLAN，全部 SSID VLAN tagged（管理 VLAN 没 untagged 到 AP 口是最常见根因）</li>
+<li><strong>[ ] DHCP</strong>：<br>管理 VLAN + 全部 SSID VLAN 各建作用域；Enterprise 模式管理作用域加 option 138（isc-dhcp-server 需先声明 <code>option ovwma code 138 = ip-address;</code> 并按 vendor-class 前 4 字节 "HAP." 匹配，p33）</li>
+<li><strong>[ ] DNS</strong>：<br>覆盖全部管理/SSID 子网</li>
+<li><strong>[ ] 路由</strong>：<br>所有 VLAN 有三层接口</li>
+<li><strong>[ ] 云管防火墙</strong>：<br>入向放行 9093 / 30123 / 30124 / 30125；出向放行 443 / 80 / 123 / 53；至少 1 台 NTP</li>
+<li><strong>[ ] 版本盘点</strong>：<br>AP 固件 AWOS 4.0.6 GA+；AP1101/AP1201L/H/HL 与 AOS release 5 交换机不被 Cirrus 支持</li>
 <li>[ ] License 至少提前一天下单（24h 延迟红线，p175）</li>
 </ul>
 <hr />

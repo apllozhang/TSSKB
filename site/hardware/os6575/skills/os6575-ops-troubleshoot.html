@@ -71,14 +71,24 @@ blockquote p{margin:6px 0}
 <div class="grp">运维排障</div>
 <a href="../skills/os6575-ops-troubleshoot.html" class="on">os6575-ops-troubleshoot</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../hardware/index.html">硬件手册</a> › <a href="../index.html">OmniSwitch 6575 Hardware Guide</a> › <span>os6575-ops-troubleshoot</span></nav><h1>os6575-ops-troubleshoot</h1><p class="meta"><span class="badge">SKILL</span> os6575-ops-troubleshoot · 来源页码: </p><h2 id="r">R（触发场景）</h2>
 <ul>
-<li>告警链路建设：Alarm Relay 输入联动输出、系统事件（如认证失败）映射干接点</li>
-<li>失电通告：Dying Gasp SNMP trap/Syslog 双通道接收端配置</li>
-<li>PoE 运维：首次激活、逐口功率/优先级调节、Guard Band 拒载解锁、Priority Disconnect 裁决</li>
-<li>巡检排障：show module/temperature/powersupply/lanpower、告警 LED 判读、温度超限处置</li>
-<li>安全红线：NEBS OSP 隔离、激光/ESD/锂电池警告</li>
+<li><strong>告警链路建设</strong>：<br>Alarm Relay 输入联动输出、系统事件（如认证失败）映射干接点</li>
+<li><strong>失电通告</strong>：<br>Dying Gasp SNMP trap/Syslog 双通道接收端配置</li>
+<li><strong>PoE 运维</strong>：<br>首次激活、逐口功率/优先级调节、Guard Band 拒载解锁、Priority Disconnect 裁决</li>
+<li><strong>巡检排障</strong>：<br>show module/temperature/powersupply/lanpower、告警 LED 判读、温度超限处置</li>
+<li><strong>安全红线</strong>：<br>NEBS OSP 隔离、激光/ESD/锂电池警告</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>工业高可用三支柱框架（F3，<span class="pg">原文p12</span> /<span class="pg">原文p48</span> /<span class="pg">原文p50</span> -<span class="pg">原文p52</span> ）：链路侧=MP16 Port Bypass 断电旁路；供电侧=双同规格电源+独立电路+UPS+Dying Gasp 双通道（SNMP trap/Syslog 各前 3 目标）+Alarm Relay 干接点外送（NO/NC 触点 220VDC/250VAC/2A）；运行侧=无风扇宽温+温度双阈值（93/98°C：Warning 发 trap→Danger 关机手动恢复）+Alarm in/out/event 三源映射（VC 内跨机同步）。DG 本机仅双通道，无 802.3ah OAM PDU（P30，<span class="pg">原文p52</span> ）。PoE 语义核心：Priority Disconnect 四情形规则+Guard Band 余量判据（P37/P38）。</p>
+<ul>
+<li><strong>工业高可用三支柱框架（F3，<span class="pg">原文p12</span> /<span class="pg">原文p48</span> /<span class="pg">原文p50</span> -<span class="pg">原文p52</span> ）</strong>：<br>链路侧=MP16 Port Bypass 断电旁路；</li>
+<li>供电侧=双同规格电源+独立电路+UPS+Dying Gasp 双通道（SNMP trap/Syslog 各前 3 目标）+Alarm Relay 干接点外送（NO/NC 触点 220VDC/250VAC/2A）；</li>
+<li>
+<p>运行侧=无风扇宽温+温度双阈值（93/98°C：Warning 发 trap→Danger 关机手动恢复）+Alarm in/out/event 三源映射（VC 内跨机同步）；</p>
+</li>
+<li>
+<p>DG 本机仅双通道，无 802.3ah OAM PDU（P30，<span class="pg">原文p52</span> ）。</p>
+</li>
+<li><strong>PoE 语义核心</strong>：<br>Priority Disconnect 四情形规则+Guard Band 余量判据（P37/P38）。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>告警三源映射：输入（传感器 5-12VDC）→动作（output/trap/SWLog 三选）→系统事件绑定；VC 内任一机可驱动任一机输出（P24/P25，<span class="pg">原文p48</span> ）</li>
@@ -95,7 +105,7 @@ blockquote p{margin:6px 0}
 <li><strong>DG 接收配置</strong>：snmp station+swlog output socket（C21，<span class="pg">原文p52</span> ）</li>
 <li><strong>PoE 首次激活与核对</strong>：powersupply type→lanpower slot 1/1 service start→show lanpower 1/1 逐口核对 Maximum/Actual/Status/Priority/On-Off/Class 与槽预算（C22，<span class="pg">原文p46</span> /<span class="pg">原文p64</span> /<span class="pg">原文p71</span> ）</li>
 <li><strong>PoE 关断两级</strong>：单口 lanpower port admin-state disable；整槽 lanpower slot service stop；admin-state enable 仅复活被断口（C23，<span class="pg">原文p64</span> ）</li>
-<li>告警四态 LED 组合判读：输入+动作 alarm out→双 On；</li>
+<li><strong>告警四态 LED 组合判读</strong>：<br>输入+动作 alarm out→双 On；</li>
 <li>输入+动作 trap/SWLog→仅 Input On；</li>
 <li>系统事件触发输出→仅 Output On（P27，<span class="pg">原文p48</span> ）；</li>
 <li>Alarm In/Out LED 各 Solid Red=检测到触发（P21，<span class="pg">原文p27</span> ）；</li>
@@ -104,8 +114,8 @@ blockquote p{margin:6px 0}
 <ul>
 <li>温度告警输入驱动干接点外送 PLC（C18，<span class="pg">原文p49</span> ）</li>
 <li>认证失败事件→告警输出映射与实时状态核对（C19，<span class="pg">原文p49</span> ）</li>
-<li>Guard Band 解锁小功率 PD：lanpower power 1/1/1 power 10000 调低口上限后正常上电（C26，<span class="pg">原文p67</span> ）</li>
-<li>Priority Disconnect 四情形：禁用拒新 PD；同级按物理口号 1 最高→8 最低裁决；新 PD 最高级→自动断最低级口接纳；新 PD 最低级→被拒存量不停（P38，<span class="pg">原文p68</span> -<span class="pg">原文p70</span> ）</li>
+<li><strong>Guard Band 解锁小功率 PD</strong>：<br>lanpower power 1/1/1 power 10000 调低口上限后正常上电（C26，<span class="pg">原文p67</span> ）</li>
+<li><strong>Priority Disconnect 四情形</strong>：<br>禁用拒新 PD；同级按物理口号 1 最高→8 最低裁决；新 PD 最高级→自动断最低级口接纳；新 PD 最低级→被拒存量不停（P38，<span class="pg">原文p68</span> -<span class="pg">原文p70</span> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>
@@ -115,7 +125,7 @@ blockquote p{margin:6px 0}
 <li>调低槽预算可致低优先级口掉电；maxpower 不预留功率（X9/X10，<span class="pg">原文p65</span> ）</li>
 <li>Guard Band 不适用于已上电 PD——但拔电源缩减预算时 priority disconnect 会生效掉口（X11，<span class="pg">原文p67</span> ）</li>
 <li>Danger 阈值固化不可配；超限关机须手动重启（X16/X17，<span class="pg">原文p51</span> ）</li>
-<li>NEBS 红线：楼内端口禁金属直连 OSP；AC 电源必须接 SPD（X25/X26，<span class="pg">原文p80</span> ）</li>
+<li><strong>NEBS 红线</strong>：<br>楼内端口禁金属直连 OSP；AC 电源必须接 SPD（X25/X26，<span class="pg">原文p80</span> ）</li>
 <li>Class 1M 激光勿直视、空光口加盖；运行中勿触背板；雷暴禁作业；锂电池返厂（X31/X29/X33，<span class="pg">原文p80</span> -<span class="pg">原文p85</span> ）</li>
 <li>aaa 一次一类；密码覆盖受限（X14/X15，<span class="pg">原文p17</span> /<span class="pg">原文p18</span> ）</li>
 </ul>

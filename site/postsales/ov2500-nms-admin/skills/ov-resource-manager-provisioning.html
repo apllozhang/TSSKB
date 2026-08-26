@@ -83,7 +83,10 @@ blockquote p{margin:6px 0}
 <li>新交换机上线希望自动匹配规则推送配置（Template Based Provisioning）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>Resource Manager 解决"存量设备的配置与固件生命周期"（备份/恢复/升级/清单），Provisioning 解决"新设备的零接触上线"（三阶段状态模型：Factory-default → Bootstrapped → Provisioned）。核心机制是规则匹配：交换机每 5 分钟联系 OV 一次，命中 Rule（序列号/MAC/型号）即推送管理与配置模板。</p>
+<ul>
+<li>Resource Manager 解决"存量设备的配置与固件生命周期"（备份/恢复/升级/清单），Provisioning 解决"新设备的零接触上线"（三阶段状态模型：Factory-default → Bootstrapped → Provisioned）。</li>
+<li><strong>核心机制是规则匹配</strong>：<br>交换机每 5 分钟联系 OV 一次，命中 Rule（序列号/MAC/型号）即推送管理与配置模板。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li><strong>配置备份</strong>：Configuration → Resource Manager → Backup/Restore → Backup → Backup by Devices → Switch Picker 选设备 → （提示 FTP 认证则 Add FTP Authentication：admin/switch）→ Backup Type=Configuration Only → Backup（<span class="pg">原文p197-198</span> ）</li>
@@ -96,16 +99,16 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
-<li>动态模板 + 值映射：模板分 Static（无变量）与 Dynamic（带 $VLAN/$PORTS 变量）；动态模板必须建 Value Mappings，由模板+变量值表推导实际下发配置（<span class="pg">原文p463-464</span> ）</li>
-<li>引导方式：DHCP Option 43 Sub-Option 128 指向本地 OV 激活服务器（推荐），或 DNS 把 activation.myovcloud.com 解析到 OV；存量交换机改 cloudagent.cfg 的 Activation Server URL（as-lite.*.ove.local）并 <code>cloud-agent admin-state enable</code>（<span class="pg">原文p460</span> ）</li>
-<li>部署场景矩阵：①Mobile App 离线 ②Mobile App 在线 ③Advanced DHCP+RCL（企业/园区）④仅 Advanced DHCP；场景 1/2 依赖尚未发布的 Mobile App 功能，当前不可实施（&lt;&lt;<PAGE 418/451/415>&gt;&gt;）</li>
-<li>Thin Client 模式：交换机零本地配置（仅 vcboot.cfg 保底网络可达），开机经 activation/call-home 从 OV 取配置；</li>
+<li><strong>动态模板 + 值映射</strong>：<br>模板分 Static（无变量）与 Dynamic（带 $VLAN/$PORTS 变量）；动态模板必须建 Value Mappings，由模板+变量值表推导实际下发配置（<span class="pg">原文p463-464</span> ）</li>
+<li><strong>引导方式</strong>：<br>DHCP Option 43 Sub-Option 128 指向本地 OV 激活服务器（推荐），或 DNS 把 activation.myovcloud.com 解析到 OV；存量交换机改 cloudagent.cfg 的 Activation Server URL（as-lite.*.ove.local）并 <code>cloud-agent admin-state enable</code>（<span class="pg">原文p460</span> ）</li>
+<li><strong>部署场景矩阵</strong>：<br>①Mobile App 离线 ②Mobile App 在线 ③Advanced DHCP+RCL（企业/园区）④仅 Advanced DHCP；场景 1/2 依赖尚未发布的 Mobile App 功能，当前不可实施（&lt;&lt;<PAGE 418/451/415>&gt;&gt;）</li>
+<li><strong>Thin Client 模式</strong>：<br>交换机零本地配置（仅 vcboot.cfg 保底网络可达），开机经 activation/call-home 从 OV 取配置；</li>
 <li>Incremental Template 只在下一次周期 call-home（默认 30 分钟）应用一次（<span class="pg">原文p75-77</span> ）；</li>
 <li>
 <p>Rule 可配 Thin Switch Yes/No 与 Desired Switch Config（Template+Incremental/最新备份快照/Golden 快照）（<span class="pg">原文p76</span> ）；</p>
 </li>
 <li>
-<p>Golden Configuration 审计："Configuration selected from a list of the three most recent switch backups that can be applied to a switch in the event there is an unwanted configuration change"；可周期审计、标记 golden、偏离告警（&lt;&lt;<PAGE 467/417>&gt;&gt;）</p>
+<p><strong>Golden Configuration 审计</strong>：<br>"Configuration selected from a list of the three most recent switch backups that can be applied to a switch in the event there is an unwanted configuration change"；可周期审计、标记 golden、偏离告警（&lt;&lt;<PAGE 467/417>&gt;&gt;）</p>
 </li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
@@ -116,8 +119,8 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="b">B（边界与陷阱）</h2>
 <ul>
-<li>升级完成的收尾动作不能漏：需 SSH reload + Copy Working Certified，漏做则升级不生效；实验环境镜像升级节"DO NOT perform this section unless directed by your instructor."（&lt;&lt;<PAGE 203/206>&gt;&gt;）</li>
-<li>备份向导可能因交换机缺 FTP 凭据中断："Click on Add FTP Authentication if prompted."（<span class="pg">原文p198</span> ）</li>
+<li><strong>升级完成的收尾动作不能漏</strong>：<br>需 SSH reload + Copy Working Certified，漏做则升级不生效；实验环境镜像升级节"DO NOT perform this section unless directed by your instructor."（&lt;&lt;<PAGE 203/206>&gt;&gt;）</li>
+<li><strong>备份向导可能因交换机缺 FTP 凭据中断</strong>：<br>"Click on Add FTP Authentication if prompted."（<span class="pg">原文p198</span> ）</li>
 <li>Thin Client 模式下"All configuration changes should be done in OV 2500"——本地改配置无意义/会被覆盖；且仅 AOS 8.8R1+ 支持（<span class="pg">原文p75</span> ）</li>
 </ul>
 <h2 id="_1">来源</h2>

@@ -85,8 +85,11 @@ blockquote p{margin:6px 0}
 <li>部署 Application Visibility（L7 应用识别 + Enforcement）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>Analytics 是 Profile 驱动的报表体系：Top N Apps/Clients/Ports 报表必须先建 Analytics Profile（设备+端口+信息类型），实时类报表（Availability/Alarms/Health/SIP）免 Profile；
-Top N Apps-Advanced 由 Application Visibility 的 Signature Profile 驱动。数据面是 sFlow：建 Profile 时 OV 自动成为 sFlow Receiver，应用识别靠 sFlow 包中的 TCP/UDP 端口。统计采集与查看解耦：Collection Profile（采集什么）+ View Profile（怎么看）。</p>
+<ul>
+<li><strong>Analytics 是 Profile 驱动的报表体系</strong>：<br>Top N Apps/Clients/Ports 报表必须先建 Analytics Profile（设备+端口+信息类型），实时类报表（Availability/Alarms/Health/SIP）免 Profile；Top N Apps-Advanced 由 Application Visibility 的 Signature Profile 驱动。</li>
+<li><strong>数据面是 sFlow</strong>：<br>建 Profile 时 OV 自动成为 sFlow Receiver，应用识别靠 sFlow 包中的 TCP/UDP 端口。</li>
+<li><strong>统计采集与查看解耦</strong>：<br>Collection Profile（采集什么）+ View Profile（怎么看）。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <p>报表选型（frameworks·F3，<span class="pg">原文p66-67</span> ）：
 1. 要 Top N Apps/Clients/Ports Utilization/PoE → 先 Profiles 建 Analytics Profile（<span class="pg">原文p130-131</span> ）
@@ -96,18 +99,14 @@ Top N Apps-Advanced 由 Application Visibility 的 Signature Profile 驱动。�
 5. 数据下钻粒度固定：月→周→日→时→15 分钟（frameworks·F4，<span class="pg">原文p72-74</span> ）</p>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li>
-<p>建 Analytics Profile：Profiles→Add→Configuration（Profile Type：Top N Apps &amp; Clients / Top N Ports Utilization / Top N PoE Ports Utilization；</p>
-</li>
-<li>
-<p>Sampling Rate；</p>
-</li>
+<li><strong>建 Analytics Profile</strong>：<br>Profiles→Add→Configuration（Profile Type：Top N Apps &amp; Clients / Top N Ports Utilization / Top N PoE Ports Utilization；</li>
+<li>Sampling Rate；</li>
 <li>PoE Usage Threshold 1-99 默认 99 仅 AOS 8.x）→Device/Port Selection（可用 Default Ports Template 批量套端口如 1/1-1/10）→Create；</li>
 <li>
 <p>PoE Profile 无需选端口（cases·C9，<span class="pg">原文p130-131</span> ）；</p>
 </li>
 <li>
-<p>出 Top N Applications 报表：Analytics→Reports→Top N Applications；</p>
+<p><strong>出 Top N Applications 报表</strong>：<br>Analytics→Reports→Top N Applications；</p>
 </li>
 <li>默认 Summary 饼图（过去 24 小时）；</li>
 <li>Filter by Profile/Select Devices 过滤；</li>
@@ -139,7 +138,7 @@ Top N Apps-Advanced 由 Application Visibility 的 Signature Profile 驱动。�
 <li>未定义 FTP 凭据时备份/恢复/升级会逐台弹窗询问（counter·X2，<span class="pg">原文p43</span> ）</li>
 <li>外部 RADIUS 登录的管理员只能出实时报表、不能排程（counter·X6 / principles·P13，<span class="pg">原文p64</span> ）</li>
 <li>改交换机 IP 后已指派的 Top N App &amp; Clients Profile 失效，须重新指派（counter·X7，<span class="pg">原文p131</span> ）</li>
-<li>统计采集静默失败：设备 SNMP 源 IP 与 OV 发现 IP 不一致时收不到数据且无报错（counter·X8 / principles·P24，<span class="pg">原文p119</span> ）</li>
+<li><strong>统计采集静默失败</strong>：<br>设备 SNMP 源 IP 与 OV 发现 IP 不一致时收不到数据且无报错（counter·X8 / principles·P24，<span class="pg">原文p119</span> ）</li>
 <li>删除 Statistics/View Profile 连带删除全部历史统计（counter·X9，<span class="pg">原文p121, 129</span> ）</li>
 <li>健康阈值修改最长 1 小时（下个轮询周期）后才可见（counter·X10 / principles·P20，<span class="pg">原文p100</span> ）</li>
 <li>健康阈值一次最多 20 台，超过按钮不激活（principles·P19，<span class="pg">原文p99</span> ）</li>
@@ -148,8 +147,11 @@ Top N Apps-Advanced 由 Application Visibility 的 Signature Profile 驱动。�
 <li>端口利用率低于 1%、PoE 为 0% 的端口不显示；PoE 报表需 CLI 预先启用（principles·P21，<span class="pg">原文p101, 106</span> ）</li>
 <li>一台交换机同一 Profile Type 只能入一个 Profile；移除端口连带删 sFlow 配置（principles·P27，<span class="pg">原文p130-131</span> ）</li>
 <li>异常检测最少需 11 天数据、季节性最多学 30 天（principles·P29，<span class="pg">原文p133-134</span> ）</li>
-<li>含不支持 AV 的 AP 的组应用签名档案：操作"成功"但部分 AP 未生效；会清掉 CLI 配置的 AV 配置（counter·X21/X22，<span class="pg">原文p209</span> ）</li>
+<li><strong>含不支持 AV 的 AP 的组应用签名档案</strong>：<br>操作"成功"但部分 AP 未生效；会清掉 CLI 配置的 AV 配置（counter·X21/X22，<span class="pg">原文p209</span> ）</li>
 <li>签名档案向导里配的 Access Role Profile 不会自动下发设备（counter·X23，<span class="pg">原文p208</span> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniVista 2500 NMS 4.9R2 User Guide 第 3 章 Analytics（<span class="pg">原文p64-136</span> ）、第 6 章 Application Visibility（<span class="pg">原文p201-211</span> ）、第 26 章 Report（<span class="pg">原文p484-486</span> ）。条目来源：frameworks F3/F4/F5/F6；cases C4-C10/C21/C48；counter-examples X1/X2/X4/X5/X6/X7/X8/X9/X10/X12/X21/X22/X23/X45/X46；principles P12-P29。</p><div class="pn"><a href="ov-console-basics-dashboard.html">⬅ 上一单元：ov-console-basics-dashboard</a><a class="nxt" href="ov-discovery-topology-views.html">下一单元：ov-discovery-topology-views ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<ul>
+<li>OmniVista 2500 NMS 4.9R2 User Guide 第 3 章 Analytics（<span class="pg">原文p64-136</span> ）、第 6 章 Application Visibility（<span class="pg">原文p201-211</span> ）、第 26 章 Report（<span class="pg">原文p484-486</span> ）。</li>
+<li><strong>条目来源</strong>：<br>frameworks F3/F4/F5/F6；cases C4-C10/C21/C48；counter-examples X1/X2/X4/X5/X6/X7/X8/X9/X10/X12/X21/X22/X23/X45/X46；principles P12-P29。</li>
+</ul><div class="pn"><a href="ov-console-basics-dashboard.html">⬅ 上一单元：ov-console-basics-dashboard</a><a class="nxt" href="ov-discovery-topology-views.html">下一单元：ov-discovery-topology-views ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

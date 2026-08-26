@@ -98,16 +98,16 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a1">A1 · 书中案例</h2>
 <ul>
-<li>OVE 模式五步：开箱首连 OVC Device Registration Server 取回 RAP 参数（含 OVE IP）→ 密钥导出到总部 RAP VPN Server → 建 WireGuard 管理隧道接受 OVE 管理 → OVE 上配 Data VPN 隧道并导密钥 → 数据隧道承载业务。</li>
-<li>OVC 模式四步：开箱首连注册服务器确认 → AP 建 OpenVPN 连接由 OVC 管理 → OVC 配 Data VPN 隧道并导出密钥到总部 → 隧道承载业务。</li>
+<li><strong>OVE 模式五步</strong>：<br>开箱首连 OVC Device Registration Server 取回 RAP 参数（含 OVE IP）→ 密钥导出到总部 RAP VPN Server → 建 WireGuard 管理隧道接受 OVE 管理 → OVE 上配 Data VPN 隧道并导密钥 → 数据隧道承载业务。</li>
+<li><strong>OVC 模式四步</strong>：<br>开箱首连注册服务器确认 → AP 建 OpenVPN 连接由 OVC 管理 → OVC 配 Data VPN 隧道并导出密钥到总部 → 隧道承载业务。</li>
 <li>Device Catalog 加 AP 时要填"第 3 步才部署"的 VPN Server 信息——先定 Server 再开工，否则顺序颠倒隧道建不起来。</li>
-<li>CSV 批量导入：模板中 RAP 字段必须为 TRUE 才携带 VpnSettingName。</li>
+<li><strong>CSV 批量导入</strong>：<br>模板中 RAP 字段必须为 TRUE 才携带 VpnSettingName。</li>
 </ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
-<li>触发：客户要做居家办公/分支 AP 回连方案，问"选哪种模式""要不要 Management VPN Server""AP 怎么注册"；或在老 hypervisor 上规划部署前核对版本。</li>
-<li>与 <code><a href="vpn-va-deploy-capacity.html">vpn-va-deploy-capacity</a></code> 的区分：本 skill 只做<strong>选型与注册规划</strong>（纸面设计 + Device Catalog 操作）；选定模式后虚拟机怎么装、网卡怎么配、给多少资源，转部署 skill。</li>
-<li>与 <code><a href="rap-data-tunnel-config.html">rap-data-tunnel-config</a></code> 的区分：本 skill 不碰隧道 SSID、Data VPN Server 界面配置与设置文件导出。</li>
+<li><strong>触发</strong>：<br>客户要做居家办公/分支 AP 回连方案，问"选哪种模式""要不要 Management VPN Server""AP 怎么注册"；或在老 hypervisor 上规划部署前核对版本。</li>
+<li><strong>与 <code><a href="vpn-va-deploy-capacity.html">vpn-va-deploy-capacity</a></code> 的区分</strong>：<br>本 skill 只做<strong>选型与注册规划</strong>（纸面设计 + Device Catalog 操作）；选定模式后虚拟机怎么装、网卡怎么配、给多少资源，转部署 skill。</li>
+<li><strong>与 <code><a href="rap-data-tunnel-config.html">rap-data-tunnel-config</a></code> 的区分</strong>：<br>本 skill 不碰隧道 SSID、Data VPN Server 界面配置与设置文件导出。</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>

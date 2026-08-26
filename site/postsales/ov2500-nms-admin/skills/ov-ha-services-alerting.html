@@ -83,7 +83,10 @@ blockquote p{margin:6px 0}
 <li>需要把设备 Trap 转成邮件告警，或按用户角色收紧权限、启用 2FA</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>OV2500 的可用性分两层：服务器层靠 HA 双实例（Main/Standby 常驻、状态同步、故障自动接管），应用层靠 Watchdog 管理各个服务。告警链路是"设备 Trap → Trap Responder 匹配 → 邮件/声音"，账号安全则由用户组权限 + 按角色的 2FA（TOTP）构成。</p>
+<ul>
+<li><strong>OV2500 的可用性分两层</strong>：<br>服务器层靠 HA 双实例（Main/Standby 常驻、状态同步、故障自动接管），应用层靠 Watchdog 管理各个服务。</li>
+<li>告警链路是"设备 Trap → Trap Responder 匹配 → 邮件/声音"，账号安全则由用户组权限 + 按角色的 2FA（TOTP）构成。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>
@@ -105,10 +108,10 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
-<li>HA 容量认证：up to 4K AP w/1.5K Switches（<span class="pg">原文p19</span> ）</li>
-<li>无 HA 时故障后果要评估：管理员失去监控与配置能力；"If using UPAM, no new additional clients would be able to authenticate"（<span class="pg">原文p18</span> ）</li>
-<li>验证告警链路可用非断链事件："Try different events, i.e. logging in to the switch with an incorrect username or password and notice the trap being generated"（<span class="pg">原文p194</span> ）</li>
-<li>会话管理：Session Management 列出所有客户端登录会话，可强制登出某会话；System Health 提供 VA 的 CPU/内存/网络流量概览与配置问题提示（<span class="pg">原文p72-73</span> ）</li>
+<li><strong>HA 容量认证</strong>：<br>up to 4K AP w/1.5K Switches（<span class="pg">原文p19</span> ）</li>
+<li><strong>无 HA 时故障后果要评估</strong>：<br>管理员失去监控与配置能力；"If using UPAM, no new additional clients would be able to authenticate"（<span class="pg">原文p18</span> ）</li>
+<li><strong>验证告警链路可用非断链事件</strong>：<br>"Try different events, i.e. logging in to the switch with an incorrect username or password and notice the trap being generated"（<span class="pg">原文p194</span> ）</li>
+<li><strong>会话管理</strong>：<br>Session Management 列出所有客户端登录会话，可强制登出某会话；System Health 提供 VA 的 CPU/内存/网络流量概览与配置问题提示（<span class="pg">原文p72-73</span> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
@@ -118,8 +121,8 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="b">B（边界与陷阱）</h2>
 <ul>
-<li>Trap Responder 必须禁用 Normal 级别，否则正常事件涌入邮件（<span class="pg">原文p192</span> ）；前置条件：交换机端口需 <code>interfaces &lt;slot&gt;[/port] link-trap enable</code>（<span class="pg">原文p192</span> ）</li>
-<li>Control Panel 误停服务风险："(DO NOT modify or stop any process unless directed by your instructor!)"（<span class="pg">原文p221</span> ）</li>
+<li><strong>Trap Responder 必须禁用 Normal 级别，否则正常事件涌入邮件（<span class="pg">原文p192</span> ）；前置条件</strong>：<br>交换机端口需 <code>interfaces &lt;slot&gt;[/port] link-trap enable</code>（<span class="pg">原文p192</span> ）</li>
+<li><strong>Control Panel 误停服务风险</strong>：<br>"(DO NOT modify or stop any process unless directed by your instructor!)"（<span class="pg">原文p221</span> ）</li>
 <li>远程实验室环境无音频设备，听不到通知声音；Firefox 复制粘贴有已知问题（workaround: sudoedit.com/firefox-async-clipboard）（&lt;&lt;<PAGE 195/81>&gt;&gt;）</li>
 </ul>
 <h2 id="_1">来源</h2>

@@ -83,8 +83,10 @@ blockquote p{margin:6px 0}
 <li>策略下发后不确定交换机是怎么拿到策略的（Policy Flow）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>PolicyView 双模式：OneTouch 面向常见场景（Voice/Data/ACL），"Sets parameters once, Distributed to devices at the same time"；
-Expert Mode 面向复杂策略（含验证机制）。底层架构是 LDAP 策略仓库：策略创建后存入安装时配置的 LDAP 服务器，交换机被通知后自行拉取。</p>
+<ul>
+<li><strong>PolicyView 双模式</strong>：<br>OneTouch 面向常见场景（Voice/Data/ACL），"Sets parameters once, Distributed to devices at the same time"；Expert Mode 面向复杂策略（含验证机制）。</li>
+<li><strong>底层架构是 LDAP 策略仓库</strong>：<br>策略创建后存入安装时配置的 LDAP 服务器，交换机被通知后自行拉取。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li><strong>四步法</strong>（<span class="pg">原文p275</span> ）："Create a Policy Condition / Create a Policy Action / Create a Policy Rule / Apply the Policy"</li>
@@ -94,12 +96,12 @@ Expert Mode 面向复杂策略（含验证机制）。底层架构是 LDAP 策�
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
-<li>策略归一化（应用侧，<span class="pg">原文p365-366</span> ）："The Policy has to be included in a Policy List. Then, the Policy List is included as part of the Access Role Profile configuration."；Unified Policy 本身 "are part of the Access Role Profile configuration"（<span class="pg">原文p246</span> ）</li>
-<li>SIP Snooping 联动：识别并标记 SIP 及 RTP/RTCP 流（DSCP 字段），计算 Delay/Jitter/RTT/R factor/MOS；OneTouch 媒体模板固定优先级——Voice dscp 46/precedence 50000、Video dscp 34/44000、Other dscp 24/44001（&lt;&lt;<PAGE 438/442>&gt;&gt;）</li>
+<li><strong>策略归一化（应用侧，<span class="pg">原文p365-366</span> ）</strong>：<br>"The Policy has to be included in a Policy List. Then, the Policy List is included as part of the Access Role Profile configuration."；Unified Policy 本身 "are part of the Access Role Profile configuration"（<span class="pg">原文p246</span> ）</li>
+<li><strong>SIP Snooping 联动</strong>：<br>识别并标记 SIP 及 RTP/RTCP 流（DSCP 字段），计算 Delay/Jitter/RTT/R factor/MOS；OneTouch 媒体模板固定优先级——Voice dscp 46/precedence 50000、Video dscp 34/44000、Other dscp 24/44001（&lt;&lt;<PAGE 438/442>&gt;&gt;）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>Expert Mode 阻断客户端访问 Loopback0 网段：Name=Block_Loopback0_access</li>
+<li><strong>Expert Mode 阻断客户端访问 Loopback0 网段</strong>：<br>Name=Block_Loopback0_access</li>
 <li>Precedence=30001</li>
 <li>Device=switch8</li>
 <li>Condition：L3 IPs，Source 192.168.80.0/24 → Destination 192.168.200.0/24</li>
@@ -111,7 +113,7 @@ Expert Mode 面向复杂策略（含验证机制）。底层架构是 LDAP 策�
 <ul>
 <li>下发后必须等到 "Notify Success!" 才算确认，没等到就验证会误判（<span class="pg">原文p293</span> ）</li>
 <li>Precedence 数值决定策略优先顺序，实验用 30001，需与现网既有策略序号统筹（<span class="pg">原文p291</span> ）</li>
-<li>策略生效依赖 LDAP 仓库链路：PolicyView 创建 → 存入 Policy Directory Server → Policy Enabled → 交换机从 LDAP 拉取（&lt;&lt;<PAGE 272/286>&gt;&gt;）</li>
+<li><strong>策略生效依赖 LDAP 仓库链路</strong>：<br>PolicyView 创建 → 存入 Policy Directory Server → Policy Enabled → 交换机从 LDAP 拉取（&lt;&lt;<PAGE 272/286>&gt;&gt;）</li>
 </ul>
 <h2 id="_1">来源</h2>
 <ul>

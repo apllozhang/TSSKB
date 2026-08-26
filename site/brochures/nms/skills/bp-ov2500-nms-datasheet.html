@@ -80,7 +80,11 @@ blockquote p{margin:6px 0}
 <li>Terra 部署前虚拟机资源与虚拟化平台核对（≤5000 设备、ESXi 8）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>OmniVista 是 ALE 统一网管套件，双形态交付：Cirrus（云端 SaaS，原生微服务、多租户/MSP、SOC1/SOC2 数据中心）与 Terra（本地部署，数据主权、≤5000 设备、Active-Active L2 高可用）（<span class="pg">原文p9</span> ）。两形态共享功能集：内置 NAC 模块 UPAM（认证/角色/访客/BYOD）、QoE 指标、用户与网络行为分析、Rainbow CPaaS 实时告警（<span class="pg">原文p9</span> ）。选型逻辑代际×形态双轴（F1）：上一代 = OV2500（本地）+ Cirrus 4（云）；新一代迁移设备基本免重配（<span class="pg">原文p10</span> ）。</p>
+<ul>
+<li><strong>OmniVista 是 ALE 统一网管套件，双形态交付</strong>：<br>Cirrus（云端 SaaS，原生微服务、多租户/MSP、SOC1/SOC2 数据中心）与 Terra（本地部署，数据主权、≤5000 设备、Active-Active L2 高可用）（<span class="pg">原文p9</span> ）。</li>
+<li><strong>两形态共享功能集</strong>：<br>内置 NAC 模块 UPAM（认证/角色/访客/BYOD）、QoE 指标、用户与网络行为分析、Rainbow CPaaS 实时告警（<span class="pg">原文p9</span> ）。</li>
+<li><strong>选型逻辑代际×形态双轴（F1）</strong>：<br>上一代 = OV2500（本地）+ Cirrus 4（云）；新一代迁移设备基本免重配（<span class="pg">原文p10</span> ）。</li>
+</ul>
 <h2 id="a1">A1（选型/决策要点）</h2>
 <ol>
 <li>问行业与合规：数据不出境/本地安全合规 → Terra（<span class="pg">原文p9</span> ）</li>
@@ -148,15 +152,15 @@ blockquote p{margin:6px 0}
 </table>
 <h3 id="terra-p15">Terra 虚机部署规格（<span class="pg">原文p15</span> ）</h3>
 <ul>
-<li>虚拟化平台：仅 VMware 与 Hyper-V；ESXi 最低版本 8</li>
-<li>按设备数 1-3 台虚机扩展；每台推荐：8 vCPU / 32 GB RAM / 系统盘 200 GB / 数据盘 3 TB</li>
+<li><strong>虚拟化平台</strong>：<br>仅 VMware 与 Hyper-V；ESXi 最低版本 8</li>
+<li><strong>按设备数 1-3 台虚机扩展；每台推荐</strong>：<br>8 vCPU / 32 GB RAM / 系统盘 200 GB / 数据盘 3 TB</li>
 <li>CPU 必须支持 AVX/AVX2 指令集，最低主频 3 GHz；磁盘必须 SSD/NVMe，读写 ≥50 MB/s</li>
 </ul>
 <h3 id="p15">设备版本门槛（<span class="pg">原文p15</span> ）</h3>
 <ul>
-<li>Stellar AP 15xx 系列：AWOS ≥5.0.1MR；AP 12xx/13xx/14xx/15xx 系列（AP1101、AP1201H 明确不支持）</li>
-<li>交换机：AOS ≥8.9R1</li>
-<li>浏览器：Chrome ≥63 / Firefox ≥56 / Edge Chromium 110</li>
+<li><strong>Stellar AP 15xx 系列</strong>：<br>AWOS ≥5.0.1MR；AP 12xx/13xx/14xx/15xx 系列（AP1101、AP1201H 明确不支持）</li>
+<li><strong>交换机</strong>：<br>AOS ≥8.9R1</li>
+<li><strong>浏览器</strong>：<br>Chrome ≥63 / Firefox ≥56 / Edge Chromium 110</li>
 </ul>
 <h3 id="sku-ebuy">订阅 SKU 全表（Ebuy 下单，预付模式）</h3>
 <p><strong>Cirrus 预付（OVCX-*-BAS/BIZ/PRM-nY，n=1/3/5，<span class="pg">原文p17</span> /<span class="pg">原文p18</span> ）</strong>
@@ -179,9 +183,9 @@ blockquote p{margin:6px 0}
 <p><strong>服务档差异（<span class="pg">原文p16</span> /<span class="pg">原文p17</span> ）</strong>：Base = 软件更新+云支持入口（不含设备硬件维保与设备支持）；Business = +Partner Plus+设备维护 AVR；Premium = +End Customer 直享支持（含硬件维保/AVR/高级换新）。</p>
 <h3 id="_2">平台关键功能索引</h3>
 <ul>
-<li>迁移工具随标准包（能力因源系统而异，<span class="pg">原文p10</span> ）；UPAM 认证源：RADIUS/AD/LDAP/Microsoft Entra AD，802.1x EAP-TTLS，访客门户支持 email/SMS/Facebook/Microsoft 365/Rainbow 社交登录（<span class="pg">原文p11</span> ）</li>
-<li>QoE 指标：连接成功率/连接时长/漫游时间/覆盖/可用容量，直指 DHCP/DNS/认证类故障（<span class="pg">原文p12</span> ）；热图（覆盖+密度）与客户端定位（<span class="pg">原文p13</span> ）</li>
-<li>配置模型四类 Profile：SSID / ARP / RF / AP-Group（组内 AP 全继承）；Golden Configuration 漂移审计（<span class="pg">原文p14</span> ）</li>
+<li><strong>迁移工具随标准包（能力因源系统而异，<span class="pg">原文p10</span> ）；UPAM 认证源</strong>：<br>RADIUS/AD/LDAP/Microsoft Entra AD，802.1x EAP-TTLS，访客门户支持 email/SMS/Facebook/Microsoft 365/Rainbow 社交登录（<span class="pg">原文p11</span> ）</li>
+<li><strong>QoE 指标</strong>：<br>连接成功率/连接时长/漫游时间/覆盖/可用容量，直指 DHCP/DNS/认证类故障（<span class="pg">原文p12</span> ）；热图（覆盖+密度）与客户端定位（<span class="pg">原文p13</span> ）</li>
+<li><strong>配置模型四类 Profile</strong>：<br>SSID / ARP / RF / AP-Group（组内 AP 全继承）；Golden Configuration 漂移审计（<span class="pg">原文p14</span> ）</li>
 <li>SPB Service Manager 与图形化 fabric 拓扑（<span class="pg">原文p14</span> /<span class="pg">原文p15</span> ）；DPI 应用级可视、纳管 Celona Private 5G 小站（<span class="pg">原文p14</span> ）</li>
 <li>Open API（认证加密、开放稳定）、SAML 2.0 SSO（Okta/Azure AD）、RADsec、双栈 IPv4/IPv6（<span class="pg">原文p14</span> /<span class="pg">原文p15</span> ）</li>
 </ul>

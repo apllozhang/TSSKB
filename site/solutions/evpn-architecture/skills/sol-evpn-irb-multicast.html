@@ -70,13 +70,23 @@ blockquote p{margin:6px 0}
 <a href="../skills/sol-evpn-multi-homing.html">sol-evpn-multi-homing</a>
 <a href="../skills/sol-evpn-irb-multicast.html" class="on">sol-evpn-irb-multicast</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../solutions/index.html">解决方案</a> › <a href="../index.html">EVPN 架构指南</a> › <span>sol-evpn-irb-multicast</span></nav><h1>sol-evpn-irb-multicast</h1><p class="meta"><span class="badge">SKILL</span> sol-evpn-irb-multicast · 来源页码: </p><h2 id="r">R（触发场景）</h2>
 <ul>
-<li>规划 EVPN 内跨子网（东西向）路由：选 IRB 模型</li>
+<li><strong>规划 EVPN 内跨子网（东西向）路由</strong>：<br>选 IRB 模型</li>
 <li>部署分布式网关 DAG 替代 VRRP</li>
 <li>跨子网组播设计（OISM/IPMS/PEG 与外部 PIM 互通）</li>
 <li>数据中心/园区 fabric 对接外部网络（border leaf、路由汇总、双 leaf 防回声）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>IRB 模型选型框架（F3，<span class="pg">原文p24</span> ）：对称 IRB 配置简、扩展好、是主流推荐（P9）；每 PE 只维护本地 ARP/MAC-VRF（P10，<span class="pg">原文p25</span> ）；每 VRF 一个 L3EVI（SBD/AOS 中记 Fabric-VPN）提供跨 EVI 可达（P11，<span class="pg">原文p25</span> ）。DAG（<span class="pg">原文p28</span> ）：所有共 EVI 的 PE 配同一 anycast IP+MAC（每 VRF 一个 VMAC），网关全分布式、同 PE 主机间流量不过 fabric（P8，<span class="pg">原文p22</span> ），免 VRRP 类冗余协议。外部连通框架（F5，<span class="pg">原文p29</span> /<span class="pg">原文p48</span> ）：border leaf+Fabric-VPN+GRM 注入；对外只重分发聚合路由（P34）；双 border leaf 调 import 路由优先级防 OSPF 回声（P35）。</p>
+<ul>
+<li><strong>IRB 模型选型框架（F3，<span class="pg">原文p24</span> ）</strong>：<br>对称 IRB 配置简、扩展好、是主流推荐（P9）；</li>
+<li>每 PE 只维护本地 ARP/MAC-VRF（P10，<span class="pg">原文p25</span> ）；</li>
+<li>
+<p>每 VRF 一个 L3EVI（SBD/AOS 中记 Fabric-VPN）提供跨 EVI 可达（P11，<span class="pg">原文p25</span> ）；</p>
+</li>
+<li>
+<p><strong>DAG（<span class="pg">原文p28</span> ）</strong>：<br>所有共 EVI 的 PE 配同一 anycast IP+MAC（每 VRF 一个 VMAC），网关全分布式、同 PE 主机间流量不过 fabric（P8，<span class="pg">原文p22</span> ），免 VRRP 类冗余协议。</p>
+</li>
+<li><strong>外部连通框架（F5，<span class="pg">原文p29</span> /<span class="pg">原文p48</span> ）</strong>：<br>border leaf+Fabric-VPN+GRM 注入；对外只重分发聚合路由（P34）；双 border leaf 调 import 路由优先级防 OSPF 回声（P35）。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>IRB 选型判定（F3）：host-based（R-T2 /32，对称/非对称皆可）vs prefix-based（R-T5，仅对称）；对称 IRB 下服务只配在主机接入 PE（C14，<span class="pg">原文p48-72</span> ）</li>
@@ -98,17 +108,17 @@ blockquote p{margin:6px 0}
 <li>Intra-subnet 五步/Inter-subnet 六步走包分析（C3/C4，<span class="pg">原文p31-32</span> ）</li>
 <li>OISM 跨子网组播与双 PEG 冗余案例（C7/C8，<span class="pg">原文p37-38</span> ）</li>
 <li>border leaf+GRM 外部路由注入（C13，<span class="pg">原文p47</span> ）</li>
-<li>Duplicate IP（DAD）场景：新 ARP 同 IP 视为 IP Mobility，Confirm 探测旧主（C11，<span class="pg">原文p39-40</span> ）；静默主机静态绑 MAC+sticky 位防误迁移（C12/P21，<span class="pg">原文p40</span> ）</li>
+<li><strong>Duplicate IP（DAD）场景</strong>：<br>新 ARP 同 IP 视为 IP Mobility，Confirm 探测旧主（C11，<span class="pg">原文p39-40</span> ）；静默主机静态绑 MAC+sticky 位防误迁移（C12/P21，<span class="pg">原文p40</span> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>
 <li>非对称 IRB 全 PE 维护全网 ARP/MAC-VRF/IRB 接口，资源与配置密集（X12，<span class="pg">原文p24</span> ）</li>
-<li>VRRP 集中网关低效：tromboning+控制面开销——用 DAG（X9，<span class="pg">原文p28</span> ）</li>
+<li><strong>VRRP 集中网关低效</strong>：<br>tromboning+控制面开销——用 DAG（X9，<span class="pg">原文p28</span> ）</li>
 <li>自动派生 anycast MAC 有碰撞风险，不确定时手工指定（X10，<span class="pg">原文p29</span> ）</li>
 <li>(<em>,</em>) 默认 SBD-SMET 让 PEG 收全部组播流量，核心带宽浪费（X19/P40，<span class="pg">原文p38-39</span> ）</li>
 <li>R-T10 源发现建流有少量额外时延（X23，<span class="pg">原文p39</span> ）</li>
 <li>border leaf 泄漏主机路由压垮外部路由器控制/数据面（X20，<span class="pg">原文p48</span> ）</li>
-<li>双 border leaf 路由回声：import 路由优先级须高于 OSPF（数值更低）（X21/P35，<span class="pg">原文p48</span> ）</li>
+<li><strong>双 border leaf 路由回声</strong>：<br>import 路由优先级须高于 OSPF（数值更低）（X21/P35，<span class="pg">原文p48</span> ）</li>
 <li>IP+MAC 同迁（VM motion）不算 DAD，勿误报（P38，<span class="pg">原文p40</span> ）</li>
 </ul>
 <p>来源：EVPN Architecture Guide（p23-48）</p><div class="pn"><a href="sol-evpn-multi-homing.html">⬅ 上一单元：sol-evpn-multi-homing</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

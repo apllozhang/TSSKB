@@ -74,14 +74,17 @@ blockquote p{margin:6px 0}
 <a href="../skills/aos-sm-logging-health.html" class="on">aos-sm-logging-health</a>
 <a href="../skills/aos-sm-chassis-cmm.html">aos-sm-chassis-cmm</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../aos/index.html">AOS 软件手册</a> › <a href="../index.html">AOS 8.10R04</a> › <span>aos-sm-logging-health</span></nav><h1>aos-sm-logging-health</h1><p class="meta"><span class="badge">SKILL</span> aos-sm-logging-health · 来源页码: </p><h2 id="r">R（触发场景）</h2>
 <ul>
-<li>要审计谁在交换机上执行了什么命令（合规/追责）：启用 command-log</li>
-<li>排障要采集完整诊断基线：show tech-support（layer2/layer3/eng complete）</li>
+<li><strong>要审计谁在交换机上执行了什么命令（合规/追责）</strong>：<br>启用 command-log</li>
+<li><strong>排障要采集完整诊断基线</strong>：<br>show tech-support（layer2/layer3/eng complete）</li>
 <li>要查交换机运行日志 swlog、检查文件系统（fsck/freespace）、验证镜像完整性</li>
 <li>冗余/增强安全场景要做硬件自检（hardware-self-test）与进程自检（process-self-test）</li>
 <li>要设系统日期/时区（NTP 见 aos-sm-mgmt-services）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>AOS 运维监测分四层：命令级审计（command-log 记录命令全文/用户/时间/来源 IP/结果，默认禁用，P52）→ 系统日志（swlog 落 /flash/network，<span class="pg">原文p52</span> ）→ 诊断快照（show tech-support 按层采集基线，升级与排障前必采，P17/C3）→ 主动健康检查（fsck 文件系统修复、image integrity check 镜像校验、硬件/进程自检、show system 总览）。时钟是日志可信的前提：<code>system date/timezone</code>，DST 随时区自动（P163）。</p>
+<ul>
+<li><strong>AOS 运维监测分四层</strong>：<br>命令级审计（command-log 记录命令全文/用户/时间/来源 IP/结果，默认禁用，P52）→ 系统日志（swlog 落 /flash/network，<span class="pg">原文p52</span> ）→ 诊断快照（show tech-support 按层采集基线，升级与排障前必采，P17/C3）→ 主动健康检查（fsck 文件系统修复、image integrity check 镜像校验、硬件/进程自检、show system 总览）。</li>
+<li><strong>时钟是日志可信的前提</strong>：<br><code>system date/timezone</code>，DST 随时区自动（P163）。</li>
+</ul>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>合规审计开 command-log</strong>：<code>command-log enable</code> 自动建 /flash/command.log，降序查看含 Command/UserName/Date/IP/Result（C26）</li>
@@ -115,4 +118,7 @@ blockquote p{margin:6px 0}
 <li>时间不准时日志时间戳与证书/云认证都会连锁出问题；用户配置的时区优先于 DHCP Option-2（P163，<span class="pg">原文p78-79</span> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniSwitch AOS 8.10R4 Switch Management Guide 第 1 章维护例行（<span class="pg">原文p23</span> ）、第 3 章 System Files（<span class="pg">原文p52-60, 78-79</span> ）、第 4 章镜像完整性（<span class="pg">原文p118</span> ）、第 5 章命令日志（<span class="pg">原文p127-128</span> ）、第 7 章会话管理（<span class="pg">原文p163-164</span> ）。条目来源：cases C3/C15/C26；principles P8-P10/P17/P52/P53/P84/P92/P163；counter-examples X29/X31/X53；frameworks F12（时钟部分）。</p><div class="pn"><a href="aos-sm-mgmt-services.html">⬅ 上一单元：aos-sm-mgmt-services</a><a class="nxt" href="aos-sm-chassis-cmm.html">下一单元：aos-sm-chassis-cmm ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<ul>
+<li>OmniSwitch AOS 8.10R4 Switch Management Guide 第 1 章维护例行（<span class="pg">原文p23</span> ）、第 3 章 System Files（<span class="pg">原文p52-60, 78-79</span> ）、第 4 章镜像完整性（<span class="pg">原文p118</span> ）、第 5 章命令日志（<span class="pg">原文p127-128</span> ）、第 7 章会话管理（<span class="pg">原文p163-164</span> ）。</li>
+<li><strong>条目来源</strong>：<br>cases C3/C15/C26；principles P8-P10/P17/P52/P53/P84/P92/P163；counter-examples X29/X31/X53；frameworks F12（时钟部分）。</li>
+</ul><div class="pn"><a href="aos-sm-mgmt-services.html">⬅ 上一单元：aos-sm-mgmt-services</a><a class="nxt" href="aos-sm-chassis-cmm.html">下一单元：aos-sm-chassis-cmm ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

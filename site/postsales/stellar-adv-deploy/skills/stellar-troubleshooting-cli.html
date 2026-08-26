@@ -84,22 +84,17 @@ blockquote p{margin:6px 0}
 </blockquote>
 <h2 id="i">I · 方法论骨架</h2>
 <ul>
-<li>排障前置铁律：<strong>先 NTP 全网同步</strong>（AP、OmniVista、交换机同一台 NTP），否则跨设备日志时间戳对不上。</li>
-<li>接入手段：SSH（企业/云管模式需先在 AP 组 Provisioning 里启用并设密码）或串口（115200 8N1，无校验无流控；默认账号 support/aos2016）。</li>
-<li>按层检查：1. <strong>无线配置</strong>：iwconfig 看 SSID 是否在目标射频广播、功率与 RF Profile 一致、加密开启、BSSID 存在。</li>
-<li>接口命名 athXYY：X=0/1/2 对应 2.4/5/6GHz，YY=SSID 编号（ath001=2.4G 的 1 号 SSID）。</li>
+<li><strong>排障前置铁律</strong>：<br><strong>先 NTP 全网同步</strong>（AP、OmniVista、交换机同一台 NTP），否则跨设备日志时间戳对不上。</li>
+<li><strong>接入手段</strong>：<br>SSH（企业/云管模式需先在 AP 组 Provisioning 里启用并设密码）或串口（115200 8N1，无校验无流控；默认账号 support/aos2016）。</li>
+<li><strong>按层检查</strong>：<br>1. <strong>无线配置</strong>：iwconfig 看 SSID 是否在目标射频广播、功率与 RF Profile 一致、加密开启、BSSID 存在。</li>
+<li><strong>接口命名 athXYY</strong>：<br>X=0/1/2 对应 2.4/5/6GHz，YY=SSID 编号（ath001=2.4G 的 1 号 SSID）。</li>
 <li>
 <ol>
 <li><strong>RF 配置</strong>：cat /tmp/config/rfprofile.conf 对照 Band Steering/Load Balance/扫描/国家码/信道/功率/门限。</li>
 </ol>
 </li>
 <li>
-<ol>
-<li>客户端：ssudo sta_list（第一命令——VLAN/IP/时长/收发计数/认证方式/Final_role）；</li>
-<li>cat /proc/kes_syslog 看 DHCP 与关联；</li>
-<li>ssudo wlanconfig athXX list 看 RSSI/SNR（RSSI 值 29≈-67dBm、20≈-76dBm、10≈-86dBm）；
-。</li>
-</ol>
+<p><strong>3. 客户端</strong>：<br>ssudo sta_list（第一命令——VLAN/IP/时长/收发计数/认证方式/Final_role）；    - cat /proc/kes_syslog 看 DHCP 与关联；    - ssudo wlanconfig athXX list 看 RSSI/SNR（RSSI 值 29≈-67dBm、20≈-76dBm、10≈-86dBm）；。</p>
 </li>
 <li>
 <p>漫游：adme show 看邻居与 RSSI；wam.log 搜 L2/L3 roaming-start/success。</p>
@@ -126,7 +121,7 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="a1-lab">A1 · 书中案例（Lab 精要）</h2>
 <ul>
-<li>四个排障用例（p276-284、p214-217）：- <strong>看不到 SSID</strong> 三问：SSID 是否真在该射频广播（iwconfig）？客户端射频与 SSID 频段兼容？AP 国家码被客户端支持？国家码错误的规避法：RF Profile 里手工指定一个双方兼容的信道，无需改国家码。</li>
+<li><strong>四个排障用例（p276-284、p214-217）</strong>：<br>- <strong>看不到 SSID</strong> 三问：SSID 是否真在该射频广播（iwconfig）？客户端射频与 SSID 频段兼容？AP 国家码被客户端支持？国家码错误的规避法：RF Profile 里手工指定一个双方兼容的信道，无需改国家码。</li>
 <li>
 <ul>
 <li><strong>拿不到 IP</strong>：客户端 Wireshark + AP tcpdump 双侧抓 DHCP 看丢在哪侧，sta_list 核对 VLAN 与 Final_role 是否过滤 DHCP。</li>
@@ -171,13 +166,13 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>
-<li>untagged 与 tagged VLAN 之间不能漫游：同一 SSID 多 AP 部署必须统一打标方式，这类失败是静默的。</li>
+<li><strong>untagged 与 tagged VLAN 之间不能漫游</strong>：<br>同一 SSID 多 AP 部署必须统一打标方式，这类失败是静默的。</li>
 <li>signalStrengthThreshold 设得过高会主动踢弱信号客户端（案例 70），"频繁掉线"别只盯功率。</li>
 <li>低功率部署（如打印机紧邻 AP）是特例，通用覆盖照搬 3dBm 必掉线。</li>
 <li>门户首连 IP 未知发不出重定向是正常时序，不是门户故障；先查 IP（DHCP/VLAN/Final_role 过滤）。</li>
 <li>国家码不匹配表现为"看不见 SSID"，现象与根因错位；规避靠指定兼容信道。</li>
 <li>僵尸/Dead 进程累积吃内存，发现后开票附进程清单，不要只重启。</li>
-<li>演练环境踩坑：交换机重启阶段按键会进 Miniboot（排障重启时同样适用）。</li>
+<li><strong>演练环境踩坑</strong>：<br>交换机重启阶段按键会进 Miniboot（排障重启时同样适用）。</li>
 </ul>
 <hr />
 <p>来源条目: f11 · c11 · c12 · c13 · p13 · p14 · p20 · p22 · p23 · p24 · ce01 · ce05 · ce06 · ce07 · ce08 · ce09 · ce11 · g51 · g52 · g53 · g54 · g55 · g56</p><div class="pn"><a href="stellar-deployment-checklist.html">⬅ 上一单元：stellar-deployment-checklist</a><a class="nxt" href="stellar-vowlan.html">下一单元：stellar-vowlan ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

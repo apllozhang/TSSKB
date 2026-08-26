@@ -70,10 +70,9 @@ blockquote p{margin:6px 0}
 <div class="grp">运维</div>
 <a href="skills/aos-tx-ddm-install.html">aos-tx-ddm-install</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../aos/index.html">AOS 软件手册</a> › <a href="index.html">AOS 8.10R04</a> › <span>精华长文 DIGEST</span></nav><h1>精华长文 DIGEST</h1><h1 id="digest-omniswitch-aos-release-8-transceivers-guide-810r4">DIGEST — OmniSwitch AOS Release 8 Transceivers Guide (8.10R4) 精华</h1>
 <ul>
-<li>本书是 AOS 8.10R4 的光模块/线缆规格与兼容性手册（107 页），两章结构：Ch1 按速率/类型列出每款模块的连接器/标准/波长/光功率/灵敏度/距离/温度/功耗/DDM；
-Ch2 按 14 个平台（含扩展模块/板卡）给出"模块 × 最低 AOS 版本"兼容矩阵。</li>
+<li><strong>本书是 AOS 8.10R4 的光模块/线缆规格与兼容性手册（107 页），两章结构</strong>：<br>Ch1 按速率/类型列出每款模块的连接器/标准/波长/光功率/灵敏度/距离/温度/功耗/DDM；Ch2 按 14 个平台（含扩展模块/板卡）给出"模块 × 最低 AOS 版本"兼容矩阵。</li>
 <li>全书无配置流程（cases 为 0），蒸馏以 glossary（逐型号规格条目）与 principles（跨型号机制）为主体。</li>
-<li>封面红线：使用非 ALE 认证 PN 的模块被禁止且不保修。</li>
+<li><strong>封面红线</strong>：<br>使用非 ALE 认证 PN 的模块被禁止且不保修。</li>
 <li>以下按三个技能单元摘要，页码均指原书。</li>
 </ul>
 <h2 id="_1">一、知识地图（三技能单元）</h2>
@@ -94,11 +93,40 @@ Ch2 按 14 个平台（含扩展模块/板卡）给出"模块 × 最低 AOS 版�
 </ol>
 <h2 id="_2">二、三单元要点串讲</h2>
 <h3 id="1">1. 型号矩阵：先定距离再定封装</h3>
-<p>速率代际 × 距离档位矩阵（F2，<span class="pg">原文p18-63</span> ）：列=封装（SFP→SFP+→SFP28→QSFP+→SFP56→QSFP28→QSFP56→QSFP-DD），行=距离档（DAC 0.4-7m→AOC 10-20m→SR 档 70-400m→CLR/FR 2km→LR 10km→ER/LH40 40km→LH70 70km→ZR 80km→EZX 120km）。关键型号锚点：10G 家族 SR/LR/ER/ZR(80km)/T(30m 铜口)/BX 配对（<span class="pg">原文p32-39</span> ）；25G 家族 SR/ESR(OM4 300m)/LR/CLR(2km)/BX-D40·U40（<span class="pg">原文p40-43</span> ）；40G 家族 SR(SR4 MPO 可拆 4X10G)/LR4/ER4/PSM4(10km)/DAC/AOC20M/CBL 系列是 20G VFL 专用（<span class="pg">原文p44-50</span> ）；50G 仅 LNI-U6 可用（<span class="pg">原文p51-52</span> ）；100G SR4(可拆 4X25G)/LR4/CLR4/ER4/CWDM4/SR1.2·PSM4（8.10R4 新品）（<span class="pg">原文p53-57</span> ）；200G SR4/FR4/2XQ100·2XQ200 拆分线（<span class="pg">原文p58-60</span> ）；400G 全系仅 6920、均 8.10R4（<span class="pg">原文p61-63</span> ）。单双纤配对原则：BX 系列必须 D/U 成对下单（P25）。DAC 三级长度体系：机柜内 DAC、跨柜 AOC/光纤（P11/P12）。</p>
+<ul>
+<li><strong>速率代际 × 距离档位矩阵（F2，<span class="pg">原文p18-63</span> ）</strong>：<br>列=封装（SFP→SFP+→SFP28→QSFP+→SFP56→QSFP28→QSFP56→QSFP-DD），行=距离档（DAC 0.4-7m→AOC 10-20m→SR 档 70-400m→CLR/FR 2km→LR 10km→ER/LH40 40km→LH70 70km→ZR 80km→EZX 120km）。</li>
+<li><strong>关键型号锚点</strong>：<br>10G 家族 SR/LR/ER/ZR(80km)/T(30m 铜口)/BX 配对（<span class="pg">原文p32-39</span> ）；</li>
+<li>25G 家族 SR/ESR(OM4 300m)/LR/CLR(2km)/BX-D40·U40（<span class="pg">原文p40-43</span> ）；</li>
+<li>40G 家族 SR(SR4 MPO 可拆 4X10G)/LR4/ER4/PSM4(10km)/DAC/AOC20M/CBL 系列是 20G VFL 专用（<span class="pg">原文p44-50</span> ）；</li>
+<li>50G 仅 LNI-U6 可用（<span class="pg">原文p51-52</span> ）；</li>
+<li>100G SR4(可拆 4X25G)/LR4/CLR4/ER4/CWDM4/SR1.2·PSM4（8.10R4 新品）（<span class="pg">原文p53-57</span> ）；</li>
+<li>200G SR4/FR4/2XQ100·2XQ200 拆分线（<span class="pg">原文p58-60</span> ）；</li>
+<li>
+<p>400G 全系仅 6920、均 8.10R4（<span class="pg">原文p61-63</span> ）；</p>
+</li>
+<li>
+<p><strong>单双纤配对原则</strong>：<br>BX 系列必须 D/U 成对下单（P25）。</p>
+</li>
+<li><strong>DAC 三级长度体系</strong>：<br>机柜内 DAC、跨柜 AOC/光纤（P11/P12）。</li>
+</ul>
 <h3 id="2">2. 平台兼容：三查法 + 硬件修订双版本</h3>
-<p>兼容矩阵查询三查法（F1）：一查 Ch1 定型号规格，二查 Ch2 定"平台 × 最低版本"（含端口级脚注），三查排除项（VFL 例外/SFP28 自协商/每机箱上限/PERF 许可口）。平台分型（F3，<span class="pg">原文p75-107</span> ）：全谱系型（6860N/6870/6900-X）／上联收窄型（6560 只有 40G-SR/AOC/DAC）／工业型（iSFP PN 体系）／40G+ 专用型（6920 只有 QSFP；V72/C32 无 1G）／板卡拼图型（9900/6860N 按板卡）。典型陷阱：同一模块跨平台版本差异大（100G-SR4：6860N 8.7R2/6900 8.5R2/6870 8.10R2/6920 8.10R4）要按最高版本对齐；硬件修订双版本（10G-T 新 Rev 需 8.9R3/8.10R2，P17）；2019-05 采购分界提到 8.6R1（P18）；6560 X4 的 10G 解锁口需 PERF 许可（X1）；6900 每机箱 SFP-10G-T 上限 38 只（X7）；<strong>6860N 与 OS686x 禁止混 VC 场景下同家族机型光模块清单也不通用</strong>（X34）。</p>
+<ul>
+<li><strong>兼容矩阵查询三查法（F1）</strong>：<br>一查 Ch1 定型号规格，二查 Ch2 定"平台 × 最低版本"（含端口级脚注），三查排除项（VFL 例外/SFP28 自协商/每机箱上限/PERF 许可口）。</li>
+<li><strong>平台分型（F3，<span class="pg">原文p75-107</span> ）</strong>：<br>全谱系型（6860N/6870/6900-X）／上联收窄型（6560 只有 40G-SR/AOC/DAC）／工业型（iSFP PN 体系）／40G+ 专用型（6920 只有 QSFP；V72/C32 无 1G）／板卡拼图型（9900/6860N 按板卡）。</li>
+<li><strong>典型陷阱</strong>：<br>同一模块跨平台版本差异大（100G-SR4：6860N 8.7R2/6900 8.5R2/6870 8.10R2/6920 8.10R4）要按最高版本对齐；</li>
+<li>硬件修订双版本（10G-T 新 Rev 需 8.9R3/8.10R2，P17）；</li>
+<li>2019-05 采购分界提到 8.6R1（P18）；</li>
+<li>6560 X4 的 10G 解锁口需 PERF 许可（X1）；</li>
+<li>6900 每机箱 SFP-10G-T 上限 38 只（X7）；</li>
+<li>6860N 与 OS686x 禁止混 VC 场景下同家族机型光模块清单也不通用（X34）；</li>
+</ul>
 <h3 id="3-ddm">3. 安装与 DDM：纪律与边界</h3>
-<p>安装纪律（P4-P8，<span class="pg">原文p14-16</span> ）：拔出后同端口至少等 10 秒再插；三种释放机构（铰链 90°/bail wire/弹出器）各按其法，不得强插强拔；ESD 腕带、防尘帽回套、Class 1 激光（高速模块另有 CLASS 1M 开盖勿直视）。DDM 边界（X31）：全部 DAC、铜口 T 系列、部分 CWDM/BX/A20M 无 DDM——这些口无法做光功率监控。协商机制：双速模块建议两端手工定速防失配（P15）；SFP28 口与 1G 模块不自协商，必须对端禁用自协商（P16）；100G-A20M 必须关自协商+FEC RS（P27）；QSFP-40G-C 9900↔6900 互连关 9900 侧自协商（X26）。功耗预算（P23）：1G/10G ≤1-1.5W → 400G 高达 10-12W，高密 400G 先核电源与风冷；温度两档：商用 0~70°C、工业 iSFP -40~85°C（P24）。</p>
+<ul>
+<li><strong>安装纪律（P4-P8，<span class="pg">原文p14-16</span> ）</strong>：<br>拔出后同端口至少等 10 秒再插；三种释放机构（铰链 90°/bail wire/弹出器）各按其法，不得强插强拔；ESD 腕带、防尘帽回套、Class 1 激光（高速模块另有 CLASS 1M 开盖勿直视）。</li>
+<li><strong>DDM 边界（X31）</strong>：<br>全部 DAC、铜口 T 系列、部分 CWDM/BX/A20M 无 DDM——这些口无法做光功率监控。</li>
+<li><strong>协商机制</strong>：<br>双速模块建议两端手工定速防失配（P15）；SFP28 口与 1G 模块不自协商，必须对端禁用自协商（P16）；100G-A20M 必须关自协商+FEC RS（P27）；QSFP-40G-C 9900↔6900 互连关 9900 侧自协商（X26）。</li>
+<li><strong>功耗预算（P23）</strong>：<br>1G/10G ≤1-1.5W → 400G 高达 10-12W，高密 400G 先核电源与风冷；温度两档：商用 0~70°C、工业 iSFP -40~85°C（P24）。</li>
+</ul>
 <h2 id="_3">三、高价值章节页码索引</h2>
 <table>
 <thead>
@@ -203,12 +231,9 @@ Ch2 按 14 个平台（含扩展模块/板卡）给出"模块 × 最低 AOS 版�
 </tbody>
 </table>
 <h2 id="_4">四、条目统计与技能对应</h2>
-<p>verified 计数：principles 30：
-- counter-examples 35
-- frameworks 3
-- glossary 78
-- cases 0（纯规格手册无配置流程）。技能对应：aos-tx-module-matrix（F2+P11/P12/P23-P26/P29+型号 glossary）；
-aos-tx-platform-compat（F1/F3+P17/P18/P30+X 主体）；
-aos-tx-ddm-install（P1-P10/P15/P16/P20-P22/X31）。</p>
+<ul>
+<li><strong>verified 计数</strong>：<br>principles 30 / counter-examples 35 / frameworks 3 / glossary 78 / cases 0（纯规格手册无配置流程）。</li>
+<li><strong>技能对应</strong>：<br>aos-tx-module-matrix（F2+P11/P12/P23-P26/P29+型号 glossary）；aos-tx-platform-compat（F1/F3+P17/P18/P30+X 主体）；aos-tx-ddm-install（P1-P10/P15/P16/P20-P22/X31）。</li>
+</ul>
 <h2 id="_5">五、一句话总纲</h2>
 <p>光模块手册是采购与排障的 PN 底座：先按距离档定型号、再按平台矩阵对最低版本（硬件修订双版本与端口脚注是最大坑）、最后按功耗温度与 DDM 边界核运维预算；所有"插上不识别/不支持"先查矩阵 N/S 与版本门槛，别先怀疑模块坏了。</p><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

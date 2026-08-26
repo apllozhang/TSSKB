@@ -80,7 +80,12 @@ blockquote p{margin:6px 0}
 <li>要接 RADIUS/LDAP 外部认证并设计本地回退链，或部署 ASA 增强模式/JITC/FIPS</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>ASA 安全框架（F3，<span class="pg">原文p167-186</span> ）：管理接口（console/ftp/http/ssh/telnet/snmp）× 认证源（RADIUS/LDAP/local 链式故障切换）× 授权（命令域/族分区）× 计费四层，default/enhanced/JITC 三档安全模式递进。权限分区框架（F4）：命令域（domain-admin/system/network 等 12 个）下辖命令族，read-only/read-write/all/none/all-except 组合授权。默认管理面锁定（P34）：除 console 外一切管理接口需 <code>aaa authentication</code> 显式解锁；admin 恒可走 console 兜底（P36）。CLI 是单级命令体系，任意时刻可输任意命令（P46）。</p>
+<ul>
+<li><strong>ASA 安全框架（F3，<span class="pg">原文p167-186</span> ）</strong>：<br>管理接口（console/ftp/http/ssh/telnet/snmp）× 认证源（RADIUS/LDAP/local 链式故障切换）× 授权（命令域/族分区）× 计费四层，default/enhanced/JITC 三档安全模式递进。</li>
+<li><strong>权限分区框架（F4）</strong>：<br>命令域（domain-admin/system/network 等 12 个）下辖命令族，read-only/read-write/all/none/all-except 组合授权。</li>
+<li><strong>默认管理面锁定（P34）</strong>：<br>除 console 外一切管理接口需 <code>aaa authentication</code> 显式解锁；admin 恒可走 console 兜底（P36）。</li>
+<li>CLI 是单级命令体系，任意时刻可输任意命令（P46）。</li>
+</ul>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>首次带外接入</strong>：micro-USB/RJ-45 console（默认 9600-8-N-1）或 EMP/USB dongle/蓝牙；改串口参数走 <code>modify boot parameters</code>（C5-C7）</li>
@@ -117,10 +122,13 @@ blockquote p{margin:6px 0}
 <li>密码策略命令不自动保存到配置（X31）；全星号密码被拒（X32）；密码过期用户需 admin 重置（X33）（<span class="pg">原文p151-154</span> ）</li>
 <li>锁定观察窗不应长于锁时长（X34，<span class="pg">原文p157</span> ）</li>
 <li>SNMP 不能配 admin 用户（X35）；secondary CMM/Slave 不支持远端认证，只能 local（X37）；SNMP 仅支持 LDAP/local（X38）（<span class="pg">原文p161, 173-174</span> ）</li>
-<li>增强模式：非合规密码登录直接判认证失败（X39）、单用户单会话（X40）、仅 TLS1.2（X41）、新镜像必须同步更新 imgsha256sum 否则循环重启（X42）（<span class="pg">原文p177-178</span> ）</li>
+<li><strong>增强模式</strong>：<br>非合规密码登录直接判认证失败（X39）、单用户单会话（X40）、仅 TLS1.2（X41）、新镜像必须同步更新 imgsha256sum 否则循环重启（X42）（<span class="pg">原文p177-178</span> ）</li>
 <li>priv-mask 读写权限仅限 HTTP(S)，SSH/Telnet/Console 只能只读（X44，<span class="pg">原文p181</span> ）</li>
 <li>JITC 与增强/CC 模式互斥（X45）；超级用户密码不可恢复，遗忘只能恢复出厂（X47）（<span class="pg">原文p184, 186</span> ）</li>
 <li>secureadmin 用户不可用 Telnet/FTP，关键 CLI 仅 console 会话可执行（X101，<span class="pg">原文p146</span> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniSwitch AOS 8.10R4 Switch Management Guide 第 2 章 Logging In（<span class="pg">原文p29-48</span> ）、第 5 章 Using the CLI（<span class="pg">原文p122-130</span> ）、第 7 章 User Accounts（<span class="pg">原文p144-166</span> ）、第 8 章 Switch Security（<span class="pg">原文p167-186</span> ）。条目来源：cases C5-C12/C30-C34；principles P34-P51/P61-P84；counter-examples X3-X5/X31-X47/X101；frameworks F3/F4。</p><div class="pn"><a href="aos-sm-software-upgrade.html">⬅ 上一单元：aos-sm-software-upgrade</a><a class="nxt" href="aos-sm-mgmt-services.html">下一单元：aos-sm-mgmt-services ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<ul>
+<li>OmniSwitch AOS 8.10R4 Switch Management Guide 第 2 章 Logging In（<span class="pg">原文p29-48</span> ）、第 5 章 Using the CLI（<span class="pg">原文p122-130</span> ）、第 7 章 User Accounts（<span class="pg">原文p144-166</span> ）、第 8 章 Switch Security（<span class="pg">原文p167-186</span> ）。</li>
+<li><strong>条目来源</strong>：<br>cases C5-C12/C30-C34；principles P34-P51/P61-P84；counter-examples X3-X5/X31-X47/X101；frameworks F3/F4。</li>
+</ul><div class="pn"><a href="aos-sm-software-upgrade.html">⬅ 上一单元：aos-sm-software-upgrade</a><a class="nxt" href="aos-sm-mgmt-services.html">下一单元：aos-sm-mgmt-services ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

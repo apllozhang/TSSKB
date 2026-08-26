@@ -70,13 +70,17 @@ blockquote p{margin:6px 0}
 <a href="../skills/sol-evpn-multi-homing.html" class="on">sol-evpn-multi-homing</a>
 <a href="../skills/sol-evpn-irb-multicast.html">sol-evpn-irb-multicast</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../solutions/index.html">解决方案</a> › <a href="../index.html">EVPN 架构指南</a> › <span>sol-evpn-multi-homing</span></nav><h1>sol-evpn-multi-homing</h1><p class="meta"><span class="badge">SKILL</span> sol-evpn-multi-homing · 来源页码: </p><h2 id="r">R（触发场景）</h2>
 <ul>
-<li>CE 双归/多归 PE 接入设计：选 single-active 还是 all-active</li>
-<li>规划 ESI：LACP LAG 自动生成 vs 静态 LAG 手工 5 字节</li>
+<li><strong>CE 双归/多归 PE 接入设计</strong>：<br>选 single-active 还是 all-active</li>
+<li><strong>规划 ESI</strong>：<br>LACP LAG 自动生成 vs 静态 LAG 手工 5 字节</li>
 <li>排查多归属 BUM 重复包/环路/黑洞</li>
 <li>DF 选举与 failover 行为分析（含组播状态同步）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>Multi-homing 框架（F4，<span class="pg">原文p32</span> ）：模式（SH/SA/AA）→ LACP vs 静态 LAG（决定 ESI 自动/手工）→ DF 选举（service carving：DF=EVI mod N，<span class="pg">原文p33</span> ）→ 防环三件套（split horizon/local bias/ES pruning）→ 流量优化（aliasing/backup path/mass withdraw）。LAG 是多归属防重复包与防环的前提（P13，<span class="pg">原文p32</span> ）；DF 防止 BUM 从 fabric 到 CE 重复洪泛（P14，<span class="pg">原文p32</span> ）。VXLAN 下 split horizon 靠维护同 ES 对端 PE IP 列表而非 ESI label（P17，<span class="pg">原文p34</span> ）。</p>
+<ul>
+<li><strong>Multi-homing 框架（F4，<span class="pg">原文p32</span> ）</strong>：<br>模式（SH/SA/AA）→ LACP vs 静态 LAG（决定 ESI 自动/手工）→ DF 选举（service carving：DF=EVI mod N，<span class="pg">原文p33</span> ）→ 防环三件套（split horizon/local bias/ES pruning）→ 流量优化（aliasing/backup path/mass withdraw）。</li>
+<li>LAG 是多归属防重复包与防环的前提（P13，<span class="pg">原文p32</span> ）；DF 防止 BUM 从 fabric 到 CE 重复洪泛（P14，<span class="pg">原文p32</span> ）。</li>
+<li>VXLAN 下 split horizon 靠维护同 ES 对端 PE IP 列表而非 ESI label（P17，<span class="pg">原文p34</span> ）。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>模式选型：全活（aliasing 按流负载分担，P19，<span class="pg">原文p34</span> ）或单活（Primary/Backup PE 列表主撤路无缝切换，<span class="pg">原文p35-36</span> ）；R-T1A ESI Label 扩展社区 flags=1 表 single-active、0 表 all-active（C5，<span class="pg">原文p32-33</span> ）</li>
@@ -92,13 +96,13 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>多归属开局全流程：R-T4 发现→DF 选举→冗余模式通告（C5，<span class="pg">原文p32-33</span> ）</li>
-<li>DF change 丢包场景与 SMET-by-all-PEs 补救：远端 PE 在收到新 PE 的 SMET 路由前持续发旧 PE 致丢包（C6，<span class="pg">原文p36</span> ）</li>
-<li>MAC duplication 场景：同 MAC 两主机/环路致反复通告-撤销拖垮控制面，靠 hold-down+retry-time 解除（C10，<span class="pg">原文p39</span> ）</li>
+<li><strong>多归属开局全流程</strong>：<br>R-T4 发现→DF 选举→冗余模式通告（C5，<span class="pg">原文p32-33</span> ）</li>
+<li><strong>DF change 丢包场景与 SMET-by-all-PEs 补救</strong>：<br>远端 PE 在收到新 PE 的 SMET 路由前持续发旧 PE 致丢包（C6，<span class="pg">原文p36</span> ）</li>
+<li><strong>MAC duplication 场景</strong>：<br>同 MAC 两主机/环路致反复通告-撤销拖垮控制面，靠 hold-down+retry-time 解除（C10，<span class="pg">原文p39</span> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>
-<li>无 R-T6/7/8 时多归属 IGMP 状态问题：全活不保证 Join/Leave 到 DF；单活 DF failover 丢 IGMP 状态（X13，<span class="pg">原文p36</span> ）</li>
+<li><strong>无 R-T6/7/8 时多归属 IGMP 状态问题</strong>：<br>全活不保证 Join/Leave 到 DF；单活 DF failover 丢 IGMP 状态（X13，<span class="pg">原文p36</span> ）</li>
 <li>DF change 期间组播丢包不可避免，需 SMET 补救（X14，<span class="pg">原文p36</span> ）</li>
 <li>MAC duplication 连续通告/撤销降级全网性能（X15，<span class="pg">原文p39</span> ）</li>
 <li>SAP 配置不一致导致 CE 侧黑洞（X22，<span class="pg">原文p66</span> ）</li>

@@ -75,13 +75,23 @@ blockquote p{margin:6px 0}
 <a href="../skills/aos-sm-chassis-cmm.html" class="on">aos-sm-chassis-cmm</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../aos/index.html">AOS 软件手册</a> › <a href="../index.html">AOS 8.10R04</a> › <span>aos-sm-chassis-cmm</span></nav><h1>aos-sm-chassis-cmm</h1><p class="meta"><span class="badge">SKILL</span> aos-sm-chassis-cmm · 来源页码: </p><h2 id="r">R（触发场景）</h2>
 <ul>
 <li>双 CMM 机箱要做 certified 同步（flash-synchro）或计划内接管（takeover）</li>
-<li>要把多台交换机组成 Virtual Chassis 单 IP 管理：手工组 VC 或 Auto-VFL 零接触建组</li>
+<li><strong>要把多台交换机组成 Virtual Chassis 单 IP 管理</strong>：<br>手工组 VC 或 Auto-VFL 零接触建组</li>
 <li>要配置 VFL 聚合链路、控制 VLAN、Master 选举优先级</li>
 <li>要部署分裂保护（RCD 带外检测 / VCSP+helper）并演练分裂恢复</li>
 <li>VC 加新成员、混合机型入组、重复 chassis ID 排障</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>VC 框架（F7，<span class="pg">原文p305-343</span> ）：vcsetup.cfg（单机入组设置：Chassis ID/Group/priority/VFL）+ vcboot.cfg（VC 整体配置）双文件体系；Master/Slave 选举五准则（现任→priority→uptime→最小 ID→最小 MAC，P130）；VFL（10/40/100G 聚合、16 字节封装头）+ 控制 VLAN（默认 4094）+ IS-IS VC 专有协议维持拓扑。分裂双保险：RCD（EMP 带外周期通告，VFL 全断时 former Slave 关全部面板口防双 IP/MAC，P134）与 VCSP（经 helper 邻机专用 linkagg 转 PDU，master MAC 不匹配即进 protection state，P135/P136）。CMM 冗余（P85-P87）：running 配置自动同步，certified 需手动 flash-synchro；takeover 断开旧主管理会话。</p>
+<ul>
+<li><strong>VC 框架（F7，<span class="pg">原文p305-343</span> ）</strong>：<br>vcsetup.cfg（单机入组设置：Chassis ID/Group/priority/VFL）+ vcboot.cfg（VC 整体配置）双文件体系；</li>
+<li>Master/Slave 选举五准则（现任→priority→uptime→最小 ID→最小 MAC，P130）；</li>
+<li>
+<p>VFL（10/40/100G 聚合、16 字节封装头）+ 控制 VLAN（默认 4094）+ IS-IS VC 专有协议维持拓扑；</p>
+</li>
+<li>
+<p><strong>分裂双保险</strong>：<br>RCD（EMP 带外周期通告，VFL 全断时 former Slave 关全部面板口防双 IP/MAC，P134）与 VCSP（经 helper 邻机专用 linkagg 转 PDU，master MAC 不匹配即进 protection state，P135/P136）。</p>
+</li>
+<li><strong>CMM 冗余（P85-P87）</strong>：<br>running 配置自动同步，certified 需手动 flash-synchro；takeover 断开旧主管理会话。</li>
+</ul>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>双 CMM 日常</strong>：certify + 同步一步 <code>copy running certified flash-synchro</code>；计划内切换 <code>takeover</code>（先同步）（C23）</li>
@@ -95,7 +105,7 @@ blockquote p{margin:6px 0}
 <li><strong>CMM 同步与接管</strong>：<code>copy running certified flash-synchro</code>（或单独 <code>copy flash-synchro</code>）；<code>takeover</code>（C23，<span class="pg">原文p110-111</span> ）</li>
 <li><strong>手工组 VC</strong>：双侧 <code>virtual-chassis configured-chassis-id 1|2</code> → <code>virtual-chassis vf-link 0 create</code> + member-port → <code>ip interface local emp ...</code> → <code>write memory</code> → <code>convert-configuration to vc_dir</code> → <code>reload from vc_dir no rollback-timeout</code>；Master 上配 <code>ip interface master emp address 10.255.100.100</code>（C46，<span class="pg">原文p307, 328</span> ）</li>
 <li><strong>Auto-VFL</strong>：默认端口直连即成；<code>virtual-chassis auto-vf-link-port 1/1/25</code>；验证 <code>show virtual-chassis topology|consistency|vf-link member-port</code>（C47，<span class="pg">原文p304, 339</span> ）</li>
-<li>VCSP：VC 侧 <code>virtual-chassis split-protection admin-state enable</code> + <code>split-protection linkagg</code>；</li>
+<li><strong>VCSP</strong>：<br>VC 侧 <code>virtual-chassis split-protection admin-state enable</code> + <code>split-protection linkagg</code>；</li>
 <li>helper 侧 <code>split-protection helper admin-state enable</code> + helper linkagg；</li>
 <li>
 <p>guard-timer 控自动恢复（C48，<span class="pg">原文p341</span> ）；</p>
@@ -127,4 +137,7 @@ blockquote p{margin:6px 0}
 <li>Master 与 Slave 的 vcboot.cfg/镜像不一致时 Master 覆盖 Slave 并令其自动重启（P131，<span class="pg">原文p307</span> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniSwitch AOS 8.10R4 Switch Management Guide 第 4 章 CMM 冗余（<span class="pg">原文p99-111</span> ）、第 13 章 Virtual Chassis（<span class="pg">原文p300-343</span> ）。条目来源：cases C23/C46/C47/C48；principles P85-P92/P128-P141；counter-examples X27/X70-X82；frameworks F7。</p><div class="pn"><a href="aos-sm-logging-health.html">⬅ 上一单元：aos-sm-logging-health</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<ul>
+<li>OmniSwitch AOS 8.10R4 Switch Management Guide 第 4 章 CMM 冗余（<span class="pg">原文p99-111</span> ）、第 13 章 Virtual Chassis（<span class="pg">原文p300-343</span> ）。</li>
+<li><strong>条目来源</strong>：<br>cases C23/C46/C47/C48；principles P85-P92/P128-P141；counter-examples X27/X70-X82；frameworks F7。</li>
+</ul><div class="pn"><a href="aos-sm-logging-health.html">⬅ 上一单元：aos-sm-logging-health</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

@@ -103,7 +103,7 @@ blockquote p{margin:6px 0}
 <h2 id="a1-lab">A1 · 书中案例（Lab 精要）</h2>
 <ul>
 <li><strong>c01 交换机发现</strong>：三台 OmniSwitch 各建 snmpuserv3（SHA+DES），trap 指向 OV2500:162；OV2500 侧 Profile 参数 Timeout 5000/Retry 3，按三个 IP 段 Discover Now。</li>
-<li>c02 AP 云上线：VLAN Manager 一次给三台交换机建 VLAN 40（default 口 + Q-tag 级联）；</li>
+<li><strong>c02 AP 云上线</strong>：<br>VLAN Manager 一次给三台交换机建 VLAN 40（default 口 + Q-tag 级联）；</li>
 <li>核心 6870 配 DHCP relay 与静态路由；</li>
 <li><code>lanpower slot 1/1 service stop/start</code> 重启 PoE 逼 AP 注册；</li>
 <li>
@@ -117,8 +117,8 @@ blockquote p{margin:6px 0}
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
 <li>新站点部署 / 存量网络纳管 OV2500、AP 不出现在网管、发现失败排障。</li>
-<li>与 <code><a href="stellar-ssid-policy-advanced.html">stellar-ssid-policy-advanced</a></code> 的区分：本 skill 管"设备进网管"，SSID/认证/策略在设备纳管之后才做。</li>
-<li>与 <code><a href="stellar-rap-backup-upgrade-ops.html">stellar-rap-backup-upgrade-ops</a></code> 的区分：那两个是云管（Cirrus）与远程 AP（RAP）场景；本 skill 只管本地 OV2500 Enterprise 模式。</li>
+<li><strong>与 <code><a href="stellar-ssid-policy-advanced.html">stellar-ssid-policy-advanced</a></code> 的区分</strong>：<br>本 skill 管"设备进网管"，SSID/认证/策略在设备纳管之后才做。</li>
+<li><strong>与 <code><a href="stellar-rap-backup-upgrade-ops.html">stellar-rap-backup-upgrade-ops</a></code> 的区分</strong>：<br>那两个是云管（Cirrus）与远程 AP（RAP）场景；本 skill 只管本地 OV2500 Enterprise 模式。</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
@@ -168,7 +168,7 @@ blockquote p{margin:6px 0}
 <li><strong>国家码 = 区域合规</strong>：跨境调拨/二手设备，出厂区域与网管国家码不一致会假死；先查标签/序列号。</li>
 <li><strong>评估许可两种导入二选一</strong>；密钥只贴键值不贴整行。</li>
 <li>option 138 是 ALE 私有引导方式，DHCP 服务器不做预定义则 AP 永远拿不到 OV2500 地址。</li>
-<li>本 skill 不覆盖 IPv6 管理面：Enterprise 模式下 AP 管理只走 IPv4（见 <code><a href="stellar-wifi7-hardware-rf-quickref.html">stellar-wifi7-hardware-rf-quickref</a></code> 的模式差异条目）。</li>
+<li><strong>本 skill 不覆盖 IPv6 管理面</strong>：<br>Enterprise 模式下 AP 管理只走 IPv4（见 <code><a href="stellar-wifi7-hardware-rf-quickref.html">stellar-wifi7-hardware-rf-quickref</a></code> 的模式差异条目）。</li>
 </ul>
 <hr />
 <p>来源条目: f02 · c01 · c02 · ce02 · ce03</p><div class="pn"><a href="../index.html">⬅ 返回课程首页</a><a class="nxt" href="stellar-ssid-policy-advanced.html">下一单元：stellar-ssid-policy-advanced ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

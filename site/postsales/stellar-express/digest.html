@@ -179,9 +179,14 @@ AP 本地内置 DHCP/DNS/NAT 和防火墙，无外部基础设施也能放号出
 Mesh 只做最后几跳，超 16 节点回有线；
 识别现场是否走了 Auto Mesh，搜隐藏 SSID "Stellar-MESH"。</p>
 <h2 id="15">五、排障案例地图（15 案例三域分类）</h2>
-<p>排障章 p126-160 共 15 案，接单先归域再套案例，每案固定"现象→分步检查→命令验证"。通用救援梯度：Web（默认 IP 192.168.1.254）→ Console（115200）→ tcpdump 抓包存 /tmp、tftp 上送 Wireshark（p129-132）。</p>
 <ul>
-<li>AP 侧域：Case 1 不上电（LED 九态判读，p128）；</li>
+<li>排障章 p126-160 共 15 案，接单先归域再套案例，每案固定"现象→分步检查→命令验证"。</li>
+<li>
+<p><strong>通用救援梯度</strong>：<br>Web（默认 IP 192.168.1.254）→ Console（115200）→ tcpdump 抓包存 /tmp、tftp 上送 Wireshark（p129-132）。</p>
+</li>
+<li>
+<p><strong>AP 侧域</strong>：<br>Case 1 不上电（LED 九态判读，p128）；</p>
+</li>
 <li>Case 2 DHCP 拿不到 IP——经典根因是 <code>option proto</code> 残留 static，改过静态地址的设备入新网不发 DHCP 请求（p129-132）；</li>
 <li>
 <p>Case 4 入不了集群四查：cluster ID 一致（<code>cluster_mgt -x show=self</code>）→ 32767 报文可达 → joining 需 PVM 手工批准 → 集群是否达上限 + 抓 32768 确认 AP 在发（p136-138）；</p>

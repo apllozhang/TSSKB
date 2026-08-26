@@ -84,13 +84,13 @@ blockquote p{margin:6px 0}
 </blockquote>
 <h2 id="i">I · 方法论骨架</h2>
 <ul>
-<li>三种接入冗余/共享形态，按场景选：1. <strong>DHL</strong>（p29）：接入交换机双上联两台 BEB，不跑 STP；每机仅一个会话，linkA/linkB + vlan-map 定向 VLAN；切换时 <code>mac-flushing raw</code>。</li>
+<li><strong>三种接入冗余/共享形态，按场景选</strong>：<br>1. <strong>DHL</strong>（p29）：接入交换机双上联两台 BEB，不跑 STP；每机仅一个会话，linkA/linkB + vlan-map 定向 VLAN；切换时 <code>mac-flushing raw</code>。</li>
 <li>
 <ol>
 <li><strong>ERP（G.8032）</strong>（f13）：环网经 BEB SAP 口延伸过 SPB 云。</li>
 </ol>
 </li>
-<li>分工：环内节点配 port1/port2 + service-vlan + MEG level，RPL owner 加 rpl-node 与 wait-to-restore-timer，靠 BEB 的节点配 sap-neighbor；BEB 侧建服务/SAP 并用 <code>access-tagged ... spb-remote-system &lt;对端 B-MAC&gt;</code> 把环另一端接过 SPB。</li>
+<li><strong>分工</strong>：<br>环内节点配 port1/port2 + service-vlan + MEG level，RPL owner 加 rpl-node 与 wait-to-restore-timer，靠 BEB 的节点配 sap-neighbor；BEB 侧建服务/SAP 并用 <code>access-tagged ... spb-remote-system &lt;对端 B-MAC&gt;</code> 把环另一端接过 SPB。</li>
 <li>
 <ol>
 <li><strong>Multi-Access 共享网</strong>（p13）：跨共享 LAN/微波 PMP/跨 SPB 域时，接口从默认 P2P 改 <code>type multi-access</code>，DIS 选举按优先级（默认 64）定、同分取最高 B-MAC，重选约 3 秒；同一台机可混配 P2P 与 multi-access。</li>
@@ -117,8 +117,7 @@ Lab7a 共享网（c12，p246）：先 disable 原 P2P 口，再 <code>spb isis i
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
 <li>接入交换机要双上联免 STP、现网 ERP 环要跨 SPB 机房延伸、BEB 间经运营商共享以太网/微波互联时用本 skill。</li>
-<li>与 <code><a href="spb-bum-protection.html">spb-bum-protection</a></code> 的区分：LBD 只检测封口不成方案，DHL/ERP 是带倒换的成套冗余；
-与 <code><a href="spb-backbone-deploy.html">spb-backbone-deploy</a></code> 的区分：multi-access 是骨干接口形态的改造（P2P→共享），但成套 Lab 场景（含回滚）集中在本 skill。</li>
+<li><strong>与 <code><a href="spb-bum-protection.html">spb-bum-protection</a></code> 的区分</strong>：<br>LBD 只检测封口不成方案，DHL/ERP 是带倒换的成套冗余；与 <code><a href="spb-backbone-deploy.html">spb-backbone-deploy</a></code> 的区分：multi-access 是骨干接口形态的改造（P2P→共享），但成套 Lab 场景（含回滚）集中在本 skill。</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
@@ -136,7 +135,7 @@ Lab7a 共享网（c12，p246）：先 disable 原 P2P 口，再 <code>spb isis i
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>
-<li>ERP/SPB 六条铁律（p23/ce08）：每 SVLAN 最多 2 个 ERP 型 NNI 关联；</li>
+<li><strong>ERP/SPB 六条铁律（p23/ce08）</strong>：<br>每 SVLAN 最多 2 个 ERP 型 NNI 关联；</li>
 <li>环不能建在 802.1q tag 口或 STP 型 NNI 上；</li>
 <li>BEB 不能做 RPL 节点；</li>
 <li>RPL 口不能在 SPB 网内也不能做 SAP neighbor；</li>

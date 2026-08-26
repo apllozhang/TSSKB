@@ -85,7 +85,11 @@ blockquote p{margin:6px 0}
 <li>把常用外部工具挂进 OV 的自定义菜单</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>CLI Script 是 .script 文本文件，CLI 命令与 JavaScript 混编（每行一条 CLI；JS 用 cli 对象驱动交互）。两类难点：一是"应答"——确认提示型命令用 expectPrompt 训练，挂起型命令用 <tapps> lastcmd；二是"慢命令"——write memory flash-synchro 等作末条命令会话即断，须设超时或补命令。第三方 MIB 走 OID 条目 + Mibset 目录 + 依赖顺序导入。</p>
+<ul>
+<li>CLI Script 是 .script 文本文件，CLI 命令与 JavaScript 混编（每行一条 CLI；JS 用 cli 对象驱动交互）。</li>
+<li><strong>两类难点</strong>：<br>一是"应答"——确认提示型命令用 expectPrompt 训练，挂起型命令用 <tapps> lastcmd；二是"慢命令"——write memory flash-synchro 等作末条命令会话即断，须设超时或补命令。</li>
+<li>第三方 MIB 走 OID 条目 + Mibset 目录 + 依赖顺序导入。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>
@@ -103,7 +107,7 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li>创建并发送脚本：CLI Scripting→Scripts→Add：Filename（自动加 .script）</li>
+<li><strong>创建并发送脚本</strong>：<br>CLI Scripting→Scripts→Add：Filename（自动加 .script）</li>
 <li>勾 Shared Admin Script（前缀 shadmin）</li>
 <li>
 <p>命令区（描述用 /<em> @@desc@@ </em>/）→Add。发送：选脚本→Send Script→Script Info→Device Selection（Switch Picker 或 Topology）→Scheduler（Now / Periodically: Simple 或 Cron）→Define User Variables→Send Script；日志在 Logs 屏按命令查看（cases·C23，<span class="pg">原文p239-246</span> ）</p>
@@ -125,10 +129,13 @@ blockquote p{margin:6px 0}
 <ul>
 <li>CLI 脚本不能发往 Stellar 无线设备；发送前 OV 必须已知每台设备 CLI/FTP 凭据（principles·P63，<span class="pg">原文p239</span> ）</li>
 <li>自动弹确认提示的操作命令（takeover、reload、fsck）不支持直接写入脚本，必须 expectPrompt/more/lastcmd 处理（principles·P66，<span class="pg">原文p242</span> ）</li>
-<li>慢命令作末条命令会话即断：write memory flash-synchro 之后要补一条命令或设 tapps 超时；setTimeout(min,sec) 仅作用于下一条命令（principles·P65，<span class="pg">原文p241-243</span> ）</li>
+<li><strong>慢命令作末条命令会话即断</strong>：<br>write memory flash-synchro 之后要补一条命令或设 tapps 超时；setTimeout(min,sec) 仅作用于下一条命令（principles·P65，<span class="pg">原文p241-243</span> ）</li>
 <li>MIB 文件必须 .mib 扩展名；新目录须导入完整 MIB 集（含被引用标准 MIB）；依赖顺序按 import 语句排，文件名常不可信；不建议向 OV 自带 MIB 目录加文件（principles·P81，<span class="pg">原文p287-288</span> ）</li>
 <li>MIB 导入后不立即解析——发现对应 OID 设备或重启服务器才解析（principles·P81，<span class="pg">原文p287-288</span> ）</li>
 <li>脚本日志保留默认 180 天，位于 data\cli_scripting_logs 按设备 IP 分目录（principles·P67，<span class="pg">原文p248</span> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniVista 2500 NMS 4.9R2 User Guide 第 10 章 CLI Scripting（<span class="pg">原文p238-248</span> ）、第三方设备支持与 MIB 导入（<span class="pg">原文p285-288</span> ）、SSH Custom（<span class="pg">原文p268-270</span> ）。条目来源：cases C23/C25/C29/C31；principles P63-P67/P80/P81。</p><div class="pn"><a href="ov-resource-manager-ops.html">⬅ 上一单元：ov-resource-manager-ops</a><a class="nxt" href="ov-unified-access-profiles.html">下一单元：ov-unified-access-profiles ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<ul>
+<li>OmniVista 2500 NMS 4.9R2 User Guide 第 10 章 CLI Scripting（<span class="pg">原文p238-248</span> ）、第三方设备支持与 MIB 导入（<span class="pg">原文p285-288</span> ）、SSH Custom（<span class="pg">原文p268-270</span> ）。</li>
+<li><strong>条目来源</strong>：<br>cases C23/C25/C29/C31；principles P63-P67/P80/P81。</li>
+</ul><div class="pn"><a href="ov-resource-manager-ops.html">⬅ 上一单元：ov-resource-manager-ops</a><a class="nxt" href="ov-unified-access-profiles.html">下一单元：ov-unified-access-profiles ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

@@ -100,9 +100,8 @@ AP 侧 cat 三份 AAA 配置文件核对绑定链与默认值（1812/1813、time
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
 <li>Enterprise/802.1X SSID 认证失败、凭证确认无误仍连不上、认证请求"石沉大海"超时 → 本 skill。</li>
-<li>与 <code><a href="client-connection-trouble.html">client-connection-trouble</a></code> 的区分：那边处理关联层与 IP 层（sta_list、DHCP、掉线）；
-本 skill 只管 EAP/RADIUS 认证链。判断方法：sta_list 的 AUTH 字段确认走了 802.1X、wam_debug 认证结果失败 → 进本 skill。</li>
-<li>与 <code><a href="stellar-ap-system-health.html">stellar-ap-system-health</a></code> 门户部分的区分：Captive Portal（eag）认证用那边；802.1X/ MAC 认证失败用本 skill。</li>
+<li><strong>与 <code><a href="client-connection-trouble.html">client-connection-trouble</a></code> 的区分</strong>：<br>那边处理关联层与 IP 层（sta_list、DHCP、掉线）；本 skill 只管 EAP/RADIUS 认证链。判断方法：sta_list 的 AUTH 字段确认走了 802.1X、wam_debug 认证结果失败 → 进本 skill。</li>
+<li><strong>与 <code><a href="stellar-ap-system-health.html">stellar-ap-system-health</a></code> 门户部分的区分</strong>：<br>Captive Portal（eag）认证用那边；802.1X/ MAC 认证失败用本 skill。</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
@@ -127,9 +126,9 @@ AP 侧 cat 三份 AAA 配置文件核对绑定链与默认值（1812/1813、time
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>
-<li>共享密钥不匹配是静默失败：不报错、只见超时，核对时逐字符比。</li>
+<li><strong>共享密钥不匹配是静默失败</strong>：<br>不报错、只见超时，核对时逐字符比。</li>
 <li>Radius station IP 要填 <strong>Stellar AP 的地址</strong>，不是客户端或 OmniVista 的地址——教材单独强调的核对点。</li>
-<li>顺序纪律：先客户端低级错误、再 AP、最后服务器；跳段排查容易把客户端配错当成服务器故障。</li>
+<li><strong>顺序纪律</strong>：<br>先客户端低级错误、再 AP、最后服务器；跳段排查容易把客户端配错当成服务器故障。</li>
 <li>防火墙只放行认证端口不放行计费端口（1813）也会造成部分功能异常，两端口都要查。</li>
 </ul>
 <hr />

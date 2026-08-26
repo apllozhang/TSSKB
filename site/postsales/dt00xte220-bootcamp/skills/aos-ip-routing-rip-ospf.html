@@ -82,7 +82,7 @@ blockquote p{margin:6px 0}
 <div class="grp">组播与织构</div>
 <a href="../skills/aos-multicast-erp-spb.html">aos-multicast-erp-spb</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../postsales/index.html">售后</a> › <a href="../index.html">DT00XTE220</a> › <span>aos-ip-routing-rip-ospf</span></nav><h1>aos-ip-routing-rip-ospf</h1><p class="meta"><span class="badge">SKILL</span> aos-ip-routing-rip-ospf · 来源页码: </p><h2 id="r">R（触发场景）</h2>
 <ul>
-<li>园区三层层间互通：静态/RIP/OSPF 选型与配置</li>
+<li><strong>园区三层层间互通</strong>：<br>静态/RIP/OSPF 选型与配置</li>
 <li>OSPF 区域设计（Stub/NSSA/虚链路）、路由汇总与重分发</li>
 <li>计划主控重启要求转发不中断（Graceful Restart）</li>
 <li>快速故障检测（BFD）、等价多路径（ECMP）</li>
@@ -91,11 +91,13 @@ blockquote p{margin:6px 0}
 <li>IPv6 地址规划基础</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>路由体系的骨架是偏好值：AOS 默认 Local 1：
-- Static 2
-- OSPF 10
-- RIP 100
-- BGP 200，可手工调整（P147，<span class="pg">原文p769</span> ），静态永远优先于动态（P135，<span class="pg">原文p714-716</span> ）。RIP 是距离向量（跳数 16 不可达、30 秒全表更新），四定时器 update 30/invalid 180/garbage 120/holddown 0 且 invalid≥3×update 由 AOS 强制（P138/P140，<span class="pg">原文p724, 730-731</span> ）。OSPF 三数据库（邻接表/LSDB/路由表）+ SPF 并行计算（P142，<span class="pg">原文p753</span> ）；区域类型本质是"允许进入的 LSA 集合"（F13/P144，<span class="pg">原文p759-762</span> ）。GR 的契约是重启方保持转发、邻居做 helper 不重算 SPF，Grace LSA（Type 9 Opaque）携宽限期（P148/P149，<span class="pg">原文p772-775</span> ）。重分发范式全书统一："先 route-map 后 redist"（P141，<span class="pg">原文p726-727</span> ）。</p>
+<ul>
+<li><strong>路由体系的骨架是偏好值</strong>：<br>AOS 默认 Local 1 / Static 2 / OSPF 10 / RIP 100 / BGP 200，可手工调整（P147，<span class="pg">原文p769</span> ），静态永远优先于动态（P135，<span class="pg">原文p714-716</span> ）。</li>
+<li>RIP 是距离向量（跳数 16 不可达、30 秒全表更新），四定时器 update 30/invalid 180/garbage 120/holddown 0 且 invalid≥3×update 由 AOS 强制（P138/P140，<span class="pg">原文p724, 730-731</span> ）。</li>
+<li>OSPF 三数据库（邻接表/LSDB/路由表）+ SPF 并行计算（P142，<span class="pg">原文p753</span> ）；区域类型本质是"允许进入的 LSA 集合"（F13/P144，<span class="pg">原文p759-762</span> ）。</li>
+<li>GR 的契约是重启方保持转发、邻居做 helper 不重算 SPF，Grace LSA（Type 9 Opaque）携宽限期（P148/P149，<span class="pg">原文p772-775</span> ）。</li>
+<li><strong>重分发范式全书统一</strong>：<br>"先 route-map 后 redist"（P141，<span class="pg">原文p726-727</span> ）。</li>
+</ul>
 <h2 id="a1">A1（决策/选型）</h2>
 <ol>
 <li>IGP 选型：小网络 RIP（v2 组播 224.0.0.9、带认证，P139，<span class="pg">原文p724</span> ）；中大型 OSPF；超大型/SPB 底座用 IS-IS（直接跑在 802.3/802.2 二层，P202，<span class="pg">原文p1093-1096</span> ）</li>
@@ -166,9 +168,9 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>C38 RIP 骨干：linkagg 18 承载 + 重分发本地/静态 + 定时器调优（<span class="pg">原文p733-745</span> ）</li>
-<li>C39 OSPF 骨干：区域/认证/重分发/route-pref 全要素（<span class="pg">原文p779-792</span> ）</li>
-<li>C54 SLB 三合一：VIP + WRR 权重 + HTTP 探针（<span class="pg">原文p976-987, 995</span> ）</li>
+<li><strong>C38 RIP 骨干</strong>：<br>linkagg 18 承载 + 重分发本地/静态 + 定时器调优（<span class="pg">原文p733-745</span> ）</li>
+<li><strong>C39 OSPF 骨干</strong>：<br>区域/认证/重分发/route-pref 全要素（<span class="pg">原文p779-792</span> ）</li>
+<li><strong>C54 SLB 三合一</strong>：<br>VIP + WRR 权重 + HTTP 探针（<span class="pg">原文p976-987, 995</span> ）</li>
 <li>C56/C57 BGP 邻接与 IS-IS 基础（<span class="pg">原文p1080-1088, 1105-1106</span> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>

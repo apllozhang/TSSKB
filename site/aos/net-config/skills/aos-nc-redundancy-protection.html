@@ -80,15 +80,19 @@ blockquote p{margin:6px 0}
 <a href="../skills/aos-nc-oam-monitoring.html">aos-nc-oam-monitoring</a>
 <a href="../skills/aos-nc-switch-foundation.html">aos-nc-switch-foundation</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../aos/index.html">AOS 软件手册</a> › <a href="../index.html">AOS 8.10R04</a> › <span>aos-nc-redundancy-protection</span></nav><h1>aos-nc-redundancy-protection</h1><p class="meta"><span class="badge">SKILL</span> aos-nc-redundancy-protection · 来源页码: </p><h2 id="r">R（触发场景）</h2>
 <ul>
-<li>二层组网要防环：选 STP/RSTP/MSTP 还是环网协议</li>
-<li>上联带宽不够/单链故障：做链路聚合（静态或 LACP）</li>
+<li><strong>二层组网要防环</strong>：<br>选 STP/RSTP/MSTP 还是环网协议</li>
+<li><strong>上联带宽不够/单链故障</strong>：<br>做链路聚合（静态或 LACP）</li>
 <li>接入交换机双上联两台核心，要 Active-Active 或 Active-Standby 保护（DHL）</li>
-<li>光纤单通导致 STP 环路：部署 UDLD</li>
-<li>接入侧私接小交换机成环：部署 LBD</li>
+<li><strong>光纤单通导致 STP 环路</strong>：<br>部署 UDLD</li>
+<li><strong>接入侧私接小交换机成环</strong>：<br>部署 LBD</li>
 <li>电信以太环网（G.8032 ERP）或工业环网（MRP）保护切换</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>二层高可靠防环分层选型（F3，<span class="pg">原文p157</span> /<span class="pg">原文p395</span> /<span class="pg">原文p211</span> ）：STP/RSTP/MSTP（通用树）→UDLD（单向链路）→LBD（环回）→ERP/MRP（电信/工业环网）→DHL（双归）→SPBM（ISIS 最短路径，见 aos-nc-fabric-backbone）。环网保护双体系（F16，<span class="pg">原文p395</span> /<span class="pg">原文p426</span> ）：ERP(G.8032，RPL owner+WTR/Guard+R-APS) 面向电信以太，MRP(IEC 62439-2，MRM/MRC/MRA 投票+测试帧) 面向工业环。STP 拓扑计算三步：选根桥（最低桥 ID）→每桥算到根最优路径→阻塞成环节路（P43，<span class="pg">原文p157</span> ）。</p>
+<ul>
+<li><strong>二层高可靠防环分层选型（F3，<span class="pg">原文p157</span> /<span class="pg">原文p395</span> /<span class="pg">原文p211</span> ）</strong>：<br>STP/RSTP/MSTP（通用树）→UDLD（单向链路）→LBD（环回）→ERP/MRP（电信/工业环网）→DHL（双归）→SPBM（ISIS 最短路径，见 aos-nc-fabric-backbone）。</li>
+<li><strong>环网保护双体系（F16，<span class="pg">原文p395</span> /<span class="pg">原文p426</span> ）</strong>：<br>ERP(G.8032，RPL owner+WTR/Guard+R-APS) 面向电信以太，MRP(IEC 62439-2，MRM/MRC/MRA 投票+测试帧) 面向工业环。</li>
+<li><strong>STP 拓扑计算三步</strong>：<br>选根桥（最低桥 ID）→每桥算到根最优路径→阻塞成环节路（P43，<span class="pg">原文p157</span> ）。</li>
+</ul>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>通用防环</strong>：小网 RSTP；多 VLAN 独立路径选 MSTP（VLAN 映射 MSTI，Flat 模式最多 17 实例含 CIST）；per-VLAN 模式是 AOS 私有，跨厂商互通受限（P45/P46/X21，<span class="pg">原文p164</span> ）</li>
@@ -99,7 +103,7 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li>MST 区域：<code>spantree mst region &lt;name&gt;</code>+revision+VLAN-MSTI 映射（cases·C12，<span class="pg">原文p202</span> ）；</li>
+<li><strong>MST 区域</strong>：<br><code>spantree mst region &lt;name&gt;</code>+revision+VLAN-MSTI 映射（cases·C12，<span class="pg">原文p202</span> ）；</li>
 <li>单 MSTI 调优：对特定 MSTI 配端口 path cost/priority 使该 MSTI VLAN 走独立路径（cases·C13，<span class="pg">原文p205</span> ）；</li>
 <li>
 <p>端口参数（edge port、root guard、限 TCN/BPDU）见章内 Configuring STP Port Parameters（cases·C14，<span class="pg">原文p189</span> ）；</p>
@@ -127,7 +131,7 @@ blockquote p{margin:6px 0}
 <li>聚合组任一成员口环回，整组 shutdown（X29，<span class="pg">原文p328</span> ）；remote-origin LBD 双端都开时结果不确定（X30，<span class="pg">原文p327</span> ）</li>
 <li>聚合组成员必须同速，混速无法成组；负载分担非 IP 按 MAC、IP 报文按 IP 地址（X32/P64，<span class="pg">原文p341</span> ）</li>
 <li>静态聚合不能与部分厂商设备对接（X31，<span class="pg">原文p341</span> ）</li>
-<li>DHL：未同时挂到 linkA/linkB 的 VLAN 不受保护；</li>
+<li><strong>DHL</strong>：<br>未同时挂到 linkA/linkB 的 VLAN 不受保护；</li>
 <li>每交换机仅一个会话、每会话仅两链路；</li>
 <li>VLAN 数≤128/组；</li>
 <li>raw flooding 的 MAC≤1000（X33/X34，<span class="pg">原文p382</span> ）；</li>
@@ -139,7 +143,20 @@ blockquote p{margin:6px 0}
 </li>
 <li>ERPv2 子环不能使用共享链路；共享链路只能属于一个主环（X36，<span class="pg">原文p395</span> ）</li>
 <li>MSTP 仅 Flat 模式支持；MSTI 端口状态由 CST 统一算，不调 path cost 无法让单实例独立转发（X23/P47，<span class="pg">原文p164</span> ）</li>
-<li>MSTP 恢复流程要点：恢复侧发 R-APS(NR) 并启 Guard→RPL owner 启 WTR→超时阻塞 RPL 并发 R-APS(NR,RB)→各节点 flush MAC 回 idle（P74，<span class="pg">原文p398</span> ）</li>
+<li><strong>MSTP 恢复流程要点</strong>：<br>恢复侧发 R-APS(NR) 并启 Guard→RPL owner 启 WTR→超时阻塞 RPL 并发 R-APS(NR,RB)→各节点 flush MAC 回 idle（P74，<span class="pg">原文p398</span> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniSwitch AOS 8.10R4 Network Configuration Guide 第 2 章 UDLD（<span class="pg">原文p98-99</span> ）、第 6 章 Spanning Tree（<span class="pg">原文p157-205</span> ）、第 8 章 LBD（<span class="pg">原文p325-329</span> ）、第 9/10 章链路聚合（<span class="pg">原文p341-354</span> ）、第 11 章 DHL（<span class="pg">原文p380-383</span> ）、第 12 章 ERP（<span class="pg">原文p395-419</span> ）、第 13 章 MRP（<span class="pg">原文p426-437</span> ）。条目来源：cases C11-C14/C19-C26；principles P21-P24/P42-P48/P58-P70/P72-P82；counter-examples X21-X23/X28-X36；frameworks F3/F16。</p><div class="pn"><a href="aos-nc-vlan-l2.html">⬅ 上一单元：aos-nc-vlan-l2</a><a class="nxt" href="aos-nc-fabric-backbone.html">下一单元：aos-nc-fabric-backbone ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<ul>
+<li>OmniSwitch AOS 8.10R4 Network Configuration Guide 第 2 章 UDLD（<span class="pg">原文p98-99</span> ）</li>
+<li>第 6 章 Spanning Tree（<span class="pg">原文p157-205</span> ）</li>
+<li>第 8 章 LBD（<span class="pg">原文p325-329</span> ）</li>
+<li>第 9/10 章链路聚合（<span class="pg">原文p341-354</span> ）</li>
+<li>第 11 章 DHL（<span class="pg">原文p380-383</span> ）</li>
+<li>第 12 章 ERP（<span class="pg">原文p395-419</span> ）</li>
+<li>
+<p>第 13 章 MRP（<span class="pg">原文p426-437</span> ）</p>
+</li>
+<li>
+<p><strong>条目来源</strong>：<br>cases C11-C14/C19-C26；principles P21-P24/P42-P48/P58-P70/P72-P82；counter-examples X21-X23/X28-X36；frameworks F3/F16。</p>
+</li>
+</ul><div class="pn"><a href="aos-nc-vlan-l2.html">⬅ 上一单元：aos-nc-vlan-l2</a><a class="nxt" href="aos-nc-fabric-backbone.html">下一单元：aos-nc-fabric-backbone ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

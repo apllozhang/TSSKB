@@ -80,15 +80,19 @@ blockquote p{margin:6px 0}
 <a href="../skills/aos-nc-oam-monitoring.html" class="on">aos-nc-oam-monitoring</a>
 <a href="../skills/aos-nc-switch-foundation.html">aos-nc-switch-foundation</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../aos/index.html">AOS 软件手册</a> › <a href="../index.html">AOS 8.10R04</a> › <span>aos-nc-oam-monitoring</span></nav><h1>aos-nc-oam-monitoring</h1><p class="meta"><span class="badge">SKILL</span> aos-nc-oam-monitoring · 来源页码: </p><h2 id="r">R（触发场景）</h2>
 <ul>
-<li>端到端以太业务要连续性检查与故障定位：CFM CC/loopback/linktrace</li>
-<li>单条链路质量劣化要监控告警：EFM errored-frame 窗口阈值</li>
-<li>要测帧时延/抖动：Y.1731 帧时延测量</li>
-<li>交换机 CPU/内存资源要阈值监控：Switch Health</li>
+<li><strong>端到端以太业务要连续性检查与故障定位</strong>：<br>CFM CC/loopback/linktrace</li>
+<li><strong>单条链路质量劣化要监控告警</strong>：<br>EFM errored-frame 窗口阈值</li>
+<li><strong>要测帧时延/抖动</strong>：<br>Y.1731 帧时延测量</li>
+<li><strong>交换机 CPU/内存资源要阈值监控</strong>：<br>Switch Health</li>
 <li>要调日志级别/输出设备/格式，或做 SPB 服务保障测量（SAA）</li>
-<li>宽带接入要在 PPPoE 报文插用户线路标识：PPPoE-IA</li>
+<li><strong>宽带接入要在 PPPoE 报文插用户线路标识</strong>：<br>PPPoE-IA</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>OAM 分层框架（F14，<span class="pg">原文p1655</span> ）：LINK OAM(802.3ah，单链路发现/监控/环回) 与 Service OAM(802.1ag/Y.1731，MD/MA/MEP 层级+CC/LB/LT+时延测量) 互补，CFM MD 分层 0-7 对应运营商/客户组织边界。MD 分级：5-7 客户、3-4 运营商、0-2 操作员；MEP 发起 OAM 命令防域间泄漏，MIP 被动应答（P196，<span class="pg">原文p1655</span> ）。EFM 用慢协议 OAMPDU 承载控制与状态，单链路传递不被网桥转发；发现阶段双方能力匹配才建立 OAM 连接，5 秒无 OAMPDU 即失联（P198/P199，<span class="pg">原文p1673-1674</span> ）。</p>
+<ul>
+<li><strong>OAM 分层框架（F14，<span class="pg">原文p1655</span> ）</strong>：<br>LINK OAM(802.3ah，单链路发现/监控/环回) 与 Service OAM(802.1ag/Y.1731，MD/MA/MEP 层级+CC/LB/LT+时延测量) 互补，CFM MD 分层 0-7 对应运营商/客户组织边界。</li>
+<li><strong>MD 分级</strong>：<br>5-7 客户、3-4 运营商、0-2 操作员；MEP 发起 OAM 命令防域间泄漏，MIP 被动应答（P196，<span class="pg">原文p1655</span> ）。</li>
+<li>EFM 用慢协议 OAMPDU 承载控制与状态，单链路传递不被网桥转发；发现阶段双方能力匹配才建立 OAM 连接，5 秒无 OAMPDU 即失联（P198/P199，<span class="pg">原文p1673-1674</span> ）。</li>
+</ul>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>定位故障先分层</strong>：单链路问题用 LINK OAM（发现/三窗口链路监控/远端故障/远端环回，P200，<span class="pg">原文p1673</span> ）；业务端到端问题用 Service OAM（P195，<span class="pg">原文p1655</span> ）</li>
@@ -116,9 +120,21 @@ blockquote p{margin:6px 0}
 <ul>
 <li>LINK OAM 5 秒收不到 OAMPDU 邻接即丢，keepalive 间隔配置不当会频繁掉 OAM 会话（X72/P199，<span class="pg">原文p1674</span> ）</li>
 <li>PPPoE-IA 不支持镜像目的口；全局+端口两级必须同时使能否则不生效（X73/P203，<span class="pg">原文p1715</span> ）</li>
-<li>PPPoE access loop 标识：直连用户=chassis/slot/port，多用户共享口=端口+CVLAN 组合（P202，<span class="pg">原文p1714</span> ）</li>
+<li><strong>PPPoE access loop 标识</strong>：<br>直连用户=chassis/slot/port，多用户共享口=端口+CVLAN 组合（P202，<span class="pg">原文p1714</span> ）</li>
 <li>MD Level 分层对应组织边界，跨层规划会导致 OAM 命令泄漏或测量失效（P196，<span class="pg">原文p1655</span> ）</li>
 <li>虚拟 MEP 是虚拟端口上的 UP MEP，用于没有物理口的场景（<span class="pg">原文p1655</span> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniSwitch AOS 8.10R4 Network Configuration Guide 第 41 章 Switch Health（<span class="pg">原文p1566</span> ）、第 43 章 Switch Logging（<span class="pg">原文p1580</span> ）、第 44 章 Service OAM/CFM（<span class="pg">原文p1650-1665</span> ）、第 45 章 EFM LINK OAM（<span class="pg">原文p1672-1674</span> ）、第 47 章 PPPoE-IA（<span class="pg">原文p1714-1715</span> ）、第 48 章 SAA（<span class="pg">原文p1700</span> ）。条目来源：cases C62-C64；principles P190/P194-P204；counter-examples X72/X73；frameworks F14。</p><div class="pn"><a href="aos-nc-access-security.html">⬅ 上一单元：aos-nc-access-security</a><a class="nxt" href="aos-nc-switch-foundation.html">下一单元：aos-nc-switch-foundation ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<ul>
+<li>OmniSwitch AOS 8.10R4 Network Configuration Guide 第 41 章 Switch Health（<span class="pg">原文p1566</span> ）</li>
+<li>第 43 章 Switch Logging（<span class="pg">原文p1580</span> ）</li>
+<li>第 44 章 Service OAM/CFM（<span class="pg">原文p1650-1665</span> ）</li>
+<li>第 45 章 EFM LINK OAM（<span class="pg">原文p1672-1674</span> ）</li>
+<li>第 47 章 PPPoE-IA（<span class="pg">原文p1714-1715</span> ）</li>
+<li>
+<p>第 48 章 SAA（<span class="pg">原文p1700</span> ）</p>
+</li>
+<li>
+<p><strong>条目来源</strong>：<br>cases C62-C64；principles P190/P194-P204；counter-examples X72/X73；frameworks F14。</p>
+</li>
+</ul><div class="pn"><a href="aos-nc-access-security.html">⬅ 上一单元：aos-nc-access-security</a><a class="nxt" href="aos-nc-switch-foundation.html">下一单元：aos-nc-switch-foundation ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

@@ -88,9 +88,11 @@ blockquote p{margin:6px 0}
 <li>RP 单点故障风险大，需要 RP 冗余与负载分担（Anycast RP）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>组播分两层解：同 VLAN 内由 IPMS（硬件 IGMP 侦听）解决"只发给加入的端口"；
-跨网段才需要组播路由协议做 RPF 校验和树构建。PIM-SM 用显式加入 + RP 共享树（RPT），末跳 DR 收到首包后自动发起 SPT 切换获得最优路径；
-RP 是可用性与性能的关键点，BSR 做动态发现，Anycast RP（RFC 4610）用共享 Loopback 任播地址做到 IGP 级快速切换。</p>
+<ul>
+<li><strong>组播分两层解</strong>：<br>同 VLAN 内由 IPMS（硬件 IGMP 侦听）解决"只发给加入的端口"；跨网段才需要组播路由协议做 RPF 校验和树构建。</li>
+<li>PIM-SM 用显式加入 + RP 共享树（RPT），末跳 DR 收到首包后自动发起 SPT 切换获得最优路径；
+RP 是可用性与性能的关键点，BSR 做动态发现，Anycast RP（RFC 4610）用共享 Loopback 任播地址做到 IGP 级快速切换。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>二层 IPMS：<code>ip multicast admin-state enable</code>（全网）+ 服务器侧 <code>ip multicast querying enable</code> + 其余 <code>ip multicast querier-forwarding enable</code>；验证 <code>show ip multicast group/forward</code> 精确到组地址的端口表项（<span class="pg">原文p405</span> -<span class="pg">原文p409</span> ）</li>
@@ -108,19 +110,19 @@ RP 是可用性与性能的关键点，BSR 做动态发现，Anycast RP（RFC 46
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
-<li>IGMP Throttling：per-port 限制覆盖 VLAN 与全局，动作 none/drop/replace（<span class="pg">原文p396</span> ）</li>
-<li>IGMP 版本：v1 基础查询/报告；v2 加 Leave、特定组查询（Fast Leave）；v3 加源过滤（Explicit Host Tracking）；TTL=1 本地段协议，查询发 224.0.0.1、Leave 发 224.0.0.2（<span class="pg">原文p381</span> -<span class="pg">原文p382</span> ）</li>
-<li>BSR 选 RP 算法：优先级（最小）→ hash（组地址+RP 地址）→ 最高 IP（<span class="pg">原文p431</span> -<span class="pg">原文p432</span> ）</li>
-<li>PIM-DM：泛洪-剪枝 3 分钟循环、无 RP，适合接收者密集网络（<span class="pg">原文p434</span> -<span class="pg">原文p435</span> ）</li>
-<li>DVMRP：RPF 校验 + flood/prune/graft，prune 超时 7200s（<span class="pg">原文p413</span> 、<span class="pg">原文p416</span> -<span class="pg">原文p417</span> ）</li>
-<li>Anycast RP 边界：仅 PIM-SM、最多 8 台、须启用 SPT（<span class="pg">原文p645</span> ）</li>
-<li>地址基础：Class D 224.0.0.0-239.255.255.255，IP 低 23 位映射 01:00:5E 组播 MAC；知名组如 224.0.0.5/6（OSPF）、224.0.0.13（PIM）、224.0.0.18（VRRP）（<span class="pg">原文p375</span> ）</li>
+<li><strong>IGMP Throttling</strong>：<br>per-port 限制覆盖 VLAN 与全局，动作 none/drop/replace（<span class="pg">原文p396</span> ）</li>
+<li><strong>IGMP 版本</strong>：<br>v1 基础查询/报告；v2 加 Leave、特定组查询（Fast Leave）；v3 加源过滤（Explicit Host Tracking）；TTL=1 本地段协议，查询发 224.0.0.1、Leave 发 224.0.0.2（<span class="pg">原文p381</span> -<span class="pg">原文p382</span> ）</li>
+<li><strong>BSR 选 RP 算法</strong>：<br>优先级（最小）→ hash（组地址+RP 地址）→ 最高 IP（<span class="pg">原文p431</span> -<span class="pg">原文p432</span> ）</li>
+<li><strong>PIM-DM</strong>：<br>泛洪-剪枝 3 分钟循环、无 RP，适合接收者密集网络（<span class="pg">原文p434</span> -<span class="pg">原文p435</span> ）</li>
+<li><strong>DVMRP</strong>：<br>RPF 校验 + flood/prune/graft，prune 超时 7200s（<span class="pg">原文p413</span> 、<span class="pg">原文p416</span> -<span class="pg">原文p417</span> ）</li>
+<li><strong>Anycast RP 边界</strong>：<br>仅 PIM-SM、最多 8 台、须启用 SPT（<span class="pg">原文p645</span> ）</li>
+<li><strong>地址基础</strong>：<br>Class D 224.0.0.0-239.255.255.255，IP 低 23 位映射 01:00:5E 组播 MAC；知名组如 224.0.0.5/6（OSPF）、224.0.0.13（PIM）、224.0.0.18（VRRP）（<span class="pg">原文p375</span> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>C-28 IPMS 开关对比：关闭时组播帧泛洪全 VLAN，开启后 <code>show ip multicast group/forward</code> 精确到 231.1.1.5 的端口级表项（<span class="pg">原文p405</span> -<span class="pg">原文p409</span> ）</li>
-<li>C-30 PIM-SM 全网配置：BSR 域内多 RP 分组，<code>show ip pim group-map</code> 学到 6 条 RP、<code>sgroute</code> 显示 (S,G) 建立（<span class="pg">原文p447</span> -<span class="pg">原文p449</span> ）</li>
-<li>C-31 Anycast RP：Loopback1 共享地址 + static-rp 全域下发 + anycast-rp 互指（<span class="pg">原文p648</span> -<span class="pg">原文p649</span> ）</li>
+<li><strong>C-28 IPMS 开关对比</strong>：<br>关闭时组播帧泛洪全 VLAN，开启后 <code>show ip multicast group/forward</code> 精确到 231.1.1.5 的端口级表项（<span class="pg">原文p405</span> -<span class="pg">原文p409</span> ）</li>
+<li><strong>C-30 PIM-SM 全网配置</strong>：<br>BSR 域内多 RP 分组，<code>show ip pim group-map</code> 学到 6 条 RP、<code>sgroute</code> 显示 (S,G) 建立（<span class="pg">原文p447</span> -<span class="pg">原文p449</span> ）</li>
+<li><strong>C-31 Anycast RP</strong>：<br>Loopback1 共享地址 + static-rp 全域下发 + anycast-rp 互指（<span class="pg">原文p648</span> -<span class="pg">原文p649</span> ）</li>
 </ul>
 <h2 id="b">B（边界与陷阱）</h2>
 <ul>

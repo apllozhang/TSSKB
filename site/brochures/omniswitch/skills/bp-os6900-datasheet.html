@@ -87,19 +87,21 @@ blockquote p{margin:6px 0}
 <h2 id="r">R（触发场景）</h2>
 <ul>
 <li>中型园区核心/汇聚、DC ToR 或 spine 选型（10/25/40/100G 固定平台）</li>
-<li>1RU 高密度需求：128x10G、80x25G、32x100G 端口核算</li>
-<li>加密核心：认准 X48E/C32E 的全口 MACsec（AES 128/256bit）</li>
+<li><strong>1RU 高密度需求</strong>：<br>128x10G、80x25G、32x100G 端口核算</li>
+<li><strong>加密核心</strong>：<br>认准 X48E/C32E 的全口 MACsec（AES 128/256bit）</li>
 <li>VC 6 台 + ISSU 的不中断升级设计（医院/生产网）</li>
 <li>BGP-EVPN-VXLAN DC fabric、SPB、MPLS l2vpn（付费许可）选型</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>OS6900 是固定配置核心与 DC 交换机："compact, high-density 10, 25, 40 and 100 GigE platforms... Wire-rate non-blocking up to 6.4 Tb/s"（<span class="pg">原文p125</span> /<span class="pg">原文p126</span> ）。层级：核心/DC 固定档，下接 6860/6870 汇聚，上对 6920（400G）与 9900（模块化）。</p>
+<ul>
+<li><strong>OS6900 是固定配置核心与 DC 交换机</strong>：<br>"compact, high-density 10, 25, 40 and 100 GigE platforms... Wire-rate non-blocking up to 6.4 Tb/s"（<span class="pg">原文p125</span> /<span class="pg">原文p126</span> ）。</li>
+<li><strong>层级</strong>：<br>核心/DC 固定档，下接 6860/6870 汇聚，上对 6920（400G）与 9900（模块化）。</li>
+</ul>
 <h2 id="a1">A1（与相邻系列选型差异）</h2>
 <ul>
-<li>vs OS9900：中型园区/DC ToR 用 6900（1RU 固定，开箱即用）；
-大密度 GbE + PoE 核心/按线卡扩容用 9900（288 GbE + 10800W PoE，"investment protection... scaling out"，C3）。</li>
-<li>vs OS6920：6920 是 32x400G 单型号 AI/HPC 骨干（12.8Tb/s、RoCEv2 无损、无 GbE/PoE）；6900 覆盖 1G~100G 全速率与 MACsec 加密。</li>
-<li>vs OS6870：6870 接入/边缘（95W PoE、多千兆用户口）；6900 纯核心（无 PoE、全光口为主 + 10GBaseT 型）。</li>
+<li><strong>vs OS9900</strong>：<br>中型园区/DC ToR 用 6900（1RU 固定，开箱即用）；大密度 GbE + PoE 核心/按线卡扩容用 9900（288 GbE + 10800W PoE，"investment protection... scaling out"，C3）。</li>
+<li><strong>vs OS6920</strong>：<br>6920 是 32x400G 单型号 AI/HPC 骨干（12.8Tb/s、RoCEv2 无损、无 GbE/PoE）；6900 覆盖 1G~100G 全速率与 MACsec 加密。</li>
+<li><strong>vs OS6870</strong>：<br>6870 接入/边缘（95W PoE、多千兆用户口）；6900 纯核心（无 PoE、全光口为主 + 10GBaseT 型）。</li>
 </ul>
 <h2 id="a2">A2（规格细节速查表）</h2>
 <p>机型矩阵（<span class="pg">原文p127</span>  型号描述 / <span class="pg">原文p131</span>  产品矩阵）：
@@ -119,10 +121,10 @@ Layer 特性（<span class="pg">原文p126</span> /<span class="pg">原文p127</
 规格红线：无 PoE；MACsec 仅 X48E/C32E；MPLS 付费许可。</p>
 <h2 id="e">E（适用场景）</h2>
 <ul>
-<li>中型园区核心/DC ToR：1RU 128x10G（X48 拆分）或 80x25G（V48）（C3）</li>
-<li>加密核心/DC 上行：X48E/C32E 全口 MACsec（C5）</li>
-<li>升级不中断：VC + ISSU 写进医院/生产网技术条款（C10）</li>
-<li>DC fabric：BGP-EVPN-VXLAN（主机漫游/多归属/L2-L3 VPN，<span class="pg">原文p127</span> ）；企业 MPLS 接入/汇聚/端到端 fabric（付费许可，<span class="pg">原文p126</span> ）</li>
+<li><strong>中型园区核心/DC ToR</strong>：<br>1RU 128x10G（X48 拆分）或 80x25G（V48）（C3）</li>
+<li><strong>加密核心/DC 上行</strong>：<br>X48E/C32E 全口 MACsec（C5）</li>
+<li><strong>升级不中断</strong>：<br>VC + ISSU 写进医院/生产网技术条款（C10）</li>
+<li><strong>DC fabric</strong>：<br>BGP-EVPN-VXLAN（主机漫游/多归属/L2-L3 VPN，<span class="pg">原文p127</span> ）；企业 MPLS 接入/汇聚/端到端 fabric（付费许可，<span class="pg">原文p126</span> ）</li>
 </ul>
 <h2 id="b">B（限制与坑）</h2>
 <ul>

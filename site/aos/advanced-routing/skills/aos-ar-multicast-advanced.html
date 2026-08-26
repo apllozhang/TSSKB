@@ -73,13 +73,18 @@ blockquote p{margin:6px 0}
 <div class="grp">组播高级</div>
 <a href="../skills/aos-ar-multicast-advanced.html" class="on">aos-ar-multicast-advanced</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../aos/index.html">AOS 软件手册</a> › <a href="../index.html">AOS 8.10R04</a> › <span>aos-ar-multicast-advanced</span></nav><h1>aos-ar-multicast-advanced</h1><p class="meta"><span class="badge">SKILL</span> aos-ar-multicast-advanced · 来源页码: </p><h2 id="r">R（触发场景）</h2>
 <ul>
-<li>要隔离/复用私组播地址段：ip mroute-boundary 地址边界，多布线间复用同一段 239 地址</li>
+<li><strong>要隔离/复用私组播地址段</strong>：<br>ip mroute-boundary 地址边界，多布线间复用同一段 239 地址</li>
 <li>要跑 DVMRP（含 DVMRP 隧道穿越非组播网络）或 PIM-DM（泛洪-剪枝）</li>
-<li>要部署 PIM-SM：C-RP/C-BSR/静态 RP 选型、Anycast RP 冗余、Register 打包调优、SPT 切换</li>
+<li><strong>要部署 PIM-SM</strong>：<br>C-RP/C-BSR/静态 RP 选型、Anycast RP 冗余、Register 打包调优、SPT 切换</li>
 <li>要启用 SSM（232/8、FF3x::/32）或 IPv6 PIM；要打通 PIM 与 DVMRP 两域（MBR）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>组播路由三范式（F7）：密集模式（DVMRP/PIM-DM，广播-剪枝按源建树）→ 稀疏模式（PIM-SM，接收者显式 Join，RP 共享树 + SPT 切换）→ SSM（显式频道订阅免 RP）。域隔离体系（F9）：239/8 管理作用域 + mroute-boundary 让同段地址多域并发复用 + MBR 连接 PIM/DVMRP 两域。PIM-SM 控制体系五要素（F8）：RP（解封装 Register）、BSR（域内唯一分发 RP-set）、DR（源侧封装/接收侧 Join）、RPT 共享树、SPT 切换（末跳 DR 收到首包即切换）。RPF 逆向路径检查是全部组播转发的公共底层（P95）。</p>
+<ul>
+<li><strong>组播路由三范式（F7）</strong>：<br>密集模式（DVMRP/PIM-DM，广播-剪枝按源建树）→ 稀疏模式（PIM-SM，接收者显式 Join，RP 共享树 + SPT 切换）→ SSM（显式频道订阅免 RP）。</li>
+<li><strong>域隔离体系（F9）</strong>：<br>239/8 管理作用域 + mroute-boundary 让同段地址多域并发复用 + MBR 连接 PIM/DVMRP 两域。</li>
+<li><strong>PIM-SM 控制体系五要素（F8）</strong>：<br>RP（解封装 Register）、BSR（域内唯一分发 RP-set）、DR（源侧封装/接收侧 Join）、RPT 共享树、SPT 切换（末跳 DR 收到首包即切换）。</li>
+<li>RPF 逆向路径检查是全部组播转发的公共底层（P95）。</li>
+</ul>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>地址域设计</strong>：边界地址必须是 239/8 作用域段（X46）；同一 239 段可在多个被边界隔离的域并发复用（P93/C33）</li>
@@ -94,14 +99,14 @@ blockquote p{margin:6px 0}
 <li><strong>DVMRP 五步</strong>：<code>ip load dvmrp</code> → <code>ip interface vlan-2 ...</code> → <code>ip dvmrp interface vlan-2</code> → <code>ip dvmrp admin-state enable</code> → <code>write memory</code>；<code>show ip dvmrp [interface]</code>（C34，<span class="pg">原文p231</span> ）</li>
 <li><strong>DVMRP 隧道</strong>：<code>ip interface "tnl-1" tunnel source 23.23.23.1 destination 155.2.2.2</code>；源地址接口与隧道接口都要 <code>ip dvmrp interface</code> 使能（C35，<span class="pg">原文p244</span> ）</li>
 <li><strong>PIM-DM 六步</strong>：<code>ip load pim</code> → <code>ip interface vlan-2</code> → <code>ip pim interface vlan-2</code> → <code>ip pim dense group 225.0.0.0/24</code> → <code>ip pim dense admin-state enable</code> → <code>write memory</code>（C36，<span class="pg">原文p252</span> ）</li>
-<li>PIM-SM RP 体系：C-RP <code>ip pim candidate-rp 50.1.1.1 225.16.1.1/32 priority 100 interval 100</code>；</li>
+<li><strong>PIM-SM RP 体系</strong>：<br>C-RP <code>ip pim candidate-rp 50.1.1.1 225.16.1.1/32 priority 100 interval 100</code>；</li>
 <li>C-BSR <code>ip pim cbsr 50.1.1.1 priority 100 mask-length 4</code>；</li>
 <li>静态 <code>ip pim static-rp 225.0.0.0/24 10.1.1.1 priority 10</code>；</li>
 <li>
 <p><code>show ip pim group-map/candidate-rp/cbsr</code>（C37，<span class="pg">原文p270-273</span> ）；</p>
 </li>
 <li>
-<p>Anycast RP：两 RP 各配 Loopback1=10.10.10.1（IGP 通告）；</p>
+<p><strong>Anycast RP</strong>：<br>两 RP 各配 Loopback1=10.10.10.1（IGP 通告）；</p>
 </li>
 <li>全网 <code>ip pim static-rp 224.0.0.0/4 10.10.10.1</code>；</li>
 <li>两 RP 各配完整 RP set（<code>ip pim anycast-rp 10.10.10.1 192.168.1.1</code> + 对端）；</li>
@@ -112,7 +117,7 @@ blockquote p{margin:6px 0}
 <p><strong>Register/J-P 调优</strong>：<code>ip pim register-packing enable|force-enable</code>、<code>ip pim register-mtu 1000</code>、<code>ip pim register-delay 100</code>（C39，<span class="pg">原文p278-279</span> ）</p>
 </li>
 <li><strong>IPv6 PIM</strong>：<code>ipv6 pim interface vlan-2</code> → <code>ipv6 pim dense group ff0e::1234/128</code> → enable；SM 侧 candidate-rp/cbsr/static-rp/rp-switchover 全套（C40，<span class="pg">原文p283-292</span> ）</li>
-<li>MBR：PIM 与 DVMRP 各自 load+接口+全局使能 → <code>ip mroute mbr admin-state enable</code>；</li>
+<li><strong>MBR</strong>：<br>PIM 与 DVMRP 各自 load+接口+全局使能 → <code>ip mroute mbr admin-state enable</code>；</li>
 <li>可选 DVMRP 默认路由通告（<code>ip dvmrp interface "vlan-6" mbr-default-information enable</code>）或 <code>ip pim mbr all-sources</code>；</li>
 <li><code>show ip mroute mbr</code> 看 "Protocols Registered = DVMRP PIM"（C41，<span class="pg">原文p298-303</span> ）；</li>
 </ul>
@@ -129,7 +134,7 @@ blockquote p{margin:6px 0}
 <li>每接口仅支持一个组播路由协议，PIM 与 DVMRP 不能同接口共存（X44，<span class="pg">原文p238, 266</span> ）</li>
 <li>协议未加载即配置报 "application is not loaded"（X45，<span class="pg">原文p237, 265</span> ）</li>
 <li>边界地址必须是 239.0.0.0-239.255.255.255 作用域段（X46，<span class="pg">原文p224</span> ）</li>
-<li>DVMRP：prune-lifetime 谨慎改（X47）；</li>
+<li><strong>DVMRP</strong>：<br>prune-lifetime 谨慎改（X47）；</li>
 <li>show ip dvmrp prune 只显示发出的 prune（X48）；</li>
 <li>隧道两端都要使能 DVMRP 否则不 operational（X49）；</li>
 <li>flash-interval 必须小于 report-interval（X50）；</li>
@@ -147,4 +152,7 @@ blockquote p{margin:6px 0}
 <li>高级路由协议需购买附加包（X71，<span class="pg">原文p12</span> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniSwitch AOS 8.10R4 Advanced Routing Guide 第 5 章 Multicast Address Boundary（<span class="pg">原文p220-228</span> ）、第 6 章 DVMRP（<span class="pg">原文p229-244</span> ）、第 7 章 PIM（<span class="pg">原文p247-296</span> ）、第 8 章 MBR（<span class="pg">原文p297-303</span> ）。条目来源：cases C32-C41；principles P91-P127；counter-examples X44-X71；frameworks F7/F8/F9/F10（组播部分）。</p><div class="pn"><a href="aos-ar-policy-toolbox.html">⬅ 上一单元：aos-ar-policy-toolbox</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<ul>
+<li>OmniSwitch AOS 8.10R4 Advanced Routing Guide 第 5 章 Multicast Address Boundary（<span class="pg">原文p220-228</span> ）、第 6 章 DVMRP（<span class="pg">原文p229-244</span> ）、第 7 章 PIM（<span class="pg">原文p247-296</span> ）、第 8 章 MBR（<span class="pg">原文p297-303</span> ）。</li>
+<li><strong>条目来源</strong>：<br>cases C32-C41；principles P91-P127；counter-examples X44-X71；frameworks F7/F8/F9/F10（组播部分）。</li>
+</ul><div class="pn"><a href="aos-ar-policy-toolbox.html">⬅ 上一单元：aos-ar-policy-toolbox</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

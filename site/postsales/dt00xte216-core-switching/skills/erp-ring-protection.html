@@ -88,8 +88,10 @@ blockquote p{margin:6px 0}
 <li>需要在主环下挂子环（Laddered/Subtending）扩展覆盖范围</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>ERPv2 用"稳态阻塞唯一一条 RPL 链路"换取环内无环；
-故障时 R-APS SF 消息触发 RPL Owner 解阻塞倒换，恢复时靠 NR + WTR 定时器（默认 5 分钟）防抖回切。整个环是一台协同的状态机，任何一台交换机的 Service VLAN/MEG Level/RPL 配置不一致都会破坏这个协同。</p>
+<ul>
+<li>ERPv2 用"稳态阻塞唯一一条 RPL 链路"换取环内无环；故障时 R-APS SF 消息触发 RPL Owner 解阻塞倒换，恢复时靠 NR + WTR 定时器（默认 5 分钟）防抖回切。</li>
+<li>整个环是一台协同的状态机，任何一台交换机的 Service VLAN/MEG Level/RPL 配置不一致都会破坏这个协同。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>建环并指定 Service VLAN 与 MEG Level（全网一致，0-7）：
@@ -102,14 +104,14 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
-<li>状态机三态：idle（RPL 阻塞）/ Protection（故障转发）/ Pending（WTR 计时中）；稳态 NR/RB、故障 SF、恢复 NR+WTR（<span class="pg">原文p40</span> -<span class="pg">原文p42</span> 、<span class="pg">原文p56</span> ）</li>
+<li><strong>状态机三态</strong>：<br>idle（RPL 阻塞）/ Protection（故障转发）/ Pending（WTR 计时中）；稳态 NR/RB、故障 SF、恢复 NR+WTR（<span class="pg">原文p40</span> -<span class="pg">原文p42</span> 、<span class="pg">原文p56</span> ）</li>
 <li>子环借主环虚通道闭合，R-APS 用子环 Service VLAN 的 S-tag 传递（<span class="pg">原文p43</span> ）</li>
 <li>Guard Timer 默认 50 厘秒，丢弃过期 R-APS 防误倒换（<span class="pg">原文p56</span> ）</li>
-<li>实验回收：<code>rm -r labERP</code> → <code>reload from working no rollback-timeout</code>（<span class="pg">原文p62</span> -<span class="pg">原文p63</span> ）</li>
+<li><strong>实验回收</strong>：<br><code>rm -r labERP</code> → <code>reload from working no rollback-timeout</code>（<span class="pg">原文p62</span> -<span class="pg">原文p63</span> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>C-01 主环 4 节点全流程：建目录→VLAN 1001 Service/20/30 Protected→RPL→enable→<code>show erp</code> idle→断链 ping 不中断（<span class="pg">原文p53</span> -<span class="pg">原文p58</span> ）</li>
+<li><strong>C-01 主环 4 节点全流程</strong>：<br>建目录→VLAN 1001 Service/20/30 Protected→RPL→enable→<code>show erp</code> idle→断链 ping 不中断（<span class="pg">原文p53</span> -<span class="pg">原文p58</span> ）</li>
 <li>C-02 子环 sub-ring-port 单口接入，RPL 在子环上唯一（<span class="pg">原文p59</span> -<span class="pg">原文p61</span> ）</li>
 </ul>
 <h2 id="b">B（边界与陷阱）</h2>

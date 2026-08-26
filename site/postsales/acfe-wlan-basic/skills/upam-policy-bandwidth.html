@@ -128,18 +128,18 @@ blockquote p{margin:6px 0}
 套餐设计映射：全员总量=SSID 合同，身份差异化=ARP，应用级=策略。</p>
 <ol>
 <li><strong>访客账号体系（四类账号）</strong></li>
-<li>Employee：登录/密码必填；可配 Session timeout、计费间隔、上下行带宽上限</li>
-<li>Company Property：MAC 必填，用于 BYOD/DSPSK，可绑员工账号/ARP/Policy List，可下发专属 PSK</li>
-<li>Guest：登录/密码/失效日期/Service Level 或 Registration Profile 必填；支持批量建号与票据打印</li>
+<li><strong>Employee</strong>：<br>登录/密码必填；可配 Session timeout、计费间隔、上下行带宽上限</li>
+<li><strong>Company Property</strong>：<br>MAC 必填，用于 BYOD/DSPSK，可绑员工账号/ARP/Policy List，可下发专属 PSK</li>
+<li><strong>Guest</strong>：<br>登录/密码/失效日期/Service Level 或 Registration Profile 必填；支持批量建号与票据打印</li>
 <li>
-<p>Guest Operator：前台账号，专属门户只管访客开户/审批自注册/批量导入 XLSX/CSV</p>
+<p><strong>Guest Operator</strong>：<br>前台账号，专属门户只管访客开户/审批自注册/批量导入 XLSX/CSV</p>
 </li>
 <li>
 <p><strong>三层治理对象</strong></p>
 </li>
-<li>Registration Profile：数据配额（MB）+ 时间配额（每日小时/总小时）+ 有效期 + Remember Device/最大设备数 + 耗尽处理（阻断可加重定向 URL，或降速分设上行/下行 kB/s）</li>
-<li>Service Level（最多 5 档）：打包 ARP + Unified Policy List + Registration Profile + 有效期 + 删除策略</li>
-<li>全局设置：批量生成、过期删除策略（Never/到期/N 天后）、密码策略</li>
+<li><strong>Registration Profile</strong>：<br>数据配额（MB）+ 时间配额（每日小时/总小时）+ 有效期 + Remember Device/最大设备数 + 耗尽处理（阻断可加重定向 URL，或降速分设上行/下行 kB/s）</li>
+<li><strong>Service Level（最多 5 档）</strong>：<br>打包 ARP + Unified Policy List + Registration Profile + 有效期 + 删除策略</li>
+<li><strong>全局设置</strong>：<br>批量生成、过期删除策略（Never/到期/N 天后）、密码策略</li>
 </ol>
 <p>书中配额实例：100MB + 每天 4h；耗尽降速 UP=100kB/s、DOWN=1000kB/s；Day1 用 90MB/3h 无动作，Day2 累计 115MB 触发。</p>
 <h2 id="a1-lab">A1 · 书中案例（Lab 步骤精要）</h2>
@@ -163,10 +163,10 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>
-<li>顺序错了策略不生效：不挂到 SSID 的 ACL/QoS 或 ARP，策略只是摆设。</li>
+<li><strong>顺序错了策略不生效</strong>：<br>不挂到 SSID 的 ACL/QoS 或 ARP，策略只是摆设。</li>
 <li>Group Assignment 含 default 组会导致策略作用面失控。</li>
 <li>员工账号默认弱密码/弱用户名策略，生产必须收紧（ce38）。</li>
-<li>SSID 级合同是共享池：单个用户可占满全组带宽，需精细控制时下沉到 ARP/策略层。</li>
+<li><strong>SSID 级合同是共享池</strong>：<br>单个用户可占满全组带宽，需精细控制时下沉到 ARP/策略层。</li>
 <li>策略动作双向执行，改 Drop 类动作前先明确影响面（参考基线-复测法）。</li>
 </ul>
 <hr />

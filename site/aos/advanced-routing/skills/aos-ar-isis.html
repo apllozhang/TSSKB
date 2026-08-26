@@ -73,14 +73,19 @@ blockquote p{margin:6px 0}
 <div class="grp">组播高级</div>
 <a href="../skills/aos-ar-multicast-advanced.html">aos-ar-multicast-advanced</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../aos/index.html">AOS 软件手册</a> › <a href="../index.html">AOS 8.10R04</a> › <span>aos-ar-isis</span></nav><h1>aos-ar-isis</h1><p class="meta"><span class="badge">SKILL</span> aos-ar-isis · 来源页码: </p><h2 id="r">R（触发场景）</h2>
 <ul>
-<li>新上线 IS-IS：area-id → level 能力 → 电路（接口）→ admin-state 十步流程</li>
+<li><strong>新上线 IS-IS</strong>：<br>area-id → level 能力 → 电路（接口）→ admin-state 十步流程</li>
 <li>规划 Level-1/L1-2/L2 路由器角色与区域归属（路由器整体属单区域，与 OSPF 接口分域不同）</li>
 <li>要配分层认证（全局/level/电路/电路级四层）或 keychain</li>
 <li>要做 L1→L2 泄漏、L2→L1 前缀分发、路由汇总；IPv4/IPv6 双栈要选单拓扑还是 M-ISIS 多拓扑</li>
 </ul>
 <h2 id="i">I（核心理解）</h2>
-<p>IS-IS 两层层级（P42）：Level-1 区内、Level-2 区间；
-与 OSPF 最大差异是路由器整体属于单一区域（P47）。NSAP 三字段 Area ID + System ID + NSEL，NSEL=00 时称 NET（P43）。报文四类：IIH 发现邻居、LSP 承载链路状态、CSNP 全量清单同步、PSNP 请求确认（P46）。邻接三要素：认证匹配、IS 类型、MTU（P45）。M-ISIS 为 IPv4/IPv6 各自独立 SPF 与 RIB（MT ID：IPv4=0、IPv6=2），解决单拓扑混布黑洞问题（P54/P55）。</p>
+<ul>
+<li><strong>IS-IS 两层层级（P42）</strong>：<br>Level-1 区内、Level-2 区间；与 OSPF 最大差异是路由器整体属于单一区域（P47）。</li>
+<li>NSAP 三字段 Area ID + System ID + NSEL，NSEL=00 时称 NET（P43）。</li>
+<li><strong>报文四类</strong>：<br>IIH 发现邻居、LSP 承载链路状态、CSNP 全量清单同步、PSNP 请求确认（P46）。</li>
+<li><strong>邻接三要素</strong>：<br>认证匹配、IS 类型、MTU（P45）。</li>
+<li><strong>M-ISIS 为 IPv4/IPv6 各自独立 SPF 与 RIB（MT ID</strong>：<br>IPv4=0、IPv6=2），解决单拓扑混布黑洞问题（P54/P55）。</li>
+</ul>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>角色规划</strong>：区内路由器 level-1、区间路由器 level-1/2、纯骨干 level-2；全局与接口 level 能力组合决定潜在邻接（P48）</li>
@@ -93,7 +98,7 @@ blockquote p{margin:6px 0}
 <ul>
 <li><strong>十步上线</strong>：<code>vlan 5</code> → <code>ip interface vlan-5 ...</code> → <code>ip load isis</code> → <code>ip isis area-id 49.0001</code> → <code>ip isis admin-state enable</code> → <code>ip isis activate-ipv4</code> → <code>ip isis vlan 5</code> + <code>address-family v4</code> → <code>ip isis vlan 5 admin-state enable</code> → <code>show ip isis status</code>（C14，<span class="pg">原文p92</span> ）</li>
 <li><strong>双栈双路由器</strong>：各建 vlan-isis（v4+v6 地址）→ <code>ip isis level-capability level-1/2</code> → <code>ip isis vlan vlan-isis address-family v4v6</code> + enable → <code>show ip isis adjacency/routes/spf</code>（C15，<span class="pg">原文p117-119</span> ）</li>
-<li>认证：全局 <code>ip isis auth-type md5 key 12345</code>；</li>
+<li><strong>认证</strong>：<br>全局 <code>ip isis auth-type md5 key 12345</code>；</li>
 <li>level 级 <code>ip isis level 2 auth-type md5 encrypt-key ...</code>；</li>
 <li>电路级 <code>ip isis vlan 10 hello-auth-type md5 key 12345</code>；</li>
 <li>
@@ -102,7 +107,7 @@ blockquote p{margin:6px 0}
 <li>
 <p><strong>L1→L2 泄漏</strong>：<code>ip route-map is2is sequence-number 1 action permit</code> + <code>match route-type level1</code> + <code>set level level2</code> → <code>ip redist isis into isis route-map is2is status enable</code>（C17，<span class="pg">原文p115</span> ）</p>
 </li>
-<li>汇总：<code>ip isis summary-address 100.1.0.0/16 level-2</code>；</li>
+<li><strong>汇总</strong>：<br><code>ip isis summary-address 100.1.0.0/16 level-2</code>；</li>
 <li>IPv6 <code>ip isis summary-address6 4001::/16 level-1</code>；</li>
 <li>
 <p><code>show ip isis summary-address[6]</code>（C18，<span class="pg">原文p104-105</span> ）；</p>
@@ -135,4 +140,7 @@ blockquote p{margin:6px 0}
 <li>点到点口无共同拓扑不成邻接；广播网即使无共同拓扑也成邻接（P57，<span class="pg">原文p120</span> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniSwitch AOS 8.10R4 Advanced Routing Guide 第 3 章 IS-IS（<span class="pg">原文p89-121</span> ）。条目来源：cases C14-C19；principles P42-P59；counter-examples X10/X14-X24；frameworks F1/F2/F3/F6。</p><div class="pn"><a href="aos-ar-ospf-ospfv3.html">⬅ 上一单元：aos-ar-ospf-ospfv3</a><a class="nxt" href="aos-ar-bgp.html">下一单元：aos-ar-bgp ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<ul>
+<li>OmniSwitch AOS 8.10R4 Advanced Routing Guide 第 3 章 IS-IS（<span class="pg">原文p89-121</span> ）。</li>
+<li><strong>条目来源</strong>：<br>cases C14-C19；principles P42-P59；counter-examples X10/X14-X24；frameworks F1/F2/F3/F6。</li>
+</ul><div class="pn"><a href="aos-ar-ospf-ospfv3.html">⬅ 上一单元：aos-ar-ospf-ospfv3</a><a class="nxt" href="aos-ar-bgp.html">下一单元：aos-ar-bgp ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

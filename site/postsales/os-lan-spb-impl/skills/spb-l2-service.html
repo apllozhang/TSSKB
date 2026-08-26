@@ -133,7 +133,7 @@ disable 恢复 E-LAN）。</p>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
 <li>新 VLAN 跨骨干延伸、两站点 CVLAN 编号不一致、客户控制帧要透传或拦截、点对点透明电路需求时用本 skill。</li>
-<li>与 <code><a href="spb-backbone-deploy.html">spb-backbone-deploy</a></code> 的区分：本 skill 前提是骨干已建好（IS-IS 邻接 UP）；</li>
+<li><strong>与 <code><a href="spb-backbone-deploy.html">spb-backbone-deploy</a></code> 的区分</strong>：<br>本 skill 前提是骨干已建好（IS-IS 邻接 UP）；</li>
 <li>与 <code><a href="ip-over-spb.html">ip-over-spb</a></code> 的区分：本 skill 只做 L2 透传，一旦要配 IP 接口/网关即转 <code><a href="ip-over-spb.html">ip-over-spb</a></code>；</li>
 <li>与 <code><a href="unp-dynamic-ov2500.html">unp-dynamic-ov2500</a></code> 的区分：本 skill 是静态 SAP，终端动态归档归 UNP；</li>
 </ul>
@@ -176,11 +176,10 @@ disable 恢复 E-LAN）。</p>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>
 <li><strong>绑 IP 接口后 vlan-xlation 被隐式启用并锁定</strong>（p09/ce05）：L3 场景想改翻译状态必须先解绑接口；规划期确认翻译需求。</li>
-<li>容量（p07）：AOS 每 BVLAN 1024 个 I-SID、每 I-SID 4094 个 VLAN。</li>
-<li>L2 Profile 默认动作表（p10）：静态口 def-access-profile——STP/GVRP/MVRP tunnel、802.1X/LLDP/AMAP drop、LACP peer；
-动态 UNP 口默认不同（STP drop）。</li>
+<li><strong>容量（p07）</strong>：<br>AOS 每 BVLAN 1024 个 I-SID、每 I-SID 4094 个 VLAN。</li>
+<li><strong>L2 Profile 默认动作表（p10）</strong>：<br>静态口 def-access-profile——STP/GVRP/MVRP tunnel、802.1X/LLDP/AMAP drop、LACP peer；动态 UNP 口默认不同（STP drop）。</li>
 <li>伪线服务强制 head-end 组播、无 MAC 学习（p30），改回 E-LAN 用 <code>pseudo-wire disable</code>。</li>
-<li>CoS：隧道化未打标 BPDU 自动最高优先级（p11）。</li>
+<li><strong>CoS</strong>：<br>隧道化未打标 BPDU 自动最高优先级（p11）。</li>
 </ul>
 <hr />
 <p>来源条目: f03 · p07 · p08 · p09 · p10 · p11 · p30 · c02 · ce05 · g09 · g13 · g19 · g21 · g30 · g33 · g34 · g38</p><div class="pn"><a href="spb-backbone-deploy.html">⬅ 上一单元：spb-backbone-deploy</a><a class="nxt" href="ip-over-spb.html">下一单元：ip-over-spb ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

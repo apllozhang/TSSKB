@@ -83,7 +83,10 @@ blockquote p{margin:6px 0}
 <li>需要申请、安装、更换 Evaluation 或 Production License</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>OV2500 是纯虚拟机形态（Virtual Appliance = Linux OS + OV 应用打包在一起，无独立安装器），平台规模在安装时通过 Network Size 一次性锁定，系统按所选档位分配内存。License 分 Device License（Starter/Evaluation/Production）与 Service License（VM/Guest/On-Boarding/HA/Web Content Filtering）两条线，安装方式文件与密钥二选一。</p>
+<ul>
+<li>OV2500 是纯虚拟机形态（Virtual Appliance = Linux OS + OV 应用打包在一起，无独立安装器），平台规模在安装时通过 Network Size 一次性锁定，系统按所选档位分配内存。</li>
+<li>License 分 Device License（Starter/Evaluation/Production）与 Service License（VM/Guest/On-Boarding/HA/Web Content Filtering）两条线，安装方式文件与密钥二选一。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li><strong>容量选型</strong>：按设备数定档——Low &lt;500 / Medium 500-2000 / High 2000-5000 / Very High 5000-10000 台；上限 10000 devices、4000 Stellar APs、5000 VMs（&lt;&lt;<PAGE 45/58/44>&gt;&gt;）</li>
@@ -95,19 +98,19 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
-<li>HA 场景许可：自 4.3R1 起 "you don't have to double the licenses on the redundant system"；节点计数规则：VC 内每台物理设备占 1 个 license（"VC of 2 = 2 license units"）（<span class="pg">原文p50-51</span> ）</li>
-<li>带 4000 Stellar AP 时：High 档仅支持到 500 台 AOS 交换机，Very High 档到 1000 台——AP 多的无线重环境要升档（<span class="pg">原文p45</span> ）</li>
+<li><strong>HA 场景许可</strong>：<br>自 4.3R1 起 "you don't have to double the licenses on the redundant system"；节点计数规则：VC 内每台物理设备占 1 个 license（"VC of 2 = 2 license units"）（<span class="pg">原文p50-51</span> ）</li>
+<li><strong>带 4000 Stellar AP 时</strong>：<br>High 档仅支持到 500 台 AOS 交换机，Very High 档到 1000 台——AP 多的无线重环境要升档（<span class="pg">原文p45</span> ）</li>
 <li>标称容量受环境变量影响（VLAN 数、客户端数、开放的应用数等），"Specific configurations may vary"（<span class="pg">原文p45</span> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
 <li>部署 Virtual Appliance（vSphere OVF 全流程，Thick Provision 推荐）——cases·OVF 部署（<span class="pg">原文p54</span> ）</li>
-<li>安装序列：控制台初始化 → 重启 → 首登改密 → License 弹窗——cases·安装序列（&lt;&lt;<PAGE 56-60/61/101-102>&gt;&gt;）</li>
+<li><strong>安装序列</strong>：<br>控制台初始化 → 重启 → 首登改密 → License 弹窗——cases·安装序列（&lt;&lt;<PAGE 56-60/61/101-102>&gt;&gt;）</li>
 <li>生成并安装 Evaluation License 全流程——cases·EVAL 许可（<span class="pg">原文p103-105</span> ）</li>
 </ul>
 <h2 id="b">B（边界与陷阱）</h2>
 <ul>
-<li>License 文件与 License Keys 不可同时安装："Don't do both!"（<span class="pg">原文p104</span> ）</li>
+<li><strong>License 文件与 License Keys 不可同时安装</strong>：<br>"Don't do both!"（<span class="pg">原文p104</span> ）</li>
 <li>粘贴 Key 时只取逗号后的 key 部分，整行粘贴会把许可名带进去（<span class="pg">原文p104</span> ）</li>
 <li>接受 EULA 时不要勾 Enable Fleet Supervision，书中两次强调（<span class="pg">原文p104</span> ）</li>
 <li>装完许可务必删除本地 EVAL 文件，防止外泄（<span class="pg">原文p105</span> ）</li>

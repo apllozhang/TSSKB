@@ -87,7 +87,7 @@ blockquote p{margin:6px 0}
 <p>"Multicast - 224.0.0.18 / Virtual MAC address: 00-00-5E-00-01-{VRID} / At least two virtual routers must be configured on the LAN - a master router and a backup router."（p297-302）</p>
 <h2 id="i">I · 方法论骨架</h2>
 <ul>
-<li>L3 服务三件套 + 冗余：- <strong>IP 接口</strong>：<code>ip interface &lt;名&gt; address &lt;IP/掩码&gt; vlan &lt;N&gt;</code>（可合写一条）；IP routing 只要有任一 IP 接口绑定 VLAN 即激活。</li>
+<li><strong>L3 服务三件套 + 冗余</strong>：<br>- <strong>IP 接口</strong>：<code>ip interface &lt;名&gt; address &lt;IP/掩码&gt; vlan &lt;N&gt;</code>（可合写一条）；IP routing 只要有任一 IP 接口绑定 VLAN 即激活。</li>
 <li>
 <ul>
 <li><strong>Loopback0</strong>：名字固定即 /32 环回口，不绑 VLAN、有任一 active VLAN 即恒 UP，创建即被 RIP/OSPF 宣告（BGP 除外）；作 NMS/RADIUS/NTP/sFlow 稳定源地址（ip service source-ip loopback0 &lt;应用&gt;）。</li>
@@ -111,14 +111,14 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="a1-lab">A1 · 书中案例（Lab 配置精要）</h2>
 <ul>
-<li>VRRP 主备（p305-312）：6870/6860 各建 VRID 1（int_20，虚 IP 192.168.20.254）与 VRID 2（int_30，.30.254）。</li>
+<li><strong>VRRP 主备（p305-312）</strong>：<br>6870/6860 各建 VRID 1（int_20，虚 IP 192.168.20.254）与 VRID 2（int_30，.30.254）。</li>
 <li>默认优先级同为 100 时比 router ID，6870 全 Master；客户端网关改 .254 后 arp -a 见 00-00-5E-00-01-01。</li>
 <li>
 <p>改优先级三步：admin-state disable → priority 150 → enable，实现 6870 主 VLAN20、6860 主 VLAN30 的分担；
 重启 Master 演示 Backup 秒级接管（Become Master 计数 +1）。</p>
 </li>
 <li>
-<p>DHCP Relay（p289-293）：先 show ip routes + ping 确认两核心可达服务器 192.168.100.102；</p>
+<p><strong>DHCP Relay（p289-293）</strong>：<br>先 show ip routes + ping 确认两核心可达服务器 192.168.100.102；</p>
 </li>
 <li>两台分别 <code>ip dhcp relay destination 192.168.100.102</code> + <code>ip dhcp relay admin-state enable</code>（全局模式）；</li>
 <li>客户端改自动获取后 show ip dhcp relay statistics 的 Reception/Tx 计数增长验证；</li>
@@ -132,31 +132,18 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ul>
-<li>IP 接口与环回：1. <code>ip interface int_20 address 192.168.20.7/24 vlan 20</code>。</li>
-<li>
-<ol>
-<li>管理地址：<code>ip interface Loopback0 address 10.0.0.1/32</code>；<code>ip service source-ip loopback0 &lt;应用&gt;</code>。</li>
-</ol>
-</li>
+<li><strong>IP 接口与环回</strong>：<br>1. <code>ip interface int_20 address 192.168.20.7/24 vlan 20</code>。</li>
+<li><strong>2. 管理地址</strong>：<br><code>ip interface Loopback0 address 10.0.0.1/32</code>；<code>ip service source-ip loopback0 &lt;应用&gt;</code>。</li>
 <li>
 <ol>
 <li><code>show ip interfaces</code> / <code>show ip routes</code>（LOCAL 网段即 VLAN 间路由）。</li>
 </ol>
 </li>
-<li>静态路由（主备默认路由）：1. <code>ip static-route 0.0.0.0/0 gateway 1.1.1.1 metric 1</code>2. <code>ip static-route 0.0.0.0/0 gateway 2.2.2.2 metric 2</code>；
-show ip router database 可见 inactive 备路。</li>
-<li>VRRP：1. <code>ip vrrp 1 interface int_20</code> → <code>… address &lt;虚IP&gt;</code> →（可选）<code>… priority 150 preempt interval 100</code> → <code>… admin-state enable</code>。</li>
-<li>
-<ol>
-<li>跟踪：<code>ip vrrp track 3 admin-state enable priority 30 port 1/1/3</code> → <code>ip vrrp 1 interface int_20 track-association 3</code>。</li>
-</ol>
-</li>
-<li>
-<ol>
-<li>验证：<code>show ip vrrp [statistics]</code>、终端 arp -a 查虚拟 MAC。</li>
-</ol>
-</li>
-<li>DHCP Relay：1. <code>ip dhcp relay destination &lt;服务器IP&gt;</code> → <code>ip dhcp relay admin-state enable</code>（全局）；或 per-interface 模式（两者互斥）。</li>
+<li><strong>静态路由（主备默认路由）</strong>：<br>1. <code>ip static-route 0.0.0.0/0 gateway 1.1.1.1 metric 1</code>2. <code>ip static-route 0.0.0.0/0 gateway 2.2.2.2 metric 2</code>；show ip router database 可见 inactive 备路。</li>
+<li><strong>VRRP</strong>：<br>1. <code>ip vrrp 1 interface int_20</code> → <code>… address &lt;虚IP&gt;</code> →（可选）<code>… priority 150 preempt interval 100</code> → <code>… admin-state enable</code>。</li>
+<li><strong>2. 跟踪</strong>：<br><code>ip vrrp track 3 admin-state enable priority 30 port 1/1/3</code> → <code>ip vrrp 1 interface int_20 track-association 3</code>。</li>
+<li><strong>3. 验证</strong>：<br><code>show ip vrrp [statistics]</code>、终端 arp -a 查虚拟 MAC。</li>
+<li><strong>DHCP Relay</strong>：<br>1. <code>ip dhcp relay destination &lt;服务器IP&gt;</code> → <code>ip dhcp relay admin-state enable</code>（全局）；或 per-interface 模式（两者互斥）。</li>
 <li>
 <ol>
 <li><code>show ip dhcp relay statistics</code> 看收发计数。</li>

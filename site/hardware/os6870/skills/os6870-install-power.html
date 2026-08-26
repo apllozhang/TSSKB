@@ -71,14 +71,24 @@ blockquote p{margin:6px 0}
 <div class="grp">运维排障</div>
 <a href="../skills/os6870-ops-troubleshoot.html">os6870-ops-troubleshoot</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../hardware/index.html">硬件手册</a> › <a href="../index.html">OmniSwitch 6870 Hardware Guide</a> › <span>os6870-install-power</span></nav><h1>os6870-install-power</h1><p class="meta"><span class="badge">SKILL</span> os6870-install-power · 来源页码: </p><h2 id="r">R（触发场景）</h2>
 <ul>
-<li>新机上架：弹簧夹法兰+后支架/双人机架六步/桌面四脚垫/盲板</li>
-<li>电源选型：非 PoE 250W AC/DC、V12 专用 550W、P 系列 600W/1200W/2000W</li>
+<li><strong>新机上架</strong>：<br>弹簧夹法兰+后支架/双人机架六步/桌面四脚垫/盲板</li>
+<li><strong>电源选型</strong>：<br>非 PoE 250W AC/DC、V12 专用 550W、P 系列 600W/1200W/2000W</li>
 <li>电源混插扩容规划（本机型支持不同瓦数混插，先混后替）</li>
 <li>PoE 预算按四变量查表（1200W/2000W 需 190-240VAC 才得高功率）</li>
 <li>-48VDC 接线与机箱 supplemental 接地</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>6870 为双电源负载分担+热插拔架构，且<strong>支持不同瓦数电源混插</strong>（P12，<span class="pg">原文p47</span> /<span class="pg">原文p51</span> ："Mixing different wattage power supplies in a chassis is supported"）——扩容可先混后替，这是与 6860（wattage 禁混）的关键差异。PoE 预算四变量联动（F2，<span class="pg">原文p47</span> /<span class="pg">原文p63</span> ）：①机型（定可用电源与口能力）②电源瓦数（600/1200/2000W；Z 系列上限 1200W）③单/双电源（双电负载分担、预算非简单翻倍，如 P24M 双 600W=788W）④市电电压（双值条目=低压/高压输入；1200W/2000W 需 190-240VAC 才得高 PoE 功率，P14）。无总开关=接电即开机（P13）。</p>
+<ul>
+<li>6870 为双电源负载分担+热插拔架构，且<strong>支持不同瓦数电源混插</strong>（P12，<span class="pg">原文p47</span> /<span class="pg">原文p51</span> ："Mixing different wattage power supplies in a chassis is supported"）——扩容可先混后替，这是与 6860（wattage 禁混）的关键差异。</li>
+<li><strong>PoE 预算四变量联动（F2，<span class="pg">原文p47</span> /<span class="pg">原文p63</span> ）</strong>：<br>①机型（定可用电源与口能力）②电源瓦数（600/1200/2000W；</li>
+<li>Z 系列上限 1200W）③单/双电源（双电负载分担、预算非简单翻倍，如 P24M 双 600W=788W）④市电电压（双值条目=低压/高压输入；</li>
+<li>
+<p>1200W/2000W 需 190-240VAC 才得高 PoE 功率，P14）；</p>
+</li>
+<li>
+<p>无总开关=接电即开机（P13）。</p>
+</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>安装形态：机架（弹簧夹法兰+后支架，双人作业）→桌面（四脚垫正放，承重按满配）→空槽常装盲板（X3，<span class="pg">原文p41</span> ）</li>
@@ -101,14 +111,14 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>预算表查法（P27，<span class="pg">原文p63</span> ）：P24M 双 1200W=1516W/1880W（低/高压）、双 2000W=1516W/2280W；P48M 双 2000W 最高 3309W</li>
-<li>混插扩容实战：P24M 从双 600W（788W）起步，先插一只 1200W 混跑、业务不中断，再替另一只升至双 1200W（F4/P12，<span class="pg">原文p47</span> /<span class="pg">原文p51</span> ）</li>
-<li>高压输入才得全功率：1200W/2000W 电源 "High power PoE wattages available at voltage inputs between 190-240VAC"（P14/X11，<span class="pg">原文p52</span> /<span class="pg">原文p53</span> ）</li>
+<li><strong>预算表查法（P27，<span class="pg">原文p63</span> ）</strong>：<br>P24M 双 1200W=1516W/1880W（低/高压）、双 2000W=1516W/2280W；P48M 双 2000W 最高 3309W</li>
+<li><strong>混插扩容实战</strong>：<br>P24M 从双 600W（788W）起步，先插一只 1200W 混跑、业务不中断，再替另一只升至双 1200W（F4/P12，<span class="pg">原文p47</span> /<span class="pg">原文p51</span> ）</li>
+<li><strong>高压输入才得全功率</strong>：<br>1200W/2000W 电源 "High power PoE wattages available at voltage inputs between 190-240VAC"（P14/X11，<span class="pg">原文p52</span> /<span class="pg">原文p53</span> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>
 <li><strong>跨书易混（本机型方向）</strong>：6870 允许不同瓦数电源混插（P12）——与 6860 的"wattage 禁混、混插发 trap"相反；但 2000W 仍仅限 P24M/P48M，Z 系列标 N/A（X30）</li>
-<li>1200W/2000W 在 100-120V 市电降额：高 PoE 功率须 190-240VAC（X11，<span class="pg">原文p52</span> /<span class="pg">原文p53</span> ）</li>
+<li><strong>1200W/2000W 在 100-120V 市电降额</strong>：<br>高 PoE 功率须 190-240VAC（X11，<span class="pg">原文p52</span> /<span class="pg">原文p53</span> ）</li>
 <li>多电源必须数秒内相继插电，保证启动全程供电（X10，<span class="pg">原文p18</span> ）</li>
 <li>拆电源必先断源；运行中勿触电源槽与背板；多电源检修全断（X12/X22/X23，<span class="pg">原文p56</span> /<span class="pg">原文p81</span> ）</li>
 <li>DC 强制受限场所；每个 DC 电源地线必须接大地（EMC）（X15/X17，<span class="pg">原文p54</span> /<span class="pg">原文p82</span> ）</li>

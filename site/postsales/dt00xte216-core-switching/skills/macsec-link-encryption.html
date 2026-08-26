@@ -88,8 +88,10 @@ blockquote p{margin:6px 0}
 <li>MACsec 会话起不来或密钥轮换策略需要设计</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>MACsec（802.1AE）用 GCM-AES 对直连链路上几乎所有流量（含 LLDP/LACP/DHCP/ARP）做加密+认证，报文带 SecTag（EtherType 0x88E5）与 16 字节 ICV，按包编号防重放。密钥模型是：每节点收发各一条安全通道（SCI），通道内 SA 持有 SAK；
-Static 模式手工配 key-chain 交叉引用，Dynamic 模式由 MKA 协商生成 SAK。</p>
+<ul>
+<li>MACsec（802.1AE）用 GCM-AES 对直连链路上几乎所有流量（含 LLDP/LACP/DHCP/ARP）做加密+认证，报文带 SecTag（EtherType 0x88E5）与 16 字节 ICV，按包编号防重放。</li>
+<li><strong>密钥模型是</strong>：<br>每节点收发各一条安全通道（SCI），通道内 SA 持有 SAK；Static 模式手工配 key-chain 交叉引用，Dynamic 模式由 MKA 协商生成 SAK。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>预检：<code>show interfaces 1/1/27 capability</code>（MACsec Supported、256-bit）、<code>show license-info</code>（<span class="pg">原文p87</span> ）；无 license 时安装：<code>license apply file licence.dat order-id "..."</code> → <code>show license-info</code> 出现 MACSEC PERM（<span class="pg">原文p91</span> ）</li>
@@ -105,21 +107,21 @@ Static 模式手工配 key-chain 交叉引用，Dynamic 模式由 MKA 协商生�
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
-<li>模式决策树：交换机间可用 Static 或 Dynamic；交换机到主机用 EAP（802.1X/RADIUS VSAs 下发 CAK）（<span class="pg">原文p67</span> 、<span class="pg">原文p76</span> 、<span class="pg">原文p79</span> ）</li>
-<li>SAK 轮换双门限：会话时长 5-120 分钟与流量 5-1000GB 同时配置，先到先触发（<span class="pg">原文p77</span> 、<span class="pg">原文p89</span> ）</li>
-<li>MKA 双密钥体系：CAK 保护控制平面，key server 动态生成 SAK（<span class="pg">原文p76</span> ）</li>
-<li>权限：MACsec 命令纳入 security 域（securityadmin read-write MACsec）（<span class="pg">原文p82</span> ）</li>
+<li><strong>模式决策树</strong>：<br>交换机间可用 Static 或 Dynamic；交换机到主机用 EAP（802.1X/RADIUS VSAs 下发 CAK）（<span class="pg">原文p67</span> 、<span class="pg">原文p76</span> 、<span class="pg">原文p79</span> ）</li>
+<li><strong>SAK 轮换双门限</strong>：<br>会话时长 5-120 分钟与流量 5-1000GB 同时配置，先到先触发（<span class="pg">原文p77</span> 、<span class="pg">原文p89</span> ）</li>
+<li><strong>MKA 双密钥体系</strong>：<br>CAK 保护控制平面，key server 动态生成 SAK（<span class="pg">原文p76</span> ）</li>
+<li><strong>权限</strong>：<br>MACsec 命令纳入 security 域（securityadmin read-write MACsec）（<span class="pg">原文p82</span> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>C-04 Dynamic PSK 全流程（6870-A↔6860-B）：PSK 双端一致，轮换 10 分钟/20GB（<span class="pg">原文p87</span> -<span class="pg">原文p90</span> ）</li>
-<li>C-05 Static SA：4 把 aes-gcm-128 密钥组成两条 key-chain，本端 tx=对端 rx（<span class="pg">原文p92</span> -<span class="pg">原文p94</span> ）</li>
+<li><strong>C-04 Dynamic PSK 全流程（6870-A↔6860-B）</strong>：<br>PSK 双端一致，轮换 10 分钟/20GB（<span class="pg">原文p87</span> -<span class="pg">原文p90</span> ）</li>
+<li><strong>C-05 Static SA</strong>：<br>4 把 aes-gcm-128 密钥组成两条 key-chain，本端 tx=对端 rx（<span class="pg">原文p92</span> -<span class="pg">原文p94</span> ）</li>
 <li>C-06 免费 site license 手工安装（<span class="pg">原文p91</span> ）</li>
 </ul>
 <h2 id="b">B（边界与陷阱）</h2>
 <ul>
 <li>Static 模式不支持 OS6860N；OS6870 VFL 堆叠口（24 口机型 25/26、48 口机型 49/50）不支持 MACsec（<span class="pg">原文p75</span> 、<span class="pg">原文p72</span> ）</li>
-<li>板卡差异大：64X10G 分支光模块/扩展模块不支持；OS9900 部分板卡仅 Static——部署前逐板卡核对平台矩阵（<span class="pg">原文p71</span> ）</li>
+<li><strong>板卡差异大</strong>：<br>64X10G 分支光模块/扩展模块不支持；OS9900 部分板卡仅 Static——部署前逐板卡核对平台矩阵（<span class="pg">原文p71</span> ）</li>
 <li>无 license 时功能不可用，先 <code>show license-info</code> 预检避免配到一半失败（<span class="pg">原文p87</span> ）</li>
 </ul>
 <h2 id="_1">来源</h2>

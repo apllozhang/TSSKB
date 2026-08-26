@@ -79,15 +79,29 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="_2">二、两单元要点串讲</h2>
 <h3 id="1">1. 机制：定时器体系驱动的状态机</h3>
-<p>防环原则 = 任一时刻只阻塞一条环链路（<span class="pg">原文p7</span> ）。正常态 RPL Owner 阻塞 RPL 并周期发 (NR, RB)。单链故障：hold-off（0-10s 过滤间歇故障）→ 检测节点三连动作（本地阻塞/flush/双向发 SF）→ 全环各 flush 两次，靠 (Node ID, Blocked Port ID) 去重 → RPL Owner 收首个 SF 解阻 RPL（<span class="pg">原文p8-9</span> ）。RPL 自身故障例外：SF 带 DNF 位、全环不 flush（<span class="pg">原文p11</span> ）。恢复：guard 屏蔽过期消息防环 → 低 ID 端先解阻 → WTR（&gt;guard）后 (NR, RB) 触发全网回切+一次性 flush；non-revertive 则等管理员 clear（<span class="pg">原文p11-12</span> ）。</p>
+<ul>
+<li>防环原则 = 任一时刻只阻塞一条环链路（<span class="pg">原文p7</span> ）。</li>
+<li>正常态 RPL Owner 阻塞 RPL 并周期发 (NR, RB)。</li>
+<li><strong>单链故障</strong>：<br>hold-off（0-10s 过滤间歇故障）→ 检测节点三连动作（本地阻塞/flush/双向发 SF）→ 全环各 flush 两次，靠 (Node ID, Blocked Port ID) 去重 → RPL Owner 收首个 SF 解阻 RPL（<span class="pg">原文p8-9</span> ）。</li>
+<li><strong>RPL 自身故障例外</strong>：<br>SF 带 DNF 位、全环不 flush（<span class="pg">原文p11</span> ）。</li>
+<li><strong>恢复</strong>：<br>guard 屏蔽过期消息防环 → 低 ID 端先解阻 → WTR（&gt;guard）后 (NR, RB) 触发全网回切+一次性 flush；non-revertive 则等管理员 clear（<span class="pg">原文p11-12</span> ）。</li>
+</ul>
 <h3 id="2-virtual-channel">2. 多环：三原则 + Virtual Channel</h3>
-<p>接入接环三选一：STP（不推荐）、DHL（仅单节点）、multi-ring + ERP v2（推荐）（<span class="pg">原文p13</span> ）。多环三原则：R-APS 不跨环共享、每端口单环控制、每环独立 RPL（<span class="pg">原文p13</span> ）。子环跨互联节点共享链路必须用 R-APS Virtual Channel，多子环用不同 VLAN；互联链路本身归 major ring 管（<span class="pg">原文p14</span> ）。50ms 保护切换有四前提（无拥塞/全 idle/节点&lt;16/光纤&lt;1200km）且明确不是端到端收敛（<span class="pg">原文p14-15</span> ）。VC+LACP 可加弹性但收敛变慢（<span class="pg">原文p15</span> ）。NNI 可作 ERP 口、UNI 不可；9900/6900 至 6865/6465T 全系支持（<span class="pg">原文p16</span> ）。</p>
+<ul>
+<li><strong>接入接环三选一</strong>：<br>STP（不推荐）、DHL（仅单节点）、multi-ring + ERP v2（推荐）（<span class="pg">原文p13</span> ）。</li>
+<li><strong>多环三原则</strong>：<br>R-APS 不跨环共享、每端口单环控制、每环独立 RPL（<span class="pg">原文p13</span> ）。</li>
+<li>子环跨互联节点共享链路必须用 R-APS Virtual Channel，多子环用不同 VLAN；互联链路本身归 major ring 管（<span class="pg">原文p14</span> ）。</li>
+<li>50ms 保护切换有四前提（无拥塞/全 idle/节点&lt;16/光纤&lt;1200km）且明确不是端到端收敛（<span class="pg">原文p14-15</span> ）。</li>
+<li>VC+LACP 可加弹性但收敛变慢（<span class="pg">原文p15</span> ）。</li>
+<li>NNI 可作 ERP 口、UNI 不可；9900/6900 至 6865/6465T 全系支持（<span class="pg">原文p16</span> ）。</li>
+</ul>
 <h2 id="_3">三、本书在知识库中的位置</h2>
-<p>与 sol-mpls-reference（L2VPN 专线）、sol-spb / os-lan-spb-impl（SPB 路由型二层）、os-lan-vxlan-evpn（数据中心）共同构成 ALE 二层冗余方案谱系——ERP 定位亚秒环保护、低控制面开销、配置简单，是城域/工业环网首选。跨书易混点：50ms 是保护切换时间而非端到端收敛，与 MPLS FRR 的 50ms 语义同理；
-ERP 口自动禁 STP 但 BPDUs 仍会泛洪。</p>
+<ul>
+<li>与 sol-mpls-reference（L2VPN 专线）、sol-spb / os-lan-spb-impl（SPB 路由型二层）、os-lan-vxlan-evpn（数据中心）共同构成 ALE 二层冗余方案谱系——ERP 定位亚秒环保护、低控制面开销、配置简单，是城域/工业环网首选。</li>
+<li><strong>跨书易混点</strong>：<br>50ms 是保护切换时间而非端到端收敛，与 MPLS FRR 的 50ms 语义同理；ERP 口自动禁 STP 但 BPDUs 仍会泛洪。</li>
+</ul>
 <h2 id="_4">来源</h2>
-<p>Ethernet Ring Protection Switching Application Note（ethernet-ring-protection-switching-application-note-en.pdf，17p，2023-06 版）。verified.md：cases C1-C14；
-principles P1-P20；
-counter-examples X1-X17；
-frameworks F1-F4；
-glossary 29 条。</p><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<ul>
+<li>Ethernet Ring Protection Switching Application Note（ethernet-ring-protection-switching-application-note-en.pdf，17p，2023-06 版）。</li>
+<li><strong>verified.md</strong>：<br>cases C1-C14；principles P1-P20；counter-examples X1-X17；frameworks F1-F4；glossary 29 条。</li>
+</ul><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

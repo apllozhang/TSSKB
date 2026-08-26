@@ -142,17 +142,17 @@ blockquote p{margin:6px 0}
 </table>
 <p><strong>③ VPN-Lite 六条守则（p28/ce11）</strong>：每 VRF 环回路由侧单 IP 接口绑专用 VLAN（他口不用）；一 VRF 可多 IP 接口对应多 I-SID，但<strong>两 VRF 不得共享同一 I-SID</strong>；对侧 SAP 用同 VLAN 号绑同 I-SID；VRRP 可按接口配（hello 穿 PBB）；可全静态路由。硬件约束：IPv4/IPv6 同绑一 SPB 业务须同一 VRF 实例（p30）。</p>
 <p><strong>④ 配置模板（c04-c07）</strong>
-- Outline：<code>vlan 500</code> + <code>spb bvlan 4001</code> + <code>service spb 10 isid 1000</code> + <code>service spb 10 sap port 1/1/24:500</code> + <code>vrf 1 ip interface L3vpn1 vlan 500 address 10.5.1.1/24</code>。
-- VPN-Lite 路由：<code>vrf 1 ip static-route 192.168.3.0/24 gateway 10.5.1.2</code> 或 <code>vrf 1 ip load ospf</code> + area 0.0.0.0。
-- 前面板 inline：<code>interfaces port 1/1/18 loopback</code> + <code>ip interface L3vpn1 ... rtr-port port 1/1/18 tagged vlan 200</code>。
-- Service-based inline（最简）：<code>vrf 1 ip interface L3vpn1 address 10.5.1.1/24 service 10</code>。
-- L3 VPN 增量：<code>spb ipvpn bind vrf 1 isid 1000 gateway 10.5.1.1 all-routes</code> + <code>vrf 1 ip export/import ... all-routes</code>。</p>
+- <strong>Outline</strong>：<br><code>vlan 500</code> + <code>spb bvlan 4001</code> + <code>service spb 10 isid 1000</code> + <code>service spb 10 sap port 1/1/24:500</code> + <code>vrf 1 ip interface L3vpn1 vlan 500 address 10.5.1.1/24</code>。
+- <strong>VPN-Lite 路由</strong>：<br><code>vrf 1 ip static-route 192.168.3.0/24 gateway 10.5.1.2</code> 或 <code>vrf 1 ip load ospf</code> + area 0.0.0.0。
+- <strong>前面板 inline</strong>：<br><code>interfaces port 1/1/18 loopback</code> + <code>ip interface L3vpn1 ... rtr-port port 1/1/18 tagged vlan 200</code>。
+- <strong>Service-based inline（最简）</strong>：<br><code>vrf 1 ip interface L3vpn1 address 10.5.1.1/24 service 10</code>。
+- <strong>L3 VPN 增量</strong>：<br><code>spb ipvpn bind vrf 1 isid 1000 gateway 10.5.1.1 all-routes</code> + <code>vrf 1 ip export/import ... all-routes</code>。</p>
 <h2 id="a1">A1 · 书中案例</h2>
 <p>p84/87/93-94/96-97 四套 CLI 样例构成完整配置手册：ISID-1000 承载、两 BEB（10.5.1.1/10.5.1.2）、VRF 1 内 192.168.x.0/24 网段互通；
 同一形态上 VPN-Lite 与 L3 VPN 只差 bind/export/import 三行。</p>
 <h2 id="a2">A2 · 触发场景</h2>
 <ul>
-<li>标书需要"L3 over SPB"技术方案章节：选形态（按机型与端口预算）+ 选机制（按客户技能与规模）；</li>
+<li><strong>标书需要"L3 over SPB"技术方案章节</strong>：<br>选形态（按机型与端口预算）+ 选机制（按客户技能与规模）；</li>
 <li>写或审 AOS 三层集成配置（直接套四套模板）；</li>
 <li>客户问"BEB 能不能同时当桥和路由器"（能——消灭独立路由层的论证）。
 与相邻 skill 区分：选 EVPN 还是 SPB 做整体织物走 <code><a href="spb-vs-evpn-mpls-selection.html">spb-vs-evpn-mpls-selection</a></code>；机型规格总表走 <code><a href="spb-license-spec-sizing.html">spb-license-spec-sizing</a></code>。</li>

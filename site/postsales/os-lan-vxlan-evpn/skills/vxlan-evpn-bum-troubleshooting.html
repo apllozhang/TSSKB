@@ -118,15 +118,14 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a1">A1 · 书中案例</h2>
 <ul>
-<li>Proxy ARP 排障（p203/110/113-114）：<code>sh ip evpn proxy-arp evi 1000</code> 初始 Total count: 0，两主机互 ping 后出现 192.168.10.50↔bc:24:11:dd:29:a9 等表项——空表先造流量再回查，仍空才往 RT2 携带 IP、snooping 方向查。</li>
-<li>HER silent failure（p41）：裸 VXLAN（无 EVPN）场景，本端 VTEP 漏学一台远端 VTEP IP，该 VTEP 收不到该 VNI 任何泛洪流量（未知单播/广播/组播全静默丢弃，表现为"部分方向不通"）——排障优先核对 VTEP 对等列表完整性；
-EVPN 下这正是 RT3 的价值。</li>
-<li>MAC 表双通道（p73/116）：<code>sh mac-learning evpn-vxlan</code> 本地 MAC 挂 sap:1/1/7，远端 MAC 挂 sdp:32768——确认控制面学习链是否闭环。</li>
+<li><strong>Proxy ARP 排障（p203/110/113-114）</strong>：<br><code>sh ip evpn proxy-arp evi 1000</code> 初始 Total count: 0，两主机互 ping 后出现 192.168.10.50↔bc:24:11:dd:29:a9 等表项——空表先造流量再回查，仍空才往 RT2 携带 IP、snooping 方向查。</li>
+<li><strong>HER silent failure（p41）</strong>：<br>裸 VXLAN（无 EVPN）场景，本端 VTEP 漏学一台远端 VTEP IP，该 VTEP 收不到该 VNI 任何泛洪流量（未知单播/广播/组播全静默丢弃，表现为"部分方向不通"）——排障优先核对 VTEP 对等列表完整性；EVPN 下这正是 RT3 的价值。</li>
+<li><strong>MAC 表双通道（p73/116）</strong>：<br><code>sh mac-learning evpn-vxlan</code> 本地 MAC 挂 sap:1/1/7，远端 MAC 挂 sdp:32768——确认控制面学习链是否闭环。</li>
 </ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
-<li>触发：广播/未知单播不通、ARP 代答异常、主机迁移后不通、MAC 震荡告警、BUM 复制方式选型（HER vs 组播）。</li>
-<li>区分：不通的根因在业务/网关配置 → <code><a href="vxlan-evpn-service-provisioning.html">vxlan-evpn-service-provisioning</a></code>（先核 dummy 口、网关笔误）；</li>
+<li><strong>触发</strong>：<br>广播/未知单播不通、ARP 代答异常、主机迁移后不通、MAC 震荡告警、BUM 复制方式选型（HER vs 组播）。</li>
+<li><strong>区分</strong>：<br>不通的根因在业务/网关配置 → <code><a href="vxlan-evpn-service-provisioning.html">vxlan-evpn-service-provisioning</a></code>（先核 dummy 口、网关笔误）；</li>
 <li>根因在多归属/DF → <code><a href="vxlan-evpn-multihoming-df.html">vxlan-evpn-multihoming-df</a></code>；</li>
 <li>底座路由/BGP → <code><a href="vxlan-evpn-underlay-bgp-design.html">vxlan-evpn-underlay-bgp-design</a></code>。本 skill 管"转发平面的 BUM 行为与控制面学习链排障"；</li>
 </ul>

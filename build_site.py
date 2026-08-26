@@ -513,7 +513,7 @@ def preprocess(text):
         if len(sents) < 2 or len(para) < 100:
             return m.group(0)
         return head + '\n' + '\n'.join(f'- {s}。' for s in sents) + '\n'
-    text = _re.sub(r'(^#{1,3}\s*[^\n]+\n+)([^\n#\-*|!>][^\n]*)', bulletize, text)
+    text = _re.sub(r'(^#{1,3}\s*[^\n]+\n+)([^\n#\-*|!>][^\n]*)', bulletize, text, flags=_re.M)
     # 密集长列表项拆分：'1. **标题**——句。解释a。解释b。' → 标题句保留，其余降为嵌套子要点
     def split_item(m):
         prefix, content = m.group(1), m.group(2).strip()
@@ -567,6 +567,16 @@ def preprocess(text):
             out_blocks.append(block)
         return '\n\n'.join(out_blocks)
     text = block_bulletize(text)
+    # 要点行"观点：解释"分层：观点短语加粗独占一行，解释换行跟随（≤40 字观点才判定为 lead）
+    def lead_split(m):
+        lead, rest = m.group(1).strip(), m.group(2).strip()
+        if not rest or lead.startswith('**'):
+            return m.group(0)
+        visible = _re.sub(r'<[^>]+>', '', lead)
+        if len(visible) > 52:
+            return m.group(0)
+        return f'- **{lead}**：<br>{rest}'
+    text = _re.sub(r'^- ([^：*\n]{2,240})：(.+)$', lead_split, text, flags=_re.M)
     # 无结构的超长普通行（技能清单/枚举）：≥4 个 ' / ' 分隔时按斜杠拆行
     def slash_split(m):
         parts = [p.strip() for p in m.group(0).split(' / ')]

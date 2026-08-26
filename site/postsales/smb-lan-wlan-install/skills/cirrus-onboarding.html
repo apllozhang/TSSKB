@@ -84,7 +84,11 @@ blockquote p{margin:6px 0}
 <li>需要购买/导入 OVC 许可订阅</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>Cirrus 上线是"设备侧 call-home + 云侧申报"的双向握手：交换机的 cloud-agent 周期性（默认 30 分钟）呼叫激活服务器，云侧 Device Catalog 按序列号建档，状态机走到 "OV Managed" 才算完全受管。云管前提是版本：交换机 AOS ≥ 8.9R1、AP AWOS ≥ 4.0.6 GA 且不在排除型号清单内。配置模型三层继承：AP → AP Group → Provisioning Configuration。</p>
+<ul>
+<li><strong>Cirrus 上线是"设备侧 call-home + 云侧申报"的双向握手</strong>：<br>交换机的 cloud-agent 周期性（默认 30 分钟）呼叫激活服务器，云侧 Device Catalog 按序列号建档，状态机走到 "OV Managed" 才算完全受管。</li>
+<li><strong>云管前提是版本</strong>：<br>交换机 AOS ≥ 8.9R1、AP AWOS ≥ 4.0.6 GA 且不在排除型号清单内。</li>
+<li><strong>配置模型三层继承</strong>：<br>AP → AP Group → Provisioning Configuration。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>
@@ -126,24 +130,24 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
-<li>激活状态机：Registered &gt; Obtaining Certificate &gt; Assigned &gt; VPN Configuring &gt; Connected to OV &gt; Provisioning &gt; OV Managed；含 Failed To Get Certificate / Factory Reset Required 等失败态（P46，<span class="pg">原文p314</span> 、<span class="pg">原文p309</span> –<span class="pg">原文p310</span> ）。</li>
+<li><strong>激活状态机</strong>：<br>Registered &gt; Obtaining Certificate &gt; Assigned &gt; VPN Configuring &gt; Connected to OV &gt; Provisioning &gt; OV Managed；含 Failed To Get Certificate / Factory Reset Required 等失败态（P46，<span class="pg">原文p314</span> 、<span class="pg">原文p309</span> –<span class="pg">原文p310</span> ）。</li>
 <li>cloud-agent discovery-interval 默认 30 分钟，出错时按此周期重试（P46，<span class="pg">原文p314</span> ）。</li>
 <li>AP Group（Cirrus 版）继承 SSIDs/防火墙/认证/RF 策略，组内可混插任意 AP 型号、上限 10000（P48，<span class="pg">原文p277</span> 、<span class="pg">原文p329</span> 、<span class="pg">原文p331</span> ）。</li>
-<li>平台容量：最多 12000 台设备（10000 AP + 2000 交换机）（glossary·<span class="pg">原文p286</span> –<span class="pg">原文p287</span> ）。</li>
-<li>云管运维：Scheduled Upgrades 四步（Schedule Setting 时长 6h &gt; AP Groups &gt; Set Software Version &gt; Review）；</li>
+<li><strong>平台容量</strong>：<br>最多 12000 台设备（10000 AP + 2000 交换机）（glossary·<span class="pg">原文p286</span> –<span class="pg">原文p287</span> ）。</li>
+<li><strong>云管运维</strong>：<br>Scheduled Upgrades 四步（Schedule Setting 时长 6h &gt; AP Groups &gt; Set Software Version &gt; Review）；</li>
 <li>Collect Support Info 一键收集；</li>
 <li>Golden Config 标记基准配置用于审计漂移（C24，<span class="pg">原文p451</span> –<span class="pg">原文p456</span> ；</li>
 <li>glossary·<span class="pg">原文p439</span> ）；</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>OS6360 完整上线：管理 VLAN + 静态路由 + NTP/DNS + cloud-agent enable，force 重呼后 <code>show cloud-agent status</code> 显示 DeviceManaged（C18，<span class="pg">原文p338</span> –<span class="pg">原文p346</span> ）。</li>
-<li>Stellar AP 上线：showsysinfo 取 SN &gt; Create Device &gt; 建 My-AP-Group/My-Provisioning-Config &gt; 重启 AP 加速 call-home &gt; ocloud_show 见 VPN connected（C19，<span class="pg">原文p352</span> –<span class="pg">原文p357</span> ）。</li>
-<li>云侧 Employees SSID：Create SSID（802.1X + WPA2_AES）&gt; UPAM 建账号 &gt; Network Assignments 绑 My-AP-Group/VLAN 20 &gt; 客户端 PEAP/MSCHAPv2 上线，Authentication Records 查记录（C20，<span class="pg">原文p390</span> –<span class="pg">原文p396</span> ）。</li>
+<li><strong>OS6360 完整上线</strong>：<br>管理 VLAN + 静态路由 + NTP/DNS + cloud-agent enable，force 重呼后 <code>show cloud-agent status</code> 显示 DeviceManaged（C18，<span class="pg">原文p338</span> –<span class="pg">原文p346</span> ）。</li>
+<li><strong>Stellar AP 上线</strong>：<br>showsysinfo 取 SN &gt; Create Device &gt; 建 My-AP-Group/My-Provisioning-Config &gt; 重启 AP 加速 call-home &gt; ocloud_show 见 VPN connected（C19，<span class="pg">原文p352</span> –<span class="pg">原文p357</span> ）。</li>
+<li><strong>云侧 Employees SSID</strong>：<br>Create SSID（802.1X + WPA2_AES）&gt; UPAM 建账号 &gt; Network Assignments 绑 My-AP-Group/VLAN 20 &gt; 客户端 PEAP/MSCHAPv2 上线，Authentication Records 查记录（C20，<span class="pg">原文p390</span> –<span class="pg">原文p396</span> ）。</li>
 </ul>
 <h2 id="b">B（边界与陷阱）</h2>
 <ul>
-<li>cloudagent.cfg 缺失则交换机无法注册 Cirrus；从备份目录恢复：<code>cp /flash/cirrus/cloudagent.cfg /flash/working/cloudagent.cfg</code>（CE17，<span class="pg">原文p338</span> ）。</li>
+<li><strong>cloudagent.cfg 缺失则交换机无法注册 Cirrus；从备份目录恢复</strong>：<br><code>cp /flash/cirrus/cloudagent.cfg /flash/working/cloudagent.cfg</code>（CE17，<span class="pg">原文p338</span> ）。</li>
 <li>AOS 低于 8.9R1 的交换机（如 OS2360 AOS 5.2）无法 onboard，只能 CLI 管理（CE16，<span class="pg">原文p337</span> ）。</li>
 <li>AP1101、AP1201L/H/HL 不支持云管；AWOS 需 4.0.6 GA+（CE15，<span class="pg">原文p290</span> ）。</li>
 <li>不要在 MSP 视图下 Delete 组织，不可恢复（CE10，<span class="pg">原文p340</span> ）。</li>

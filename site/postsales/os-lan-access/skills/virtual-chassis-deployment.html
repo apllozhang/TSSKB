@@ -89,7 +89,7 @@ blockquote p{margin:6px 0}
 <h2 id="i">I · 方法论骨架</h2>
 <ul>
 <li>VC = 多台交换机经 VFL 互联后呈现为单一逻辑设备（单管理点、免 STP/VRRP、免许可）。</li>
-<li>核心骨架：- <strong>静态部署五步</strong>：唯一 chassis ID → 相同 chassis-group + priority（0-255 预定 master）→ VFL（auto 端口自动检测 / static 显式建 VFL ID 挂口）→ write memory → 从含 vcsetup.cfg 的目录 reload。</li>
+<li><strong>核心骨架</strong>：<br>- <strong>静态部署五步</strong>：唯一 chassis ID → 相同 chassis-group + priority（0-255 预定 master）→ VFL（auto 端口自动检测 / static 显式建 VFL ID 挂口）→ write memory → 从含 vcsetup.cfg 的目录 reload。</li>
 <li>
 <ul>
 <li><strong>选举链</strong>（ISIS-VC）：priority 最大 → uptime 最长（差 &gt;10 分钟才比）→ chassis ID 最小 → MAC 最小。</li>
@@ -113,12 +113,19 @@ blockquote p{margin:6px 0}
 </li>
 </ul>
 <h2 id="a1-lab">A1 · 书中案例（Lab 配置精要）</h2>
-<p>6360 双机 Lab（p112-122）：A 端 <code>virtual-chassis chassis-group 1</code> + <code>chassis-id 1 configured-chassis-priority 200</code>；
-B 端 <code>configured-chassis-id 2</code>；
-<code>virtual-chassis vf-link-mode auto</code> + <code>auto-vf-link-port 1/1/27</code>（P10 型号用 1/1/11）；
-<code>interfaces 1/1/27-28 admin-state enable</code>；
-write memory 后各 reload（priority/chassis-id 改动必须重启生效；
-B 端 write memory 弹 "Chassis 1 missing! Configuration associated with missing chassis will be erased permanently! Confirm (Y/N)" 警告）。监控：show virtual-chassis topology（"+"=未保存）、show virtual-chassis vf-link member-port、show virtual-chassis consistency、<code>ssh-chassis admin@2</code> 跳到从机。</p>
+<ul>
+<li><strong>6360 双机 Lab（p112-122）</strong>：<br>A 端 <code>virtual-chassis chassis-group 1</code> + <code>chassis-id 1 configured-chassis-priority 200</code>；</li>
+<li>B 端 <code>configured-chassis-id 2</code>；</li>
+<li><code>virtual-chassis vf-link-mode auto</code> + <code>auto-vf-link-port 1/1/27</code>（P10 型号用 1/1/11）；</li>
+<li><code>interfaces 1/1/27-28 admin-state enable</code>；</li>
+<li>write memory 后各 reload（priority/chassis-id 改动必须重启生效；</li>
+<li>
+<p>B 端 write memory 弹 "Chassis 1 missing! Configuration associated with missing chassis will be erased permanently! Confirm (Y/N)" 警告）；</p>
+</li>
+<li>
+<p><strong>监控</strong>：<br>show virtual-chassis topology（"+"=未保存）、show virtual-chassis vf-link member-port、show virtual-chassis consistency、<code>ssh-chassis admin@2</code> 跳到从机。</p>
+</li>
+</ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
 <li>接入层多机合一管理、跨机箱端口聚合、免 STP/VRRP——本 skill。</li>

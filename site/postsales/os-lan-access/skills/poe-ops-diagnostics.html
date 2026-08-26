@@ -88,7 +88,7 @@ blockquote p{margin:6px 0}
 - Type 4: 100 W. Default priority level for a port is low... Critical: inline power to critical ports is maintained as long as possible."（p434-441）</p>
 <h2 id="i">I · 方法论骨架</h2>
 <ul>
-<li>运维四块：- <strong>日志</strong>：swlog 输出 console/flash（swlog_chassis1~1.6 轮转 8 个，单文件默认 1250KB）/syslog（≤12 台）；按 appid/subapp 调级（默认 info=6）。</li>
+<li><strong>运维四块</strong>：<br>- <strong>日志</strong>：swlog 输出 console/flash（swlog_chassis1~1.6 轮转 8 个，单文件默认 1250KB）/syslog（≤12 台）；按 appid/subapp 调级（默认 info=6）。</li>
 <li>command-log 审计"谁改了配置"（100 条、须启用）。</li>
 <li>
 <ul>
@@ -126,23 +126,14 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ul>
-<li>日志与审计：1. 看日志：<code>show log swlog</code>（CTRL+C 停）；调级：<code>swlog appid &lt;进程&gt; subapp &lt;子&gt; level &lt;1-8|debug3&gt;</code>。</li>
-<li>
-<ol>
-<li>审计：<code>command-log enable</code> → <code>show command-log</code>。</li>
-</ol>
-</li>
-<li>抓包：3. 镜像：<code>port-mirroring &lt;会话&gt; source port &lt;口&gt; destination port &lt;口&gt;</code> + <code>port-mirroring &lt;会话&gt; enable</code>（源/目的同容量）。</li>
-<li>
-<ol>
-<li>抓包文件：<code>port-monitoring &lt;会话&gt; source port &lt;口&gt; enable</code>，可 pause/resume/disable/timeout。</li>
-</ol>
-</li>
-<li>监控：5. <code>show health</code> / <code>show rmon probes [history|stats]</code> / sflow sampler+poller → receiver。</li>
-<li>PoE：6. <code>lanpower …</code> 管预算/优先级；延迟上电 delayed-start 120-600 秒（5 的倍数，启用后不支持 FPoE/PPoE，须 write memory 才重启保留）。</li>
-<li>升级：7. 读 release note → 传镜像（FTP/SFTP/USB/WebView）→ <code>reload from working no rollback-timeout</code> 验证 → <code>copy running certified</code>；
-U-Boot/FPGA 先行 <code>update uboot …</code> / <code>update fpga-cpld …</code>。</li>
-<li>零配置：8. auto-fabric admin-state enable（Auto-VC/RCL 拉配置/Auto-LACP/Auto-SPB 等）。</li>
+<li><strong>日志与审计</strong>：<br>1. 看日志：<code>show log swlog</code>（CTRL+C 停）；调级：<code>swlog appid &lt;进程&gt; subapp &lt;子&gt; level &lt;1-8|debug3&gt;</code>。</li>
+<li><strong>2. 审计</strong>：<br><code>command-log enable</code> → <code>show command-log</code>。</li>
+<li><strong>抓包</strong>：<br>3. 镜像：<code>port-mirroring &lt;会话&gt; source port &lt;口&gt; destination port &lt;口&gt;</code> + <code>port-mirroring &lt;会话&gt; enable</code>（源/目的同容量）。</li>
+<li><strong>4. 抓包文件</strong>：<br><code>port-monitoring &lt;会话&gt; source port &lt;口&gt; enable</code>，可 pause/resume/disable/timeout。</li>
+<li><strong>监控</strong>：<br>5. <code>show health</code> / <code>show rmon probes [history|stats]</code> / sflow sampler+poller → receiver。</li>
+<li><strong>PoE</strong>：<br>6. <code>lanpower …</code> 管预算/优先级；延迟上电 delayed-start 120-600 秒（5 的倍数，启用后不支持 FPoE/PPoE，须 write memory 才重启保留）。</li>
+<li><strong>升级</strong>：<br>7. 读 release note → 传镜像（FTP/SFTP/USB/WebView）→ <code>reload from working no rollback-timeout</code> 验证 → <code>copy running certified</code>；U-Boot/FPGA 先行 <code>update uboot …</code> / <code>update fpga-cpld …</code>。</li>
+<li><strong>零配置</strong>：<br>8. auto-fabric admin-state enable（Auto-VC/RCL 拉配置/Auto-LACP/Auto-SPB 等）。</li>
 </ul>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>

@@ -173,22 +173,20 @@ service 100 sap port 1/1/7:10
 <p><strong>RT 类型总表</strong>（p148 章节与架构指南）：RT1 以太网 AD（aliasing/备份路径/水平分割/批量撤销；RT1A per-ES ETag=0xFFFFFFFF，RT1B per-EVI）；RT2 MAC/IP（主机可达+ARP 抑制）；RT3 IMET（VTEP 发现+BUM 复制）；RT4 ES（同 ES 发现+DF 选举）；RT5 IP 前缀（RFC 9136）；RT6-8 SMET/IGMP-MLD（RFC 9251）。基础通告主要用 RT1-RT4。</p>
 <h2 id="lab">四、Lab 实施精要</h2>
 <ul>
-<li>Lab1 四节点底座（p78-86）：Spine Loopback 1.1.1.10/11、Leaf 1.1.1.1/2；</li>
+<li><strong>Lab1 四节点底座（p78-86）</strong>：<br>Spine Loopback 1.1.1.10/11、Leaf 1.1.1.1/2；</li>
 <li>互联 VLAN 101/102/110/111/112 子网 172.16.1xy.0/24；</li>
 <li>
 <p>验证链 <code>sh ip ospf neighbor</code> 全 Full → <code>sh ip routes</code> 双等价路径 → <code>show ip bgp neighbors</code> established + evpn advertised；</p>
 </li>
 <li>
-<p>Lab2 双业务+三层（p102-117）：service 100/200（VNI 1000/2000）共用口 1/1/7，SAP <code>1/1/7:10</code> 与 <code>1/1/7:20</code>；
-三层每 Leaf 挂 ip interface（Leaf1=.1、Leaf2=.2）+ anycast .254。</p>
+<p><strong>Lab2 双业务+三层（p102-117）</strong>：<br>service 100/200（VNI 1000/2000）共用口 1/1/7，SAP <code>1/1/7:10</code> 与 <code>1/1/7:20</code>；三层每 Leaf 挂 ip interface（Leaf1=.1、Leaf2=.2）+ anycast .254。</p>
 </li>
 <li>验证五连：<code>show service evpn</code> → <code>ethernet-segment</code> → <code>debug evpn show bgp route-type rt3</code>（4 条 IMET）→ <code>&lt;esi&gt; sap-info</code> → <code>evi 1000 tunnel-ports</code>（动态 SDP 32768 建到远端 1.1.1.2）。</li>
 <li>
 <p>注意 p113 教材笔误：client 9/10 网关原文误写 192.168.30.254，应为 192.168.20.254，照抄必不通。</p>
 </li>
 <li>
-<p>Lab3 跨设备多归属（p153-158）：两 Leaf 各建 <code>linkagg lacp agg 3 size 2</code> + <code>actor admin-key 3</code>，CE 侧同 agg 挂两口，自动 ESI 03:2c:fa:a2:a2:f2:ad:00:03:00；
-切换演练断 Leaf1 成员口，ES 角色翻转、ping 不中断、MAC 迁到对端 sap。</p>
+<p><strong>Lab3 跨设备多归属（p153-158）</strong>：<br>两 Leaf 各建 <code>linkagg lacp agg 3 size 2</code> + <code>actor admin-key 3</code>，CE 侧同 agg 挂两口，自动 ESI 03:2c:fa:a2:a2:f2:ad:00:03:00；切换演练断 Leaf1 成员口，ES 角色翻转、ping 不中断、MAC 迁到对端 sap。</p>
 </li>
 <li>静态 LAG 用 <code>linkagg static agg 7</code> + 手工 ESI。</li>
 <li>验证三视图：本地单归属 <code>sap-info</code>（* = DF）、本地多归属 <code>carving-info</code>、远端 <code>aliasing-info</code>（p200-201）。</li>
@@ -203,7 +201,10 @@ service 100 sap port 1/1/7:10
 </ol>
 <p>排障统一分层（课堂验证链，p64-74）：ES → service → SAP → RT3 → MAC → SDP 隧道 → Proxy ARP → 端到端 ping，逐层核对。</p>
 <h2 id="810r1">六、版本边界与陷阱（8.10R1）</h2>
-<p>EVPN 首版 <strong>8.10R1、仅 OS6900</strong>，四项不支持（p173/p179/p180/p182 逐条命中）：<strong>RT5、对称 IRB、tandem 组播复制、all-active 多归属</strong>。客户需求命中任一项就改方案或核对目标版本 release notes（培训环境为 8.10R2，能力随 release 滚动放开）。</p>
+<ul>
+<li>EVPN 首版 <strong>8.10R1、仅 OS6900</strong>，四项不支持（p173/p179/p180/p182 逐条命中）：<strong>RT5、对称 IRB、tandem 组播复制、all-active 多归属</strong>。</li>
+<li>客户需求命中任一项就改方案或核对目标版本 release notes（培训环境为 8.10R2，能力随 release 滚动放开）。</li>
+</ul>
 <p>高频陷阱清单：</p>
 <ul>
 <li><strong>Spine 漏配业务</strong>：非对称 IRB 要求全 PE 全业务实例化，Spine 忘配 dummy 口则 IRB 路由上下文不完整。</li>

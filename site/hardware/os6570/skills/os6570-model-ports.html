@@ -71,13 +71,24 @@ blockquote p{margin:6px 0}
 <div class="grp">运维排障</div>
 <a href="../skills/os6570-ops-troubleshoot.html">os6570-ops-troubleshoot</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../hardware/index.html">硬件手册</a> › <a href="../index.html">OmniSwitch 6570M Hardware Guide</a> › <span>os6570-model-ports</span></nav><h1>os6570-model-ports</h1><p class="meta"><span class="badge">SKILL</span> os6570-model-ports · 来源页码: </p><h2 id="r">R（触发场景）</h2>
 <ul>
-<li>6570M 家族选型：12（铜口小规模）/12D（直流场景）/U28（全光密集）三选一</li>
-<li>解码面板端口：铜口/SFP/SFP+ 口位、combo 21-24、Uplink/Stacking 双角色口</li>
+<li><strong>6570M 家族选型</strong>：<br>12（铜口小规模）/12D（直流场景）/U28（全光密集）三选一</li>
+<li><strong>解码面板端口</strong>：<br>铜口/SFP/SFP+ 口位、combo 21-24、Uplink/Stacking 双角色口</li>
 <li>规划 Virtual Chassis 堆叠链路口位（12 口机 11-12，U28 机 25-30）</li>
 <li>半宽机双机 1U 并排（DUO-MNT）的端口/空间核算</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>6570M 选型三轴矩阵（F1，<span class="pg">原文p11</span> /<span class="pg">原文p22</span> /<span class="pg">原文p26</span> /<span class="pg">原文p35</span> ）：轴一=下行口形态（12/12D=8 铜口+2 SFP 混合，柜边小汇聚；U28=20 纯 SFP+4 combo 全光，光纤入柜）；轴二=供电制式（12=内置 AC、12D=内置 DC 宽压）；轴三=上联与堆叠需求（12/12D=2 个 SFP+、U28=6 个 SFP+）。核心机制：Uplink/Stacking SFP+ 口为 1G/10G 双角色——同一口既做上联又做 Virtual Chassis 堆叠链路（P2，<span class="pg">原文p11</span> /<span class="pg">原文p21</span> /<span class="pg">原文p25</span> ）；U28 combo 口同口位光铜互斥（P3）。本家族无 PoE、全机型不支持半双工（X1，<span class="pg">原文p21</span> /<span class="pg">原文p23</span> /<span class="pg">原文p25</span> ）。</p>
+<ul>
+<li><strong>6570M 选型三轴矩阵（F1，<span class="pg">原文p11</span> /<span class="pg">原文p22</span> /<span class="pg">原文p26</span> /<span class="pg">原文p35</span> ）</strong>：<br>轴一=下行口形态（12/12D=8 铜口+2 SFP 混合，柜边小汇聚；</li>
+<li>U28=20 纯 SFP+4 combo 全光，光纤入柜）；</li>
+<li>轴二=供电制式（12=内置 AC、12D=内置 DC 宽压）；</li>
+<li>
+<p>轴三=上联与堆叠需求（12/12D=2 个 SFP+、U28=6 个 SFP+）；</p>
+</li>
+<li>
+<p><strong>核心机制</strong>：<br>Uplink/Stacking SFP+ 口为 1G/10G 双角色——同一口既做上联又做 Virtual Chassis 堆叠链路（P2，<span class="pg">原文p11</span> /<span class="pg">原文p21</span> /<span class="pg">原文p25</span> ）；U28 combo 口同口位光铜互斥（P3）。</p>
+</li>
+<li>本家族无 PoE、全机型不支持半双工（X1，<span class="pg">原文p21</span> /<span class="pg">原文p23</span> /<span class="pg">原文p25</span> ）。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>按物理环境定包络：12/12D=半宽 21.72cm×28.07cm×1.7kg；U28=全宽 44cm×35cm×4.08kg（P5，<span class="pg">原文p22</span> /<span class="pg">原文p24</span> /<span class="pg">原文p26</span> ）</li>
@@ -88,10 +99,10 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li>面板核对：12/12D=8×10/100/1000Base-T + 2×100/1000Base-X SFP + 2×SFP+（11-12）；U28=20×SFP + 4×combo（21-24）+ 6×SFP+（25-30）（P1，<span class="pg">原文p11</span> ）</li>
-<li>combo 口使用：同口位 SFP 光口与 RJ45 铜口二选一，不可同时（P3，<span class="pg">原文p11</span> /<span class="pg">原文p25</span> ）</li>
-<li>VC 识别：U28 独有 Virtual Chassis ID LED；VC LED 稳绿=master/稳琥珀=slave/闪琥珀以次数报 unit 号（P26，<span class="pg">原文p25</span> /<span class="pg">原文p27</span> ）</li>
-<li>端口 LED 判读：稳绿=有效链路、闪绿=链路活动，全绿色系无 PoE 维度（P27，<span class="pg">原文p27</span> ）</li>
+<li><strong>面板核对</strong>：<br>12/12D=8×10/100/1000Base-T + 2×100/1000Base-X SFP + 2×SFP+（11-12）；U28=20×SFP + 4×combo（21-24）+ 6×SFP+（25-30）（P1，<span class="pg">原文p11</span> ）</li>
+<li><strong>combo 口使用</strong>：<br>同口位 SFP 光口与 RJ45 铜口二选一，不可同时（P3，<span class="pg">原文p11</span> /<span class="pg">原文p25</span> ）</li>
+<li><strong>VC 识别</strong>：<br>U28 独有 Virtual Chassis ID LED；VC LED 稳绿=master/稳琥珀=slave/闪琥珀以次数报 unit 号（P26，<span class="pg">原文p25</span> /<span class="pg">原文p27</span> ）</li>
+<li><strong>端口 LED 判读</strong>：<br>稳绿=有效链路、闪绿=链路活动，全绿色系无 PoE 维度（P27，<span class="pg">原文p27</span> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
@@ -102,7 +113,7 @@ blockquote p{margin:6px 0}
 <ul>
 <li>全机型不支持半双工连接（X1，<span class="pg">原文p21</span> /<span class="pg">原文p23</span> /<span class="pg">原文p25</span> ）</li>
 <li>combo 口光铜互斥，按两口配置会失效（P3，<span class="pg">原文p25</span> ）</li>
-<li>上联/堆叠共用 SFP+ 口：堆叠占口后上联带宽同步受挤，规划时先留堆叠口（P2）</li>
-<li>待机功耗梯度差 3 倍：U28 71W，按 12 机型 23W 估算供电会低估（P6）</li>
+<li><strong>上联/堆叠共用 SFP+ 口</strong>：<br>堆叠占口后上联带宽同步受挤，规划时先留堆叠口（P2）</li>
+<li><strong>待机功耗梯度差 3 倍</strong>：<br>U28 71W，按 12 机型 23W 估算供电会低估（P6）</li>
 </ul>
 <p>来源：OmniSwitch 6570M Hardware Users Guide（Ch1/Ch3，p11-34）</p><div class="pn"><a href="../index.html">⬅ 返回课程首页</a><a class="nxt" href="os6570-install-power.html">下一单元：os6570-install-power ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

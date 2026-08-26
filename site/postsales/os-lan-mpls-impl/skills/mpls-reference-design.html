@@ -94,9 +94,9 @@ P2P 链路建议 /31 地址。</p>
 <p>验证命令族谱（p18）：包/许可 → MPLS 全局/接口 → 标签表 → LDP → 业务 → BGP → MAC，按层次下钻。</p>
 <h2 id="a1">A1 · 书中案例</h2>
 <ul>
-<li>LDP 规范样例（c05，p136-138，R1 视角）：Loopback0=1.1.1.1/32（兼 router-id），SDP 102/103 指向 1.1.1.6/1.1.1.7，<code>service 1 sap port 1/1/4:0</code>，一次绑两条 SDP。</li>
-<li>BGP 规范样例（c06，p138-139）：标准序列多了 <code>ip bgp mpls</code> 全局命令（Lab 3 中没有），其余同 Lab 3；同样只配在 R1/R6/R7。</li>
-<li>验证命令族谱（p18）：<code>show pkgmgr</code></li>
+<li><strong>LDP 规范样例（c05，p136-138，R1 视角）</strong>：<br>Loopback0=1.1.1.1/32（兼 router-id），SDP 102/103 指向 1.1.1.6/1.1.1.7，<code>service 1 sap port 1/1/4:0</code>，一次绑两条 SDP。</li>
+<li><strong>BGP 规范样例（c06，p138-139）</strong>：<br>标准序列多了 <code>ip bgp mpls</code> 全局命令（Lab 3 中没有），其余同 Lab 3；同样只配在 R1/R6/R7。</li>
+<li><strong>验证命令族谱（p18）</strong>：<br><code>show pkgmgr</code></li>
 <li><code>show license-server usage</code></li>
 <li><code>show mpls</code></li>
 <li><code>show mpls ftn-table</code>（入向 PUSH 视角）</li>
@@ -110,10 +110,10 @@ P2P 链路建议 /31 地址。</p>
 </ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
-<li>售前写方案书选架构模板、界定 MPLS 域边界：本 skill。</li>
-<li>交付时直接抄标准化配置（比 Lab 更规范）：本 skill 的 c05/c06 模板。</li>
-<li>运维排障需要命令清单：本 skill 的验证命令族谱。</li>
-<li>区分：从零部署的前置流程与许可归 <code><a href="aos-mpls-deploy-license.html">aos-mpls-deploy-license</a></code>；信令选型逻辑归 <code><a href="vpls-signaling-ldp-vs-bgp.html">vpls-signaling-ldp-vs-bgp</a></code>；本 skill 偏"模板与规范"，出方案/写配置基线时优先用。</li>
+<li><strong>售前写方案书选架构模板、界定 MPLS 域边界</strong>：<br>本 skill。</li>
+<li><strong>交付时直接抄标准化配置（比 Lab 更规范）</strong>：<br>本 skill 的 c05/c06 模板。</li>
+<li><strong>运维排障需要命令清单</strong>：<br>本 skill 的验证命令族谱。</li>
+<li><strong>区分</strong>：<br>从零部署的前置流程与许可归 <code><a href="aos-mpls-deploy-license.html">aos-mpls-deploy-license</a></code>；信令选型逻辑归 <code><a href="vpls-signaling-ldp-vs-bgp.html">vpls-signaling-ldp-vs-bgp</a></code>；本 skill 偏"模板与规范"，出方案/写配置基线时优先用。</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
@@ -136,7 +136,7 @@ P2P 链路建议 /31 地址。</p>
 <li>教材示例互联地址实际用 /24（可读性取舍），最佳实践推荐 /31——交付按 /31，教学示例勿照抄。</li>
 <li>最佳实践的 BFD 是全局+OSPF 接口两级使能，只配一边不生效。</li>
 <li>BGP 规范样例的 <code>ip bgp mpls</code> 是参考设计独有命令，Lab 3 未出现，照抄 c06 时别漏。</li>
-<li>业务配置只落 PE/LER：P 节点（样例中 R2-R5）零 service 配置，别过度配置。</li>
+<li><strong>业务配置只落 PE/LER</strong>：<br>P 节点（样例中 R2-R5）零 service 配置，别过度配置。</li>
 <li>能力边界（RSVP/VPWS/RR 等六项不支持）见 <code><a href="aos-mpls-capability-limits.html">aos-mpls-capability-limits</a></code>，方案书引用特性前先核对该清单。</li>
 </ul>
 <hr />

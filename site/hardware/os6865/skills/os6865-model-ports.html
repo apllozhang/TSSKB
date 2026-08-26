@@ -71,14 +71,18 @@ blockquote p{margin:6px 0}
 <div class="grp">运维排障</div>
 <a href="../skills/os6865-ops-troubleshoot.html">os6865-ops-troubleshoot</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../hardware/index.html">硬件手册</a> › <a href="../index.html">OmniSwitch 6865 Hardware Guide</a> › <span>os6865-model-ports</span></nav><h1>os6865-model-ports</h1><p class="meta"><span class="badge">SKILL</span> os6865-model-ports · 来源页码: </p><h2 id="r">R（触发场景）</h2>
 <ul>
-<li>加固场景选型：在 P16X/U12X/U28X 三机型中按 PoE 密度 vs 上行密度选</li>
-<li>解码命名：P=PoE 电机型、U=上行口密集、数字=端口总数、X=含 SFP+ 10G 上行</li>
+<li><strong>加固场景选型</strong>：<br>在 P16X/U12X/U28X 三机型中按 PoE 密度 vs 上行密度选</li>
+<li><strong>解码命名</strong>：<br>P=PoE 电机型、U=上行口密集、数字=端口总数、X=含 SFP+ 10G 上行</li>
 <li>核对 75W HPoE / 60W bt 口位与 SFP/SFP+/QSFP+ 上行构成</li>
-<li>宽温部署核对：-40~74°C（需气流）/65°C（免气流）/55°C（DNV 盖）三档</li>
+<li><strong>宽温部署核对</strong>：<br>-40~74°C（需气流）/65°C（免气流）/55°C（DNV 盖）三档</li>
 <li>工业合规核对（IEC 61850-3 变电站/EN 50121-4 铁路/NEMA TS-2 交通/DNV 2.4 船用）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>6865 是加固型（hardened）千兆/10G 交换机家族（P1，<span class="pg">原文p42</span> ）："designed for demanding electrical and severe temperature environments"。三机型分工（F1，<span class="pg">原文p42</span> -<span class="pg">原文p48</span> ）：P16X=PoE 供电密集（4×75W HPoE/bt + 8×PoE+）；U12X=光纤上行紧凑型；U28X=大量光纤上行 + 2×QSFP+ VFL。四条家族铁律：全无风扇（P3，散热全靠机箱散热片+外部气流）；机箱两档（半宽 2RU/全宽 1RU，P4）；TMRA 三档温度包络（P9：有气流 -40~74°C、无气流 -40~65°C、DNV 盖一律 55°C）；1588v2 精密时间同步全家族支持（电力/工业场景）。</p>
+<ul>
+<li><strong>6865 是加固型（hardened）千兆/10G 交换机家族（P1，<span class="pg">原文p42</span> ）</strong>：<br>"designed for demanding electrical and severe temperature environments"。</li>
+<li><strong>三机型分工（F1，<span class="pg">原文p42</span> -<span class="pg">原文p48</span> ）</strong>：<br>P16X=PoE 供电密集（4×75W HPoE/bt + 8×PoE+）；U12X=光纤上行紧凑型；U28X=大量光纤上行 + 2×QSFP+ VFL。</li>
+<li><strong>四条家族铁律</strong>：<br>全无风扇（P3，散热全靠机箱散热片+外部气流）；机箱两档（半宽 2RU/全宽 1RU，P4）；TMRA 三档温度包络（P9：有气流 -40~74°C、无气流 -40~65°C、DNV 盖一律 55°C）；1588v2 精密时间同步全家族支持（电力/工业场景）。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>选型三问（F1）：现场要给多少 75W 大功率 PD？→P16X；要多少路上行？→U12X（8 光）/U28X（24 光+2 VFL）；要不要 VC 堆叠？→仅 U28X 有 QSFP+ VFL</li>
@@ -88,7 +92,7 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li>面板识别：P16X=2 SFP+ + 2 SFP + 4 HPoE/bt + 8 PoE+（半宽 2RU）；</li>
+<li><strong>面板识别</strong>：<br>P16X=2 SFP+ + 2 SFP + 4 HPoE/bt + 8 PoE+（半宽 2RU）；</li>
 <li>U12X=2 SFP+ + 6 SFP + 4 HPoE；</li>
 <li>
 <p>U28X=4 SFP+ + 20 SFP + 4 HPoE + 2 QSFP+ VFL（29/30 口）（P2，<span class="pg">原文p44</span> /<span class="pg">原文p46</span> /<span class="pg">原文p48</span> ）；</p>
@@ -102,17 +106,17 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>P16X 16 口 PoE 部署构成：4×75W HPoE/bt + 8×PoE+ + 2 SFP+ + 2 SFP，面向话机/AP/摄像头密集供电（F1，<span class="pg">原文p42</span> /<span class="pg">原文p44</span> ）</li>
-<li>U28X 大规模光纤上行：4 SFP+ + 20 SFP + 4 HPoE + 2×QSFP+ VFL，全宽 1RU（17.2" 宽），VC 堆叠走 VFL（<span class="pg">原文p47</span> /<span class="pg">原文p49</span> ）</li>
-<li>高温机房部署核对链：74°C →必须封闭机柜+气流+顶部 1 RU 间隙（X1/X2，<span class="pg">原文p9</span> /<span class="pg">原文p11</span> ）</li>
+<li><strong>P16X 16 口 PoE 部署构成</strong>：<br>4×75W HPoE/bt + 8×PoE+ + 2 SFP+ + 2 SFP，面向话机/AP/摄像头密集供电（F1，<span class="pg">原文p42</span> /<span class="pg">原文p44</span> ）</li>
+<li><strong>U28X 大规模光纤上行</strong>：<br>4 SFP+ + 20 SFP + 4 HPoE + 2×QSFP+ VFL，全宽 1RU（17.2" 宽），VC 堆叠走 VFL（<span class="pg">原文p47</span> /<span class="pg">原文p49</span> ）</li>
+<li><strong>高温机房部署核对链</strong>：<br>74°C →必须封闭机柜+气流+顶部 1 RU 间隙（X1/X2，<span class="pg">原文p9</span> /<span class="pg">原文p11</span> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>
-<li>65°C 是气流硬阈值：低于 65°C 免气流、≥65°C 必须气流（X1，<span class="pg">原文p11</span> ）；74°C 必须封闭机柜（X2，<span class="pg">原文p9</span> ）</li>
-<li>DNV 电源盖降额：装盖后无论有无气流上限都降到 55°C（X3，<span class="pg">原文p42</span> /<span class="pg">原文p45</span> /<span class="pg">原文p47</span> ）</li>
+<li><strong>65°C 是气流硬阈值</strong>：<br>低于 65°C 免气流、≥65°C 必须气流（X1，<span class="pg">原文p11</span> ）；74°C 必须封闭机柜（X2，<span class="pg">原文p9</span> ）</li>
+<li><strong>DNV 电源盖降额</strong>：<br>装盖后无论有无气流上限都降到 55°C（X3，<span class="pg">原文p42</span> /<span class="pg">原文p45</span> /<span class="pg">原文p47</span> ）</li>
 <li>三机型均不支持半双工（X38，<span class="pg">原文p44</span> /<span class="pg">原文p46</span> /<span class="pg">原文p48</span> ）</li>
-<li>高温下 PoE 预算腰斩：P16X/U12X 双电源 65°C/74°C 从 300W 降到 150W——选型勿按常温预算外推（X31，<span class="pg">原文p56</span> ）</li>
-<li>激光辐射：空光口勿直视，拆线后加盖（X34，<span class="pg">原文p72</span> ）</li>
-<li>跨书易混：6865 的 HPoE 口为 75W/60W bt 双兼容，与 6860 E 代"not 802.3bt compliant"的私有 HPoE 不同，对 bt PD 互通性更好</li>
+<li><strong>高温下 PoE 预算腰斩</strong>：<br>P16X/U12X 双电源 65°C/74°C 从 300W 降到 150W——选型勿按常温预算外推（X31，<span class="pg">原文p56</span> ）</li>
+<li><strong>激光辐射</strong>：<br>空光口勿直视，拆线后加盖（X34，<span class="pg">原文p72</span> ）</li>
+<li><strong>跨书易混</strong>：<br>6865 的 HPoE 口为 75W/60W bt 双兼容，与 6860 E 代"not 802.3bt compliant"的私有 HPoE 不同，对 bt PD 互通性更好</li>
 </ul>
 <p>来源：OmniSwitch 6865 Hardware Users Guide（Ch1 p9-12/p38 + Ch2 p42-50）</p><div class="pn"><a href="../index.html">⬅ 返回课程首页</a><a class="nxt" href="os6865-install-power.html">下一单元：os6865-install-power ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

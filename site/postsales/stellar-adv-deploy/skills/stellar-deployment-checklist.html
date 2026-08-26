@@ -99,27 +99,28 @@ blockquote p{margin:6px 0}
 <p>清理是逆向拆除（云管无一键恢复默认）：按创建的反序删——运行任务 → WIPS → AP 组/Provisioning/RF Profile 解绑 → SSID → 策略/角色/门户 → 账号/资产 → Golden Config → 报表 → 阈值重置 → 站点 → 确认设备目录空 → CLI 模板/值映射。</p>
 <h2 id="a1-lab">A1 · 书中案例（Lab 精要）</h2>
 <ul>
-<li>综合演练（p286-299）三个差异化 SSID：EmployeesX（WPA2-Enterprise 802.1X、仅 5GHz、VLAN 20、工作时间调度、按角色封 HTTP）；
-GuestsX（内部 Captive Portal、限 1Mbit/s、封 SSH/Telnet、VLAN 30、周一至周三调度、账号限时限量）；
-PrinterX（仅 2.4GHz、最小发射功率、固定信道、WPA2 PSK + 按设备 PSK/DPSK、复用 Employee VLAN）。</li>
-<li>RF Profile：负载均衡启用、关联门限 -50dBm。</li>
-<li>监控阈值（p298）：健康 70%、2.4G 利用率 20%（只跑打印机故收紧）、2.4G 客户端健康 90%、可用容量 25%。</li>
+<li><strong>综合演练（p286-299）三个差异化 SSID</strong>：<br>EmployeesX（WPA2-Enterprise 802.1X、仅 5GHz、VLAN 20、工作时间调度、按角色封 HTTP）；</li>
+<li>GuestsX（内部 Captive Portal、限 1Mbit/s、封 SSH/Telnet、VLAN 30、周一至周三调度、账号限时限量）；</li>
+<li>
+<p>PrinterX（仅 2.4GHz、最小发射功率、固定信道、WPA2 PSK + 按设备 PSK/DPSK、复用 Employee VLAN）；</p>
+</li>
+<li>
+<p><strong>RF Profile</strong>：<br>负载均衡启用、关联门限 -50dBm。</p>
+</li>
+<li><strong>监控阈值（p298）</strong>：<br>健康 70%、2.4G 利用率 20%（只跑打印机故收紧）、2.4G 客户端健康 90%、可用容量 25%。</li>
 <li>末段两 AP 建 Mesh（AP1321 为 Root、自定义 SSID、WPA2-Personal）。</li>
-<li>基础 Lab（p43-73）补充上线细节：reset_PODX 复位 → My Site + Building A/Ground Floor（画约 1200-1300m² 楼层边界）→ 双交换机 + 双 AP 入目录 → 手工配 VLAN 10/20/30 → EmployeesX/GuestsX 映射 My-AP-Group → 树莓派验证（Employee 192.168.20.70-79 / Guest 192.168.30.70-79）。</li>
-<li>清理 Lab（p313-319）：29 步逆向拆除全量配置，清理后设备目录回空、可重新部署。</li>
 </ul>
+<p>基础 Lab（p43-73）补充上线细节：reset_PODX 复位 → My Site + Building A/Ground Floor（画约 1200-1300m² 楼层边界）→ 双交换机 + 双 AP 入目录 → 手工配 VLAN 10/20/30 → EmployeesX/GuestsX 映射 My-AP-Group → 树莓派验证（Employee 192.168.20.70-79 / Guest 192.168.30.70-79）。
+清理 Lab（p313-319）：29 步逆向拆除全量配置，清理后设备目录回空、可重新部署。</p>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
 <li>新项目交付或交付前演练验收，需要一份覆盖组织/上线/SSID/安全/运维的 checklist → 本 skill。</li>
 <li>项目下线、换设备、重配网络前要清空云管配置 → 本 skill 清理流程（别去找"一键恢复"，没有）。</li>
-<li>单点深入：SSID 高级选项 → stellar-ssid-advanced；
-Mesh → stellar-bridge-mesh；
-阈值业务含义 → stellar-monitoring-ops；
-上线后故障 → stellar-troubleshooting-cli。</li>
+<li><strong>单点深入</strong>：<br>SSID 高级选项 → stellar-ssid-advanced；Mesh → stellar-bridge-mesh；阈值业务含义 → stellar-monitoring-ops；上线后故障 → stellar-troubleshooting-cli。</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ul>
-<li>交付（照 A1 七段主线逐项打勾）：1. 复位设备，ping 验证到 DHCP/外网连通。</li>
+<li><strong>交付（照 A1 七段主线逐项打勾）</strong>：<br>1. 复位设备，ping 验证到 DHCP/外网连通。</li>
 <li>
 <ol>
 <li>建组织层级与站点（含预留），导入楼层平面图。</li>
@@ -161,10 +162,10 @@ Mesh → stellar-bridge-mesh；
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>
 <li>云管没有一键恢复默认；删除全部要手工逆向，漏一步就留下孤儿配置。</li>
-<li>删除有依赖顺序：AP 组挂着自定义 Provisioning 删不掉；Provisioning 引用自定义 RF Profile 也删不掉——先改回 Default 再删（逆着创建顺序操作）。</li>
+<li><strong>删除有依赖顺序</strong>：<br>AP 组挂着自定义 Provisioning 删不掉；Provisioning 引用自定义 RF Profile 也删不掉——先改回 Default 再删（逆着创建顺序操作）。</li>
 <li>误删组织（MSP Portal 上对 Organization 点 Delete）不可恢复，连带站点、设备与全部配置。</li>
 <li>复位脚本运行中交换机重启阶段不能按任何键，否则掉进 Miniboot 且重启中断。</li>
-<li>实验环境边界：核心 OS-6900、汇聚 OS-6870 预置配置与 DHCP/NAT 服务器不得改删（改删断云管连通）；树莓派有线网卡绝不能动（远程桌面走有线）。</li>
+<li><strong>实验环境边界</strong>：<br>核心 OS-6900、汇聚 OS-6870 预置配置与 DHCP/NAT 服务器不得改删（改删断云管连通）；树莓派有线网卡绝不能动（远程桌面走有线）。</li>
 <li>OS-2360 这类不能上云管的交换机只能手工配置，checklist 里别指望云管纳管它。</li>
 </ul>
 <hr />

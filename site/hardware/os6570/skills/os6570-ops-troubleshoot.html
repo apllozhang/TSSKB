@@ -71,14 +71,18 @@ blockquote p{margin:6px 0}
 <div class="grp">运维排障</div>
 <a href="../skills/os6570-ops-troubleshoot.html" class="on">os6570-ops-troubleshoot</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../hardware/index.html">硬件手册</a> › <a href="../index.html">OmniSwitch 6570M Hardware Guide</a> › <span>os6570-ops-troubleshoot</span></nav><h1>os6570-ops-troubleshoot</h1><p class="meta"><span class="badge">SKILL</span> os6570-ops-troubleshoot · 来源页码: </p><h2 id="r">R（触发场景）</h2>
 <ul>
-<li>失电通告建设：Dying Gasp 三通道（SNMP trap/Syslog/802.3ah OAM PDU）配置</li>
-<li>日常巡检：show module / show temperature 硬件巡检与温度阈值判读</li>
-<li>LED 诊断：OK/VC/PS1/PS2 系统灯与 150W 电源六态灯排障</li>
-<li>温度超限处置：Warning trap / Danger 关机恢复</li>
-<li>首次登录与安全红线：aaa 解锁、锂电池返厂、激光/ESD 警告</li>
+<li><strong>失电通告建设</strong>：<br>Dying Gasp 三通道（SNMP trap/Syslog/802.3ah OAM PDU）配置</li>
+<li><strong>日常巡检</strong>：<br>show module / show temperature 硬件巡检与温度阈值判读</li>
+<li><strong>LED 诊断</strong>：<br>OK/VC/PS1/PS2 系统灯与 150W 电源六态灯排障</li>
+<li><strong>温度超限处置</strong>：<br>Warning trap / Danger 关机恢复</li>
+<li><strong>首次登录与安全红线</strong>：<br>aaa 解锁、锂电池返厂、激光/ESD 警告</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>高可用双支柱框架（F3，<span class="pg">原文p12</span> /<span class="pg">原文p35</span> /<span class="pg">原文p46</span> /<span class="pg">原文p47</span> ）：供电侧=电源冗余+独立电路+Dying Gasp 三通道通告；运行侧=温度双阈值固化+LED 三层+show 巡检。DG 三通道语义（P28，<span class="pg">原文p46</span> /<span class="pg">原文p47</span> ）：SNMP trap（前 3 站，含槽号/主备电源类型/失效时间）+Syslog"Dying Gasp Power Failure Event Occurred"（前 3 服务器）+4 个 802.3ah OAM Information PDU（Dying Gasp 位置位）；PDU 按端口优先级"上联口优先"发送（P29）。温度双阈值固化不可改（P12/X3）：Warning 发 trap 业务不停；Danger 自动关机且必须手动重启（X4）。</p>
+<ul>
+<li><strong>高可用双支柱框架（F3，<span class="pg">原文p12</span> /<span class="pg">原文p35</span> /<span class="pg">原文p46</span> /<span class="pg">原文p47</span> ）</strong>：<br>供电侧=电源冗余+独立电路+Dying Gasp 三通道通告；运行侧=温度双阈值固化+LED 三层+show 巡检。</li>
+<li><strong>DG 三通道语义（P28，<span class="pg">原文p46</span> /<span class="pg">原文p47</span> ）</strong>：<br>SNMP trap（前 3 站，含槽号/主备电源类型/失效时间）+Syslog"Dying Gasp Power Failure Event Occurred"（前 3 服务器）+4 个 802.3ah OAM Information PDU（Dying Gasp 位置位）；PDU 按端口优先级"上联口优先"发送（P29）。</li>
+<li><strong>温度双阈值固化不可改（P12/X3）</strong>：<br>Warning 发 trap 业务不停；Danger 自动关机且必须手动重启（X4）。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>巡检三步：show module 查槽位→show temperature 查五列（Current/Range/Danger/Thresh/Status）→UNDER THRESHOLD 即正常（C14/P13，<span class="pg">原文p45</span> ）</li>
@@ -99,7 +103,7 @@ blockquote p{margin:6px 0}
 <ul>
 <li>DG 三通道完整配置与上联口 PDU 优先（C16/C17/P28/P29，<span class="pg">原文p46</span> /<span class="pg">原文p47</span> ）</li>
 <li>温度 Warning/Danger 双阈值处置流程（C15，<span class="pg">原文p45</span> /<span class="pg">原文p46</span> ）</li>
-<li>12/12D 与 U28 阈值分化排障：12 口机 85/88°C vs U28 69/74°C——光口机热预算更紧（P9，<span class="pg">原文p22</span> /<span class="pg">原文p24</span> /<span class="pg">原文p26</span> ）</li>
+<li><strong>12/12D 与 U28 阈值分化排障</strong>：<br>12 口机 85/88°C vs U28 69/74°C——光口机热预算更紧（P9，<span class="pg">原文p22</span> /<span class="pg">原文p24</span> /<span class="pg">原文p26</span> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>

@@ -84,7 +84,10 @@ blockquote p{margin:6px 0}
 <li>访客 Captive Portal 不弹页面；需要抓包或镜像端口定位</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>排查走"分层递进 + 分侧取证"：有线侧自下而上（电→VLAN→IP→云），无线侧在 AP CLI 用 iwconfig/sta_list 看空口与角色，认证侧核对 AAA 配置与日志进程。每层都有明确命令与预期输出，失败点即故障层。</p>
+<ul>
+<li><strong>排查走"分层递进 + 分侧取证"</strong>：<br>有线侧自下而上（电→VLAN→IP→云），无线侧在 AP CLI 用 iwconfig/sta_list 看空口与角色，认证侧核对 AAA 配置与日志进程。</li>
+<li>每层都有明确命令与预期输出，失败点即故障层。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li><strong>AP 上线排障五步法</strong>（<span class="pg">原文p376</span> -<span class="pg">原文p378</span> 、<span class="pg">原文p365</span> -<span class="pg">原文p366</span> ）：</li>
@@ -107,14 +110,14 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>上云排障五步法完整走位：PoE→VLAN（管理 VLAN untagged 检查）→getmode/cat network→ip interface+ping 激活域名→OVC Activation Log（<span class="pg">原文p376</span> -<span class="pg">原文p378</span> 、<span class="pg">原文p365</span> -<span class="pg">原文p366</span> ）。</li>
-<li>802.1X 排障链：iwconfig→sta_list（看 assignedVLAN）→AAA_server.conf 核对→tcpdump 抓 RADIUS（<span class="pg">原文p415</span> -<span class="pg">原文p418</span> ）。</li>
-<li>Portal 排障链：date/resolv.conf 前置检查→eag 进程→eag_cli 用户列表→eag.log（<span class="pg">原文p444</span> -<span class="pg">原文p448</span> ）。</li>
+<li><strong>上云排障五步法完整走位</strong>：<br>PoE→VLAN（管理 VLAN untagged 检查）→getmode/cat network→ip interface+ping 激活域名→OVC Activation Log（<span class="pg">原文p376</span> -<span class="pg">原文p378</span> 、<span class="pg">原文p365</span> -<span class="pg">原文p366</span> ）。</li>
+<li><strong>802.1X 排障链</strong>：<br>iwconfig→sta_list（看 assignedVLAN）→AAA_server.conf 核对→tcpdump 抓 RADIUS（<span class="pg">原文p415</span> -<span class="pg">原文p418</span> ）。</li>
+<li><strong>Portal 排障链</strong>：<br>date/resolv.conf 前置检查→eag 进程→eag_cli 用户列表→eag.log（<span class="pg">原文p444</span> -<span class="pg">原文p448</span> ）。</li>
 </ul>
 <h2 id="b">B（边界与陷阱）</h2>
 <ul>
 <li><strong>不要对预配置设备恢复出厂</strong>：R-Lab 交换机装有特定默认配置，恢复出厂会破坏实验环境（<span class="pg">原文p123</span> ）；同理不要动实验室核心 OS6900（<span class="pg">原文p100</span> ）、不要对 Organization 用 Delete（<span class="pg">原文p358</span> ）。</li>
-<li>Lightning Config 触发条件苛刻：仅第一/二物理口接客户端、无任何既有配置、开机后无 DHCP 分配、无 RCL/OmniVista 连接时才触发（<span class="pg">原文p79</span> 、<span class="pg">原文p1025</span> ）；</li>
+<li><strong>Lightning Config 触发条件苛刻</strong>：<br>仅第一/二物理口接客户端、无任何既有配置、开机后无 DHCP 分配、无 RCL/OmniVista 连接时才触发（<span class="pg">原文p79</span> 、<span class="pg">原文p1025</span> ）；</li>
 <li>不要预先把新交换机接进网络，也不要把两台开箱交换机直连（先跑 Lightning Config，<span class="pg">原文p1034</span> ）；</li>
 <li>
 <p>保存配置后默认 IP 192.168.0.1 被移除（<span class="pg">原文p79</span> ）；</p>

@@ -89,7 +89,12 @@ blockquote p{margin:6px 0}
 <li>机房能耗优化（EEE）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>OmniSwitch 用动态 PoE：按需供电至预算上限，优于 IEEE 可选分类（P129，<span class="pg">原文p694</span> ）。分级靠 PD 固定电阻：802.3af Class 0-3（15.4W 顶）、802.3at Class 4（PSE 34.2W/PD 25.5W）（P130，<span class="pg">原文p695</span> ）；高功率 HPoE 60/75W 对应 802.3bt 级（<span class="pg">原文p33, 54</span> ）。电力不足时的仲裁规则是端口优先级三级 low/high/critical——critical 尽量不断电（P131，<span class="pg">原文p701</span> ）。最大的坑是默认值：PoE 操作状态默认 down，必须逐台 <code>lanpower start</code> 激活（X76，<span class="pg">原文p697-698</span> ）。</p>
+<ul>
+<li><strong>OmniSwitch 用动态 PoE</strong>：<br>按需供电至预算上限，优于 IEEE 可选分类（P129，<span class="pg">原文p694</span> ）。</li>
+<li><strong>分级靠 PD 固定电阻</strong>：<br>802.3af Class 0-3（15.4W 顶）、802.3at Class 4（PSE 34.2W/PD 25.5W）（P130，<span class="pg">原文p695</span> ）；高功率 HPoE 60/75W 对应 802.3bt 级（<span class="pg">原文p33, 54</span> ）。</li>
+<li>电力不足时的仲裁规则是端口优先级三级 low/high/critical——critical 尽量不断电（P131，<span class="pg">原文p701</span> ）。</li>
+<li><strong>最大的坑是默认值</strong>：<br>PoE 操作状态默认 down，必须逐台 <code>lanpower start</code> 激活（X76，<span class="pg">原文p697-698</span> ）。</li>
+</ul>
 <h2 id="a1">A1（决策/选型）</h2>
 <ol>
 <li>功率等级：15.4W（af）→ 30W（at）→ 60W（6860E 前 4 口）→ 75W（6560 mGIG/802.3bt）（<span class="pg">原文p33, 54, 695</span> ）</li>
@@ -122,8 +127,8 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>C35 R6 PoE 管理：启动、限额、优先级、预算观察（<span class="pg">原文p700-703</span> ）</li>
-<li>C36 R8 PoE 管理：slot 级 service start 与 maxpower 预算控制（<span class="pg">原文p705-708</span> ）</li>
+<li><strong>C35 R6 PoE 管理</strong>：<br>启动、限额、优先级、预算观察（<span class="pg">原文p700-703</span> ）</li>
+<li><strong>C36 R8 PoE 管理</strong>：<br>slot 级 service start 与 maxpower 预算控制（<span class="pg">原文p705-708</span> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>

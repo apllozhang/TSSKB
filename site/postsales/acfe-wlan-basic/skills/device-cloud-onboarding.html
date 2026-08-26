@@ -127,16 +127,16 @@ blockquote p{margin:6px 0}
 </code></pre>
 <ul>
 <li>每个中间态正常 ≤5 分钟</li>
-<li>失败态映射：Failed To Get Certificate（证书服务/时间）| Upgrade Failed | Configuring VPN Failed | Provisioning Failed | Device Validation Failed | Factory Reset Required（VPN profile 变更过，唯一解是现场恢复出厂）</li>
+<li><strong>失败态映射</strong>：<br>Failed To Get Certificate（证书服务/时间）| Upgrade Failed | Configuring VPN Failed | Provisioning Failed | Device Validation Failed | Factory Reset Required（VPN profile 变更过，唯一解是现场恢复出厂）</li>
 <li>
-<p>设备靠周期性 Call Home 联系云：交换机 <code>cloud-agent admin-state restart</code>（约 2 分钟）、AP 重启/firstboot 强制立即呼叫</p>
+<p><strong>设备靠周期性 Call Home 联系云</strong>：<br>交换机 <code>cloud-agent admin-state restart</code>（约 2 分钟）、AP 重启/firstboot 强制立即呼叫</p>
 </li>
 <li>
 <p><strong>AP Group / Provisioning Configuration</strong></p>
 </li>
 <li>Cirrus 以 AP Group 为单位管理（SSID/RF Profile 挂组）；组内可混型号，上限 2000，不依赖物理网络</li>
-<li>Provisioning 四必填：Name / Site / RF Profile / Timezone</li>
-<li>可选项：SSH Login、AP Web、Client Behavior Tracking、证书、SNMP、IoT Radio、Data VPN、Syslog（≤4 台）</li>
+<li><strong>Provisioning 四必填</strong>：<br>Name / Site / RF Profile / Timezone</li>
+<li><strong>可选项</strong>：<br>SSH Login、AP Web、Client Behavior Tracking、证书、SNMP、IoT Radio、Data VPN、Syslog（≤4 台）</li>
 <li>
 <p>BLE 信标按 AP Group 配置（默认关，默认 iBeacon 模式；可调功率/周期/UUID/Major/Minor），用于资产定位（p12）</p>
 </li>
@@ -175,7 +175,7 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>
-<li>UNP 安全盲区：AP 不过 802.1X，仿冒 AP 的 tagged 流量照样进内网 VLAN；高安全环境补 ACL/WIPS（ce17）。</li>
+<li><strong>UNP 安全盲区</strong>：<br>AP 不过 802.1X，仿冒 AP 的 tagged 流量照样进内网 VLAN；高安全环境补 ACL/WIPS（ce17）。</li>
 <li>手动分类漏配 VLAN 故障隐蔽（其他 SSID 正常），新 AP 上线用固定检查单核对（ce18）。</li>
 <li>管理 VLAN 没 untagged 到 AP 口是最常见根因（ce16）。</li>
 <li>Call Home 间隔可到 30 分钟量级，等太久≠故障，用强制手段（ce15）。</li>

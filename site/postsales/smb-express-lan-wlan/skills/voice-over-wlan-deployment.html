@@ -84,7 +84,10 @@ blockquote p{margin:6px 0}
 <li>需要决定 802.11r/k/v 开不开、2.4G 还是 5G、RAP 还是本部 AP</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>VoWLAN 是"覆盖设计 + QoS + 漫游"三件事：覆盖按 -70dBm 小区交叠 8dB 设计，QoS 把 Voice 映射到 WMM/802.1p 6 / DSCP 46，漫游靠 802.11r/k/v 与 CNCS 上下文判定 L2/L3。语音对延迟、抖动、丢包、重传有硬门限，规划阶段就要算清 AP 密度与每 AP 语音流数。</p>
+<ul>
+<li><strong>VoWLAN 是"覆盖设计 + QoS + 漫游"三件事</strong>：<br>覆盖按 -70dBm 小区交叠 8dB 设计，QoS 把 Voice 映射到 WMM/802.1p 6 / DSCP 46，漫游靠 802.11r/k/v 与 CNCS 上下文判定 L2/L3。</li>
+<li>语音对延迟、抖动、丢包、重传有硬门限，规划阶段就要算清 AP 密度与每 AP 语音流数。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li><strong>按五阶段方法论推进</strong>：Prepare → Plan → Design → Implement → Operate（<span class="pg">原文p252</span> 、<span class="pg">原文p964</span> ）：先识别语音与音视频用途，运营阶段持续监控维护。</li>
@@ -105,7 +108,7 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
-<li>漫游机制：802.11r Fast Transition 先握手换钥再漫游（over-the-air FT 为默认）；</li>
+<li><strong>漫游机制</strong>：<br>802.11r Fast Transition 先握手换钥再漫游（over-the-air FT 为默认）；</li>
 <li>802.11k 邻居报告省去全信道扫描；</li>
 <li>
 <p>802.11v 由 AP 主动建议漫游目标（<span class="pg">原文p938</span> -<span class="pg">原文p940</span> ）。漫游类型判定：CNC 表中 VLAN 与目标 AP Access Role VLAN 一致 → L2 漫游，否则 L3（<span class="pg">原文p917</span> ）；</p>
@@ -119,9 +122,9 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>智能手机 EIRP 不对称：手机 5GHz 仅约 11dBm，是 AP 的 1/8 距离短板；降 AP 功率迁就手机会导致 AP 数量暴涨，手机 VoWLAN 只能 Best Effort（<span class="pg">原文p931</span> ）。</li>
-<li>81x8s 话机兼容性：8158s/8168s 当前版本拒绝 AP 的 802.11v 请求，需按终端能力分 SSID（<span class="pg">原文p940</span> ）。</li>
-<li>RAP 三禁区实例：总部勿用 RAP（VPN 隧道约束）、加密带宽约打 2.3 折、同地两台 RAP 间 8168s 不支持切换（<span class="pg">原文p904</span> ）。</li>
+<li><strong>智能手机 EIRP 不对称</strong>：<br>手机 5GHz 仅约 11dBm，是 AP 的 1/8 距离短板；降 AP 功率迁就手机会导致 AP 数量暴涨，手机 VoWLAN 只能 Best Effort（<span class="pg">原文p931</span> ）。</li>
+<li><strong>81x8s 话机兼容性</strong>：<br>8158s/8168s 当前版本拒绝 AP 的 802.11v 请求，需按终端能力分 SSID（<span class="pg">原文p940</span> ）。</li>
+<li><strong>RAP 三禁区实例</strong>：<br>总部勿用 RAP（VPN 隧道约束）、加密带宽约打 2.3 折、同地两台 RAP 间 8168s 不支持切换（<span class="pg">原文p904</span> ）。</li>
 </ul>
 <h2 id="b">B（边界与陷阱）</h2>
 <ul>

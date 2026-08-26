@@ -84,8 +84,11 @@ blockquote p{margin:6px 0}
 <li>需要升级 AOS 镜像（含 uboot/FPGA）或做配置的 USB 备份</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>AOS 的配置管理是"三层目录 + RAM 运行配置"的状态机：certified 是已认证的稳定目录，working 是待验证目录，还可自建 user-defined 目录。运行配置在 RAM 里，不保存就丢；
-<code>reload all</code> 永远从 certified 启动，验证新配置必须用 <code>reload from working no rollback-timeout</code>。升级同理：先升 working、验证无误再 <code>copy running certified</code> 固化。</p>
+<ul>
+<li><strong>AOS 的配置管理是"三层目录 + RAM 运行配置"的状态机</strong>：<br>certified 是已认证的稳定目录，working 是待验证目录，还可自建 user-defined 目录。</li>
+<li>运行配置在 RAM 里，不保存就丢；<code>reload all</code> 永远从 certified 启动，验证新配置必须用 <code>reload from working no rollback-timeout</code>。</li>
+<li><strong>升级同理</strong>：<br>先升 working、验证无误再 <code>copy running certified</code> 固化。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>查看目录与状态：
@@ -122,15 +125,15 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
-<li>冷启动目录选择规则：running 与 certified 内容一致则从 running 启动，不一致回退 certified（P14，<span class="pg">原文p132</span> ）。</li>
-<li>启动序列：U-Boot 引导 → 硬件初始化 → 内存诊断 → 镜像选择 → AOS 拷入 RAM 运行（P13，<span class="pg">原文p119</span> ）。</li>
-<li>Thin Client 模式：本地不存配置，全部从 OV2500 拉取，<code>write memory</code> 可执行但不生效（P18，<span class="pg">原文p127</span> ）。</li>
+<li><strong>冷启动目录选择规则</strong>：<br>running 与 certified 内容一致则从 running 启动，不一致回退 certified（P14，<span class="pg">原文p132</span> ）。</li>
+<li><strong>启动序列</strong>：<br>U-Boot 引导 → 硬件初始化 → 内存诊断 → 镜像选择 → AOS 拷入 RAM 运行（P13，<span class="pg">原文p119</span> ）。</li>
+<li><strong>Thin Client 模式</strong>：<br>本地不存配置，全部从 OV2500 拉取，<code>write memory</code> 可执行但不生效（P18，<span class="pg">原文p127</span> ）。</li>
 <li>USB 备份可设密码加密，且 <code>write memory</code> / <code>copy running certified</code> 触发自动镜像（P17，<span class="pg">原文p126</span> 、<span class="pg">原文p138</span> ）。</li>
-<li>CLI 效率技巧：部分关键字补全（<code>sh vl</code>）、<code>| grep &lt;MAC&gt;</code> 过滤、<code>?</code> 在线帮助（P19，<span class="pg">原文p128</span> ）。</li>
+<li><strong>CLI 效率技巧</strong>：<br>部分关键字补全（<code>sh vl</code>）、<code>| grep &lt;MAC&gt;</code> 过滤、<code>?</code> 在线帮助（P19，<span class="pg">原文p128</span> ）。</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>目录管理全流程实验：改 VLAN 后状态变 NOT SYNCHRONIZED，经 write memory / reload / copy running certified / modify running-directory 完整走一遍状态机（C07，<span class="pg">原文p131</span> –<span class="pg">原文p137</span> ）。</li>
+<li><strong>目录管理全流程实验</strong>：<br>改 VLAN 后状态变 NOT SYNCHRONIZED，经 write memory / reload / copy running certified / modify running-directory 完整走一遍状态机（C07，<span class="pg">原文p131</span> –<span class="pg">原文p137</span> ）。</li>
 <li>USB 备份启用后 write memory 自动同步，<code>cd /uflash; ls</code> 见到 certified/working（C08，<span class="pg">原文p138</span> –<span class="pg">原文p139</span> ）。</li>
 <li>AOS 升级命令链 uboot → fpga-cpld → reload → certify（C25，<span class="pg">原文p469</span> ）。</li>
 </ul>

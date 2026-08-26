@@ -84,12 +84,17 @@ blockquote p{margin:6px 0}
 <ul>
 <li>语音/关键业务流量需要队列优先或带宽保障</li>
 <li>按流标记 802.1p/DSCP、限速或重定向</li>
-<li>ACL 需求：L2 拒绝主机、L3 网段拒绝、白名单式内部防火墙</li>
+<li><strong>ACL 需求</strong>：<br>L2 拒绝主机、L3 网段拒绝、白名单式内部防火墙</li>
 <li>话机信任（Auto-QoS）或 SIP 信令自动识别 RTP 流</li>
 <li>排查"配了 QoS 反而全网断"类事故</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>AOS 的 QoS 与 ACL 是同一套策略引擎：解析器之后硬件分类引擎按 L2-L4 条件匹配，策略三元组 Condition+Action+Rule（可选生效时段）执行标记/限速/重定向/镜像（P105/P106/P107，<span class="pg">原文p542-545</span> ）。R8 的队列模型分层为 QSet（每口 8 单播+4 组播队列）→ QSI 实例 → QSet Profile（8SP / 1EF+7SP / 1EF+7WFQ）（P109/F8，<span class="pg">原文p548-552</span> ）。两条默认值是事故之源：未匹配流量默认全 accept（配 deny 后全断）、交换端口默认不信任任何标记（P112/P117，<span class="pg">原文p581-590, 610-618</span> ）。信任要显式给：<code>qos phones trusted</code>/<code>qos nms priority</code> 或端口级信任（P112，<span class="pg">原文p581-590</span> ）。</p>
+<ul>
+<li><strong>AOS 的 QoS 与 ACL 是同一套策略引擎</strong>：<br>解析器之后硬件分类引擎按 L2-L4 条件匹配，策略三元组 Condition+Action+Rule（可选生效时段）执行标记/限速/重定向/镜像（P105/P106/P107，<span class="pg">原文p542-545</span> ）。</li>
+<li>R8 的队列模型分层为 QSet（每口 8 单播+4 组播队列）→ QSI 实例 → QSet Profile（8SP / 1EF+7SP / 1EF+7WFQ）（P109/F8，<span class="pg">原文p548-552</span> ）。</li>
+<li><strong>两条默认值是事故之源</strong>：<br>未匹配流量默认全 accept（配 deny 后全断）、交换端口默认不信任任何标记（P112/P117，<span class="pg">原文p581-590, 610-618</span> ）。</li>
+<li><strong>信任要显式给</strong>：<br><code>qos phones trusted</code>/<code>qos nms priority</code> 或端口级信任（P112，<span class="pg">原文p581-590</span> ）。</li>
+</ul>
 <h2 id="a1">A1（决策/选型）</h2>
 <ol>
 <li>R6 调度三算法：Strict Priority（低队列饿死风险）/ WRR（1-15 包，0=严格）/ DRR（按体量 1=10KB）（P108，<span class="pg">原文p547</span> ）</li>
@@ -121,8 +126,8 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>C27 标记与限速策略：L2 802.1p 重标 + L3 源 IP 优先（<span class="pg">原文p574-593</span> ）</li>
-<li>C31 白名单式 L3 ACL：全局 deny + 精确 accept（<span class="pg">原文p613-614</span> ）</li>
+<li><strong>C27 标记与限速策略</strong>：<br>L2 802.1p 重标 + L3 源 IP 优先（<span class="pg">原文p574-593</span> ）</li>
+<li><strong>C31 白名单式 L3 ACL</strong>：<br>全局 deny + 精确 accept（<span class="pg">原文p613-614</span> ）</li>
 <li>C30 L2 拒绝主机 + qos log 命中验证（<span class="pg">原文p612</span> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>

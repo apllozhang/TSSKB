@@ -84,7 +84,10 @@ blockquote p{margin:6px 0}
 <li>从 OmniVista Cirrus 4 迁移到 OVC，或从 Cirrus 切到 Terra</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>AP Onboarding 的本质是"宣告 + 激活状态机"：Device Catalog 跟踪设备从 Registered 一路到 OV Managed 终态（正常链最长 5 分钟）。激活的核心原理是平台为设备签发数字证书并建立安全 VPN 通道，因此曾归属其他平台的残留证书是激活失败的头号根源。</p>
+<ul>
+<li><strong>AP Onboarding 的本质是"宣告 + 激活状态机"</strong>：<br>Device Catalog 跟踪设备从 Registered 一路到 OV Managed 终态（正常链最长 5 分钟）。</li>
+<li>激活的核心原理是平台为设备签发数字证书并建立安全 VPN 通道，因此曾归属其他平台的残留证书是激活失败的头号根源。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li><strong>Terra 前置三步</strong>（Cirrus 不需要）（<span class="pg">原文p141</span> ）：</li>
@@ -99,7 +102,7 @@ blockquote p{margin:6px 0}
 <ul>
 <li><strong>激活状态机</strong>（排障地图）：Registered → Obtaining Certificate → Upgrade/Upgrading → Assigned → VPN Configuring → Connected to OV → OV Managed（<span class="pg">原文p146</span> <span class="pg">原文p147</span> <span class="pg">原文p166</span> <span class="pg">原文p167</span> ）。</li>
 <li><strong>OVC4 → OVC 迁移</strong>：先在新平台手工重建 AP Group/Provisioning/SSID/Access Policy 并与 OVC4 核对配置 → 从 OVC4 Device Catalog 删除所有设备 → 新平台添加并等 Call Home（AP 最长 30 分钟，或重启设备加速）（<span class="pg">原文p69</span> <span class="pg">原文p70</span> ）。</li>
-<li>AP CLI 查看云代理状态：<code>ocloud_show</code>（<span class="pg">原文p150</span> ）。</li>
+<li><strong>AP CLI 查看云代理状态</strong>：<br><code>ocloud_show</code>（<span class="pg">原文p150</span> ）。</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
@@ -110,12 +113,8 @@ blockquote p{margin:6px 0}
 <ul>
 <li><strong>序列号唯一性</strong>：同一设备不能同时声明在 OVC4 和 OVC，旧平台必须先删（<span class="pg">原文p70</span> ）。</li>
 <li><strong>OVC4→OVC 无自动迁移工具</strong>：AP Group/Provisioning/SSID/Access Policy 全部手工重建核对（<span class="pg">原文p69</span> ）。</li>
-<li>
-<p>激活失败状态族：Failed To Get Certificate / Upgrade Failed / Configuring VPN Failed / Provisioning Failed / Device Validation Failed / Factory Reset Required；</p>
-</li>
-<li>
-<p>其中 "Provisioning Failed" = 设备无法处理供给配置或平台无法发现设备；</p>
-</li>
+<li><strong>激活失败状态族</strong>：<br>Failed To Get Certificate / Upgrade Failed / Configuring VPN Failed / Provisioning Failed / Device Validation Failed / Factory Reset Required；</li>
+<li>其中 "Provisioning Failed" = 设备无法处理供给配置或平台无法发现设备；</li>
 <li>
 <p>"Unsupported Device Model" = 平台不支持该设备（<span class="pg">原文p146</span> <span class="pg">原文p147</span> ）；</p>
 </li>

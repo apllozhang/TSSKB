@@ -120,17 +120,15 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a1">A1 · 书中案例</h2>
 <ul>
-<li>单机转 HA：4.9R2 单机由 4.3R2 或更新 Standalone 升级而来才可转 HA；由 4.3R1 升级来的不行（ce69）。</li>
-<li>KVM 扩容盘检测不到前两块：disk1/disk2 各给 1KB 占位，容量给 disk3，占位盘不许删（ce61）。</li>
-<li>VMware Flexible NIC 升 4.8R1 失败：换网卡类型重配 IP 再升（ce60）。</li>
-<li>许可三档：Starter 免费 30 台不过期；Evaluation 免费 60 台 90 天；Production 全功能，上限 10000 设备 / 4000 AP / 5000 VM（p17）。</li>
+<li><strong>单机转 HA</strong>：<br>4.9R2 单机由 4.3R2 或更新 Standalone 升级而来才可转 HA；由 4.3R1 升级来的不行（ce69）。</li>
+<li><strong>KVM 扩容盘检测不到前两块</strong>：<br>disk1/disk2 各给 1KB 占位，容量给 disk3，占位盘不许删（ce61）。</li>
+<li><strong>VMware Flexible NIC 升 4.8R1 失败</strong>：<br>换网卡类型重配 IP 再升（ce60）。</li>
+<li><strong>许可三档</strong>：<br>Starter 免费 30 台不过期；Evaluation 免费 60 台 90 天；Production 全功能，上限 10000 设备 / 4000 AP / 5000 VM（p17）。</li>
 </ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
-<li>触发：制定升级方案、变更窗口排期、新装 VA、扩容、HA 架构设计、License 采购决策。</li>
-<li>区分：只查"某机型固件配不配" → 用 <code><a href="ov2500-49r2-features-compat.html">ov2500-49r2-features-compat</a></code>；
-升级中/后出现故障 → 用 <code><a href="ov2500-known-issues.html">ov2500-known-issues</a></code>；
-升级风险评审（不可降级、强制改密等）→ 用 <code><a href="ov2500-danger-traps.html">ov2500-danger-traps</a></code>。</li>
+<li><strong>触发</strong>：<br>制定升级方案、变更窗口排期、新装 VA、扩容、HA 架构设计、License 采购决策。</li>
+<li><strong>区分</strong>：<br>只查"某机型固件配不配" → 用 <code><a href="ov2500-49r2-features-compat.html">ov2500-49r2-features-compat</a></code>；升级中/后出现故障 → 用 <code><a href="ov2500-known-issues.html">ov2500-known-issues</a></code>；升级风险评审（不可降级、强制改密等）→ 用 <code><a href="ov2500-danger-traps.html">ov2500-danger-traps</a></code>。</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
@@ -170,9 +168,9 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>
-<li>HA 七条硬限制（ce69）：L3 无集群 IP；4.3R1 链不能转 HA；建集群后不能改 IP/主机名；主机名禁大写；不做内存同步；重同步期间禁 failover；L2 不能转 L3。</li>
-<li>老路径历史坑：4.4R2→4.5R1/4.5R1→4.5R2 必须选 "Download and Upgrade"，"Download Only" 会失败（ce56）。</li>
-<li>备份完整性：OS6900 AOS 8.3.1 全量备份丢 SSH Key 与 User Table，恢复后要手工补（ce13）。</li>
+<li><strong>HA 七条硬限制（ce69）</strong>：<br>L3 无集群 IP；4.3R1 链不能转 HA；建集群后不能改 IP/主机名；主机名禁大写；不做内存同步；重同步期间禁 failover；L2 不能转 L3。</li>
+<li><strong>老路径历史坑</strong>：<br>4.4R2→4.5R1/4.5R1→4.5R2 必须选 "Download and Upgrade"，"Download Only" 会失败（ce56）。</li>
+<li><strong>备份完整性</strong>：<br>OS6900 AOS 8.3.1 全量备份丢 SSH Key 与 User Table，恢复后要手工补（ce13）。</li>
 <li>L3 HA failover 后 Top N 采集断档属已知问题，报表预期要设好（ce62）。</li>
 </ul>
 <hr />

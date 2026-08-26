@@ -82,7 +82,7 @@ blockquote p{margin:6px 0}
 <ul>
 <li>本书是 ALE OmniSwitch 多产品线 AOS Release 8.10R4 的 1745 页特性配置手册（48 个功能章）。</li>
 <li>它没有叙事结构，是"某特性怎么配、默认值是什么、与其他特性怎么交互"的 CLI 查询底座。</li>
-<li>全书统一章法（F1）：Defaults→Quick Steps→Overview→Configuring→Example→Verifying——排障时按固定小节定位，Quick Steps 与 Application Example 提供可复制流程，"Interaction With Other Features"与 Limitations 提示跨功能约束。</li>
+<li><strong>全书统一章法（F1）</strong>：<br>Defaults→Quick Steps→Overview→Configuring→Example→Verifying——排障时按固定小节定位，Quick Steps 与 Application Example 提供可复制流程，"Interaction With Other Features"与 Limitations 提示跨功能约束。</li>
 <li>以下按十个技能单元摘要，页码均指原书。</li>
 </ul>
 <h2 id="_1">一、知识地图（十技能单元）</h2>
@@ -139,25 +139,88 @@ OSPF/IS-IS/BGP 主体在 Advanced Routing 手册（Ch25-26/29-30，p842-1015）�
 </ol>
 <h2 id="_2">二、十单元要点串讲</h2>
 <h3 id="1">1. 交换机基础：违规恢复是统一底层</h3>
-<p>端口自协商禁用后 auto MDIX/speed/duplex 全失效（<span class="pg">原文p56</span> ）。风暴控制按 bcast/uucast/mcast 分别限速，默认动作纯丢包不告警，要感知须显式配 action/trap，自动恢复靠 low-threshold（<span class="pg">原文p59</span> ）。违规关停与恢复统一框架（F2）：十余个特性共用 shutdown/recovery/trap，排障先查 <code>show violation</code>（<span class="pg">原文p69</span> ）；Administratively 关断插拔网线救不回，永久关断只能 clear violation（<span class="pg">原文p69-70</span> ）。MACsec 三模式：静态 SA（两端手工配匹配 SAK）、动态 SAK(PSK)、动态 CAK(EAP 须 EAP-TLS)（<span class="pg">原文p83-85</span> ）。静态 MAC 分 bridging/filtering，聚合口配在 linkagg ID（<span class="pg">原文p105-106</span> ）。</p>
+<ul>
+<li>端口自协商禁用后 auto MDIX/speed/duplex 全失效（<span class="pg">原文p56</span> ）。</li>
+<li>风暴控制按 bcast/uucast/mcast 分别限速，默认动作纯丢包不告警，要感知须显式配 action/trap，自动恢复靠 low-threshold（<span class="pg">原文p59</span> ）。</li>
+<li><strong>违规关停与恢复统一框架（F2）</strong>：<br>十余个特性共用 shutdown/recovery/trap，排障先查 <code>show violation</code>（<span class="pg">原文p69</span> ）；Administratively 关断插拔网线救不回，永久关断只能 clear violation（<span class="pg">原文p69-70</span> ）。</li>
+<li><strong>MACsec 三模式</strong>：<br>静态 SA（两端手工配匹配 SAK）、动态 SAK(PSK)、动态 CAK(EAP 须 EAP-TLS)（<span class="pg">原文p83-85</span> ）。</li>
+<li>静态 MAC 分 bridging/filtering，聚合口配在 linkagg ID（<span class="pg">原文p105-106</span> ）。</li>
+</ul>
 <h3 id="2-vlan">2. VLAN 与二层域：演进框架选型</h3>
-<p>标准 VLAN→802.1Q→PVLAN→QinQ→VXLAN→EVPN 按隔离需求逐级选用（F17）。端口只能属一个 untagged VLAN；VLAN 在有活动端口前保持 inactive（<span class="pg">原文p115</span> ）。PVLAN 主 VLAN 配置自动作用于二级 VLAN，IP 接口只能配主 VLAN（<span class="pg">原文p129</span> ）。QinQ 隧道 ID 与 VLAN ID 一一对应，double tagging 与 VLAN translation 两法（<span class="pg">原文p1608</span> ）。MVRP 动态声明 VLAN 成员，与 per-VLAN STP 互斥（<span class="pg">原文p444</span> ）。HA VLAN 用静态 MAC(L2)/静态 ARP(L3) 实现服务器集群（<span class="pg">原文p140</span> ）。</p>
+<ul>
+<li>标准 VLAN→802.1Q→PVLAN→QinQ→VXLAN→EVPN 按隔离需求逐级选用（F17）。</li>
+<li>端口只能属一个 untagged VLAN；VLAN 在有活动端口前保持 inactive（<span class="pg">原文p115</span> ）。</li>
+<li>PVLAN 主 VLAN 配置自动作用于二级 VLAN，IP 接口只能配主 VLAN（<span class="pg">原文p129</span> ）。</li>
+<li>QinQ 隧道 ID 与 VLAN ID 一一对应，double tagging 与 VLAN translation 两法（<span class="pg">原文p1608</span> ）。</li>
+<li>MVRP 动态声明 VLAN 成员，与 per-VLAN STP 互斥（<span class="pg">原文p444</span> ）。</li>
+<li>HA VLAN 用静态 MAC(L2)/静态 ARP(L3) 实现服务器集群（<span class="pg">原文p140</span> ）。</li>
+</ul>
 <h3 id="3">3. 二层冗余：分层防环选型</h3>
-<p>STP→UDLD→LBD→ERP/MRP→DHL→SPBM 分层选型（F3）。MSTP 仅 Flat 模式，MSTI 端口状态由 CST 统一算，单实例独立转发要调 path cost（<span class="pg">原文p164</span> ）。聚合组成员必须同速，静态聚合与部分厂商不互通（<span class="pg">原文p341</span> ）。DHL 每交换机一个会话两链路，未映射 VLAN 自动归 linkA（<span class="pg">原文p380-383</span> ）。ERP Guard Timer 必须大于 R-APS 绕环时延否则可能成环（<span class="pg">原文p396</span> ）；MRP 面向工业确定性重构，MRA 投票自动选 MRM（<span class="pg">原文p426-428</span> ）。MST 模式下 LBD 只能开在 STP 禁用接口（<span class="pg">原文p328</span> ）。</p>
+<ul>
+<li>STP→UDLD→LBD→ERP/MRP→DHL→SPBM 分层选型（F3）。</li>
+<li>MSTP 仅 Flat 模式，MSTI 端口状态由 CST 统一算，单实例独立转发要调 path cost（<span class="pg">原文p164</span> ）。</li>
+<li>聚合组成员必须同速，静态聚合与部分厂商不互通（<span class="pg">原文p341</span> ）。</li>
+<li>DHL 每交换机一个会话两链路，未映射 VLAN 自动归 linkA（<span class="pg">原文p380-383</span> ）。</li>
+<li>ERP Guard Timer 必须大于 R-APS 绕环时延否则可能成环（<span class="pg">原文p396</span> ）；MRP 面向工业确定性重构，MRA 投票自动选 MRM（<span class="pg">原文p426-428</span> ）。</li>
+<li>MST 模式下 LBD 只能开在 STP 禁用接口（<span class="pg">原文p328</span> ）。</li>
+</ul>
 <h3 id="4-fabricsapsdpservice">4. 骨干与 Fabric：SAP/SDP/Service 一次学四处用</h3>
-<p>SPBM=ISIS-SPB 控制面+MAC-in-MAC 数据面；BEB 学客户 MAC、BCB 只按 BMAC 转发；配置必须先骨干（六步）后服务（三步）（<span class="pg">原文p211, 245</span> ）。SAP/SDP/Service 三件套抽象通用于 SPB/VPLS/VPWS/VXLAN（F5）。VPLS 需 PE 全网格 PW+Split Horizon（<span class="pg">原文p478</span> ）。VXLAN VTEP 由 Loopback0 IP 标识（<span class="pg">原文p535</span> ）。EVPN 用控制面通告 MAC/IP 替代泛洪学习；静态聚合必须手工配 ESI 否则失去多归属（<span class="pg">原文p587</span> ）；部署模型库 Clos-3/5/Collapsed/Multi-site/Multi-PoD（F7）。</p>
+<ul>
+<li>SPBM=ISIS-SPB 控制面+MAC-in-MAC 数据面；BEB 学客户 MAC、BCB 只按 BMAC 转发；配置必须先骨干（六步）后服务（三步）（<span class="pg">原文p211, 245</span> ）。</li>
+<li>SAP/SDP/Service 三件套抽象通用于 SPB/VPLS/VPWS/VXLAN（F5）。</li>
+<li>VPLS 需 PE 全网格 PW+Split Horizon（<span class="pg">原文p478</span> ）。</li>
+<li>VXLAN VTEP 由 Loopback0 IP 标识（<span class="pg">原文p535</span> ）。</li>
+<li>EVPN 用控制面通告 MAC/IP 替代泛洪学习；静态聚合必须手工配 ESI 否则失去多归属（<span class="pg">原文p587</span> ）；部署模型库 Clos-3/5/Collapsed/Multi-site/Multi-PoD（F7）。</li>
+</ul>
 <h3 id="5-ipipv6-vrf-dhcp">5. IP/IPv6 服务：VRF 隔离与 DHCP 全栈</h3>
-<p><code>ip interface &lt;name&gt; address &lt;ip&gt; vlan &lt;vid&gt;</code> 是三层基本模型（<span class="pg">原文p709</span> ）。VRF 分割 L3 实例可复用地址空间，跨 VRF 必须显式 route leak（<span class="pg">原文p756</span> ）。DHCP 全栈（F12）：外部 relay→内部 relay（global/per-interface、Option-82）→Generic UDP Relay→内部 Server→Snooping（L2/L3、绑定表、信任口）→DHCPv6（relay/snooping/RA guard/ISF）。全局 Option-82 与 Snooping 互斥（<span class="pg">原文p925</span> ）。IPsec 仅传输模式；机密性必须 ESP（<span class="pg">原文p819</span> ）。</p>
+<ul>
+<li><code>ip interface &lt;name&gt; address &lt;ip&gt; vlan &lt;vid&gt;</code> 是三层基本模型（<span class="pg">原文p709</span> ）。</li>
+<li>VRF 分割 L3 实例可复用地址空间，跨 VRF 必须显式 route leak（<span class="pg">原文p756</span> ）。</li>
+<li><strong>DHCP 全栈（F12）</strong>：<br>外部 relay→内部 relay（global/per-interface、Option-82）→Generic UDP Relay→内部 Server→Snooping（L2/L3、绑定表、信任口）→DHCPv6（relay/snooping/RA guard/ISF）。</li>
+<li>全局 Option-82 与 Snooping 互斥（<span class="pg">原文p925</span> ）。</li>
+<li>IPsec 仅传输模式；机密性必须 ESP（<span class="pg">原文p819</span> ）。</li>
+</ul>
 <h3 id="6-vrrp-bfd">6. 路由基础：VRRP 时序与 BFD 分工</h3>
-<p>RIP 15 跳上限+120 秒 hold-down，大网不适用（<span class="pg">原文p842</span> ）。VRRP Master_Down=(3×Adv)+Skew、Skew=(256-P)/256；优先级接近会接管抖动（<span class="pg">原文p980</span> ）；IPv4 须先配接口地址才能使能（<span class="pg">原文p978</span> ）。BFD：VRRP/静态路由只用 Echo（单跳），OSPF/IS-IS/BGP 用控制包（可多跳）（<span class="pg">原文p870</span> ）。SLB 以 VIP 或 QoS condition 标识集群，WRR 分发+ping 健康探测（<span class="pg">原文p1012</span> ）。</p>
+<ul>
+<li>RIP 15 跳上限+120 秒 hold-down，大网不适用（<span class="pg">原文p842</span> ）。</li>
+<li>VRRP Master_Down=(3×Adv)+Skew、Skew=(256-P)/256；优先级接近会接管抖动（<span class="pg">原文p980</span> ）；IPv4 须先配接口地址才能使能（<span class="pg">原文p978</span> ）。</li>
+<li><strong>BFD</strong>：<br>VRRP/静态路由只用 Echo（单跳），OSPF/IS-IS/BGP 用控制包（可多跳）（<span class="pg">原文p870</span> ）。</li>
+<li>SLB 以 VIP 或 QoS condition 标识集群，WRR 分发+ping 健康探测（<span class="pg">原文p1012</span> ）。</li>
+</ul>
 <h3 id="7-vlan">7. 组播：域内交换+域间路由+跨 VLAN 分发</h3>
-<p>IPMS(IGMP)/IPMSv6(MLD) 管 VLAN/service 域内交换；PIM/DVMRP 建路由库；IPMVLAN/MVR 跨 VLAN 单向分发（F13）。querier 最低 IP 当选（<span class="pg">原文p1033</span> ）。IPMVLAN 模式（企业/Stacking）建后不可改必须删除重建；Stacking 模式仅一个 sender 口（<span class="pg">原文p1086-1087</span> ）。</p>
+<ul>
+<li>IPMS(IGMP)/IPMSv6(MLD) 管 VLAN/service 域内交换；PIM/DVMRP 建路由库；IPMVLAN/MVR 跨 VLAN 单向分发（F13）。</li>
+<li>querier 最低 IP 当选（<span class="pg">原文p1033</span> ）。</li>
+<li>IPMVLAN 模式（企业/Stacking）建后不可改必须删除重建；Stacking 模式仅一个 sender 口（<span class="pg">原文p1086-1087</span> ）。</li>
+</ul>
 <h3 id="8-qos-qos-apply">8. QoS 与策略：四步链+三元组+qos apply</h3>
-<p>分类→拥塞管理→拥塞避免→policing/shaping 四步链（F8）；policy=condition+action+rule，多策略命中取最高 precedence；每口 8 队列；四类策略列表（default/UNP/egress/AFP）。配置后不 <code>qos apply</code> 不生效是最常见坑（<span class="pg">原文p1149</span> ）。IPv4/IPv6 条件不能混进同一 condition（<span class="pg">原文p1135</span> ）。802.1Q tagged 口默认 untrusted（<span class="pg">原文p1134</span> ）。SIP snooping 仅 IPv4/UDP、所有初始消息须过同一 trusted server（<span class="pg">原文p704</span> ）。</p>
+<ul>
+<li>分类→拥塞管理→拥塞避免→policing/shaping 四步链（F8）；
+policy=condition+action+rule，多策略命中取最高 precedence；
+每口 8 队列；
+四类策略列表（default/UNP/egress/AFP）。</li>
+<li>配置后不 <code>qos apply</code> 不生效是最常见坑（<span class="pg">原文p1149</span> ）。</li>
+<li>IPv4/IPv6 条件不能混进同一 condition（<span class="pg">原文p1135</span> ）。</li>
+<li>802.1Q tagged 口默认 untrusted（<span class="pg">原文p1134</span> ）。</li>
+<li>SIP snooping 仅 IPv4/UDP、所有初始消息须过同一 trusted server（<span class="pg">原文p704</span> ）。</li>
+</ul>
 <h3 id="9">9. 接入安全：认证→分类→角色→隔离</h3>
-<p>准入框架（F9）：802.1X/MAC/Captive Portal→RADIUS（唯一支持端口准入）→UNP 分类规则→profile（VLAN/service 映射+QoS 列表）→QMR。标准次序：RADIUS→profile→映射→分类→端口→使能→默认 profile（<span class="pg">原文p1211</span> ）。认证服务器不逐台轮询，第一台找不到用户即失败（<span class="pg">原文p1475</span> ）。AppMon（DPI）与 AFP（REGEX）互补（F11）；AFP 默认全局使能但端口全禁用（<span class="pg">原文p1457</span> ）。LPS 不支持聚合口、学习窗口全局（<span class="pg">原文p1536</span> ）。镜像配 unblocked-vlan 防 STP 中断；sFlow 默认 UDP 6343（<span class="pg">原文p1558, 1561</span> ）。</p>
+<ul>
+<li><strong>准入框架（F9）</strong>：<br>802.1X/MAC/Captive Portal→RADIUS（唯一支持端口准入）→UNP 分类规则→profile（VLAN/service 映射+QoS 列表）→QMR。</li>
+<li><strong>标准次序</strong>：<br>RADIUS→profile→映射→分类→端口→使能→默认 profile（<span class="pg">原文p1211</span> ）。</li>
+<li>认证服务器不逐台轮询，第一台找不到用户即失败（<span class="pg">原文p1475</span> ）。</li>
+<li>AppMon（DPI）与 AFP（REGEX）互补（F11）；AFP 默认全局使能但端口全禁用（<span class="pg">原文p1457</span> ）。</li>
+<li>LPS 不支持聚合口、学习窗口全局（<span class="pg">原文p1536</span> ）。</li>
+<li>镜像配 unblocked-vlan 防 STP 中断；sFlow 默认 UDP 6343（<span class="pg">原文p1558, 1561</span> ）。</li>
+</ul>
 <h3 id="10-oam">10. OAM 与运维：先分层再定位</h3>
-<p>LINK OAM(802.3ah) 管单链路、Service OAM(802.1ag/Y.1731) 管端到端业务（F14）；MD 分层 0-7 对应组织边界，MEP 发起命令防域间泄漏（<span class="pg">原文p1655</span> ）。EFM 5 秒无 OAMPDU 即失联（<span class="pg">原文p1674</span> ）。Switch Health 资源阈值+采样；日志=级别+输出设备+格式+存储上限（<span class="pg">原文p1566, 1580</span> ）。SAA 以 SPB 会话测量出 XML 历史（<span class="pg">原文p1700</span> ）。PPPoE-IA 全局+端口两级必须同时使能（<span class="pg">原文p1715</span> ）。</p>
+<ul>
+<li>LINK OAM(802.3ah) 管单链路、Service OAM(802.1ag/Y.1731) 管端到端业务（F14）；MD 分层 0-7 对应组织边界，MEP 发起命令防域间泄漏（<span class="pg">原文p1655</span> ）。</li>
+<li>EFM 5 秒无 OAMPDU 即失联（<span class="pg">原文p1674</span> ）。</li>
+<li>Switch Health 资源阈值+采样；日志=级别+输出设备+格式+存储上限（<span class="pg">原文p1566, 1580</span> ）。</li>
+<li>SAA 以 SPB 会话测量出 XML 历史（<span class="pg">原文p1700</span> ）。</li>
+<li>PPPoE-IA 全局+端口两级必须同时使能（<span class="pg">原文p1715</span> ）。</li>
+</ul>
 <h2 id="_3">三、高价值章节页码索引</h2>
 <table>
 <thead>

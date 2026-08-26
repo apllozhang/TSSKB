@@ -127,7 +127,7 @@ show saa statistics aggregate               ! RTT/Jitter min/avg/max + 丢包
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
 <li>部署后验收（逐对测通）、长期监控（阈值告警）、故障定位（邻接/转发/路径哪层断）时用本 skill。</li>
-<li>与 <code><a href="spb-backbone-deploy.html">spb-backbone-deploy</a></code> 的区分：那个 skill 管"配上去"，本 skill 管"测出来"；验证链命令在部署 skill 的 E 步骤里被引用，完整用法与限制集中在此。</li>
+<li><strong>与 <code><a href="spb-backbone-deploy.html">spb-backbone-deploy</a></code> 的区分</strong>：<br>那个 skill 管"配上去"，本 skill 管"测出来"；验证链命令在部署 skill 的 E 步骤里被引用，完整用法与限制集中在此。</li>
 <li>L3VPN 的"路由学到没有"三级表对拍模板归 <code><a href="ip-over-spb.html">ip-over-spb</a></code>（c10），本 skill 补充通用 OAM 工具。</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
@@ -161,7 +161,7 @@ show saa statistics aggregate               ! RTT/Jitter min/avg/max + 丢包
 <li><strong>mac-ping 目标不能是广播/组播/空地址</strong>（p26/ce10）：必须先取对端单播 B-MAC；tandem 组播树地址 ping 不了。</li>
 <li><strong>每包超时固定 1 秒不可配</strong>（p26/ce10）：时延基线注意此粒度。</li>
 <li>SAA 对 LAG 目的会遍历所有成员链路（f12）——聚合链路的每条路径都被覆盖，统计里会看到多条路径的结果。</li>
-<li>SAA 默认参数（p27）：1 分钟/轮、5 包、包间隔 1000us、载荷 32 字节；历史文件 /flash/network/saa.xml（文件名/周期可配）。</li>
+<li><strong>SAA 默认参数（p27）</strong>：<br>1 分钟/轮、5 包、包间隔 1000us、载荷 32 字节；历史文件 /flash/network/saa.xml（文件名/周期可配）。</li>
 <li>服务层验证另有 <code>show spb isis services</code> / <code>show service sdp spb</code> / <code>show mac-learning domain spb</code>（归 <code><a href="spb-l2-service.html">spb-l2-service</a></code>）。</li>
 </ul>
 <hr />

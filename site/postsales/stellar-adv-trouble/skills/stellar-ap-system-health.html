@@ -155,13 +155,13 @@ blockquote p{margin:6px 0}
 <h2 id="a1">A1 · 书中案例</h2>
 <ul>
 <li>教材示例 <code>/usr/sbin/drm</code> 占 81% CPU，即 top 定位元凶后随工单上报的典型（p52）。</li>
-<li>eag.log 三阶段：客户端首联 IP 未知（userip 0.0.0.0）→ 获取 IP → 发出 PortalRedirect。<strong>卡在 IP 未知阶段 = DHCP 未完成，先查地址获取而非门户本身</strong>（p56）。</li>
-<li>p50 重启核查：uptime 远小于部署时长即发生过非计划重启，先对时再翻日志。</li>
+<li><strong>eag.log 三阶段</strong>：<br>客户端首联 IP 未知（userip 0.0.0.0）→ 获取 IP → 发出 PortalRedirect。<strong>卡在 IP 未知阶段 = DHCP 未完成，先查地址获取而非门户本身</strong>（p56）。</li>
+<li><strong>p50 重启核查</strong>：<br>uptime 远小于部署时长即发生过非计划重启，先对时再翻日志。</li>
 </ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
 <li>症状是"AP 整体不对劲"（灯不对、疑似重启、变慢、功能失灵）→ 本 skill；症状是"单个客户端连不上/掉线"→ <code><a href="client-connection-trouble.html">client-connection-trouble</a></code>。</li>
-<li>门户相关：用户 complaining 转不出认证页 → 本 skill 的 eag 部分；802.1X 认证失败（无门户）→ <code><a href="dot1x-radius-trouble.html">dot1x-radius-trouble</a></code>。</li>
+<li><strong>门户相关</strong>：<br>用户 complaining 转不出认证页 → 本 skill 的 eag 部分；802.1X 认证失败（无门户）→ <code><a href="dot1x-radius-trouble.html">dot1x-radius-trouble</a></code>。</li>
 <li>LED 显示纯红（启动中）长时间不变化 → 硬件/启动问题，本 skill 优先；LED 正常但 AP 不上线 → <code><a href="network-side-trouble.html">network-side-trouble</a></code>。</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>

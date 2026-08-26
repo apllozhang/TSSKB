@@ -84,7 +84,7 @@ blockquote p{margin:6px 0}
 </blockquote>
 <h2 id="i">I · 方法论骨架</h2>
 <ul>
-<li>云管可观测性分三层，由粗到细：1. <strong>QoE（体验质量）</strong>——从终端视角回答"用户体验好不好"：六指标 + 失败分类器。</li>
+<li><strong>云管可观测性分三层，由粗到细</strong>：<br>1. <strong>QoE（体验质量）</strong>——从终端视角回答"用户体验好不好"：六指标 + 失败分类器。</li>
 <li>
 <ul>
 <li>Successful Connects（成功连接数，计数器无阈值）   - Time To Connect（关联/授权/DHCP/Portal 四阶段总耗时；阈值 2-20s，默认 2s）   - Roaming（漫游成功率；阈值 0.2-2s，默认 0.2s）   - Coverage（信号高于阈值的时间占比；阈值 -90~-55dBm，默认 -66dBm）   - Available Capacity（RF 信道可用时间占比；阈值 10%-50%，默认 10%）   - Device Uptime（设备在线率；交换机仅有这一项 QoE 指标）2. <strong>网络分析</strong>——从设备视角回答"网络健康吗"：信道分布与利用率 → AP/交换机 CPU/内存/闪存健康 → 单设备下钻（客户端数、吞吐、发射功率、端口帧统计/PoE）。</li>
@@ -98,10 +98,10 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="a1-lab">A1 · 书中案例（Lab 精要）</h2>
 <ul>
-<li>Lab 前提：树莓派先连上 Employee SSID 产生数据。</li>
-<li>① QoE：Network &gt; Analytics &gt; QoE，确认站点选择，逐项看六指标，Configure Thresholds 调阈值，More details 看失败分类器（时间窗扩到 Last 7 days，最近一小时没有失败样本时看不到失败分类器）。</li>
-<li>② Network Analytics：点具体信道跳转到使用该信道 AP 的 RF Details。</li>
-<li>③ Client Analytics：按小时点选柱状图，下方各分布组件联动。</li>
+<li><strong>Lab 前提</strong>：<br>树莓派先连上 Employee SSID 产生数据。</li>
+<li><strong>① QoE</strong>：<br>Network &gt; Analytics &gt; QoE，确认站点选择，逐项看六指标，Configure Thresholds 调阈值，More details 看失败分类器（时间窗扩到 Last 7 days，最近一小时没有失败样本时看不到失败分类器）。</li>
+<li><strong>② Network Analytics</strong>：<br>点具体信道跳转到使用该信道 AP 的 RF Details。</li>
+<li><strong>③ Client Analytics</strong>：<br>按小时点选柱状图，下方各分布组件联动。</li>
 <li>（p156-163）。</li>
 </ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
@@ -149,7 +149,7 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>
-<li>失败分类器要有失败样本才显示：时间范围太短（如最近一小时）会"看不到问题"，先扩窗到 7 天。</li>
+<li><strong>失败分类器要有失败样本才显示</strong>：<br>时间范围太短（如最近一小时）会"看不到问题"，先扩窗到 7 天。</li>
 <li>交换机只有 Device Uptime 一项 QoE 指标，别在交换机上找其他五项。</li>
 <li>阈值是按站点配置的，多站点不能一刀切；阈值应对齐业务用途（参考 stellar-deployment-checklist 的场景化阈值 70%/20%/90%/25%）。</li>
 <li>QoE 是 Cirrus 云管专属指标体系，脱离 OmniVista Cirrus 不适用。</li>

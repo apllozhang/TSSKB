@@ -80,13 +80,18 @@ blockquote p{margin:6px 0}
 <a href="../skills/aos-nc-oam-monitoring.html">aos-nc-oam-monitoring</a>
 <a href="../skills/aos-nc-switch-foundation.html">aos-nc-switch-foundation</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../aos/index.html">AOS 软件手册</a> › <a href="../index.html">AOS 8.10R04</a> › <span>aos-nc-multicast</span></nav><h1>aos-nc-multicast</h1><p class="meta"><span class="badge">SKILL</span> aos-nc-multicast · 来源页码: </p><h2 id="r">R（触发场景）</h2>
 <ul>
-<li>VLAN 内 IPTV/视频会议流量要不泛洪、按成员精确复制：IPMS（IGMP snooping）</li>
-<li>IPv6 组播环境：IPMSv6（MLD snooping）</li>
-<li>跨网段组播源：组播路由（PIM-SM/DM、DVMRP）与 IPMSR 交互</li>
+<li><strong>VLAN 内 IPTV/视频会议流量要不泛洪、按成员精确复制</strong>：<br>IPMS（IGMP snooping）</li>
+<li><strong>IPv6 组播环境</strong>：<br>IPMSv6（MLD snooping）</li>
+<li><strong>跨网段组播源</strong>：<br>组播路由（PIM-SM/DM、DVMRP）与 IPMSR 交互</li>
 <li>多个用户 VLAN 共享一个组播 VLAN 做单向分发（MVR/IPMVLAN）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>组播分发框架（F13，<span class="pg">原文p1032</span> /<span class="pg">原文p1086</span> ）：IPMS(IGMP)/IPMSv6(MLD) 做 VLAN/service 域内组播交换，PIM/DVMRP 做域间路由，IPMVLAN/MVR 做跨 VLAN 单向分发，EVPN RT6-8/OISM 做叠加层优化。组播组地址为 D 类 224.0.0.0-239.255.255.255，239/8 为管理域（P148，<span class="pg">原文p1032</span> ）。多个组播路由器共存时最低 IP 者当选 IGMP querier（P150，<span class="pg">原文p1033</span> ）。组播路由协议建立组播路由库，IPMS 依其决策+端口成员请求转发（P151，<span class="pg">原文p1033</span> ）。</p>
+<ul>
+<li><strong>组播分发框架（F13，<span class="pg">原文p1032</span> /<span class="pg">原文p1086</span> ）</strong>：<br>IPMS(IGMP)/IPMSv6(MLD) 做 VLAN/service 域内组播交换，PIM/DVMRP 做域间路由，IPMVLAN/MVR 做跨 VLAN 单向分发，EVPN RT6-8/OISM 做叠加层优化。</li>
+<li>组播组地址为 D 类 224.0.0.0-239.255.255.255，239/8 为管理域（P148，<span class="pg">原文p1032</span> ）。</li>
+<li>多个组播路由器共存时最低 IP 者当选 IGMP querier（P150，<span class="pg">原文p1033</span> ）。</li>
+<li>组播路由协议建立组播路由库，IPMS 依其决策+端口成员请求转发（P151，<span class="pg">原文p1033</span> ）。</li>
+</ul>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>域内组播交换选 IPMS/IPMSv6</strong>：IGMP 版本（v1-3）按客户端与源端能力选；querier 可静态指定；静态组用于不发 report 的接收者</li>
@@ -113,4 +118,7 @@ blockquote p{margin:6px 0}
 <li>IGMP querier 最低 IP 当选；多路由器共存时注意 querier 漂移对转发表的影响（P150，<span class="pg">原文p1033</span> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniSwitch AOS 8.10R4 Network Configuration Guide 第 31 章 IP Multicast Switching（<span class="pg">原文p1032-1038</span> ）、第 32 章 IP Multicast VLAN（<span class="pg">原文p1086-1093</span> ）。条目来源：cases C49/C50；principles P148-P151；counter-examples X58/X59；frameworks F13。</p><div class="pn"><a href="aos-nc-routing.html">⬅ 上一单元：aos-nc-routing</a><a class="nxt" href="aos-nc-qos-policy.html">下一单元：aos-nc-qos-policy ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<ul>
+<li>OmniSwitch AOS 8.10R4 Network Configuration Guide 第 31 章 IP Multicast Switching（<span class="pg">原文p1032-1038</span> ）、第 32 章 IP Multicast VLAN（<span class="pg">原文p1086-1093</span> ）。</li>
+<li><strong>条目来源</strong>：<br>cases C49/C50；principles P148-P151；counter-examples X58/X59；frameworks F13。</li>
+</ul><div class="pn"><a href="aos-nc-routing.html">⬅ 上一单元：aos-nc-routing</a><a class="nxt" href="aos-nc-qos-policy.html">下一单元：aos-nc-qos-policy ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

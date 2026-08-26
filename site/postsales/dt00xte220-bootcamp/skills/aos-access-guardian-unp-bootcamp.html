@@ -89,7 +89,13 @@ blockquote p{margin:6px 0}
 <li>IoT 设备自动识别（DHCP Option 55/60 指纹 + MAC OUI）并自动指派档案</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>Access Guardian 的核心是"端口自动感知多客户端认证"：同一口上自动检测 802.1X 与非 802.1X 设备（P120，<span class="pg">原文p630</span> ）。身份的载体是 UNP（Universal Network Profile）= VLAN + QoS/ACL 策略列表 +（R8 加 Location/Period），档案随用户动态应用到端口（P121，<span class="pg">原文p631</span> ）。下发路径：RADIUS Access-Accept 的 Filter-ID 携 UNP 名；无返回时走降级链——分类规则 → 默认 UNP → Captive Portal → 阻断（P122/F10，<span class="pg">原文p632, 635-638</span> ）。R8 端口分类规则有 16 级固定优先序（Port &gt; Port+VLAN tag &gt; Domain 组合 &gt; MAC &gt; OUI &gt; Range &gt; LLDP &gt; Auth-type &gt; IP &gt; VLAN tag）（P124，<span class="pg">原文p638</span> ）。IoT 画像三组件：本地签名收集器 + 本地 profiler + UNP 画像，识别后自动指派 UNP（P127/P128/F11，<span class="pg">原文p686-690</span> ）。</p>
+<ul>
+<li><strong>Access Guardian 的核心是"端口自动感知多客户端认证"</strong>：<br>同一口上自动检测 802.1X 与非 802.1X 设备（P120，<span class="pg">原文p630</span> ）。</li>
+<li>身份的载体是 UNP（Universal Network Profile）= VLAN + QoS/ACL 策略列表 +（R8 加 Location/Period），档案随用户动态应用到端口（P121，<span class="pg">原文p631</span> ）。</li>
+<li><strong>下发路径</strong>：<br>RADIUS Access-Accept 的 Filter-ID 携 UNP 名；无返回时走降级链——分类规则 → 默认 UNP → Captive Portal → 阻断（P122/F10，<span class="pg">原文p632, 635-638</span> ）。</li>
+<li>R8 端口分类规则有 16 级固定优先序（Port &gt; Port+VLAN tag &gt; Domain 组合 &gt; MAC &gt; OUI &gt; Range &gt; LLDP &gt; Auth-type &gt; IP &gt; VLAN tag）（P124，<span class="pg">原文p638</span> ）。</li>
+<li><strong>IoT 画像三组件</strong>：<br>本地签名收集器 + 本地 profiler + UNP 画像，识别后自动指派 UNP（P127/P128/F11，<span class="pg">原文p686-690</span> ）。</li>
+</ul>
 <h2 id="a1">A1（决策/选型）</h2>
 <ol>
 <li>认证方式：802.1X（有 supplicant）vs MAC 认证（交换机以源 MAC 为用户名/密码构造 RADIUS 请求，P123，<span class="pg">原文p633</span> ）vs 免认证纯分类</li>
@@ -127,8 +133,8 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>C33 AG 部署：R6/R8 双语法 + MAC/OUI/LLDP 分类规则 + RADIUS 档案 + test-radius-server 联调（<span class="pg">原文p642-677</span> ）</li>
-<li>C34 Location/Period 策略：按位置与办公时间窗限制（<span class="pg">原文p649-650</span> ）</li>
+<li><strong>C33 AG 部署</strong>：<br>R6/R8 双语法 + MAC/OUI/LLDP 分类规则 + RADIUS 档案 + test-radius-server 联调（<span class="pg">原文p642-677</span> ）</li>
+<li><strong>C34 Location/Period 策略</strong>：<br>按位置与办公时间窗限制（<span class="pg">原文p649-650</span> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>

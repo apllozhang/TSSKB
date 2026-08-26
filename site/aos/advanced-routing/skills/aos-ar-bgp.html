@@ -73,15 +73,19 @@ blockquote p{margin:6px 0}
 <div class="grp">组播高级</div>
 <a href="../skills/aos-ar-multicast-advanced.html">aos-ar-multicast-advanced</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../aos/index.html">AOS 软件手册</a> › <a href="../index.html">AOS 8.10R04</a> › <span>aos-ar-bgp</span></nav><h1>aos-ar-bgp</h1><p class="meta"><span class="badge">SKILL</span> aos-ar-bgp · 来源页码: </p><h2 id="r">R（触发场景）</h2>
 <ul>
-<li>新上线 BGP：router-id/primary → ip load bgp → AS 号 → 邻居 remote-as → 使能七步</li>
-<li>iBGP 全互联太贵：要部署 Route Reflector（含冗余 cluster-id）或联邦</li>
+<li><strong>新上线 BGP</strong>：<br>router-id/primary → ip load bgp → AS 号 → 邻居 remote-as → 使能七步</li>
+<li><strong>iBGP 全互联太贵</strong>：<br>要部署 Route Reflector（含冗余 cluster-id）或联邦</li>
 <li>要做路由聚合（summary-only/as-set）、抖动抑制 dampening、属性策略（local-preference/MED/community）</li>
 <li>IPv6 对等（纯 v6 域或 IPv4 会话跑 v6 前缀）、GTSM 防攻击、EVPN/VPLS 地址族、邻居模板</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>BGP 是 AS 间 EGP，跑在 TCP 179 上，增量更新使长会话更高效（P60）；
-AS_PATH 承担 AS 级环路检测（P61）。选路属性体系：Local Preference（AS 内、越高越优先）与 MED（仅同一邻居 AS 间比较、绝不向下一 AS 传播）（P71/P77）。iBGP 全互联规则由 RR 放松（P65），RR 通告按路由来源决定反射范围（P66）；
-联邦以子 AS 间 EBGP 模拟整体 IBGP（P69）。策略体系（F5）：aspath/community/prefix(prefix6)/route-map 四类原子策略先建后绑到 peer 的 in/out 方向，改动后 clear soft 重应用（P78/C29）。IPv6 由 MP-BGP 的 MP_REACH/MP_UNREACH_NLRI 承载，v6 前缀可跑在 v4 会话上（P80/P81）。</p>
+<ul>
+<li>BGP 是 AS 间 EGP，跑在 TCP 179 上，增量更新使长会话更高效（P60）；AS_PATH 承担 AS 级环路检测（P61）。</li>
+<li><strong>选路属性体系</strong>：<br>Local Preference（AS 内、越高越优先）与 MED（仅同一邻居 AS 间比较、绝不向下一 AS 传播）（P71/P77）。</li>
+<li>iBGP 全互联规则由 RR 放松（P65），RR 通告按路由来源决定反射范围（P66）；联邦以子 AS 间 EBGP 模拟整体 IBGP（P69）。</li>
+<li><strong>策略体系（F5）</strong>：<br>aspath/community/prefix(prefix6)/route-map 四类原子策略先建后绑到 peer 的 in/out 方向，改动后 clear soft 重应用（P78/C29）。</li>
+<li>IPv6 由 MP-BGP 的 MP_REACH/MP_UNREACH_NLRI 承载，v6 前缀可跑在 v4 会话上（P80/P81）。</li>
+</ul>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>邻居设计</strong>：peer 必须逐个显式配置、不会动态学习（X34）；Loopback0 永久 up 适合作对等源（update-source + ebgp-multihop）（P88）</li>
@@ -100,7 +104,7 @@ AS_PATH 承担 AS 级环路检测（P61）。选路属性体系：Local Preferen
 <li><strong>IPv6（v4 会话）</strong>：<code>ip bgp neighbor 23.23.23.23</code> → remote-as 200 → <code>activate-ipv6</code> → <code>ipv6-nexthop 2001:100:3:4::1</code> → enable（C26，<span class="pg">原文p178</span> ）；纯 v6 对等 <code>ipv6 bgp neighbor 2001::1</code> + update-source（C27）</li>
 <li><strong>策略绑定</strong>：<code>ip bgp policy aspath-list aspathfilter "^100 200$" action permit</code> 等四类 → <code>ip bgp neighbor 172.22.2.0 in-aspathlist|route-map mapfilter in|out</code> → <code>clear soft in|out</code>（C29，<span class="pg">原文p201-210</span> ）</li>
 <li><strong>GTSM</strong>：<code>ip bgp neighbor 10.0.0.1 ttl-security 6</code>（直连对等用 0）；<code>show ip bgp neighbors</code> 验证（C30，<span class="pg">原文p212-213</span> ）</li>
-<li>EVPN/VPLS/模板：<code>ip bgp address-family evpn</code> + <code>activate-evpn</code> + fabric 邻居 <code>evpn-nbr-type-fabric</code>；</li>
+<li><strong>EVPN/VPLS/模板</strong>：<br><code>ip bgp address-family evpn</code> + <code>activate-evpn</code> + fabric 邻居 <code>evpn-nbr-type-fabric</code>；</li>
 <li>VPLS <code>address-family l2vpn-vpls</code>；</li>
 <li>模板 <code>ip bgp nbr-template Mytemplate</code>（C31，<span class="pg">原文p214-218</span> ）；</li>
 </ul>
@@ -116,7 +120,7 @@ AS_PATH 承担 AS 级环路检测（P61）。选路属性体系：Local Preferen
 <ul>
 <li>一批全局命令（AS 号、本地优先、MED、RR、cluster-id）改前必须先禁用 BGP（X25，<span class="pg">原文p139</span> ）</li>
 <li>CLI 不支持 CIDR 斜杠写法，必须写全掩码（X26，<span class="pg">原文p137</span> ）</li>
-<li>AS 正则错误：数字超 65535、逗号当分隔符、括号嵌套、^ 不在首/$ 不在尾（X28，<span class="pg">原文p136</span> ）</li>
+<li><strong>AS 正则错误</strong>：<br>数字超 65535、逗号当分隔符、括号嵌套、^ 不在首/$ 不在尾（X28，<span class="pg">原文p136</span> ）</li>
 <li>dampening 参数必须整条按序一次输入（X29，<span class="pg">原文p157</span> ）</li>
 <li>聚合前 BGP 表内须至少一条更精确路由（X30，<span class="pg">原文p152</span> ）</li>
 <li>冗余 RR 过多推高内存（X31，<span class="pg">原文p163</span> ）；同步开启给 AS 内非 BGP 路由器带来大负担（X32，<span class="pg">原文p144</span> ）</li>
@@ -130,4 +134,7 @@ AS_PATH 承担 AS 级环路检测（P61）。选路属性体系：Local Preferen
 <li>MED 只在同一邻居 AS 间比较且绝不向下一 AS 传播（P71，<span class="pg">原文p143</span> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniSwitch AOS 8.10R4 Advanced Routing Guide 第 4 章 BGP（<span class="pg">原文p123-218</span> ）。条目来源：cases C20-C31；principles P60-P90；counter-examples X25-X43；frameworks F5/F6。</p><div class="pn"><a href="aos-ar-isis.html">⬅ 上一单元：aos-ar-isis</a><a class="nxt" href="aos-ar-policy-toolbox.html">下一单元：aos-ar-policy-toolbox ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<ul>
+<li>OmniSwitch AOS 8.10R4 Advanced Routing Guide 第 4 章 BGP（<span class="pg">原文p123-218</span> ）。</li>
+<li><strong>条目来源</strong>：<br>cases C20-C31；principles P60-P90；counter-examples X25-X43；frameworks F5/F6。</li>
+</ul><div class="pn"><a href="aos-ar-isis.html">⬅ 上一单元：aos-ar-isis</a><a class="nxt" href="aos-ar-policy-toolbox.html">下一单元：aos-ar-policy-toolbox ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

@@ -72,7 +72,7 @@ blockquote p{margin:6px 0}
 <a href="skills/os6360-ops-troubleshoot.html">os6360-ops-troubleshoot</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../hardware/index.html">硬件手册</a> › <a href="index.html">OmniSwitch 6360 Hardware Guide</a> › <span>精华长文 DIGEST</span></nav><h1>精华长文 DIGEST</h1><h1 id="digest-omniswitch-6360-hardware-users-guide">DIGEST — OmniSwitch 6360 Hardware Users Guide 精华</h1>
 <ul>
 <li>本书是 ALE 入门级三层千兆接入交换机 OS6360 的硬件手册（83 页，10 个 1U 固定配置机型）。</li>
-<li>全书围绕"选型→安装→上电→PoE→监控"的硬件生命周期展开：Ch1 机型总表、Ch2 快速入门、Ch3 机箱与电源、Ch4 PoE 管理、附录 A 法规。</li>
+<li><strong>全书围绕"选型→安装→上电→PoE→监控"的硬件生命周期展开</strong>：<br>Ch1 机型总表、Ch2 快速入门、Ch3 机箱与电源、Ch4 PoE 管理、附录 A 法规。</li>
 <li>所有机型电源内置不可热换，PoE 预算在购机时一次定死。</li>
 <li>以下按三个技能单元摘要，页码均指原书。</li>
 </ul>
@@ -94,18 +94,36 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="_2">二、三单元要点串讲</h2>
 <h3 id="1">1. 机型与端口：三轴选型矩阵</h3>
-<p>家族命名：<code>-10/-24/-48</code> 非 PoE；<code>P</code>=802.3at；<code>PX</code>=2×多千兆 bt 口+950W 电源；<code>PH</code>=combo 可软件升 10G（<span class="pg">原文p13-15</span> ）。上行三段式：2×combo + 2×SFP+ 软件可配口（1G 上行 / 10G/VFL 双角色）（<span class="pg">原文p13</span> ）。PoE 预算与电源一一对应：P10=120W、P24=180W、P24X/PH24=380W、P48=350W、P48X/PH48=760W（<span class="pg">原文p60</span> ）。陷阱：P10A-US（PN 904324-90）丝印相同但不支持 Fast/Perpetual PoE（<span class="pg">原文p28</span> ）。无风扇机型为 10/P10/24/P24/48，大功率 PoE 机型带风扇（<span class="pg">原文p13-14</span> ）。</p>
+<ul>
+<li><strong>家族命名</strong>：<br><code>-10/-24/-48</code> 非 PoE；<code>P</code>=802.3at；<code>PX</code>=2×多千兆 bt 口+950W 电源；<code>PH</code>=combo 可软件升 10G（<span class="pg">原文p13-15</span> ）。</li>
+<li><strong>上行三段式</strong>：<br>2×combo + 2×SFP+ 软件可配口（1G 上行 / 10G/VFL 双角色）（<span class="pg">原文p13</span> ）。</li>
+<li><strong>PoE 预算与电源一一对应</strong>：<br>P10=120W、P24=180W、P24X/PH24=380W、P48=350W、P48X/PH48=760W（<span class="pg">原文p60</span> ）。</li>
+<li><strong>陷阱</strong>：<br>P10A-US（PN 904324-90）丝印相同但不支持 Fast/Perpetual PoE（<span class="pg">原文p28</span> ）。</li>
+<li>无风扇机型为 10/P10/24/P24/48，大功率 PoE 机型带风扇（<span class="pg">原文p13-14</span> ）。</li>
+</ul>
 <h3 id="2-poe">2. 安装与电源：PoE 三环体系</h3>
-<p>安装四形态：全宽机架法兰（双人+先下孔后上孔）、半宽 L 支架（OS6360-RM-19-L）、桌面脚垫、壁挂（仅 10/P10）（<span class="pg">原文p48-55</span> ）。间隙前 6"/后 6"/侧 2"（<span class="pg">原文p19</span> ）；接地 LCD8-10A-L+8AWG+30-60 in-lb（<span class="pg">原文p55</span> ）。PoE 三环（<span class="pg">原文p62-68</span> ）：预算环（service 两级激活、maxpower 不预留、Guard Band 余量&lt;口上限即拒新 PD）；优先级环（low/high/critical+端口号 1 高 48 低）；保护环（Priority Disconnect 四情形）。Guard Band 解锁口诀：降口上限放行小 PD（<span class="pg">原文p65</span> ）。Fast PoE 固化于 FPGA 上电数秒供电；Perpetual PoE 软重启不断电（MCU 升级除外）（<span class="pg">原文p63</span> ）。</p>
+<ul>
+<li><strong>安装四形态</strong>：<br>全宽机架法兰（双人+先下孔后上孔）、半宽 L 支架（OS6360-RM-19-L）、桌面脚垫、壁挂（仅 10/P10）（<span class="pg">原文p48-55</span> ）。</li>
+<li>间隙前 6"/后 6"/侧 2"（<span class="pg">原文p19</span> ）；接地 LCD8-10A-L+8AWG+30-60 in-lb（<span class="pg">原文p55</span> ）。</li>
+<li><strong>PoE 三环（<span class="pg">原文p62-68</span> ）</strong>：<br>预算环（service 两级激活、maxpower 不预留、Guard Band 余量&lt;口上限即拒新 PD）；优先级环（low/high/critical+端口号 1 高 48 低）；保护环（Priority Disconnect 四情形）。</li>
+<li><strong>Guard Band 解锁口诀</strong>：<br>降口上限放行小 PD（<span class="pg">原文p65</span> ）。</li>
+<li>Fast PoE 固化于 FPGA 上电数秒供电；Perpetual PoE 软重启不断电（MCU 升级除外）（<span class="pg">原文p63</span> ）。</li>
+</ul>
 <h3 id="3">3. 运维与排障：三层监控框架</h3>
-<p>物理层 LED：OK/VC/PWR 三系统灯+端口分色（绿=非 PoE/琥珀=PoE，SFP 琥珀=VFL）（<span class="pg">原文p45-46</span> ）。传感层：超 Warning 发 trap、超 Danger 自动关机（阈值固化不可配、需手动重启）（<span class="pg">原文p56-57</span> ）。CLI 层四板斧：show module/temperature/powersupply/lanpower（<span class="pg">原文p55-57</span> ）。首次登录六步+会话逐类解锁模型（<span class="pg">原文p21-24</span> ）。红线：无 RTC 须 NTP（<span class="pg">原文p23</span> ）、admin-state 不能首次激活 PoE（<span class="pg">原文p62</span> ）、Class 检测复位全口（<span class="pg">原文p62</span> ）、禁延长线/雷暴作业/住宅使用（<span class="pg">原文p17</span> /<span class="pg">原文p78</span> /<span class="pg">原文p75</span> ）。</p>
+<ul>
+<li><strong>物理层 LED</strong>：<br>OK/VC/PWR 三系统灯+端口分色（绿=非 PoE/琥珀=PoE，SFP 琥珀=VFL）（<span class="pg">原文p45-46</span> ）。</li>
+<li><strong>传感层</strong>：<br>超 Warning 发 trap、超 Danger 自动关机（阈值固化不可配、需手动重启）（<span class="pg">原文p56-57</span> ）。</li>
+<li><strong>CLI 层四板斧</strong>：<br>show module/temperature/powersupply/lanpower（<span class="pg">原文p55-57</span> ）。</li>
+<li>首次登录六步+会话逐类解锁模型（<span class="pg">原文p21-24</span> ）。</li>
+<li><strong>红线</strong>：<br>无 RTC 须 NTP（<span class="pg">原文p23</span> ）、admin-state 不能首次激活 PoE（<span class="pg">原文p62</span> ）、Class 检测复位全口（<span class="pg">原文p62</span> ）、禁延长线/雷暴作业/住宅使用（<span class="pg">原文p17</span> /<span class="pg">原文p78</span> /<span class="pg">原文p75</span> ）。</li>
+</ul>
 <h2 id="_3">三、本书在知识库中的位置</h2>
-<p>与 aos810 软件手册（配置/管理）互补提供 6360 硬件底座；
-与 hw-6465（工业加固）、hw-6560（多千兆 bt）构成接入家族三线——6360 定位入门千兆、内置单电源、预算上限 760W。跨书易混点：Priority Disconnect 同级裁决在 6360 为"端口号 1 高 48 低"；
-混插规则本机型不适用（电源内置）。</p>
+<ul>
+<li>与 aos810 软件手册（配置/管理）互补提供 6360 硬件底座；与 hw-6465（工业加固）、hw-6560（多千兆 bt）构成接入家族三线——6360 定位入门千兆、内置单电源、预算上限 760W。</li>
+<li><strong>跨书易混点</strong>：<br>Priority Disconnect 同级裁决在 6360 为"端口号 1 高 48 低"；混插规则本机型不适用（电源内置）。</li>
+</ul>
 <h2 id="_4">来源</h2>
-<p>OmniSwitch 6360 Hardware Users Guide（Part No. 060711-00, Rev. J, 2025-12）。verified.md：cases C1-C24；
-principles P1-P40；
-counter-examples X1-X25；
-frameworks F1-F3；
-glossary 约 62 条。</p><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<ul>
+<li>OmniSwitch 6360 Hardware Users Guide（Part No. 060711-00, Rev. J, 2025-12）。</li>
+<li><strong>verified.md</strong>：<br>cases C1-C24；principles P1-P40；counter-examples X1-X25；frameworks F1-F3；glossary 约 62 条。</li>
+</ul><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

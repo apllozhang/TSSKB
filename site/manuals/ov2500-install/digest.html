@@ -154,8 +154,7 @@ blockquote p{margin:6px 0}
 <h2 id="ha">三、HA 双集群要点</h2>
 <ul>
 <li><strong>资格</strong>：HA License 已导入、规格 ≥Medium、设备 ≤4000；来源必须是全新 4.9R2 或从 ≥4.3R2 升级而来（4.3R1 来源不能转，p40-41）。</li>
-<li>L2 还是 L3（一锤定音）：L2 两节点同子网+虚拟 Cluster IP，设备零改动、功能完整；
-L3 跨子网，受限一串——sFlow、AOS Policy、Captive Portal 不支持，IoT 需重应用，Syslog 需外部服务器，L3 冗余仅 AP13XX+（AWOS 5.0+），且必须配 Preferred Node（p41-42）。</li>
+<li><strong>L2 还是 L3（一锤定音）</strong>：<br>L2 两节点同子网+虚拟 Cluster IP，设备零改动、功能完整；L3 跨子网，受限一串——sFlow、AOS Policy、Captive Portal 不支持，IoT 需重应用，Syslog 需外部服务器，L3 冗余仅 AP13XX+（AWOS 5.0+），且必须配 Preferred Node（p41-42）。</li>
 <li>L2 不能转 L3，L3 只能全新搭建（p40-41）。</li>
 <li>
 <p>能同子网就选 L2；最佳实践是把原 Standalone IP 腾出来当 Cluster IP（p21, p40）。</p>
@@ -163,7 +162,7 @@ L3 跨子网，受限一串——sFlow、AOS Policy、Captive Portal 不支持�
 <li>
 <p><strong>转换步骤</strong>：备份+快照后，Node1 菜单 12 Convert to Cluster → Node2 菜单 13 Join Cluster，全程 Console 做、禁止 SSH；转换向导里已配置的 Captive Portal 保持默认回车，别改（p46）。网络基线：节点间 1Gbps 带宽、1ms 延迟（p42）。</p>
 </li>
-<li>脑裂防护/日常铁律：任何操作前看 Show OV Cluster Status，Data Sync 必须 "Up to Date"（显示百分比=同步中，此时做配置变更可能被覆盖分叉，p296）；</li>
+<li><strong>脑裂防护/日常铁律</strong>：<br>任何操作前看 Show OV Cluster Status，Data Sync 必须 "Up to Date"（显示百分比=同步中，此时做配置变更可能被覆盖分叉，p296）；</li>
 <li>集群级操作只在 Active 节点做；</li>
 <li>集群初始化后不要改 Peer Node 信息，要改先备份再联系客服（p303）；</li>
 <li>被 Remove 的节点视同报废不可复用（p299）。Standby 节点上 upam、nginx 显示 Stopped 是预期行为，不是故障（p52）；</li>
@@ -172,7 +171,7 @@ L3 跨子网，受限一串——sFlow、AOS Policy、Captive Portal 不支持�
 <ul>
 <li><strong>升级链（唯一路径，逐级走）</strong>：4.5R1→4.5R2→4.5R3→4.6R1→4.6R2→4.7R1→4.7R1 Patch 2→4.8R1→4.8R2→4.9R1→4.9R2（p6-7）。旧于 4.5R1 不升级，改"备份+全新安装+重导配置"。</li>
 <li><strong>停机窗口（报审批用）</strong>：Standalone 全程不可管理 1-4 小时（p60-61）；HA 管理持续可用，仅 failover 中断约 5-10 分钟；例外是 4.7R1→Patch 2 的 HA 升级全程停机。</li>
-<li>HA 滚动升级（≥4.8R1 新流程）：确认同步 Up to Date → Active 启维护模式（一次启用双节点生效）→ 先升 Standby → 升完立即重启并 failover（此时屏幕黄色 WARNING 要忽略）→ 新 Active 服务全起后升原 Active → 验证（p67）。</li>
+<li><strong>HA 滚动升级（≥4.8R1 新流程）</strong>：<br>确认同步 Up to Date → Active 启维护模式（一次启用双节点生效）→ 先升 Standby → 升完立即重启并 failover（此时屏幕黄色 WARNING 要忽略）→ 新 Active 服务全起后升原 Active → 验证（p67）。</li>
 <li>角色互换是正常状态。</li>
 <li>
 <p>老流程（≤4.7R1 Patch2）重启时机相反：Standby 升完忍住不重启，两台都升完一起重启——新旧文档混用是最常见事故源（p155-167）。</p>

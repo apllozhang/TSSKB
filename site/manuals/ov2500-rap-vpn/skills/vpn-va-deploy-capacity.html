@@ -108,18 +108,18 @@ KVM=3 网卡 Macvtap + 双盘 Discard unmap。</li>
 </ol>
 <h2 id="a1">A1 · 书中案例</h2>
 <ul>
-<li>容量样例：100 台以下 4 vCPU/2GB；500-1000 台 12 vCPU/16GB；251 台起规划第二台。</li>
-<li>Hyper-V 网卡样例：Eth0 映射公网 VLAN 70、Eth1 映射私网 VLAN 1000、Eth2 开 MAC 地址欺骗后配 Trunk（AllowedVlanIdList "201,202"、NativeVlanId 0），Get-VMNetworkAdapterVlan 验证。</li>
-<li>NIC Teaming 实测矩阵：Switch Independent 下仅 Address Hash 可用；Linkagg static / LACP 下三种负载均衡全通过。</li>
-<li>KVM 样例：Ubuntu 22.04 装 qemu-kvm/libvirt/virtinst/bridge-utils，两块 qcow2、OS 选 Generic Linux 2022，安装前对两块 VirtIO 盘把 Discard Mode 设 unmap。</li>
-<li>升级样例：旧 VA 4.9.1 Build 3 一直运行到第 4 步才关停，RAP 断连集中在第 4-7 步，约 5 分钟；新 VA 4.9.2 默认硬盘 8GB。</li>
+<li><strong>容量样例</strong>：<br>100 台以下 4 vCPU/2GB；500-1000 台 12 vCPU/16GB；251 台起规划第二台。</li>
+<li><strong>Hyper-V 网卡样例</strong>：<br>Eth0 映射公网 VLAN 70、Eth1 映射私网 VLAN 1000、Eth2 开 MAC 地址欺骗后配 Trunk（AllowedVlanIdList "201,202"、NativeVlanId 0），Get-VMNetworkAdapterVlan 验证。</li>
+<li><strong>NIC Teaming 实测矩阵</strong>：<br>Switch Independent 下仅 Address Hash 可用；Linkagg static / LACP 下三种负载均衡全通过。</li>
+<li><strong>KVM 样例</strong>：<br>Ubuntu 22.04 装 qemu-kvm/libvirt/virtinst/bridge-utils，两块 qcow2、OS 选 Generic Linux 2022，安装前对两块 VirtIO 盘把 Discard Mode 设 unmap。</li>
+<li><strong>升级样例</strong>：<br>旧 VA 4.9.1 Build 3 一直运行到第 4 步才关停，RAP 断连集中在第 4-7 步，约 5 分钟；新 VA 4.9.2 默认硬盘 8GB。</li>
 </ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
-<li>触发：模式已定（见 <code><a href="rap-vpn-mode-registration.html">rap-vpn-mode-registration</a></code>），开始动手装 VPN VA：选 vCPU/内存档位、ESXi/Hyper-V/KVM 导入 OVF、配网卡、初装控制台，或版本升级割接。</li>
-<li>与 <code><a href="rap-vpn-mode-registration.html">rap-vpn-mode-registration</a></code> 的区分：那边管选型和 Device Catalog 注册；本 skill 从"拿到 OVF 包"开始。</li>
-<li>与 <code><a href="rap-data-tunnel-config.html">rap-data-tunnel-config</a></code> 的区分：本 skill 终点是 VA 网络就绪（三网卡 IP、SSH、回程路由）；VPN 设置文件导入、Data VPN Server、SSID 配置不在此处。</li>
-<li>与 <code><a href="rap-vpn-troubleshooting.html">rap-vpn-troubleshooting</a></code> 的区分：升级流程在本 skill（变更操作）；运行期故障定位转排障 skill。</li>
+<li><strong>触发</strong>：<br>模式已定（见 <code><a href="rap-vpn-mode-registration.html">rap-vpn-mode-registration</a></code>），开始动手装 VPN VA：选 vCPU/内存档位、ESXi/Hyper-V/KVM 导入 OVF、配网卡、初装控制台，或版本升级割接。</li>
+<li><strong>与 <code><a href="rap-vpn-mode-registration.html">rap-vpn-mode-registration</a></code> 的区分</strong>：<br>那边管选型和 Device Catalog 注册；本 skill 从"拿到 OVF 包"开始。</li>
+<li><strong>与 <code><a href="rap-data-tunnel-config.html">rap-data-tunnel-config</a></code> 的区分</strong>：<br>本 skill 终点是 VA 网络就绪（三网卡 IP、SSH、回程路由）；VPN 设置文件导入、Data VPN Server、SSID 配置不在此处。</li>
+<li><strong>与 <code><a href="rap-vpn-troubleshooting.html">rap-vpn-troubleshooting</a></code> 的区分</strong>：<br>升级流程在本 skill（变更操作）；运行期故障定位转排障 skill。</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>

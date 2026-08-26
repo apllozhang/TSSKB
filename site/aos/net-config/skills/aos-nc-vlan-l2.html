@@ -82,12 +82,17 @@ blockquote p{margin:6px 0}
 <ul>
 <li>新建业务 VLAN、把端口按 tagged/untagged 接入，或跨交换机单链多 VLAN</li>
 <li>同一 VLAN 内要把部分用户彼此隔开（PVLAN isolated/community）</li>
-<li>运营商/城域场景：客户流量打外层 SVLAN 透明穿越（VLAN Stacking/QinQ、ethernet-service）</li>
+<li><strong>运营商/城域场景</strong>：<br>客户流量打外层 SVLAN 透明穿越（VLAN Stacking/QinQ、ethernet-service）</li>
 <li>服务器集群要一个虚 MAC 对多条链路收流量（HA VLAN）</li>
 <li>互联口上希望 VLAN 成员随对端自动声明/撤销（MVRP），不想手工配两边 trunk</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>VLAN 演进框架（F17，<span class="pg">原文p115</span> /<span class="pg">原文p1606</span> /<span class="pg">原文p583</span> ）：标准 VLAN→802.1Q trunk→PVLAN（子域隔离）→VLAN Stacking/QinQ（运营商隧道）→VXLAN/EVI（数据中心叠加）→EVPN（控制面化），按规模与隔离需求逐级选用。基本模型：端口只能属于一个 untagged VLAN（默认 VLAN）+任意多个 tagged VLAN；VLAN 在有活动端口前 oper 状态一直是 inactive（P31/P34，<span class="pg">原文p115, 118</span> ）。QinQ 的隧道 ID 与 VLAN ID 一一对应，"tunnel and VLAN are interchangeable terms"（P192，<span class="pg">原文p1608</span> ）。MVRP 是 MRP 应用，动态声明/撤销 VLAN 成员，学到的动态 VLAN 所有端口都是 tagged（P83/P84，<span class="pg">原文p442</span> ）。</p>
+<ul>
+<li><strong>VLAN 演进框架（F17，<span class="pg">原文p115</span> /<span class="pg">原文p1606</span> /<span class="pg">原文p583</span> ）</strong>：<br>标准 VLAN→802.1Q trunk→PVLAN（子域隔离）→VLAN Stacking/QinQ（运营商隧道）→VXLAN/EVI（数据中心叠加）→EVPN（控制面化），按规模与隔离需求逐级选用。</li>
+<li><strong>基本模型</strong>：<br>端口只能属于一个 untagged VLAN（默认 VLAN）+任意多个 tagged VLAN；VLAN 在有活动端口前 oper 状态一直是 inactive（P31/P34，<span class="pg">原文p115, 118</span> ）。</li>
+<li>QinQ 的隧道 ID 与 VLAN ID 一一对应，"tunnel and VLAN are interchangeable terms"（P192，<span class="pg">原文p1608</span> ）。</li>
+<li>MVRP 是 MRP 应用，动态声明/撤销 VLAN 成员，学到的动态 VLAN 所有端口都是 tagged（P83/P84，<span class="pg">原文p442</span> ）。</li>
+</ul>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>普通隔离选标准 VLAN + 802.1Q</strong>：单链多 VLAN 用 tagged 口（P32/P33：入向分类规则，带 tag 必须匹配端口默认 VLAN 或已打标 VLAN 否则丢弃，<span class="pg">原文p118</span> ）</li>
@@ -117,11 +122,14 @@ blockquote p{margin:6px 0}
 <li>删除 VLAN 连带删路由接口和全部 VPA；默认 VLAN 被删则端口回落 VLAN 1——误删业务风险（X15，<span class="pg">原文p116</span> ）</li>
 <li>带 802.1Q tag 的包若 VID 既非端口默认 VLAN 又非该口 tagged VLAN，直接丢弃（X17，<span class="pg">原文p118</span> ）</li>
 <li>NNI 口 TPID 非 0x8100 时不允许再打普通 802.1q tag（X18，<span class="pg">原文p119</span> ）</li>
-<li>PVLAN：主 VLAN VID 不能与现存 VLAN 冲突；UNP 口只能属一个 PVLAN 域；IP 接口只能配在主 VLAN 上（X19，<span class="pg">原文p129</span> ）</li>
+<li><strong>PVLAN</strong>：<br>主 VLAN VID 不能与现存 VLAN 冲突；UNP 口只能属一个 PVLAN 域；IP 接口只能配在主 VLAN 上（X19，<span class="pg">原文p129</span> ）</li>
 <li>HA VLAN 一旦成型，标准 VLAN 命令失效（X20，<span class="pg">原文p140</span> ）</li>
 <li>MVRP 与 per-VLAN STP 互斥；MVRP 配置后 STP 模式不能再改成 per-VLAN（X22，<span class="pg">原文p444</span> ）</li>
 <li>动态 VLAN 由 MVRP 学到的 VPA 在拓扑变化时一并删除（P86，<span class="pg">原文p444</span> ）</li>
-<li>转发声明≠加入：端口转发从其他口学到的声明，但只有本口收到声明才加入该 VLAN（P85，<span class="pg">原文p442</span> ）</li>
+<li><strong>转发声明≠加入</strong>：<br>端口转发从其他口学到的声明，但只有本口收到声明才加入该 VLAN（P85，<span class="pg">原文p442</span> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniSwitch AOS 8.10R4 Network Configuration Guide 第 4 章 VLAN（<span class="pg">原文p115-129</span> ）、第 5 章 HA VLAN（<span class="pg">原文p140</span> ）、第 14 章 MVRP（<span class="pg">原文p442-447</span> ）、第 42 章 VLAN Stacking（<span class="pg">原文p1606-1622</span> ）。条目来源：cases C7/C8/C9/C10/C61；principles P30-P41/P83-P86/P191-P193；counter-examples X15-X20/X22；frameworks F17。</p><div class="pn"><a href="../index.html">⬅ 返回课程首页</a><a class="nxt" href="aos-nc-redundancy-protection.html">下一单元：aos-nc-redundancy-protection ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<ul>
+<li>OmniSwitch AOS 8.10R4 Network Configuration Guide 第 4 章 VLAN（<span class="pg">原文p115-129</span> ）、第 5 章 HA VLAN（<span class="pg">原文p140</span> ）、第 14 章 MVRP（<span class="pg">原文p442-447</span> ）、第 42 章 VLAN Stacking（<span class="pg">原文p1606-1622</span> ）。</li>
+<li><strong>条目来源</strong>：<br>cases C7/C8/C9/C10/C61；principles P30-P41/P83-P86/P191-P193；counter-examples X15-X20/X22；frameworks F17。</li>
+</ul><div class="pn"><a href="../index.html">⬅ 返回课程首页</a><a class="nxt" href="aos-nc-redundancy-protection.html">下一单元：aos-nc-redundancy-protection ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

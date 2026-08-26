@@ -129,13 +129,13 @@ Master/Backup/Initialize 状态）↔ show configuration snapshot vrrp 逐行比
 </ol>
 <h2 id="a1-lab">A1 · 书中案例（LAB 故障根因）</h2>
 <ul>
-<li>c06（LAB3 案例2，p223-227）：四客户端 DHCP 拿不到地址。</li>
+<li><strong>c06（LAB3 案例2，p223-227）</strong>：<br>四客户端 DHCP 拿不到地址。</li>
 <li>Reception From Client 计数在涨但对 172.168.100.102 的 Tx Server=0——目的地地址本身就是错的（172 vs 192 一字之差）。</li>
 <li>
 <p>修复：no 掉错误 destination → <code>ip dhcp relay destination 192.168.100.102</code> → 复查计数重新累计。</p>
 </li>
 <li>
-<p>c07（LAB4 案例1，p278-284）：VRRP 三连错——sw7 VRID2 没 admin-state enable；</p>
+<p><strong>c07（LAB4 案例1，p278-284）</strong>：<br>VRRP 三连错——sw7 VRID2 没 admin-state enable；</p>
 </li>
 <li>sw8 虚拟 IP 配成 .154（应为 .254）导致 VRID Errors=41 两台互认非法报文；</li>
 <li>重建时报 "At least one IP address must be associated" 根因是 int_30 接口本身 DOWN。判据：VRID Errors&gt;0 优先怀疑虚拟 IP/VRID 不匹配；</li>
@@ -143,7 +143,7 @@ Master/Backup/Initialize 状态）↔ show configuration snapshot vrrp 逐行比
 <p>Initialize 状态优先查接口与 admin-state；</p>
 </li>
 <li>
-<p>c08（LAB4 案例2，p279-289）：路由表 22→17 条。</p>
+<p><strong>c08（LAB4 案例2，p279-289）</strong>：<br>路由表 22→17 条。</p>
 </li>
 <li>debug3 日志直接给答案：第一层 auth-key alcatell vs alcatel（一字母之差）；
 修完 "Not solve, check if there is not another problem"——第二层 hello-interval 20 vs 10。</li>
@@ -156,11 +156,8 @@ Master/Backup/Initialize 状态）↔ show configuration snapshot vrrp 逐行比
 </ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
-<li>触发：跨网段不通、丢包需定位段、DHCP 中继失效、OSPF/RIP 邻居 Init/2-Way 卡住或路由消失、VRRP 双 Master/Initialize/VRID Errors、ECMP 退化为单路径。</li>
-<li>区分：同网段二层问题 → l2-connectivity；
-组播不通但单播通 → multicast；
-丢包计数/抓包工具的 QoS 命令细节 → app-logging-qos skill；
-DoS invalid ip 刷屏指向 VRRP 虚拟 MAC 时是环路 → stp-loop（ce19）。</li>
+<li><strong>触发</strong>：<br>跨网段不通、丢包需定位段、DHCP 中继失效、OSPF/RIP 邻居 Init/2-Way 卡住或路由消失、VRRP 双 Master/Initialize/VRID Errors、ECMP 退化为单路径。</li>
+<li><strong>区分</strong>：<br>同网段二层问题 → l2-connectivity；组播不通但单播通 → multicast；丢包计数/抓包工具的 QoS 命令细节 → app-logging-qos skill；DoS invalid ip 刷屏指向 VRRP 虚拟 MAC 时是环路 → stp-loop（ce19）。</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>

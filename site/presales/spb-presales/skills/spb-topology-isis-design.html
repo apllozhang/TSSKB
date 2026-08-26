@@ -124,9 +124,9 @@ blockquote p{margin:6px 0}
 </table>
 <p>远程站点可经 MPLS/VXLAN 域延伸 SPB。</p>
 <p><strong>② IS-IS 控制面常数（可背）</strong>
-- 默认控制目的 MAC：<code>01:80:c2:00:00:14</code>；邻接类型 P2P 与 P2MP（p06）。
-- 路径三特性：对称（往返同路）、同路（单组播同路）、RPFC 无环（基于源 BMAC 反向路径检查）（p07）。
-- DIS 选举（P2MP）：最高接口优先级，平局取最高 BMAC；<strong>无备份，重选约 3 秒</strong>（p08/ce03）。</p>
+- <strong>默认控制目的 MAC</strong>：<br><code>01:80:c2:00:00:14</code>；邻接类型 P2P 与 P2MP（p06）。
+- <strong>路径三特性</strong>：<br>对称（往返同路）、同路（单组播同路）、RPFC 无环（基于源 BMAC 反向路径检查）（p07）。
+- <strong>DIS 选举（P2MP）</strong>：<br>最高接口优先级，平局取最高 BMAC；<strong>无备份，重选约 3 秒</strong>（p08/ce03）。</p>
 <p><strong>③ BVLAN 六规则（p09/ce05）</strong>：不跑 STP / 不学客户 MAC / 不洪泛未知与组播 / 每 BVLAN 独立 SPT / Control BVLAN 承载 IS-IS 控制 / <strong>AOS 上限 16 个、推荐只规划 4 个</strong>。Control BVLAN 可兼作带内管理网（BEB 与 BCB 均支持，管理路由可重分发进 IS-IS，p10）。</p>
 <p><strong>④ ECT 选路三级决胜（f09/p11-13）</strong>：metric 低者优 → 跳数少者优 → 16 个 ECT 算法（ECT-MASK 与路径各节点 BridgeID 逐字节 XOR，取最低路径 ID）。同一算法同管单播与组播（保证同构）；新建 BVLAN 自动分配下一个可用 ECT-ID（可改）；链路故障时依赖该链路的 ECT 被剔除、次低者接管（p43 示例：链路 1-4 故障 → ECT-1/ECT-3 出局、ECT-2 胜出）。流量由头端在最多 16 条等价路径间分配。</p>
 <p><strong>⑤ 封装常数（p14）</strong>：B-TAG EtherType <code>0x88a8</code>、I-TAG <code>0x88e7</code>；B-VID 12 位、I-SID 24 位（1-1600 万）；PCP 各 3 位。BridgeID = 2 字节优先级 + 6 字节系统 BMAC。</p>
@@ -136,7 +136,7 @@ blockquote p{margin:6px 0}
 <ul>
 <li>拿到园区/城网需求做 SPB 拓扑设计（层级、冗余、BVLAN/ECT 规划）；</li>
 <li>客户或评审问"SPB 凭什么满链路利用还无环"（ECT+RPFC 机制级回答）；</li>
-<li>抓包排障：识别控制 MAC、分析路径对称性。
+<li><strong>抓包排障</strong>：<br>识别控制 MAC、分析路径对称性。
 与相邻 skill 区分：服务面（SAP/封装业务/组播模式/QoS）走 <code><a href="spb-edge-services.html">spb-edge-services</a></code>；
 机型规格上限走 <code><a href="spb-license-spec-sizing.html">spb-license-spec-sizing</a></code>；
 防环兜底 LBD 的部署清单也在 edge-services。</li>

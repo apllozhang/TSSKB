@@ -130,12 +130,12 @@ blockquote p{margin:6px 0}
 <ul>
 <li><strong>ce04（LAB2/LAB4 收尾实证）</strong>：LAB4 专门列出收尾命令 swlog appid ospf_0 subapp all level info，LAB2 同样收尾——不调回 debug 级日志持续高速写 flash，本身就制造高 CPU/日志风暴次生故障。</li>
 <li><strong>ce12/g23（RADIUS 假阴性）</strong>：aaa test-radius-server 失败就断定服务器坏——测试工具只支持 MD5/PAP，服务器侧可能未开放这两个方法。</li>
-<li>TKC 案例 N2（c01，方法论 skill）：UNP 用户卡 "In progress" 是已知缺陷形态，LAB1 用 <code>unp user flush port &lt;口&gt;</code> 清理（另见 c02 的 l2 skill）。</li>
+<li><strong>TKC 案例 N2（c01，方法论 skill）</strong>：<br>UNP 用户卡 "In progress" 是已知缺陷形态，LAB1 用 <code>unp user flush port &lt;口&gt;</code> 清理（另见 c02 的 l2 skill）。</li>
 </ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
-<li>触发：任何需要看日志/调日志级的排障（本 skill 是全书的工具层）；丢包计数验证；需要抓包取证；802.1X/UNP 认证失败；syslog 发不出去。</li>
-<li>区分：本 skill 提供<strong>工具</strong>，各协议 skill（stp/l3/multicast）提供<strong>判读对象</strong>——读 OSPF 日志的语义在 l3 skill，调级与检索手法在本 skill。QoS 计数找丢包段的完整流程在 l3-routing-vrrp skill。</li>
+<li><strong>触发</strong>：<br>任何需要看日志/调日志级的排障（本 skill 是全书的工具层）；丢包计数验证；需要抓包取证；802.1X/UNP 认证失败；syslog 发不出去。</li>
+<li><strong>区分</strong>：<br>本 skill 提供<strong>工具</strong>，各协议 skill（stp/l3/multicast）提供<strong>判读对象</strong>——读 OSPF 日志的语义在 l3 skill，调级与检索手法在本 skill。QoS 计数找丢包段的完整流程在 l3-routing-vrrp skill。</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>

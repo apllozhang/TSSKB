@@ -70,13 +70,18 @@ blockquote p{margin:6px 0}
 <a href="../skills/sol-erp-multi-ring-design.html" class="on">sol-erp-multi-ring-design</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../solutions/index.html">解决方案</a> › <a href="../index.html">ERP 环网保护</a> › <span>sol-erp-multi-ring-design</span></nav><h1>sol-erp-multi-ring-design</h1><p class="meta"><span class="badge">SKILL</span> sol-erp-multi-ring-design · 来源页码: </p><h2 id="r">R（触发场景）</h2>
 <ul>
 <li>接入/汇聚层多节点需要接入核心环，比较 STP、DHL、multi-ring 方案</li>
-<li>设计 major ring + sub-ring：RPL 位置、ERP 实例划分、互联节点端口归属</li>
+<li><strong>设计 major ring + sub-ring</strong>：<br>RPL 位置、ERP 实例划分、互联节点端口归属</li>
 <li>子环跨互联节点共享链路时配置 R-APS Virtual Channel</li>
 <li>ERP 域与既有 STP 域共存、802.1ad VLAN stacking 场景</li>
 <li>核对哪些端口/产品可跑 ERP</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>接入接环首选 multi-ring + ERP v2（P15，<span class="pg">原文p13</span> ）：支持多节点接入与光纤受限场景；STP 收敛慢且可能引发不稳定，DHL 只适用单节点接入。多环设计守"三原则"（P13，<span class="pg">原文p13</span> ）：R-APS 协议不跨环共享；每端口只受一个环控制（R-APS 与被保护 VLAN）；每环独立 RPL。子环跨共享链路必须用 R-APS Virtual Channel（P14，<span class="pg">原文p14</span> ）——共享链路本身归 major ring 管。ERP 口自动禁 STP，防环责任分域（P16，<span class="pg">原文p15</span> ）。</p>
+<ul>
+<li><strong>接入接环首选 multi-ring + ERP v2（P15，<span class="pg">原文p13</span> ）</strong>：<br>支持多节点接入与光纤受限场景；STP 收敛慢且可能引发不稳定，DHL 只适用单节点接入。</li>
+<li><strong>多环设计守"三原则"（P13，<span class="pg">原文p13</span> ）</strong>：<br>R-APS 协议不跨环共享；每端口只受一个环控制（R-APS 与被保护 VLAN）；每环独立 RPL。</li>
+<li>子环跨共享链路必须用 R-APS Virtual Channel（P14，<span class="pg">原文p14</span> ）——共享链路本身归 major ring 管。</li>
+<li>ERP 口自动禁 STP，防环责任分域（P16，<span class="pg">原文p15</span> ）。</li>
+</ul>
 <p><img alt="主环 + 子环 + 互联节点结构（原文 p14）" src="images/fig10-multiring-interconnect.jpeg" /></p>
 <p><img alt="主环/子环与 RPL 阻塞点（原文 p6）" src="images/fig03-main-subring.png" /></p>
 <h2 id="a1">A1（行动框架）</h2>
@@ -100,18 +105,18 @@ blockquote p{margin:6px 0}
 <p><img alt="实验拓扑：多环 EXP 场景（原文 p13）" src="images/fig09-lab-exp.jpeg" /></p>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>多环设计实例：双 ERP 实例、两条不同 RPL（C8，<span class="pg">原文p13-14</span> ）</li>
+<li><strong>多环设计实例</strong>：<br>双 ERP 实例、两条不同 RPL（C8，<span class="pg">原文p13-14</span> ）</li>
 <li>多子环共用链路的 virtual channel VLAN 区分（C9，<span class="pg">原文p14</span> ）</li>
-<li>VC+LACP 弹性部署：环链路捆绑 + 接入双归（C11，<span class="pg">原文p15</span> ）</li>
+<li><strong>VC+LACP 弹性部署</strong>：<br>环链路捆绑 + 接入双归（C11，<span class="pg">原文p15</span> ）</li>
 <li>ERP+STP 分域协作与节点 2 故障断域失效场景（C12，<span class="pg">原文p16</span> ）</li>
-<li>附录配置拓扑：major ERP#1 + sub-ring ERP#2 + VLAN 1001（C13，<span class="pg">原文p16-17</span> ）</li>
+<li><strong>附录配置拓扑</strong>：<br>major ERP#1 + sub-ring ERP#2 + VLAN 1001（C13，<span class="pg">原文p16-17</span> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>
-<li>STP 不推荐：收敛慢、可能不稳定；STP 域挂单节点故障全网断连（X8/X15，<span class="pg">原文p13-16</span> ）</li>
+<li><strong>STP 不推荐</strong>：<br>收敛慢、可能不稳定；STP 域挂单节点故障全网断连（X8/X15，<span class="pg">原文p13-16</span> ）</li>
 <li>BPDUs 仍会经 ERP 环口泛洪，勿以为 ERP 能完全隔离 STP（X16，<span class="pg">原文p13</span> ）</li>
 <li>DHL 不适用多节点接入层、光纤受限场景（X9，<span class="pg">原文p13</span> ）</li>
-<li>违反多环三原则的后果：R-APS 串环、双 RPL 冲突（X10/P13，<span class="pg">原文p13</span> ）</li>
+<li><strong>违反多环三原则的后果</strong>：<br>R-APS 串环、双 RPL 冲突（X10/P13，<span class="pg">原文p13</span> ）</li>
 <li>VC 与 ERP 叠加增加收敛时间（控制面复杂化 + FDB flush 同步）（X14/P19，<span class="pg">原文p15</span> ）</li>
 <li>MPLS FRR 同样不是端到端 50ms，勿类比套用（X13，<span class="pg">原文p15</span> ）</li>
 <li>UNI 口误用作 ERP 口（X17/P20，<span class="pg">原文p16</span> ）</li>

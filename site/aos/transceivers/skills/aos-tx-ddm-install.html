@@ -77,7 +77,12 @@ blockquote p{margin:6px 0}
 <li>高密 400G/长距模块上线前的电源与风冷预算核算</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>SFP MSA 标准接口是识别与监控的物理基础（P1，<span class="pg">原文p13</span> ）：20 针插座+笼式外壳，模块内置串行接口提供能力/接口/厂商识别信息——交换机据此识别模块并读 DDM。安装纪律四条（P4-P8，<span class="pg">原文p14-16</span> ）：拔出后同端口至少等 10 秒再插；三种释放机构（铰链面开到 90°、bail wire 压杆、弹出器按钮）各有操作法，任何时候不得强行插拔；ESD 腕带+防尘帽+Class 1 激光安全。DDM 并非人人都有：全部 DAC、铜口 T 系列、SFP-GIG-##CWD、SFP-100-LC-MM/SM15、SFP-DUAL-SM10、QSFP-40G-SR-BD、QSFP-100G-A20M 无 DDM（X31）——这些口无法用 DDM 做光功率监控，排障要靠替代手段。拆分与 VFL 是两类特殊连接形态：拆分线家族（4X10G/4X25G/2XQ100/2XQ200/2Q100）物理拆带宽；VFL 连接有专用件与禁用件清单（P21）。</p>
+<ul>
+<li><strong>SFP MSA 标准接口是识别与监控的物理基础（P1，<span class="pg">原文p13</span> ）</strong>：<br>20 针插座+笼式外壳，模块内置串行接口提供能力/接口/厂商识别信息——交换机据此识别模块并读 DDM。</li>
+<li><strong>安装纪律四条（P4-P8，<span class="pg">原文p14-16</span> ）</strong>：<br>拔出后同端口至少等 10 秒再插；三种释放机构（铰链面开到 90°、bail wire 压杆、弹出器按钮）各有操作法，任何时候不得强行插拔；ESD 腕带+防尘帽+Class 1 激光安全。</li>
+<li><strong>DDM 并非人人都有</strong>：<br>全部 DAC、铜口 T 系列、SFP-GIG-##CWD、SFP-100-LC-MM/SM15、SFP-DUAL-SM10、QSFP-40G-SR-BD、QSFP-100G-A20M 无 DDM（X31）——这些口无法用 DDM 做光功率监控，排障要靠替代手段。</li>
+<li><strong>拆分与 VFL 是两类特殊连接形态</strong>：<br>拆分线家族（4X10G/4X25G/2XQ100/2XQ200/2Q100）物理拆带宽；VFL 连接有专用件与禁用件清单（P21）。</li>
+</ul>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>插拔先看释放机构类型</strong>：铰链式/ bail wire /弹出器按钮三选一，禁止蛮力</li>
@@ -108,17 +113,20 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>本书无配置流程案例（物理安装说明已并入条目）；"场景"即现场操作与运维：按 A2 步骤执行插拔/监控/拆分，模块级参数回 aos-tx-module-matrix、平台支持回 aos-tx-platform-compat 查证</li>
+<li><strong>本书无配置流程案例（物理安装说明已并入条目）；"场景"即现场操作与运维</strong>：<br>按 A2 步骤执行插拔/监控/拆分，模块级参数回 aos-tx-module-matrix、平台支持回 aos-tx-platform-compat 查证</li>
 </ul>
 <h2 id="b">B（反例/坑）</h2>
 <ul>
 <li>拔出模块后不足 10 秒重插——软件来不及做拔出检测，可能识别异常（P4，<span class="pg">原文p14</span> ）</li>
-<li>无 DDM 模块清单：全部 DAC（SFP-10G-C/QSFP-40G-C/100G-C/200G·400G 拆分线）、铜口 T 系列、SFP-GIG-##CWD、SFP-100-LC-MM/SM15、SFP-DUAL-SM10、QSFP-40G-SR-BD、QSFP-100G-A20M（X31，<span class="pg">原文p20-63</span> ）——这些链路的光功率劣化无法在交换机侧预警</li>
+<li><strong>无 DDM 模块清单</strong>：<br>全部 DAC（SFP-10G-C/QSFP-40G-C/100G-C/200G·400G 拆分线）、铜口 T 系列、SFP-GIG-##CWD、SFP-100-LC-MM/SM15、SFP-DUAL-SM10、QSFP-40G-SR-BD、QSFP-100G-A20M（X31，<span class="pg">原文p20-63</span> ）——这些链路的光功率劣化无法在交换机侧预警</li>
 <li>40G SR4 的 DDM 仅 V/T/mA/Input 四项（不全量）（<span class="pg">原文p44</span> ）</li>
-<li>拆分模式牺牲自动 VFL：6870 QSFP-100G-SR4 splitter 模式不支持 Auto-VFL（P20，<span class="pg">原文p96</span> ）</li>
-<li>VFL 用错件：AOC20M 仅 20G VFL、CBL 为 20G VFL 线；BX/SR-BD 不支持 VFL（P21）</li>
+<li><strong>拆分模式牺牲自动 VFL</strong>：<br>6870 QSFP-100G-SR4 splitter 模式不支持 Auto-VFL（P20，<span class="pg">原文p96</span> ）</li>
+<li><strong>VFL 用错件</strong>：<br>AOC20M 仅 20G VFL、CBL 为 20G VFL 线；BX/SR-BD 不支持 VFL（P21）</li>
 <li>100G A20M 需禁自协商+FEC RS，否则链路异常（P27/X27，<span class="pg">原文p55</span> ）</li>
-<li>高速模块发热量级差异大：同封装不同距离档功耗差数倍（SR4 4.5W vs FR4 6W vs 400G DR4 10W），高密部署按逐口功耗累加核预算（P23）</li>
+<li><strong>高速模块发热量级差异大</strong>：<br>同封装不同距离档功耗差数倍（SR4 4.5W vs FR4 6W vs 400G DR4 10W），高密部署按逐口功耗累加核预算（P23）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniSwitch AOS Release 8 Transceivers Guide Ch1 前言（MSA/安装/安全，<span class="pg">原文p11-17</span> ）、各速率节 DDM/功耗/温度列（<span class="pg">原文p18-63</span> ）、Ch2 脚注（VFL/自协商，<span class="pg">原文p75-107</span> ）。条目来源：principles P1/P4-P11/P15/P16/P20/P21/P23/P24/P27；counter-examples X26/X27/X31。</p><div class="pn"><a href="aos-tx-platform-compat.html">⬅ 上一单元：aos-tx-platform-compat</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<ul>
+<li>OmniSwitch AOS Release 8 Transceivers Guide Ch1 前言（MSA/安装/安全，<span class="pg">原文p11-17</span> ）、各速率节 DDM/功耗/温度列（<span class="pg">原文p18-63</span> ）、Ch2 脚注（VFL/自协商，<span class="pg">原文p75-107</span> ）。</li>
+<li><strong>条目来源</strong>：<br>principles P1/P4-P11/P15/P16/P20/P21/P23/P24/P27；counter-examples X26/X27/X31。</li>
+</ul><div class="pn"><a href="aos-tx-platform-compat.html">⬅ 上一单元：aos-tx-platform-compat</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

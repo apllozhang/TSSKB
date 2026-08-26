@@ -76,7 +76,12 @@ blockquote p{margin:6px 0}
 <li>核对 AOS 8.9R3/8.10R2 的 QoS/OAM 能力边界</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>只有顶层（传输）标签的 EXP/TTL 被处理（P10，<span class="pg">原文p18-19</span> ）：内层标签原样透传。QoS/TTL 透明性选型框架（F5，<span class="pg">原文p18-19</span> ）：uniform 让客户标记穿透（复制到 EXP、出域回写），pipe 运营商自定 EXP、客户 DSCP 不动。PHP 用 implicit NULL 让倒数第二跳弹传输标签省 eLER 一次查表（P9，<span class="pg">原文p16</span> ），代价是 EXP 随标签一起弹掉（X9）。数据面验证靠 LSP ping/trace（P32，<span class="pg">原文p23</span> ）：IP 可达、控制面看似正常时仍可能有数据面故障。</p>
+<ul>
+<li><strong>只有顶层（传输）标签的 EXP/TTL 被处理（P10，<span class="pg">原文p18-19</span> ）</strong>：<br>内层标签原样透传。</li>
+<li><strong>QoS/TTL 透明性选型框架（F5，<span class="pg">原文p18-19</span> ）</strong>：<br>uniform 让客户标记穿透（复制到 EXP、出域回写），pipe 运营商自定 EXP、客户 DSCP 不动。</li>
+<li>PHP 用 implicit NULL 让倒数第二跳弹传输标签省 eLER 一次查表（P9，<span class="pg">原文p16</span> ），代价是 EXP 随标签一起弹掉（X9）。</li>
+<li><strong>数据面验证靠 LSP ping/trace（P32，<span class="pg">原文p23</span> ）</strong>：<br>IP 可达、控制面看似正常时仍可能有数据面故障。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>QoS 模式决策（F5）：客户标记需端到端可见 → uniform；运营商独立 QoS 策略、客户标记不动 → pipe</li>
@@ -94,8 +99,8 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>QoS uniform/pipe 双模式行为对比：uniform 复制 IP precedence 到 EXP，pipe 按运营商策略设定（C7，<span class="pg">原文p18</span> ）</li>
-<li>TTL 双模式：L3VPN 两端各减 1（traceroute 少 N-1 跳）、L2VPN 完全不变（C8，<span class="pg">原文p19</span> ）</li>
+<li><strong>QoS uniform/pipe 双模式行为对比</strong>：<br>uniform 复制 IP precedence 到 EXP，pipe 按运营商策略设定（C7，<span class="pg">原文p18</span> ）</li>
+<li><strong>TTL 双模式</strong>：<br>L3VPN 两端各减 1（traceroute 少 N-1 跳）、L2VPN 完全不变（C8，<span class="pg">原文p19</span> ）</li>
 <li>PHP 与 explicit NULL 的 QoS 保留对比（C6，<span class="pg">原文p16-17</span> ）</li>
 <li>LSP ping 5 发 5 中实测与 traceroute 逐跳发现 implicit-null（C9/C10，<span class="pg">原文p44</span> ）</li>
 </ul>
@@ -103,7 +108,7 @@ blockquote p{margin:6px 0}
 <ul>
 <li>implicit NULL 弹标签即丢 EXP/QoS 信息；要保留就得用 explicit NULL——AOS 不支持（X9/X16，<span class="pg">原文p16-17</span> ）</li>
 <li>不用 PHP 则 eLER 做两次查表，性能受损（X10/P9，<span class="pg">原文p16</span> ）</li>
-<li>AOS 明确不支持：QoS over EXP、TTL manipulation、explicit NULL（X16，<span class="pg">原文p17-19</span> ）</li>
+<li><strong>AOS 明确不支持</strong>：<br>QoS over EXP、TTL manipulation、explicit NULL（X16，<span class="pg">原文p17-19</span> ）</li>
 <li>Graceful Restart 只保计划内接管；非计划主控故障或链路断仍有流量中断（X12/P27，<span class="pg">原文p19</span> ）</li>
 <li>OAM Alert Label（14）未广泛实现，勿依赖其区分 OAM 与数据包（X11，<span class="pg">原文p10</span> ）</li>
 <li>OAM 探测目的地址必须 127/8，否则 echo 包可能被当普通 IP 包转出 eLER（P21，<span class="pg">原文p23</span> ）</li>

@@ -85,7 +85,7 @@ blockquote p{margin:6px 0}
 <p>"The global setting is active immediately; however, modifying a port configuration requires qos apply to activate the change."（p346）</p>
 <h2 id="i">I · 方法论骨架</h2>
 <ul>
-<li>AOS 的 QoS 与 ACL 共用一套三元组策略引擎：- <strong>condition</strong>（匹配）：L1-L4——端口/MAC/VLAN/IP/ip-port/ip-protocol/DSCP/服务组等；可用 policy group（port/mac/network/service）复用。</li>
+<li><strong>AOS 的 QoS 与 ACL 共用一套三元组策略引擎</strong>：<br>- <strong>condition</strong>（匹配）：L1-L4——端口/MAC/VLAN/IP/ip-port/ip-protocol/DSCP/服务组等；可用 policy group（port/mac/network/service）复用。</li>
 <li>
 <ul>
 <li><strong>action</strong>（动作）：priority / maximum bandwidth / 802.1p 标记 / redirect / mirror / disposition（accept|drop|deny）等。</li>
@@ -96,32 +96,20 @@ blockquote p{margin:6px 0}
 <li><strong>rule</strong>（组装）：condition + action + 可选 precedence/log/count/trap；最后 <strong>qos apply</strong> 下发硬件。</li>
 </ul>
 </li>
-<li>
-<ul>
-<li>默认值：QoS 默认启用；端口 802.1p/DSCP 默认 0、默认 untrusted（流量按 default 值重标）；未命中任何规则的流默认 accept。</li>
-</ul>
-</li>
-<li>
-<ul>
-<li>出口调度：QSP 队列模板（QSP1=8 严格优先级、QSP2=1 EF+7SP）→ QSI 端口实例。</li>
-</ul>
-</li>
-<li>
-<ul>
-<li>保留组 UserPorts / DropServices：用户口入组即防源 IP 欺骗 + 丢弃高危服务端口，免写规则。</li>
-</ul>
-</li>
+<li><strong>- 默认值</strong>：<br>QoS 默认启用；端口 802.1p/DSCP 默认 0、默认 untrusted（流量按 default 值重标）；未命中任何规则的流默认 accept。</li>
+<li><strong>- 出口调度</strong>：<br>QSP 队列模板（QSP1=8 严格优先级、QSP2=1 EF+7SP）→ QSI 端口实例。</li>
+<li><strong>- 保留组 UserPorts / DropServices</strong>：<br>用户口入组即防源 IP 欺骗 + 丢弃高危服务端口，免写规则。</li>
 </ul>
 <h2 id="a1-lab">A1 · 书中案例（Lab 配置精要）</h2>
 <ul>
-<li>QoS Lab（p344-350）：qos flush 复位 → <code>qos port 1/1/1 default 802.1p 7</code> 给未打标流量最高优先级 → <code>qos port 1/1/1 trusted</code> + qos apply（trusted 保留原标记）。</li>
+<li><strong>QoS Lab（p344-350）</strong>：<br>qos flush 复位 → <code>qos port 1/1/1 default 802.1p 7</code> 给未打标流量最高优先级 → <code>qos port 1/1/1 trusted</code> + qos apply（trusted 保留原标记）。</li>
 <li>策略限速：condition(source vlan 20) + action(802.1p 5 + maximum bandwidth 100k) + rule → qos apply → show active policy rule 看命中计数；
 大包 <code>ping -l 65000</code> 触发 TCM 三色丢弃（Red 包出现）。</li>
 <li>
 <p>排障用 policy rule log + show qos log。</p>
 </li>
 <li>
-<p>ACL Lab（p369-374）：员工 VLAN20 禁 FTP、承包商 VLAN30 禁 HTTP。</p>
+<p><strong>ACL Lab（p369-374）</strong>：<br>员工 VLAN20 禁 FTP、承包商 VLAN30 禁 HTTP。</p>
 </li>
 <li>L2 拒绝：condition source mac + action disposition deny；
 FTP：condition <code>source vlan 20 destination ip-port 20-21 ip-protocol 6</code>；
@@ -152,7 +140,7 @@ HTTP：5 条 policy service（80/8080/8000/443/4343）组成 service group 入�
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>
 <li><strong>不 qos apply 不生效</strong>：端口级修改与所有 policy rule 都要 apply 才下发硬件；show active policy rule 里看不到 = 没 apply 或被 disable。</li>
-<li>端口默认 untrusted：不 trusted 的口流量统一按 default 值（默认 0）重标，已有标记会被抹掉。</li>
+<li><strong>端口默认 untrusted</strong>：<br>不 trusted 的口流量统一按 default 值（默认 0）重标，已有标记会被抹掉。</li>
 <li>IP 话机自动优先级默认开（alaPhones MAC 组给 priority 5），可用 qos no phones 关、qos phones priority N 改；与手工话机策略可能叠加，先确认。</li>
 <li>UserPorts 组的策略对路由流量自动生效，规划时别误伤上联口。</li>
 <li>PBR 仅 6570M/6860/6865/6900/9900 支持。</li>

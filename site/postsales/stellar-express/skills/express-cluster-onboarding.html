@@ -105,14 +105,14 @@ blockquote p{margin:6px 0}
 <p>选型背景：Express 上限 255 台（混合型号集群）；超此规模迁 Enterprise（OV2500）或 Cloud（Cirrus），两者均 4000 台、功能基本等同，差别只在本地/云端。</p>
 <h2 id="a1">A1 · 书中案例</h2>
 <ul>
-<li>选举演示：同一 VLAN 内 AP 同时上电，最高型号/最高 MAC 者自动成为 PVM 并广播 mywifi-0102 型组配置 SSID，其余 AP 加入为 Member（p79-80）。</li>
-<li>第 256 台静默失效：某网络 AP 数超过 255 后，新增 AP 无报错地永远停在 joining 状态，现场极易误判为网络/配置问题（p81）。</li>
-<li>远程运维规划：某项目把全网固件升级排成纯远程批次，卡在 AP Group image upgrade 这一步——其余操作都可远程，唯升级必须到场（p86）。</li>
+<li><strong>选举演示</strong>：<br>同一 VLAN 内 AP 同时上电，最高型号/最高 MAC 者自动成为 PVM 并广播 mywifi-0102 型组配置 SSID，其余 AP 加入为 Member（p79-80）。</li>
+<li><strong>第 256 台静默失效</strong>：<br>某网络 AP 数超过 255 后，新增 AP 无报错地永远停在 joining 状态，现场极易误判为网络/配置问题（p81）。</li>
+<li><strong>远程运维规划</strong>：<br>某项目把全网固件升级排成纯远程批次，卡在 AP Group image upgrade 这一步——其余操作都可远程，唯升级必须到场（p86）。</li>
 </ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
-<li>触发：新购 Stellar AP 首次上线、规划集群分域、扩容撞 255 上限、需要远程运维方案、售前被问"无网管能管到什么规模"。</li>
-<li>区分：AP 已上线但入不了集群/拿不到 IP/不上电的故障处置，用 <code><a href="ap-side-troubleshooting.html">ap-side-troubleshooting</a></code>；</li>
+<li><strong>触发</strong>：<br>新购 Stellar AP 首次上线、规划集群分域、扩容撞 255 上限、需要远程运维方案、售前被问"无网管能管到什么规模"。</li>
+<li><strong>区分</strong>：<br>AP 已上线但入不了集群/拿不到 IP/不上电的故障处置，用 <code><a href="ap-side-troubleshooting.html">ap-side-troubleshooting</a></code>；</li>
 <li>SSID/Portal/认证等业务配置用 <code><a href="ssid-portal-auth.html">ssid-portal-auth</a></code>；</li>
 <li>回程组网用 <code><a href="bridge-mesh-deployment.html">bridge-mesh-deployment</a></code>；</li>
 <li>覆盖与信号质量用 <code><a href="rf-survey-tuning.html">rf-survey-tuning</a></code>。本 skill 管"从零到可管"与"规模/域的规划"，不管故障与业务配置；</li>
@@ -139,7 +139,7 @@ blockquote p{margin:6px 0}
 <li><strong>集群实际上限随型号组合变化</strong>（32/64/255），排障时勿默认 255。</li>
 <li><strong>跨集群无 L2/L3 漫游</strong>：终端跨集群必掉线重连，多集群设计的移动预期必须写清。</li>
 <li><strong>远程管理做不了 AP Group 镜像升级</strong>——升级计划别排成纯远程。</li>
-<li>引用校注：p82 型号清单原文为 "1350"，按谱系应为 AP1351，引用时保留校注。</li>
+<li><strong>引用校注</strong>：<br>p82 型号清单原文为 "1350"，按谱系应为 AP1351，引用时保留校注。</li>
 <li>Express 能力不残缺（802.1X/WPA3/WIPS/DFS/TPC/内置 DHCP-DNS-NAT/Mesh/证书/GuestOperator 受限角色/ZTP），售前答疑可对照 p41 清单；
 UPAM 等网管级能力仅在 Enterprise/Cloud 模式。</li>
 </ul>

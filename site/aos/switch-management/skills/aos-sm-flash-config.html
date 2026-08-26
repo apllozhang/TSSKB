@@ -78,10 +78,15 @@ blockquote p{margin:6px 0}
 <li>要把试验配置先放用户目录验证，再认证回 certified（软件回滚）</li>
 <li>要上传/应用 ASCII 配置文件（configuration apply）、定时批量下发、应用前语法预检</li>
 <li>要抓取当前非默认配置快照（snapshot）、tar 备份/恢复、或恢复出厂（reset-to-factory）</li>
-<li>文件传输选型：FTP/SFTP/SCP/TFTP；TFTP 单会话、空间限制排障</li>
+<li><strong>文件传输选型</strong>：<br>FTP/SFTP/SCP/TFTP；TFTP 单会话、空间限制排障</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>CMM 双目录配置管理体系（F2，<span class="pg">原文p94-101</span> ）：certified（已认证的最可靠基线，不可直接写）+ working/用户目录（新文件试验场）+ RUNNING CONFIGURATION（RAM 中的当前配置）三层模型。正常重启时若 certified 与 RUNNING DIRECTORY 内容不同则从 certified 启动（P4，<span class="pg">原文p95</span> ），这套目录结构本身就是回滚机制——新镜像/新配置先进 working 验证，可靠后 <code>copy running certified</code>（P5）。vcboot.cfg 是启动配置文件，启动时按名查找（P6，<span class="pg">原文p94</span> ）。配置文件即 ASCII 文本，可上传、快照、定时应用，构成可复制的批量部署底座（P47，<span class="pg">原文p122</span> ）。</p>
+<ul>
+<li><strong>CMM 双目录配置管理体系（F2，<span class="pg">原文p94-101</span> ）</strong>：<br>certified（已认证的最可靠基线，不可直接写）+ working/用户目录（新文件试验场）+ RUNNING CONFIGURATION（RAM 中的当前配置）三层模型。</li>
+<li>正常重启时若 certified 与 RUNNING DIRECTORY 内容不同则从 certified 启动（P4，<span class="pg">原文p95</span> ），这套目录结构本身就是回滚机制——新镜像/新配置先进 working 验证，可靠后 <code>copy running certified</code>（P5）。</li>
+<li>vcboot.cfg 是启动配置文件，启动时按名查找（P6，<span class="pg">原文p94</span> ）。</li>
+<li>配置文件即 ASCII 文本，可上传、快照、定时应用，构成可复制的批量部署底座（P47，<span class="pg">原文p122</span> ）。</li>
+</ul>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>改动要落盘</strong>：运行目录为 certified 时不能直接保存（X1），先 <code>modify running-directory</code> 切用户目录，<code>write memory</code> 落盘，验证后 <code>copy running certified</code>（C20，<span class="pg">原文p104, 106</span> ）</li>
@@ -120,4 +125,7 @@ blockquote p{margin:6px 0}
 <li>reset-to-factory all 档连 license/证书一并清除（P60，<span class="pg">原文p141</span> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniSwitch AOS 8.10R4 Switch Management Guide 第 3 章 System Files（<span class="pg">原文p52-64</span> ）、第 4 章 CMM Directory（<span class="pg">原文p94-107</span> ）、第 6 章 Configuration Files（<span class="pg">原文p122-141</span> ）。条目来源：cases C3/C20/C21/C27/C28/C29；principles P1-P12/P47/P54-P60；counter-examples X1/X2/X7/X8/X28/X30；frameworks F2。</p><div class="pn"><a href="../index.html">⬅ 返回课程首页</a><a class="nxt" href="aos-sm-software-upgrade.html">下一单元：aos-sm-software-upgrade ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<ul>
+<li>OmniSwitch AOS 8.10R4 Switch Management Guide 第 3 章 System Files（<span class="pg">原文p52-64</span> ）、第 4 章 CMM Directory（<span class="pg">原文p94-107</span> ）、第 6 章 Configuration Files（<span class="pg">原文p122-141</span> ）。</li>
+<li><strong>条目来源</strong>：<br>cases C3/C20/C21/C27/C28/C29；principles P1-P12/P47/P54-P60；counter-examples X1/X2/X7/X8/X28/X30；frameworks F2。</li>
+</ul><div class="pn"><a href="../index.html">⬅ 返回课程首页</a><a class="nxt" href="aos-sm-software-upgrade.html">下一单元：aos-sm-software-upgrade ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

@@ -80,13 +80,18 @@ blockquote p{margin:6px 0}
 <a href="../skills/aos-nc-oam-monitoring.html">aos-nc-oam-monitoring</a>
 <a href="../skills/aos-nc-switch-foundation.html">aos-nc-switch-foundation</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../aos/index.html">AOS 软件手册</a> › <a href="../index.html">AOS 8.10R04</a> › <span>aos-nc-fabric-backbone</span></nav><h1>aos-nc-fabric-backbone</h1><p class="meta"><span class="badge">SKILL</span> aos-nc-fabric-backbone · 来源页码: </p><h2 id="r">R（触发场景）</h2>
 <ul>
-<li>园区/数据中心骨干要最短路径转发、免 STP 阻塞口：部署 SPBM</li>
-<li>大二层跨机房/运营商承载：MPLS LDP + VPLS/VPWS</li>
-<li>数据中心叠加网络：VXLAN 网关桥接传统 VLAN 域</li>
-<li>BGP EVPN 做控制面：多归属冗余、对称/非对称 IRB、Clos 或 Multi-site 部署</li>
+<li><strong>园区/数据中心骨干要最短路径转发、免 STP 阻塞口</strong>：<br>部署 SPBM</li>
+<li><strong>大二层跨机房/运营商承载</strong>：<br>MPLS LDP + VPLS/VPWS</li>
+<li><strong>数据中心叠加网络</strong>：<br>VXLAN 网关桥接传统 VLAN 域</li>
+<li><strong>BGP EVPN 做控制面</strong>：<br>多归属冗余、对称/非对称 IRB、Clos 或 Multi-site 部署</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>SPBM 双平面框架（F4，<span class="pg">原文p211</span> ）：控制面 ISIS-SPB（ECT 对称最短路径树+控制面 MAC 学习）+数据面 802.1ah MAC-in-MAC（BEB 封装、BCB 按 BMAP 转发）；服务模型=BVLAN 承载多 I-SID，SAP 定义接入分类。服务模型三件套（F5，<span class="pg">原文p212</span> /<span class="pg">原文p478</span> /<span class="pg">原文p533</span> ）：SPB、VPLS、VPWS、VXLAN 共用"接入点 SAP+隧道分发点 SDP+服务实例"抽象，学会一次即可迁移到四种 VPN。EVPN 控制面框架（F6，<span class="pg">原文p583</span> ）：MP-BGP EVPN 地址族（RT1-8）+ES/ESI 多归属（DF 选举、别名、水平分割）+VRF tenancy（非对称/对称 IRB、fabric-vpn、DAG、OISM）。EVPN 用控制面通告 MAC/IP 替代数据面泛洪学习（P101，<span class="pg">原文p583</span> ）。</p>
+<ul>
+<li><strong>SPBM 双平面框架（F4，<span class="pg">原文p211</span> ）</strong>：<br>控制面 ISIS-SPB（ECT 对称最短路径树+控制面 MAC 学习）+数据面 802.1ah MAC-in-MAC（BEB 封装、BCB 按 BMAP 转发）；服务模型=BVLAN 承载多 I-SID，SAP 定义接入分类。</li>
+<li><strong>服务模型三件套（F5，<span class="pg">原文p212</span> /<span class="pg">原文p478</span> /<span class="pg">原文p533</span> ）</strong>：<br>SPB、VPLS、VPWS、VXLAN 共用"接入点 SAP+隧道分发点 SDP+服务实例"抽象，学会一次即可迁移到四种 VPN。</li>
+<li><strong>EVPN 控制面框架（F6，<span class="pg">原文p583</span> ）</strong>：<br>MP-BGP EVPN 地址族（RT1-8）+ES/ESI 多归属（DF 选举、别名、水平分割）+VRF tenancy（非对称/对称 IRB、fabric-vpn、DAG、OISM）。</li>
+<li>EVPN 用控制面通告 MAC/IP 替代数据面泛洪学习（P101，<span class="pg">原文p583</span> ）。</li>
+</ul>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>园区骨干选 SPBM</strong>：每桥以自己为根算 SPT，任意两点间最短路径，克服 STP 根桥次优路径（P52，<span class="pg">原文p214</span> ）；配置必须先骨干后服务，顺序颠倒导致 ISIS 邻接异常（X25，<span class="pg">原文p245</span> ）</li>
@@ -98,12 +103,8 @@ blockquote p{margin:6px 0}
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
 <li><strong>SPBM 骨干六步（每台）</strong>：<code>system name BEB-1</code>→<code>spb bvlan 4001</code>/<code>spb bvlan 4002</code>→<code>spb isis bvlan 4001 ect-id 1</code>（每 BVLAN 全网同 ECT）→<code>spb isis control-bvlan 4001</code>→<code>spb isis interface port 1/1-3</code>→<code>spb isis admin-state enable</code>（cases·C15，<span class="pg">原文p245</span> ）</li>
-<li>
-<p>SPB 服务三步：<code>service access port 1/12</code>→<code>service 1 spb isid 500 bvlan 4001 admin-state enable</code>→<code>service 1 sap port 1/12:10 admin-state enable</code>；</p>
-</li>
-<li>
-<p>SAP 封装 <code>:10</code> 匹配 CVLAN10、<code>:0</code> untagged、<code>:all</code> 全部 tagged；</p>
-</li>
+<li><strong>SPB 服务三步</strong>：<br><code>service access port 1/12</code>→<code>service 1 spb isid 500 bvlan 4001 admin-state enable</code>→<code>service 1 sap port 1/12:10 admin-state enable</code>；</li>
+<li>SAP 封装 <code>:10</code> 匹配 CVLAN10、<code>:0</code> untagged、<code>:all</code> 全部 tagged；</li>
 <li>
 <p>验证 show isis/spb service（cases·C16，<span class="pg">原文p245</span> ）；</p>
 </li>
@@ -134,4 +135,7 @@ blockquote p{margin:6px 0}
 <li>AOS 单归设备也用非零 ESI，享受控制面 FDB 管理且可与厂商互通（P105，<span class="pg">原文p583</span> ）；RD 自动生成规则见 P107（<span class="pg">原文p588</span> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniSwitch AOS 8.10R4 Network Configuration Guide 第 7 章 SPBM（<span class="pg">原文p211-280</span> ）、第 15 章 MPLS（<span class="pg">原文p453-461</span> ）、第 16 章 L2VPN（<span class="pg">原文p478-505</span> ）、第 17 章 VXLAN（<span class="pg">原文p533-536</span> ）、第 18 章 EVPN（<span class="pg">原文p583-661</span> ）。条目来源：cases C15-C18/C28/C30-C33；principles P49-P57/P87-P89/P92-P96/P100-P107；counter-examples X25-X27/X37-X42；frameworks F4-F7。</p><div class="pn"><a href="aos-nc-redundancy-protection.html">⬅ 上一单元：aos-nc-redundancy-protection</a><a class="nxt" href="aos-nc-ip-ipv6-services.html">下一单元：aos-nc-ip-ipv6-services ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<ul>
+<li>OmniSwitch AOS 8.10R4 Network Configuration Guide 第 7 章 SPBM（<span class="pg">原文p211-280</span> ）、第 15 章 MPLS（<span class="pg">原文p453-461</span> ）、第 16 章 L2VPN（<span class="pg">原文p478-505</span> ）、第 17 章 VXLAN（<span class="pg">原文p533-536</span> ）、第 18 章 EVPN（<span class="pg">原文p583-661</span> ）。</li>
+<li><strong>条目来源</strong>：<br>cases C15-C18/C28/C30-C33；principles P49-P57/P87-P89/P92-P96/P100-P107；counter-examples X25-X27/X37-X42；frameworks F4-F7。</li>
+</ul><div class="pn"><a href="aos-nc-redundancy-protection.html">⬅ 上一单元：aos-nc-redundancy-protection</a><a class="nxt" href="aos-nc-ip-ipv6-services.html">下一单元：aos-nc-ip-ipv6-services ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

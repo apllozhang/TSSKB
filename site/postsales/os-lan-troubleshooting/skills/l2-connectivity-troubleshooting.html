@@ -116,7 +116,7 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a1-lab">A1 · 书中案例（LAB 故障根因）</h2>
 <ul>
-<li>c02（LAB1 主案例，p140-143）：Client10 ping 不通认证后的 Client5。</li>
+<li><strong>c02（LAB1 主案例，p140-143）</strong>：<br>Client10 ping 不通认证后的 Client5。</li>
 <li>三层根因叠加：① 6360-A 端口 1/1/1 在 vlan 1 中 inactive——端口被禁用，<code>interfaces 1/1/1 admin-state enable</code> 恢复；
 ② 6860-B 上 vlan 30 的 IP 接口 int_30 未启用，到 contractor 网段无路由且 DHCP 中继无归属；
 ③ UNP 会话卡住需 <code>unp user flush port 1/1/1</code>。</li>
@@ -124,8 +124,8 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
-<li>触发：终端互 ping 不通、端口 down、新接设备不通、VLAN 变更后断流、ARP 疑似异常。</li>
-<li>区分：本 skill 处理"单段二层路径"问题。出现 MAC 漂移/环路/STP 状态异常 → stp-loop；</li>
+<li><strong>触发</strong>：<br>终端互 ping 不通、端口 down、新接设备不通、VLAN 变更后断流、ARP 疑似异常。</li>
+<li><strong>区分</strong>：<br>本 skill 处理"单段二层路径"问题。出现 MAC 漂移/环路/STP 状态异常 → stp-loop；</li>
 <li>DHL 双上联 dhl-blocking → stp-loop（含 DHL）；</li>
 <li>堆叠成员口异常 → virtual-chassis；</li>
 <li>网关冗余/路由协议 → l3-routing；</li>

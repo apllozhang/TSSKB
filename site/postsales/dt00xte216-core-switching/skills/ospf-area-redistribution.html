@@ -88,7 +88,11 @@ blockquote p{margin:6px 0}
 <li>直连/静态路由要注入 OSPF（重分发 + route-map），或邻居起不来要排障</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>OSPF 分区的收益是减少 LSA 传播量：区域类型决定允许进入的 LSA 集合（Stub 拒 Type5 注默认路由，Totally Stubby 再拒 Type3，NSSA 用 Type7 引外部路由）。重分发的通用范式是"先 route-map 后 redist"：route-map 序列自上而下、命中即停，执行 <code>ip redist</code> 的路由器即成为 ASBR。邻居建立的前提是 hello/dead/area/认证参数完全一致。</p>
+<ul>
+<li><strong>OSPF 分区的收益是减少 LSA 传播量</strong>：<br>区域类型决定允许进入的 LSA 集合（Stub 拒 Type5 注默认路由，Totally Stubby 再拒 Type3，NSSA 用 Type7 引外部路由）。</li>
+<li><strong>重分发的通用范式是"先 route-map 后 redist"</strong>：<br>route-map 序列自上而下、命中即停，执行 <code>ip redist</code> 的路由器即成为 ASBR。</li>
+<li>邻居建立的前提是 hello/dead/area/认证参数完全一致。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>七步法（<span class="pg">原文p275</span> -<span class="pg">原文p280</span> ）：①配 router-id（<code>ip interface Loopback0 address 192.168.254.1</code> → <code>ip router router-id 192.168.254.1</code>）②<code>ip load ospf</code> ③<code>ip ospf area 0.0.0.0</code> ④指定区域类型 ⑤<code>ip ospf interface int_217</code> ⑥<code>ip ospf interface int_217 area 0.0.0.0</code> ⑦<code>admin-state enable</code> → <code>ip ospf admin-state enable</code>（<span class="pg">原文p325</span> -<span class="pg">原文p330</span> ）</li>
@@ -108,11 +112,11 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
-<li>邻居排障：<code>swlog appid ospf_0 subapp all level debug3</code> + <code>show log swlog | grep ospf_0</code>，可抓到 "HELLO ... discarded ... invalid helloInterval" 类证据（<span class="pg">原文p292</span> -<span class="pg">原文p294</span> ）</li>
-<li>LSA 速查：Type1 每路由器域内泛洪 / Type2 DR 生成 / Type3 ABR 汇总（域内路由在 ABR 做 summarization）/ Type4 通告 ASBR 位置 / Type5 ASBR 外部（外部路由在 ASBR 做 aggregation）/ Type7 NSSA 专用由 ABR 转 Type5 出域（<span class="pg">原文p260</span> -<span class="pg">原文p267</span> 、<span class="pg">原文p286</span> -<span class="pg">原文p287</span> ）</li>
-<li>ECMP：等价路径最多 4 条、按流分担、不支持逐包（<span class="pg">原文p285</span> ）</li>
-<li>Graceful Restart：重启期间邻居维持邻接避免全网 SPF；OSPF/ISIS 默认关、BGP 默认开（<span class="pg">原文p359</span> -<span class="pg">原文p363</span> ）</li>
-<li>route-map 组合逻辑：同序列多 match 为 AND，同 match 多值为 OR（<span class="pg">原文p305</span> ）</li>
+<li><strong>邻居排障</strong>：<br><code>swlog appid ospf_0 subapp all level debug3</code> + <code>show log swlog | grep ospf_0</code>，可抓到 "HELLO ... discarded ... invalid helloInterval" 类证据（<span class="pg">原文p292</span> -<span class="pg">原文p294</span> ）</li>
+<li><strong>LSA 速查</strong>：<br>Type1 每路由器域内泛洪 / Type2 DR 生成 / Type3 ABR 汇总（域内路由在 ABR 做 summarization）/ Type4 通告 ASBR 位置 / Type5 ASBR 外部（外部路由在 ASBR 做 aggregation）/ Type7 NSSA 专用由 ABR 转 Type5 出域（<span class="pg">原文p260</span> -<span class="pg">原文p267</span> 、<span class="pg">原文p286</span> -<span class="pg">原文p287</span> ）</li>
+<li><strong>ECMP</strong>：<br>等价路径最多 4 条、按流分担、不支持逐包（<span class="pg">原文p285</span> ）</li>
+<li><strong>Graceful Restart</strong>：<br>重启期间邻居维持邻接避免全网 SPF；OSPF/ISIS 默认关、BGP 默认开（<span class="pg">原文p359</span> -<span class="pg">原文p363</span> ）</li>
+<li><strong>route-map 组合逻辑</strong>：<br>同序列多 match 为 AND，同 match 多值为 OR（<span class="pg">原文p305</span> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>

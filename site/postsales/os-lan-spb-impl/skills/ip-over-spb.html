@@ -84,7 +84,7 @@ blockquote p{margin:6px 0}
 </blockquote>
 <h2 id="i">I · 方法论骨架</h2>
 <ul>
-<li>三方案按"是否另跑路由协议"递进（f07）：1. <strong>方案一 VRRP 冗余</strong>：无路由协议。</li>
+<li><strong>三方案按"是否另跑路由协议"递进（f07）</strong>：<br>1. <strong>方案一 VRRP 冗余</strong>：无路由协议。</li>
 <li>两台 BEB 对同一服务各建内联 IP 接口 + 交叉优先级 VRRP。</li>
 <li>
 <ol>
@@ -97,22 +97,21 @@ blockquote p{margin:6px 0}
 </ol>
 </li>
 <li>
-<p>公共最小配置（c04）：先有服务，再 <code>ip interface &lt;name&gt; address A/M service &lt;id&gt;</code> 绑接（接口地址即网关）。</p>
+<p><strong>公共最小配置（c04）</strong>：<br>先有服务，再 <code>ip interface &lt;name&gt; address A/M service &lt;id&gt;</code> 绑接（接口地址即网关）。</p>
 </li>
-<li>L3-VPN 四步心法（f08）：bind → export → import → redist（可选泄漏），全程可用 route-map 过滤。</li>
-<li>选型判据：需要 OSPF/BGP 对接 → VPN-Lite；纯 SPB 域内 → L3-VPN。</li>
+<li><strong>L3-VPN 四步心法（f08）</strong>：<br>bind → export → import → redist（可选泄漏），全程可用 route-map 过滤。</li>
+<li><strong>选型判据</strong>：<br>需要 OSPF/BGP 对接 → VPN-Lite；纯 SPB 域内 → L3-VPN。</li>
 </ul>
 <h2 id="a1-lab">A1 · 书中案例（Lab 配置序列精要）</h2>
 <ul>
-<li>L3-VPN 最小五步（c08，p202）：<code>spb bvlan 4001service spb 10 isid 1000 bvlan 4001 admin-state enablevrf 1 ip interface L3vpn1 address 10.5.1.1/24 service 10spb ipvpn bind vrf 1 isid 1000 gateway 10.5.1.1 all-routesvrf 1 ip export all-routesvrf 1 ip import isid 1000 all-routes</code>VPN-Lite OSPF 块（c06/c07，p176/180）：<code>ip load ospf</code> → <code>ip ospf area 0.0.0.0</code> → <code>ip ospf interface L3vpn999</code> → 接口 enable + 入 area → <code>ip ospf admin-state enable</code>，加 route-map 重分发 <code>ip redist local into ospf route-map local</code>。</li>
-<li>VRRP 交叉优先级（c05，p169）：Sw1 <code>ip vrrp 2 interface L3vpnvlan2 priority 200 / address 192.168.2.254 / admin-state enable</code>（vlan3 prio 100），Sw2 相反。</li>
-<li>ECMP（c11，p219）：同一 VRF 绑两个 I-SID（各配服务+接口+bind），import 两条 I-SID 后 show ip routes 出现 "+" 双下一跳。</li>
+<li><strong>L3-VPN 最小五步（c08，p202）</strong>：<br><code>spb bvlan 4001service spb 10 isid 1000 bvlan 4001 admin-state enablevrf 1 ip interface L3vpn1 address 10.5.1.1/24 service 10spb ipvpn bind vrf 1 isid 1000 gateway 10.5.1.1 all-routesvrf 1 ip export all-routesvrf 1 ip import isid 1000 all-routes</code>VPN-Lite OSPF 块（c06/c07，p176/180）：<code>ip load ospf</code> → <code>ip ospf area 0.0.0.0</code> → <code>ip ospf interface L3vpn999</code> → 接口 enable + 入 area → <code>ip ospf admin-state enable</code>，加 route-map 重分发 <code>ip redist local into ospf route-map local</code>。</li>
+<li><strong>VRRP 交叉优先级（c05，p169）</strong>：<br>Sw1 <code>ip vrrp 2 interface L3vpnvlan2 priority 200 / address 192.168.2.254 / admin-state enable</code>（vlan3 prio 100），Sw2 相反。</li>
+<li><strong>ECMP（c11，p219）</strong>：<br>同一 VRF 绑两个 I-SID（各配服务+接口+bind），import 两条 I-SID 后 show ip routes 出现 "+" 双下一跳。</li>
 </ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
 <li>业务要网关冗余、跨 SPB 路由互通、多 VRF 隔离、等价多路径、老平台（6900-X20 等）无内联路由能力时用本 skill。</li>
-<li>与 <code><a href="spb-l2-service.html">spb-l2-service</a></code> 的区分：本 skill 所有方案的第一步都是建 L2 服务，但一旦 <code>ip interface ... service X</code> 出现即进入本 skill；
-与 <code><a href="spb-oam-troubleshoot.html">spb-oam-troubleshoot</a></code> 的区分："路由学到没有"的三级表对拍（c10）本 skill 已内含，通用 OAM 归排障 skill。</li>
+<li><strong>与 <code><a href="spb-l2-service.html">spb-l2-service</a></code> 的区分</strong>：<br>本 skill 所有方案的第一步都是建 L2 服务，但一旦 <code>ip interface ... service X</code> 出现即进入本 skill；与 <code><a href="spb-oam-troubleshoot.html">spb-oam-troubleshoot</a></code> 的区分："路由学到没有"的三级表对拍（c10）本 skill 已内含，通用 OAM 归排障 skill。</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
@@ -131,7 +130,7 @@ blockquote p{margin:6px 0}
 <li><strong>内联接口三条硬规则</strong>（p18）：service 必须先存在；绑定瞬间 vlan-xlation 隐式启用且锁定不可改（ce05）；IPv4/IPv6 同绑一个服务必须同 VRF。</li>
 <li><strong>同 I-SID 不能既 bind 又 redist 到同一 VRF</strong>（ce06）：多部门互通的泄漏路径必须绕开已绑定组合。</li>
 <li><strong>VPN-Lite 两 VRF 不能共享同一 I-SID</strong>（ce07/ce11 之外的 p31）：I-SID 即 L3 隔离边界；回环对 VLAN 必须专属且两侧一致。</li>
-<li>老平台回环口独占（ce11）：loopback 模式下端口不能再承担其他功能，linkagg 回环只能删组解除；端口预算要扣除。</li>
+<li><strong>老平台回环口独占（ce11）</strong>：<br>loopback 模式下端口不能再承担其他功能，linkagg 回环只能删组解除；端口预算要扣除。</li>
 <li>VPN-Lite 收敛受协议叠加拖累（IS-IS 先收敛 OSPF 才能收敛，g39），对收敛敏感选 L3-VPN。</li>
 </ul>
 <hr />

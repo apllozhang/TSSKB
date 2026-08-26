@@ -96,13 +96,16 @@ blockquote p{margin:6px 0}
 </li>
 </ol>
 <h2 id="a1-lab">A1 · 书中案例（Lab 精要）</h2>
-<p>Lab（p89-98）在 AP "Home-AP" 的 Eth1 口做 MAC 认证：预置两个角色 → 配 AAA Server Profile 指向 UPAMRadiusServer → Access Auth Profile 应用到 AP 组并启用端口 Eth1 → Access Policy 匹配 MAC/Local Database/ARP_PASS/Web 重定向 None → 在 Accounts &gt; Company Property 录入客户端 MAC 11:22:33:44:55:66 → 接上有线客户端验证。监控：Device Catalog &gt; Wired Ports 看端口与 UNP 客户端；Analytics &gt; Clients 看在线/历史有线会话（时间窗最近 1 小时到 1 个月）。</p>
+<ul>
+<li><strong>Lab（p89-98）在 AP "Home-AP" 的 Eth1 口做 MAC 认证</strong>：<br>预置两个角色 → 配 AAA Server Profile 指向 UPAMRadiusServer → Access Auth Profile 应用到 AP 组并启用端口 Eth1 → Access Policy 匹配 MAC/Local Database/ARP_PASS/Web 重定向 None → 在 Accounts &gt; Company Property 录入客户端 MAC 11:22:33:44:55:66 → 接上有线客户端验证。</li>
+<li><strong>监控</strong>：<br>Device Catalog &gt; Wired Ports 看端口与 UNP 客户端；Analytics &gt; Clients 看在线/历史有线会话（时间窗最近 1 小时到 1 个月）。</li>
+</ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
 <li>打印机/摄像头/POS 等哑终端要接 AP 有线口或交换机口做准入 → 本 skill MAC 认证流程。</li>
 <li>要让云管"认得出"终端类型并按类型限速/限权（如 IoT 设备自动套受限角色）→ 本 skill IoT 识别部分。</li>
 <li>无线终端的身份认证（802.1X/Captive Portal）属于 SSID 策略 → stellar-ssid-advanced；802.1X 失败排障 → stellar-troubleshooting-cli。</li>
-<li>注意：Access Role Profile（访问角色）与地址解析协议 ARP 同名缩写，本书语境里指访问角色。</li>
+<li><strong>注意</strong>：<br>Access Role Profile（访问角色）与地址解析协议 ARP 同名缩写，本书语境里指访问角色。</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
@@ -142,8 +145,8 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>
-<li>角色顺序别配反：未认证终端落在 ARP_DEFAULT，认证通过才升到 ARP_PASS；默认角色给了全通就失去准入意义。</li>
-<li>DHCP 指纹依赖终端发 DHCP：静态 IP 的哑终端只能靠 MAC OUI 识别。</li>
+<li><strong>角色顺序别配反</strong>：<br>未认证终端落在 ARP_DEFAULT，认证通过才升到 ARP_PASS；默认角色给了全通就失去准入意义。</li>
+<li><strong>DHCP 指纹依赖终端发 DHCP</strong>：<br>静态 IP 的哑终端只能靠 MAC OUI 识别。</li>
 <li>MAC 认证可被 MAC 仿冒，安全要求高的场景应升级到 802.1X。</li>
 <li>IoT 分类绑定 ARP 强制后策略即时生效，误分类（如把正常终端归入受限类）会直接断业务，先小范围验证。</li>
 </ul>

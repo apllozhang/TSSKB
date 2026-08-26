@@ -84,7 +84,10 @@ blockquote p{margin:6px 0}
 <li>需要做配置备份（内置 tar / USB）或升级软件镜像并保留回退能力</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>AOS R8 用 working / certified / user-defined 三目录实现"配置即文件"的管理模型：运行配置（running）随时可写入 working，但只有 <code>copy running certified</code> 认证后才能在冷启动时稳定生效。冷启动会比较 working 与 certified 内容决定启动目录，这是一套防"半配置"开机的回滚保护机制。</p>
+<ul>
+<li>AOS R8 用 working / certified / user-defined 三目录实现"配置即文件"的管理模型：运行配置（running）随时可写入 working，但只有 <code>copy running certified</code> 认证后才能在冷启动时稳定生效。</li>
+<li>冷启动会比较 working 与 certified 内容决定启动目录，这是一套防"半配置"开机的回滚保护机制。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li><strong>理解状态机</strong>：<code>write memory</code>（running→working）→ <code>copy running certified</code>（认证）→ <code>write memory flash-synchro</code>（= write memory + copy running certified 三合一，<span class="pg">原文p89</span> ）。</li>
@@ -104,7 +107,7 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>双分区目录全流程实验：建 VLAN → write memory → reload all 回滚丢失 → reload from working 找回 → user 目录 → certify（<span class="pg">原文p127</span> -<span class="pg">原文p131</span> ）。</li>
+<li><strong>双分区目录全流程实验</strong>：<br>建 VLAN → write memory → reload all 回滚丢失 → reload from working 找回 → user 目录 → certify（<span class="pg">原文p127</span> -<span class="pg">原文p131</span> ）。</li>
 <li>实测报错 "ERROR: Write memory is not permitted when switch is running in certified mode"（<span class="pg">原文p129</span> ）。</li>
 <li>USB 备份/恢复全流程验证 certified/working 双目录落盘（<span class="pg">原文p132</span> -<span class="pg">原文p133</span> ）。</li>
 </ul>
@@ -112,7 +115,7 @@ blockquote p{margin:6px 0}
 <ul>
 <li><strong><code>reload all</code> 无条件从 certified 启动</strong>，不管 running 目录内容是什么——未认证的改动会丢（<span class="pg">原文p126</span>  WARNING）。</li>
 <li>RAM 未保存就重启 → running 的全部改动被覆盖（案例中 VLAN 2/3/99 全丢，<span class="pg">原文p127</span> ）。</li>
-<li>Certified 模式下只读：不能 write memory、不能跨目录移动文件（<span class="pg">原文p91</span> 、<span class="pg">原文p129</span> ）。解法：<code>reload from working no rollback-timeout</code> 或 <code>modify running-directory working</code>。</li>
+<li><strong>Certified 模式下只读</strong>：<br>不能 write memory、不能跨目录移动文件（<span class="pg">原文p91</span> 、<span class="pg">原文p129</span> ）。解法：<code>reload from working no rollback-timeout</code> 或 <code>modify running-directory working</code>。</li>
 <li>Fast PoE / Perpetual PoE 需升级 FPGA/CPLD，OS6360-P10A 不支持（<span class="pg">原文p147</span> -<span class="pg">原文p148</span> ）。</li>
 </ul>
 <h2 id="_1">来源</h2>

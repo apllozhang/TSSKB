@@ -71,13 +71,18 @@ blockquote p{margin:6px 0}
 <div class="grp">运维排障</div>
 <a href="../skills/os6900-ops-troubleshoot.html">os6900-ops-troubleshoot</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../hardware/index.html">硬件手册</a> › <a href="../index.html">OmniSwitch 6900 Hardware Guide</a> › <span>os6900-install-power</span></nav><h1>os6900-install-power</h1><p class="meta"><span class="badge">SKILL</span> os6900-install-power · 来源页码: </p><h2 id="r">R（触发场景）</h2>
 <ul>
-<li>深机箱上架：51.5-59cm 机型的机架安装（滑入式后支撑/中装法兰）与桌面安装</li>
-<li>电源选型与备件：区分 V 系 650W / X 系 400W / OS6920 1500W-1600W 阵营，防两代混插</li>
-<li>DC 场景：V/X 系 12AWG 三芯线、OS6920 环形端子（8AWG/6AWG/50A 过流）接线</li>
+<li><strong>深机箱上架</strong>：<br>51.5-59cm 机型的机架安装（滑入式后支撑/中装法兰）与桌面安装</li>
+<li><strong>电源选型与备件</strong>：<br>区分 V 系 650W / X 系 400W / OS6920 1500W-1600W 阵营，防两代混插</li>
+<li><strong>DC 场景</strong>：<br>V/X 系 12AWG 三芯线、OS6920 环形端子（8AWG/6AWG/50A 过流）接线</li>
 <li>风扇托盘热更换（60 秒窗口）与机箱接地（Panduit lug 30-60 in-lb）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>深机箱机架安装三方案决策树（F3，<span class="pg">原文p54</span> -<span class="pg">原文p57</span> ）：标准机架=前法兰+滑入式后支撑（强制）；深度受限=中装法兰；仅前法兰=官方明令 Never。电源体系两阵营对照框架（F4，<span class="pg">原文p59</span> -<span class="pg">原文p65</span> ）：V 系 650W / X 系 400W / OS6920 1500/1600W 三阵营，阵营间不可混、同箱 AC+DC 可混，F/R 后缀对应气流方向。1+1 冗余模型：第二电源装入即 standby，无电源开关语义=接电即开机（P11/P21，<span class="pg">原文p12</span> /<span class="pg">原文p59</span> ）。气流三件套一致性：电源与风扇托盘方向必须相同，失配将循环重启（P14/P15，<span class="pg">原文p50</span> /<span class="pg">原文p52</span> ）。</p>
+<ul>
+<li><strong>深机箱机架安装三方案决策树（F3，<span class="pg">原文p54</span> -<span class="pg">原文p57</span> ）</strong>：<br>标准机架=前法兰+滑入式后支撑（强制）；深度受限=中装法兰；仅前法兰=官方明令 Never。</li>
+<li><strong>电源体系两阵营对照框架（F4，<span class="pg">原文p59</span> -<span class="pg">原文p65</span> ）</strong>：<br>V 系 650W / X 系 400W / OS6920 1500/1600W 三阵营，阵营间不可混、同箱 AC+DC 可混，F/R 后缀对应气流方向。</li>
+<li><strong>1+1 冗余模型</strong>：<br>第二电源装入即 standby，无电源开关语义=接电即开机（P11/P21，<span class="pg">原文p12</span> /<span class="pg">原文p59</span> ）。</li>
+<li><strong>气流三件套一致性</strong>：<br>电源与风扇托盘方向必须相同，失配将循环重启（P14/P15，<span class="pg">原文p50</span> /<span class="pg">原文p52</span> ）。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>安装形态决策：机架（八步双人+后支撑）→ 中装（螺纹孔 mid-mount）→ 桌面（正放、留气流间隙）</li>
@@ -102,12 +107,12 @@ blockquote p{margin:6px 0}
 <li>深机箱标准机架安装全流程（后支撑插入 slot rails 直抵立柱）（C8，<span class="pg">原文p54-55</span> ）</li>
 <li>OS6920 DC 环形端子自制线缆九项尺寸规格（C14，<span class="pg">原文p67</span> ）</li>
 <li>X48C6 需 IEC 60945 船用认证时必须换 OS-DNV-DC-PWR 双磁环线缆（P25/X16，<span class="pg">原文p63</span> ）</li>
-<li>OS6920 AC 双压输入：100-127V 仅 12V/83.33A（220-240V 得 125A 全功率），hold time &lt;20ms（P22/X12，<span class="pg">原文p64</span> ）</li>
+<li><strong>OS6920 AC 双压输入</strong>：<br>100-127V 仅 12V/83.33A（220-240V 得 125A 全功率），hold time &lt;20ms（P22/X12，<span class="pg">原文p64</span> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>
-<li>两代电源不可混："Do not mix OS6900-V72/C32/C32E/X48C4E/V48C8 power supplies with T48C6/X48C6/T24C2/X24C2 power supplies"（650W 系与 400W 系外观相近互不兼容）（X8/P20，<span class="pg">原文p60</span> -<span class="pg">原文p65</span> ）</li>
-<li>仅前法兰安装禁令：深机箱必致下垂/损坏，后支撑是全部机架安装的强制件（X24/X25，<span class="pg">原文p54</span> /<span class="pg">原文p55</span> ）</li>
+<li><strong>两代电源不可混</strong>：<br>"Do not mix OS6900-V72/C32/C32E/X48C4E/V48C8 power supplies with T48C6/X48C6/T24C2/X24C2 power supplies"（650W 系与 400W 系外观相近互不兼容）（X8/P20，<span class="pg">原文p60</span> -<span class="pg">原文p65</span> ）</li>
+<li><strong>仅前法兰安装禁令</strong>：<br>深机箱必致下垂/损坏，后支撑是全部机架安装的强制件（X24/X25，<span class="pg">原文p54</span> /<span class="pg">原文p55</span> ）</li>
 <li>风扇托盘不可缺位运行、型号不可乱装（F/R 方向且随机型专用）、更换超 60 秒有过热风险（X21/X23/X22，<span class="pg">原文p70</span> /<span class="pg">原文p71</span> /<span class="pg">原文p72</span> ）</li>
 <li>禁用延长线；违电涌军规可失保；DC 源必须在受限场所且地线 EMC 强制（X17/X19/X14/X15，<span class="pg">原文p15</span> /<span class="pg">原文p16</span> /<span class="pg">原文p66</span> /<span class="pg">原文p87</span> ）</li>
 <li>拆电源必须先断电源源；检修/搬动前断开全部电源线（X10/X35，<span class="pg">原文p69</span> /<span class="pg">原文p86</span> ）</li>

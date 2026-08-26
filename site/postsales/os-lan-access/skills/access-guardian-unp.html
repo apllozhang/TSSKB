@@ -93,10 +93,7 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="a1-lab">A1 · 书中案例（Lab 配置精要）</h2>
 <ul>
-<li>Access Guardian 完整流（p397-406）：<code>aaa radius-server my_radius host 192.168.100.102 key alcatel-lucent</code> + <code>aaa device-authentication 802.1x my_radius</code> + <code>aaa accounting mac my_radius</code>；
-ACL 规则装 <code>policy list deny_employees type unp enable</code>；
-<code>unp profile UNP-employee qos-policy-list deny_employees</code> + <code>map vlan 20</code>（contractor→vlan 30）；
-端口 <code>unp port 1/1/1 802.1x-authentication</code> + <code>mac-authentication</code>。</li>
+<li><strong>Access Guardian 完整流（p397-406）</strong>：<br><code>aaa radius-server my_radius host 192.168.100.102 key alcatel-lucent</code> + <code>aaa device-authentication 802.1x my_radius</code> + <code>aaa accounting mac my_radius</code>；ACL 规则装 <code>policy list deny_employees type unp enable</code>；<code>unp profile UNP-employee qos-policy-list deny_employees</code> + <code>map vlan 20</code>（contractor→vlan 30）；端口 <code>unp port 1/1/1 802.1x-authentication</code> + <code>mac-authentication</code>。</li>
 <li>客户端启 PEAP-MSCHAPv2 后 <code>unp user flush port 1/1/1</code> 重认证：employee 进 VLAN20+角色、contractor 进 VLAN30；
 RADIUS 无条目则 Status=Block。</li>
 <li>
@@ -105,7 +102,7 @@ RADIUS 无条目则 Status=Block。</li>
 <li>
 <p><strong>动态 VLAN（p133/p144-157）</strong>：<code>unp profile employee</code> + <code>map vlan 40</code> → <code>unp classification mac-address 00:50:56:90:ee:0a profile1 employee</code> → <code>unp port 2/1/1 port-type bridge</code> → <code>unp user flush port 2/1/1</code> → show unp user 见端口自动进 VLAN 40（unpUntag）。</p>
 </li>
-<li>LLDP（p422-426）：<code>lldp port 1/1/3 notification enable</code> + <code>tlv management port-description enable</code>；</li>
+<li><strong>LLDP（p422-426）</strong>：<br><code>lldp port 1/1/3 notification enable</code> + <code>tlv management port-description enable</code>；</li>
 <li>chassis 级开 system-name/system-description/management-address；</li>
 <li>show lldp remote-system 对比开 TLV 前后（System Name 从 (null) 变 Pod20sw7）；</li>
 </ul>
@@ -118,17 +115,13 @@ RADIUS 无条目则 Status=Block。</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ul>
-<li>动态 VLAN（免认证）：1. 建 VLAN（vlan 20）。</li>
+<li><strong>动态 VLAN（免认证）</strong>：<br>1. 建 VLAN（vlan 20）。</li>
 <li>
 <ol>
 <li><code>unp profile &lt;名&gt;</code> → <code>unp profile &lt;名&gt; map vlan 20</code>。</li>
 </ol>
 </li>
-<li>
-<ol>
-<li>兜底：<code>unp profile def_unp</code> + map vlan 10。</li>
-</ol>
-</li>
+<li><strong>3. 兜底</strong>：<br><code>unp profile def_unp</code> + map vlan 10。</li>
 <li>
 <ol>
 <li><code>unp classification-rule &lt;规则&gt; mac-address-range &lt;起&gt; &lt;止&gt;</code>（或 MAC/OUI/IP/LLDP 等）+ <code>… profile1 &lt;名&gt;</code>。</li>
@@ -144,8 +137,7 @@ RADIUS 无条目则 Status=Block。</li>
 <li><code>unp user flush port &lt;口&gt;</code> → <code>show unp user</code> 验证。</li>
 </ol>
 </li>
-<li>Access Guardian：1. 声明 RADIUS：aaa radius-server …；
-挂认证：aaa authentication 802.1x / aaa device-authentication 802.1x、aaa accounting mac。</li>
+<li><strong>Access Guardian</strong>：<br>1. 声明 RADIUS：aaa radius-server …；挂认证：aaa authentication 802.1x / aaa device-authentication 802.1x、aaa accounting mac。</li>
 <li>
 <ol>
 <li>建 VLAN + UNP profile（map vlan、可挂 qos-policy-list/location-policy）。</li>
@@ -161,12 +153,8 @@ RADIUS 无条目则 Status=Block。</li>
 <li>可选 port-template 批量下发认证参数与 pass-alternate profile。</li>
 </ol>
 </li>
-<li>
-<ol>
-<li>验证：aaa test-radius-server → unp user flush → show unp user [status|details]。</li>
-</ol>
-</li>
-<li>LLDP：1. <code>lldp port &lt;口&gt; notification enable</code>；按需开管理 TLV（system-name/management-address 等，chassis 级）。</li>
+<li><strong>5. 验证</strong>：<br>aaa test-radius-server → unp user flush → show unp user [status|details]。</li>
+<li><strong>LLDP</strong>：<br>1. <code>lldp port &lt;口&gt; notification enable</code>；按需开管理 TLV（system-name/management-address 等，chassis 级）。</li>
 <li>
 <ol>
 <li><code>show lldp remote-system</code> / <code>show lldp statistics</code> 验证。</li>
@@ -179,7 +167,7 @@ RADIUS 无条目则 Status=Block。</li>
 <li>分类规则组合优先级固定（Extended &gt; Binding &gt; Simple），规则次序 Port 最先、VLAN tag 最后——诊断"为什么命中了别的 profile"按此链查。</li>
 <li>RADIUS 无 MAC 条目时用户直接 Block，不是超时重试；先 aaa test-radius-server 定位。</li>
 <li>认证关闭或失败时 UNP 分类规则直接作用于端口流量（default-profile 兜底别忘配，否则端口行为漂移）。</li>
-<li>Mobile Tag：普通 802.1Q 只能配固定端口，mobile 口收 tagged 流需 UNP profile mobile-tag。</li>
+<li><strong>Mobile Tag</strong>：<br>普通 802.1Q 只能配固定端口，mobile 口收 tagged 流需 UNP profile mobile-tag。</li>
 <li>unp user flush 是重分类/重认证的触发器，改完规则不 flush 看不到变化。</li>
 </ul>
 <hr />

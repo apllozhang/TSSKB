@@ -71,14 +71,19 @@ blockquote p{margin:6px 0}
 <div class="grp">运维排障</div>
 <a href="../skills/os6870-ops-troubleshoot.html" class="on">os6870-ops-troubleshoot</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../hardware/index.html">硬件手册</a> › <a href="../index.html">OmniSwitch 6870 Hardware Guide</a> › <span>os6870-ops-troubleshoot</span></nav><h1>os6870-ops-troubleshoot</h1><p class="meta"><span class="badge">SKILL</span> os6870-ops-troubleshoot · 来源页码: </p><h2 id="r">R（触发场景）</h2>
 <ul>
-<li>PoE 上线：slot service 激活、4pair 60-95W 与 bt Class 5-8 使能、限额与优先级</li>
+<li><strong>PoE 上线</strong>：<br>slot service 激活、4pair 60-95W 与 bt Class 5-8 使能、限额与优先级</li>
 <li>新 PD 拒载排查（Guard Band）或预算不足裁口（Priority Disconnect）</li>
-<li>掉电可观测性：Dying Gasp 三通道配置</li>
-<li>巡检与告警处置：show module/temperature；Warning/Danger 双阈值</li>
+<li><strong>掉电可观测性</strong>：<br>Dying Gasp 三通道配置</li>
+<li><strong>巡检与告警处置</strong>：<br>show module/temperature；Warning/Danger 双阈值</li>
 <li>首次上电入网七步流程或电源热插拔更换</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>6870 运维围绕 bt 供电全栈（P26，<span class="pg">原文p62</span> /<span class="pg">原文p65</span> ）：802.3af/at/bt，Class 0-8 梯度（Class 5=45W/6=60W/7=75W/8=90-99W，4 对线 Type 3/4）；4pair 与 8023bt 两级使能（P29）：<code>lanpower 4pair</code> 开 60/75/95W（802.3at 4 对+PoH）、<code>lanpower 8023bt</code> 开 bt 双 Type。两级裁决与家族通用：Guard Band（剩余预算&lt;口上限/类最大值即拒载，不作用已在电 PD，P34）与 Priority Disconnect 四场景（优先级+物理口号 <strong>1 最高→48 最低</strong>，P33）。温度双阈值（P19，<span class="pg">原文p58</span> /<span class="pg">原文p59</span> ）：Warning 用户可配发 trap 业务继续；Danger 出厂固化超限自动关机须手动启动。三大可用性支柱（P10）：电源冗余/热插拔/硬件监控（自动 trap+LED+show 命令）。</p>
+<ul>
+<li><strong>6870 运维围绕 bt 供电全栈（P26，<span class="pg">原文p62</span> /<span class="pg">原文p65</span> ）</strong>：<br>802.3af/at/bt，Class 0-8 梯度（Class 5=45W/6=60W/7=75W/8=90-99W，4 对线 Type 3/4）；4pair 与 8023bt 两级使能（P29）：<code>lanpower 4pair</code> 开 60/75/95W（802.3at 4 对+PoH）、<code>lanpower 8023bt</code> 开 bt 双 Type。</li>
+<li><strong>两级裁决与家族通用</strong>：<br>Guard Band（剩余预算&lt;口上限/类最大值即拒载，不作用已在电 PD，P34）与 Priority Disconnect 四场景（优先级+物理口号 <strong>1 最高→48 最低</strong>，P33）。</li>
+<li><strong>温度双阈值（P19，<span class="pg">原文p58</span> /<span class="pg">原文p59</span> ）</strong>：<br>Warning 用户可配发 trap 业务继续；Danger 出厂固化超限自动关机须手动启动。</li>
+<li><strong>三大可用性支柱（P10）</strong>：<br>电源冗余/热插拔/硬件监控（自动 trap+LED+show 命令）。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>上电-入网标准七步（F3，<span class="pg">原文p17</span> -<span class="pg">原文p21</span> /<span class="pg">原文p65</span> ）：安装（双人/盲板）→多电源数秒内相继插电→观察 OK/PS LED 至启动完成→console 115200-8N1 rollover 登录 admin/switch→解锁会话→改密+时区/时间/contact/name/location→write memory；PoE 机型追加 slot service start</li>
@@ -101,16 +106,16 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>Guard Band 放行小 PD 实战（C26/P34，<span class="pg">原文p67</span> /<span class="pg">原文p68</span> ）：剩余 50W、口上限 75W→拒载 4W PD；调口上限至 10W→放行</li>
-<li>Priority Disconnect 四场景（P33，<span class="pg">原文p69</span> /<span class="pg">原文p70</span> ）：禁用→一律拒新 PD；启用+同级→按物理口号 1 最高→48 最低；新 PD 最高级→必得电、先断最低级口、同级断端口号最大口；新 PD 最低级→拒</li>
-<li>95W bt 全链部署：P48M+双 2000W(230V)=3309W，lanpower 4pair+8023bt 两级使能后 Class 8 PD 按类供电（P27/P29，<span class="pg">原文p63</span> /<span class="pg">原文p65</span> ）</li>
+<li><strong>Guard Band 放行小 PD 实战（C26/P34，<span class="pg">原文p67</span> /<span class="pg">原文p68</span> ）</strong>：<br>剩余 50W、口上限 75W→拒载 4W PD；调口上限至 10W→放行</li>
+<li><strong>Priority Disconnect 四场景（P33，<span class="pg">原文p69</span> /<span class="pg">原文p70</span> ）</strong>：<br>禁用→一律拒新 PD；启用+同级→按物理口号 1 最高→48 最低；新 PD 最高级→必得电、先断最低级口、同级断端口号最大口；新 PD 最低级→拒</li>
+<li><strong>95W bt 全链部署</strong>：<br>P48M+双 2000W(230V)=3309W，lanpower 4pair+8023bt 两级使能后 Class 8 PD 按类供电（P27/P29，<span class="pg">原文p63</span> /<span class="pg">原文p65</span> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>
 <li><strong>Priority Disconnect 端口号方向（本机型）</strong>：1 最高→48 最低（P33，<span class="pg">原文p68</span> /<span class="pg">原文p69</span> ）——与 6860 的"端口号越大越高"相反，跨书迁移配置须核对</li>
 <li>lanpower port admin-state 不能首次激活 PoE（X25，<span class="pg">原文p65</span> ）；Class 检测开启复位全机 PoE 口（X26）；电容检测不符 IEEE 仅限老式话机（X27，<span class="pg">原文p67</span> ）</li>
 <li>调低 slot 上限可致低优先级口断电（X28，<span class="pg">原文p66</span> ）；maxpower 不预留（P31，<span class="pg">原文p67</span> ）</li>
-<li>Guard Band 不保已在电 PD：预算缩减（如拔电源）由 priority disconnect 裁决（X29，<span class="pg">原文p68</span> ）</li>
+<li><strong>Guard Band 不保已在电 PD</strong>：<br>预算缩减（如拔电源）由 priority disconnect 裁决（X29，<span class="pg">原文p68</span> ）</li>
 <li>Z 系列不支持 2000W 电源，预算规划勿套用 M 系列（X30，<span class="pg">原文p47</span> /<span class="pg">原文p63</span> ）</li>
 <li>Danger 阈值固化不可配，超限自动关机须手动启动（X31，<span class="pg">原文p59</span> ）</li>
 <li>解锁远程会话即开放远程访问；密码覆盖受限须安全记录（X40/X39，<span class="pg">原文p19</span> /<span class="pg">原文p20</span> ）；一条命令只能解锁一类会话（X41）</li>

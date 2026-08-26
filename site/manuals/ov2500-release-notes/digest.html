@@ -77,7 +77,7 @@ blockquote p{margin:6px 0}
 <p>4.9R2 是 OmniVista 2500 网管平台的维护增强版，只以虚拟设备（VA）形态交付，支持的宿主机：VMware ESXi 6.5/6.7/7.0.2/8.0、Hyper-V 2012R2-2022、Win10 Pro Hyper-V、KVM Ubuntu 22.04（p5）。</p>
 <p>这版值得升的理由集中在安全与无线两块：</p>
 <ul>
-<li>安全加固：Blast-RADIUS 防护（新增 Require Message Authenticator 校验，解决 CVE-2024-3596，p8-9）；</li>
+<li><strong>安全加固</strong>：<br>Blast-RADIUS 防护（新增 Require Message Authenticator 校验，解决 CVE-2024-3596，p8-9）；</li>
 <li>SNMPv3 全量加密组合；</li>
 <li>密码有效期策略 + CLI 管理员密码找回（p7）；</li>
 <li>
@@ -92,7 +92,7 @@ blockquote p{margin:6px 0}
 <h2 id="_1">二、升级路径速查</h2>
 <ul>
 <li><strong>只有 4.9R1 能直升 4.9R2</strong>（p11），且 4.9R1→4.9R2 用全新工作流：系统会自动先打 4.9R1 Patch 1 再升 4.9R2，变更单里把 Patch 1 列为独立步骤（p9, p15-16）。</li>
-<li>从 4.7R1 出发的完整链是五步：4.7R1 Patch 2 → 4.8R1 → 4.8R2 → 4.9R1 → 4.9R2（p11）。</li>
+<li><strong>从 4.7R1 出发的完整链是五步</strong>：<br>4.7R1 Patch 2 → 4.8R1 → 4.8R2 → 4.9R1 → 4.9R2（p11）。</li>
 <li><strong>HA 环境</strong>：先升 Standby，等所有服务起来，再升 Active（p12, p15）；升完组合 failover 后 WCF 可能失效，重启 WMA 服务即可（ce40）。L2 HA 不能转 L3 HA，L3 集群只能全新安装（p19-20）。</li>
 <li><strong>停机窗口</strong>：升完全员被强制登出改密（见下文陷阱 2），窗口公告要发；默认凭据 admin/switch 升级后也会强制改密（p19）。</li>
 <li><strong>设备侧顺序</strong>：先升 OV 到 4.9R2，再把 Stellar AP 升到 AWOS 5.0.2；Mesh 网络 AP 要从最末节点逐跳升级，且只能用 AP Web GUI，不能用 Resource Manager（p14, p19）。</li>
@@ -144,7 +144,7 @@ blockquote p{margin:6px 0}
 No workaround 条目转为预期管理（估算窗口、告警降噪）。每条带 PR 号，可向 ALE TAC 交叉确认修复版本。</p>
 <h2 id="_4">五、兼容矩阵要点</h2>
 <ul>
-<li>交换机固件（p13-14）：OS2260/2360 = 5.2R5-R7；</li>
+<li><strong>交换机固件（p13-14）</strong>：<br>OS2260/2360 = 5.2R5-R7；</li>
 <li>OS6350/6450 = 6.7.2.R06-R08；</li>
 <li>OS6360/6465/6560/6570M/6860E/6860N/6865 = 8.9R4 / 8.10R2 / 8.10R3；</li>
 <li>OS6870 特殊，只有 8.10R2/R3，没有 8.9R4 档；</li>

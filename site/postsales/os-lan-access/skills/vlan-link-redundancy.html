@@ -86,7 +86,7 @@ blockquote p{margin:6px 0}
 <p>"-&gt; dhl 1 / -&gt; dhl 1 linka linkagg 1 linkb linkagg 2 / -&gt; dhl 1 vlan-map linkb 30 / -&gt; dhl 1 admin-state enable / -&gt; dhl 1 mac-flushing raw"（p257-259）</p>
 <h2 id="i">I · 方法论骨架</h2>
 <ul>
-<li>L2 建网四层递进：- <strong>VLAN</strong>：vlan N → members port … untagged|tagged → 可批量/命名（多词加引号）。</li>
+<li><strong>L2 建网四层递进</strong>：<br>- <strong>VLAN</strong>：vlan N → members port … untagged|tagged → 可批量/命名（多词加引号）。</li>
 <li>物理口恒有且仅有一个 untagged 桥接 VLAN（端口默认 VLAN），其余 VLAN tagged 传送——trunk 两端对同一组 VLAN 打标签。</li>
 <li>
 <ul>
@@ -94,7 +94,7 @@ blockquote p{margin:6px 0}
 </ul>
 </li>
 <li>admin-key 仅本地有效，不必等于组号。</li>
-<li>VLAN 挂聚合口：vlan N members linkagg N untagged|tagged。</li>
+<li><strong>VLAN 挂聚合口</strong>：<br>vlan N members linkagg N untagged|tagged。</li>
 <li>
 <ul>
 <li><strong>STP</strong>：模式（flat=整机单实例 / per-vlan=1x1，默认后者）→ 协议（stp/rstp/mstp）→ 按 VLAN 调 bridge priority（0-65535，默认 32768，越小越优）→ 必要时 path-cost-mode。</li>
@@ -109,31 +109,27 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="a1-lab">A1 · 书中案例（Lab 配置精要）</h2>
 <ul>
-<li>
-<p>802.1Q trunk（p218-224）：先 vlan 58 members port 2/1/3 untagged 做默认 VLAN，再 vlan 20/30 members linkagg 7 tagged 与 port 2/1/3 tagged；</p>
-</li>
-<li>
-<p>一口同载 tagged 20/30 + untagged 58；</p>
-</li>
+<li><strong>802.1Q trunk（p218-224）</strong>：<br>先 vlan 58 members port 2/1/3 untagged 做默认 VLAN，再 vlan 20/30 members linkagg 7 tagged 与 port 2/1/3 tagged；</li>
+<li>一口同载 tagged 20/30 + untagged 58；</li>
 <li>
 <p>两端各做 VLAN 20/30 网关，Client5/6 跨 VLAN ping 验证；</p>
 </li>
 <li>
-<p>LACP + 故障演练（p209-217）：6360 VC 侧跨机箱 linkagg lacp agg 7 size 2 actor admin-key 7（1/1/3+2/1/4），6870 侧 1/1/3-4 同 key；</p>
+<p><strong>LACP + 故障演练（p209-217）</strong>：<br>6360 VC 侧跨机箱 linkagg lacp agg 7 size 2 actor admin-key 7（1/1/3+2/1/4），6870 侧 1/1/3-4 同 key；</p>
 </li>
 <li>单边配好 show linkagg 显示 DOWN，对端配完即 UP；</li>
 <li>
 <p>disable 成员口演示单链路存活；</p>
 </li>
 <li>
-<p>STP 根桥（p238-248）：spantree vlan 20 priority 20000 设 6870 为根（Bridge ID==Designated Root）；</p>
+<p><strong>STP 根桥（p238-248）</strong>：<br>spantree vlan 20 priority 20000 设 6870 为根（Bridge ID==Designated Root）；</p>
 </li>
 <li>show spantree vlan 20 ports 看 ROOT/ALT/BLK；</li>
 <li>
 <p>1x1 负载分担：VLAN20 根=6870(20000)、VLAN30 根=6860，两上行口各转一个 VLAN；</p>
 </li>
 <li>
-<p>DHL（p261-266）：清端口 VLAN 成员再入聚合；</p>
+<p><strong>DHL（p261-266）</strong>：<br>清端口 VLAN 成员再入聚合；</p>
 </li>
 <li>dhl 1 linka linkagg 7 linkb linkagg 8、vlan-map linkb 30、admin-state enable、mac-flushing raw；</li>
 <li>ping 中禁 linkagg 7 验证无缝切换，恢复等 30 秒 pre-emption 回切；</li>
@@ -147,9 +143,9 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ul>
-<li>VLAN：<code>vlan N</code> → <code>vlan N members port &lt;c/s/p&gt; untagged|tagged</code> → <code>show vlan members</code> 验证。</li>
-<li>Trunk：默认 VLAN untagged + 业务 VLAN tagged，两端对称。</li>
-<li>LACP：1. <code>linkagg lacp agg N size X admin-state enable</code>，记 admin-key。</li>
+<li><strong>VLAN</strong>：<br><code>vlan N</code> → <code>vlan N members port &lt;c/s/p&gt; untagged|tagged</code> → <code>show vlan members</code> 验证。</li>
+<li><strong>Trunk</strong>：<br>默认 VLAN untagged + 业务 VLAN tagged，两端对称。</li>
+<li><strong>LACP</strong>：<br>1. <code>linkagg lacp agg N size X admin-state enable</code>，记 admin-key。</li>
 <li>
 <ol>
 <li>端口清残留 VLAN 成员（no vlan N members port …）后 <code>linkagg lacp port &lt;口&gt; actor admin-key K</code>。</li>
@@ -160,13 +156,9 @@ blockquote p{margin:6px 0}
 <li><code>vlan N members linkagg N untagged|tagged</code>；show linkagg / show linkagg port 验证。</li>
 </ol>
 </li>
-<li>STP：1. <code>spantree mode per-vlan</code>（默认）→ <code>spantree [cist|vlan N] protocol rstp</code>。</li>
-<li>
-<ol>
-<li>根桥：<code>spantree vlan N priority 20000</code>；验证 <code>show spantree vlan N ports active</code>。</li>
-</ol>
-</li>
-<li>DHL：1. <code>dhl 1</code> → <code>dhl 1 linka linkagg A linkb linkagg B</code>（两链路同属一个默认 VLAN）。</li>
+<li><strong>STP</strong>：<br>1. <code>spantree mode per-vlan</code>（默认）→ <code>spantree [cist|vlan N] protocol rstp</code>。</li>
+<li><strong>2. 根桥</strong>：<br><code>spantree vlan N priority 20000</code>；验证 <code>show spantree vlan N ports active</code>。</li>
+<li><strong>DHL</strong>：<br>1. <code>dhl 1</code> → <code>dhl 1 linka linkagg A linkb linkagg B</code>（两链路同属一个默认 VLAN）。</li>
 <li>
 <ol>
 <li><code>dhl 1 vlan-map linkb &lt;VLAN&gt;</code>（其余自动走 A）→ <code>dhl 1 admin-state enable</code> → <code>dhl 1 mac-flushing raw|mvrp</code>。</li>
@@ -186,7 +178,7 @@ blockquote p{margin:6px 0}
 <li><strong>静态聚合仅限 OmniSwitch 之间</strong>；对接服务器/存储/第三方必须 LACP（组内同速）。</li>
 <li><strong>DHL 回切延迟</strong>：链路恢复后等 pre-emption timer（默认 30 秒，0-600 可配）才回切，勿误判故障；DHL 口上 STP 自动禁用；mobile/802.1x/GVRP/UNI 口不支持 DHL。</li>
 <li>hash-control 默认按型号分 brief/extended（6900/6465/6360=brief），分流不均时切 extended。</li>
-<li>STP 路径成本两套：16bit（1G=4、10G=2）用于 802.1d/w，32bit 用于 MSTP；path-cost-mode auto 随协议选。</li>
+<li><strong>STP 路径成本两套</strong>：<br>16bit（1G=4、10G=2）用于 802.1d/w，32bit 用于 MSTP；path-cost-mode auto 随协议选。</li>
 </ul>
 <hr />
 <p>来源条目: f06 · f08 · f09 · f10 · p19 · p20 · p27 · p28 · p29 · p30 · p31 · p32 · ce05 · ce10 · ce11 · ce12 · ce13 · c04 · c06 · c07 · c08 · c09 · g20 · g22 · g23 · g24</p><div class="pn"><a href="virtual-chassis-deployment.html">⬅ 上一单元：virtual-chassis-deployment</a><a class="nxt" href="ip-services-basic.html">下一单元：ip-services-basic ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

@@ -83,7 +83,7 @@ blockquote p{margin:6px 0}
 <p>"IF THE OMNISWITCH IS REBOOTED WITH THE 'RELOAD ALL' COMMAND, IT WILL REBOOT FROM THE CERTIFIED DIRECTORY, NO MATTER WHAT THE CONTENT OF THE RUNNING DIRECTORY IS."（p81）</p>
 <h2 id="i">I · 方法论骨架</h2>
 <ul>
-<li>AOS 用"目录式配置"而非单一 startup-config：- <strong>三个候选启动目录</strong>：certified（认证基线）、working（测试暂存）、user-defined（用户自建，可多套）。</li>
+<li><strong>AOS 用"目录式配置"而非单一 startup-config</strong>：<br>- <strong>三个候选启动目录</strong>：certified（认证基线）、working（测试暂存）、user-defined（用户自建，可多套）。</li>
 <li>每个目录 = AOS 镜像 + vcboot.cfg（启动配置）+ vcsetup.cfg（VC 参数）三件套。</li>
 <li>
 <ul>
@@ -101,14 +101,13 @@ blockquote p{margin:6px 0}
 <li><strong>回滚即重启</strong>：冷启动时比较 running 目录与 certified 的镜像+vcboot.cfg，不一致自动回退 certified。</li>
 </ul>
 </li>
-<li>
-<ul>
-<li>判断状态看 <code>show running-directory</code>：NOT SYNCHRONIZED / CERTIFY NEEDED / CERTIFIED。</li>
-</ul>
-</li>
+<li><strong>- 判断状态看 <code>show running-directory</code></strong>：<br>NOT SYNCHRONIZED / CERTIFY NEEDED / CERTIFIED。</li>
 </ul>
 <h2 id="a1-lab">A1 · 书中案例（Lab 配置精要）</h2>
-<p>Lab 目录全流程（p79-88）：建 VLAN 2/3/99（只在 RAM）→ show running-directory 见 NOT SYNCHRONIZED → write memory 变 CERTIFY NEEDED → reload all 回退 certified、VLAN 全丢 → reload from working 找回 → certified 模式下 write memory 报错 "Write memory is not permitted when switch is running in certified mode" → mkdir lab + cp working/<em>.</em> lab（boot.md5 Permission denied 可忽略）→ reload from lab no rollback-timeout → copy running certified 固化。附 USB 备份：usb enable → usb backup admin-state enable → write memory flash-synchro（拔 U 盘前必须 usb disable）。</p>
+<ul>
+<li><strong>Lab 目录全流程（p79-88）</strong>：<br>建 VLAN 2/3/99（只在 RAM）→ show running-directory 见 NOT SYNCHRONIZED → write memory 变 CERTIFY NEEDED → reload all 回退 certified、VLAN 全丢 → reload from working 找回 → certified 模式下 write memory 报错 "Write memory is not permitted when switch is running in certified mode" → mkdir lab + cp working/<em>.</em> lab（boot.md5 Permission denied 可忽略）→ reload from lab no rollback-timeout → copy running certified 固化。</li>
+<li><strong>附 USB 备份</strong>：<br>usb enable → usb backup admin-state enable → write memory flash-synchro（拔 U 盘前必须 usb disable）。</li>
+</ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
 <li>配置改完要不要保存、保存到哪、怎么回退——本 skill。</li>

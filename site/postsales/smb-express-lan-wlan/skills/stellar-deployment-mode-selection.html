@@ -84,7 +84,10 @@ blockquote p{margin:6px 0}
 <li>多台 AP 需要统一成组管理（AP Group / PVM / SVM）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>Stellar 是无控制器分布式架构：AP 上电后按 "DHCP option 138（OV2500）→ Cirrus 注册（MAC/序列号）→ 都没有则 Express" 三级判定自动进入管理模式。同 Group ID + 同管理 VLAN 的 AP 自动成组并选举 PVM/SVM，从 PVM 统一下发配置。</p>
+<ul>
+<li><strong>Stellar 是无控制器分布式架构</strong>：<br>AP 上电后按 "DHCP option 138（OV2500）→ Cirrus 注册（MAC/序列号）→ 都没有则 Express" 三级判定自动进入管理模式。</li>
+<li>同 Group ID + 同管理 VLAN 的 AP 自动成组并选举 PVM/SVM，从 PVM 统一下发配置。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li><strong>按规模选模式</strong>（<span class="pg">原文p188</span> -<span class="pg">原文p198</span> ）：Express 自管理 standalone 集群 ≤255 AP、免许可证；Enterprise（OV2500 本地 NMS 集中管理）≤4000 AP；Cloud（OmniVista Cirrus）≤10000 AP。</li>
@@ -101,8 +104,8 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>多交换机多 AP 实验：OS2360 上配 VLAN tagged/untagged 后，两台 AP 自动成组，PVM=AP1321（型号更高），并从 System&gt;General 修改组参数（<span class="pg">原文p240</span> -<span class="pg">原文p245</span> ）。</li>
-<li>选型反例：需要语音可视化的项目误选 Express，只能拿到 DPI 带宽管控而拿不到 Voice analytics（<span class="pg">原文p875</span> ）。</li>
+<li><strong>多交换机多 AP 实验</strong>：<br>OS2360 上配 VLAN tagged/untagged 后，两台 AP 自动成组，PVM=AP1321（型号更高），并从 System&gt;General 修改组参数（<span class="pg">原文p240</span> -<span class="pg">原文p245</span> ）。</li>
+<li><strong>选型反例</strong>：<br>需要语音可视化的项目误选 Express，只能拿到 DPI 带宽管控而拿不到 Voice analytics（<span class="pg">原文p875</span> ）。</li>
 </ul>
 <h2 id="b">B（边界与陷阱）</h2>
 <ul>

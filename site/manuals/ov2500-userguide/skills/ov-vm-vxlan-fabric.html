@@ -85,8 +85,11 @@ blockquote p{margin:6px 0}
 <li>VXLAN 封装包识别与策略入库（VM Snooping）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>VM Manager 纳管混合 vCenter（≤2 个）+Hyper-V，总 VM 上限 5000；
-流量塑形模型：VM 打 VLAN Tag → 交换机 UNP Tag 规则把 VM VLAN 映射到 UNP+VLAN → 每 VM VLAN 一个 UNP + 一条 VLAN Tag 分类规则 → VM 跨 Host 迁移免改配置。VXLAN 仅 OS6900-Q32/X72 支持：VXLAN Service = VFI（SAP 侧学客户 MAC + SDP 侧学网络 MAC），24 位 VNI 支持 1600 万隔离段。</p>
+<ul>
+<li>VM Manager 纳管混合 vCenter（≤2 个）+Hyper-V，总 VM 上限 5000；
+流量塑形模型：VM 打 VLAN Tag → 交换机 UNP Tag 规则把 VM VLAN 映射到 UNP+VLAN → 每 VM VLAN 一个 UNP + 一条 VLAN Tag 分类规则 → VM 跨 Host 迁移免改配置。</li>
+<li><strong>VXLAN 仅 OS6900-Q32/X72 支持</strong>：<br>VXLAN Service = VFI（SAP 侧学客户 MAC + SDP 侧学网络 MAC），24 位 VNI 支持 1600 万隔离段。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li><strong>VM 纳管前置</strong>（principles·P191，<span class="pg">原文p830-840</span> ）：vCenter URL 需 /sdk 后缀；所有 Hypervisor 系统时间必须与 OV 同步；Hypervisor 连接口或本身须关链路发现协议（否则发 LLDP 被当成桥设备）</li>
@@ -95,7 +98,7 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li>VM VLAN 配置与 One-Touch SPB：Exclude VLAN 让 OV 忽略管理类 VM VLAN；</li>
+<li><strong>VM VLAN 配置与 One-Touch SPB</strong>：<br>Exclude VLAN 让 OV 忽略管理类 VM VLAN；</li>
 <li>VLAN Notification 的 Active/Ignored 两列（有替代配置可 Ignore）；</li>
 <li>Resolve 向导自动修复缺失 Tag 规则——自动生成 UNP Profile 名 "UNP XX"（XX=VLAN ID）；</li>
 <li>SPB Profile 的 ISID=Starting ISID+VM VLAN ID（改起始值可建独立 L2 域），BVLAN 4 个轮转+各自 ECT ID；</li>
@@ -103,7 +106,7 @@ blockquote p{margin:6px 0}
 <p>自动生成的 Profile Policy List 留空仅保连通，后续手工补（principles·P192，<span class="pg">原文p841-847</span> ）；</p>
 </li>
 <li>
-<p>VXLAN 核心：VXLAN Service=VFI；</p>
+<p><strong>VXLAN 核心</strong>：<br>VXLAN Service=VFI；</p>
 </li>
 <li>VNID 置 0 自动生成；</li>
 <li>删除 Service 须先禁用 Service 及关联 SAP/SDP；</li>
@@ -114,7 +117,7 @@ blockquote p{margin:6px 0}
 <p>SAP 每端口最多 8 个，Trusted 默认 True（principles·P193，<span class="pg">原文p848-852</span> ）；</p>
 </li>
 <li>
-<p>VM Snooping：Policy Mode Basic/Advanced；</p>
+<p><strong>VM Snooping</strong>：<br>Policy Mode Basic/Advanced；</p>
 </li>
 <li>Policy Resource Default/Extended（策略数翻倍）；</li>
 <li>Aging 0-86400 默认 300（0=永不老化）；</li>
@@ -147,4 +150,7 @@ blockquote p{margin:6px 0}
 <li>VXLAN 组播隧道要求全网 Multicast Mode 统一（Headend/Tandem 同 BVLAN 必须一致）（principles·P152，<span class="pg">原文p523-525</span> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniVista 2500 NMS 4.9R2 User Guide 第 36 章 VM Manager（<span class="pg">原文p830-847</span> ）、第 37 章 VXLAN（<span class="pg">原文p848-860</span> ）、SPB 概念（<span class="pg">原文p523-525</span> ）。条目来源：principles P101/P152/P191-P194。</p><div class="pn"><a href="ov-wlan-ssid-advanced.html">⬅ 上一单元：ov-wlan-ssid-advanced</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<ul>
+<li>OmniVista 2500 NMS 4.9R2 User Guide 第 36 章 VM Manager（<span class="pg">原文p830-847</span> ）、第 37 章 VXLAN（<span class="pg">原文p848-860</span> ）、SPB 概念（<span class="pg">原文p523-525</span> ）。</li>
+<li><strong>条目来源</strong>：<br>principles P101/P152/P191-P194。</li>
+</ul><div class="pn"><a href="ov-wlan-ssid-advanced.html">⬅ 上一单元：ov-wlan-ssid-advanced</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

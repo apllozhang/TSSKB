@@ -93,11 +93,45 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="_2">二、三单元要点串讲</h2>
 <h3 id="1-profile-tcam">1. 平台三梯队：先选梯队、再选 profile、最后对 TCAM 档位</h3>
-<p>平台规模三梯队框架（F2，<span class="pg">原文p30, 42</span> ）：接入级（6360/6465/6560：MAC 16K、路由 32-2K、聚合 32 组）→ 汇聚级（6570M/6575/6860 系：MAC 32-64K、路由 12-13K、聚合 128）→ 核心/数据中心级（6870/6900/6920/9900：MAC 104-228K、路由 113-384K、聚合 252+）。VC 规格解读（F4，<span class="pg">原文p12, 23-24</span> ）：maximum 默认作用于整 VC 而非单机（P13），三类例外要辨明——按机箱×成员数扩的、VC 封顶的（UNP 用户脚注 2，X35）、仅单机的（1588v2 VC-of-1）；混搭白名单之外 <strong>6860N 与 OS686x 禁止混 VC</strong>（X2）；6900 VC 的 ARP 总量=最低能力模块的值（X6，<span class="pg">原文p42</span> ）。管理面全平台一致：Telnet 6/SSH 8/HTTP 4（P2）；各平台镜像与 USB 救援文件名体系见 P1/P5（<span class="pg">原文p14, 17</span> ）。</p>
+<ul>
+<li><strong>平台规模三梯队框架（F2，<span class="pg">原文p30, 42</span> ）</strong>：<br>接入级（6360/6465/6560：MAC 16K、路由 32-2K、聚合 32 组）→ 汇聚级（6570M/6575/6860 系：MAC 32-64K、路由 12-13K、聚合 128）→ 核心/数据中心级（6870/6900/6920/9900：MAC 104-228K、路由 113-384K、聚合 252+）。</li>
+<li><strong>VC 规格解读（F4，<span class="pg">原文p12, 23-24</span> ）</strong>：<br>maximum 默认作用于整 VC 而非单机（P13），三类例外要辨明——按机箱×成员数扩的、VC 封顶的（UNP 用户脚注 2，X35）、仅单机的（1588v2 VC-of-1）；</li>
+<li>混搭白名单之外 6860N 与 OS686x 禁止混 VC（X2）；</li>
+<li>
+<p>6900 VC 的 ARP 总量=最低能力模块的值（X6，<span class="pg">原文p42</span> ）；</p>
+</li>
+<li>
+<p><strong>管理面全平台一致</strong>：<br>Telnet 6/SSH 8/HTTP 4（P2）；各平台镜像与 USB 救援文件名体系见 P1/P5（<span class="pg">原文p14, 17</span> ）。</p>
+</li>
+</ul>
 <h3 id="2">2. 容量红线：许多容量互相反比</h3>
-<p>骨干选型：SPB（BVLAN 16、I-SID 512-8K 按平台，P19/P20）vs VXLAN（段 1600 万/SAP 8K/VTEP 500/VNI 4K/组播组 500，P22）vs EVPN on 6900（主机 10K 生成 20K RT2、业务 50、VRF 4，P23）。路由：硬件路由 6360 256 → 6900-X RM 312K，超限走软件路由（P16）；OSPF 区域 2-15、BGP 路由 2K-256K（P29）；6560 OSPF 仅 2 区域（X46）。容量反比规律：DHCP Snooping 条目按 VLAN 数反比缩放（P33）；PIMv4+PIMv6+DVMRP 接口合计 384 全局预算（P31）；UNP 用户 VC 两种脚注语义（X35，<span class="pg">原文p61</span> ）；VLAN Stacking service 仅 4、SAP profile 带 QoS 时 8K 降 1K（X40，<span class="pg">原文p71</span> ）；RMON 仅基础 4 组（X39）；L2 GRE Access 隧道多数平台仅 1 是 BYOD 规划瓶颈（X37）；6570M/6575 路由特性需 Advanced Routing license（X44）。</p>
+<ul>
+<li><strong>骨干选型</strong>：<br>SPB（BVLAN 16、I-SID 512-8K 按平台，P19/P20）vs VXLAN（段 1600 万/SAP 8K/VTEP 500/VNI 4K/组播组 500，P22）vs EVPN on 6900（主机 10K 生成 20K RT2、业务 50、VRF 4，P23）。</li>
+<li><strong>路由</strong>：<br>硬件路由 6360 256 → 6900-X RM 312K，超限走软件路由（P16）；OSPF 区域 2-15、BGP 路由 2K-256K（P29）；6560 OSPF 仅 2 区域（X46）。</li>
+<li><strong>容量反比规律</strong>：<br>DHCP Snooping 条目按 VLAN 数反比缩放（P33）；</li>
+<li>PIMv4+PIMv6+DVMRP 接口合计 384 全局预算（P31）；</li>
+<li>UNP 用户 VC 两种脚注语义（X35，<span class="pg">原文p61</span> ）；</li>
+<li>VLAN Stacking service 仅 4、SAP profile 带 QoS 时 8K 降 1K（X40，<span class="pg">原文p71</span> ）；</li>
+<li>RMON 仅基础 4 组（X39）；</li>
+<li>L2 GRE Access 隧道多数平台仅 1 是 BYOD 规划瓶颈（X37）；</li>
+<li>6570M/6575 路由特性需 Advanced Routing license（X44）；</li>
+</ul>
 <h3 id="3-tcam">3. TCAM 零和：档位间是重分配，缺口不因版本改变</h3>
-<p>TCAM profile 机制（F3/P51，<span class="pg">原文p87</span> ）：按应用分配 TCAM 规则数，配置后必须 reload 激活。6870 五档（Default/Metro services/QoS ACL/Source IPv6 ACL/Bidirectional IPv6 ACL）——QoS ACL 档 QoS 入规则 2048→4096 但 SAP 分类降到 1024（P52，<span class="pg">原文p89</span> ）；6570M Fabric 档隧道与 UNP 换掉 PVLAN/VSTK（归零）与 QoS 入规则（P53，<span class="pg">原文p90</span> ）；6575 特例：要 IPv6 snooping 只能选 Source IPv6 ACL 档（P54，<span class="pg">原文p92</span> ）。平台 N/S 缺口是另一维度：MACsec 6360/6865/6900（除 X48C4E）/6920 不支持且需站点许可（X9）；Application Fingerprinting 全平台未实现（X12）；WRED 全平台 N/S（X13）；Ethernet OAM 不支持 6360 与 9900（X11）；MRP 仅 6465/6575/6865（X19）。</p>
+<ul>
+<li><strong>TCAM profile 机制（F3/P51，<span class="pg">原文p87</span> ）</strong>：<br>按应用分配 TCAM 规则数，配置后必须 reload 激活。</li>
+<li>6870 五档（Default/Metro services/QoS ACL/Source IPv6 ACL/Bidirectional IPv6 ACL）——QoS ACL 档 QoS 入规则 2048→4096 但 SAP 分类降到 1024（P52，<span class="pg">原文p89</span> ）；</li>
+<li>6570M Fabric 档隧道与 UNP 换掉 PVLAN/VSTK（归零）与 QoS 入规则（P53，<span class="pg">原文p90</span> ）；</li>
+<li>
+<p>6575 特例：要 IPv6 snooping 只能选 Source IPv6 ACL 档（P54，<span class="pg">原文p92</span> ）；</p>
+</li>
+<li>
+<p><strong>平台 N/S 缺口是另一维度</strong>：<br>MACsec 6360/6865/6900（除 X48C4E）/6920 不支持且需站点许可（X9）；</p>
+</li>
+<li>Application Fingerprinting 全平台未实现（X12）；</li>
+<li>WRED 全平台 N/S（X13）；</li>
+<li>Ethernet OAM 不支持 6360 与 9900（X11）；</li>
+<li>MRP 仅 6465/6575/6865（X19）；</li>
+</ul>
 <h2 id="_3">三、高价值章节页码索引</h2>
 <table>
 <thead>
@@ -198,12 +232,11 @@ blockquote p{margin:6px 0}
 </tbody>
 </table>
 <h2 id="_4">四、条目统计与技能对应</h2>
-<p>verified 计数：principles 54：
-- counter-examples 50
-- frameworks 4
-- glossary 60
-- cases 0（纯规格手册无配置流程）。技能对应：aos-spec-platform-tiers（F1/F2/F4+P1-P17+X1-X6/X42/X48）；
-aos-spec-capacity-limits（F2/F4+P16/P19-P50+容量类 X）；
-aos-spec-tcam-features（F3+P38/P51-P54+缺口类 X9-X13/X20-X22）。</p>
+<ul>
+<li><strong>verified 计数</strong>：<br>principles 54 / counter-examples 50 / frameworks 4 / glossary 60 / cases 0（纯规格手册无配置流程）。</li>
+<li><strong>技能对应</strong>：<br>aos-spec-platform-tiers（F1/F2/F4+P1-P17+X1-X6/X42/X48）；</li>
+<li>aos-spec-capacity-limits（F2/F4+P16/P19-P50+容量类 X）；</li>
+<li>aos-spec-tcam-features（F3+P38/P51-P54+缺口类 X9-X13/X20-X22）；</li>
+</ul>
 <h2 id="_5">五、一句话总纲</h2>
 <p>规格手册是网络设计的红线底座：先按三梯队选平台、再用 SM/RM/ER 放大规模、最后用 TCAM 档位换资源；所有"为什么超了/为什么缩水"（VC 整机语义、反比容量、零和 TCAM、N/S 缺口）都能在本手册矩阵中找到权威答案。</p><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

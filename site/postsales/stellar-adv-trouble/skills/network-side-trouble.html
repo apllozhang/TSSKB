@@ -127,8 +127,8 @@ blockquote p{margin:6px 0}
 <p><strong>OmniVista 云管/本地管上线前置（硬门槛）</strong>：防火墙开 9093、30123-30125；放行出向 443/80/123/53；DHCP 选项 1/2/6/28/42/43（代理另加 129-133、138）；至少 1 台 NTP；AWOS 版本 Cirrus ≥4.0.6 GA、Terra ≥4.0.7.14；AP1101、AP1201L/H/HL 不受支持。</p>
 <h2 id="a1">A1 · 书中案例</h2>
 <ul>
-<li>全书主案例的网络侧成因（p11-18）：OmniVista 里 SSID 映射 VLAN 10、接入交换机 Building_A 配 VLAN 20，tagged 不一致 → 认证后拿不到正确子网，全员连不上 Employee SSID。Resolution：更新交换机 tagged VLAN ID=20。</li>
-<li>ce15 的 NAK 判据：教材要求"至少应回 DHCP-NAK"，把"地址池问题"与"路径不通"一刀分开（p100）。</li>
+<li><strong>全书主案例的网络侧成因（p11-18）</strong>：<br>OmniVista 里 SSID 映射 VLAN 10、接入交换机 Building_A 配 VLAN 20，tagged 不一致 → 认证后拿不到正确子网，全员连不上 Employee SSID。Resolution：更新交换机 tagged VLAN ID=20。</li>
+<li><strong>ce15 的 NAK 判据</strong>：<br>教材要求"至少应回 DHCP-NAK"，把"地址池问题"与"路径不通"一刀分开（p100）。</li>
 </ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
@@ -168,7 +168,7 @@ blockquote p{margin:6px 0}
 <li>proto=static 模式下抓包只能看到徒劳的请求，确认模式是抓包前提。</li>
 <li>时区错但 NTP 同步正常时，日志时间仍整体偏移（教材示例 /tmp/TZ=UTC+08 标注 Wrong time zone），跨设备对齐前必查 /tmp/TZ。</li>
 <li>云管前置里 AP1101/AP1201L/H/HL 硬件就不支持，先查型号再查配置。</li>
-<li>ce01 教训：全员连不上而 AP 本身正常，优先怀疑接入交换机侧 VLAN，别先动无线配置。</li>
+<li><strong>ce01 教训</strong>：<br>全员连不上而 AP 本身正常，优先怀疑接入交换机侧 VLAN，别先动无线配置。</li>
 </ul>
 <hr />
 <p>来源条目: p22 · p24 · p25 · p26 · ce01 · ce14 · ce15 · ce16（术语 g05 br-wan · g12 OmniVista Cirrus · g13 OmniVista Terra · g22 DHCP-NAK）</p><div class="pn"><a href="dot1x-radius-trouble.html">⬅ 上一单元：dot1x-radius-trouble</a><a class="nxt" href="wireless-rf-roaming-trouble.html">下一单元：wireless-rf-roaming-trouble ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

@@ -70,13 +70,18 @@ blockquote p{margin:6px 0}
 <div class="grp">配置</div>
 <a href="../skills/sol-wlan-profile-hierarchy.html">sol-wlan-profile-hierarchy</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../solutions/index.html">解决方案</a> › <a href="../index.html">Stellar WLAN 设计与调优</a> › <span>sol-wlan-fine-tuning</span></nav><h1>sol-wlan-fine-tuning</h1><p class="meta"><span class="badge">SKILL</span> sol-wlan-fine-tuning · 来源页码: </p><h2 id="r">R（触发场景）</h2>
 <ul>
-<li>部署后优化：QoE 评分不达标、信道利用率过高、漫游体验差</li>
-<li>决定哪些参数自动、哪些手工：RDA/背景扫描开关与间隔</li>
+<li><strong>部署后优化</strong>：<br>QoE 评分不达标、信道利用率过高、漫游体验差</li>
+<li><strong>决定哪些参数自动、哪些手工</strong>：<br>RDA/背景扫描开关与间隔</li>
 <li>处理粘滞客户端、Apple 设备兼容、DFS 漫游问题</li>
 <li>语音/视频时敏业务的 SSID 与参数专门化</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>自动化优先、默认开启勿关（P35/P38/P39，<span class="pg">原文p48-53</span> ）：RDA（ACS+APC）算法自动选信道功率，手工微调勿过度——Wi-Fi 环境更适合开足自动功能后小修。容量型思维贯穿微调：小蜂窝低功率（P37）。微调的量化抓手是 QoE 评分与信道利用率（50% 红线，P40，<span class="pg">原文p52</span> ）。粘滞客户端的正解是 802.11k/v，负载均衡解决不了（P44/X12，<span class="pg">原文p57-58</span> ）。</p>
+<ul>
+<li><strong>自动化优先、默认开启勿关（P35/P38/P39，<span class="pg">原文p48-53</span> ）</strong>：<br>RDA（ACS+APC）算法自动选信道功率，手工微调勿过度——Wi-Fi 环境更适合开足自动功能后小修。</li>
+<li><strong>容量型思维贯穿微调</strong>：<br>小蜂窝低功率（P37）。</li>
+<li>微调的量化抓手是 QoE 评分与信道利用率（50% 红线，P40，<span class="pg">原文p52</span> ）。</li>
+<li>粘滞客户端的正解是 802.11k/v，负载均衡解决不了（P44/X12，<span class="pg">原文p57-58</span> ）。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <p>高密 RF 管理七要点（F2，<span class="pg">原文p8-9</span> ）：
 1. 信道复用规则化降 CCI/ACI
@@ -92,14 +97,14 @@ blockquote p{margin:6px 0}
 <li><strong>RSSI 阈值</strong>（P41/P42/C17，<span class="pg">原文p55</span> ）：以 -96dBm 底噪换算；关联阈值 22（= -74dBm）、漫游阈值 25（= -71dBm），双频同值；时敏场景加严（某客户 2.4G=34、5G=28，C18）</li>
 <li><strong>最低速率</strong>（P19/P43，<span class="pg">原文p10, 55</span> ）：最低客户端数据速率 2.4G=12Mbps、5G=24Mbps；且必须 ≥ 最低管理帧速率</li>
 <li><strong>Band Steering / Force 5G</strong>（X7/X8，<span class="pg">原文p54</span> ）：Band Steering 开启时 Apple iOS 可能拉黑 SSID 数分钟——重度 Apple 环境慎用；Force 5G 会拒绝全部 2.4G 关联，仅纯双频客户端环境用</li>
-<li>漫游套件（P44，<span class="pg">原文p57-58</span> ）：802.11k（邻居报告）+ 802.11v（BSS 过渡引导）解粘滞；</li>
+<li><strong>漫游套件（P44，<span class="pg">原文p57-58</span> ）</strong>：<br>802.11k（邻居报告）+ 802.11v（BSS 过渡引导）解粘滞；</li>
 <li>802.11r 快速切换 + OKC 复用 PMK 免完整 802.1X 重认证；</li>
 <li>FDB Update on Association 让 AP 发 ARP 刷新交换机转发表；</li>
 <li>
 <p>注意 k/v 依赖客户端支持（X13）；</p>
 </li>
 <li>
-<p>广播/组播优化（P46，<span class="pg">原文p59-60</span> ）：IGMP Snooping 定向转发；</p>
+<p><strong>广播/组播优化（P46，<span class="pg">原文p59-60</span> ）</strong>：<br>IGMP Snooping 定向转发；</p>
 </li>
 <li>Multicast Optimization 组播转单播（Number of Clients 默认 6）；</li>
 <li>Broadcast Filter ARP 让 AP 作 ARP 代理只发不播（AP 不代理免费 ARP，X14）；</li>
@@ -107,7 +112,7 @@ blockquote p{margin:6px 0}
 <p>Broadcast Key Rotation 默认 15 分钟（1-1440）；</p>
 </li>
 <li>
-<p>语音专门化（P45/C19，<span class="pg">原文p61-62</span> ）：语音专用仅 5GHz SSID 且关 Band Steering；</p>
+<p><strong>语音专门化（P45/C19，<span class="pg">原文p61-62</span> ）</strong>：<br>语音专用仅 5GHz SSID 且关 Band Steering；</p>
 </li>
 <li>会话期间暂停背景扫描（Voice and Video Awareness）；</li>
 <li>
@@ -121,7 +126,7 @@ blockquote p{margin:6px 0}
 <h2 id="e">E（实证案例）</h2>
 <ul>
 <li>SSID×同信道 AP 空口开销矩阵与 2.4G 更糟对照（C13/C14，<span class="pg">原文p53</span> ）</li>
-<li>信号强度行业基准表：-67dBm 时敏（VoIP/视频）、-70dBm 邮件网页、-80dBm 最低连接不可靠（C16/X9，<span class="pg">原文p54</span> ）</li>
+<li><strong>信号强度行业基准表</strong>：<br>-67dBm 时敏（VoIP/视频）、-70dBm 邮件网页、-80dBm 最低连接不可靠（C16/X9，<span class="pg">原文p54</span> ）</li>
 <li>RSSI-dBm 换算（-96 底噪 - 29 = -67dBm）（C17，<span class="pg">原文p55</span> ）</li>
 <li>时敏场景漫游阈值加严（2.4G=34/5G=28）（C18，<span class="pg">原文p55</span> ）</li>
 <li>AP1230 双 5G 信道细分配置（C19，<span class="pg">原文p62</span> ）</li>
@@ -129,12 +134,12 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>
-<li>关背景扫描：外国 AP 检测/rogue 抑制停止、RDA 精度下降（X2，<span class="pg">原文p49</span> ）</li>
+<li><strong>关背景扫描</strong>：<br>外国 AP 检测/rogue 抑制停止、RDA 精度下降（X2，<span class="pg">原文p49</span> ）</li>
 <li>过度手工微调反受其害（X6/P39，<span class="pg">原文p53</span> ）</li>
 <li>负载均衡解决不了粘滞客户端，也不保证最优性能（X12，<span class="pg">原文p58</span> ）</li>
 <li>每次漫游都完整 802.1X 重认证会抵消移动性意义（X11，<span class="pg">原文p57</span> ）</li>
 <li>-80dBm 下发包不可靠，勿当可用信号（X9，<span class="pg">原文p54</span> ）</li>
-<li>iPhone/Chromebook 与 DFS 动态信道不兼容：漫游/粘滞/随机差性能（X15，<span class="pg">原文p60</span> ）</li>
+<li><strong>iPhone/Chromebook 与 DFS 动态信道不兼容</strong>：<br>漫游/粘滞/随机差性能（X15，<span class="pg">原文p60</span> ）</li>
 <li>802.11k/v 取决于客户端最低共同支持（X13，<span class="pg">原文p58</span> ）</li>
 </ul>
 <p>来源：OmniAccess Stellar Wireless Fine-Tuning Best Practices（p8-10、48-68）</p><div class="pn"><a href="sol-wlan-high-density.html">⬅ 上一单元：sol-wlan-high-density</a><a class="nxt" href="sol-wlan-profile-hierarchy.html">下一单元：sol-wlan-profile-hierarchy ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

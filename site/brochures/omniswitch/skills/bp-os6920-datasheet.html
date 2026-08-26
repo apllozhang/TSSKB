@@ -92,12 +92,14 @@ blockquote p{margin:6px 0}
 <li>服务器接入提速（10G→25G/100G）带动的骨干带宽扩容</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>OS6920-D32 是紧凑高密 400G 交换机："32 × 400G ports... Wire-rate non-blocking up to 12.8 Tb/s... With support for RoCEv2 and PFC, it enables a fully lossless fabric"（<span class="pg">原文p138</span> ），SPB L2 VPN + Secure Boot，Azure Local 官方认证。层级：核心/DC 最高速固定档（400G 世代），与 6900（≤100G）互补。</p>
+<ul>
+<li><strong>OS6920-D32 是紧凑高密 400G 交换机</strong>：<br>"32 × 400G ports... Wire-rate non-blocking up to 12.8 Tb/s... With support for RoCEv2 and PFC, it enables a fully lossless fabric"（<span class="pg">原文p138</span> ），SPB L2 VPN + Secure Boot，Azure Local 官方认证。</li>
+<li><strong>层级</strong>：<br>核心/DC 最高速固定档（400G 世代），与 6900（≤100G）互补。</li>
+</ul>
 <h2 id="a1">A1（与相邻系列选型差异）</h2>
 <ul>
-<li>vs OS6900：6900 覆盖 1G~100G（6.4Tb/s、MACsec、VC 6 台）；
-6920 单机 12.8Tb/s 400G + 无损 fabric——要 400G/RoCEv2 上 6920，要端口多样性/MACsec 留 6900。</li>
-<li>vs OS9900：9900 模块化大密度（480 GbE/208 QSFP28、PoE）；6920 定向 AI/DC 骨干，无 PoE 无 GbE。</li>
+<li><strong>vs OS6900</strong>：<br>6900 覆盖 1G~100G（6.4Tb/s、MACsec、VC 6 台）；6920 单机 12.8Tb/s 400G + 无损 fabric——要 400G/RoCEv2 上 6920，要端口多样性/MACsec 留 6900。</li>
+<li><strong>vs OS9900</strong>：<br>9900 模块化大密度（480 GbE/208 QSFP28、PoE）；6920 定向 AI/DC 骨干，无 PoE 无 GbE。</li>
 <li>无 VC 堆叠能力（规格表无 VC 字段，<span class="pg">原文p142</span> ）——扩展靠 spine-leaf 拓扑。</li>
 </ul>
 <h2 id="a2">A2（规格细节速查表）</h2>
@@ -115,7 +117,7 @@ Layer 特性（<span class="pg">原文p139</span> /<span class="pg">原文p140</
 规格红线：单型号 D32；反吹风道环境上限 35°C；深 59cm 需深机柜。</p>
 <h2 id="e">E（适用场景）</h2>
 <ul>
-<li>GPU 集群/AI 训练后台：RoCEv2+PFC 无损（C4），拆分口灵活配 spine/super-spine/border-leaf</li>
+<li><strong>GPU 集群/AI 训练后台</strong>：<br>RoCEv2+PFC 无损（C4），拆分口灵活配 spine/super-spine/border-leaf</li>
 <li>高速存储（解耦存储/RDMA）网络</li>
 <li>Azure Local 混合与边缘 DC（官方认证，<span class="pg">原文p138</span> ）</li>
 <li>校园/企业 DC 骨干从 100G 向 400G 平滑演进</li>
@@ -125,7 +127,7 @@ Layer 特性（<span class="pg">原文p139</span> /<span class="pg">原文p140</
 <li>全册仅 OS6920-D32 一个型号，32x400G 固定；无 GbE/PoE 接入能力——接入层必须另配（X13）</li>
 <li>反吹风道（-R）运行上限仅 35°C、45°C 关机（<span class="pg">原文p142</span> ）——热通道机房选 -F 并规划风道</li>
 <li>无 VC 堆叠——高可用靠拓扑冗余与 VRRP/BFD，不能靠堆叠</li>
-<li>功耗门槛高：386W 起、满配双 1500/1600W 电源——机柜电力预算按 1.5kW+/台预留</li>
+<li><strong>功耗门槛高</strong>：<br>386W 起、满配双 1500/1600W 电源——机柜电力预算按 1.5kW+/台预留</li>
 <li>400G 光模块（SR4.2/DR4/FR4/LR4）与拆分 DAC 需按拓扑单独订购（<span class="pg">原文p144</span> ）</li>
 <li>9416B 巨帧（非 9216）——与存储阵列 MTU 对齐时注意（<span class="pg">原文p142</span> ）</li>
 </ul>

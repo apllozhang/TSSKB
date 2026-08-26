@@ -85,8 +85,10 @@ blockquote p{margin:6px 0}
 <li>需要交换机配置合规审计（Golden Configuration）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>有线配置下发有两条模型：①模板化——Initial 模板在设备变 managed 前应用，Incremental 模板对已纳管交换机增量应用，变量经 Value Mappings 映射；
-②对象化——VLAN Manager 管 L2、IP Interface 管 L3，均以"创建对象 + 选择交换机"的方式下发。Golden Configuration 提供基准备份与偏离审计。</p>
+<ul>
+<li><strong>有线配置下发有两条模型</strong>：<br>①模板化——Initial 模板在设备变 managed 前应用，Incremental 模板对已纳管交换机增量应用，变量经 Value Mappings 映射；②对象化——VLAN Manager 管 L2、IP Interface 管 L3，均以"创建对象 + 选择交换机"的方式下发。</li>
+<li>Golden Configuration 提供基准备份与偏离审计。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li><strong>CLI 模板化配置</strong>：</li>
@@ -105,9 +107,9 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
-<li>模板 + Value Mappings 实现多站点差异化：一套模板，每站点一套映射值（<span class="pg">原文p175</span> ）。</li>
-<li>IoT 设备识别（Device Profiling）：基于 MAC OUI 与 DHCP 指纹（option 55 参数请求列表 / option 60 厂商标识）分类，再按设备类别映射 ARP 执行 Enforcement（<span class="pg">原文p464</span> <span class="pg">原文p465</span> ）。</li>
-<li>UNP（Unified Network Policy）：OmniSwitch 上的统一网络策略，可在有线客户端/port 视图应用（<span class="pg">原文p193</span> <span class="pg">原文p313</span> ）。</li>
+<li><strong>模板 + Value Mappings 实现多站点差异化</strong>：<br>一套模板，每站点一套映射值（<span class="pg">原文p175</span> ）。</li>
+<li><strong>IoT 设备识别（Device Profiling）</strong>：<br>基于 MAC OUI 与 DHCP 指纹（option 55 参数请求列表 / option 60 厂商标识）分类，再按设备类别映射 ARP 执行 Enforcement（<span class="pg">原文p464</span> <span class="pg">原文p465</span> ）。</li>
+<li><strong>UNP（Unified Network Policy）</strong>：<br>OmniSwitch 上的统一网络策略，可在有线客户端/port 视图应用（<span class="pg">原文p193</span> <span class="pg">原文p313</span> ）。</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
@@ -116,8 +118,8 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="b">B（边界与陷阱）</h2>
 <ul>
-<li>Initial 与 Incremental 应用时机不同：Initial 只在设备变 managed 前的 onboarding 环节生效，错过就要用 Incremental（<span class="pg">原文p174</span> ）。</li>
-<li>审计基准更新要及时：Golden Configuration 偏离即 Non-Compliant，计划内变更后需刷新基准（<span class="pg">原文p195</span> <span class="pg">原文p196</span> ）。</li>
+<li><strong>Initial 与 Incremental 应用时机不同</strong>：<br>Initial 只在设备变 managed 前的 onboarding 环节生效，错过就要用 Incremental（<span class="pg">原文p174</span> ）。</li>
+<li><strong>审计基准更新要及时</strong>：<br>Golden Configuration 偏离即 Non-Compliant，计划内变更后需刷新基准（<span class="pg">原文p195</span> <span class="pg">原文p196</span> ）。</li>
 </ul>
 <h2 id="_1">来源</h2>
 <ul>

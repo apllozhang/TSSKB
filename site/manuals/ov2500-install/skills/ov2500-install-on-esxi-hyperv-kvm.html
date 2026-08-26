@@ -102,16 +102,15 @@ blockquote p{margin:6px 0}
 <h2 id="a1">A1 · 书中案例</h2>
 <ul>
 <li>新手想一步到位，部署 VA 前就预挂扩容盘——官方明确禁止；须等 OmniVista 配置完成并重启后再从 Hypervisor 加盘（p10）。</li>
-<li>用 Configure Other Network Cards 加第二块网卡做跨子网发现：新网卡误配在主 OV IP 已管理设备的同子网，导致现有设备发不出 trap/报文；
-且新网卡必须与第一块同型号（eth1 与 eth0 同类型），经新网卡发现的设备 trap station 还要手动指到新网卡 IP（p285）。</li>
-<li>内存紧张的中型网络：Watchdog 菜单 Choose Service Profile 选 "2 4 5"（不开 Stellar/UPAM、不开 IoT、不开 sFlow）一次裁掉三类服务（p287）。</li>
-<li>KVM 部署初期：两块系统盘按手册选 VirtIO 总线并设 Discard Mode=unmap（p33）。</li>
+<li><strong>用 Configure Other Network Cards 加第二块网卡做跨子网发现</strong>：<br>新网卡误配在主 OV IP 已管理设备的同子网，导致现有设备发不出 trap/报文；且新网卡必须与第一块同型号（eth1 与 eth0 同类型），经新网卡发现的设备 trap station 还要手动指到新网卡 IP（p285）。</li>
+<li><strong>内存紧张的中型网络</strong>：<br>Watchdog 菜单 Choose Service Profile 选 "2 4 5"（不开 Stellar/UPAM、不开 IoT、不开 sFlow）一次裁掉三类服务（p287）。</li>
+<li><strong>KVM 部署初期</strong>：<br>两块系统盘按手册选 VirtIO 总线并设 Discard Mode=unmap（p33）。</li>
 </ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
 <li><strong>用本 skill</strong>：拿到 VA 包后到"能登录 Web UI 并激活许可"这一段，以及装机后的常规菜单运维（服务启停、改 IP、加网卡、NTP、关机）。</li>
-<li>与 <code><a href="ov2500-sizing-and-platform-planning.html">ov2500-sizing-and-platform-planning</a></code> 的区分：档位/资源/端口的决策在那边；本 skill 是照决策执行安装与菜单操作。</li>
-<li>与 <code><a href="ov2500-ha-cluster-design-and-conversion.html">ov2500-ha-cluster-design-and-conversion</a></code> 的区分：VA 菜单里 Convert/Join Cluster 相关操作归那一个；本 skill 只覆盖单机（Standalone）形态。</li>
+<li><strong>与 <code><a href="ov2500-sizing-and-platform-planning.html">ov2500-sizing-and-platform-planning</a></code> 的区分</strong>：<br>档位/资源/端口的决策在那边；本 skill 是照决策执行安装与菜单操作。</li>
+<li><strong>与 <code><a href="ov2500-ha-cluster-design-and-conversion.html">ov2500-ha-cluster-design-and-conversion</a></code> 的区分</strong>：<br>VA 菜单里 Convert/Join Cluster 相关操作归那一个；本 skill 只覆盖单机（Standalone）形态。</li>
 <li>磁盘扩容完整流程（含 KVM SATA 怪癖）在升级 skill 的备份恢复/存储单元；此处只强调"首装别提前加盘"。</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
@@ -143,8 +142,8 @@ blockquote p{margin:6px 0}
 <ul>
 <li><strong>禁止首装前预挂扩展盘</strong>；不支持编辑既有虚拟盘容量（p10）。</li>
 <li>cliadmin / Technical Support Code 密码丢失无法找回，只能重装。</li>
-<li>Hyper-V：不支持 Live Migration；VM Manager 仅支持 2012/2012R2/2016（p19）。</li>
-<li>KVM：系统盘用 VirtIO+unmap；后续扩容盘规则完全不同（SATA 总线、前两块新盘不可见，详见扩容单元）。</li>
+<li><strong>Hyper-V</strong>：<br>不支持 Live Migration；VM Manager 仅支持 2012/2012R2/2016（p19）。</li>
+<li><strong>KVM</strong>：<br>系统盘用 VirtIO+unmap；后续扩容盘规则完全不同（SATA 总线、前两块新盘不可见，详见扩容单元）。</li>
 <li>改 OV IP 不会自动更新网络设备，trap/策略/DHCP 全要手动重推（p276）。</li>
 <li>Stellar AP 必须跑 Release Notes 认证的 AWOS 版本，一般在 OV 升级完成后再刷 AP 固件（p8）。</li>
 <li>直接关宿主机给 VM 断电是数据损坏禁忌；长操作（扩盘等）全程不得对 VM 断电或复位（p8, p292）。</li>

@@ -71,14 +71,28 @@ blockquote p{margin:6px 0}
 <div class="grp">运维排障</div>
 <a href="../skills/os6865-ops-troubleshoot.html" class="on">os6865-ops-troubleshoot</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../hardware/index.html">硬件手册</a> › <a href="../index.html">OmniSwitch 6865 Hardware Guide</a> › <span>os6865-ops-troubleshoot</span></nav><h1>os6865-ops-troubleshoot</h1><p class="meta"><span class="badge">SKILL</span> os6865-ops-troubleshoot · 来源页码: </p><h2 id="r">R（触发场景）</h2>
 <ul>
-<li>PoE 上线：逐 slot 物理激活、口/槽功率上限、三级优先级、Fast/Perpetual PoE 开启</li>
+<li><strong>PoE 上线</strong>：<br>逐 slot 物理激活、口/槽功率上限、三级优先级、Fast/Perpetual PoE 开启</li>
 <li>新 PD 拒载排查（Guard Band）或预算不足裁口（Priority Disconnect 四场景）</li>
-<li>掉电可观测性：Dying Gasp 三通道（SNMP/Syslog/Link OAM PDU）配置</li>
-<li>首次上电：LED 判读时机（启动完成前不判断）与首次登录六步</li>
-<li>电源/PoE 状态巡检：show powersupply / show lanpower slot</li>
+<li><strong>掉电可观测性</strong>：<br>Dying Gasp 三通道（SNMP/Syslog/Link OAM PDU）配置</li>
+<li><strong>首次上电</strong>：<br>LED 判读时机（启动完成前不判断）与首次登录六步</li>
+<li><strong>电源/PoE 状态巡检</strong>：<br>show powersupply / show lanpower slot</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>6865 运维三支柱：①PoE 两级激活模型（P27，<span class="pg">原文p58</span> ）——软件默认 administratively enabled，但必须逐 slot <code>lanpower slot service start</code> 物理激活才供电；②预算-温度-电源三变量联动（P25）——预算随温度档降额（65°C 腰斩），叠加 Guard Band（剩余预算&lt;口上限拒新 PD）与 Priority Disconnect（优先级+端口号 1 最高→28 最低裁决，P33）两级裁决；③Dying Gasp 部署框架（F4，<span class="pg">原文p54</span> /<span class="pg">原文p55</span> ）——全电源丢失瞬间维持电力发 SNMP trap（前 3 站）+Syslog（前 3 服务器）+4×802.3ah PDU；资源约束=并发 PDU 口数 10−已配服务器数，上行口优先。Fast PoE 上电数秒供电（FPGA 固化）；Perpetual PoE 软重启不断电，MCU 升级例外（P29/P30，<span class="pg">原文p59</span> ）。</p>
+<ul>
+<li><strong>6865 运维三支柱</strong>：<br>①PoE 两级激活模型（P27，<span class="pg">原文p58</span> ）——软件默认 administratively enabled，但必须逐 slot <code>lanpower slot service start</code> 物理激活才供电；</li>
+<li>
+<p>②预算-温度-电源三变量联动（P25）——预算随温度档降额（65°C 腰斩），叠加 Guard Band（剩余预算&lt;口上限拒新 PD）与 Priority Disconnect（优先级+端口号 1 最高→28 最低裁决，P33）两级裁决；</p>
+</li>
+<li>
+<p>③Dying Gasp 部署框架（F4，<span class="pg">原文p54</span> /<span class="pg">原文p55</span> ）——全电源丢失瞬间维持电力发 SNMP trap（前 3 站）+Syslog（前 3 服务器）+4×802.3ah PDU；</p>
+</li>
+<li>
+<p>资源约束=并发 PDU 口数 10−已配服务器数，上行口优先；</p>
+</li>
+<li>
+<p>Fast PoE 上电数秒供电（FPGA 固化）；Perpetual PoE 软重启不断电，MCU 升级例外（P29/P30，<span class="pg">原文p59</span> ）。</p>
+</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>首次上电判读纪律：启动完成前不判断 LED 状态（"Be sure the boot process is complete before checking LED status"，C22，<span class="pg">原文p38</span> ）</li>
@@ -92,7 +106,7 @@ blockquote p{margin:6px 0}
 <li><strong>PoE 物理激活</strong>：<code>lanpower slot 2/1 service start</code>；曾被断电的口重启用 <code>lanpower port admin-state enable</code>（C28，<span class="pg">原文p58</span> ）</li>
 <li><strong>关 PoE</strong>：单口 <code>lanpower port 1/1/12 admin-state disable</code>；整槽 <code>lanpower slot 1/1 service stop</code>（C29，<span class="pg">原文p59</span> ）</li>
 <li><strong>Fast/Perpetual PoE</strong>：<code>lanpower slot 1/1 fpoe enable</code> / <code>lanpower slot 1/1 ppoe enable</code>（C30，<span class="pg">原文p59</span> ）</li>
-<li>调限额与优先级：<code>lanpower power</code>（须带 chassis/slot/port 全三段）；</li>
+<li><strong>调限额与优先级</strong>：<br><code>lanpower power</code>（须带 chassis/slot/port 全三段）；</li>
 <li><code>lanpower slot 1/1 maxpower 150</code>；</li>
 <li>
 <p><code>lanpower port 1/1/6 priority critical</code>（C31/C32，<span class="pg">原文p59</span> -<span class="pg">原文p61</span> ）；</p>
@@ -107,9 +121,9 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>Priority Disconnect 四场景裁决（P33，<span class="pg">原文p62</span> /<span class="pg">原文p63</span> ）：禁用→一律拒新 PD；启用+同级→按物理口号 1 最高→28 最低；新 PD 最高优先级→必得电、先断最低级口、同级断端口号最大的口；新 PD 最低→拒</li>
-<li>DG PDU 并发限额：2 SNMP+1 Syslog→最多 7 口同时发 PDU，上行口优先（P20，<span class="pg">原文p54</span> /<span class="pg">原文p55</span> ）</li>
-<li>Class 检测抉择：默认关闭按预算供电；严格按类限功率需显式开启，代价=复位全部 PoE 口（P28，<span class="pg">原文p57</span> /<span class="pg">原文p58</span> ）</li>
+<li><strong>Priority Disconnect 四场景裁决（P33，<span class="pg">原文p62</span> /<span class="pg">原文p63</span> ）</strong>：<br>禁用→一律拒新 PD；启用+同级→按物理口号 1 最高→28 最低；新 PD 最高优先级→必得电、先断最低级口、同级断端口号最大的口；新 PD 最低→拒</li>
+<li><strong>DG PDU 并发限额</strong>：<br>2 SNMP+1 Syslog→最多 7 口同时发 PDU，上行口优先（P20，<span class="pg">原文p54</span> /<span class="pg">原文p55</span> ）</li>
+<li><strong>Class 检测抉择</strong>：<br>默认关闭按预算供电；严格按类限功率需显式开启，代价=复位全部 PoE 口（P28，<span class="pg">原文p57</span> /<span class="pg">原文p58</span> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>
@@ -117,11 +131,11 @@ blockquote p{margin:6px 0}
 <li>lanpower port admin-state 不能首次激活 PoE，必须 slot service（X24，<span class="pg">原文p58</span> ）；Class 检测开启复位全部 PoE 口（X25）</li>
 <li>电容检测不符 IEEE，仅限老式 IP 话机（X26，<span class="pg">原文p61</span> ）</li>
 <li>调低 slot 上限可致低优先级口断电（X27，<span class="pg">原文p60</span> ）；maxpower 不预留功率（P31，<span class="pg">原文p60</span> ）</li>
-<li>Perpetual PoE 例外：MCU 固件升级必断 PD 电（X28，<span class="pg">原文p59</span> ）；LLDP PD 在 Fast PoE 下须等启动完成（X29）</li>
-<li>双电同源风险：两电源接同一源=同时故障，DG 直接触发（X30/P18，<span class="pg">原文p54</span> ）</li>
+<li><strong>Perpetual PoE 例外</strong>：<br>MCU 固件升级必断 PD 电（X28，<span class="pg">原文p59</span> ）；LLDP PD 在 Fast PoE 下须等启动完成（X29）</li>
+<li><strong>双电同源风险</strong>：<br>两电源接同一源=同时故障，DG 直接触发（X30/P18，<span class="pg">原文p54</span> ）</li>
 <li>解锁远程会话即向远程开放访问（X40，<span class="pg">原文p40</span> ）；密码覆盖受限，须安全记录（X39）</li>
 <li>解锁会话一条命令只能一类（aaa authentication 逐类执行）</li>
 <li>锂电池更换只能同型/等效型，旧电池寄回工厂（X37，<span class="pg">原文p76</span> ）</li>
-<li>跨书易混：6865 无温度双阈值机制（无 Danger 关机语义），与 6860/6870 的 Warning/Danger 双阈值不同，高温防护靠 TMRA 分级+预算降额</li>
+<li><strong>跨书易混</strong>：<br>6865 无温度双阈值机制（无 Danger 关机语义），与 6860/6870 的 Warning/Danger 双阈值不同，高温防护靠 TMRA 分级+预算降额</li>
 </ul>
 <p>来源：OmniSwitch 6865 Hardware Users Guide（Ch1 p38-41 + Ch2 p51-55 + Ch3 p56-64）</p><div class="pn"><a href="os6865-install-power.html">⬅ 上一单元：os6865-install-power</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

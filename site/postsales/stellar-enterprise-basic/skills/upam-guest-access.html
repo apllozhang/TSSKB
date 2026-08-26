@@ -108,15 +108,15 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a1-lab">A1 · 书中案例（Lab 精要）</h2>
 <ul>
-<li>c07：建 GuestsX（Usage=Guest Network、OV-UPAM 门户、VLAN 30），访客 Guest/password；</li>
+<li><strong>c07</strong>：<br>建 GuestsX（Usage=Guest Network、OV-UPAM 门户、VLAN 30），访客 Guest/password；</li>
 <li>客户端访问任意非 HTTPS URL（http://2.2.2.2）触发门户重定向。管控：UPAM &gt; Guest Device 踢线 KickOff；</li>
 <li>
 <p>WLAN &gt; Client List 拉黑 Blocklist；</p>
 </li>
 <li>
-<p>c08：Unified Policy 拒 telnet/SSH——建 Service Group（TCP23/22）→ Policy 动作 QoS Disposition=DROP → Policy List 顺序 DeniedServ + OV-L3-AcceptAllPolicy → 塞进访客角色 __GuestsX → Apply to Devices（VLAN 30，OS6870+APGX）。</p>
+<p><strong>c08</strong>：<br>Unified Policy 拒 telnet/SSH——建 Service Group（TCP23/22）→ Policy 动作 QoS Disposition=DROP → Policy List 顺序 DeniedServ + OV-L3-AcceptAllPolicy → 塞进访客角色 __GuestsX → Apply to Devices（VLAN 30，OS6870+APGX）。</p>
 </li>
-<li>c09：WCF-guests 拒 Social Networking 与 Gambling 类目，绑 __GuestsX 后必须 Apply to Devices 才推到 AP；google.com 通、facebook.com 拒。</li>
+<li><strong>c09</strong>：<br>WCF-guests 拒 Social Networking 与 Gambling 类目，绑 __GuestsX 后必须 Apply to Devices 才推到 AP；google.com 通、facebook.com 拒。</li>
 </ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
@@ -163,8 +163,8 @@ blockquote p{margin:6px 0}
 <ul>
 <li>OV2500 必须配 DNS，否则 WCF 停在 Not in service、连不上 Brightcloud——验收第一步看状态。</li>
 <li>AP1101/AP1201H 不支持 WCF；WCF Profile 与 Access Role 一对一。</li>
-<li>策略在认证成功时套用：改完必须断开重连强制重认证，否则误判"没生效"。</li>
-<li>访客账号有有效期：OV2500 与 AP 时间不同步会导致"没过期却登不上"，两侧 <code>date</code> 核对，根治配 NTP。</li>
+<li><strong>策略在认证成功时套用</strong>：<br>改完必须断开重连强制重认证，否则误判"没生效"。</li>
+<li><strong>访客账号有有效期</strong>：<br>OV2500 与 AP 时间不同步会导致"没过期却登不上"，两侧 <code>date</code> 核对，根治配 NTP。</li>
 <li>门户重定向需 HTTP 触发（访问 HTTPS 站点不会跳门户）。</li>
 <li>Unified Policy 部分特性仅 OS6870 与 AP 支持（OS2360/6360 不支持）。</li>
 </ul>

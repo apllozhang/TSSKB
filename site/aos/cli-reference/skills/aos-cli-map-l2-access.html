@@ -78,7 +78,12 @@ blockquote p{margin:6px 0}
 <li>端口违例恢复、PoE 分级、聚合哈希、VLAN 删除语义等关键默认值核对</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>CLI Reference 是 6240 页命令字典，每条命令按"语法→参数→默认值→平台矩阵→用法指南→示例→Release History→相关命令→MIB Objects"固定结构展开；正确用法是先定位章（按本地图），再回书按页码查命令全文，不做通读。本域覆盖接入层命令：<code>interfaces</code>（30+ 子命令）、<code>lanpower</code>、<code>vlan</code>/<code>pvlan</code>、<code>linkagg</code>、<code>spanty</code>/<code>bridge</code>、<code>erp</code>/<code>mrp</code>、<code>virtual-chassis</code>。页码取 PDF 全文标记 <code>&lt;&lt;&lt;PAGE N&gt;&gt;&gt;</code>（第 1 章始于 <span class="pg">原文p67</span> ，对应书内页 1-1）。</p>
+<ul>
+<li>CLI Reference 是 6240 页命令字典，每条命令按"语法→参数→默认值→平台矩阵→用法指南→示例→Release History→相关命令→MIB Objects"固定结构展开；
+正确用法是先定位章（按本地图），再回书按页码查命令全文，不做通读。</li>
+<li><strong>本域覆盖接入层命令</strong>：<br><code>interfaces</code>（30+ 子命令）、<code>lanpower</code>、<code>vlan</code>/<code>pvlan</code>、<code>linkagg</code>、<code>spanty</code>/<code>bridge</code>、<code>erp</code>/<code>mrp</code>、<code>virtual-chassis</code>。</li>
+<li>页码取 PDF 全文标记 <code>&lt;&lt;&lt;PAGE N&gt;&gt;&gt;</code>（第 1 章始于 <span class="pg">原文p67</span> ，对应书内页 1-1）。</li>
+</ul>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>物理层/端口参数</strong>→第 1 章；<strong>PoE 供电</strong>→第 2 章；<strong>UDLD</strong>→第 3 章</li>
@@ -90,7 +95,7 @@ blockquote p{margin:6px 0}
 <h2 id="a2">A2（操作步骤）·章节清单与代表命令</h2>
 <ul>
 <li><strong>Ch1 Ethernet Port（<span class="pg">原文p67</span> ，约 85 条）</strong>：<code>interfaces &lt;port&gt; speed|duplex|fec|break-out|eee|ddm</code>、<code>interfaces link-monitoring link-flap-threshold</code>、<code>violation</code>/<code>clear violation</code>；<code>show interfaces status/counters/counters errors/ddm</code>（P1/P2）</li>
-<li>Ch2 PoE（<span class="pg">原文p254</span> ，约 38 条）：<code>lanpower slot port ...</code>（供电/预算/优先级/power rule）；</li>
+<li><strong>Ch2 PoE（<span class="pg">原文p254</span> ，约 38 条）</strong>：<br><code>lanpower slot port ...</code>（供电/预算/优先级/power rule）；</li>
 <li>802.3at 须先 <code>lanpower slot class-detection</code>，802.3bt（固件 3.xx）自动启用；</li>
 <li>power rule 先创建再绑定（P3/X7）；</li>
 <li>
@@ -100,7 +105,7 @@ blockquote p{margin:6px 0}
 <p><strong>Ch3 UDLD（<span class="pg">原文p327</span> ，约 12 条）</strong>：<code>udld port ...</code> 单向链路检测</p>
 </li>
 <li><strong>Ch4 Source Learning（<span class="pg">原文p351</span> ，约 33 条）</strong>：<code>mac-address-table</code> 学习/过滤/老化</li>
-<li>Ch5 VLAN Management（<span class="pg">原文p427</span> ，约 13 条）：<code>vlan vlan_id [admin-state {enable|disable}] [name | prompt-on-deletion]</code>（默认 enable/disable）；</li>
+<li><strong>Ch5 VLAN Management（<span class="pg">原文p427</span> ，约 13 条）</strong>：<br><code>vlan vlan_id [admin-state {enable|disable}] [name | prompt-on-deletion]</code>（默认 enable/disable）；</li>
 <li><code>vlan 10-15</code> 区间写法；</li>
 <li>删除 VLAN 自动剥离成员、端口回落 VLAN 1（P5/P6）；</li>
 <li>
@@ -112,7 +117,7 @@ blockquote p{margin:6px 0}
 <li><strong>Ch7 VLAN Stacking（<span class="pg">原文p476</span> ，约 40 条）</strong>：<code>vlan stacking</code>（QinQ 双层标签/保留 VLAN/NNI-UNI 角色）；保留 VLAN 不能用标准 vlan 命令配（X18）</li>
 <li><strong>Ch8 Distributed Spanning Tree（<span class="pg">原文p567</span> ，约 50 条）</strong>：<code>spanty</code>/<code>bridge</code></li>
 <li><strong>Ch12 Loopback Detection（<span class="pg">原文p1070</span> ，约 11 条）</strong>：<code>loopback-detection</code></li>
-<li>Ch13 Link Aggregation（<span class="pg">原文p1092</span> ，约 46 条）：<code>linkagg ...</code>（静态/LACP，动态仅兼容 IEEE 802.3ad）；</li>
+<li><strong>Ch13 Link Aggregation（<span class="pg">原文p1092</span> ，约 46 条）</strong>：<br><code>linkagg ...</code>（静态/LACP，动态仅兼容 IEEE 802.3ad）；</li>
 <li><code>hash-control brief</code> 模式哈希退化为源 MAC（L2）/源 IP（L3）（P10/X16）；</li>
 <li>
 <p>聚合不能配在 AppMon 已启用端口（X12）；</p>
@@ -141,4 +146,7 @@ blockquote p{margin:6px 0}
 <li>chassis identifier 到目标机箱下次重启才生效（X10）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniSwitch AOS Release 810R04 CLI Reference User Guide 第 1-8、12-17、20 章（&lt;&lt;<PAGE 67-689、1070-1390、1523-1549>&gt;&gt;）。条目来源：principles P1-P7/P10；counter-examples X7/X9/X10/X12/X15/X16/X18-X20/X22；frameworks F1-F3/F5（域分组）。</p><div class="pn"><a href="../index.html">⬅ 返回课程首页</a><a class="nxt" href="aos-cli-map-fabric.html">下一单元：aos-cli-map-fabric ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<ul>
+<li>OmniSwitch AOS Release 810R04 CLI Reference User Guide 第 1-8、12-17、20 章（&lt;&lt;<PAGE 67-689、1070-1390、1523-1549>&gt;&gt;）。</li>
+<li><strong>条目来源</strong>：<br>principles P1-P7/P10；counter-examples X7/X9/X10/X12/X15/X16/X18-X20/X22；frameworks F1-F3/F5（域分组）。</li>
+</ul><div class="pn"><a href="../index.html">⬅ 返回课程首页</a><a class="nxt" href="aos-cli-map-fabric.html">下一单元：aos-cli-map-fabric ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

@@ -84,10 +84,12 @@ blockquote p{margin:6px 0}
 <li>需要即时供电、重启不断电或延迟供电等特殊供电行为</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>PoE 预算 = PSE 总供给能力 − 所有 PD 需求之和；PD 功率由 Class 分级决定（af 15.4W：
-- at 30W
-- bt 60W
-- 100W 四档）。动态分配只按 PD 实际需求供电，可提高预算利用率。超预算时按 Low → High → Critical 顺序断电，关键设备必须设 critical。型号带字母 «P» 才支持 PoE。</p>
+<ul>
+<li>PoE 预算 = PSE 总供给能力 − 所有 PD 需求之和；PD 功率由 Class 分级决定（af 15.4W / at 30W / bt 60W / 100W 四档）。</li>
+<li>动态分配只按 PD 实际需求供电，可提高预算利用率。</li>
+<li>超预算时按 Low → High → Critical 顺序断电，关键设备必须设 critical。</li>
+<li>型号带字母 «P» 才支持 PoE。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>查电源与受电状态：
@@ -109,7 +111,7 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
-<li>四标准功率对照（P01，<span class="pg">原文p147</span> ）：af Type1 = PD 12.95W / PSE 15.4W / 350mA / 3 级；</li>
+<li><strong>四标准功率对照（P01，<span class="pg">原文p147</span> ）</strong>：<br>af Type1 = PD 12.95W / PSE 15.4W / 350mA / 3 级；</li>
 <li>at Type2 = 25.5W / 30W / 600mA / 4 级；</li>
 <li>bt Type3 = 51W / 60W / 6 级；</li>
 <li>
@@ -121,7 +123,7 @@ blockquote p{margin:6px 0}
 <li>Fast PoE：上电数秒即供电，不等系统完全启动；</li>
 <li>Perpetual PoE：交换机软重启期间对 PD 不断电；</li>
 <li>delayed-start：lanpower 延迟启动 120–600 秒（5 的倍数），等系统稳定再供电。</li>
-<li>PoE 端口 LED 判读：琥珀 = 已连接且受电，绿 = 已连接但未受电（P44，<span class="pg">原文p143</span> ）。</li>
+<li><strong>PoE 端口 LED 判读</strong>：<br>琥珀 = 已连接且受电，绿 = 已连接但未受电（P44，<span class="pg">原文p143</span> ）。</li>
 <li>非 PoE 交换机环境可用 PoE Injector / Midspan 补供电（glossary·<span class="pg">原文p39</span> ）。</li>
 <li>SMB 拓扑选型时按 PoE 能力分档（.bt 90W、最大摄像头数）（F14，<span class="pg">原文p491</span> –<span class="pg">原文p493</span> ）。</li>
 </ul>

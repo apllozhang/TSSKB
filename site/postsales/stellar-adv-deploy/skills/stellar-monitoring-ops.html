@@ -84,7 +84,7 @@ blockquote p{margin:6px 0}
 </blockquote>
 <h2 id="i">I · 方法论骨架</h2>
 <ul>
-<li>运维期四大抓手 + 两个读图能力：1. <strong>升级计划</strong>：四步向导（Schedule Setting → 设备选择 → Set Software Version → Review），按站点/AP 组/单 AP 维度；升级=重启=终端断连，必须纳入变更通知。</li>
+<li><strong>运维期四大抓手 + 两个读图能力</strong>：<br>1. <strong>升级计划</strong>：四步向导（Schedule Setting → 设备选择 → Set Software Version → Review），按站点/AP 组/单 AP 维度；升级=重启=终端断连，必须纳入变更通知。</li>
 <li>
 <ol>
 <li><strong>配置备份</strong>：可含安全文件，可按交换机/站点/楼层排程。</li>
@@ -113,15 +113,23 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="a1-lab">A1 · 书中案例（Lab 精要）</h2>
 <ul>
-<li>Lab 走读五大运维动作（p250-257）：① 升级计划四步向导只演示不执行（默认 6 小时升级窗口）；
-② Network Events 浏览三类事件；
-③ Collect Support Info 从 Uploading 变 Collected 后下载；
-④ Alerts 顶部汇总+底部 Entry List，新告警红点提示；
-⑤ 给 AP 下发 setDateTime 命令几分钟后回读结果。</li>
-<li>监控侧（p183-187）：Clients 仪表盘查树莓派 RSSI/噪声底/吞吐/PHY 速率；
-Authentication Records 与 Captive Portal Records（看 Auth result 与 Reject Reason）；
-创建 Analytics Data Report（Wireless Client Sessions、PDF、Last 7 days、Instant），报表邮件自动送达。</li>
-<li>设备目录与拓扑（p242-249）：Actions 全集（Edit Device/SSH/Web UI/Configuration Management），拓扑悬停看链路类型与楼层，点设备看 7 天 trap。</li>
+<li><strong>Lab 走读五大运维动作（p250-257）</strong>：<br>① 升级计划四步向导只演示不执行（默认 6 小时升级窗口）；</li>
+<li>② Network Events 浏览三类事件；</li>
+<li>③ Collect Support Info 从 Uploading 变 Collected 后下载；</li>
+<li>④ Alerts 顶部汇总+底部 Entry List，新告警红点提示；</li>
+<li>
+<p>⑤ 给 AP 下发 setDateTime 命令几分钟后回读结果；</p>
+</li>
+<li>
+<p><strong>监控侧（p183-187）</strong>：<br>Clients 仪表盘查树莓派 RSSI/噪声底/吞吐/PHY 速率；</p>
+</li>
+<li>Authentication Records 与 Captive Portal Records（看 Auth result 与 Reject Reason）；</li>
+<li>
+<p>创建 Analytics Data Report（Wireless Client Sessions、PDF、Last 7 days、Instant），报表邮件自动送达；</p>
+</li>
+<li>
+<p><strong>设备目录与拓扑（p242-249）</strong>：<br>Actions 全集（Edit Device/SSH/Web UI/Configuration Management），拓扑悬停看链路类型与楼层，点设备看 7 天 trap。</p>
+</li>
 </ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
@@ -165,7 +173,7 @@ Authentication Records 与 Captive Portal Records（看 Auth result 与 Reject R
 <ul>
 <li>升级必然重启且终端断连（默认 6 小时窗口），生产创建计划前必须确认版本确实需要、窗口已批准；
 训练/演示环境止步于 Review 点 Cancel——原文明确 "Use this section only as a configuration guide, and do not complete this upgrade process."（p252）</li>
-<li>热力图硬性前提：少于 3 台 Stellar AP 无法生成。</li>
+<li><strong>热力图硬性前提</strong>：<br>少于 3 台 Stellar AP 无法生成。</li>
 <li>拓扑"红"仍表示连通（只是有 critical 告警），"灰"才是失联，别读反。</li>
 <li>SSH/Web UI 访问 AP 需先在 Provisioning Configuration 启用并设凭据。</li>
 <li>客户端仪表盘里设备名与 IPv4 需几分钟才浮现，别急着判"数据缺失"。</li>

@@ -106,18 +106,17 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a1">A1 · 书中案例</h2>
 <ul>
-<li>wg show 输出基线（p81-82）：对端 endpoint 198.206.185.132:9093、persistent keepalive 每 5 秒；检查公钥/监听端口/allowed ips/握手时间/收发增量。</li>
-<li>ip -d link 基线：gre0=1476、gretap0=1462、wg0=1420，均须低于 1500。</li>
-<li>配置核对路径：管理配置 <code>cat /etc/config/rap.conf</code>，数据配置 <code>cat /var/config/datavpn.conf</code>。</li>
-<li>日志收集：VPN VA 日志走 VA 菜单；RAP 日志经 OV（OVE/OVC）→Administration→Audit→Collect Support Info。</li>
+<li><strong>wg show 输出基线（p81-82）</strong>：<br>对端 endpoint 198.206.185.132:9093、persistent keepalive 每 5 秒；检查公钥/监听端口/allowed ips/握手时间/收发增量。</li>
+<li><strong>ip -d link 基线</strong>：<br>gre0=1476、gretap0=1462、wg0=1420，均须低于 1500。</li>
+<li><strong>配置核对路径</strong>：<br>管理配置 <code>cat /etc/config/rap.conf</code>，数据配置 <code>cat /var/config/datavpn.conf</code>。</li>
+<li><strong>日志收集</strong>：<br>VPN VA 日志走 VA 菜单；RAP 日志经 OV（OVE/OVC）→Administration→Audit→Collect Support Info。</li>
 </ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
-<li>触发：交付后或变更后出现"AP 离线""隧道起不来""无线连上但拿不到 IP / 上不了内网"，需要按层定位。</li>
-<li>与 <code><a href="vpn-va-deploy-capacity.html">vpn-va-deploy-capacity</a></code> 的区分：部署期的导入/网卡错误在那边（如混杂模式的三项 Accept 配法两边都引用，本 skill 把"混杂模式默认 Reject"作为故障第一嫌疑）。</li>
-<li>与 <code><a href="rap-data-tunnel-config.html">rap-data-tunnel-config</a></code> 的区分：那边是正向配置（设置文件、AP Group 绑定）；
-本 skill 假设配置已做完，定位哪一环失效——很多故障根因正是那边 B 节列的陷阱（文件没重传、AP Group 没绑）。</li>
-<li>与升级割接相关：若故障发生在 VA 升级后（约 5 分钟窗口），先确认第 4-7 步是否已完成、profile 是否已回导。</li>
+<li><strong>触发</strong>：<br>交付后或变更后出现"AP 离线""隧道起不来""无线连上但拿不到 IP / 上不了内网"，需要按层定位。</li>
+<li><strong>与 <code><a href="vpn-va-deploy-capacity.html">vpn-va-deploy-capacity</a></code> 的区分</strong>：<br>部署期的导入/网卡错误在那边（如混杂模式的三项 Accept 配法两边都引用，本 skill 把"混杂模式默认 Reject"作为故障第一嫌疑）。</li>
+<li><strong>与 <code><a href="rap-data-tunnel-config.html">rap-data-tunnel-config</a></code> 的区分</strong>：<br>那边是正向配置（设置文件、AP Group 绑定）；本 skill 假设配置已做完，定位哪一环失效——很多故障根因正是那边 B 节列的陷阱（文件没重传、AP Group 没绑）。</li>
+<li><strong>与升级割接相关</strong>：<br>若故障发生在 VA 升级后（约 5 分钟窗口），先确认第 4-7 步是否已完成、profile 是否已回导。</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
@@ -172,7 +171,7 @@ ip -d link 对 MTU 基线；
 <li><strong>混杂模式默认 Reject 是"客户端不通 LAN"的头号原因</strong>——双隧道全 up 也照样不通；第二层坑是 Override 勾了但三项没全 Accept，或端口组继承了 Reject 的 vSwitch0（ce06，p20/p81 两处强调）。</li>
 <li>wg 相关命令要在<strong>有隧道上下文的一侧</strong>执行：RAP 不可达时不在 RAP 上执行 wg 定位管理隧道。</li>
 <li>MTU 基线数值（1476/1462/1420）为书中实测样例，环境不同会略有差异，核对"低于 1500"这一性质即可。</li>
-<li>排障前先问"最近改过什么"：加了 AP 没重传设置文件、改了 VPN 配置没重新导出、升级后 profile 没回导，都是高发根因（见 <code><a href="rap-data-tunnel-config.html">rap-data-tunnel-config</a></code> 的 B 节）。</li>
+<li><strong>排障前先问"最近改过什么"</strong>：<br>加了 AP 没重传设置文件、改了 VPN 配置没重新导出、升级后 profile 没回导，都是高发根因（见 <code><a href="rap-data-tunnel-config.html">rap-data-tunnel-config</a></code> 的 B 节）。</li>
 <li>DS-Lite ISP 环境下隧道慢/断，先按 TCPMSS/MTU 参数表核对（1352/1300/1376 一组），参数入口见 <code><a href="rap-data-tunnel-config.html">rap-data-tunnel-config</a></code> 第 8 步。</li>
 </ul>
 <hr />

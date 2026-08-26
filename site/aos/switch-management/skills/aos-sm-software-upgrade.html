@@ -75,15 +75,19 @@ blockquote p{margin:6px 0}
 <a href="../skills/aos-sm-chassis-cmm.html">aos-sm-chassis-cmm</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../aos/index.html">AOS 软件手册</a> › <a href="../index.html">AOS 8.10R04</a> › <span>aos-sm-software-upgrade</span></nav><h1>aos-sm-software-upgrade</h1><p class="meta"><span class="badge">SKILL</span> aos-sm-software-upgrade · 来源页码: </p><h2 id="r">R（触发场景）</h2>
 <ul>
 <li>计划把交换机/VC 从旧版本 AOS 升级到 8.10R4（标准 reload 升级或 ISSU 最小中断升级）</li>
-<li>升级前要做维护例行：清旧文件、确认 certified/synchronized、采 tech-support 基线</li>
+<li><strong>升级前要做维护例行</strong>：<br>清旧文件、确认 certified/synchronized、采 tech-support 基线</li>
 <li>安装/移除 Debian 应用包（NTP、Cirrus Agent、Nutanix 插件等），或免重启启停应用</li>
 <li>处理签名镜像降级、u-boot/ONIE 版本匹配、镜像完整性校验</li>
 <li>用 USB 闪存做自动批量升级、备份或灾难恢复（含 ONIE 设备）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>标准升级模型（P13）：上传新镜像到 Running 目录 → reload → 验证 → certify；
-VC 场景 Master 先把镜像拷给 Slave 再统一重启。ISSU（P14）按 chassis-id 从低到高逐台重启 Slave、最后重启 Master，实现最小网络 disruption。目录结构即回滚体系（certified 保底）。安全链：ALE Secured Code + ASLR（P18）→ RSA-2048/SHA-256 签名镜像（P19）→ Secure Boot 启动链验证（P20）。包管理双组件（P21）：pkgmgr 管验证/安装/移除，appmgr 管免重启启停；
-安装必须 <code>write memory</code> 持久化（P23）。</p>
+<ul>
+<li><strong>标准升级模型（P13）</strong>：<br>上传新镜像到 Running 目录 → reload → 验证 → certify；VC 场景 Master 先把镜像拷给 Slave 再统一重启。</li>
+<li>ISSU（P14）按 chassis-id 从低到高逐台重启 Slave、最后重启 Master，实现最小网络 disruption。</li>
+<li>目录结构即回滚体系（certified 保底）。</li>
+<li><strong>安全链</strong>：<br>ALE Secured Code + ASLR（P18）→ RSA-2048/SHA-256 签名镜像（P19）→ Secure Boot 启动链验证（P20）。</li>
+<li><strong>包管理双组件（P21）</strong>：<br>pkgmgr 管验证/安装/移除，appmgr 管免重启启停；安装必须 <code>write memory</code> 持久化（P23）。</li>
+</ul>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>standalone/普通 VC 选标准升级</strong>：维护前置 → 下载 → FTP 到 RUNNING 目录 → reload → 验证 → certify（C1，<span class="pg">原文p23-24</span> ）</li>
@@ -121,7 +125,7 @@ VC 场景 Master 先把镜像拷给 Slave 再统一重启。ISSU（P14）按 cha
 <li>USB 自动拷贝重启后自动关闭；auto-copy 与 backup 互斥（P90，<span class="pg">原文p113-114</span> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniSwitch AOS 8.10R4 Switch Management Guide 第 1 章 Upgrading AOS（<span class="pg">原文p21-24</span> ）、第 3 章 Loading Software：
-- Secured Code
-- Package Management
-- U-boot &amp; ONIE（<span class="pg">原文p62-92</span> ）、第 4 章 USB（<span class="pg">原文p113-118</span> ）。条目来源：cases C1/C2/C3/C17/C18/C24/C25；principles P13-P25/P90-P92；counter-examples X9/X16-X21；frameworks F6。</p><div class="pn"><a href="aos-sm-flash-config.html">⬅ 上一单元：aos-sm-flash-config</a><a class="nxt" href="aos-sm-cli-session-usermgmt.html">下一单元：aos-sm-cli-session-usermgmt ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<ul>
+<li>OmniSwitch AOS 8.10R4 Switch Management Guide 第 1 章 Upgrading AOS（<span class="pg">原文p21-24</span> ）、第 3 章 Loading Software / Secured Code / Package Management / U-boot &amp; ONIE（<span class="pg">原文p62-92</span> ）、第 4 章 USB（<span class="pg">原文p113-118</span> ）。</li>
+<li><strong>条目来源</strong>：<br>cases C1/C2/C3/C17/C18/C24/C25；principles P13-P25/P90-P92；counter-examples X9/X16-X21；frameworks F6。</li>
+</ul><div class="pn"><a href="aos-sm-flash-config.html">⬅ 上一单元：aos-sm-flash-config</a><a class="nxt" href="aos-sm-cli-session-usermgmt.html">下一单元：aos-sm-cli-session-usermgmt ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

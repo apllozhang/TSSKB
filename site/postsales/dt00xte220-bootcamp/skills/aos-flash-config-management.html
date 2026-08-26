@@ -84,12 +84,17 @@ blockquote p{margin:6px 0}
 <ul>
 <li>变更前需要设计回滚路径（reload rollback-timeout / certified 备份）</li>
 <li>误删配置后需要从 snapshot 文本快速恢复</li>
-<li>代码升级：上传镜像到 working、验证、认证到 certified</li>
+<li><strong>代码升级</strong>：<br>上传镜像到 working、验证、认证到 certified</li>
 <li>配置管理访问（SSH/WebView/FTP）、用户账户分区权限、密码策略</li>
 <li>排障需要 swlog 分级日志、command-log、端口镜像、sFlow</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>AOS Flash 的核心是双目录互为回滚：working（可写运行目录）与 certified（只读认证目录）各存一套镜像+boot.cfg，认证版本即升级失败的退路（P17/F4，<span class="pg">原文p126-127</span> ）。启动规则：两目录不一致时从 certified 启动，此时改动无法保存，须先切回 working（P19/P24，<span class="pg">原文p130-131, 148</span> ）。R8 增加了用户自定义目录与 running directory 概念，可直接对自定义目录保存配置（P21/P22，<span class="pg">原文p145-146</span> ）。变更文化的口诀是"先拿到可回退状态再推进"：<code>reload working no rollback-timeout</code> → 验证 → <code>copy working certified</code>（P20，<span class="pg">原文p132-133</span> ）。</p>
+<ul>
+<li><strong>AOS Flash 的核心是双目录互为回滚</strong>：<br>working（可写运行目录）与 certified（只读认证目录）各存一套镜像+boot.cfg，认证版本即升级失败的退路（P17/F4，<span class="pg">原文p126-127</span> ）。</li>
+<li><strong>启动规则</strong>：<br>两目录不一致时从 certified 启动，此时改动无法保存，须先切回 working（P19/P24，<span class="pg">原文p130-131, 148</span> ）。</li>
+<li>R8 增加了用户自定义目录与 running directory 概念，可直接对自定义目录保存配置（P21/P22，<span class="pg">原文p145-146</span> ）。</li>
+<li><strong>变更文化的口诀是"先拿到可回退状态再推进"</strong>：<br><code>reload working no rollback-timeout</code> → 验证 → <code>copy working certified</code>（P20，<span class="pg">原文p132-133</span> ）。</li>
+</ul>
 <h2 id="a1">A1（决策/选型）</h2>
 <ol>
 <li>回滚方式：带 rollback-timeout 的 reload 到时自动回滚（实验/灰度）；no rollback-timeout 表示确认不回滚（P23，<span class="pg">原文p147</span> ）</li>
@@ -127,10 +132,10 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>C3 Working/Certified 回滚实操：rollback-timeout 引发的 CERTIFY NEEDED 状态观察（<span class="pg">原文p215-217</span> ）</li>
-<li>C4 快照保存与恢复：删 VLAN 后 <code>configuration apply snapvlan</code> 全量回滚（<span class="pg">原文p229-230</span> ）</li>
-<li>C14 诊断综合实验：swlog 三输出 + command-log + sFlow sampler 512:1 采样（<span class="pg">原文p326-356</span> ）</li>
-<li>C52 代码升级：FTP 上传 → reload 验证 → 认证（<span class="pg">原文p962-965</span> ）</li>
+<li><strong>C3 Working/Certified 回滚实操</strong>：<br>rollback-timeout 引发的 CERTIFY NEEDED 状态观察（<span class="pg">原文p215-217</span> ）</li>
+<li><strong>C4 快照保存与恢复</strong>：<br>删 VLAN 后 <code>configuration apply snapvlan</code> 全量回滚（<span class="pg">原文p229-230</span> ）</li>
+<li><strong>C14 诊断综合实验</strong>：<br>swlog 三输出 + command-log + sFlow sampler 512:1 采样（<span class="pg">原文p326-356</span> ）</li>
+<li><strong>C52 代码升级</strong>：<br>FTP 上传 → reload 验证 → 认证（<span class="pg">原文p962-965</span> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>

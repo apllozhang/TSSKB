@@ -71,13 +71,23 @@ blockquote p{margin:6px 0}
 <a href="../skills/sol-gtts-redundancy-designs.html">sol-gtts-redundancy-designs</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../solutions/index.html">解决方案</a> › <a href="../index.html">访客流量隧道 GTTS</a> › <span>sol-gtts-deployment-scenarios</span></nav><h1>sol-gtts-deployment-scenarios</h1><p class="meta"><span class="badge">SKILL</span> sol-gtts-deployment-scenarios · 来源页码: </p><h2 id="r">R（触发场景）</h2>
 <ul>
 <li>客户要把 Guest SSID 与内网彻底隔离（只出 Internet）</li>
-<li>校园/医院/多分支：同一批 SSID 多站点广播、流量统一汇聚到数据中心施策</li>
-<li>运营商/SP：多客户流量集中终结、客户间逻辑隔离</li>
+<li><strong>校园/医院/多分支</strong>：<br>同一批 SSID 多站点广播、流量统一汇聚到数据中心施策</li>
+<li><strong>运营商/SP</strong>：<br>多客户流量集中终结、客户间逻辑隔离</li>
 <li>从控制器架构迁移分布式，边缘不想加 VLAN（迁移用例）</li>
 <li>IPS 等安全设备需串在无线流量路径上（bump in the wire）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>三用例 × 三场景体系（F1）：用例决定"为什么隧道"——访客隔离（DMZ 终点只出 Internet）、安全策略（中心 scrub/IPS 串行）、迁移（边缘零新增 VLAN，VLAN 只配中心）（<span class="pg">原文p3</span> ）。场景决定"落在哪"：DMZ 基线（Corporate/DMZ/External 三区防火墙分隔，访客"第一扇门"开在 DMZ，病毒在防火墙处失效，C3，<span class="pg">原文p11</span> ）；Campus（AP Group 粒度使多站点同 SSID 同隧道终点，C4，<span class="pg">原文p12</span> ）；多租户（每客户一 AP Group + 运营商交换机 IP，借 SD-WAN/SPB/MPLS 既有链路，C5，<span class="pg">原文p13</span> ）。三个场景的聚合交换机配置完全同一套（p9 五步）。</p>
+<ul>
+<li><strong>三用例 × 三场景体系（F1）</strong>：<br>用例决定"为什么隧道"——访客隔离（DMZ 终点只出 Internet）、安全策略（中心 scrub/IPS 串行）、迁移（边缘零新增 VLAN，VLAN 只配中心）（<span class="pg">原文p3</span> ）。</li>
+<li><strong>场景决定"落在哪"</strong>：<br>DMZ 基线（Corporate/DMZ/External 三区防火墙分隔，访客"第一扇门"开在 DMZ，病毒在防火墙处失效，C3，<span class="pg">原文p11</span> ）；</li>
+<li>Campus（AP Group 粒度使多站点同 SSID 同隧道终点，C4，<span class="pg">原文p12</span> ）；</li>
+<li>
+<p>多租户（每客户一 AP Group + 运营商交换机 IP，借 SD-WAN/SPB/MPLS 既有链路，C5，<span class="pg">原文p13</span> ）；</p>
+</li>
+<li>
+<p>三个场景的聚合交换机配置完全同一套（p9 五步）。</p>
+</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>用例定位：访客隔离 / 安全串行 / 迁移免扩 VLAN（<span class="pg">原文p3</span> ）</li>
@@ -96,9 +106,9 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>DMZ 三区架构：Corporate（员工+访客接入）/DMZ（聚合交换机+DHCP+Web/存储服务器）/External（Internet/SD-WAN/运营商网）（<span class="pg">原文p11</span> ）</li>
-<li>园区架构：1 数据中心 + 多站点，学生/教师各有 SSID 统一隧道，恶意软件无法在网内扩散（<span class="pg">原文p12</span> ）</li>
-<li>SP 与多客户交互轻视图：客户侧 AP Group → SP 聚合交换机（<span class="pg">原文p13</span> ）</li>
+<li><strong>DMZ 三区架构</strong>：<br>Corporate（员工+访客接入）/DMZ（聚合交换机+DHCP+Web/存储服务器）/External（Internet/SD-WAN/运营商网）（<span class="pg">原文p11</span> ）</li>
+<li><strong>园区架构</strong>：<br>1 数据中心 + 多站点，学生/教师各有 SSID 统一隧道，恶意软件无法在网内扩散（<span class="pg">原文p12</span> ）</li>
+<li><strong>SP 与多客户交互轻视图</strong>：<br>客户侧 AP Group → SP 聚合交换机（<span class="pg">原文p13</span> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>

@@ -84,7 +84,7 @@ blockquote p{margin:6px 0}
 </blockquote>
 <h2 id="i">I · 方法论骨架</h2>
 <ul>
-<li>SSID 高级选项四组参数：1. <strong>QoS（WMM/DSCP/802.1p）</strong>：WMM 四队列推荐映射——Voice 5/46(EF)、Video 4/34(AF41)、Best Effort 0/0、Background 2/18(AF21)；上下行可分别标记（示例上行：Voice 46、Video 32、BE 0、BG 8）。</li>
+<li><strong>SSID 高级选项四组参数</strong>：<br>1. <strong>QoS（WMM/DSCP/802.1p）</strong>：WMM 四队列推荐映射——Voice 5/46(EF)、Video 4/34(AF41)、Best Effort 0/0、Background 2/18(AF21)；上下行可分别标记（示例上行：Voice 46、Video 32、BE 0、BG 8）。</li>
 <li>
 <ol>
 <li><strong>安全</strong>：GTK/广播密钥周期轮换防破解（默认 15 分钟，1 分钟-24 小时，仅 Enterprise SSID）；客户端隔离（同 AP 同 SSID 内互访阻断，访客常用）。</li>
@@ -95,22 +95,15 @@ blockquote p{margin:6px 0}
 <li><strong>广播/组播优化</strong>：Broadcast Filter All（除 DHCP/ARP 全丢）/ Broadcast Filter ARP（广播 ARP 转单播）；组播优化把组播转单播（PTK 加密、更高速率），但有两个自动停用上限——组播信道利用率 90%、高吞吐客户端数 6。</li>
 </ol>
 </li>
-<li>
-<ol>
-<li>访客与公众 Wi-Fi：OV-UPAM Captive Portal + Guest Access Strategy + 门户模板；</li>
-<li>Walled Garden 白名单（认证前可访问域名）；</li>
-<li>社交登录（Facebook WiFi/Google）；</li>
-<li>WiFi4EU SSID 必须 HTTPS 门户、会话超时可配至 12 小时；</li>
-<li>Hotspot 2.0（Passpoint，基于 802.11u 与 EAP-SIM/AKA）。</li>
-</ol>
-</li>
+<li><strong>4. 访客与公众 Wi-Fi</strong>：<br>OV-UPAM Captive Portal + Guest Access Strategy + 门户模板；    - Walled Garden 白名单（认证前可访问域名）；    - 社交登录（Facebook WiFi/Google）；    - WiFi4EU SSID 必须 HTTPS 门户、会话超时可配至 12 小时；    - Hotspot 2.0（Passpoint，基于 802.11u 与 EAP-SIM/AKA）。</li>
 <li>SSID 级带宽契约（Bandwidth Contract）与按用户的 Bandwidth Control 区分；。</li>
 </ul>
 <p>另：访客流量可选隧道集中出口——SSID 的 VLAN/Tunnel Mapping 选 Tunnel（Tunnel ID + TTS IP），由远端 OS6860-GTTS 终结。</p>
 <h2 id="a1-lab">A1 · 书中案例（Lab 精要）</h2>
-<p>基础 Lab（p70-71）配 GuestsX：SSID 选 OV-UPAM Captive Portal 类型，绑 Guest Access Strategy 与门户模板，VLAN 30；
-树莓派验证 Guest 拿 192.168.30.70-79。综合演练（p293-295）进阶用法：GuestsX 内部门户+限 1Mbit/s+封 SSH/Telnet+客户端隔离+周一至周三调度+账号限时限量；
-打印机 SSID 用 WPA2 PSK + 按设备 PSK（DPSK，按 MAC 各配专属 passphrase）。</p>
+<ul>
+<li><strong>基础 Lab（p70-71）配 GuestsX</strong>：<br>SSID 选 OV-UPAM Captive Portal 类型，绑 Guest Access Strategy 与门户模板，VLAN 30；树莓派验证 Guest 拿 192.168.30.70-79。</li>
+<li><strong>综合演练（p293-295）进阶用法</strong>：<br>GuestsX 内部门户+限 1Mbit/s+封 SSH/Telnet+客户端隔离+周一至周三调度+账号限时限量；打印机 SSID 用 WPA2 PSK + 按设备 PSK（DPSK，按 MAC 各配专属 passphrase）。</li>
+</ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
 <li>SSID 骨架（加密、VLAN、调度）已会配，要调优 QoS 标记、组播行为、访客体验 → 本 skill。</li>

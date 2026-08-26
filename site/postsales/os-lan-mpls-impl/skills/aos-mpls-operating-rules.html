@@ -79,28 +79,26 @@ blockquote p{margin:6px 0}
 <p>"A PE must never send a packet on a PW if that packet has been received from a PW. ... The fact that there is always a full mesh of PWs between the PE devices ensures that every destination within the VPLS will be reached."（p133）</p>
 </blockquote>
 <h2 id="i">I · 方法论骨架</h2>
-<p>服务模型（f05 + p14）：一个 MPLS 服务=一个 VPN/租户，只建在 LER 上；
-LER 四组件——SAP（UNI 侧，绑物理口+客户流量类型，可复用）、SDP（NNI 侧，绑远端）、服务隧道（FEC=vplsid）、传输隧道（FEC=loopback）。VPLS 的 PE 须按实例做 MAC 学习/桥接/复制。</p>
+<ul>
+<li><strong>服务模型（f05 + p14）</strong>：<br>一个 MPLS 服务=一个 VPN/租户，只建在 LER 上；LER 四组件——SAP（UNI 侧，绑物理口+客户流量类型，可复用）、SDP（NNI 侧，绑远端）、服务隧道（FEC=vplsid）、传输隧道（FEC=loopback）。</li>
+<li>VPLS 的 PE 须按实例做 MAC 学习/桥接/复制。</li>
+</ul>
 <p>标签规则（p05）：直连路由=隐式 NULL(3)；其他从 16 起（AOS 配置 16~1048575）；0-15 为 RFC 3032 保留。标签仅本地唯一，不同 LSR 可重号。</p>
 <p>双层标签栈（p13）：栈顶=传输标签，栈底=服务标签；iLER 先压服务再压传输，中间 LSR 只 swap 传输标签，eLER 依次弹出。多数厂商栈深 4-6。</p>
 <p>LDP 行为（p08-p10）：AOS 默认 DU+ILD+LLR；hold-time 两端取较小值、接口级覆盖全局；多链路单会话属正常，LDP ID=loopback:标签空间（:0 为 per-platform）。</p>
 <p>PHP（p12）：eLER 发隐式 NULL 让倒数第二跳弹传输标签，省一次查表——Lab 中直连网段 Out-Label=3 即此。</p>
 <h2 id="a1">A1 · 书中案例</h2>
 <ul>
-<li>Lab 1 输出解读（c01）：forwarding-table 直连网段 Out-Label=3（impl-null/PHP），远端 loopback 是 52480+ 的标签；等价路径两条带 + 标记（ECMP）。</li>
-<li>Lab 2 输出解读（c02/p14）：<code>show mac-learning domain vpls</code> 在 sw7 看到 <code>sap:1/1/3:2</code> 与 <code>sdp:78:2</code> 两类接口 MAC；
-P 节点 sw9/sw10 该表为空——服务只存在 LER 的直接证据。</li>
-<li>LDP 会话输出（p10）：<code>show mpls ldp neighbor</code> 显示 192.168.254.10:0，即 per-platform 标签空间；
-<code>show mpls ldp session</code> 显示 Advertisement mode=Downstream Unsolicited、Label retention=Liberal（p08）。</li>
-<li>定时器实测（p09）：Hello 5s / Hold 15s / Targeted Hello 15s / Targeted Hold 45s / Keepalive 10s 超时 30s，Graceful Restart 使能。</li>
+<li><strong>Lab 1 输出解读（c01）</strong>：<br>forwarding-table 直连网段 Out-Label=3（impl-null/PHP），远端 loopback 是 52480+ 的标签；等价路径两条带 + 标记（ECMP）。</li>
+<li><strong>Lab 2 输出解读（c02/p14）</strong>：<br><code>show mac-learning domain vpls</code> 在 sw7 看到 <code>sap:1/1/3:2</code> 与 <code>sdp:78:2</code> 两类接口 MAC；P 节点 sw9/sw10 该表为空——服务只存在 LER 的直接证据。</li>
+<li><strong>LDP 会话输出（p10）</strong>：<br><code>show mpls ldp neighbor</code> 显示 192.168.254.10:0，即 per-platform 标签空间；<code>show mpls ldp session</code> 显示 Advertisement mode=Downstream Unsolicited、Label retention=Liberal（p08）。</li>
+<li><strong>定时器实测（p09）</strong>：<br>Hello 5s / Hold 15s / Targeted Hello 15s / Targeted Hold 45s / Keepalive 10s 超时 30s，Graceful Restart 使能。</li>
 </ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
-<li>拿到 show mpls/ldp/mac-learning 输出要判断"正常还是故障"：本 skill。</li>
-<li>设计/讲解阶段要弄清 SAP/SDP/双层隧道为什么这么配：本 skill 的模型。</li>
-<li>区分：怎么把服务配出来（CLI 序列）归 <code><a href="vpls-signaling-ldp-vs-bgp.html">vpls-signaling-ldp-vs-bgp</a></code>；
-部署顺序与许可归 <code><a href="aos-mpls-deploy-license.html">aos-mpls-deploy-license</a></code>；
-排障命令用哪条归 <code><a href="mpls-reference-design.html">mpls-reference-design</a></code> 的命令族谱。</li>
+<li><strong>拿到 show mpls/ldp/mac-learning 输出要判断"正常还是故障"</strong>：<br>本 skill。</li>
+<li><strong>设计/讲解阶段要弄清 SAP/SDP/双层隧道为什么这么配</strong>：<br>本 skill 的模型。</li>
+<li><strong>区分</strong>：<br>怎么把服务配出来（CLI 序列）归 <code><a href="vpls-signaling-ldp-vs-bgp.html">vpls-signaling-ldp-vs-bgp</a></code>；部署顺序与许可归 <code><a href="aos-mpls-deploy-license.html">aos-mpls-deploy-license</a></code>；排障命令用哪条归 <code><a href="mpls-reference-design.html">mpls-reference-design</a></code> 的命令族谱。</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
@@ -135,10 +133,10 @@ P 节点 sw9/sw10 该表为空——服务只存在 LER 的直接证据。</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>
-<li>ce03：PHP 弹顶层标签时 EXP 位一并丢失；标准解法显式 NULL 在 AOS 不支持——QoS 承诺只能落在 DSCP，不能落在 EXP。</li>
-<li>ce04：LDP 使能范围例外——LER 上朝向 CE 的接口<strong>不能</strong>使能 LDP，业务走 SAP 接入。</li>
-<li>ce06：LDP Graceful Restart（RFC 3478）只对计划内接管（手工 takeover）有效，CMM 意外故障或链路 down 时无效——高可用话术要区分这两种场景。</li>
-<li>ce02：loopback 不唯一 → 行为不可预测，读会话输出前先核查全网唯一。</li>
+<li><strong>ce03</strong>：<br>PHP 弹顶层标签时 EXP 位一并丢失；标准解法显式 NULL 在 AOS 不支持——QoS 承诺只能落在 DSCP，不能落在 EXP。</li>
+<li><strong>ce04</strong>：<br>LDP 使能范围例外——LER 上朝向 CE 的接口<strong>不能</strong>使能 LDP，业务走 SAP 接入。</li>
+<li><strong>ce06</strong>：<br>LDP Graceful Restart（RFC 3478）只对计划内接管（手工 takeover）有效，CMM 意外故障或链路 down 时无效——高可用话术要区分这两种场景。</li>
+<li><strong>ce02</strong>：<br>loopback 不唯一 → 行为不可预测，读会话输出前先核查全网唯一。</li>
 <li>与异厂商互通时核对 LDP 模式（AOS 默认 DU/ILD/LLR），模式不匹配会话起不来。</li>
 </ul>
 <hr />

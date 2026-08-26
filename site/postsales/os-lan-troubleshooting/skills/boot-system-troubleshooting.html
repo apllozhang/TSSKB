@@ -102,15 +102,14 @@ blockquote p{margin:6px 0}
 <li><strong>LED 速查</strong>（p09）：OK 常绿=正常（VC slave）；闪绿=VC master；常琥珀=诊断或 AOS 启动失败。PS 常绿=双电源好；OK+PS 同闪琥珀=缺风扇盘或气流方向不匹配。</li>
 </ol>
 <h2 id="a1-lab">A1 · 书中案例（LAB 故障根因）</h2>
-<p>本 skill 无独立 LAB，但系统层判读是 LAB 全部案例的前置：LAB4 开场先 <code>show system</code> 核对两台日期时间再查 OSPF（c08）；
-LAB2 中 show health CPU 98% 指向 VLAN 278 环路（c04 根因在 stp-loop skill）。崩溃类故障产物是 PMD 文件（/flash/pmd/，g33），处置方向为收集证据升级 TAC（c11，详见 ovna skill）。</p>
+<ul>
+<li><strong>本 skill 无独立 LAB，但系统层判读是 LAB 全部案例的前置</strong>：<br>LAB4 开场先 <code>show system</code> 核对两台日期时间再查 OSPF（c08）；LAB2 中 show health CPU 98% 指向 VLAN 278 环路（c04 根因在 stp-loop skill）。</li>
+<li>崩溃类故障产物是 PMD 文件（/flash/pmd/，g33），处置方向为收集证据升级 TAC（c11，详见 ovna skill）。</li>
+</ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
-<li>触发：设备无法启动/密码丢失/USB 恢复；show module 异常；版本升级前门槛核对；CPU 告警；温度/风扇/电源告警；面板灯异常。</li>
-<li>区分：业务口 down 但整机正常 → l2-connectivity；
-VC 相关的模块/chassis 状态 → virtual-chassis；
-CPU 高伴随 MAC 漂移/DoS 刷屏 → stp-loop（先查环）；
-整机崩溃出 PMD → 本 skill 判读 + ovna skill 处置链。</li>
+<li><strong>触发</strong>：<br>设备无法启动/密码丢失/USB 恢复；show module 异常；版本升级前门槛核对；CPU 告警；温度/风扇/电源告警；面板灯异常。</li>
+<li><strong>区分</strong>：<br>业务口 down 但整机正常 → l2-connectivity；VC 相关的模块/chassis 状态 → virtual-chassis；CPU 高伴随 MAC 漂移/DoS 刷屏 → stp-loop（先查环）；整机崩溃出 PMD → 本 skill 判读 + ovna skill 处置链。</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>

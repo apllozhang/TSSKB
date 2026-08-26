@@ -77,7 +77,12 @@ blockquote p{margin:6px 0}
 <li>排查骨干环路、瞬态环、广播风暴类问题（RPFC/LBD/风暴控制）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>双平面架构框架（F1，<span class="pg">原文p9</span> ）：DP=802.1ah PBB（B-VID/ISID/B-SA/B-DA，只查 FDB 不做决策）+ CP=RFC 6329 IS-IS（拓扑发现、SPT 计算、服务成员泛播、FDB 预填充）。每节点以自己为根建 SPF 树，全部链路可用且路径最短（P1/P2，<span class="pg">原文p7</span> /<span class="pg">原文p11</span> ）；MAC-in-MAC 把 CMAC 学习限制在 BEB 边缘，BCB 零感知（P4/P15，<span class="pg">原文p7</span> /<span class="pg">原文p10</span> ）。每节点每 BVLAN 一棵树，ECT-ID 打破平局实现按服务负载分担（P17/P18，<span class="pg">原文p11-12</span> ）；路径对称与确定性保障帧有序送达与 OAM 单向时延推算（P19/P20，<span class="pg">原文p12</span> ）。防环分预防+缓解双机制：RPFC 校验入帧源 BMAC 与 FDB 一致性丢非合规帧（P45，<span class="pg">原文p51</span> ）。</p>
+<ul>
+<li><strong>双平面架构框架（F1，<span class="pg">原文p9</span> ）</strong>：<br>DP=802.1ah PBB（B-VID/ISID/B-SA/B-DA，只查 FDB 不做决策）+ CP=RFC 6329 IS-IS（拓扑发现、SPT 计算、服务成员泛播、FDB 预填充）。</li>
+<li>每节点以自己为根建 SPF 树，全部链路可用且路径最短（P1/P2，<span class="pg">原文p7</span> /<span class="pg">原文p11</span> ）；MAC-in-MAC 把 CMAC 学习限制在 BEB 边缘，BCB 零感知（P4/P15，<span class="pg">原文p7</span> /<span class="pg">原文p10</span> ）。</li>
+<li>每节点每 BVLAN 一棵树，ECT-ID 打破平局实现按服务负载分担（P17/P18，<span class="pg">原文p11-12</span> ）；路径对称与确定性保障帧有序送达与 OAM 单向时延推算（P19/P20，<span class="pg">原文p12</span> ）。</li>
+<li><strong>防环分预防+缓解双机制</strong>：<br>RPFC 校验入帧源 BMAC 与 FDB 一致性丢非合规帧（P45，<span class="pg">原文p51</span> ）。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>骨干搭建四步（C1，<span class="pg">原文p16</span> ）：建 BVLAN 配 ECT-ID → 定控制 BVLAN → 定义 SPB IS-IS 接口 → 启用 SPB IS-IS</li>
@@ -87,7 +92,7 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li>骨干验证命令族（C2，<span class="pg">原文p18</span> ）：<code>show spb isis interface</code>（L1 邻接</li>
+<li><strong>骨干验证命令族（C2，<span class="pg">原文p18</span> ）</strong>：<br><code>show spb isis interface</code>（L1 邻接</li>
 <li>metric=10</li>
 <li>Hello 9s/持失 27s）→ <code>show spb isis nodes</code>（system ID=BMAC</li>
 <li>source ID</li>
@@ -108,10 +113,10 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>
-<li>STP 三宗罪：禁链路费带宽、非根间绕行次优路径、秒级收敛且瞬态成环（X1/X2/X3，<span class="pg">原文p5</span> ）</li>
+<li><strong>STP 三宗罪</strong>：<br>禁链路费带宽、非根间绕行次优路径、秒级收敛且瞬态成环（X1/X2/X3，<span class="pg">原文p5</span> ）</li>
 <li>以太网泛洪学习+全网学 MAC 不可扩展；Q-in-Q 服务实例上限 4096（X4/X5/X6，<span class="pg">原文p6</span> ）</li>
 <li>MPLS 需协议栈（LDP/OSPF/MP-BGP），SPB 单协议搞定（X7，<span class="pg">原文p6</span> ）</li>
-<li>BUM 模式取舍：head-end 复制费带宽、tandem (S,G) 每服务多耗 SPT/组播 FDB、tandem (*,G) 共享树不走最短路（X8/X9/X10，<span class="pg">原文p15-16</span> ）</li>
+<li><strong>BUM 模式取舍</strong>：<br>head-end 复制费带宽、tandem (S,G) 每服务多耗 SPT/组播 FDB、tandem (*,G) 共享树不走最短路（X8/X9/X10，<span class="pg">原文p15-16</span> ）</li>
 <li>BVLAN 超过等价路径数徒增控制面负担与收敛时间（X20，<span class="pg">原文p52</span> ）</li>
 <li>overload 后若无备选路径则流量中断，维护前先确认替代路径（X19，<span class="pg">原文p48</span> ）</li>
 <li>客户网配置错误可引发跨 SPB+接入网的广播风暴，LBD 是最后防线（X29，<span class="pg">原文p51</span> ）</li>

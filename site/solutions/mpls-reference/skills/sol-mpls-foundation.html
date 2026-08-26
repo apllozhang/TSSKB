@@ -70,13 +70,18 @@ blockquote p{margin:6px 0}
 <div class="grp">运维</div>
 <a href="../skills/sol-mpls-qos-oam.html">sol-mpls-qos-oam</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../solutions/index.html">解决方案</a> › <a href="../index.html">MPLS 参考设计指南</a> › <span>sol-mpls-foundation</span></nav><h1>sol-mpls-foundation</h1><p class="meta"><span class="badge">SKILL</span> sol-mpls-foundation · 来源页码: </p><h2 id="r">R（触发场景）</h2>
 <ul>
-<li>规划 IP/MPLS 底层：IGP underlay、/32 loopback、LSR ID 唯一性</li>
+<li><strong>规划 IP/MPLS 底层</strong>：<br>IGP underlay、/32 loopback、LSR ID 唯一性</li>
 <li>排查 LDP 邻居/会话建立失败（hello、hold-timer、keepalive、MD5）</li>
 <li>解释标签封装与转发（push/swap/pop、标签栈、FTN/ILM 表项）</li>
 <li>确认 AOS 8.9R3+ 的 LDP 模式支持边界（仅 DU+ILD+LLR+MD5）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>标签隧道换 BGP-free core（P1/P2，<span class="pg">原文p5</span> ）：MPLS 用预分配标签做精确匹配转发，核心 LSR 无需承载大量路由。双层解耦模型（F4，<span class="pg">原文p20</span> ）：服务标签在底、传输标签在顶，中间 LSR 只处理传输标签（P6，<span class="pg">原文p21</span> ）。LDP 是"依 IGP 而生"的信令（P3，<span class="pg">原文p10</span> ）：先有 IGP 全可达，LDP 才能从 eLER 向 iLER 上游泛洪标签（P19）。会话可靠性靠 hello/keepalive 双定时器双保险（P23，<span class="pg">原文p12</span> ）。</p>
+<ul>
+<li><strong>标签隧道换 BGP-free core（P1/P2，<span class="pg">原文p5</span> ）</strong>：<br>MPLS 用预分配标签做精确匹配转发，核心 LSR 无需承载大量路由。</li>
+<li><strong>双层解耦模型（F4，<span class="pg">原文p20</span> ）</strong>：<br>服务标签在底、传输标签在顶，中间 LSR 只处理传输标签（P6，<span class="pg">原文p21</span> ）。</li>
+<li><strong>LDP 是"依 IGP 而生"的信令（P3，<span class="pg">原文p10</span> ）</strong>：<br>先有 IGP 全可达，LDP 才能从 eLER 向 iLER 上游泛洪标签（P19）。</li>
+<li>会话可靠性靠 hello/keepalive 双定时器双保险（P23，<span class="pg">原文p12</span> ）。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>标签分发/控制/保留模式选型框架（F1，<span class="pg">原文p13-14</span> ）：分发 DoD（按需）vs DU（主动）；控制 ILD（独立即刻通告）vs OLD（有序等下游）；保留 CLR（只留有效）vs LLR（全保留）。AOS 唯一组合 = DU+ILD+LLR（X16，<span class="pg">原文p13-17</span> ）</li>
@@ -95,7 +100,7 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>双标签封装-解封端到端流程：iLER push service 标签再 push transport 标签，eLER 依次 pop（C2，<span class="pg">原文p20-21</span> ）</li>
+<li><strong>双标签封装-解封端到端流程</strong>：<br>iLER push service 标签再 push transport 标签，eLER 依次 pop（C2，<span class="pg">原文p20-21</span> ）</li>
 <li>push/swap/pop 三操作数据面走包（C5，<span class="pg">原文p16</span> ）</li>
 <li>LDP 邻居发现与会话建立全流程（C3，<span class="pg">原文p12</span> ）</li>
 <li>LDP 会话协商结果输出（DU/Liberal/GR Helper）（C17，<span class="pg">原文p33</span> ）</li>
@@ -113,6 +118,6 @@ blockquote p{margin:6px 0}
 <li>hold-timer 取双方较低值，接口级覆盖全局（P16，<span class="pg">原文p12</span> ）</li>
 <li>LDP 不在面向 CE 的接口使能（P17，<span class="pg">原文p12</span> ）</li>
 <li>未装 Site/Node-based license 则 MPLS 接口起不来（X18，<span class="pg">原文p30</span> ）</li>
-<li>AOS 不支持：DoD、OLD、CLR、非 MD5 认证、explicit NULL、QoS over EXP、TTL manipulation（X16，<span class="pg">原文p13-19</span> ）</li>
+<li><strong>AOS 不支持</strong>：<br>DoD、OLD、CLR、非 MD5 认证、explicit NULL、QoS over EXP、TTL manipulation（X16，<span class="pg">原文p13-19</span> ）</li>
 </ul>
 <p>来源：MPLS Reference Design Guide（Fundamentals Ch + Control Plane + Configuration 节，p5-17、p24-33）</p><div class="pn"><a href="../index.html">⬅ 返回课程首页</a><a class="nxt" href="sol-mpls-vpls-vpws.html">下一单元：sol-mpls-vpls-vpws ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

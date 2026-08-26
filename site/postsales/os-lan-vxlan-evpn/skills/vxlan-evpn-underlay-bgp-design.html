@@ -104,22 +104,19 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a1">A1 · 书中案例</h2>
 <ul>
-<li>Lab1 四节点底座（p78-86）：Loopback 取值 Spine-1/2=1.1.1.10/11、Leaf-1/2=1.1.1.1/2；</li>
+<li><strong>Lab1 四节点底座（p78-86）</strong>：<br>Loopback 取值 Spine-1/2=1.1.1.10/11、Leaf-1/2=1.1.1.1/2；</li>
 <li>互联 VLAN 110(S-S)/101/102/111/112，子网 172.16.1xy.0/24，端口号对称；</li>
 <li>
 <p>验证链 <code>sh ip ospf neighbor</code> 全 Full → <code>sh ip routes</code> 看 Leaf 双等价路径 → <code>show ip bgp neighbors</code> established + evpn advertised；</p>
 </li>
 <li>
-<p>架构指南 6 节点参考设计（p187-197）：Spine=1.1.1.1/2、Leaf=1.1.1.10/20/30/40；
-互联口挂聚合口（如 port 1/1/50A tagged）；
-6 台全互联 iBGP EVPN（每台 5 邻居），全量 established。</p>
+<p><strong>架构指南 6 节点参考设计（p187-197）</strong>：<br>Spine=1.1.1.1/2、Leaf=1.1.1.10/20/30/40；互联口挂聚合口（如 port 1/1/50A tagged）；6 台全互联 iBGP EVPN（每台 5 邻居），全量 established。</p>
 </li>
 </ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
-<li>触发：新建 fabric 底座、BGP EVPN 会话起不来、underlay 收敛调优、Spine 规模化改造上 RR。</li>
-<li>区分：底座通了以后开业务/开网关 → <code><a href="vxlan-evpn-service-provisioning.html">vxlan-evpn-service-provisioning</a></code>；
-整体路线与版本边界 → <code><a href="vxlan-evpn-five-step-architecture.html">vxlan-evpn-five-step-architecture</a></code>。本 skill 只管"让 Loopback 之间路由可达、EVPN 会话建立"这一层。</li>
+<li><strong>触发</strong>：<br>新建 fabric 底座、BGP EVPN 会话起不来、underlay 收敛调优、Spine 规模化改造上 RR。</li>
+<li><strong>区分</strong>：<br>底座通了以后开业务/开网关 → <code><a href="vxlan-evpn-service-provisioning.html">vxlan-evpn-service-provisioning</a></code>；整体路线与版本边界 → <code><a href="vxlan-evpn-five-step-architecture.html">vxlan-evpn-five-step-architecture</a></code>。本 skill 只管"让 Loopback 之间路由可达、EVPN 会话建立"这一层。</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
@@ -151,9 +148,9 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>
-<li>eBGP underlay 与 iBGP overlay 的 AS 规则相反（underlay：Spine 同 AS/Leaf 各异；overlay：全网同 AS），迁移或混合场景最容易配反。</li>
+<li><strong>eBGP underlay 与 iBGP overlay 的 AS 规则相反（underlay</strong>：<br>Spine 同 AS/Leaf 各异；overlay：全网同 AS），迁移或混合场景最容易配反。</li>
 <li><code>activate-evpn</code> 是逐邻居开关，漏一条该邻居只建普通 BGP 会话、不交换 EVPN 路由。</li>
-<li>MTU 是隐性杀手：underlay 不预留 50 字节 VXLAN 头会出现大帧静默丢包、小包正常的现象。</li>
+<li><strong>MTU 是隐性杀手</strong>：<br>underlay 不预留 50 字节 VXLAN 头会出现大帧静默丢包、小包正常的现象。</li>
 </ul>
 <hr />
 <p>来源条目: f02 · f03 · f07 · p02 · p03 · p04 · p05 · c01 · c06 · g15 · g16 · g19</p><div class="pn"><a href="vxlan-evpn-five-step-architecture.html">⬅ 上一单元：vxlan-evpn-five-step-architecture</a><a class="nxt" href="vxlan-evpn-service-provisioning.html">下一单元：vxlan-evpn-service-provisioning ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

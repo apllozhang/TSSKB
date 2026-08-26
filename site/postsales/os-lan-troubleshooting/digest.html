@@ -237,9 +237,7 @@ blockquote p{margin:6px 0}
 <h2 id="lab">四、五大 LAB 根因复盘</h2>
 <ul>
 <li><strong>LAB1（L2 连通）</strong>：Client10 认证后 ping 不通 Client5，三层根因叠加——端口 1/1/1 被禁用（inactive）、6860-B 的 vlan 30 IP 接口未启用、UNP 会话卡 In progress 需 <code>unp user flush port 1/1/1</code>。教训：认证 OK 不等于路径通（p140-143）。</li>
-<li>
-<p>LAB2（VC + STP）：案例 1——6360 两台各自成 Master，vcsetup.cfg.1.err 直指 <code>vf-link-mode static</code> 在 stackport 平台不支持、member-port 编号与 chassis-id 不符；</p>
-</li>
+<li><strong>LAB2（VC + STP）</strong>：<br>案例 1——6360 两台各自成 Master，vcsetup.cfg.1.err 直指 <code>vf-link-mode static</code> 在 stackport 平台不支持、member-port 编号与 chassis-id 不符；</li>
 <li>
 <p>改 auto 后 write memory 弹 "Chassis 2 missing … erased permanently" 警告需停下确认（p191-198）。案例 2——CPU 98% + DoS invalid ip 刷屏，真根因是 VLAN 278 STP 被 OFF，两端口成环把自己的 VRRP 通告环回收；</p>
 </li>
@@ -249,7 +247,7 @@ blockquote p{margin:6px 0}
 <li>
 <p><strong>LAB3（L3 + DHL）</strong>：案例 1——DHL 双链路全 dhl-blocking，根因两条链路 native VLAN 不一致（vlan 57 一边 tagged 一边 untagged）（p223-226）。案例 2——DHCP 拿不到地址，Tx Server = 0，中继目的地 172.168.100.102 抄错（应为 192）（p223-227）。</p>
 </li>
-<li>LAB4（路由协议/组播）：VRRP 三连错——VRID2 没 enable、虚拟 IP .154 应为 .254、接口 DOWN 导致 Initialize（p278-284）；</li>
+<li><strong>LAB4（路由协议/组播）</strong>：<br>VRRP 三连错——VRID2 没 enable、虚拟 IP .154 应为 .254、接口 DOWN 导致 Initialize（p278-284）；</li>
 <li>
 <p>OSPF 双层错——auth-key 一字母之差（alcatell/alcatel）叠 hello-interval 20 vs 10，debug3 日志直给答案，修一层复测再挖下一层，路由数 22→17→22 回基线（p279-289）；</p>
 </li>

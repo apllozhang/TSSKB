@@ -81,12 +81,17 @@ blockquote p{margin:6px 0}
 <a href="../skills/aos-nc-switch-foundation.html">aos-nc-switch-foundation</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../aos/index.html">AOS 软件手册</a> › <a href="../index.html">AOS 8.10R04</a> › <span>aos-nc-routing</span></nav><h1>aos-nc-routing</h1><p class="meta"><span class="badge">SKILL</span> aos-nc-routing · 来源页码: </p><h2 id="r">R（触发场景）</h2>
 <ul>
 <li>小型纯交换网或分支用 RIP 做动态路由</li>
-<li>默认网关要冗余：VRRP 主备/抢占/跟踪上联</li>
-<li>路由协议收敛太慢，要毫秒级检测故障：BFD 联动 OSPF/BGP/VRRP/静态路由</li>
-<li>本地服务器池要做负载均衡：SLB 集群 + 健康探测</li>
+<li><strong>默认网关要冗余</strong>：<br>VRRP 主备/抢占/跟踪上联</li>
+<li><strong>路由协议收敛太慢，要毫秒级检测故障</strong>：<br>BFD 联动 OSPF/BGP/VRRP/静态路由</li>
+<li><strong>本地服务器池要做负载均衡</strong>：<br>SLB 集群 + 健康探测</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>静态路由/递归静态路由/默认路由/黑洞路由均由 <code>ip static-route</code> 系列配置（P110，<span class="pg">原文p709</span> ），是其余动态路由的底座。VRRP 选举虚拟路由器 master 转发虚拟 IP 流量，master 失效由最高优先级 backup 接管（P139，<span class="pg">原文p979</span> ）；时序公式 Master_Down_Interval=(3×Adv_Interval)+Skew_Time、Skew=(256-Priority)/256，优先级越低等待越长避免抖动（P141，<span class="pg">原文p980</span> ）。BFD 毫秒级检测转发面故障，异步控制包与 Echo 两种模式分工：VRRP/静态路由只用 Echo，OSPF/IS-IS/BGP 用控制包；Echo 单跳、控制包可多跳（P127，<span class="pg">原文p870</span> ）。SLB 集群以 VIP（L3）或 QoS condition（L2/L3）标识虚拟服务器，分发算法为加权轮询 WRR（P145/P147，<span class="pg">原文p1012</span> ）。</p>
+<ul>
+<li>静态路由/递归静态路由/默认路由/黑洞路由均由 <code>ip static-route</code> 系列配置（P110，<span class="pg">原文p709</span> ），是其余动态路由的底座。</li>
+<li>VRRP 选举虚拟路由器 master 转发虚拟 IP 流量，master 失效由最高优先级 backup 接管（P139，<span class="pg">原文p979</span> ）；时序公式 Master_Down_Interval=(3×Adv_Interval)+Skew_Time、Skew=(256-Priority)/256，优先级越低等待越长避免抖动（P141，<span class="pg">原文p980</span> ）。</li>
+<li><strong>BFD 毫秒级检测转发面故障，异步控制包与 Echo 两种模式分工</strong>：<br>VRRP/静态路由只用 Echo，OSPF/IS-IS/BGP 用控制包；Echo 单跳、控制包可多跳（P127，<span class="pg">原文p870</span> ）。</li>
+<li>SLB 集群以 VIP（L3）或 QoS condition（L2/L3）标识虚拟服务器，分发算法为加权轮询 WRR（P145/P147，<span class="pg">原文p1012</span> ）。</li>
+</ul>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>路由选型</strong>：小网/分支 RIP（15 跳上限与 120 秒 hold-down 慢收敛，大网不适用，X48，<span class="pg">原文p842</span> ）；OSPF/IS-IS/BGP 主体配置另查 Advanced Routing 手册，本书提供 VRF 内路由实例与重分发基础</li>
@@ -110,13 +115,16 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="b">B（反例/坑）</h2>
 <ul>
-<li>RIP 15 跳上限：直连=1 跳，&gt;15 跳路由删除；默认 30 秒广播更新（P122，<span class="pg">原文p842</span> ）</li>
+<li><strong>RIP 15 跳上限</strong>：<br>直连=1 跳，&gt;15 跳路由删除；默认 30 秒广播更新（P122，<span class="pg">原文p842</span> ）</li>
 <li>RIPv2 的不兼容特性（next hop/认证/组播更新）只在组播更新时可用，广播回退 RIPv1 兼容格式（X49/P124，<span class="pg">原文p843</span> ）</li>
 <li>BFD Echo 仅单跳、控制包可多跳；Demand 模式不支持（X50/X51，<span class="pg">原文p870</span> ）</li>
-<li>VRRP backup 优先级接近会产生接管时序冲突：先接管者未必最高优先级，随后被抢占产生抖动（X57，<span class="pg">原文p980</span> ）</li>
-<li>虚拟 MAC：v2=00-00-5E-00-01-VRID，v3/IPv6=00-00-5E-00-02-VRID；IPv6 用 ND 替代 ARP（P142，<span class="pg">原文p981</span> ）</li>
+<li><strong>VRRP backup 优先级接近会产生接管时序冲突</strong>：<br>先接管者未必最高优先级，随后被抢占产生抖动（X57，<span class="pg">原文p980</span> ）</li>
+<li><strong>虚拟 MAC</strong>：<br>v2=00-00-5E-00-01-VRID，v3/IPv6=00-00-5E-00-02-VRID；IPv6 用 ND 替代 ARP（P142，<span class="pg">原文p981</span> ）</li>
 <li>成为 master 时发免费 ARP；接口 IP 被虚路由共享时路由机制不再发免费 ARP（P143，<span class="pg">原文p981</span> ）</li>
 <li>VRRP 支持 BFD 联动 tracking 与 UNP 动态 SPB SAP（P144，<span class="pg">原文p980</span> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniSwitch AOS 8.10R4 Network Configuration Guide 第 21 章 IP 静态路由（<span class="pg">原文p709</span> ）、第 25 章 RIP（<span class="pg">原文p842-844</span> ）、第 26 章 BFD（<span class="pg">原文p869-870</span> ）、第 29 章 VRRP（<span class="pg">原文p978-993</span> ）、第 30 章 SLB（<span class="pg">原文p1011-1015</span> ）。条目来源：cases C40/C41/C46-C48；principles P110/P122-P124/P127/P139-P147；counter-examples X48-X51/X57。</p><div class="pn"><a href="aos-nc-ip-ipv6-services.html">⬅ 上一单元：aos-nc-ip-ipv6-services</a><a class="nxt" href="aos-nc-multicast.html">下一单元：aos-nc-multicast ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<ul>
+<li>OmniSwitch AOS 8.10R4 Network Configuration Guide 第 21 章 IP 静态路由（<span class="pg">原文p709</span> ）、第 25 章 RIP（<span class="pg">原文p842-844</span> ）、第 26 章 BFD（<span class="pg">原文p869-870</span> ）、第 29 章 VRRP（<span class="pg">原文p978-993</span> ）、第 30 章 SLB（<span class="pg">原文p1011-1015</span> ）。</li>
+<li><strong>条目来源</strong>：<br>cases C40/C41/C46-C48；principles P110/P122-P124/P127/P139-P147；counter-examples X48-X51/X57。</li>
+</ul><div class="pn"><a href="aos-nc-ip-ipv6-services.html">⬅ 上一单元：aos-nc-ip-ipv6-services</a><a class="nxt" href="aos-nc-multicast.html">下一单元：aos-nc-multicast ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

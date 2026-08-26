@@ -77,7 +77,18 @@ blockquote p{margin:6px 0}
 <li>Primary 恢复后需要会话回切（Preemption 规划）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>冗余五级阶梯（F2，<span class="pg">原文p14-19</span> ）：R0 单交换机+单 Hairpin，交换机/Hairpin/连接三单点任一故障 SSID 全灭（X7）；R1 给 Hairpin 两侧各建 linkagg——只修端口级故障并顺带翻倍带宽，不修整机与连接（X8），可与 R2/R3/R4 叠加；R2 SSID 填 Backup GRE Server IP，整机切换秒级收敛，备机配置=主机（VPN ID 必须一致），Preemption 可回切（P16）；R3 两机组 Virtual-Chassis + 跨成员 linkagg，亚秒收敛，Hairpin/连接/整机全覆盖；R4 每 SSID 一对交换机（建议异地），连续故障或整站宕机只伤单个 SSID，最高等级。选型主线：预算从低到高、收敛从秒到亚秒、爆炸半径从全网到单 SSID。</p>
+<ul>
+<li><strong>冗余五级阶梯（F2，<span class="pg">原文p14-19</span> ）</strong>：<br>R0 单交换机+单 Hairpin，交换机/Hairpin/连接三单点任一故障 SSID 全灭（X7）；</li>
+<li>R1 给 Hairpin 两侧各建 linkagg——只修端口级故障并顺带翻倍带宽，不修整机与连接（X8），可与 R2/R3/R4 叠加；</li>
+<li>R2 SSID 填 Backup GRE Server IP，整机切换秒级收敛，备机配置=主机（VPN ID 必须一致），Preemption 可回切（P16）；</li>
+<li>R3 两机组 Virtual-Chassis + 跨成员 linkagg，亚秒收敛，Hairpin/连接/整机全覆盖；</li>
+<li>
+<p>R4 每 SSID 一对交换机（建议异地），连续故障或整站宕机只伤单个 SSID，最高等级；</p>
+</li>
+<li>
+<p><strong>选型主线</strong>：<br>预算从低到高、收敛从秒到亚秒、爆炸半径从全网到单 SSID。</p>
+</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>定可用性目标：容忍秒级中断→R2；要求亚秒不中断→R3；地理容灾/按业务分级→R4</li>
@@ -111,16 +122,16 @@ blockquote p{margin:6px 0}
 <h2 id="e">E（实证案例）</h2>
 <ul>
 <li>R1/R3 的完整可用 CLI 配置（端口/描述/ID 齐全，<span class="pg">原文p15-18</span> ）</li>
-<li>R2 收敛时间实测口径：Primary→Secondary failover "a few seconds"；R3 VC "sub-second"（<span class="pg">原文p16-17</span> ）</li>
-<li>R4 异地部署原则：交换机对不同地点防地理性故障，仅对应 SSID 受影响（<span class="pg">原文p18</span> ）</li>
+<li><strong>R2 收敛时间实测口径</strong>：<br>Primary→Secondary failover "a few seconds"；R3 VC "sub-second"（<span class="pg">原文p16-17</span> ）</li>
+<li><strong>R4 异地部署原则</strong>：<br>交换机对不同地点防地理性故障，仅对应 SSID 受影响（<span class="pg">原文p18</span> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>
-<li>R0 上生产：三个单点（整机/自环线/连接）任一故障 GTTS SSID 不可用（X7，<span class="pg">原文p14</span> ）</li>
-<li>把 R1 当整机冗余卖：它只保 SAP/ACCESS 各 1 端口故障无感，交换机与连接仍单点（X8，<span class="pg">原文p15</span> ）</li>
-<li>R2 备机 vpnid 与主机不一致：AP 靠 VPN ID 开隧道，不一致则切换后隧道建不起来（X11，<span class="pg">原文p16</span> ）</li>
-<li>以为 VC 能抬高隧道数上限：上限按单机机型定档，VC 不增加（X6，<span class="pg">原文p8</span> ）</li>
-<li>忘开 Preemption 规划回切：Primary 恢复后流量滞留 Secondary，主备角色与预期漂移（<span class="pg">原文p10</span> <span class="pg">原文p17</span> ）</li>
-<li>单 Hairpin 带宽瓶颈：SSID 吞吐=Hairpin 线速，高带宽场景必须多 Hairpin/linkagg（X12，<span class="pg">原文p8</span> ）</li>
+<li><strong>R0 上生产</strong>：<br>三个单点（整机/自环线/连接）任一故障 GTTS SSID 不可用（X7，<span class="pg">原文p14</span> ）</li>
+<li><strong>把 R1 当整机冗余卖</strong>：<br>它只保 SAP/ACCESS 各 1 端口故障无感，交换机与连接仍单点（X8，<span class="pg">原文p15</span> ）</li>
+<li><strong>R2 备机 vpnid 与主机不一致</strong>：<br>AP 靠 VPN ID 开隧道，不一致则切换后隧道建不起来（X11，<span class="pg">原文p16</span> ）</li>
+<li><strong>以为 VC 能抬高隧道数上限</strong>：<br>上限按单机机型定档，VC 不增加（X6，<span class="pg">原文p8</span> ）</li>
+<li><strong>忘开 Preemption 规划回切</strong>：<br>Primary 恢复后流量滞留 Secondary，主备角色与预期漂移（<span class="pg">原文p10</span> <span class="pg">原文p17</span> ）</li>
+<li><strong>单 Hairpin 带宽瓶颈</strong>：<br>SSID 吞吐=Hairpin 线速，高带宽场景必须多 Hairpin/linkagg（X12，<span class="pg">原文p8</span> ）</li>
 </ul>
 <p>来源：Guest Traffic Tunnelling Services Application Note，GTTS redundancy designs 章（p14-19）</p><div class="pn"><a href="sol-gtts-deployment-scenarios.html">⬅ 上一单元：sol-gtts-deployment-scenarios</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

@@ -71,15 +71,19 @@ blockquote p{margin:6px 0}
 <a href="../skills/sol-sec-device-access.html" class="on">sol-sec-device-access</a>
 <a href="../skills/sol-sec-nlm-lifecycle.html">sol-sec-nlm-lifecycle</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../solutions/index.html">解决方案</a> › <a href="../index.html">网络基础设施安全</a> › <span>sol-sec-device-access</span></nav><h1>sol-sec-device-access</h1><p class="meta"><span class="badge">SKILL</span> sol-sec-device-access · 来源页码: </p><h2 id="r">R（触发场景）</h2>
 <ul>
-<li>首次开机安全基线：改默认口令、限制控制台、关多余服务</li>
-<li>规划管理通道：带外 EMP vs 管理 VRF vs 数据 VRF 关管理口</li>
+<li><strong>首次开机安全基线</strong>：<br>改默认口令、限制控制台、关多余服务</li>
+<li><strong>规划管理通道</strong>：<br>带外 EMP vs 管理 VRF vs 数据 VRF 关管理口</li>
 <li>部署 SSH PKA、IP 锁定、AAA 集中化与 RADIUS over TLS</li>
 <li>SNMPv3 三模型选择、PKI/SSL cipher、Captive Portal 证书</li>
 <li>按合规要求选择 CC/JITC/FIPS/ASA enhanced 安全模式</li>
-<li>加固 OmniVista：2FA、Network ID、REST API 凭据管理</li>
+<li><strong>加固 OmniVista</strong>：<br>2FA、Network ID、REST API 凭据管理</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>管理面三道闸（F2，<span class="pg">原文p9-30</span> ）：物理/引导层（U-boot 口令+镜像校验）→ 通道层（OOB 优先、管理 VRF 隔离、白名单）→ 认证层（强加密 SSH+PKA+AAA+MFA）。密码认证固有弱点（可预测、重用、共享、钓鱼、暴力破解、长期有效，X5，<span class="pg">原文p16</span> ）——公钥+多因素是出路（P22/P27）。安全模式是成套收紧：CC 仅 console+SSH、JITC 军规、FIPS 强算法，互斥选用。</p>
+<ul>
+<li><strong>管理面三道闸（F2，<span class="pg">原文p9-30</span> ）</strong>：<br>物理/引导层（U-boot 口令+镜像校验）→ 通道层（OOB 优先、管理 VRF 隔离、白名单）→ 认证层（强加密 SSH+PKA+AAA+MFA）。</li>
+<li>密码认证固有弱点（可预测、重用、共享、钓鱼、暴力破解、长期有效，X5，<span class="pg">原文p16</span> ）——公钥+多因素是出路（P22/P27）。</li>
+<li><strong>安全模式是成套收紧</strong>：<br>CC 仅 console+SSH、JITC 军规、FIPS 强算法，互斥选用。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>管理通道选型：专用物理 OOB（最优，P14）→ 不行则带内专用 VLAN/VRF（次优）→ 数据 VRF 内逐项关闭管理服务兜底（P15/C5，<span class="pg">原文p10</span> ）</li>
@@ -94,13 +98,13 @@ blockquote p{margin:6px 0}
 <li><strong>管理站白名单</strong>：仅预定义 IP 可管理，上限 64 个（P16，<span class="pg">原文p11</span> ）</li>
 <li><strong>SSH PKA 七步</strong>（C6，<span class="pg">原文p14</span> ）：ssh-keygen 生成对→保存私钥→scp 公钥上机→建用户→installsshkey→公钥登录→<code>ssh enforce-pubkey-auth</code></li>
 <li><strong>暴力破解防护</strong>：限登录尝试次数（P23）+ 收敛 login-grace-time（默认 120s）与会话超时（P24）+ IP 锁定阈值（认证失败达阈值永久封禁，清单上限 128 IP）（C7/P25，<span class="pg">原文p14-15</span> ）</li>
-<li>AAA 回退链（C8，<span class="pg">原文p16</span> ）：<code>aaa authentication ssh rad1 ldap2 local</code>——顺序可用性回退，rad1 挂走 ldap2，再挂走本地库；</li>
+<li><strong>AAA 回退链（C8，<span class="pg">原文p16</span> ）</strong>：<br><code>aaa authentication ssh rad1 ldap2 local</code>——顺序可用性回退，rad1 挂走 ldap2，再挂走本地库；</li>
 <li>RADIUS over TLS 消除 MD5 风险（P29，<span class="pg">原文p17</span> ）；</li>
 <li>
 <p>按命令域/族做 RBAC（P30，<span class="pg">原文p17-18</span> ）并开记账与 command.log（P31/P32，<span class="pg">原文p18-19</span> ）；</p>
 </li>
 <li>
-<p>SNMPv3：VACM 视图访问 + USM 用户安全 + TSM（over TLS/DTLS，已有 PKI 则用 TSM，否则 USM）；</p>
+<p><strong>SNMPv3</strong>：<br>VACM 视图访问 + USM 用户安全 + TSM（over TLS/DTLS，已有 PKI 则用 TSM，否则 USM）；</p>
 </li>
 <li>SNMP 专用账户禁 SSH；</li>
 <li>开认证陷阱（P33-P36，<span class="pg">原文p19-20</span> ）；</li>
@@ -108,7 +112,7 @@ blockquote p{margin:6px 0}
 <p>TSM 需 <code>snmp tsm-map remote-identity manager.crt user ...</code> 证书映射（C9，<span class="pg">原文p20</span> ）；</p>
 </li>
 <li>
-<p>PKI/SSL：三模式 No Validation（默认，不校验）/Server Cert Validation/Mutual Auth（P38，<span class="pg">原文p21</span> ）；</p>
+<p><strong>PKI/SSL</strong>：<br>三模式 No Validation（默认，不校验）/Server Cert Validation/Mutual Auth（P38，<span class="pg">原文p21</span> ）；</p>
 </li>
 <li>cipher 设 high（CC 模式强制 high）；</li>
 <li>WebView 换自定义证书勿依赖自签默认（P39/P40/X11，<span class="pg">原文p22-23</span> ）；</li>
@@ -119,7 +123,7 @@ blockquote p{margin:6px 0}
 <p><strong>JITC 细则</strong>（C13，<span class="pg">原文p27</span> ）：口令≥15 字符；SSH 每 GB 或每 60 分钟 rekey；升级前必须验签</p>
 </li>
 <li><strong>日志</strong>：集中 syslog + TLS 加密 + 第二服务器冗余（P37，<span class="pg">原文p21</span> ）</li>
-<li>OmniVista：MSP/Organization 两级用户均开 2FA（P74，<span class="pg">原文p72</span> ）；</li>
+<li><strong>OmniVista</strong>：<br>MSP/Organization 两级用户均开 2FA（P74，<span class="pg">原文p72</span> ）；</li>
 <li>DHCP Option 43 Sub-Option 133 下发 Network ID，Strict Mode 拒绝无 ID 设备（P76，<span class="pg">原文p75-76</span> ）；</li>
 <li>API 凭据用第三方保管、专用账户、最小权限、勿暴露公网（P80/X23/X24，<span class="pg">原文p84</span> ）；</li>
 </ul>
@@ -134,7 +138,7 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>
-<li>默认口令 "switch"：admin 与 secureadmin 首开同密码（X1，<span class="pg">原文p11</span> ）</li>
+<li><strong>默认口令 "switch"</strong>：<br>admin 与 secureadmin 首开同密码（X1，<span class="pg">原文p11</span> ）</li>
 <li>控制台直连可重置管理员口令——控制台也要管起来（X2/P18，<span class="pg">原文p11</span> ）</li>
 <li>U-boot 口令丢失且 flash 损坏时只能返厂（C3，<span class="pg">原文p9</span> ）</li>
 <li>工厂默认口令策略弱（无大小写要求数）、默认无用户锁定——必须手工收紧（X12/X13，<span class="pg">原文p25</span> ）</li>

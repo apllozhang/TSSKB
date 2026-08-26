@@ -78,7 +78,13 @@ blockquote p{margin:6px 0}
 <li>规划 Virtual Chassis（VC）时核对 VC LED 语义与机型角色</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>6360 家族选型三轴矩阵（F1，<span class="pg">原文p13</span> /<span class="pg">原文p60</span> ）：轴一=下行口数（10/24/48），轴二=PoE 能力（无 → P=802.3at → PX=2×多千兆 bt 口+950W 电源），轴三=上行升级（X/H 后缀 combo 口可软件升 10G）。家族命名解码（P1）：<code>-10/-24/-48</code> 非 PoE；<code>P*</code>=802.3at PoE；<code>P*X</code>=2 个多千兆 802.3bt 口（47-48）+大电源；<code>PH*</code>=combo 口可软件升级 10G（"Upgradeable to 10G"）。上行口三段式结构（P2，<span class="pg">原文p13</span> ）：全家族统一为"2×RJ45/SFP combo + 2×SFP+ 软件可配口"，SFP+ 口可在"1G SFP 上行"与"10G SFP+ 上行或 VFL"两种角色间软件切换。电源全部内置不可热换，wattage 随 PoE 递增（30→950W，P5）。无风扇分级（P4）：-10/P10/24/P24/48 无风扇；P24X/PH24/P48X/PH48 大功率 PoE 机型带风扇。</p>
+<ul>
+<li><strong>6360 家族选型三轴矩阵（F1，<span class="pg">原文p13</span> /<span class="pg">原文p60</span> ）</strong>：<br>轴一=下行口数（10/24/48），轴二=PoE 能力（无 → P=802.3at → PX=2×多千兆 bt 口+950W 电源），轴三=上行升级（X/H 后缀 combo 口可软件升 10G）。</li>
+<li><strong>家族命名解码（P1）</strong>：<br><code>-10/-24/-48</code> 非 PoE；<code>P*</code>=802.3at PoE；<code>P*X</code>=2 个多千兆 802.3bt 口（47-48）+大电源；<code>PH*</code>=combo 口可软件升级 10G（"Upgradeable to 10G"）。</li>
+<li><strong>上行口三段式结构（P2，<span class="pg">原文p13</span> ）</strong>：<br>全家族统一为"2×RJ45/SFP combo + 2×SFP+ 软件可配口"，SFP+ 口可在"1G SFP 上行"与"10G SFP+ 上行或 VFL"两种角色间软件切换。</li>
+<li>电源全部内置不可热换，wattage 随 PoE 递增（30→950W，P5）。</li>
+<li><strong>无风扇分级（P4）</strong>：<br>-10/P10/24/P24/48 无风扇；P24X/PH24/P48X/PH48 大功率 PoE 机型带风扇。</li>
+</ul>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>先定下行口数</strong>：10 口（半宽机箱、独享壁挂能力）/24 口/48 口三档（F1，<span class="pg">原文p13</span> ）</li>
@@ -99,7 +105,7 @@ blockquote p{margin:6px 0}
 <h2 id="e">E（实证案例）</h2>
 <ul>
 <li>10 口机型独享半宽机箱+壁挂（OS6360-WALL-MNT，C10，<span class="pg">原文p54</span> ）</li>
-<li>P48X 面板：46 口 at + 2 口多千兆 bt（2.5G）+ 10G combo，950W 电源/760W 预算（<span class="pg">原文p42</span> ）</li>
+<li><strong>P48X 面板</strong>：<br>46 口 at + 2 口多千兆 bt（2.5G）+ 10G combo，950W 电源/760W 预算（<span class="pg">原文p42</span> ）</li>
 <li>P10A-US 靠 PN 区分的变体（904324-90，X1，<span class="pg">原文p28</span> ）</li>
 </ul>
 <h2 id="b">B（反例/坑）</h2>
@@ -111,4 +117,7 @@ blockquote p{margin:6px 0}
 <li>6360 无 VC 专用堆叠口，VC 建在 SFP+ 可配口上，占用上联资源（<span class="pg">原文p13</span> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniSwitch 6360 Hardware Users Guide Ch1 机型总表（<span class="pg">原文p13-16</span> ）、Ch3 逐机型面板与规格（<span class="pg">原文p25-57</span> ）。条目来源：principles P1-P5/P13/P14；cases C1/C10；counter-examples X1；frameworks F1；glossary 10 机型逐条。</p><div class="pn"><a href="../index.html">⬅ 返回课程首页</a><a class="nxt" href="os6360-install-power.html">下一单元：os6360-install-power ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<ul>
+<li>OmniSwitch 6360 Hardware Users Guide Ch1 机型总表（<span class="pg">原文p13-16</span> ）、Ch3 逐机型面板与规格（<span class="pg">原文p25-57</span> ）。</li>
+<li><strong>条目来源</strong>：<br>principles P1-P5/P13/P14；cases C1/C10；counter-examples X1；frameworks F1；glossary 10 机型逐条。</li>
+</ul><div class="pn"><a href="../index.html">⬅ 返回课程首页</a><a class="nxt" href="os6360-install-power.html">下一单元：os6360-install-power ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

@@ -117,7 +117,7 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a1-lab">A1 · 书中案例（LAB 故障根因）</h2>
 <ul>
-<li>c09（LAB4 案例3，p280-292）：Client1（监控摄像头源，组 231.1.1.1）发流，Client9 收不到；单播互 ping 正常。</li>
+<li><strong>c09（LAB4 案例3，p280-292）</strong>：<br>Client1（监控摄像头源，组 231.1.1.1）发流，Client9 收不到；单播互 ping 正常。</li>
 <li>排查：从 6360-A traceroute 192.168.110.50 确认单播路径经 192.168.57.7→172.16.17.1（PIM-SM 的 RPF/join 沿单播路径走）；
 show ip pim interface 逐台核——6870-A 五个口 PIM enabled，而 6900-A 路径上的 int_217 没启用 PIM，join 到不了源侧。</li>
 <li>修复：<code>ip pim interface int_217</code>，发流验证。</li>
@@ -125,8 +125,8 @@ show ip pim interface 逐台核——6870-A 五个口 PIM enabled，而 6900-A �
 </ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
-<li>触发：组播流不通或断流、IGMP 加组/离开异常、频道切换问题、PIM 邻居丢失、RP/BSR 选举异常、组播引起广播洪泛。</li>
-<li>区分：<strong>单播也不通 → l3-routing-vrrp</strong>（先修单播，RPF 依赖单播路由）；纯 L2 同网段组播泛洪 → 本 skill 的 IPMS 层；组播风暴引发 CPU 高/环路 → 先按 stp-loop 查环。</li>
+<li><strong>触发</strong>：<br>组播流不通或断流、IGMP 加组/离开异常、频道切换问题、PIM 邻居丢失、RP/BSR 选举异常、组播引起广播洪泛。</li>
+<li><strong>区分</strong>：<br><strong>单播也不通 → l3-routing-vrrp</strong>（先修单播，RPF 依赖单播路由）；纯 L2 同网段组播泛洪 → 本 skill 的 IPMS 层；组播风暴引发 CPU 高/环路 → 先按 stp-loop 查环。</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>

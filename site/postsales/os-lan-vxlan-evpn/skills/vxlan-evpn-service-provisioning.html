@@ -115,21 +115,21 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a1">A1 · 书中案例</h2>
 <ul>
-<li>Lab2 双业务（p102-108）：service 100/200（VNI 1000/2000）共用口 1/1/7，SAP 1/1/7:10 与 1/1/7:20；验证五连：<code>show service evpn</code>（双业务 Up）→ <code>show service evpn ethernet-segment</code>（SH[L-A]+SH[R]）→ <code>debug evpn show bgp route-type rt3</code>（4 条 IMET）→ <code>&lt;esi&gt; sap-info</code>（ETag-EVI 映射）→ <code>evi 1000 tunnel-ports</code>（动态 SDP 32768:100 → 远端 1.1.1.2）。</li>
-<li>Lab2 三层叠加（p109-117）：每业务挂 <code>ip interface &lt;name&gt; service &lt;id&gt; address 192.168.10.1/24</code>（Leaf1=.1、Leaf2=.2 各自独立），再 <code>anycast-gateway-address 192.168.10.254</code>；</li>
+<li><strong>Lab2 双业务（p102-108）</strong>：<br>service 100/200（VNI 1000/2000）共用口 1/1/7，SAP 1/1/7:10 与 1/1/7:20；验证五连：<code>show service evpn</code>（双业务 Up）→ <code>show service evpn ethernet-segment</code>（SH[L-A]+SH[R]）→ <code>debug evpn show bgp route-type rt3</code>（4 条 IMET）→ <code>&lt;esi&gt; sap-info</code>（ETag-EVI 映射）→ <code>evi 1000 tunnel-ports</code>（动态 SDP 32768:100 → 远端 1.1.1.2）。</li>
+<li><strong>Lab2 三层叠加（p109-117）</strong>：<br>每业务挂 <code>ip interface &lt;name&gt; service &lt;id&gt; address 192.168.10.1/24</code>（Leaf1=.1、Leaf2=.2 各自独立），再 <code>anycast-gateway-address 192.168.10.254</code>；</li>
 <li>CE 侧 vlan 10 主机口 untagged、上联 tagged；</li>
 <li><code>sh ip interface</code> 出现 A=Anycast 标志；</li>
 <li>
 <p>Spine 的 evpn-vxlan MAC 表为 0（不学主机 MAC）；</p>
 </li>
 <li>
-<p>课堂最小验证链（p64-74）：单边配置 Oper Down → 对端配完三条 → RT3 互收 → MAC 表 sap/sdp 双侧 → SDP 32768 建起、Oper 转 Up。可当开局 checklist：ES→service→SAP→RT3→MAC→SDP 隧道逐层核对。</p>
+<p><strong>课堂最小验证链（p64-74）</strong>：<br>单边配置 Oper Down → 对端配完三条 → RT3 互收 → MAC 表 sap/sdp 双侧 → SDP 32768 建起、Oper 转 Up。可当开局 checklist：ES→service→SAP→RT3→MAC→SDP 隧道逐层核对。</p>
 </li>
 </ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
-<li>触发：新开一条 L2/L3 业务、加 IRB/任播网关、多租户 RD/RT 规划、查"这条路由是什么类型/为什么没导入"。</li>
-<li>区分：底座与 BGP 会话 → <code><a href="vxlan-evpn-underlay-bgp-design.html">vxlan-evpn-underlay-bgp-design</a></code>；</li>
+<li><strong>触发</strong>：<br>新开一条 L2/L3 业务、加 IRB/任播网关、多租户 RD/RT 规划、查"这条路由是什么类型/为什么没导入"。</li>
+<li><strong>区分</strong>：<br>底座与 BGP 会话 → <code><a href="vxlan-evpn-underlay-bgp-design.html">vxlan-evpn-underlay-bgp-design</a></code>；</li>
 <li>CE 双归/LAG/DF → <code><a href="vxlan-evpn-multihoming-df.html">vxlan-evpn-multihoming-df</a></code>；</li>
 <li>ARP 抑制/BUM/mac mobility/排障 → <code><a href="vxlan-evpn-bum-troubleshooting.html">vxlan-evpn-bum-troubleshooting</a></code>。本 skill 管"业务怎么开、参数怎么定"；</li>
 </ul>
@@ -164,7 +164,7 @@ blockquote p{margin:6px 0}
 <li><strong>Spine 漏配业务</strong>（非对称 IRB 最常见翻车点）：忘配 dummy 口则 IRB 路由上下文不完整；规避只能等对称 IRB（8.10R1 不支持）。</li>
 <li><strong>教材笔误</strong>（p113）：client 9/10 的网关原文误写 192.168.30.254，正确应为所在 VLAN 的 192.168.20.254——照抄必不通。通用教训：主机网关必须逐字等于该业务 anycast-gateway-address，DAG 排障第一步就核这个。</li>
 <li>Anycast 虚拟 MAC 按 VRF 设置，同一 VRF 各子网接口共用一个；漏配导致主机迁移后网关 MAC 漂移。</li>
-<li>业务默认值（p67）：MTU 9194 / VPN IP-MTU 1500 / Hybrid 组播 / Proxy-Arp Ena / Unknown-Mac-Route Ena / Mac-Vrf-Hw-Lrng Dis——核对 <code>show service</code> 输出时按此基线。</li>
+<li><strong>业务默认值（p67）</strong>：<br>MTU 9194 / VPN IP-MTU 1500 / Hybrid 组播 / Proxy-Arp Ena / Unknown-Mac-Route Ena / Mac-Vrf-Hw-Lrng Dis——核对 <code>show service</code> 输出时按此基线。</li>
 <li>对远端 ES 执行 <code>sap-info</code> 会报 "Not supported for Remote ES"，本地/远端命令选择见 multihoming skill。</li>
 </ul>
 <hr />

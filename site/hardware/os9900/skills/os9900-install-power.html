@@ -71,14 +71,19 @@ blockquote p{margin:6px 0}
 <div class="grp">运维排障</div>
 <a href="../skills/os9900-ops-troubleshoot.html">os9900-ops-troubleshoot</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../hardware/index.html">硬件手册</a> › <a href="../index.html">OmniSwitch 9900 Hardware Guide</a> › <span>os9900-install-power</span></nav><h1>os9900-install-power</h1><p class="meta"><span class="badge">SKILL</span> os9900-install-power · 来源页码: </p><h2 id="r">R（触发场景）</h2>
 <ul>
-<li>新机箱搭建：从空机箱到上电的组件安装标准序列（CFM→NI→CMM→电源）</li>
-<li>加装 NI/冗余 CMM/PoE 设备或拔电源前：机箱功率预算核查（Power Left）</li>
-<li>电源选型与混插规则核对：OS99-PS-A（AC 两档输出）与 OS99-PS-D（DC）</li>
-<li>DC 场景接线：75A 过流、双 10AWG 导体、4P PWRBLADE 连接器</li>
+<li><strong>新机箱搭建</strong>：<br>从空机箱到上电的组件安装标准序列（CFM→NI→CMM→电源）</li>
+<li><strong>加装 NI/冗余 CMM/PoE 设备或拔电源前</strong>：<br>机箱功率预算核查（Power Left）</li>
+<li><strong>电源选型与混插规则核对</strong>：<br>OS99-PS-A（AC 两档输出）与 OS99-PS-D（DC）</li>
+<li><strong>DC 场景接线</strong>：<br>75A 过流、双 10AWG 导体、4P PWRBLADE 连接器</li>
 <li>机架/独立安装（三人搬运、不可墙装）与接地施工</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>机箱功率预算三步法（F3，<span class="pg">原文p23</span> -<span class="pg">原文p26</span> /<span class="pg">原文p29</span> /<span class="pg">原文p49</span> /<span class="pg">原文p63</span> ）：组件一插入中板功率需求即刻生效，预算不足则新组件不上电甚至中断数据流——变更前必查 <code>show chassis</code> 的 Power Left；算增量时计入 CMM 64/74W、CFM 119/222W、NI 56-402W、风扇 112/200W 与 PoE slot 默认 1800W。组件安装/拆除标准作业序列（F4，<span class="pg">原文p36</span> -<span class="pg">原文p45</span> /<span class="pg">原文p57</span> -<span class="pg">原文p63</span> ）：空机箱就位（三人）→ CFM（先拆风扇托盘）→ NI → CMM → 核功率 → 电源 → 四绿判据 → 首登。电源三不混（P24，<span class="pg">原文p29</span> /<span class="pg">原文p63</span> ）：AC 与 DC 不可混、240V 与 110V 输入不可混——与 6900 家族"AC+DC 可混"相反，跨平台经验不可平移。4 电源 N+1 负载分担（P5，<span class="pg">原文p8</span> /<span class="pg">原文p13</span> ），单电源不可热拆（P38）。</p>
+<ul>
+<li><strong>机箱功率预算三步法（F3，<span class="pg">原文p23</span> -<span class="pg">原文p26</span> /<span class="pg">原文p29</span> /<span class="pg">原文p49</span> /<span class="pg">原文p63</span> ）</strong>：<br>组件一插入中板功率需求即刻生效，预算不足则新组件不上电甚至中断数据流——变更前必查 <code>show chassis</code> 的 Power Left；算增量时计入 CMM 64/74W、CFM 119/222W、NI 56-402W、风扇 112/200W 与 PoE slot 默认 1800W。</li>
+<li><strong>组件安装/拆除标准作业序列（F4，<span class="pg">原文p36</span> -<span class="pg">原文p45</span> /<span class="pg">原文p57</span> -<span class="pg">原文p63</span> ）</strong>：<br>空机箱就位（三人）→ CFM（先拆风扇托盘）→ NI → CMM → 核功率 → 电源 → 四绿判据 → 首登。</li>
+<li><strong>电源三不混（P24，<span class="pg">原文p29</span> /<span class="pg">原文p63</span> ）</strong>：<br>AC 与 DC 不可混、240V 与 110V 输入不可混——与 6900 家族"AC+DC 可混"相反，跨平台经验不可平移。</li>
+<li>4 电源 N+1 负载分担（P5，<span class="pg">原文p8</span> /<span class="pg">原文p13</span> ），单电源不可热拆（P38）。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>安装前决策：场地（禁墙装、仅前→后气流、留气流间隙）→ 机架承重（满载 32.83/64.36kg 起）→ 三人作业编组</li>
@@ -101,15 +106,15 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>机箱功率预算核查：变更前 <code>show chassis</code> 看 Power Left（示例输出 2041W 可用于新组件与 PD）（C14/X18，<span class="pg">原文p49</span> ）</li>
-<li>OS99-PS-A AC 双档输出：1200W/21.4A 或 3000W/53.5A；PS-D DC 输出 2500W/44.6A@56V（P23，<span class="pg">原文p29</span> /<span class="pg">原文p30</span> ）</li>
-<li>ESD 腕带生效前提：电源必须已装机并接接地插座，仅接腕带接地点无效（P8/X43，<span class="pg">原文p8</span> /<span class="pg">原文p9</span> /<span class="pg">原文p72</span> ）</li>
+<li><strong>机箱功率预算核查</strong>：<br>变更前 <code>show chassis</code> 看 Power Left（示例输出 2041W 可用于新组件与 PD）（C14/X18，<span class="pg">原文p49</span> ）</li>
+<li><strong>OS99-PS-A AC 双档输出</strong>：<br>1200W/21.4A 或 3000W/53.5A；PS-D DC 输出 2500W/44.6A@56V（P23，<span class="pg">原文p29</span> /<span class="pg">原文p30</span> ）</li>
+<li><strong>ESD 腕带生效前提</strong>：<br>电源必须已装机并接接地插座，仅接腕带接地点无效（P8/X43，<span class="pg">原文p8</span> /<span class="pg">原文p9</span> /<span class="pg">原文p72</span> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>
 <li>AC 与 DC 电源不可混、Hi(240V) 与 Lo(110V) 输入不可混——与 6900 家族相反，跨平台经验会翻车（X9/X10/P24，<span class="pg">原文p29</span> /<span class="pg">原文p63</span> ）</li>
-<li>预算不足后果链：新组件不上电+电源错误中断数据流，加件/拔电前必查 Power Left（X18/P26，<span class="pg">原文p49</span> ）</li>
-<li>单件不可热拆：仅一台 CMM/CFM/电源时拆即断业务（X11/P38，<span class="pg">原文p63</span> ）</li>
+<li><strong>预算不足后果链</strong>：<br>新组件不上电+电源错误中断数据流，加件/拔电前必查 Power Left（X18/P26，<span class="pg">原文p49</span> ）</li>
+<li><strong>单件不可热拆</strong>：<br>仅一台 CMM/CFM/电源时拆即断业务（X11/P38，<span class="pg">原文p63</span> ）</li>
 <li>不可墙装（重量+气流要求）；禁止满载机箱搬运；倒放/侧躺禁令（X24/X25/X27，<span class="pg">原文p36</span> /<span class="pg">原文p32</span> ）</li>
 <li>拆装电源必须先断电源源；拆电源不托底会致电源壳尾部坠落损坏设备（X12/X23，<span class="pg">原文p43</span> /<span class="pg">原文p57</span> /<span class="pg">原文p58</span> ）</li>
 <li>禁延长线；AC 插座各走独立电路；电涌军规违者可失保（X16/P28/X31，<span class="pg">原文p33</span> /<span class="pg">原文p44</span> ）</li>

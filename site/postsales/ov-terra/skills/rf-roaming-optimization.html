@@ -84,7 +84,11 @@ blockquote p{margin:6px 0}
 <li>两地不便布线，需要 Mesh/Bridge 回程，或部署远程 AP（RAP）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>Stellar 射频管理是全分布式的（DRM）：每个 AP 空口发现邻居、LAN 上共享 RF 上下文、自主做射频决策，不依赖 AP Group 或管理 VLAN。漫游分 L2/L3，判定依据是 home/foreign AP 间的客户端 VLAN 是否一致，L3 漫游靠 L2 GRE 隧道。优化工作的核心抓手是 RF Profile 参数（Band Steering、DLB、扫描、Roaming RSSI 阈值）与 802.11k/v 引导。</p>
+<ul>
+<li><strong>Stellar 射频管理是全分布式的（DRM）</strong>：<br>每个 AP 空口发现邻居、LAN 上共享 RF 上下文、自主做射频决策，不依赖 AP Group 或管理 VLAN。</li>
+<li>漫游分 L2/L3，判定依据是 home/foreign AP 间的客户端 VLAN 是否一致，L3 漫游靠 L2 GRE 隧道。</li>
+<li>优化工作的核心抓手是 RF Profile 参数（Band Steering、DLB、扫描、Roaming RSSI 阈值）与 802.11k/v 引导。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li><strong>RF Profile 配置</strong>（应用于 AP Group 或 AP 级）：国家码、Smart Load Balance、扫描、信道/功率设置（<span class="pg">原文p366</span> <span class="pg">原文p367</span> ）。</li>
@@ -108,27 +112,27 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
-<li>漫游判定：L2 或 L3 按客户端在 home/foreign AP 间 VLAN 选择：无上下文→新客户端；</li>
+<li><strong>漫游判定</strong>：<br>L2 或 L3 按客户端在 home/foreign AP 间 VLAN 选择：无上下文→新客户端；</li>
 <li>上下文 + WLAN/ARP 匹配 + VLAN 匹配→L2；</li>
 <li>
 <p>VLAN 不匹配→L3（基于 L2 GRE 隧道）。L2 漫游始终启用，L3 默认禁用（<span class="pg">原文p394</span> <span class="pg">原文p400</span> ）；</p>
 </li>
 <li>
-<p>客户端上下文共享：客户端关联时 AP 向所有空口相邻 AP 发 Add 消息，漫游时旧 AP 收到新 AP 的 Add 后触发 Del；</p>
+<p><strong>客户端上下文共享</strong>：<br>客户端关联时 AP 向所有空口相邻 AP 发 Add 消息，漫游时旧 AP 收到新 AP 的 Add 后触发 Del；</p>
 </li>
 <li>上下文含 VLAN ID/ARP/Policy List/PMKSA cache；</li>
 <li>
 <p>与 AP Group、管理 VLAN 无关（<span class="pg">原文p397</span> <span class="pg">原文p399</span> ）；</p>
 </li>
 <li>
-<p>Mesh 拓扑限制：最多 8 台 slave AP、4 跳、单跳最多 5 AP、全网最多 16 AP；</p>
+<p><strong>Mesh 拓扑限制</strong>：<br>最多 8 台 slave AP、4 跳、单跳最多 5 AP、全网最多 16 AP；</p>
 </li>
 <li>所有 AP 可广播最多 5 个 SSID；</li>
 <li>
 <p>最佳实践 BAND 5GHz、CHANNEL &gt;100（<span class="pg">原文p439</span> ）。Auto Mesh：LAN 上的 root AP 广播隐藏 SSID "Stellar-MESH"（5GHz），未连 LAN 的 AP 自动以 non-root 加入（<span class="pg">原文p440</span> ）；</p>
 </li>
 <li>
-<p>RAP（远程 AP）五步开通：[PRE] 管理员预录入（OV Cirrus：序列号/RAP 模式/VPN Server 公网 IP/OV2500 IP/VPN Client IP；</p>
+<p><strong>RAP（远程 AP）五步开通</strong>：<br>[PRE] 管理员预录入（OV Cirrus：序列号/RAP 模式/VPN Server 公网 IP/OV2500 IP/VPN Client IP；</p>
 </li>
 <li>VPN Server：公网/私网 IP/密钥；</li>
 <li>

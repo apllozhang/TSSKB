@@ -84,7 +84,11 @@ blockquote p{margin:6px 0}
 <li>多台新交换机开箱，希望 5 分钟内完成单台基础配置（Lightning Config）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>OmniSwitch 出厂默认凭据是 admin/switch（8.10R4 起强制改密），Console 是最后一道兜底管理通道。各管理通道（Console/Telnet/SSH/HTTP）的认证相互独立，默认 SSH/HTTP 是 deny 状态，必须逐项用 <code>aaa authentication</code> 打开。开箱场景优先走 Lightning Config 向导，CLI 是通用兜底。</p>
+<ul>
+<li>OmniSwitch 出厂默认凭据是 admin/switch（8.10R4 起强制改密），Console 是最后一道兜底管理通道。</li>
+<li>各管理通道（Console/Telnet/SSH/HTTP）的认证相互独立，默认 SSH/HTTP 是 deny 状态，必须逐项用 <code>aaa authentication</code> 打开。</li>
+<li>开箱场景优先走 Lightning Config 向导，CLI 是通用兜底。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>Console 连接：串口参数 115200 / 8N1 / 无流控（P12，<span class="pg">原文p65</span> ），Tera Term/Putty 登录 admin/switch（P06，<span class="pg">原文p60</span> ）。</li>
@@ -107,11 +111,11 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
-<li>Lightning Config 触发有五项前置：仅第 1/2 物理口接客户端、无既有配置、上电后无 DHCP 分配、无 RCL/OmniVista NMS 连接（F07，<span class="pg">原文p75</span> ）；任一不满足则退回常规配置。</li>
-<li>模板批量交付：IMPORT .json 模板 → Lightning Config → SAVE CONFIGURATION（C26，<span class="pg">原文p481</span> –<span class="pg">原文p490</span> ）。</li>
-<li>多服务器认证链：<code>aaa authentication console server1 [server2...] [local] [exit-on-fail {enable|disable}]</code>；exit-on-fail enable 时只查首台可用服务器，disable 时逐台回退（P08，<span class="pg">原文p63</span> ）。</li>
-<li>会话规格上限：Telnet 6 / FTP 4 / SSH+SFTP 8 / HTTP 4 / 总 20 / SNMP 50（P10，<span class="pg">原文p67</span> ）。</li>
-<li>EMP 带外管理口绕过业务板直连 CMM：<code>ip interface master emp address 172.25.167.203 mask 255.255.255.224</code>；无 EMP 机型可用 USB Ethernet Dongle 等效（P11，<span class="pg">原文p66</span> ）。</li>
+<li><strong>Lightning Config 触发有五项前置</strong>：<br>仅第 1/2 物理口接客户端、无既有配置、上电后无 DHCP 分配、无 RCL/OmniVista NMS 连接（F07，<span class="pg">原文p75</span> ）；任一不满足则退回常规配置。</li>
+<li><strong>模板批量交付</strong>：<br>IMPORT .json 模板 → Lightning Config → SAVE CONFIGURATION（C26，<span class="pg">原文p481</span> –<span class="pg">原文p490</span> ）。</li>
+<li><strong>多服务器认证链</strong>：<br><code>aaa authentication console server1 [server2...] [local] [exit-on-fail {enable|disable}]</code>；exit-on-fail enable 时只查首台可用服务器，disable 时逐台回退（P08，<span class="pg">原文p63</span> ）。</li>
+<li><strong>会话规格上限</strong>：<br>Telnet 6 / FTP 4 / SSH+SFTP 8 / HTTP 4 / 总 20 / SNMP 50（P10，<span class="pg">原文p67</span> ）。</li>
+<li><strong>EMP 带外管理口绕过业务板直连 CMM</strong>：<br><code>ip interface master emp address 172.25.167.203 mask 255.255.255.224</code>；无 EMP 机型可用 USB Ethernet Dongle 等效（P11，<span class="pg">原文p66</span> ）。</li>
 <li>WebView 默认强制 HTTPS/TLS1.2（<code>webview force-ssl enable</code>，P09，<span class="pg">原文p68</span> –<span class="pg">原文p69</span> ）。</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
@@ -122,7 +126,7 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="b">B（边界与陷阱）</h2>
 <ul>
-<li>Lightning Config 前禁止把新交换机接入网络/互联/接 DHCP 服务器：多台未配置交换机默认都是 192.168.0.1 会 IP 冲突；且"Do NOT skip the Recommended Defaults!"（CE13，<span class="pg">原文p477</span> 、<span class="pg">原文p486</span> 、<span class="pg">原文p484</span> ）。</li>
+<li><strong>Lightning Config 前禁止把新交换机接入网络/互联/接 DHCP 服务器</strong>：<br>多台未配置交换机默认都是 192.168.0.1 会 IP 冲突；且"Do NOT skip the Recommended Defaults!"（CE13，<span class="pg">原文p477</span> 、<span class="pg">原文p486</span> 、<span class="pg">原文p484</span> ）。</li>
 <li>教学或托管环境的"默认配置"并非空配置，重置后所有端口 disabled，不通时先 <code>interfaces x admin-state enable</code>（CE01，<span class="pg">原文p89</span> ）。</li>
 <li>密码勿用 <code>!</code> 或 <code>$</code> 字符（C26，<span class="pg">原文p481</span> –<span class="pg">原文p490</span> ）。</li>
 <li>本地用户库 userTable9 存于 flash/system，最多 64 用户（P06，<span class="pg">原文p60</span> –<span class="pg">原文p61</span> ）。</li>

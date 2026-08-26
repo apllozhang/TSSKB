@@ -86,11 +86,17 @@ blockquote p{margin:6px 0}
 <li>跨网段组播需要 PIM-SM（RP/BSR 规划）</li>
 <li>环形拓扑要 50ms 级保护倒换（ERP G.8032）</li>
 <li>VLAN 手工维护成本高，要动态注册裁剪（MVRP）</li>
-<li>新交换机零接触上线（Auto-fabric：Auto-VC/LACP/Routing/MVRP）</li>
+<li><strong>新交换机零接触上线（Auto-fabric</strong>：<br>Auto-VC/LACP/Routing/MVRP）</li>
 <li>评估用 SPB 替代 STP 做二层织构（6865/6900 iFab）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>组播分两层解（F14，<span class="pg">原文p874</span> ）：同 VLAN 用 IPMS 硬件侦听 IGMP 按端口建转发表（默认禁用，须显式开，P172，<span class="pg">原文p875-878</span> ）；跨网段用 PIM-SM 显式加入 + RP 共享树，末跳自动 SPT 切换（默认启用）（P177，<span class="pg">原文p908-909</span> ）。IGMP 本身 TTL=1 永不出本段（P170，<span class="pg">原文p871</span> ）。ERP 的机制是"牺牲一条 RPL 链路换全环无环"：APS 协议协调，RPL owner 负责阻塞/解阻塞（P178，<span class="pg">原文p926-929</span> ）。Auto-fabric 七步零接触（Auto-VC → RCL → Auto-LACP → Auto-Routing → Auto-SPB → Auto-Network Profiling → Auto-MVRP），失败即删除并禁用配置（P27/F5，<span class="pg">原文p155, 936</span> ）。SPB 用 IS-IS 替代 STP：简化业务开通、全链路可用（P186/F15，<span class="pg">原文p73, 68</span> ）。</p>
+<ul>
+<li><strong>组播分两层解（F14，<span class="pg">原文p874</span> ）</strong>：<br>同 VLAN 用 IPMS 硬件侦听 IGMP 按端口建转发表（默认禁用，须显式开，P172，<span class="pg">原文p875-878</span> ）；跨网段用 PIM-SM 显式加入 + RP 共享树，末跳自动 SPT 切换（默认启用）（P177，<span class="pg">原文p908-909</span> ）。</li>
+<li>IGMP 本身 TTL=1 永不出本段（P170，<span class="pg">原文p871</span> ）。</li>
+<li><strong>ERP 的机制是"牺牲一条 RPL 链路换全环无环"</strong>：<br>APS 协议协调，RPL owner 负责阻塞/解阻塞（P178，<span class="pg">原文p926-929</span> ）。</li>
+<li>Auto-fabric 七步零接触（Auto-VC → RCL → Auto-LACP → Auto-Routing → Auto-SPB → Auto-Network Profiling → Auto-MVRP），失败即删除并禁用配置（P27/F5，<span class="pg">原文p155, 936</span> ）。</li>
+<li><strong>SPB 用 IS-IS 替代 STP</strong>：<br>简化业务开通、全链路可用（P186/F15，<span class="pg">原文p73, 68</span> ）。</li>
+</ul>
 <h2 id="a1">A1（决策/选型）</h2>
 <ol>
 <li>组播地址映射：D 类 224.0.0.0-239.255.255.255，MAC 取 01:00:5e + IP 低 23 位（P169，<span class="pg">原文p867</span> ）</li>
@@ -125,9 +131,9 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>C48 IPMS：开启前后泛洪 vs 端口级精准转发对比（<span class="pg">原文p877-883, 916-918</span> ）</li>
-<li>C49 PIM-SM：RP/BSR + groute/sgroute 验证（<span class="pg">原文p908-913, 923</span> ）</li>
-<li>C50 ERP：6560x2 + 6900x2 环网故障切换与 WTR 恢复（含拆/恢复 6900 VC）（<span class="pg">原文p926-932</span> ）</li>
+<li><strong>C48 IPMS</strong>：<br>开启前后泛洪 vs 端口级精准转发对比（<span class="pg">原文p877-883, 916-918</span> ）</li>
+<li><strong>C49 PIM-SM</strong>：<br>RP/BSR + groute/sgroute 验证（<span class="pg">原文p908-913, 923</span> ）</li>
+<li><strong>C50 ERP</strong>：<br>6560x2 + 6900x2 环网故障切换与 WTR 恢复（含拆/恢复 6900 VC）（<span class="pg">原文p926-932</span> ）</li>
 <li>C51 Auto-fabric 三件套验证（Auto-LACP/Auto-MVRP/动态 VLAN）（<span class="pg">原文p943-951</span> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>

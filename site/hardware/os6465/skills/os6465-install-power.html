@@ -78,7 +78,11 @@ blockquote p{margin:6px 0}
 <li>高温环境（60-75°C）PoE 预算降额核算与 Guard Band/Priority Disconnect 排查</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>工业 PoE 降额三环体系（F2，<span class="pg">原文p24</span> /<span class="pg">原文p30</span> /<span class="pg">原文p74</span> ）：环境温度环（≤60°C 全额/60-70°C 降额需 100 CFM/70-75°C 停 PoE）→ 输入电压环（50-57V 满额/44-57V 限 af/24V 仅系统）→ 电源配置环（powersupply type 手工声明+双电源同型号+仅 P28 负载分担）。安装形态五件套框架（F4，<span class="pg">原文p38-49</span> ）：DIN 导轨→机架→侧挂/壁挂→DNV 船用→后托盘电源。电源类型不可自动识别（P15）：必须 <code>powersupply type</code> 手工配置，否则功率/PoE 信息错误。</p>
+<ul>
+<li><strong>工业 PoE 降额三环体系（F2，<span class="pg">原文p24</span> /<span class="pg">原文p30</span> /<span class="pg">原文p74</span> ）</strong>：<br>环境温度环（≤60°C 全额/60-70°C 降额需 100 CFM/70-75°C 停 PoE）→ 输入电压环（50-57V 满额/44-57V 限 af/24V 仅系统）→ 电源配置环（powersupply type 手工声明+双电源同型号+仅 P28 负载分担）。</li>
+<li><strong>安装形态五件套框架（F4，<span class="pg">原文p38-49</span> ）</strong>：<br>DIN 导轨→机架→侧挂/壁挂→DNV 船用→后托盘电源。</li>
+<li><strong>电源类型不可自动识别（P15）</strong>：<br>必须 <code>powersupply type</code> 手工配置，否则功率/PoE 信息错误。</li>
+</ul>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>安装形态五选</strong>（F4）：DIN 导轨卡扣（P6/P12）→ P28 全宽机架 → T 单机 L 支架/双机 DUO 并排 → WALL-MNT 侧挂壁挂 → DNV 船用三套件</li>
@@ -100,14 +104,14 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>Guard Band 拒载处置：余 50W/口上限 75W 拒 4W PD→降口上限 10W 放行（C23，<span class="pg">原文p80</span> ）</li>
-<li>上电纪律：多电源数秒内先后插电；冗余 AC 每路独立电路（C1，<span class="pg">原文p15</span> /<span class="pg">原文p17</span> ）</li>
-<li>温度降额实测：P6/P12/ENH-240 三档预算 45/30/0、150/130/0、240/240/0W（P9，<span class="pg">原文p74</span> ）</li>
+<li><strong>Guard Band 拒载处置</strong>：<br>余 50W/口上限 75W 拒 4W PD→降口上限 10W 放行（C23，<span class="pg">原文p80</span> ）</li>
+<li><strong>上电纪律</strong>：<br>多电源数秒内先后插电；冗余 AC 每路独立电路（C1，<span class="pg">原文p15</span> /<span class="pg">原文p17</span> ）</li>
+<li><strong>温度降额实测</strong>：<br>P6/P12/ENH-240 三档预算 45/30/0、150/130/0、240/240/0W（P9，<span class="pg">原文p74</span> ）</li>
 </ul>
 <h2 id="b">B（反例/坑）</h2>
 <ul>
 <li><strong>本机型注意（与 6560 等跨书易混）</strong>：6465 双电源同型号强制且仅 P28 负载分担——不存在 6560 式"BP+BP-D 唯一混插例外"，混用即不支持（X2，<span class="pg">原文p24</span> /<span class="pg">原文p27</span> /<span class="pg">原文p30</span> ）</li>
-<li>24V 输入有检测电路已知缺陷：无法配置电源类型且 PS LED 不亮（X1，<span class="pg">原文p24</span> /<span class="pg">原文p27</span> ）</li>
+<li><strong>24V 输入有检测电路已知缺陷</strong>：<br>无法配置电源类型且 PS LED 不亮（X1，<span class="pg">原文p24</span> /<span class="pg">原文p27</span> ）</li>
 <li>电源类型必须手工配置，系统不能自动识别——漏配则功率/PoE 信息全错（X9，<span class="pg">原文p60</span> ）</li>
 <li>70-75°C 完全停止 PoE；60-70°C 降额预算以 100 CFM 气流为前提（X5/X6，<span class="pg">原文p74</span> ）</li>
 <li>BPNX 无工业认证、标签可能误标（X3）；BPN 75W 配 ENH-240 需 ≥8.9R2（X4）</li>
@@ -115,4 +119,7 @@ blockquote p{margin:6px 0}
 <li>接线确认前禁止 NEMA 5-15 插电，违者可能触电/损坏（X11，<span class="pg">原文p59</span> ）；只准用 ALE 原厂配件（X12）</li>
 </ul>
 <h2 id="_1">来源</h2>
-<p>OmniSwitch 6465 Hardware Users Guide Ch2 快速入门（<span class="pg">原文p14-20</span> ）、Ch3 安装/电源/告警（<span class="pg">原文p21-69</span> ）、Ch4 PoE（<span class="pg">原文p70-84</span> ）。条目来源：cases C1/C4-C15/C21-C23；principles P5/P6/P9-P16/P28-P35；counter-examples X1-X6/X8-X12；frameworks F2/F4。</p><div class="pn"><a href="os6465-model-ports.html">⬅ 上一单元：os6465-model-ports</a><a class="nxt" href="os6465-ops-troubleshoot.html">下一单元：os6465-ops-troubleshoot ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<ul>
+<li>OmniSwitch 6465 Hardware Users Guide Ch2 快速入门（<span class="pg">原文p14-20</span> ）、Ch3 安装/电源/告警（<span class="pg">原文p21-69</span> ）、Ch4 PoE（<span class="pg">原文p70-84</span> ）。</li>
+<li><strong>条目来源</strong>：<br>cases C1/C4-C15/C21-C23；principles P5/P6/P9-P16/P28-P35；counter-examples X1-X6/X8-X12；frameworks F2/F4。</li>
+</ul><div class="pn"><a href="os6465-model-ports.html">⬅ 上一单元：os6465-model-ports</a><a class="nxt" href="os6465-ops-troubleshoot.html">下一单元：os6465-ops-troubleshoot ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

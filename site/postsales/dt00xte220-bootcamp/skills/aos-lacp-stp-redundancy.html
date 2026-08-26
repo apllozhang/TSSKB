@@ -82,14 +82,20 @@ blockquote p{margin:6px 0}
 <div class="grp">组播与织构</div>
 <a href="../skills/aos-multicast-erp-spb.html">aos-multicast-erp-spb</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../postsales/index.html">售后</a> › <a href="../index.html">DT00XTE220</a> › <span>aos-lacp-stp-redundancy</span></nav><h1>aos-lacp-stp-redundancy</h1><p class="meta"><span class="badge">SKILL</span> aos-lacp-stp-redundancy · 来源页码: </p><h2 id="r">R（触发场景）</h2>
 <ul>
-<li>上行带宽扩容与链路冗余：LACP 动态聚合或 OmniChannel 静态聚合</li>
-<li>园区防环与收敛优化：根桥规划、RSTP 端口角色、MSTP 多实例负载分担</li>
+<li><strong>上行带宽扩容与链路冗余</strong>：<br>LACP 动态聚合或 OmniChannel 静态聚合</li>
+<li><strong>园区防环与收敛优化</strong>：<br>根桥规划、RSTP 端口角色、MSTP 多实例负载分担</li>
 <li>与 Cisco 共存网络的 PVST+ 互操作</li>
-<li>接入双上联两台不同核心、不想跑 STP 阻塞：DHL Active-Active</li>
+<li><strong>接入双上联两台不同核心、不想跑 STP 阻塞</strong>：<br>DHL Active-Active</li>
 <li>堆叠/VC 场景外的二层冗余选型对比</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>聚合把多物理口合成单逻辑链路：静态 OmniChannel 仅限 OmniSwitch 间且两端参数必须完全一致；LACP（802.3ad）用 LACPDU 协商可跨厂商（P74，<span class="pg">原文p396</span> ），关联靠 actor admin key 两端同值（P75，<span class="pg">原文p398-404</span> ）。STP 家族的选型矩阵：协议 802.1D/802.1w（默认）/802.1s/ERPv2 × 模式 flat/1x1（默认）（F7，<span class="pg">原文p415</span> ）。MSTP 的精髓是"同域三要素（域名+修订级+VLAN-实例映射）一致才是一个域，一帧 BPDU 携带全部实例"（P86/P87，<span class="pg">原文p438-443</span> ），负载分担靠不同 MSTI 选不同根桥。DHL 用 VLAN-链路映射代替 STP 防环，两条上行都活跃、100% 带宽（P90/P93，<span class="pg">原文p477-481</span> ）。冗余方案横向对比：STP 50% 带宽 &lt; LACP 仅链路 &lt; VC 全冗余 &lt; DHL 链路+设备冗余 100% 带宽（F16，<span class="pg">原文p481</span> ）。</p>
+<ul>
+<li><strong>聚合把多物理口合成单逻辑链路</strong>：<br>静态 OmniChannel 仅限 OmniSwitch 间且两端参数必须完全一致；LACP（802.3ad）用 LACPDU 协商可跨厂商（P74，<span class="pg">原文p396</span> ），关联靠 actor admin key 两端同值（P75，<span class="pg">原文p398-404</span> ）。</li>
+<li><strong>STP 家族的选型矩阵</strong>：<br>协议 802.1D/802.1w（默认）/802.1s/ERPv2 × 模式 flat/1x1（默认）（F7，<span class="pg">原文p415</span> ）。</li>
+<li>MSTP 的精髓是"同域三要素（域名+修订级+VLAN-实例映射）一致才是一个域，一帧 BPDU 携带全部实例"（P86/P87，<span class="pg">原文p438-443</span> ），负载分担靠不同 MSTI 选不同根桥。</li>
+<li>DHL 用 VLAN-链路映射代替 STP 防环，两条上行都活跃、100% 带宽（P90/P93，<span class="pg">原文p477-481</span> ）。</li>
+<li><strong>冗余方案横向对比</strong>：<br>STP 50% 带宽 &lt; LACP 仅链路 &lt; VC 全冗余 &lt; DHL 链路+设备冗余 100% 带宽（F16，<span class="pg">原文p481</span> ）。</li>
+</ul>
 <h2 id="a1">A1（决策/选型）</h2>
 <ol>
 <li>动态 vs 静态聚合：跨厂商/防误配用 LACP；纯 OmniSwitch 间可用静态</li>

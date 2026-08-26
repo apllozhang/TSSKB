@@ -190,7 +190,7 @@ vrf 1 ip import isid 1000 all-routes
 <p>前 3 个是主线必读；4-6 按场景查；7-8 是 Day3 自动化增强。</p>
 <h2 id="_4">七、实施陷阱清单</h2>
 <ul>
-<li>骨干与服务层：- 控制 BVLAN 只能在 <code>spb isis admin-state disable</code> 时改（改不动先查协议状态）。</li>
+<li><strong>骨干与服务层</strong>：<br>- 控制 BVLAN 只能在 <code>spb isis admin-state disable</code> 时改（改不动先查协议状态）。</li>
 <li>
 <ul>
 <li>BVLAN 自动禁 STP、不学客户 MAC、不泛洪——别指望 STP 在骨干做环保护。</li>
@@ -212,18 +212,10 @@ vrf 1 ip import isid 1000 all-routes
 </ul>
 </li>
 <li>
-<p>保护与冗余：- LBD 在 linkagg 上封整组；封口裁决规则是跨机关较高 BridgeID、同机关较高 PortID——预判被封口，别误判设备故障。</p>
+<p><strong>保护与冗余</strong>：<br>- LBD 在 linkagg 上封整组；封口裁决规则是跨机关较高 BridgeID、同机关较高 PortID——预判被封口，别误判设备故障。</p>
 </li>
-<li>
-<ul>
-<li>接入层并行双路径无 STP/LBD 兜底必成环：SPB 骨干无环不等于接入无环（p131 实验复现）。</li>
-</ul>
-</li>
-<li>
-<ul>
-<li>ERP 六条铁律（p23）：BEB 不能做 RPL 节点；ERP 服务必须配在<strong>控制 BVLAN</strong>；环不能建在 802.1q tag 口；每 SVLAN 最多 2 个 ERP NNI；多环 VLAN 范围互斥。</li>
-</ul>
-</li>
+<li><strong>- 接入层并行双路径无 STP/LBD 兜底必成环</strong>：<br>SPB 骨干无环不等于接入无环（p131 实验复现）。</li>
+<li><strong>- ERP 六条铁律（p23）</strong>：<br>BEB 不能做 RPL 节点；ERP 服务必须配在<strong>控制 BVLAN</strong>；环不能建在 802.1q tag 口；每 SVLAN 最多 2 个 ERP NNI；多环 VLAN 范围互斥。</li>
 <li>
 <ul>
 <li>DHL 每交换机只允许一个会话。</li>
@@ -231,8 +223,8 @@ vrf 1 ip import isid 1000 all-routes
 </li>
 </ul>
 <p>动态与增强：
-- UNP：SNMP 用户名禁用 admin/diag/user（建号失败先查保留字）；隔离用户不能靠重定向补救。
-- E-Tree：两端都配 e-tree = 全 Leaf 死网；用户报"同服务两站不通"先查是否都是 Leaf——这是设计语义，不是故障。
+- <strong>UNP</strong>：<br>SNMP 用户名禁用 admin/diag/user（建号失败先查保留字）；隔离用户不能靠重定向补救。
+- <strong>E-Tree</strong>：<br>两端都配 e-tree = 全 Leaf 死网；用户报"同服务两站不通"先查是否都是 Leaf——这是设计语义，不是故障。
 - 老平台（6900-X20 等）无内联路由能力，回环口独占且 linkagg 回环只能删组解除，端口预算要扣除。</p>
 <hr />
 <p>。*</p><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>

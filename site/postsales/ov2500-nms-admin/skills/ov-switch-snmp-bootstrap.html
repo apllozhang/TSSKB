@@ -83,7 +83,11 @@ blockquote p{margin:6px 0}
 <li>不确定 SNMP 安全级别（no security / authentication / privacy / traps only）怎么设</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>OV2500 通过 SNMP/Traps 管理设备，而"By default, an OmniSwitch cannot be managed by OmniVista"——必须先在交换机侧开放 SNMP 访问。管理寻址推荐 Loopback0：snmp source ip 默认优先用 loopback0 作为源地址，Discovery 也用 Loopback0 地址发现设备。安全级别矩阵决定接受哪类请求，是安全与可用性的权衡。</p>
+<ul>
+<li>OV2500 通过 SNMP/Traps 管理设备，而"By default, an OmniSwitch cannot be managed by OmniVista"——必须先在交换机侧开放 SNMP 访问。</li>
+<li><strong>管理寻址推荐 Loopback0</strong>：<br>snmp source ip 默认优先用 loopback0 作为源地址，Discovery 也用 Loopback0 地址发现设备。</li>
+<li>安全级别矩阵决定接受哪类请求，是安全与可用性的权衡。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li><strong>SNMPv3 准备（推荐）</strong>，逐台执行（<span class="pg">原文p97</span> ）：
@@ -101,21 +105,21 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a2">A2（进阶应用）</h2>
 <ul>
-<li>安全级别矩阵（<span class="pg">原文p69</span> ）：no security → 接受所有请求；</li>
+<li><strong>安全级别矩阵（<span class="pg">原文p69</span> ）</strong>：<br>no security → 接受所有请求；</li>
 <li>authentication set → 接受 v1/v2 Get 及非认证 v3 Get；</li>
 <li>privacy all → 仅加密 v3 Set/Get；</li>
 <li>
 <p>traps only → "All SNMP requests are rejected"（纯上报模式）；</p>
 </li>
 <li>
-<p>CLI vs GUI 取舍：CLI 胜在熟练度/脚本化/"ASCII 配置文件可在交换机间复制粘贴"；</p>
+<p><strong>CLI vs GUI 取舍</strong>：<br>CLI 胜在熟练度/脚本化/"ASCII 配置文件可在交换机间复制粘贴"；</p>
 </li>
 <li>GUI 胜在颜色编码、减少 fat-finger 错误、批量操作；</li>
 <li>
 <p>WebView 是单设备原生网元管理器，"100% CLI equivalent features. Integrated with OmniVista"（<span class="pg">原文p22-24</span> ）；</p>
 </li>
 <li>
-<p>NMS 组件模型：Agents ↔ Managed Devices ↔ NMS，协议栈 SNMP、sFlow（Analytics）、MIB、Traps、RMON（<span class="pg">原文p21</span> ）</p>
+<p><strong>NMS 组件模型</strong>：<br>Agents ↔ Managed Devices ↔ NMS，协议栈 SNMP、sFlow（Analytics）、MIB、Traps、RMON（<span class="pg">原文p21</span> ）</p>
 </li>
 <li>4.3R2+ 可直接 SSH/Telnet 到尚未被 SNMP 覆盖的新设备做预配置（<span class="pg">原文p164</span> ）</li>
 </ul>
