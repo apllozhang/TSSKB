@@ -77,7 +77,11 @@ blockquote p{margin:6px 0}
 <li>需要判断多协议共存时 RIB 的选路次序</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>AOS 的路由世界观是"路由数据库（router database）+ 协议优先级（route-pref）"：Local 1 / Static 2 / OSPF 110 / ISIS-L1 115 / ISIS-L2 118 / RIP 120 / EBGP 190 / IBGP 200 / Import 210。Loopback0 是全网稳定的身份地址（router-id、BGP peering、PIM RP 等），RIP/OSPF 自动通告它而 BGP 不会。静态路由的递归形式（follows）让下一跳跟随另一条路由动态解析。</p>
+<ul>
+<li>AOS 的路由世界观是"路由数据库（router database）+ 协议优先级（route-pref）"：Local 1 / Static 2 / OSPF 110 / ISIS-L1 115 / ISIS-L2 118 / RIP 120 / EBGP 190 / IBGP 200 / Import 210。</li>
+<li>Loopback0 是全网稳定的身份地址（router-id、BGP peering、PIM RP 等），RIP/OSPF 自动通告它而 BGP 不会。</li>
+<li>静态路由的递归形式（follows）让下一跳跟随另一条路由动态解析。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>静态与默认路由：<code>ip static-route 134.1.21.0/24 gateway 10.1.1.1</code> / <code>ip static-route 0.0.0.0/0 gateway 10.1.1.1</code>；双默认路由用 metric 1 与 metric 2 互备；<code>show ip router database</code> 可见 inactive 备份（&lt;&lt;<PAGE 222>&gt;&gt;-&lt;&lt;<PAGE 223>&gt;&gt;）</li>

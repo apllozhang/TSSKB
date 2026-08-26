@@ -77,8 +77,10 @@ blockquote p{margin:6px 0}
 <li>PVLAN 域要跨多台交换机延伸</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>Private VLAN 把一个广播域切成多个子域：Primary VLAN 对外，Secondary VLAN 分 isolated（成员间二层完全不通）与 community（组内通、组间不通）。转发模型上，出向流量经 Primary VLAN 转发，未授权的二级 VLAN 间流量被丢弃；
-所有 secondary 的 MAC 实际学在 primary VLAN 上。</p>
+<ul>
+<li>Private VLAN 把一个广播域切成多个子域：Primary VLAN 对外，Secondary VLAN 分 isolated（成员间二层完全不通）与 community（组内通、组间不通）。</li>
+<li>转发模型上，出向流量经 Primary VLAN 转发，未授权的二级 VLAN 间流量被丢弃；所有 secondary 的 MAC 实际学在 primary VLAN 上。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>定义主/从 VLAN：<code>pvlan 100 admin-state enable</code> / <code>pvlan 100 secondary 101 type community</code> / <code>pvlan 100 secondary 103 type isolated</code>（&lt;&lt;<PAGE 103>&gt;&gt;）</li>

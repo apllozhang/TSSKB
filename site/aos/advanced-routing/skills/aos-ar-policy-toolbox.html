@@ -68,10 +68,15 @@ blockquote p{margin:6px 0}
 <li>排查"重分发没生效/多分发了"：deny 语义、无 match 兜底、子策略未建等坑</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>Route Map 重分发统一模型（F4，跨 OSPF/OSPFv3/IS-IS/BGP 四章复用）：route map 由 Action（名称+序列号+permit/deny）/Match/Set 三类语句构成（P26）；
+<ul>
+<li>Route Map 重分发统一模型（F4，跨 OSPF/OSPFv3/IS-IS/BGP 四章复用）：route map 由 Action（名称+序列号+permit/deny）/Match/Set 三类语句构成（P26）；
 序列之间隐含 OR，同类型 match 之间 OR、不同类型之间 AND（P27）；
 无 match 语句则重分发所有路由（P28）；
-未配序列号默认取 50（P29）。deny 某路由不等于默认放行其余——每条路由都要有明确的 permit/deny 规则（P30）。set metric 支持 add/subtract/replace/none 四种效果（P31）。BGP 策略体系（F5）在此之上加四类原子策略列表 + peer 的 in/out 绑定（P78）。</p>
+未配序列号默认取 50（P29）。</li>
+<li>deny 某路由不等于默认放行其余——每条路由都要有明确的 permit/deny 规则（P30）。</li>
+<li>set metric 支持 add/subtract/replace/none 四种效果（P31）。</li>
+<li>BGP 策略体系（F5）在此之上加四类原子策略列表 + peer 的 in/out 绑定（P78）。</li>
+</ul>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>先建原子件再组 route map</strong>：IP 访问列表/prefix-list/aspath-list 先创建，route map 引用不存在的子策略直接报错（X39）</li>

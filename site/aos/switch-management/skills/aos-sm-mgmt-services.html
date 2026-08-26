@@ -69,7 +69,11 @@ blockquote p{margin:6px 0}
 <li>要让交换机解析域名（DNS resolver）或对时（NTP 客户端/服务器/广播/认证）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>纳管四条通道递进：SNMP（传统 NMS 轮询+trap，v1/v2c community 映射到用户、v3 USM/TSM 加密认证，P93-P100）→ WebView/REST（内嵌 Web 界面 + mib/cli 双域 RESTful API，P101/P113-P117）→ AMS 发布订阅（MQTT 替代 SNMP 轮询的局域微服务，P120-P123）→ OmniVista Cirrus 云管理（零接触 call-home + VPN 隧道 + NaaS 订阅状态机，F10）。时间同步框架（F12）：本地时钟/时区（DST 自动）→ NTP 分层 stratum 模型 → 云场景 NTP 池保障证书时间有效。DNS 三步启用：domain-name → domain-lookup → name-server（P43）。</p>
+<ul>
+<li>纳管四条通道递进：SNMP（传统 NMS 轮询+trap，v1/v2c community 映射到用户、v3 USM/TSM 加密认证，P93-P100）→ WebView/REST（内嵌 Web 界面 + mib/cli 双域 RESTful API，P101/P113-P117）→ AMS 发布订阅（MQTT 替代 SNMP 轮询的局域微服务，P120-P123）→ OmniVista Cirrus 云管理（零接触 call-home + VPN 隧道 + NaaS 订阅状态机，F10）。</li>
+<li>时间同步框架（F12）：本地时钟/时区（DST 自动）→ NTP 分层 stratum 模型 → 云场景 NTP 池保障证书时间有效。</li>
+<li>DNS 三步启用：domain-name → domain-lookup → name-server（P43）。</li>
+</ul>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>传统 NMS 纳管选 SNMP</strong>：v3 加密认证（sha+aes）优先；v1/v2c 靠 community-map 映射到用户继承权限（P95）；安全等级链决定接受哪些请求（P94）</li>

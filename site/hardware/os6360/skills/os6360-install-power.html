@@ -67,7 +67,12 @@ blockquote p{margin:6px 0}
 <li>机房温度偏高，核对 Tmra 与温度双阈值行为</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>PoE 供电三环体系（F2，&lt;&lt;<PAGE 62-68>&gt;&gt;）：外环=预算（slot maxpower/port power 上限+Guard Band 拒载），中环=优先级（low/high/critical+物理端口号 1 高 48 低同级裁决），内环=保护动作（Priority Disconnect 四情形）。PoE 激活两级模型（P27）：软件层默认 enabled，但物理层必须逐 slot <code>lanpower slot service</code> 启动才真正供电。环境包络（P7）：0-45°C（Tmra）/湿度 5-95%/100-240V；chassis 温度=传感器读数（阈值判断用）、恒高于室温（P8）。安装五大考量（P17）：Tmra 折减/气流/载重/过流/接地。</p>
+<ul>
+<li>PoE 供电三环体系（F2，&lt;&lt;<PAGE 62-68>&gt;&gt;）：外环=预算（slot maxpower/port power 上限+Guard Band 拒载），中环=优先级（low/high/critical+物理端口号 1 高 48 低同级裁决），内环=保护动作（Priority Disconnect 四情形）。</li>
+<li>PoE 激活两级模型（P27）：软件层默认 enabled，但物理层必须逐 slot <code>lanpower slot service</code> 启动才真正供电。</li>
+<li>环境包络（P7）：0-45°C（Tmra）/湿度 5-95%/100-240V；chassis 温度=传感器读数（阈值判断用）、恒高于室温（P8）。</li>
+<li>安装五大考量（P17）：Tmra 折减/气流/载重/过流/接地。</li>
+</ul>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>安装形态四选</strong>：全宽 24/48 口机架法兰 → 10 口半宽 L 支架（OS6360-RM-19-L）→ 桌面（橡胶脚垫）→ 壁挂（仅 10/P10，OS6360-WALL-MNT）（C6-C10，&lt;&lt;<PAGE 48-55>&gt;&gt;）</li>
@@ -76,11 +81,18 @@ blockquote p{margin:6px 0}
 <li><strong>预算不足时的裁决</strong>：Guard Band（余量&lt;口上限即拒新 PD）→ 降口上限放行；Priority Disconnect 四情形按优先级+端口号裁决（P34/P35）</li>
 <li><strong>温度治理</strong>：Warning 超阈值发 trap 查气流；Danger 超阈值自动关机、处理后手动重启（P23）</li>
 </ol>
+<p><img alt="机架安装示意：整机与半宽机型（原文 p51）" src="images/fig-rack-mount-p51.png" /></p>
+<p><img alt="机柜固定实拍（原文 p53）" src="images/fig-rack-secure-p53.jpeg" /></p>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
 <li><strong>机架安装</strong>：双人作业→先穿每侧法兰底部螺丝并紧固→再上顶部螺丝；重设备下置（C6，&lt;&lt;<PAGE 48>&gt;&gt;-&lt;&lt;<PAGE 51>&gt;&gt;）；法兰卡扣：弹簧夹 out→tab 入槽→"CLICK"→螺丝固定（C7，&lt;&lt;<PAGE 49>&gt;&gt;）</li>
-<li><strong>壁挂</strong>：四托架朝下→双人定位标记→预钻孔→承重达标紧固件（自备）；建议侧立面板朝侧（C10，&lt;&lt;<PAGE 54>&gt;&gt;）</li>
-<li><strong>接地</strong>：Panduit LCD8-10A-L 接地耳+8AWG 铜线+扭矩 30-60 in-lb（C12，&lt;&lt;<PAGE 55>&gt;&gt;）</li>
+<li>
+<p><strong>壁挂</strong>：四托架朝下→双人定位标记→预钻孔→承重达标紧固件（自备）；建议侧立面板朝侧（C10，&lt;&lt;<PAGE 54>&gt;&gt;）
+<img alt="机箱接地位置与操作（原文 p55）" src="images/fig-grounding-p55.png" /></p>
+</li>
+<li>
+<p><strong>接地</strong>：Panduit LCD8-10A-L 接地耳+8AWG 铜线+扭矩 30-60 in-lb（C12，&lt;&lt;<PAGE 55>&gt;&gt;）</p>
+</li>
 <li><strong>PoE 首次激活</strong>：<code>show powersupply</code> 确认 UP→<code>lanpower slot 2/1 service start</code>→<code>show lanpower slot 1/1</code> 核对（C14，&lt;&lt;<PAGE 60-62>&gt;&gt;）</li>
 <li><strong>预算/优先级调整</strong>：<code>lanpower port 1/1/24 power 3000</code>、<code>lanpower slot 3/1 maxpower 400</code>、<code>lanpower port 1/1/6 priority critical</code>（C16-C18，&lt;&lt;<PAGE 63-64>&gt;&gt;）</li>
 <li><strong>Guard Band 解锁</strong>：拒载时 <code>lanpower power 1/1/1 power 10000</code> 降口上限放行 4W 小 PD（C22，&lt;&lt;<PAGE 65>&gt;&gt;）</li>

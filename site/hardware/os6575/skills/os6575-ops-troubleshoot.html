@@ -67,7 +67,11 @@ blockquote p{margin:6px 0}
 <li>安全红线：NEBS OSP 隔离、激光/ESD/锂电池警告</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>工业高可用三支柱框架（F3，&lt;&lt;<PAGE 12>&gt;&gt;/&lt;&lt;<PAGE 48>&gt;&gt;/&lt;&lt;<PAGE 50>&gt;&gt;-&lt;&lt;<PAGE 52>&gt;&gt;）：链路侧=MP16 Port Bypass 断电旁路；供电侧=双同规格电源+独立电路+UPS+Dying Gasp 双通道（SNMP trap/Syslog 各前 3 目标）+Alarm Relay 干接点外送（NO/NC 触点 220VDC/250VAC/2A）；运行侧=无风扇宽温+温度双阈值（93/98°C：Warning 发 trap→Danger 关机手动恢复）+Alarm in/out/event 三源映射（VC 内跨机同步）。DG 本机仅双通道，无 802.3ah OAM PDU（P30，&lt;&lt;<PAGE 52>&gt;&gt;）。PoE 语义核心：Priority Disconnect 四情形规则+Guard Band 余量判据（P37/P38）。</p>
+<ul>
+<li>工业高可用三支柱框架（F3，&lt;&lt;<PAGE 12>&gt;&gt;/&lt;&lt;<PAGE 48>&gt;&gt;/&lt;&lt;<PAGE 50>&gt;&gt;-&lt;&lt;<PAGE 52>&gt;&gt;）：链路侧=MP16 Port Bypass 断电旁路；供电侧=双同规格电源+独立电路+UPS+Dying Gasp 双通道（SNMP trap/Syslog 各前 3 目标）+Alarm Relay 干接点外送（NO/NC 触点 220VDC/250VAC/2A）；运行侧=无风扇宽温+温度双阈值（93/98°C：Warning 发 trap→Danger 关机手动恢复）+Alarm in/out/event 三源映射（VC 内跨机同步）。</li>
+<li>DG 本机仅双通道，无 802.3ah OAM PDU（P30，&lt;&lt;<PAGE 52>&gt;&gt;）。</li>
+<li>PoE 语义核心：Priority Disconnect 四情形规则+Guard Band 余量判据（P37/P38）。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>告警三源映射：输入（传感器 5-12VDC）→动作（output/trap/SWLog 三选）→系统事件绑定；VC 内任一机可驱动任一机输出（P24/P25，&lt;&lt;<PAGE 48>&gt;&gt;）</li>

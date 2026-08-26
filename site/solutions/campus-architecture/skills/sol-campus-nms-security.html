@@ -65,7 +65,11 @@ blockquote p{margin:6px 0}
 <li>无线安全：wIDS/wIPS、流氓 AP 判定与遏制、WCF 内容过滤</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>统一接入安全框架（F5，&lt;&lt;<PAGE 36>&gt;&gt;）：UPAM 中央 RADIUS+captive portal → 认证谱系 → 角色（UNP/ARP）定 VLAN+ACL+QoS → 事后处置（Quarantine+QMR/WCF/wIDS/wIPS），安全贯穿"接入-授权-运行-处置"全生命周期。安全内建于网络并按角色动态施加，而非静态绑端口（P52，&lt;&lt;<PAGE 36>&gt;&gt;）；UNP/ARP 内嵌于交换机/AP 保证有线无线策略一致（P53，&lt;&lt;<PAGE 36>&gt;&gt;）。NMS 选型：L2 HA 复用原 IP 零改造（P49，&lt;&lt;<PAGE 35>&gt;&gt;）；L3 HA 跨子网但 sFlow/策略执行等功能受限（P50/X14，&lt;&lt;<PAGE 36>&gt;&gt;）。</p>
+<ul>
+<li>统一接入安全框架（F5，&lt;&lt;<PAGE 36>&gt;&gt;）：UPAM 中央 RADIUS+captive portal → 认证谱系 → 角色（UNP/ARP）定 VLAN+ACL+QoS → 事后处置（Quarantine+QMR/WCF/wIDS/wIPS），安全贯穿"接入-授权-运行-处置"全生命周期。</li>
+<li>安全内建于网络并按角色动态施加，而非静态绑端口（P52，&lt;&lt;<PAGE 36>&gt;&gt;）；UNP/ARP 内嵌于交换机/AP 保证有线无线策略一致（P53，&lt;&lt;<PAGE 36>&gt;&gt;）。</li>
+<li>NMS 选型：L2 HA 复用原 IP 零改造（P49，&lt;&lt;<PAGE 35>&gt;&gt;）；L3 HA 跨子网但 sFlow/策略执行等功能受限（P50/X14，&lt;&lt;<PAGE 36>&gt;&gt;）。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>NMS 部署选型（C10，&lt;&lt;<PAGE 35>&gt;&gt;）：单机无切换；L2 HA 双 VM 同子网+虚拟 Cluster IP（原单机 IP 可复用）；L3 HA 双节点跨子网各持 IP、设备配双地址、Preferred Node 须 CLI admin 菜单设置</li>

@@ -73,7 +73,11 @@ blockquote p{margin:6px 0}
 <li>需要认证后动态分配 VLAN/QoS（802.1X 或 MAC 认证），或话机上电自动进语音 VLAN</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>OmniSwitch 的策略体系是"condition + action + rule"三件套，<code>qos apply</code> 才下发硬件。角色化控制分两层：交换机侧 Access Guardian（UNP 用户网络档案），无线侧 ARP（Access Role Profile）。话机场景用 LLDP-MED Network Policy TLV 自动下发语音 VLAN + L2 priority + DSCP。</p>
+<ul>
+<li>OmniSwitch 的策略体系是"condition + action + rule"三件套，<code>qos apply</code> 才下发硬件。</li>
+<li>角色化控制分两层：交换机侧 Access Guardian（UNP 用户网络档案），无线侧 ARP（Access Role Profile）。</li>
+<li>话机场景用 LLDP-MED Network Policy TLV 自动下发语音 VLAN + L2 priority + DSCP。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li><strong>QoS 限速</strong>（&lt;&lt;<PAGE 724>&gt;&gt;-&lt;&lt;<PAGE 726>&gt;&gt;）：<code>policy condition client_traffic source vlan 20</code> → <code>policy action priority_5 802.1p 5</code> → <code>policy rule rule1 &lt;condition+action&gt;</code> → <code>qos apply</code> → 大包 ping 触发 Red Packets 验证限速生效。</li>

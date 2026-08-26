@@ -74,8 +74,11 @@ blockquote p{margin:6px 0}
 <li>VXLAN 封装包识别与策略入库（VM Snooping）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>VM Manager 纳管混合 vCenter（≤2 个）+Hyper-V，总 VM 上限 5000；
-流量塑形模型：VM 打 VLAN Tag → 交换机 UNP Tag 规则把 VM VLAN 映射到 UNP+VLAN → 每 VM VLAN 一个 UNP + 一条 VLAN Tag 分类规则 → VM 跨 Host 迁移免改配置。VXLAN 仅 OS6900-Q32/X72 支持：VXLAN Service = VFI（SAP 侧学客户 MAC + SDP 侧学网络 MAC），24 位 VNI 支持 1600 万隔离段。</p>
+<ul>
+<li>VM Manager 纳管混合 vCenter（≤2 个）+Hyper-V，总 VM 上限 5000；
+流量塑形模型：VM 打 VLAN Tag → 交换机 UNP Tag 规则把 VM VLAN 映射到 UNP+VLAN → 每 VM VLAN 一个 UNP + 一条 VLAN Tag 分类规则 → VM 跨 Host 迁移免改配置。</li>
+<li>VXLAN 仅 OS6900-Q32/X72 支持：VXLAN Service = VFI（SAP 侧学客户 MAC + SDP 侧学网络 MAC），24 位 VNI 支持 1600 万隔离段。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li><strong>VM 纳管前置</strong>（principles·P191，&lt;&lt;<PAGE 830-840>&gt;&gt;）：vCenter URL 需 /sdk 后缀；所有 Hypervisor 系统时间必须与 OV 同步；Hypervisor 连接口或本身须关链路发现协议（否则发 LLDP 被当成桥设备）</li>

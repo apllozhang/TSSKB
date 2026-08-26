@@ -77,7 +77,11 @@ blockquote p{margin:6px 0}
 <li>直连/静态路由要注入 OSPF（重分发 + route-map），或邻居起不来要排障</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>OSPF 分区的收益是减少 LSA 传播量：区域类型决定允许进入的 LSA 集合（Stub 拒 Type5 注默认路由，Totally Stubby 再拒 Type3，NSSA 用 Type7 引外部路由）。重分发的通用范式是"先 route-map 后 redist"：route-map 序列自上而下、命中即停，执行 <code>ip redist</code> 的路由器即成为 ASBR。邻居建立的前提是 hello/dead/area/认证参数完全一致。</p>
+<ul>
+<li>OSPF 分区的收益是减少 LSA 传播量：区域类型决定允许进入的 LSA 集合（Stub 拒 Type5 注默认路由，Totally Stubby 再拒 Type3，NSSA 用 Type7 引外部路由）。</li>
+<li>重分发的通用范式是"先 route-map 后 redist"：route-map 序列自上而下、命中即停，执行 <code>ip redist</code> 的路由器即成为 ASBR。</li>
+<li>邻居建立的前提是 hello/dead/area/认证参数完全一致。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>七步法（&lt;&lt;<PAGE 275>&gt;&gt;-&lt;&lt;<PAGE 280>&gt;&gt;）：①配 router-id（<code>ip interface Loopback0 address 192.168.254.1</code> → <code>ip router router-id 192.168.254.1</code>）②<code>ip load ospf</code> ③<code>ip ospf area 0.0.0.0</code> ④指定区域类型 ⑤<code>ip ospf interface int_217</code> ⑥<code>ip ospf interface int_217 area 0.0.0.0</code> ⑦<code>admin-state enable</code> → <code>ip ospf admin-state enable</code>（&lt;&lt;<PAGE 325>&gt;&gt;-&lt;&lt;<PAGE 330>&gt;&gt;）</li>

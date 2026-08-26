@@ -81,7 +81,11 @@ blockquote p{margin:6px 0}
 <li>多租户/多业务路由隔离（VRF）与受控互通（Route Leak）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>AOS 安全是一整套组合拳（F9，&lt;&lt;<PAGE 799>&gt;&gt;）：接入面 LLDP Rogue Detection + LPS，转发面 PBR/高级 ACL 组（UserPorts/DropServices/port-disable），控制面 DoS/ARP 防御，数据面 DHCP Snooping+Option82+Port Mapping+MACsec+Storm Control。共同思路是"默认收紧、显式信任"：非信任 DHCP 口只收 Discover/Request（P161，&lt;&lt;<PAGE 829-830>&gt;&gt;）；端口默认只学 1 个 MAC（P152，&lt;&lt;<PAGE 850>&gt;&gt;）。VRF 把一台物理交换机切成多个路由实例、可重复 IP，隔离是默认、互通是例外——只能经 route-map 在 VRF 与 GRT 间泄漏（P165/P168，&lt;&lt;<PAGE 855-864>&gt;&gt;）。</p>
+<ul>
+<li>AOS 安全是一整套组合拳（F9，&lt;&lt;<PAGE 799>&gt;&gt;）：接入面 LLDP Rogue Detection + LPS，转发面 PBR/高级 ACL 组（UserPorts/DropServices/port-disable），控制面 DoS/ARP 防御，数据面 DHCP Snooping+Option82+Port Mapping+MACsec+Storm Control。</li>
+<li>共同思路是"默认收紧、显式信任"：非信任 DHCP 口只收 Discover/Request（P161，&lt;&lt;<PAGE 829-830>&gt;&gt;）；端口默认只学 1 个 MAC（P152，&lt;&lt;<PAGE 850>&gt;&gt;）。</li>
+<li>VRF 把一台物理交换机切成多个路由实例、可重复 IP，隔离是默认、互通是例外——只能经 route-map 在 VRF 与 GRT 间泄漏（P165/P168，&lt;&lt;<PAGE 855-864>&gt;&gt;）。</li>
+</ul>
 <h2 id="a1">A1（决策/选型）</h2>
 <ol>
 <li>端口 MAC 管控：LPS 限学 MAC 数/白名单（不支持聚合口）；违规动作 restrict（只滤违规流量）vs shutdown（全口阻断）（P151/P152，&lt;&lt;<PAGE 804-806>&gt;&gt;）</li>

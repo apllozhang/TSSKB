@@ -68,7 +68,11 @@ blockquote p{margin:6px 0}
 <li>加固 OmniVista：2FA、Network ID、REST API 凭据管理</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>管理面三道闸（F2，&lt;&lt;<PAGE 9-30>&gt;&gt;）：物理/引导层（U-boot 口令+镜像校验）→ 通道层（OOB 优先、管理 VRF 隔离、白名单）→ 认证层（强加密 SSH+PKA+AAA+MFA）。密码认证固有弱点（可预测、重用、共享、钓鱼、暴力破解、长期有效，X5，&lt;&lt;<PAGE 16>&gt;&gt;）——公钥+多因素是出路（P22/P27）。安全模式是成套收紧：CC 仅 console+SSH、JITC 军规、FIPS 强算法，互斥选用。</p>
+<ul>
+<li>管理面三道闸（F2，&lt;&lt;<PAGE 9-30>&gt;&gt;）：物理/引导层（U-boot 口令+镜像校验）→ 通道层（OOB 优先、管理 VRF 隔离、白名单）→ 认证层（强加密 SSH+PKA+AAA+MFA）。</li>
+<li>密码认证固有弱点（可预测、重用、共享、钓鱼、暴力破解、长期有效，X5，&lt;&lt;<PAGE 16>&gt;&gt;）——公钥+多因素是出路（P22/P27）。</li>
+<li>安全模式是成套收紧：CC 仅 console+SSH、JITC 军规、FIPS 强算法，互斥选用。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>管理通道选型：专用物理 OOB（最优，P14）→ 不行则带内专用 VLAN/VRF（次优）→ 数据 VRF 内逐项关闭管理服务兜底（P15/C5，&lt;&lt;<PAGE 10>&gt;&gt;）</li>

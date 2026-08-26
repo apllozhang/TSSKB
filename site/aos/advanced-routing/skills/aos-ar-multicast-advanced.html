@@ -68,7 +68,12 @@ blockquote p{margin:6px 0}
 <li>要启用 SSM（232/8、FF3x::/32）或 IPv6 PIM；要打通 PIM 与 DVMRP 两域（MBR）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>组播路由三范式（F7）：密集模式（DVMRP/PIM-DM，广播-剪枝按源建树）→ 稀疏模式（PIM-SM，接收者显式 Join，RP 共享树 + SPT 切换）→ SSM（显式频道订阅免 RP）。域隔离体系（F9）：239/8 管理作用域 + mroute-boundary 让同段地址多域并发复用 + MBR 连接 PIM/DVMRP 两域。PIM-SM 控制体系五要素（F8）：RP（解封装 Register）、BSR（域内唯一分发 RP-set）、DR（源侧封装/接收侧 Join）、RPT 共享树、SPT 切换（末跳 DR 收到首包即切换）。RPF 逆向路径检查是全部组播转发的公共底层（P95）。</p>
+<ul>
+<li>组播路由三范式（F7）：密集模式（DVMRP/PIM-DM，广播-剪枝按源建树）→ 稀疏模式（PIM-SM，接收者显式 Join，RP 共享树 + SPT 切换）→ SSM（显式频道订阅免 RP）。</li>
+<li>域隔离体系（F9）：239/8 管理作用域 + mroute-boundary 让同段地址多域并发复用 + MBR 连接 PIM/DVMRP 两域。</li>
+<li>PIM-SM 控制体系五要素（F8）：RP（解封装 Register）、BSR（域内唯一分发 RP-set）、DR（源侧封装/接收侧 Join）、RPT 共享树、SPT 切换（末跳 DR 收到首包即切换）。</li>
+<li>RPF 逆向路径检查是全部组播转发的公共底层（P95）。</li>
+</ul>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>地址域设计</strong>：边界地址必须是 239/8 作用域段（X46）；同一 239 段可在多个被边界隔离的域并发复用（P93/C33）</li>

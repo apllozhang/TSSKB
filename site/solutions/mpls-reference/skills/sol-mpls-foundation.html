@@ -65,7 +65,12 @@ blockquote p{margin:6px 0}
 <li>确认 AOS 8.9R3+ 的 LDP 模式支持边界（仅 DU+ILD+LLR+MD5）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>标签隧道换 BGP-free core（P1/P2，&lt;&lt;<PAGE 5>&gt;&gt;）：MPLS 用预分配标签做精确匹配转发，核心 LSR 无需承载大量路由。双层解耦模型（F4，&lt;&lt;<PAGE 20>&gt;&gt;）：服务标签在底、传输标签在顶，中间 LSR 只处理传输标签（P6，&lt;&lt;<PAGE 21>&gt;&gt;）。LDP 是"依 IGP 而生"的信令（P3，&lt;&lt;<PAGE 10>&gt;&gt;）：先有 IGP 全可达，LDP 才能从 eLER 向 iLER 上游泛洪标签（P19）。会话可靠性靠 hello/keepalive 双定时器双保险（P23，&lt;&lt;<PAGE 12>&gt;&gt;）。</p>
+<ul>
+<li>标签隧道换 BGP-free core（P1/P2，&lt;&lt;<PAGE 5>&gt;&gt;）：MPLS 用预分配标签做精确匹配转发，核心 LSR 无需承载大量路由。</li>
+<li>双层解耦模型（F4，&lt;&lt;<PAGE 20>&gt;&gt;）：服务标签在底、传输标签在顶，中间 LSR 只处理传输标签（P6，&lt;&lt;<PAGE 21>&gt;&gt;）。</li>
+<li>LDP 是"依 IGP 而生"的信令（P3，&lt;&lt;<PAGE 10>&gt;&gt;）：先有 IGP 全可达，LDP 才能从 eLER 向 iLER 上游泛洪标签（P19）。</li>
+<li>会话可靠性靠 hello/keepalive 双定时器双保险（P23，&lt;&lt;<PAGE 12>&gt;&gt;）。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>标签分发/控制/保留模式选型框架（F1，&lt;&lt;<PAGE 13-14>&gt;&gt;）：分发 DoD（按需）vs DU（主动）；控制 ILD（独立即刻通告）vs OLD（有序等下游）；保留 CLR（只留有效）vs LLR（全保留）。AOS 唯一组合 = DU+ILD+LLR（X16，&lt;&lt;<PAGE 13-17>&gt;&gt;）</li>

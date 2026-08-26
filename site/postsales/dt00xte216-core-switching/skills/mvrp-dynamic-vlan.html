@@ -77,7 +77,10 @@ blockquote p{margin:6px 0}
 <li>动态 VLAN 删除报错、MVRP 与 MSTP/IP 接口配合出现疑问</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>MVRP（802.1ak）基于 STP 拓扑在桥接网内传播动态 VLAN 注册：一个 PDU 携带端口全部 4094 个 VLAN 状态，拓扑变化时只对受影响 VLAN 重新声明。它只解决二层连通——动态 VLAN 不建 IP 接口、不映射 MSTI，L3 和生成树负载分担要手工补配。</p>
+<ul>
+<li>MVRP（802.1ak）基于 STP 拓扑在桥接网内传播动态 VLAN 注册：一个 PDU 携带端口全部 4094 个 VLAN 状态，拓扑变化时只对受影响 VLAN 重新声明。</li>
+<li>它只解决二层连通——动态 VLAN 不建 IP 接口、不映射 MSTI，L3 和生成树负载分担要手工补配。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>前置：<code>spantree mode flat</code>（MVRP 仅支持 flat 模式）</li>

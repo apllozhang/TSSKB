@@ -77,7 +77,10 @@ blockquote p{margin:6px 0}
 <li>部分租户间需要受控互访（VRF Route Leak）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>BGP 是路径矢量协议（TCP 179），靠属性而非单纯度量选路：Local Pref 选出口、AS-Path 防环、MED 引导入流量、Community 控制通告范围。VRF 在一台物理设备上切出多张路由表，隔离是默认、互通是例外——跨 VRF 流量必须经 GRT（全局路由表）以 route-map 为过滤器中转。</p>
+<ul>
+<li>BGP 是路径矢量协议（TCP 179），靠属性而非单纯度量选路：Local Pref 选出口、AS-Path 防环、MED 引导入流量、Community 控制通告范围。</li>
+<li>VRF 在一台物理设备上切出多张路由表，隔离是默认、互通是例外——跨 VRF 流量必须经 GRT（全局路由表）以 route-map 为过滤器中转。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>eBGP 基础：<code>ip load bgp</code> → <code>ip bgp autonomous-system 100</code> → <code>ip bgp neighbor 192.168.12.2 remote-as 200</code> → <code>admin-state enable</code> → <code>ip bgp admin-state enable</code>；注入本 AS 路由：<code>ip route-map switch1bgp sequence-number 10 action permit</code> + <code>ip redist ospf into bgp route-map switch1bgp</code> + <code>ip redist local into bgp ...</code>（&lt;&lt;<PAGE 512>&gt;&gt;-&lt;&lt;<PAGE 517>&gt;&gt;）</li>

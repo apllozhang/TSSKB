@@ -78,7 +78,13 @@ blockquote p{margin:6px 0}
 <li>堆叠/VC 场景外的二层冗余选型对比</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>聚合把多物理口合成单逻辑链路：静态 OmniChannel 仅限 OmniSwitch 间且两端参数必须完全一致；LACP（802.3ad）用 LACPDU 协商可跨厂商（P74，&lt;&lt;<PAGE 396>&gt;&gt;），关联靠 actor admin key 两端同值（P75，&lt;&lt;<PAGE 398-404>&gt;&gt;）。STP 家族的选型矩阵：协议 802.1D/802.1w（默认）/802.1s/ERPv2 × 模式 flat/1x1（默认）（F7，&lt;&lt;<PAGE 415>&gt;&gt;）。MSTP 的精髓是"同域三要素（域名+修订级+VLAN-实例映射）一致才是一个域，一帧 BPDU 携带全部实例"（P86/P87，&lt;&lt;<PAGE 438-443>&gt;&gt;），负载分担靠不同 MSTI 选不同根桥。DHL 用 VLAN-链路映射代替 STP 防环，两条上行都活跃、100% 带宽（P90/P93，&lt;&lt;<PAGE 477-481>&gt;&gt;）。冗余方案横向对比：STP 50% 带宽 &lt; LACP 仅链路 &lt; VC 全冗余 &lt; DHL 链路+设备冗余 100% 带宽（F16，&lt;&lt;<PAGE 481>&gt;&gt;）。</p>
+<ul>
+<li>聚合把多物理口合成单逻辑链路：静态 OmniChannel 仅限 OmniSwitch 间且两端参数必须完全一致；LACP（802.3ad）用 LACPDU 协商可跨厂商（P74，&lt;&lt;<PAGE 396>&gt;&gt;），关联靠 actor admin key 两端同值（P75，&lt;&lt;<PAGE 398-404>&gt;&gt;）。</li>
+<li>STP 家族的选型矩阵：协议 802.1D/802.1w（默认）/802.1s/ERPv2 × 模式 flat/1x1（默认）（F7，&lt;&lt;<PAGE 415>&gt;&gt;）。</li>
+<li>MSTP 的精髓是"同域三要素（域名+修订级+VLAN-实例映射）一致才是一个域，一帧 BPDU 携带全部实例"（P86/P87，&lt;&lt;<PAGE 438-443>&gt;&gt;），负载分担靠不同 MSTI 选不同根桥。</li>
+<li>DHL 用 VLAN-链路映射代替 STP 防环，两条上行都活跃、100% 带宽（P90/P93，&lt;&lt;<PAGE 477-481>&gt;&gt;）。</li>
+<li>冗余方案横向对比：STP 50% 带宽 &lt; LACP 仅链路 &lt; VC 全冗余 &lt; DHL 链路+设备冗余 100% 带宽（F16，&lt;&lt;<PAGE 481>&gt;&gt;）。</li>
+</ul>
 <h2 id="a1">A1（决策/选型）</h2>
 <ol>
 <li>动态 vs 静态聚合：跨厂商/防误配用 LACP；纯 OmniSwitch 间可用静态</li>

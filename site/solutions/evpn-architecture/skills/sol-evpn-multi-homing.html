@@ -65,7 +65,11 @@ blockquote p{margin:6px 0}
 <li>DF 选举与 failover 行为分析（含组播状态同步）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>Multi-homing 框架（F4，&lt;&lt;<PAGE 32>&gt;&gt;）：模式（SH/SA/AA）→ LACP vs 静态 LAG（决定 ESI 自动/手工）→ DF 选举（service carving：DF=EVI mod N，&lt;&lt;<PAGE 33>&gt;&gt;）→ 防环三件套（split horizon/local bias/ES pruning）→ 流量优化（aliasing/backup path/mass withdraw）。LAG 是多归属防重复包与防环的前提（P13，&lt;&lt;<PAGE 32>&gt;&gt;）；DF 防止 BUM 从 fabric 到 CE 重复洪泛（P14，&lt;&lt;<PAGE 32>&gt;&gt;）。VXLAN 下 split horizon 靠维护同 ES 对端 PE IP 列表而非 ESI label（P17，&lt;&lt;<PAGE 34>&gt;&gt;）。</p>
+<ul>
+<li>Multi-homing 框架（F4，&lt;&lt;<PAGE 32>&gt;&gt;）：模式（SH/SA/AA）→ LACP vs 静态 LAG（决定 ESI 自动/手工）→ DF 选举（service carving：DF=EVI mod N，&lt;&lt;<PAGE 33>&gt;&gt;）→ 防环三件套（split horizon/local bias/ES pruning）→ 流量优化（aliasing/backup path/mass withdraw）。</li>
+<li>LAG 是多归属防重复包与防环的前提（P13，&lt;&lt;<PAGE 32>&gt;&gt;）；DF 防止 BUM 从 fabric 到 CE 重复洪泛（P14，&lt;&lt;<PAGE 32>&gt;&gt;）。</li>
+<li>VXLAN 下 split horizon 靠维护同 ES 对端 PE IP 列表而非 ESI label（P17，&lt;&lt;<PAGE 34>&gt;&gt;）。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>模式选型：全活（aliasing 按流负载分担，P19，&lt;&lt;<PAGE 34>&gt;&gt;）或单活（Primary/Backup PE 列表主撤路无缝切换，&lt;&lt;<PAGE 35-36>&gt;&gt;）；R-T1A ESI Label 扩展社区 flags=1 表 single-active、0 表 all-active（C5，&lt;&lt;<PAGE 32-33>&gt;&gt;）</li>

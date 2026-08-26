@@ -74,8 +74,13 @@ blockquote p{margin:6px 0}
 <li>查"某个终端现在插在哪个口"（Locator）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>发现 = Range（IP 范围）× Discovery Profile（凭据/协议参数，多档案按序回退）。自动发现按四级轮询（Full ⊇ Occasional ⊇ Regular ⊇ Frequent，间隔随网络规模分档）持续更新。Topology 是三层地图体系：Physical Network Map（自动、不可删）→ Child Map → Logical Map，外加 Dynamic Map（过滤器驱动）；
-Geo Map 是默认视图，站点（Site/Sub-Site）自动生成同名逻辑图。Locator 一切搜索最终归结为 MAC。</p>
+<ul>
+<li>发现 = Range（IP 范围）× Discovery Profile（凭据/协议参数，多档案按序回退）。</li>
+<li>自动发现按四级轮询（Full ⊇ Occasional ⊇ Regular ⊇ Frequent，间隔随网络规模分档）持续更新。</li>
+<li>Topology 是三层地图体系：Physical Network Map（自动、不可删）→ Child Map → Logical Map，外加 Dynamic Map（过滤器驱动）；
+Geo Map 是默认视图，站点（Site/Sub-Site）自动生成同名逻辑图。</li>
+<li>Locator 一切搜索最终归结为 MAC。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li><strong>首次纳管五步法</strong>（cases·C1，&lt;&lt;<PAGE 40-44>&gt;&gt;）：Discovery→Discover New Devices 输 IP 范围（可用 Default Profile）→Managed Devices 里 Edit 修正主 IP/write community/CLI-FTP 凭据/SNMP 版本→Notifications 配 trap（Topology 需 coldStart/warmStart/linkUp/linkDown）→Copy Working/Running to Certified 保存→需 QoS 时跑 PolicyView 后再保存</li>

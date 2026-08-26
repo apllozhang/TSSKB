@@ -72,7 +72,10 @@ blockquote p{margin:6px 0}
 <li>新交换机上线希望自动匹配规则推送配置（Template Based Provisioning）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>Resource Manager 解决"存量设备的配置与固件生命周期"（备份/恢复/升级/清单），Provisioning 解决"新设备的零接触上线"（三阶段状态模型：Factory-default → Bootstrapped → Provisioned）。核心机制是规则匹配：交换机每 5 分钟联系 OV 一次，命中 Rule（序列号/MAC/型号）即推送管理与配置模板。</p>
+<ul>
+<li>Resource Manager 解决"存量设备的配置与固件生命周期"（备份/恢复/升级/清单），Provisioning 解决"新设备的零接触上线"（三阶段状态模型：Factory-default → Bootstrapped → Provisioned）。</li>
+<li>核心机制是规则匹配：交换机每 5 分钟联系 OV 一次，命中 Rule（序列号/MAC/型号）即推送管理与配置模板。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li><strong>配置备份</strong>：Configuration → Resource Manager → Backup/Restore → Backup → Backup by Devices → Switch Picker 选设备 → （提示 FTP 认证则 Add FTP Authentication：admin/switch）→ Backup Type=Configuration Only → Backup（&lt;&lt;<PAGE 197-198>&gt;&gt;）</li>

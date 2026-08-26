@@ -77,7 +77,11 @@ blockquote p{margin:6px 0}
 <li>iFab 零触摸部署的动态服务编号/隔离策略需要设计或排障</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>SPB（802.1aq）用 IS-IS 做控制平面、MAC-in-MAC（PBB，802.1ah）做数据平面：BCB 只按 BMAC 转发不学客户 MAC，每节点对每个 BVLAN 建一棵以自己为根的 SPF 树，全链路可用、路径对称、帧有序。服务标识 I-SID 全局强一致，service 号仅本地有效。相比 STP 的"闲置链路+次优路径+慢收敛"，SPB 换来全链路利用与百毫秒级收敛。</p>
+<ul>
+<li>SPB（802.1aq）用 IS-IS 做控制平面、MAC-in-MAC（PBB，802.1ah）做数据平面：BCB 只按 BMAC 转发不学客户 MAC，每节点对每个 BVLAN 建一棵以自己为根的 SPF 树，全链路可用、路径对称、帧有序。</li>
+<li>服务标识 I-SID 全局强一致，service 号仅本地有效。</li>
+<li>相比 STP 的"闲置链路+次优路径+慢收敛"，SPB 换来全链路利用与百毫秒级收敛。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>骨干四任务（&lt;&lt;<PAGE 547>&gt;&gt;-&lt;&lt;<PAGE 548>&gt;&gt;）：<code>spb bvlan 2000/2001/2002</code>（各 BVLAN 配不同 ECT-ID 最大化分流）→ 修改 control BVLAN 前先 <code>spb isis admin-state disable</code> → <code>spb isis control-bvlan 2000</code> → <code>spb isis interface port 1/1/x</code>（各骨干口）→ <code>spb isis admin-state enable</code></li>

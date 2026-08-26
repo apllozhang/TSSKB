@@ -65,7 +65,11 @@ blockquote p{margin:6px 0}
 <li>数据中心/园区 fabric 对接外部网络（border leaf、路由汇总、双 leaf 防回声）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>IRB 模型选型框架（F3，&lt;&lt;<PAGE 24>&gt;&gt;）：对称 IRB 配置简、扩展好、是主流推荐（P9）；每 PE 只维护本地 ARP/MAC-VRF（P10，&lt;&lt;<PAGE 25>&gt;&gt;）；每 VRF 一个 L3EVI（SBD/AOS 中记 Fabric-VPN）提供跨 EVI 可达（P11，&lt;&lt;<PAGE 25>&gt;&gt;）。DAG（&lt;&lt;<PAGE 28>&gt;&gt;）：所有共 EVI 的 PE 配同一 anycast IP+MAC（每 VRF 一个 VMAC），网关全分布式、同 PE 主机间流量不过 fabric（P8，&lt;&lt;<PAGE 22>&gt;&gt;），免 VRRP 类冗余协议。外部连通框架（F5，&lt;&lt;<PAGE 29>&gt;&gt;/&lt;&lt;<PAGE 48>&gt;&gt;）：border leaf+Fabric-VPN+GRM 注入；对外只重分发聚合路由（P34）；双 border leaf 调 import 路由优先级防 OSPF 回声（P35）。</p>
+<ul>
+<li>IRB 模型选型框架（F3，&lt;&lt;<PAGE 24>&gt;&gt;）：对称 IRB 配置简、扩展好、是主流推荐（P9）；每 PE 只维护本地 ARP/MAC-VRF（P10，&lt;&lt;<PAGE 25>&gt;&gt;）；每 VRF 一个 L3EVI（SBD/AOS 中记 Fabric-VPN）提供跨 EVI 可达（P11，&lt;&lt;<PAGE 25>&gt;&gt;）。</li>
+<li>DAG（&lt;&lt;<PAGE 28>&gt;&gt;）：所有共 EVI 的 PE 配同一 anycast IP+MAC（每 VRF 一个 VMAC），网关全分布式、同 PE 主机间流量不过 fabric（P8，&lt;&lt;<PAGE 22>&gt;&gt;），免 VRRP 类冗余协议。</li>
+<li>外部连通框架（F5，&lt;&lt;<PAGE 29>&gt;&gt;/&lt;&lt;<PAGE 48>&gt;&gt;）：border leaf+Fabric-VPN+GRM 注入；对外只重分发聚合路由（P34）；双 border leaf 调 import 路由优先级防 OSPF 回声（P35）。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>IRB 选型判定（F3）：host-based（R-T2 /32，对称/非对称皆可）vs prefix-based（R-T5，仅对称）；对称 IRB 下服务只配在主机接入 PE（C14，&lt;&lt;<PAGE 48-72>&gt;&gt;）</li>

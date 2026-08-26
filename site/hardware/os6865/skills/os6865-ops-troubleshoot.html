@@ -67,7 +67,10 @@ blockquote p{margin:6px 0}
 <li>电源/PoE 状态巡检：show powersupply / show lanpower slot</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>6865 运维三支柱：①PoE 两级激活模型（P27，&lt;&lt;<PAGE 58>&gt;&gt;）——软件默认 administratively enabled，但必须逐 slot <code>lanpower slot service start</code> 物理激活才供电；②预算-温度-电源三变量联动（P25）——预算随温度档降额（65°C 腰斩），叠加 Guard Band（剩余预算&lt;口上限拒新 PD）与 Priority Disconnect（优先级+端口号 1 最高→28 最低裁决，P33）两级裁决；③Dying Gasp 部署框架（F4，&lt;&lt;<PAGE 54>&gt;&gt;/&lt;&lt;<PAGE 55>&gt;&gt;）——全电源丢失瞬间维持电力发 SNMP trap（前 3 站）+Syslog（前 3 服务器）+4×802.3ah PDU；资源约束=并发 PDU 口数 10−已配服务器数，上行口优先。Fast PoE 上电数秒供电（FPGA 固化）；Perpetual PoE 软重启不断电，MCU 升级例外（P29/P30，&lt;&lt;<PAGE 59>&gt;&gt;）。</p>
+<ul>
+<li>6865 运维三支柱：①PoE 两级激活模型（P27，&lt;&lt;<PAGE 58>&gt;&gt;）——软件默认 administratively enabled，但必须逐 slot <code>lanpower slot service start</code> 物理激活才供电；②预算-温度-电源三变量联动（P25）——预算随温度档降额（65°C 腰斩），叠加 Guard Band（剩余预算&lt;口上限拒新 PD）与 Priority Disconnect（优先级+端口号 1 最高→28 最低裁决，P33）两级裁决；③Dying Gasp 部署框架（F4，&lt;&lt;<PAGE 54>&gt;&gt;/&lt;&lt;<PAGE 55>&gt;&gt;）——全电源丢失瞬间维持电力发 SNMP trap（前 3 站）+Syslog（前 3 服务器）+4×802.3ah PDU；资源约束=并发 PDU 口数 10−已配服务器数，上行口优先。</li>
+<li>Fast PoE 上电数秒供电（FPGA 固化）；Perpetual PoE 软重启不断电，MCU 升级例外（P29/P30，&lt;&lt;<PAGE 59>&gt;&gt;）。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>首次上电判读纪律：启动完成前不判断 LED 状态（"Be sure the boot process is complete before checking LED status"，C22，&lt;&lt;<PAGE 38>&gt;&gt;）</li>

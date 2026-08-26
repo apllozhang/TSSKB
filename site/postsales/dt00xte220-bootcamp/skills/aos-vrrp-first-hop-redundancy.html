@@ -77,7 +77,11 @@ blockquote p{margin:6px 0}
 <li>多虚拟路由器负载分担规划</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>VRRP（RFC 2338）用一个虚拟 IP + 虚拟 MAC（00-00-5E-00-01-{VRID}）把多台路由器虚拟成一台，最高优先级者为 Master 负责转发与 ARP 应答，IP 拥有者直接 Master（P99/P100，&lt;&lt;<PAGE 524-526>&gt;&gt;）。收敛的时钟设计是 Master_Down_Interval = 3×通告间隔 + Skew_Time，而 Skew_Time=(256-Priority)/256——优先级越低的 Backup 等得越久，天然错峰升主，防止多备同时抢占（P101，&lt;&lt;<PAGE 527>&gt;&gt;）。可靠性闭环靠 Tracking：跟踪口断则按策略扣优先级触发切换（P103，&lt;&lt;<PAGE 531>&gt;&gt;）。</p>
+<ul>
+<li>VRRP（RFC 2338）用一个虚拟 IP + 虚拟 MAC（00-00-5E-00-01-{VRID}）把多台路由器虚拟成一台，最高优先级者为 Master 负责转发与 ARP 应答，IP 拥有者直接 Master（P99/P100，&lt;&lt;<PAGE 524-526>&gt;&gt;）。</li>
+<li>收敛的时钟设计是 Master_Down_Interval = 3×通告间隔 + Skew_Time，而 Skew_Time=(256-Priority)/256——优先级越低的 Backup 等得越久，天然错峰升主，防止多备同时抢占（P101，&lt;&lt;<PAGE 527>&gt;&gt;）。</li>
+<li>可靠性闭环靠 Tracking：跟踪口断则按策略扣优先级触发切换（P103，&lt;&lt;<PAGE 531>&gt;&gt;）。</li>
+</ul>
 <h2 id="a1">A1（决策/选型）</h2>
 <ol>
 <li>首跳冗余选型：VRRP 标准协议；与 Cisco HSRP 不兼容，混布网络不能两侧各跑一个（X53，&lt;&lt;<PAGE 524>&gt;&gt;）</li>

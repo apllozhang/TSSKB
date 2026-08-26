@@ -74,7 +74,11 @@ blockquote p{margin:6px 0}
 <li>把常用外部工具挂进 OV 的自定义菜单</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>CLI Script 是 .script 文本文件，CLI 命令与 JavaScript 混编（每行一条 CLI；JS 用 cli 对象驱动交互）。两类难点：一是"应答"——确认提示型命令用 expectPrompt 训练，挂起型命令用 <tapps> lastcmd；二是"慢命令"——write memory flash-synchro 等作末条命令会话即断，须设超时或补命令。第三方 MIB 走 OID 条目 + Mibset 目录 + 依赖顺序导入。</p>
+<ul>
+<li>CLI Script 是 .script 文本文件，CLI 命令与 JavaScript 混编（每行一条 CLI；JS 用 cli 对象驱动交互）。</li>
+<li>两类难点：一是"应答"——确认提示型命令用 expectPrompt 训练，挂起型命令用 <tapps> lastcmd；二是"慢命令"——write memory flash-synchro 等作末条命令会话即断，须设超时或补命令。</li>
+<li>第三方 MIB 走 OID 条目 + Mibset 目录 + 依赖顺序导入。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li><strong>判断命令类型</strong>：普通命令直接写；确认提示型（takeover/reload/fsck）须 expectPrompt 处理；慢命令（写闪）须 setTimeout/<tapps> set timeout；挂起型（reload）前加 <tapps> lastcmd（principles·P65/P66，&lt;&lt;<PAGE 241-244>&gt;&gt;）</li>

@@ -67,7 +67,12 @@ blockquote p{margin:6px 0}
 <li>双机箱虚拟化 VC-of-2 的组合约束</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>9907 vs 9912 选型矩阵（F1，&lt;&lt;<PAGE 5>&gt;&gt;/&lt;&lt;<PAGE 6>&gt;&gt;/&lt;&lt;<PAGE 11>&gt;&gt;/&lt;&lt;<PAGE 22>&gt;&gt;/&lt;&lt;<PAGE 24>&gt;&gt;-&lt;&lt;<PAGE 26>&gt;&gt;）：高度（11RU/17RU）、槽位数（7/12）、重量（32.83/64.36kg）、CFM 带宽阶梯，共性为 4 电源 N+1、仅前→后气流、23 英寸深。CMM/CFM 兼容组合决策表（F2，&lt;&lt;<PAGE 17>&gt;&gt;/&lt;&lt;<PAGE 20>&gt;&gt;/&lt;&lt;<PAGE 22>&gt;&gt;）：只有三种同箱组合支持（旧体系、CMM+CFM2、CMM2+CFM2 各自对称），一切新旧混插 Not Supported，升级路径只有整代切换。CFM 带宽叠加模型（P14，&lt;&lt;<PAGE 20>&gt;&gt;/&lt;&lt;<PAGE 21>&gt;&gt;）：每加一块 CFM 即增加矩阵带宽（2.56T→12.8T→25.6T），CFM 藏于风扇托盘之后、经中板连接（P4/P15）。slot2 双角色是 9907 的架构级权衡：装 NI 换端口密度，代价是 CMM 无冗余且 NI 只活前 8 口（P2/P3，&lt;&lt;<PAGE 7>&gt;&gt;/&lt;&lt;<PAGE 16>&gt;&gt;/&lt;&lt;<PAGE 17>&gt;&gt;）。</p>
+<ul>
+<li>9907 vs 9912 选型矩阵（F1，&lt;&lt;<PAGE 5>&gt;&gt;/&lt;&lt;<PAGE 6>&gt;&gt;/&lt;&lt;<PAGE 11>&gt;&gt;/&lt;&lt;<PAGE 22>&gt;&gt;/&lt;&lt;<PAGE 24>&gt;&gt;-&lt;&lt;<PAGE 26>&gt;&gt;）：高度（11RU/17RU）、槽位数（7/12）、重量（32.83/64.36kg）、CFM 带宽阶梯，共性为 4 电源 N+1、仅前→后气流、23 英寸深。</li>
+<li>CMM/CFM 兼容组合决策表（F2，&lt;&lt;<PAGE 17>&gt;&gt;/&lt;&lt;<PAGE 20>&gt;&gt;/&lt;&lt;<PAGE 22>&gt;&gt;）：只有三种同箱组合支持（旧体系、CMM+CFM2、CMM2+CFM2 各自对称），一切新旧混插 Not Supported，升级路径只有整代切换。</li>
+<li>CFM 带宽叠加模型（P14，&lt;&lt;<PAGE 20>&gt;&gt;/&lt;&lt;<PAGE 21>&gt;&gt;）：每加一块 CFM 即增加矩阵带宽（2.56T→12.8T→25.6T），CFM 藏于风扇托盘之后、经中板连接（P4/P15）。</li>
+<li>slot2 双角色是 9907 的架构级权衡：装 NI 换端口密度，代价是 CMM 无冗余且 NI 只活前 8 口（P2/P3，&lt;&lt;<PAGE 7>&gt;&gt;/&lt;&lt;<PAGE 16>&gt;&gt;/&lt;&lt;<PAGE 17>&gt;&gt;）。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>机箱选型走 F1：端口规模定 9907/9912 → 查 9912 不支持 NI 清单（P48Z16/P24Z8/UP24Q2/U12Q）→ 核机架承重与 23" 深度</li>

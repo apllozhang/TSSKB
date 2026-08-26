@@ -73,7 +73,11 @@ blockquote p{margin:6px 0}
 <li>需要 802.1X/外部 RADIUS 企业认证，或 AP 内置 DHCP 分段地址</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>SSID 是用户分流入口：客户端连上 SSID 即自动落入预定义 VLAN，再叠加带宽/优先级/访问范围差异化策略。认证三档：Personal 密码（员工轻量）、Enterprise 802.1X（UPAM 或外部 RADIUS）、Open + Captive Portal（访客，账号/接入码/条款三选一）。Cirrus 侧用 ARP（Access Role Profile）六元组集中描述用户策略，其裁决顺序：外部源 &gt; 内部用户库 &gt; 认证策略 &gt; SSID 默认。</p>
+<ul>
+<li>SSID 是用户分流入口：客户端连上 SSID 即自动落入预定义 VLAN，再叠加带宽/优先级/访问范围差异化策略。</li>
+<li>认证三档：Personal 密码（员工轻量）、Enterprise 802.1X（UPAM 或外部 RADIUS）、Open + Captive Portal（访客，账号/接入码/条款三选一）。</li>
+<li>Cirrus 侧用 ARP（Access Role Profile）六元组集中描述用户策略，其裁决顺序：外部源 &gt; 内部用户库 &gt; 认证策略 &gt; SSID 默认。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>员工 SSID（Express）：WLAN &gt; New &gt; 名称 EmployeesX、Security Personal、密码 superuser &gt; Advanced &gt; VLAN ID 20 &gt; Save；客户端 <code>ifconfig</code> 确认落在 192.168.20.x（C11，&lt;&lt;<PAGE 221>&gt;&gt;–&lt;&lt;<PAGE 224>&gt;&gt;）。</li>

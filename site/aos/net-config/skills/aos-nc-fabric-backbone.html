@@ -75,7 +75,12 @@ blockquote p{margin:6px 0}
 <li>BGP EVPN 做控制面：多归属冗余、对称/非对称 IRB、Clos 或 Multi-site 部署</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>SPBM 双平面框架（F4，&lt;&lt;<PAGE 211>&gt;&gt;）：控制面 ISIS-SPB（ECT 对称最短路径树+控制面 MAC 学习）+数据面 802.1ah MAC-in-MAC（BEB 封装、BCB 按 BMAP 转发）；服务模型=BVLAN 承载多 I-SID，SAP 定义接入分类。服务模型三件套（F5，&lt;&lt;<PAGE 212>&gt;&gt;/&lt;&lt;<PAGE 478>&gt;&gt;/&lt;&lt;<PAGE 533>&gt;&gt;）：SPB、VPLS、VPWS、VXLAN 共用"接入点 SAP+隧道分发点 SDP+服务实例"抽象，学会一次即可迁移到四种 VPN。EVPN 控制面框架（F6，&lt;&lt;<PAGE 583>&gt;&gt;）：MP-BGP EVPN 地址族（RT1-8）+ES/ESI 多归属（DF 选举、别名、水平分割）+VRF tenancy（非对称/对称 IRB、fabric-vpn、DAG、OISM）。EVPN 用控制面通告 MAC/IP 替代数据面泛洪学习（P101，&lt;&lt;<PAGE 583>&gt;&gt;）。</p>
+<ul>
+<li>SPBM 双平面框架（F4，&lt;&lt;<PAGE 211>&gt;&gt;）：控制面 ISIS-SPB（ECT 对称最短路径树+控制面 MAC 学习）+数据面 802.1ah MAC-in-MAC（BEB 封装、BCB 按 BMAP 转发）；服务模型=BVLAN 承载多 I-SID，SAP 定义接入分类。</li>
+<li>服务模型三件套（F5，&lt;&lt;<PAGE 212>&gt;&gt;/&lt;&lt;<PAGE 478>&gt;&gt;/&lt;&lt;<PAGE 533>&gt;&gt;）：SPB、VPLS、VPWS、VXLAN 共用"接入点 SAP+隧道分发点 SDP+服务实例"抽象，学会一次即可迁移到四种 VPN。</li>
+<li>EVPN 控制面框架（F6，&lt;&lt;<PAGE 583>&gt;&gt;）：MP-BGP EVPN 地址族（RT1-8）+ES/ESI 多归属（DF 选举、别名、水平分割）+VRF tenancy（非对称/对称 IRB、fabric-vpn、DAG、OISM）。</li>
+<li>EVPN 用控制面通告 MAC/IP 替代数据面泛洪学习（P101，&lt;&lt;<PAGE 583>&gt;&gt;）。</li>
+</ul>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>园区骨干选 SPBM</strong>：每桥以自己为根算 SPT，任意两点间最短路径，克服 STP 根桥次优路径（P52，&lt;&lt;<PAGE 214>&gt;&gt;）；配置必须先骨干后服务，顺序颠倒导致 ISIS 邻接异常（X25，&lt;&lt;<PAGE 245>&gt;&gt;）</li>

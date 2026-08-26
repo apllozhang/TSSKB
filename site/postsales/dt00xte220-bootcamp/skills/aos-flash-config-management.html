@@ -78,7 +78,12 @@ blockquote p{margin:6px 0}
 <li>排障需要 swlog 分级日志、command-log、端口镜像、sFlow</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>AOS Flash 的核心是双目录互为回滚：working（可写运行目录）与 certified（只读认证目录）各存一套镜像+boot.cfg，认证版本即升级失败的退路（P17/F4，&lt;&lt;<PAGE 126-127>&gt;&gt;）。启动规则：两目录不一致时从 certified 启动，此时改动无法保存，须先切回 working（P19/P24，&lt;&lt;<PAGE 130-131, 148>&gt;&gt;）。R8 增加了用户自定义目录与 running directory 概念，可直接对自定义目录保存配置（P21/P22，&lt;&lt;<PAGE 145-146>&gt;&gt;）。变更文化的口诀是"先拿到可回退状态再推进"：<code>reload working no rollback-timeout</code> → 验证 → <code>copy working certified</code>（P20，&lt;&lt;<PAGE 132-133>&gt;&gt;）。</p>
+<ul>
+<li>AOS Flash 的核心是双目录互为回滚：working（可写运行目录）与 certified（只读认证目录）各存一套镜像+boot.cfg，认证版本即升级失败的退路（P17/F4，&lt;&lt;<PAGE 126-127>&gt;&gt;）。</li>
+<li>启动规则：两目录不一致时从 certified 启动，此时改动无法保存，须先切回 working（P19/P24，&lt;&lt;<PAGE 130-131, 148>&gt;&gt;）。</li>
+<li>R8 增加了用户自定义目录与 running directory 概念，可直接对自定义目录保存配置（P21/P22，&lt;&lt;<PAGE 145-146>&gt;&gt;）。</li>
+<li>变更文化的口诀是"先拿到可回退状态再推进"：<code>reload working no rollback-timeout</code> → 验证 → <code>copy working certified</code>（P20，&lt;&lt;<PAGE 132-133>&gt;&gt;）。</li>
+</ul>
 <h2 id="a1">A1（决策/选型）</h2>
 <ol>
 <li>回滚方式：带 rollback-timeout 的 reload 到时自动回滚（实验/灰度）；no rollback-timeout 表示确认不回滚（P23，&lt;&lt;<PAGE 147>&gt;&gt;）</li>

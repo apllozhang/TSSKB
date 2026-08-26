@@ -78,7 +78,12 @@ blockquote p{margin:6px 0}
 <li>排查"配了 QoS 反而全网断"类事故</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>AOS 的 QoS 与 ACL 是同一套策略引擎：解析器之后硬件分类引擎按 L2-L4 条件匹配，策略三元组 Condition+Action+Rule（可选生效时段）执行标记/限速/重定向/镜像（P105/P106/P107，&lt;&lt;<PAGE 542-545>&gt;&gt;）。R8 的队列模型分层为 QSet（每口 8 单播+4 组播队列）→ QSI 实例 → QSet Profile（8SP / 1EF+7SP / 1EF+7WFQ）（P109/F8，&lt;&lt;<PAGE 548-552>&gt;&gt;）。两条默认值是事故之源：未匹配流量默认全 accept（配 deny 后全断）、交换端口默认不信任任何标记（P112/P117，&lt;&lt;<PAGE 581-590, 610-618>&gt;&gt;）。信任要显式给：<code>qos phones trusted</code>/<code>qos nms priority</code> 或端口级信任（P112，&lt;&lt;<PAGE 581-590>&gt;&gt;）。</p>
+<ul>
+<li>AOS 的 QoS 与 ACL 是同一套策略引擎：解析器之后硬件分类引擎按 L2-L4 条件匹配，策略三元组 Condition+Action+Rule（可选生效时段）执行标记/限速/重定向/镜像（P105/P106/P107，&lt;&lt;<PAGE 542-545>&gt;&gt;）。</li>
+<li>R8 的队列模型分层为 QSet（每口 8 单播+4 组播队列）→ QSI 实例 → QSet Profile（8SP / 1EF+7SP / 1EF+7WFQ）（P109/F8，&lt;&lt;<PAGE 548-552>&gt;&gt;）。</li>
+<li>两条默认值是事故之源：未匹配流量默认全 accept（配 deny 后全断）、交换端口默认不信任任何标记（P112/P117，&lt;&lt;<PAGE 581-590, 610-618>&gt;&gt;）。</li>
+<li>信任要显式给：<code>qos phones trusted</code>/<code>qos nms priority</code> 或端口级信任（P112，&lt;&lt;<PAGE 581-590>&gt;&gt;）。</li>
+</ul>
 <h2 id="a1">A1（决策/选型）</h2>
 <ol>
 <li>R6 调度三算法：Strict Priority（低队列饿死风险）/ WRR（1-15 包，0=严格）/ DRR（按体量 1=10KB）（P108，&lt;&lt;<PAGE 547>&gt;&gt;）</li>

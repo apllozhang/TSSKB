@@ -74,8 +74,11 @@ blockquote p{margin:6px 0}
 <li>做有线+无线统一 QoS 策略、按 L7 应用限速、One Touch 语音策略</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>Quarantine Manager 是事件驱动的状态机：IPS/交换机事件→规则匹配（Banned 优先于 Candidate）→ Candidates（流量照常，等决策）/ Banned（进隔离 VLAN，走 QMR）/ Disabled Ports（端口禁用，须逐条释放）/ Never Banned（OV 与交换机隐式在内）；
-无线客户端不进 Banned 而进 Client Blocklist。PolicyView 策略存 OV 内置 LDAP，交换机被 SNMP 通知后自行拉取（Notify 是"通知-拉取"不是推送）。</p>
+<ul>
+<li>Quarantine Manager 是事件驱动的状态机：IPS/交换机事件→规则匹配（Banned 优先于 Candidate）→ Candidates（流量照常，等决策）/ Banned（进隔离 VLAN，走 QMR）/ Disabled Ports（端口禁用，须逐条释放）/ Never Banned（OV 与交换机隐式在内）；
+无线客户端不进 Banned 而进 Client Blocklist。</li>
+<li>PolicyView 策略存 OV 内置 LDAP，交换机被 SNMP 通知后自行拉取（Notify 是"通知-拉取"不是推送）。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li><strong>事件处理链</strong>（frameworks·F13，&lt;&lt;<PAGE 457, 460-465>&gt;&gt;）：IPS（Fortinet 2.3）/交换机发 Syslog(514)或 trap（含 IP/MAC）→规则→①Candidates（管理员 Release/Ban/Never Ban）→②Banned（Scheduled to be Banned→Completed/Partially Banned；Release 解封）→③Disabled Ports（全部条目释放端口才启用）</li>

@@ -65,7 +65,13 @@ blockquote p{margin:6px 0}
 <li>特性组合上线后容量莫名缩水（SAP profile 带 QoS 降容、OAM 域挤占 RFP）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>TCAM profile 零和分配框架（F3，&lt;&lt;<PAGE 87-92>&gt;&gt;）：TCAM 总量固定，profile 在 QoS 入规则/SAP 分类/VSTK 翻译/业务隧道/DHCP snooping/UNP 用户/PVLAN 之间做此消彼长；配置后必须 reload 激活（P51）。选型三步——列出必开特性清单→逐 profile 核对资源列→接受牺牲项后 reload 生效。档位间是零和重分配（6870 QoS ACL 档 QoS 4096 但 SAP 从 2048 降到 1024，P52）；fabric 场景牺牲 VPN 特性换隧道容量（6570M Fabric 档 PVLAN/VSTK 归零，P53）。平台特性缺口是另一维度：N/S 矩阵项（MACsec/WRED/Fingerprinting 等）不因 TCAM 或版本改变。</p>
+<ul>
+<li>TCAM profile 零和分配框架（F3，&lt;&lt;<PAGE 87-92>&gt;&gt;）：TCAM 总量固定，profile 在 QoS 入规则/SAP 分类/VSTK 翻译/业务隧道/DHCP snooping/UNP 用户/PVLAN 之间做此消彼长；配置后必须 reload 激活（P51）。</li>
+<li>选型三步——列出必开特性清单→逐 profile 核对资源列→接受牺牲项后 reload 生效。</li>
+<li>档位间是零和重分配（6870 QoS ACL 档 QoS 4096 但 SAP 从 2048 降到 1024，P52）；
+fabric 场景牺牲 VPN 特性换隧道容量（6570M Fabric 档 PVLAN/VSTK 归零，P53）。</li>
+<li>平台特性缺口是另一维度：N/S 矩阵项（MACsec/WRED/Fingerprinting 等）不因 TCAM 或版本改变。</li>
+</ul>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>列必开清单</strong>：QoS ACL 条数、SAP 分类数、IPv6 snooping、SPB 隧道数、UNP 用户数、PVLAN/VSTK 是否需要</li>

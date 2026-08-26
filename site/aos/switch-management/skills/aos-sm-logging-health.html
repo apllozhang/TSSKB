@@ -70,7 +70,10 @@ blockquote p{margin:6px 0}
 <li>要设系统日期/时区（NTP 见 aos-sm-mgmt-services）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>AOS 运维监测分四层：命令级审计（command-log 记录命令全文/用户/时间/来源 IP/结果，默认禁用，P52）→ 系统日志（swlog 落 /flash/network，&lt;&lt;<PAGE 52>&gt;&gt;）→ 诊断快照（show tech-support 按层采集基线，升级与排障前必采，P17/C3）→ 主动健康检查（fsck 文件系统修复、image integrity check 镜像校验、硬件/进程自检、show system 总览）。时钟是日志可信的前提：<code>system date/timezone</code>，DST 随时区自动（P163）。</p>
+<ul>
+<li>AOS 运维监测分四层：命令级审计（command-log 记录命令全文/用户/时间/来源 IP/结果，默认禁用，P52）→ 系统日志（swlog 落 /flash/network，&lt;&lt;<PAGE 52>&gt;&gt;）→ 诊断快照（show tech-support 按层采集基线，升级与排障前必采，P17/C3）→ 主动健康检查（fsck 文件系统修复、image integrity check 镜像校验、硬件/进程自检、show system 总览）。</li>
+<li>时钟是日志可信的前提：<code>system date/timezone</code>，DST 随时区自动（P163）。</li>
+</ul>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>合规审计开 command-log</strong>：<code>command-log enable</code> 自动建 /flash/command.log，降序查看含 Command/UserName/Date/IP/Result（C26）</li>

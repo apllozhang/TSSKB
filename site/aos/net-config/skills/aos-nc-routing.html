@@ -75,7 +75,12 @@ blockquote p{margin:6px 0}
 <li>本地服务器池要做负载均衡：SLB 集群 + 健康探测</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>静态路由/递归静态路由/默认路由/黑洞路由均由 <code>ip static-route</code> 系列配置（P110，&lt;&lt;<PAGE 709>&gt;&gt;），是其余动态路由的底座。VRRP 选举虚拟路由器 master 转发虚拟 IP 流量，master 失效由最高优先级 backup 接管（P139，&lt;&lt;<PAGE 979>&gt;&gt;）；时序公式 Master_Down_Interval=(3×Adv_Interval)+Skew_Time、Skew=(256-Priority)/256，优先级越低等待越长避免抖动（P141，&lt;&lt;<PAGE 980>&gt;&gt;）。BFD 毫秒级检测转发面故障，异步控制包与 Echo 两种模式分工：VRRP/静态路由只用 Echo，OSPF/IS-IS/BGP 用控制包；Echo 单跳、控制包可多跳（P127，&lt;&lt;<PAGE 870>&gt;&gt;）。SLB 集群以 VIP（L3）或 QoS condition（L2/L3）标识虚拟服务器，分发算法为加权轮询 WRR（P145/P147，&lt;&lt;<PAGE 1012>&gt;&gt;）。</p>
+<ul>
+<li>静态路由/递归静态路由/默认路由/黑洞路由均由 <code>ip static-route</code> 系列配置（P110，&lt;&lt;<PAGE 709>&gt;&gt;），是其余动态路由的底座。</li>
+<li>VRRP 选举虚拟路由器 master 转发虚拟 IP 流量，master 失效由最高优先级 backup 接管（P139，&lt;&lt;<PAGE 979>&gt;&gt;）；时序公式 Master_Down_Interval=(3×Adv_Interval)+Skew_Time、Skew=(256-Priority)/256，优先级越低等待越长避免抖动（P141，&lt;&lt;<PAGE 980>&gt;&gt;）。</li>
+<li>BFD 毫秒级检测转发面故障，异步控制包与 Echo 两种模式分工：VRRP/静态路由只用 Echo，OSPF/IS-IS/BGP 用控制包；Echo 单跳、控制包可多跳（P127，&lt;&lt;<PAGE 870>&gt;&gt;）。</li>
+<li>SLB 集群以 VIP（L3）或 QoS condition（L2/L3）标识虚拟服务器，分发算法为加权轮询 WRR（P145/P147，&lt;&lt;<PAGE 1012>&gt;&gt;）。</li>
+</ul>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>路由选型</strong>：小网/分支 RIP（15 跳上限与 120 秒 hold-down 慢收敛，大网不适用，X48，&lt;&lt;<PAGE 842>&gt;&gt;）；OSPF/IS-IS/BGP 主体配置另查 Advanced Routing 手册，本书提供 VRF 内路由实例与重分发基础</li>

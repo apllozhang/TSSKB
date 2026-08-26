@@ -74,8 +74,12 @@ blockquote p{margin:6px 0}
 <li>交换机间/VM 间 RTT、抖动、丢包拨测</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>Resource Manager 管存量设备生命周期：Backup 三类型（Full/Configuration Only/Images Only），镜像不物理备份只记录版本号；
-Upgrade Image 走 Repository+File Set，FTP 超时 5 分钟是大文件升级的头号坑。Provisioning 是 DHCP Option 43 + Cloud Agent Call-Home + SSH 推模板的零接触链路。SAA 是交换机侧 MACSAA 探针，OV 只做编排与展示。</p>
+<ul>
+<li>Resource Manager 管存量设备生命周期：Backup 三类型（Full/Configuration Only/Images Only），镜像不物理备份只记录版本号；
+Upgrade Image 走 Repository+File Set，FTP 超时 5 分钟是大文件升级的头号坑。</li>
+<li>Provisioning 是 DHCP Option 43 + Cloud Agent Call-Home + SSH 推模板的零接触链路。</li>
+<li>SAA 是交换机侧 MACSAA 探针，OV 只做编排与展示。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li><strong>备份方式选型</strong>（principles·P143，&lt;&lt;<PAGE 488-493>&gt;&gt;）：按设备（默认）/按地图（&gt;50 台建议）/按 AP Group（Stellar AP 只能按组备）；类型 Full（Certified 或 All）/Configuration Only（可选排除 Security Files）/Images Only</li>

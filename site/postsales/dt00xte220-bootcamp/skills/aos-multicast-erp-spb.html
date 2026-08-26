@@ -79,7 +79,13 @@ blockquote p{margin:6px 0}
 <li>评估用 SPB 替代 STP 做二层织构（6865/6900 iFab）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>组播分两层解（F14，&lt;&lt;<PAGE 874>&gt;&gt;）：同 VLAN 用 IPMS 硬件侦听 IGMP 按端口建转发表（默认禁用，须显式开，P172，&lt;&lt;<PAGE 875-878>&gt;&gt;）；跨网段用 PIM-SM 显式加入 + RP 共享树，末跳自动 SPT 切换（默认启用）（P177，&lt;&lt;<PAGE 908-909>&gt;&gt;）。IGMP 本身 TTL=1 永不出本段（P170，&lt;&lt;<PAGE 871>&gt;&gt;）。ERP 的机制是"牺牲一条 RPL 链路换全环无环"：APS 协议协调，RPL owner 负责阻塞/解阻塞（P178，&lt;&lt;<PAGE 926-929>&gt;&gt;）。Auto-fabric 七步零接触（Auto-VC → RCL → Auto-LACP → Auto-Routing → Auto-SPB → Auto-Network Profiling → Auto-MVRP），失败即删除并禁用配置（P27/F5，&lt;&lt;<PAGE 155, 936>&gt;&gt;）。SPB 用 IS-IS 替代 STP：简化业务开通、全链路可用（P186/F15，&lt;&lt;<PAGE 73, 68>&gt;&gt;）。</p>
+<ul>
+<li>组播分两层解（F14，&lt;&lt;<PAGE 874>&gt;&gt;）：同 VLAN 用 IPMS 硬件侦听 IGMP 按端口建转发表（默认禁用，须显式开，P172，&lt;&lt;<PAGE 875-878>&gt;&gt;）；跨网段用 PIM-SM 显式加入 + RP 共享树，末跳自动 SPT 切换（默认启用）（P177，&lt;&lt;<PAGE 908-909>&gt;&gt;）。</li>
+<li>IGMP 本身 TTL=1 永不出本段（P170，&lt;&lt;<PAGE 871>&gt;&gt;）。</li>
+<li>ERP 的机制是"牺牲一条 RPL 链路换全环无环"：APS 协议协调，RPL owner 负责阻塞/解阻塞（P178，&lt;&lt;<PAGE 926-929>&gt;&gt;）。</li>
+<li>Auto-fabric 七步零接触（Auto-VC → RCL → Auto-LACP → Auto-Routing → Auto-SPB → Auto-Network Profiling → Auto-MVRP），失败即删除并禁用配置（P27/F5，&lt;&lt;<PAGE 155, 936>&gt;&gt;）。</li>
+<li>SPB 用 IS-IS 替代 STP：简化业务开通、全链路可用（P186/F15，&lt;&lt;<PAGE 73, 68>&gt;&gt;）。</li>
+</ul>
 <h2 id="a1">A1（决策/选型）</h2>
 <ol>
 <li>组播地址映射：D 类 224.0.0.0-239.255.255.255，MAC 取 01:00:5e + IP 低 23 位（P169，&lt;&lt;<PAGE 867>&gt;&gt;）</li>

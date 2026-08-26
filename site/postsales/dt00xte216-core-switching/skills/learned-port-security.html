@@ -77,8 +77,10 @@ blockquote p{margin:6px 0}
 <li>端口接了交换机导致 LPS 误过滤 LLDP/STP/IP 多 MAC，需要排查</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>LPS 通过"限学多少 MAC（maximum）+ 学习窗口 + 违例动作（restrict 只拦违例源 / shutdown 整口）"三重控制接入安全，convert-to-static 把当前学到的 MAC 固化实现设备绑定。学习期被截获的报文由 pkt-relay 重注入，正常业务不中断；
-违例默认 300s 自动恢复、最多自动恢复 10 次。</p>
+<ul>
+<li>LPS 通过"限学多少 MAC（maximum）+ 学习窗口 + 违例动作（restrict 只拦违例源 / shutdown 整口）"三重控制接入安全，convert-to-static 把当前学到的 MAC 固化实现设备绑定。</li>
+<li>学习期被截获的报文由 pkt-relay 重注入，正常业务不中断；违例默认 300s 自动恢复、最多自动恢复 10 次。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>最小模板一次成型：<code>port-security port 1/1/1 admin-state enable / maximum 1 / violation shutdown / convert-to-static enable</code>（&lt;&lt;<PAGE 193>&gt;&gt;）</li>

@@ -67,7 +67,13 @@ blockquote p{margin:6px 0}
 <li>规划 Virtual Chassis（VC）时核对 VC LED 语义与机型角色</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>6360 家族选型三轴矩阵（F1，&lt;&lt;<PAGE 13>&gt;&gt;/&lt;&lt;<PAGE 60>&gt;&gt;）：轴一=下行口数（10/24/48），轴二=PoE 能力（无 → P=802.3at → PX=2×多千兆 bt 口+950W 电源），轴三=上行升级（X/H 后缀 combo 口可软件升 10G）。家族命名解码（P1）：<code>-10/-24/-48</code> 非 PoE；<code>P*</code>=802.3at PoE；<code>P*X</code>=2 个多千兆 802.3bt 口（47-48）+大电源；<code>PH*</code>=combo 口可软件升级 10G（"Upgradeable to 10G"）。上行口三段式结构（P2，&lt;&lt;<PAGE 13>&gt;&gt;）：全家族统一为"2×RJ45/SFP combo + 2×SFP+ 软件可配口"，SFP+ 口可在"1G SFP 上行"与"10G SFP+ 上行或 VFL"两种角色间软件切换。电源全部内置不可热换，wattage 随 PoE 递增（30→950W，P5）。无风扇分级（P4）：-10/P10/24/P24/48 无风扇；P24X/PH24/P48X/PH48 大功率 PoE 机型带风扇。</p>
+<ul>
+<li>6360 家族选型三轴矩阵（F1，&lt;&lt;<PAGE 13>&gt;&gt;/&lt;&lt;<PAGE 60>&gt;&gt;）：轴一=下行口数（10/24/48），轴二=PoE 能力（无 → P=802.3at → PX=2×多千兆 bt 口+950W 电源），轴三=上行升级（X/H 后缀 combo 口可软件升 10G）。</li>
+<li>家族命名解码（P1）：<code>-10/-24/-48</code> 非 PoE；<code>P*</code>=802.3at PoE；<code>P*X</code>=2 个多千兆 802.3bt 口（47-48）+大电源；<code>PH*</code>=combo 口可软件升级 10G（"Upgradeable to 10G"）。</li>
+<li>上行口三段式结构（P2，&lt;&lt;<PAGE 13>&gt;&gt;）：全家族统一为"2×RJ45/SFP combo + 2×SFP+ 软件可配口"，SFP+ 口可在"1G SFP 上行"与"10G SFP+ 上行或 VFL"两种角色间软件切换。</li>
+<li>电源全部内置不可热换，wattage 随 PoE 递增（30→950W，P5）。</li>
+<li>无风扇分级（P4）：-10/P10/24/P24/48 无风扇；P24X/PH24/P48X/PH48 大功率 PoE 机型带风扇。</li>
+</ul>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>先定下行口数</strong>：10 口（半宽机箱、独享壁挂能力）/24 口/48 口三档（F1，&lt;&lt;<PAGE 13>&gt;&gt;）</li>
@@ -76,6 +82,7 @@ blockquote p{margin:6px 0}
 <li><strong>多千兆 AP 场景</strong>：P48X/PH48 的 47-48 口为 2.5G 802.3bt 口，接 Wi-Fi6 AP（&lt;&lt;<PAGE 42>&gt;&gt;）</li>
 <li><strong>堆叠需求</strong>：VC 通过 SFP+ 软件可配口建链，VC LED 闪绿=Master/闪琥珀=Slave、闪烁次数即节点 ID（P13，&lt;&lt;<PAGE 45>&gt;&gt;）</li>
 </ol>
+<p><img alt="OS6360 机型前/后面板示意（原文 p26，每机型一页：p26-44）" src="images/fig-panel-model-p26.png" /></p>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
 <li><strong>机型速查</strong>：对照 Ch1 机型总表（&lt;&lt;<PAGE 13-15>&gt;&gt;）与 Ch3 逐机型面板图/规格表（&lt;&lt;<PAGE 26-45>&gt;&gt;）</li>

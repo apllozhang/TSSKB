@@ -21,9 +21,15 @@ PoE 供电三环体系（F2，<<<PAGE 62-68>>>）：外环=预算（slot maxpowe
 4. **预算不足时的裁决**：Guard Band（余量<口上限即拒新 PD）→ 降口上限放行；Priority Disconnect 四情形按优先级+端口号裁决（P34/P35）
 5. **温度治理**：Warning 超阈值发 trap 查气流；Danger 超阈值自动关机、处理后手动重启（P23）
 
+![机架安装示意：整机与半宽机型（原文 p51）](images/fig-rack-mount-p51.png)
+
+![机柜固定实拍（原文 p53）](images/fig-rack-secure-p53.jpeg)
+
 ## A2（操作步骤）
 - **机架安装**：双人作业→先穿每侧法兰底部螺丝并紧固→再上顶部螺丝；重设备下置（C6，<<<PAGE 48>>>-<<<PAGE 51>>>）；法兰卡扣：弹簧夹 out→tab 入槽→"CLICK"→螺丝固定（C7，<<<PAGE 49>>>）
 - **壁挂**：四托架朝下→双人定位标记→预钻孔→承重达标紧固件（自备）；建议侧立面板朝侧（C10，<<<PAGE 54>>>）
+![机箱接地位置与操作（原文 p55）](images/fig-grounding-p55.png)
+
 - **接地**：Panduit LCD8-10A-L 接地耳+8AWG 铜线+扭矩 30-60 in-lb（C12，<<<PAGE 55>>>）
 - **PoE 首次激活**：`show powersupply` 确认 UP→`lanpower slot 2/1 service start`→`show lanpower slot 1/1` 核对（C14，<<<PAGE 60-62>>>）
 - **预算/优先级调整**：`lanpower port 1/1/24 power 3000`、`lanpower slot 3/1 maxpower 400`、`lanpower port 1/1/6 priority critical`（C16-C18，<<<PAGE 63-64>>>）

@@ -68,7 +68,12 @@ blockquote p{margin:6px 0}
 <li>接口认证（simple/MD5/keychain-SHA256）、被动接口批量生成、CMM 冗余优雅重启（GR）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>链路状态统一原理骨架（F2）：本地状态经泛洪保证全区域一致 LSDB，各路由器以自身为根算 SPF 树得路由表（P1/P2）。区域分层体系（F3）：区域隔离拓扑知识以减少路由流量（P6），骨干区 Area 0.0.0.0 负责区间分发（P7），路由器按 Internal/ABR/Backbone/ASBR 四角色分类（P9），ABR 为每个所连区域跑一份 SPF 并浓缩拓扑（P10）。OSPFv3 是 v2 的 IPv6 扩展、GR 默认使能（P34），命令族整体 ipv6 镜像（F10）。IGP 配置统一骨架（F1）：准备网络 → ip load → admin-state enable → 建区域 → 接口挂区 → 可选特性 → show 验证。</p>
+<ul>
+<li>链路状态统一原理骨架（F2）：本地状态经泛洪保证全区域一致 LSDB，各路由器以自身为根算 SPF 树得路由表（P1/P2）。</li>
+<li>区域分层体系（F3）：区域隔离拓扑知识以减少路由流量（P6），骨干区 Area 0.0.0.0 负责区间分发（P7），路由器按 Internal/ABR/Backbone/ASBR 四角色分类（P9），ABR 为每个所连区域跑一份 SPF 并浓缩拓扑（P10）。</li>
+<li>OSPFv3 是 v2 的 IPv6 扩展、GR 默认使能（P34），命令族整体 ipv6 镜像（F10）。</li>
+<li>IGP 配置统一骨架（F1）：准备网络 → ip load → admin-state enable → 建区域 → 接口挂区 → 可选特性 → show 验证。</li>
+</ul>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>末节区域选型</strong>：Stub（无外部 LSA、默认路由出域，P12）→ Totally Stubby（再滤 Type-3，实现=Stub+关汇总，P19）→ NSSA（Type-7 LSA 选择性导入外部，P13）</li>

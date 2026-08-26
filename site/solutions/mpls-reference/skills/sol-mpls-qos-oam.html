@@ -65,7 +65,12 @@ blockquote p{margin:6px 0}
 <li>核对 AOS 8.9R3/8.10R2 的 QoS/OAM 能力边界</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>只有顶层（传输）标签的 EXP/TTL 被处理（P10，&lt;&lt;<PAGE 18-19>&gt;&gt;）：内层标签原样透传。QoS/TTL 透明性选型框架（F5，&lt;&lt;<PAGE 18-19>&gt;&gt;）：uniform 让客户标记穿透（复制到 EXP、出域回写），pipe 运营商自定 EXP、客户 DSCP 不动。PHP 用 implicit NULL 让倒数第二跳弹传输标签省 eLER 一次查表（P9，&lt;&lt;<PAGE 16>&gt;&gt;），代价是 EXP 随标签一起弹掉（X9）。数据面验证靠 LSP ping/trace（P32，&lt;&lt;<PAGE 23>&gt;&gt;）：IP 可达、控制面看似正常时仍可能有数据面故障。</p>
+<ul>
+<li>只有顶层（传输）标签的 EXP/TTL 被处理（P10，&lt;&lt;<PAGE 18-19>&gt;&gt;）：内层标签原样透传。</li>
+<li>QoS/TTL 透明性选型框架（F5，&lt;&lt;<PAGE 18-19>&gt;&gt;）：uniform 让客户标记穿透（复制到 EXP、出域回写），pipe 运营商自定 EXP、客户 DSCP 不动。</li>
+<li>PHP 用 implicit NULL 让倒数第二跳弹传输标签省 eLER 一次查表（P9，&lt;&lt;<PAGE 16>&gt;&gt;），代价是 EXP 随标签一起弹掉（X9）。</li>
+<li>数据面验证靠 LSP ping/trace（P32，&lt;&lt;<PAGE 23>&gt;&gt;）：IP 可达、控制面看似正常时仍可能有数据面故障。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>QoS 模式决策（F5）：客户标记需端到端可见 → uniform；运营商独立 QoS 策略、客户标记不动 → pipe</li>

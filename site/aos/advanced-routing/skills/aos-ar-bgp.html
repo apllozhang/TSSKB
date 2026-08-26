@@ -68,9 +68,13 @@ blockquote p{margin:6px 0}
 <li>IPv6 对等（纯 v6 域或 IPv4 会话跑 v6 前缀）、GTSM 防攻击、EVPN/VPLS 地址族、邻居模板</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>BGP 是 AS 间 EGP，跑在 TCP 179 上，增量更新使长会话更高效（P60）；
-AS_PATH 承担 AS 级环路检测（P61）。选路属性体系：Local Preference（AS 内、越高越优先）与 MED（仅同一邻居 AS 间比较、绝不向下一 AS 传播）（P71/P77）。iBGP 全互联规则由 RR 放松（P65），RR 通告按路由来源决定反射范围（P66）；
-联邦以子 AS 间 EBGP 模拟整体 IBGP（P69）。策略体系（F5）：aspath/community/prefix(prefix6)/route-map 四类原子策略先建后绑到 peer 的 in/out 方向，改动后 clear soft 重应用（P78/C29）。IPv6 由 MP-BGP 的 MP_REACH/MP_UNREACH_NLRI 承载，v6 前缀可跑在 v4 会话上（P80/P81）。</p>
+<ul>
+<li>BGP 是 AS 间 EGP，跑在 TCP 179 上，增量更新使长会话更高效（P60）；AS_PATH 承担 AS 级环路检测（P61）。</li>
+<li>选路属性体系：Local Preference（AS 内、越高越优先）与 MED（仅同一邻居 AS 间比较、绝不向下一 AS 传播）（P71/P77）。</li>
+<li>iBGP 全互联规则由 RR 放松（P65），RR 通告按路由来源决定反射范围（P66）；联邦以子 AS 间 EBGP 模拟整体 IBGP（P69）。</li>
+<li>策略体系（F5）：aspath/community/prefix(prefix6)/route-map 四类原子策略先建后绑到 peer 的 in/out 方向，改动后 clear soft 重应用（P78/C29）。</li>
+<li>IPv6 由 MP-BGP 的 MP_REACH/MP_UNREACH_NLRI 承载，v6 前缀可跑在 v4 会话上（P80/P81）。</li>
+</ul>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>邻居设计</strong>：peer 必须逐个显式配置、不会动态学习（X34）；Loopback0 永久 up 适合作对等源（update-source + ebgp-multihop）（P88）</li>

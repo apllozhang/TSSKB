@@ -80,7 +80,13 @@ blockquote p{margin:6px 0}
 <li>IPv6 地址规划基础</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>路由体系的骨架是偏好值：AOS 默认 Local 1 / Static 2 / OSPF 10 / RIP 100 / BGP 200，可手工调整（P147，&lt;&lt;<PAGE 769>&gt;&gt;），静态永远优先于动态（P135，&lt;&lt;<PAGE 714-716>&gt;&gt;）。RIP 是距离向量（跳数 16 不可达、30 秒全表更新），四定时器 update 30/invalid 180/garbage 120/holddown 0 且 invalid≥3×update 由 AOS 强制（P138/P140，&lt;&lt;<PAGE 724, 730-731>&gt;&gt;）。OSPF 三数据库（邻接表/LSDB/路由表）+ SPF 并行计算（P142，&lt;&lt;<PAGE 753>&gt;&gt;）；区域类型本质是"允许进入的 LSA 集合"（F13/P144，&lt;&lt;<PAGE 759-762>&gt;&gt;）。GR 的契约是重启方保持转发、邻居做 helper 不重算 SPF，Grace LSA（Type 9 Opaque）携宽限期（P148/P149，&lt;&lt;<PAGE 772-775>&gt;&gt;）。重分发范式全书统一："先 route-map 后 redist"（P141，&lt;&lt;<PAGE 726-727>&gt;&gt;）。</p>
+<ul>
+<li>路由体系的骨架是偏好值：AOS 默认 Local 1 / Static 2 / OSPF 10 / RIP 100 / BGP 200，可手工调整（P147，&lt;&lt;<PAGE 769>&gt;&gt;），静态永远优先于动态（P135，&lt;&lt;<PAGE 714-716>&gt;&gt;）。</li>
+<li>RIP 是距离向量（跳数 16 不可达、30 秒全表更新），四定时器 update 30/invalid 180/garbage 120/holddown 0 且 invalid≥3×update 由 AOS 强制（P138/P140，&lt;&lt;<PAGE 724, 730-731>&gt;&gt;）。</li>
+<li>OSPF 三数据库（邻接表/LSDB/路由表）+ SPF 并行计算（P142，&lt;&lt;<PAGE 753>&gt;&gt;）；区域类型本质是"允许进入的 LSA 集合"（F13/P144，&lt;&lt;<PAGE 759-762>&gt;&gt;）。</li>
+<li>GR 的契约是重启方保持转发、邻居做 helper 不重算 SPF，Grace LSA（Type 9 Opaque）携宽限期（P148/P149，&lt;&lt;<PAGE 772-775>&gt;&gt;）。</li>
+<li>重分发范式全书统一："先 route-map 后 redist"（P141，&lt;&lt;<PAGE 726-727>&gt;&gt;）。</li>
+</ul>
 <h2 id="a1">A1（决策/选型）</h2>
 <ol>
 <li>IGP 选型：小网络 RIP（v2 组播 224.0.0.9、带认证，P139，&lt;&lt;<PAGE 724>&gt;&gt;）；中大型 OSPF；超大型/SPB 底座用 IS-IS（直接跑在 802.3/802.2 二层，P202，&lt;&lt;<PAGE 1093-1096>&gt;&gt;）</li>

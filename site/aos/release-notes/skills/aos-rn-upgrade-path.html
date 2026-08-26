@@ -67,7 +67,13 @@ blockquote p{margin:6px 0}
 <li>升级出问题要用 Certified 目录回退</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>升级方法论二分框架（F1，&lt;&lt;<PAGE 67-76>&gt;&gt;）：Standard（传镜像到 Running 目录→reload→验证→copy running certified，全程一次中断）vs ISSU（逐成员/逐 CMM 升级、双归属主机不断链）。选型三问——平台是否支持 ISSU（6360/6465/6560/6570M 不支持，X2，&lt;&lt;<PAGE 69>&gt;&gt;）、源版本是否在 ISSU 支持清单、是否需要保留 running 目录名。升级前置四查：certified 配置、U-Boot/FPGA 版本、tech-support 基线、EMP/console 带外通道。固件三件套分层框架（F2，&lt;&lt;<PAGE 4-14>&gt;&gt;/&lt;&lt;<PAGE 77-82>&gt;&gt;）：AOS 镜像（功能性）／引导件 U-Boot·ONIE·BIOS（信任链与启动）／逻辑件 FPGA·CPLD（电源/风扇/PoE/PHY 行为）三者独立演进，版本矩阵按机型×部件列 Minimum/Current；每条 FPGA/U-Boot 升级都对应 CRAOS8X 编号，可反查"该现象要不要升固件"。ISSU 机理（P37，&lt;&lt;<PAGE 67>&gt;&gt;）：VC 按 chassis-id 从低到高逐台从 ISSU 目录重启，Slave 全部完成后 Master 重启引发 takeover；模块化机箱则备 CMM 先升转主。</p>
+<ul>
+<li>升级方法论二分框架（F1，&lt;&lt;<PAGE 67-76>&gt;&gt;）：Standard（传镜像到 Running 目录→reload→验证→copy running certified，全程一次中断）vs ISSU（逐成员/逐 CMM 升级、双归属主机不断链）。</li>
+<li>选型三问——平台是否支持 ISSU（6360/6465/6560/6570M 不支持，X2，&lt;&lt;<PAGE 69>&gt;&gt;）、源版本是否在 ISSU 支持清单、是否需要保留 running 目录名。</li>
+<li>升级前置四查：certified 配置、U-Boot/FPGA 版本、tech-support 基线、EMP/console 带外通道。</li>
+<li>固件三件套分层框架（F2，&lt;&lt;<PAGE 4-14>&gt;&gt;/&lt;&lt;<PAGE 77-82>&gt;&gt;）：AOS 镜像（功能性）／引导件 U-Boot·ONIE·BIOS（信任链与启动）／逻辑件 FPGA·CPLD（电源/风扇/PoE/PHY 行为）三者独立演进，版本矩阵按机型×部件列 Minimum/Current；每条 FPGA/U-Boot 升级都对应 CRAOS8X 编号，可反查"该现象要不要升固件"。</li>
+<li>ISSU 机理（P37，&lt;&lt;<PAGE 67>&gt;&gt;）：VC 按 chassis-id 从低到高逐台从 ISSU 目录重启，Slave 全部完成后 Master 重启引发 takeover；模块化机箱则备 CMM 先升转主。</li>
+</ul>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>先核对固件三件套版本</strong>：<code>show hardware-info</code> 查 U-Boot/FPGA 当前版本，对照 System Specifications 表 Minimum 列，低于最小值先走 FPGA/U-Boot 升级（C3，&lt;&lt;<PAGE 4>&gt;&gt;）</li>

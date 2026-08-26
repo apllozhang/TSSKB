@@ -77,7 +77,11 @@ blockquote p{margin:6px 0}
 <li>电信以太环网（G.8032 ERP）或工业环网（MRP）保护切换</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>二层高可靠防环分层选型（F3，&lt;&lt;<PAGE 157>&gt;&gt;/&lt;&lt;<PAGE 395>&gt;&gt;/&lt;&lt;<PAGE 211>&gt;&gt;）：STP/RSTP/MSTP（通用树）→UDLD（单向链路）→LBD（环回）→ERP/MRP（电信/工业环网）→DHL（双归）→SPBM（ISIS 最短路径，见 aos-nc-fabric-backbone）。环网保护双体系（F16，&lt;&lt;<PAGE 395>&gt;&gt;/&lt;&lt;<PAGE 426>&gt;&gt;）：ERP(G.8032，RPL owner+WTR/Guard+R-APS) 面向电信以太，MRP(IEC 62439-2，MRM/MRC/MRA 投票+测试帧) 面向工业环。STP 拓扑计算三步：选根桥（最低桥 ID）→每桥算到根最优路径→阻塞成环节路（P43，&lt;&lt;<PAGE 157>&gt;&gt;）。</p>
+<ul>
+<li>二层高可靠防环分层选型（F3，&lt;&lt;<PAGE 157>&gt;&gt;/&lt;&lt;<PAGE 395>&gt;&gt;/&lt;&lt;<PAGE 211>&gt;&gt;）：STP/RSTP/MSTP（通用树）→UDLD（单向链路）→LBD（环回）→ERP/MRP（电信/工业环网）→DHL（双归）→SPBM（ISIS 最短路径，见 aos-nc-fabric-backbone）。</li>
+<li>环网保护双体系（F16，&lt;&lt;<PAGE 395>&gt;&gt;/&lt;&lt;<PAGE 426>&gt;&gt;）：ERP(G.8032，RPL owner+WTR/Guard+R-APS) 面向电信以太，MRP(IEC 62439-2，MRM/MRC/MRA 投票+测试帧) 面向工业环。</li>
+<li>STP 拓扑计算三步：选根桥（最低桥 ID）→每桥算到根最优路径→阻塞成环节路（P43，&lt;&lt;<PAGE 157>&gt;&gt;）。</li>
+</ul>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>通用防环</strong>：小网 RSTP；多 VLAN 独立路径选 MSTP（VLAN 映射 MSTI，Flat 模式最多 17 实例含 CIST）；per-VLAN 模式是 AOS 私有，跨厂商互通受限（P45/P46/X21，&lt;&lt;<PAGE 164>&gt;&gt;）</li>

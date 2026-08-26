@@ -67,7 +67,11 @@ blockquote p{margin:6px 0}
 <li>核对安全红线：激光/ESD/雷暴/住宅禁用等</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>硬件健康监控三层框架（F3，&lt;&lt;<PAGE 15>&gt;&gt;/&lt;&lt;<PAGE 45>&gt;&gt;/&lt;&lt;<PAGE 55-57>&gt;&gt;）：物理层=面板 LED（OK/VC/PWR 三系统灯+端口灯分色）；传感层=自动监控（超 Warning 发 trap 不停机、超 Danger 自动关机不可配）；CLI 层=用户驱动四板斧（show module/show temperature/show powersupply/show lanpower）。首次登录六步闭环（P37）：console（9600-8N1）→admin/switch→解锁会话→改密→时间/可选项→write memory。会话解锁安全模型（P38）：出厂仅 console 可用，Telnet/FTP/WebView/SNMP 全锁死需 <code>aaa authentication</code> 逐类解锁。</p>
+<ul>
+<li>硬件健康监控三层框架（F3，&lt;&lt;<PAGE 15>&gt;&gt;/&lt;&lt;<PAGE 45>&gt;&gt;/&lt;&lt;<PAGE 55-57>&gt;&gt;）：物理层=面板 LED（OK/VC/PWR 三系统灯+端口灯分色）；传感层=自动监控（超 Warning 发 trap 不停机、超 Danger 自动关机不可配）；CLI 层=用户驱动四板斧（show module/show temperature/show powersupply/show lanpower）。</li>
+<li>首次登录六步闭环（P37）：console（9600-8N1）→admin/switch→解锁会话→改密→时间/可选项→write memory。</li>
+<li>会话解锁安全模型（P38）：出厂仅 console 可用，Telnet/FTP/WebView/SNMP 全锁死需 <code>aaa authentication</code> 逐类解锁。</li>
+</ul>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>LED 快诊</strong>：OK 琥珀=系统/风扇/温度故障；PWR 稳琥珀=12V 故障、闪琥珀=54V/PoE 故障；VC 灭=关机或非 VC 成员（P13，&lt;&lt;<PAGE 45>&gt;&gt;）</li>

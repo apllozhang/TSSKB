@@ -72,7 +72,12 @@ blockquote p{margin:6px 0}
 <li>网络里 IoT 终端（打印机/摄像头等）需要自动识别与分类管理</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>Analytics 的数据面是 sFlow 采样：交换机发 sFlow 包 → OV Analytics Service → Mongo DB → WebServer 呈现，应用识别靠 sFlow 里的 TCP/UDP 端口。AppVis 在此之上用签名文件做深度识别并可下发 enforcement（DROP）。所有 Profile 都有"一机一档"限制：一台交换机同一时刻只能属于一个同类 Profile。IoT 画像靠 MAC OUI + DHCP 指纹（Option 55/60）。</p>
+<ul>
+<li>Analytics 的数据面是 sFlow 采样：交换机发 sFlow 包 → OV Analytics Service → Mongo DB → WebServer 呈现，应用识别靠 sFlow 里的 TCP/UDP 端口。</li>
+<li>AppVis 在此之上用签名文件做深度识别并可下发 enforcement（DROP）。</li>
+<li>所有 Profile 都有"一机一档"限制：一台交换机同一时刻只能属于一个同类 Profile。</li>
+<li>IoT 画像靠 MAC OUI + DHCP 指纹（Option 55/60）。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li><strong>AppVis 配置四步</strong>（&lt;&lt;<PAGE 371-375>&gt;&gt;）：Network → Application Visibility → 先在 Devices Management 确认设备无 Profile → Signature Files 导入（如 AppSig.upgrade_kit_3）→ Signature Profiles → "+"：Name=OS6860_Profile、选 Signature File → Monitor Flow Count 组建 App Group（如 MyApps：Facebook/Twitter/youtube/bet365）→ Bandwidth Usage and Enforcement 组选 MyApps、ACL/QoS 字段点 N/A 设 Disposition=DROP → Create Profile → Apply to Devices（选设备与端口 1/1/1、1/1/5）</li>

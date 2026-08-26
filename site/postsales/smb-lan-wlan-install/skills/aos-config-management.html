@@ -73,8 +73,11 @@ blockquote p{margin:6px 0}
 <li>需要升级 AOS 镜像（含 uboot/FPGA）或做配置的 USB 备份</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>AOS 的配置管理是"三层目录 + RAM 运行配置"的状态机：certified 是已认证的稳定目录，working 是待验证目录，还可自建 user-defined 目录。运行配置在 RAM 里，不保存就丢；
-<code>reload all</code> 永远从 certified 启动，验证新配置必须用 <code>reload from working no rollback-timeout</code>。升级同理：先升 working、验证无误再 <code>copy running certified</code> 固化。</p>
+<ul>
+<li>AOS 的配置管理是"三层目录 + RAM 运行配置"的状态机：certified 是已认证的稳定目录，working 是待验证目录，还可自建 user-defined 目录。</li>
+<li>运行配置在 RAM 里，不保存就丢；<code>reload all</code> 永远从 certified 启动，验证新配置必须用 <code>reload from working no rollback-timeout</code>。</li>
+<li>升级同理：先升 working、验证无误再 <code>copy running certified</code> 固化。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>查看目录与状态：

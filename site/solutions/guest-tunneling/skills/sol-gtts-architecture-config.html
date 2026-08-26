@@ -66,7 +66,13 @@ blockquote p{margin:6px 0}
 <li>规划隧道数上限（按机型三档）与 MTU（+24 字节）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>数据路径统一模型（F3，&lt;&lt;<PAGE 4-5>&gt;&gt;）：AP 收流量 → 按 ARP 分类进 L2 GRE service profile → 加 GRE 头过隧道 → 聚合交换机解封装 → 经 Hairpin（SAP 口→自环线→ACCESS 口）落 VLAN 域出 Internet。双向对称。三前置纪律：One ARP（一个 ARP 同时只有一条活跃隧道，N 个隧道 SSID 需 N 台交换机，P8/X1，&lt;&lt;<PAGE 7>&gt;&gt;）；L3 hop（AP 管理 IP 与 GRE Server IP 不同子网，P9/X3，&lt;&lt;<PAGE 7>&gt;&gt;）；版本（AOS ≥8.4.1.R02 / AWOS ≥3.0.2.19，P14，&lt;&lt;<PAGE 6>&gt;&gt;）。两条容量红线：Hairpin 线速封顶 SSID 带宽（P10，&lt;&lt;<PAGE 8>&gt;&gt;）、单机隧道数按机型 1000/2000/6000 且 VC 不抬高（P13/X6，&lt;&lt;<PAGE 8>&gt;&gt;）。服务约束：DHCP 流量也在隧道内，DHCP/Portal/DNS/NTP 必须从聚合交换机可达，最佳是隧道 SSID 专属服务（P4/X10，&lt;&lt;<PAGE 4-5>&gt;&gt;）。</p>
+<ul>
+<li>数据路径统一模型（F3，&lt;&lt;<PAGE 4-5>&gt;&gt;）：AP 收流量 → 按 ARP 分类进 L2 GRE service profile → 加 GRE 头过隧道 → 聚合交换机解封装 → 经 Hairpin（SAP 口→自环线→ACCESS 口）落 VLAN 域出 Internet。</li>
+<li>双向对称。</li>
+<li>三前置纪律：One ARP（一个 ARP 同时只有一条活跃隧道，N 个隧道 SSID 需 N 台交换机，P8/X1，&lt;&lt;<PAGE 7>&gt;&gt;）；L3 hop（AP 管理 IP 与 GRE Server IP 不同子网，P9/X3，&lt;&lt;<PAGE 7>&gt;&gt;）；版本（AOS ≥8.4.1.R02 / AWOS ≥3.0.2.19，P14，&lt;&lt;<PAGE 6>&gt;&gt;）。</li>
+<li>两条容量红线：Hairpin 线速封顶 SSID 带宽（P10，&lt;&lt;<PAGE 8>&gt;&gt;）、单机隧道数按机型 1000/2000/6000 且 VC 不抬高（P13/X6，&lt;&lt;<PAGE 8>&gt;&gt;）。</li>
+<li>服务约束：DHCP 流量也在隧道内，DHCP/Portal/DNS/NTP 必须从聚合交换机可达，最佳是隧道 SSID 专属服务（P4/X10，&lt;&lt;<PAGE 4-5>&gt;&gt;）。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>需求定位：用例三选一——访客隔离/安全策略串行/迁移免扩 VLAN（F1，&lt;&lt;<PAGE 3>&gt;&gt;）</li>

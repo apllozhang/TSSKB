@@ -67,7 +67,12 @@ blockquote p{margin:6px 0}
 <li>首次上电入网七步流程或电源热插拔更换</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>6870 运维围绕 bt 供电全栈（P26，&lt;&lt;<PAGE 62>&gt;&gt;/&lt;&lt;<PAGE 65>&gt;&gt;）：802.3af/at/bt，Class 0-8 梯度（Class 5=45W/6=60W/7=75W/8=90-99W，4 对线 Type 3/4）；4pair 与 8023bt 两级使能（P29）：<code>lanpower 4pair</code> 开 60/75/95W（802.3at 4 对+PoH）、<code>lanpower 8023bt</code> 开 bt 双 Type。两级裁决与家族通用：Guard Band（剩余预算&lt;口上限/类最大值即拒载，不作用已在电 PD，P34）与 Priority Disconnect 四场景（优先级+物理口号 <strong>1 最高→48 最低</strong>，P33）。温度双阈值（P19，&lt;&lt;<PAGE 58>&gt;&gt;/&lt;&lt;<PAGE 59>&gt;&gt;）：Warning 用户可配发 trap 业务继续；Danger 出厂固化超限自动关机须手动启动。三大可用性支柱（P10）：电源冗余/热插拔/硬件监控（自动 trap+LED+show 命令）。</p>
+<ul>
+<li>6870 运维围绕 bt 供电全栈（P26，&lt;&lt;<PAGE 62>&gt;&gt;/&lt;&lt;<PAGE 65>&gt;&gt;）：802.3af/at/bt，Class 0-8 梯度（Class 5=45W/6=60W/7=75W/8=90-99W，4 对线 Type 3/4）；4pair 与 8023bt 两级使能（P29）：<code>lanpower 4pair</code> 开 60/75/95W（802.3at 4 对+PoH）、<code>lanpower 8023bt</code> 开 bt 双 Type。</li>
+<li>两级裁决与家族通用：Guard Band（剩余预算&lt;口上限/类最大值即拒载，不作用已在电 PD，P34）与 Priority Disconnect 四场景（优先级+物理口号 <strong>1 最高→48 最低</strong>，P33）。</li>
+<li>温度双阈值（P19，&lt;&lt;<PAGE 58>&gt;&gt;/&lt;&lt;<PAGE 59>&gt;&gt;）：Warning 用户可配发 trap 业务继续；Danger 出厂固化超限自动关机须手动启动。</li>
+<li>三大可用性支柱（P10）：电源冗余/热插拔/硬件监控（自动 trap+LED+show 命令）。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>上电-入网标准七步（F3，&lt;&lt;<PAGE 17>&gt;&gt;-&lt;&lt;<PAGE 21>&gt;&gt;/&lt;&lt;<PAGE 65>&gt;&gt;）：安装（双人/盲板）→多电源数秒内相继插电→观察 OK/PS LED 至启动完成→console 115200-8N1 rollover 登录 admin/switch→解锁会话→改密+时区/时间/contact/name/location→write memory；PoE 机型追加 slot service start</li>

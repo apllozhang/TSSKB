@@ -78,7 +78,13 @@ blockquote p{margin:6px 0}
 <li>管理面需要 Loopback0 常驻地址</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>VLAN 即广播域，端口经静态配置、移动/认证、802.1q、Mobile Tag 四种途径入 VLAN（P64，&lt;&lt;<PAGE 360>&gt;&gt;）。动态分类的优先序固定：MAC &gt; MAC Range &gt; Network &gt; Protocol &gt; Default（P66，&lt;&lt;<PAGE 367-368>&gt;&gt;）。三层互通的开关很简单——VLAN 挂上 IP 接口路由即激活，无活跃成员则 oper down（P68，&lt;&lt;<PAGE 373>&gt;&gt;）。管理面的锚点是 Loopback0：不绑 VLAN 恒 up，RIP/OSPF 自动通告（BGP 不），是 router-id/RP/RADIUS 源 IP 的标准身份地址（P94，&lt;&lt;<PAGE 492>&gt;&gt;）。LLDP 默认全交换机使能，LLDP-MED 的 Network Policy TLV 让话机拿到 VLAN+802.1p+DSCP 三件套自动上线（P97/P98，&lt;&lt;<PAGE 509-517>&gt;&gt;）。</p>
+<ul>
+<li>VLAN 即广播域，端口经静态配置、移动/认证、802.1q、Mobile Tag 四种途径入 VLAN（P64，&lt;&lt;<PAGE 360>&gt;&gt;）。</li>
+<li>动态分类的优先序固定：MAC &gt; MAC Range &gt; Network &gt; Protocol &gt; Default（P66，&lt;&lt;<PAGE 367-368>&gt;&gt;）。</li>
+<li>三层互通的开关很简单——VLAN 挂上 IP 接口路由即激活，无活跃成员则 oper down（P68，&lt;&lt;<PAGE 373>&gt;&gt;）。</li>
+<li>管理面的锚点是 Loopback0：不绑 VLAN 恒 up，RIP/OSPF 自动通告（BGP 不），是 router-id/RP/RADIUS 源 IP 的标准身份地址（P94，&lt;&lt;<PAGE 492>&gt;&gt;）。</li>
+<li>LLDP 默认全交换机使能，LLDP-MED 的 Network Policy TLV 让话机拿到 VLAN+802.1p+DSCP 三件套自动上线（P97/P98，&lt;&lt;<PAGE 509-517>&gt;&gt;）。</li>
+</ul>
 <h2 id="a1">A1（决策/选型）</h2>
 <ol>
 <li>静态 VLAN（默认 VLAN 指派）vs 动态 VLAN（规则/认证匹配）vs 802.1Q tag（跨交换机 trunk）</li>

@@ -66,7 +66,11 @@ blockquote p{margin:6px 0}
 <li>利用出厂 Auto-Fabric/动态服务做近零接触开局</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>中型园区参考架构（F6，&lt;&lt;<PAGE 63>&gt;&gt;）：2×BCB 全网格 + N×BEB 双归 LAG + PBR 策略路由器；VRF 按部门分段、VRRP 虚网关 .1（末位=BEB 号）、/30 点对点连 PBR、OSPF 按 VRF 分 area、PBR 集中策略，可平滑加 BCB 扩展。VRRP tracking 联动上行链路：上行断则优先级 120−25=95，对端接管（P59，&lt;&lt;<PAGE 78>&gt;&gt;）。自动化分层（F5，&lt;&lt;<PAGE 36>&gt;&gt;）：Auto-Fabric 六阶段打底 → UNP+认证动态 SAP → 动态服务按 VLAN 标签即时生成（ISID=BSN+Domain ID+VLAN%Modulo 公式，P36，&lt;&lt;<PAGE 42>&gt;&gt;）。</p>
+<ul>
+<li>中型园区参考架构（F6，&lt;&lt;<PAGE 63>&gt;&gt;）：2×BCB 全网格 + N×BEB 双归 LAG + PBR 策略路由器；VRF 按部门分段、VRRP 虚网关 .1（末位=BEB 号）、/30 点对点连 PBR、OSPF 按 VRF 分 area、PBR 集中策略，可平滑加 BCB 扩展。</li>
+<li>VRRP tracking 联动上行链路：上行断则优先级 120−25=95，对端接管（P59，&lt;&lt;<PAGE 78>&gt;&gt;）。</li>
+<li>自动化分层（F5，&lt;&lt;<PAGE 36>&gt;&gt;）：Auto-Fabric 六阶段打底 → UNP+认证动态 SAP → 动态服务按 VLAN 标签即时生成（ISID=BSN+Domain ID+VLAN%Modulo 公式，P36，&lt;&lt;<PAGE 42>&gt;&gt;）。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>部署 11 步总清单（C24，&lt;&lt;<PAGE 62>&gt;&gt;）：物理拓扑/LAG → VLANs → LBD → 控制与业务 BVLAN → SPB 服务 → BEB 上 SAP → VRF 分段 → VRRP → VRF-PBR 点对点 → VRRP Tracking → OSPF → 网络策略</li>

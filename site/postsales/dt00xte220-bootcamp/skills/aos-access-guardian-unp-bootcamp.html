@@ -78,7 +78,13 @@ blockquote p{margin:6px 0}
 <li>IoT 设备自动识别（DHCP Option 55/60 指纹 + MAC OUI）并自动指派档案</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>Access Guardian 的核心是"端口自动感知多客户端认证"：同一口上自动检测 802.1X 与非 802.1X 设备（P120，&lt;&lt;<PAGE 630>&gt;&gt;）。身份的载体是 UNP（Universal Network Profile）= VLAN + QoS/ACL 策略列表 +（R8 加 Location/Period），档案随用户动态应用到端口（P121，&lt;&lt;<PAGE 631>&gt;&gt;）。下发路径：RADIUS Access-Accept 的 Filter-ID 携 UNP 名；无返回时走降级链——分类规则 → 默认 UNP → Captive Portal → 阻断（P122/F10，&lt;&lt;<PAGE 632, 635-638>&gt;&gt;）。R8 端口分类规则有 16 级固定优先序（Port &gt; Port+VLAN tag &gt; Domain 组合 &gt; MAC &gt; OUI &gt; Range &gt; LLDP &gt; Auth-type &gt; IP &gt; VLAN tag）（P124，&lt;&lt;<PAGE 638>&gt;&gt;）。IoT 画像三组件：本地签名收集器 + 本地 profiler + UNP 画像，识别后自动指派 UNP（P127/P128/F11，&lt;&lt;<PAGE 686-690>&gt;&gt;）。</p>
+<ul>
+<li>Access Guardian 的核心是"端口自动感知多客户端认证"：同一口上自动检测 802.1X 与非 802.1X 设备（P120，&lt;&lt;<PAGE 630>&gt;&gt;）。</li>
+<li>身份的载体是 UNP（Universal Network Profile）= VLAN + QoS/ACL 策略列表 +（R8 加 Location/Period），档案随用户动态应用到端口（P121，&lt;&lt;<PAGE 631>&gt;&gt;）。</li>
+<li>下发路径：RADIUS Access-Accept 的 Filter-ID 携 UNP 名；无返回时走降级链——分类规则 → 默认 UNP → Captive Portal → 阻断（P122/F10，&lt;&lt;<PAGE 632, 635-638>&gt;&gt;）。</li>
+<li>R8 端口分类规则有 16 级固定优先序（Port &gt; Port+VLAN tag &gt; Domain 组合 &gt; MAC &gt; OUI &gt; Range &gt; LLDP &gt; Auth-type &gt; IP &gt; VLAN tag）（P124，&lt;&lt;<PAGE 638>&gt;&gt;）。</li>
+<li>IoT 画像三组件：本地签名收集器 + 本地 profiler + UNP 画像，识别后自动指派 UNP（P127/P128/F11，&lt;&lt;<PAGE 686-690>&gt;&gt;）。</li>
+</ul>
 <h2 id="a1">A1（决策/选型）</h2>
 <ol>
 <li>认证方式：802.1X（有 supplicant）vs MAC 认证（交换机以源 MAC 为用户名/密码构造 RADIUS 请求，P123，&lt;&lt;<PAGE 633>&gt;&gt;）vs 免认证纯分类</li>

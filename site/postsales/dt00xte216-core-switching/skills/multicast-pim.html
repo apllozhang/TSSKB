@@ -77,9 +77,11 @@ blockquote p{margin:6px 0}
 <li>RP 单点故障风险大，需要 RP 冗余与负载分担（Anycast RP）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>组播分两层解：同 VLAN 内由 IPMS（硬件 IGMP 侦听）解决"只发给加入的端口"；
-跨网段才需要组播路由协议做 RPF 校验和树构建。PIM-SM 用显式加入 + RP 共享树（RPT），末跳 DR 收到首包后自动发起 SPT 切换获得最优路径；
-RP 是可用性与性能的关键点，BSR 做动态发现，Anycast RP（RFC 4610）用共享 Loopback 任播地址做到 IGP 级快速切换。</p>
+<ul>
+<li>组播分两层解：同 VLAN 内由 IPMS（硬件 IGMP 侦听）解决"只发给加入的端口"；跨网段才需要组播路由协议做 RPF 校验和树构建。</li>
+<li>PIM-SM 用显式加入 + RP 共享树（RPT），末跳 DR 收到首包后自动发起 SPT 切换获得最优路径；
+RP 是可用性与性能的关键点，BSR 做动态发现，Anycast RP（RFC 4610）用共享 Loopback 任播地址做到 IGP 级快速切换。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>二层 IPMS：<code>ip multicast admin-state enable</code>（全网）+ 服务器侧 <code>ip multicast querying enable</code> + 其余 <code>ip multicast querier-forwarding enable</code>；验证 <code>show ip multicast group/forward</code> 精确到组地址的端口表项（&lt;&lt;<PAGE 405>&gt;&gt;-&lt;&lt;<PAGE 409>&gt;&gt;）</li>

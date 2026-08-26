@@ -67,7 +67,12 @@ blockquote p{margin:6px 0}
 <li>PoE 供电排障：lanpower 命令族、Priority Disconnect 裁决、预算不足断电分析</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>热插拔节律双标准（P37，&lt;&lt;<PAGE 63>&gt;&gt;）：所有拆件间隔 30 秒；所有插件间隔 5 分钟且 LED 无错才能进行下一件——这是 9900 区别于 1U 交换机的机箱级纪律。三重热换限制（P38-P40，&lt;&lt;<PAGE 63>&gt;&gt;）：单件不可热拆；CFM 热换 120 秒窗口且风扇全在位、一次一块；NI 只能同类热换（先断网线拔光模块等 30 秒）。LED 组合诊断语义（P12，&lt;&lt;<PAGE 18>&gt;&gt;）：PRI/FAB 状态编码故障域，五灯同闪=全部 CFM PCIe 硬链路失效（拒绝登录、console 每 5 秒报错）。PoE 机制三要点：默认 operational disabled（装好不等于供电）；功率上限只设限不预留；Priority Disconnect 端口优先方向为 <strong>48（最高）→1（最低）</strong>，与接入系列相反（P31/P32/X37/X38，&lt;&lt;<PAGE 50>&gt;&gt;/&lt;&lt;<PAGE 52>&gt;&gt;/&lt;&lt;<PAGE 53>&gt;&gt;/&lt;&lt;<PAGE 55>&gt;&gt;）。</p>
+<ul>
+<li>热插拔节律双标准（P37，&lt;&lt;<PAGE 63>&gt;&gt;）：所有拆件间隔 30 秒；所有插件间隔 5 分钟且 LED 无错才能进行下一件——这是 9900 区别于 1U 交换机的机箱级纪律。</li>
+<li>三重热换限制（P38-P40，&lt;&lt;<PAGE 63>&gt;&gt;）：单件不可热拆；CFM 热换 120 秒窗口且风扇全在位、一次一块；NI 只能同类热换（先断网线拔光模块等 30 秒）。</li>
+<li>LED 组合诊断语义（P12，&lt;&lt;<PAGE 18>&gt;&gt;）：PRI/FAB 状态编码故障域，五灯同闪=全部 CFM PCIe 硬链路失效（拒绝登录、console 每 5 秒报错）。</li>
+<li>PoE 机制三要点：默认 operational disabled（装好不等于供电）；功率上限只设限不预留；Priority Disconnect 端口优先方向为 <strong>48（最高）→1（最低）</strong>，与接入系列相反（P31/P32/X37/X38，&lt;&lt;<PAGE 50>&gt;&gt;/&lt;&lt;<PAGE 52>&gt;&gt;/&lt;&lt;<PAGE 53>&gt;&gt;/&lt;&lt;<PAGE 55>&gt;&gt;）。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>更换作业先过三关：该组件是否多于一件（单件禁拆）→ 热插拔节律表（拆 30s/插 5min+LED 无错）→ 功率预算（<code>show chassis</code> Power Left）</li>

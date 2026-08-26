@@ -72,8 +72,11 @@ blockquote p{margin:6px 0}
 <li>客户端认证失败/落错 VLAN，需要排查 UNP 匹配链路</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>Unified Access 是三层模板模型：AAA Server Profile 定义认证服务器参数 → Access Role Profile 定义 UNP 属性（QoS 策略表、Access Policies、Captive Portal 认证）→ Access Auth Profile 把预定义 UNP 端口配置指派到边缘端口；
-Unified Policy 挂在 Access Role Profile 之下。认证不可用时由 Access Classification 规则兜底决定 profile。</p>
+<ul>
+<li>Unified Access 是三层模板模型：AAA Server Profile 定义认证服务器参数 → Access Role Profile 定义 UNP 属性（QoS 策略表、Access Policies、Captive Portal 认证）→ Access Auth Profile 把预定义 UNP 端口配置指派到边缘端口；
+Unified Policy 挂在 Access Role Profile 之下。</li>
+<li>认证不可用时由 Access Classification 规则兜底决定 profile。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li><strong>建认证服务器</strong>：Security &gt; Authentication Servers &gt; RADIUS：建 RADIUS_VM（IP 192.168.100.102 / secret alcatel-lucent）（&lt;&lt;<PAGE 258-259>&gt;&gt;）</li>

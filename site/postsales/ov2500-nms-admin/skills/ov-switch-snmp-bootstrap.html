@@ -72,7 +72,11 @@ blockquote p{margin:6px 0}
 <li>不确定 SNMP 安全级别（no security / authentication / privacy / traps only）怎么设</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>OV2500 通过 SNMP/Traps 管理设备，而"By default, an OmniSwitch cannot be managed by OmniVista"——必须先在交换机侧开放 SNMP 访问。管理寻址推荐 Loopback0：snmp source ip 默认优先用 loopback0 作为源地址，Discovery 也用 Loopback0 地址发现设备。安全级别矩阵决定接受哪类请求，是安全与可用性的权衡。</p>
+<ul>
+<li>OV2500 通过 SNMP/Traps 管理设备，而"By default, an OmniSwitch cannot be managed by OmniVista"——必须先在交换机侧开放 SNMP 访问。</li>
+<li>管理寻址推荐 Loopback0：snmp source ip 默认优先用 loopback0 作为源地址，Discovery 也用 Loopback0 地址发现设备。</li>
+<li>安全级别矩阵决定接受哪类请求，是安全与可用性的权衡。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li><strong>SNMPv3 准备（推荐）</strong>，逐台执行（&lt;&lt;<PAGE 97>&gt;&gt;）：

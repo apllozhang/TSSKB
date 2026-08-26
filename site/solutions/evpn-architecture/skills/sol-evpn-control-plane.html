@@ -65,7 +65,11 @@ blockquote p{margin:6px 0}
 <li>解读 R-T1~R-T8 路由类型与扩展社区</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>演进决策链（F1，&lt;&lt;<PAGE 5-9>&gt;&gt;）：STP 阻塞链路→routed underlay；4096 VLAN 上限→24-bit VNI（约 1600 万）；洪泛学习→控制平面主动学习（"endpoint reachability information is advertised intelligently through the control plane within MP-BGP NLRI updates"，P1，&lt;&lt;<PAGE 7>&gt;&gt;）；单一控制平面同时承载 L2/L3 服务（P3，&lt;&lt;<PAGE 9>&gt;&gt;）。控制面学到的 MAC 不老化，以对端撤路为生命周期（P5，&lt;&lt;<PAGE 13>&gt;&gt;）。设计选型框架（F2，&lt;&lt;<PAGE 45>&gt;&gt;）：推荐 OSPF underlay+iBGP overlay+冗余 RR（same cluster-id 省内存，P29，&lt;&lt;<PAGE 46>&gt;&gt;）。</p>
+<ul>
+<li>演进决策链（F1，&lt;&lt;<PAGE 5-9>&gt;&gt;）：STP 阻塞链路→routed underlay；4096 VLAN 上限→24-bit VNI（约 1600 万）；洪泛学习→控制平面主动学习（"endpoint reachability information is advertised intelligently through the control plane within MP-BGP NLRI updates"，P1，&lt;&lt;<PAGE 7>&gt;&gt;）；单一控制平面同时承载 L2/L3 服务（P3，&lt;&lt;<PAGE 9>&gt;&gt;）。</li>
+<li>控制面学到的 MAC 不老化，以对端撤路为生命周期（P5，&lt;&lt;<PAGE 13>&gt;&gt;）。</li>
+<li>设计选型框架（F2，&lt;&lt;<PAGE 45>&gt;&gt;）：推荐 OSPF underlay+iBGP overlay+冗余 RR（same cluster-id 省内存，P29，&lt;&lt;<PAGE 46>&gt;&gt;）。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>Underlay 基线（P26/P27，&lt;&lt;<PAGE 45-46>&gt;&gt;）：单区域 OSPF+p2p 网络类型（免 DR 选举等待）+BFD 毫秒收敛；EVPN-VXLAN 只跑一个 underlay VRF（默认 VRF，P32，&lt;&lt;<PAGE 46>&gt;&gt;）</li>

@@ -77,7 +77,13 @@ blockquote p{margin:6px 0}
 <li>IP 语音要按 SIP 信令识别媒体流给 QoS：SIP snooping</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>QoS 四步处理链（F8/P156，&lt;&lt;<PAGE 1103>&gt;&gt;）：分类标记→拥塞管理（入队调度）→拥塞避免（随机丢弃防 tail drop）→policing/shaping。策略三元组：policy=condition+action+rule；流不匹配任何策略则用端口默认 QoS，多策略命中取最高 precedence（P158，&lt;&lt;<PAGE 1133>&gt;&gt;）。每端口 8 条队列，入队依据策略+ToS/802.1p+端口信任状态（P159）。策略来源决定修改权：PolicyView(LDAP) 建的只能 PolicyView 改，CLI/WebView 建的只能本端改（P160/X61，&lt;&lt;<PAGE 1133>&gt;&gt;）。四类策略列表：default/UNP/egress/AFP（AFP 仅 OS6900）（P161，&lt;&lt;<PAGE 1134>&gt;&gt;）。</p>
+<ul>
+<li>QoS 四步处理链（F8/P156，&lt;&lt;<PAGE 1103>&gt;&gt;）：分类标记→拥塞管理（入队调度）→拥塞避免（随机丢弃防 tail drop）→policing/shaping。</li>
+<li>策略三元组：policy=condition+action+rule；流不匹配任何策略则用端口默认 QoS，多策略命中取最高 precedence（P158，&lt;&lt;<PAGE 1133>&gt;&gt;）。</li>
+<li>每端口 8 条队列，入队依据策略+ToS/802.1p+端口信任状态（P159）。</li>
+<li>策略来源决定修改权：PolicyView(LDAP) 建的只能 PolicyView 改，CLI/WebView 建的只能本端改（P160/X61，&lt;&lt;<PAGE 1133>&gt;&gt;）。</li>
+<li>四类策略列表：default/UNP/egress/AFP（AFP 仅 OS6900）（P161，&lt;&lt;<PAGE 1134>&gt;&gt;）。</li>
+</ul>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>先定分类</strong>：信任口采信报文已有 802.1p/ToS；802.1Q tagged 口默认 untrusted——上联口语音/视频标记不生效的常见原因（X64，&lt;&lt;<PAGE 1134>&gt;&gt;）</li>

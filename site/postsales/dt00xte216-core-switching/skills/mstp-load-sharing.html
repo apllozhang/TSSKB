@@ -77,8 +77,11 @@ blockquote p{margin:6px 0}
 <li>排查"交换机不同域/实例行为不一致"的 MST Region 配置问题</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>MSTP（802.1s）把多个 VLAN 映射到至多 16 个 MSTI，用 CIST（实例 0）承载全部实例的单一 BPDU。同域三要素是 region name、revision level、VLAN-to-MSTI 映射，必须完全一致；
-对外整个 region 表现为一台交换机。负载分担的本质是让不同 MSTI 选不同根桥（差异化优先级）。</p>
+<ul>
+<li>MSTP（802.1s）把多个 VLAN 映射到至多 16 个 MSTI，用 CIST（实例 0）承载全部实例的单一 BPDU。</li>
+<li>同域三要素是 region name、revision level、VLAN-to-MSTI 映射，必须完全一致；对外整个 region 表现为一台交换机。</li>
+<li>负载分担的本质是让不同 MSTI 选不同根桥（差异化优先级）。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>切模式：<code>spantree mode flat</code> → <code>spantree mst region name lab_region</code> → <code>spantree mst region revision-level 1</code> → <code>spantree protocol mstp</code>（&lt;&lt;<PAGE 141>&gt;&gt;）</li>

@@ -503,6 +503,16 @@ import re as _re
 _CIRC = "①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮"
 
 def preprocess(text):
+    # I（核心理念）段落要点化：整段长句按句号拆成 bullet，便于快速扫读
+    def bulletize(m):
+        head, para = m.group(1), m.group(2).strip()
+        if para.startswith(('- ', '* ', '1.')):
+            return m.group(0)
+        sents = [s.strip() for s in para.split('。') if s.strip()]
+        if len(sents) < 2:
+            return m.group(0)
+        return head + '\n' + '\n'.join(f'- {s}。' for s in sents) + '\n'
+    text = _re.sub(r'(## I（核心理念）\s*\n+)([^\n#]+)', bulletize, text)
     # 内部使用：去掉流水线署名描述
     out = []
     for ln in text.splitlines():

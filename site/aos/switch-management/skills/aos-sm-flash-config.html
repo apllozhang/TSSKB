@@ -70,7 +70,12 @@ blockquote p{margin:6px 0}
 <li>文件传输选型：FTP/SFTP/SCP/TFTP；TFTP 单会话、空间限制排障</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>CMM 双目录配置管理体系（F2，&lt;&lt;<PAGE 94-101>&gt;&gt;）：certified（已认证的最可靠基线，不可直接写）+ working/用户目录（新文件试验场）+ RUNNING CONFIGURATION（RAM 中的当前配置）三层模型。正常重启时若 certified 与 RUNNING DIRECTORY 内容不同则从 certified 启动（P4，&lt;&lt;<PAGE 95>&gt;&gt;），这套目录结构本身就是回滚机制——新镜像/新配置先进 working 验证，可靠后 <code>copy running certified</code>（P5）。vcboot.cfg 是启动配置文件，启动时按名查找（P6，&lt;&lt;<PAGE 94>&gt;&gt;）。配置文件即 ASCII 文本，可上传、快照、定时应用，构成可复制的批量部署底座（P47，&lt;&lt;<PAGE 122>&gt;&gt;）。</p>
+<ul>
+<li>CMM 双目录配置管理体系（F2，&lt;&lt;<PAGE 94-101>&gt;&gt;）：certified（已认证的最可靠基线，不可直接写）+ working/用户目录（新文件试验场）+ RUNNING CONFIGURATION（RAM 中的当前配置）三层模型。</li>
+<li>正常重启时若 certified 与 RUNNING DIRECTORY 内容不同则从 certified 启动（P4，&lt;&lt;<PAGE 95>&gt;&gt;），这套目录结构本身就是回滚机制——新镜像/新配置先进 working 验证，可靠后 <code>copy running certified</code>（P5）。</li>
+<li>vcboot.cfg 是启动配置文件，启动时按名查找（P6，&lt;&lt;<PAGE 94>&gt;&gt;）。</li>
+<li>配置文件即 ASCII 文本，可上传、快照、定时应用，构成可复制的批量部署底座（P47，&lt;&lt;<PAGE 122>&gt;&gt;）。</li>
+</ul>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
 <li><strong>改动要落盘</strong>：运行目录为 certified 时不能直接保存（X1），先 <code>modify running-directory</code> 切用户目录，<code>write memory</code> 落盘，验证后 <code>copy running certified</code>（C20，&lt;&lt;<PAGE 104, 106>&gt;&gt;）</li>

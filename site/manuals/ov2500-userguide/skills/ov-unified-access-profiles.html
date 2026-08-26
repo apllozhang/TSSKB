@@ -74,7 +74,10 @@ blockquote p{margin:6px 0}
 <li>认证/分类结果要映射到 SPB 服务、VXLAN、GRE Tunnel</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>Unified Access 有三个配置途径：Workflow（六种引导流程：分类规则/802.1X/MAC/802.1X+MAC/MAC+Captive Portal/ClearPass）→ Template（Access Auth/WLAN Service/Access Role/AAA Server 等模板批量下发）→ Device Config（单设备微调）＋Profile Polling 轮询同步。认证分层：L2（802.1X/MAC/分类规则→定 UNP+VLAN，之后不变）→ L3（QMR、MAC 黑名单、位置/时间校验动态改 Policy List/Role）。</p>
+<ul>
+<li>Unified Access 有三个配置途径：Workflow（六种引导流程：分类规则/802.1X/MAC/802.1X+MAC/MAC+Captive Portal/ClearPass）→ Template（Access Auth/WLAN Service/Access Role/AAA Server 等模板批量下发）→ Device Config（单设备微调）＋Profile Polling 轮询同步。</li>
+<li>认证分层：L2（802.1X/MAC/分类规则→定 UNP+VLAN，之后不变）→ L3（QMR、MAC 黑名单、位置/时间校验动态改 Policy List/Role）。</li>
+</ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li><strong>途径选型</strong>（frameworks·F15，&lt;&lt;<PAGE 592>&gt;&gt;）：新场景走 Workflow 向导；标准化批量走 Template；个别设备差异走 Device Config（改动只影响所选设备不回写模板）</li>

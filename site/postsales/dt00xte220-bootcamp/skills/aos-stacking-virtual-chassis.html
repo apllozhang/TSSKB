@@ -78,7 +78,12 @@ blockquote p{margin:6px 0}
 <li>VFL 断裂担心双 Master 脑裂（同 IP 同 MAC 冲突）</li>
 </ul>
 <h2 id="i">I（核心理念）</h2>
-<p>堆叠把 2-8 台同家族交换机变成一个管理实体，四角色 Primary/Secondary/Idle/Pass-Through，Slot-ID 冲突时后来者进 Pass-Through（不阻流量但不成栈）（P38/P39，&lt;&lt;<PAGE 251-255>&gt;&gt;）。R8 的 Virtual Chassis 更进一步：多台物理机经 VFL 互联成单一路由器/网桥，接入-核心之间免 STP/VRRP（P46，&lt;&lt;<PAGE 290>&gt;&gt;）。两个体系共同的纪律是"切换前必须同步"（P42，&lt;&lt;<PAGE 260>&gt;&gt;）和"原主回来不重选举、MAC retention 恒开"（P50，&lt;&lt;<PAGE 297>&gt;&gt;）。脑裂是 VC 最大风险——两 Master 同 IP 同 MAC 会引发网络级故障，须用 RCD/VCSP 双保险（P53，&lt;&lt;<PAGE 306-307>&gt;&gt;）。</p>
+<ul>
+<li>堆叠把 2-8 台同家族交换机变成一个管理实体，四角色 Primary/Secondary/Idle/Pass-Through，Slot-ID 冲突时后来者进 Pass-Through（不阻流量但不成栈）（P38/P39，&lt;&lt;<PAGE 251-255>&gt;&gt;）。</li>
+<li>R8 的 Virtual Chassis 更进一步：多台物理机经 VFL 互联成单一路由器/网桥，接入-核心之间免 STP/VRRP（P46，&lt;&lt;<PAGE 290>&gt;&gt;）。</li>
+<li>两个体系共同的纪律是"切换前必须同步"（P42，&lt;&lt;<PAGE 260>&gt;&gt;）和"原主回来不重选举、MAC retention 恒开"（P50，&lt;&lt;<PAGE 297>&gt;&gt;）。</li>
+<li>脑裂是 VC 最大风险——两 Master 同 IP 同 MAC 会引发网络级故障，须用 RCD/VCSP 双保险（P53，&lt;&lt;<PAGE 306-307>&gt;&gt;）。</li>
+</ul>
 <h2 id="a1">A1（决策/选型）</h2>
 <ol>
 <li>冗余方案定位：STP 仅 50% 带宽 → LACP 仅链路冗余 → VC 链路+设备冗余+统一管理 → DHL 链路+设备冗余 100% 带宽（F16，&lt;&lt;<PAGE 481>&gt;&gt;）</li>
