@@ -641,6 +641,9 @@ def preprocess(text):
         out_blocks = []
         for block in _re.split(r'\n\s*\n', text):
             s = block.strip()
+            if '\n|' in block or block.lstrip().startswith('|'):
+                out_blocks.append(block)  # 表格块（含引导标题）整体保留，不拆
+                continue
             mli = _re.match(r'^(\d+\.|\-)\s+(.+)$', s, _re.S)
             if mli and len(s) > 200 and not _re.search(r'\n\s*[-*]\s', s):
                 joined = _re.sub(r'\n\s*', ' ', s)
@@ -727,6 +730,13 @@ def preprocess(text):
 def to_html(text):
     md.reset()
     h = md.convert(preprocess(text))
+    # 加粗引导行紧贴表格时，表格被吞进 <p> 不渲染——把竖线行解出为真表格
+    def _table_fix(m):
+        pre, rows = m.group(1), m.group(2)
+        return (f'<p>{pre.strip()}</p>' if pre.strip() else '') \
+            + '<div class="twrap"><table>' + rows + '</table></div>'
+    h = _re.sub(r'<p>((?:(?!<[tp]).)*?)\n((?:\|[^\n]*\n)+\|[^<]*)</p>', _table_fix, h, flags=_re.S)
+    h = h.replace('<p></p>', '')
     # 表格包横向滚动层：窄屏滚动查看，宽屏自动占满，避免挤压变形
     return h.replace('<table>', '<div class="twrap"><table>').replace('</table>', '</table></div>')
 
