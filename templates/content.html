@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}{{ title }} — {{ course.title }}{% endblock %}
+{% block body %}
+<div class="course-layout">
+  {% include '_course_sidebar.html' %}
+  <main id="main-content" class="course-main prose">
+    <nav class="breadcrumbs" aria-label="面包屑"><a href="/index.html">培训门户</a><span>/</span><a href="/{{ category.id }}/index.html">{{ category.label }}</a><span>/</span><a href="/{{ course.id }}/index.html">{{ course.title|course_code }}</a><span>/</span><span aria-current="page">{{ title }}</span></nav>
+    {% if skill_slug %}<header class="skill-heading"><div><p class="eyebrow">KNOWLEDGE UNIT</p><h1>{{ title }}</h1></div><dl><div><dt>Skill ID</dt><dd>{{ skill_slug }}</dd></div>{% if source_chapter %}<div><dt>来源章节</dt><dd>{{ source_chapter }}</dd></div>{% endif %}</dl></header>{% else %}<header class="page-intro compact"><p class="eyebrow">COURSE REFERENCE</p><h1>{{ title }}</h1></header>{% endif %}
+    <article class="markdown-body">{{ body_html }}</article>
+    {% if previous_href or next_href %}<nav class="previous-next" aria-label="知识单元翻页">{% if previous_href %}<a href="{{ previous_href }}"><span>上一单元</span><b>{{ previous_label }}</b></a>{% else %}<span></span>{% endif %}{% if next_href %}<a class="next" href="{{ next_href }}"><span>下一单元</span><b>{{ next_label }}</b></a>{% endif %}</nav>{% endif %}
+    <footer class="content-footer">{{ site.rights_notice }}</footer>
+  </main>
+</div>
+{% endblock %}

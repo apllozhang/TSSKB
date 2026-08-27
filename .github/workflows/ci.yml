@@ -1,0 +1,50 @@
+name: quality-gate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install
+        run: python -m pip install -e ".[dev,deploy]"
+      - name: Lint and type check
+        run: |
+          ruff check .
+          mypy src
+      - name: Test
+        run: pytest --cov=src/tsskb --cov-report=term-missing
+      - name: Build and validate
+        run: |
+          tsskb build --output dist/site --full --strict
+          tsskb validate --site dist/site --strict
+          tsskb metrics --site dist/site --environment prod --enforce-budget
+      - name: Reproducibility check
+        run: |
+          tsskb build --output dist/site-second --full --strict
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          a = json.loads(Path("dist/site/_meta/manifest.json").read_text())
+          b = json.loads(Path("dist/site-second/_meta/manifest.json").read_text())
+          assert a["input_digest"] == b["input_digest"]
+          assert a["output_digest"] == b["output_digest"]
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: tsskb-site-${{ github.sha }}
+          path: dist/site
+          if-no-files-found: error
+          retention-days: 14

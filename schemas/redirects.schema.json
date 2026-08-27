@@ -1,0 +1,53 @@
+{
+  "$defs": {
+    "Redirect": {
+      "additionalProperties": false,
+      "properties": {
+        "from_path": {
+          "pattern": "^[a-z0-9][a-z0-9_./-]*\\.html$",
+          "title": "From Path",
+          "type": "string"
+        },
+        "to_path": {
+          "pattern": "^[a-z0-9][a-z0-9_./-]*\\.html$",
+          "title": "To Path",
+          "type": "string"
+        },
+        "reason": {
+          "maxLength": 240,
+          "minLength": 5,
+          "title": "Reason",
+          "type": "string"
+        }
+      },
+      "required": [
+        "from_path",
+        "to_path",
+        "reason"
+      ],
+      "title": "Redirect",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "redirects": {
+      "items": {
+        "$ref": "#/$defs/Redirect"
+      },
+      "title": "Redirects",
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema_version",
+    "redirects"
+  ],
+  "title": "Redirects",
+  "type": "object"
+}

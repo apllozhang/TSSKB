@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 """V1 原文真实性核对 v2：特征词命中率匹配（摘录为转写压缩，不能逐字匹配）"""
-import re, json, sys
+import json
+import re
+import sys
 from pathlib import Path
 
 STOP = set("the a an of to in and or for with on by is are be as at from this that it its can will not use used using when which all any each per via only page type mode".split())
@@ -20,7 +22,7 @@ def load_pages(fulltext):
 def words(s):
     return [w for w in re.findall(r"[a-zA-Z0-9][a-zA-Z0-9./_-]{3,}", s.lower()) if w not in STOP]
 
-def check_book(base):
+def check_book(base: Path) -> None:
     bdir = Path(base)
     pages = load_pages((bdir / "fulltext.md").read_text(encoding="utf-8"))
     report = {}
@@ -57,10 +59,12 @@ def check_book(base):
             results.append({"h": round(ratio, 2), "ok": ratio >= 0.35, "head": e.split("\n")[0][:70]})
         report[cat] = results
     (bdir / "v1_report.json").write_text(json.dumps(report, ensure_ascii=False, indent=1), encoding="utf-8")
-    print(f"== {base.split('/')[-1]} ==")
+    print(f"== {base.name} ==")
     for cat, rs in report.items():
         ok = sum(1 for r in rs if r["ok"])
         print(f"  {cat}: {len(rs)} 条, V1通过 {ok}, 淘汰 {len(rs)-ok}")
 
-for slug in sys.argv[1:]:
-    check_book(f"D:/Claude code/TSSKB/books/{slug}")
+if __name__ == "__main__":
+    project_root = Path(__file__).resolve().parent
+    for slug in sys.argv[1:]:
+        check_book(project_root / "books" / slug)

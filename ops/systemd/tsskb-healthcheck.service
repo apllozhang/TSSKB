@@ -1,0 +1,10 @@
+[Unit]
+Description=TSSKB production health check
+After=network-online.target nginx.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/curl --fail --silent --show-error --max-time 8 http://127.0.0.1:8899/healthz
+User=nobody
+NoNewPrivileges=true
+PrivateTmp=true

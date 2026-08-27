@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}{{ category.label }} — {{ site.name }}{% endblock %}
+{% block description %}{{ category.description }}。{{ site.description }}{% endblock %}
+{% block body %}
+<main id="main-content" class="page-shell">
+  <section class="category-hero">
+    {% if category.banner %}<img src="/assets/{{ category.banner }}" alt="" role="presentation">{% endif %}
+    <div class="category-overlay"></div>
+    <div><p class="eyebrow light">{{ category.id|upper }}</p><h1>{{ category.label }}</h1><p>{{ category.description }} · {{ courses|length }} 门已上线课程</p></div>
+  </section>
+  <div class="category-tools">
+    {% set search_id = 'global-search' %}{% include '_search.html' %}
+    <label><span class="sr-only">筛选本分类课程</span><input type="search" placeholder="筛选本分类课程…" data-category-filter></label>
+  </div>
+  <section class="course-grid category-grid" data-course-grid>
+  {% for course in courses %}
+    <article class="course-card" data-course-card><div class="card-topline"><span>{{ course.title|course_code }}</span><span class="status">{{ course.status }}</span></div><h2><a href="/{{ course.id }}/index.html">{{ course.title }}</a></h2><p>{{ course.catalog_description }}</p><div class="chips">{% if course.version %}<span>{{ course.version }}</span>{% endif %}{% if course.pages %}<span>{{ course.pages }} 页</span>{% endif %}<span>{{ course.skill_slugs|length }} 单元</span></div></article>
+  {% endfor %}
+  {% for item in category.planned_items %}
+    <article class="course-card planned" data-course-card><div class="card-topline"><span>ROADMAP</span><span class="status">待建设</span></div><h2>{{ item.title }}</h2><p>{{ item.description }}</p></article>
+  {% endfor %}
+  </section>
+</main>
+{% endblock %}

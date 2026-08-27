@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="{{ site.locale }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{% block description %}{{ site.description }}{% endblock %}">
+  <meta name="theme-color" content="#6B489D">
+  <title>{% block title %}{{ site.name }}{% endblock %}</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/tokens.css">
+  <link rel="stylesheet" href="/assets/css/layout.css">
+  <link rel="stylesheet" href="/assets/css/components.css">
+  <link rel="stylesheet" href="/assets/css/content.css">
+</head>
+<body data-page-kind="{{ page_kind }}">
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <header class="topbar" data-topbar>
+    <a class="brand" href="/index.html" aria-label="返回 ALE 技术培训门户首页">
+      <img src="/assets/ale-logo-color.png" alt="Alcatel-Lucent Enterprise">
+      <span>{{ site.short_name }}</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-controls="primary-nav" aria-expanded="false" data-nav-toggle>
+      <span aria-hidden="true">☰</span><span class="sr-only">打开导航</span>
+    </button>
+    <nav id="primary-nav" class="primary-nav" aria-label="主导航">
+      {% for item in navigation %}
+      <a href="/{{ item.href }}"{% if active_nav == item.category or (active_nav == 'home' and item.href == 'index.html') %} aria-current="page"{% endif %}>{{ item.label }}</a>
+      {% endfor %}
+    </nav>
+  </header>
+  {% block body %}{% endblock %}
+  <script src="/assets/js/app.js" defer></script>
+  <script src="/assets/js/search.js" defer></script>
+  <script src="/assets/js/lightbox.js" defer></script>
+</body>
+</html>

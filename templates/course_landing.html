@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}{{ course.title }} — {{ site.name }}{% endblock %}
+{% block body %}
+<div class="course-layout">
+  {% include '_course_sidebar.html' %}
+  <main id="main-content" class="course-main">
+    <nav class="breadcrumbs" aria-label="面包屑"><a href="/index.html">培训门户</a><span>/</span><a href="/{{ category.id }}/index.html">{{ category.label }}</a><span>/</span><span aria-current="page">{{ course.title|course_code }}</span></nav>
+    <header class="course-intro"><p class="eyebrow">{{ course.title|course_code }}</p><h1>{{ course.title }}</h1><p>{{ course.subtitle }}</p><div class="chips">{% if course.version %}<span>{{ course.version }}</span>{% endif %}{% if course.pages %}<span>{{ course.pages }} 页</span>{% endif %}<span>{{ course.skill_slugs|length }} 个知识单元</span></div></header>
+    <section class="route"><h2>建议学习路线</h2><ol>{% for item in course.route %}<li>{{ item }}</li>{% endfor %}</ol></section>
+    <section><div class="section-heading"><div><p class="eyebrow">EXECUTABLE KNOWLEDGE</p><h2>知识单元</h2></div></div>
+      <div class="skill-groups">{% for group in course.groups %}<section><h3>{{ group.name }}</h3><div>{% for skill in group.skills %}<a href="/{{ course.id }}/skills/{{ skill }}.html"><b>{{ skill_titles[skill] }}</b><code>{{ skill }}</code><span>{{ skill_descriptions.get(skill, '') }}</span></a>{% endfor %}</div></section>{% endfor %}</div>
+    </section>
+    <section class="reading-links"><h2>课程全景资料</h2><a href="/{{ course.id }}/digest.html">精华长文 DIGEST</a><a href="/{{ course.id }}/overview.html">教书理解 BOOK_OVERVIEW</a><a href="/{{ course.id }}/glossary.html">术语词典</a>{% if has_gallery %}<a href="/{{ course.id }}/gallery.html">产品外观</a>{% endif %}</section>
+    <footer class="content-footer">{{ site.rights_notice }}</footer>
+  </main>
+</div>
+{% endblock %}

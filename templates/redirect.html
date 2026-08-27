@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="{{ site.locale }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="refresh" content="0;url=/{{ redirect.to_path }}">
+  <link rel="canonical" href="/{{ redirect.to_path }}">
+  <title>页面已迁移 — {{ site.name }}</title>
+  <link rel="stylesheet" href="/assets/css/tokens.css">
+  <link rel="stylesheet" href="/assets/css/layout.css">
+</head>
+<body>
+  <main id="main-content" class="page-shell">
+    <header class="page-intro"><p class="eyebrow">CONTENT MIGRATION</p><h1>页面已迁移</h1><p>{{ redirect.reason }}</p></header>
+    <p><a href="/{{ redirect.to_path }}">如果浏览器没有自动跳转，请打开新页面。</a></p>
+  </main>
+  <script>window.location.replace("/{{ redirect.to_path }}" + window.location.hash);</script>
+</body>
+</html>

@@ -1,0 +1,391 @@
+{
+  "$defs": {
+    "Category": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "pattern": "^[a-z0-9]+(?:[a-z0-9-]*/?)*[a-z0-9]$|^[a-z0-9]$",
+          "title": "Id",
+          "type": "string"
+        },
+        "label": {
+          "maxLength": 100,
+          "minLength": 2,
+          "title": "Label",
+          "type": "string"
+        },
+        "description": {
+          "maxLength": 180,
+          "minLength": 2,
+          "title": "Description",
+          "type": "string"
+        },
+        "accent": {
+          "pattern": "^#[0-9A-Fa-f]{6}$",
+          "title": "Accent",
+          "type": "string"
+        },
+        "banner": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z0-9][a-z0-9_.-]+$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Banner"
+        },
+        "planned_items": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/PlannedItem"
+          },
+          "title": "Planned Items",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "label",
+        "description",
+        "accent"
+      ],
+      "title": "Category",
+      "type": "object"
+    },
+    "Course": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "pattern": "^[a-z0-9]+(?:[a-z0-9-]*/?)*[a-z0-9]$|^[a-z0-9]$",
+          "title": "Id",
+          "type": "string"
+        },
+        "category": {
+          "pattern": "^[a-z0-9]+(?:[a-z0-9-]*/?)*[a-z0-9]$|^[a-z0-9]$",
+          "title": "Category",
+          "type": "string"
+        },
+        "book": {
+          "pattern": "^[a-z0-9]+(?:[a-z0-9-]*/?)*[a-z0-9]$|^[a-z0-9]$",
+          "title": "Book",
+          "type": "string"
+        },
+        "title": {
+          "maxLength": 180,
+          "minLength": 3,
+          "title": "Title",
+          "type": "string"
+        },
+        "subtitle": {
+          "maxLength": 300,
+          "minLength": 3,
+          "title": "Subtitle",
+          "type": "string"
+        },
+        "catalog_description": {
+          "maxLength": 300,
+          "minLength": 3,
+          "title": "Catalog Description",
+          "type": "string"
+        },
+        "status": {
+          "default": "published",
+          "enum": [
+            "draft",
+            "review",
+            "published",
+            "archived"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "version": {
+          "anyOf": [
+            {
+              "maxLength": 80,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Version"
+        },
+        "pages": {
+          "anyOf": [
+            {
+              "maximum": 100000,
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Pages"
+        },
+        "roles": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Roles",
+          "type": "array"
+        },
+        "difficulty": {
+          "enum": [
+            "foundation",
+            "intermediate",
+            "advanced"
+          ],
+          "title": "Difficulty",
+          "type": "string"
+        },
+        "tags": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Tags",
+          "type": "array"
+        },
+        "route": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Route",
+          "type": "array"
+        },
+        "groups": {
+          "items": {
+            "$ref": "#/$defs/CourseGroup"
+          },
+          "minItems": 1,
+          "title": "Groups",
+          "type": "array"
+        },
+        "source": {
+          "$ref": "#/$defs/SourceInfo"
+        }
+      },
+      "required": [
+        "id",
+        "category",
+        "book",
+        "title",
+        "subtitle",
+        "catalog_description",
+        "roles",
+        "difficulty",
+        "tags",
+        "route",
+        "groups",
+        "source"
+      ],
+      "title": "Course",
+      "type": "object"
+    },
+    "CourseGroup": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "maxLength": 80,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "skills": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Skills",
+          "type": "array"
+        }
+      },
+      "required": [
+        "name",
+        "skills"
+      ],
+      "title": "CourseGroup",
+      "type": "object"
+    },
+    "NavigationItem": {
+      "additionalProperties": false,
+      "properties": {
+        "label": {
+          "maxLength": 40,
+          "minLength": 1,
+          "title": "Label",
+          "type": "string"
+        },
+        "href": {
+          "pattern": "^[a-z0-9][a-z0-9_./-]*\\.html$",
+          "title": "Href",
+          "type": "string"
+        },
+        "category": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Category"
+        }
+      },
+      "required": [
+        "label",
+        "href"
+      ],
+      "title": "NavigationItem",
+      "type": "object"
+    },
+    "PlannedItem": {
+      "additionalProperties": false,
+      "properties": {
+        "title": {
+          "maxLength": 150,
+          "minLength": 2,
+          "title": "Title",
+          "type": "string"
+        },
+        "description": {
+          "maxLength": 300,
+          "minLength": 2,
+          "title": "Description",
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "description"
+      ],
+      "title": "PlannedItem",
+      "type": "object"
+    },
+    "SiteInfo": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "maxLength": 100,
+          "minLength": 2,
+          "title": "Name",
+          "type": "string"
+        },
+        "short_name": {
+          "maxLength": 60,
+          "minLength": 2,
+          "title": "Short Name",
+          "type": "string"
+        },
+        "description": {
+          "maxLength": 300,
+          "minLength": 5,
+          "title": "Description",
+          "type": "string"
+        },
+        "locale": {
+          "default": "zh-CN",
+          "title": "Locale",
+          "type": "string"
+        },
+        "rights_notice": {
+          "maxLength": 300,
+          "minLength": 5,
+          "title": "Rights Notice",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "short_name",
+        "description",
+        "rights_notice"
+      ],
+      "title": "SiteInfo",
+      "type": "object"
+    },
+    "SourceInfo": {
+      "additionalProperties": false,
+      "properties": {
+        "book": {
+          "pattern": "^[a-z0-9]+(?:[a-z0-9-]*/?)*[a-z0-9]$|^[a-z0-9]$",
+          "title": "Book",
+          "type": "string"
+        },
+        "rights_scope": {
+          "const": "internal-training",
+          "default": "internal-training",
+          "title": "Rights Scope",
+          "type": "string"
+        },
+        "last_verified": {
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+          "title": "Last Verified",
+          "type": "string"
+        }
+      },
+      "required": [
+        "book",
+        "last_verified"
+      ],
+      "title": "SourceInfo",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "site": {
+      "$ref": "#/$defs/SiteInfo"
+    },
+    "navigation": {
+      "items": {
+        "$ref": "#/$defs/NavigationItem"
+      },
+      "minItems": 1,
+      "title": "Navigation",
+      "type": "array"
+    },
+    "categories": {
+      "items": {
+        "$ref": "#/$defs/Category"
+      },
+      "minItems": 1,
+      "title": "Categories",
+      "type": "array"
+    },
+    "courses": {
+      "items": {
+        "$ref": "#/$defs/Course"
+      },
+      "minItems": 1,
+      "title": "Courses",
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema_version",
+    "site",
+    "navigation",
+    "categories",
+    "courses"
+  ],
+  "title": "Catalog",
+  "type": "object"
+}

@@ -1,0 +1,21 @@
+<aside class="course-sidebar" id="course-sidebar" data-sidebar>
+  <div class="sidebar-heading">
+    <p class="eyebrow">COURSE</p>
+    <h2>{{ course.title }}</h2>
+    <p>{{ course.subtitle }}</p>
+  </div>
+  {% set search_id = 'course-search' %}{% include '_search.html' %}
+  <nav class="course-nav" aria-label="课程目录">
+    <a{% if current == 'landing' %} aria-current="page"{% endif %} href="/{{ course.id }}/index.html">课程首页</a>
+    <a{% if current == 'digest' %} aria-current="page"{% endif %} href="/{{ course.id }}/digest.html">精华长文</a>
+    {% if has_gallery %}<a{% if current == 'gallery' %} aria-current="page"{% endif %} href="/{{ course.id }}/gallery.html">产品外观</a>{% endif %}
+    <a{% if current == 'overview' %} aria-current="page"{% endif %} href="/{{ course.id }}/overview.html">教书理解</a>
+    <a{% if current == 'glossary' %} aria-current="page"{% endif %} href="/{{ course.id }}/glossary.html">术语词典</a>
+    {% for group in course.groups %}
+    <p class="course-nav-group">{{ group.name }}</p>
+      {% for skill in group.skills %}
+      <a{% if current == skill %} aria-current="page"{% endif %} href="/{{ course.id }}/skills/{{ skill }}.html">{{ skill_titles.get(skill, skill) }}</a>
+      {% endfor %}
+    {% endfor %}
+  </nav>
+</aside>

@@ -1,0 +1,67 @@
+{
+  "$defs": {
+    "RecentItem": {
+      "additionalProperties": false,
+      "properties": {
+        "date": {
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+          "title": "Date",
+          "type": "string"
+        },
+        "title": {
+          "maxLength": 150,
+          "minLength": 2,
+          "title": "Title",
+          "type": "string"
+        },
+        "href": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z0-9][a-z0-9_./-]*\\.html$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Href"
+        },
+        "note": {
+          "maxLength": 300,
+          "minLength": 2,
+          "title": "Note",
+          "type": "string"
+        }
+      },
+      "required": [
+        "date",
+        "title",
+        "note"
+      ],
+      "title": "RecentItem",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "items": {
+      "items": {
+        "$ref": "#/$defs/RecentItem"
+      },
+      "title": "Items",
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema_version",
+    "items"
+  ],
+  "title": "RecentUpdates",
+  "type": "object"
+}

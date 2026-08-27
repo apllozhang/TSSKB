@@ -1,0 +1,99 @@
+{
+  "$defs": {
+    "LearningPath": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "pattern": "^[a-z0-9]+(?:[a-z0-9-]*/?)*[a-z0-9]$|^[a-z0-9]$",
+          "title": "Id",
+          "type": "string"
+        },
+        "title": {
+          "maxLength": 100,
+          "minLength": 2,
+          "title": "Title",
+          "type": "string"
+        },
+        "description": {
+          "maxLength": 300,
+          "minLength": 2,
+          "title": "Description",
+          "type": "string"
+        },
+        "banner": {
+          "pattern": "^[a-z0-9][a-z0-9_.-]+$",
+          "title": "Banner",
+          "type": "string"
+        },
+        "steps": {
+          "items": {
+            "$ref": "#/$defs/LearningStep"
+          },
+          "minItems": 1,
+          "title": "Steps",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "description",
+        "banner",
+        "steps"
+      ],
+      "title": "LearningPath",
+      "type": "object"
+    },
+    "LearningStep": {
+      "additionalProperties": false,
+      "properties": {
+        "title": {
+          "maxLength": 150,
+          "minLength": 2,
+          "title": "Title",
+          "type": "string"
+        },
+        "description": {
+          "maxLength": 300,
+          "minLength": 2,
+          "title": "Description",
+          "type": "string"
+        },
+        "href": {
+          "pattern": "^[a-z0-9][a-z0-9_./-]*\\.html$",
+          "title": "Href",
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "description",
+        "href"
+      ],
+      "title": "LearningStep",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "paths": {
+      "items": {
+        "$ref": "#/$defs/LearningPath"
+      },
+      "minItems": 1,
+      "title": "Paths",
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema_version",
+    "paths"
+  ],
+  "title": "LearningPaths",
+  "type": "object"
+}

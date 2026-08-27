@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block title %}{{ site.name }}{% endblock %}
+{% block body %}
+<main id="main-content">
+  <section class="legacy-hero" aria-labelledby="hero-title">
+    <div class="legacy-hero-inner">
+      <div class="legacy-hero-copy">
+        <img class="legacy-hero-logo" src="/assets/ale-logo-white.png" alt="Alcatel-Lucent Enterprise">
+        <h1 id="hero-title">ALE Networking 技术培训门户</h1>
+        <p>面向售前、售后和网络工程师的产品、部署与排障知识中心</p>
+        {% set search_id = 'home-search' %}{% include '_search.html' %}
+        <div class="hero-actions legacy-actions">
+          <a class="button primary" href="#catalog">开始学习</a>
+          <a class="button ghost" href="#catalog">查找资料</a>
+        </div>
+        <p class="legacy-stats"><strong>{{ metrics.course_count }}</strong> 门课程 <i>·</i> <strong>{{ metrics.skill_count }}</strong> 个知识单元</p>
+      </div>
+      <figure class="legacy-hero-visual">
+        <img src="/assets/banner-wlan.jpg" alt="ALE OmniVista 网络管理场景">
+      </figure>
+    </div>
+    <svg class="legacy-wave" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true"><path d="M0,50 C240,95 480,0 720,35 C960,70 1200,15 1440,55 L1440,90 L0,90 Z"></path></svg>
+  </section>
+
+  <section class="legacy-tasks" aria-label="按任务进入">
+    <a href="/presales/index.html"><b>我是售前工程师</b><span>选型 · 彩页 · 方案与报价</span></a>
+    <a href="/postsales/index.html"><b>我是售后工程师</b><span>部署 · 配置 · 排障手册</span></a>
+    <a href="/hardware/index.html"><b>我要做产品选型</b><span>机型矩阵 · 硬件指南 · 数据表</span></a>
+    <a href="/postsales/os-lan-troubleshooting/index.html"><b>我要排查故障</b><span>有线/无线排障 · 已知问题库</span></a>
+    <a href="/solutions/index.html"><b>我要设计方案</b><span>SPB/EVPN/MPLS · 园区架构</span></a>
+  </section>
+
+  <div class="page-shell home-shell">
+    <section id="catalog" aria-labelledby="catalog-title">
+      <div class="section-heading"><div><p class="eyebrow">KNOWLEDGE CATALOG</p><h2 id="catalog-title">课程与技术资料</h2></div><p>按工作场景组织，而不是按文件夹堆叠。</p></div>
+      {% for category in categories %}
+      <section class="catalog-group" aria-labelledby="category-{{ category.id }}">
+        <div class="catalog-heading" style="--category-accent:{{ category.accent }}"><div><h3 id="category-{{ category.id }}">{{ category.label }}</h3><p>{{ category.description }}</p></div><a href="/{{ category.id }}/index.html">全部 {{ courses_by_category[category.id]|length }} 门 →</a></div>
+        <div class="course-grid">
+        {% for course in courses_by_category[category.id] %}
+          <article class="course-card"><div class="card-topline"><span>{{ course.title|course_code }}</span><span class="status">已上线</span></div><h4><a href="/{{ course.id }}/index.html">{{ course.title }}</a></h4><p>{{ course.catalog_description }}</p><div class="chips">{% if course.version %}<span>{{ course.version }}</span>{% endif %}{% if course.pages %}<span>{{ course.pages }} 页</span>{% endif %}<span>{{ course.skill_slugs|length }} 单元</span></div></article>
+        {% endfor %}
+        {% for item in category.planned_items %}
+          <article class="course-card planned"><div class="card-topline"><span>ROADMAP</span><span class="status">待建设</span></div><h4>{{ item.title }}</h4><p>{{ item.description }}</p></article>
+        {% endfor %}
+        </div>
+      </section>
+      {% endfor %}
+    </section>
+
+    <section class="recent" aria-labelledby="recent-title">
+      <div class="section-heading"><div><p class="eyebrow">CHANGELOG</p><h2 id="recent-title">最近更新</h2></div><a href="/paths.html">查看学习路径 →</a></div>
+      <div class="recent-list">
+      {% for item in recent.items %}
+        <article><time datetime="{{ item.date }}">{{ item.date }}</time><div>{% if item.href %}<a href="/{{ item.href }}">{{ item.title }}</a>{% else %}<strong>{{ item.title }}</strong>{% endif %}<p>{{ item.note }}</p></div></article>
+      {% endfor %}
+      </div>
+    </section>
+  </div>
+</main>
+<footer class="site-footer"><img src="/assets/ale-logo-color.png" alt="Alcatel-Lucent Enterprise"><p>{{ site.rights_notice }}</p></footer>
+{% endblock %}
