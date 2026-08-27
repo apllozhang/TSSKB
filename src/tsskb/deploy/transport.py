@@ -37,7 +37,6 @@ class SshReleaseTransport:
             raise ValueError("remote_root must be an absolute POSIX path")
         if any(character in config.remote_root for character in "\n\r\0"):
             raise ValueError("remote_root contains forbidden characters")
-        self._root: str = config.remote_root
         try:
             import paramiko
         except ImportError as exc:
@@ -62,6 +61,13 @@ class SshReleaseTransport:
             allow_agent=True,
             timeout=12,
         )
+
+    @property
+    def _root(self) -> str:
+        root = self.config.remote_root
+        if not root:
+            raise ValueError("deploy remote_root is required")
+        return root
 
     def current_release(self) -> str | None:
         value = self._run(f"readlink {shlex.quote(self._root + '/current')} || true").strip()

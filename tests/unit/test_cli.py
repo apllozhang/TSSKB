@@ -4,6 +4,7 @@ from pathlib import Path
 
 import pytest
 
+from tsskb.build.pipeline import BuildResult
 from tsskb.cli import main
 from tsskb.config import ProjectPaths
 
@@ -16,9 +17,26 @@ def test_cli_validates_repository(
     assert '"status": "valid"' in capsys.readouterr().out
 
 
-def test_cli_deploy_and_rollback_dry_runs() -> None:
+def test_cli_deploy_and_rollback_dry_runs(
+    built_site: tuple[Path, BuildResult],
+) -> None:
+    site, _ = built_site
     root = Path(__file__).resolve().parents[2]
-    assert main(["--root", str(root), "deploy", "--environment", "staging", "--dry-run"]) == 0
+    assert (
+        main(
+            [
+                "--root",
+                str(root),
+                "deploy",
+                "--site",
+                str(site),
+                "--environment",
+                "staging",
+                "--dry-run",
+            ]
+        )
+        == 0
+    )
     assert main(["--root", str(root), "rollback", "--environment", "staging", "--dry-run"]) == 0
 
 
