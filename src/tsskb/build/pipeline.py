@@ -21,7 +21,7 @@ from tsskb.build.validator import ValidationReport, validate_site
 from tsskb.config import ProjectPaths, stable_json
 from tsskb.content.loader import ContentBundle, ContentRepository
 from tsskb.content.markdown import MarkdownDocument, MarkdownRenderer, parse_frontmatter
-from tsskb.models import Category, Course, EnvironmentConfig
+from tsskb.models import Category, Course
 from tsskb.observability import EventLogger
 
 

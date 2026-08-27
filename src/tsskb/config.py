@@ -20,7 +20,7 @@ class ProjectPaths:
     dist: Path
 
     @classmethod
-    def discover(cls, root: Path | None = None) -> "ProjectPaths":
+    def discover(cls, root: Path | None = None) -> ProjectPaths:
         project_root = (root or Path.cwd()).resolve()
         if not (project_root / "pyproject.toml").is_file():
             raise FileNotFoundError(f"Not a TSSKB project root: {project_root}")

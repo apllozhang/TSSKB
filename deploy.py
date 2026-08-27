@@ -13,7 +13,6 @@ sys.path.insert(0, str(Path(__file__).resolve().parent / "src"))
 
 from tsskb.cli import main
 
-
 if __name__ == "__main__":
     print("Legacy destructive deployment is disabled; using immutable release workflow.")
     raise SystemExit(main(["deploy", "--environment", "prod", *sys.argv[1:]]))

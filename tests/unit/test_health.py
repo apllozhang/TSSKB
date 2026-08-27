@@ -12,7 +12,7 @@ class FakeResponse:
         self.body = body
         self.status = status
 
-    def __enter__(self) -> "FakeResponse":
+    def __enter__(self) -> FakeResponse:
         return self
 
     def __exit__(self, *_: object) -> None:

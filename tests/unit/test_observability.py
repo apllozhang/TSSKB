@@ -18,9 +18,8 @@ def test_json_event_logger_emits_machine_readable_events(capsys: pytest.CaptureF
 
 def test_timed_event_reports_failure(capsys: pytest.CaptureFixture[str]) -> None:
     logger = EventLogger(json_output=True)
-    with pytest.raises(RuntimeError):
-        with logger.timed("example"):
-            raise RuntimeError("boom")
+    with pytest.raises(RuntimeError), logger.timed("example"):
+        raise RuntimeError("boom")
     rows = [json.loads(line) for line in capsys.readouterr().out.splitlines()]
     assert rows[-1]["event"] == "example.failed"
     assert rows[-1]["error"] == "RuntimeError"

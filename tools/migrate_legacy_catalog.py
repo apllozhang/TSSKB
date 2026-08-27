@@ -62,7 +62,10 @@ def evaluate(node: ast.AST) -> Any:
     if isinstance(node, ast.Tuple):
         return tuple(evaluate(item) for item in node.elts)
     if isinstance(node, ast.Dict):
-        return {evaluate(key): evaluate(value) for key, value in zip(node.keys, node.values)}
+        return {
+            evaluate(key): evaluate(value)
+            for key, value in zip(node.keys, node.values, strict=True)
+        }
     if isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id == "dict":
         if node.args:
             raise ValueError("positional dict arguments are not allowed")
@@ -201,7 +204,9 @@ def main() -> None:
                         for step_title, step_description, href in steps
                     ],
                 }
-                for path_id, (title, description, banner, steps) in zip(path_ids, learning_paths)
+                for path_id, (title, description, banner, steps) in zip(
+                    path_ids, learning_paths, strict=True
+                )
             ],
         },
     )
