@@ -9,7 +9,7 @@ from pathlib import Path
 from tsskb.models import SearchBudget
 
 
-def collect_metrics(site: Path) -> dict[str, object]:
+def collect_metrics(site: Path) -> dict[str, int]:
     if not site.is_dir():
         raise FileNotFoundError(f"site output is missing: {site}")
     files = [path for path in site.rglob("*") if path.is_file()]
@@ -38,7 +38,7 @@ def collect_metrics(site: Path) -> dict[str, object]:
     }
 
 
-def enforce_metrics(metrics: dict[str, object], budget: SearchBudget) -> None:
+def enforce_metrics(metrics: dict[str, int], budget: SearchBudget) -> None:
     checks = (
         ("search_raw_bytes", budget.total_raw_bytes),
         ("search_gzip_bytes", budget.total_gzip_bytes),
@@ -48,7 +48,7 @@ def enforce_metrics(metrics: dict[str, object], budget: SearchBudget) -> None:
     violations = [
         f"{name}={metrics[name]} exceeds {limit}"
         for name, limit in checks
-        if int(metrics[name]) > limit
+        if metrics[name] > limit
     ]
     if violations:
         raise ValueError("Capacity budget exceeded: " + "; ".join(violations))

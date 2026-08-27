@@ -37,6 +37,7 @@ class SshReleaseTransport:
             raise ValueError("remote_root must be an absolute POSIX path")
         if any(character in config.remote_root for character in "\n\r\0"):
             raise ValueError("remote_root contains forbidden characters")
+        self._root: str = config.remote_root
         try:
             import paramiko
         except ImportError as exc:
@@ -63,17 +64,17 @@ class SshReleaseTransport:
         )
 
     def current_release(self) -> str | None:
-        value = self._run(f"readlink {shlex.quote(self.config.remote_root + '/current')} || true").strip()
+        value = self._run(f"readlink {shlex.quote(self._root + '/current')} || true").strip()
         return posixpath.basename(value) if value else None
 
     def list_releases(self) -> list[str]:
-        root = shlex.quote(self.config.remote_root + "/releases")
+        root = shlex.quote(self._root + "/releases")
         output = self._run(f"find {root} -mindepth 1 -maxdepth 1 -type d -printf '%f\\n' 2>/dev/null || true")
         return sorted(item for item in output.splitlines() if RELEASE_PATTERN.fullmatch(item))
 
     def upload_release(self, site: Path, release_id: str) -> None:
         self._validate_release(release_id)
-        release_root = posixpath.join(self.config.remote_root or "", "releases", release_id)
+        release_root = posixpath.join(self._root, "releases", release_id)
         quoted = shlex.quote(release_root)
         exists = self._run(f"test -e {quoted} && echo exists || true").strip()
         if exists:
@@ -93,14 +94,14 @@ class SshReleaseTransport:
         self._validate_release(release_id)
         relative = "_meta/release-manifest.json"
         local_hash = sha256_file(site / relative)
-        remote = posixpath.join(self.config.remote_root or "", "releases", release_id, relative)
+        remote = posixpath.join(self._root, "releases", release_id, relative)
         output = self._run(f"sha256sum {shlex.quote(remote)}").split()[0]
         if output != local_hash:
             raise RuntimeError(f"release manifest checksum mismatch: {output} != {local_hash}")
 
     def activate(self, release_id: str) -> None:
         self._validate_release(release_id)
-        root = shlex.quote(self.config.remote_root or "")
+        root = shlex.quote(self._root)
         target = shlex.quote(f"releases/{release_id}")
         self._run(
             f"cd {root} && ln -sfn {target} current.next && mv -Tf current.next current"
@@ -111,7 +112,7 @@ class SshReleaseTransport:
 
     def _run(self, command: str) -> str:
         _, stdout, stderr = self.client.exec_command(command, timeout=60)
-        output = stdout.read().decode("utf-8", "replace")
+        output: str = stdout.read().decode("utf-8", "replace")
         error = stderr.read().decode("utf-8", "replace")
         status = stdout.channel.recv_exit_status()
         if status:

@@ -129,7 +129,8 @@ class MarkdownRenderer:
         rendered = markdown.markdown(
             preprocess_markdown(text),
             extensions=["tables", "fenced_code", "toc"],
-            output_format="html5",
+            # types-Markdown 桩尚未收录 html5（运行时 Markdown 3.3+ 支持）
+            output_format="html5",  # type: ignore[arg-type]
         )
         rendered = rendered.replace("<table>", '<div class="table-scroll"><table>')
         rendered = rendered.replace("</table>", "</table></div>")
