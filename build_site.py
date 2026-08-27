@@ -85,6 +85,15 @@ NEW_COURSES = [
         ('机制', ['upamfw-sso-overview']),
         ('Palo Alto 集成', ['upamfw-pan-arch', 'upamfw-pan-config']),
        ]),
+  dict(id='presales/golden-rfp', book='golden-rfp', title='Golden RFP · 标准标书需求库',
+       subtitle='7 份 Golden RFP · AOS 8.10R4 软件特性 / AI-DC / 机型 / Stellar WLAN / OmniVista 10.5（C/PC/NC 分级弹药）',
+       route=['Golden RFP 机制与 C/PC/NC 评判分级', 'AOS 软件特性需求矩阵', 'AI 数据中心与 Stellar WLAN 需求精粹',
+              '接入交换机机型硬指标对比', 'OmniVista 10.5 网管需求'],
+       groups=[
+        ('使用指南', ['grfp-guide']),
+        ('需求矩阵', ['grfp-sw-features', 'grfp-aidc', 'grfp-wlan', 'grfp-nms']),
+        ('机型对比', ['grfp-lan-access']),
+       ]),
   dict(id='certification/training-system', book='cert-training', title='培训服务体系与培训中心',
        subtitle='培训中心查询 + 网络课程目录前言 · 培训形式/五级认证/换证规则/14 个培训中心',
        route=['培训形式（虚拟/教室/在线）与五级认证（ACSR/AQPS/ACPS/ACFE/ACSE）', 'Training Units 与远程实验室',
@@ -1208,6 +1217,7 @@ CATALOG = [
         ('DT00XPS288 · OmniAccess Stellar WLAN 售前', 'Edition 28 · 273 页 · 8 个知识单元 · AP 矩阵 / 三管理模式 / License 三体系 / 七大用例', 'presales/stellar-wlan/index.html'),
         ('DAN · 数字化时代网络', '10 份官方文档 · 9 个知识单元 · 愿景三支柱 / 全球与 APAC 白皮书 / 七大行业方案', 'presales/dan/index.html'),
         ('全球客户案例 · Customer Reference 2024', '98 页 · 约 95 例 · 6 个知识单元 · 医疗 / 交通 / 教育 / 酒店 / 政府 / 综合行业速查', 'presales/dan-cases/index.html'),
+        ('Golden RFP · 标准标书需求库', '7 份 · 6 个知识单元 · C/PC/NC 分级 / AOS 特性矩阵 / AI-DC / WLAN / 机型硬指标', 'presales/golden-rfp/index.html'),
         ('SD-WAN / SASE 方案', '零信任与云网融合', None),
     ]),
     ('售后 · Postsales', '#f59e0b', [
