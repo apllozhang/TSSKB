@@ -45,10 +45,27 @@ show_missing = true
 [tool.ruff]
 line-length = 100
 target-version = "py311"
+# 冻结的历史脚本（旧 1.x 构建器与一次性生成/补丁工具）不参与 lint
+extend-exclude = [
+  "tools/legacy",
+  "extract2.py",
+  "gen_panels.py",
+  "gen_verified.py",
+  "patch_build.py",
+  "patch_nav.py",
+  "patch_ux.py",
+  "verify_v1.py",
+]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "B", "UP", "SIM"]
 ignore = ["E501"]
+
+[tool.ruff.lint.per-file-ignores]
+# 兼容垫片必须先 sys.path.insert 再 import，E402 是该模式固有形态
+"build_site.py" = ["E402"]
+"check_links.py" = ["E402"]
+"deploy.py" = ["E402"]
 
 [tool.mypy]
 python_version = "3.11"

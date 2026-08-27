@@ -3,9 +3,9 @@
 from __future__ import annotations
 
 import json
+from collections.abc import Callable
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Callable
 
 from tsskb.deploy.health import HealthResult, check_release
 from tsskb.deploy.transport import ReleaseTransport, SshReleaseTransport

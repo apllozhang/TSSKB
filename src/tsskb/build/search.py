@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import gzip
 import html
-import json
 from dataclasses import dataclass
 from html.parser import HTMLParser
 from pathlib import Path

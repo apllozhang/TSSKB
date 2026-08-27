@@ -39,7 +39,7 @@ class CourseGroup(StrictModel):
     skills: tuple[str, ...] = Field(min_length=1)
 
     @model_validator(mode="after")
-    def unique_skills(self) -> "CourseGroup":
+    def unique_skills(self) -> CourseGroup:
         if len(self.skills) != len(set(self.skills)):
             raise ValueError(f"duplicate skill in group {self.name!r}")
         for slug in self.skills:
@@ -66,7 +66,7 @@ class Course(StrictModel):
     source: SourceInfo
 
     @model_validator(mode="after")
-    def validate_course(self) -> "Course":
+    def validate_course(self) -> Course:
         if self.id.split("/", 1)[0] != self.category:
             raise ValueError("course id must start with its category")
         skills = self.skill_slugs
@@ -101,7 +101,7 @@ class Catalog(StrictModel):
     courses: tuple[Course, ...] = Field(min_length=1)
 
     @model_validator(mode="after")
-    def validate_references(self) -> "Catalog":
+    def validate_references(self) -> Catalog:
         category_ids = [category.id for category in self.categories]
         if len(category_ids) != len(set(category_ids)):
             raise ValueError("category ids must be unique")
@@ -156,7 +156,7 @@ class Redirects(StrictModel):
     redirects: tuple[Redirect, ...]
 
     @model_validator(mode="after")
-    def unique_sources(self) -> "Redirects":
+    def unique_sources(self) -> Redirects:
         sources = [redirect.from_path for redirect in self.redirects]
         if len(sources) != len(set(sources)):
             raise ValueError("redirect sources must be unique")
