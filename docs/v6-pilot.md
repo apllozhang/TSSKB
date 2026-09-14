@@ -15,3 +15,5 @@
 - 断言（webui kit/tools/_pilot/verify-tsskb.mjs）：资产 200、阅读宽度 760 实测一致、内容层级无跳级、ALE 令牌生效（#6b489d）、控制台零错、320 根级无溢出 —— **12/12 PASS**
 - 截图：320+1440（webui 仓库 _pilot-evidence/tsskb/）
 - 迁移耗时：约 40 分钟（含流水线构建）；缺失令牌：无（bridge 层映射即可满足）；视觉差异：暗色 slate 旧版 → ALE 亮色令牌（预期内换肤）
+
+- **R4-02 字体接入(M6-R1)**:vendored `static/fonts/noto.css`(构建映射 /assets/fonts/) + `noto/*.woff2`(400/500/700,SIL OFL,与 kit shared 同源),页面真实请求 200、FontFaceSet loaded、`document.fonts.check` 命中——FONT-CHAIN PASS。
