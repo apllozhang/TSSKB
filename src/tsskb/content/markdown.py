@@ -134,5 +134,8 @@ class MarkdownRenderer:
         )
         rendered = rendered.replace("<table>", '<div class="table-scroll"><table>')
         rendered = rendered.replace("</table>", "</table></div>")
+        # R4-10: 页面标题由模板 page-intro 承担,正文首个 h1(文档标题)降为 h2——每页唯一 h1,锚点 id 保留
+        rendered = rendered.replace("<h1", "<h2", 1)
+        rendered = rendered.replace("</h1>", "</h2>", 1)
         return Markup(rendered)
 
