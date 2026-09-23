@@ -1,7 +1,7 @@
 # bp-stellar-ap-datasheets 书目总览
 
 ## 主题
-ALE OmniAccess Stellar 无线接入点（AP）数据表合集，14 份文档覆盖 Wi-Fi 6（802.11ax）、Wi-Fi 6E（6GHz）到 Wi-Fi 7（802.11be）三代、室内/室外/墙面三大形态共 20+ SKU。蒸馏目标是"选型速查知识"：什么场景选哪个型号、上下行/供电/管制域边界。
+ALE OmniAccess Stellar 无线接入点（AP）数据表合集，14 份文档覆盖 Wi-Fi 6（802.11ax）、Wi-Fi 6E（6GHz）到 Wi-Fi 7（802.11be）三代、室内/室外/墙面三大形态共 20+ SKU。整理目标是"选型速查知识"：什么场景选哪个型号、上下行/供电/管制域边界。
 
 ## 文档映射
 
@@ -22,7 +22,7 @@ ALE OmniAccess Stellar 无线接入点（AP）数据表合集，14 份文档覆�
 | 13 | AP1561 | p108-116 | Wi-Fi 7 | 室外 | 2x2x3，9.328Gbps，IP67，5GE 上联，仅 802.3at，AFC |
 | 14 | AP1570 系列(1571/1572) | p117-128 | Wi-Fi 7 | 室外旗舰 | 2x2x3+扫描+BLE，10GE combo(RJ45/SFP+)，PSE 下联，bt 供电 50W，AFC |
 
-## 蒸馏重点
+## 整理重点
 1. **型号命名规律**：末位 1=内置天线、D=定向天线、2=外置天线接口（1361D/1362/1572）；x0x/x1x/x2x 低端、x3x+ 中高端（对应订阅分档）。
 2. **代际对比**：Wi-Fi 6 → 6E（加 6GHz）→ Wi-Fi 7（MLO/4096-QAM/320MHz/MACsec）。
 3. **供电降级逻辑**：bt 全功能 → at 关 USB → af 关端口降射频，是 PoE 预算设计的硬约束。

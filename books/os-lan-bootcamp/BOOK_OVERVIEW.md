@@ -16,7 +16,7 @@
 | 扩展 | 代码升级、MVRP、SLB、静态聚合、Access Guardian Captive Portal、Mac-Sec、BGP、ISIS、安全认证、IPv6 | p961-1138 |
 | 附录 | ProActive Lifecycle、CodeGuardian、全系列机型速查 | p1139-1207 |
 
-## 蒸馏重点
+## 整理重点
 
 - 每个 Overview 章节的原理 + 配置命令 + Lab 的完整 CLI 流程都要进 principles/cases
 - Lab 流程是本教材最大价值：完整命令序列 + 验证输出 → cases

@@ -1,4 +1,4 @@
-# verified.md · 三重验证通过条目（cangjie-skill 流水线阶段 1.5 裁决）
+# verified.md · 三重验证通过条目（文档整理-skill 流水线阶段 1.5 裁决）
 
 ## 汇总
 

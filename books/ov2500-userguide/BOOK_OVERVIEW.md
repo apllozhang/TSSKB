@@ -10,7 +10,7 @@
 纯参考手册（reference manual），无叙事结构。价值密度最高的章：Analytics、UPAM（认证中枢）、Unified Access、WLAN、Topology、Quarantine Manager。
 
 ## 批判
-作为查询手册不适合线性蒸馏；应抽取"高频操作流程 + 关键参数 + 功能地图"。
+作为查询手册不适合线性整理；应抽取"高频操作流程 + 关键参数 + 功能地图"。
 
 ## 应用
 交付后的运维手册：查"某个功能在哪配、怎么配、默认值是什么"。

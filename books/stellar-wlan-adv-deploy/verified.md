@@ -95,7 +95,7 @@
 - **ce09 Portal 无 IP 时重定向必失败**（p220）— V1：命中；V2/V3：先查 IP 再查门户的排障顺序。
 - **ce10 老款 AP 桥接不支持 VLAN 打标**（p113）— V1："VLAN tagging over a bridge" 逐字命中；V2/V3：选型限制，冷知识。
 - **ce11 国家码不匹配致 SSID 不可见**（p276）— V1："Wrong country code" 命中；V2/V3：现象与根因错位的典型案例。
-- **ce12 训练环境勿真执行升级计划**（p252）— V1：命中（原文为小写 "do not complete this upgrade process"，候选引文系大写改写，**后续蒸馏时引文应修正为原文措辞**）；V2/V3：演练/生产变更控制。
+- **ce12 训练环境勿真执行升级计划**（p252）— V1：命中（原文为小写 "do not complete this upgrade process"，候选引文系大写改写，**后续整理时引文应修正为原文措辞**）；V2/V3：演练/生产变更控制。
 - **ce13 云管删除有依赖顺序**（p316）— V1："only be deleted if no custom provisioning" 命中；V2/V3：清理报错的真实解法。
 
 ## glossary（60 条，免验保留）
@@ -106,5 +106,5 @@
 
 ### 遗留事项（供阶段 2 处理）
 
-1. ce12 引文措辞与原文有出入（大写改写），蒸馏时修正为原文 "Use this section only as a configuration guide, and do not complete this upgrade process."
+1. ce12 引文措辞与原文有出入（大写改写），整理时修正为原文 "Use this section only as a configuration guide, and do not complete this upgrade process."
 2. f12（Guest Tunnel 附录）被淘汰，若后续拿到可读的原版 PDF 附录，可重新候选。

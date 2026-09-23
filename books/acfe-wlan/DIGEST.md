@@ -120,4 +120,4 @@ RSSI 判读：dBm = RSSI − 96；RSSI<20（约 −76dBm 以下）Bad 不宜音�
 
 ---
 
-> 本文由 cangjie-skill 流水线从 DT00XTE360EN 蒸馏生成。
+> 本文由 文档整理-skill 流水线从 DT00XTE360EN 整理生成。

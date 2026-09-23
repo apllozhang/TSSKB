@@ -79,4 +79,4 @@ Mesh 硬限制表：
 
 ---
 
-*由 cangjie-skill 流水线从 DT00XTE455EN 蒸馏生成*
+*由 文档整理-skill 流水线从 DT00XTE455EN 整理生成*

@@ -1,4 +1,4 @@
-# 《OmniSwitch R6/R8 Bootcamp Issue 25（DT00CTE120）》蒸馏精华（DIGEST）
+# 《OmniSwitch R6/R8 Bootcamp Issue 25（DT00CTE120）》整理精华（DIGEST）
 
 > 来源：Bootcamp Issue 25 DT00CTE120（1207 页五天训练营 Participant's Guide），全部知识点带原书页码（<<<PAGE N>>> 格式）。
 

@@ -1,6 +1,6 @@
 # DIGEST · Stellar WLAN 售前精华：不读全书，只看这一篇
 
-> 原书：DT00XPS288EN《OmniAccess Stellar WLAN Presales》Edition 28，ALE 培训服务部 2025-02，273 页。本文是全书与 8 个蒸馏 skill 的浓缩版，数字均标注原书页码。
+> 原书：DT00XPS288EN《OmniAccess Stellar WLAN Presales》Edition 28，ALE 培训服务部 2025-02，273 页。本文是全书与 8 个整理 skill 的浓缩版，数字均标注原书页码。
 
 ---
 
@@ -129,4 +129,4 @@ Cirrus 10 拼码示例：客户用 OS6860X24 交换机（→类别 68）、要 T
 
 ---
 
-*本文由 cangjie-skill 流水线从 DT00XPS288EN 蒸馏生成。*
+*本文由 文档整理-skill 流水线从 DT00XPS288EN 整理生成。*

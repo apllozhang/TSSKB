@@ -2,7 +2,7 @@
 
 ## 全书定位
 
-本书收录 ALE（Alcatel-Lucent Enterprise）"Digital Age Networking（DAN，数字时代网络）"系列营销与白皮书文档共 9 份，蒸馏为 9 个技能单元。DAN 是 ALE 2019-2023 年间的旗舰网络愿景：以三大支柱（Autonomous Network 自主网络 / IoT onboarding 物联网接入 / Business Innovation 业务创新）为核心话术，把 OmniSwitch、OmniAccess Stellar、OmniVista、Rainbow 等产品组合包装成面向数字化转型的整体方案，并按六大行业（企业、教育、政府/智慧城市、医疗、酒店、交通）给出行业化彩页。
+本书收录 ALE（Alcatel-Lucent Enterprise）"Digital Age Networking（DAN，数字时代网络）"系列营销与白皮书文档共 9 份，整理为 9 个技能单元。DAN 是 ALE 2019-2023 年间的旗舰网络愿景：以三大支柱（Autonomous Network 自主网络 / IoT onboarding 物联网接入 / Business Innovation 业务创新）为核心话术，把 OmniSwitch、OmniAccess Stellar、OmniVista、Rainbow 等产品组合包装成面向数字化转型的整体方案，并按六大行业（企业、教育、政府/智慧城市、医疗、酒店、交通）给出行业化彩页。
 
 全书两条叙事线：
 - **理论线**：愿景总览（4 页彩页）→ 全球白皮书（2019，四趋势框架）→ APAC 白皮书（2022，三支柱框架，口径更新）

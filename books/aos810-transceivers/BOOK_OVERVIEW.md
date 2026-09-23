@@ -6,9 +6,9 @@
 - 性质：光模块/线缆规格与兼容性手册——两章结构：Ch1 按速率/类型列出每款模块的连接器/标准/波长/光功率/灵敏度/距离/温度/功耗/DDM；Ch2 按 14 个平台（含扩展模块）给出"模块 × 最低 AOS 版本"兼容矩阵
 - 红线（封面警示）：使用非 ALE 认证 PN 的模块被禁止且不保修："Use of any transceivers other than the ALE-certified part numbers listed in the Compatibility Matrices is prohibited and unsupported."
 
-## 章节结构与蒸馏重点
+## 章节结构与整理重点
 
-| 节 | 内容 | fulltext 页 | 蒸馏重点 |
+| 节 | 内容 | fulltext 页 | 整理重点 |
 |---|---|---|---|
 | Ch1 前言 | SFP MSA、安装拆卸 | 11-17 | MSA 20 针定义；ESD/防尘/激光安全；拔出后 ≥10 秒再插；三种释放机构（铰链/bail wire/弹出器） |
 | Ch1 | 40/100G 光缆 | 17 | QSFP-QSFP MPO 用 Type-B 交叉；MPO-LC splitter 8 芯 4×10G |
@@ -23,7 +23,7 @@
 | Ch1 | GPON/工业 | 64-73 | 3FE46541AA(GPON ONT)/3FE49327AA(XGS-PON)；iSFP 系列 -40~85°C |
 | Ch2 | 兼容矩阵 | 74-107 | 6360/6465/6465T/6560(E)/6570M/6575/6860/6860N(含 68 系扩展模块)/6865/6870/6900-V72·C32·C32E/6900/6920/9900（含 99 系板卡） |
 
-## 蒸馏策略（本书特调）
+## 整理策略（本书特调）
 
 - **glossary 大头**：把规格表逐型号转成术语条目（型号→速率/波长/距离/连接器/DDM），按速率分组
 - **principles 收通用机制**：MSA/安装纪律/DDM 语义/双速模块手工定速/SFP28 自协商禁用/拆分模式/VFL 限制等跨型号规律

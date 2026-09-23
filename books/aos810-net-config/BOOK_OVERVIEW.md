@@ -5,9 +5,9 @@
 - 页数：正文 1745 页（fulltext.md 页码标记 `<<<PAGE N>>>`）
 - 性质：OmniSwitch 多产品线 AOS 8 特性配置手册（CLI 配置向导型文档）
 
-## 章节结构与蒸馏重点
+## 章节结构与整理重点
 
-| 章 | 标题 | 正文起始页 | 蒸馏重点 |
+| 章 | 标题 | 正文起始页 | 整理重点 |
 |---|---|---|---|
 | 1 | Configuring Ethernet Ports | <<<PAGE 51>>> | 端口参数/EEE/DDM/TDR 诊断/链路监控/Violation Recovery/Link Fault Propagation/MACsec(含 WAN MACsec) |
 | 2 | Configuring UDLD | ~<<<PAGE 195>>> | 单向链路检测机制、probe/echo 定时器 |
@@ -60,7 +60,7 @@
 
 （正文起始页为近似值，提取时以 fulltext.md 内真实 `<<<PAGE N>>>` 标记为准。）
 
-## 文档体例规律（对蒸馏有用）
+## 文档体例规律（对整理有用）
 
 - 每章结构固定：In This Chapter → Defaults 表 → Quick Steps → Overview（原理）→ Configuring（逐参数 CLI）→ Application Example → Verifying。
 - "Quick Steps" 与 "Application Example" 是 cases 的主要来源；"Overview/How ... Works" 是 principles 主要来源；"Interaction With Other Features"、"Configuration Guidelines"、"Limitations"、Defaults 表注记是 counter-examples 主要来源。

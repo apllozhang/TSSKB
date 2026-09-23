@@ -162,4 +162,4 @@
 配置备份 pub-config.tar 是工单标准共享材料（p33），开票前先备好。
 
 ---
-由 cangjie-skill 流水线从 DT00XTE478EN 蒸馏生成。
+由 文档整理-skill 流水线从 DT00XTE478EN 整理生成。

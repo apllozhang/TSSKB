@@ -19,7 +19,7 @@
 - **F2** PoE 供电预算四变量联动框架：
   ① 机型（决定可用电源型号与每口能力）② 电源瓦数（600W/1200W/2000W；Z 系列上限 1200W）③ 单/双电源（双电负载分担、预算非简单翻倍，如 P24M 双 600W=788W）④ 市电电压（双值条目=低压/高压输入；1200W/2000W 需 190-240VAC 才得高 PoE 功率）→ 查预算表得总瓦数，再叠加 Guard Band（口上限 vs 剩余）与 Priority Disconnect（low/high/critical + 端口号 1 高 48 低）两级裁决；落地检查命令 `show lanpower slot` <<<PAGE 47>>>/<<<PAGE 51>>>-<<<PAGE 53>>>/<<<PAGE 63>>>/<<<PAGE 67>>>-<<<PAGE 70>>>
 
-- **F3** 6870 上电-入网标准七步流程（cangjie 可执行框架）：
+- **F3** 6870 上电-入网标准七步流程（文档整理 可执行框架）：
   ① 安装（机架双人/桌面四脚，盲板常装）② 多电源数秒内相继插电 ③ 观察 OK/PS LED 至启动完成 ④ console 115200-8N1 rollover 登录 admin/switch ⑤ 解锁会话（aaa authentication … local）⑥ 改密+时区+时间+contact/name/location ⑦ `write memory` 保存；PoE 机型追加 `lanpower slot service start` 物理激活 <<<PAGE 17>>>-<<<PAGE 21>>>/<<<PAGE 65>>>
 
 - **F4** 电源选型与演进框架（同一 P 系列机箱内三档平滑升级）：

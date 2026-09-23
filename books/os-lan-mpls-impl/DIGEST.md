@@ -96,4 +96,4 @@ service 2 vpls vplsid 200 signaling bgp ve-id 1 admin-state enable
 
 **一句话收束：** 准入（8.9R3/6860N/许可）→ 十步部署（Loopback0 唯一是底线）→ 信令选型（小网 LDP、大网 BGP 全互联）→ 模板交付（业务只配 LER）→ 命令族谱分层验证 → 售前先过六项禁引清单。
 
-*由 cangjie-skill 流水线从 DT00XTE324EN 蒸馏生成。*
+*由 文档整理-skill 流水线从 DT00XTE324EN 整理生成。*

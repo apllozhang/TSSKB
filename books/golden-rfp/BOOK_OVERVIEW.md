@@ -1,6 +1,6 @@
 # Golden RFP — ALE 售前投标弹药库
 
-把 ALE（Alcatel-Lucent Enterprise）的 8 份 "Golden RFP" 标准化需求清单文档蒸馏成中文课程：写标书时直接抄需求条目与响应口径。
+把 ALE（Alcatel-Lucent Enterprise）的 8 份 "Golden RFP" 标准化需求清单文档整理成中文课程：写标书时直接抄需求条目与响应口径。
 
 ## 源文档一览
 

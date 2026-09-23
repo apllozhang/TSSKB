@@ -1,6 +1,6 @@
 # DIGEST — OmniSwitch AOS Release 8 Specifications Guide (8.10R4) 精华
 
-本书是 AOS 8.10R4 的规格速查手册（98 页），按"特性 × 13 平台"矩阵给出最大值/支持项/RFC 清单，不含任何配置与 CLI（原书自述："This guide is designed to provide feature specification information only"）。它回答"能到多少"，不回答"怎么配"——配置去 Network Configuration / Advanced Routing 手册，命令查 CLI Reference。全书为纯规格表格，蒸馏以 glossary/principles/counter-examples 为主体（cases 为 0）。以下按三个技能单元摘要，页码均指原书。
+本书是 AOS 8.10R4 的规格速查手册（98 页），按"特性 × 13 平台"矩阵给出最大值/支持项/RFC 清单，不含任何配置与 CLI（原书自述："This guide is designed to provide feature specification information only"）。它回答"能到多少"，不回答"怎么配"——配置去 Network Configuration / Advanced Routing 手册，命令查 CLI Reference。全书为纯规格表格，整理以 glossary/principles/counter-examples 为主体（cases 为 0）。以下按三个技能单元摘要，页码均指原书。
 
 ## 一、知识地图（三技能单元）
 

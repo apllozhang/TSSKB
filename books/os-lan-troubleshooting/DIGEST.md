@@ -88,4 +88,4 @@
 - **ONIE 密码恢复只能从 console 做**，网管侧做不了（ce11）。
 
 ---
-由 cangjie-skill 流水线从 DT00XTE221EN 蒸馏生成。
+由 文档整理-skill 流水线从 DT00XTE221EN 整理生成。

@@ -1,7 +1,7 @@
 # DIGEST · SPB 实施精华——不读全书，只看这一篇
 
 > 教材：OmniSwitch LAN SPB Concepts & Implementation（DT00XTE323EN，367 页，ALE 售后 Experienced 路径 3 天实操课）
-> 这篇 Digest 把 8 个已蒸馏 skill 的干货串成一条交付主线：骨干 → L2 服务 → IP over SPB → 保护与冗余 → 动态服务与编排。命令与页码均出自原书。
+> 这篇 Digest 把 8 个已整理 skill 的干货串成一条交付主线：骨干 → L2 服务 → IP over SPB → 保护与冗余 → 动态服务与编排。命令与页码均出自原书。
 
 ## 一、一页看懂 SPB 实施
 
@@ -118,4 +118,4 @@ vrf 1 ip import isid 1000 all-routes
 
 ---
 
-*由 cangjie-skill 流水线从 DT00XTE323EN 蒸馏生成。*
+*由 文档整理-skill 流水线从 DT00XTE323EN 整理生成。*

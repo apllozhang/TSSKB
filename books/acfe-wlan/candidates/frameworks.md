@@ -1,5 +1,5 @@
 # frameworks.md · ACFE WLAN Basic Deployment With OmniVista Ed04 — 框架/流程候选
-# 提取器：cangjie-skill 框架提取阶段（宁多勿漏，待独立验证）
+# 提取器：文档整理-skill 框架提取阶段（宁多勿漏，待独立验证）
 # 来源：source/fulltext.md（页码与原文一致）、figures_captions.md、BOOK_OVERVIEW.md
 
 ```yaml

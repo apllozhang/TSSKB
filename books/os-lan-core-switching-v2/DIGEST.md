@@ -1,4 +1,4 @@
-# 《OmniSwitch LAN Core Switching Ed15》蒸馏精华（DIGEST）
+# 《OmniSwitch LAN Core Switching Ed15》整理精华（DIGEST）
 
 > 来源：DT00XTE216 OmniSwitch LAN Core Switching Ed15，全部知识点均带原书页码（<<<PAGE N>>> 格式）。
 

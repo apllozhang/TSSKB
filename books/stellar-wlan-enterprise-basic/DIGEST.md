@@ -148,4 +148,4 @@ Guest 工作流（p343）：Guest Usage 建 SSID → 勾强制门户 → 认证�
 
 ---
 
-> 由 cangjie-skill 流水线从 DT00XTE368EN 蒸馏生成。
+> 由 文档整理-skill 流水线从 DT00XTE368EN 整理生成。

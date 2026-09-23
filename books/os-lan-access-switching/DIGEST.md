@@ -117,4 +117,4 @@ VC 场景下 flash-synchro 会把镜像+配置同步到所有 slave 的 certifie
 
 ---
 
-*由 cangjie-skill 流水线从 DT00XTE215EN 蒸馏生成*
+*由 文档整理-skill 流水线从 DT00XTE215EN 整理生成*

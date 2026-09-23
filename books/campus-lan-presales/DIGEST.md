@@ -126,4 +126,4 @@ BOM 五件套：整机型号 / 电源 / 堆叠接口线缆光模块 / 软件 Lic
 
 ---
 
-*由 cangjie-skill 流水线从 DT00XPS281EN 蒸馏生成*
+*由 文档整理-skill 流水线从 DT00XPS281EN 整理生成*

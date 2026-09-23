@@ -78,4 +78,4 @@ Stellar AP 的 AWOS 固件支持 Express 模式：AP 自己组成集群，内置
 另两条易踩坑：Out-of-box Mesh（内置 SSID "Stellar-MESH"，2.4G）**一旦接过有线 uplink 即永久禁用**，只有恢复出厂能找回（p103）；组间不漫游，多组边界要规划在漫游不敏感的位置。
 
 ---
-*由 cangjie-skill 流水线从 AWOS 5.0.3 User Guide 蒸馏生成。*
+*由 文档整理-skill 流水线从 AWOS 5.0.3 User Guide 整理生成。*

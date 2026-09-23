@@ -62,4 +62,4 @@
 18. L3 failover 后 AP 假 down 5-10 分钟是正常窗口，别误判去重启设备（p42）。
 
 ---
-*由 cangjie-skill 流水线从 OV2500 4.9R2 Installation and Upgrade Guide 蒸馏生成*
+*由 文档整理-skill 流水线从 OV2500 4.9R2 Installation and Upgrade Guide 整理生成*

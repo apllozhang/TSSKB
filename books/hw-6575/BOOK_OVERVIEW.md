@@ -7,9 +7,9 @@
 - 家族命名规律：`P12`=PoE 12 口紧凑机（DIN）；`U28`=上联密集 28 口 1U 机；`MP16`=Multi-Purpose/M12 16 口工业机
 - 注意：附录 A（fulltext 72-86 页）页眉误印为"OmniSwitch 6465"，内容为 6575 附录（含工业合规章节）
 
-## 章节结构与蒸馏重点
+## 章节结构与整理重点
 
-| 章 | 内容 | fulltext 页 | 蒸馏重点 |
+| 章 | 内容 | fulltext 页 | 整理重点 |
 |---|---|---|---|
 | 前言 | 文档路线图 | 1-10 | 四阶段文档体系 |
 | Ch1 | 机型总表 + 可用性 | 11-12 | 3 机型全无风扇；MP16 Port Bypass 断电旁路特性 |
@@ -18,7 +18,7 @@
 | Ch4 | PoE | 56-71 | at/bt 规格；温度阶梯预算表（预算随 Tmra 降档）；48V 以下禁 PoE；Guard Band；Priority Disconnect 四情形 |
 | 附录 A | 法规 | 72-86 | 工业合规（ISA/DNV/铁路 EN 50121-4/NEMA TS-2/MIL-STD-810F）；NEBS GR-1089 OSP 隔离；星形垫圈/CBN |
 
-## 蒸馏策略（本书特调）
+## 整理策略（本书特调）
 
 - **principles 收工业特性与预算阶梯**：无风扇 -40~75°C、Port Bypass、Alarm Relay、输入电压分档 PoE 档位（U28 50-57V=at/44-57V=af/24-60V=无 PoE）、PoE 温度阶梯预算、M12 X-code PoE pinout
 - **cases 收安装与接线流程**：后装电源（导柱+拇指螺丝）、ROJ 交流/直流接线（线色+力矩）、Alarm Relay 配置族、PoE 配置族

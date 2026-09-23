@@ -1,6 +1,6 @@
 # ALE 认证与学习路径（cert-training）
 
-主题：ALE Training Services 的认证体系（ACSR/AQPS/ACPS/ACFE/ACSE）、培训课程目录、专业化资质路径与培训中心信息。基于 2026 年 6 月版 5 份官方培训文档蒸馏。
+主题：ALE Training Services 的认证体系（ACSR/AQPS/ACPS/ACFE/ACSE）、培训课程目录、专业化资质路径与培训中心信息。基于 2026 年 6 月版 5 份官方培训文档整理。
 
 ## 五份源文档定位
 

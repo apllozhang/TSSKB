@@ -1,5 +1,5 @@
 # Campus LAN Presales Ed29 · 决策框架/思维模型候选（frameworks.md）
-> 提取器：框架提取器（cangjie-skill 流水线）
+> 提取器：框架提取器（文档整理-skill 流水线）
 > 来源：fulltext.md（480 页全书）+ figures_captions.md + BOOK_OVERVIEW.md
 > 原则：宁多勿漏，每条含原文引用与页码；后续有独立验证阶段筛选
 

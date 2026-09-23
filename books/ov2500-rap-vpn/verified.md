@@ -14,7 +14,7 @@
   - p06：quote 中 "The number of Virtual NICs supported..." 一句出自 p13，其余出自 p14，出处修正为 p13-14。
   - ce02：quote 第二句 "Remember, do not include the *.mf File..." 出自 p16（非 p24）；p24 有等价表述（"Delete the *.mf File ... before importing the files in Step 2"）。出处修正为 p14, p16（p24 等价）。
 - 推断性表述标注 2 处（quote 真实，summary 含合理推断，下游引用时注意）：ce09"只能重部署"、ce02"导入失败或校验报错"为推断，原文未明说后果。
-- 内容重叠提示（未构成淘汰理由）：ce01 与 p03 的版本矩阵重叠；p07 与 ce02 的 *.mf 提示重叠。蒸馏阶段可按用途分工（原则=正向操作，反例=踩坑警示）。
+- 内容重叠提示（未构成淘汰理由）：ce01 与 p03 的版本矩阵重叠；p07 与 ce02 的 *.mf 提示重叠。整理阶段可按用途分工（原则=正向操作，反例=踩坑警示）。
 
 ---
 
@@ -43,7 +43,7 @@
 - V1：版本矩阵原句逐字命中
 - V2：开工前核对清单（ESXi/Hyper-V/AWOS/VA 版本配套），任何一项不满足即返工
 - V3：具体版本号组合（如 ESXi 5.5 被排除、VA 4.9.2.2 与 OV2500 4.9R2/OVC 4.9.2 认证配套）为厂商兼容性口径
-- 备注：与 ce01（ESXi 5.5 反例）信息重叠，蒸馏时分工
+- 备注：与 ce01（ESXi 5.5 反例）信息重叠，整理时分工
 - 内容：
   - summary：前置条件清单：ESXi 支持 6.5/6.7/7.0.2/8.0（5.5 明确不支持）；Hyper-V 支持 2016/2019/2022；Stellar RAP 需 AWOS 5.0.2 及以上（最新特性也要求 5.0.2+）；RAP VPN VA 版本 4.9.2.2；该 VA 与 OV2500 4.9R2、OVC 4.9.2 认证配套。另支持在 Ubuntu 22.04 LTS + KVM 上部署。
   - tags: [版本兼容, ESXi, Hyper-V, AWOS, KVM]
@@ -80,7 +80,7 @@
 - V1：VLAN 0 / VLAN 4095 / 混杂模式 / Override 三项 Accept 原句逐字命中
 - V2：ESXi 端口组具体设置值（0=untagged、4095=tagged、三项安全策略 Accept），照做即可
 - V3：VLAN 0/4095 承载桥接流量的约定是该 VA 的专属配置手法
-- 备注：与 ce02（*.mf 反例）信息重叠，蒸馏时分工
+- 备注：与 ce02（*.mf 反例）信息重叠，整理时分工
 - 内容：
   - summary：VMware 部署：解压 OVF 包后只用 OVF 文件 + 两块 VMDK（disk 1/disk 2），导入前删除 *.mf 文件；磁盘置备（Disk provisioning）选 Thin；接受许可协议后完成部署。桥接流量专用网卡（无管理 IP 的接口）的 ESXi 端口组规则：非标记 VLAN 流量走隧道配 VLAN 0；标记 VLAN 流量走隧道配 VLAN 4095；必须为该网卡启用混杂模式（Promiscuous Mode）。若勾选 Override，混杂模式、MAC 地址变更（MAC address changes）、伪传输（Forged transmits）三项都要设为 Accept；端口组继承 vSwitch 时须确保 vSwitch0 三项均为 Accept，或在端口组直接设 Accept。
   - tags: [VMware, ESXi, VLAN0, VLAN4095, 混杂模式]
@@ -117,7 +117,7 @@
 - V1：L2 隧道禁配 IP + 混杂模式句、E1000 默认句逐字命中
 - V2：菜单路径（2→8→3 加回程路由 10.255.255.0/24）、每步 Apply 的操作链，含排障高频回程路由问题
 - V3：第三网卡禁 IP 的 L2 约束与 E1000 默认值为该 VA 专属
-- 备注：禁配 IP 与 ce05 反例互为正反表述，蒸馏时分工
+- 备注：禁配 IP 与 ce05 反例互为正反表述，整理时分工
 - 内容：
   - summary：初装：保留 OVF 默认的 Guest OS / VM 兼容性 / 网卡类型（E1000）；控制台自动登录后依次完成键盘布局（默认 US）、空格翻页接受最终用户协议、设置 Admin 密码，重启后以 admin 登录主菜单。网络配置：NIC1 配 VPN 公网 IPv4（示例 10.255.222.97/24），NIC2 配连接 OVE 服务器的接口 IP；第三块网卡专用于 Data Tunnel，因为是二层（L2）隧道严禁配置 IP，且需在 hypervisor 为其开启混杂模式。随后按需配置网络路由、DNS、默认网关，并配置 SSH 服务（用于 SFTP 上传 VPN 设置文件，端口可自定义）；每步改完都要 Apply Configuration Changes 生效。回程路由（p76-77）：需在 VA 菜单 2→8→3（Add Route v4）添加路由，使 OmniVista 能到达 VPN VA 连接企业网的网卡网段（如 10.255.255.0/24），再用 2-Show Current Routes 核对。
   - tags: [初装, E1000, L2隧道禁IP, SSH, 回程路由]

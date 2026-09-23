@@ -6,9 +6,9 @@
 - 性质：入门级三层千兆接入交换机硬件手册——10 个固定配置 1U 机型（10/24/48 口，非 PoE / PoE / 多千兆 PoE），全部内置单电源；除 P24X/PH24/P48X/PH48 外多为无风扇；含机架/壁挂安装、面板 LED、PoE（802.3af/at/bt）预算与优先级断电机制、CLI 硬件监控、法规附录
 - 家族命名规律：`-10/-24/-48` 非 PoE；`P` 前缀 = PoE（802.3at）；`PX` = 2 个多千兆 802.3bt 口 + 大电源；`H` = combo 口可升级 10G（软件解锁）
 
-## 章节结构与蒸馏重点
+## 章节结构与整理重点
 
-| 章 | 内容 | fulltext 页 | 蒸馏重点 |
+| 章 | 内容 | fulltext 页 | 整理重点 |
 |---|---|---|---|
 | 前言 | 文档路线图 | 1-12 | 硬件手册定位（不含软件配置）；四阶段文档路线图 |
 | Ch1 | 机型总表 + 可用性特性 | 13-16 | 10 机型端口构成对照；热插拔/自动监控（传感器 trap）/LED 三大可用性特性 |
@@ -17,7 +17,7 @@
 | Ch4 | PoE 管理 | 58-69 | 规格与默认值；PoE 预算表（120-760W）；lanpower 命令族（service/power/maxpower/priority/4pair/8023bt/class-detection/capacitor-detection/priority-disconnect）；Fast/Perpetual PoE 机制（FPGA/CPLD 依赖）；Guard Band 拒载机制；Priority Disconnect 三场景裁决规则（优先级+物理端口号 1 高 48 低） |
 | 附录 A | 法规与安全 | 70-83 | CE/WEEE/RoHS/Prop 65；安全/EMC/环境标准清单；多语言安全警告（雷暴/激光/ESD/接地/锂电/受限场所等） |
 
-## 蒸馏策略（本书特调）
+## 整理策略（本书特调）
 
 - **principles 收机型规格规律**：家族命名解码、PoE 预算-电源 wattage 对应、LED 语义、温度双阈值、Guard Band/Priority Disconnect 机制、Fast/Perpetual PoE 原理、接地规范
 - **cases 收安装与配置流程**：开箱→上电→首次登录→解锁会话→改密→保存；机架/桌面/壁挂三类安装；PoE 激活/关断/优先级/预算配置

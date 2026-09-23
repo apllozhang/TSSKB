@@ -131,4 +131,4 @@
 
 45 个词条无重复术语，全部保留：802.11r/k/v、Access Guardian、AeroScout RTLS、AWOS、BLE Beaconing、BYOD、Captive Portal、Controller-less Architecture、DHCP Option 138、DPI、DRM、eBuy、EDUROAM、Ekahau、ESL、Freemium/Premium、GRE Guest Tunneling、HA、Hotspot 2.0、Maintenance Contract (PW/SP)、Network Advisor、OAW-APxxxx-Region、OmniVista 2500、OmniVista Cirrus 4、OmniVista Cirrus 10、OV2500-NG-AP、OVCX-[Category]-[Level]-[Duration]、PVM/SVM、Rainbow、RAP、RTLS、Smart Load Balancing、Starter Pack、Stellar Enterprise (On-Premise)、Stellar Enterprise Cloud、Stellar Express、UNP、UPAM、VoWLAN、WCF、Wi-Fi Bridge、Wi-Fi Mesh、WIPS/wIDS、WPA3、Zigbee。
 
-原文与词条定义抽样一致（如 p95 BLE 默认参数、p141 服务包、p130 Starter Pack）。g21 中"30+ 种预置异常"与 f16 的"40+"同样属未获原文支持的数量表述，p219-220 实列 17 个具名异常，后续蒸馏时统一改为"预置异常库（持续更新）"为宜。
+原文与词条定义抽样一致（如 p95 BLE 默认参数、p141 服务包、p130 Starter Pack）。g21 中"30+ 种预置异常"与 f16 的"40+"同样属未获原文支持的数量表述，p219-220 实列 17 个具名异常，后续整理时统一改为"预置异常库（持续更新）"为宜。

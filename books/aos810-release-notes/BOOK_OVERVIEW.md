@@ -5,9 +5,9 @@
 - 页数：105 页（fulltext.md 页码标记 `<<<PAGE N>>>`，与 PDF 页码一致）
 - 性质：版本发布说明——升级前提、新特性、许可、已知问题（Open CR）、修复列表（Fixed CR）、升级流程附录。信息密度高、大量内容为"手册里没有"的独占信息（原书自述："Since much of the information in these release notes is not included in the hardware and software user manuals, it is important that you read all sections"）
 
-## 章节结构与蒸馏重点
+## 章节结构与整理重点
 
-| 页 | 章节 | 蒸馏重点 |
+| 页 | 章节 | 整理重点 |
 |---|---|---|
 | 4-14 | System Specifications | 各机型 SDRAM/Flash 配置；各机型 U-Boot/FPGA/ONIE/CPLD 最低版与当前版矩阵（升级硬前提） |
 | 15-18 | [MUST READ] Prerequisites and Deployment | 出厂首次启动 VC 自动化副作用、OS6560-P48Z16(903954-90) 聚合限制、快速收敛例外、MACsec 站点许可、SHA-1/ssh-rsa 禁用、按版本列出的废弃特性（EVB/NTP/WRED/OVSDB/EVPN VRF 化等） |
@@ -29,7 +29,7 @@
 | 103 | Appendix K: Fixed CVEs | CVE-2025-49794/49795/49796、6965、3277、49844、46817、1861 等 |
 | 104-105 | Appendix L: Secure Boot | 各平台 Secure Boot 镜像/U-Boot/BIOS 要求与升级次序 |
 
-## 蒸馏策略（本书特调）
+## 整理策略（本书特调）
 
 - **counter-examples 是大头**：升级陷阱（Secure Boot 前必须先升 U-Boot、ISSU 不支持的平台、8.10R3 EVPN 必须手工迁 VRF）、已知未修问题（Open CR 全量收）、废弃特性（EVB 配置存在则无法升 8.5R4+）、平台/端口级限制（MACsec 端口矩阵、OS6560-P48Z16 聚合）
 - **principles 收新特性机制**：Secure Boot 信任链、ALE CA 证书生命周期、DHL Active-Standby、Telemetry IPFIX 管道、Multi-Site SPB 层级、MKA VLAN/TPID 隧道化等

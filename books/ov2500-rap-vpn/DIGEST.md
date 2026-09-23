@@ -59,4 +59,4 @@ Local Breakout 三条路由红线（p73-74）：只有 Tunnel ID=0 且隧道内�
 - **License 红线**：下行口认证需 Premium/Business 账号；CSV 的 RAP 列留空或 FALSE，导入看似成功但 AP 不带隧道配置。
 
 ---
-由 cangjie-skill 流水线从 OV2500 4.9R2 RAP and VPN VA Installation 蒸馏生成。
+由 文档整理-skill 流水线从 OV2500 4.9R2 RAP and VPN VA Installation 整理生成。

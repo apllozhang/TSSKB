@@ -1,6 +1,6 @@
 # DIGEST · Stellar WLAN 进阶部署与云管运维（DT00XTE361EN）精华版
 
-> 不读全书、只看精华。这是 ALE 培训教材 OmniAccess Stellar WLAN Advanced Deployment with OmniVista（330 页）的蒸馏长文：QoE 六指标、云管运维四件套、有线/IoT 接入、全流程交付清单、CLI 排障速查，一次读完即可上手。
+> 不读全书、只看精华。这是 ALE 培训教材 OmniAccess Stellar WLAN Advanced Deployment with OmniVista（330 页）的整理长文：QoE 六指标、云管运维四件套、有线/IoT 接入、全流程交付清单、CLI 排障速查，一次读完即可上手。
 
 ## 一、一页看懂这门课
 
@@ -82,4 +82,4 @@ QoE（体验质量）从终端视角回答"用户体验好不好"。Cirrus 提�
 **高频陷阱清单**：升级必重启且终端断连；少于 3 台 AP 无热力图；组播优化"失效"多为自动停用（信道利用率 90% 或 6 个高吞吐客户端，是设计行为）；密钥轮换仅 Enterprise SSID 可用；门户首连 IP 为 0.0.0.0 发不出重定向是正常时序，先查 IP 再查门户；僵尸进程累积吃内存，发现后开票附进程清单别只重启；交换机重启阶段按键会掉进 Miniboot；语音标准（-67dBm）别错用到数据场景，会过度建设。
 
 ---
-*由 cangjie-skill 流水线从 DT00XTE361EN 蒸馏生成。*
+*由 文档整理-skill 流水线从 DT00XTE361EN 整理生成。*
