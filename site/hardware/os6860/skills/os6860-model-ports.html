@@ -1,90 +1,70 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>os6860-model-ports — OmniSwitch 6860/6860E/6860N Hardware Guide</title>
-<style>
-:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
-*{box-sizing:border-box}
-body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
-a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
-.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin:16px 0}
-.gallery figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px}
-.gallery img{width:100%;max-height:340px;object-fit:contain;background:#fff;border-radius:6px}
-.gallery figcaption{font-size:12.5px;color:var(--mut);text-align:center;margin-top:6px}
-/* 侧栏折叠 + 图片灯箱 */
-.tgl{position:fixed;left:0;top:45%;z-index:60;background:var(--card);border:1px solid var(--line);border-right:none;border-radius:0 8px 8px 0;color:var(--tx);padding:10px 6px;cursor:pointer;font-size:13px;line-height:1.1;writing-mode:vertical-lr}
-.tgl:hover{background:var(--acc);color:#0f172a}
-.layout.full{grid-template-columns:0 1fr}
-.layout.full aside{display:none}
-.lb{position:fixed;inset:0;background:rgba(5,10,20,.92);z-index:100;display:flex;align-items:center;justify-content:center;flex-direction:column}
-.lb img{max-width:92vw;max-height:82vh;background:#fff;border-radius:6px;transition:transform .12s}
-.lb .lbb{margin-top:10px;display:flex;gap:10px}
-.lb button{background:var(--card);border:1px solid var(--line);color:var(--tx);border-radius:8px;padding:6px 14px;cursor:pointer;font-size:14px}
-.lb button:hover{background:var(--acc);color:#0f172a}
-.search{margin:0 0 14px}
-.search input{width:100%;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--tx);font-size:13px;outline:none}
-.search input:focus{border-color:var(--acc)}
-#qres{max-height:340px;overflow-y:auto;margin-top:6px}
-#qres .qi{display:block;padding:6px 8px;border-radius:6px;font-size:12.5px;color:var(--tx);border-left:2px solid transparent}
-#qres .qi:hover{background:var(--card);text-decoration:none;border-left-color:var(--acc)}
-#qres .qi .qp{color:var(--mut);font-size:11px;display:block}
-#qres .qi b{color:var(--acc)}
-.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
-main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
-.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
-aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
-aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
-aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
-aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
-aside a:hover{background:var(--card);text-decoration:none}
-aside a.on{background:var(--card);color:var(--acc)}
-main{padding:36px 48px;max-width:1000px}
-h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
-h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
-table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
-th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
-th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
-code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
-pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
-pre code{background:none;padding:0}
-blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
-.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
-.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
-.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
-.meta{font-size:13px;color:var(--mut)}
-hr{border:none;border-top:1px solid var(--line);margin:26px 0}
-.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
-.badge.soon{background:#475569;color:#cbd5e1}
-main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
-main{padding:28px 48px 40px;max-width:1040px}
-h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
-blockquote p{margin:6px 0}
-.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
-.crumbs a{color:var(--acc)}
-.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
-.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
-.pn a:hover{border-color:var(--acc)}
-.pn .nxt{text-align:right}
-.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
-@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
-</style></head>
-<body><div class="layout"><aside><h1>OmniSwitch 6860/6860E/6860N Hardware Guide</h1>
-<div class="search"><input id="qk" type="search" placeholder="🔍 搜索全站…" autocomplete="off"><div id="qres"></div></div>
-
-<div class="sub">Rev W · 115 页 · 三代 15 机型（20G VC→QSFP28 VFL/七款电源）</div>
-<a href="../index.html">🏠 课程首页</a>
-<a href="../digest.html">📖 精华长文 DIGEST</a>
-
-<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
-<a href="../glossary.html">🔤 术语词典</a>
-<a href="../../../index.html">⬅️ 返回培训门户</a>
-<a href="../index.html">──── Skills ────</a>
-<div class="grp">机型与端口</div>
-<a href="../skills/os6860-model-ports.html" class="on">os6860-model-ports</a>
-<div class="grp">安装与电源</div>
-<a href="../skills/os6860-install-power.html">os6860-install-power</a>
-<div class="grp">运维排障</div>
-<a href="../skills/os6860-ops-troubleshoot.html">os6860-ops-troubleshoot</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../hardware/index.html">硬件手册</a> › <a href="../index.html">OmniSwitch 6860/6860E/6860N Hardware Guide</a> › <span>os6860-model-ports</span></nav><h1>os6860-model-ports</h1><p class="meta"><span class="badge">SKILL</span> os6860-model-ports · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="面向售前、售后与网络工程师的 ALE 内部技术知识平台">
+  <meta name="theme-color" content="#6B489D">
+  <title>os6860-model-ports — OmniSwitch 6860/6860E/6860N Hardware Guide</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=4">
+  <link rel="stylesheet" href="/assets/css/layout.css?v=4">
+  <link rel="stylesheet" href="/assets/css/components.css?v=4">
+  <link rel="stylesheet" href="/assets/css/content.css?v=7">
+  <script src="/assets/js/auth-config.js?v=4"></script>
+  <script src="/assets/js/auth-core.js?v=4"></script>
+  <script src="/assets/js/auth-guard.js?v=4"></script>
+</head>
+<body data-page-kind="course">
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <header class="topbar" data-topbar>
+    <a class="brand" href="/index.html" aria-label="返回 ALE 技术培训门户首页">
+      <img src="/assets/ale-logo-color.png" alt="Alcatel-Lucent Enterprise">
+      <span>ALE 培训门户</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-controls="primary-nav" aria-expanded="false" data-nav-toggle>
+      <span aria-hidden="true">☰</span><span class="sr-only">打开导航</span>
+    </button>
+    <nav id="primary-nav" class="primary-nav" aria-label="主导航">
+      <a href="/index.html">首页</a>
+      <a href="/paths.html">学习路径</a>
+      <a href="/presales/index.html">售前</a>
+      <a href="/postsales/index.html">售后</a>
+      <a href="/wlan/index.html">无线</a>
+      <a href="/aos/index.html">AOS 手册</a>
+      <a href="/hardware/index.html" aria-current="page">硬件</a>
+      <a href="/brochures/index.html">彩页</a>
+      <a href="/solutions/index.html">解决方案</a>
+      <a href="/security/index.html">安全</a>
+    </nav>
+    <button id="logout-btn" class="logout-btn" type="button" hidden>退出登录</button>
+  </header>
+<div class="course-layout">
+<aside class="course-sidebar" id="course-sidebar" data-sidebar>
+  <div class="sidebar-heading">
+    <p class="eyebrow">COURSE</p>
+    <h2>OmniSwitch 6860/6860E/6860N Hardware Guide</h2>
+    <p>Rev W · 115 页 · 三代 15 机型（20G VC→QSFP28 VFL/七款电源）</p>
+  </div>
+<div class="search" data-search>
+  <label class="sr-only" for="course-search">搜索全站课程和知识单元</label>
+  <input id="course-search" type="search" placeholder="搜索课程编号、产品型号或技术关键词…" autocomplete="off" data-search-input>
+  <div class="search-results" role="listbox" aria-live="polite" data-search-results></div>
+</div>  <nav class="course-nav" aria-label="课程目录">
+    <a href="/hardware/os6860/index.html">课程首页</a>
+    <a href="/hardware/os6860/digest.html">精华长文</a>
+<a href="/hardware/os6860/gallery.html">产品外观</a>    <a href="/hardware/os6860/overview.html">教书理解</a>
+    <a href="/hardware/os6860/glossary.html">术语词典</a>
+    <p class="course-nav-group">机型与端口</p>
+      <a aria-current="page" href="/hardware/os6860/skills/os6860-model-ports.html">os6860-model-ports</a>
+    <p class="course-nav-group">安装与电源</p>
+      <a href="/hardware/os6860/skills/os6860-install-power.html">os6860-install-power</a>
+    <p class="course-nav-group">运维排障</p>
+      <a href="/hardware/os6860/skills/os6860-ops-troubleshoot.html">os6860-ops-troubleshoot</a>
+  </nav>
+</aside>  <main id="main-content" class="course-main prose">
+    <nav class="breadcrumbs" aria-label="面包屑"><a href="/index.html">培训门户</a><span>/</span><a href="/hardware/index.html">硬件手册 · Hardware Guides</a><span>/</span><a href="/hardware/os6860/index.html">OmniSwitch 6860/6860E/6860N Hardware Guide</a><span>/</span><span aria-current="page">os6860-model-ports</span></nav>
+<header class="skill-heading"><div><p class="eyebrow">KNOWLEDGE UNIT</p><h1>os6860-model-ports</h1></div><dl><div><dt>Skill ID</dt><dd>os6860-model-ports</dd></div></dl></header>    <article class="markdown-body"><h2 id="r">R（触发场景）</h2>
 <ul>
 <li><strong>6860 家族选型</strong>：<br>在基础/E/N 三代 15 机型中按业务选机型</li>
 <li><strong>解码命名</strong>：<br>P=PoE、E=协处理器增强、N=下一代、U28=全光、Z=多千兆、M=带上联模块槽</li>
@@ -94,44 +74,145 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="i">I（核心理念）</h2>
 <ul>
-<li><strong>6860 家族是同一 1U 44cm 包络内的三代演进（F1/F4，<span class="pg">原文p14</span> /<span class="pg">原文p15</span> ）</strong>：<br>基础代=千兆铜 + 4×SFP+ 10G 上联 + 2×20G VC 口；</li>
-<li>E 代加内置协处理器（OK2 双系统灯）+ 后面板 EMP 带外口 + 私有 HPoE 60/75W（"not 802.3bt compliant"，P4，<span class="pg">原文p43</span> /<span class="pg">原文p46</span> ）；</li>
-<li>
-<p>N 代全面 bt 95W + 2.5G-10G 多千兆铜口 + SFP28 25G 上联 + QSFP28 VFL，M 型带上联模块槽（P1/P6，<span class="pg">原文p50</span> -<span class="pg">原文p56</span> ）；</p>
-</li>
-<li>
-<p><strong>选型口诀</strong>：<br>普通办公选基础，要协处理器/EMP/私有 60W 选 E，Wi-Fi6 时代 2.5G-5G AP 与 25G 上联选 N。</p>
-</li>
+<li>6860 家族是同一 1U 44cm 包络内的三代演进（F1/F4，<span class="source-page">原文p14</span> /<span class="source-page">原文p15</span> ）。</li>
+<li><strong>选型口诀</strong>：<br>普通办公选基础，要协处理器/EMP/私有 60W 选 E，Wi-Fi6 时代 2.5G-5G AP 与 25G 上联选 N。</li>
 </ul>
+<p>三代能力对照（P1/P6，<span class="source-page">原文p50</span> -<span class="source-page">原文p56</span> ）：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>代际</th>
+<th>下行口</th>
+<th>上联</th>
+<th>VC 堆叠口</th>
+<th>代际特色</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>基础代</td>
+<td>24/48 千兆铜</td>
+<td>4×SFP+（10G）</td>
+<td>2×20G VC 口</td>
+<td>入门定位</td>
+</tr>
+<tr>
+<td>E 代</td>
+<td>24/48 千兆铜（含 HPoE 型）</td>
+<td>4×SFP+（10G）</td>
+<td>2×20G VC 口</td>
+<td>内置协处理器（OK2 双系统灯）+ 后面板 EMP 带外口 + 私有 HPoE 60/75W（"not 802.3bt compliant"，P4，<span class="source-page">原文p43</span> /<span class="source-page">原文p46</span> ）</td>
+</tr>
+<tr>
+<td>N 代</td>
+<td>千兆铜 / 2.5G-10G 多千兆 / U28 全光</td>
+<td>SFP28×4（25G）</td>
+<td>2×QSFP28 VFL</td>
+<td>全面 PoE bt 95W；M 型带上联模块槽</td>
+</tr>
+</tbody>
+</table></div>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>三代选型三问（F1）：要协处理器/EMP？→E；要 25G 上联/多千兆 bt 95W？→N；都不需要→基础代</li>
 <li>下行口形态定机型：24/48 千兆铜（基础/E）→U28 全光→Z 多千兆混合→M 模块化上联</li>
-<li>上行核对：基础/E=4×SFP+(10G)；N=QSFP28×2 VFL + SFP28×4（四口组 31-34 禁 1G/10G 与 25G 混跑，X1，<span class="pg">原文p48</span> /<span class="pg">原文p53</span> ）</li>
-<li>VC 堆叠链路：基础/E 用 2×20G VC 口；N 代升级为 2×QSFP28 VFL（P3，<span class="pg">原文p48</span> /<span class="pg">原文p50</span> ）</li>
-<li>N-M 型上联模块四选一：OS68-XNI-U4（4×SFP+）/QNI-U2（2×QSFP+ 40G）/VNI-U4（4×SFP28 25G，同四口组限速）/CNI-U1（1×QSFP28 40/100G）（<span class="pg">原文p56</span> -<span class="pg">原文p58</span> ）</li>
+<li>上行核对：基础/E=4×SFP+(10G)；N=QSFP28×2 VFL + SFP28×4（四口组 31-34 禁 1G/10G 与 25G 混跑，X1，<span class="source-page">原文p48</span> /<span class="source-page">原文p53</span> ）</li>
+<li>VC 堆叠链路：基础/E 用 2×20G VC 口；N 代升级为 2×QSFP28 VFL（P3，<span class="source-page">原文p48</span> /<span class="source-page">原文p50</span> ）</li>
+<li>N-M 型上联模块四选一（<span class="source-page">原文p56</span> -<span class="source-page">原文p58</span> ）：</li>
 </ol>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>模块</th>
+<th>形态与速率</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OS68-XNI-U4</td>
+<td>4×SFP+（10G）</td>
+<td>—</td>
+</tr>
+<tr>
+<td>OS68-QNI-U2</td>
+<td>2×QSFP+（40G）</td>
+<td>—</td>
+</tr>
+<tr>
+<td>OS68-VNI-U4</td>
+<td>4×SFP28（25G）</td>
+<td>与下行 SFP28 四口组相同限速规则</td>
+</tr>
+<tr>
+<td>OS68-CNI-U1</td>
+<td>1×QSFP28（40/100G）</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>上联模块装拆</strong>：插入 Slot 2→滑入就位→captive 螺丝固定；拆=松螺丝→握牢直拉（C15，<span class="pg">原文p84</span> ）</li>
-<li><strong>N 型端口 LED 判读</strong>：绿=千兆链路、琥珀=PoE、蓝=2.5G、蓝+黄=5G、品红=10G；LED2 琥珀=PoE Active；VFL 口绿=uplink/琥珀=VFL（P16，<span class="pg">原文p60</span> ）</li>
-<li><strong>上电后 LED 快查</strong>：OK1 绿+PRI 绿（master）/琥珀（slave）+PS 绿；E 型另看 OK2 绿（P17，<span class="pg">原文p23</span> ）</li>
-<li><strong>console 连接</strong>：Micro USB-to-USB 线（随机附带），9600-8N1；N 型 115200（C2，<span class="pg">原文p22</span> ）</li>
+<li><strong>上联模块装拆</strong>：插入 Slot 2→滑入就位→captive 螺丝固定；拆=松螺丝→握牢直拉（C15，<span class="source-page">原文p84</span> ）</li>
+<li><strong>N 型端口 LED 判读</strong>（P16，<span class="source-page">原文p60</span> ）：</li>
+</ul>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>LED 颜色</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>绿</td>
+<td>千兆链路</td>
+</tr>
+<tr>
+<td>琥珀</td>
+<td>PoE 供电</td>
+</tr>
+<tr>
+<td>蓝</td>
+<td>2.5G 链路</td>
+</tr>
+<tr>
+<td>蓝 + 黄</td>
+<td>5G 链路</td>
+</tr>
+<tr>
+<td>品红</td>
+<td>10G 链路</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li>LED2 琥珀 = PoE Active；VFL 口绿 = uplink / 琥珀 = VFL。</li>
+<li><strong>上电后 LED 快查</strong>：OK1 绿+PRI 绿（master）/琥珀（slave）+PS 绿；E 型另看 OK2 绿（P17，<span class="source-page">原文p23</span> ）</li>
+<li><strong>console 连接</strong>：Micro USB-to-USB 线（随机附带），9600-8N1；N 型 115200（C2，<span class="source-page">原文p22</span> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li><strong>E 代 HPoE 机型口功率域核对</strong>：<br>E-P24/E-P48 口 1-4 为 60W HPoE、E-P24Z8 口 17-24 为 75W，均非 bt 合规（X2/P4，<span class="pg">原文p43</span> /<span class="pg">原文p45</span> /<span class="pg">原文p46</span> ）</li>
-<li><strong>N-P48M 全口 bt 95W 高功率部署</strong>：<br>36×2.5G + 12×100M-10G 均 95W 档，260W 待机/8.5kg，需后支架（P6/P10，<span class="pg">原文p51</span> /<span class="pg">原文p52</span> ）</li>
-<li><strong>OS68-VNI-U4 四口 SFP28 模块组内限速</strong>：<br>组内须全跑 1G/10G 或全跑 25G（X1，<span class="pg">原文p57</span> ）</li>
+<li><strong>E 代 HPoE 机型口功率域核对</strong>：<br>E-P24/E-P48 口 1-4 为 60W HPoE、E-P24Z8 口 17-24 为 75W，均非 bt 合规（X2/P4，<span class="source-page">原文p43</span> /<span class="source-page">原文p45</span> /<span class="source-page">原文p46</span> ）</li>
+<li><strong>N-P48M 全口 bt 95W 高功率部署</strong>：<br>36×2.5G + 12×100M-10G 均 95W 档，260W 待机/8.5kg，需后支架（P6/P10，<span class="source-page">原文p51</span> /<span class="source-page">原文p52</span> ）</li>
+<li><strong>OS68-VNI-U4 四口 SFP28 模块组内限速</strong>：<br>组内须全跑 1G/10G 或全跑 25G（X1，<span class="source-page">原文p57</span> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>
-<li><strong>N 型 SFP28 四口组禁混速</strong>：<br>31-34 口（P48Z/P24Z 及 VNI-U4）不可 1G/10G 与 25G 混跑；1G 与 10G 混跑允许（X1，<span class="pg">原文p48</span> /<span class="pg">原文p50</span> /<span class="pg">原文p53</span> /<span class="pg">原文p57</span> ）</li>
-<li><strong>HPoE 非 bt 合规</strong>：<br>E 代 60/75W 口对严格 bt PD 互通需留意（X2，<span class="pg">原文p43</span> /<span class="pg">原文p46</span> ）</li>
-<li><strong>OS-BPS 备份电源槽已停支持</strong>：<br>"No longer supported"，面板图保留但不可用（X3，<span class="pg">原文p29</span> /<span class="pg">原文p31</span> ）</li>
-<li>2000W 电源仅 N-P48M/P24M 两款；P48Z/P24Z 标 Not Supported（X4，<span class="pg">原文p69</span> ）</li>
-<li>N 机型/N 电源需 AOS ≥8.7R1 才支持（X6，<span class="pg">原文p69</span> ）</li>
-<li>N 型 M/Z 机箱 44cm 深（基础/E 为 35cm），机柜深度与后支架须提前核对（P10，<span class="pg">原文p30</span> /<span class="pg">原文p52</span> ）</li>
-<li><strong>Class 1M 激光</strong>：<br>空光口勿直视、不用光学仪器看，加盖（X35，<span class="pg">原文p29</span> /<span class="pg">原文p110</span> ）</li>
+<li><strong>N 型 SFP28 四口组禁混速</strong>：<br>31-34 口（P48Z/P24Z 及 VNI-U4）不可 1G/10G 与 25G 混跑；1G 与 10G 混跑允许（X1，<span class="source-page">原文p48</span> /<span class="source-page">原文p50</span> /<span class="source-page">原文p53</span> /<span class="source-page">原文p57</span> ）</li>
+<li><strong>HPoE 非 bt 合规</strong>：<br>E 代 60/75W 口对严格 bt PD 互通需留意（X2，<span class="source-page">原文p43</span> /<span class="source-page">原文p46</span> ）</li>
+<li><strong>OS-BPS 备份电源槽已停支持</strong>：<br>"No longer supported"，面板图保留但不可用（X3，<span class="source-page">原文p29</span> /<span class="source-page">原文p31</span> ）</li>
+<li>2000W 电源仅 N-P48M/P24M 两款；P48Z/P24Z 标 Not Supported（X4，<span class="source-page">原文p69</span> ）</li>
+<li>N 机型/N 电源需 AOS ≥8.7R1 才支持（X6，<span class="source-page">原文p69</span> ）</li>
+<li>N 型 M/Z 机箱 44cm 深（基础/E 为 35cm），机柜深度与后支架须提前核对（P10，<span class="source-page">原文p30</span> /<span class="source-page">原文p52</span> ）</li>
+<li><strong>Class 1M 激光</strong>：<br>空光口勿直视、不用光学仪器看，加盖（X35，<span class="source-page">原文p29</span> /<span class="source-page">原文p110</span> ）</li>
 </ul>
-<p>来源：OmniSwitch 6860/6860E/6860N Hardware Users Guide（Ch1 p14-17 + Ch3 p27-60 + 上联模块 p84-85）</p><div class="pn"><a href="../index.html">⬅ 返回课程首页</a><a class="nxt" href="os6860-install-power.html">下一单元：os6860-install-power ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<p>来源：OmniSwitch 6860/6860E/6860N Hardware Users Guide（Ch1 p14-17 + Ch3 p27-60 + 上联模块 p84-85）</p></article>
+<nav class="previous-next" aria-label="知识单元翻页"><a href="/hardware/os6860/index.html"><span>上一单元</span><b>返回课程首页</b></a><a class="next" href="/hardware/os6860/skills/os6860-install-power.html"><span>下一单元</span><b>os6860-install-power</b></a></nav>    <footer class="content-footer">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</footer>
+  </main>
+</div>
+  <script src="/assets/js/app.js?v=4" defer></script>
+  <script src="/assets/js/search.js?v=4" defer></script>
+  <script src="/assets/js/lightbox.js?v=5" defer></script>
+</body>
+</html>

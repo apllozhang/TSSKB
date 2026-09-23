@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="面向售前、售后与网络工程师的 ALE 内部技术知识平台">
+  <meta name="theme-color" content="#6B489D">
+  <title>transit-overview — 轨道交通解决方案 · 设计指南</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=4">
+  <link rel="stylesheet" href="/assets/css/layout.css?v=4">
+  <link rel="stylesheet" href="/assets/css/components.css?v=4">
+  <link rel="stylesheet" href="/assets/css/content.css?v=7">
+  <script src="/assets/js/auth-config.js?v=4"></script>
+  <script src="/assets/js/auth-core.js?v=4"></script>
+  <script src="/assets/js/auth-guard.js?v=4"></script>
+</head>
+<body data-page-kind="course">
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <header class="topbar" data-topbar>
+    <a class="brand" href="/index.html" aria-label="返回 ALE 技术培训门户首页">
+      <img src="/assets/ale-logo-color.png" alt="Alcatel-Lucent Enterprise">
+      <span>ALE 培训门户</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-controls="primary-nav" aria-expanded="false" data-nav-toggle>
+      <span aria-hidden="true">☰</span><span class="sr-only">打开导航</span>
+    </button>
+    <nav id="primary-nav" class="primary-nav" aria-label="主导航">
+      <a href="/index.html">首页</a>
+      <a href="/paths.html">学习路径</a>
+      <a href="/presales/index.html">售前</a>
+      <a href="/postsales/index.html">售后</a>
+      <a href="/wlan/index.html">无线</a>
+      <a href="/aos/index.html">AOS 手册</a>
+      <a href="/hardware/index.html">硬件</a>
+      <a href="/brochures/index.html">彩页</a>
+      <a href="/solutions/index.html" aria-current="page">解决方案</a>
+      <a href="/security/index.html">安全</a>
+    </nav>
+    <button id="logout-btn" class="logout-btn" type="button" hidden>退出登录</button>
+  </header>
+<div class="course-layout">
+<aside class="course-sidebar" id="course-sidebar" data-sidebar>
+  <div class="sidebar-heading">
+    <p class="eyebrow">COURSE</p>
+    <h2>轨道交通解决方案 · 设计指南</h2>
+    <p>两版设计指南 112 页 · 分层架构 / SPB 织构 / 组播 / 容量测算 / 安全纵深 / 产品选型</p>
+  </div>
+<div class="search" data-search>
+  <label class="sr-only" for="course-search">搜索全站课程和知识单元</label>
+  <input id="course-search" type="search" placeholder="搜索课程编号、产品型号或技术关键词…" autocomplete="off" data-search-input>
+  <div class="search-results" role="listbox" aria-live="polite" data-search-results></div>
+</div>  <nav class="course-nav" aria-label="课程目录">
+    <a href="/solutions/transportation/index.html">课程首页</a>
+    <a href="/solutions/transportation/digest.html">精华长文</a>
+    <a href="/solutions/transportation/overview.html">教书理解</a>
+    <a href="/solutions/transportation/glossary.html">术语词典</a>
+    <p class="course-nav-group">架构</p>
+      <a aria-current="page" href="/solutions/transportation/skills/transit-overview.html">transit-overview</a>
+      <a href="/solutions/transportation/skills/transit-architecture.html">transit-architecture</a>
+    <p class="course-nav-group">织构设计</p>
+      <a href="/solutions/transportation/skills/transit-spb-design.html">transit-spb-design</a>
+      <a href="/solutions/transportation/skills/transit-multicast.html">transit-multicast</a>
+      <a href="/solutions/transportation/skills/transit-capacity.html">transit-capacity</a>
+    <p class="course-nav-group">接入与运维</p>
+      <a href="/solutions/transportation/skills/transit-attachment.html">transit-attachment</a>
+      <a href="/solutions/transportation/skills/transit-ops.html">transit-ops</a>
+    <p class="course-nav-group">安全与选型</p>
+      <a href="/solutions/transportation/skills/transit-security.html">transit-security</a>
+      <a href="/solutions/transportation/skills/transit-products.html">transit-products</a>
+  </nav>
+</aside>  <main id="main-content" class="course-main prose">
+    <nav class="breadcrumbs" aria-label="面包屑"><a href="/index.html">培训门户</a><span>/</span><a href="/solutions/index.html">解决方案 · Solutions</a><span>/</span><a href="/solutions/transportation/index.html">轨道交通解决方案</a><span>/</span><span aria-current="page">transit-overview</span></nav>
+<header class="skill-heading"><div><p class="eyebrow">KNOWLEDGE UNIT</p><h1>transit-overview</h1></div><dl><div><dt>Skill ID</dt><dd>transit-overview</dd></div></dl></header>    <article class="markdown-body"><h2 id="r">R（何时用）</h2>
+<ul>
+<li>新建轨交/有轨电车/智能交通项目立项，需要梳理"网上到底要跑哪些业务系统"</li>
+<li>与业主或信号专业对齐网络需求指标（隔离、收敛、规模、环境）</li>
+<li>判断信号（Signaling/ATC）这类 50ms 级业务能否上 SPB 统一网</li>
+<li>编写需求规格书或方案书的"业务与需求"章节</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<ul>
+<li><strong>轨交业务系统分四类</strong>：<br>Control（控制）、Safety（安全）、Communications（通信）、Information（信息），全部跑在一张共享网络 上，靠 VPN/容器做逻辑分割（通用版 p11-12、p14）。</li>
+<li><strong>网络设计被六大需求驱动</strong>：<br>多租户虚拟隔离、无单点故障的亚秒级收敛、可扩展到几十系统/几百节点/几千终端、单级 QoS 按系统分级、设备加固与准入安全、轨道旁设备须满足 EN 50121 / NEMA TS-2 工业规格（通用版 p14-17）。</li>
+<li><strong>一条硬红线</strong>：<br>SPB 收敛时间通常大于 200ms（8.5R2 目标 100ms 以内），满足不了信号系统 50ms 要求，这类业务必须走独立网络（SDH/SONET 或 MPLS）（通用版 p7、p15）。</li>
+</ul>
+<h2 id="a1">A1（决策要点）</h2>
+<ol>
+<li>先按四类清点业务系统，逐系统确认带宽流向（OCC→车站 / 车站→OCC / 站间 / 本地），这是后续链路容量规划的输入（通用版 p12-14、p39-40）</li>
+<li>每个系统一个 VPN 容器、一个流量等级——单级 QoS 够用，不必上层次化 QoS（通用版 p16）</li>
+<li>收敛指标口径：网络无 SPOF 时中断时长等于收敛时间，本指南按"亚秒级"设计（通用版 p15）</li>
+<li>车载、车地、车车通信不在本设计指南范围内（SPB 版 p5、通用版 p7-8）</li>
+<li>选设备前先核对环境等级：轨道旁须无风扇、抗振、耐极端温度、EMI/EMC 达标（通用版 p16-17）</li>
+</ol>
+<h2 id="a2">A2（细节速查表）</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>业务类别</th>
+<th>代表系统（轨交）</th>
+<th>说明</th>
+<th>页码（通用版）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Control</td>
+<td>Signaling、ATC（ATP/ATO/ATS）</td>
+<td>防碰撞、保持安全车距、按图停站与调度</td>
+<td>p12</td>
+</tr>
+<tr>
+<td>Safety</td>
+<td>Video Surveillance、Emergency Call、Fire/Alarm、Access Control</td>
+<td>人身与资产安全、事件响应</td>
+<td>p12</td>
+</tr>
+<tr>
+<td>Communications</td>
+<td>Telephony、Wireless LAN</td>
+<td>员工通信，兼作紧急呼叫与广播的底层</td>
+<td>p12-13</td>
+</tr>
+<tr>
+<td>Information</td>
+<td>PIS、Passenger Announcement、Infotainment、Internet</td>
+<td>乘客信息与增值收入</td>
+<td>p13-14</td>
+</tr>
+</tbody>
+</table></div>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>需求维度</th>
+<th>要点</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>虚拟化</td>
+<td>一张物理网，VPN 容器隔离多系统/多租户</td>
+<td>通用版 p14-15</td>
+</tr>
+<tr>
+<td>可用性</td>
+<td>无 SPOF、自动恢复、在线维护；SPB 收敛 &gt;200ms（8.5R2 目标 &lt;100ms）</td>
+<td>通用版 p15、p7</td>
+</tr>
+<tr>
+<td>可扩展</td>
+<td>几十个系统、几百节点、几千终端与组播流</td>
+<td>通用版 p15-16</td>
+</tr>
+<tr>
+<td>性能与 QoS</td>
+<td>按系统映射流量等级，单级 QoS 足够</td>
+<td>通用版 p16</td>
+</tr>
+<tr>
+<td>安全</td>
+<td>节点加固抗 DDoS、准入与角色访问、隔离受损设备；通用版增加完整性与机密性</td>
+<td>SPB 版 p11、通用版 p16</td>
+</tr>
+<tr>
+<td>环境</td>
+<td>EN 50121（轨道旁）、NEMA TS-2（路边机柜）、无风扇加固</td>
+<td>通用版 p16-17</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="e">E（场景案例）</h2>
+<ul>
+<li>轻轨单线（OCC+BCC+20 站）按此框架清点出 CCTV/PA/PIS/电话/AFC/门禁/TDS 七个系统并逐一估带宽（通用版 p40）</li>
+<li><strong>ITS 场景</strong>：<br>TMS/VSL/收费/TIS 与轨交系统重叠清点（通用版 p11-12）</li>
+<li>信号系统 50ms 需求被明确排除出 SPB 网、另行建 SDH/MPLS 网的边界决策（SPB 版 p5）</li>
+</ul>
+<h2 id="b">B（限制与坑）</h2>
+<ul>
+<li>把信令/ATC 塞进 SPB 网——收敛能力不达标，属于范围错误（通用版 p7）</li>
+<li>忽视轨道旁环境等级，用普通商用交换机上架——不满足 EN 50121/NEMA TS-2（通用版 p16-17）</li>
+<li>业务系统只报"路数"不报流向（本地 vs 上环），容量规划必然失真（通用版 p39-40）</li>
+<li>默认所有业务同等级承载——拥塞或故障绕行时无差别丢包，必须按系统分流量等级（通用版 p16）</li>
+</ul>
+<h2 id="_1">来源</h2>
+<p>Transportation Networks Design Guide（p7-17、p39-40）+ SPB-based Transportation Networks Design Guide（p5、p8-11）</p></article>
+<nav class="previous-next" aria-label="知识单元翻页"><a href="/solutions/transportation/index.html"><span>上一单元</span><b>返回课程首页</b></a><a class="next" href="/solutions/transportation/skills/transit-architecture.html"><span>下一单元</span><b>transit-architecture</b></a></nav>    <footer class="content-footer">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</footer>
+  </main>
+</div>
+  <script src="/assets/js/app.js?v=4" defer></script>
+  <script src="/assets/js/search.js?v=4" defer></script>
+  <script src="/assets/js/lightbox.js?v=5" defer></script>
+</body>
+</html>

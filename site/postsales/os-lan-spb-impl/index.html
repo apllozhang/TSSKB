@@ -1,100 +1,86 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>首页 — DT00XTE323 · OmniSwitch LAN SPB 实施</title>
-<style>
-:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
-*{box-sizing:border-box}
-body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
-a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
-.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin:16px 0}
-.gallery figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px}
-.gallery img{width:100%;max-height:340px;object-fit:contain;background:#fff;border-radius:6px}
-.gallery figcaption{font-size:12.5px;color:var(--mut);text-align:center;margin-top:6px}
-/* 侧栏折叠 + 图片灯箱 */
-.tgl{position:fixed;left:0;top:45%;z-index:60;background:var(--card);border:1px solid var(--line);border-right:none;border-radius:0 8px 8px 0;color:var(--tx);padding:10px 6px;cursor:pointer;font-size:13px;line-height:1.1;writing-mode:vertical-lr}
-.tgl:hover{background:var(--acc);color:#0f172a}
-.layout.full{grid-template-columns:0 1fr}
-.layout.full aside{display:none}
-.lb{position:fixed;inset:0;background:rgba(5,10,20,.92);z-index:100;display:flex;align-items:center;justify-content:center;flex-direction:column}
-.lb img{max-width:92vw;max-height:82vh;background:#fff;border-radius:6px;transition:transform .12s}
-.lb .lbb{margin-top:10px;display:flex;gap:10px}
-.lb button{background:var(--card);border:1px solid var(--line);color:var(--tx);border-radius:8px;padding:6px 14px;cursor:pointer;font-size:14px}
-.lb button:hover{background:var(--acc);color:#0f172a}
-.search{margin:0 0 14px}
-.search input{width:100%;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--tx);font-size:13px;outline:none}
-.search input:focus{border-color:var(--acc)}
-#qres{max-height:340px;overflow-y:auto;margin-top:6px}
-#qres .qi{display:block;padding:6px 8px;border-radius:6px;font-size:12.5px;color:var(--tx);border-left:2px solid transparent}
-#qres .qi:hover{background:var(--card);text-decoration:none;border-left-color:var(--acc)}
-#qres .qi .qp{color:var(--mut);font-size:11px;display:block}
-#qres .qi b{color:var(--acc)}
-.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
-main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
-.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
-aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
-aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
-aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
-aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
-aside a:hover{background:var(--card);text-decoration:none}
-aside a.on{background:var(--card);color:var(--acc)}
-main{padding:36px 48px;max-width:1000px}
-h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
-h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
-table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
-th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
-th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
-code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
-pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
-pre code{background:none;padding:0}
-blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
-.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
-.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
-.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
-.meta{font-size:13px;color:var(--mut)}
-hr{border:none;border-top:1px solid var(--line);margin:26px 0}
-.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
-.badge.soon{background:#475569;color:#cbd5e1}
-main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
-main{padding:28px 48px 40px;max-width:1040px}
-h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
-blockquote p{margin:6px 0}
-.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
-.crumbs a{color:var(--acc)}
-.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
-.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
-.pn a:hover{border-color:var(--acc)}
-.pn .nxt{text-align:right}
-.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
-@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
-</style></head>
-<body><div class="layout"><aside><h1>DT00XTE323 · OmniSwitch LAN SPB 实施</h1>
-<div class="search"><input id="qk" type="search" placeholder="🔍 搜索全站…" autocomplete="off"><div id="qres"></div></div>
-
-<div class="sub">Edition 12 · 367 页 · SPB 交付配置手册（骨干→L2→L3→自动化，10 Lab CLI 全录）</div>
-<a href="index.html">🏠 课程首页</a>
-<a href="digest.html">📖 精华长文 DIGEST</a>
-
-<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
-<a href="glossary.html">🔤 术语词典</a>
-<a href="../../index.html">⬅️ 返回培训门户</a>
-<a href="index.html">──── Skills ────</a>
-<div class="grp">骨干与 L2</div>
-<a href="skills/spb-backbone-deploy.html">spb-backbone-deploy</a>
-<a href="skills/spb-l2-service.html">spb-l2-service</a>
-<div class="grp">L3 集成</div>
-<a href="skills/ip-over-spb.html">ip-over-spb</a>
-<div class="grp">保护与冗余</div>
-<a href="skills/spb-bum-protection.html">spb-bum-protection</a>
-<a href="skills/spb-access-ring-redundancy.html">spb-access-ring-redundancy</a>
-<a href="skills/spb-hybrid-etree.html">spb-hybrid-etree</a>
-<div class="grp">自动化与运维</div>
-<a href="skills/unp-dynamic-ov2500.html">unp-dynamic-ov2500</a>
-<a href="skills/spb-oam-troubleshoot.html">spb-oam-troubleshoot</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../postsales/index.html">售后</a> › <a href="index.html">DT00XTE323</a> › <span>首页</span></nav><p><a href="../../index.html">⬅️ 返回培训门户</a></p>
-<h1>DT00XTE323 · OmniSwitch LAN SPB 实施 · 学习站</h1>
-<p class="meta">教材: <b>Edition 12 · 367 页 · SPB 交付配置手册（骨干→L2→L3→自动化，10 Lab CLI 全录）</b>。整理为 8 个可执行知识单元：
-每个单元含 原文引用(R) / 方法论骨架(I) / 书中案例(A1) / 触发场景(A2) / 可执行步骤(E) / 边界与陷阱(B)。</p>
-<h2>建议学习路线</h2><ol><li>骨干部署四步（BCB/BEB/BVLAN/IS-IS）</li><li>L2 服务五步开通（SAP/ISID/vlan-xlation）</li><li>IP over SPB 三方案配置模板</li><li>BUM 组播与接入保护</li><li>UNP 动态服务/OV2500 编排/E-Tree</li></ol>
-<h2>知识单元</h2><h2>骨干与 L2</h2><div class="cards"><div class="card"><a href="skills/spb-backbone-deploy.html">spb-backbone-deploy</a><p>何时用：从零搭建或验收 SPB 骨干（BVLAN/ECT/IS-IS/BCB-BEB 拓扑设计与四步部署）时。…</p></div><div class="card"><a href="skills/spb-l2-service.html">spb-l2-service</a><p>何时用：在已建好的 SPB 骨干上开通 L2 服务（VLAN/SAP/I-SID 映射、vlan-xlation、L2 Profile、伪线）时。…</p></div></div><h2>L3 集成</h2><div class="cards"><div class="card"><a href="skills/ip-over-spb.html">ip-over-spb</a><p>何时用：在 SPB 上叠三层（VRRP 网关冗余 / VPN-Lite / L3-VPN 配置模板与选型、老硬件回环）时。…</p></div></div><h2>保护与冗余</h2><div class="cards"><div class="card"><a href="skills/spb-bum-protection.html">spb-bum-protection</a><p>何时用：选配 BUM 组播分发模式、开 IPMS 抑制泛洪、部署 LBD 防接入环路、overload 维护引流时。…</p></div><div class="card"><a href="skills/spb-access-ring-redundancy.html">spb-access-ring-redundancy</a><p>何时用：接入交换机双上联（DHL）、ERP 环过 SPB 延伸、BEB 经共享网 multi-access 接入时。…</p></div><div class="card"><a href="skills/spb-hybrid-etree.html">spb-hybrid-etree</a><p>何时用：单口同时做桥接与 SAP（Hybrid）、或要客户间隔离的有根多点服务（E-Tree Leaf/Root）时。…</p></div></div><h2>自动化与运维</h2><div class="cards"><div class="card"><a href="skills/unp-dynamic-ov2500.html">unp-dynamic-ov2500</a><p>何时用：终端动态归档建 SAP（UNP 分类/802.1x/静默设备/编号公式）或 OV2500 编排纳管 SPB 网时。…</p></div><div class="card"><a href="skills/spb-oam-troubleshoot.html">spb-oam-troubleshoot</a><p>何时用：SPB 骨干/服务验收与排障——mac-ping 连通测试、SAA 持续探测、IS-IS 逐层命令链时。…</p></div></div>
-<h2>全文阅读</h2>
-<p><a href="digest.html">📖 精华长文 DIGEST</a> · <a href="overview.html">📘 教书理解</a> · <a href="glossary.html">🔤 术语词典</a></p><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="面向售前、售后与网络工程师的 ALE 内部技术知识平台">
+  <meta name="theme-color" content="#6B489D">
+  <title>DT00XTE323 · OmniSwitch LAN SPB 实施 — ALE Networking 技术培训</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=4">
+  <link rel="stylesheet" href="/assets/css/layout.css?v=4">
+  <link rel="stylesheet" href="/assets/css/components.css?v=4">
+  <link rel="stylesheet" href="/assets/css/content.css?v=7">
+  <script src="/assets/js/auth-config.js?v=4"></script>
+  <script src="/assets/js/auth-core.js?v=4"></script>
+  <script src="/assets/js/auth-guard.js?v=4"></script>
+</head>
+<body data-page-kind="course">
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <header class="topbar" data-topbar>
+    <a class="brand" href="/index.html" aria-label="返回 ALE 技术培训门户首页">
+      <img src="/assets/ale-logo-color.png" alt="Alcatel-Lucent Enterprise">
+      <span>ALE 培训门户</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-controls="primary-nav" aria-expanded="false" data-nav-toggle>
+      <span aria-hidden="true">☰</span><span class="sr-only">打开导航</span>
+    </button>
+    <nav id="primary-nav" class="primary-nav" aria-label="主导航">
+      <a href="/index.html">首页</a>
+      <a href="/paths.html">学习路径</a>
+      <a href="/presales/index.html">售前</a>
+      <a href="/postsales/index.html" aria-current="page">售后</a>
+      <a href="/wlan/index.html">无线</a>
+      <a href="/aos/index.html">AOS 手册</a>
+      <a href="/hardware/index.html">硬件</a>
+      <a href="/brochures/index.html">彩页</a>
+      <a href="/solutions/index.html">解决方案</a>
+      <a href="/security/index.html">安全</a>
+    </nav>
+    <button id="logout-btn" class="logout-btn" type="button" hidden>退出登录</button>
+  </header>
+<div class="course-layout">
+<aside class="course-sidebar" id="course-sidebar" data-sidebar>
+  <div class="sidebar-heading">
+    <p class="eyebrow">COURSE</p>
+    <h2>DT00XTE323 · OmniSwitch LAN SPB 实施</h2>
+    <p>Edition 12 · 367 页 · SPB 交付配置手册（骨干→L2→L3→自动化，10 Lab CLI 全录）</p>
+  </div>
+<div class="search" data-search>
+  <label class="sr-only" for="course-search">搜索全站课程和知识单元</label>
+  <input id="course-search" type="search" placeholder="搜索课程编号、产品型号或技术关键词…" autocomplete="off" data-search-input>
+  <div class="search-results" role="listbox" aria-live="polite" data-search-results></div>
+</div>  <nav class="course-nav" aria-label="课程目录">
+    <a aria-current="page" href="/postsales/os-lan-spb-impl/index.html">课程首页</a>
+    <a href="/postsales/os-lan-spb-impl/digest.html">精华长文</a>
+    <a href="/postsales/os-lan-spb-impl/overview.html">教书理解</a>
+    <a href="/postsales/os-lan-spb-impl/glossary.html">术语词典</a>
+    <p class="course-nav-group">骨干与 L2</p>
+      <a href="/postsales/os-lan-spb-impl/skills/spb-backbone-deploy.html">SPB 骨干部署与拓扑设计（BVLAN / ECT / IS-IS）</a>
+      <a href="/postsales/os-lan-spb-impl/skills/spb-l2-service.html">L2 服务开通（SAP / I-SID / vlan-xlation / L2 Profile）</a>
+    <p class="course-nav-group">L3 集成</p>
+      <a href="/postsales/os-lan-spb-impl/skills/ip-over-spb.html">IP over SPB 三方案（VRRP 冗余 / VPN-Lite / L3-VPN）</a>
+    <p class="course-nav-group">保护与冗余</p>
+      <a href="/postsales/os-lan-spb-impl/skills/spb-bum-protection.html">BUM 组播与接入保护（三模式 / LBD / Overload）</a>
+      <a href="/postsales/os-lan-spb-impl/skills/spb-access-ring-redundancy.html">接入冗余与环保护（Multi-Access / DHL / ERP）</a>
+      <a href="/postsales/os-lan-spb-impl/skills/spb-hybrid-etree.html">混合接入端口与 E-Tree 服务</a>
+    <p class="course-nav-group">自动化与运维</p>
+      <a href="/postsales/os-lan-spb-impl/skills/unp-dynamic-ov2500.html">UNP 动态服务与 OV2500 编排</a>
+      <a href="/postsales/os-lan-spb-impl/skills/spb-oam-troubleshoot.html">SPB OAM 排障命令手册（mac-ping / SAA / 验证链）</a>
+  </nav>
+</aside>  <main id="main-content" class="course-main">
+    <nav class="breadcrumbs" aria-label="面包屑"><a href="/index.html">培训门户</a><span>/</span><a href="/postsales/index.html">售后 · Postsales</a><span>/</span><span aria-current="page">DT00XTE323</span></nav>
+    <header class="course-intro"><p class="eyebrow">DT00XTE323</p><h1>DT00XTE323 · OmniSwitch LAN SPB 实施</h1><p>Edition 12 · 367 页 · SPB 交付配置手册（骨干→L2→L3→自动化，10 Lab CLI 全录）</p><div class="chips"><span>Edition 12</span><span>367 页</span><span>8 个知识单元</span></div></header>
+    <section class="route"><h2>建议学习路线</h2><ol><li>骨干部署四步（BCB/BEB/BVLAN/IS-IS）</li><li>L2 服务五步开通（SAP/ISID/vlan-xlation）</li><li>IP over SPB 三方案配置模板</li><li>BUM 组播与接入保护</li><li>UNP 动态服务/OV2500 编排/E-Tree</li></ol></section>
+    <section><div class="section-heading"><div><p class="eyebrow">EXECUTABLE KNOWLEDGE</p><h2>知识单元</h2></div></div>
+      <div class="skill-groups"><section><h3>骨干与 L2</h3><div><a href="/postsales/os-lan-spb-impl/skills/spb-backbone-deploy.html"><b>SPB 骨干部署与拓扑设计（BVLAN / ECT / IS-IS）</b><code>spb-backbone-deploy</code><span>何时用：从零搭建或验收 SPB 骨干（BVLAN/ECT/IS-IS/BCB-BEB 拓扑设计与四步部署）时。</span></a><a href="/postsales/os-lan-spb-impl/skills/spb-l2-service.html"><b>L2 服务开通（SAP / I-SID / vlan-xlation / L2 Profile）</b><code>spb-l2-service</code><span>何时用：在已建好的 SPB 骨干上开通 L2 服务（VLAN/SAP/I-SID 映射、vlan-xlation、L2 Profile、伪线）时。</span></a></div></section><section><h3>L3 集成</h3><div><a href="/postsales/os-lan-spb-impl/skills/ip-over-spb.html"><b>IP over SPB 三方案（VRRP 冗余 / VPN-Lite / L3-VPN）</b><code>ip-over-spb</code><span>何时用：在 SPB 上叠三层（VRRP 网关冗余 / VPN-Lite / L3-VPN 配置模板与选型、老硬件回环）时。</span></a></div></section><section><h3>保护与冗余</h3><div><a href="/postsales/os-lan-spb-impl/skills/spb-bum-protection.html"><b>BUM 组播与接入保护（三模式 / LBD / Overload）</b><code>spb-bum-protection</code><span>何时用：选配 BUM 组播分发模式、开 IPMS 抑制泛洪、部署 LBD 防接入环路、overload 维护引流时。</span></a><a href="/postsales/os-lan-spb-impl/skills/spb-access-ring-redundancy.html"><b>接入冗余与环保护（Multi-Access / DHL / ERP）</b><code>spb-access-ring-redundancy</code><span>何时用：接入交换机双上联（DHL）、ERP 环过 SPB 延伸、BEB 经共享网 multi-access 接入时。</span></a><a href="/postsales/os-lan-spb-impl/skills/spb-hybrid-etree.html"><b>混合接入端口与 E-Tree 服务</b><code>spb-hybrid-etree</code><span>何时用：单口同时做桥接与 SAP（Hybrid）、或要客户间隔离的有根多点服务（E-Tree Leaf/Root）时。</span></a></div></section><section><h3>自动化与运维</h3><div><a href="/postsales/os-lan-spb-impl/skills/unp-dynamic-ov2500.html"><b>UNP 动态服务与 OV2500 编排</b><code>unp-dynamic-ov2500</code><span>何时用：终端动态归档建 SAP（UNP 分类/802.1x/静默设备/编号公式）或 OV2500 编排纳管 SPB 网时。</span></a><a href="/postsales/os-lan-spb-impl/skills/spb-oam-troubleshoot.html"><b>SPB OAM 排障命令手册（mac-ping / SAA / 验证链）</b><code>spb-oam-troubleshoot</code><span>何时用：SPB 骨干/服务验收与排障——mac-ping 连通测试、SAA 持续探测、IS-IS 逐层命令链时。</span></a></div></section></div>
+    </section>
+    <section class="reading-links"><h2>课程全景资料</h2><a href="/postsales/os-lan-spb-impl/digest.html">精华长文 DIGEST</a><a href="/postsales/os-lan-spb-impl/overview.html">教书理解 BOOK_OVERVIEW</a><a href="/postsales/os-lan-spb-impl/glossary.html">术语词典</a></section>
+    <footer class="content-footer">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</footer>
+  </main>
+</div>
+  <script src="/assets/js/app.js?v=4" defer></script>
+  <script src="/assets/js/search.js?v=4" defer></script>
+  <script src="/assets/js/lightbox.js?v=5" defer></script>
+</body>
+</html>

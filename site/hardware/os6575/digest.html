@@ -1,90 +1,70 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>精华长文 DIGEST — OmniSwitch 6575 Hardware Guide</title>
-<style>
-:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
-*{box-sizing:border-box}
-body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
-a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
-.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin:16px 0}
-.gallery figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px}
-.gallery img{width:100%;max-height:340px;object-fit:contain;background:#fff;border-radius:6px}
-.gallery figcaption{font-size:12.5px;color:var(--mut);text-align:center;margin-top:6px}
-/* 侧栏折叠 + 图片灯箱 */
-.tgl{position:fixed;left:0;top:45%;z-index:60;background:var(--card);border:1px solid var(--line);border-right:none;border-radius:0 8px 8px 0;color:var(--tx);padding:10px 6px;cursor:pointer;font-size:13px;line-height:1.1;writing-mode:vertical-lr}
-.tgl:hover{background:var(--acc);color:#0f172a}
-.layout.full{grid-template-columns:0 1fr}
-.layout.full aside{display:none}
-.lb{position:fixed;inset:0;background:rgba(5,10,20,.92);z-index:100;display:flex;align-items:center;justify-content:center;flex-direction:column}
-.lb img{max-width:92vw;max-height:82vh;background:#fff;border-radius:6px;transition:transform .12s}
-.lb .lbb{margin-top:10px;display:flex;gap:10px}
-.lb button{background:var(--card);border:1px solid var(--line);color:var(--tx);border-radius:8px;padding:6px 14px;cursor:pointer;font-size:14px}
-.lb button:hover{background:var(--acc);color:#0f172a}
-.search{margin:0 0 14px}
-.search input{width:100%;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--tx);font-size:13px;outline:none}
-.search input:focus{border-color:var(--acc)}
-#qres{max-height:340px;overflow-y:auto;margin-top:6px}
-#qres .qi{display:block;padding:6px 8px;border-radius:6px;font-size:12.5px;color:var(--tx);border-left:2px solid transparent}
-#qres .qi:hover{background:var(--card);text-decoration:none;border-left-color:var(--acc)}
-#qres .qi .qp{color:var(--mut);font-size:11px;display:block}
-#qres .qi b{color:var(--acc)}
-.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
-main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
-.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
-aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
-aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
-aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
-aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
-aside a:hover{background:var(--card);text-decoration:none}
-aside a.on{background:var(--card);color:var(--acc)}
-main{padding:36px 48px;max-width:1000px}
-h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
-h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
-table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
-th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
-th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
-code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
-pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
-pre code{background:none;padding:0}
-blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
-.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
-.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
-.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
-.meta{font-size:13px;color:var(--mut)}
-hr{border:none;border-top:1px solid var(--line);margin:26px 0}
-.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
-.badge.soon{background:#475569;color:#cbd5e1}
-main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
-main{padding:28px 48px 40px;max-width:1040px}
-h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
-blockquote p{margin:6px 0}
-.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
-.crumbs a{color:var(--acc)}
-.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
-.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
-.pn a:hover{border-color:var(--acc)}
-.pn .nxt{text-align:right}
-.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
-@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
-</style></head>
-<body><div class="layout"><aside><h1>OmniSwitch 6575 Hardware Guide</h1>
-<div class="search"><input id="qk" type="search" placeholder="🔍 搜索全站…" autocomplete="off"><div id="qres"></div></div>
-
-<div class="sub">Rev A · 86 页 · 工业无风扇（M12 连接器/温度阶梯预算/Alarm Relay）</div>
-<a href="index.html">🏠 课程首页</a>
-<a href="digest.html">📖 精华长文 DIGEST</a>
-
-<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
-<a href="glossary.html">🔤 术语词典</a>
-<a href="../../index.html">⬅️ 返回培训门户</a>
-<a href="index.html">──── Skills ────</a>
-<div class="grp">机型与端口</div>
-<a href="skills/os6575-model-ports.html">os6575-model-ports</a>
-<div class="grp">安装与电源</div>
-<a href="skills/os6575-install-power.html">os6575-install-power</a>
-<div class="grp">运维排障</div>
-<a href="skills/os6575-ops-troubleshoot.html">os6575-ops-troubleshoot</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../hardware/index.html">硬件手册</a> › <a href="index.html">OmniSwitch 6575 Hardware Guide</a> › <span>精华长文 DIGEST</span></nav><h1>精华长文 DIGEST</h1><h1 id="digest-omniswitch-6575-hardware-users-guide">DIGEST — OmniSwitch 6575 Hardware Users Guide 精华</h1>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="面向售前、售后与网络工程师的 ALE 内部技术知识平台">
+  <meta name="theme-color" content="#6B489D">
+  <title>精华长文 DIGEST — OmniSwitch 6575 Hardware Guide</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=4">
+  <link rel="stylesheet" href="/assets/css/layout.css?v=4">
+  <link rel="stylesheet" href="/assets/css/components.css?v=4">
+  <link rel="stylesheet" href="/assets/css/content.css?v=7">
+  <script src="/assets/js/auth-config.js?v=4"></script>
+  <script src="/assets/js/auth-core.js?v=4"></script>
+  <script src="/assets/js/auth-guard.js?v=4"></script>
+</head>
+<body data-page-kind="course">
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <header class="topbar" data-topbar>
+    <a class="brand" href="/index.html" aria-label="返回 ALE 技术培训门户首页">
+      <img src="/assets/ale-logo-color.png" alt="Alcatel-Lucent Enterprise">
+      <span>ALE 培训门户</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-controls="primary-nav" aria-expanded="false" data-nav-toggle>
+      <span aria-hidden="true">☰</span><span class="sr-only">打开导航</span>
+    </button>
+    <nav id="primary-nav" class="primary-nav" aria-label="主导航">
+      <a href="/index.html">首页</a>
+      <a href="/paths.html">学习路径</a>
+      <a href="/presales/index.html">售前</a>
+      <a href="/postsales/index.html">售后</a>
+      <a href="/wlan/index.html">无线</a>
+      <a href="/aos/index.html">AOS 手册</a>
+      <a href="/hardware/index.html" aria-current="page">硬件</a>
+      <a href="/brochures/index.html">彩页</a>
+      <a href="/solutions/index.html">解决方案</a>
+      <a href="/security/index.html">安全</a>
+    </nav>
+    <button id="logout-btn" class="logout-btn" type="button" hidden>退出登录</button>
+  </header>
+<div class="course-layout">
+<aside class="course-sidebar" id="course-sidebar" data-sidebar>
+  <div class="sidebar-heading">
+    <p class="eyebrow">COURSE</p>
+    <h2>OmniSwitch 6575 Hardware Guide</h2>
+    <p>Rev A · 86 页 · 工业无风扇（M12 连接器/温度阶梯预算/Alarm Relay）</p>
+  </div>
+<div class="search" data-search>
+  <label class="sr-only" for="course-search">搜索全站课程和知识单元</label>
+  <input id="course-search" type="search" placeholder="搜索课程编号、产品型号或技术关键词…" autocomplete="off" data-search-input>
+  <div class="search-results" role="listbox" aria-live="polite" data-search-results></div>
+</div>  <nav class="course-nav" aria-label="课程目录">
+    <a href="/hardware/os6575/index.html">课程首页</a>
+    <a aria-current="page" href="/hardware/os6575/digest.html">精华长文</a>
+<a href="/hardware/os6575/gallery.html">产品外观</a>    <a href="/hardware/os6575/overview.html">教书理解</a>
+    <a href="/hardware/os6575/glossary.html">术语词典</a>
+    <p class="course-nav-group">机型与端口</p>
+      <a href="/hardware/os6575/skills/os6575-model-ports.html">os6575-model-ports</a>
+    <p class="course-nav-group">安装与电源</p>
+      <a href="/hardware/os6575/skills/os6575-install-power.html">os6575-install-power</a>
+    <p class="course-nav-group">运维排障</p>
+      <a href="/hardware/os6575/skills/os6575-ops-troubleshoot.html">os6575-ops-troubleshoot</a>
+  </nav>
+</aside>  <main id="main-content" class="course-main prose">
+    <nav class="breadcrumbs" aria-label="面包屑"><a href="/index.html">培训门户</a><span>/</span><a href="/hardware/index.html">硬件手册 · Hardware Guides</a><span>/</span><a href="/hardware/os6575/index.html">OmniSwitch 6575 Hardware Guide</a><span>/</span><span aria-current="page">精华长文 DIGEST</span></nav>
+<header class="page-intro compact"><p class="eyebrow">COURSE REFERENCE</p><h1>精华长文 DIGEST</h1></header>    <article class="markdown-body"><h1 id="digest-omniswitch-6575-hardware-users-guide">DIGEST — OmniSwitch 6575 Hardware Users Guide 精华</h1>
 <ul>
 <li>本书是 ALE 工业/极端环境无风扇交换机 OS6575 家族硬件手册（86 页，3 个机型按安装形态分化：P12/U28/MP16）。</li>
 <li><strong>核心卖点</strong>：<br>无风扇 -40~75°C 宽温 + M12/M23 防水连接器 + Port Bypass 断电旁路 + Alarm Relay 干接点 + PoE 温度阶梯预算。</li>
@@ -92,57 +72,47 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="_1">一、知识地图（三技能单元）</h2>
 <ol>
-<li>机型与端口体系（os6575-model-ports）：P12/U28/MP16 三轴选型、MP16 四段阵列与 M12/M23 pinout、Uplink/VFL 双角色口（Ch1/Ch3，p11-26、p53-55）。<ul>
-<li>
-<ol>
-<li>安装与供电（os6575-install-power）：U28 前装/后装、DIN/壁装、4 款电源与 ROJ 端子接线、powersupply type 手动声明、温度阶梯 PoE 预算（Ch2-Ch4，p13-47、p56-68）。</li>
-</ol>
-</li>
-<li>
-<ol>
-<li>运维与排障（os6575-ops-troubleshoot）：Alarm Relay in/out/event 映射与 VC 同步、Dying Gasp 双通道、lanpower PoE 语义（Guard Band/Priority Disconnect）、LED 诊断、NEBS 安全红线（Ch3-Ch4+附录 A，p46-71、p77-85）。</li>
-</ol>
-</li>
-</ul>
-</li>
+<li><strong>机型与端口体系</strong>（os6575-model-ports）：P12/U28/MP16 三轴选型、MP16 四段阵列与 M12/M23 pinout、Uplink/VFL 双角色口（Ch1/Ch3，p11-26、p53-55）。</li>
+<li><strong>安装与供电</strong>（os6575-install-power）：U28 前装/后装、DIN/壁装、4 款电源与 ROJ 端子接线、powersupply type 手动声明、温度阶梯 PoE 预算（Ch2-Ch4，p13-47、p56-68）。</li>
+<li><strong>运维与排障</strong>（os6575-ops-troubleshoot）：Alarm Relay in/out/event 映射与 VC 同步、Dying Gasp 双通道、lanpower PoE 语义（Guard Band/Priority Disconnect）、LED 诊断、NEBS 安全红线（Ch3-Ch4+附录 A，p46-71、p77-85）。</li>
 </ol>
 <h2 id="_2">二、三单元要点串讲</h2>
 <h3 id="1">1. 机型与端口：按形态分化的工业三机</h3>
 <ul>
-<li><strong>命名（<span class="pg">原文p11</span> ）</strong>：<br><code>P12</code>=DIN 导轨 PoE 紧凑机（8×bt 60W RJ45+4×SFP+）；</li>
-<li><code>U28</code>=1U 机架全光机（4 combo PoE+ 90W+20×SFP+4×SFP+）；</li>
-<li>
-<p><code>MP16</code>=壁装工业机（M12 连接器四段阵列：纯数据/at 30W/bt 60W/Bypass 各 4 口）；</p>
-</li>
-<li>
-<p>MP16 独有 Port Bypass——失电自动直连两口保通信（<span class="pg">原文p12</span> /<span class="pg">原文p25</span> ）。</p>
-</li>
-<li><strong>输入电压域分化</strong>：<br>P12=24-57V、U28=24-60V 三档（50-57V=at 150W/44-57V=af 120W/24-60V=无 PoE）、MP16=20-110V 超宽压（<span class="pg">原文p22</span> -<span class="pg">原文p26</span> ）。</li>
+<li><strong>命名（<span class="source-page">原文p11</span> ）</strong>：<br><code>P12</code>=DIN 导轨 PoE 紧凑机（8×bt 60W RJ45+4×SFP+）；<code>U28</code>=1U 机架全光机（4 combo PoE+ 90W+20×SFP+4×SFP+）；<code>MP16</code>=壁装工业机（M12 连接器四段阵列：纯数据/at 30W/bt 60W/Bypass 各 4 口）。</li>
+<li>MP16 独有 Port Bypass——失电自动直连两口保通信（<span class="source-page">原文p12</span> /<span class="source-page">原文p25</span> ）。</li>
+<li><strong>输入电压域分化</strong>：<br>P12=24-57V、U28=24-60V 三档（50-57V=at 150W/44-57V=af 120W/24-60V=无 PoE）、MP16=20-110V 超宽压（<span class="source-page">原文p22</span> -<span class="source-page">原文p26</span> ）。</li>
 <li><strong>红线</strong>：<br>48V 以下禁 PoE。</li>
 </ul>
 <h3 id="2-roj">2. 安装与供电：ROJ 接线制与温度阶梯预算</h3>
 <ul>
-<li><strong>四款电源（<span class="pg">原文p36</span> -<span class="pg">原文p40</span> ）</strong>：<br>BPNS 150W/BPNSX 480W 外置 AC（ROJ 剥线端子制），BPR/BPRD 180W 模块（U28 后装 DB-15 导柱+拇指螺丝）。</li>
+<li><strong>四款电源（<span class="source-page">原文p36</span> -<span class="source-page">原文p40</span> ）</strong>：<br>BPNS 150W/BPNSX 480W 外置 AC（ROJ 剥线端子制），BPR/BPRD 180W 模块（U28 后装 DB-15 导柱+拇指螺丝）。</li>
 <li>ROJ 线色注意 V-=红、V+=黑（反直觉），输出端子力矩 3.5 in-lb。</li>
 <li>电源类型不能自动检测，必须 powersupply type 手动声明（PoE 配置前置）。</li>
-<li><strong>核心特色温度阶梯预算（<span class="pg">原文p60</span> /<span class="pg">原文p61</span> ）</strong>：<br>预算随 Tmra 四档降级——P12+1×BPNSX 从 ≤50°C 的 330W 降至 70-75°C 的 140W；U28+1×BPR(D) 从 75W 降至 15W；MP16 预算恒定封顶（52W/120W），加电源只保冗余不扩容。</li>
+<li><strong>核心特色温度阶梯预算（<span class="source-page">原文p60</span> /<span class="source-page">原文p61</span> ）</strong>：<br>预算随 Tmra 四档降级——P12+1×BPNSX 从 ≤50°C 的 330W 降至 70-75°C 的 140W；U28+1×BPR(D) 从 75W 降至 15W；MP16 预算恒定封顶（52W/120W），加电源只保冗余不扩容。</li>
 </ul>
 <h3 id="3-poe">3. 运维与排障：告警干接点与 PoE 语义</h3>
 <ul>
-<li><strong>Alarm Relay（<span class="pg">原文p48</span> /<span class="pg">原文p49</span> ）</strong>：<br>输入单线 5-12VDC（外接温度/门磁/接近传感器）→输出继电器干接点（NO/C/NC，Max 220VDC/250VAC/2A），动作可选 output/trap/SWLog；VC 内跨机同步，支持多对一/一对多映射。</li>
-<li><strong>Dying Gasp 本机仅双通道</strong>：<br>SNMP trap（前 3 站）+Syslog（前 3 服务器），无 OAM PDU（<span class="pg">原文p52</span> ）。</li>
+<li><strong>Alarm Relay（<span class="source-page">原文p48</span> /<span class="source-page">原文p49</span> ）</strong>：<br>输入单线 5-12VDC（外接温度/门磁/接近传感器）→输出继电器干接点（NO/C/NC，Max 220VDC/250VAC/2A），动作可选 output/trap/SWLog；VC 内跨机同步，支持多对一/一对多映射。</li>
+<li><strong>Dying Gasp 本机仅双通道</strong>：<br>SNMP trap（前 3 站）+Syslog（前 3 服务器），无 OAM PDU（<span class="source-page">原文p52</span> ）。</li>
 <li>温度双阈值 93/98°C，Danger 固化且关机须手动重启。</li>
 <li><strong>PoE 语义</strong>：<br>首启必 lanpower slot service；Guard Band=剩余预算低于口 maxpower 即拒新 PD（解法=降口上限）；Priority Disconnect 四情形按优先级+物理口号（1 高 8 低）裁决。</li>
 </ul>
 <h2 id="_3">三、本书在知识库中的位置</h2>
 <ul>
 <li>与 hw-6465（工业加固）、hw-6560（多千兆旗舰）、hw-6570M（紧凑接入）构成家族矩阵——6575 定位极端环境专用线：无风扇宽温+防水连接器+旁路。</li>
-<li><strong>跨书易混点</strong>：<br>DG 通道数 6560/6570M 为三通道（含 802.3ah OAM PDU），6575 仅双通道；</li>
-<li>6575 的 Priority Disconnect 口号裁决为"1 高 8 低"（低密度口序），与 hw-9900 的"48 高 1 低"相反；</li>
-<li>MP16 的 M12 口不能插普通 RJ45 网线，须配专用转接线缆族；</li>
+<li><strong>跨书易混点</strong>：<br>DG 通道数 6560/6570M 为三通道（含 802.3ah OAM PDU），6575 仅双通道；6575 的 Priority Disconnect 口号裁决为"1 高 8 低"（低密度口序），与 hw-9900 的"48 高 1 低"相反；MP16 的 M12 口不能插普通 RJ45 网线，须配专用转接线缆族。</li>
 </ul>
 <h2 id="_4">来源</h2>
 <ul>
 <li>OmniSwitch 6575 Hardware Users Guide（Part No. 060975-00, Rev. A, 2025-12）。</li>
 <li><strong>verified.md</strong>：<br>cases C1-C27；principles P1-P40；counter-examples X1-X35；frameworks F1-F3；glossary 约 85 条。</li>
-</ul><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+</ul></article>
+    <footer class="content-footer">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</footer>
+  </main>
+</div>
+  <script src="/assets/js/app.js?v=4" defer></script>
+  <script src="/assets/js/search.js?v=4" defer></script>
+  <script src="/assets/js/lightbox.js?v=5" defer></script>
+</body>
+</html>

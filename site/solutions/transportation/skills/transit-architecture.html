@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="面向售前、售后与网络工程师的 ALE 内部技术知识平台">
+  <meta name="theme-color" content="#6B489D">
+  <title>transit-architecture — 轨道交通解决方案 · 设计指南</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=4">
+  <link rel="stylesheet" href="/assets/css/layout.css?v=4">
+  <link rel="stylesheet" href="/assets/css/components.css?v=4">
+  <link rel="stylesheet" href="/assets/css/content.css?v=7">
+  <script src="/assets/js/auth-config.js?v=4"></script>
+  <script src="/assets/js/auth-core.js?v=4"></script>
+  <script src="/assets/js/auth-guard.js?v=4"></script>
+</head>
+<body data-page-kind="course">
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <header class="topbar" data-topbar>
+    <a class="brand" href="/index.html" aria-label="返回 ALE 技术培训门户首页">
+      <img src="/assets/ale-logo-color.png" alt="Alcatel-Lucent Enterprise">
+      <span>ALE 培训门户</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-controls="primary-nav" aria-expanded="false" data-nav-toggle>
+      <span aria-hidden="true">☰</span><span class="sr-only">打开导航</span>
+    </button>
+    <nav id="primary-nav" class="primary-nav" aria-label="主导航">
+      <a href="/index.html">首页</a>
+      <a href="/paths.html">学习路径</a>
+      <a href="/presales/index.html">售前</a>
+      <a href="/postsales/index.html">售后</a>
+      <a href="/wlan/index.html">无线</a>
+      <a href="/aos/index.html">AOS 手册</a>
+      <a href="/hardware/index.html">硬件</a>
+      <a href="/brochures/index.html">彩页</a>
+      <a href="/solutions/index.html" aria-current="page">解决方案</a>
+      <a href="/security/index.html">安全</a>
+    </nav>
+    <button id="logout-btn" class="logout-btn" type="button" hidden>退出登录</button>
+  </header>
+<div class="course-layout">
+<aside class="course-sidebar" id="course-sidebar" data-sidebar>
+  <div class="sidebar-heading">
+    <p class="eyebrow">COURSE</p>
+    <h2>轨道交通解决方案 · 设计指南</h2>
+    <p>两版设计指南 112 页 · 分层架构 / SPB 织构 / 组播 / 容量测算 / 安全纵深 / 产品选型</p>
+  </div>
+<div class="search" data-search>
+  <label class="sr-only" for="course-search">搜索全站课程和知识单元</label>
+  <input id="course-search" type="search" placeholder="搜索课程编号、产品型号或技术关键词…" autocomplete="off" data-search-input>
+  <div class="search-results" role="listbox" aria-live="polite" data-search-results></div>
+</div>  <nav class="course-nav" aria-label="课程目录">
+    <a href="/solutions/transportation/index.html">课程首页</a>
+    <a href="/solutions/transportation/digest.html">精华长文</a>
+    <a href="/solutions/transportation/overview.html">教书理解</a>
+    <a href="/solutions/transportation/glossary.html">术语词典</a>
+    <p class="course-nav-group">架构</p>
+      <a href="/solutions/transportation/skills/transit-overview.html">transit-overview</a>
+      <a aria-current="page" href="/solutions/transportation/skills/transit-architecture.html">transit-architecture</a>
+    <p class="course-nav-group">织构设计</p>
+      <a href="/solutions/transportation/skills/transit-spb-design.html">transit-spb-design</a>
+      <a href="/solutions/transportation/skills/transit-multicast.html">transit-multicast</a>
+      <a href="/solutions/transportation/skills/transit-capacity.html">transit-capacity</a>
+    <p class="course-nav-group">接入与运维</p>
+      <a href="/solutions/transportation/skills/transit-attachment.html">transit-attachment</a>
+      <a href="/solutions/transportation/skills/transit-ops.html">transit-ops</a>
+    <p class="course-nav-group">安全与选型</p>
+      <a href="/solutions/transportation/skills/transit-security.html">transit-security</a>
+      <a href="/solutions/transportation/skills/transit-products.html">transit-products</a>
+  </nav>
+</aside>  <main id="main-content" class="course-main prose">
+    <nav class="breadcrumbs" aria-label="面包屑"><a href="/index.html">培训门户</a><span>/</span><a href="/solutions/index.html">解决方案 · Solutions</a><span>/</span><a href="/solutions/transportation/index.html">轨道交通解决方案</a><span>/</span><span aria-current="page">transit-architecture</span></nav>
+<header class="skill-heading"><div><p class="eyebrow">KNOWLEDGE UNIT</p><h1>transit-architecture</h1></div><dl><div><dt>Skill ID</dt><dd>transit-architecture</dd></div></dl></header>    <article class="markdown-body"><h2 id="r">R（何时用）</h2>
+<ul>
+<li><strong>新线或改造线的骨干网架构设计</strong>：<br>定拓扑、定控制中心、定每站架构（L2 还是 L3）</li>
+<li>评估网络能扩展到多少车站/终端，选型核对 ISID/FDB/L3 规格</li>
+<li>双中心（OCC/BCC）与站点双归方案比选</li>
+<li>评审别人方案里 VLAN/ISID 的规划方式是否可扩展</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<ul>
+<li>环是沿线路冗余互联节点的天然拓扑，OCC 为主控中心、BCC 为灾备，二者可主主或主备（通用版 p18-19）。</li>
+<li><strong>站点架构二选一</strong>：<br>L2 VPN 把站点 VLAN 1:1 映射 ISID，全网 VLAN 数受 OCC/BCC BEB 的 ISID/FDB/ARP 规格封顶；L3 VPN 在站点 BEB 做 VRRP 网关，站点接入 VLAN 仅本地有效，只有共享的上行 VLAN 映射 ISID，路由靠 IS-IS 特殊 TLV 随骨干自动扩散，不需要额外路由协议——IP 可汇总、MAC 不可汇总，所以 L3 天然更可扩展（通用版 p21-24）。</li>
+<li><strong>站点接入网双归到两台不同 BEB 消除单点，两种做法</strong>：<br>同站双 BEB（多花设备、省光纤、运维简单）与本地+远端 BEB（省设备、多光纤、运维复杂）（通用版 p24-25）。</li>
+</ul>
+<h2 id="a1">A1（决策要点）</h2>
+<ol>
+<li>拓扑默认环形：多线运营时先定控制架构——集中式（所有线归一个 OCC）或分层式（线路中心+总控）（通用版 p19-20）</li>
+<li>L2/L3 站点架构选型：小规模、每站 VLAN 少可 L2；追求车站数量与终端数量扩展性选 L3 VPN（通用版 p24）</li>
+<li>L3 设计三件套：站点 BEB 组成 VRRP 对当默认网关；接入 VLAN 只在本地有意义；上联 VLAN 全站共享并经 hairpin 映射 ISID，hairpin 端口速率须不低于骨干 NNI（通用版 p23-24）</li>
+<li>双归方式按"设备预算 vs 光纤芯数 vs 运维能力"三角权衡（通用版 p24-25）</li>
+<li>规格核查顺序：L2 设计查 OCC/BCC 节点的 ISID 数、FDB、ARP（全网终端 MAC 都落在那两台）；L3 设计只需查各 BEB 本站规模（通用版 p26-28）</li>
+<li>规模大时骨干才上 SPB，站点接入网用传统以太网（STP/ERP/LAG），非所有节点都要 SPB（通用版 p26）</li>
+</ol>
+<h2 id="a2">A2（细节速查表）</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>L2 VPN 设计</th>
+<th>L3 VPN 设计</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>路由位置</td>
+<td>全部在 OCC/BCC（VRRP 对）</td>
+<td>站点 BEB（VRRP 对）当默认网关</td>
+<td>通用版 p21/p23</td>
+</tr>
+<tr>
+<td>VLAN 语义</td>
+<td>站点 VLAN 全局有效，1:1 映射 ISID</td>
+<td>接入 VLAN 仅本地有效；上联 VLAN 全站共享映射 ISID</td>
+<td>通用版 p21/p23</td>
+</tr>
+<tr>
+<td>ISID 消耗</td>
+<td>每站每 VLAN 一个，受 OCC/BCC ISID 规格封顶</td>
+<td>每系统一个，数量极小</td>
+<td>通用版 p26-27</td>
+</tr>
+<tr>
+<td>MAC/FDB</td>
+<td>全网终端 MAC 集中在 OCC/BCC BEB</td>
+<td>MAC 只在本站内已知</td>
+<td>通用版 p27</td>
+</tr>
+<tr>
+<td>路由/ARP</td>
+<td>路由与全部终端 ARP 集中 OCC/BCC</td>
+<td>每站 BEB 携带本站 ARP；VRF 存在于每台 BEB</td>
+<td>通用版 p28</td>
+</tr>
+<tr>
+<td>路由协议</td>
+<td>—</td>
+<td>VRF 路由经 IS-IS TLV 扩散，无需附加协议</td>
+<td>通用版 p24</td>
+</tr>
+</tbody>
+</table></div>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>规格（SPB 机型）</th>
+<th>OS10K</th>
+<th>OS9900</th>
+<th>OS6900</th>
+<th>OS6860</th>
+<th>OS6865</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ISID</td>
+<td>1K</td>
+<td>Future</td>
+<td>X20/X40/T20/T40:1K；X72/Q32:8K</td>
+<td>2K</td>
+<td>2K</td>
+<td>通用版 p27</td>
+</tr>
+<tr>
+<td>FDB</td>
+<td>32K/槽</td>
+<td>128K/槽</td>
+<td>X20/X40/T20/T40:128K；X72/Q32:228K</td>
+<td>48K</td>
+<td>48K</td>
+<td>通用版 p27</td>
+</tr>
+<tr>
+<td>L3 表</td>
+<td>16K（U32S:12K）</td>
+<td>512K</td>
+<td>16K/12K</td>
+<td>64K</td>
+<td>64K</td>
+<td>通用版 p28</td>
+</tr>
+<tr>
+<td>ARP 表</td>
+<td>16K/8K</td>
+<td>24K</td>
+<td>8K-48K</td>
+<td>VC 取最低 16K</td>
+<td>16K</td>
+<td>通用版 p28</td>
+</tr>
+<tr>
+<td>VRF</td>
+<td>64</td>
+<td>64</td>
+<td>64</td>
+<td>64</td>
+<td>64</td>
+<td>通用版 p28</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="e">E（场景案例）</h2>
+<ul>
+<li>17 站轻轨+OCC+BCC 的环网参考拓扑（通用版 p19）</li>
+<li><strong>L3 VPN hairpin</strong>：<br>上联 VLAN 走 hairpin 一侧做路由、SAP 一侧进 SPB，站点接入 VLAN 与 BVLAN 同跑在两台 BEB 互联链路上（通用版 p23-24）</li>
+<li>站点内双 BEB 双归 vs 本地+远端 BEB 双归的设备/光纤/运维三维对比（通用版 p24-25）</li>
+<li>L2 设计因 OCC/BCC 节点 ISID/FDB/ARP 三张表同时见顶而扩展受限的推导（通用版 p26-28）</li>
+</ul>
+<h2 id="b">B（限制与坑）</h2>
+<ul>
+<li>L2 设计把全网 VLAN/ISID 都开在 OCC/BCC 两台节点上——车站数、终端数双双被规格卡死（通用版 p26-28）</li>
+<li><strong>多站共享 VLAN/ISID 的 L2 方案</strong>：<br>BUM 流量与组播复制开销爆炸，明确不推荐（通用版 p21、p38-39）</li>
+<li>hairpin 端口速率低于骨干 NNI——上行方向成瓶颈，属硬性要求（通用版 p24）</li>
+<li><strong>通用版文档内嵌的评审批注指出</strong>：<br>VLAN UNI 型 hairpin 的官方支持性、"支持多少 SPB 节点"的官方口径当时均未定论，落地前须向 ALE 确认（通用版 p24、p26）</li>
+<li>双归多 BEB 带来成环风险，必须配套防环方案（见 transit-attachment 单元）（通用版 p25）</li>
+</ul>
+<h2 id="_1">来源</h2>
+<p>Transportation Networks Design Guide（p18-28）+ SPB-based Transportation Networks Design Guide（p12-20，内容基本对应）</p></article>
+<nav class="previous-next" aria-label="知识单元翻页"><a href="/solutions/transportation/skills/transit-overview.html"><span>上一单元</span><b>transit-overview</b></a><a class="next" href="/solutions/transportation/skills/transit-spb-design.html"><span>下一单元</span><b>transit-spb-design</b></a></nav>    <footer class="content-footer">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</footer>
+  </main>
+</div>
+  <script src="/assets/js/app.js?v=4" defer></script>
+  <script src="/assets/js/search.js?v=4" defer></script>
+  <script src="/assets/js/lightbox.js?v=5" defer></script>
+</body>
+</html>

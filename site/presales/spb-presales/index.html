@@ -1,102 +1,88 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>首页 — DT00XPS279 · OmniSwitch LAN SPB 售前</title>
-<style>
-:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
-*{box-sizing:border-box}
-body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
-a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
-.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin:16px 0}
-.gallery figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px}
-.gallery img{width:100%;max-height:340px;object-fit:contain;background:#fff;border-radius:6px}
-.gallery figcaption{font-size:12.5px;color:var(--mut);text-align:center;margin-top:6px}
-/* 侧栏折叠 + 图片灯箱 */
-.tgl{position:fixed;left:0;top:45%;z-index:60;background:var(--card);border:1px solid var(--line);border-right:none;border-radius:0 8px 8px 0;color:var(--tx);padding:10px 6px;cursor:pointer;font-size:13px;line-height:1.1;writing-mode:vertical-lr}
-.tgl:hover{background:var(--acc);color:#0f172a}
-.layout.full{grid-template-columns:0 1fr}
-.layout.full aside{display:none}
-.lb{position:fixed;inset:0;background:rgba(5,10,20,.92);z-index:100;display:flex;align-items:center;justify-content:center;flex-direction:column}
-.lb img{max-width:92vw;max-height:82vh;background:#fff;border-radius:6px;transition:transform .12s}
-.lb .lbb{margin-top:10px;display:flex;gap:10px}
-.lb button{background:var(--card);border:1px solid var(--line);color:var(--tx);border-radius:8px;padding:6px 14px;cursor:pointer;font-size:14px}
-.lb button:hover{background:var(--acc);color:#0f172a}
-.search{margin:0 0 14px}
-.search input{width:100%;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--tx);font-size:13px;outline:none}
-.search input:focus{border-color:var(--acc)}
-#qres{max-height:340px;overflow-y:auto;margin-top:6px}
-#qres .qi{display:block;padding:6px 8px;border-radius:6px;font-size:12.5px;color:var(--tx);border-left:2px solid transparent}
-#qres .qi:hover{background:var(--card);text-decoration:none;border-left-color:var(--acc)}
-#qres .qi .qp{color:var(--mut);font-size:11px;display:block}
-#qres .qi b{color:var(--acc)}
-.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
-main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
-.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
-aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
-aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
-aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
-aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
-aside a:hover{background:var(--card);text-decoration:none}
-aside a.on{background:var(--card);color:var(--acc)}
-main{padding:36px 48px;max-width:1000px}
-h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
-h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
-table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
-th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
-th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
-code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
-pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
-pre code{background:none;padding:0}
-blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
-.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
-.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
-.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
-.meta{font-size:13px;color:var(--mut)}
-hr{border:none;border-top:1px solid var(--line);margin:26px 0}
-.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
-.badge.soon{background:#475569;color:#cbd5e1}
-main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
-main{padding:28px 48px 40px;max-width:1040px}
-h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
-blockquote p{margin:6px 0}
-.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
-.crumbs a{color:var(--acc)}
-.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
-.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
-.pn a:hover{border-color:var(--acc)}
-.pn .nxt{text-align:right}
-.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
-@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
-</style></head>
-<body><div class="layout"><aside><h1>DT00XPS279 · OmniSwitch LAN SPB 售前</h1>
-<div class="search"><input id="qk" type="search" placeholder="🔍 搜索全站…" autocomplete="off"><div id="qres"></div></div>
-
-<div class="sub">Issue 05 · 147 页 · SPB 技术推销课（卖点弹药/架构/L3 服务/案例/三技术对比）</div>
-<a href="index.html">🏠 课程首页</a>
-<a href="digest.html">📖 精华长文 DIGEST</a>
-
-<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
-<a href="glossary.html">🔤 术语词典</a>
-<a href="../../index.html">⬅️ 返回培训门户</a>
-<a href="index.html">──── Skills ────</a>
-<div class="grp">售前攻防</div>
-<a href="skills/spb-presales-battlecard.html">spb-presales-battlecard</a>
-<a href="skills/spb-micro-segmentation.html">spb-micro-segmentation</a>
-<div class="grp">架构与设计</div>
-<a href="skills/spb-topology-isis-design.html">spb-topology-isis-design</a>
-<div class="grp">边缘与服务</div>
-<a href="skills/spb-edge-services.html">spb-edge-services</a>
-<div class="grp">L3 集成</div>
-<a href="skills/spb-l3-integration.html">spb-l3-integration</a>
-<div class="grp">交付与选型</div>
-<a href="skills/spb-ov2500-delivery.html">spb-ov2500-delivery</a>
-<a href="skills/spb-vs-evpn-mpls-selection.html">spb-vs-evpn-mpls-selection</a>
-<a href="skills/spb-stp-migration-cases.html">spb-stp-migration-cases</a>
-<a href="skills/spb-license-spec-sizing.html">spb-license-spec-sizing</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../presales/index.html">售前</a> › <a href="index.html">DT00XPS279</a> › <span>首页</span></nav><p><a href="../../index.html">⬅️ 返回培训门户</a></p>
-<h1>DT00XPS279 · OmniSwitch LAN SPB 售前 · 学习站</h1>
-<p class="meta">教材: <b>Issue 05 · 147 页 · SPB 技术推销课（卖点弹药/架构/L3 服务/案例/三技术对比）</b>。整理为 9 个可执行知识单元：
-每个单元含 原文引用(R) / 方法论骨架(I) / 书中案例(A1) / 触发场景(A2) / 可执行步骤(E) / 边界与陷阱(B)。</p>
-<h2>建议学习路线</h2><ol><li>售前攻防弹药库：为什么弃 STP 选 SPB</li><li>架构与控制面/数据面：BEB/BCB/BVLAN/IS-IS/ECT</li><li>L3 集成三形态：Outline/Front-panel/Service-based</li><li>OV2500 编排与三大成功案例</li><li>SPB vs EVPN vs MPLS 七维选型</li></ol>
-<h2>知识单元</h2><h2>售前攻防</h2><div class="cards"><div class="card"><a href="skills/spb-presales-battlecard.html">spb-presales-battlecard</a><p>客户问&quot;为什么换 SPB / 为什么换掉 STP&quot;时，用瑞士军刀定位、非 IP 安全、投资保护、自动化降本四组弹药组织售前开场与答辩。…</p></div><div class="card"><a href="skills/spb-micro-segmentation.html">spb-micro-segmentation</a><p>客户问&quot;零信任/微分段怎么落地&quot;时，用认证→分类→供给三步流水线和校园弹性演示场景讲 SPB/UNP 方案。…</p></div></div><h2>架构与设计</h2><div class="cards"><div class="card"><a href="skills/spb-topology-isis-design.html">spb-topology-isis-design</a><p>做 SPB 网络拓扑设计（2-tier/3-tier 选型）、IS-IS 控制面规划（BVLAN/DIS/ECT 选路）或解释&quot;满链路利用还无环&quot;机制时使用。…</p></div></div><h2>边缘与服务</h2><div class="cards"><div class="card"><a href="skills/spb-edge-services.html">spb-edge-services</a><p>设计 SPB 服务接入面（SAP 封装、E-LINE 伪线、L2 控制帧处置、边缘 QoS、BUM 组播复制模式、LBD 防环）时使用。…</p></div></div><h2>L3 集成</h2><div class="cards"><div class="card"><a href="skills/spb-l3-integration.html">spb-l3-integration</a><p>做 L3 over SPB 方案选型（Outline/前面板 inline/单遍 inline 三形态 × VPN-Lite/L3 VPN 两机制）或写 AOS 路由集成配置时使用。…</p></div></div><h2>交付与选型</h2><div class="cards"><div class="card"><a href="skills/spb-ov2500-delivery.html">spb-ov2500-delivery</a><p>用 OmniVista 2500 做 SPB 服务的图形化开通/监控/POC 演示，或排布&quot;骨干一次配好、服务边缘增删&quot;的配置工单分工时使用。…</p></div><div class="card"><a href="skills/spb-vs-evpn-mpls-selection.html">spb-vs-evpn-mpls-selection</a><p>客户或标书要对比 SPB/EVPN/MPLS 三种织物技术选型时，用七维对比表+行业用例矩阵+混合架构样例直接产出选型结论。…</p></div><div class="card"><a href="skills/spb-stp-migration-cases.html">spb-stp-migration-cases</a><p>需要分阶段迁移方案（双域并行/STP 无中断割接）或调用教育/交通/政务三个成功案例做售前背书时使用。…</p></div><div class="card"><a href="skills/spb-license-spec-sizing.html">spb-license-spec-sizing</a><p>报价选型阶段核对 SPB 许可成本、机型容量上限（BVLAN/I-SID/SAP/IS-IS 邻接）与 OmniFabric 三技术支持矩阵时使用。…</p></div></div>
-<h2>全文阅读</h2>
-<p><a href="digest.html">📖 精华长文 DIGEST</a> · <a href="overview.html">📘 教书理解</a> · <a href="glossary.html">🔤 术语词典</a></p><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="面向售前、售后与网络工程师的 ALE 内部技术知识平台">
+  <meta name="theme-color" content="#6B489D">
+  <title>DT00XPS279 · OmniSwitch LAN SPB 售前 — ALE Networking 技术培训</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=4">
+  <link rel="stylesheet" href="/assets/css/layout.css?v=4">
+  <link rel="stylesheet" href="/assets/css/components.css?v=4">
+  <link rel="stylesheet" href="/assets/css/content.css?v=7">
+  <script src="/assets/js/auth-config.js?v=4"></script>
+  <script src="/assets/js/auth-core.js?v=4"></script>
+  <script src="/assets/js/auth-guard.js?v=4"></script>
+</head>
+<body data-page-kind="course">
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <header class="topbar" data-topbar>
+    <a class="brand" href="/index.html" aria-label="返回 ALE 技术培训门户首页">
+      <img src="/assets/ale-logo-color.png" alt="Alcatel-Lucent Enterprise">
+      <span>ALE 培训门户</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-controls="primary-nav" aria-expanded="false" data-nav-toggle>
+      <span aria-hidden="true">☰</span><span class="sr-only">打开导航</span>
+    </button>
+    <nav id="primary-nav" class="primary-nav" aria-label="主导航">
+      <a href="/index.html">首页</a>
+      <a href="/paths.html">学习路径</a>
+      <a href="/presales/index.html" aria-current="page">售前</a>
+      <a href="/postsales/index.html">售后</a>
+      <a href="/wlan/index.html">无线</a>
+      <a href="/aos/index.html">AOS 手册</a>
+      <a href="/hardware/index.html">硬件</a>
+      <a href="/brochures/index.html">彩页</a>
+      <a href="/solutions/index.html">解决方案</a>
+      <a href="/security/index.html">安全</a>
+    </nav>
+    <button id="logout-btn" class="logout-btn" type="button" hidden>退出登录</button>
+  </header>
+<div class="course-layout">
+<aside class="course-sidebar" id="course-sidebar" data-sidebar>
+  <div class="sidebar-heading">
+    <p class="eyebrow">COURSE</p>
+    <h2>DT00XPS279 · OmniSwitch LAN SPB 售前</h2>
+    <p>Issue 05 · 147 页 · SPB 技术推销课（卖点弹药/架构/L3 服务/案例/三技术对比）</p>
+  </div>
+<div class="search" data-search>
+  <label class="sr-only" for="course-search">搜索全站课程和知识单元</label>
+  <input id="course-search" type="search" placeholder="搜索课程编号、产品型号或技术关键词…" autocomplete="off" data-search-input>
+  <div class="search-results" role="listbox" aria-live="polite" data-search-results></div>
+</div>  <nav class="course-nav" aria-label="课程目录">
+    <a aria-current="page" href="/presales/spb-presales/index.html">课程首页</a>
+    <a href="/presales/spb-presales/digest.html">精华长文</a>
+    <a href="/presales/spb-presales/overview.html">教书理解</a>
+    <a href="/presales/spb-presales/glossary.html">术语词典</a>
+    <p class="course-nav-group">售前攻防</p>
+      <a href="/presales/spb-presales/skills/spb-presales-battlecard.html">SPB 售前攻防弹药库（Why SPB）</a>
+      <a href="/presales/spb-presales/skills/spb-micro-segmentation.html">SPB 宏/微分段落地法（零信任三步流水线）</a>
+    <p class="course-nav-group">架构与设计</p>
+      <a href="/presales/spb-presales/skills/spb-topology-isis-design.html">SPB 拓扑设计与 IS-IS 控制面规划</a>
+    <p class="course-nav-group">边缘与服务</p>
+      <a href="/presales/spb-presales/skills/spb-edge-services.html">SPB 边缘服务面设计（SAP / QoS / 组播 / 防环）</a>
+    <p class="course-nav-group">L3 集成</p>
+      <a href="/presales/spb-presales/skills/spb-l3-integration.html">SPB 三层集成选型与配置（三种形态 × 两档路由机制）</a>
+    <p class="course-nav-group">交付与选型</p>
+      <a href="/presales/spb-presales/skills/spb-ov2500-delivery.html">OmniVista 2500 服务交付与配置分层</a>
+      <a href="/presales/spb-presales/skills/spb-vs-evpn-mpls-selection.html">SPB vs EVPN vs MPLS 技术选型对比</a>
+      <a href="/presales/spb-presales/skills/spb-stp-migration-cases.html">SPB 迁移方法论与成功案例弹药库</a>
+      <a href="/presales/spb-presales/skills/spb-license-spec-sizing.html">SPB 许可与机型规格 Sizing 手册</a>
+  </nav>
+</aside>  <main id="main-content" class="course-main">
+    <nav class="breadcrumbs" aria-label="面包屑"><a href="/index.html">培训门户</a><span>/</span><a href="/presales/index.html">售前 · Presales</a><span>/</span><span aria-current="page">DT00XPS279</span></nav>
+    <header class="course-intro"><p class="eyebrow">DT00XPS279</p><h1>DT00XPS279 · OmniSwitch LAN SPB 售前</h1><p>Issue 05 · 147 页 · SPB 技术推销课（卖点弹药/架构/L3 服务/案例/三技术对比）</p><div class="chips"><span>Issue 05</span><span>147 页</span><span>9 个知识单元</span></div></header>
+    <section class="route"><h2>建议学习路线</h2><ol><li>售前攻防弹药库：为什么弃 STP 选 SPB</li><li>架构与控制面/数据面：BEB/BCB/BVLAN/IS-IS/ECT</li><li>L3 集成三形态：Outline/Front-panel/Service-based</li><li>OV2500 编排与三大成功案例</li><li>SPB vs EVPN vs MPLS 七维选型</li></ol></section>
+    <section><div class="section-heading"><div><p class="eyebrow">EXECUTABLE KNOWLEDGE</p><h2>知识单元</h2></div></div>
+      <div class="skill-groups"><section><h3>售前攻防</h3><div><a href="/presales/spb-presales/skills/spb-presales-battlecard.html"><b>SPB 售前攻防弹药库（Why SPB）</b><code>spb-presales-battlecard</code><span>客户问&#34;为什么换 SPB / 为什么换掉 STP&#34;时，用瑞士军刀定位、非 IP 安全、投资保护、自动化降本四组弹药组织售前开场与答辩。</span></a><a href="/presales/spb-presales/skills/spb-micro-segmentation.html"><b>SPB 宏/微分段落地法（零信任三步流水线）</b><code>spb-micro-segmentation</code><span>客户问&#34;零信任/微分段怎么落地&#34;时，用认证→分类→供给三步流水线和校园弹性演示场景讲 SPB/UNP 方案。</span></a></div></section><section><h3>架构与设计</h3><div><a href="/presales/spb-presales/skills/spb-topology-isis-design.html"><b>SPB 拓扑设计与 IS-IS 控制面规划</b><code>spb-topology-isis-design</code><span>做 SPB 网络拓扑设计（2-tier/3-tier 选型）、IS-IS 控制面规划（BVLAN/DIS/ECT 选路）或解释&#34;满链路利用还无环&#34;机制时使用。</span></a></div></section><section><h3>边缘与服务</h3><div><a href="/presales/spb-presales/skills/spb-edge-services.html"><b>SPB 边缘服务面设计（SAP / QoS / 组播 / 防环）</b><code>spb-edge-services</code><span>设计 SPB 服务接入面（SAP 封装、E-LINE 伪线、L2 控制帧处置、边缘 QoS、BUM 组播复制模式、LBD 防环）时使用。</span></a></div></section><section><h3>L3 集成</h3><div><a href="/presales/spb-presales/skills/spb-l3-integration.html"><b>SPB 三层集成选型与配置（三种形态 × 两档路由机制）</b><code>spb-l3-integration</code><span>做 L3 over SPB 方案选型（Outline/前面板 inline/单遍 inline 三形态 × VPN-Lite/L3 VPN 两机制）或写 AOS 路由集成配置时使用。</span></a></div></section><section><h3>交付与选型</h3><div><a href="/presales/spb-presales/skills/spb-ov2500-delivery.html"><b>OmniVista 2500 服务交付与配置分层</b><code>spb-ov2500-delivery</code><span>用 OmniVista 2500 做 SPB 服务的图形化开通/监控/POC 演示，或排布&#34;骨干一次配好、服务边缘增删&#34;的配置工单分工时使用。</span></a><a href="/presales/spb-presales/skills/spb-vs-evpn-mpls-selection.html"><b>SPB vs EVPN vs MPLS 技术选型对比</b><code>spb-vs-evpn-mpls-selection</code><span>客户或标书要对比 SPB/EVPN/MPLS 三种织物技术选型时，用七维对比表+行业用例矩阵+混合架构样例直接产出选型结论。</span></a><a href="/presales/spb-presales/skills/spb-stp-migration-cases.html"><b>SPB 迁移方法论与成功案例弹药库</b><code>spb-stp-migration-cases</code><span>需要分阶段迁移方案（双域并行/STP 无中断割接）或调用教育/交通/政务三个成功案例做售前背书时使用。</span></a><a href="/presales/spb-presales/skills/spb-license-spec-sizing.html"><b>SPB 许可与机型规格 Sizing 手册</b><code>spb-license-spec-sizing</code><span>报价选型阶段核对 SPB 许可成本、机型容量上限（BVLAN/I-SID/SAP/IS-IS 邻接）与 OmniFabric 三技术支持矩阵时使用。</span></a></div></section></div>
+    </section>
+    <section class="reading-links"><h2>课程全景资料</h2><a href="/presales/spb-presales/digest.html">精华长文 DIGEST</a><a href="/presales/spb-presales/overview.html">教书理解 BOOK_OVERVIEW</a><a href="/presales/spb-presales/glossary.html">术语词典</a></section>
+    <footer class="content-footer">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</footer>
+  </main>
+</div>
+  <script src="/assets/js/app.js?v=4" defer></script>
+  <script src="/assets/js/search.js?v=4" defer></script>
+  <script src="/assets/js/lightbox.js?v=5" defer></script>
+</body>
+</html>

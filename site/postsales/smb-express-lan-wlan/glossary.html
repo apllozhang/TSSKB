@@ -1,103 +1,83 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>术语词典 — DT00XTE310 · OmniSwitch 接入与 Stellar WLAN Express</title>
-<style>
-:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
-*{box-sizing:border-box}
-body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
-a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
-.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin:16px 0}
-.gallery figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px}
-.gallery img{width:100%;max-height:340px;object-fit:contain;background:#fff;border-radius:6px}
-.gallery figcaption{font-size:12.5px;color:var(--mut);text-align:center;margin-top:6px}
-/* 侧栏折叠 + 图片灯箱 */
-.tgl{position:fixed;left:0;top:45%;z-index:60;background:var(--card);border:1px solid var(--line);border-right:none;border-radius:0 8px 8px 0;color:var(--tx);padding:10px 6px;cursor:pointer;font-size:13px;line-height:1.1;writing-mode:vertical-lr}
-.tgl:hover{background:var(--acc);color:#0f172a}
-.layout.full{grid-template-columns:0 1fr}
-.layout.full aside{display:none}
-.lb{position:fixed;inset:0;background:rgba(5,10,20,.92);z-index:100;display:flex;align-items:center;justify-content:center;flex-direction:column}
-.lb img{max-width:92vw;max-height:82vh;background:#fff;border-radius:6px;transition:transform .12s}
-.lb .lbb{margin-top:10px;display:flex;gap:10px}
-.lb button{background:var(--card);border:1px solid var(--line);color:var(--tx);border-radius:8px;padding:6px 14px;cursor:pointer;font-size:14px}
-.lb button:hover{background:var(--acc);color:#0f172a}
-.search{margin:0 0 14px}
-.search input{width:100%;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--tx);font-size:13px;outline:none}
-.search input:focus{border-color:var(--acc)}
-#qres{max-height:340px;overflow-y:auto;margin-top:6px}
-#qres .qi{display:block;padding:6px 8px;border-radius:6px;font-size:12.5px;color:var(--tx);border-left:2px solid transparent}
-#qres .qi:hover{background:var(--card);text-decoration:none;border-left-color:var(--acc)}
-#qres .qi .qp{color:var(--mut);font-size:11px;display:block}
-#qres .qi b{color:var(--acc)}
-.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
-main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
-.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
-aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
-aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
-aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
-aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
-aside a:hover{background:var(--card);text-decoration:none}
-aside a.on{background:var(--card);color:var(--acc)}
-main{padding:36px 48px;max-width:1000px}
-h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
-h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
-table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
-th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
-th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
-code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
-pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
-pre code{background:none;padding:0}
-blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
-.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
-.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
-.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
-.meta{font-size:13px;color:var(--mut)}
-hr{border:none;border-top:1px solid var(--line);margin:26px 0}
-.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
-.badge.soon{background:#475569;color:#cbd5e1}
-main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
-main{padding:28px 48px 40px;max-width:1040px}
-h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
-blockquote p{margin:6px 0}
-.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
-.crumbs a{color:var(--acc)}
-.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
-.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
-.pn a:hover{border-color:var(--acc)}
-.pn .nxt{text-align:right}
-.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
-@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
-</style></head>
-<body><div class="layout"><aside><h1>DT00XTE310 · OmniSwitch 接入与 Stellar WLAN Express</h1>
-<div class="search"><input id="qk" type="search" placeholder="🔍 搜索全站…" autocomplete="off"><div id="qres"></div></div>
-
-<div class="sub">Edition 05 · 1083 页 · 五日交付全科（三部署模式+语音 WLAN+故障排查）</div>
-<a href="index.html">🏠 课程首页</a>
-<a href="digest.html">📖 精华长文 DIGEST</a>
-
-<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
-<a href="glossary.html">🔤 术语词典</a>
-<a href="../../index.html">⬅️ 返回培训门户</a>
-<a href="index.html">──── Skills ────</a>
-<div class="grp">交换机管理</div>
-<a href="skills/aos-dual-partition-config-management.html">aos-dual-partition-config-management</a>
-<a href="skills/poe-management.html">poe-management</a>
-<a href="skills/vlan-inter-vlan-routing.html">vlan-inter-vlan-routing</a>
-<a href="skills/switch-high-availability.html">switch-high-availability</a>
-<a href="skills/qos-acl-access-guardian.html">qos-acl-access-guardian</a>
-<div class="grp">部署模式</div>
-<a href="skills/stellar-deployment-mode-selection.html">stellar-deployment-mode-selection</a>
-<a href="skills/wifi-express-operations.html">wifi-express-operations</a>
-<a href="skills/cirrus-cloud-management.html">cirrus-cloud-management</a>
-<div class="grp">无线与排障</div>
-<a href="skills/wireless-tech-fundamentals.html">wireless-tech-fundamentals</a>
-<a href="skills/voice-over-wlan-deployment.html">voice-over-wlan-deployment</a>
-<a href="skills/lan-wlan-troubleshooting.html">lan-wlan-troubleshooting</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../postsales/index.html">售后</a> › <a href="index.html">DT00XTE310</a> › <span>术语词典</span></nav><h1>术语词典</h1><h1 id="glossary">GLOSSARY · 术语表</h1>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="面向售前、售后与网络工程师的 ALE 内部技术知识平台">
+  <meta name="theme-color" content="#6B489D">
+  <title>术语词典 — DT00XTE310 · OmniSwitch 接入与 Stellar WLAN Express</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=4">
+  <link rel="stylesheet" href="/assets/css/layout.css?v=4">
+  <link rel="stylesheet" href="/assets/css/components.css?v=4">
+  <link rel="stylesheet" href="/assets/css/content.css?v=7">
+  <script src="/assets/js/auth-config.js?v=4"></script>
+  <script src="/assets/js/auth-core.js?v=4"></script>
+  <script src="/assets/js/auth-guard.js?v=4"></script>
+</head>
+<body data-page-kind="course">
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <header class="topbar" data-topbar>
+    <a class="brand" href="/index.html" aria-label="返回 ALE 技术培训门户首页">
+      <img src="/assets/ale-logo-color.png" alt="Alcatel-Lucent Enterprise">
+      <span>ALE 培训门户</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-controls="primary-nav" aria-expanded="false" data-nav-toggle>
+      <span aria-hidden="true">☰</span><span class="sr-only">打开导航</span>
+    </button>
+    <nav id="primary-nav" class="primary-nav" aria-label="主导航">
+      <a href="/index.html">首页</a>
+      <a href="/paths.html">学习路径</a>
+      <a href="/presales/index.html">售前</a>
+      <a href="/postsales/index.html" aria-current="page">售后</a>
+      <a href="/wlan/index.html">无线</a>
+      <a href="/aos/index.html">AOS 手册</a>
+      <a href="/hardware/index.html">硬件</a>
+      <a href="/brochures/index.html">彩页</a>
+      <a href="/solutions/index.html">解决方案</a>
+      <a href="/security/index.html">安全</a>
+    </nav>
+    <button id="logout-btn" class="logout-btn" type="button" hidden>退出登录</button>
+  </header>
+<div class="course-layout">
+<aside class="course-sidebar" id="course-sidebar" data-sidebar>
+  <div class="sidebar-heading">
+    <p class="eyebrow">COURSE</p>
+    <h2>DT00XTE310 · OmniSwitch 接入与 Stellar WLAN Express</h2>
+    <p>Edition 05 · 1083 页 · 五日交付全科（三部署模式+语音 WLAN+故障排查）</p>
+  </div>
+<div class="search" data-search>
+  <label class="sr-only" for="course-search">搜索全站课程和知识单元</label>
+  <input id="course-search" type="search" placeholder="搜索课程编号、产品型号或技术关键词…" autocomplete="off" data-search-input>
+  <div class="search-results" role="listbox" aria-live="polite" data-search-results></div>
+</div>  <nav class="course-nav" aria-label="课程目录">
+    <a href="/postsales/smb-express-lan-wlan/index.html">课程首页</a>
+    <a href="/postsales/smb-express-lan-wlan/digest.html">精华长文</a>
+    <a href="/postsales/smb-express-lan-wlan/overview.html">教书理解</a>
+    <a aria-current="page" href="/postsales/smb-express-lan-wlan/glossary.html">术语词典</a>
+    <p class="course-nav-group">交换机管理</p>
+      <a href="/postsales/smb-express-lan-wlan/skills/aos-dual-partition-config-management.html">aos-dual-partition-config-management</a>
+      <a href="/postsales/smb-express-lan-wlan/skills/poe-management.html">poe-management</a>
+      <a href="/postsales/smb-express-lan-wlan/skills/vlan-inter-vlan-routing.html">vlan-inter-vlan-routing</a>
+      <a href="/postsales/smb-express-lan-wlan/skills/switch-high-availability.html">switch-high-availability</a>
+      <a href="/postsales/smb-express-lan-wlan/skills/qos-acl-access-guardian.html">qos-acl-access-guardian</a>
+    <p class="course-nav-group">部署模式</p>
+      <a href="/postsales/smb-express-lan-wlan/skills/stellar-deployment-mode-selection.html">stellar-deployment-mode-selection</a>
+      <a href="/postsales/smb-express-lan-wlan/skills/wifi-express-operations.html">wifi-express-operations</a>
+      <a href="/postsales/smb-express-lan-wlan/skills/cirrus-cloud-management.html">cirrus-cloud-management</a>
+    <p class="course-nav-group">无线与排障</p>
+      <a href="/postsales/smb-express-lan-wlan/skills/wireless-tech-fundamentals.html">wireless-tech-fundamentals</a>
+      <a href="/postsales/smb-express-lan-wlan/skills/voice-over-wlan-deployment.html">voice-over-wlan-deployment</a>
+      <a href="/postsales/smb-express-lan-wlan/skills/lan-wlan-troubleshooting.html">lan-wlan-troubleshooting</a>
+  </nav>
+</aside>  <main id="main-content" class="course-main prose">
+    <nav class="breadcrumbs" aria-label="面包屑"><a href="/index.html">培训门户</a><span>/</span><a href="/postsales/index.html">售后 · Postsales</a><span>/</span><a href="/postsales/smb-express-lan-wlan/index.html">DT00XTE310</a><span>/</span><span aria-current="page">术语词典</span></nav>
+<header class="page-intro compact"><p class="eyebrow">COURSE REFERENCE</p><h1>术语词典</h1></header>    <article class="markdown-body"><h1 id="glossary">GLOSSARY · 术语表</h1>
 <blockquote>
 <p>来源：DT00XTE310 verified.md glossary 候选，按类别分组，保留页码引用。</p>
 </blockquote>
 <h2 id="_1">平台与产品</h2>
-<table>
+<div class="table-scroll"><table>
 <thead>
 <tr>
 <th>术语</th>
@@ -109,47 +89,47 @@ blockquote p{margin:6px 0}
 <tr>
 <td>OmniSwitch</td>
 <td>ALE 以太网交换机家族；AOS R8 覆盖 6360/6465/6560/6570M/6860E/N/6865/6870/6900/9900</td>
-<td><span class="pg">原文p84</span></td>
+<td><span class="source-page">原文p84</span></td>
 </tr>
 <tr>
 <td>OmniAccess Stellar</td>
 <td>ALE WLAN 接入点家族（Wi-Fi 6/6E/7：AP1301~AP1571），无控制器分布式架构</td>
-<td><span class="pg">原文p20</span> -<span class="pg">原文p23</span></td>
+<td><span class="source-page">原文p20</span> -<span class="source-page">原文p23</span></td>
 </tr>
 <tr>
 <td>OmniVista Cirrus (OVC10)</td>
 <td>云管平台（SaaS），管理 10000 AP + 2000 交换机</td>
-<td><span class="pg">原文p276</span> -<span class="pg">原文p277</span></td>
+<td><span class="source-page">原文p276</span> -<span class="source-page">原文p277</span></td>
 </tr>
 <tr>
 <td>OmniVista 2500</td>
 <td>本地 NMS，Enterprise 模式管理服务器兼许可证服务器</td>
-<td><span class="pg">原文p190</span> 、<span class="pg">原文p845</span></td>
+<td><span class="source-page">原文p190</span> 、<span class="source-page">原文p845</span></td>
 </tr>
 <tr>
 <td>AWOS</td>
 <td>Stellar AP 的操作系统（如 AWOS 4.0.7）</td>
-<td><span class="pg">原文p370</span></td>
+<td><span class="source-page">原文p370</span></td>
 </tr>
 <tr>
 <td>AOS</td>
 <td>Alcatel-Lucent Operating System，OmniSwitch 操作系统 R6/R8 双目录结构</td>
-<td><span class="pg">原文p125</span></td>
+<td><span class="source-page">原文p125</span></td>
 </tr>
 <tr>
 <td>ALE OmniVista Smart Tool (OST)</td>
 <td>免费安装/排障工具（PoE 向导、auto-ticket、配置备份）</td>
-<td><span class="pg">原文p1046</span> -<span class="pg">原文p1052</span></td>
+<td><span class="source-page">原文p1046</span> -<span class="source-page">原文p1052</span></td>
 </tr>
 <tr>
 <td>Lightning Config (OLC)</td>
 <td>交换机开箱即用向导（默认 192.168.0.1，仅 1/2 口触发）</td>
-<td><span class="pg">原文p77</span> -<span class="pg">原文p79</span></td>
+<td><span class="source-page">原文p77</span> -<span class="source-page">原文p79</span></td>
 </tr>
 </tbody>
-</table>
+</table></div>
 <h2 id="_2">语音与统一通信</h2>
-<table>
+<div class="table-scroll"><table>
 <thead>
 <tr>
 <th>术语</th>
@@ -161,37 +141,37 @@ blockquote p{margin:6px 0}
 <tr>
 <td>OXO Connect / OXE</td>
 <td>ALE 中小/大企业 IP 话音通信服务器（OmniPCX），VoWLAN 的 PBX 侧</td>
-<td><span class="pg">原文p824</span></td>
+<td><span class="source-page">原文p824</span></td>
 </tr>
 <tr>
 <td>Rainbow UCaaS</td>
 <td>ALE 云统一通信客户端（iOS/Android/桌面），WebRTC 音视频</td>
-<td><span class="pg">原文p858</span></td>
+<td><span class="source-page">原文p858</span></td>
 </tr>
 <tr>
 <td>OTC (OpenTouch Conversation)</td>
 <td>ALE 移动协作客户端</td>
-<td><span class="pg">原文p824</span></td>
+<td><span class="source-page">原文p824</span></td>
 </tr>
 <tr>
 <td>8158s / 8168s</td>
 <td>ALE WLAN 话机（Ascom OEM）；8168s 彩屏/免提/PTT/Ekahau RTLS，8158s 黑白屏</td>
-<td><span class="pg">原文p847</span></td>
+<td><span class="source-page">原文p847</span></td>
 </tr>
 <tr>
 <td>IMS3</td>
 <td>Integrated Messaging and Wireless Services，81x8s 话机集中网管/告警服务器（ELISE3 硬件 Linux）</td>
-<td><span class="pg">原文p853</span></td>
+<td><span class="source-page">原文p853</span></td>
 </tr>
 <tr>
 <td>WinPDM</td>
 <td>Windows Portable Device Manager，话机配置工具（配 Cradle）</td>
-<td><span class="pg">原文p853</span></td>
+<td><span class="source-page">原文p853</span></td>
 </tr>
 </tbody>
-</table>
+</table></div>
 <h2 id="_3">管理模式与策略</h2>
-<table>
+<div class="table-scroll"><table>
 <thead>
 <tr>
 <th>术语</th>
@@ -203,72 +183,72 @@ blockquote p{margin:6px 0}
 <tr>
 <td>Wi-Fi Express 模式</td>
 <td>自管理 AP 集群（AP-Group+PVM），≤255 AP，免许可证</td>
-<td><span class="pg">原文p188</span></td>
+<td><span class="source-page">原文p188</span></td>
 </tr>
 <tr>
 <td>Wi-Fi Enterprise 模式</td>
 <td>OV2500 集中管理模式，≤4000 AP</td>
-<td><span class="pg">原文p190</span></td>
+<td><span class="source-page">原文p190</span></td>
 </tr>
 <tr>
 <td>Wi-Fi Cloud 模式</td>
 <td>Cirrus 云管，≤10000 AP</td>
-<td><span class="pg">原文p192</span></td>
+<td><span class="source-page">原文p192</span></td>
 </tr>
 <tr>
 <td>AP Group</td>
 <td>同 Group ID+同 VLAN 的 AP 自动成组，统一配置单元（Cloud 下按组下发 SSID/RF/策略）</td>
-<td><span class="pg">原文p205</span> 、<span class="pg">原文p267</span></td>
+<td><span class="source-page">原文p205</span> 、<span class="source-page">原文p267</span></td>
 </tr>
 <tr>
 <td>PVM / SVM</td>
 <td>Primary/Secondary Virtual Manager（Controller），组内主/备管理 AP，按型号→MAC 选举</td>
-<td><span class="pg">原文p206</span></td>
+<td><span class="source-page">原文p206</span></td>
 </tr>
 <tr>
 <td>UPAM</td>
 <td>Unified Policy Authentication Manager，内嵌 RADIUS + Captive Portal 的统一认证平台</td>
-<td><span class="pg">原文p385</span></td>
+<td><span class="source-page">原文p385</span></td>
 </tr>
 <tr>
 <td>ARP (Access Role Profile)</td>
 <td>接入角色档案：VLAN/QoS/ACL/L7 规则/位置/时段的集合</td>
-<td><span class="pg">原文p394</span></td>
+<td><span class="source-page">原文p394</span></td>
 </tr>
 <tr>
 <td>UNP (User Network Profile)</td>
 <td>OmniSwitch 侧用户网络档案（VLAN+Policy List+ACL+QoS+Location+Period）</td>
-<td><span class="pg">原文p755</span></td>
+<td><span class="source-page">原文p755</span></td>
 </tr>
 <tr>
 <td>Access Guardian</td>
 <td>基于 UNP 的角色化接入控制（802.1X/MAC 认证后套用 UNP）</td>
-<td><span class="pg">原文p754</span></td>
+<td><span class="source-page">原文p754</span></td>
 </tr>
 <tr>
 <td>Device Catalog</td>
 <td>Cirrus 设备目录，按 SN 宣告并跟踪激活状态至 OV Managed</td>
-<td><span class="pg">原文p326</span></td>
+<td><span class="source-page">原文p326</span></td>
 </tr>
 <tr>
 <td>Call Home</td>
 <td>设备周期性主动联系云激活服务器（默认间隔 30 分钟）</td>
-<td><span class="pg">原文p332</span></td>
+<td><span class="source-page">原文p332</span></td>
 </tr>
 <tr>
 <td>cloud-agent</td>
 <td>AOS 交换机上负责 Cirrus 注册/VPN 的代理进程（cloud-agent.cfg 存激活 URL）</td>
-<td><span class="pg">原文p332</span></td>
+<td><span class="source-page">原文p332</span></td>
 </tr>
 <tr>
 <td>RAP (Remote AP)</td>
 <td>远程站点 AP，经 Wireguard VPN 隧道回连总部 VPN VA（Tunnel/Local breakout 两模式）</td>
-<td><span class="pg">原文p904</span></td>
+<td><span class="source-page">原文p904</span></td>
 </tr>
 </tbody>
-</table>
+</table></div>
 <h2 id="_4">交换技术</h2>
-<table>
+<div class="table-scroll"><table>
 <thead>
 <tr>
 <th>术语</th>
@@ -280,67 +260,67 @@ blockquote p{margin:6px 0}
 <tr>
 <td>VFL (Virtual Fabric Link)</td>
 <td>Virtual Chassis 成员间堆叠互联链路</td>
-<td><span class="pg">原文p468</span></td>
+<td><span class="source-page">原文p468</span></td>
 </tr>
 <tr>
 <td>Virtual Chassis</td>
 <td>多台交换机虚拟成单逻辑设备（ISIS-VC 管理，ISSU 升级）</td>
-<td><span class="pg">原文p468</span></td>
+<td><span class="source-page">原文p468</span></td>
 </tr>
 <tr>
 <td>ISSU</td>
 <td>In-Service Software Upgrade，逐台 slave 重启的在线升级</td>
-<td><span class="pg">原文p478</span></td>
+<td><span class="source-page">原文p478</span></td>
 </tr>
 <tr>
 <td>RCD</td>
 <td>Remote Chassis Detection，VC 分裂的带外检测（走 EMP）</td>
-<td><span class="pg">原文p476</span></td>
+<td><span class="source-page">原文p476</span></td>
 </tr>
 <tr>
 <td>LACP (802.3ad)</td>
 <td>动态链路聚合控制协议，actor admin key 关联端口</td>
-<td><span class="pg">原文p576</span></td>
+<td><span class="source-page">原文p576</span></td>
 </tr>
 <tr>
 <td>DHL (Dual-Home Link)</td>
 <td>Active-Active 双归属链路，按 VLAN 划分活跃链路防环（替代 STP）</td>
-<td><span class="pg">原文p628</span></td>
+<td><span class="source-page">原文p628</span></td>
 </tr>
 <tr>
 <td>VRRP</td>
 <td>虚拟路由冗余协议（虚拟 MAC 00-00-5E-00-01-VRID）</td>
-<td><span class="pg">原文p674</span></td>
+<td><span class="source-page">原文p674</span></td>
 </tr>
 <tr>
 <td>STP/RSTP/MSTP；flat/per-VLAN(1x1)</td>
 <td>生成树协议与两种模式（OmniSwitch 默认 per-VLAN）</td>
-<td><span class="pg">原文p604</span></td>
+<td><span class="source-page">原文p604</span></td>
 </tr>
 <tr>
 <td>802.1Q / 802.1p</td>
 <td>VLAN 打 tag（12bit VID）/tag 内 3bit 优先级</td>
-<td><span class="pg">原文p169</span></td>
+<td><span class="source-page">原文p169</span></td>
 </tr>
 <tr>
 <td>Mobile Tag</td>
 <td>允许移动口收 802.1Q tag 并动态入 VLAN（话机场景）</td>
-<td><span class="pg">原文p172</span></td>
+<td><span class="source-page">原文p172</span></td>
 </tr>
 <tr>
 <td>Loopback0</td>
 <td>不绑 VLAN 的稳定管理/服务源地址接口</td>
-<td><span class="pg">原文p659</span></td>
+<td><span class="source-page">原文p659</span></td>
 </tr>
 <tr>
 <td>EMP</td>
 <td>Ethernet Management Port，带外管理口（master emp 地址命令配置）</td>
-<td><span class="pg">原文p70</span></td>
+<td><span class="source-page">原文p70</span></td>
 </tr>
 </tbody>
-</table>
+</table></div>
 <h2 id="poe">PoE</h2>
-<table>
+<div class="table-scroll"><table>
 <thead>
 <tr>
 <th>术语</th>
@@ -352,17 +332,17 @@ blockquote p{margin:6px 0}
 <tr>
 <td>Fast PoE / Perpetual PoE</td>
 <td>开机即供电 / 重启不断电（需 FPGA 升级）</td>
-<td><span class="pg">原文p147</span> -<span class="pg">原文p148</span></td>
+<td><span class="source-page">原文p147</span> -<span class="source-page">原文p148</span></td>
 </tr>
 <tr>
 <td>EEE (802.3az)</td>
 <td>空闲低功耗节能以太网（仅铜口 100/1000M）</td>
-<td><span class="pg">原文p149</span></td>
+<td><span class="source-page">原文p149</span></td>
 </tr>
 </tbody>
-</table>
+</table></div>
 <h2 id="_5">无线技术</h2>
-<table>
+<div class="table-scroll"><table>
 <thead>
 <tr>
 <th>术语</th>
@@ -374,67 +354,75 @@ blockquote p{margin:6px 0}
 <tr>
 <td>SSID</td>
 <td>服务集标识（Wi-Fi 网络名）；Cirrus 建 SSID 走五步向导</td>
-<td><span class="pg">原文p383</span></td>
+<td><span class="source-page">原文p383</span></td>
 </tr>
 <tr>
 <td>Captive Portal</td>
 <td>访客 Web 认证门户（AP 内置或 UPAM/外部）</td>
-<td><span class="pg">原文p216</span></td>
+<td><span class="source-page">原文p216</span></td>
 </tr>
 <tr>
 <td>Walled Garden</td>
 <td>访客认证前即可访问的白名单网站列表</td>
-<td><span class="pg">原文p238</span> 、<span class="pg">原文p428</span></td>
+<td><span class="source-page">原文p238</span> 、<span class="source-page">原文p428</span></td>
 </tr>
 <tr>
 <td>MU-MIMO</td>
 <td>多用户多输入多输出（M 发 N 收，多用户复用空间流）</td>
-<td><span class="pg">原文p912</span></td>
+<td><span class="source-page">原文p912</span></td>
 </tr>
 <tr>
 <td>OFDMA / BSS Coloring / TWT</td>
 <td>Wi-Fi 6 高效率三件套：子载波调度/同频染色/目标唤醒时间</td>
-<td><span class="pg">原文p911</span></td>
+<td><span class="source-page">原文p911</span></td>
 </tr>
 <tr>
 <td>MLO</td>
 <td>Multi-Link Operation，Wi-Fi 7 多链路并发</td>
-<td><span class="pg">原文p48</span></td>
+<td><span class="source-page">原文p48</span></td>
 </tr>
 <tr>
 <td>DFS (802.11h)</td>
 <td>动态频率选择，检测雷达避让信道</td>
-<td><span class="pg">原文p927</span></td>
+<td><span class="source-page">原文p927</span></td>
 </tr>
 <tr>
 <td>CNCS (Client Network Context Sharing)</td>
 <td>AP 间客户端上下文共享，漫游判定基础</td>
-<td><span class="pg">原文p842</span></td>
+<td><span class="source-page">原文p842</span></td>
 </tr>
 <tr>
 <td>L3 Roaming (GRE tunnel)</td>
 <td>跨子网漫游时新 AP↔Home AP 建 L2 GRE 隧道</td>
-<td><span class="pg">原文p894</span></td>
+<td><span class="source-page">原文p894</span></td>
 </tr>
 <tr>
 <td>DRM (Dynamic Radio Manager)</td>
 <td>Stellar 射频自动管理（ACS/APC、自愈、负载均衡、频段引导）</td>
-<td><span class="pg">原文p841</span></td>
+<td><span class="source-page">原文p841</span></td>
 </tr>
 <tr>
 <td>DPI (Deep Packet Inspection)</td>
 <td>AP 内置应用识别，配合 OV 做应用可视与带宽管控</td>
-<td><span class="pg">原文p875</span></td>
+<td><span class="source-page">原文p875</span></td>
 </tr>
 <tr>
 <td>WIPS/WIDS</td>
 <td>无线入侵防护/检测（Rogue AP 检测与压制）</td>
-<td><span class="pg">原文p993</span></td>
+<td><span class="source-page">原文p993</span></td>
 </tr>
 <tr>
 <td>Stellar Asset Tracking / Ekahau RTLS</td>
 <td>基于 BLE 信标 / RSSI 三角定位的资产与人员定位</td>
-<td><span class="pg">原文p880</span></td>
+<td><span class="source-page">原文p880</span></td>
 </tr>
 </tbody>
-</table><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+</table></div></article>
+    <footer class="content-footer">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</footer>
+  </main>
+</div>
+  <script src="/assets/js/app.js?v=4" defer></script>
+  <script src="/assets/js/search.js?v=4" defer></script>
+  <script src="/assets/js/lightbox.js?v=5" defer></script>
+</body>
+</html>

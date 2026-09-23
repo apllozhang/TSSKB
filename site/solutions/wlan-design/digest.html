@@ -1,131 +1,99 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>精华长文 DIGEST — Stellar WLAN 设计与调优</title>
-<style>
-:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
-*{box-sizing:border-box}
-body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
-a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
-.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin:16px 0}
-.gallery figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px}
-.gallery img{width:100%;max-height:340px;object-fit:contain;background:#fff;border-radius:6px}
-.gallery figcaption{font-size:12.5px;color:var(--mut);text-align:center;margin-top:6px}
-/* 侧栏折叠 + 图片灯箱 */
-.tgl{position:fixed;left:0;top:45%;z-index:60;background:var(--card);border:1px solid var(--line);border-right:none;border-radius:0 8px 8px 0;color:var(--tx);padding:10px 6px;cursor:pointer;font-size:13px;line-height:1.1;writing-mode:vertical-lr}
-.tgl:hover{background:var(--acc);color:#0f172a}
-.layout.full{grid-template-columns:0 1fr}
-.layout.full aside{display:none}
-.lb{position:fixed;inset:0;background:rgba(5,10,20,.92);z-index:100;display:flex;align-items:center;justify-content:center;flex-direction:column}
-.lb img{max-width:92vw;max-height:82vh;background:#fff;border-radius:6px;transition:transform .12s}
-.lb .lbb{margin-top:10px;display:flex;gap:10px}
-.lb button{background:var(--card);border:1px solid var(--line);color:var(--tx);border-radius:8px;padding:6px 14px;cursor:pointer;font-size:14px}
-.lb button:hover{background:var(--acc);color:#0f172a}
-.search{margin:0 0 14px}
-.search input{width:100%;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--tx);font-size:13px;outline:none}
-.search input:focus{border-color:var(--acc)}
-#qres{max-height:340px;overflow-y:auto;margin-top:6px}
-#qres .qi{display:block;padding:6px 8px;border-radius:6px;font-size:12.5px;color:var(--tx);border-left:2px solid transparent}
-#qres .qi:hover{background:var(--card);text-decoration:none;border-left-color:var(--acc)}
-#qres .qi .qp{color:var(--mut);font-size:11px;display:block}
-#qres .qi b{color:var(--acc)}
-.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
-main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
-.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
-aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
-aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
-aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
-aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
-aside a:hover{background:var(--card);text-decoration:none}
-aside a.on{background:var(--card);color:var(--acc)}
-main{padding:36px 48px;max-width:1000px}
-h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
-h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
-table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
-th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
-th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
-code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
-pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
-pre code{background:none;padding:0}
-blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
-.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
-.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
-.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
-.meta{font-size:13px;color:var(--mut)}
-hr{border:none;border-top:1px solid var(--line);margin:26px 0}
-.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
-.badge.soon{background:#475569;color:#cbd5e1}
-main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
-main{padding:28px 48px 40px;max-width:1040px}
-h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
-blockquote p{margin:6px 0}
-.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
-.crumbs a{color:var(--acc)}
-.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
-.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
-.pn a:hover{border-color:var(--acc)}
-.pn .nxt{text-align:right}
-.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
-@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
-</style></head>
-<body><div class="layout"><aside><h1>Stellar WLAN 设计与调优</h1>
-<div class="search"><input id="qk" type="search" placeholder="🔍 搜索全站…" autocomplete="off"><div id="qres"></div></div>
-
-<div class="sub">3 份 75 页 · 高密设计指南 + 微调最佳实践 + 部署服务表</div>
-<a href="index.html">🏠 课程首页</a>
-<a href="digest.html">📖 精华长文 DIGEST</a>
-
-<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
-<a href="glossary.html">🔤 术语词典</a>
-<a href="../../index.html">⬅️ 返回培训门户</a>
-<a href="index.html">──── Skills ────</a>
-<div class="grp">设计</div>
-<a href="skills/sol-wlan-high-density.html">sol-wlan-high-density</a>
-<a href="skills/sol-wlan-fine-tuning.html">sol-wlan-fine-tuning</a>
-<div class="grp">配置</div>
-<a href="skills/sol-wlan-profile-hierarchy.html">sol-wlan-profile-hierarchy</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../solutions/index.html">解决方案</a> › <a href="index.html">Stellar WLAN 设计与调优</a> › <span>精华长文 DIGEST</span></nav><h1>精华长文 DIGEST</h1><h1 id="digest-stellar">DIGEST — Stellar 高密设计指南 + 微调最佳实践 + 部署协助服务 精华</h1>
-<p>本书册由三份文档构成（页码连续）：DOC1 高密设计指南（p1-44，体育场 VHD 端到端设计）；
-DOC2 无线微调最佳实践（p45-72，Enterprise 模式参数级微调）；
-DOC3 部署协助服务数据表（p73-75，ALE 专业服务定义）。</p>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="面向售前、售后与网络工程师的 ALE 内部技术知识平台">
+  <meta name="theme-color" content="#6B489D">
+  <title>精华长文 DIGEST — Stellar WLAN 设计与调优</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=4">
+  <link rel="stylesheet" href="/assets/css/layout.css?v=4">
+  <link rel="stylesheet" href="/assets/css/components.css?v=4">
+  <link rel="stylesheet" href="/assets/css/content.css?v=7">
+  <script src="/assets/js/auth-config.js?v=4"></script>
+  <script src="/assets/js/auth-core.js?v=4"></script>
+  <script src="/assets/js/auth-guard.js?v=4"></script>
+</head>
+<body data-page-kind="course">
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <header class="topbar" data-topbar>
+    <a class="brand" href="/index.html" aria-label="返回 ALE 技术培训门户首页">
+      <img src="/assets/ale-logo-color.png" alt="Alcatel-Lucent Enterprise">
+      <span>ALE 培训门户</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-controls="primary-nav" aria-expanded="false" data-nav-toggle>
+      <span aria-hidden="true">☰</span><span class="sr-only">打开导航</span>
+    </button>
+    <nav id="primary-nav" class="primary-nav" aria-label="主导航">
+      <a href="/index.html">首页</a>
+      <a href="/paths.html">学习路径</a>
+      <a href="/presales/index.html">售前</a>
+      <a href="/postsales/index.html">售后</a>
+      <a href="/wlan/index.html">无线</a>
+      <a href="/aos/index.html">AOS 手册</a>
+      <a href="/hardware/index.html">硬件</a>
+      <a href="/brochures/index.html">彩页</a>
+      <a href="/solutions/index.html" aria-current="page">解决方案</a>
+      <a href="/security/index.html">安全</a>
+    </nav>
+    <button id="logout-btn" class="logout-btn" type="button" hidden>退出登录</button>
+  </header>
+<div class="course-layout">
+<aside class="course-sidebar" id="course-sidebar" data-sidebar>
+  <div class="sidebar-heading">
+    <p class="eyebrow">COURSE</p>
+    <h2>Stellar WLAN 设计与调优</h2>
+    <p>3 份 75 页 · 高密设计指南 + 微调最佳实践 + 部署服务表</p>
+  </div>
+<div class="search" data-search>
+  <label class="sr-only" for="course-search">搜索全站课程和知识单元</label>
+  <input id="course-search" type="search" placeholder="搜索课程编号、产品型号或技术关键词…" autocomplete="off" data-search-input>
+  <div class="search-results" role="listbox" aria-live="polite" data-search-results></div>
+</div>  <nav class="course-nav" aria-label="课程目录">
+    <a href="/solutions/wlan-design/index.html">课程首页</a>
+    <a aria-current="page" href="/solutions/wlan-design/digest.html">精华长文</a>
+    <a href="/solutions/wlan-design/overview.html">教书理解</a>
+    <a href="/solutions/wlan-design/glossary.html">术语词典</a>
+    <p class="course-nav-group">设计</p>
+      <a href="/solutions/wlan-design/skills/sol-wlan-high-density.html">sol-wlan-high-density</a>
+      <a href="/solutions/wlan-design/skills/sol-wlan-fine-tuning.html">sol-wlan-fine-tuning</a>
+    <p class="course-nav-group">配置</p>
+      <a href="/solutions/wlan-design/skills/sol-wlan-profile-hierarchy.html">sol-wlan-profile-hierarchy</a>
+  </nav>
+</aside>  <main id="main-content" class="course-main prose">
+    <nav class="breadcrumbs" aria-label="面包屑"><a href="/index.html">培训门户</a><span>/</span><a href="/solutions/index.html">解决方案 · Solutions</a><span>/</span><a href="/solutions/wlan-design/index.html">Stellar WLAN 设计与调优</a><span>/</span><span aria-current="page">精华长文 DIGEST</span></nav>
+<header class="page-intro compact"><p class="eyebrow">COURSE REFERENCE</p><h1>精华长文 DIGEST</h1></header>    <article class="markdown-body"><h1 id="digest-stellar">DIGEST — Stellar 高密设计指南 + 微调最佳实践 + 部署协助服务 精华</h1>
+<p>本书册由三份文档构成（页码连续）：DOC1 高密设计指南（p1-44，体育场 VHD 端到端设计）；DOC2 无线微调最佳实践（p45-72，Enterprise 模式参数级微调）；DOC3 部署协助服务数据表（p73-75，ALE 专业服务定义）。</p>
 <h2 id="_1">一、知识地图（三技能单元）</h2>
 <ol>
-<li>高密设计（sol-wlan-high-density）：五步法、容量 vs 覆盖、VHD 吞吐基线、AP 计数与布点、双 6900 架构、LAN 带宽公式（p5-25）。<ul>
-<li>
-<ol>
-<li>RF 微调（sol-wlan-fine-tuning）：RDA 自动化、七要点、RSSI/速率阈值、Band Steering 陷阱、粘滞客户端与 802.11k/v/r、组播广播优化、语音专门化（p8-10、48-68）。</li>
-</ol>
-</li>
-<li>
-<ol>
-<li>三级配置与部署服务（sol-wlan-profile-hierarchy）：RF Profile/AP Group/SSID 三级体系、Enterprise vs Express、模板与参数对照表、部署协助服务包（p27-44、66-75）。</li>
-</ol>
-</li>
-</ul>
-</li>
+<li><strong>高密设计</strong>（sol-wlan-high-density）：五步法、容量 vs 覆盖、VHD 吞吐基线、AP 计数与布点、双 6900 架构、LAN 带宽公式（p5-25）。</li>
+<li><strong>RF 微调</strong>（sol-wlan-fine-tuning）：RDA 自动化、七要点、RSSI/速率阈值、Band Steering 陷阱、粘滞客户端与 802.11k/v/r、组播广播优化、语音专门化（p8-10、48-68）。</li>
+<li><strong>三级配置与部署服务</strong>（sol-wlan-profile-hierarchy）：RF Profile/AP Group/SSID 三级体系、Enterprise vs Express、模板与参数对照表、部署协助服务包（p27-44、66-75）。</li>
 </ol>
 <h2 id="_2">二、三单元要点串讲</h2>
 <h3 id="1">1. 高密：容量规划先行</h3>
 <ul>
-<li><strong>需求分析是第一步（<span class="pg">原文p6</span> ）</strong>：<br>5 万座体育场 = 数万并发设备、AP 多于 5GHz 信道数。</li>
-<li><strong>容量型优于覆盖型（<span class="pg">原文p50-51</span> ）</strong>：<br>更多 AP、更低功率、小蜂窝。</li>
-<li><strong>VHD 吞吐基线</strong>：<br>Wi-Fi 6 HE20 单用户 80Mbps → 60 并发衰减至 40Mbps → 再乘 25% 折减（<span class="pg">原文p11</span> ）。</li>
-<li><strong>计数标准</strong>：<br>看台 120 终端/AP（150 座/AP）、其余 1 AP/100m²、30% 并发率（<span class="pg">原文p12</span> ）。</li>
-<li><strong>布点</strong>：<br>屋顶 AP1322+扇区天线 1 AP/180 座、座椅下 NEMA 盒、卫星机柜 1/3200 座（<span class="pg">原文p16-17</span> ）。</li>
-<li><strong>架构</strong>：<br>双 6900（40G/100G）+ OV2500 HA（4000 AP）+ Cirrus 云分析；LAN BW = 复用因子×AP 数×客户端×带宽再 +50%（<span class="pg">原文p18-21</span> ）。</li>
+<li><strong>需求分析是第一步（<span class="source-page">原文p6</span> ）</strong>：<br>5 万座体育场 = 数万并发设备、AP 多于 5GHz 信道数。</li>
+<li><strong>容量型优于覆盖型（<span class="source-page">原文p50-51</span> ）</strong>：<br>更多 AP、更低功率、小蜂窝。</li>
+<li><strong>VHD 吞吐基线</strong>：<br>Wi-Fi 6 HE20 单用户 80Mbps → 60 并发衰减至 40Mbps → 再乘 25% 折减（<span class="source-page">原文p11</span> ）。</li>
+<li><strong>计数标准</strong>：<br>看台 120 终端/AP（150 座/AP）、其余 1 AP/100m²、30% 并发率（<span class="source-page">原文p12</span> ）。</li>
+<li><strong>布点</strong>：<br>屋顶 AP1322+扇区天线 1 AP/180 座、座椅下 NEMA 盒、卫星机柜 1/3200 座（<span class="source-page">原文p16-17</span> ）。</li>
+<li><strong>架构</strong>：<br>双 6900（40G/100G）+ OV2500 HA（4000 AP）+ Cirrus 云分析；LAN BW = 复用因子×AP 数×客户端×带宽再 +50%（<span class="source-page">原文p18-21</span> ）。</li>
 </ul>
 <h3 id="2">2. 微调：自动化优先</h3>
 <ul>
-<li>RDA（ACS+APC）默认开启勿关、勿过度手工微调（<span class="pg">原文p48-53</span> ）。</li>
-<li><strong>七要点</strong>：<br>信道复用、强制 5GHz、低功率、DFS 分区、20MHz、Airtime Fairness、专用扫描射频（<span class="pg">原文p8-9</span> ）。</li>
-<li><strong>阈值</strong>：<br>关联 RSSI 22（-74dBm）、漫游 25（-71dBm）、最低速率 2.4G 12M/5G 24M（<span class="pg">原文p55</span> ）。</li>
-<li>粘滞客户端正解 = 802.11k/v（负载均衡解决不了）；Apple 对 Band Steering 过敏、Force 5G 拒 2.4G 关联、iPhone/Chromebook 与 DFS 不合（<span class="pg">原文p53-60</span> ）。</li>
-<li><strong>语音</strong>：<br>专用 5GHz SSID+关 Band Steering+信道细分（5G Low 8/High 11）（<span class="pg">原文p61-62</span> ）。</li>
+<li>RDA（ACS+APC）默认开启勿关、勿过度手工微调（<span class="source-page">原文p48-53</span> ）。</li>
+<li><strong>七要点</strong>：<br>信道复用、强制 5GHz、低功率、DFS 分区、20MHz、Airtime Fairness、专用扫描射频（<span class="source-page">原文p8-9</span> ）。</li>
+<li><strong>阈值</strong>：<br>关联 RSSI 22（-74dBm）、漫游 25（-71dBm）、最低速率 2.4G 12M/5G 24M（<span class="source-page">原文p55</span> ）。</li>
+<li>粘滞客户端正解 = 802.11k/v（负载均衡解决不了）；Apple 对 Band Steering 过敏、Force 5G 拒 2.4G 关联、iPhone/Chromebook 与 DFS 不合（<span class="source-page">原文p53-60</span> ）。</li>
+<li><strong>语音</strong>：<br>专用 5GHz SSID+关 Band Steering+信道细分（5G Low 8/High 11）（<span class="source-page">原文p61-62</span> ）。</li>
 </ul>
 <h3 id="3">3. 配置与服务：三级体系落地</h3>
 <ul>
 <li>RF Profile（区域）/AP Group（设备组）/SSID（业务）三级各管一维，附录给访客与监控两套模板及默认/推荐值对照（&lt;&lt;<PAGE 27-44、66-72>&gt;&gt;）。</li>
 <li><strong>模式</strong>：<br>Enterprise（OV 集中 4000 AP/组）vs Express（256 AP/集群），高密用 Enterprise。</li>
-<li><strong>服务</strong>：<br>部署协助 5 天交付包（Ekahau 预测勘测+现场勘测+辅导+ACSE 认证），前置 ACFE+办公部署经验+HLD，eBuy PS-PAER-5-NET（<span class="pg">原文p73-75</span> ）。</li>
+<li><strong>服务</strong>：<br>部署协助 5 天交付包（Ekahau 预测勘测+现场勘测+辅导+ACSE 认证），前置 ACFE+办公部署经验+HLD，eBuy PS-PAER-5-NET（<span class="source-page">原文p73-75</span> ）。</li>
 </ul>
 <h2 id="_3">三、本书在知识库中的位置</h2>
 <ul>
@@ -134,12 +102,14 @@ DOC3 部署协助服务数据表（p73-75，ALE 专业服务定义）。</p>
 </ul>
 <h2 id="_4">来源</h2>
 <ul>
-<li>DOC1 ale-omniaccess-stellar-high-density-design-guidelines-en.pdf（p1-44）；</li>
-<li>DOC2 omniaccess-stellar-wireless-fine-tuning-best-practices-techbrief-en.pdf（p45-72）；</li>
-<li>
-<p>DOC3 omniaccess-stellar-wlan-specific-deployment-assistance-datasheet-en.pdf（p73-75）；</p>
-</li>
-<li>
-<p><strong>verified.md</strong>：<br>cases C1-C21；principles P1-P46；counter-examples X1-X20；frameworks F1-F4；glossary 63 条。</p>
-</li>
-</ul><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<li>DOC1 ale-omniaccess-stellar-high-density-design-guidelines-en.pdf（p1-44）；DOC2 omniaccess-stellar-wireless-fine-tuning-best-practices-techbrief-en.pdf（p45-72）；DOC3 omniaccess-stellar-wlan-specific-deployment-assistance-datasheet-en.pdf（p73-75）。</li>
+<li><strong>verified.md</strong>：<br>cases C1-C21；principles P1-P46；counter-examples X1-X20；frameworks F1-F4；glossary 63 条。</li>
+</ul></article>
+    <footer class="content-footer">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</footer>
+  </main>
+</div>
+  <script src="/assets/js/app.js?v=4" defer></script>
+  <script src="/assets/js/search.js?v=4" defer></script>
+  <script src="/assets/js/lightbox.js?v=5" defer></script>
+</body>
+</html>

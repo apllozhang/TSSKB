@@ -1,96 +1,76 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>stellar-ap-system-health — DT00XTE478 · Stellar WLAN 高级排障</title>
-<style>
-:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
-*{box-sizing:border-box}
-body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
-a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
-.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin:16px 0}
-.gallery figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px}
-.gallery img{width:100%;max-height:340px;object-fit:contain;background:#fff;border-radius:6px}
-.gallery figcaption{font-size:12.5px;color:var(--mut);text-align:center;margin-top:6px}
-/* 侧栏折叠 + 图片灯箱 */
-.tgl{position:fixed;left:0;top:45%;z-index:60;background:var(--card);border:1px solid var(--line);border-right:none;border-radius:0 8px 8px 0;color:var(--tx);padding:10px 6px;cursor:pointer;font-size:13px;line-height:1.1;writing-mode:vertical-lr}
-.tgl:hover{background:var(--acc);color:#0f172a}
-.layout.full{grid-template-columns:0 1fr}
-.layout.full aside{display:none}
-.lb{position:fixed;inset:0;background:rgba(5,10,20,.92);z-index:100;display:flex;align-items:center;justify-content:center;flex-direction:column}
-.lb img{max-width:92vw;max-height:82vh;background:#fff;border-radius:6px;transition:transform .12s}
-.lb .lbb{margin-top:10px;display:flex;gap:10px}
-.lb button{background:var(--card);border:1px solid var(--line);color:var(--tx);border-radius:8px;padding:6px 14px;cursor:pointer;font-size:14px}
-.lb button:hover{background:var(--acc);color:#0f172a}
-.search{margin:0 0 14px}
-.search input{width:100%;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--tx);font-size:13px;outline:none}
-.search input:focus{border-color:var(--acc)}
-#qres{max-height:340px;overflow-y:auto;margin-top:6px}
-#qres .qi{display:block;padding:6px 8px;border-radius:6px;font-size:12.5px;color:var(--tx);border-left:2px solid transparent}
-#qres .qi:hover{background:var(--card);text-decoration:none;border-left-color:var(--acc)}
-#qres .qi .qp{color:var(--mut);font-size:11px;display:block}
-#qres .qi b{color:var(--acc)}
-.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
-main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
-.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
-aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
-aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
-aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
-aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
-aside a:hover{background:var(--card);text-decoration:none}
-aside a.on{background:var(--card);color:var(--acc)}
-main{padding:36px 48px;max-width:1000px}
-h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
-h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
-table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
-th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
-th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
-code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
-pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
-pre code{background:none;padding:0}
-blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
-.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
-.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
-.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
-.meta{font-size:13px;color:var(--mut)}
-hr{border:none;border-top:1px solid var(--line);margin:26px 0}
-.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
-.badge.soon{background:#475569;color:#cbd5e1}
-main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
-main{padding:28px 48px 40px;max-width:1040px}
-h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
-blockquote p{margin:6px 0}
-.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
-.crumbs a{color:var(--acc)}
-.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
-.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
-.pn a:hover{border-color:var(--acc)}
-.pn .nxt{text-align:right}
-.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
-@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
-</style></head>
-<body><div class="layout"><aside><h1>DT00XTE478 · Stellar WLAN 高级排障</h1>
-<div class="search"><input id="qk" type="search" placeholder="🔍 搜索全站…" autocomplete="off"><div id="qres"></div></div>
-
-<div class="sub">187 页 · 无线排障专题（方法论/工具箱/四层排障/勘测/TKC）</div>
-<a href="../index.html">🏠 课程首页</a>
-<a href="../digest.html">📖 精华长文 DIGEST</a>
-
-<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
-<a href="../glossary.html">🔤 术语词典</a>
-<a href="../../../index.html">⬅️ 返回培训门户</a>
-<a href="../index.html">──── Skills ────</a>
-<div class="grp">方法论</div>
-<a href="../skills/wlan-trouble-methodology.html">wlan-trouble-methodology</a>
-<div class="grp">工具与体检</div>
-<a href="../skills/stellar-ap-toolbox.html">stellar-ap-toolbox</a>
-<a href="../skills/stellar-ap-system-health.html" class="on">stellar-ap-system-health</a>
-<div class="grp">故障域</div>
-<a href="../skills/client-connection-trouble.html">client-connection-trouble</a>
-<a href="../skills/dot1x-radius-trouble.html">dot1x-radius-trouble</a>
-<a href="../skills/network-side-trouble.html">network-side-trouble</a>
-<a href="../skills/wireless-rf-roaming-trouble.html">wireless-rf-roaming-trouble</a>
-<div class="grp">勘测纠正</div>
-<a href="../skills/site-survey-remediation.html">site-survey-remediation</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../postsales/index.html">售后</a> › <a href="../index.html">DT00XTE478</a> › <span>Stellar AP 基础层排障：LED · 系统 · 进程 · 门户 · 集群</span></nav><h1>Stellar AP 基础层排障：LED · 系统 · 进程 · 门户 · 集群</h1><p class="meta"><span class="badge">SKILL</span> stellar-ap-system-health · 来源页码: </p><h1 id="stellar-ap-led">Stellar AP 基础层排障：LED · 系统 · 进程 · 门户 · 集群</h1>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="面向售前、售后与网络工程师的 ALE 内部技术知识平台">
+  <meta name="theme-color" content="#6B489D">
+  <title>Stellar AP 基础层排障：LED · 系统 · 进程 · 门户 · 集群 — DT00XTE478 · Stellar WLAN 高级排障</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=4">
+  <link rel="stylesheet" href="/assets/css/layout.css?v=4">
+  <link rel="stylesheet" href="/assets/css/components.css?v=4">
+  <link rel="stylesheet" href="/assets/css/content.css?v=7">
+  <script src="/assets/js/auth-config.js?v=4"></script>
+  <script src="/assets/js/auth-core.js?v=4"></script>
+  <script src="/assets/js/auth-guard.js?v=4"></script>
+</head>
+<body data-page-kind="course">
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <header class="topbar" data-topbar>
+    <a class="brand" href="/index.html" aria-label="返回 ALE 技术培训门户首页">
+      <img src="/assets/ale-logo-color.png" alt="Alcatel-Lucent Enterprise">
+      <span>ALE 培训门户</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-controls="primary-nav" aria-expanded="false" data-nav-toggle>
+      <span aria-hidden="true">☰</span><span class="sr-only">打开导航</span>
+    </button>
+    <nav id="primary-nav" class="primary-nav" aria-label="主导航">
+      <a href="/index.html">首页</a>
+      <a href="/paths.html">学习路径</a>
+      <a href="/presales/index.html">售前</a>
+      <a href="/postsales/index.html" aria-current="page">售后</a>
+      <a href="/wlan/index.html">无线</a>
+      <a href="/aos/index.html">AOS 手册</a>
+      <a href="/hardware/index.html">硬件</a>
+      <a href="/brochures/index.html">彩页</a>
+      <a href="/solutions/index.html">解决方案</a>
+      <a href="/security/index.html">安全</a>
+    </nav>
+    <button id="logout-btn" class="logout-btn" type="button" hidden>退出登录</button>
+  </header>
+<div class="course-layout">
+<aside class="course-sidebar" id="course-sidebar" data-sidebar>
+  <div class="sidebar-heading">
+    <p class="eyebrow">COURSE</p>
+    <h2>DT00XTE478 · Stellar WLAN 高级排障</h2>
+    <p>187 页 · 无线排障专题（方法论/工具箱/四层排障/勘测/TKC）</p>
+  </div>
+<div class="search" data-search>
+  <label class="sr-only" for="course-search">搜索全站课程和知识单元</label>
+  <input id="course-search" type="search" placeholder="搜索课程编号、产品型号或技术关键词…" autocomplete="off" data-search-input>
+  <div class="search-results" role="listbox" aria-live="polite" data-search-results></div>
+</div>  <nav class="course-nav" aria-label="课程目录">
+    <a href="/postsales/stellar-adv-trouble/index.html">课程首页</a>
+    <a href="/postsales/stellar-adv-trouble/digest.html">精华长文</a>
+    <a href="/postsales/stellar-adv-trouble/overview.html">教书理解</a>
+    <a href="/postsales/stellar-adv-trouble/glossary.html">术语词典</a>
+    <p class="course-nav-group">方法论</p>
+      <a href="/postsales/stellar-adv-trouble/skills/wlan-trouble-methodology.html">WLAN 排障总方法论：七步流程 · 三域根因地图 · 访谈四问</a>
+    <p class="course-nav-group">工具与体检</p>
+      <a href="/postsales/stellar-adv-trouble/skills/stellar-ap-toolbox.html">Stellar AP 排障工具箱：登录通道 · 抓包 · 配置备份</a>
+      <a aria-current="page" href="/postsales/stellar-adv-trouble/skills/stellar-ap-system-health.html">Stellar AP 基础层排障：LED · 系统 · 进程 · 门户 · 集群</a>
+    <p class="course-nav-group">故障域</p>
+      <a href="/postsales/stellar-adv-trouble/skills/client-connection-trouble.html">客户端连接排障决策链：看不到 · 连不上 · 没地址 · 掉线</a>
+      <a href="/postsales/stellar-adv-trouble/skills/dot1x-radius-trouble.html">802.1X 认证失败三段排查法</a>
+      <a href="/postsales/stellar-adv-trouble/skills/network-side-trouble.html">网络侧排障：AP 取址 · 连通性 · 服务器 · 云管前置</a>
+      <a href="/postsales/stellar-adv-trouble/skills/wireless-rf-roaming-trouble.html">无线层与漫游排障：接口 · RF profile · 邻居 · 漫游验证</a>
+    <p class="course-nav-group">勘测纠正</p>
+      <a href="/postsales/stellar-adv-trouble/skills/site-survey-remediation.html">WiFi 勘测与纠正措施：类型选型 · 三步法 · 五类发现 · 五类动作</a>
+  </nav>
+</aside>  <main id="main-content" class="course-main prose">
+    <nav class="breadcrumbs" aria-label="面包屑"><a href="/index.html">培训门户</a><span>/</span><a href="/postsales/index.html">售后 · Postsales</a><span>/</span><a href="/postsales/stellar-adv-trouble/index.html">DT00XTE478</a><span>/</span><span aria-current="page">Stellar AP 基础层排障：LED · 系统 · 进程 · 门户 · 集群</span></nav>
+<header class="skill-heading"><div><p class="eyebrow">KNOWLEDGE UNIT</p><h1>Stellar AP 基础层排障：LED · 系统 · 进程 · 门户 · 集群</h1></div><dl><div><dt>Skill ID</dt><dd>stellar-ap-system-health</dd></div></dl></header>    <article class="markdown-body"><h1 id="stellar-ap-led">Stellar AP 基础层排障：LED · 系统 · 进程 · 门户 · 集群</h1>
 <h2 id="r">R · 原文引用</h2>
 <blockquote>
 <p>Flashing Green: System Running, Default SSID broadcasted. Solid Green: System Running, Single band working. Solid Blue: System Running, Dual band working. Flashing Blue &amp; Red: OS upgrading. Solid Red: System startup. AP1251/AP1360: 7 LEDs - SYS ON: Power On - System Running; ENET0/1 Solid: Ethernet Link UP; 5G/2.4G Solid: SSID created and running; PSE ON: PSE Enabled. (p41-44)</p>
@@ -100,7 +80,7 @@ blockquote p{margin:6px 0}
 </blockquote>
 <h2 id="i">I · 方法论骨架</h2>
 <p><strong>LED 免登录第一道体检表（单三色 LED 家族 AP12XX/13XX/14XX/15X1）</strong></p>
-<table>
+<div class="table-scroll"><table>
 <thead>
 <tr>
 <th>状态</th>
@@ -133,10 +113,10 @@ blockquote p{margin:6px 0}
 <td>系统启动中</td>
 </tr>
 </tbody>
-</table>
+</table></div>
 <p>AP1251/AP1360 用 7 颗独立 LED：SYS（常亮=运行/闪烁=加载升级）、2.4G/5G（SSID 创建运行）、ENET0/1（链路 up）、SFP、PSE（PoE 供电）。AP1201H 的 PoE 灯：橙常亮=受电在线、橙闪=离线、灭=PSE 禁用。</p>
 <p><strong>系统四命令</strong></p>
-<table>
+<div class="table-scroll"><table>
 <thead>
 <tr>
 <th>命令</th>
@@ -161,7 +141,7 @@ blockquote p{margin:6px 0}
 <td>集群成员（MAC/IP/角色/版本）+ OmniVista 服务器 IP（云模式用 getovinfo）</td>
 </tr>
 </tbody>
-</table>
+</table></div>
 <p><strong>进程健康判定</strong>：top 按 %CPU 找元凶、看全局内存；ps 看状态列——<strong>R/S 正常，X（Dead）/Z（Zombie）异常</strong>；僵尸进程堆积吃内存。开票必附进程列表。</p>
 <p><strong>高 CPU 四根因</strong>：异常进程 / 进程死循环（疑软件缺陷）/ 过量日志与跟踪引发的计算 / DoS 攻击。</p>
 <p><strong>重启核查顺序纪律</strong>：先 <code>date</code>（对时，时间不可信则日志定位无意义）→ <code>uptime</code>（判断是否计划外重启）→ 才去日志收集包按对齐后时间戳找重启原因。</p>
@@ -175,40 +155,18 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
-<li>症状是"AP 整体不对劲"（灯不对、疑似重启、变慢、功能失灵）→ 本 skill；症状是"单个客户端连不上/掉线"→ <code><a href="client-connection-trouble.html">client-connection-trouble</a></code>。</li>
-<li><strong>门户相关</strong>：<br>用户 complaining 转不出认证页 → 本 skill 的 eag 部分；802.1X 认证失败（无门户）→ <code><a href="dot1x-radius-trouble.html">dot1x-radius-trouble</a></code>。</li>
-<li>LED 显示纯红（启动中）长时间不变化 → 硬件/启动问题，本 skill 优先；LED 正常但 AP 不上线 → <code><a href="network-side-trouble.html">network-side-trouble</a></code>。</li>
+<li>症状是"AP 整体不对劲"（灯不对、疑似重启、变慢、功能失灵）→ 本 skill；症状是"单个客户端连不上/掉线"→ <code><a href="/postsales/stellar-adv-trouble/skills/client-connection-trouble.html">client-connection-trouble</a></code>。</li>
+<li><strong>门户相关</strong>：<br>用户 complaining 转不出认证页 → 本 skill 的 eag 部分；802.1X 认证失败（无门户）→ <code><a href="/postsales/stellar-adv-trouble/skills/dot1x-radius-trouble.html">dot1x-radius-trouble</a></code>。</li>
+<li>LED 显示纯红（启动中）长时间不变化 → 硬件/启动问题，本 skill 优先；LED 正常但 AP 不上线 → <code><a href="/postsales/stellar-adv-trouble/skills/network-side-trouble.html">network-side-trouble</a></code>。</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
-<li>到场先看 LED，按表判读单双频/升级/启动状态，免登录定性。<ul>
-<li>
-<ol>
+<li>到场先看 LED，按表判读单双频/升级/启动状态，免登录定性。</li>
 <li>SSH/串口进 CLI（见 stellar-ap-toolbox），跑 showsysinfo / showver / getmode / show_cluster，核对国家码与版本与预期一致。</li>
-</ol>
-</li>
-<li>
-<ol>
 <li>怀疑重启：date → uptime → 日志收集包按时间戳找原因。</li>
-</ol>
-</li>
-<li>
-<ol>
 <li>性能异常：top 找元凶进程（记 PID/命令名/%CPU）→ ps 查状态列扫 X/Z → 记录后随工单上报，勿自行 kill 系统进程。</li>
-</ol>
-</li>
-<li>
-<ol>
-<li>门户故障：eag_cli show user all 三查 → cat /var/log/eag.log 定位三阶段卡点 → 卡在 IP 未知转 <code><a href="client-connection-trouble.html">client-connection-trouble</a></code> 的 DHCP 排查。</li>
-</ol>
-</li>
-<li>
-<ol>
+<li>门户故障：eag_cli show user all 三查 → cat /var/log/eag.log 定位三阶段卡点 → 卡在 IP 未知转 <code><a href="/postsales/stellar-adv-trouble/skills/client-connection-trouble.html">client-connection-trouble</a></code> 的 DHCP 排查。</li>
 <li>Express 集群异常：三查依次执行，两个 cluster_mgt 线程即判异常。</li>
-</ol>
-</li>
-</ul>
-</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>
@@ -218,5 +176,13 @@ blockquote p{margin:6px 0}
 <li>双 cluster_mgt 线程（一运行一睡眠）是产品特定的异常信号，别当成正常冗余。</li>
 <li>LED 表只覆盖教材所列型号；其他型号先查对应快速指南。</li>
 </ul>
-<hr />
-<p>来源条目: p06 · p08 · p09 · p10 · p11 · p12 · ce17 · ce18 · ce20 · ce22 · ce23（术语 g09 PVC · g10 Cluster · g11 getmode 三态 · g16 Captive Portal · g17 eag · g23 PoE/PSE · g33 僵尸进程）</p><div class="pn"><a href="stellar-ap-toolbox.html">⬅ 上一单元：stellar-ap-toolbox</a><a class="nxt" href="client-connection-trouble.html">下一单元：client-connection-trouble ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<hr>
+<p>来源条目: p06 · p08 · p09 · p10 · p11 · p12 · ce17 · ce18 · ce20 · ce22 · ce23（术语 g09 PVC · g10 Cluster · g11 getmode 三态 · g16 Captive Portal · g17 eag · g23 PoE/PSE · g33 僵尸进程）</p></article>
+<nav class="previous-next" aria-label="知识单元翻页"><a href="/postsales/stellar-adv-trouble/skills/stellar-ap-toolbox.html"><span>上一单元</span><b>Stellar AP 排障工具箱：登录通道 · 抓包 · 配置备份</b></a><a class="next" href="/postsales/stellar-adv-trouble/skills/client-connection-trouble.html"><span>下一单元</span><b>客户端连接排障决策链：看不到 · 连不上 · 没地址 · 掉线</b></a></nav>    <footer class="content-footer">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</footer>
+  </main>
+</div>
+  <script src="/assets/js/app.js?v=4" defer></script>
+  <script src="/assets/js/search.js?v=4" defer></script>
+  <script src="/assets/js/lightbox.js?v=5" defer></script>
+</body>
+</html>

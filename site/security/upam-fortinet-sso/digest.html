@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="面向售前、售后与网络工程师的 ALE 内部技术知识平台">
+  <meta name="theme-color" content="#6B489D">
+  <title>精华长文 DIGEST — UPAM × Fortinet SSO 集成 · 应用笔记</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=4">
+  <link rel="stylesheet" href="/assets/css/layout.css?v=4">
+  <link rel="stylesheet" href="/assets/css/components.css?v=4">
+  <link rel="stylesheet" href="/assets/css/content.css?v=7">
+  <script src="/assets/js/auth-config.js?v=4"></script>
+  <script src="/assets/js/auth-core.js?v=4"></script>
+  <script src="/assets/js/auth-guard.js?v=4"></script>
+</head>
+<body data-page-kind="course">
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <header class="topbar" data-topbar>
+    <a class="brand" href="/index.html" aria-label="返回 ALE 技术培训门户首页">
+      <img src="/assets/ale-logo-color.png" alt="Alcatel-Lucent Enterprise">
+      <span>ALE 培训门户</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-controls="primary-nav" aria-expanded="false" data-nav-toggle>
+      <span aria-hidden="true">☰</span><span class="sr-only">打开导航</span>
+    </button>
+    <nav id="primary-nav" class="primary-nav" aria-label="主导航">
+      <a href="/index.html">首页</a>
+      <a href="/paths.html">学习路径</a>
+      <a href="/presales/index.html">售前</a>
+      <a href="/postsales/index.html">售后</a>
+      <a href="/wlan/index.html">无线</a>
+      <a href="/aos/index.html">AOS 手册</a>
+      <a href="/hardware/index.html">硬件</a>
+      <a href="/brochures/index.html">彩页</a>
+      <a href="/solutions/index.html">解决方案</a>
+      <a href="/security/index.html" aria-current="page">安全</a>
+    </nav>
+    <button id="logout-btn" class="logout-btn" type="button" hidden>退出登录</button>
+  </header>
+<div class="course-layout">
+<aside class="course-sidebar" id="course-sidebar" data-sidebar>
+  <div class="sidebar-heading">
+    <p class="eyebrow">COURSE</p>
+    <h2>UPAM × Fortinet SSO 集成 · 应用笔记</h2>
+    <p>Fortinet FortiGate SSO Application Note · 17 页 · Accounting 直发 / FortiAuthenticator 汇聚</p>
+  </div>
+<div class="search" data-search>
+  <label class="sr-only" for="course-search">搜索全站课程和知识单元</label>
+  <input id="course-search" type="search" placeholder="搜索课程编号、产品型号或技术关键词…" autocomplete="off" data-search-input>
+  <div class="search-results" role="listbox" aria-live="polite" data-search-results></div>
+</div>  <nav class="course-nav" aria-label="课程目录">
+    <a href="/security/upam-fortinet-sso/index.html">课程首页</a>
+    <a aria-current="page" href="/security/upam-fortinet-sso/digest.html">精华长文</a>
+    <a href="/security/upam-fortinet-sso/overview.html">教书理解</a>
+    <a href="/security/upam-fortinet-sso/glossary.html">术语词典</a>
+    <p class="course-nav-group">机制</p>
+      <a href="/security/upam-fortinet-sso/skills/upamfw-sso-overview.html">upamfw-sso-overview</a>
+    <p class="course-nav-group">Fortinet 集成</p>
+      <a href="/security/upam-fortinet-sso/skills/upamfw-fortinet-arch.html">upamfw-fortinet-arch</a>
+      <a href="/security/upam-fortinet-sso/skills/upamfw-fortinet-config.html">upamfw-fortinet-config</a>
+  </nav>
+</aside>  <main id="main-content" class="course-main prose">
+    <nav class="breadcrumbs" aria-label="面包屑"><a href="/index.html">培训门户</a><span>/</span><a href="/security/index.html">安全 · Security</a><span>/</span><a href="/security/upam-fortinet-sso/index.html">UPAM × Fortinet SSO 集成</a><span>/</span><span aria-current="page">精华长文 DIGEST</span></nav>
+<header class="page-intro compact"><p class="eyebrow">COURSE REFERENCE</p><h1>精华长文 DIGEST</h1></header>    <article class="markdown-body"><h1 id="_1">全书精华串讲</h1>
+<h2 id="_2">一句话主线</h2>
+<p>终端在局域网（交换机/AP）上通过 MAC、802.1x 或 captive portal 完成一次认证，UPAM 体系把"IP ↔ 用户名/角色"的映射推给下一代防火墙，防火墙从此按身份而非仅按 IP 做策略、日志与取证——这就是 UPAM 与防火墙 SSO 集成的全部要义。</p>
+<h2 id="_3">为什么值得做：零信任</h2>
+<ul>
+<li>传统防火墙按"接在哪里"划分信任，内网隐式可信。</li>
+<li><strong>移动办公与 IoT 让这套失效</strong>：<br>BYOD 可能带毒、IoT 设备天然脆弱、内部用户也可能恶意。</li>
+<li>零信任的核心动作是先确认身份，再谈授权。</li>
+<li>下一代防火墙（Fortinet FSSO、PAN User-ID）为此准备了身份接收机制，缺的只是一个可靠的身份源——对没有 AD 账号的 BYOD/IoT 终端，这个身份源就是 UPAM。</li>
+</ul>
+<h2 id="_4">先做路线判断</h2>
+<ul>
+<li>终端是 AD 域设备 → 集成点直接放 AD/NPAS，走防火墙厂商的 AD 集成文档，不要绕道 UPAM。</li>
+<li>终端是 BYOD/IoT，直接对 UPAM 本地库（或 AD 之外的外部 RADIUS）认证 → 集成点就是 UPAM，即本书两条配置线的主题。</li>
+</ul>
+<h2 id="_5">身份怎么推：两条通道</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th></th>
+<th>Fortinet（FSSO/RSSO）</th>
+<th>PAN（User-ID）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>协议</td>
+<td>RADIUS Accounting</td>
+<td>Syslog</td>
+</tr>
+<tr>
+<td>端口</td>
+<td>UDP 1813</td>
+<td>UDP 514</td>
+</tr>
+<tr>
+<td>发送方</td>
+<td>交换机/AP 直发（不经 UPAM）</td>
+<td>UPAM 自身</td>
+</tr>
+<tr>
+<td>角色字段</td>
+<td>Filter-Id（=ARP/uNP 名）</td>
+<td>filterID（=ARP/uNP 名）</td>
+</tr>
+<tr>
+<td>防火墙侧组织</td>
+<td>RSSO 用户组（Attribute Value=ARP 名）</td>
+<td>Syslog Parse Profile + 策略直接引用角色</td>
+</tr>
+</tbody>
+</table></div>
+<p>两种方案里 UPAM 侧前半段配置几乎一致：AAA Server Profile → Authentication Strategy + Access Policy → Access Auth Profile 挂到交换机/AP 组。差别从"记账发往哪"开始分叉。</p>
+<h2 id="_6">身份映射的三个关键设计决策</h2>
+<ol>
+<li><strong>映射用户名还是角色</strong>：MAC 认证下用户名就是 MAC 地址，拿它做策略可读性差。按角色（Filter-Id/filterID）做策略最省事，防火墙本地零用户；代价是防火墙日志只见角色不见真实用户名——补救办法是让 UPAM 同时向另一台 syslog 服务器发一份日志留档，靠时间同步做取证关联。</li>
+<li><strong>设备 IP 何时到位</strong>：DHCP 要等认证后才完成，认证成功消息里通常没有 IP，真正的映射信息在 accounting 消息里。所以 interim accounting 必须开（默认 600 秒一次）；若设备 IP 出现在第二笔起，调小 interim 能加快防火墙侧更新。</li>
+<li><strong>超时与登出</strong>：PAN 侧每个 syslog 源只能挂一个解析过滤器，笔记选了信息最全的 Accounting 过滤器，因此过滤不了 Disconnect——用户断线后映射要等 User Identification Timeout（默认 45 分钟）收不到更新才清除。硬约束：interim interval 必须小于这个超时，否则活跃用户会被误登出。</li>
+</ol>
+<h2 id="_7">排障检查清单（两方案通用 + 各自专属）</h2>
+<ul>
+<li><strong>通用</strong>：<br>默认 ARP 是否先建好并映射到交换机/AP 组；Access Auth Profile 是否已套用到设备；中间链路是否放行对应 UDP 端口（1813/514）。</li>
+<li><strong>Fortinet</strong>：<br>RSSO 连接器属性必须 SSH 用 CLI 配（GUI 做不了）；两处共享密钥必须一致；RSSO 用户组的 Attribute Value 必须逐字等于 ARP 名。验证：Firewall Users 面板 / <code>diagnose firewall auth list</code>。</li>
+<li><strong>PAN</strong>：<br>syslog 连接测试报"连不上"是预期行为（PAN 不回应测试）；Interface Management 里要勾 Syslog Listener 并登记 UPAM IP、套到接收接口；策略里角色一律小写。验证：<code>show user ip-user-mapping all</code> / Monitor → Logs → Traffic。</li>
+</ul>
+<h2 id="_8">收益收口</h2>
+<p>集成完成后：可视化按用户/角色而非 IP；策略实现最小权限（只放有业务需要者）；日志、报表与取证按用户/角色过滤，缩小攻击面。两份笔记的结论章对此表述几乎逐句一致。</p></article>
+    <footer class="content-footer">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</footer>
+  </main>
+</div>
+  <script src="/assets/js/app.js?v=4" defer></script>
+  <script src="/assets/js/search.js?v=4" defer></script>
+  <script src="/assets/js/lightbox.js?v=5" defer></script>
+</body>
+</html>

@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="面向售前、售后与网络工程师的 ALE 内部技术知识平台">
+  <meta name="theme-color" content="#6B489D">
+  <title>transit-security — 轨道交通解决方案 · 设计指南</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=4">
+  <link rel="stylesheet" href="/assets/css/layout.css?v=4">
+  <link rel="stylesheet" href="/assets/css/components.css?v=4">
+  <link rel="stylesheet" href="/assets/css/content.css?v=7">
+  <script src="/assets/js/auth-config.js?v=4"></script>
+  <script src="/assets/js/auth-core.js?v=4"></script>
+  <script src="/assets/js/auth-guard.js?v=4"></script>
+</head>
+<body data-page-kind="course">
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <header class="topbar" data-topbar>
+    <a class="brand" href="/index.html" aria-label="返回 ALE 技术培训门户首页">
+      <img src="/assets/ale-logo-color.png" alt="Alcatel-Lucent Enterprise">
+      <span>ALE 培训门户</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-controls="primary-nav" aria-expanded="false" data-nav-toggle>
+      <span aria-hidden="true">☰</span><span class="sr-only">打开导航</span>
+    </button>
+    <nav id="primary-nav" class="primary-nav" aria-label="主导航">
+      <a href="/index.html">首页</a>
+      <a href="/paths.html">学习路径</a>
+      <a href="/presales/index.html">售前</a>
+      <a href="/postsales/index.html">售后</a>
+      <a href="/wlan/index.html">无线</a>
+      <a href="/aos/index.html">AOS 手册</a>
+      <a href="/hardware/index.html">硬件</a>
+      <a href="/brochures/index.html">彩页</a>
+      <a href="/solutions/index.html" aria-current="page">解决方案</a>
+      <a href="/security/index.html">安全</a>
+    </nav>
+    <button id="logout-btn" class="logout-btn" type="button" hidden>退出登录</button>
+  </header>
+<div class="course-layout">
+<aside class="course-sidebar" id="course-sidebar" data-sidebar>
+  <div class="sidebar-heading">
+    <p class="eyebrow">COURSE</p>
+    <h2>轨道交通解决方案 · 设计指南</h2>
+    <p>两版设计指南 112 页 · 分层架构 / SPB 织构 / 组播 / 容量测算 / 安全纵深 / 产品选型</p>
+  </div>
+<div class="search" data-search>
+  <label class="sr-only" for="course-search">搜索全站课程和知识单元</label>
+  <input id="course-search" type="search" placeholder="搜索课程编号、产品型号或技术关键词…" autocomplete="off" data-search-input>
+  <div class="search-results" role="listbox" aria-live="polite" data-search-results></div>
+</div>  <nav class="course-nav" aria-label="课程目录">
+    <a href="/solutions/transportation/index.html">课程首页</a>
+    <a href="/solutions/transportation/digest.html">精华长文</a>
+    <a href="/solutions/transportation/overview.html">教书理解</a>
+    <a href="/solutions/transportation/glossary.html">术语词典</a>
+    <p class="course-nav-group">架构</p>
+      <a href="/solutions/transportation/skills/transit-overview.html">transit-overview</a>
+      <a href="/solutions/transportation/skills/transit-architecture.html">transit-architecture</a>
+    <p class="course-nav-group">织构设计</p>
+      <a href="/solutions/transportation/skills/transit-spb-design.html">transit-spb-design</a>
+      <a href="/solutions/transportation/skills/transit-multicast.html">transit-multicast</a>
+      <a href="/solutions/transportation/skills/transit-capacity.html">transit-capacity</a>
+    <p class="course-nav-group">接入与运维</p>
+      <a href="/solutions/transportation/skills/transit-attachment.html">transit-attachment</a>
+      <a href="/solutions/transportation/skills/transit-ops.html">transit-ops</a>
+    <p class="course-nav-group">安全与选型</p>
+      <a aria-current="page" href="/solutions/transportation/skills/transit-security.html">transit-security</a>
+      <a href="/solutions/transportation/skills/transit-products.html">transit-products</a>
+  </nav>
+</aside>  <main id="main-content" class="course-main prose">
+    <nav class="breadcrumbs" aria-label="面包屑"><a href="/index.html">培训门户</a><span>/</span><a href="/solutions/index.html">解决方案 · Solutions</a><span>/</span><a href="/solutions/transportation/index.html">轨道交通解决方案</a><span>/</span><span aria-current="page">transit-security</span></nav>
+<header class="skill-heading"><div><p class="eyebrow">KNOWLEDGE UNIT</p><h1>transit-security</h1></div><dl><div><dt>Skill ID</dt><dd>transit-security</dd></div></dl></header>    <article class="markdown-body"><h2 id="r">R（何时用）</h2>
+<ul>
+<li>编写轨交项目的网络安全方案（分区分域、纵深防御）</li>
+<li>加固交换机管理面（登录、协议、DoS 过滤）与数据面（MACsec）</li>
+<li>设计 IoT 终端（摄像头、售票机、传感器）的准入与隔离方案</li>
+<li>应答业主的安全合规问询（Common Criteria/FIPS/JITC）</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<ul>
+<li>轨交关键基础设施安全必须走"纵深防御（defense-in-depth）"，主动与被动机制并用（通用版 p55）。</li>
+<li><strong>分层布防</strong>：<br>终端层给 IoT 设备做密码/证书/加密管理/补丁四项加固；边界层让系统间通信只经防火墙、按细粒度策略放行（可结合用户身份/设备/应用/位置的动态策略）；网络层做交换机登录外置（RADIUS/LDAP）、禁明文协议、开 DoS 过滤、启用 AOS secure diversified code 源码级加固；数据面用 MACsec 在 MAC 层做线速认证与加密，重点是保护经过物理安全区外公共空间的链路；准入层用 Access Guardian 三种认证（802.1x/MAC/Captive Portal）返回 User Network Profile 动态绑 VLAN 与策略；架构层靠 SPB 容器（ISID）天然分段、出容器必过防火墙；响应层 OmniVista 与 IDS 经 Syslog 联动定位攻击者端口并隔离（通用版 p55-65）。</li>
+</ul>
+<h2 id="a1">A1（决策要点）</h2>
+<ol>
+<li>方案骨架按七层搭：IoT 终端 → 边界防火墙 → 网络设备加固 → DoS 过滤 → MACsec 数据面 → NAC 准入 → 容器隔离与联动处置（通用版 p55-65）</li>
+<li>IoT 设备四件套：中心化密码策略、X.509 证书双向认证（兼做 NAC）、TLS 管理禁明文、按厂商规范打补丁（通用版 p56）</li>
+<li>管理面基线：Telnet/FTP/SNMPv1v2 全禁、SSHv2 密钥&gt;2048、SNMPv3 带认证加密、TLS 1.1/1.2 连 RADIUS/LDAP/Syslog、admin 本地库仅作 console 口的兜底（通用版 p57）</li>
+<li>MACsec 部署点：公共空间链路（易被搭线窃听）为主场景；骨干节点间 10G 用 6860/9900，站点接入用 6860/6465（含加固场景），对照机型支持表选型（通用版 p59-61）</li>
+<li>准入选型：有 supplicant 用 802.1x；哑终端用 MAC 认证；访客/BYOD 用 Captive Portal；认证返回 UNP 联动 VLAN/ACL/QoS（通用版 p63-64）</li>
+<li>容器化：SPB 的 MAC-in-MAC + ISID 天然把 IoT 分进容器，容器外通信必过防火墙；接入层按设备类型发 Network Profile（通用版 p64）</li>
+<li>政企/公共部门项目核对认证：NDcPP EAL-2、FIPS 140-2、JITC（通用版 p61-63）</li>
+</ol>
+<h2 id="a2">A2（细节速查表）</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>防御层</th>
+<th>机制</th>
+<th>要点</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IoT 终端</td>
+<td>密码/证书/加密/补丁</td>
+<td>证书可用于与服务器双向认证及 NAC</td>
+<td>p56</td>
+</tr>
+<tr>
+<td>边界</td>
+<td>防火墙</td>
+<td>系统间通信只经防火墙；可做身份感知动态策略</td>
+<td>p56</td>
+</tr>
+<tr>
+<td>登录与审计</td>
+<td>RADIUS/LDAP 外置</td>
+<td>本地 admin 仅 console 兜底；记录会话统计</td>
+<td>p57</td>
+</tr>
+<tr>
+<td>管理面</td>
+<td>协议加固</td>
+<td>禁 Telnet/FTP/TFTP/明文 SNMP；SSHv2/HTTPS/SNMPv3/TLS</td>
+<td>p57</td>
+</tr>
+<tr>
+<td>DoS 过滤</td>
+<td>内置攻击识别</td>
+<td>Ping of Death、Land、ARP Flood（&gt;500/s）、Invalid IP、ICMP 过载（&gt;100/s，默认关）、端口扫描等</td>
+<td>p57-58</td>
+</tr>
+<tr>
+<td>OS 加固</td>
+<td>Secure diversified code</td>
+<td>源码独立验证、目标码多样化、安全交付；每个新版持续应用</td>
+<td>p59</td>
+</tr>
+<tr>
+<td>数据面</td>
+<td>MACsec（802.1AE）</td>
+<td>硬件线速、零时延代价；防中间人/嗅探/伪造/重放</td>
+<td>p59</td>
+</tr>
+<tr>
+<td>准入</td>
+<td>Access Guardian</td>
+<td>802.1x（EAP）/MAC 认证/Captive Portal；返回 UNP</td>
+<td>p63-64</td>
+</tr>
+<tr>
+<td>分段</td>
+<td>容器化</td>
+<td>ISID 容器隔离，出容器过防火墙；NP 按设备类型下发 VLAN/ACL/QoS</td>
+<td>p64</td>
+</tr>
+<tr>
+<td>响应</td>
+<td>IDS 联动</td>
+<td>OmniVista 收 Syslog 定位端口并 quarantine（关端口或隔离 profile）</td>
+<td>p64-65</td>
+</tr>
+<tr>
+<td>分析</td>
+<td>Smart Analytics</td>
+<td>SNMP+sFlow，DPI 应用识别（6860E 接入口可做应用策略）</td>
+<td>p65</td>
+</tr>
+</tbody>
+</table></div>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>MACsec 支持（节选）</th>
+<th>硬件支持</th>
+<th>软件版本</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OS6465-P6/P12</td>
+<td>全端口</td>
+<td>AOS 8.5R01</td>
+<td>p59</td>
+</tr>
+<tr>
+<td>OS6465-P28</td>
+<td>全部 1G 口 + 4 个 10G 口中的 2 个</td>
+<td>AOS 8.5R02</td>
+<td>p59</td>
+</tr>
+<tr>
+<td>OS6860（多数型号）</td>
+<td>仅 10G 口</td>
+<td>AOS 8.4.1R03</td>
+<td>p59-60</td>
+</tr>
+<tr>
+<td>OS6860E-P24</td>
+<td>1G 与 10G 口</td>
+<td>AOS 8.4.1R03</td>
+<td>p60</td>
+</tr>
+<tr>
+<td>OS9900</td>
+<td>除 CNI-U8 模块与 CMM 40G 口外全端口</td>
+<td>AOS 8.4.1R03</td>
+<td>p60</td>
+</tr>
+</tbody>
+</table></div>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>认证</th>
+<th>覆盖产品</th>
+<th>级别</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Common Criteria NDcPP</td>
+<td>6250/6350/6450（AOS 6.7.1）等</td>
+<td>EAL-2</td>
+<td>p62</td>
+</tr>
+<tr>
+<td>FIPS 140-2</td>
+<td>AOS 6.7.1R04、8.3.1R01</td>
+<td>密码模块</td>
+<td>p63</td>
+</tr>
+<tr>
+<td>JITC</td>
+<td>6860/6865/6900/9900</td>
+<td>美国防部互操作</td>
+<td>p63</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="e">E（场景案例）</h2>
+<ul>
+<li><strong>SPB 网中 MACsec 部署</strong>：<br>骨干 10G 链路（6860/9900）+ 站点接入链路（6860/6465）的组合保护（通用版 p60-61）</li>
+<li>IDS 检出攻击 → Syslog（含攻击者地址）→ OmniVista 定位交换机端口 → 关端口或套隔离 profile（限制性 VLAN+ACL）→ 补丁清理的闭环（通用版 p64-65）</li>
+<li>sFlow-RT 实时检测 DDoS → SDN 应用驱动控制器下发丢流规则的缓解路径（通用版 p65）</li>
+<li><strong>容器化落地</strong>：<br>接入层 NP 认证绑 VLAN → 802.1q 上联 → BEB SAP 映射 SPB 容器（通用版 p64）</li>
+</ul>
+<h2 id="b">B（限制与坑）</h2>
+<ul>
+<li>本单元仅来自通用版第 6 章，SPB 版只有需求级安全描述（SPB 版 p11）</li>
+<li>只做预防不做响应——原文强调没有 IDS 联动隔离的安全策略不完整（通用版 p64）</li>
+<li>MACsec 当全网开关——它是逐链路点到点机制，按"公共空间链路"选点部署（通用版 p59-61）</li>
+<li>OS6465-P28 的 MACsec 只覆盖部分 10G 口，插错口等于没加密（通用版 p59）</li>
+<li>ICMP 过载检测默认关闭，需要时应显式开启（通用版 p58）</li>
+<li>6450/6560/6350 等接入机型无 MACsec 硬件支持表项，加密诉求下不能选（通用版 p59-60）</li>
+</ul>
+<h2 id="_1">来源</h2>
+<p>Transportation Networks Design Guide（p55-65；SPB 版仅 p11 有安全需求级描述）</p></article>
+<nav class="previous-next" aria-label="知识单元翻页"><a href="/solutions/transportation/skills/transit-ops.html"><span>上一单元</span><b>transit-ops</b></a><a class="next" href="/solutions/transportation/skills/transit-products.html"><span>下一单元</span><b>transit-products</b></a></nav>    <footer class="content-footer">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</footer>
+  </main>
+</div>
+  <script src="/assets/js/app.js?v=4" defer></script>
+  <script src="/assets/js/search.js?v=4" defer></script>
+  <script src="/assets/js/lightbox.js?v=5" defer></script>
+</body>
+</html>

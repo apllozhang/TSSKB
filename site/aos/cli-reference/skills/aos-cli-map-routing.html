@@ -1,92 +1,72 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>aos-cli-map-routing — AOS 8.10R04 · CLI Reference 命令地图</title>
-<style>
-:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
-*{box-sizing:border-box}
-body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
-a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
-.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin:16px 0}
-.gallery figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px}
-.gallery img{width:100%;max-height:340px;object-fit:contain;background:#fff;border-radius:6px}
-.gallery figcaption{font-size:12.5px;color:var(--mut);text-align:center;margin-top:6px}
-/* 侧栏折叠 + 图片灯箱 */
-.tgl{position:fixed;left:0;top:45%;z-index:60;background:var(--card);border:1px solid var(--line);border-right:none;border-radius:0 8px 8px 0;color:var(--tx);padding:10px 6px;cursor:pointer;font-size:13px;line-height:1.1;writing-mode:vertical-lr}
-.tgl:hover{background:var(--acc);color:#0f172a}
-.layout.full{grid-template-columns:0 1fr}
-.layout.full aside{display:none}
-.lb{position:fixed;inset:0;background:rgba(5,10,20,.92);z-index:100;display:flex;align-items:center;justify-content:center;flex-direction:column}
-.lb img{max-width:92vw;max-height:82vh;background:#fff;border-radius:6px;transition:transform .12s}
-.lb .lbb{margin-top:10px;display:flex;gap:10px}
-.lb button{background:var(--card);border:1px solid var(--line);color:var(--tx);border-radius:8px;padding:6px 14px;cursor:pointer;font-size:14px}
-.lb button:hover{background:var(--acc);color:#0f172a}
-.search{margin:0 0 14px}
-.search input{width:100%;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--tx);font-size:13px;outline:none}
-.search input:focus{border-color:var(--acc)}
-#qres{max-height:340px;overflow-y:auto;margin-top:6px}
-#qres .qi{display:block;padding:6px 8px;border-radius:6px;font-size:12.5px;color:var(--tx);border-left:2px solid transparent}
-#qres .qi:hover{background:var(--card);text-decoration:none;border-left-color:var(--acc)}
-#qres .qi .qp{color:var(--mut);font-size:11px;display:block}
-#qres .qi b{color:var(--acc)}
-.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
-main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
-.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
-aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
-aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
-aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
-aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
-aside a:hover{background:var(--card);text-decoration:none}
-aside a.on{background:var(--card);color:var(--acc)}
-main{padding:36px 48px;max-width:1000px}
-h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
-h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
-table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
-th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
-th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
-code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
-pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
-pre code{background:none;padding:0}
-blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
-.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
-.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
-.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
-.meta{font-size:13px;color:var(--mut)}
-hr{border:none;border-top:1px solid var(--line);margin:26px 0}
-.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
-.badge.soon{background:#475569;color:#cbd5e1}
-main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
-main{padding:28px 48px 40px;max-width:1040px}
-h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
-blockquote p{margin:6px 0}
-.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
-.crumbs a{color:var(--acc)}
-.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
-.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
-.pn a:hover{border-color:var(--acc)}
-.pn .nxt{text-align:right}
-.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
-@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
-</style></head>
-<body><div class="layout"><aside><h1>AOS 8.10R04 · CLI Reference 命令地图</h1>
-<div class="search"><input id="qk" type="search" placeholder="🔍 搜索全站…" autocomplete="off"><div id="qres"></div></div>
-
-<div class="sub">6240 页 · 70 章命令字典导航（约 2480 条命令，按 5 域组织）</div>
-<a href="../index.html">🏠 课程首页</a>
-<a href="../digest.html">📖 精华长文 DIGEST</a>
-
-<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
-<a href="../glossary.html">🔤 术语词典</a>
-<a href="../../../index.html">⬅️ 返回培训门户</a>
-<a href="../index.html">──── Skills ────</a>
-<div class="grp">二层与接入</div>
-<a href="../skills/aos-cli-map-l2-access.html">aos-cli-map-l2-access</a>
-<div class="grp">骨干与路由</div>
-<a href="../skills/aos-cli-map-fabric.html">aos-cli-map-fabric</a>
-<a href="../skills/aos-cli-map-routing.html" class="on">aos-cli-map-routing</a>
-<div class="grp">策略与运维</div>
-<a href="../skills/aos-cli-map-multicast-qos.html">aos-cli-map-multicast-qos</a>
-<a href="../skills/aos-cli-map-mgmt-oam.html">aos-cli-map-mgmt-oam</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../aos/index.html">AOS 软件手册</a> › <a href="../index.html">AOS 8.10R04</a> › <span>aos-cli-map-routing</span></nav><h1>aos-cli-map-routing</h1><p class="meta"><span class="badge">SKILL</span> aos-cli-map-routing · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="面向售前、售后与网络工程师的 ALE 内部技术知识平台">
+  <meta name="theme-color" content="#6B489D">
+  <title>aos-cli-map-routing — AOS 8.10R04 · CLI Reference 命令地图</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=4">
+  <link rel="stylesheet" href="/assets/css/layout.css?v=4">
+  <link rel="stylesheet" href="/assets/css/components.css?v=4">
+  <link rel="stylesheet" href="/assets/css/content.css?v=7">
+  <script src="/assets/js/auth-config.js?v=4"></script>
+  <script src="/assets/js/auth-core.js?v=4"></script>
+  <script src="/assets/js/auth-guard.js?v=4"></script>
+</head>
+<body data-page-kind="course">
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <header class="topbar" data-topbar>
+    <a class="brand" href="/index.html" aria-label="返回 ALE 技术培训门户首页">
+      <img src="/assets/ale-logo-color.png" alt="Alcatel-Lucent Enterprise">
+      <span>ALE 培训门户</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-controls="primary-nav" aria-expanded="false" data-nav-toggle>
+      <span aria-hidden="true">☰</span><span class="sr-only">打开导航</span>
+    </button>
+    <nav id="primary-nav" class="primary-nav" aria-label="主导航">
+      <a href="/index.html">首页</a>
+      <a href="/paths.html">学习路径</a>
+      <a href="/presales/index.html">售前</a>
+      <a href="/postsales/index.html">售后</a>
+      <a href="/wlan/index.html">无线</a>
+      <a href="/aos/index.html" aria-current="page">AOS 手册</a>
+      <a href="/hardware/index.html">硬件</a>
+      <a href="/brochures/index.html">彩页</a>
+      <a href="/solutions/index.html">解决方案</a>
+      <a href="/security/index.html">安全</a>
+    </nav>
+    <button id="logout-btn" class="logout-btn" type="button" hidden>退出登录</button>
+  </header>
+<div class="course-layout">
+<aside class="course-sidebar" id="course-sidebar" data-sidebar>
+  <div class="sidebar-heading">
+    <p class="eyebrow">COURSE</p>
+    <h2>AOS 8.10R04 · CLI Reference 命令地图</h2>
+    <p>6240 页 · 70 章命令字典导航（约 2480 条命令，按 5 域组织）</p>
+  </div>
+<div class="search" data-search>
+  <label class="sr-only" for="course-search">搜索全站课程和知识单元</label>
+  <input id="course-search" type="search" placeholder="搜索课程编号、产品型号或技术关键词…" autocomplete="off" data-search-input>
+  <div class="search-results" role="listbox" aria-live="polite" data-search-results></div>
+</div>  <nav class="course-nav" aria-label="课程目录">
+    <a href="/aos/cli-reference/index.html">课程首页</a>
+    <a href="/aos/cli-reference/digest.html">精华长文</a>
+    <a href="/aos/cli-reference/overview.html">教书理解</a>
+    <a href="/aos/cli-reference/glossary.html">术语词典</a>
+    <p class="course-nav-group">二层与接入</p>
+      <a href="/aos/cli-reference/skills/aos-cli-map-l2-access.html">aos-cli-map-l2-access</a>
+    <p class="course-nav-group">骨干与路由</p>
+      <a href="/aos/cli-reference/skills/aos-cli-map-fabric.html">aos-cli-map-fabric</a>
+      <a aria-current="page" href="/aos/cli-reference/skills/aos-cli-map-routing.html">aos-cli-map-routing</a>
+    <p class="course-nav-group">策略与运维</p>
+      <a href="/aos/cli-reference/skills/aos-cli-map-multicast-qos.html">aos-cli-map-multicast-qos</a>
+      <a href="/aos/cli-reference/skills/aos-cli-map-mgmt-oam.html">aos-cli-map-mgmt-oam</a>
+  </nav>
+</aside>  <main id="main-content" class="course-main prose">
+    <nav class="breadcrumbs" aria-label="面包屑"><a href="/index.html">培训门户</a><span>/</span><a href="/aos/index.html">AOS 软件手册 · Software Guides</a><span>/</span><a href="/aos/cli-reference/index.html">AOS 8.10R04</a><span>/</span><span aria-current="page">aos-cli-map-routing</span></nav>
+<header class="skill-heading"><div><p class="eyebrow">KNOWLEDGE UNIT</p><h1>aos-cli-map-routing</h1></div><dl><div><dt>Skill ID</dt><dd>aos-cli-map-routing</dd></div></dl></header>    <article class="markdown-body"><h2 id="r">R（触发场景）</h2>
 <ul>
 <li>查路由类命令语法/默认值/平台矩阵（ip ospf、ip bgp、ipv6 等）</li>
 <li>路由协议命令敲了不生效——忘了 <code>ip load &lt;protocol&gt;</code> 先加载模块</li>
@@ -95,9 +75,8 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="i">I（核心理念）</h2>
 <ul>
-<li><strong>本域是全书体量最大的命令域（<span class="pg">原文p1549-3227</span> ），两条通用规律</strong>：<br>其一，路由协议命令生效前需 <code>ip load &lt;protocol&gt;</code> 加载对应模块（X8，RIP/OSPF/IS-IS/BGP/VRRP）；其二，部分全局参数类命令要求先停协议再改。</li>
-<li>BGP 章 194 条为全书第二大章，命令分 Global/Aggregate/Network/Neighbor/Address-family/VRF 组（P20）；
-OSPF 章按 Global/Area/Interface/BFD/VRF 分组（P17）。</li>
+<li><strong>本域是全书体量最大的命令域（<span class="source-page">原文p1549-3227</span> ），两条通用规律</strong>：<br>其一，路由协议命令生效前需 <code>ip load &lt;protocol&gt;</code> 加载对应模块（X8，RIP/OSPF/IS-IS/BGP/VRRP）；其二，部分全局参数类命令要求先停协议再改。</li>
+<li>BGP 章 194 条为全书第二大章，命令分 Global/Aggregate/Network/Neighbor/Address-family/VRF 组（P20）；OSPF 章按 Global/Area/Interface/BFD/VRF 分组（P17）。</li>
 </ul>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
@@ -110,34 +89,753 @@ OSPF 章按 Global/Area/Interface/BFD/VRF 分组（P17）。</li>
 </ol>
 <h2 id="a2">A2（操作步骤）·章节清单与代表命令</h2>
 <ul>
-<li><strong>Ch21 IP（<span class="pg">原文p1549</span> ，约 113 条）</strong>：<code>ip interface</code>、<code>ip route</code>、<code>ip domain</code>、ARP、<code>ip helper</code> 等单播底座（P16）</li>
-<li><strong>Ch22 IPv6（<span class="pg">原文p1793</span> ，约 68 条）</strong>：<code>ipv6</code> 地址/邻居发现/路由与过渡</li>
-<li><strong>Ch23 IPsec（<span class="pg">原文p1948</span> ，约 11 条）</strong>：<code>ipsec</code>/IKE 隧道加密</li>
-<li><strong>Ch24 RIP（<span class="pg">原文p1974</span> ，约 41 条）</strong>：<code>ip rip</code> 距离矢量</li>
-<li><strong>Ch25 BFD（<span class="pg">原文p2058</span> ，约 16 条）</strong>：<code>ip bfd</code>（为路由协议提供毫秒级故障检测）</li>
-<li><strong>Ch26 DHCP Relay（<span class="pg">原文p2092</span> ，约 116 条）</strong>：<code>bootp relay</code>/DHCP 中继、option82、监督</li>
-<li><strong>Ch27 VRRP（<span class="pg">原文p2334</span> ，约 24 条）</strong>：<code>ip vrrp</code>（首跳网关备份）</li>
-<li><strong>Ch28 OSPF（<span class="pg">原文p2392</span> ，约 57 条）</strong>：<br><code>ip ospf spf-timer [delay seconds] [hold seconds]</code>（0-65535，默认 delay=5/hold=10；</li>
-<li>任一为 0 则立即触发 SPF）（P18）；</li>
-<li><code>ip ospf interface hello-interval</code>（0-65535 秒，默认 broadcast/P2P=10、NBMA/P2MP=30）（P19）；</li>
-<li>
-<p><code>ip load ospf</code> 前置（X8）；</p>
-</li>
-<li>
-<p><strong>Ch29 OSPFv3（<span class="pg">原文p2513</span> ，约 46 条）</strong></p>
-</li>
-<li><strong>Ch30 IS-IS（<span class="pg">原文p2610</span> ，约 62 条）</strong>：SPB 控制面基础</li>
-<li><strong>Ch31 BGP（<span class="pg">原文p2744</span> ，约 194 条）</strong>：<br><code>ip bgp maximum-paths</code>（ECMP 开关，默认 disabled；</li>
-<li>启用后忽略 router-id 判等装全部等价路径；</li>
-<li>要求先停 BGP）（P22）；</li>
-<li><code>ip bgp default local-preference</code>；</li>
-<li>
-<p>BGP-4+MP-BGP（IPv6 前缀与邻居），peer 与 neighbor 术语互换（P20）；</p>
-</li>
-<li>
-<p><strong>Ch32 SLB（<span class="pg">原文p3160</span> ，约 31 条）</strong>：<code>slb</code>（VIP/实服务组/健康检查）</p>
-</li>
+<li><strong>Ch21 IP（<span class="source-page">原文p1549</span> ，约 113 条）</strong>：<code>ip interface</code>、<code>ip route</code>、<code>ip domain</code>、ARP、<code>ip helper</code> 等单播底座（P16）</li>
+<li><strong>Ch22 IPv6（<span class="source-page">原文p1793</span> ，约 68 条）</strong>：<code>ipv6</code> 地址/邻居发现/路由与过渡</li>
+<li><strong>Ch23 IPsec（<span class="source-page">原文p1948</span> ，约 11 条）</strong>：<code>ipsec</code>/IKE 隧道加密</li>
+<li><strong>Ch24 RIP（<span class="source-page">原文p1974</span> ，约 41 条）</strong>：<code>ip rip</code> 距离矢量</li>
+<li><strong>Ch25 BFD（<span class="source-page">原文p2058</span> ，约 16 条）</strong>：<code>ip bfd</code>（为路由协议提供毫秒级故障检测）</li>
+<li><strong>Ch26 DHCP Relay（<span class="source-page">原文p2092</span> ，约 116 条）</strong>：<code>bootp relay</code>/DHCP 中继、option82、监督</li>
+<li><strong>Ch27 VRRP（<span class="source-page">原文p2334</span> ，约 24 条）</strong>：<code>ip vrrp</code>（首跳网关备份）</li>
+<li><strong>Ch28 OSPF（<span class="source-page">原文p2392</span> ，约 57 条）</strong>：<code>ip ospf spf-timer [delay seconds] [hold seconds]</code>（0-65535，默认 delay=5/hold=10；任一为 0 则立即触发 SPF）（P18）；<code>ip ospf interface hello-interval</code>（0-65535 秒，默认 broadcast/P2P=10、NBMA/P2MP=30）（P19）；<code>ip load ospf</code> 前置（X8）</li>
+<li><strong>Ch29 OSPFv3（<span class="source-page">原文p2513</span> ，约 46 条）</strong></li>
+<li><strong>Ch30 IS-IS（<span class="source-page">原文p2610</span> ，约 62 条）</strong>：SPB 控制面基础</li>
+<li><strong>Ch31 BGP（<span class="source-page">原文p2744</span> ，约 194 条）</strong>：<code>ip bgp maximum-paths</code>（ECMP 开关，默认 disabled；启用后忽略 router-id 判等装全部等价路径；要求先停 BGP）（P22）；<code>ip bgp default local-preference</code>；BGP-4+MP-BGP（IPv6 前缀与邻居），peer 与 neighbor 术语互换（P20）</li>
+<li><strong>Ch32 SLB（<span class="source-page">原文p3160</span> ，约 31 条）</strong>：<code>slb</code>（VIP/实服务组/健康检查）</li>
 </ul>
+<h2 id="a3">A3（核心命令速查）</h2>
+<ul>
+<li>语法/默认值/示例均摘自原书第 21-32 章对应条目；页码为 fulltext <code>&lt;&lt;&lt;PAGE N&gt;&gt;&gt;</code> 标记值。</li>
+<li><code>{enable | disable}</code> 表示"多选一"。</li>
+<li><strong>注意 X8</strong>：<br>RIP/OSPF/IS-IS/BGP/VRRP 等协议命令前需 <code>ip load &lt;protocol&gt;</code>。</li>
+</ul>
+<h3 id="ip-21">IP 单播底座（第 21 章）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>语法要点</th>
+<th>关键参数与默认值</th>
+<th>典型用法（一行示例）</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ip interface</td>
+<td><code>ip interface if_name [{address \| vip-address} ip_address] [mask subnet_mask] [vlan vlan_id \| service service_id]</code>，<code>no</code> 删除</td>
+<td>创建 IP 路由接口；emp/master emp 用于管理口</td>
+<td><code>-&gt; ip interface vlan-100 address 10.0.0.1 mask 255.255.255.0 vlan 100</code></td>
+<td>1553</td>
+</tr>
+<tr>
+<td>ip static-route</td>
+<td><code>ip static-route ip_address [mask mask] {gateway {gateway_address \| null} \| interface if_name} [metric n] [tag n]</code>，<code>no</code> 删除</td>
+<td>静态路由优先级高于动态路由</td>
+<td><code>-&gt; ip static-route 10.10.0.0 gateway 10.0.0.2</code></td>
+<td>1569</td>
+</tr>
+<tr>
+<td>ip route-pref</td>
+<td><code>[vrf vrf_name] ip route-pref {static \| ospf \| rip \| isisl1 \| isisl2 \| ebgp \| ibgp \| spb-mgmt \| import} value</code></td>
+<td>各协议路由优先级</td>
+<td><code>-&gt; ip route-pref ospf 20</code></td>
+<td>1576</td>
+</tr>
+<tr>
+<td>ip redist</td>
+<td><code>[vrf name] ip redist {local \| static \| rip \| ospf \| isis \| bgp \| spb-mgmt \| import} into {rip \| ospf \| isis \| bgp \| spb-mgmt} {all-routes \| route-map rm}</code></td>
+<td>协议间重分发</td>
+<td><code>-&gt; ip redist static into ospf all-routes</code></td>
+<td>1605</td>
+</tr>
+<tr>
+<td>ip route-map action / match / set</td>
+<td><code>ip route-map name action {permit \| deny}</code>；<code>match ip address / tag / metric / route-type ...</code>；<code>set metric / tag / local-preference / ip-nexthop ...</code></td>
+<td>策略路由与重分发过滤的四级模型</td>
+<td><code>-&gt; ip route-map rm1 action permit</code></td>
+<td>1612-1650</td>
+</tr>
+<tr>
+<td>vrf</td>
+<td><code>vrf [create] [vrf_name \| default] [profile {max [no-autoload-vrrp] \| low}]</code>，<code>no vrf vrf_name</code></td>
+<td>默认存在 default VRF</td>
+<td><code>-&gt; vrf create vrf1</code></td>
+<td>1652</td>
+</tr>
+<tr>
+<td>ip export / ip import</td>
+<td><code>[vrf name] ip export {all-routes \| route-map rm \| to-all-vrfs ...}</code>；<code>[vrf name] ip import {vrf {src \| default} \| isid id} {all-routes \| route-map rm}</code></td>
+<td>VRF↔GRT 路由导入导出</td>
+<td><code>-&gt; ip import vrf vrf1 all-routes</code></td>
+<td>1655/1658</td>
+</tr>
+<tr>
+<td>arp</td>
+<td><code>arp ip_address mac_address [vlan vlan_id]</code></td>
+<td>永久 ARP 表项（不老化）</td>
+<td><code>-&gt; arp 10.0.0.99 00:d0:c0:86:12:07</code></td>
+<td>1667</td>
+</tr>
+<tr>
+<td>clear arp-cache</td>
+<td><code>clear arp-cache</code></td>
+<td>清全部动态 ARP</td>
+<td><code>-&gt; clear arp-cache</code></td>
+<td>1673</td>
+</tr>
+<tr>
+<td>show ip interface / routes</td>
+<td><code>show ip interface [if_name]</code> / <code>show ip routes [ip mask]</code></td>
+<td>接口与路由表首查</td>
+<td><code>-&gt; show ip routes</code></td>
+<td>1719/1729</td>
+</tr>
+<tr>
+<td>show ip router database</td>
+<td><code>show ip router database [protocol type]</code></td>
+<td>各协议原始路由库</td>
+<td><code>-&gt; show ip router database</code></td>
+<td>1742</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="ipv6-22">IPv6（第 22 章）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>语法要点</th>
+<th>关键参数与默认值</th>
+<th>典型用法（一行示例）</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ipv6 interface</td>
+<td><code>ipv6 interface if_name [vlan vlan_id \| loopback loopback_id \| tunnel tunnel_id]</code>，<code>no</code> 删除</td>
+<td>IPv6 路由接口</td>
+<td><code>-&gt; ipv6 interface Test vlan 1</code></td>
+<td>1795</td>
+</tr>
+<tr>
+<td>ipv6 address</td>
+<td><code>ipv6 address ipv6_address/prefix_length if_name</code>；eui-64 后缀变体</td>
+<td>—</td>
+<td><code>-&gt; ipv6 address 2001:db8:4132:86::19a/64 Test_Lab</code></td>
+<td>1801</td>
+</tr>
+<tr>
+<td>ipv6 static-route</td>
+<td><code>ipv6 static-route ipv6_prefix/prefix_length gateway {ipv6_address [if_name] \| interface if_name} [metric n]</code></td>
+<td>—</td>
+<td><code>-&gt; ipv6 static-route 212:95:5::/64 gateway 2001::205 emp</code></td>
+<td>1840</td>
+</tr>
+<tr>
+<td>ipv6 neighbor</td>
+<td><code>ipv6 neighbor ipv6_address hardware_address if_name [port c/s/p]</code>；<code>ipv6 neighbor limit count</code></td>
+<td>limit 默认 6465=64、6560/6570M=128，其他平台不限</td>
+<td><code>-&gt; ipv6 neighbor 4132:86::203 00:d0:c0:86:12:07 Test port 1/1/1</code></td>
+<td>1827/1831</td>
+</tr>
+<tr>
+<td>ipv6 ra-filter</td>
+<td><code>ipv6 ra-filter if-name [admin-state {enable \| disable}]</code>；<code>trusted port/linkagg</code> 子命令</td>
+<td>RA 防护默认 disabled；端口默认 untrusted</td>
+<td><code>-&gt; ipv6 ra-filter vlan-23 admin-state enable</code></td>
+<td>1849/1851</td>
+</tr>
+<tr>
+<td>ipv6 redist / import / export</td>
+<td>同 IPv4 版本结构</td>
+<td>—</td>
+<td><code>-&gt; ipv6 redist rip into ospf route-map rip-to-ospf1</code></td>
+<td>1875/1899/1903</td>
+</tr>
+<tr>
+<td>show ipv6 interface / routes / neighbors</td>
+<td><code>show ipv6 interface [if_name]</code> / <code>show ipv6 routes</code> / <code>show ipv6 neighbors</code></td>
+<td>排障三件套</td>
+<td><code>-&gt; show ipv6 routes</code></td>
+<td>1950-1977</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="rip-24">RIP（第 24 章）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>语法要点</th>
+<th>关键参数与默认值</th>
+<th>典型用法（一行示例）</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ip load rip / ipv6 load rip</td>
+<td><code>ip load rip</code> / <code>ipv6 load rip</code></td>
+<td>先加载模块（X8）</td>
+<td><code>-&gt; ip load rip</code></td>
+<td>1975/2038</td>
+</tr>
+<tr>
+<td>ip rip admin-state</td>
+<td><code>ip rip admin-state {enable \| disable}</code></td>
+<td>全局开关</td>
+<td><code>-&gt; ip rip admin-state enable</code></td>
+<td>1977</td>
+</tr>
+<tr>
+<td>ip rip interface</td>
+<td><code>ip rip interface if_name</code>，<code>no</code> 删除；子命令 metric/send-version/recv-version/auth-type/auth-key/ingress-filter/egress-filter</td>
+<td>计时器族 update-interval/invalid-timer/garbage-timer/holddown-timer</td>
+<td><code>-&gt; ip rip interface rip-1 send-version v1</code></td>
+<td>1979-2005</td>
+</tr>
+<tr>
+<td>ipv6 rip interface</td>
+<td><code>ipv6 rip interface if_name</code> + metric/recv-status/send-status/horizon 子命令</td>
+<td>—</td>
+<td><code>-&gt; ipv6 rip interface Test_Lab send-status enable</code></td>
+<td>2047-2056</td>
+</tr>
+<tr>
+<td>show ip rip / interface / routes</td>
+<td><code>show ip rip</code> / <code>show ip rip interface [if_name]</code> / <code>show ip rip routes</code></td>
+<td>IPv6 版同构</td>
+<td><code>-&gt; show ip rip routes</code></td>
+<td>2008-2020</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="bfd-25">BFD（第 25 章）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>语法要点</th>
+<th>关键参数与默认值</th>
+<th>典型用法（一行示例）</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ip bfd admin-state</td>
+<td><code>ip bfd admin-state {enable \| disable}</code></td>
+<td>全局默认 disabled</td>
+<td><code>-&gt; ip bfd admin-state enable</code></td>
+<td>2059</td>
+</tr>
+<tr>
+<td>ip bfd transmit / receive / multiplier</td>
+<td><code>ip bfd {transmit \| receive} interval_ms</code> / <code>ip bfd multiplier num</code></td>
+<td>multiplier 默认 3</td>
+<td><code>-&gt; ip bfd transmit 500</code></td>
+<td>2061-2065</td>
+</tr>
+<tr>
+<td>ip bfd interface</td>
+<td><code>ip bfd interface if_name</code>；子命令 admin-state/transmit/receive/multiplier/echo-interval</td>
+<td>接口创建时默认 disabled</td>
+<td><code>-&gt; ip bfd interface bfd-vlan-101 admin-state enable</code></td>
+<td>2069-2077</td>
+</tr>
+<tr>
+<td>show ip bfd sessions</td>
+<td><code>show ip bfd sessions [session_id]</code>；另有 interfaces/statistics 子命令</td>
+<td>默认全部会话</td>
+<td><code>-&gt; show ip bfd sessions</code></td>
+<td>2085-2089</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="dhcp-relay-snooping-26">DHCP Relay / Snooping（第 26 章）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>语法要点</th>
+<th>关键参数与默认值</th>
+<th>典型用法（一行示例）</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ip dhcp relay admin-state</td>
+<td><code>ip dhcp relay admin-state {enable \| disable}</code></td>
+<td>默认 disabled</td>
+<td><code>-&gt; ip dhcp relay admin-state enable</code></td>
+<td>2095</td>
+</tr>
+<tr>
+<td>ip dhcp relay destination</td>
+<td><code>ip dhcp relay destination ip_address</code>，<code>no</code> 删除</td>
+<td>全局模式目的服务器</td>
+<td><code>-&gt; ip dhcp relay destination 3.3.0.2</code></td>
+<td>2097</td>
+</tr>
+<tr>
+<td>ip dhcp relay interface destination</td>
+<td><code>ip dhcp relay interface if_name destination ip_address</code></td>
+<td>接口级目的</td>
+<td><code>-&gt; ip dhcp relay interface client_traffic destination 75.0.0.10</code></td>
+<td>2101</td>
+</tr>
+<tr>
+<td>ip dhcp relay maximum-hops</td>
+<td><code>ip dhcp relay maximum-hops hops</code></td>
+<td>默认 16</td>
+<td><code>-&gt; ip dhcp relay maximum-hops 10</code></td>
+<td>2107</td>
+</tr>
+<tr>
+<td>ip dhcp relay insert-agent-information</td>
+<td><code>ip dhcp relay insert-agent-information</code>，<code>no</code> 关闭</td>
+<td>Option-82 注入，默认 disabled</td>
+<td><code>-&gt; ip dhcp relay insert-agent-information</code></td>
+<td>2109</td>
+</tr>
+<tr>
+<td>ip helper address</td>
+<td><code>ip helper address ip_address</code>，<code>no</code> 删除</td>
+<td>UDP 广播中继（本版本标注 Not supported）</td>
+<td><code>-&gt; ip helper address 75.0.0.10</code></td>
+<td>2131</td>
+</tr>
+<tr>
+<td>dhcp-snooping vlan / port</td>
+<td><code>dhcp-snooping vlan vlan_id admin-state {enable \| disable}</code>；<code>dhcp-snooping port c/s/p {block \| client-only \| trust}</code></td>
+<td>snooping 默认 disabled；端口默认 client-only</td>
+<td><code>-&gt; dhcp-snooping port 1/1/24 trust</code></td>
+<td>2247/2249</td>
+</tr>
+<tr>
+<td>show ip dhcp relay statistics</td>
+<td><code>show ip dhcp relay statistics</code>；<code>ip dhcp relay clear statistics</code></td>
+<td>—</td>
+<td><code>-&gt; show ip dhcp relay statistics</code></td>
+<td>2121/2123</td>
+</tr>
+<tr>
+<td>show dhcp-snooping binding</td>
+<td><code>show dhcp-snooping binding [port ... \| ip-address ... \| snapshot]</code></td>
+<td>默认全部绑定表</td>
+<td><code>-&gt; show dhcp-snooping binding</code></td>
+<td>2293</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="vrrp-27">VRRP（第 27 章）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>语法要点</th>
+<th>关键参数与默认值</th>
+<th>典型用法（一行示例）</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ip vrrp（实例）</td>
+<td><code>ip vrrp vrid interface if_name [address ip] [priority n] [admin-state {enable \| disable}]</code></td>
+<td>vrid 1-255；先 <code>ip load vrrp</code>（X8）</td>
+<td><code>-&gt; ip vrrp 23 interface ipv4-100 priority 75</code></td>
+<td>2335</td>
+</tr>
+<tr>
+<td>ip vrrp track</td>
+<td><code>ip vrrp track track_id [admin-state ...] priority decrement ipv4-interface if_name</code>；可挂 <code>address ip bfd-state</code></td>
+<td>track_id 1-255</td>
+<td><code>-&gt; ip vrrp track 2 admin-state enable priority 50 ipv4-interface Marketing</code></td>
+<td>2341</td>
+</tr>
+<tr>
+<td>ip vrrp bfd-state / preempt / accept</td>
+<td><code>ip vrrp {bfd-state {enable \| disable} \| preempt \| accept}</code></td>
+<td>主备检测与抢占</td>
+<td><code>-&gt; ip vrrp bfd-state enable</code></td>
+<td>2345-2353</td>
+</tr>
+<tr>
+<td>ip vrrp group</td>
+<td><code>ip vrrp group vrgid [interval centiseconds] [priority n] [preempt] [no accept] [version {v2 \| v3}]</code>，<code>no</code> 删除</td>
+<td>虚拟路由组模板</td>
+<td><code>-&gt; ip vrrp group 25 interval 200 priority 50 no preempt version v3</code></td>
+<td>2369</td>
+</tr>
+<tr>
+<td>show ip vrrp</td>
+<td><code>show ip vrrp [vrid]</code>；另有 statistics/track/track-association/group</td>
+<td>—</td>
+<td><code>-&gt; show ip vrrp</code></td>
+<td>2384-2402</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="ospf-ospfv3-28-29">OSPF / OSPFv3（第 28-29 章）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>语法要点</th>
+<th>关键参数与默认值</th>
+<th>典型用法（一行示例）</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ip load ospf</td>
+<td><code>ip load ospf</code></td>
+<td>先加载（X8）</td>
+<td><code>-&gt; ip load ospf</code></td>
+<td>2394</td>
+</tr>
+<tr>
+<td>ip ospf admin-state</td>
+<td><code>ip ospf admin-state {enable \| disable}</code></td>
+<td>—</td>
+<td><code>-&gt; ip ospf admin-state enable</code></td>
+<td>2396</td>
+</tr>
+<tr>
+<td>ip ospf spf-timer</td>
+<td><code>ip ospf spf-timer [delay seconds] [hold seconds]</code></td>
+<td>0-65535，默认 delay=5/hold=10；任一为 0 立即触发 SPF（P18）；平台 6360/6465 No</td>
+<td><code>-&gt; ip ospf spf-timer delay 20 hold 35</code></td>
+<td>2409</td>
+</tr>
+<tr>
+<td>ip ospf interface</td>
+<td><code>ip ospf interface if_name</code>；子命令 admin-state/area/auth-type/auth-key/md5/type/cost/priority/poll-interval/retrans-interval/transit-delay</td>
+<td>接口入 OSPF</td>
+<td><code>-&gt; ip ospf interface vlan-101 area 0.0.0.1</code></td>
+<td>2430/2438</td>
+</tr>
+<tr>
+<td>ip ospf interface hello-interval / dead-interval</td>
+<td><code>ip ospf interface if_name {hello-interval \| dead-interval} seconds</code></td>
+<td>hello 默认 broadcast/P2P=10、NBMA/P2MP=30；hello=0 即被动接口（X23）；平台 6360/6465 No</td>
+<td><code>-&gt; ip ospf interface vlan-101 hello-interval 50</code></td>
+<td>2434</td>
+</tr>
+<tr>
+<td>ip ospf area</td>
+<td><code>ip ospf area area_id [type {normal \| stub \| nssa}] [summary {enable \| disable}]</code>；<code>range summary ip mask</code> 汇总</td>
+<td>—</td>
+<td><code>-&gt; ip ospf area 0.0.0.1 type stub</code></td>
+<td>2418/2424</td>
+</tr>
+<tr>
+<td>ip ospf default-originate</td>
+<td><code>ip ospf default-originate {always \| only} [metric n] [metric-type type1\|type2]</code></td>
+<td>注入默认路由</td>
+<td><code>-&gt; ip ospf default-originate always</code></td>
+<td>2410</td>
+</tr>
+<tr>
+<td>ip ospf bfd-state</td>
+<td><code>ip ospf bfd-state {enable \| disable}</code>；<code>all-interfaces</code>；接口级 <code>drs-only</code>/<code>all-neighbors</code></td>
+<td>需先开 BFD</td>
+<td><code>-&gt; ip ospf bfd-state enable</code></td>
+<td>2470-2482</td>
+</tr>
+<tr>
+<td>ip ospf restart-support</td>
+<td><code>ip ospf restart-support {planned-unplanned ...}</code></td>
+<td>GR 默认 disabled；helper 默认启用</td>
+<td><code>-&gt; ip ospf restart-support planned-unplanned</code></td>
+<td>2485</td>
+</tr>
+<tr>
+<td>show ip ospf neighbor / lsdb / routes / interface</td>
+<td><code>show ip ospf neighbor [ip]</code> / <code>lsdb [area ...]</code> / <code>routes</code> / <code>interface [if]</code></td>
+<td>邻居/LSDB/路由/接口四件套</td>
+<td><code>-&gt; show ip ospf neighbor</code></td>
+<td>2451-2484</td>
+</tr>
+<tr>
+<td>ipv6 load ospf + 接口族</td>
+<td><code>ipv6 load ospf</code>；<code>ipv6 ospf interface if_name [area id] [hello-interval/dead-interval/cost/priority/type ...]</code></td>
+<td>OSPFv3 同构</td>
+<td><code>-&gt; ipv6 ospf interface vlan-101 area 0.0.0.1</code></td>
+<td>2515+</td>
+</tr>
+<tr>
+<td>show ipv6 ospf</td>
+<td><code>show ipv6 ospf [neighbor \| lsdb \| routes \| interface ...]</code></td>
+<td>—</td>
+<td><code>-&gt; show ipv6 ospf neighbor</code></td>
+<td>2589+</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="is-is-30">IS-IS（第 30 章）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>语法要点</th>
+<th>关键参数与默认值</th>
+<th>典型用法（一行示例）</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ip load isis / ip isis admin-state</td>
+<td><code>ip load isis</code> → <code>ip isis admin-state {enable \| disable}</code></td>
+<td>默认未加载（X8）</td>
+<td><code>-&gt; ip load isis</code></td>
+<td>2613/2614</td>
+</tr>
+<tr>
+<td>ip isis area-id</td>
+<td><code>ip isis area-id area_address</code>，<code>no</code> 删除</td>
+<td>区域地址如 49.0001</td>
+<td><code>-&gt; ip isis area-id 49.0001</code></td>
+<td>2616</td>
+</tr>
+<tr>
+<td>ip isis level-capability</td>
+<td><code>ip isis level-capability {level-1 \| level-2 \| level-1/2}</code></td>
+<td>—</td>
+<td><code>-&gt; ip isis level-capability level-2</code></td>
+<td>2618</td>
+</tr>
+<tr>
+<td>ip isis vlan</td>
+<td><code>ip isis vlan vlan_id [address-family {v4 \| v6 \| v4v6}]</code></td>
+<td>地址族默认 disabled</td>
+<td><code>-&gt; ip isis vlan 10 address-family v4v6</code></td>
+<td>2660</td>
+</tr>
+<tr>
+<td>ip isis vlan level hello-interval / metric</td>
+<td><code>ip isis vlan vlan_id level {1 \| 2} {hello-interval seconds \| metric number}</code></td>
+<td>—</td>
+<td><code>-&gt; ip isis vlan 10 level 1 metric 25</code></td>
+<td>2681/2685</td>
+</tr>
+<tr>
+<td>ip isis overload / graceful-restart</td>
+<td><code>ip isis overload [timeout seconds]</code> / <code>ip isis graceful-restart</code></td>
+<td>overload 默认 disabled；GR 默认 disabled</td>
+<td><code>-&gt; ip isis overload timeout 70</code></td>
+<td>2638/2642</td>
+</tr>
+<tr>
+<td>ip isis summary-address</td>
+<td><code>ip isis summary-address ip_prefix/mask {level-1 \| level-2 \| level-1/2}</code></td>
+<td>区域路由汇总</td>
+<td><code>-&gt; ip isis summary-address 10.0.0.0/8 level-2</code></td>
+<td>2636</td>
+</tr>
+<tr>
+<td>show ip isis adjacency / database / routes</td>
+<td><code>show ip isis adjacency [system-id ...] [detail]</code> / <code>database [system_id ...] [detail] [level {1\|2}]</code> / <code>routes</code></td>
+<td>邻接/LSDB/路由</td>
+<td><code>-&gt; show ip isis adjacency</code></td>
+<td>2699/2703/2710</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="bgp-31-194">BGP（第 31 章，194 条）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>语法要点</th>
+<th>关键参数与默认值</th>
+<th>典型用法（一行示例）</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ip load bgp / ip bgp admin-state</td>
+<td><code>ip load bgp</code> → <code>ip bgp admin-state {enable \| disable}</code></td>
+<td>先加载再启用（X8）</td>
+<td><code>-&gt; ip load bgp</code></td>
+<td>2749/2751</td>
+</tr>
+<tr>
+<td>ip bgp autonomous-system</td>
+<td><code>ip bgp autonomous-system as_num</code></td>
+<td>本端 AS 号</td>
+<td><code>-&gt; ip bgp autonomous-system 64724</code></td>
+<td>2753</td>
+</tr>
+<tr>
+<td>ip bgp default local-preference</td>
+<td><code>ip bgp default local-preference value</code></td>
+<td>平台 6360/6465/6575 No（X3）</td>
+<td><code>-&gt; ip bgp default local-preference 200</code></td>
+<td>2759</td>
+</tr>
+<tr>
+<td>ip bgp maximum-paths</td>
+<td><code>ip bgp maximum-paths</code>，<code>no</code> 关闭</td>
+<td>ECMP，默认 disabled；启用要求先停 BGP（P22）；平台同上 No</td>
+<td><code>-&gt; ip bgp maximum-paths</code></td>
+<td>2775</td>
+</tr>
+<tr>
+<td>ip bgp dampening</td>
+<td><code>ip bgp dampening [half-life h reuse r suppress s max-suppress-time m]</code></td>
+<td>路由抖动抑制，默认 disabled</td>
+<td><code>-&gt; ip bgp dampening half-life 15 reuse 750 suppress 3000</code></td>
+<td>2779</td>
+</tr>
+<tr>
+<td>ip bgp network</td>
+<td><code>ip bgp network ip_address [mask m] [metric n] [community ...] [local-preference ...]</code></td>
+<td>宣告本地已知网络</td>
+<td><code>-&gt; ip bgp network 10.1.0.0</code></td>
+<td>2799</td>
+</tr>
+<tr>
+<td>ip bgp aggregate-address</td>
+<td><code>ip bgp aggregate-address ip_address mask [as-set] [summary-only] [community ...]</code></td>
+<td>聚合路由</td>
+<td><code>-&gt; ip bgp aggregate-address 172.22.0.0 255.255.0.0 summary-only</code></td>
+<td>2785</td>
+</tr>
+<tr>
+<td>ip bgp neighbor</td>
+<td><code>ip bgp neighbor ip_address</code>，<code>no</code> 删除</td>
+<td>创建对等体，默认无 peer</td>
+<td><code>-&gt; ip bgp neighbor 172.22.2.115</code></td>
+<td>2809</td>
+</tr>
+<tr>
+<td>ip bgp neighbor remote-as</td>
+<td><code>ip bgp neighbor ip_address remote-as value</code></td>
+<td>对端 AS</td>
+<td><code>-&gt; ip bgp neighbor 172.22.2.115 remote-as 65000</code></td>
+<td>2843</td>
+</tr>
+<tr>
+<td>ip bgp neighbor timers</td>
+<td><code>ip bgp neighbor ip_address timers keepalive holdtime</code></td>
+<td>KEEPALIVE/保持时间（秒）</td>
+<td><code>-&gt; ip bgp neighbor 172.22.2.115 timers 10 30</code></td>
+<td>2825</td>
+</tr>
+<tr>
+<td>ip bgp neighbor route-map</td>
+<td><code>ip bgp neighbor ip_address route-map {name \| none} {in \| out}</code>，<code>no</code> 移除</td>
+<td>邻居策略</td>
+<td><code>-&gt; ip bgp neighbor 172.22.2.115 route-map InboundRoute in</code></td>
+<td>2871</td>
+</tr>
+<tr>
+<td>ip bgp neighbor next-hop-self</td>
+<td><code>ip bgp neighbor ip_address next-hop-self</code>，<code>no</code> 关闭</td>
+<td>默认 disabled</td>
+<td><code>-&gt; ip bgp neighbor 172.22.2.115 next-hop-self</code></td>
+<td>2839</td>
+</tr>
+<tr>
+<td>ip bgp neighbor 其他常用</td>
+<td><code>description / md5 key / ebgp-multihop / update-source / maximum-prefix / default-originate / passive / soft-reconfiguration / route-reflector-client</code></td>
+<td>见各条目</td>
+<td><code>-&gt; ip bgp neighbor 1.1.1.1 ebgp-multihop</code></td>
+<td>2809-2873</td>
+</tr>
+<tr>
+<td>ip bgp policy 族</td>
+<td><code>ip bgp policy {aspath-list / community-list / prefix-list / prefix6-list / route-map} ...</code></td>
+<td>BGP 专用策略对象（match/set 动作族）</td>
+<td><code>-&gt; ip bgp policy route-map rm1 action permit</code></td>
+<td>2892-2959</td>
+</tr>
+<tr>
+<td>ipv6 bgp neighbor / network</td>
+<td><code>ipv6 bgp neighbor ipv6_address</code> / <code>ipv6 bgp network prefix</code> + remote-as/timers 等同构子命令</td>
+<td>MP-BGP for IPv6</td>
+<td><code>-&gt; ipv6 bgp neighbor 2001::1 remote-as 65000</code></td>
+<td>3071/3059</td>
+</tr>
+<tr>
+<td>ip bgp address-family evpn</td>
+<td><code>ip bgp address-family evpn</code>，<code>no</code> 关闭</td>
+<td>EVPN 地址族默认 disabled；配 <code>neighbor activate-evpn</code> 联动</td>
+<td><code>-&gt; ip bgp address-family evpn</code></td>
+<td>3019</td>
+</tr>
+<tr>
+<td>ip bgp graceful-restart</td>
+<td><code>ip bgp graceful-restart</code>，<code>no</code> 关闭</td>
+<td>GR 默认 enabled</td>
+<td><code>-&gt; ip bgp graceful-restart</code></td>
+<td>3013</td>
+</tr>
+<tr>
+<td>show ip bgp / routes / neighbors</td>
+<td><code>show ip bgp</code> / <code>show ip bgp routes [ip mask]</code> / <code>show ip bgp neighbors [ip] [policy \| timer \| statistics]</code></td>
+<td>全局/路由/邻居三件套</td>
+<td><code>-&gt; show ip bgp neighbors</code></td>
+<td>2961/2975/2981</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="slb-32">SLB（第 32 章）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>语法要点</th>
+<th>关键参数与默认值</th>
+<th>典型用法（一行示例）</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ip slb admin-state</td>
+<td><code>ip slb admin-state {enable \| disable}</code></td>
+<td>—</td>
+<td><code>-&gt; ip slb admin-state enable</code></td>
+<td>3161</td>
+</tr>
+<tr>
+<td>ip slb cluster</td>
+<td><code>ip slb cluster name vip ip_address</code>，<code>no</code> 删除；子命令 admin-state/hashing/ping period-timeout-retries/probe/wait-to-restore</td>
+<td>集群创建即 admin enable；wait-to-restore 默认 0</td>
+<td><code>-&gt; ip slb cluster corporate_servers vip 1.2.3.4</code></td>
+<td>3165</td>
+</tr>
+<tr>
+<td>ip slb server ip cluster</td>
+<td><code>ip slb server ip ip_address cluster cluster_name [admin-state ...]</code></td>
+<td>实服务器入组</td>
+<td><code>-&gt; ip slb server ip 10.255.11.127 cluster corporate_servers</code></td>
+<td>3181</td>
+</tr>
+<tr>
+<td>ip slb probe</td>
+<td><code>ip slb probe probe_name {ftp \| http \| smtp \| tcp \| udp} ...</code>；timeout/period/port/retries/url/expect 子参数</td>
+<td>健康检查</td>
+<td><code>-&gt; ip slb probe mail_server_probe smtp</code></td>
+<td>3188</td>
+</tr>
+<tr>
+<td>show ip slb</td>
+<td><code>show ip slb [clusters \| cluster name \| servers \| probes]</code></td>
+<td>—</td>
+<td><code>-&gt; show ip slb clusters statistics</code></td>
+<td>3221-3232</td>
+</tr>
+</tbody>
+</table></div>
 <h2 id="e">E（实证案例）</h2>
 <ul>
 <li>命令地图型 skill，不搬运案例；原书每条命令自带 Example，按章首页码回查（cases 原件未创建）</li>
@@ -145,13 +843,21 @@ OSPF 章按 Global/Area/Interface/BFD/VRF 分组（P17）。</li>
 <h2 id="b">B（反例/坑）</h2>
 <ul>
 <li>路由协议命令生效前需 <code>ip load &lt;protocol&gt;</code> 加载模块（X8，第 24/27/28/30/31 章）</li>
-<li><strong><code>ip ospf spf-timer</code>/<code>hello-interval</code> 平台</strong>：<br>6360/6465 不支持，6560 起支持（X2，<span class="pg">原文p2409</span> /<span class="pg">原文p2434</span> ）</li>
-<li><code>ip ospf interface hello-interval</code> 设 0 的语义是创建被动接口（不发 hello），并非更快收敛（X23，<span class="pg">原文p2434</span> ）</li>
-<li><strong><code>ip bgp default local-preference</code>/<code>maximum-paths</code> 平台</strong>：<br>6360/6465/6575 不支持（X3，<span class="pg">原文p2759</span> /<span class="pg">原文p2776</span> ）</li>
+<li><strong><code>ip ospf spf-timer</code>/<code>hello-interval</code> 平台</strong>：<br>6360/6465 不支持，6560 起支持（X2，<span class="source-page">原文p2409</span> /<span class="source-page">原文p2434</span> ）</li>
+<li><code>ip ospf interface hello-interval</code> 设 0 的语义是创建被动接口（不发 hello），并非更快收敛（X23，<span class="source-page">原文p2434</span> ）</li>
+<li><strong><code>ip bgp default local-preference</code>/<code>maximum-paths</code> 平台</strong>：<br>6360/6465/6575 不支持（X3，<span class="source-page">原文p2759</span> /<span class="source-page">原文p2776</span> ）</li>
 <li><code>ip bgp maximum-paths</code> 同样要求先停 BGP 再配（P22）</li>
 </ul>
 <h2 id="_1">来源</h2>
 <ul>
-<li>OmniSwitch AOS Release 810R04 CLI Reference User Guide 第 21-32 章（<span class="pg">原文p1549-3227</span> ）。</li>
+<li>OmniSwitch AOS Release 810R04 CLI Reference User Guide 第 21-32 章（<span class="source-page">原文p1549-3227</span> ）。</li>
 <li><strong>条目来源</strong>：<br>principles P16-P22；counter-examples X2/X3/X8/X23；frameworks F6。</li>
-</ul><div class="pn"><a href="aos-cli-map-fabric.html">⬅ 上一单元：aos-cli-map-fabric</a><a class="nxt" href="aos-cli-map-multicast-qos.html">下一单元：aos-cli-map-multicast-qos ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+</ul></article>
+<nav class="previous-next" aria-label="知识单元翻页"><a href="/aos/cli-reference/skills/aos-cli-map-fabric.html"><span>上一单元</span><b>aos-cli-map-fabric</b></a><a class="next" href="/aos/cli-reference/skills/aos-cli-map-multicast-qos.html"><span>下一单元</span><b>aos-cli-map-multicast-qos</b></a></nav>    <footer class="content-footer">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</footer>
+  </main>
+</div>
+  <script src="/assets/js/app.js?v=4" defer></script>
+  <script src="/assets/js/search.js?v=4" defer></script>
+  <script src="/assets/js/lightbox.js?v=5" defer></script>
+</body>
+</html>

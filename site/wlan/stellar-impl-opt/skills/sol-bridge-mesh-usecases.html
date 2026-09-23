@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="面向售前、售后与网络工程师的 ALE 内部技术知识平台">
+  <meta name="theme-color" content="#6B489D">
+  <title>sol-bridge-mesh-usecases — Stellar 桥接与 Multi-Mesh 实施</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=4">
+  <link rel="stylesheet" href="/assets/css/layout.css?v=4">
+  <link rel="stylesheet" href="/assets/css/components.css?v=4">
+  <link rel="stylesheet" href="/assets/css/content.css?v=7">
+  <script src="/assets/js/auth-config.js?v=4"></script>
+  <script src="/assets/js/auth-core.js?v=4"></script>
+  <script src="/assets/js/auth-guard.js?v=4"></script>
+</head>
+<body data-page-kind="course">
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <header class="topbar" data-topbar>
+    <a class="brand" href="/index.html" aria-label="返回 ALE 技术培训门户首页">
+      <img src="/assets/ale-logo-color.png" alt="Alcatel-Lucent Enterprise">
+      <span>ALE 培训门户</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-controls="primary-nav" aria-expanded="false" data-nav-toggle>
+      <span aria-hidden="true">☰</span><span class="sr-only">打开导航</span>
+    </button>
+    <nav id="primary-nav" class="primary-nav" aria-label="主导航">
+      <a href="/index.html">首页</a>
+      <a href="/paths.html">学习路径</a>
+      <a href="/presales/index.html">售前</a>
+      <a href="/postsales/index.html">售后</a>
+      <a href="/wlan/index.html" aria-current="page">无线</a>
+      <a href="/aos/index.html">AOS 手册</a>
+      <a href="/hardware/index.html">硬件</a>
+      <a href="/brochures/index.html">彩页</a>
+      <a href="/solutions/index.html">解决方案</a>
+      <a href="/security/index.html">安全</a>
+    </nav>
+    <button id="logout-btn" class="logout-btn" type="button" hidden>退出登录</button>
+  </header>
+<div class="course-layout">
+<aside class="course-sidebar" id="course-sidebar" data-sidebar>
+  <div class="sidebar-heading">
+    <p class="eyebrow">COURSE</p>
+    <h2>Stellar 桥接与 Multi-Mesh 实施</h2>
+    <p>Bridging &amp; Meshing Guidelines · 32 页 · 室外桥接 / 多点 Mesh / 家庭 Mesh / OV2500 配置 / 链路监测</p>
+  </div>
+<div class="search" data-search>
+  <label class="sr-only" for="course-search">搜索全站课程和知识单元</label>
+  <input id="course-search" type="search" placeholder="搜索课程编号、产品型号或技术关键词…" autocomplete="off" data-search-input>
+  <div class="search-results" role="listbox" aria-live="polite" data-search-results></div>
+</div>  <nav class="course-nav" aria-label="课程目录">
+    <a href="/wlan/stellar-impl-opt/index.html">课程首页</a>
+    <a href="/wlan/stellar-impl-opt/digest.html">精华长文</a>
+    <a href="/wlan/stellar-impl-opt/overview.html">教书理解</a>
+    <a href="/wlan/stellar-impl-opt/glossary.html">术语词典</a>
+    <p class="course-nav-group">架构与用例</p>
+      <a href="/wlan/stellar-impl-opt/skills/sol-bridge-mesh-overview.html">sol-bridge-mesh-overview</a>
+      <a aria-current="page" href="/wlan/stellar-impl-opt/skills/sol-bridge-mesh-usecases.html">sol-bridge-mesh-usecases</a>
+    <p class="course-nav-group">室外设计</p>
+      <a href="/wlan/stellar-impl-opt/skills/sol-bridge-mesh-outdoor-design.html">sol-bridge-mesh-outdoor-design</a>
+    <p class="course-nav-group">配置与运维</p>
+      <a href="/wlan/stellar-impl-opt/skills/sol-bridge-mesh-config.html">sol-bridge-mesh-config</a>
+      <a href="/wlan/stellar-impl-opt/skills/sol-bridge-mesh-monitor.html">sol-bridge-mesh-monitor</a>
+  </nav>
+</aside>  <main id="main-content" class="course-main prose">
+    <nav class="breadcrumbs" aria-label="面包屑"><a href="/index.html">培训门户</a><span>/</span><a href="/wlan/index.html">无线网络 · WLAN</a><span>/</span><a href="/wlan/stellar-impl-opt/index.html">Stellar 桥接与 Multi-Mesh 实施</a><span>/</span><span aria-current="page">sol-bridge-mesh-usecases</span></nav>
+<header class="skill-heading"><div><p class="eyebrow">KNOWLEDGE UNIT</p><h1>sol-bridge-mesh-usecases</h1></div><dl><div><dt>Skill ID</dt><dd>sol-bridge-mesh-usecases</dd></div></dl></header>    <article class="markdown-body"><h2 id="r">R（何时使用）</h2>
+<ul>
+<li>确认某型号 Stellar AP 能否用于 bridge 或 indoor/outdoor mesh</li>
+<li>核对 mesh 集群规模、每 AP SSID 数、漫游能力、VoIP 承载等硬性限制</li>
+<li>规划室内工业场景（厂房/仓库）或家庭 mesh 的 RF 指标与天线选型</li>
+<li>用 Access Role Profile（ARP）规划 bridge 远端端口的 VLAN 角色</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p><strong>用例三分法</strong>：室外 Bridge（两站点 LAN 延伸）、Multi-Point mesh（室外难布线区域 + 室内工业/家庭覆盖）是三大落地形态（P8/P10/P15，<span class="source-page">原文p8</span> ）。</p>
+<p><strong>mesh 节点六条规则是硬约束</strong>，室内室外通用：16 AP 上限、5 SSID 上限、吞吐 ÷2、无漫游、VoIP 尽力转发（P11/P17，<span class="source-page">原文p11</span> ）。</p>
+<p>家庭场景是 mesh 的轻量入口：Express 模式 + 入门 AP1301 即可企业级组网，体现 Stellar"从家庭到企业同一套 mesh 架构"的定位（P16，<span class="source-page">原文p16</span> ）。</p>
+<h2 id="a1">A1（决策要点）</h2>
+<ol>
+<li><strong>室外 Bridge 前提</strong>（P9，<span class="source-page">原文p9</span> ）：仅用于连接两个可管理远端站点、仅限室外；root 可双；不建议同一 bridge 配多个 Bridge AP（若配，下联选 RSSI 最好的）；必须用定向或高定向天线</li>
+<li><strong>室外 mesh 前提</strong>（P11，<span class="source-page">原文p11</span> ）：最多 16 个 mesh AP；root 可双；root 用全向/半定向 MIMO 天线；nLoS 可行但半定向天线波束边缘至少损耗 3dB</li>
+<li><strong>天线一致性</strong>（P9/P11，<span class="source-page">原文p9</span> ）：链路两端天线型号与极化必须一致；MU-MIMO 天线（±45° 双斜极化）推荐；同一 mesh 用同系列 AP（Wi-Fi 6 才能享受 802.11ax）</li>
+<li><strong>频宽建议</strong>（P9/P11，<span class="source-page">原文p9</span> ）：数据走 5GHz，40MHz 及以上信道宽度（802.11ac/ax）；VLAN 0-4095 全部可透传</li>
+<li><strong>室内 RF 指标</strong>（P16，<span class="source-page">原文p16</span> ）：SNR ≥20dB（语音更好）、RSSI ≥-67dBm；用全向外置高增益天线（如 AP1322 直挂 ANT-O-6）；patch 天线不推荐用于室内 mesh</li>
+<li><strong>家庭 mesh 要点</strong>（P16-17，<span class="source-page">原文p16</span> ）：root 接路由器旁、用路由器 DHCP、mesh 距离不超过 2 个房间（约 5 米）、Express 模式逐 AP 管理、按 SSID 配 QoS</li>
+</ol>
+<h2 id="a2">A2（细节速查表）</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mesh AP 数量上限</td>
+<td>16 个 mesh AP / mesh 配置（室内外相同）</td>
+<td><span class="source-page">原文p11</span>  / <span class="source-page">原文p17</span></td>
+</tr>
+<tr>
+<td>每 mesh AP SSID 上限</td>
+<td>5 个客户端 WLAN 服务</td>
+<td><span class="source-page">原文p11</span>  / <span class="source-page">原文p17</span></td>
+</tr>
+<tr>
+<td>root 容量共享</td>
+<td>root 总吞吐被所有 mesh AP 与客户端共享；每 mesh AP 每 SSID 吞吐 ÷2</td>
+<td><span class="source-page">原文p11</span></td>
+</tr>
+<tr>
+<td>漫游</td>
+<td>mesh AP 之间无漫游，无 PMK/OKC/密钥交换处理</td>
+<td><span class="source-page">原文p11</span></td>
+</tr>
+<tr>
+<td>VoIP/实时业务</td>
+<td>仅尽力转发（best effort）</td>
+<td><span class="source-page">原文p11</span></td>
+</tr>
+<tr>
+<td>自动入网</td>
+<td>root 旁出厂配置且未接 LAN 的 AP 会自动以 mesh AP 接入并继承 root 的客户端 SSID</td>
+<td><span class="source-page">原文p11</span></td>
+</tr>
+<tr>
+<td>Bridge VLAN 透传</td>
+<td>0-4095 tagged VLAN</td>
+<td><span class="source-page">原文p9</span></td>
+</tr>
+<tr>
+<td>Bridge AP 支持</td>
+<td>室外 IP67：AP1361/1362/1361D（Wi-Fi 6）、AP1251（Wi-Fi 5）；室内 AP1322（Wi-Fi 6，外置 patch 天线）、AP1222（Wi-Fi 5）</td>
+<td><span class="source-page">原文p10</span></td>
+</tr>
+<tr>
+<td>室外 mesh AP 支持</td>
+<td>AP1361/1362/1361D、AP1251；AP1361/AP1251 可抱杆安装，root 可 nLoS</td>
+<td><span class="source-page">原文p11</span></td>
+</tr>
+<tr>
+<td>室内 mesh AP 支持（Wi-Fi 6）</td>
+<td>AP1301/1311/1321/1322/1331/1351/1361</td>
+<td><span class="source-page">原文p17</span></td>
+</tr>
+<tr>
+<td>室内 mesh AP 支持（Wi-Fi 5）</td>
+<td>AP1201/1221/1222/1231/1232/1251</td>
+<td><span class="source-page">原文p17</span></td>
+</tr>
+<tr>
+<td>Bridge 端口角色</td>
+<td>Enterprise 模式用 Access Role Profile（ARP）按 VLAN/端口定义 ACL 与 QoS</td>
+<td><span class="source-page">原文p8</span></td>
+</tr>
+<tr>
+<td>家庭 mesh 设备</td>
+<td>AP1301（入门 Wi-Fi 6），OAW-AP-MNT-W 壁挂套件 + 48V 电源块</td>
+<td><span class="source-page">原文p16-17</span></td>
+</tr>
+<tr>
+<td>家庭连接形态</td>
+<td>单 SSID + 密码，双频；2.4GHz 笔记本、5GHz 手机/Chromecast/电视/主机</td>
+<td><span class="source-page">原文p16</span></td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="e">E（场景案例）</h2>
+<ul>
+<li><strong>隔街两栋楼</strong>：<br>AP1361D 定向天线 Bridge，ENET0 分发企业 VLAN，ENET1 给 IP 摄像头 PoE 供电（P8，<span class="source-page">原文p8</span> ）</li>
+<li><strong>工业园区难布线区域</strong>：<br>root 双冗余 + 多个 AP1361 抱杆 mesh 节点，每节点带 Wi-Fi 覆盖与下联口（P10-11，<span class="source-page">原文p10</span> ）</li>
+<li><strong>工厂车间室内覆盖延伸</strong>：<br>AP1322 + ANT-O-6 全向外置天线，SNR 20dB / RSSI -67dBm 达标（P15-16，<span class="source-page">原文p15</span> ）</li>
+<li><strong>家庭办公</strong>：<br>路由器旁放 root AP1301，各房间 mesh AP1301，3-5 米距离高吞吐，5GHz 80MHz 给双频 Wi-Fi 6 设备（P16-17，<span class="source-page">原文p16</span> ）</li>
+</ul>
+<h2 id="b">B（限制与坑）</h2>
+<ul>
+<li><strong>同一 bridge 不建议配多个 Bridge AP</strong>，下联会连到 RSSI 最好的那个，行为不易控（P9，<span class="source-page">原文p9</span> ）</li>
+<li><strong>mesh AP 间无漫游</strong>——手机在 mesh 节点间移动会断连重连，不能按传统 WLAN 漫游承诺（P11，<span class="source-page">原文p11</span> ）</li>
+<li><strong>VoIP 与实时应用只有尽力转发</strong>，不要给客户承诺语音质量（P11，<span class="source-page">原文p11</span> ）</li>
+<li>5 SSID、16 AP 上限是硬顶，超了要拆集群（P11/P17，<span class="source-page">原文p11</span> ）</li>
+<li>混用 Wi-Fi 5 与 Wi-Fi 6 AP 会拉低整链路到低代际速率，保持同系列（P9/P11，<span class="source-page">原文p9</span> ）</li>
+<li>室内 mesh 用 patch 天线是反模式，patch 只适合特定覆盖（P16，<span class="source-page">原文p16</span> ）</li>
+<li>家庭 mesh 链路距离超过 2 个房间（5 米）性能不保（P16，<span class="source-page">原文p16</span> ）</li>
+</ul>
+<p>来源：OmniAccess Stellar Bridging/Multi-Point Meshing Guidelines，p8-11、p15-17（Use cases + 前提 + 支持型号 + mesh 规则）</p></article>
+<nav class="previous-next" aria-label="知识单元翻页"><a href="/wlan/stellar-impl-opt/skills/sol-bridge-mesh-overview.html"><span>上一单元</span><b>sol-bridge-mesh-overview</b></a><a class="next" href="/wlan/stellar-impl-opt/skills/sol-bridge-mesh-outdoor-design.html"><span>下一单元</span><b>sol-bridge-mesh-outdoor-design</b></a></nav>    <footer class="content-footer">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</footer>
+  </main>
+</div>
+  <script src="/assets/js/app.js?v=4" defer></script>
+  <script src="/assets/js/search.js?v=4" defer></script>
+  <script src="/assets/js/lightbox.js?v=5" defer></script>
+</body>
+</html>

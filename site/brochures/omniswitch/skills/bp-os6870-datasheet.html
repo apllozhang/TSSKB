@@ -1,104 +1,84 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>bp-os6870-datasheet — OmniSwitch · 官方数据表</title>
-<style>
-:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
-*{box-sizing:border-box}
-body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
-a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
-.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin:16px 0}
-.gallery figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px}
-.gallery img{width:100%;max-height:340px;object-fit:contain;background:#fff;border-radius:6px}
-.gallery figcaption{font-size:12.5px;color:var(--mut);text-align:center;margin-top:6px}
-/* 侧栏折叠 + 图片灯箱 */
-.tgl{position:fixed;left:0;top:45%;z-index:60;background:var(--card);border:1px solid var(--line);border-right:none;border-radius:0 8px 8px 0;color:var(--tx);padding:10px 6px;cursor:pointer;font-size:13px;line-height:1.1;writing-mode:vertical-lr}
-.tgl:hover{background:var(--acc);color:#0f172a}
-.layout.full{grid-template-columns:0 1fr}
-.layout.full aside{display:none}
-.lb{position:fixed;inset:0;background:rgba(5,10,20,.92);z-index:100;display:flex;align-items:center;justify-content:center;flex-direction:column}
-.lb img{max-width:92vw;max-height:82vh;background:#fff;border-radius:6px;transition:transform .12s}
-.lb .lbb{margin-top:10px;display:flex;gap:10px}
-.lb button{background:var(--card);border:1px solid var(--line);color:var(--tx);border-radius:8px;padding:6px 14px;cursor:pointer;font-size:14px}
-.lb button:hover{background:var(--acc);color:#0f172a}
-.search{margin:0 0 14px}
-.search input{width:100%;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--tx);font-size:13px;outline:none}
-.search input:focus{border-color:var(--acc)}
-#qres{max-height:340px;overflow-y:auto;margin-top:6px}
-#qres .qi{display:block;padding:6px 8px;border-radius:6px;font-size:12.5px;color:var(--tx);border-left:2px solid transparent}
-#qres .qi:hover{background:var(--card);text-decoration:none;border-left-color:var(--acc)}
-#qres .qi .qp{color:var(--mut);font-size:11px;display:block}
-#qres .qi b{color:var(--acc)}
-.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
-main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
-.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
-aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
-aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
-aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
-aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
-aside a:hover{background:var(--card);text-decoration:none}
-aside a.on{background:var(--card);color:var(--acc)}
-main{padding:36px 48px;max-width:1000px}
-h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
-h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
-table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
-th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
-th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
-code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
-pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
-pre code{background:none;padding:0}
-blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
-.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
-.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
-.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
-.meta{font-size:13px;color:var(--mut)}
-hr{border:none;border-top:1px solid var(--line);margin:26px 0}
-.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
-.badge.soon{background:#475569;color:#cbd5e1}
-main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
-main{padding:28px 48px 40px;max-width:1040px}
-h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
-blockquote p{margin:6px 0}
-.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
-.crumbs a{color:var(--acc)}
-.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
-.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
-.pn a:hover{border-color:var(--acc)}
-.pn .nxt{text-align:right}
-.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
-@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
-</style></head>
-<body><div class="layout"><aside><h1>OmniSwitch · 官方数据表</h1>
-<div class="search"><input id="qk" type="search" placeholder="🔍 搜索全站…" autocomplete="off"><div id="qres"></div></div>
-
-<div class="sub">2026-08 快照 · 15 份 158 页 · OS2260-OS9900 全系选型速查</div>
-<a href="../index.html">🏠 课程首页</a>
-<a href="../digest.html">📖 精华长文 DIGEST</a>
-
-<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
-<a href="../glossary.html">🔤 术语词典</a>
-<a href="../../../index.html">⬅️ 返回培训门户</a>
-<a href="../index.html">──── Skills ────</a>
-<div class="grp">接入层 SMB</div>
-<a href="../skills/bp-os2260-datasheet.html">bp-os2260-datasheet</a>
-<a href="../skills/bp-os2360-datasheet.html">bp-os2360-datasheet</a>
-<div class="grp">接入层千兆</div>
-<a href="../skills/bp-os6360-datasheet.html">bp-os6360-datasheet</a>
-<a href="../skills/bp-os6370-datasheet.html">bp-os6370-datasheet</a>
-<a href="../skills/bp-os6570m-datasheet.html">bp-os6570m-datasheet</a>
-<div class="grp">接入层多千兆与工业</div>
-<a href="../skills/bp-os6560e-datasheet.html">bp-os6560e-datasheet</a>
-<a href="../skills/bp-os6465-datasheet.html">bp-os6465-datasheet</a>
-<a href="../skills/bp-os6465t-datasheet.html">bp-os6465t-datasheet</a>
-<a href="../skills/bp-os6575-datasheet.html">bp-os6575-datasheet</a>
-<div class="grp">汇聚</div>
-<a href="../skills/bp-os6860-datasheet.html">bp-os6860-datasheet</a>
-<a href="../skills/bp-os6865-datasheet.html">bp-os6865-datasheet</a>
-<div class="grp">核心</div>
-<a href="../skills/bp-os6870-datasheet.html" class="on">bp-os6870-datasheet</a>
-<a href="../skills/bp-os6900-datasheet.html">bp-os6900-datasheet</a>
-<a href="../skills/bp-os6920-datasheet.html">bp-os6920-datasheet</a>
-<a href="../skills/bp-os9900-datasheet.html">bp-os9900-datasheet</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../brochures/index.html">产品彩页</a> › <a href="../index.html">OmniSwitch</a> › <span>bp-os6870-datasheet</span></nav><h1>bp-os6870-datasheet</h1><p class="meta"><span class="badge">SKILL</span> bp-os6870-datasheet · 来源页码: </p><p><img alt="OmniSwitch 6870 数据表速查（OmniFabric 三 fabric 合一高端） · 产品实物图（官方彩页）" src="images/omniswitch_6870.jpeg" /></p>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="面向售前、售后与网络工程师的 ALE 内部技术知识平台">
+  <meta name="theme-color" content="#6B489D">
+  <title>bp-os6870-datasheet — OmniSwitch · 官方数据表</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=4">
+  <link rel="stylesheet" href="/assets/css/layout.css?v=4">
+  <link rel="stylesheet" href="/assets/css/components.css?v=4">
+  <link rel="stylesheet" href="/assets/css/content.css?v=7">
+  <script src="/assets/js/auth-config.js?v=4"></script>
+  <script src="/assets/js/auth-core.js?v=4"></script>
+  <script src="/assets/js/auth-guard.js?v=4"></script>
+</head>
+<body data-page-kind="course">
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <header class="topbar" data-topbar>
+    <a class="brand" href="/index.html" aria-label="返回 ALE 技术培训门户首页">
+      <img src="/assets/ale-logo-color.png" alt="Alcatel-Lucent Enterprise">
+      <span>ALE 培训门户</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-controls="primary-nav" aria-expanded="false" data-nav-toggle>
+      <span aria-hidden="true">☰</span><span class="sr-only">打开导航</span>
+    </button>
+    <nav id="primary-nav" class="primary-nav" aria-label="主导航">
+      <a href="/index.html">首页</a>
+      <a href="/paths.html">学习路径</a>
+      <a href="/presales/index.html">售前</a>
+      <a href="/postsales/index.html">售后</a>
+      <a href="/wlan/index.html">无线</a>
+      <a href="/aos/index.html">AOS 手册</a>
+      <a href="/hardware/index.html">硬件</a>
+      <a href="/brochures/index.html" aria-current="page">彩页</a>
+      <a href="/solutions/index.html">解决方案</a>
+      <a href="/security/index.html">安全</a>
+    </nav>
+    <button id="logout-btn" class="logout-btn" type="button" hidden>退出登录</button>
+  </header>
+<div class="course-layout">
+<aside class="course-sidebar" id="course-sidebar" data-sidebar>
+  <div class="sidebar-heading">
+    <p class="eyebrow">COURSE</p>
+    <h2>OmniSwitch · 官方数据表</h2>
+    <p>2026-08 快照 · 15 份 158 页 · OS2260-OS9900 全系选型速查</p>
+  </div>
+<div class="search" data-search>
+  <label class="sr-only" for="course-search">搜索全站课程和知识单元</label>
+  <input id="course-search" type="search" placeholder="搜索课程编号、产品型号或技术关键词…" autocomplete="off" data-search-input>
+  <div class="search-results" role="listbox" aria-live="polite" data-search-results></div>
+</div>  <nav class="course-nav" aria-label="课程目录">
+    <a href="/brochures/omniswitch/index.html">课程首页</a>
+    <a href="/brochures/omniswitch/digest.html">精华长文</a>
+    <a href="/brochures/omniswitch/overview.html">教书理解</a>
+    <a href="/brochures/omniswitch/glossary.html">术语词典</a>
+    <p class="course-nav-group">接入层 SMB</p>
+      <a href="/brochures/omniswitch/skills/bp-os2260-datasheet.html">bp-os2260-datasheet</a>
+      <a href="/brochures/omniswitch/skills/bp-os2360-datasheet.html">bp-os2360-datasheet</a>
+    <p class="course-nav-group">接入层千兆</p>
+      <a href="/brochures/omniswitch/skills/bp-os6360-datasheet.html">bp-os6360-datasheet</a>
+      <a href="/brochures/omniswitch/skills/bp-os6370-datasheet.html">bp-os6370-datasheet</a>
+      <a href="/brochures/omniswitch/skills/bp-os6570m-datasheet.html">bp-os6570m-datasheet</a>
+    <p class="course-nav-group">接入层多千兆与工业</p>
+      <a href="/brochures/omniswitch/skills/bp-os6560e-datasheet.html">bp-os6560e-datasheet</a>
+      <a href="/brochures/omniswitch/skills/bp-os6465-datasheet.html">bp-os6465-datasheet</a>
+      <a href="/brochures/omniswitch/skills/bp-os6465t-datasheet.html">bp-os6465t-datasheet</a>
+      <a href="/brochures/omniswitch/skills/bp-os6575-datasheet.html">bp-os6575-datasheet</a>
+    <p class="course-nav-group">汇聚</p>
+      <a href="/brochures/omniswitch/skills/bp-os6860-datasheet.html">bp-os6860-datasheet</a>
+      <a href="/brochures/omniswitch/skills/bp-os6865-datasheet.html">bp-os6865-datasheet</a>
+    <p class="course-nav-group">核心</p>
+      <a aria-current="page" href="/brochures/omniswitch/skills/bp-os6870-datasheet.html">bp-os6870-datasheet</a>
+      <a href="/brochures/omniswitch/skills/bp-os6900-datasheet.html">bp-os6900-datasheet</a>
+      <a href="/brochures/omniswitch/skills/bp-os6920-datasheet.html">bp-os6920-datasheet</a>
+      <a href="/brochures/omniswitch/skills/bp-os9900-datasheet.html">bp-os9900-datasheet</a>
+  </nav>
+</aside>  <main id="main-content" class="course-main prose">
+    <nav class="breadcrumbs" aria-label="面包屑"><a href="/index.html">培训门户</a><span>/</span><a href="/brochures/index.html">产品彩页 · Product Datasheets</a><span>/</span><a href="/brochures/omniswitch/index.html">OmniSwitch</a><span>/</span><span aria-current="page">bp-os6870-datasheet</span></nav>
+<header class="skill-heading"><div><p class="eyebrow">KNOWLEDGE UNIT</p><h1>bp-os6870-datasheet</h1></div><dl><div><dt>Skill ID</dt><dd>bp-os6870-datasheet</dd></div></dl></header>    <article class="markdown-body"><p><img alt="OmniSwitch 6870 数据表速查（OmniFabric 三 fabric 合一高端） · 产品实物图（官方彩页）" src="images/omniswitch_6870.jpeg"></p>
 <h2 id="r">R（触发场景）</h2>
 <ul>
 <li>既有 SPB 园区要接 VxLAN-EVPN DC 或 MPLS WAN 的多 fabric 演进（一步到位不做网关转换）</li>
@@ -109,7 +89,7 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="i">I（核心理念）</h2>
 <ul>
-<li><strong>OS6870 基于 OmniFabric 架构</strong>：<br>"The first solution to support SPBM, VxLAN-EVPN, and MPLS within the Alcatel-Lucent OS (AOS) unified service manager framework"（<span class="pg">原文p110</span> ）。</li>
+<li><strong>OS6870 基于 OmniFabric 架构</strong>：<br>"The first solution to support SPBM, VxLAN-EVPN, and MPLS within the Alcatel-Lucent OS (AOS) unified service manager framework"（<span class="source-page">原文p110</span> ）。</li>
 <li>全口 256bit MACsec + Secure Boot + AI 流遥测（Network Advisor）。</li>
 <li><strong>层级</strong>：<br>高端接入/园区边缘旗舰，上接 6900/9900 核心。</li>
 </ul>
@@ -120,43 +100,108 @@ blockquote p{margin:6px 0}
 <li>V12 型独有 12x1/10/25G SFP28 全光形态，适合全光园区边缘。</li>
 </ul>
 <h2 id="a2">A2（规格细节速查表）</h2>
-<p>机型矩阵（<span class="pg">原文p111</span>  Highlights / <span class="pg">原文p112</span> /<span class="pg">原文p113</span>  表 1-2 / <span class="pg">原文p120</span> -<span class="pg">原文p122</span>  订购）：
-Advanced（advanced：2x100G VFL 固定 + 4/6x25G 固定上联）：
-| 型号 | 用户口 | 上联与 VFL | PoE（1 PS/2 PS） |
-|---|---|---|---|
-| OS6870-24/48（/D） | 24/48 x 1G RJ45 | 4x1/10/25G SFP28 + 2x40/100G QSFP28 | N/A |
-| OS6870-P24Z | 24x2.5G bt 60W | 6x1/10/25G SFP28 + 2x40/100G QSFP28 | 375/921W（BPPH） |
-| OS6870-P48Z | 48x2.5G bt 60W | 同上 | 739~921/1440~1976W（BPPX，分压位） |
-| OS6870-U32 | 16x1G SFP + 8x10G SFP+ + 8x25G SFP28 | 2x40/100/200G QSFP56 | N/A（BPH/BP-D） |
-Premium（模块化上联槽 + 2x200G QSFP56 VFL 固定）：
-| 型号 | 用户口 | 上联 | PoE（1 PS/2 PS） |
-|---|---|---|---|
-| OS6870-P48M | 48x2.5/5G bt 95W | LNI-U6（6x10/25/50G）或 CNI-U2（2x40/100G） | 216~762/580~1854W；BPXL 双配 3309W@230V |
-| OS6870-P24M | 24x2.5/5/10G bt 95W | 同上 | 242~788/788~2280W |
-| OS6870-V12（/D） | 12x1/10/25G SFP28 | 模块化 + 2x100/200G QSFP56 | N/A |
-上联与堆叠：VFL 容量 advanced 200/400 Gb/s（U32 与 premium 400/800 Gb/s 聚合，<span class="pg">原文p114</span> ）；VC 8 台任意混搭，VFL 口可当上联用（<span class="pg">原文p111</span> ）。
-交换容量与包转发（<span class="pg">原文p114</span> ）：648（24）~2000 Gb/s（V12）；482.1~1488 Mpps；8MB 包缓冲。
-电源体系（<span class="pg">原文p115</span> ）：1+1 热插拔、支持非平衡 PoE 负载分摊（不同容量 PSU 混配，<span class="pg">原文p113</span> ）；BP 250W/BP-D/BPPH 600W/BPPX 1200W/BPXL 2000W（仅 P48M/P24M）/BPH 550W（V12/U32）；advanced 最高 1976W、premium 最高 2280W（P24M 双 BPXL@230V，<span class="pg">原文p113</span> ）。
-Layer 特性（<span class="pg">原文p116</span> /<span class="pg">原文p117</span> ）：OmniFabric：SPB-M + VxLAN + VxLAN-EVPN（RFC 8365，Type 2/Type 5 路由）+ MPLS；完整 IPv4/IPv6 路由（OSPF/IS-IS/BGP/VRF/PIM）内置；1588v2 端到端透明时钟（<span class="pg">原文p111</span> ）；全口 256bit MACsec + Clear Tag（<span class="pg">原文p116</span> ）；Streaming telemetry/DPI（<span class="pg">原文p111</span> ）；128K MAC、116K IPv4/58K IPv6 路由（<span class="pg">原文p114</span> ）。
-许可家族（<span class="pg">原文p122</span> ）：OS-SW-MACSEC（免费站点许可）、OS6870-SW-PERF（LNI-U6 口 50G 速度）、SW-PRM1（P24M/P48M/V12 premium 特性）、SW-PRM2（24/48/P24Z/P48Z/U32）。
-硬件平台：8GB DRAM/32GB flash；风扇 2+1/3+1 冗余；0~45°C；MTBF 350k~558k 小时；待机 71~252W（<span class="pg">原文p119</span> ）。
-规格红线：50G 需 SW-PERF；premium 上联模块不随整机发货；按 bundle（##）订购。</p>
+<p>机型矩阵（<span class="source-page">原文p111</span>  Highlights / <span class="source-page">原文p112</span> /<span class="source-page">原文p113</span>  表 1-2 / <span class="source-page">原文p120</span> -<span class="source-page">原文p122</span>  订购）：
+Advanced（advanced：2x100G VFL 固定 + 4/6x25G 固定上联）：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>型号</th>
+<th>用户口</th>
+<th>上联与 VFL</th>
+<th>PoE（1 PS/2 PS）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OS6870-24/48（/D）</td>
+<td>24/48 x 1G RJ45</td>
+<td>4x1/10/25G SFP28 + 2x40/100G QSFP28</td>
+<td>N/A</td>
+</tr>
+<tr>
+<td>OS6870-P24Z</td>
+<td>24x2.5G bt 60W</td>
+<td>6x1/10/25G SFP28 + 2x40/100G QSFP28</td>
+<td>375/921W（BPPH）</td>
+</tr>
+<tr>
+<td>OS6870-P48Z</td>
+<td>48x2.5G bt 60W</td>
+<td>同上</td>
+<td>739~921/1440~1976W（BPPX，分压位）</td>
+</tr>
+<tr>
+<td>OS6870-U32</td>
+<td>16x1G SFP + 8x10G SFP+ + 8x25G SFP28</td>
+<td>2x40/100/200G QSFP56</td>
+<td>N/A（BPH/BP-D）</td>
+</tr>
+</tbody>
+</table></div>
+<p>Premium（模块化上联槽 + 2x200G QSFP56 VFL 固定）：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>型号</th>
+<th>用户口</th>
+<th>上联</th>
+<th>PoE（1 PS/2 PS）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OS6870-P48M</td>
+<td>48x2.5/5G bt 95W</td>
+<td>LNI-U6（6x10/25/50G）或 CNI-U2（2x40/100G）</td>
+<td>216~762/580~1854W；BPXL 双配 3309W@230V</td>
+</tr>
+<tr>
+<td>OS6870-P24M</td>
+<td>24x2.5/5/10G bt 95W</td>
+<td>同上</td>
+<td>242~788/788~2280W</td>
+</tr>
+<tr>
+<td>OS6870-V12（/D）</td>
+<td>12x1/10/25G SFP28</td>
+<td>模块化 + 2x100/200G QSFP56</td>
+<td>N/A</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>上联与堆叠</strong>：<br>VFL 容量 advanced 200/400 Gb/s（U32 与 premium 400/800 Gb/s 聚合，<span class="source-page">原文p114</span> ）；VC 8 台任意混搭，VFL 口可当上联用（<span class="source-page">原文p111</span> ）。</li>
+<li><strong>交换容量与包转发（<span class="source-page">原文p114</span> ）</strong>：<br>648（24）~2000 Gb/s（V12）；482.1~1488 Mpps；8MB 包缓冲。</li>
+<li><strong>电源体系（<span class="source-page">原文p115</span> ）</strong>：<br>1+1 热插拔、支持非平衡 PoE 负载分摊（不同容量 PSU 混配，<span class="source-page">原文p113</span> ）；BP 250W/BP-D/BPPH 600W/BPPX 1200W/BPXL 2000W（仅 P48M/P24M）/BPH 550W（V12/U32）；advanced 最高 1976W、premium 最高 2280W（P24M 双 BPXL@230V，<span class="source-page">原文p113</span> ）。</li>
+<li><strong>Layer 特性（<span class="source-page">原文p116</span> /<span class="source-page">原文p117</span> ）</strong>：<br>OmniFabric：SPB-M + VxLAN + VxLAN-EVPN（RFC 8365，Type 2/Type 5 路由）+ MPLS；完整 IPv4/IPv6 路由（OSPF/IS-IS/BGP/VRF/PIM）内置；1588v2 端到端透明时钟（<span class="source-page">原文p111</span> ）；全口 256bit MACsec + Clear Tag（<span class="source-page">原文p116</span> ）；Streaming telemetry/DPI（<span class="source-page">原文p111</span> ）；128K MAC、116K IPv4/58K IPv6 路由（<span class="source-page">原文p114</span> ）。</li>
+<li><strong>许可家族（<span class="source-page">原文p122</span> ）</strong>：<br>OS-SW-MACSEC（免费站点许可）、OS6870-SW-PERF（LNI-U6 口 50G 速度）、SW-PRM1（P24M/P48M/V12 premium 特性）、SW-PRM2（24/48/P24Z/P48Z/U32）。</li>
+<li><strong>硬件平台</strong>：<br>8GB DRAM/32GB flash；风扇 2+1/3+1 冗余；0~45°C；MTBF 350k~558k 小时；待机 71~252W（<span class="source-page">原文p119</span> ）。</li>
+<li><strong>规格红线</strong>：<br>50G 需 SW-PERF；premium 上联模块不随整机发货；按 bundle（##）订购。</li>
+</ul>
 <h2 id="e">E（适用场景）</h2>
 <ul>
 <li><strong>SPB 老园区向多 fabric 演进一步到位（C8）</strong>：<br>不必加网关转换 VxLAN DC/MPLS WAN</li>
 <li><strong>高安全园区/Zero Trust</strong>：<br>全口 256bit MACsec + Secure Boot + MACsec Clear Tag</li>
 <li><strong>Wi-Fi 6/6E/7 全 95W 旗舰接入</strong>：<br>P24M（24 口全 10G 多千兆 95W）</li>
-<li><strong>AI 运维</strong>：<br>流遥测引擎 + OmniVista Network Advisor 自动识别风险（<span class="pg">原文p111</span> ）</li>
+<li><strong>AI 运维</strong>：<br>流遥测引擎 + OmniVista Network Advisor 自动识别风险（<span class="source-page">原文p111</span> ）</li>
 <li><strong>全光边缘</strong>：<br>V12（12x25G SFP28）/U32（16x1G+8x10G+8x25G）</li>
 </ul>
 <h2 id="b">B（限制与坑）</h2>
 <ul>
-<li>50G 上联速度需 OS6870-SW-PERF 许可（"License required for 50G speed"，X16，<span class="pg">原文p111</span> ）——到货默认只到 25G</li>
-<li>premium 上联模块（LNI-U6/CNI-U2）需单独下单，不随整机（<span class="pg">原文p114</span> /<span class="pg">原文p122</span> ）</li>
-<li>全系按 bundle（## 号 = 主机 + 指定电源）订购——报价时注意包内电源规格（X21，<span class="pg">原文p120</span> -<span class="pg">原文p122</span> ）</li>
-<li>MACsec 需免费站点许可 OS-SW-MACSEC（<span class="pg">原文p122</span> ）</li>
-<li>BPXL 2000W 仅 P48M/P24M，115VAC 输出降为 1000W（<span class="pg">原文p115</span> ）</li>
-<li>PoE 型深 44.2cm、重量满配 9kg+——机柜深度/承重复核（<span class="pg">原文p113</span> ）</li>
-<li>MPLS 在数据表标注为 "MPLS2"（脚注 2，streaming telemetry/DPI 亦然，<span class="pg">原文p111</span> ）——投标前按 AOS 规格指南确认当前版本交付状态</li>
+<li>50G 上联速度需 OS6870-SW-PERF 许可（"License required for 50G speed"，X16，<span class="source-page">原文p111</span> ）——到货默认只到 25G</li>
+<li>premium 上联模块（LNI-U6/CNI-U2）需单独下单，不随整机（<span class="source-page">原文p114</span> /<span class="source-page">原文p122</span> ）</li>
+<li>全系按 bundle（## 号 = 主机 + 指定电源）订购——报价时注意包内电源规格（X21，<span class="source-page">原文p120</span> -<span class="source-page">原文p122</span> ）</li>
+<li>MACsec 需免费站点许可 OS-SW-MACSEC（<span class="source-page">原文p122</span> ）</li>
+<li>BPXL 2000W 仅 P48M/P24M，115VAC 输出降为 1000W（<span class="source-page">原文p115</span> ）</li>
+<li>PoE 型深 44.2cm、重量满配 9kg+——机柜深度/承重复核（<span class="source-page">原文p113</span> ）</li>
+<li>MPLS 在数据表标注为 "MPLS2"（脚注 2，streaming telemetry/DPI 亦然，<span class="source-page">原文p111</span> ）——投标前按 AOS 规格指南确认当前版本交付状态</li>
 </ul>
-<p>来源：bp-omniswitch-datasheets DOC 12（p110-124，MPR24040101EN June 2026）；verified.md C8/C9/X16/X21/P13/P14/F5</p><div class="pn"><a href="bp-os6865-datasheet.html">⬅ 上一单元：bp-os6865-datasheet</a><a class="nxt" href="bp-os6900-datasheet.html">下一单元：bp-os6900-datasheet ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<p>来源：bp-omniswitch-datasheets DOC 12（p110-124，MPR24040101EN June 2026）；verified.md C8/C9/X16/X21/P13/P14/F5</p></article>
+<nav class="previous-next" aria-label="知识单元翻页"><a href="/brochures/omniswitch/skills/bp-os6865-datasheet.html"><span>上一单元</span><b>bp-os6865-datasheet</b></a><a class="next" href="/brochures/omniswitch/skills/bp-os6900-datasheet.html"><span>下一单元</span><b>bp-os6900-datasheet</b></a></nav>    <footer class="content-footer">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</footer>
+  </main>
+</div>
+  <script src="/assets/js/app.js?v=4" defer></script>
+  <script src="/assets/js/search.js?v=4" defer></script>
+  <script src="/assets/js/lightbox.js?v=5" defer></script>
+</body>
+</html>

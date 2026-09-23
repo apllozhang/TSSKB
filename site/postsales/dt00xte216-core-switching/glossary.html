@@ -1,107 +1,87 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>术语词典 — DT00XTE216 · OmniSwitch LAN R8 Core Switching</title>
-<style>
-:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
-*{box-sizing:border-box}
-body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
-a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
-.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin:16px 0}
-.gallery figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px}
-.gallery img{width:100%;max-height:340px;object-fit:contain;background:#fff;border-radius:6px}
-.gallery figcaption{font-size:12.5px;color:var(--mut);text-align:center;margin-top:6px}
-/* 侧栏折叠 + 图片灯箱 */
-.tgl{position:fixed;left:0;top:45%;z-index:60;background:var(--card);border:1px solid var(--line);border-right:none;border-radius:0 8px 8px 0;color:var(--tx);padding:10px 6px;cursor:pointer;font-size:13px;line-height:1.1;writing-mode:vertical-lr}
-.tgl:hover{background:var(--acc);color:#0f172a}
-.layout.full{grid-template-columns:0 1fr}
-.layout.full aside{display:none}
-.lb{position:fixed;inset:0;background:rgba(5,10,20,.92);z-index:100;display:flex;align-items:center;justify-content:center;flex-direction:column}
-.lb img{max-width:92vw;max-height:82vh;background:#fff;border-radius:6px;transition:transform .12s}
-.lb .lbb{margin-top:10px;display:flex;gap:10px}
-.lb button{background:var(--card);border:1px solid var(--line);color:var(--tx);border-radius:8px;padding:6px 14px;cursor:pointer;font-size:14px}
-.lb button:hover{background:var(--acc);color:#0f172a}
-.search{margin:0 0 14px}
-.search input{width:100%;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--tx);font-size:13px;outline:none}
-.search input:focus{border-color:var(--acc)}
-#qres{max-height:340px;overflow-y:auto;margin-top:6px}
-#qres .qi{display:block;padding:6px 8px;border-radius:6px;font-size:12.5px;color:var(--tx);border-left:2px solid transparent}
-#qres .qi:hover{background:var(--card);text-decoration:none;border-left-color:var(--acc)}
-#qres .qi .qp{color:var(--mut);font-size:11px;display:block}
-#qres .qi b{color:var(--acc)}
-.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
-main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
-.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
-aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
-aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
-aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
-aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
-aside a:hover{background:var(--card);text-decoration:none}
-aside a.on{background:var(--card);color:var(--acc)}
-main{padding:36px 48px;max-width:1000px}
-h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
-h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
-table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
-th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
-th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
-code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
-pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
-pre code{background:none;padding:0}
-blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
-.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
-.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
-.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
-.meta{font-size:13px;color:var(--mut)}
-hr{border:none;border-top:1px solid var(--line);margin:26px 0}
-.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
-.badge.soon{background:#475569;color:#cbd5e1}
-main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
-main{padding:28px 48px 40px;max-width:1040px}
-h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
-blockquote p{margin:6px 0}
-.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
-.crumbs a{color:var(--acc)}
-.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
-.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
-.pn a:hover{border-color:var(--acc)}
-.pn .nxt{text-align:right}
-.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
-@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
-</style></head>
-<body><div class="layout"><aside><h1>DT00XTE216 · OmniSwitch LAN R8 Core Switching</h1>
-<div class="search"><input id="qk" type="search" placeholder="🔍 搜索全站…" autocomplete="off"><div id="qres"></div></div>
-
-<div class="sub">Edition 15 · 724 页 · 核心交换专题（新流水线重制版：ERP/MACsec/PVLAN/MSTP/安全/OSPF/组播/BGP/SPB）</div>
-<a href="index.html">🏠 课程首页</a>
-<a href="digest.html">📖 精华长文 DIGEST</a>
-
-<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
-<a href="glossary.html">🔤 术语词典</a>
-<a href="../../index.html">⬅️ 返回培训门户</a>
-<a href="index.html">──── Skills ────</a>
-<div class="grp">二层专题</div>
-<a href="skills/erp-ring-protection.html">erp-ring-protection</a>
-<a href="skills/macsec-link-encryption.html">macsec-link-encryption</a>
-<a href="skills/private-vlan-isolation.html">private-vlan-isolation</a>
-<a href="skills/mstp-load-sharing.html">mstp-load-sharing</a>
-<a href="skills/mvrp-dynamic-vlan.html">mvrp-dynamic-vlan</a>
-<div class="grp">安全</div>
-<a href="skills/arp-dos-defense.html">arp-dos-defense</a>
-<a href="skills/learned-port-security.html">learned-port-security</a>
-<div class="grp">三层路由</div>
-<a href="skills/ip-routing-fundamentals.html">ip-routing-fundamentals</a>
-<a href="skills/ospf-area-redistribution.html">ospf-area-redistribution</a>
-<a href="skills/bgp-vrf-leak.html">bgp-vrf-leak</a>
-<div class="grp">Fabric 与组播</div>
-<a href="skills/spb-fabric.html">spb-fabric</a>
-<a href="skills/multicast-pim.html">multicast-pim</a>
-<div class="grp">运维</div>
-<a href="skills/switch-platform-ops.html">switch-platform-ops</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../postsales/index.html">售后</a> › <a href="index.html">DT00XTE216</a> › <span>术语词典</span></nav><h1>术语词典</h1><h1 id="omniswitch-lan-core-switching-ed15">术语表（OmniSwitch LAN Core Switching Ed15）</h1>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="面向售前、售后与网络工程师的 ALE 内部技术知识平台">
+  <meta name="theme-color" content="#6B489D">
+  <title>术语词典 — DT00XTE216 · OmniSwitch LAN R8 Core Switching</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=4">
+  <link rel="stylesheet" href="/assets/css/layout.css?v=4">
+  <link rel="stylesheet" href="/assets/css/components.css?v=4">
+  <link rel="stylesheet" href="/assets/css/content.css?v=7">
+  <script src="/assets/js/auth-config.js?v=4"></script>
+  <script src="/assets/js/auth-core.js?v=4"></script>
+  <script src="/assets/js/auth-guard.js?v=4"></script>
+</head>
+<body data-page-kind="course">
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <header class="topbar" data-topbar>
+    <a class="brand" href="/index.html" aria-label="返回 ALE 技术培训门户首页">
+      <img src="/assets/ale-logo-color.png" alt="Alcatel-Lucent Enterprise">
+      <span>ALE 培训门户</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-controls="primary-nav" aria-expanded="false" data-nav-toggle>
+      <span aria-hidden="true">☰</span><span class="sr-only">打开导航</span>
+    </button>
+    <nav id="primary-nav" class="primary-nav" aria-label="主导航">
+      <a href="/index.html">首页</a>
+      <a href="/paths.html">学习路径</a>
+      <a href="/presales/index.html">售前</a>
+      <a href="/postsales/index.html" aria-current="page">售后</a>
+      <a href="/wlan/index.html">无线</a>
+      <a href="/aos/index.html">AOS 手册</a>
+      <a href="/hardware/index.html">硬件</a>
+      <a href="/brochures/index.html">彩页</a>
+      <a href="/solutions/index.html">解决方案</a>
+      <a href="/security/index.html">安全</a>
+    </nav>
+    <button id="logout-btn" class="logout-btn" type="button" hidden>退出登录</button>
+  </header>
+<div class="course-layout">
+<aside class="course-sidebar" id="course-sidebar" data-sidebar>
+  <div class="sidebar-heading">
+    <p class="eyebrow">COURSE</p>
+    <h2>DT00XTE216 · OmniSwitch LAN R8 Core Switching</h2>
+    <p>Edition 15 · 724 页 · 核心交换专题（新流水线重制版：ERP/MACsec/PVLAN/MSTP/安全/OSPF/组播/BGP/SPB）</p>
+  </div>
+<div class="search" data-search>
+  <label class="sr-only" for="course-search">搜索全站课程和知识单元</label>
+  <input id="course-search" type="search" placeholder="搜索课程编号、产品型号或技术关键词…" autocomplete="off" data-search-input>
+  <div class="search-results" role="listbox" aria-live="polite" data-search-results></div>
+</div>  <nav class="course-nav" aria-label="课程目录">
+    <a href="/postsales/dt00xte216-core-switching/index.html">课程首页</a>
+    <a href="/postsales/dt00xte216-core-switching/digest.html">精华长文</a>
+    <a href="/postsales/dt00xte216-core-switching/overview.html">教书理解</a>
+    <a aria-current="page" href="/postsales/dt00xte216-core-switching/glossary.html">术语词典</a>
+    <p class="course-nav-group">二层专题</p>
+      <a href="/postsales/dt00xte216-core-switching/skills/erp-ring-protection.html">erp-ring-protection</a>
+      <a href="/postsales/dt00xte216-core-switching/skills/macsec-link-encryption.html">macsec-link-encryption</a>
+      <a href="/postsales/dt00xte216-core-switching/skills/private-vlan-isolation.html">private-vlan-isolation</a>
+      <a href="/postsales/dt00xte216-core-switching/skills/mstp-load-sharing.html">mstp-load-sharing</a>
+      <a href="/postsales/dt00xte216-core-switching/skills/mvrp-dynamic-vlan.html">mvrp-dynamic-vlan</a>
+    <p class="course-nav-group">安全</p>
+      <a href="/postsales/dt00xte216-core-switching/skills/arp-dos-defense.html">arp-dos-defense</a>
+      <a href="/postsales/dt00xte216-core-switching/skills/learned-port-security.html">learned-port-security</a>
+    <p class="course-nav-group">三层路由</p>
+      <a href="/postsales/dt00xte216-core-switching/skills/ip-routing-fundamentals.html">ip-routing-fundamentals</a>
+      <a href="/postsales/dt00xte216-core-switching/skills/ospf-area-redistribution.html">ospf-area-redistribution</a>
+      <a href="/postsales/dt00xte216-core-switching/skills/bgp-vrf-leak.html">bgp-vrf-leak</a>
+    <p class="course-nav-group">Fabric 与组播</p>
+      <a href="/postsales/dt00xte216-core-switching/skills/spb-fabric.html">spb-fabric</a>
+      <a href="/postsales/dt00xte216-core-switching/skills/multicast-pim.html">multicast-pim</a>
+    <p class="course-nav-group">运维</p>
+      <a href="/postsales/dt00xte216-core-switching/skills/switch-platform-ops.html">switch-platform-ops</a>
+  </nav>
+</aside>  <main id="main-content" class="course-main prose">
+    <nav class="breadcrumbs" aria-label="面包屑"><a href="/index.html">培训门户</a><span>/</span><a href="/postsales/index.html">售后 · Postsales</a><span>/</span><a href="/postsales/dt00xte216-core-switching/index.html">DT00XTE216</a><span>/</span><span aria-current="page">术语词典</span></nav>
+<header class="page-intro compact"><p class="eyebrow">COURSE REFERENCE</p><h1>术语词典</h1></header>    <article class="markdown-body"><h1 id="omniswitch-lan-core-switching-ed15">术语表（OmniSwitch LAN Core Switching Ed15）</h1>
 <blockquote>
 <p>从 verified.md glossary 候选整理，按专题分组，页码为原书首现/核心页。</p>
 </blockquote>
 <h2 id="erp">ERP 环网</h2>
-<table>
+<div class="table-scroll"><table>
 <thead>
 <tr>
 <th>术语</th>
@@ -113,67 +93,67 @@ blockquote p{margin:6px 0}
 <tr>
 <td>ERP (Ethernet Ring Protection)</td>
 <td>以太网环网保护协议，环内防环并实现约 50ms 快速故障恢复</td>
-<td><span class="pg">原文p37</span></td>
+<td><span class="source-page">原文p37</span></td>
 </tr>
 <tr>
 <td>RPL (Ring Protection Link)</td>
 <td>环保护链路，环内正常状态下被阻塞以防环路的那条链路</td>
-<td><span class="pg">原文p38</span></td>
+<td><span class="source-page">原文p38</span></td>
 </tr>
 <tr>
 <td>RPL Owner</td>
 <td>持有 RPL 端口的交换机，负责稳态阻塞/故障时解阻塞 RPL 口</td>
-<td><span class="pg">原文p38</span></td>
+<td><span class="source-page">原文p38</span></td>
 </tr>
 <tr>
 <td>R-APS message</td>
 <td>环自动保护倒换消息，在 Service VLAN 内传递</td>
-<td><span class="pg">原文p38</span></td>
+<td><span class="source-page">原文p38</span></td>
 </tr>
 <tr>
 <td>SF (Signal Fail)</td>
 <td>R-APS 消息类型，检测到链路/节点故障时宣告</td>
-<td><span class="pg">原文p38</span></td>
+<td><span class="source-page">原文p38</span></td>
 </tr>
 <tr>
 <td>NR / RB (No Request / RPL Blocked)</td>
 <td>无请求消息及 RPL 已阻塞标记，恢复完成时由 RPL Owner 发出</td>
-<td><span class="pg">原文p40</span></td>
+<td><span class="source-page">原文p40</span></td>
 </tr>
 <tr>
 <td>WTR (Wait To Restore) timer</td>
 <td>等待恢复定时器，默认 5 分钟，防链路抖动引发反复倒换</td>
-<td><span class="pg">原文p42</span></td>
+<td><span class="source-page">原文p42</span></td>
 </tr>
 <tr>
 <td>Guard Timer</td>
 <td>守护定时器（默认 50 厘秒），丢弃过期 R-APS 防误倒换</td>
-<td><span class="pg">原文p56</span></td>
+<td><span class="source-page">原文p56</span></td>
 </tr>
 <tr>
 <td>Service VLAN</td>
 <td>环级 VLAN，承载 R-APS 消息和 ETH CCM</td>
-<td><span class="pg">原文p38</span></td>
+<td><span class="source-page">原文p38</span></td>
 </tr>
 <tr>
 <td>Protected VLAN</td>
 <td>加入 ERP 环、转发状态由 ERP 决定的业务 VLAN</td>
-<td><span class="pg">原文p38</span></td>
+<td><span class="source-page">原文p38</span></td>
 </tr>
 <tr>
 <td>MEG Level</td>
 <td>ERP 管理实体组级别 0-7，环内所有交换机必须一致</td>
-<td><span class="pg">原文p47</span></td>
+<td><span class="source-page">原文p47</span></td>
 </tr>
 <tr>
 <td>Laddered / Subtending Ring</td>
 <td>主环+子环的梯形结构，子环借主环虚通道闭合</td>
-<td><span class="pg">原文p43</span></td>
+<td><span class="source-page">原文p43</span></td>
 </tr>
 </tbody>
-</table>
+</table></div>
 <h2 id="macsec">MACsec</h2>
-<table>
+<div class="table-scroll"><table>
 <thead>
 <tr>
 <th>术语</th>
@@ -185,57 +165,57 @@ blockquote p{margin:6px 0}
 <tr>
 <td>MACsec (IEEE 802.1AE)</td>
 <td>二层链路加密与认证标准，点到点保护直连节点间流量</td>
-<td><span class="pg">原文p67</span></td>
+<td><span class="source-page">原文p67</span></td>
 </tr>
 <tr>
 <td>SecTag</td>
 <td>MACsec 报文头（8/16 字节），含密钥信息、包号与安全通道标识（EtherType 0x88E5）</td>
-<td><span class="pg">原文p68</span></td>
+<td><span class="source-page">原文p68</span></td>
 </tr>
 <tr>
 <td>ICV (Integrity Check Value)</td>
 <td>GCM-AES 生成的 16 字节完整性校验值</td>
-<td><span class="pg">原文p68</span></td>
+<td><span class="source-page">原文p68</span></td>
 </tr>
 <tr>
 <td>SCI (Secure Channel Identifier)</td>
 <td>安全通道标识，收发通道各一，需与对端交叉匹配</td>
-<td><span class="pg">原文p69</span></td>
+<td><span class="source-page">原文p69</span></td>
 </tr>
 <tr>
 <td>SAK (Secure Association Key)</td>
 <td>安全关联密钥，加密数据平面流量</td>
-<td><span class="pg">原文p69</span></td>
+<td><span class="source-page">原文p69</span></td>
 </tr>
 <tr>
 <td>Key-chain</td>
 <td>密钥链，聚合多个 security key 供 sci-tx/sci-rx 引用</td>
-<td><span class="pg">原文p69</span></td>
+<td><span class="source-page">原文p69</span></td>
 </tr>
 <tr>
 <td>Static SA Mode</td>
 <td>手工配置最多 4 把 SA 密钥的交换机间静态模式</td>
-<td><span class="pg">原文p75</span></td>
+<td><span class="source-page">原文p75</span></td>
 </tr>
 <tr>
 <td>MKA (MACsec Key Agreement)</td>
 <td>IEEE 802.1X-2010 密钥协商协议，动态生成 SAK</td>
-<td><span class="pg">原文p76</span></td>
+<td><span class="source-page">原文p76</span></td>
 </tr>
 <tr>
 <td>CAK (Connectivity Association Key)</td>
 <td>连接关联密钥，保护 MKA 控制平面；EAP 模式经 RADIUS VSAs 下发</td>
-<td><span class="pg">原文p76</span></td>
+<td><span class="source-page">原文p76</span></td>
 </tr>
 <tr>
 <td>Key rotation</td>
 <td>SAK 轮换，按会话时长（5-120 分钟）或流量（5-1000GB）先到先换</td>
-<td><span class="pg">原文p77</span></td>
+<td><span class="source-page">原文p77</span></td>
 </tr>
 </tbody>
-</table>
+</table></div>
 <h2 id="private-vlan-mstp-mvrp">Private VLAN / MSTP / MVRP</h2>
-<table>
+<div class="table-scroll"><table>
 <thead>
 <tr>
 <th>术语</th>
@@ -247,77 +227,77 @@ blockquote p{margin:6px 0}
 <tr>
 <td>Private VLAN (PVLAN)</td>
 <td>在单广播域内划分子域实现二层隔离的特性</td>
-<td><span class="pg">原文p98</span></td>
+<td><span class="source-page">原文p98</span></td>
 </tr>
 <tr>
 <td>Primary / Secondary VLAN</td>
 <td>PVLAN 主 VLAN（对外）与从 VLAN（isolated/community 两类）</td>
-<td><span class="pg">原文p99</span></td>
+<td><span class="source-page">原文p99</span></td>
 </tr>
 <tr>
 <td>Isolated VLAN</td>
 <td>隔离型二级 VLAN，成员间二层完全不通，仅到 promiscuous 口；每 Primary 仅一个</td>
-<td><span class="pg">原文p99</span> 、<span class="pg">原文p109</span></td>
+<td><span class="source-page">原文p99</span> 、<span class="source-page">原文p109</span></td>
 </tr>
 <tr>
 <td>Community VLAN</td>
 <td>社区型二级 VLAN，同社区可互通、跨社区不通</td>
-<td><span class="pg">原文p99</span></td>
+<td><span class="source-page">原文p99</span></td>
 </tr>
 <tr>
 <td>Promiscuous port</td>
 <td>混杂端口，属 Primary VLAN，可与所有端口通信</td>
-<td><span class="pg">原文p100</span></td>
+<td><span class="source-page">原文p100</span></td>
 </tr>
 <tr>
 <td>PVLAN ISL</td>
 <td>跨交换机延伸 PVLAN 域的级联口，同时承载主/从 VLAN</td>
-<td><span class="pg">原文p100</span></td>
+<td><span class="source-page">原文p100</span></td>
 </tr>
 <tr>
 <td>MSTP (IEEE 802.1s)</td>
 <td>多生成树协议，多 VLAN 映射到少量实例</td>
-<td><span class="pg">原文p115</span></td>
+<td><span class="source-page">原文p115</span></td>
 </tr>
 <tr>
 <td>MSTI (MST Instance)</td>
 <td>多生成树实例（最多 16 个），VLAN 按需映射</td>
-<td><span class="pg">原文p116</span></td>
+<td><span class="source-page">原文p116</span></td>
 </tr>
 <tr>
 <td>CIST / IST</td>
 <td>公共与内部生成树（实例 0），未映射 VLAN 默认归属，承载全部实例 BPDU</td>
-<td><span class="pg">原文p115</span> 、<span class="pg">原文p118</span></td>
+<td><span class="source-page">原文p115</span> 、<span class="source-page">原文p118</span></td>
 </tr>
 <tr>
 <td>MST Region</td>
 <td>多生成树区域，name+revision+VLAN 映射三要素一致才同域</td>
-<td><span class="pg">原文p117</span></td>
+<td><span class="source-page">原文p117</span></td>
 </tr>
 <tr>
 <td>Flat / per-vlan (1x1) mode</td>
 <td>单树 flat 模式（MSTP/MVRP 前置）与每 VLAN 一树模式，二者互斥</td>
-<td><span class="pg">原文p122</span> 、<span class="pg">原文p143</span></td>
+<td><span class="source-page">原文p122</span> 、<span class="source-page">原文p143</span></td>
 </tr>
 <tr>
 <td>MVRP (IEEE 802.1ak)</td>
 <td>多 VLAN 注册协议，跨桥接网动态传播 VLAN 成员（近似 GVRP）</td>
-<td><span class="pg">原文p152</span></td>
+<td><span class="source-page">原文p152</span></td>
 </tr>
 <tr>
 <td>Registrar / Applicant mode</td>
 <td>MVRP 端口注册模式（normal/fixed/forbidden）与申请者模式</td>
-<td><span class="pg">原文p154</span> 、<span class="pg">原文p155</span></td>
+<td><span class="source-page">原文p154</span> 、<span class="source-page">原文p155</span></td>
 </tr>
 <tr>
 <td>Dynamic VLAN (dyn)</td>
 <td>由 MVRP 自动学习创建的 VLAN，不建 IP 接口、不映射 MSTI</td>
-<td><span class="pg">原文p162</span> 、<span class="pg">原文p163</span></td>
+<td><span class="source-page">原文p162</span> 、<span class="source-page">原文p163</span></td>
 </tr>
 </tbody>
-</table>
+</table></div>
 <h2 id="_1">网络安全</h2>
-<table>
+<div class="table-scroll"><table>
 <thead>
 <tr>
 <th>术语</th>
@@ -329,62 +309,62 @@ blockquote p{margin:6px 0}
 <tr>
 <td>DoS Filtering</td>
 <td>交换机内置 DoS 攻击过滤（PoD/SYN/Land/Teardrop/ICMP&gt;100pps 等）</td>
-<td><span class="pg">原文p168</span></td>
+<td><span class="source-page">原文p168</span></td>
 </tr>
 <tr>
 <td>UDP Relay</td>
 <td>通用 UDP 端口中继，按服务端口转发到指定 VLAN/IP</td>
-<td><span class="pg">原文p170</span></td>
+<td><span class="source-page">原文p170</span></td>
 </tr>
 <tr>
 <td>ARP Poisoning Detection</td>
 <td>ARP 欺骗检测，识别未请求应答/伪造请求，restricted-address 每接口最多 2 个</td>
-<td><span class="pg">原文p176</span> 、<span class="pg">原文p177</span></td>
+<td><span class="source-page">原文p176</span> 、<span class="source-page">原文p177</span></td>
 </tr>
 <tr>
 <td>Local Proxy ARP</td>
 <td>本地代理 ARP，per-VLAN 用路由口 MAC 应答所有请求</td>
-<td><span class="pg">原文p179</span></td>
+<td><span class="source-page">原文p179</span></td>
 </tr>
 <tr>
 <td>ARP filter</td>
 <td>ARP 过滤，按 sender/target 与 allow/block 控制代理应答</td>
-<td><span class="pg">原文p180</span></td>
+<td><span class="source-page">原文p180</span></td>
 </tr>
 <tr>
 <td>Port Mapping</td>
 <td>端口映射会话，user 口彼此隔离仅经 network 口通信，最多 8 会话</td>
-<td><span class="pg">原文p182</span></td>
+<td><span class="source-page">原文p182</span></td>
 </tr>
 <tr>
 <td>MFF (MAC Forced Forwarding, RFC 4562)</td>
 <td>MAC 强制转发，同子网主机 ARP 一律指向网关（DHCP snooping+port mapping+动态代理 ARP）</td>
-<td><span class="pg">原文p185</span></td>
+<td><span class="source-page">原文p185</span></td>
 </tr>
 <tr>
 <td>Storm Control (flood-limit)</td>
 <td>风暴控制，按 bcast/mcast/uucast 限速（pps/mbps/cap%），违例 shutdown/trap</td>
-<td><span class="pg">原文p188</span></td>
+<td><span class="source-page">原文p188</span></td>
 </tr>
 <tr>
 <td>LPS (Learned Port Security)</td>
 <td>学习型端口安全：限 MAC 数量/学习窗/违例 restrict 或 shutdown；不支持聚合口</td>
-<td><span class="pg">原文p190</span></td>
+<td><span class="source-page">原文p190</span></td>
 </tr>
 <tr>
 <td>convert-to-static</td>
 <td>将端口已学动态 MAC 固化为静态，锁定当前设备</td>
-<td><span class="pg">原文p193</span></td>
+<td><span class="source-page">原文p193</span></td>
 </tr>
 <tr>
 <td>pkt-relay</td>
 <td>LPS 报文中继，学习期被截获报文重注入转发路径</td>
-<td><span class="pg">原文p196</span></td>
+<td><span class="source-page">原文p196</span></td>
 </tr>
 </tbody>
-</table>
+</table></div>
 <h2 id="ip-ospf">IP 路由 / OSPF</h2>
-<table>
+<div class="table-scroll"><table>
 <thead>
 <tr>
 <th>术语</th>
@@ -396,102 +376,102 @@ blockquote p{margin:6px 0}
 <tr>
 <td>Loopback0</td>
 <td>环回接口，管理/协议标识用，RIP/OSPF 自动通告（BGP 不）</td>
-<td><span class="pg">原文p216</span></td>
+<td><span class="source-page">原文p216</span></td>
 </tr>
 <tr>
 <td>Recursive static route (follows)</td>
 <td>递归静态路由，下一跳跟随某目标主机路由动态解析</td>
-<td><span class="pg">原文p224</span></td>
+<td><span class="source-page">原文p224</span></td>
 </tr>
 <tr>
 <td>RIP</td>
 <td>距离矢量协议，跳数度量，16 跳不可达，UDP 520，更新 30s/失效 180s</td>
-<td><span class="pg">原文p227</span></td>
+<td><span class="source-page">原文p227</span></td>
 </tr>
 <tr>
 <td>Router database / route-pref</td>
 <td>路由数据库与协议优先级（Local 1/Static 2/OSPF 110/RIP 120/EBGP 190…）</td>
-<td><span class="pg">原文p223</span> 、<span class="pg">原文p299</span></td>
+<td><span class="source-page">原文p223</span> 、<span class="source-page">原文p299</span></td>
 </tr>
 <tr>
 <td>Router ID</td>
 <td>OSPF 路由器标识：手工指定 &gt; Loopback0 &gt; 最高接口 IP</td>
-<td><span class="pg">原文p240</span></td>
+<td><span class="source-page">原文p240</span></td>
 </tr>
 <tr>
 <td>DR / BDR / DROther</td>
 <td>指定/备份指定路由器（优先级+RouterID 选举）与普通路由器；组播 224.0.0.5/224.0.0.6</td>
-<td><span class="pg">原文p242</span></td>
+<td><span class="source-page">原文p242</span></td>
 </tr>
 <tr>
 <td>DBD / LSR / LSU / LSAck</td>
 <td>OSPF 数据库描述/请求/更新/确认包，邻接同步四件套</td>
-<td><span class="pg">原文p245</span> 、<span class="pg">原文p246</span></td>
+<td><span class="source-page">原文p245</span> 、<span class="source-page">原文p246</span></td>
 </tr>
 <tr>
 <td>LSA Type 1/2</td>
 <td>路由器 LSA（每路由器域内泛洪）与网络 LSA（DR 生成）</td>
-<td><span class="pg">原文p260</span> 、<span class="pg">原文p261</span></td>
+<td><span class="source-page">原文p260</span> 、<span class="source-page">原文p261</span></td>
 </tr>
 <tr>
 <td>LSA Type 3 (Summary)</td>
 <td>汇总 LSA，ABR 生成跨区域通告网段；也承载区域路由汇总</td>
-<td><span class="pg">原文p262</span> 、<span class="pg">原文p286</span></td>
+<td><span class="source-page">原文p262</span> 、<span class="source-page">原文p286</span></td>
 </tr>
 <tr>
 <td>LSA Type 4 (Summary ASBR)</td>
 <td>ASBR 汇总 LSA，ABR 通告到 ASBR 的位置</td>
-<td><span class="pg">原文p264</span></td>
+<td><span class="source-page">原文p264</span></td>
 </tr>
 <tr>
 <td>LSA Type 5 (External)</td>
 <td>外部 LSA，ASBR 重分发的域外路由；外部聚合由 ASBR 完成</td>
-<td><span class="pg">原文p263</span> 、<span class="pg">原文p287</span></td>
+<td><span class="source-page">原文p263</span> 、<span class="source-page">原文p287</span></td>
 </tr>
 <tr>
 <td>LSA Type 7 (NSSA)</td>
 <td>NSSA 外部 LSA，ABR 转换为 Type 5 出域</td>
-<td><span class="pg">原文p265</span></td>
+<td><span class="source-page">原文p265</span></td>
 </tr>
 <tr>
 <td>ABR / ASBR / BB / IR</td>
 <td>区域边界路由器（汇总）/自治系统边界路由器（重分发）/骨干/内部路由器</td>
-<td><span class="pg">原文p256</span> -<span class="pg">原文p258</span></td>
+<td><span class="source-page">原文p256</span> -<span class="source-page">原文p258</span></td>
 </tr>
 <tr>
 <td>Stub / Totally Stubby Area</td>
 <td>末梢区域（拒 Type4/5，ABR 注入 Type3 默认路由）/完全末梢（再拒 Type3）</td>
-<td><span class="pg">原文p268</span> 、<span class="pg">原文p269</span></td>
+<td><span class="source-page">原文p268</span> 、<span class="source-page">原文p269</span></td>
 </tr>
 <tr>
 <td>NSSA</td>
 <td>非纯末梢区域，允许 ASBR 用 Type7 引入外部路由</td>
-<td><span class="pg">原文p270</span></td>
+<td><span class="source-page">原文p270</span></td>
 </tr>
 <tr>
 <td>ECMP</td>
 <td>等价多路径，按流负载分担，AOS 最多 4 条，不支持逐包</td>
-<td><span class="pg">原文p285</span></td>
+<td><span class="source-page">原文p285</span></td>
 </tr>
 <tr>
 <td>Virtual Link / Transit Area</td>
 <td>虚链路与穿越区域，跨非骨干区延伸 Area 0</td>
-<td><span class="pg">原文p289</span></td>
+<td><span class="source-page">原文p289</span></td>
 </tr>
 <tr>
 <td>Graceful Restart (Grace LSA)</td>
 <td>平滑重启，重启期间邻居维持邻接避免全网 SPF；OSPF/ISIS 默认关、BGP 默认开</td>
-<td><span class="pg">原文p361</span> 、<span class="pg">原文p363</span></td>
+<td><span class="source-page">原文p361</span> 、<span class="source-page">原文p363</span></td>
 </tr>
 <tr>
 <td>Route Map (action/match/set)</td>
 <td>路由图：动作+匹配+修改，重分发过滤核心；序列自上而下命中即停</td>
-<td><span class="pg">原文p300</span> 、<span class="pg">原文p304</span></td>
+<td><span class="source-page">原文p300</span> 、<span class="source-page">原文p304</span></td>
 </tr>
 </tbody>
-</table>
+</table></div>
 <h2 id="_2">组播</h2>
-<table>
+<div class="table-scroll"><table>
 <thead>
 <tr>
 <th>术语</th>
@@ -503,62 +483,62 @@ blockquote p{margin:6px 0}
 <tr>
 <td>Class D / 01:00:5E</td>
 <td>组播地址 224.0.0.0-239.255.255.255，IP 低 23 位映射组播 MAC</td>
-<td><span class="pg">原文p375</span></td>
+<td><span class="source-page">原文p375</span></td>
 </tr>
 <tr>
 <td>IPMS (IP Multicast Switching)</td>
 <td>IP 组播交换，硬件 IGMP 侦听按端口转发</td>
-<td><span class="pg">原文p377</span></td>
+<td><span class="source-page">原文p377</span></td>
 </tr>
 <tr>
 <td>IGMP (v1/v2/v3)</td>
 <td>因特网组管理协议；v2 加 Leave/特定组查询，v3 加源过滤；TTL=1 本地段协议</td>
-<td><span class="pg">原文p381</span> 、<span class="pg">原文p382</span></td>
+<td><span class="source-page">原文p381</span> 、<span class="source-page">原文p382</span></td>
 </tr>
 <tr>
 <td>IGMP Querier / querier-forwarding</td>
 <td>查询器（每 LAN 一个）与查询器转发（组播定向到查询器交换机）</td>
-<td><span class="pg">原文p380</span> 、<span class="pg">原文p389</span></td>
+<td><span class="source-page">原文p380</span> 、<span class="source-page">原文p389</span></td>
 </tr>
 <tr>
 <td>IGMP Throttling (max-group)</td>
 <td>每端口/VLAN/全局限制学习组数，动作 none/drop/replace</td>
-<td><span class="pg">原文p396</span></td>
+<td><span class="source-page">原文p396</span></td>
 </tr>
 <tr>
 <td>RPF (Reverse Path Forwarding)</td>
 <td>逆向路径转发校验，只在指向源的接口收包</td>
-<td><span class="pg">原文p413</span> 、<span class="pg">原文p426</span></td>
+<td><span class="source-page">原文p413</span> 、<span class="source-page">原文p426</span></td>
 </tr>
 <tr>
 <td>PIM-SM / PIM-DM</td>
 <td>稀疏模式（显式加入+RP 共享树）/密集模式（泛洪-剪枝 3 分钟循环、无 RP）</td>
-<td><span class="pg">原文p426</span> 、<span class="pg">原文p434</span></td>
+<td><span class="source-page">原文p426</span> 、<span class="source-page">原文p434</span></td>
 </tr>
 <tr>
 <td>RP (Rendezvous Point)</td>
 <td>汇聚点，共享树根，源以 Register 单播封装发往</td>
-<td><span class="pg">原文p428</span></td>
+<td><span class="source-page">原文p428</span></td>
 </tr>
 <tr>
 <td>RPT / SPT switchover</td>
 <td>共享树/最短路径树；末跳 DR 收到首包后自动发起 SPT 切换</td>
-<td><span class="pg">原文p428</span> -<span class="pg">原文p430</span></td>
+<td><span class="source-page">原文p428</span> -<span class="source-page">原文p430</span></td>
 </tr>
 <tr>
 <td>BSR / C-RP</td>
 <td>自举路由器/候选 RP 的动态 RP 发现机制（优先级→hash→IP 选 RP）</td>
-<td><span class="pg">原文p431</span> 、<span class="pg">原文p432</span></td>
+<td><span class="source-page">原文p431</span> 、<span class="source-page">原文p432</span></td>
 </tr>
 <tr>
 <td>Anycast RP (RFC 4610)</td>
 <td>多 RP 共享任播 Loopback 地址实现负载分担与 IGP 级快速切换；仅 PIM-SM、最多 8 台</td>
-<td><span class="pg">原文p643</span> -<span class="pg">原文p645</span></td>
+<td><span class="source-page">原文p643</span> -<span class="source-page">原文p645</span></td>
 </tr>
 </tbody>
-</table>
+</table></div>
 <h2 id="vrf-bgp">VRF / BGP</h2>
-<table>
+<div class="table-scroll"><table>
 <thead>
 <tr>
 <th>术语</th>
@@ -570,47 +550,47 @@ blockquote p{margin:6px 0}
 <tr>
 <td>VRF</td>
 <td>虚拟路由转发，一台物理交换机多路由实例、地址可重叠；VLAN 只能归属一个 VRF</td>
-<td><span class="pg">原文p453</span> 、<span class="pg">原文p460</span></td>
+<td><span class="source-page">原文p453</span> 、<span class="source-page">原文p460</span></td>
 </tr>
 <tr>
 <td>GRT / VRF Route Leak</td>
 <td>全局路由表及经 route-map 的 VRF 间路由导入导出</td>
-<td><span class="pg">原文p461</span></td>
+<td><span class="source-page">原文p461</span></td>
 </tr>
 <tr>
 <td>BGP-4 (RFC 4271)</td>
 <td>边界网关协议，AS 间路径矢量协议，TCP 179</td>
-<td><span class="pg">原文p476</span></td>
+<td><span class="source-page">原文p476</span></td>
 </tr>
 <tr>
 <td>IBGP / EBGP</td>
 <td>AS 内/AS 间 BGP 邻居关系；IBGP 学的路由不再传给其他 IBGP 邻居（水平分割）</td>
-<td><span class="pg">原文p478</span> 、<span class="pg">原文p501</span></td>
+<td><span class="source-page">原文p478</span> 、<span class="source-page">原文p501</span></td>
 </tr>
 <tr>
 <td>AS-PATH / Next-HOP / Origin</td>
 <td>BGP 必选属性：AS 列表/下一跳/来源（IGP&gt;EGP&gt;Incomplete）</td>
-<td><span class="pg">原文p484</span> -<span class="pg">原文p487</span></td>
+<td><span class="source-page">原文p484</span> -<span class="source-page">原文p487</span></td>
 </tr>
 <tr>
 <td>Local Preference / MED</td>
 <td>选出口偏好（越高越优）与入流量入口建议（越低越优、仅两 AS 间传递）</td>
-<td><span class="pg">原文p488</span> 、<span class="pg">原文p491</span></td>
+<td><span class="source-page">原文p488</span> 、<span class="source-page">原文p491</span></td>
 </tr>
 <tr>
 <td>Community (NO-EXPORT/NO-ADVERTISE)</td>
 <td>路由打标分组属性，控制通告范围</td>
-<td><span class="pg">原文p494</span> 、<span class="pg">原文p496</span></td>
+<td><span class="source-page">原文p494</span> 、<span class="source-page">原文p496</span></td>
 </tr>
 <tr>
 <td>BGP synchronization</td>
 <td>同步：IBGP 学的路由须 IGP 可达才通告给 EBGP</td>
-<td><span class="pg">原文p502</span></td>
+<td><span class="source-page">原文p502</span></td>
 </tr>
 </tbody>
-</table>
+</table></div>
 <h2 id="spb-ifab">SPB / iFab / 平台</h2>
-<table>
+<div class="table-scroll"><table>
 <thead>
 <tr>
 <th>术语</th>
@@ -622,92 +602,100 @@ blockquote p{margin:6px 0}
 <tr>
 <td>SPB / SPB-M (IEEE 802.1aq)</td>
 <td>最短路径桥接（MAC-in-MAC 变体），IS-IS 控制平面，全链路可用</td>
-<td><span class="pg">原文p523</span> 、<span class="pg">原文p525</span></td>
+<td><span class="source-page">原文p523</span> 、<span class="source-page">原文p525</span></td>
 </tr>
 <tr>
 <td>PBB (IEEE 802.1ah)</td>
 <td>运营商骨干桥接，MAC-in-MAC 封装（Ethertype 0x88E7）</td>
-<td><span class="pg">原文p526</span> 、<span class="pg">原文p567</span></td>
+<td><span class="source-page">原文p526</span> 、<span class="source-page">原文p567</span></td>
 </tr>
 <tr>
 <td>BEB / BCB</td>
 <td>骨干边缘桥（封装/解封装、终结服务）/骨干核心桥（仅按 BMAC 转发、不学客户 MAC）</td>
-<td><span class="pg">原文p527</span></td>
+<td><span class="source-page">原文p527</span></td>
 </tr>
 <tr>
 <td>BVLAN (B-VID)</td>
 <td>骨干 VLAN，承载控制与服务流量，最多 16 个；其上无 STP</td>
-<td><span class="pg">原文p527</span> 、<span class="pg">原文p569</span></td>
+<td><span class="source-page">原文p527</span> 、<span class="source-page">原文p569</span></td>
 </tr>
 <tr>
 <td>I-SID</td>
 <td>24 位服务实例标识，区分租户/VPN，可达 16M</td>
-<td><span class="pg">原文p527</span> 、<span class="pg">原文p565</span></td>
+<td><span class="source-page">原文p527</span> 、<span class="source-page">原文p565</span></td>
 </tr>
 <tr>
 <td>ECT / ECT-ID</td>
 <td>等价树及编号，用于各 BVLAN 建 SPT 时的 tie-break 分流</td>
-<td><span class="pg">原文p569</span></td>
+<td><span class="source-page">原文p569</span></td>
 </tr>
 <tr>
 <td>SAP / SDP</td>
 <td>服务接入点（物理口+封装值绑定服务）/服务分发点（通向远端 BEB，自动创建）</td>
-<td><span class="pg">原文p527</span> 、<span class="pg">原文p572</span></td>
+<td><span class="source-page">原文p527</span> 、<span class="source-page">原文p572</span></td>
 </tr>
 <tr>
 <td>Head-End / Tandem replication</td>
 <td>SPB BUM 复制模式：头端多单播复制（默认）/串联按组播 FDB 分叉复制</td>
-<td><span class="pg">原文p539</span> 、<span class="pg">原文p573</span></td>
+<td><span class="source-page">原文p539</span> 、<span class="source-page">原文p573</span></td>
 </tr>
 <tr>
 <td>VPN Lite / L3 VPN (SPB)</td>
 <td>SPB 上叠跑 OSPF/BGP 的边界方案 / IS-IS TLV 携带 VRF 路由的域内方案</td>
-<td><span class="pg">原文p534</span> 、<span class="pg">原文p536</span> 、<span class="pg">原文p592</span></td>
+<td><span class="source-page">原文p534</span> 、<span class="source-page">原文p536</span> 、<span class="source-page">原文p592</span></td>
 </tr>
 <tr>
 <td>LBD (Loopback Detection)</td>
 <td>环回检测，发探测帧防接入层环路，检测到即关闭端口</td>
-<td><span class="pg">原文p609</span></td>
+<td><span class="source-page">原文p609</span></td>
 </tr>
 <tr>
 <td>iFab (Auto-VC/RCD/LACP/Routing/SPB/Profiling/MVRP)</td>
 <td>出厂默认七阶段零触摸自动化家族；失败自动回退</td>
-<td><span class="pg">原文p624</span></td>
+<td><span class="source-page">原文p624</span></td>
 </tr>
 <tr>
 <td>DIS / Pseudo node</td>
 <td>IS-IS 指定中间系统/伪节点（对应 OSPF DR，可抢占；Hello 9s，DIS 3s）</td>
-<td><span class="pg">原文p689</span> 、<span class="pg">原文p690</span></td>
+<td><span class="source-page">原文p689</span> 、<span class="source-page">原文p690</span></td>
 </tr>
 <tr>
 <td>NSAP (Area/System-ID/NSEL)</td>
 <td>IS-IS 的 OSI 地址结构，本地管理 AFI=49，最小 8 字节</td>
-<td><span class="pg">原文p686</span></td>
+<td><span class="source-page">原文p686</span></td>
 </tr>
 <tr>
 <td>DHL (Dual-Home Link)</td>
 <td>双归链路，无 STP/LAG 的接入-核心快速倒换冗余</td>
-<td><span class="pg">原文p318</span> 、<span class="pg">原文p607</span></td>
+<td><span class="source-page">原文p318</span> 、<span class="source-page">原文p607</span></td>
 </tr>
 <tr>
 <td>Virtual Chassis (VC) / VFL</td>
 <td>虚拟机箱/虚拟机箱链路，多台堆叠为一逻辑设备</td>
-<td><span class="pg">原文p134</span></td>
+<td><span class="source-page">原文p134</span></td>
 </tr>
 <tr>
 <td>SLB / VIP / WRR</td>
 <td>服务器负载均衡：集群虚拟 IP（代理 ARP 应答）与加权轮询（权重 0 备份、总权重≤32）</td>
-<td><span class="pg">原文p653</span> -<span class="pg">原文p656</span></td>
+<td><span class="source-page">原文p653</span> -<span class="source-page">原文p656</span></td>
 </tr>
 <tr>
 <td>write memory flash-synchro</td>
 <td>保存配置并同步备份 Flash 的 AOS 命令</td>
-<td><span class="pg">原文p112</span></td>
+<td><span class="source-page">原文p112</span></td>
 </tr>
 <tr>
 <td>working / certified directory</td>
 <td>AOS 双镜像目录，reload from working/certified 支持升级回滚</td>
-<td><span class="pg">原文p53</span> 、<span class="pg">原文p680</span></td>
+<td><span class="source-page">原文p53</span> 、<span class="source-page">原文p680</span></td>
 </tr>
 </tbody>
-</table><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+</table></div></article>
+    <footer class="content-footer">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</footer>
+  </main>
+</div>
+  <script src="/assets/js/app.js?v=4" defer></script>
+  <script src="/assets/js/search.js?v=4" defer></script>
+  <script src="/assets/js/lightbox.js?v=5" defer></script>
+</body>
+</html>

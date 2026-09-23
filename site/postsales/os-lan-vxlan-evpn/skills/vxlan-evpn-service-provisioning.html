@@ -1,92 +1,72 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>vxlan-evpn-service-provisioning — DT00XTE325 · OmniSwitch LAN VxLAN/EVPN</title>
-<style>
-:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
-*{box-sizing:border-box}
-body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
-a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
-.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin:16px 0}
-.gallery figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px}
-.gallery img{width:100%;max-height:340px;object-fit:contain;background:#fff;border-radius:6px}
-.gallery figcaption{font-size:12.5px;color:var(--mut);text-align:center;margin-top:6px}
-/* 侧栏折叠 + 图片灯箱 */
-.tgl{position:fixed;left:0;top:45%;z-index:60;background:var(--card);border:1px solid var(--line);border-right:none;border-radius:0 8px 8px 0;color:var(--tx);padding:10px 6px;cursor:pointer;font-size:13px;line-height:1.1;writing-mode:vertical-lr}
-.tgl:hover{background:var(--acc);color:#0f172a}
-.layout.full{grid-template-columns:0 1fr}
-.layout.full aside{display:none}
-.lb{position:fixed;inset:0;background:rgba(5,10,20,.92);z-index:100;display:flex;align-items:center;justify-content:center;flex-direction:column}
-.lb img{max-width:92vw;max-height:82vh;background:#fff;border-radius:6px;transition:transform .12s}
-.lb .lbb{margin-top:10px;display:flex;gap:10px}
-.lb button{background:var(--card);border:1px solid var(--line);color:var(--tx);border-radius:8px;padding:6px 14px;cursor:pointer;font-size:14px}
-.lb button:hover{background:var(--acc);color:#0f172a}
-.search{margin:0 0 14px}
-.search input{width:100%;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--tx);font-size:13px;outline:none}
-.search input:focus{border-color:var(--acc)}
-#qres{max-height:340px;overflow-y:auto;margin-top:6px}
-#qres .qi{display:block;padding:6px 8px;border-radius:6px;font-size:12.5px;color:var(--tx);border-left:2px solid transparent}
-#qres .qi:hover{background:var(--card);text-decoration:none;border-left-color:var(--acc)}
-#qres .qi .qp{color:var(--mut);font-size:11px;display:block}
-#qres .qi b{color:var(--acc)}
-.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
-main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
-.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
-aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
-aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
-aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
-aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
-aside a:hover{background:var(--card);text-decoration:none}
-aside a.on{background:var(--card);color:var(--acc)}
-main{padding:36px 48px;max-width:1000px}
-h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
-h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
-table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
-th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
-th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
-code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
-pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
-pre code{background:none;padding:0}
-blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
-.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
-.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
-.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
-.meta{font-size:13px;color:var(--mut)}
-hr{border:none;border-top:1px solid var(--line);margin:26px 0}
-.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
-.badge.soon{background:#475569;color:#cbd5e1}
-main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
-main{padding:28px 48px 40px;max-width:1040px}
-h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
-blockquote p{margin:6px 0}
-.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
-.crumbs a{color:var(--acc)}
-.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
-.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
-.pn a:hover{border-color:var(--acc)}
-.pn .nxt{text-align:right}
-.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
-@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
-</style></head>
-<body><div class="layout"><aside><h1>DT00XTE325 · OmniSwitch LAN VxLAN/EVPN</h1>
-<div class="search"><input id="qk" type="search" placeholder="🔍 搜索全站…" autocomplete="off"><div id="qres"></div></div>
-
-<div class="sub">Edition 01 · 213 页 · 五步配置法 + 三 Lab + EVPN 架构指南</div>
-<a href="../index.html">🏠 课程首页</a>
-<a href="../digest.html">📖 精华长文 DIGEST</a>
-
-<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
-<a href="../glossary.html">🔤 术语词典</a>
-<a href="../../../index.html">⬅️ 返回培训门户</a>
-<a href="../index.html">──── Skills ────</a>
-<div class="grp">总纲与底座</div>
-<a href="../skills/vxlan-evpn-five-step-architecture.html">vxlan-evpn-five-step-architecture</a>
-<a href="../skills/vxlan-evpn-underlay-bgp-design.html">vxlan-evpn-underlay-bgp-design</a>
-<div class="grp">业务与多归属</div>
-<a href="../skills/vxlan-evpn-service-provisioning.html" class="on">vxlan-evpn-service-provisioning</a>
-<a href="../skills/vxlan-evpn-multihoming-df.html">vxlan-evpn-multihoming-df</a>
-<div class="grp">排障</div>
-<a href="../skills/vxlan-evpn-bum-troubleshooting.html">vxlan-evpn-bum-troubleshooting</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../postsales/index.html">售后</a> › <a href="../index.html">DT00XTE325</a> › <span>L2/L3 业务开通（VNI / IRB / DAG / RD-RT / 路由类型总表）</span></nav><h1>L2/L3 业务开通（VNI / IRB / DAG / RD-RT / 路由类型总表）</h1><p class="meta"><span class="badge">SKILL</span> vxlan-evpn-service-provisioning · 来源页码: </p><h1 id="l2l3-vni-irb-dag-rd-rt">L2/L3 业务开通（VNI / IRB / DAG / RD-RT / 路由类型总表）</h1>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="面向售前、售后与网络工程师的 ALE 内部技术知识平台">
+  <meta name="theme-color" content="#6B489D">
+  <title>L2/L3 业务开通（VNI / IRB / DAG / RD-RT / 路由类型总表） — DT00XTE325 · OmniSwitch LAN VxLAN/EVPN</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=4">
+  <link rel="stylesheet" href="/assets/css/layout.css?v=4">
+  <link rel="stylesheet" href="/assets/css/components.css?v=4">
+  <link rel="stylesheet" href="/assets/css/content.css?v=7">
+  <script src="/assets/js/auth-config.js?v=4"></script>
+  <script src="/assets/js/auth-core.js?v=4"></script>
+  <script src="/assets/js/auth-guard.js?v=4"></script>
+</head>
+<body data-page-kind="course">
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <header class="topbar" data-topbar>
+    <a class="brand" href="/index.html" aria-label="返回 ALE 技术培训门户首页">
+      <img src="/assets/ale-logo-color.png" alt="Alcatel-Lucent Enterprise">
+      <span>ALE 培训门户</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-controls="primary-nav" aria-expanded="false" data-nav-toggle>
+      <span aria-hidden="true">☰</span><span class="sr-only">打开导航</span>
+    </button>
+    <nav id="primary-nav" class="primary-nav" aria-label="主导航">
+      <a href="/index.html">首页</a>
+      <a href="/paths.html">学习路径</a>
+      <a href="/presales/index.html">售前</a>
+      <a href="/postsales/index.html" aria-current="page">售后</a>
+      <a href="/wlan/index.html">无线</a>
+      <a href="/aos/index.html">AOS 手册</a>
+      <a href="/hardware/index.html">硬件</a>
+      <a href="/brochures/index.html">彩页</a>
+      <a href="/solutions/index.html">解决方案</a>
+      <a href="/security/index.html">安全</a>
+    </nav>
+    <button id="logout-btn" class="logout-btn" type="button" hidden>退出登录</button>
+  </header>
+<div class="course-layout">
+<aside class="course-sidebar" id="course-sidebar" data-sidebar>
+  <div class="sidebar-heading">
+    <p class="eyebrow">COURSE</p>
+    <h2>DT00XTE325 · OmniSwitch LAN VxLAN/EVPN</h2>
+    <p>Edition 01 · 213 页 · 五步配置法 + 三 Lab + EVPN 架构指南</p>
+  </div>
+<div class="search" data-search>
+  <label class="sr-only" for="course-search">搜索全站课程和知识单元</label>
+  <input id="course-search" type="search" placeholder="搜索课程编号、产品型号或技术关键词…" autocomplete="off" data-search-input>
+  <div class="search-results" role="listbox" aria-live="polite" data-search-results></div>
+</div>  <nav class="course-nav" aria-label="课程目录">
+    <a href="/postsales/os-lan-vxlan-evpn/index.html">课程首页</a>
+    <a href="/postsales/os-lan-vxlan-evpn/digest.html">精华长文</a>
+    <a href="/postsales/os-lan-vxlan-evpn/overview.html">教书理解</a>
+    <a href="/postsales/os-lan-vxlan-evpn/glossary.html">术语词典</a>
+    <p class="course-nav-group">总纲与底座</p>
+      <a href="/postsales/os-lan-vxlan-evpn/skills/vxlan-evpn-five-step-architecture.html">VxLAN/EVPN 五步配置法总纲与 AOS 架构模型</a>
+      <a href="/postsales/os-lan-vxlan-evpn/skills/vxlan-evpn-underlay-bgp-design.html">Underlay 与 BGP Overlay/RR 设计（Loopback0 / OSPF / eBGP / iBGP / RR）</a>
+    <p class="course-nav-group">业务与多归属</p>
+      <a aria-current="page" href="/postsales/os-lan-vxlan-evpn/skills/vxlan-evpn-service-provisioning.html">L2/L3 业务开通（VNI / IRB / DAG / RD-RT / 路由类型总表）</a>
+      <a href="/postsales/os-lan-vxlan-evpn/skills/vxlan-evpn-multihoming-df.html">EVPN 多归属与 DF（ESI / LACP / ETag / DF carving）</a>
+    <p class="course-nav-group">排障</p>
+      <a href="/postsales/os-lan-vxlan-evpn/skills/vxlan-evpn-bum-troubleshooting.html">BUM 复制、MAC Mobility 与故障排查（HER / Proxy ARP / 验证命令链）</a>
+  </nav>
+</aside>  <main id="main-content" class="course-main prose">
+    <nav class="breadcrumbs" aria-label="面包屑"><a href="/index.html">培训门户</a><span>/</span><a href="/postsales/index.html">售后 · Postsales</a><span>/</span><a href="/postsales/os-lan-vxlan-evpn/index.html">DT00XTE325</a><span>/</span><span aria-current="page">L2/L3 业务开通（VNI / IRB / DAG / RD-RT / 路由类型总表）</span></nav>
+<header class="skill-heading"><div><p class="eyebrow">KNOWLEDGE UNIT</p><h1>L2/L3 业务开通（VNI / IRB / DAG / RD-RT / 路由类型总表）</h1></div><dl><div><dt>Skill ID</dt><dd>vxlan-evpn-service-provisioning</dd></div></dl></header>    <article class="markdown-body"><h1 id="l2l3-vni-irb-dag-rd-rt">L2/L3 业务开通（VNI / IRB / DAG / RD-RT / 路由类型总表）</h1>
 <h2 id="r">R · 原文引用</h2>
 <blockquote>
 <p><code>-&gt; service access port 1/1/7 evpn-ethernet-segment enable</code>
@@ -98,81 +78,32 @@ blockquote p{margin:6px 0}
 </blockquote>
 <h2 id="i">I · 方法论骨架</h2>
 <ol>
-<li>
-<p>L2 业务三部曲：①物理口声明 service access port + <code>evpn-ethernet-segment enable</code>（自动 ESI、单归属）；②<code>service &lt;id&gt; vxlan vnid &lt;vni&gt; bgp-evpn enable</code> 建虚拟桥；③<code>service &lt;id&gt; sap port &lt;端口&gt;:&lt;VLAN&gt;</code> 挂 SAP（冒号后 VLAN 即 ETag）。</p>
-<ul>
-<li>对端 Leaf 重复同样三条。</li>
-<li>映射惯例：service 100 ↔ EVI/VNI 1000 ↔ ETag 10。</li>
-</ul>
-</li>
-<li>
-<p>IRB 选型决策表（p91）：非对称=入端 PE 一次 MAC+IP 查找、无需 routed VXLAN、全 PE 全业务全 ARP、只靠 RT2、简单欠扩展；</p>
-<ul>
-<li>对称=两端 MAC+IP、需 RT5 强制、业务按需部署、可扩展但 4 变体。AOS 现支持 host-based 非对称；</li>
-<li>对称 8.10R1 不支持（配置入口 fabric-vpn 仅为示意）；</li>
-</ul>
-</li>
-<li>
-<p><strong>非对称 IRB 硬前提</strong>：每个 EVI 在所有交换机（含 Spine）实例化 + 每业务有 operational 端口 → Spine 用 dummy 口占位（Lab 1/1/24、指南 1/1/48）。</p>
-</li>
+<li><strong>L2 业务三部曲</strong>：①物理口声明 service access port + <code>evpn-ethernet-segment enable</code>（自动 ESI、单归属）；②<code>service &lt;id&gt; vxlan vnid &lt;vni&gt; bgp-evpn enable</code> 建虚拟桥；③<code>service &lt;id&gt; sap port &lt;端口&gt;:&lt;VLAN&gt;</code> 挂 SAP（冒号后 VLAN 即 ETag）。对端 Leaf 重复同样三条。映射惯例：service 100 ↔ EVI/VNI 1000 ↔ ETag 10。</li>
+<li><strong>IRB 选型决策表</strong>（p91）：非对称=入端 PE 一次 MAC+IP 查找、无需 routed VXLAN、全 PE 全业务全 ARP、只靠 RT2、简单欠扩展；对称=两端 MAC+IP、需 RT5 强制、业务按需部署、可扩展但 4 变体。AOS 现支持 host-based 非对称；对称 8.10R1 不支持（配置入口 fabric-vpn 仅为示意）。</li>
+<li><strong>非对称 IRB 硬前提</strong>：每个 EVI 在所有交换机（含 Spine）实例化 + 每业务有 operational 端口 → Spine 用 dummy 口占位（Lab 1/1/24、指南 1/1/48）。</li>
 <li><strong>DAG 三规则</strong>：同一 EVI 所有 Leaf 网关 IP 相同（惯例 .254，任播非冲突）；<code>ip anycast-gateway-mac auto</code> 生成虚拟 MAC 00:00:5E:00:01:XX（XX=虚拟路由器 ID，按 VRF 统一）；RT2 同时通告硬件+虚拟 MAC。</li>
 <li><strong>RD/RT 公式</strong>：RD=SystemIP:EVI（8 字节 Type-1，基于 Loopback0）；RT=target:AS:EVI；export RT 与接收方 import RT 匹配才导入；ES-Import RT 自动从 ESI 编码、加在 RT4 上。</li>
 <li><strong>ETag 服务模型</strong>：VLAN-based（一对一、ETag 恒 0）/ VLAN bundle（多 VLAN 共域、ETag 恒 0）/ VLAN-aware（ETag=VLAN ID）；AOS 实现 bundle+aware 的 hybrid，按 ETag 汇总撤收。</li>
-<li>路由类型速查（RT1-RT8）：RT1 以太网 AD（aliasing/备份/水平分割/批量撤销；<ul>
-<li>RT1A per-ES ETag=0xFFFFFFFF，RT1B per-EVI）；</li>
-<li>RT2 MAC/IP（主机可达+ARP 抑制）；</li>
-<li>RT3 IMET（VTEP 发现+BUM 复制）；</li>
-<li>RT4 ES（同 ES 发现+DF 选举）；</li>
-<li>RT5 IP 前缀（RFC 9136）；</li>
-<li>RT6-8 SMET/IGMP-MLD（RFC 9251）。基础通告主要用 RT1-RT4；</li>
-</ul>
-</li>
+<li><strong>路由类型速查（RT1-RT8）</strong>：RT1 以太网 AD（aliasing/备份/水平分割/批量撤销；RT1A per-ES ETag=0xFFFFFFFF，RT1B per-EVI）；RT2 MAC/IP（主机可达+ARP 抑制）；RT3 IMET（VTEP 发现+BUM 复制）；RT4 ES（同 ES 发现+DF 选举）；RT5 IP 前缀（RFC 9136）；RT6-8 SMET/IGMP-MLD（RFC 9251）。基础通告主要用 RT1-RT4。</li>
 </ol>
 <h2 id="a1">A1 · 书中案例</h2>
 <ul>
 <li><strong>Lab2 双业务（p102-108）</strong>：<br>service 100/200（VNI 1000/2000）共用口 1/1/7，SAP 1/1/7:10 与 1/1/7:20；验证五连：<code>show service evpn</code>（双业务 Up）→ <code>show service evpn ethernet-segment</code>（SH[L-A]+SH[R]）→ <code>debug evpn show bgp route-type rt3</code>（4 条 IMET）→ <code>&lt;esi&gt; sap-info</code>（ETag-EVI 映射）→ <code>evi 1000 tunnel-ports</code>（动态 SDP 32768:100 → 远端 1.1.1.2）。</li>
-<li><strong>Lab2 三层叠加（p109-117）</strong>：<br>每业务挂 <code>ip interface &lt;name&gt; service &lt;id&gt; address 192.168.10.1/24</code>（Leaf1=.1、Leaf2=.2 各自独立），再 <code>anycast-gateway-address 192.168.10.254</code>；</li>
-<li>CE 侧 vlan 10 主机口 untagged、上联 tagged；</li>
-<li><code>sh ip interface</code> 出现 A=Anycast 标志；</li>
-<li>
-<p>Spine 的 evpn-vxlan MAC 表为 0（不学主机 MAC）；</p>
-</li>
-<li>
-<p><strong>课堂最小验证链（p64-74）</strong>：<br>单边配置 Oper Down → 对端配完三条 → RT3 互收 → MAC 表 sap/sdp 双侧 → SDP 32768 建起、Oper 转 Up。可当开局 checklist：ES→service→SAP→RT3→MAC→SDP 隧道逐层核对。</p>
-</li>
+<li><strong>Lab2 三层叠加（p109-117）</strong>：<br>每业务挂 <code>ip interface &lt;name&gt; service &lt;id&gt; address 192.168.10.1/24</code>（Leaf1=.1、Leaf2=.2 各自独立），再 <code>anycast-gateway-address 192.168.10.254</code>；CE 侧 vlan 10 主机口 untagged、上联 tagged；<code>sh ip interface</code> 出现 A=Anycast 标志；Spine 的 evpn-vxlan MAC 表为 0（不学主机 MAC）。</li>
+<li><strong>课堂最小验证链（p64-74）</strong>：<br>单边配置 Oper Down → 对端配完三条 → RT3 互收 → MAC 表 sap/sdp 双侧 → SDP 32768 建起、Oper 转 Up。可当开局 checklist：ES→service→SAP→RT3→MAC→SDP 隧道逐层核对。</li>
 </ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
 <li><strong>触发</strong>：<br>新开一条 L2/L3 业务、加 IRB/任播网关、多租户 RD/RT 规划、查"这条路由是什么类型/为什么没导入"。</li>
-<li><strong>区分</strong>：<br>底座与 BGP 会话 → <code><a href="vxlan-evpn-underlay-bgp-design.html">vxlan-evpn-underlay-bgp-design</a></code>；</li>
-<li>CE 双归/LAG/DF → <code><a href="vxlan-evpn-multihoming-df.html">vxlan-evpn-multihoming-df</a></code>；</li>
-<li>ARP 抑制/BUM/mac mobility/排障 → <code><a href="vxlan-evpn-bum-troubleshooting.html">vxlan-evpn-bum-troubleshooting</a></code>。本 skill 管"业务怎么开、参数怎么定"；</li>
+<li><strong>区分</strong>：<br>底座与 BGP 会话 → <code><a href="/postsales/os-lan-vxlan-evpn/skills/vxlan-evpn-underlay-bgp-design.html">vxlan-evpn-underlay-bgp-design</a></code>；CE 双归/LAG/DF → <code><a href="/postsales/os-lan-vxlan-evpn/skills/vxlan-evpn-multihoming-df.html">vxlan-evpn-multihoming-df</a></code>；ARP 抑制/BUM/mac mobility/排障 → <code><a href="/postsales/os-lan-vxlan-evpn/skills/vxlan-evpn-bum-troubleshooting.html">vxlan-evpn-bum-troubleshooting</a></code>。本 skill 管"业务怎么开、参数怎么定"。</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
-<li>双端 Leaf：<code>interfaces 1/1/7 admin-state enable</code> → <code>service access port 1/1/7 evpn-ethernet-segment enable</code> → <code>service 100 vxlan vnid 1000 bgp-evpn enable</code> → <code>service 100 sap port 1/1/7:10</code>。<ul>
-<li>
-<ol>
+<li>双端 Leaf：<code>interfaces 1/1/7 admin-state enable</code> → <code>service access port 1/1/7 evpn-ethernet-segment enable</code> → <code>service 100 vxlan vnid 1000 bgp-evpn enable</code> → <code>service 100 sap port 1/1/7:10</code>。</li>
 <li>若需三层：每 Leaf <code>ip interface &lt;n&gt; service 100 address 192.168.10.&lt;leaf号&gt;/24</code> + <code>ip anycast-gateway-mac auto</code> + <code>anycast-gateway-address 192.168.10.254</code>。</li>
-</ol>
-</li>
-<li>
-<ol>
 <li>非对称 IRB 场景：Spine 用 dummy 口重复 service/sap 两条命令补全实例化。</li>
-</ol>
-</li>
-<li>
-<ol>
 <li>验证：<code>show service evpn</code> Up、<code>show service 100 proxy-arp config</code> 四参数、<code>sh mac-learning evpn-vxlan</code>、<code>debug evpn show bgp route-type rt2</code>（含 MAC+IP 双条目）。</li>
-</ol>
-</li>
-<li>
-<ol>
 <li>多租户规划按公式算 RD/RT，跨 EVI 互通靠 import/export RT 匹配设计。</li>
-</ol>
-</li>
-</ul>
-</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>
@@ -182,5 +113,13 @@ blockquote p{margin:6px 0}
 <li><strong>业务默认值（p67）</strong>：<br>MTU 9194 / VPN IP-MTU 1500 / Hybrid 组播 / Proxy-Arp Ena / Unknown-Mac-Route Ena / Mac-Vrf-Hw-Lrng Dis——核对 <code>show service</code> 输出时按此基线。</li>
 <li>对远端 ES 执行 <code>sap-info</code> 会报 "Not supported for Remote ES"，本地/远端命令选择见 multihoming skill。</li>
 </ul>
-<hr />
-<p>来源条目: f04 · f05 · p06 · p08 · p09 · p11 · p12 · p13 · ce01 · ce07 · c02 · c03 · c07 · c08 · g04 · g08 · g09 · g11 · g12 · g14 · g18 · g20 · g21 · g22</p><div class="pn"><a href="vxlan-evpn-underlay-bgp-design.html">⬅ 上一单元：vxlan-evpn-underlay-bgp-design</a><a class="nxt" href="vxlan-evpn-multihoming-df.html">下一单元：vxlan-evpn-multihoming-df ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<hr>
+<p>来源条目: f04 · f05 · p06 · p08 · p09 · p11 · p12 · p13 · ce01 · ce07 · c02 · c03 · c07 · c08 · g04 · g08 · g09 · g11 · g12 · g14 · g18 · g20 · g21 · g22</p></article>
+<nav class="previous-next" aria-label="知识单元翻页"><a href="/postsales/os-lan-vxlan-evpn/skills/vxlan-evpn-underlay-bgp-design.html"><span>上一单元</span><b>Underlay 与 BGP Overlay/RR 设计（Loopback0 / OSPF / eBGP / iBGP / RR）</b></a><a class="next" href="/postsales/os-lan-vxlan-evpn/skills/vxlan-evpn-multihoming-df.html"><span>下一单元</span><b>EVPN 多归属与 DF（ESI / LACP / ETag / DF carving）</b></a></nav>    <footer class="content-footer">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</footer>
+  </main>
+</div>
+  <script src="/assets/js/app.js?v=4" defer></script>
+  <script src="/assets/js/search.js?v=4" defer></script>
+  <script src="/assets/js/lightbox.js?v=5" defer></script>
+</body>
+</html>

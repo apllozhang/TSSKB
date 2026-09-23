@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="面向售前、售后与网络工程师的 ALE 内部技术知识平台">
+  <meta name="theme-color" content="#6B489D">
+  <title>transit-ops — 轨道交通解决方案 · 设计指南</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=4">
+  <link rel="stylesheet" href="/assets/css/layout.css?v=4">
+  <link rel="stylesheet" href="/assets/css/components.css?v=4">
+  <link rel="stylesheet" href="/assets/css/content.css?v=7">
+  <script src="/assets/js/auth-config.js?v=4"></script>
+  <script src="/assets/js/auth-core.js?v=4"></script>
+  <script src="/assets/js/auth-guard.js?v=4"></script>
+</head>
+<body data-page-kind="course">
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <header class="topbar" data-topbar>
+    <a class="brand" href="/index.html" aria-label="返回 ALE 技术培训门户首页">
+      <img src="/assets/ale-logo-color.png" alt="Alcatel-Lucent Enterprise">
+      <span>ALE 培训门户</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-controls="primary-nav" aria-expanded="false" data-nav-toggle>
+      <span aria-hidden="true">☰</span><span class="sr-only">打开导航</span>
+    </button>
+    <nav id="primary-nav" class="primary-nav" aria-label="主导航">
+      <a href="/index.html">首页</a>
+      <a href="/paths.html">学习路径</a>
+      <a href="/presales/index.html">售前</a>
+      <a href="/postsales/index.html">售后</a>
+      <a href="/wlan/index.html">无线</a>
+      <a href="/aos/index.html">AOS 手册</a>
+      <a href="/hardware/index.html">硬件</a>
+      <a href="/brochures/index.html">彩页</a>
+      <a href="/solutions/index.html" aria-current="page">解决方案</a>
+      <a href="/security/index.html">安全</a>
+    </nav>
+    <button id="logout-btn" class="logout-btn" type="button" hidden>退出登录</button>
+  </header>
+<div class="course-layout">
+<aside class="course-sidebar" id="course-sidebar" data-sidebar>
+  <div class="sidebar-heading">
+    <p class="eyebrow">COURSE</p>
+    <h2>轨道交通解决方案 · 设计指南</h2>
+    <p>两版设计指南 112 页 · 分层架构 / SPB 织构 / 组播 / 容量测算 / 安全纵深 / 产品选型</p>
+  </div>
+<div class="search" data-search>
+  <label class="sr-only" for="course-search">搜索全站课程和知识单元</label>
+  <input id="course-search" type="search" placeholder="搜索课程编号、产品型号或技术关键词…" autocomplete="off" data-search-input>
+  <div class="search-results" role="listbox" aria-live="polite" data-search-results></div>
+</div>  <nav class="course-nav" aria-label="课程目录">
+    <a href="/solutions/transportation/index.html">课程首页</a>
+    <a href="/solutions/transportation/digest.html">精华长文</a>
+    <a href="/solutions/transportation/overview.html">教书理解</a>
+    <a href="/solutions/transportation/glossary.html">术语词典</a>
+    <p class="course-nav-group">架构</p>
+      <a href="/solutions/transportation/skills/transit-overview.html">transit-overview</a>
+      <a href="/solutions/transportation/skills/transit-architecture.html">transit-architecture</a>
+    <p class="course-nav-group">织构设计</p>
+      <a href="/solutions/transportation/skills/transit-spb-design.html">transit-spb-design</a>
+      <a href="/solutions/transportation/skills/transit-multicast.html">transit-multicast</a>
+      <a href="/solutions/transportation/skills/transit-capacity.html">transit-capacity</a>
+    <p class="course-nav-group">接入与运维</p>
+      <a href="/solutions/transportation/skills/transit-attachment.html">transit-attachment</a>
+      <a aria-current="page" href="/solutions/transportation/skills/transit-ops.html">transit-ops</a>
+    <p class="course-nav-group">安全与选型</p>
+      <a href="/solutions/transportation/skills/transit-security.html">transit-security</a>
+      <a href="/solutions/transportation/skills/transit-products.html">transit-products</a>
+  </nav>
+</aside>  <main id="main-content" class="course-main prose">
+    <nav class="breadcrumbs" aria-label="面包屑"><a href="/index.html">培训门户</a><span>/</span><a href="/solutions/index.html">解决方案 · Solutions</a><span>/</span><a href="/solutions/transportation/index.html">轨道交通解决方案</a><span>/</span><span aria-current="page">transit-ops</span></nav>
+<header class="skill-heading"><div><p class="eyebrow">KNOWLEDGE UNIT</p><h1>transit-ops</h1></div><dl><div><dt>Skill ID</dt><dd>transit-ops</dd></div></dl></header>    <article class="markdown-body"><h2 id="r">R（何时用）</h2>
+<ul>
+<li>规划轨交网的管理通道（带外/带内、管理 VLAN/ISID 设计）</li>
+<li>部署 OAM（802.1ag）做 SPB 骨干与端到端业务的连通性排查</li>
+<li>建立时延/抖动/丢包的持续性能基线（SAA auto-create）</li>
+<li><strong>计划维护窗口</strong>：<br>节点下线用 Overload、VC/双主控切换靠 Graceful Restart 保转发</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<ul>
+<li><strong>管理面先通才能运维</strong>：<br>设备侧 Console/Telnet/SSH/Web，远程管理要 IP 连通，还要通 RADIUS（AAA 与终端准入）（通用版 p51-52）。</li>
+<li><strong>管理通道两大家族</strong>：<br>带外（独立物理网，走 EMP 专用口或 ACL 锁定的标准口）与带内（管理 ISID + hairpin、管理 VLAN 随 BVLAN 同跑并配 STP/ERP、或将来的 in-line routing）（通用版 p52）。</li>
+<li><strong>故障排查主用 802.1ag 的 L2 ping（LBM/LBR）与 L2 trace（LTM/LTR）</strong>：<br>BVLAN 级给所有 BEB 配 virtual MEP（可选 BCB）、MIP 自动生成，因无 CCM，trace 输出只显示 B-MAC；CVLAN 级 OAM 放在更高维护域级别，可测站到站、站到 OCC 的端到端业务连通（通用版 p52-53）。</li>
+<li>性能基线用 <code>saa auto-create</code> 在所有 BEB/BCB 间、所有 BVLAN 上自动建时延/抖动/丢包测试（通用版 p54）。</li>
+<li><strong>维护两板斧</strong>：<br>Overload state 让其他节点不再经由本节点转发（等效全链路调大 metric 但更快），可无限期或定时恢复；Graceful Restart 让 VC 主控/CMM 切换期间保邻接、保 FDB，靠 RR TLV 通告重启、邻居回灌 LSDB（通用版 p54-55）。</li>
+</ul>
+<h2 id="a1">A1（决策要点）</h2>
+<ol>
+<li>管理通道选型：安全等级高的项目选 OOBMN（EMP 口仅 10K/9900/6860E 有）；带内则管理 ISID + hairpin 最干净，管理 VLAN 随 BVLAN 跑要配 STP/ERP 防环（通用版 p52）</li>
+<li>标准口做带外管理时必须 ACL 锁定、并禁止路由协议在管理口收发（通用版 p52）</li>
+<li>OAM 分级：BVLAN 级 MEP 全 BEB（排骨干）、CVLAN 级更高维护域（排端到端业务）；CCM 与 SPB 不配套，别指望系统名，认 B-MAC（通用版 p52-53）</li>
+<li>SAA 用 <code>saa auto-create</code> 一次铺全网基线，配合 OmniVista 2500（4.3 起 SPB 拓扑视图：单播/组播链路、SPB 服务端口展示）（通用版 p54、p51）</li>
+<li>计划维护先设 Overload（定时恢复更稳），再做硬件操作（通用版 p54）</li>
+<li>VC 或双主控机型必开 Graceful Restart，避免切换期拆除邻接重建拓扑造成的流量损伤（通用版 p54-55）</li>
+</ol>
+<h2 id="a2">A2（细节速查表）</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>管理方案</th>
+<th>形态</th>
+<th>要点</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>带外-EMP</td>
+<td>专用管理物理口</td>
+<td>仅 10K/9900/6860E 具备；只走管理流量</td>
+<td>通用版 p52</td>
+</tr>
+<tr>
+<td>带外-标准口</td>
+<td>专用管理 VLAN + loopback IP</td>
+<td>ACL 锁定；路由协议不进管理口</td>
+<td>通用版 p52</td>
+</tr>
+<tr>
+<td>带内-管理 ISID</td>
+<td>管理 VLAN 经 hairpin+SAP 映射 ISID</td>
+<td>与业务共物理网但逻辑隔离</td>
+<td>通用版 p52</td>
+</tr>
+<tr>
+<td>带内-VLAN 随行</td>
+<td>管理 VLAN 与 BVLAN 同跑骨干口</td>
+<td>需 STP/ERP 防环</td>
+<td>通用版 p52</td>
+</tr>
+<tr>
+<td>带内-in-line routing</td>
+<td>loopback IP 直接驻留管理 ISID</td>
+<td>OS9900 路线图特性，需向 ALE 确认</td>
+<td>通用版 p52</td>
+</tr>
+</tbody>
+</table></div>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>运维工具</th>
+<th>用途</th>
+<th>配置要点</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>L2 ping（LBM/LBR）</td>
+<td>BEB 间连通验证</td>
+<td>BVLAN 级 virtual MEP 配全 BEB</td>
+<td>通用版 p52-53</td>
+</tr>
+<tr>
+<td>L2 trace（LTM/LTR）</td>
+<td>逐跳路径核查</td>
+<td>输出引用 B-MAC（无 CCM 无系统名）</td>
+<td>通用版 p52-53</td>
+</tr>
+<tr>
+<td>CVLAN 级 OAM</td>
+<td>站间/站到中心端到端测试</td>
+<td>维护域级别须高于 BVLAN OAM</td>
+<td>通用版 p53</td>
+</tr>
+<tr>
+<td>SAA auto-create</td>
+<td>时延/抖动/丢包基线</td>
+<td>全 BEB+BCB、全 BVLAN 自动建</td>
+<td>通用版 p54</td>
+</tr>
+<tr>
+<td>OmniVista 2500</td>
+<td>拓扑与 SPB 视图</td>
+<td>4.3 起：BVLAN 单播/组播链路、服务端口展示</td>
+<td>通用版 p51</td>
+</tr>
+<tr>
+<td>Overload state</td>
+<td>优雅下线维护</td>
+<td>等效全链路 metric 调大但更快；可定时回退</td>
+<td>通用版 p54</td>
+</tr>
+<tr>
+<td>Graceful Restart</td>
+<td>主控切换保转发</td>
+<td>RR TLV 通告；邻居保持邻接并回灌 LSDB</td>
+<td>通用版 p54-55</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="e">E（场景案例）</h2>
+<ul>
+<li>BEB 之间用 LBM/LBR 验证连通、LTM/LTR 逐跳核查路径的 OAM 实操（通用版 p53）</li>
+<li>L2 设计下用 CVLAN 级 OAM 验证"站—OCC/BCC"端到端业务通道（通用版 p53）</li>
+<li><strong>维护窗口流程</strong>：<br>设 Overload → 流量绕行 → 换板/升级 → Overload 回退（通用版 p54）</li>
+<li><strong>VC master 切换</strong>：<br>开 GR 后邻接不拆、FDB 不清、LSDB 快速重建（通用版 p54-55）</li>
+</ul>
+<h2 id="b">B（限制与坑）</h2>
+<ul>
+<li>指望 CCM 做故障检测——SPB 有 IS-IS 控制面，CCM 不与 SPB 配套（通用版 p52）</li>
+<li>trace 输出找系统名——没有 CCM 映射，只有 B-MAC，要备好 B-MAC 与节点的对照（通用版 p52）</li>
+<li>CVLAN OAM 维护域级别配得不高 BVLAN OAM——域层级冲突（通用版 p53）</li>
+<li>in-line routing 当现网特性写进方案——它是 OS9900 路线图项（roadmap feature），需向 ALE 确认（通用版 p52）</li>
+<li>带外标准口不锁 ACL、放路由协议进管理口——管理通道被业务流量与路由更新污染（通用版 p52）</li>
+<li>通用版评审批注对 802.1ag 与 SPB 的支持口径提出需 PLM 复核，落地前建议再确认（通用版 p52）</li>
+</ul>
+<h2 id="_1">来源</h2>
+<p>Transportation Networks Design Guide（p51-55）+ SPB-based Transportation Networks Design Guide（p38-41，无 OmniVista 小节）</p></article>
+<nav class="previous-next" aria-label="知识单元翻页"><a href="/solutions/transportation/skills/transit-attachment.html"><span>上一单元</span><b>transit-attachment</b></a><a class="next" href="/solutions/transportation/skills/transit-security.html"><span>下一单元</span><b>transit-security</b></a></nav>    <footer class="content-footer">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</footer>
+  </main>
+</div>
+  <script src="/assets/js/app.js?v=4" defer></script>
+  <script src="/assets/js/search.js?v=4" defer></script>
+  <script src="/assets/js/lightbox.js?v=5" defer></script>
+</body>
+</html>

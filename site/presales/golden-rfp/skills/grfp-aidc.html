@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="面向售前、售后与网络工程师的 ALE 内部技术知识平台">
+  <meta name="theme-color" content="#6B489D">
+  <title>grfp-aidc — Golden RFP · 标准标书需求库</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=4">
+  <link rel="stylesheet" href="/assets/css/layout.css?v=4">
+  <link rel="stylesheet" href="/assets/css/components.css?v=4">
+  <link rel="stylesheet" href="/assets/css/content.css?v=7">
+  <script src="/assets/js/auth-config.js?v=4"></script>
+  <script src="/assets/js/auth-core.js?v=4"></script>
+  <script src="/assets/js/auth-guard.js?v=4"></script>
+</head>
+<body data-page-kind="course">
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <header class="topbar" data-topbar>
+    <a class="brand" href="/index.html" aria-label="返回 ALE 技术培训门户首页">
+      <img src="/assets/ale-logo-color.png" alt="Alcatel-Lucent Enterprise">
+      <span>ALE 培训门户</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-controls="primary-nav" aria-expanded="false" data-nav-toggle>
+      <span aria-hidden="true">☰</span><span class="sr-only">打开导航</span>
+    </button>
+    <nav id="primary-nav" class="primary-nav" aria-label="主导航">
+      <a href="/index.html">首页</a>
+      <a href="/paths.html">学习路径</a>
+      <a href="/presales/index.html" aria-current="page">售前</a>
+      <a href="/postsales/index.html">售后</a>
+      <a href="/wlan/index.html">无线</a>
+      <a href="/aos/index.html">AOS 手册</a>
+      <a href="/hardware/index.html">硬件</a>
+      <a href="/brochures/index.html">彩页</a>
+      <a href="/solutions/index.html">解决方案</a>
+      <a href="/security/index.html">安全</a>
+    </nav>
+    <button id="logout-btn" class="logout-btn" type="button" hidden>退出登录</button>
+  </header>
+<div class="course-layout">
+<aside class="course-sidebar" id="course-sidebar" data-sidebar>
+  <div class="sidebar-heading">
+    <p class="eyebrow">COURSE</p>
+    <h2>Golden RFP · 标准标书需求库</h2>
+    <p>7 份 Golden RFP · AOS 8.10R4 软件特性 / AI-DC / 机型 / Stellar WLAN / OmniVista 10.5（C/PC/NC 分级弹药）</p>
+  </div>
+<div class="search" data-search>
+  <label class="sr-only" for="course-search">搜索全站课程和知识单元</label>
+  <input id="course-search" type="search" placeholder="搜索课程编号、产品型号或技术关键词…" autocomplete="off" data-search-input>
+  <div class="search-results" role="listbox" aria-live="polite" data-search-results></div>
+</div>  <nav class="course-nav" aria-label="课程目录">
+    <a href="/presales/golden-rfp/index.html">课程首页</a>
+    <a href="/presales/golden-rfp/digest.html">精华长文</a>
+    <a href="/presales/golden-rfp/overview.html">教书理解</a>
+    <a href="/presales/golden-rfp/glossary.html">术语词典</a>
+    <p class="course-nav-group">使用指南</p>
+      <a href="/presales/golden-rfp/skills/grfp-guide.html">grfp-guide</a>
+    <p class="course-nav-group">需求矩阵</p>
+      <a href="/presales/golden-rfp/skills/grfp-sw-features.html">grfp-sw-features</a>
+      <a aria-current="page" href="/presales/golden-rfp/skills/grfp-aidc.html">grfp-aidc</a>
+      <a href="/presales/golden-rfp/skills/grfp-wlan.html">grfp-wlan</a>
+      <a href="/presales/golden-rfp/skills/grfp-nms.html">grfp-nms</a>
+    <p class="course-nav-group">机型对比</p>
+      <a href="/presales/golden-rfp/skills/grfp-lan-access.html">grfp-lan-access</a>
+  </nav>
+</aside>  <main id="main-content" class="course-main prose">
+    <nav class="breadcrumbs" aria-label="面包屑"><a href="/index.html">培训门户</a><span>/</span><a href="/presales/index.html">售前 · Presales</a><span>/</span><a href="/presales/golden-rfp/index.html">Golden RFP</a><span>/</span><span aria-current="page">grfp-aidc</span></nav>
+<header class="skill-heading"><div><p class="eyebrow">KNOWLEDGE UNIT</p><h1>grfp-aidc</h1></div><dl><div><dt>Skill ID</dt><dd>grfp-aidc</dd></div></dl></header>    <article class="markdown-body"><h2 id="r">R(何时用)</h2>
+<ul>
+<li>投标智算中心 / GPU 集群网络项目，需要逐条应答 AI-DC 需求</li>
+<li>设计后端训练网 + 前端存储网 + 带外管理网三网架构</li>
+<li>选型 GPU 服务器与 400G/800G 交换机并解释"为什么必须无损以太网"</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<ul>
+<li><strong>AI 负载的流量模型与传统 DC 根本不同</strong>：<br>all-reduce / all-gather / all-to-all 集合通信在 GPU 间产生同步大突发，"A small number of slow or congested flows is sufficient to stall an entire training job"，作业完成时间 JCT 取决于尾延迟和丢包行为而非平均吞吐（Introduction）。</li>
+<li><strong>由此推出五条设计铁律</strong>：<br>① RoCEv2 无损以太网；② 自适应路由 + 动态负载均衡防哈希极化；③ ASIC 内硬件链路倒换（检测后 &lt;1ms，不惊动控制面）；④ 可编程带内遥测 INT 诊断尾延迟；⑤ 三网分离——backend 计算 / frontend 存储+通用 / OOB 管理，单编排平台统管。</li>
+</ul>
+<p>方案构成：OmniCompute OC8100 GPU 服务器（AMD 8×MI325X）；前端用 OS6920-D32 与 OS6900 系列；后端用 OS7900 系列（ONIE 出厂，可装 ASON=ALE SONiC 或 AOS-X）；管理网用 OS6900-T48C6；编排用 OmniVista Orchestra（本地部署，原生管 SONiC/AOS-X 交换机与 GPU 服务器）。</p>
+<h2 id="a1">A1（决策要点）</h2>
+<ol>
+<li><strong>Spine 档位</strong>：51.2 Tbps（2RU，64×OSFP800 800G，5nm 单 die）vs 25.6 Tbps 400G（64×QSFP56-DD，Tomahawk 4 级，投资保护渐进迁移）。</li>
+<li><strong>Leaf 档位</strong>：25.6 Tbps（32×OSFP800 ToR 直连 GPU 400G NIC）vs 12.8 Tbps 400G（32×QSFP-DD，650ns 时延，850k IPv4 ALPM / 8192 VRF）。</li>
+<li><strong>拓扑双选</strong>：classic Clos vs rail-optimized，投标方须两种都给 BOM、线缆清单与收敛比（Solution-level req #7）。</li>
+<li><strong>NOS 双轨</strong>：back-end 必须是 hardened SONiC 发行版（SAI 硬件抽象层）+ 同硬件上的专有 NOS 并行可选；front-end 用单一容器化专有 NOS。NOS 架构要求为"容器化单体 OS 不可接受"。</li>
+<li><strong>规模验证点</strong>：8 GPU 单机柜试点 → 256 GPU 八机柜生产 pod，两个规模点都要 BOM 与布线图（req #11）。</li>
+</ol>
+<h2 id="a2">A2（细节速查表）</h2>
+<p><strong>解决方案级硬指标</strong>（Solution-level requirements）</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>条目</th>
+<th>要点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>#2</td>
+<td>后端支持 RoCEv2 无损传输（InfiniBand Spec Vol.1 Annex A17 定义）</td>
+</tr>
+<tr>
+<td>#3</td>
+<td>所有 GPU-GPU 路径 cut-through 转发</td>
+</tr>
+<tr>
+<td>#4</td>
+<td>硬件 DLB 按 egress queue 配置，依据实时端口负载+队列占用重平衡</td>
+</tr>
+<tr>
+<td>#5</td>
+<td>硬件链路倒换 link-down 检测后 &lt;1ms 重导向，无需控制面收敛</td>
+</tr>
+<tr>
+<td>#6</td>
+<td>数据面可编程 INT：line-rate 导出 per-packet/per-flow 记录、片上触发器（队列深度阈值/ECN 标记/丢包），免外置探针</td>
+</tr>
+<tr>
+<td>#9</td>
+<td>管理网独立 L2/L3 网络，仅承载 BMC/串口集中器/编排流量</td>
+</tr>
+<tr>
+<td>#15</td>
+<td>全部交换机双风道 SKU（front-to-back port intake / back-to-front port exhaust）</td>
+</tr>
+<tr>
+<td>#16</td>
+<td>电源热插拔负载分担，同机箱兼容 AC 或 HVDC 输入</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>GPU 服务器（OC8100）关键参数</strong>（AI compute server 章）</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>数值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>形态/散热</td>
+<td>8RU 风冷，AMD MI325X×8（OCP OAM 规范）</td>
+</tr>
+<tr>
+<td>显存</td>
+<td>每 GPU ≥256GB HBM3e、带宽 ≥6TB/s，整机 2TB</td>
+</tr>
+<tr>
+<td>Scale-up</td>
+<td>8 卡全互联 coherent fabric，任意两卡 ≥128GB/s 双向，每卡 7 条点对点链路</td>
+</tr>
+<tr>
+<td>算力</td>
+<td>FP32 163 TFLOPS / FP16 1300 / FP8 2610（GPU 厂商公布基准）</td>
+</tr>
+<tr>
+<td>Scale-out</td>
+<td>8×单口 400G QSFP112 NIC（一 GPU 一口，rail 优化拓扑），NIC 硬件 RoCEv2/PFC/ECN</td>
+</tr>
+<tr>
+<td>前端</td>
+<td>2×双口 200G QSFP112</td>
+</tr>
+<tr>
+<td>主机</td>
+<td>2×x86（≥64 核/路、3.3GHz、400W TDP）、≥1.5TB DDR5-5600 ECC</td>
+</tr>
+<tr>
+<td>电源/散热</td>
+<td>6×3300W 钛金 PSU 4+2 冗余、15 个 N+1 风扇模组</td>
+</tr>
+<tr>
+<td>管理</td>
+<td>独立 BMC（开源固件，SOL/Redfish/IPMI 2.0）+ 专用 1G RJ45</td>
+</tr>
+<tr>
+<td>环境</td>
+<td>10–35°C（ASHRAE A2）、峰值 ≤10kW/机柜位、实际工作 6–8kW</td>
+</tr>
+</tbody>
+</table></div>
+<ol>
+<li><strong>2T Spine 代表条目</strong>：64×OSFP800（每电 lane 100G PAM4），breakout 至 2×400G…8×50G；单片 5nm die、全双工非阻塞 51.2Tbps；自适应路由+DLB per queue+GLB 跨 spine，per-flowlet 硬件决策；VXLAN RIOT（同口路由+桥接）line-rate；端到端拥塞控制 PFC(802.1Qbb)/ECN(RFC3168)/DCQCN/HPCC 免外置控制器；SyncE(G.8262)+PTP 1588v2+1PPS/10MHz/ToD 面板接口；硬件 e-fuse 保护笼位；≤44×64.92×8.7cm / ≤22kg；jumbo 9416 字节。</li>
+</ol>
+<p><strong>公共软件基线</strong>（Common switch software features，前后端 NOS 各答一遍）：容器化模块化 NOS + SAI 抽象；<strong>PFC watchdog 防 PAUSE 死锁自恢复</strong>（原文警告无 watchdog 会 "permanent fabric stall"）；ECN per queue/port 统计经 streaming telemetry 导出；WRED；8 硬件队列 SP/DWRR；EVPN 需同时支持 Type 1/2/4/5 路由（只有 Type 2 视为 NC）；anycast gateway 对称 IRB；ESI 多归属 active-active；ARP/ND suppression；BGP Unnumbered 免逐链路配 IP；ECMP hash key/hash seed 可配置抗极化；REST API 必须 YANG/OpenConfig 或文档化 JSON schema，"Read-only CLI scraping is not acceptable"；Management VRF 与业务转发隔离。</p>
+<h2 id="e">E（场景案例/怎么用）</h2>
+<ul>
+<li><strong>客户问"为什么 leaf 到 spine 要 800G"</strong>：<br>引 leaf ToR 直收 GPU 400G scale-out NIC 上行，引 OC8100 规格 8×400G 表项。</li>
+<li><strong>标书评审答"空白判负"提醒</strong>：<br>本卷明确 blank/dash/"see datasheet"=NC，响应表务必逐格填。</li>
+<li><strong>写无双 NOS 方案的差距说明</strong>：<br>SONiC 硬化发行版要求属 back-end 强制条目（req #13），缺则至少 PC 并写清替代路径。</li>
+</ul>
+<h2 id="b">B（限制与坑）</h2>
+<ul>
+<li><strong>版本</strong>：<br>v1（2026 年 5 月），基于 AI-DC Offer Phase 2；Datasheets 一节写明"Links to be added once published"，引用数据表前要找正式发布链接。</li>
+<li>Solution-level 表里 #18 出现两次（电源线 IEC C19/C20 与编排平台无损以太网 GUI/REST 配置），引用编号时注意原文编号重复。</li>
+<li>GPU 型号锁定 AMD MI325X 生态（Infinity Fabric 互联）；对标 NVIDIA 生态需求需另行论证，不能直接标 C。</li>
+<li>温度参数分风道方向（FtB 0–40°C / BtF 0–35°C 等），机柜布局设计要先定风向再定温区。</li>
+<li>文中个别小节标注"该要求适用于前后端两套 NOS 且要各答一遍"，容易漏答一半。</li>
+</ul>
+<p>来源：Alcatel-Lucent AI DC Solution Golden RFP v1（sources/grfp-aidc.md，全文约 1100 行）</p></article>
+<nav class="previous-next" aria-label="知识单元翻页"><a href="/presales/golden-rfp/skills/grfp-sw-features.html"><span>上一单元</span><b>grfp-sw-features</b></a><a class="next" href="/presales/golden-rfp/skills/grfp-wlan.html"><span>下一单元</span><b>grfp-wlan</b></a></nav>    <footer class="content-footer">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</footer>
+  </main>
+</div>
+  <script src="/assets/js/app.js?v=4" defer></script>
+  <script src="/assets/js/search.js?v=4" defer></script>
+  <script src="/assets/js/lightbox.js?v=5" defer></script>
+</body>
+</html>

@@ -1,91 +1,71 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>stellar-ssid-policy-advanced — DT00XTE378 · Stellar WLAN 高级排障与更新</title>
-<style>
-:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
-*{box-sizing:border-box}
-body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
-a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
-.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin:16px 0}
-.gallery figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px}
-.gallery img{width:100%;max-height:340px;object-fit:contain;background:#fff;border-radius:6px}
-.gallery figcaption{font-size:12.5px;color:var(--mut);text-align:center;margin-top:6px}
-/* 侧栏折叠 + 图片灯箱 */
-.tgl{position:fixed;left:0;top:45%;z-index:60;background:var(--card);border:1px solid var(--line);border-right:none;border-radius:0 8px 8px 0;color:var(--tx);padding:10px 6px;cursor:pointer;font-size:13px;line-height:1.1;writing-mode:vertical-lr}
-.tgl:hover{background:var(--acc);color:#0f172a}
-.layout.full{grid-template-columns:0 1fr}
-.layout.full aside{display:none}
-.lb{position:fixed;inset:0;background:rgba(5,10,20,.92);z-index:100;display:flex;align-items:center;justify-content:center;flex-direction:column}
-.lb img{max-width:92vw;max-height:82vh;background:#fff;border-radius:6px;transition:transform .12s}
-.lb .lbb{margin-top:10px;display:flex;gap:10px}
-.lb button{background:var(--card);border:1px solid var(--line);color:var(--tx);border-radius:8px;padding:6px 14px;cursor:pointer;font-size:14px}
-.lb button:hover{background:var(--acc);color:#0f172a}
-.search{margin:0 0 14px}
-.search input{width:100%;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--tx);font-size:13px;outline:none}
-.search input:focus{border-color:var(--acc)}
-#qres{max-height:340px;overflow-y:auto;margin-top:6px}
-#qres .qi{display:block;padding:6px 8px;border-radius:6px;font-size:12.5px;color:var(--tx);border-left:2px solid transparent}
-#qres .qi:hover{background:var(--card);text-decoration:none;border-left-color:var(--acc)}
-#qres .qi .qp{color:var(--mut);font-size:11px;display:block}
-#qres .qi b{color:var(--acc)}
-.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
-main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
-.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
-aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
-aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
-aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
-aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
-aside a:hover{background:var(--card);text-decoration:none}
-aside a.on{background:var(--card);color:var(--acc)}
-main{padding:36px 48px;max-width:1000px}
-h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
-h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
-table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
-th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
-th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
-code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
-pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
-pre code{background:none;padding:0}
-blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
-.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
-.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
-.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
-.meta{font-size:13px;color:var(--mut)}
-hr{border:none;border-top:1px solid var(--line);margin:26px 0}
-.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
-.badge.soon{background:#475569;color:#cbd5e1}
-main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
-main{padding:28px 48px 40px;max-width:1040px}
-h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
-blockquote p{margin:6px 0}
-.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
-.crumbs a{color:var(--acc)}
-.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
-.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
-.pn a:hover{border-color:var(--acc)}
-.pn .nxt{text-align:right}
-.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
-@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
-</style></head>
-<body><div class="layout"><aside><h1>DT00XTE378 · Stellar WLAN 高级排障与更新</h1>
-<div class="search"><input id="qk" type="search" placeholder="🔍 搜索全站…" autocomplete="off"><div id="qres"></div></div>
-
-<div class="sub">488 页 · 排障篇同 T478 + Features Update 增量（新硬件/云运维/升级迁移）</div>
-<a href="../index.html">🏠 课程首页</a>
-<a href="../digest.html">📖 精华长文 DIGEST</a>
-
-<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
-<a href="../glossary.html">🔤 术语词典</a>
-<a href="../../../index.html">⬅️ 返回培训门户</a>
-<a href="../index.html">──── Skills ────</a>
-<div class="grp">上线与业务</div>
-<a href="../skills/stellar-enterprise-onboarding.html">stellar-enterprise-onboarding</a>
-<a href="../skills/stellar-ssid-policy-advanced.html" class="on">stellar-ssid-policy-advanced</a>
-<div class="grp">云运维</div>
-<a href="../skills/stellar-rap-backup-upgrade-ops.html">stellar-rap-backup-upgrade-ops</a>
-<div class="grp">硬件速览</div>
-<a href="../skills/stellar-wifi7-hardware-rf-quickref.html">stellar-wifi7-hardware-rf-quickref</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../postsales/index.html">售后</a> › <a href="../index.html">DT00XTE378</a> › <span>SSID 与策略进阶：802.1X / AD / 访客门户 / WCF / BYOD 与带宽判定</span></nav><h1>SSID 与策略进阶：802.1X / AD / 访客门户 / WCF / BYOD 与带宽判定</h1><p class="meta"><span class="badge">SKILL</span> stellar-ssid-policy-advanced · 来源页码: </p><h1 id="ssid-8021x-ad-wcf-byod">SSID 与策略进阶：802.1X / AD / 访客门户 / WCF / BYOD 与带宽判定</h1>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="面向售前、售后与网络工程师的 ALE 内部技术知识平台">
+  <meta name="theme-color" content="#6B489D">
+  <title>SSID 与策略进阶：802.1X / AD / 访客门户 / WCF / BYOD 与带宽判定 — DT00XTE378 · Stellar WLAN 高级排障与更新</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=4">
+  <link rel="stylesheet" href="/assets/css/layout.css?v=4">
+  <link rel="stylesheet" href="/assets/css/components.css?v=4">
+  <link rel="stylesheet" href="/assets/css/content.css?v=7">
+  <script src="/assets/js/auth-config.js?v=4"></script>
+  <script src="/assets/js/auth-core.js?v=4"></script>
+  <script src="/assets/js/auth-guard.js?v=4"></script>
+</head>
+<body data-page-kind="course">
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <header class="topbar" data-topbar>
+    <a class="brand" href="/index.html" aria-label="返回 ALE 技术培训门户首页">
+      <img src="/assets/ale-logo-color.png" alt="Alcatel-Lucent Enterprise">
+      <span>ALE 培训门户</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-controls="primary-nav" aria-expanded="false" data-nav-toggle>
+      <span aria-hidden="true">☰</span><span class="sr-only">打开导航</span>
+    </button>
+    <nav id="primary-nav" class="primary-nav" aria-label="主导航">
+      <a href="/index.html">首页</a>
+      <a href="/paths.html">学习路径</a>
+      <a href="/presales/index.html">售前</a>
+      <a href="/postsales/index.html" aria-current="page">售后</a>
+      <a href="/wlan/index.html">无线</a>
+      <a href="/aos/index.html">AOS 手册</a>
+      <a href="/hardware/index.html">硬件</a>
+      <a href="/brochures/index.html">彩页</a>
+      <a href="/solutions/index.html">解决方案</a>
+      <a href="/security/index.html">安全</a>
+    </nav>
+    <button id="logout-btn" class="logout-btn" type="button" hidden>退出登录</button>
+  </header>
+<div class="course-layout">
+<aside class="course-sidebar" id="course-sidebar" data-sidebar>
+  <div class="sidebar-heading">
+    <p class="eyebrow">COURSE</p>
+    <h2>DT00XTE378 · Stellar WLAN 高级排障与更新</h2>
+    <p>488 页 · 排障篇同 T478 + Features Update 增量（新硬件/云运维/升级迁移）</p>
+  </div>
+<div class="search" data-search>
+  <label class="sr-only" for="course-search">搜索全站课程和知识单元</label>
+  <input id="course-search" type="search" placeholder="搜索课程编号、产品型号或技术关键词…" autocomplete="off" data-search-input>
+  <div class="search-results" role="listbox" aria-live="polite" data-search-results></div>
+</div>  <nav class="course-nav" aria-label="课程目录">
+    <a href="/postsales/stellar-adv-trouble-update/index.html">课程首页</a>
+    <a href="/postsales/stellar-adv-trouble-update/digest.html">精华长文</a>
+    <a href="/postsales/stellar-adv-trouble-update/overview.html">教书理解</a>
+    <a href="/postsales/stellar-adv-trouble-update/glossary.html">术语词典</a>
+    <p class="course-nav-group">上线与业务</p>
+      <a href="/postsales/stellar-adv-trouble-update/skills/stellar-enterprise-onboarding.html">Enterprise 设备上线工作流：交换机发现 + AP 云注册 + AP Group 纳管</a>
+      <a aria-current="page" href="/postsales/stellar-adv-trouble-update/skills/stellar-ssid-policy-advanced.html">SSID 与策略进阶：802.1X / AD / 访客门户 / WCF / BYOD 与带宽判定</a>
+    <p class="course-nav-group">云运维</p>
+      <a href="/postsales/stellar-adv-trouble-update/skills/stellar-rap-backup-upgrade-ops.html">RAP 与运维：远程 AP 双流程 · Cirrus 云管 · 备份/恢复/升级 · 监控告警</a>
+    <p class="course-nav-group">硬件速览</p>
+      <a href="/postsales/stellar-adv-trouble-update/skills/stellar-wifi7-hardware-rf-quickref.html">新硬件与 RF 特性速览：Wi-Fi 7 家族 · 模式规模红线 · 漫游阈值 · Mesh/Bridge</a>
+  </nav>
+</aside>  <main id="main-content" class="course-main prose">
+    <nav class="breadcrumbs" aria-label="面包屑"><a href="/index.html">培训门户</a><span>/</span><a href="/postsales/index.html">售后 · Postsales</a><span>/</span><a href="/postsales/stellar-adv-trouble-update/index.html">DT00XTE378</a><span>/</span><span aria-current="page">SSID 与策略进阶：802.1X / AD / 访客门户 / WCF / BYOD 与带宽判定</span></nav>
+<header class="skill-heading"><div><p class="eyebrow">KNOWLEDGE UNIT</p><h1>SSID 与策略进阶：802.1X / AD / 访客门户 / WCF / BYOD 与带宽判定</h1></div><dl><div><dt>Skill ID</dt><dd>stellar-ssid-policy-advanced</dd></div></dl></header>    <article class="markdown-body"><h1 id="ssid-8021x-ad-wcf-byod">SSID 与策略进阶：802.1X / AD / 访客门户 / WCF / BYOD 与带宽判定</h1>
 <h2 id="r">R · 原文引用</h2>
 <blockquote>
 <p>"SSID: Wizard driven tool. Pre-defined Usage (Guest, Employee, BYOD,...). All the configuration is performed from the wizard. Recommended mode. WLAN service (expert): Manual configuration... Limited usage for specific SSIDs." (p243)</p>
@@ -96,40 +76,15 @@ blockquote p{margin:6px 0}
 <h2 id="i">I · 方法论骨架</h2>
 <ol>
 <li><strong>Usage 模板定骨架</strong>：向导选 Usage = 选安全模板（Guest=Open/MAC+门户；Employee BYOD=802.1X+BYOD 注册；Enterprise for Employees=纯 802.1X；Protected=PSK+可选门户），再逐步微调。</li>
-<li>
-<p>必填项清单：Enterprise 级 AAA Profile 必填（加密六选一至 WPA3_AES）；</p>
-<ul>
-<li>Personal 级 Passphrase+Key Format 必填（含 WPA3_SAE_AES）；</li>
-<li>Default Access Role Profile（承载 QoS/门户/带宽并映射 VLAN）一律必填；</li>
-</ul>
-</li>
-<li>
-<p>认证源三级：UPAM 本地库 → 企业 AD（LDAP/AD Configuration 两步切换）→ 外部 RADIUS。</p>
-<ul>
-<li>
-<ol>
-<li>限速四层判定（从细到粗）：DPI 应用规则 → ACL 规则 → 用户级 Access Role → SSID 共享；
-配置入口分别在 Unified Policy Policy List / Advanced Access Role / Advanced WLAN Service。</li>
-</ol>
-</li>
-<li>
-<ol>
-<li>变更闭环三步：改配置 → Apply/Notify 推送 → 受影响客户端断开重连强制重认证（策略只在认证瞬间应用）。</li>
-</ol>
-</li>
-</ul>
-</li>
+<li><strong>必填项清单</strong>：Enterprise 级 AAA Profile 必填（加密六选一至 WPA3_AES）；Personal 级 Passphrase+Key Format 必填（含 WPA3_SAE_AES）；Default Access Role Profile（承载 QoS/门户/带宽并映射 VLAN）一律必填。</li>
+<li><strong>认证源三级</strong>：UPAM 本地库 → 企业 AD（LDAP/AD Configuration 两步切换）→ 外部 RADIUS。</li>
+<li><strong>限速四层判定</strong>（从细到粗）：DPI 应用规则 → ACL 规则 → 用户级 Access Role → SSID 共享；配置入口分别在 Unified Policy Policy List / Advanced Access Role / Advanced WLAN Service。</li>
+<li><strong>变更闭环三步</strong>：改配置 → Apply/Notify 推送 → 受影响客户端断开重连强制重认证（策略只在认证瞬间应用）。</li>
 </ol>
 <h2 id="a1-lab">A1 · 书中案例（Lab 精要）</h2>
 <ul>
-<li><strong>c03 员工 SSID</strong>：<br>EmployeesX，Usage 选 Enterprise Network for Employees，WPA3_AES + UPAMRadiusServer，默认 VLAN 20；客户端 PEAP/MSCHAPv2（不校验 CA）接入。</li>
-<li>Expert 模式等价七对象：WLAN Service → AAA Server Profile → Access Role Profile（Apply to Devices 映射 VLAN）→ Authentication Strategy → Access Policy（条件 SSID=xxx）→ 部署。</li>
-<li>
-<p>AP 侧排障：<code>cat wlanservice.conf</code> / <code>AAA_server.conf</code> 核对 RADIUS 参数，<code>tcpdump -i br-wan host &lt;radiusIP&gt;</code> 抓认证报文。</p>
-</li>
-<li>
-<p><strong>c04 对接 AD</strong>：UPAM &gt; SETTINGS &gt; LDAP/AD Configuration 填 Server Type=AD、NETBIOS/DNS 域名、域控 IP、绑定账号、端口 389，Test Connection 后 Apply；再把 SSID 的 Authentication Strategy 从本地库改 External LDAP/AD。</p>
-</li>
+<li><strong>c03 员工 SSID</strong>：EmployeesX，Usage 选 Enterprise Network for Employees，WPA3_AES + UPAMRadiusServer，默认 VLAN 20；客户端 PEAP/MSCHAPv2（不校验 CA）接入。Expert 模式等价七对象：WLAN Service → AAA Server Profile → Access Role Profile（Apply to Devices 映射 VLAN）→ Authentication Strategy → Access Policy（条件 SSID=xxx）→ 部署。AP 侧排障：<code>cat wlanservice.conf</code> / <code>AAA_server.conf</code> 核对 RADIUS 参数，<code>tcpdump -i br-wan host &lt;radiusIP&gt;</code> 抓认证报文。</li>
+<li><strong>c04 对接 AD</strong>：UPAM &gt; SETTINGS &gt; LDAP/AD Configuration 填 Server Type=AD、NETBIOS/DNS 域名、域控 IP、绑定账号、端口 389，Test Connection 后 Apply；再把 SSID 的 Authentication Strategy 从本地库改 External LDAP/AD。</li>
 <li><strong>c05 访客门户</strong>：GuestsX 启用 OV-UPAM 门户；重定向验证用 http://非HTTPS URL；KickOff 踢线可重连、Add to Blocklist 拉黑不可重连。</li>
 <li><strong>c06 WCF</strong>：AP Group 激活 WCF → UPAM 建 WCF-guests（Social Networking/Gambling=Reject）→ 绑到 __GuestsX 角色档案 → <strong>Apply to Devices</strong>（否则只改在服务器本地）。原理：AP 窥探 DNS 取 FQDN → Brightcloud 分类 → 生成针对解析 IP 的阻断 ACL。</li>
 <li><strong>c07 BYOD 动态 VLAN</strong>：不建新 VLAN——预认证落 Guest VLAN 30，门户认证（Post Portal Authentication Enforcement 设 Fixed Access Role=_EmployeesX）后动态迁到 Employee VLAN 20。</li>
@@ -138,49 +93,19 @@ blockquote p{margin:6px 0}
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
 <li>新建/改造员工、访客、BYOD SSID；认证源切换到 AD；访客网页过滤；基于角色的限速不生效。</li>
-<li><strong>与 <code><a href="stellar-enterprise-onboarding.html">stellar-enterprise-onboarding</a></code> 的区分</strong>：<br>设备已纳管（在 AP Group 里），本 skill 处理空口业务与认证策略。</li>
-<li><strong>与 <code><a href="stellar-wifi7-hardware-rf-quickref.html">stellar-wifi7-hardware-rf-quickref</a></code> 的区分</strong>：<br>本 skill 不处理射频参数（漫游/阈值/Band Steering 属那边）。</li>
+<li><strong>与 <code><a href="/postsales/stellar-adv-trouble-update/skills/stellar-enterprise-onboarding.html">stellar-enterprise-onboarding</a></code> 的区分</strong>：<br>设备已纳管（在 AP Group 里），本 skill 处理空口业务与认证策略。</li>
+<li><strong>与 <code><a href="/postsales/stellar-adv-trouble-update/skills/stellar-wifi7-hardware-rf-quickref.html">stellar-wifi7-hardware-rf-quickref</a></code> 的区分</strong>：<br>本 skill 不处理射频参数（漫游/阈值/Band Steering 属那边）。</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
-<li>向导建 SSID：服务名 + 空口名（可多服务共用）→ 选 Usage 模板 → 频段/加密/PSK/默认 VLAN/认证策略 → 绑 AP Group（可调度广播时段）。<ul>
-<li>
-<ol>
+<li>向导建 SSID：服务名 + 空口名（可多服务共用）→ 选 Usage 模板 → 频段/加密/PSK/默认 VLAN/认证策略 → 绑 AP Group（可调度广播时段）。</li>
 <li>802.1X：AAA Profile 选 UPAMRadiusServer（内嵌 UPAM）或外部；建员工账号或接 AD。</li>
-</ol>
-</li>
-<li>
-<ol>
 <li>接 AD：UPAM LDAP/AD Configuration 填域信息 → Test Connection → Apply → SSID 认证策略切 External LDAP/AD。</li>
-</ol>
-</li>
-<li>
-<ol>
 <li>访客：启用 OV-UPAM 门户 + Guest 账号（注意有效期）；管理动作用 KickOff/Blocklist。</li>
-</ol>
-</li>
-<li>
-<ol>
 <li>WCF：AP Group 激活+Commit → 建档案 → 绑角色 → Apply to Devices；前置检查 OV2500 DNS。</li>
-</ol>
-</li>
-<li>
-<ol>
 <li>BYOD：Post Portal Enforcement 设员工角色，默认 VLAN 放访客段，靠动态迁移。</li>
-</ol>
-</li>
-<li>
-<ol>
 <li>限速：按四层判定选入口配置（DPI/ACL → Access Role → SSID 共享）。</li>
-</ol>
-</li>
-<li>
-<ol>
 <li>每次改完：Apply to Devices/Notify All → 客户端断开重连验证。</li>
-</ol>
-</li>
-</ul>
-</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>
@@ -193,5 +118,13 @@ blockquote p{margin:6px 0}
 <li><strong>广播密钥轮换仅企业级</strong>；Multicast Optimization 有熔断（信道利用率&gt;90% 或高吞吐客户端&gt;6 自动停）。</li>
 <li>Guest 访客账号排障先核时间/日期（有效期）。</li>
 </ul>
-<hr />
-<p>来源条目: f01 · f04 · p06 · p07 · p08 · p09 · p10 · p21 · p22 · c03 · c04 · c05 · c06 · c07 · ce06 · ce07</p><div class="pn"><a href="stellar-enterprise-onboarding.html">⬅ 上一单元：stellar-enterprise-onboarding</a><a class="nxt" href="stellar-rap-backup-upgrade-ops.html">下一单元：stellar-rap-backup-upgrade-ops ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<hr>
+<p>来源条目: f01 · f04 · p06 · p07 · p08 · p09 · p10 · p21 · p22 · c03 · c04 · c05 · c06 · c07 · ce06 · ce07</p></article>
+<nav class="previous-next" aria-label="知识单元翻页"><a href="/postsales/stellar-adv-trouble-update/skills/stellar-enterprise-onboarding.html"><span>上一单元</span><b>Enterprise 设备上线工作流：交换机发现 + AP 云注册 + AP Group 纳管</b></a><a class="next" href="/postsales/stellar-adv-trouble-update/skills/stellar-rap-backup-upgrade-ops.html"><span>下一单元</span><b>RAP 与运维：远程 AP 双流程 · Cirrus 云管 · 备份/恢复/升级 · 监控告警</b></a></nav>    <footer class="content-footer">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</footer>
+  </main>
+</div>
+  <script src="/assets/js/app.js?v=4" defer></script>
+  <script src="/assets/js/search.js?v=4" defer></script>
+  <script src="/assets/js/lightbox.js?v=5" defer></script>
+</body>
+</html>

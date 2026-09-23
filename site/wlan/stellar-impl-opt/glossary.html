@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="面向售前、售后与网络工程师的 ALE 内部技术知识平台">
+  <meta name="theme-color" content="#6B489D">
+  <title>术语词典 — Stellar 桥接与 Multi-Mesh 实施</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=4">
+  <link rel="stylesheet" href="/assets/css/layout.css?v=4">
+  <link rel="stylesheet" href="/assets/css/components.css?v=4">
+  <link rel="stylesheet" href="/assets/css/content.css?v=7">
+  <script src="/assets/js/auth-config.js?v=4"></script>
+  <script src="/assets/js/auth-core.js?v=4"></script>
+  <script src="/assets/js/auth-guard.js?v=4"></script>
+</head>
+<body data-page-kind="course">
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <header class="topbar" data-topbar>
+    <a class="brand" href="/index.html" aria-label="返回 ALE 技术培训门户首页">
+      <img src="/assets/ale-logo-color.png" alt="Alcatel-Lucent Enterprise">
+      <span>ALE 培训门户</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-controls="primary-nav" aria-expanded="false" data-nav-toggle>
+      <span aria-hidden="true">☰</span><span class="sr-only">打开导航</span>
+    </button>
+    <nav id="primary-nav" class="primary-nav" aria-label="主导航">
+      <a href="/index.html">首页</a>
+      <a href="/paths.html">学习路径</a>
+      <a href="/presales/index.html">售前</a>
+      <a href="/postsales/index.html">售后</a>
+      <a href="/wlan/index.html" aria-current="page">无线</a>
+      <a href="/aos/index.html">AOS 手册</a>
+      <a href="/hardware/index.html">硬件</a>
+      <a href="/brochures/index.html">彩页</a>
+      <a href="/solutions/index.html">解决方案</a>
+      <a href="/security/index.html">安全</a>
+    </nav>
+    <button id="logout-btn" class="logout-btn" type="button" hidden>退出登录</button>
+  </header>
+<div class="course-layout">
+<aside class="course-sidebar" id="course-sidebar" data-sidebar>
+  <div class="sidebar-heading">
+    <p class="eyebrow">COURSE</p>
+    <h2>Stellar 桥接与 Multi-Mesh 实施</h2>
+    <p>Bridging &amp; Meshing Guidelines · 32 页 · 室外桥接 / 多点 Mesh / 家庭 Mesh / OV2500 配置 / 链路监测</p>
+  </div>
+<div class="search" data-search>
+  <label class="sr-only" for="course-search">搜索全站课程和知识单元</label>
+  <input id="course-search" type="search" placeholder="搜索课程编号、产品型号或技术关键词…" autocomplete="off" data-search-input>
+  <div class="search-results" role="listbox" aria-live="polite" data-search-results></div>
+</div>  <nav class="course-nav" aria-label="课程目录">
+    <a href="/wlan/stellar-impl-opt/index.html">课程首页</a>
+    <a href="/wlan/stellar-impl-opt/digest.html">精华长文</a>
+    <a href="/wlan/stellar-impl-opt/overview.html">教书理解</a>
+    <a aria-current="page" href="/wlan/stellar-impl-opt/glossary.html">术语词典</a>
+    <p class="course-nav-group">架构与用例</p>
+      <a href="/wlan/stellar-impl-opt/skills/sol-bridge-mesh-overview.html">sol-bridge-mesh-overview</a>
+      <a href="/wlan/stellar-impl-opt/skills/sol-bridge-mesh-usecases.html">sol-bridge-mesh-usecases</a>
+    <p class="course-nav-group">室外设计</p>
+      <a href="/wlan/stellar-impl-opt/skills/sol-bridge-mesh-outdoor-design.html">sol-bridge-mesh-outdoor-design</a>
+    <p class="course-nav-group">配置与运维</p>
+      <a href="/wlan/stellar-impl-opt/skills/sol-bridge-mesh-config.html">sol-bridge-mesh-config</a>
+      <a href="/wlan/stellar-impl-opt/skills/sol-bridge-mesh-monitor.html">sol-bridge-mesh-monitor</a>
+  </nav>
+</aside>  <main id="main-content" class="course-main prose">
+    <nav class="breadcrumbs" aria-label="面包屑"><a href="/index.html">培训门户</a><span>/</span><a href="/wlan/index.html">无线网络 · WLAN</a><span>/</span><a href="/wlan/stellar-impl-opt/index.html">Stellar 桥接与 Multi-Mesh 实施</a><span>/</span><span aria-current="page">术语词典</span></nav>
+<header class="page-intro compact"><p class="eyebrow">COURSE REFERENCE</p><h1>术语词典</h1></header>    <article class="markdown-body"><h1 id="_1">术语词典</h1>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>术语</th>
+<th>含义</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bridging（桥接）</td>
+<td>Point-to-Point 单链路 mesh 配置，延伸整个企业 LAN 到远端站点，不广播 SSID</td>
+<td><span class="source-page">原文p6</span></td>
+</tr>
+<tr>
+<td>Multi-Point Meshing（多点网状）</td>
+<td>面向无法布线区域的多节点 mesh 配置，root 与各 mesh AP 可广播 WLAN 服务并带下联口</td>
+<td><span class="source-page">原文p6</span></td>
+</tr>
+<tr>
+<td>Root 角色</td>
+<td>mesh 集群中作为 LAN 网关的 AP，所有数据流量经其进出有线网</td>
+<td><span class="source-page">原文p5</span></td>
+</tr>
+<tr>
+<td>Mesh 角色</td>
+<td>mesh 集群中的无线节点 AP，逐跳转发数据</td>
+<td><span class="source-page">原文p5</span></td>
+</tr>
+<tr>
+<td>双 root</td>
+<td>同一 AP group 配置两个 root AP，mesh AP 按最佳 RSSI 选接，提供网关冗余</td>
+<td><span class="source-page">原文p6</span></td>
+</tr>
+<tr>
+<td>Mesh backhaul（回程）</td>
+<td>mesh AP 之间/到 root 的无线回传链路，与客户端业务共享带宽，可配 5GHz 或 2.4GHz</td>
+<td><span class="source-page">原文p7</span></td>
+</tr>
+<tr>
+<td>Auto-Mesh</td>
+<td>root 连 LAN 激活后，邻居空配置 AP 自动用默认 mesh 链路接入的开局特性</td>
+<td><span class="source-page">原文p7</span></td>
+</tr>
+<tr>
+<td>WDS（Wireless Distribution System）</td>
+<td>AP 以 station 模式互连的透明以太桥接，用 802.11 四地址帧（普通客户端业务为三地址），统一广播域、承载多 VLAN</td>
+<td><span class="source-page">原文p7</span></td>
+</tr>
+<tr>
+<td>4 地址帧</td>
+<td>WDS 模式使用的 802.11 帧格式，携带两个 802.11 MAC 源/目的以实现透明桥接</td>
+<td><span class="source-page">原文p7</span></td>
+</tr>
+<tr>
+<td>吞吐减半</td>
+<td>Multi-Point 模式下 mesh 节点同频同射频收发，需回传的数据吞吐每节点除以 2</td>
+<td><span class="source-page">原文p7</span></td>
+</tr>
+<tr>
+<td>ENET0/ENET1</td>
+<td>AP 的以太口；Bridge 默认经 ENET0 分发 VLAN，AP1361/1362/1361D 的 ENET1 支持 802.3af/at PSE PoE 输出</td>
+<td><span class="source-page">原文p8</span></td>
+</tr>
+<tr>
+<td>下联口（downlink port）</td>
+<td>mesh/bridge AP 上为远端有线客户端提供接入的以太口，透传 tagged/untagged VLAN</td>
+<td><span class="source-page">原文p8</span></td>
+</tr>
+<tr>
+<td>ARP（Access Role Profile）</td>
+<td>Enterprise 模式按 VLAN/端口定义角色（ACL、QoS）的配置档</td>
+<td><span class="source-page">原文p8</span></td>
+</tr>
+<tr>
+<td>LoS（Line of Sight）</td>
+<td>视距：天线主瓣互对、无遮挡的链路形态，bridge 典型要求</td>
+<td><span class="source-page">原文p9</span></td>
+</tr>
+<tr>
+<td>nLoS</td>
+<td>非视距配置；半定向天线波束边缘至少计 3dB 损耗</td>
+<td><span class="source-page">原文p11</span></td>
+</tr>
+<tr>
+<td>Fresnel 区净空</td>
+<td>链路椭球区无遮挡比例，至少 60%；决定天线安装高度</td>
+<td><span class="source-page">原文p12</span></td>
+</tr>
+<tr>
+<td>RFPL（Free Space Path Loss）</td>
+<td>自由空间损耗，距离-吞吐性能表链路预算的计算项</td>
+<td><span class="source-page">原文p14</span></td>
+</tr>
+<tr>
+<td>SOM（System Margin）</td>
+<td>系统余量，默认 10dB，吸收风雨等外部条件引起的射频波动</td>
+<td><span class="source-page">原文p14</span></td>
+</tr>
+<tr>
+<td>MU-MIMO 天线</td>
+<td>通常双斜 ±45°、垂直/水平极化，推荐用于 bridge/mesh AP 性能</td>
+<td><span class="source-page">原文p9</span></td>
+</tr>
+<tr>
+<td>TIA-6076B</td>
+<td>室外电气安装（防雷接地）最佳实践参考标准</td>
+<td><span class="source-page">原文p12</span></td>
+</tr>
+<tr>
+<td>IP67</td>
+<td>室外防护等级；室外 AP（AP1361/1251 等）与室外 PoE 注入器的要求</td>
+<td><span class="source-page">原文p10</span></td>
+</tr>
+<tr>
+<td>Ekahau PRO</td>
+<td>站点勘测/规划工具（10.4 版内置 Stellar AP 与天线），仿真 mesh 链路传播与吞吐</td>
+<td><span class="source-page">原文p18</span></td>
+</tr>
+<tr>
+<td>OV2500（OmniVista 2500 / Cirrus）</td>
+<td>Enterprise 模式统一管理平台：AP group、RF profile、SSID、mesh 角色、uNP、监控</td>
+<td><span class="source-page">原文p5</span></td>
+</tr>
+<tr>
+<td>Express 模式</td>
+<td>Wi-Fi Express 轻量管理模式，逐 AP 经 APUI（手机/平板）管理，家庭 mesh 场景使用</td>
+<td><span class="source-page">原文p16</span></td>
+</tr>
+<tr>
+<td>APUI</td>
+<td>AP 自带 Web 管理界面，可设 mesh 角色（Backhaul0）与端口 VLAN（Enet0/1/2/3）</td>
+<td><span class="source-page">原文p25</span></td>
+</tr>
+<tr>
+<td>uNP 认证配置（Access Auth Profile）</td>
+<td>管理 bridge 下联口的端口配置档：trust tag、bypass VLAN、端口认证参数</td>
+<td><span class="source-page">原文p24</span></td>
+</tr>
+<tr>
+<td>Trust tag / Bypass VLAN</td>
+<td>uNP 按端口信任 tag 与放行的 VLAN 列表</td>
+<td><span class="source-page">原文p25</span></td>
+</tr>
+<tr>
+<td>rfprofile.conf</td>
+<td>AP 本地 /tmp/config/ 下实际生效的 RF 配置文件，监控核对用</td>
+<td><span class="source-page">原文p27</span></td>
+</tr>
+<tr>
+<td>Link Quality</td>
+<td>iwconfig 输出的链路健壮度指标（基于信号强度与 SNR），骤降提示距离/频率/安装/nLoS 问题</td>
+<td><span class="source-page">原文p30</span></td>
+</tr>
+<tr>
+<td>athap1 / ath01 / ath11</td>
+<td>AP 无线接口：athap1 为 mesh backhaul 接口，ath01/ath11 为 2.4G/5G 客户端 SSID 接口（书中示例）</td>
+<td><span class="source-page">原文p30-31</span></td>
+</tr>
+<tr>
+<td>DRM（Dynamic Radio Management）</td>
+<td>动态射频管理；mesh SSID 上远端客户端的 DRM 只在 root AP 层处理</td>
+<td><span class="source-page">原文p29</span></td>
+</tr>
+<tr>
+<td>DFS（UNII-2 子带）</td>
+<td>动态频率选择子带，雷达检测告警直接显示在 AP 控制台</td>
+<td><span class="source-page">原文p30</span></td>
+</tr>
+<tr>
+<td>802.11ax / Wi-Fi 6</td>
+<td>第六代 Wi-Fi 标准；Extra Range、长保护间隔（long GI）、OFDMA、扩展 MU-MIMO 利用户外链路</td>
+<td><span class="source-page">原文p9</span></td>
+</tr>
+</tbody>
+</table></div></article>
+    <footer class="content-footer">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</footer>
+  </main>
+</div>
+  <script src="/assets/js/app.js?v=4" defer></script>
+  <script src="/assets/js/search.js?v=4" defer></script>
+  <script src="/assets/js/lightbox.js?v=5" defer></script>
+</body>
+</html>

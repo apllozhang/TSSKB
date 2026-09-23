@@ -1,94 +1,74 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>enterprise-mode-onboarding — DT00XTE368 · Stellar WLAN Enterprise Basic</title>
-<style>
-:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
-*{box-sizing:border-box}
-body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
-a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
-.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin:16px 0}
-.gallery figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px}
-.gallery img{width:100%;max-height:340px;object-fit:contain;background:#fff;border-radius:6px}
-.gallery figcaption{font-size:12.5px;color:var(--mut);text-align:center;margin-top:6px}
-/* 侧栏折叠 + 图片灯箱 */
-.tgl{position:fixed;left:0;top:45%;z-index:60;background:var(--card);border:1px solid var(--line);border-right:none;border-radius:0 8px 8px 0;color:var(--tx);padding:10px 6px;cursor:pointer;font-size:13px;line-height:1.1;writing-mode:vertical-lr}
-.tgl:hover{background:var(--acc);color:#0f172a}
-.layout.full{grid-template-columns:0 1fr}
-.layout.full aside{display:none}
-.lb{position:fixed;inset:0;background:rgba(5,10,20,.92);z-index:100;display:flex;align-items:center;justify-content:center;flex-direction:column}
-.lb img{max-width:92vw;max-height:82vh;background:#fff;border-radius:6px;transition:transform .12s}
-.lb .lbb{margin-top:10px;display:flex;gap:10px}
-.lb button{background:var(--card);border:1px solid var(--line);color:var(--tx);border-radius:8px;padding:6px 14px;cursor:pointer;font-size:14px}
-.lb button:hover{background:var(--acc);color:#0f172a}
-.search{margin:0 0 14px}
-.search input{width:100%;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--tx);font-size:13px;outline:none}
-.search input:focus{border-color:var(--acc)}
-#qres{max-height:340px;overflow-y:auto;margin-top:6px}
-#qres .qi{display:block;padding:6px 8px;border-radius:6px;font-size:12.5px;color:var(--tx);border-left:2px solid transparent}
-#qres .qi:hover{background:var(--card);text-decoration:none;border-left-color:var(--acc)}
-#qres .qi .qp{color:var(--mut);font-size:11px;display:block}
-#qres .qi b{color:var(--acc)}
-.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
-main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
-.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
-aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
-aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
-aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
-aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
-aside a:hover{background:var(--card);text-decoration:none}
-aside a.on{background:var(--card);color:var(--acc)}
-main{padding:36px 48px;max-width:1000px}
-h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
-h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
-table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
-th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
-th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
-code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
-pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
-pre code{background:none;padding:0}
-blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
-.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
-.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
-.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
-.meta{font-size:13px;color:var(--mut)}
-hr{border:none;border-top:1px solid var(--line);margin:26px 0}
-.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
-.badge.soon{background:#475569;color:#cbd5e1}
-main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
-main{padding:28px 48px 40px;max-width:1040px}
-h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
-blockquote p{margin:6px 0}
-.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
-.crumbs a{color:var(--acc)}
-.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
-.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
-.pn a:hover{border-color:var(--acc)}
-.pn .nxt{text-align:right}
-.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
-@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
-</style></head>
-<body><div class="layout"><aside><h1>DT00XTE368 · Stellar WLAN Enterprise Basic</h1>
-<div class="search"><input id="qk" type="search" placeholder="🔍 搜索全站…" autocomplete="off"><div id="qres"></div></div>
-
-<div class="sub">Edition 14 · 515 页 · 无线理论 + OV2500 企业模式实操二合一</div>
-<a href="../index.html">🏠 课程首页</a>
-<a href="../digest.html">📖 精华长文 DIGEST</a>
-
-<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
-<a href="../glossary.html">🔤 术语词典</a>
-<a href="../../../index.html">⬅️ 返回培训门户</a>
-<a href="../index.html">──── Skills ────</a>
-<div class="grp">理论与勘测</div>
-<a href="../skills/wlan-theory-fundamentals.html">wlan-theory-fundamentals</a>
-<a href="../skills/site-survey-ekahau.html">site-survey-ekahau</a>
-<div class="grp">开局与业务</div>
-<a href="../skills/enterprise-mode-onboarding.html" class="on">enterprise-mode-onboarding</a>
-<a href="../skills/employee-ssid-8021x.html">employee-ssid-8021x</a>
-<a href="../skills/upam-guest-access.html">upam-guest-access</a>
-<div class="grp">漫游与远程</div>
-<a href="../skills/roaming-l2-l3.html">roaming-l2-l3</a>
-<a href="../skills/rap-remote-deployment.html">rap-remote-deployment</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../postsales/index.html">售后</a> › <a href="../index.html">DT00XTE368</a> › <span>Enterprise 模式开局（OV2500 发现与 AP 纳管）</span></nav><h1>Enterprise 模式开局（OV2500 发现与 AP 纳管）</h1><p class="meta"><span class="badge">SKILL</span> enterprise-mode-onboarding · 来源页码: </p><h1 id="enterprise-ov2500-ap">Enterprise 模式开局（OV2500 发现与 AP 纳管）</h1>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="面向售前、售后与网络工程师的 ALE 内部技术知识平台">
+  <meta name="theme-color" content="#6B489D">
+  <title>Enterprise 模式开局（OV2500 发现与 AP 纳管） — DT00XTE368 · Stellar WLAN Enterprise Basic</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=4">
+  <link rel="stylesheet" href="/assets/css/layout.css?v=4">
+  <link rel="stylesheet" href="/assets/css/components.css?v=4">
+  <link rel="stylesheet" href="/assets/css/content.css?v=7">
+  <script src="/assets/js/auth-config.js?v=4"></script>
+  <script src="/assets/js/auth-core.js?v=4"></script>
+  <script src="/assets/js/auth-guard.js?v=4"></script>
+</head>
+<body data-page-kind="course">
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <header class="topbar" data-topbar>
+    <a class="brand" href="/index.html" aria-label="返回 ALE 技术培训门户首页">
+      <img src="/assets/ale-logo-color.png" alt="Alcatel-Lucent Enterprise">
+      <span>ALE 培训门户</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-controls="primary-nav" aria-expanded="false" data-nav-toggle>
+      <span aria-hidden="true">☰</span><span class="sr-only">打开导航</span>
+    </button>
+    <nav id="primary-nav" class="primary-nav" aria-label="主导航">
+      <a href="/index.html">首页</a>
+      <a href="/paths.html">学习路径</a>
+      <a href="/presales/index.html">售前</a>
+      <a href="/postsales/index.html" aria-current="page">售后</a>
+      <a href="/wlan/index.html">无线</a>
+      <a href="/aos/index.html">AOS 手册</a>
+      <a href="/hardware/index.html">硬件</a>
+      <a href="/brochures/index.html">彩页</a>
+      <a href="/solutions/index.html">解决方案</a>
+      <a href="/security/index.html">安全</a>
+    </nav>
+    <button id="logout-btn" class="logout-btn" type="button" hidden>退出登录</button>
+  </header>
+<div class="course-layout">
+<aside class="course-sidebar" id="course-sidebar" data-sidebar>
+  <div class="sidebar-heading">
+    <p class="eyebrow">COURSE</p>
+    <h2>DT00XTE368 · Stellar WLAN Enterprise Basic</h2>
+    <p>Edition 14 · 515 页 · 无线理论 + OV2500 企业模式实操二合一</p>
+  </div>
+<div class="search" data-search>
+  <label class="sr-only" for="course-search">搜索全站课程和知识单元</label>
+  <input id="course-search" type="search" placeholder="搜索课程编号、产品型号或技术关键词…" autocomplete="off" data-search-input>
+  <div class="search-results" role="listbox" aria-live="polite" data-search-results></div>
+</div>  <nav class="course-nav" aria-label="课程目录">
+    <a href="/postsales/stellar-enterprise-basic/index.html">课程首页</a>
+    <a href="/postsales/stellar-enterprise-basic/digest.html">精华长文</a>
+    <a href="/postsales/stellar-enterprise-basic/overview.html">教书理解</a>
+    <a href="/postsales/stellar-enterprise-basic/glossary.html">术语词典</a>
+    <p class="course-nav-group">理论与勘测</p>
+      <a href="/postsales/stellar-enterprise-basic/skills/wlan-theory-fundamentals.html">无线理论基础（802.11 / 天线 / 安全原理）</a>
+      <a href="/postsales/stellar-enterprise-basic/skills/site-survey-ekahau.html">站点勘测方法（Ekahau 全流程）</a>
+    <p class="course-nav-group">开局与业务</p>
+      <a aria-current="page" href="/postsales/stellar-enterprise-basic/skills/enterprise-mode-onboarding.html">Enterprise 模式开局（OV2500 发现与 AP 纳管）</a>
+      <a href="/postsales/stellar-enterprise-basic/skills/employee-ssid-8021x.html">Employee SSID 与 AD 认证（802.1X / PEAP）</a>
+      <a href="/postsales/stellar-enterprise-basic/skills/upam-guest-access.html">UPAM Guest 与用户角色（门户 / 带宽 / 策略 / WCF）</a>
+    <p class="course-nav-group">漫游与远程</p>
+      <a href="/postsales/stellar-enterprise-basic/skills/roaming-l2-l3.html">L2 移动性与漫游</a>
+      <a href="/postsales/stellar-enterprise-basic/skills/rap-remote-deployment.html">RAP 远程部署（Cirrus + VPN Server）</a>
+  </nav>
+</aside>  <main id="main-content" class="course-main prose">
+    <nav class="breadcrumbs" aria-label="面包屑"><a href="/index.html">培训门户</a><span>/</span><a href="/postsales/index.html">售后 · Postsales</a><span>/</span><a href="/postsales/stellar-enterprise-basic/index.html">DT00XTE368</a><span>/</span><span aria-current="page">Enterprise 模式开局（OV2500 发现与 AP 纳管）</span></nav>
+<header class="skill-heading"><div><p class="eyebrow">KNOWLEDGE UNIT</p><h1>Enterprise 模式开局（OV2500 发现与 AP 纳管）</h1></div><dl><div><dt>Skill ID</dt><dd>enterprise-mode-onboarding</dd></div></dl></header>    <article class="markdown-body"><h1 id="enterprise-ov2500-ap">Enterprise 模式开局（OV2500 发现与 AP 纳管）</h1>
 <h2 id="r">R · 原文引用</h2>
 <blockquote>
 <p>"1. AP is connected to the network and powered on. AP sends a DHCP request. 2. AP determines IP of OV2500 if option 138 is returned by DHCP server. AP is set in Enterprise mode. 3. AP contacts OV2500 for registration. 4. OV2500 assigns an AP Group to the AP. OV2500 applies the configuration to the AP." (p242)</p>
@@ -98,34 +78,12 @@ blockquote p{margin:6px 0}
 </blockquote>
 <h2 id="i">I · 方法论骨架</h2>
 <ol>
-<li>模式选型：Express（自组集群，PVM 选举，上限 255）/ Enterprise（OV2500 本地管，上限 4000）/ Cloud（Cirrus）；本 skill 主线为 Enterprise。<ul>
-<li>
-<ol>
-<li>四件套最低要求：AP（出厂净化态）+ PoE 交换机（管理 VLAN + dhcp-relay）+ DHCP 服务器（管理 VLAN 作用域带 option 138 + 业务 VLAN 地址池）+ OV2500（IP 配置 + 许可）。</li>
-</ol>
-</li>
-<li>
-<ol>
-<li>上线四步：上电 LLDP 选管理 VLAN → DHCP option 138 切 Enterprise → 向 OV2500 注册 → 分配 AP Group 下发配置。</li>
-</ol>
-</li>
-<li>
-<ol>
-<li>受管三条件：Trusted + Licensed + 国家码匹配 RF Profile；任一失败即 Unmanaged、配置不下发、射频全关。</li>
-</ol>
-</li>
-<li>
-<ol>
-<li>三平面规则（排障抓包必背）：管理流量不打标、业务流量在 AP 上联口打标、无隧道模式、数据面纯 L2。</li>
-</ol>
-</li>
-<li>
-<ol>
-<li>配置模型：一切以 AP Group 为单位；UNP 让接入口免预配置（LLDP 分类→分管理 VLAN→上报位置）。</li>
-</ol>
-</li>
-</ul>
-</li>
+<li><strong>模式选型</strong>：Express（自组集群，PVM 选举，上限 255）/ Enterprise（OV2500 本地管，上限 4000）/ Cloud（Cirrus）；本 skill 主线为 Enterprise。</li>
+<li><strong>四件套最低要求</strong>：AP（出厂净化态）+ PoE 交换机（管理 VLAN + dhcp-relay）+ DHCP 服务器（管理 VLAN 作用域带 option 138 + 业务 VLAN 地址池）+ OV2500（IP 配置 + 许可）。</li>
+<li><strong>上线四步</strong>：上电 LLDP 选管理 VLAN → DHCP option 138 切 Enterprise → 向 OV2500 注册 → 分配 AP Group 下发配置。</li>
+<li><strong>受管三条件</strong>：Trusted + Licensed + 国家码匹配 RF Profile；任一失败即 Unmanaged、配置不下发、射频全关。</li>
+<li><strong>三平面规则</strong>（排障抓包必背）：管理流量不打标、业务流量在 AP 上联口打标、无隧道模式、数据面纯 L2。</li>
+<li><strong>配置模型</strong>：一切以 AP Group 为单位；UNP 让接入口免预配置（LLDP 分类→分管理 VLAN→上报位置）。</li>
 </ol>
 <h2 id="a1-lab">A1 · 书中案例（Lab 精要）</h2>
 <ul>
@@ -142,38 +100,12 @@ blockquote p{margin:6px 0}
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
 <li>核对四件套与最低配置清单（p16 条目：PoE/管理 VLAN/ip dhcp-relay/option 138/地址池/OV 许可）。</li>
-<li>
-<p>DHCP 配 option 138=OV2500 IP：isc-dhcp 先 <code>option ovwma code 138 = ip-address;</code>（vendor-class 以 "HAP." 开头可分类）；</p>
-<ul>
-<li>OmniSwitch 直接 <code>option 138 x.x.x.x</code>；</li>
-<li>Windows Server 走预定义选项 Code 138；</li>
-</ul>
-</li>
-<li>
-<p>导入 OV2500 许可：AP 许可数 &gt; 待部署 AP 总数；HA 每对服务器一枚；WCF 按 1:10 AP。</p>
-<ul>
-<li>
-<ol>
+<li>DHCP 配 option 138=OV2500 IP：isc-dhcp 先 <code>option ovwma code 138 = ip-address;</code>（vendor-class 以 "HAP." 开头可分类）；OmniSwitch 直接 <code>option 138 x.x.x.x</code>；Windows Server 走预定义选项 Code 138。</li>
+<li>导入 OV2500 许可：AP 许可数 &gt; 待部署 AP 总数；HA 每对服务器一枚；WCF 按 1:10 AP。</li>
 <li>交换机侧（可选 UNP 自动化）：接入口配 UNP port-type bridge、关 trust-tag、建 LLDP 分类规则映射管理 VLAN。</li>
-</ol>
-</li>
-<li>
-<ol>
 <li>AP 上电后按四步链路验证；注册失败查三条件（Trust/License/国家码）。</li>
-</ol>
-</li>
-<li>
-<ol>
 <li>AP Location 语义化：接入口配 port alias &gt; system location &gt; system name &gt; 默认机箱 MAC:端口。</li>
-</ol>
-</li>
-<li>
-<ol>
 <li>HA 规划：主备 OV 经二层（或 VxLAN/SPB）互联，设备对虚拟 IP 通信。</li>
-</ol>
-</li>
-</ul>
-</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>
@@ -184,5 +116,13 @@ blockquote p{margin:6px 0}
 <li>许可 key 只贴 key 本身不贴整行；文件与 key 二选一，不可都做。</li>
 <li>RADIUS 通信仍走 IPv4，纯 IPv6 管理网要留 IPv4 通路。</li>
 </ul>
-<hr />
-<p>来源条目: f06 · f07 · f08 · f16 · p16 · p17 · p18 · p19 · p20 · p21 · p22 · p23 · p24 · p36 · p37 · p38 · ce06 · ce07 · ce08 · ce09 · ce10 · c01 · c02 · c03 · c04 · g32 · g33 · g34</p><div class="pn"><a href="site-survey-ekahau.html">⬅ 上一单元：site-survey-ekahau</a><a class="nxt" href="employee-ssid-8021x.html">下一单元：employee-ssid-8021x ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<hr>
+<p>来源条目: f06 · f07 · f08 · f16 · p16 · p17 · p18 · p19 · p20 · p21 · p22 · p23 · p24 · p36 · p37 · p38 · ce06 · ce07 · ce08 · ce09 · ce10 · c01 · c02 · c03 · c04 · g32 · g33 · g34</p></article>
+<nav class="previous-next" aria-label="知识单元翻页"><a href="/postsales/stellar-enterprise-basic/skills/site-survey-ekahau.html"><span>上一单元</span><b>站点勘测方法（Ekahau 全流程）</b></a><a class="next" href="/postsales/stellar-enterprise-basic/skills/employee-ssid-8021x.html"><span>下一单元</span><b>Employee SSID 与 AD 认证（802.1X / PEAP）</b></a></nav>    <footer class="content-footer">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</footer>
+  </main>
+</div>
+  <script src="/assets/js/app.js?v=4" defer></script>
+  <script src="/assets/js/search.js?v=4" defer></script>
+  <script src="/assets/js/lightbox.js?v=5" defer></script>
+</body>
+</html>

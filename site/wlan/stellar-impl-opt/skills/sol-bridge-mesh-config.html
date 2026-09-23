@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="面向售前、售后与网络工程师的 ALE 内部技术知识平台">
+  <meta name="theme-color" content="#6B489D">
+  <title>sol-bridge-mesh-config — Stellar 桥接与 Multi-Mesh 实施</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=4">
+  <link rel="stylesheet" href="/assets/css/layout.css?v=4">
+  <link rel="stylesheet" href="/assets/css/components.css?v=4">
+  <link rel="stylesheet" href="/assets/css/content.css?v=7">
+  <script src="/assets/js/auth-config.js?v=4"></script>
+  <script src="/assets/js/auth-core.js?v=4"></script>
+  <script src="/assets/js/auth-guard.js?v=4"></script>
+</head>
+<body data-page-kind="course">
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <header class="topbar" data-topbar>
+    <a class="brand" href="/index.html" aria-label="返回 ALE 技术培训门户首页">
+      <img src="/assets/ale-logo-color.png" alt="Alcatel-Lucent Enterprise">
+      <span>ALE 培训门户</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-controls="primary-nav" aria-expanded="false" data-nav-toggle>
+      <span aria-hidden="true">☰</span><span class="sr-only">打开导航</span>
+    </button>
+    <nav id="primary-nav" class="primary-nav" aria-label="主导航">
+      <a href="/index.html">首页</a>
+      <a href="/paths.html">学习路径</a>
+      <a href="/presales/index.html">售前</a>
+      <a href="/postsales/index.html">售后</a>
+      <a href="/wlan/index.html" aria-current="page">无线</a>
+      <a href="/aos/index.html">AOS 手册</a>
+      <a href="/hardware/index.html">硬件</a>
+      <a href="/brochures/index.html">彩页</a>
+      <a href="/solutions/index.html">解决方案</a>
+      <a href="/security/index.html">安全</a>
+    </nav>
+    <button id="logout-btn" class="logout-btn" type="button" hidden>退出登录</button>
+  </header>
+<div class="course-layout">
+<aside class="course-sidebar" id="course-sidebar" data-sidebar>
+  <div class="sidebar-heading">
+    <p class="eyebrow">COURSE</p>
+    <h2>Stellar 桥接与 Multi-Mesh 实施</h2>
+    <p>Bridging &amp; Meshing Guidelines · 32 页 · 室外桥接 / 多点 Mesh / 家庭 Mesh / OV2500 配置 / 链路监测</p>
+  </div>
+<div class="search" data-search>
+  <label class="sr-only" for="course-search">搜索全站课程和知识单元</label>
+  <input id="course-search" type="search" placeholder="搜索课程编号、产品型号或技术关键词…" autocomplete="off" data-search-input>
+  <div class="search-results" role="listbox" aria-live="polite" data-search-results></div>
+</div>  <nav class="course-nav" aria-label="课程目录">
+    <a href="/wlan/stellar-impl-opt/index.html">课程首页</a>
+    <a href="/wlan/stellar-impl-opt/digest.html">精华长文</a>
+    <a href="/wlan/stellar-impl-opt/overview.html">教书理解</a>
+    <a href="/wlan/stellar-impl-opt/glossary.html">术语词典</a>
+    <p class="course-nav-group">架构与用例</p>
+      <a href="/wlan/stellar-impl-opt/skills/sol-bridge-mesh-overview.html">sol-bridge-mesh-overview</a>
+      <a href="/wlan/stellar-impl-opt/skills/sol-bridge-mesh-usecases.html">sol-bridge-mesh-usecases</a>
+    <p class="course-nav-group">室外设计</p>
+      <a href="/wlan/stellar-impl-opt/skills/sol-bridge-mesh-outdoor-design.html">sol-bridge-mesh-outdoor-design</a>
+    <p class="course-nav-group">配置与运维</p>
+      <a aria-current="page" href="/wlan/stellar-impl-opt/skills/sol-bridge-mesh-config.html">sol-bridge-mesh-config</a>
+      <a href="/wlan/stellar-impl-opt/skills/sol-bridge-mesh-monitor.html">sol-bridge-mesh-monitor</a>
+  </nav>
+</aside>  <main id="main-content" class="course-main prose">
+    <nav class="breadcrumbs" aria-label="面包屑"><a href="/index.html">培训门户</a><span>/</span><a href="/wlan/index.html">无线网络 · WLAN</a><span>/</span><a href="/wlan/stellar-impl-opt/index.html">Stellar 桥接与 Multi-Mesh 实施</a><span>/</span><span aria-current="page">sol-bridge-mesh-config</span></nav>
+<header class="skill-heading"><div><p class="eyebrow">KNOWLEDGE UNIT</p><h1>sol-bridge-mesh-config</h1></div><dl><div><dt>Skill ID</dt><dd>sol-bridge-mesh-config</dd></div></dl></header>    <article class="markdown-body"><h2 id="r">R（何时使用）</h2>
+<ul>
+<li>Enterprise 模式（OV2500）下从零配置一个 mesh/bridge 集群</li>
+<li>规划 mesh 专用 AP Group、RF Profile（国家/信道/频宽/功率/MU-MIMO）与 SSID 参数</li>
+<li>给指定 AP 设置 Mesh Enable / Is Root / mesh SSID / 频段</li>
+<li><strong>Bridge 场景管理 ENET0/1 下联口</strong>：<br>uNP 认证配置、trust tag、bypass VLAN</li>
+<li>Express 模式下用 APUI 直接改 mesh 角色与端口 VLAN</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<p><strong>配置主线：把普通 AP group 管理中的部分 AP"特化"为 root 或 mesh 角色</strong>（P20，<span class="source-page">原文p20</span> ）。OV2500 原有 AP group / RF profile / access profile 管理框架不变，mesh group 是在此之上做角色专化。</p>
+<p><strong>四个关键动作</strong>：专用 AP Group → 专用 RF Profile → SSID/ARP 下发 → 逐 AP 设 mesh 角色（P20-23，<span class="source-page">原文p20</span> ）。</p>
+<p><strong>mesh 全员 RF 一致</strong>：工作频率、法规、信道、发射功率（含 802.11ax 激活与长 GI）必须对 mesh/bridge 组内所有 AP 相同——所以强烈建议专用 RF Profile（P21，<span class="source-page">原文p21</span> ）。</p>
+<p>IP 地址建议静态或 DHCP 保留，bridge 场景理想情况下全静态（P21，<span class="source-page">原文p21</span> ）。</p>
+<h2 id="a1">A1（决策要点）</h2>
+<ol>
+<li><strong>前置准备</strong>（P21，<span class="source-page">原文p21</span> ）：AP REGISTRATION 里识别入组 AP；DHCP 场景为全部未来 mesh AP 做 IP 保留，bridge 建议直接静态 IP</li>
+<li><strong>专用 AP Group</strong>（P21，<span class="source-page">原文p21</span> ）：路径 <code>OV2500 -&gt; NETWORK -&gt; AP REGISTRATION -&gt; AP Group -&gt; +</code>；组内配置：本地时间 + UTC 时区、Support/root 账户启用 SSH、Administrator 账户启用 AP WEB（后面 APUI 要用）</li>
+<li><strong>专用 RF Profile</strong>（P21-22，<span class="source-page">原文p21</span> ）：路径 <code>OV2500 -&gt; WLAN -&gt; RF Management -&gt; RF Profile -&gt; +</code>；示例参数：Country FR-France、Band steering Force 5GHz、Load balance 启用、Airtime Fairness 双频启用、Background Scanning 关闭（选 Wi-Fi 6 非工作信道）、5G 信道列表 [100,104,108,112]、5G 频宽 80MHz、DFS/TPC 15dBm（室内）、MU-MIMO 与 High Efficiency（Wi-Fi 6）启用；Profile 应用到 Mesh AP Group</li>
+<li><strong>SSID 下发</strong>（P22，<span class="source-page">原文p22</span> ）：路径 <code>OV2500 -&gt; WLAN -&gt; SSIDs -&gt; +</code>；示例：Personal 安全级别、Allowed Band All、WPA3 SAE AES、Untagged VLAN（示例 94）；Advanced 里 HT Control 保持 A-MSDU/A-MPDU；保存并应用到 mesh AP Group</li>
+<li><strong>多 VLAN 场景</strong>（P22，<span class="source-page">原文p22</span> ）：用 ARP（Access Role Profile）处理要经 mesh 链路分发的 VLAN；mesh AP 上管理 VLAN 分配（802.1x 客户端认证场景）</li>
+<li><strong>设 mesh 角色</strong>（P23，<span class="source-page">原文p23</span> ）：路径 <code>OV2500 -&gt; NETWORK -&gt; AP REGISTRATION -&gt; Access Points -&gt; 选 AP -&gt; Edit Mesh Configuration</code>；root AP：MESH Enable=Yes、Is Root=Yes、SSID=Stellar-MESH、Band=5GHz；mesh AP：Is Root=No，其余同</li>
+<li><strong>上线</strong>（P23，<span class="source-page">原文p23</span> ）：配置完成后 mesh AP 可脱离原 LAN 搬到最终位置（室内吸顶/bridge 屋顶），上电后 mesh 初始化需数分钟；OV2500 拓扑上 mesh 图标高亮即确认在跑</li>
+<li><strong>下联口管理</strong>（P24，<span class="source-page">原文p24</span> ）：bridge 场景用 uNP 认证配置管理 ENET0/1 下联口——路径 <code>OV2500 -&gt; UNIFIED ACCESS -&gt; UNIFIED PROFILE -&gt; Template -&gt; Access Auth Profile -&gt; +</code>；Default Settings：AP Mode=Disabled；No Auth/Failure/Alternate：Trust tag=Enabled、Bypass VLAN=待旁路 VLAN 列表；Profile 应用到 Mesh AP Group（Apply to Devices），再选具体端口应用</li>
+<li><strong>APUI 管理</strong>（P25-26，<span class="source-page">原文p25</span> ）：Express 模式经各 AP 的 @IP 进 APUI；Enterprise 模式从 AP 列表 Action -&gt; AP web 进（登录用 group 的 administrator 账户）；mesh 角色在 <code>APUI -&gt; NETWORK -&gt; AP INTERFACE -&gt; Backhaul0 -&gt; Edit Interface</code>（Mesh/Bridge/Is Root + SSID 频段/密码）；端口 VLAN 在 <code>APUI -&gt; NETWORK -&gt; AP INTERFACE -&gt; Enet0/1/2/3 -&gt; Edit Interface</code>（enable + trust/bypass VLAN）</li>
+</ol>
+<h2 id="a2">A2（细节速查表）</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>路径/参数</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>识别 AP</td>
+<td>OV2500 -&gt; NETWORK -&gt; AP REGISTRATION -&gt; Access Points</td>
+<td><span class="source-page">原文p20</span></td>
+</tr>
+<tr>
+<td>建 AP Group</td>
+<td>NETWORK -&gt; AP REGISTRATION -&gt; AP Group -&gt; +；UTC 时区 / SSH（Support+root）/ AP WEB（Admin）</td>
+<td><span class="source-page">原文p21</span></td>
+</tr>
+<tr>
+<td>建 RF Profile</td>
+<td>WLAN -&gt; RF Management -&gt; RF Profile -&gt; +（示例 FR-France）</td>
+<td><span class="source-page">原文p21</span></td>
+</tr>
+<tr>
+<td>RF Profile RF 项</td>
+<td>Band steering Force 5G、Load balance、Airtime Fairness 2.4/5G</td>
+<td><span class="source-page">原文p21</span></td>
+</tr>
+<tr>
+<td>RF Profile 信道项</td>
+<td>Background Scanning 关闭（选 Wi-Fi 6 非工作信道）、Channel DRM 5G 启用、5G 信道 [100,104,108,112]、频宽 80MHz、DFS/TPC 15dBm</td>
+<td><span class="source-page">原文p22</span></td>
+</tr>
+<tr>
+<td>RF Profile Wi-Fi 6 项</td>
+<td>MU-MIMO 启用、High Efficiency 启用</td>
+<td><span class="source-page">原文p22</span></td>
+</tr>
+<tr>
+<td>建 SSID</td>
+<td>WLAN -&gt; SSIDs -&gt; +；Personal / All band / WPA3 SAE AES / Untagged VLAN 94</td>
+<td><span class="source-page">原文p22</span></td>
+</tr>
+<tr>
+<td>SSID 高级项</td>
+<td>HT Control：A-MSDU/A-MPDU（默认启用）</td>
+<td><span class="source-page">原文p22</span></td>
+</tr>
+<tr>
+<td>设 mesh 角色</td>
+<td>Access Points -&gt; 选 AP -&gt; Edit Mesh Configuration：MESH Enable=Yes、Is Root=Yes/No、SSID=Stellar-MESH、Band=5GHz</td>
+<td><span class="source-page">原文p23</span></td>
+</tr>
+<tr>
+<td>上线确认</td>
+<td>搬迁上电，初始化数分钟；Stellar 拓扑 mesh 图标高亮</td>
+<td><span class="source-page">原文p23-24</span></td>
+</tr>
+<tr>
+<td>uNP 下联口</td>
+<td>UNIFIED ACCESS -&gt; UNIFIED PROFILE -&gt; Template -&gt; Access Auth Profile -&gt; +；AP Mode=Disabled、Trust tag=Enabled、Bypass VLAN 列表；Apply to Devices 后选端口</td>
+<td><span class="source-page">原文p24</span></td>
+</tr>
+<tr>
+<td>APUI 入口</td>
+<td>Express：集群列表点 @IP；Enterprise：AP 列表 Action -&gt; AP web，Admin 登录</td>
+<td><span class="source-page">原文p25</span></td>
+</tr>
+<tr>
+<td>APUI mesh 角色</td>
+<td>NETWORK -&gt; AP INTERFACE -&gt; Backhaul0 -&gt; Edit Interface（角色 + SSID 频段/密码）</td>
+<td><span class="source-page">原文p26</span></td>
+</tr>
+<tr>
+<td>APUI 端口</td>
+<td>NETWORK -&gt; AP INTERFACE -&gt; Enet0/1/2/3 -&gt; Edit Interface（enable + trust/bypass VLAN）</td>
+<td><span class="source-page">原文p26</span></td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="e">E（场景案例）</h2>
+<ul>
+<li><strong>书中实操</strong>：<br>2 台室内 Stellar AP 组 mesh——Storage1 设 root、Storage2 设 mesh，mesh SSID Stellar-MESH 走 5GHz，配置后拆除 Storage2 的有线搬到目标位置吸顶安装（P20-24，<span class="source-page">原文p20</span> ）</li>
+<li><strong>bridge 下联口</strong>：<br>bridge AP 的 ENET0/1 通过 uNP 认证配置做远端有线流量下联，trust tag 透传企业 VLAN（P24，<span class="source-page">原文p24</span> ）</li>
+<li><strong>Express 模式家庭 mesh</strong>：<br>逐台 AP 进 APUI 的 Backhaul0 设 root/mesh 角色与 SSID，Enet 口设 trust/bypass VLAN（P25-26，<span class="source-page">原文p25</span> ）</li>
+</ul>
+<h2 id="b">B（限制与坑）</h2>
+<ul>
+<li><strong>组内 AP 的 RF 参数（频率/法规/信道/功率/802.11ax/长 GI）必须完全一致</strong>，漏一台不一致链路就出问题——务必用专用 RF Profile 统一推送（P21，<span class="source-page">原文p21</span> ）</li>
+<li>AP WEB（APUI）入口要在 AP Group 里预先给 Administrator 账户启用，否则后面临场没法用 APUI 救急（P21/P25，<span class="source-page">原文p25</span> ）</li>
+<li>SSH 监控也要提前在 AP Group 启用 root 账户（P21/P27，<span class="source-page">原文p27</span> ）</li>
+<li>mesh 上电初始化要几分钟，别当成故障反复重启（P23，<span class="source-page">原文p23</span> ）</li>
+<li>配 mesh 角色前 AP 还在原 LAN 上由 OV2500 管；角色设完再搬走，顺序不能反（P23，<span class="source-page">原文p23</span> ）</li>
+<li><strong>uNP 认证配置 Profile 建好后还要两步</strong>：<br>Apply to Devices 到 Mesh AP Group，再逐端口应用——漏第二步端口不生效（P25，<span class="source-page">原文p25</span> ）</li>
+</ul>
+<p>来源：OmniAccess Stellar Bridging/Multi-Point Meshing Guidelines，p20-27（Enterprise 配置 + 下联口 + APUI）</p></article>
+<nav class="previous-next" aria-label="知识单元翻页"><a href="/wlan/stellar-impl-opt/skills/sol-bridge-mesh-outdoor-design.html"><span>上一单元</span><b>sol-bridge-mesh-outdoor-design</b></a><a class="next" href="/wlan/stellar-impl-opt/skills/sol-bridge-mesh-monitor.html"><span>下一单元</span><b>sol-bridge-mesh-monitor</b></a></nav>    <footer class="content-footer">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</footer>
+  </main>
+</div>
+  <script src="/assets/js/app.js?v=4" defer></script>
+  <script src="/assets/js/search.js?v=4" defer></script>
+  <script src="/assets/js/lightbox.js?v=5" defer></script>
+</body>
+</html>

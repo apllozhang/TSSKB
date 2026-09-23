@@ -1,97 +1,77 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>精华长文 DIGEST — DT00XTE311 · OmniVista 2500 NMS 管理</title>
-<style>
-:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
-*{box-sizing:border-box}
-body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
-a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
-.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin:16px 0}
-.gallery figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px}
-.gallery img{width:100%;max-height:340px;object-fit:contain;background:#fff;border-radius:6px}
-.gallery figcaption{font-size:12.5px;color:var(--mut);text-align:center;margin-top:6px}
-/* 侧栏折叠 + 图片灯箱 */
-.tgl{position:fixed;left:0;top:45%;z-index:60;background:var(--card);border:1px solid var(--line);border-right:none;border-radius:0 8px 8px 0;color:var(--tx);padding:10px 6px;cursor:pointer;font-size:13px;line-height:1.1;writing-mode:vertical-lr}
-.tgl:hover{background:var(--acc);color:#0f172a}
-.layout.full{grid-template-columns:0 1fr}
-.layout.full aside{display:none}
-.lb{position:fixed;inset:0;background:rgba(5,10,20,.92);z-index:100;display:flex;align-items:center;justify-content:center;flex-direction:column}
-.lb img{max-width:92vw;max-height:82vh;background:#fff;border-radius:6px;transition:transform .12s}
-.lb .lbb{margin-top:10px;display:flex;gap:10px}
-.lb button{background:var(--card);border:1px solid var(--line);color:var(--tx);border-radius:8px;padding:6px 14px;cursor:pointer;font-size:14px}
-.lb button:hover{background:var(--acc);color:#0f172a}
-.search{margin:0 0 14px}
-.search input{width:100%;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--tx);font-size:13px;outline:none}
-.search input:focus{border-color:var(--acc)}
-#qres{max-height:340px;overflow-y:auto;margin-top:6px}
-#qres .qi{display:block;padding:6px 8px;border-radius:6px;font-size:12.5px;color:var(--tx);border-left:2px solid transparent}
-#qres .qi:hover{background:var(--card);text-decoration:none;border-left-color:var(--acc)}
-#qres .qi .qp{color:var(--mut);font-size:11px;display:block}
-#qres .qi b{color:var(--acc)}
-.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
-main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
-.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
-aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
-aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
-aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
-aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
-aside a:hover{background:var(--card);text-decoration:none}
-aside a.on{background:var(--card);color:var(--acc)}
-main{padding:36px 48px;max-width:1000px}
-h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
-h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
-table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
-th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
-th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
-code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
-pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
-pre code{background:none;padding:0}
-blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
-.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
-.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
-.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
-.meta{font-size:13px;color:var(--mut)}
-hr{border:none;border-top:1px solid var(--line);margin:26px 0}
-.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
-.badge.soon{background:#475569;color:#cbd5e1}
-main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
-main{padding:28px 48px 40px;max-width:1040px}
-h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
-blockquote p{margin:6px 0}
-.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
-.crumbs a{color:var(--acc)}
-.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
-.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
-.pn a:hover{border-color:var(--acc)}
-.pn .nxt{text-align:right}
-.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
-@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
-</style></head>
-<body><div class="layout"><aside><h1>DT00XTE311 · OmniVista 2500 NMS 管理</h1>
-<div class="search"><input id="qk" type="search" placeholder="🔍 搜索全站…" autocomplete="off"><div id="qres"></div></div>
-
-<div class="sub">Edition 09 · 581 页 · 网管平台管理全科（安装/发现/资源/统一接入/PolicyView/隔离）</div>
-<a href="index.html">🏠 课程首页</a>
-<a href="digest.html">📖 精华长文 DIGEST</a>
-
-<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
-<a href="glossary.html">🔤 术语词典</a>
-<a href="../../index.html">⬅️ 返回培训门户</a>
-<a href="index.html">──── Skills ────</a>
-<div class="grp">平台与安装</div>
-<a href="skills/ov-va-install-license.html">ov-va-install-license</a>
-<a href="skills/ov-ha-services-alerting.html">ov-ha-services-alerting</a>
-<a href="skills/ov-switch-snmp-bootstrap.html">ov-switch-snmp-bootstrap</a>
-<div class="grp">发现与资源</div>
-<a href="skills/ov-discovery-topology-locator.html">ov-discovery-topology-locator</a>
-<a href="skills/ov-resource-manager-provisioning.html">ov-resource-manager-provisioning</a>
-<a href="skills/ov-cli-scripting-batch.html">ov-cli-scripting-batch</a>
-<div class="grp">策略与监控</div>
-<a href="skills/ov-unified-access.html">ov-unified-access</a>
-<a href="skills/ov-policyview-qos.html">ov-policyview-qos</a>
-<a href="skills/ov-quarantine-manager.html">ov-quarantine-manager</a>
-<a href="skills/ov-analytics-appvis-iot.html">ov-analytics-appvis-iot</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../postsales/index.html">售后</a> › <a href="index.html">DT00XTE311</a> › <span>精华长文 DIGEST</span></nav><h1>精华长文 DIGEST</h1><h1 id="digest-omnivista-2500-nms-administration-r4dt00xte311">DIGEST — OmniVista 2500 NMS Administration R4（DT00XTE311）精华</h1>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="面向售前、售后与网络工程师的 ALE 内部技术知识平台">
+  <meta name="theme-color" content="#6B489D">
+  <title>精华长文 DIGEST — DT00XTE311 · OmniVista 2500 NMS 管理</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=4">
+  <link rel="stylesheet" href="/assets/css/layout.css?v=4">
+  <link rel="stylesheet" href="/assets/css/components.css?v=4">
+  <link rel="stylesheet" href="/assets/css/content.css?v=7">
+  <script src="/assets/js/auth-config.js?v=4"></script>
+  <script src="/assets/js/auth-core.js?v=4"></script>
+  <script src="/assets/js/auth-guard.js?v=4"></script>
+</head>
+<body data-page-kind="course">
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <header class="topbar" data-topbar>
+    <a class="brand" href="/index.html" aria-label="返回 ALE 技术培训门户首页">
+      <img src="/assets/ale-logo-color.png" alt="Alcatel-Lucent Enterprise">
+      <span>ALE 培训门户</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-controls="primary-nav" aria-expanded="false" data-nav-toggle>
+      <span aria-hidden="true">☰</span><span class="sr-only">打开导航</span>
+    </button>
+    <nav id="primary-nav" class="primary-nav" aria-label="主导航">
+      <a href="/index.html">首页</a>
+      <a href="/paths.html">学习路径</a>
+      <a href="/presales/index.html">售前</a>
+      <a href="/postsales/index.html" aria-current="page">售后</a>
+      <a href="/wlan/index.html">无线</a>
+      <a href="/aos/index.html">AOS 手册</a>
+      <a href="/hardware/index.html">硬件</a>
+      <a href="/brochures/index.html">彩页</a>
+      <a href="/solutions/index.html">解决方案</a>
+      <a href="/security/index.html">安全</a>
+    </nav>
+    <button id="logout-btn" class="logout-btn" type="button" hidden>退出登录</button>
+  </header>
+<div class="course-layout">
+<aside class="course-sidebar" id="course-sidebar" data-sidebar>
+  <div class="sidebar-heading">
+    <p class="eyebrow">COURSE</p>
+    <h2>DT00XTE311 · OmniVista 2500 NMS 管理</h2>
+    <p>Edition 09 · 581 页 · 网管平台管理全科（安装/发现/资源/统一接入/PolicyView/隔离）</p>
+  </div>
+<div class="search" data-search>
+  <label class="sr-only" for="course-search">搜索全站课程和知识单元</label>
+  <input id="course-search" type="search" placeholder="搜索课程编号、产品型号或技术关键词…" autocomplete="off" data-search-input>
+  <div class="search-results" role="listbox" aria-live="polite" data-search-results></div>
+</div>  <nav class="course-nav" aria-label="课程目录">
+    <a href="/postsales/ov2500-nms-admin/index.html">课程首页</a>
+    <a aria-current="page" href="/postsales/ov2500-nms-admin/digest.html">精华长文</a>
+    <a href="/postsales/ov2500-nms-admin/overview.html">教书理解</a>
+    <a href="/postsales/ov2500-nms-admin/glossary.html">术语词典</a>
+    <p class="course-nav-group">平台与安装</p>
+      <a href="/postsales/ov2500-nms-admin/skills/ov-va-install-license.html">ov-va-install-license</a>
+      <a href="/postsales/ov2500-nms-admin/skills/ov-ha-services-alerting.html">ov-ha-services-alerting</a>
+      <a href="/postsales/ov2500-nms-admin/skills/ov-switch-snmp-bootstrap.html">ov-switch-snmp-bootstrap</a>
+    <p class="course-nav-group">发现与资源</p>
+      <a href="/postsales/ov2500-nms-admin/skills/ov-discovery-topology-locator.html">ov-discovery-topology-locator</a>
+      <a href="/postsales/ov2500-nms-admin/skills/ov-resource-manager-provisioning.html">ov-resource-manager-provisioning</a>
+      <a href="/postsales/ov2500-nms-admin/skills/ov-cli-scripting-batch.html">ov-cli-scripting-batch</a>
+    <p class="course-nav-group">策略与监控</p>
+      <a href="/postsales/ov2500-nms-admin/skills/ov-unified-access.html">ov-unified-access</a>
+      <a href="/postsales/ov2500-nms-admin/skills/ov-policyview-qos.html">ov-policyview-qos</a>
+      <a href="/postsales/ov2500-nms-admin/skills/ov-quarantine-manager.html">ov-quarantine-manager</a>
+      <a href="/postsales/ov2500-nms-admin/skills/ov-analytics-appvis-iot.html">ov-analytics-appvis-iot</a>
+  </nav>
+</aside>  <main id="main-content" class="course-main prose">
+    <nav class="breadcrumbs" aria-label="面包屑"><a href="/index.html">培训门户</a><span>/</span><a href="/postsales/index.html">售后 · Postsales</a><span>/</span><a href="/postsales/ov2500-nms-admin/index.html">DT00XTE311</a><span>/</span><span aria-current="page">精华长文 DIGEST</span></nav>
+<header class="page-intro compact"><p class="eyebrow">COURSE REFERENCE</p><h1>精华长文 DIGEST</h1></header>    <article class="markdown-body"><h1 id="digest-omnivista-2500-nms-administration-r4dt00xte311">DIGEST — OmniVista 2500 NMS Administration R4（DT00XTE311）精华</h1>
 <ul>
 <li>本书是 ALE OmniVista 2500 网管平台的管理员培训教材（581 页，讲授 + 动手实验），技术栈为 OV2500 R4 虚拟机网管 + OmniSwitch AOS R8。</li>
 <li>以下为知识地图与十个最重要知识点的串讲，页码均指原书。</li>
@@ -99,106 +79,90 @@ blockquote p{margin:6px 0}
 <h2 id="_1">一、知识地图</h2>
 <p>全书可归为五条主线、十个技能单元：</p>
 <ol>
-<li>平台线：虚机部署与许可（ov-va-install-license）→ HA 与系统运维、告警通知（ov-ha-services-alerting）。<ul>
-<li>
-<ol>
-<li>纳管线：交换机侧 SNMP 与基础网络准备（ov-switch-snmp-bootstrap）→ Discovery/拓扑/Locator（ov-discovery-topology-locator）→ Resource Manager 备份升级与模板化 Provisioning（ov-resource-manager-provisioning）→ CLI Scripting 批量操作（ov-cli-scripting-batch）。</li>
-</ol>
-</li>
-<li>
-<ol>
-<li>接入安全线：Unified Access 三层策略与 802.1X（ov-unified-access）→ PolicyView QoS（ov-policyview-qos）→ Quarantine Manager 攻击隔离（ov-quarantine-manager）。</li>
-</ol>
-</li>
-<li>
-<ol>
-<li>可观测线：Analytics/AppVis/IoT/OVNA（ov-analytics-appvis-iot）。</li>
-</ol>
-</li>
-<li>
-<ol>
-<li>横向概念：NMS 组件模型（SNMP/sFlow/MIB/Traps/RMON，<span class="pg">原文p21</span> ）与 CLI vs GUI 取舍（<span class="pg">原文p22-24</span> ）贯穿全书。</li>
-</ol>
-</li>
-</ul>
-</li>
+<li><strong>平台线</strong>：虚机部署与许可（ov-va-install-license）→ HA 与系统运维、告警通知（ov-ha-services-alerting）。</li>
+<li><strong>纳管线</strong>：交换机侧 SNMP 与基础网络准备（ov-switch-snmp-bootstrap）→ Discovery/拓扑/Locator（ov-discovery-topology-locator）→ Resource Manager 备份升级与模板化 Provisioning（ov-resource-manager-provisioning）→ CLI Scripting 批量操作（ov-cli-scripting-batch）。</li>
+<li><strong>接入安全线</strong>：Unified Access 三层策略与 802.1X（ov-unified-access）→ PolicyView QoS（ov-policyview-qos）→ Quarantine Manager 攻击隔离（ov-quarantine-manager）。</li>
+<li><strong>可观测线</strong>：Analytics/AppVis/IoT/OVNA（ov-analytics-appvis-iot）。</li>
+<li><strong>横向概念</strong>：NMS 组件模型（SNMP/sFlow/MIB/Traps/RMON，<span class="source-page">原文p21</span> ）与 CLI vs GUI 取舍（<span class="source-page">原文p22-24</span> ）贯穿全书。</li>
 </ol>
 <p>章节分布：p42-78 安装与系统设置，p107-168 发现与资源管理，p169-224 设备配置管理，p225-256 Unified Access，p257-294 PolicyView，p295-320 Quarantine Manager，p321 起为分析、WLAN/UPAM 与综合实验。</p>
 <h2 id="_2">二、十大知识点串讲</h2>
 <h3 id="1-network-size">1. 纯虚机形态与 Network Size 一次性分档</h3>
 <ul>
 <li>OV2500 没有独立安装器——"OmniVista 2500 = Virtual Appliance"，镜像内同时包含 Linux OS 和 OV 应用，跑在 ESXi/Hyper-V/KVM 上（&lt;&lt;<PAGE 25/44>&gt;&gt;）。</li>
-<li>部署即 vSphere 部署 OVF 模板（磁盘建议 Thick Provision），控制台依次填 IP、端口、<strong>Network Size</strong>、主机名/DNS/NTP 后重启（<span class="pg">原文p54-60</span> ）。</li>
+<li>部署即 vSphere 部署 OVF 模板（磁盘建议 Thick Provision），控制台依次填 IP、端口、<strong>Network Size</strong>、主机名/DNS/NTP 后重启（<span class="source-page">原文p54-60</span> ）。</li>
 <li>Network Size 是安装时锁定的容量档位（Low &lt;500 / Medium 500-2000 / High 2000-5000 / Very High 5000-10000 台），系统按档分配内存（&lt;&lt;<PAGE 45/58>&gt;&gt;）。</li>
-<li><strong>最容易被忽略的联动</strong>：<br>4000 台 Stellar AP 在 High 档下只能带 500 台 AOS 交换机，Very High 档才到 1000 台——无线重的环境选错档就是天花板（<span class="pg">原文p45</span> ）。</li>
+<li><strong>最容易被忽略的联动</strong>：<br>4000 台 Stellar AP 在 High 档下只能带 500 台 AOS 交换机，Very High 档才到 1000 台——无线重的环境选错档就是天花板（<span class="source-page">原文p45</span> ）。</li>
 </ul>
 <h3 id="2">2. 许可两条线与安装禁区</h3>
 <ul>
-<li>License 分 Device（Starter 免费 30 台 / Evaluation 90 天 60 台 / Production 最多 10000 台）与 Service（VM/Guest/On-Boarding/HA/Web Content Filtering）（<span class="pg">原文p46-49</span> ）。</li>
-<li>HA 自 4.3R1 起不需要双倍许可；VC 内每台物理设备各占一个 license 单元（<span class="pg">原文p50-51</span> ）。</li>
-<li><strong>安装时两个经典翻车点</strong>：<br>许可文件与 License Keys 二选一，"Don't do both!"；粘贴 Key 只取逗号后的部分（<span class="pg">原文p104</span> ）。</li>
-<li>EULA 页不要勾 Enable Fleet Supervision（<span class="pg">原文p104</span> ）。</li>
+<li>License 分 Device（Starter 免费 30 台 / Evaluation 90 天 60 台 / Production 最多 10000 台）与 Service（VM/Guest/On-Boarding/HA/Web Content Filtering）（<span class="source-page">原文p46-49</span> ）。</li>
+<li>HA 自 4.3R1 起不需要双倍许可；VC 内每台物理设备各占一个 license 单元（<span class="source-page">原文p50-51</span> ）。</li>
+<li><strong>安装时两个经典翻车点</strong>：<br>许可文件与 License Keys 二选一，"Don't do both!"；粘贴 Key 只取逗号后的部分（<span class="source-page">原文p104</span> ）。</li>
+<li>EULA 页不要勾 Enable Fleet Supervision（<span class="source-page">原文p104</span> ）。</li>
 </ul>
 <h3 id="3-snmp">3. 交换机默认不可管理——SNMP 是纳管的前提</h3>
 <ul>
-<li>"By default, an OmniSwitch cannot be managed by OmniVista"（<span class="pg">原文p97</span> ）。</li>
-<li><strong>标准准备是逐台执行 SNMPv3 序列</strong>：<br>建 read-write 用户（SHA+DES）、<code>snmp security privacy all</code>、<code>snmp station &lt;OV IP&gt; snmpuserv3 v3 enable</code>、开 trap absorption/to-webview（<span class="pg">原文p97</span> ）。</li>
-<li><strong>安全档位矩阵决定接受什么</strong>：<br>privacy all 只接受加密 v3 读写，traps only 则拒绝所有请求（<span class="pg">原文p69</span> ）。</li>
+<li>"By default, an OmniSwitch cannot be managed by OmniVista"（<span class="source-page">原文p97</span> ）。</li>
+<li><strong>标准准备是逐台执行 SNMPv3 序列</strong>：<br>建 read-write 用户（SHA+DES）、<code>snmp security privacy all</code>、<code>snmp station &lt;OV IP&gt; snmpuserv3 v3 enable</code>、开 trap absorption/to-webview（<span class="source-page">原文p97</span> ）。</li>
+<li><strong>安全档位矩阵决定接受什么</strong>：<br>privacy all 只接受加密 v3 读写，traps only 则拒绝所有请求（<span class="source-page">原文p69</span> ）。</li>
 <li>管理寻址用 Loopback0——snmp source ip 默认优先 loopback0，Discovery 也靠 Loopback0 地址找设备；路由表缺 Loopback0 属环境级故障（&lt;&lt;<PAGE 70/90>&gt;&gt;）。</li>
 </ul>
 <h3 id="4-discovery-profile">4. Discovery 三段式 Profile 与拓扑/定位</h3>
 <ul>
 <li>Discovery Profile 分 General（CLI/FTP 账号）、SNMP（版本/Timeout 5000/Retry 3/v3 用户）、Advanced（Trap Station User、Discover Link、Shell=SSH、GetBulk、Max Repetitions 10）三段，配 IP 范围后 Discover Now（&lt;&lt;<PAGE 110-114/170-172>&gt;&gt;）。</li>
-<li>链路靠 AMAP/LLDP 自动发现；关键链路建议手工添加——手工链路持久化、down 时显红色，监控能力更强（<span class="pg">原文p117-118</span> ）。</li>
-<li>拓扑缺链路就用右侧 Operations 窗口的 Poll Device/Poll Link（<span class="pg">原文p176</span> ）。</li>
+<li>链路靠 AMAP/LLDP 自动发现；关键链路建议手工添加——手工链路持久化、down 时显红色，监控能力更强（<span class="source-page">原文p117-118</span> ）。</li>
+<li>拓扑缺链路就用右侧 Operations 窗口的 Poll Device/Poll Link（<span class="source-page">原文p176</span> ）。</li>
 <li>Locator 按 IP/MAC/授权用户做 Live/Historical 检索，命中即在拓扑定位，是排障取证利器（&lt;&lt;<PAGE 30/187-188>&gt;&gt;）。</li>
 </ul>
 <h3 id="5-golden-configprovisioning">5. 配置生命周期：备份、升级、Golden Config、Provisioning</h3>
 <ul>
-<li><strong>Resource Manager 管存量</strong>：<br>Backup by Devices（提示补 FTP 凭据就补 admin/switch）→ Configuration Only 备份；Restore 选备份文件恢复（<span class="pg">原文p197-201</span> ）。</li>
-<li>镜像升级后必须 SSH 到交换机从 working 目录 reload 并执行 Copy Working Certified，漏做升级不生效（<span class="pg">原文p203-206</span> ）；批量场景用 Scheduled Upgrades，可多台同时、每台不同版本（<span class="pg">原文p124-126</span> ）。</li>
-<li><strong>新设备零接触上线走 Provisioning Rule</strong>：<br>交换机每 5 分钟联系 OV，命中序列号/MAC/型号即推送模板；动态模板（$VLAN/$PORTS 变量）必须配 Value Mapping（<span class="pg">原文p461-464</span> ）。</li>
-<li>配置被误改时从 Golden Configuration（最近三次备份之一）回滚，Force Provisioning 可在下次接触时强制推送（<span class="pg">原文p466-467</span> ）。</li>
+<li><strong>Resource Manager 管存量</strong>：<br>Backup by Devices（提示补 FTP 凭据就补 admin/switch）→ Configuration Only 备份；Restore 选备份文件恢复（<span class="source-page">原文p197-201</span> ）。</li>
+<li>镜像升级后必须 SSH 到交换机从 working 目录 reload 并执行 Copy Working Certified，漏做升级不生效（<span class="source-page">原文p203-206</span> ）；批量场景用 Scheduled Upgrades，可多台同时、每台不同版本（<span class="source-page">原文p124-126</span> ）。</li>
+<li><strong>新设备零接触上线走 Provisioning Rule</strong>：<br>交换机每 5 分钟联系 OV，命中序列号/MAC/型号即推送模板；动态模板（$VLAN/$PORTS 变量）必须配 Value Mapping（<span class="source-page">原文p461-464</span> ）。</li>
+<li>配置被误改时从 Golden Configuration（最近三次备份之一）回滚，Force Provisioning 可在下次接触时强制推送（<span class="source-page">原文p466-467</span> ）。</li>
 </ul>
 <h3 id="6-unified-access">6. Unified Access 三层模板模型</h3>
 <ul>
 <li><strong>这是全书概念密度最高的部分</strong>：<br>AAA Server Profile（认证服务器参数）→ Access Role Profile（UNP 属性：QoS 策略表、Access Policies、Captive Portal）→ Access Auth Profile（把 UNP 端口配置指派到边缘端口），Unified Policy 挂在 Access Role Profile 之下（&lt;&lt;<PAGE 235/246>&gt;&gt;）。</li>
-<li><strong>实操链路</strong>：<br>RADIUS_VM → AAA_RADIUS → UNP-employee（Map to VLAN 80）→ UNP_template 应用到 6860B 端口 1/1/1，验证靠 <code>aaa test-radius-server</code> 返回 Filter-ID、<code>show unp user</code>、Locator 按 Auth. User 查询（<span class="pg">原文p258-268</span> ）。</li>
-<li><strong>三个高频陷阱</strong>：<br>UNP 名必须与 Filter-ID 完全一致（<span class="pg">原文p263</span> ）；重测前 <code>unp user flush</code> 清残留（<span class="pg">原文p268</span> ）；客户端要取消缓存凭据/自动 Windows 登录/证书校验（<span class="pg">原文p267-268</span> ）。</li>
+<li><strong>实操链路</strong>：<br>RADIUS_VM → AAA_RADIUS → UNP-employee（Map to VLAN 80）→ UNP_template 应用到 6860B 端口 1/1/1，验证靠 <code>aaa test-radius-server</code> 返回 Filter-ID、<code>show unp user</code>、Locator 按 Auth. User 查询（<span class="source-page">原文p258-268</span> ）。</li>
+<li><strong>三个高频陷阱</strong>：<br>UNP 名必须与 Filter-ID 完全一致（<span class="source-page">原文p263</span> ）；重测前 <code>unp user flush</code> 清残留（<span class="source-page">原文p268</span> ）；客户端要取消缓存凭据/自动 Windows 登录/证书校验（<span class="source-page">原文p267-268</span> ）。</li>
 </ul>
 <h3 id="7-policyview-ldap">7. PolicyView 双模式与 LDAP 策略仓库</h3>
 <ul>
-<li>OneTouch 面向 Voice/Data（Platinum-Gold-Silver-Bronze）/ACL 常见场景，参数设一次同时分发（&lt;&lt;<PAGE 273/276-278>&gt;&gt;）；Expert Mode 五步向导处理复杂策略——典型实验是按源 192.168.80.0/24 → 目的 192.168.200.0/24</li>
-<li>Action=DROP</li>
-<li>
-<p>Precedence 30001 阻断客户端访问 Loopback0 网段，下发后等 "Notify Success!" 再验证 ping（<span class="pg">原文p279-293</span> ）</p>
-</li>
-<li>
-<p><strong>底层机制要记住</strong>：<br>策略存于安装时配置的 LDAP 目录服务器，交换机被通知后自行拉取（&lt;&lt;<PAGE 272/286>&gt;&gt;）——解释了为什么策略下发是"通知-拉取"而非直接推送。</p>
-</li>
+<li>OneTouch 面向 Voice/Data（Platinum-Gold-Silver-Bronze）/ACL 常见场景，参数设一次同时分发（&lt;&lt;<PAGE 273/276-278>&gt;&gt;）；Expert Mode 五步向导处理复杂策略——典型实验是按源 192.168.80.0/24 → 目的 192.168.200.0/24、Action=DROP、Precedence 30001 阻断客户端访问 Loopback0 网段，下发后等 "Notify Success!" 再验证 ping（<span class="source-page">原文p279-293</span> ）。</li>
+<li><strong>底层机制要记住</strong>：<br>策略存于安装时配置的 LDAP 目录服务器，交换机被通知后自行拉取（&lt;&lt;<PAGE 272/286>&gt;&gt;）——解释了为什么策略下发是"通知-拉取"而非直接推送。</li>
 </ul>
 <h3 id="8-quarantine-manager">8. Quarantine Manager：默认全禁用与三列表语义</h3>
 <ul>
-<li>检测来源开放（AOS DoS trap、第三方 IPS、Brick Firewall、WLAN Rogue Alert），规则含内置族（AlaDosTrap/Fortinet/OA WLAN）与自定义四要素（名称/描述/触发表达式/提取表达式/动作），执行手段从 <code>vlan 999 &lt;mac&gt;</code> 隔离到 ACL、端口关断分级（<span class="pg">原文p298-307</span> ）。</li>
-<li><strong>两个语义关键</strong>：<br>所有内置规则默认禁用，"以为开了其实没开"最常见（<span class="pg">原文p304</span> ）；Candidates 名单设备流量继续放行、只是等管理员决策，Banned 才是真隔离且必须手动释放，OV 自身与已发现交换机隐式在 Never Banned（<span class="pg">原文p308-310</span> ）。</li>
+<li>检测来源开放（AOS DoS trap、第三方 IPS、Brick Firewall、WLAN Rogue Alert），规则含内置族（AlaDosTrap/Fortinet/OA WLAN）与自定义四要素（名称/描述/触发表达式/提取表达式/动作），执行手段从 <code>vlan 999 &lt;mac&gt;</code> 隔离到 ACL、端口关断分级（<span class="source-page">原文p298-307</span> ）。</li>
+<li><strong>两个语义关键</strong>：<br>所有内置规则默认禁用，"以为开了其实没开"最常见（<span class="source-page">原文p304</span> ）；Candidates 名单设备流量继续放行、只是等管理员决策，Banned 才是真隔离且必须手动释放，OV 自身与已发现交换机隐式在 Never Banned（<span class="source-page">原文p308-310</span> ）。</li>
 </ul>
 <h3 id="9-sflow">9. 可观测体系：sFlow 采样到应用封禁的完整链路</h3>
 <ul>
 <li><strong>Analytics 数据面是 sFlow</strong>：<br>交换机采样发包 → OV Analytics Service → Mongo DB → WebServer 呈现，应用识别靠 sFlow 里的 TCP/UDP 端口（&lt;&lt;<PAGE 316/322/325>&gt;&gt;）。</li>
-<li>报表分 Visibility（需先建 Analytics Profile）与 Availability（<span class="pg">原文p317-318</span> ）。</li>
-<li>AppVis 在此之上用签名文件做深度识别并可 enforcement DROP——实验里建 MyApps 组（Facebook/Twitter/youtube/bet365）封社交游戏流量，交换机侧 <code>show app-mon</code> 命令族可验证，注意要等 15-20 分钟数据才出来（<span class="pg">原文p371-383</span> ）。</li>
+<li>报表分 Visibility（需先建 Analytics Profile）与 Availability（<span class="source-page">原文p317-318</span> ）。</li>
+<li>AppVis 在此之上用签名文件做深度识别并可 enforcement DROP——实验里建 MyApps 组（Facebook/Twitter/youtube/bet365）封社交游戏流量，交换机侧 <code>show app-mon</code> 命令族可验证，注意要等 15-20 分钟数据才出来（<span class="source-page">原文p371-383</span> ）。</li>
 <li><strong>铁律是"一机一档"</strong>：<br>Analytics/Signature/统计 Profile 都要求一台交换机只属一个同类 Profile，新建前先解绑 Default（&lt;&lt;<PAGE 342/372/391>&gt;&gt;）。</li>
 </ul>
 <h3 id="10-ha">10. HA 与运维底座</h3>
 <ul>
-<li><strong>单 OV 故障的后果</strong>：<br>管理员失去监控与配置能力，UPAM 场景下新客户端无法认证（<span class="pg">原文p18</span> ）。</li>
-<li>HA 双实例常驻、Main 保持 Standby 同步、故障时服务整体接管，Trap 双实例自动配置、failover 自动 Replay 并弹告警横幅（<span class="pg">原文p17-19</span> ）。</li>
+<li><strong>单 OV 故障的后果</strong>：<br>管理员失去监控与配置能力，UPAM 场景下新客户端无法认证（<span class="source-page">原文p18</span> ）。</li>
+<li>HA 双实例常驻、Main 保持 Standby 同步、故障时服务整体接管，Trap 双实例自动配置、failover 自动 Replay 并弹告警横幅（<span class="source-page">原文p17-19</span> ）。</li>
 <li>应用层看 Watchdog（Control Panel 可逐服务启停、查依赖，Scheduler History 看事件历史）（&lt;&lt;<PAGE 71/221>&gt;&gt;）。</li>
-<li>告警链路是 SMTP 配置 + Trap Responder（务必禁用 Normal 级别防刷屏，交换机端口需 link-trap enable）（<span class="pg">原文p191-194</span> ）。</li>
+<li>告警链路是 SMTP 配置 + Trap Responder（务必禁用 Normal 级别防刷屏，交换机端口需 link-trap enable）（<span class="source-page">原文p191-194</span> ）。</li>
 <li>账号侧按用户组授权 + 按角色启用 2FA（Google Authenticator TOTP）（&lt;&lt;<PAGE 157-159/216-218>&gt;&gt;）。</li>
 </ul>
 <h2 id="_3">三、一句话总纲</h2>
 <ul>
 <li><strong>OV2500 的管理逻辑可以压成一句</strong>：<br>**设备先给 SNMP 和 Loopback0 才能被管；平台安装时定死容量档；接入策略走 AAA→Role→Auth 三层模板；QoS 与隔离都是"规则+执行"闭环；一切分析数据源头是 sFlow 采样。</li>
 <li>** 掌握这五句加上十个技能单元的操作路径，就覆盖了这本 581 页教材的可迁移内核。</li>
-</ul><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+</ul></article>
+    <footer class="content-footer">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</footer>
+  </main>
+</div>
+  <script src="/assets/js/app.js?v=4" defer></script>
+  <script src="/assets/js/search.js?v=4" defer></script>
+  <script src="/assets/js/lightbox.js?v=5" defer></script>
+</body>
+</html>

@@ -1,94 +1,74 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>rap-remote-deployment — DT00XTE368 · Stellar WLAN Enterprise Basic</title>
-<style>
-:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
-*{box-sizing:border-box}
-body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
-a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
-.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin:16px 0}
-.gallery figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px}
-.gallery img{width:100%;max-height:340px;object-fit:contain;background:#fff;border-radius:6px}
-.gallery figcaption{font-size:12.5px;color:var(--mut);text-align:center;margin-top:6px}
-/* 侧栏折叠 + 图片灯箱 */
-.tgl{position:fixed;left:0;top:45%;z-index:60;background:var(--card);border:1px solid var(--line);border-right:none;border-radius:0 8px 8px 0;color:var(--tx);padding:10px 6px;cursor:pointer;font-size:13px;line-height:1.1;writing-mode:vertical-lr}
-.tgl:hover{background:var(--acc);color:#0f172a}
-.layout.full{grid-template-columns:0 1fr}
-.layout.full aside{display:none}
-.lb{position:fixed;inset:0;background:rgba(5,10,20,.92);z-index:100;display:flex;align-items:center;justify-content:center;flex-direction:column}
-.lb img{max-width:92vw;max-height:82vh;background:#fff;border-radius:6px;transition:transform .12s}
-.lb .lbb{margin-top:10px;display:flex;gap:10px}
-.lb button{background:var(--card);border:1px solid var(--line);color:var(--tx);border-radius:8px;padding:6px 14px;cursor:pointer;font-size:14px}
-.lb button:hover{background:var(--acc);color:#0f172a}
-.search{margin:0 0 14px}
-.search input{width:100%;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--tx);font-size:13px;outline:none}
-.search input:focus{border-color:var(--acc)}
-#qres{max-height:340px;overflow-y:auto;margin-top:6px}
-#qres .qi{display:block;padding:6px 8px;border-radius:6px;font-size:12.5px;color:var(--tx);border-left:2px solid transparent}
-#qres .qi:hover{background:var(--card);text-decoration:none;border-left-color:var(--acc)}
-#qres .qi .qp{color:var(--mut);font-size:11px;display:block}
-#qres .qi b{color:var(--acc)}
-.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
-main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
-.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
-aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
-aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
-aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
-aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
-aside a:hover{background:var(--card);text-decoration:none}
-aside a.on{background:var(--card);color:var(--acc)}
-main{padding:36px 48px;max-width:1000px}
-h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
-h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
-table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
-th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
-th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
-code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
-pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
-pre code{background:none;padding:0}
-blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
-.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
-.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
-.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
-.meta{font-size:13px;color:var(--mut)}
-hr{border:none;border-top:1px solid var(--line);margin:26px 0}
-.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
-.badge.soon{background:#475569;color:#cbd5e1}
-main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
-main{padding:28px 48px 40px;max-width:1040px}
-h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
-blockquote p{margin:6px 0}
-.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
-.crumbs a{color:var(--acc)}
-.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
-.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
-.pn a:hover{border-color:var(--acc)}
-.pn .nxt{text-align:right}
-.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
-@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
-</style></head>
-<body><div class="layout"><aside><h1>DT00XTE368 · Stellar WLAN Enterprise Basic</h1>
-<div class="search"><input id="qk" type="search" placeholder="🔍 搜索全站…" autocomplete="off"><div id="qres"></div></div>
-
-<div class="sub">Edition 14 · 515 页 · 无线理论 + OV2500 企业模式实操二合一</div>
-<a href="../index.html">🏠 课程首页</a>
-<a href="../digest.html">📖 精华长文 DIGEST</a>
-
-<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
-<a href="../glossary.html">🔤 术语词典</a>
-<a href="../../../index.html">⬅️ 返回培训门户</a>
-<a href="../index.html">──── Skills ────</a>
-<div class="grp">理论与勘测</div>
-<a href="../skills/wlan-theory-fundamentals.html">wlan-theory-fundamentals</a>
-<a href="../skills/site-survey-ekahau.html">site-survey-ekahau</a>
-<div class="grp">开局与业务</div>
-<a href="../skills/enterprise-mode-onboarding.html">enterprise-mode-onboarding</a>
-<a href="../skills/employee-ssid-8021x.html">employee-ssid-8021x</a>
-<a href="../skills/upam-guest-access.html">upam-guest-access</a>
-<div class="grp">漫游与远程</div>
-<a href="../skills/roaming-l2-l3.html">roaming-l2-l3</a>
-<a href="../skills/rap-remote-deployment.html" class="on">rap-remote-deployment</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../postsales/index.html">售后</a> › <a href="../index.html">DT00XTE368</a> › <span>RAP 远程部署（Cirrus + VPN Server）</span></nav><h1>RAP 远程部署（Cirrus + VPN Server）</h1><p class="meta"><span class="badge">SKILL</span> rap-remote-deployment · 来源页码: </p><h1 id="rap-cirrus-vpn-server">RAP 远程部署（Cirrus + VPN Server）</h1>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="面向售前、售后与网络工程师的 ALE 内部技术知识平台">
+  <meta name="theme-color" content="#6B489D">
+  <title>RAP 远程部署（Cirrus + VPN Server） — DT00XTE368 · Stellar WLAN Enterprise Basic</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=4">
+  <link rel="stylesheet" href="/assets/css/layout.css?v=4">
+  <link rel="stylesheet" href="/assets/css/components.css?v=4">
+  <link rel="stylesheet" href="/assets/css/content.css?v=7">
+  <script src="/assets/js/auth-config.js?v=4"></script>
+  <script src="/assets/js/auth-core.js?v=4"></script>
+  <script src="/assets/js/auth-guard.js?v=4"></script>
+</head>
+<body data-page-kind="course">
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <header class="topbar" data-topbar>
+    <a class="brand" href="/index.html" aria-label="返回 ALE 技术培训门户首页">
+      <img src="/assets/ale-logo-color.png" alt="Alcatel-Lucent Enterprise">
+      <span>ALE 培训门户</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-controls="primary-nav" aria-expanded="false" data-nav-toggle>
+      <span aria-hidden="true">☰</span><span class="sr-only">打开导航</span>
+    </button>
+    <nav id="primary-nav" class="primary-nav" aria-label="主导航">
+      <a href="/index.html">首页</a>
+      <a href="/paths.html">学习路径</a>
+      <a href="/presales/index.html">售前</a>
+      <a href="/postsales/index.html" aria-current="page">售后</a>
+      <a href="/wlan/index.html">无线</a>
+      <a href="/aos/index.html">AOS 手册</a>
+      <a href="/hardware/index.html">硬件</a>
+      <a href="/brochures/index.html">彩页</a>
+      <a href="/solutions/index.html">解决方案</a>
+      <a href="/security/index.html">安全</a>
+    </nav>
+    <button id="logout-btn" class="logout-btn" type="button" hidden>退出登录</button>
+  </header>
+<div class="course-layout">
+<aside class="course-sidebar" id="course-sidebar" data-sidebar>
+  <div class="sidebar-heading">
+    <p class="eyebrow">COURSE</p>
+    <h2>DT00XTE368 · Stellar WLAN Enterprise Basic</h2>
+    <p>Edition 14 · 515 页 · 无线理论 + OV2500 企业模式实操二合一</p>
+  </div>
+<div class="search" data-search>
+  <label class="sr-only" for="course-search">搜索全站课程和知识单元</label>
+  <input id="course-search" type="search" placeholder="搜索课程编号、产品型号或技术关键词…" autocomplete="off" data-search-input>
+  <div class="search-results" role="listbox" aria-live="polite" data-search-results></div>
+</div>  <nav class="course-nav" aria-label="课程目录">
+    <a href="/postsales/stellar-enterprise-basic/index.html">课程首页</a>
+    <a href="/postsales/stellar-enterprise-basic/digest.html">精华长文</a>
+    <a href="/postsales/stellar-enterprise-basic/overview.html">教书理解</a>
+    <a href="/postsales/stellar-enterprise-basic/glossary.html">术语词典</a>
+    <p class="course-nav-group">理论与勘测</p>
+      <a href="/postsales/stellar-enterprise-basic/skills/wlan-theory-fundamentals.html">无线理论基础（802.11 / 天线 / 安全原理）</a>
+      <a href="/postsales/stellar-enterprise-basic/skills/site-survey-ekahau.html">站点勘测方法（Ekahau 全流程）</a>
+    <p class="course-nav-group">开局与业务</p>
+      <a href="/postsales/stellar-enterprise-basic/skills/enterprise-mode-onboarding.html">Enterprise 模式开局（OV2500 发现与 AP 纳管）</a>
+      <a href="/postsales/stellar-enterprise-basic/skills/employee-ssid-8021x.html">Employee SSID 与 AD 认证（802.1X / PEAP）</a>
+      <a href="/postsales/stellar-enterprise-basic/skills/upam-guest-access.html">UPAM Guest 与用户角色（门户 / 带宽 / 策略 / WCF）</a>
+    <p class="course-nav-group">漫游与远程</p>
+      <a href="/postsales/stellar-enterprise-basic/skills/roaming-l2-l3.html">L2 移动性与漫游</a>
+      <a aria-current="page" href="/postsales/stellar-enterprise-basic/skills/rap-remote-deployment.html">RAP 远程部署（Cirrus + VPN Server）</a>
+  </nav>
+</aside>  <main id="main-content" class="course-main prose">
+    <nav class="breadcrumbs" aria-label="面包屑"><a href="/index.html">培训门户</a><span>/</span><a href="/postsales/index.html">售后 · Postsales</a><span>/</span><a href="/postsales/stellar-enterprise-basic/index.html">DT00XTE368</a><span>/</span><span aria-current="page">RAP 远程部署（Cirrus + VPN Server）</span></nav>
+<header class="skill-heading"><div><p class="eyebrow">KNOWLEDGE UNIT</p><h1>RAP 远程部署（Cirrus + VPN Server）</h1></div><dl><div><dt>Skill ID</dt><dd>rap-remote-deployment</dd></div></dl></header>    <article class="markdown-body"><h1 id="rap-cirrus-vpn-server">RAP 远程部署（Cirrus + VPN Server）</h1>
 <h2 id="r">R · 原文引用</h2>
 <blockquote>
 <p>"1 – Stellar Access Point Startup &amp; Registration. [PRE] – Settings to be Entered by the Administrator. 2 - VPN &amp; OmniVista 2500 Settings Retrieval. 3 - VPN Tunnel (Management Traffic) Establishment. 4 – Configuration Settings Retrieval. 5 – VPN Tunnel (Clients Traffic) &amp; Client Connection." (p439)</p>
@@ -97,38 +77,15 @@ blockquote p{margin:6px 0}
 </blockquote>
 <h2 id="i">I · 方法论骨架</h2>
 <ol>
-<li>三件套：Cirrus 4（Freemium 配 OV2500 / Premium 全云）+ ALE VPN Server 虚机 + Stellar AP（AP1101 不兼容）。<ul>
-<li>
-<ol>
-<li>双隧道模型：管理 VPN（AP↔VPN Server，传 OV2500 管理流量）+ 数据 VPN（L2GRE，传客户端流量回公司网段）。</li>
-</ol>
-</li>
-<li>
-<ol>
-<li>五步上线：[PRE] 管理员预录序列号/MAC、VPN 参数、OV2500 地址 → AP 上电自动连 Cirrus 按 MAC 识别 → 下发参数建管理隧道 → 经隧道从 OV2500 拉配置 → 建第二条数据隧道、远程用户接入企业 SSID。</li>
-</ol>
-</li>
-<li>
-<ol>
-<li>SSID 侧开关：Default VLAN/Network 选 Use Tunnel + Tunnel ID=0 + 指定 Data VPN Server。</li>
-</ol>
-</li>
-</ul>
-</li>
+<li><strong>三件套</strong>：Cirrus 4（Freemium 配 OV2500 / Premium 全云）+ ALE VPN Server 虚机 + Stellar AP（AP1101 不兼容）。</li>
+<li><strong>双隧道模型</strong>：管理 VPN（AP↔VPN Server，传 OV2500 管理流量）+ 数据 VPN（L2GRE，传客户端流量回公司网段）。</li>
+<li><strong>五步上线</strong>：[PRE] 管理员预录序列号/MAC、VPN 参数、OV2500 地址 → AP 上电自动连 Cirrus 按 MAC 识别 → 下发参数建管理隧道 → 经隧道从 OV2500 拉配置 → 建第二条数据隧道、远程用户接入企业 SSID。</li>
+<li><strong>SSID 侧开关</strong>：Default VLAN/Network 选 Use Tunnel + Tunnel ID=0 + 指定 Data VPN Server。</li>
 </ol>
 <h2 id="a1-lab">A1 · 书中案例（Lab 精要）</h2>
 <ul>
-<li><strong>c10（p467-497）完整流程</strong>：<br>Cirrus 4（registration.ovcirrus.com）Inventory &gt; Device Catalog 录序列号/MAC 并勾 Is this a Remote AP=YES；</li>
-<li>配管理 VPN（公网 IP:6550、Server VPN IP 192.168.0.1、客户端池 192.168.0.2-20、OV2500 IP），Export VPN Settings 导出 .conf；</li>
-<li>ALE VPN Server 虚机（OVF 部署）设双网卡（eth0 公网/eth1 私网），FileZilla 把 .conf 传到 /opt/OmniVista_2500_NMS/data/vpn_conf/vpn_profile，建 vpn_mgmt 服务导入 endpoint，Apply 后重启 AP，Maintenance &gt; VPN Status 应见 peer 握手；</li>
-<li>OV2500 虚机加默认路由（192.168.0.0/24 网关 10.130.5.251）；</li>
-<li>再建数据 VPN（10.7.0.61、客户端池 10.7.0.55-60、端口 6551 绑 eth2），AP Group 的 Data VPN Setting 选中；</li>
-<li>
-<p>建 EmployeesX 时选 Use Tunnel、Tunnel ID=0；</p>
-</li>
-<li>
-<p><strong>验证</strong>：<br>远程客户端连 EmployeesX 过 802.1X，拿到员工网段地址。</p>
-</li>
+<li><strong>c10（p467-497）完整流程</strong>：<br>Cirrus 4（registration.ovcirrus.com）Inventory &gt; Device Catalog 录序列号/MAC 并勾 Is this a Remote AP=YES；配管理 VPN（公网 IP:6550、Server VPN IP 192.168.0.1、客户端池 192.168.0.2-20、OV2500 IP），Export VPN Settings 导出 .conf；ALE VPN Server 虚机（OVF 部署）设双网卡（eth0 公网/eth1 私网），FileZilla 把 .conf 传到 /opt/OmniVista_2500_NMS/data/vpn_conf/vpn_profile，建 vpn_mgmt 服务导入 endpoint，Apply 后重启 AP，Maintenance &gt; VPN Status 应见 peer 握手；OV2500 虚机加默认路由（192.168.0.0/24 网关 10.130.5.251）；再建数据 VPN（10.7.0.61、客户端池 10.7.0.55-60、端口 6551 绑 eth2），AP Group 的 Data VPN Setting 选中；建 EmployeesX 时选 Use Tunnel、Tunnel ID=0。</li>
+<li><strong>验证</strong>：<br>远程客户端连 EmployeesX 过 802.1X，拿到员工网段地址。</li>
 </ul>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
@@ -138,44 +95,14 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
-<li>确认 AP 型号非 AP1101；读尾部标签取序列号/MAC。<ul>
-<li>
-<ol>
+<li>确认 AP 型号非 AP1101；读尾部标签取序列号/MAC。</li>
 <li>Cirrus 4 录入设备并勾 Remote AP；配置管理 VPN 参数并 Export VPN Settings 导出 .conf（务必保存好）。</li>
-</ol>
-</li>
-<li>
-<ol>
 <li>部署 ALE VPN Server 虚机：控制台设 admin 密码、公网/私网 IP、网关/DNS，开 SSH。</li>
-</ol>
-</li>
-<li>
-<ol>
 <li>把 .conf 传入 /opt/OmniVista_2500_NMS/data/vpn_conf/vpn_profile，建 vpn_mgmt 服务（绑公网 IP:6550）并导入 VPN endpoint，Apply 后重启 AP。</li>
-</ol>
-</li>
-<li>
-<ol>
 <li>OV2500 虚机菜单加去程路由；AP REGISTRATION 选国家码后 RAP 出现在 Managed AP。</li>
-</ol>
-</li>
-<li>
-<ol>
 <li>建 Data VPN Server（Server IP + 客户端池），导出 .conf 同样导入 VPN 服务器（vpn_data、端口 6551、绑 eth2）。</li>
-</ol>
-</li>
-<li>
-<ol>
 <li>AP Group 的 Data VPN Setting 选中数据 VPN；SSID 的 Default VLAN/Network 选 Use Tunnel、Tunnel ID=0，下发。</li>
-</ol>
-</li>
-<li>
-<ol>
 <li>验证：远程客户端过 802.1X 拿到企业网段地址，VPN Status 有 peer 与握手记录。</li>
-</ol>
-</li>
-</ul>
-</li>
 </ol>
 <h2 id="b">B · 边界与陷阱</h2>
 <ul>
@@ -185,5 +112,13 @@ blockquote p{margin:6px 0}
 <li>Freemium 方案含 OV2500 环节（配置经本地 OV 下发），Premium 少这一步，方案选型影响步骤数。</li>
 <li>远程站点若有本地出口需求，用 Local Breakout + VLAN 标签区分本地与回传业务。</li>
 </ul>
-<hr />
-<p>来源条目: f15 · c10 · g42 · g43</p><div class="pn"><a href="roaming-l2-l3.html">⬅ 上一单元：roaming-l2-l3</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<hr>
+<p>来源条目: f15 · c10 · g42 · g43</p></article>
+<nav class="previous-next" aria-label="知识单元翻页"><a href="/postsales/stellar-enterprise-basic/skills/roaming-l2-l3.html"><span>上一单元</span><b>L2 移动性与漫游</b></a><a class="next" href="/postsales/stellar-enterprise-basic/digest.html"><span>下一单元</span><b>查看课程精华</b></a></nav>    <footer class="content-footer">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</footer>
+  </main>
+</div>
+  <script src="/assets/js/app.js?v=4" defer></script>
+  <script src="/assets/js/search.js?v=4" defer></script>
+  <script src="/assets/js/lightbox.js?v=5" defer></script>
+</body>
+</html>

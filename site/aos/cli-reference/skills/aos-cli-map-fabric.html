@@ -1,92 +1,72 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>aos-cli-map-fabric — AOS 8.10R04 · CLI Reference 命令地图</title>
-<style>
-:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
-*{box-sizing:border-box}
-body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
-a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
-.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin:16px 0}
-.gallery figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px}
-.gallery img{width:100%;max-height:340px;object-fit:contain;background:#fff;border-radius:6px}
-.gallery figcaption{font-size:12.5px;color:var(--mut);text-align:center;margin-top:6px}
-/* 侧栏折叠 + 图片灯箱 */
-.tgl{position:fixed;left:0;top:45%;z-index:60;background:var(--card);border:1px solid var(--line);border-right:none;border-radius:0 8px 8px 0;color:var(--tx);padding:10px 6px;cursor:pointer;font-size:13px;line-height:1.1;writing-mode:vertical-lr}
-.tgl:hover{background:var(--acc);color:#0f172a}
-.layout.full{grid-template-columns:0 1fr}
-.layout.full aside{display:none}
-.lb{position:fixed;inset:0;background:rgba(5,10,20,.92);z-index:100;display:flex;align-items:center;justify-content:center;flex-direction:column}
-.lb img{max-width:92vw;max-height:82vh;background:#fff;border-radius:6px;transition:transform .12s}
-.lb .lbb{margin-top:10px;display:flex;gap:10px}
-.lb button{background:var(--card);border:1px solid var(--line);color:var(--tx);border-radius:8px;padding:6px 14px;cursor:pointer;font-size:14px}
-.lb button:hover{background:var(--acc);color:#0f172a}
-.search{margin:0 0 14px}
-.search input{width:100%;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--tx);font-size:13px;outline:none}
-.search input:focus{border-color:var(--acc)}
-#qres{max-height:340px;overflow-y:auto;margin-top:6px}
-#qres .qi{display:block;padding:6px 8px;border-radius:6px;font-size:12.5px;color:var(--tx);border-left:2px solid transparent}
-#qres .qi:hover{background:var(--card);text-decoration:none;border-left-color:var(--acc)}
-#qres .qi .qp{color:var(--mut);font-size:11px;display:block}
-#qres .qi b{color:var(--acc)}
-.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
-main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
-.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
-aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
-aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
-aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
-aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
-aside a:hover{background:var(--card);text-decoration:none}
-aside a.on{background:var(--card);color:var(--acc)}
-main{padding:36px 48px;max-width:1000px}
-h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
-h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
-table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
-th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
-th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
-code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
-pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
-pre code{background:none;padding:0}
-blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
-.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
-.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
-.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
-.meta{font-size:13px;color:var(--mut)}
-hr{border:none;border-top:1px solid var(--line);margin:26px 0}
-.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
-.badge.soon{background:#475569;color:#cbd5e1}
-main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
-main{padding:28px 48px 40px;max-width:1040px}
-h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
-blockquote p{margin:6px 0}
-.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
-.crumbs a{color:var(--acc)}
-.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
-.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
-.pn a:hover{border-color:var(--acc)}
-.pn .nxt{text-align:right}
-.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
-@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
-</style></head>
-<body><div class="layout"><aside><h1>AOS 8.10R04 · CLI Reference 命令地图</h1>
-<div class="search"><input id="qk" type="search" placeholder="🔍 搜索全站…" autocomplete="off"><div id="qres"></div></div>
-
-<div class="sub">6240 页 · 70 章命令字典导航（约 2480 条命令，按 5 域组织）</div>
-<a href="../index.html">🏠 课程首页</a>
-<a href="../digest.html">📖 精华长文 DIGEST</a>
-
-<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
-<a href="../glossary.html">🔤 术语词典</a>
-<a href="../../../index.html">⬅️ 返回培训门户</a>
-<a href="../index.html">──── Skills ────</a>
-<div class="grp">二层与接入</div>
-<a href="../skills/aos-cli-map-l2-access.html">aos-cli-map-l2-access</a>
-<div class="grp">骨干与路由</div>
-<a href="../skills/aos-cli-map-fabric.html" class="on">aos-cli-map-fabric</a>
-<a href="../skills/aos-cli-map-routing.html">aos-cli-map-routing</a>
-<div class="grp">策略与运维</div>
-<a href="../skills/aos-cli-map-multicast-qos.html">aos-cli-map-multicast-qos</a>
-<a href="../skills/aos-cli-map-mgmt-oam.html">aos-cli-map-mgmt-oam</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../aos/index.html">AOS 软件手册</a> › <a href="../index.html">AOS 8.10R04</a> › <span>aos-cli-map-fabric</span></nav><h1>aos-cli-map-fabric</h1><p class="meta"><span class="badge">SKILL</span> aos-cli-map-fabric · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="面向售前、售后与网络工程师的 ALE 内部技术知识平台">
+  <meta name="theme-color" content="#6B489D">
+  <title>aos-cli-map-fabric — AOS 8.10R04 · CLI Reference 命令地图</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=4">
+  <link rel="stylesheet" href="/assets/css/layout.css?v=4">
+  <link rel="stylesheet" href="/assets/css/components.css?v=4">
+  <link rel="stylesheet" href="/assets/css/content.css?v=7">
+  <script src="/assets/js/auth-config.js?v=4"></script>
+  <script src="/assets/js/auth-core.js?v=4"></script>
+  <script src="/assets/js/auth-guard.js?v=4"></script>
+</head>
+<body data-page-kind="course">
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <header class="topbar" data-topbar>
+    <a class="brand" href="/index.html" aria-label="返回 ALE 技术培训门户首页">
+      <img src="/assets/ale-logo-color.png" alt="Alcatel-Lucent Enterprise">
+      <span>ALE 培训门户</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-controls="primary-nav" aria-expanded="false" data-nav-toggle>
+      <span aria-hidden="true">☰</span><span class="sr-only">打开导航</span>
+    </button>
+    <nav id="primary-nav" class="primary-nav" aria-label="主导航">
+      <a href="/index.html">首页</a>
+      <a href="/paths.html">学习路径</a>
+      <a href="/presales/index.html">售前</a>
+      <a href="/postsales/index.html">售后</a>
+      <a href="/wlan/index.html">无线</a>
+      <a href="/aos/index.html" aria-current="page">AOS 手册</a>
+      <a href="/hardware/index.html">硬件</a>
+      <a href="/brochures/index.html">彩页</a>
+      <a href="/solutions/index.html">解决方案</a>
+      <a href="/security/index.html">安全</a>
+    </nav>
+    <button id="logout-btn" class="logout-btn" type="button" hidden>退出登录</button>
+  </header>
+<div class="course-layout">
+<aside class="course-sidebar" id="course-sidebar" data-sidebar>
+  <div class="sidebar-heading">
+    <p class="eyebrow">COURSE</p>
+    <h2>AOS 8.10R04 · CLI Reference 命令地图</h2>
+    <p>6240 页 · 70 章命令字典导航（约 2480 条命令，按 5 域组织）</p>
+  </div>
+<div class="search" data-search>
+  <label class="sr-only" for="course-search">搜索全站课程和知识单元</label>
+  <input id="course-search" type="search" placeholder="搜索课程编号、产品型号或技术关键词…" autocomplete="off" data-search-input>
+  <div class="search-results" role="listbox" aria-live="polite" data-search-results></div>
+</div>  <nav class="course-nav" aria-label="课程目录">
+    <a href="/aos/cli-reference/index.html">课程首页</a>
+    <a href="/aos/cli-reference/digest.html">精华长文</a>
+    <a href="/aos/cli-reference/overview.html">教书理解</a>
+    <a href="/aos/cli-reference/glossary.html">术语词典</a>
+    <p class="course-nav-group">二层与接入</p>
+      <a href="/aos/cli-reference/skills/aos-cli-map-l2-access.html">aos-cli-map-l2-access</a>
+    <p class="course-nav-group">骨干与路由</p>
+      <a aria-current="page" href="/aos/cli-reference/skills/aos-cli-map-fabric.html">aos-cli-map-fabric</a>
+      <a href="/aos/cli-reference/skills/aos-cli-map-routing.html">aos-cli-map-routing</a>
+    <p class="course-nav-group">策略与运维</p>
+      <a href="/aos/cli-reference/skills/aos-cli-map-multicast-qos.html">aos-cli-map-multicast-qos</a>
+      <a href="/aos/cli-reference/skills/aos-cli-map-mgmt-oam.html">aos-cli-map-mgmt-oam</a>
+  </nav>
+</aside>  <main id="main-content" class="course-main prose">
+    <nav class="breadcrumbs" aria-label="面包屑"><a href="/index.html">培训门户</a><span>/</span><a href="/aos/index.html">AOS 软件手册 · Software Guides</a><span>/</span><a href="/aos/cli-reference/index.html">AOS 8.10R04</a><span>/</span><span aria-current="page">aos-cli-map-fabric</span></nav>
+<header class="skill-heading"><div><p class="eyebrow">KNOWLEDGE UNIT</p><h1>aos-cli-map-fabric</h1></div><dl><div><dt>Skill ID</dt><dd>aos-cli-map-fabric</dd></div></dl></header>    <article class="markdown-body"><h2 id="r">R（触发场景）</h2>
 <ul>
 <li><strong>部署/排障 SPB 骨干</strong>：<br>BVLAN、桥优先级、ECT、IS-IS SPB 邻接</li>
 <li><strong>配 SPBM 业务</strong>：<br>ISID/SAP 绑定、PBB 封装、SPB IP VPN（VRF 绑定）</li>
@@ -95,7 +75,7 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="i">I（核心理念）</h2>
 <ul>
-<li><strong>SPBM 架构（P11，<span class="pg">原文p743</span> ）</strong>：<br>SPB-M 按 IEEE 802.1aq 用 PBB（802.1ah MAC-in-MAC）封装穿越骨干，最短路径树由 ISIS-SPB（IS-IS + SPB TLV 扩展）计算；命令分两层——第 10 章 Shortest Path Bridging 管 backbone（控制面），第 11 章 Service Manager 管 services（数据面），互为配套。</li>
+<li><strong>SPBM 架构（P11，<span class="source-page">原文p743</span> ）</strong>：<br>SPB-M 按 IEEE 802.1aq 用 PBB（802.1ah MAC-in-MAC）封装穿越骨干，最短路径树由 ISIS-SPB（IS-IS + SPB TLV 扩展）计算；命令分两层——第 10 章 Shortest Path Bridging 管 backbone（控制面），第 11 章 Service Manager 管 services（数据面），互为配套。</li>
 <li>MPLS（第 9 章）是并列的标签转发域。</li>
 <li>查命令时先分清"骨干层还是服务层"，再到对应章。</li>
 </ul>
@@ -109,31 +89,648 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a2">A2（操作步骤）·章节清单与代表命令</h2>
 <ul>
-<li><strong>Ch9 MPLS（<span class="pg">原文p689</span> ，约 26 条）</strong>：<code>mpls</code> LSP 与 VPN 隧道命令族</li>
-<li><strong>Ch10 Shortest Path Bridging（<span class="pg">原文p743</span> ，约 43 条）</strong>：<br><code>spb bvlan &lt;id&gt;</code>（1-4094，支持区间如 10-20；</li>
-<li>默认 admin-state=enable）（P12）；</li>
-<li><code>spb isis bridge-priority</code>（默认 32768，越小越优；</li>
-<li>占 8 字节 Bridge ID 高 2 字节，低 6 字节为桥 MAC）（P14）；</li>
-<li><code>spb ipvpn bind/redist</code>（P15）；</li>
-<li>
-<p>BVLAN 上 STP 自动禁用、全部端口保持转发态（P13）；</p>
-</li>
-<li>
-<p><strong>Ch11 Service Manager（<span class="pg">原文p839</span> ，约 83 条）</strong>：<code>spbm</code> 服务层——ISID/SAP 绑定、PBB 封装业务</p>
-</li>
+<li><strong>Ch9 MPLS（<span class="source-page">原文p689</span> ，约 26 条）</strong>：<code>mpls</code> LSP 与 VPN 隧道命令族</li>
+<li><strong>Ch10 Shortest Path Bridging（<span class="source-page">原文p743</span> ，约 43 条）</strong>：<code>spb bvlan &lt;id&gt;</code>（1-4094，支持区间如 10-20；默认 admin-state=enable）（P12）；<code>spb isis bridge-priority</code>（默认 32768，越小越优；占 8 字节 Bridge ID 高 2 字节，低 6 字节为桥 MAC）（P14）；<code>spb ipvpn bind/redist</code>（P15）；BVLAN 上 STP 自动禁用、全部端口保持转发态（P13）</li>
+<li><strong>Ch11 Service Manager（<span class="source-page">原文p839</span> ，约 83 条）</strong>：<code>spbm</code> 服务层——ISID/SAP 绑定、PBB 封装业务</li>
 </ul>
+<h2 id="a3">A3（核心命令速查）</h2>
+<p>以下语法/默认值/示例均摘自原书第 9-11 章对应条目，页码为 fulltext <code>&lt;&lt;&lt;PAGE N&gt;&gt;&gt;</code> 标记值。<code>{enable | disable}</code> 等花括号取值表示"多选一"。</p>
+<h3 id="mpls-ldp-9">MPLS / LDP（第 9 章）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>语法要点</th>
+<th>关键参数与默认值</th>
+<th>典型用法（一行示例）</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mpls interface</td>
+<td><code>mpls interface if_name [admin-state {enable \| disable}]</code>，<code>no</code> 删除</td>
+<td>创建时默认 admin disable；if_name 为已存在的 VLAN/IP 接口</td>
+<td><code>-&gt; mpls interface vlan10</code></td>
+<td>691</td>
+</tr>
+<tr>
+<td>mpls load ldp</td>
+<td><code>mpls load ldp</code></td>
+<td>无参数；所有 <code>mpls ldp</code> 命令的前置条件</td>
+<td><code>-&gt; mpls load ldp</code></td>
+<td>707</td>
+</tr>
+<tr>
+<td>mpls ldp admin-state</td>
+<td><code>mpls ldp admin-state [{enable \| disable}]</code></td>
+<td>全局启停 LDP</td>
+<td><code>-&gt; mpls ldp admin-state enable</code></td>
+<td>709</td>
+</tr>
+<tr>
+<td>mpls ldp</td>
+<td><code>mpls ldp [hello-interval seconds] [hold-time seconds] [keepalive-interval seconds] [keepalive-timeout seconds]</code></td>
+<td>hello=5、hold=15、keepalive-interval=10（秒）；hold-time ≥ 3×hello，keepalive-timeout ≥ 3×keepalive-interval；区间 hello 1-21845、hold 3-65535</td>
+<td><code>-&gt; mpls ldp hello-interval 10 hold-time 30</code></td>
+<td>711</td>
+</tr>
+<tr>
+<td>mpls ldp interface</td>
+<td><code>mpls ldp interface if_name [admin-state {enable \| disable}]</code>，计时器子参数同上</td>
+<td>接口级 hello/hold/keepalive，默认值同全局</td>
+<td><code>-&gt; mpls ldp interface vlan10 admin-state enable</code></td>
+<td>713/715</td>
+</tr>
+<tr>
+<td>mpls ldp session-protection</td>
+<td><code>mpls ldp session-protection [admin-state {enable \| disable}]</code></td>
+<td>默认按平台/版本</td>
+<td><code>-&gt; mpls ldp session-protection admin-state enable</code></td>
+<td>717</td>
+</tr>
+<tr>
+<td>mpls ldp graceful-restart</td>
+<td><code>mpls ldp graceful-restart [maximum-recovery-time seconds] [neighbor-liveness-time seconds]</code>，<code>no</code> 关闭</td>
+<td>默认 graceful restart 连同 helper 模式启用</td>
+<td><code>-&gt; mpls ldp graceful-restart maximum-recovery-time 200 neighbor-liveness-time 150</code></td>
+<td>719</td>
+</tr>
+<tr>
+<td>mpls ldp neighbor</td>
+<td><code>mpls ldp neighbor peer_address md5 key {key \| none}</code></td>
+<td>key 为 MD5 认证密钥字符串，none 表示清除</td>
+<td><code>-&gt; mpls ldp neighbor 5.5.5.5 md5 key testkey1</code></td>
+<td>721</td>
+</tr>
+<tr>
+<td>mpls ping ldp</td>
+<td><code>mpls ping ldp fec_prefix [destination ip_address] [source ip_address] [timeout seconds] [repeat count]</code></td>
+<td>fec_prefix 为目标前缀（如 1.1.1.4/32）</td>
+<td><code>-&gt; mpls ping ldp 1.1.1.4/32</code></td>
+<td>740</td>
+</tr>
+<tr>
+<td>mpls trace ldp</td>
+<td><code>mpls trace ldp fec_prefix [destination ip_address] [source ip_address] [timeout seconds]</code></td>
+<td>逐跳追踪 LSP</td>
+<td><code>-&gt; mpls trace ldp 1.1.1.4/32</code></td>
+<td>741</td>
+</tr>
+<tr>
+<td>show mpls</td>
+<td><code>show mpls</code></td>
+<td>无参数，MPLS 全局概览</td>
+<td><code>-&gt; show mpls</code></td>
+<td>693</td>
+</tr>
+<tr>
+<td>show mpls interface</td>
+<td><code>show mpls interface</code></td>
+<td>全部 MPLS 接口</td>
+<td><code>-&gt; show mpls interface</code></td>
+<td>695</td>
+</tr>
+<tr>
+<td>show mpls ftn-table</td>
+<td><code>show mpls ftn-table</code></td>
+<td>FEC-to-NHLFT 标签映射表</td>
+<td><code>-&gt; show mpls ftn-table</code></td>
+<td>697</td>
+</tr>
+<tr>
+<td>show mpls ilm-table</td>
+<td><code>show mpls ilm-table</code></td>
+<td>入标签映射表</td>
+<td><code>-&gt; show mpls ilm-table</code></td>
+<td>699</td>
+</tr>
+<tr>
+<td>show mpls forwarding-table</td>
+<td><code>show mpls forwarding-table</code></td>
+<td>标签转发综合表</td>
+<td><code>-&gt; show mpls forwarding-table</code></td>
+<td>701</td>
+</tr>
+<tr>
+<td>show mpls vpls mesh</td>
+<td><code>show mpls vpls mesh</code></td>
+<td>VPLS mesh 绑定</td>
+<td><code>-&gt; show mpls vpls mesh</code></td>
+<td>703</td>
+</tr>
+<tr>
+<td>show mpls vpws vc-table</td>
+<td><code>show mpls vpws vc-table</code></td>
+<td>VPWS 虚电路表</td>
+<td><code>-&gt; show mpls vpws vc-table</code></td>
+<td>704</td>
+</tr>
+<tr>
+<td>show mpls ldp</td>
+<td><code>show mpls ldp</code></td>
+<td>LDP 全局状态</td>
+<td><code>-&gt; show mpls ldp</code></td>
+<td>725</td>
+</tr>
+<tr>
+<td>show mpls ldp interface</td>
+<td><code>show mpls ldp interface [if_name]</code></td>
+<td>可按接口过滤</td>
+<td><code>-&gt; show mpls ldp interface vlan10</code></td>
+<td>726</td>
+</tr>
+<tr>
+<td>show mpls ldp neighbor</td>
+<td><code>show mpls ldp neighbor</code></td>
+<td>邻居与会话概览</td>
+<td><code>-&gt; show mpls ldp neighbor</code></td>
+<td>729</td>
+</tr>
+<tr>
+<td>show mpls ldp session</td>
+<td><code>show mpls ldp session [peer_address]</code>；另有 <code>rx-addresses/rx-labels/tx-labels peer_address</code></td>
+<td>可查每个方向的地址与标签</td>
+<td><code>-&gt; show mpls ldp session 5.5.5.5</code></td>
+<td>730/732-737</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="spb-isis-spb-bvlan-10">SPB 骨干（ISIS-SPB / BVLAN，第 10 章）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>语法要点</th>
+<th>关键参数与默认值</th>
+<th>典型用法（一行示例）</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>spb bvlan</td>
+<td><code>spb bvlan {bvlan_id[-bvlan_id2]} [admin-state {enable \| disable}] [name description]</code>，<code>no spb bvlan bvlan_id</code></td>
+<td>bvlan_id 1-4094，支持区间（10-20）；默认 enable；平台：6360/6465/6560 为 No</td>
+<td><code>-&gt; spb bvlan 200 name BVLAN-200</code></td>
+<td>745</td>
+</tr>
+<tr>
+<td>spb isis bvlan ect-id</td>
+<td><code>spb isis bvlan bvlan_id ect-id ect_id</code></td>
+<td>ect_id 1-16；默认自动分配下一个可用 ECT；bvlan 须已存在</td>
+<td><code>-&gt; spb isis bvlan 200 ect-id 5</code></td>
+<td>747</td>
+</tr>
+<tr>
+<td>spb isis control-bvlan</td>
+<td><code>spb isis control-bvlan bvlan_id</code></td>
+<td>指定控制面 BVLAN；无默认</td>
+<td><code>-&gt; spb isis control-bvlan 200</code></td>
+<td>749</td>
+</tr>
+<tr>
+<td>spb isis bvlan tandem-multicast-mode</td>
+<td><code>spb isis bvlan bvlan_id tandem-multicast-mode {sgmode \| gmode}</code></td>
+<td>默认 sgmode（(S,G) 模式）</td>
+<td><code>-&gt; spb isis bvlan 200 tandem-multicast-mode gmode</code></td>
+<td>751</td>
+</tr>
+<tr>
+<td>spb isis bridge-priority</td>
+<td><code>spb isis bridge-priority priority</code></td>
+<td>默认 32768，越小越优；占 8 字节 Bridge ID 高 2 字节</td>
+<td><code>-&gt; spb isis bridge-priority 15</code></td>
+<td>753</td>
+</tr>
+<tr>
+<td>spb isis interface</td>
+<td><code>spb isis interface {port chassis/slot/port[-port2] \| linkagg agg_id} [admin-state {enable \| disable}] [hello-interval seconds] [hello-multiplier count] [metric metric] [type {p2p \| multi-access}] [priority priority]</code></td>
+<td>默认 enable、hello=9(p2p)/3(multi-access)、multiplier=3、metric=10、type=p2p；metric 取链路两端较大值</td>
+<td><code>-&gt; spb isis interface port 1/4/7 hello-interval 60</code></td>
+<td>755</td>
+</tr>
+<tr>
+<td>spb isis admin-state</td>
+<td><code>spb isis admin-state {enable \| disable}</code></td>
+<td>全局启停 ISIS-SPB；启用后所有 SPB 接口开始发 hello</td>
+<td><code>-&gt; spb isis admin-state enable</code></td>
+<td>779</td>
+</tr>
+<tr>
+<td>spb isis area-address</td>
+<td><code>spb isis area-address area_address</code></td>
+<td>默认 0.0.0（ISIS-SPB 常用值）；全网须一致</td>
+<td><code>-&gt; spb isis area-address 1.1.1</code></td>
+<td>781</td>
+</tr>
+<tr>
+<td>spb isis source-id</td>
+<td><code>spb isis source-id {source_id \| auto}</code></td>
+<td>默认取 system ID 低 3 字节；格式如 00-2a-1d</td>
+<td><code>-&gt; spb isis source-id auto</code></td>
+<td>783</td>
+</tr>
+<tr>
+<td>spb isis control-address</td>
+<td><code>spb isis control-address {alll1 \| alll2 \| allis}</code></td>
+<td>默认 AllL1</td>
+<td><code>-&gt; spb isis control-address alll1</code></td>
+<td>785</td>
+</tr>
+<tr>
+<td>spb isis spf-wait</td>
+<td><code>spb isis spf-wait [initial-wait ms \| second-wait ms \| max-wait ms]</code></td>
+<td>默认 initial=100、second=300、max=1000（毫秒）；平台：6360/6465 为 No</td>
+<td><code>-&gt; spb isis spf-wait max-wait 2500 initial-wait 1000</code></td>
+<td>787</td>
+</tr>
+<tr>
+<td>spb isis lsp-wait</td>
+<td><code>spb isis lsp-wait {max-wait ms \| initial-wait ms \| second-wait ms}</code></td>
+<td>默认 initial=0、second/max 见原书表（P789）</td>
+<td><code>-&gt; spb isis lsp-wait max-wait 2000 initial-wait 1000</code></td>
+<td>789</td>
+</tr>
+<tr>
+<td>spb isis rapid-lsp-converge</td>
+<td><code>spb isis rapid-lsp-converge {isid instance_id \| admin-state {enable \| disable}}</code></td>
+<td>默认启用，I-SID 默认 16776961（255.255.1）</td>
+<td><code>-&gt; spb isis rapid-lsp-converge isid 4001</code></td>
+<td>791</td>
+</tr>
+<tr>
+<td>spb isis overload</td>
+<td><code>spb isis overload [timeout seconds]</code>，<code>no</code> 撤销</td>
+<td>默认禁用；timeout 后自动退出 overload</td>
+<td><code>-&gt; spb isis overload timeout 70</code></td>
+<td>793</td>
+</tr>
+<tr>
+<td>spb isis overload-on-boot</td>
+<td><code>spb isis overload-on-boot [timeout seconds]</code></td>
+<td>默认重启后不进入 overload</td>
+<td><code>-&gt; spb isis overload-on-boot timeout 80</code></td>
+<td>795</td>
+</tr>
+<tr>
+<td>spb isis graceful-restart</td>
+<td><code>spb isis graceful-restart</code>，<code>no</code> 关闭</td>
+<td>默认启用</td>
+<td><code>-&gt; spb isis graceful-restart</code></td>
+<td>797</td>
+</tr>
+<tr>
+<td>spb isis graceful-restart helper</td>
+<td><code>spb isis graceful-restart helper {enable \| disable}</code></td>
+<td>helper 邻居侧辅助</td>
+<td><code>-&gt; spb isis graceful-restart helper disable</code></td>
+<td>799</td>
+</tr>
+<tr>
+<td>spb ipvpn bind</td>
+<td><code>spb ipvpn bind vrf {vrf_name \| default} isid instance_id gateway ip_address [import-route-map rm] [export-route-map rm]</code></td>
+<td>VRF/ISID/网关须已存在</td>
+<td><code>-&gt; spb ipvpn bind vrf1 isid 1000 gateway 10.1.1.1 all-routes</code></td>
+<td>759</td>
+</tr>
+<tr>
+<td>spb ipvpn redist</td>
+<td><code>spb ipvpn redist {source-isid ... destination-isid ... {all-routes \| route-map rm} \| source-vrf vrf_name destination-isid ...}</code></td>
+<td>all-routes 为默认</td>
+<td><code>-&gt; spb ipvpn redist source-isid 1000 destination-isid 2000 all-routes</code></td>
+<td>761</td>
+</tr>
+<tr>
+<td>spb ipvpn6 bind / redist</td>
+<td>同 v4 版本，gateway 为 IPv6</td>
+<td>同上</td>
+<td><code>-&gt; spb ipvpn6 bind vrf1 isid 1000 gateway 1000::1 all-routes</code></td>
+<td>769/771</td>
+</tr>
+<tr>
+<td>show spb isis info</td>
+<td><code>show spb isis info</code></td>
+<td>ISIS-SPB 全局状态首查命令</td>
+<td><code>-&gt; show spb isis info</code></td>
+<td>801</td>
+</tr>
+<tr>
+<td>show spb isis bvlans</td>
+<td><code>show spb isis bvlans</code></td>
+<td>BVLAN 配置一览</td>
+<td><code>-&gt; show spb isis bvlans</code></td>
+<td>804</td>
+</tr>
+<tr>
+<td>show spb isis interface</td>
+<td><code>show spb isis interface [port chassis/slot/port \| linkagg id]</code></td>
+<td>默认显示摘要</td>
+<td><code>-&gt; show spb isis interface</code></td>
+<td>806</td>
+</tr>
+<tr>
+<td>show spb isis adjacency</td>
+<td><code>show spb isis adjacency [detail]</code></td>
+<td>邻接排障第一入口；默认摘要</td>
+<td><code>-&gt; show spb isis adjacency</code></td>
+<td>809</td>
+</tr>
+<tr>
+<td>show spb isis database</td>
+<td><code>show spb isis database [lsp-id lsp_id] [detail]</code></td>
+<td>默认显示整个 LSDB</td>
+<td><code>-&gt; show spb isis database</code></td>
+<td>812</td>
+</tr>
+<tr>
+<td>show spb isis nodes</td>
+<td><code>show spb isis nodes</code></td>
+<td>全网 SPB 节点（BMAC/SYSID）</td>
+<td><code>-&gt; show spb isis nodes</code></td>
+<td>819</td>
+</tr>
+<tr>
+<td>show spb isis unicast-table</td>
+<td><code>show spb isis unicast-table [bvlan bvlan_id]</code></td>
+<td>单播转发表</td>
+<td><code>-&gt; show spb isis unicast-table</code></td>
+<td>821</td>
+</tr>
+<tr>
+<td>show spb isis services</td>
+<td><code>show spb isis services [isid instance_id]</code></td>
+<td>I-SID 映射</td>
+<td><code>-&gt; show spb isis services</code></td>
+<td>823</td>
+</tr>
+<tr>
+<td>show spb isis spf</td>
+<td><code>show spb isis spf bvlan bvlan_id [bmac mac_address]</code></td>
+<td>指定 BVLAN 的 SPT</td>
+<td><code>-&gt; show spb isis spf bvlan 4001</code></td>
+<td>825</td>
+</tr>
+<tr>
+<td>show spb isis multicast-table</td>
+<td><code>show spb isis multicast-table [isid instance_id]</code></td>
+<td>组播转发表</td>
+<td><code>-&gt; show spb isis multicast-table</code></td>
+<td>827</td>
+</tr>
+<tr>
+<td>show spb ipvpn bind/redist/route-table</td>
+<td><code>show spb ipvpn bind [vrf ...]</code> / <code>redist</code> / <code>route-table [isid id]</code></td>
+<td>默认显示全部；IPv6 版 <code>ipvpn6</code> 同构</td>
+<td><code>-&gt; show spb ipvpn route-table</code></td>
+<td>763-768/773-778</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="spbm-service-manager-11">SPBM 服务层（Service Manager，第 11 章）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>语法要点</th>
+<th>关键参数与默认值</th>
+<th>典型用法（一行示例）</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>service spb</td>
+<td><code>service service_id[-id2] spb isid instance_id[-id2] bvlan bvlan_id[:x] [admin-state ...] [multicast-mode {head-end \| tandem \| hybrid}] [description ...]</code></td>
+<td>service_id 唯一编号；支持区间批量</td>
+<td><code>-&gt; service 100 spb isid 1000 bvlan 4001</code></td>
+<td>843</td>
+</tr>
+<tr>
+<td>service vxlan</td>
+<td><code>service service_id[-id2] vxlan vnid {vxlan_id[-id2] \| vlan-id vlan_id[:x]} [multicast-mode ...] [description ...]</code></td>
+<td>默认 hybrid 组播模式</td>
+<td><code>-&gt; service 10 vxlan vnid 1000 description "VxLAN service for VNID 1000"</code></td>
+<td>847</td>
+</tr>
+<tr>
+<td>service l2gre</td>
+<td><code>service service_id l2gre vpnid vpn_id [description ...] [admin-state ...] [vlan-xlation ...] [remove-ingress-tag ...]</code></td>
+<td>—</td>
+<td><code>-&gt; service 10 l2gre vpnid 1000</code></td>
+<td>851</td>
+</tr>
+<tr>
+<td>service vpls</td>
+<td><code>service service_id vpls vplsid vpls_id signaling {ldp \| bgp} [ve-id id] [admin-state ...]</code></td>
+<td>signaling 必选</td>
+<td><code>-&gt; service 1 vpls vplsid 100 signaling ldp</code></td>
+<td>854</td>
+</tr>
+<tr>
+<td>service vpws</td>
+<td><code>service service_id vpws vcid vc_id [description ...] [admin-state ...]</code></td>
+<td>—</td>
+<td><code>-&gt; service 2 vpws vcid 200 admin-state enable</code></td>
+<td>857</td>
+</tr>
+<tr>
+<td>service pseudo-wire</td>
+<td><code>service service_id pseudo-wire {enable \| disable}</code></td>
+<td>SPB 服务默认 mp2p（E-LAN），pw 用于 p2p</td>
+<td><code>-&gt; service 100 spb isid 1000 bvlan 4000 pseudo-wire enable</code></td>
+<td>862</td>
+</tr>
+<tr>
+<td>service admin-state</td>
+<td><code>service service_id admin-state {enable \| disable}</code></td>
+<td>创建时默认 disable</td>
+<td><code>-&gt; service 100 admin-state enable</code></td>
+<td>874</td>
+</tr>
+<tr>
+<td>service multicast-mode</td>
+<td><code>service service_id multicast-mode {head-end \| tandem \| hybrid}</code></td>
+<td>SPB/VPLS/VPWS 默认 head-end，VXLAN 默认 hybrid</td>
+<td><code>-&gt; service 100 multicast-mode hybrid</code></td>
+<td>867</td>
+</tr>
+<tr>
+<td>service stats</td>
+<td><code>service service_id stats {enable \| disable}</code></td>
+<td>默认 disabled</td>
+<td><code>-&gt; service 100 stats enable</code></td>
+<td>870</td>
+</tr>
+<tr>
+<td>service sap</td>
+<td><code>service service_id sap {port chassis/slot/port[-p2][:vlan[.vlan2] \| :all] \| linkagg id:...} [admin-state ...] [description ...]</code></td>
+<td>SAP 创建时默认 admin enable、trusted、stats disable；<code>:0</code> 无标签、<code>:50</code> 单 VLAN、<code>:100.200</code> QinQ</td>
+<td><code>-&gt; service 100 sap port 1/1/1:50</code></td>
+<td>930</td>
+</tr>
+<tr>
+<td>service sap trusted</td>
+<td><code>service service_id sap {port ...} {trusted \| un-trusted} [priority 0-7]</code></td>
+<td>默认 trusted、priority=0（best effort）</td>
+<td><code>-&gt; service 10 sap port 1/1/2:10 trusted</code></td>
+<td>936</td>
+</tr>
+<tr>
+<td>service sdp vxlan</td>
+<td><code>service sdp sdp_id vxlan {far-end ip_address \| multicast-group ip_address} [ttl {ttl_num \| default}] [admin-state ...] [description ...]</code></td>
+<td>VXLAN 隧道端点（VTEP）定义</td>
+<td><code>-&gt; service sdp 10 vxlan multicast-group 224.2.1.1 ttl 20</code></td>
+<td>943</td>
+</tr>
+<tr>
+<td>service sdp l2gre</td>
+<td><code>service sdp sdp_id l2gre far-end ip_address [ttl ...] [admin-state ...]</code></td>
+<td>—</td>
+<td><code>-&gt; service sdp 20 l2gre far-end 192.168.0.10 admin-state enable</code></td>
+<td>946</td>
+</tr>
+<tr>
+<td>service sdp mpls</td>
+<td><code>service sdp sdp_id mpls far-end ip_address [description ...] [admin-state ...]</code></td>
+<td>—</td>
+<td><code>-&gt; service sdp 20 mpls far-end 10.10.10.2</code></td>
+<td>948</td>
+</tr>
+<tr>
+<td>service bind-sdp</td>
+<td><code>service service_id bind-sdp sdp_id1 [sdp_id2 ...] [spoke] [description ...]</code>，<code>no</code> 解绑</td>
+<td>将服务绑定到 SDP 隧道</td>
+<td><code>-&gt; service 1 bind-sdp 10</code></td>
+<td>950</td>
+</tr>
+<tr>
+<td>service vxlan udp-port</td>
+<td><code>service vxlan udp-port {udp_port_num \| default}</code></td>
+<td>默认 4789（default VRF）</td>
+<td><code>-&gt; service vxlan udp-port 8472</code></td>
+<td>898</td>
+</tr>
+<tr>
+<td>service l2gre reserved-vlan</td>
+<td><code>service l2gre reserved-vlan vlan_id[-id2]</code></td>
+<td>默认无保留 VLAN</td>
+<td><code>-&gt; service l2gre reserved-vlan 4000</code></td>
+<td>912</td>
+</tr>
+<tr>
+<td>service bgp-evpn</td>
+<td><code>vrf vrf_name service service_id ... bgp-evpn enable</code>（随服务创建，见 EX）</td>
+<td>默认 disabled；当前支持 VXLAN 服务</td>
+<td><code>-&gt; vrf vrf1 service 101 vxlan vnid 101 bgp-evpn enable</code></td>
+<td>859</td>
+</tr>
+<tr>
+<td>service bgp-evpn route-target</td>
+<td><code>service service_id bgp-evpn route-target {import \| export \| both} rt</code></td>
+<td>默认 auto-RT（2 字节全局:4 字节本地）</td>
+<td><code>-&gt; vrf vrf1 service 1 bgp-evpn route-target both 68000:9999</code></td>
+<td>896</td>
+</tr>
+<tr>
+<td>show service</td>
+<td><code>show service [spb \| vxlan \| l2gre \| vpls \| vpws \| evpn \| service_id]</code></td>
+<td>默认列出全部服务</td>
+<td><code>-&gt; show service</code></td>
+<td>966</td>
+</tr>
+<tr>
+<td>show service ports</td>
+<td><code>show service {service_id \| vnid id \| vpnid id \| isid id} ports</code></td>
+<td>按业务键查端口</td>
+<td><code>-&gt; show service 100 ports</code></td>
+<td>977</td>
+</tr>
+<tr>
+<td>show service access</td>
+<td><code>show service access [port ... \| linkagg ...] [sap]</code></td>
+<td>默认全部接入端口</td>
+<td><code>-&gt; show service access</code></td>
+<td>963</td>
+</tr>
+<tr>
+<td>show service spb sap</td>
+<td><code>show service spb service_id sap {port chassis/slot/port}</code></td>
+<td>SPB 服务 SAP 明细</td>
+<td><code>-&gt; show service spb 525 sap port 1/11:2524</code></td>
+<td>982</td>
+</tr>
+<tr>
+<td>show service sdp</td>
+<td><code>show service sdp [sdp_id]</code>；分类型子命令 <code>sdp spb/vxlan/l2gre/mpls</code></td>
+<td>默认全部 SDP</td>
+<td><code>-&gt; show service sdp vxlan</code></td>
+<td>991-1005</td>
+</tr>
+<tr>
+<td>show service bind-sdp</td>
+<td><code>show service bind-sdp [sdp_id[:service_id]]</code>；分类型 spb/vxlan/l2gre/vpls/vpws</td>
+<td>默认全部绑定</td>
+<td><code>-&gt; show service bind-sdp</code></td>
+<td>1006-1021</td>
+</tr>
+<tr>
+<td>show service counters</td>
+<td><code>show service {service_id \| vnid id \| vpnid id \| isid id} counters</code></td>
+<td>需先 <code>service stats enable</code></td>
+<td><code>-&gt; show service 20 counters</code></td>
+<td>1059</td>
+</tr>
+<tr>
+<td>clear service counters</td>
+<td><code>clear service [service_id] [sap {port ...}] counters</code></td>
+<td>默认清除指定服务全部计数</td>
+<td><code>-&gt; clear service 100 counters</code></td>
+<td>1062</td>
+</tr>
+<tr>
+<td>show service info</td>
+<td><code>show service info</code></td>
+<td>服务管理全局信息（UDP 端口等）</td>
+<td><code>-&gt; show service info</code></td>
+<td>1033</td>
+</tr>
+<tr>
+<td>show service evpn evi</td>
+<td><code>vrf vrf_name show service evpn [evi evi_id [ethernet-segment-info]]</code></td>
+<td>EVPN 实例状态</td>
+<td><code>-&gt; vrf vrf1 show service evpn evi 780</code></td>
+<td>1041</td>
+</tr>
+<tr>
+<td>show service evpn ethernet-segment</td>
+<td><code>show service evpn ethernet-segment [{esi_id [aliasing-info \| remote]}]</code></td>
+<td>ES/多归属状态</td>
+<td><code>-&gt; vrf vrf1 show service evpn ethernet-segment</code></td>
+<td>1046</td>
+</tr>
+</tbody>
+</table></div>
 <h2 id="e">E（实证案例）</h2>
 <ul>
 <li>命令地图型 skill，不搬运案例；原书每条命令自带 Example，按章首页码回查（cases 原件未创建）</li>
 </ul>
 <h2 id="b">B（反例/坑）</h2>
 <ul>
-<li><strong>BVLAN 平台支持</strong>：<br>仅 6570M/6860/6860N/6865/6870/6900/6575/6920/9900；6360/6465/6560 为 No（X1，<span class="pg">原文p745</span> ）</li>
-<li>每台 SPB 桥的 BVLAN 配置必须完全一致，否则 ISIS-SPB 邻居发现与最短路径计算失败（X17，<span class="pg">原文p745</span> ）</li>
+<li><strong>BVLAN 平台支持</strong>：<br>仅 6570M/6860/6860N/6865/6870/6900/6575/6920/9900；6360/6465/6560 为 No（X1，<span class="source-page">原文p745</span> ）</li>
+<li>每台 SPB 桥的 BVLAN 配置必须完全一致，否则 ISIS-SPB 邻居发现与最短路径计算失败（X17，<span class="source-page">原文p745</span> ）</li>
 <li>同一 ISID 不能既绑定又重分发到同一 VRF 实例（X11）</li>
 </ul>
 <h2 id="_1">来源</h2>
 <ul>
-<li>OmniSwitch AOS Release 810R04 CLI Reference User Guide 第 9 章（<span class="pg">原文p689</span> ）、第 10 章（<span class="pg">原文p743</span> ）、第 11 章（<span class="pg">原文p839</span> ）。</li>
+<li>OmniSwitch AOS Release 810R04 CLI Reference User Guide 第 9 章（<span class="source-page">原文p689</span> ）、第 10 章（<span class="source-page">原文p743</span> ）、第 11 章（<span class="source-page">原文p839</span> ）。</li>
 <li><strong>条目来源</strong>：<br>principles P11-P15；counter-examples X1/X11/X17；frameworks F4。</li>
-</ul><div class="pn"><a href="aos-cli-map-l2-access.html">⬅ 上一单元：aos-cli-map-l2-access</a><a class="nxt" href="aos-cli-map-routing.html">下一单元：aos-cli-map-routing ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+</ul></article>
+<nav class="previous-next" aria-label="知识单元翻页"><a href="/aos/cli-reference/skills/aos-cli-map-l2-access.html"><span>上一单元</span><b>aos-cli-map-l2-access</b></a><a class="next" href="/aos/cli-reference/skills/aos-cli-map-routing.html"><span>下一单元</span><b>aos-cli-map-routing</b></a></nav>    <footer class="content-footer">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</footer>
+  </main>
+</div>
+  <script src="/assets/js/app.js?v=4" defer></script>
+  <script src="/assets/js/search.js?v=4" defer></script>
+  <script src="/assets/js/lightbox.js?v=5" defer></script>
+</body>
+</html>

@@ -1,137 +1,99 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>精华长文 DIGEST — EVPN 架构指南</title>
-<style>
-:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
-*{box-sizing:border-box}
-body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
-a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
-.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin:16px 0}
-.gallery figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px}
-.gallery img{width:100%;max-height:340px;object-fit:contain;background:#fff;border-radius:6px}
-.gallery figcaption{font-size:12.5px;color:var(--mut);text-align:center;margin-top:6px}
-/* 侧栏折叠 + 图片灯箱 */
-.tgl{position:fixed;left:0;top:45%;z-index:60;background:var(--card);border:1px solid var(--line);border-right:none;border-radius:0 8px 8px 0;color:var(--tx);padding:10px 6px;cursor:pointer;font-size:13px;line-height:1.1;writing-mode:vertical-lr}
-.tgl:hover{background:var(--acc);color:#0f172a}
-.layout.full{grid-template-columns:0 1fr}
-.layout.full aside{display:none}
-.lb{position:fixed;inset:0;background:rgba(5,10,20,.92);z-index:100;display:flex;align-items:center;justify-content:center;flex-direction:column}
-.lb img{max-width:92vw;max-height:82vh;background:#fff;border-radius:6px;transition:transform .12s}
-.lb .lbb{margin-top:10px;display:flex;gap:10px}
-.lb button{background:var(--card);border:1px solid var(--line);color:var(--tx);border-radius:8px;padding:6px 14px;cursor:pointer;font-size:14px}
-.lb button:hover{background:var(--acc);color:#0f172a}
-.search{margin:0 0 14px}
-.search input{width:100%;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--tx);font-size:13px;outline:none}
-.search input:focus{border-color:var(--acc)}
-#qres{max-height:340px;overflow-y:auto;margin-top:6px}
-#qres .qi{display:block;padding:6px 8px;border-radius:6px;font-size:12.5px;color:var(--tx);border-left:2px solid transparent}
-#qres .qi:hover{background:var(--card);text-decoration:none;border-left-color:var(--acc)}
-#qres .qi .qp{color:var(--mut);font-size:11px;display:block}
-#qres .qi b{color:var(--acc)}
-.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
-main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
-.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
-aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
-aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
-aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
-aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
-aside a:hover{background:var(--card);text-decoration:none}
-aside a.on{background:var(--card);color:var(--acc)}
-main{padding:36px 48px;max-width:1000px}
-h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
-h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
-table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
-th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
-th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
-code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
-pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
-pre code{background:none;padding:0}
-blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
-.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
-.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
-.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
-.meta{font-size:13px;color:var(--mut)}
-hr{border:none;border-top:1px solid var(--line);margin:26px 0}
-.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
-.badge.soon{background:#475569;color:#cbd5e1}
-main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
-main{padding:28px 48px 40px;max-width:1040px}
-h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
-blockquote p{margin:6px 0}
-.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
-.crumbs a{color:var(--acc)}
-.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
-.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
-.pn a:hover{border-color:var(--acc)}
-.pn .nxt{text-align:right}
-.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
-@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
-</style></head>
-<body><div class="layout"><aside><h1>EVPN 架构指南</h1>
-<div class="search"><input id="qk" type="search" placeholder="🔍 搜索全站…" autocomplete="off"><div id="qres"></div></div>
-
-<div class="sub">1 份 73 页 · BGP EVPN（Route Types/多归属五机制/IRB/OISM 组播）</div>
-<a href="index.html">🏠 课程首页</a>
-<a href="digest.html">📖 精华长文 DIGEST</a>
-
-<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
-<a href="glossary.html">🔤 术语词典</a>
-<a href="../../index.html">⬅️ 返回培训门户</a>
-<a href="index.html">──── Skills ────</a>
-<div class="grp">控制面</div>
-<a href="skills/sol-evpn-control-plane.html">sol-evpn-control-plane</a>
-<div class="grp">数据面</div>
-<a href="skills/sol-evpn-multi-homing.html">sol-evpn-multi-homing</a>
-<a href="skills/sol-evpn-irb-multicast.html">sol-evpn-irb-multicast</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../solutions/index.html">解决方案</a> › <a href="index.html">EVPN 架构指南</a> › <span>精华长文 DIGEST</span></nav><h1>精华长文 DIGEST</h1><h1 id="digest-evpn-architecture-guidesol-evpn-architecture">DIGEST — EVPN Architecture Guide（sol-evpn-architecture）精华</h1>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="面向售前、售后与网络工程师的 ALE 内部技术知识平台">
+  <meta name="theme-color" content="#6B489D">
+  <title>精华长文 DIGEST — EVPN 架构指南</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=4">
+  <link rel="stylesheet" href="/assets/css/layout.css?v=4">
+  <link rel="stylesheet" href="/assets/css/components.css?v=4">
+  <link rel="stylesheet" href="/assets/css/content.css?v=7">
+  <script src="/assets/js/auth-config.js?v=4"></script>
+  <script src="/assets/js/auth-core.js?v=4"></script>
+  <script src="/assets/js/auth-guard.js?v=4"></script>
+</head>
+<body data-page-kind="course">
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <header class="topbar" data-topbar>
+    <a class="brand" href="/index.html" aria-label="返回 ALE 技术培训门户首页">
+      <img src="/assets/ale-logo-color.png" alt="Alcatel-Lucent Enterprise">
+      <span>ALE 培训门户</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-controls="primary-nav" aria-expanded="false" data-nav-toggle>
+      <span aria-hidden="true">☰</span><span class="sr-only">打开导航</span>
+    </button>
+    <nav id="primary-nav" class="primary-nav" aria-label="主导航">
+      <a href="/index.html">首页</a>
+      <a href="/paths.html">学习路径</a>
+      <a href="/presales/index.html">售前</a>
+      <a href="/postsales/index.html">售后</a>
+      <a href="/wlan/index.html">无线</a>
+      <a href="/aos/index.html">AOS 手册</a>
+      <a href="/hardware/index.html">硬件</a>
+      <a href="/brochures/index.html">彩页</a>
+      <a href="/solutions/index.html" aria-current="page">解决方案</a>
+      <a href="/security/index.html">安全</a>
+    </nav>
+    <button id="logout-btn" class="logout-btn" type="button" hidden>退出登录</button>
+  </header>
+<div class="course-layout">
+<aside class="course-sidebar" id="course-sidebar" data-sidebar>
+  <div class="sidebar-heading">
+    <p class="eyebrow">COURSE</p>
+    <h2>EVPN 架构指南</h2>
+    <p>1 份 73 页 · BGP EVPN（Route Types/多归属五机制/IRB/OISM 组播）</p>
+  </div>
+<div class="search" data-search>
+  <label class="sr-only" for="course-search">搜索全站课程和知识单元</label>
+  <input id="course-search" type="search" placeholder="搜索课程编号、产品型号或技术关键词…" autocomplete="off" data-search-input>
+  <div class="search-results" role="listbox" aria-live="polite" data-search-results></div>
+</div>  <nav class="course-nav" aria-label="课程目录">
+    <a href="/solutions/evpn-architecture/index.html">课程首页</a>
+    <a aria-current="page" href="/solutions/evpn-architecture/digest.html">精华长文</a>
+    <a href="/solutions/evpn-architecture/overview.html">教书理解</a>
+    <a href="/solutions/evpn-architecture/glossary.html">术语词典</a>
+    <p class="course-nav-group">控制面</p>
+      <a href="/solutions/evpn-architecture/skills/sol-evpn-control-plane.html">sol-evpn-control-plane</a>
+    <p class="course-nav-group">数据面</p>
+      <a href="/solutions/evpn-architecture/skills/sol-evpn-multi-homing.html">sol-evpn-multi-homing</a>
+      <a href="/solutions/evpn-architecture/skills/sol-evpn-irb-multicast.html">sol-evpn-irb-multicast</a>
+  </nav>
+</aside>  <main id="main-content" class="course-main prose">
+    <nav class="breadcrumbs" aria-label="面包屑"><a href="/index.html">培训门户</a><span>/</span><a href="/solutions/index.html">解决方案 · Solutions</a><span>/</span><a href="/solutions/evpn-architecture/index.html">EVPN 架构指南</a><span>/</span><span aria-current="page">精华长文 DIGEST</span></nav>
+<header class="page-intro compact"><p class="eyebrow">COURSE REFERENCE</p><h1>精华长文 DIGEST</h1></header>    <article class="markdown-body"><h1 id="digest-evpn-architecture-guidesol-evpn-architecture">DIGEST — EVPN Architecture Guide（sol-evpn-architecture）精华</h1>
 <ul>
 <li>本书是 AOS 8.10R1-R3 在 OmniSwitch 6900 上的 MP-BGP EVPN for VXLAN 架构指南（73 页）：fundamentals（p9-40）+ AOS 差异化（p40-44）+ 参考设计（p44-48）+ 端到端配置案例（p48-72）四位一体。</li>
 <li><strong>核心主张</strong>：<br>控制平面主动学习取代洪泛学习，单一 BGP EVPN 控制面同时承载 L2/L3 服务。</li>
 </ul>
 <h2 id="_1">一、知识地图（三技能单元）</h2>
 <ol>
-<li>控制面（sol-evpn-control-plane）：Why 论证、VXLAN/VNI/VTEP、R-T1~R-T8、RD/RT 自动派生、service 模型、ARP 抑制、underlay/overlay 设计（p5-46）。<ul>
-<li>
-<ol>
-<li>Multi-homing 五机制（sol-evpn-multi-homing）：模式选型、ESI、DF/service carving、split horizon/local bias、aliasing、mass withdraw、组播状态同步（p32-44/p64-66）。</li>
-</ol>
-</li>
-<li>
-<ol>
-<li>IRB 与组播（sol-evpn-irb-multicast）：对称/非对称 IRB、SBD(Fabric-VPN)、DAG、OISM/PEG、border leaf 外部连通（p23-31/p37-48）。</li>
-</ol>
-</li>
-</ul>
-</li>
+<li><strong>控制面</strong>（sol-evpn-control-plane）：Why 论证、VXLAN/VNI/VTEP、R-T1~R-T8、RD/RT 自动派生、service 模型、ARP 抑制、underlay/overlay 设计（p5-46）。</li>
+<li><strong>Multi-homing 五机制</strong>（sol-evpn-multi-homing）：模式选型、ESI、DF/service carving、split horizon/local bias、aliasing、mass withdraw、组播状态同步（p32-44/p64-66）。</li>
+<li><strong>IRB 与组播</strong>（sol-evpn-irb-multicast）：对称/非对称 IRB、SBD(Fabric-VPN)、DAG、OISM/PEG、border leaf 外部连通（p23-31/p37-48）。</li>
 </ol>
 <h2 id="_2">二、三单元要点串讲</h2>
 <h3 id="1-nlri">1. 控制面：从洪泛学习到 NLRI 通告</h3>
 <ul>
-<li>传统模型五大痛点（STP 阻塞链路/L2 无 TTL 成环/4096 上限/运维复杂/tromboning，<span class="pg">原文p5</span> ）逐项映射到 VXLAN（24-bit VNI 约 1600 万）与 EVPN（MP-BGP NLRI 智能通告可达性，<span class="pg">原文p7</span> ）。</li>
-<li>控制面学的 MAC 不老化（<span class="pg">原文p13</span> ）；ARP 抑制默认开、proxy ARP 代答减 BUM（<span class="pg">原文p20-21</span> ）。</li>
-<li><strong>路由类型分工</strong>：<br>R-T1 ES 可达、R-T2 MAC/IP、R-T3 IMET 自动发现+ingress replication、R-T4 ES+DF 选举、R-T5 前缀、R-T6 SMET、R-T7/8 IGMP 同步（<span class="pg">原文p11-13</span> ）。</li>
-<li><strong>推荐设计</strong>：<br>单区域 OSPF p2p+BFD underlay+iBGP overlay+冗余 RR（同 cluster-id）+TTL security 0（<span class="pg">原文p45-46</span> ）。</li>
+<li>传统模型五大痛点（STP 阻塞链路/L2 无 TTL 成环/4096 上限/运维复杂/tromboning，<span class="source-page">原文p5</span> ）逐项映射到 VXLAN（24-bit VNI 约 1600 万）与 EVPN（MP-BGP NLRI 智能通告可达性，<span class="source-page">原文p7</span> ）。</li>
+<li>控制面学的 MAC 不老化（<span class="source-page">原文p13</span> ）；ARP 抑制默认开、proxy ARP 代答减 BUM（<span class="source-page">原文p20-21</span> ）。</li>
+<li><strong>路由类型分工</strong>：<br>R-T1 ES 可达、R-T2 MAC/IP、R-T3 IMET 自动发现+ingress replication、R-T4 ES+DF 选举、R-T5 前缀、R-T6 SMET、R-T7/8 IGMP 同步（<span class="source-page">原文p11-13</span> ）。</li>
+<li><strong>推荐设计</strong>：<br>单区域 OSPF p2p+BFD underlay+iBGP overlay+冗余 RR（同 cluster-id）+TTL security 0（<span class="source-page">原文p45-46</span> ）。</li>
 </ul>
 <h3 id="2-multi-homing">2. Multi-homing：防环防重复五机制</h3>
 <ul>
-<li>LAG 是前提（<span class="pg">原文p32</span> ）；</li>
-<li>DF=EVI mod N 的 service carving 按 EVI 分散 BUM 负载（<span class="pg">原文p33</span> ）；</li>
-<li>split horizon（VXLAN 下靠对端 PE IP 列表）+ local bias（本 PE 的 BUM 只从本地 ES 出）防环（<span class="pg">原文p34</span> ）；</li>
-<li>aliasing 让远端按流负载分担到全活 ES（<span class="pg">原文p34</span> ）；</li>
-<li>
-<p>mass withdraw 一条 ESI 撤路批量刷新 MAC（<span class="pg">原文p36</span> ）；</p>
-</li>
-<li>
-<p><strong>ESI 三档</strong>：<br>物理口/LACP LAG 自动、静态 LAG 手工 5 字节（<span class="pg">原文p41</span> ）。</p>
-</li>
-<li>坑：多归属 SAP 不一致黑洞（<span class="pg">原文p66</span> ）、DF change 丢包需 SMET 补救（<span class="pg">原文p36</span> ）。</li>
+<li>LAG 是前提（<span class="source-page">原文p32</span> ）；DF=EVI mod N 的 service carving 按 EVI 分散 BUM 负载（<span class="source-page">原文p33</span> ）；split horizon（VXLAN 下靠对端 PE IP 列表）+ local bias（本 PE 的 BUM 只从本地 ES 出）防环（<span class="source-page">原文p34</span> ）；aliasing 让远端按流负载分担到全活 ES（<span class="source-page">原文p34</span> ）；mass withdraw 一条 ESI 撤路批量刷新 MAC（<span class="source-page">原文p36</span> ）。</li>
+<li><strong>ESI 三档</strong>：<br>物理口/LACP LAG 自动、静态 LAG 手工 5 字节（<span class="source-page">原文p41</span> ）。</li>
+<li>坑：多归属 SAP 不一致黑洞（<span class="source-page">原文p66</span> ）、DF change 丢包需 SMET 补救（<span class="source-page">原文p36</span> ）。</li>
 </ul>
 <h3 id="3-irb-irbdag">3. IRB 与组播：对称 IRB+DAG 是主干</h3>
 <ul>
-<li>对称 IRB 配置简扩展好为主流推荐，每 PE 只维护本地 ARP/MAC-VRF，每 VRF 一个 Fabric-VPN(SBD) 提供跨 EVI 可达（<span class="pg">原文p24-25</span> ）。</li>
-<li>DAG 同一 anycast IP+MAC（每 VRF 一 VMAC，自动派生 00:00:5e:00:01:VRF-ID），免 VRRP、同 PE 流量不过 fabric（<span class="pg">原文p28-29</span> ）。</li>
-<li><strong>组播</strong>：<br>AOS 仅 ingress replication；跨子网用 OISM（RFC 9625，Fabric-VPN+R-T6，8.10R3 EA），源发现选 R-T10 省带宽；外部 PIM 互通走 PEG（双 PEG 冗余+专用 L3 互联，<span class="pg">原文p37-39</span> ）。</li>
-<li><strong>外部连通</strong>：<br>border leaf+GRM，对外只放聚合路由，双 leaf 调 import 优先级防回声（<span class="pg">原文p46-48</span> ）。</li>
+<li>对称 IRB 配置简扩展好为主流推荐，每 PE 只维护本地 ARP/MAC-VRF，每 VRF 一个 Fabric-VPN(SBD) 提供跨 EVI 可达（<span class="source-page">原文p24-25</span> ）。</li>
+<li>DAG 同一 anycast IP+MAC（每 VRF 一 VMAC，自动派生 00:00:5e:00:01:VRF-ID），免 VRRP、同 PE 流量不过 fabric（<span class="source-page">原文p28-29</span> ）。</li>
+<li><strong>组播</strong>：<br>AOS 仅 ingress replication；跨子网用 OISM（RFC 9625，Fabric-VPN+R-T6，8.10R3 EA），源发现选 R-T10 省带宽；外部 PIM 互通走 PEG（双 PEG 冗余+专用 L3 互联，<span class="source-page">原文p37-39</span> ）。</li>
+<li><strong>外部连通</strong>：<br>border leaf+GRM，对外只放聚合路由，双 leaf 调 import 优先级防回声（<span class="source-page">原文p46-48</span> ）。</li>
 </ul>
 <h2 id="_3">三、本书在知识库中的位置</h2>
 <ul>
@@ -140,4 +102,12 @@ blockquote p{margin:6px 0}
 <li>版本强绑定 8.10R1-R3、OmniSwitch 6900；OISM/PEG 为 EA 特性。</li>
 </ul>
 <h2 id="_4">来源</h2>
-<p>evpn-architecture-guide-en.pdf（73 页）。verified.md：C1-C20；X1-X24；F1-F5；P1-P42；glossary 约 70 条。</p><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<p>evpn-architecture-guide-en.pdf（73 页）。verified.md：C1-C20；X1-X24；F1-F5；P1-P42；glossary 约 70 条。</p></article>
+    <footer class="content-footer">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</footer>
+  </main>
+</div>
+  <script src="/assets/js/app.js?v=4" defer></script>
+  <script src="/assets/js/search.js?v=4" defer></script>
+  <script src="/assets/js/lightbox.js?v=5" defer></script>
+</body>
+</html>

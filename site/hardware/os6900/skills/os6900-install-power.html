@@ -1,90 +1,70 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>os6900-install-power — OmniSwitch 6900 Hardware Guide</title>
-<style>
-:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
-*{box-sizing:border-box}
-body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
-a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
-.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin:16px 0}
-.gallery figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px}
-.gallery img{width:100%;max-height:340px;object-fit:contain;background:#fff;border-radius:6px}
-.gallery figcaption{font-size:12.5px;color:var(--mut);text-align:center;margin-top:6px}
-/* 侧栏折叠 + 图片灯箱 */
-.tgl{position:fixed;left:0;top:45%;z-index:60;background:var(--card);border:1px solid var(--line);border-right:none;border-radius:0 8px 8px 0;color:var(--tx);padding:10px 6px;cursor:pointer;font-size:13px;line-height:1.1;writing-mode:vertical-lr}
-.tgl:hover{background:var(--acc);color:#0f172a}
-.layout.full{grid-template-columns:0 1fr}
-.layout.full aside{display:none}
-.lb{position:fixed;inset:0;background:rgba(5,10,20,.92);z-index:100;display:flex;align-items:center;justify-content:center;flex-direction:column}
-.lb img{max-width:92vw;max-height:82vh;background:#fff;border-radius:6px;transition:transform .12s}
-.lb .lbb{margin-top:10px;display:flex;gap:10px}
-.lb button{background:var(--card);border:1px solid var(--line);color:var(--tx);border-radius:8px;padding:6px 14px;cursor:pointer;font-size:14px}
-.lb button:hover{background:var(--acc);color:#0f172a}
-.search{margin:0 0 14px}
-.search input{width:100%;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--tx);font-size:13px;outline:none}
-.search input:focus{border-color:var(--acc)}
-#qres{max-height:340px;overflow-y:auto;margin-top:6px}
-#qres .qi{display:block;padding:6px 8px;border-radius:6px;font-size:12.5px;color:var(--tx);border-left:2px solid transparent}
-#qres .qi:hover{background:var(--card);text-decoration:none;border-left-color:var(--acc)}
-#qres .qi .qp{color:var(--mut);font-size:11px;display:block}
-#qres .qi b{color:var(--acc)}
-.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
-main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
-.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
-aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
-aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
-aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
-aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
-aside a:hover{background:var(--card);text-decoration:none}
-aside a.on{background:var(--card);color:var(--acc)}
-main{padding:36px 48px;max-width:1000px}
-h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
-h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
-table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
-th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
-th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
-code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
-pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
-pre code{background:none;padding:0}
-blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
-.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
-.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
-.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
-.meta{font-size:13px;color:var(--mut)}
-hr{border:none;border-top:1px solid var(--line);margin:26px 0}
-.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
-.badge.soon{background:#475569;color:#cbd5e1}
-main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
-main{padding:28px 48px 40px;max-width:1040px}
-h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
-blockquote p{margin:6px 0}
-.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
-.crumbs a{color:var(--acc)}
-.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
-.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
-.pn a:hover{border-color:var(--acc)}
-.pn .nxt{text-align:right}
-.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
-@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
-</style></head>
-<body><div class="layout"><aside><h1>OmniSwitch 6900 Hardware Guide</h1>
-<div class="search"><input id="qk" type="search" placeholder="🔍 搜索全站…" autocomplete="off"><div id="qres"></div></div>
-
-<div class="sub">Rev C · 90 页 · 模块化机箱（端口组锁速/QSFP-DD 十二态/两代电源）</div>
-<a href="../index.html">🏠 课程首页</a>
-<a href="../digest.html">📖 精华长文 DIGEST</a>
-
-<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
-<a href="../glossary.html">🔤 术语词典</a>
-<a href="../../../index.html">⬅️ 返回培训门户</a>
-<a href="../index.html">──── Skills ────</a>
-<div class="grp">机箱与板卡</div>
-<a href="../skills/os6900-chassis-modules.html">os6900-chassis-modules</a>
-<div class="grp">安装与电源</div>
-<a href="../skills/os6900-install-power.html" class="on">os6900-install-power</a>
-<div class="grp">运维排障</div>
-<a href="../skills/os6900-ops-troubleshoot.html">os6900-ops-troubleshoot</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../hardware/index.html">硬件手册</a> › <a href="../index.html">OmniSwitch 6900 Hardware Guide</a> › <span>os6900-install-power</span></nav><h1>os6900-install-power</h1><p class="meta"><span class="badge">SKILL</span> os6900-install-power · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="面向售前、售后与网络工程师的 ALE 内部技术知识平台">
+  <meta name="theme-color" content="#6B489D">
+  <title>os6900-install-power — OmniSwitch 6900 Hardware Guide</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=4">
+  <link rel="stylesheet" href="/assets/css/layout.css?v=4">
+  <link rel="stylesheet" href="/assets/css/components.css?v=4">
+  <link rel="stylesheet" href="/assets/css/content.css?v=7">
+  <script src="/assets/js/auth-config.js?v=4"></script>
+  <script src="/assets/js/auth-core.js?v=4"></script>
+  <script src="/assets/js/auth-guard.js?v=4"></script>
+</head>
+<body data-page-kind="course">
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <header class="topbar" data-topbar>
+    <a class="brand" href="/index.html" aria-label="返回 ALE 技术培训门户首页">
+      <img src="/assets/ale-logo-color.png" alt="Alcatel-Lucent Enterprise">
+      <span>ALE 培训门户</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-controls="primary-nav" aria-expanded="false" data-nav-toggle>
+      <span aria-hidden="true">☰</span><span class="sr-only">打开导航</span>
+    </button>
+    <nav id="primary-nav" class="primary-nav" aria-label="主导航">
+      <a href="/index.html">首页</a>
+      <a href="/paths.html">学习路径</a>
+      <a href="/presales/index.html">售前</a>
+      <a href="/postsales/index.html">售后</a>
+      <a href="/wlan/index.html">无线</a>
+      <a href="/aos/index.html">AOS 手册</a>
+      <a href="/hardware/index.html" aria-current="page">硬件</a>
+      <a href="/brochures/index.html">彩页</a>
+      <a href="/solutions/index.html">解决方案</a>
+      <a href="/security/index.html">安全</a>
+    </nav>
+    <button id="logout-btn" class="logout-btn" type="button" hidden>退出登录</button>
+  </header>
+<div class="course-layout">
+<aside class="course-sidebar" id="course-sidebar" data-sidebar>
+  <div class="sidebar-heading">
+    <p class="eyebrow">COURSE</p>
+    <h2>OmniSwitch 6900 Hardware Guide</h2>
+    <p>Rev C · 90 页 · 模块化机箱（端口组锁速/QSFP-DD 十二态/两代电源）</p>
+  </div>
+<div class="search" data-search>
+  <label class="sr-only" for="course-search">搜索全站课程和知识单元</label>
+  <input id="course-search" type="search" placeholder="搜索课程编号、产品型号或技术关键词…" autocomplete="off" data-search-input>
+  <div class="search-results" role="listbox" aria-live="polite" data-search-results></div>
+</div>  <nav class="course-nav" aria-label="课程目录">
+    <a href="/hardware/os6900/index.html">课程首页</a>
+    <a href="/hardware/os6900/digest.html">精华长文</a>
+<a href="/hardware/os6900/gallery.html">产品外观</a>    <a href="/hardware/os6900/overview.html">教书理解</a>
+    <a href="/hardware/os6900/glossary.html">术语词典</a>
+    <p class="course-nav-group">机箱与板卡</p>
+      <a href="/hardware/os6900/skills/os6900-chassis-modules.html">os6900-chassis-modules</a>
+    <p class="course-nav-group">安装与电源</p>
+      <a aria-current="page" href="/hardware/os6900/skills/os6900-install-power.html">os6900-install-power</a>
+    <p class="course-nav-group">运维排障</p>
+      <a href="/hardware/os6900/skills/os6900-ops-troubleshoot.html">os6900-ops-troubleshoot</a>
+  </nav>
+</aside>  <main id="main-content" class="course-main prose">
+    <nav class="breadcrumbs" aria-label="面包屑"><a href="/index.html">培训门户</a><span>/</span><a href="/hardware/index.html">硬件手册 · Hardware Guides</a><span>/</span><a href="/hardware/os6900/index.html">OmniSwitch 6900 Hardware Guide</a><span>/</span><span aria-current="page">os6900-install-power</span></nav>
+<header class="skill-heading"><div><p class="eyebrow">KNOWLEDGE UNIT</p><h1>os6900-install-power</h1></div><dl><div><dt>Skill ID</dt><dd>os6900-install-power</dd></div></dl></header>    <article class="markdown-body"><h2 id="r">R（触发场景）</h2>
 <ul>
 <li><strong>深机箱上架</strong>：<br>51.5-59cm 机型的机架安装（滑入式后支撑/中装法兰）与桌面安装</li>
 <li><strong>电源选型与备件</strong>：<br>区分 V 系 650W / X 系 400W / OS6920 1500W-1600W 阵营，防两代混插</li>
@@ -93,45 +73,74 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="i">I（核心理念）</h2>
 <ul>
-<li><strong>深机箱机架安装三方案决策树（F3，<span class="pg">原文p54</span> -<span class="pg">原文p57</span> ）</strong>：<br>标准机架=前法兰+滑入式后支撑（强制）；深度受限=中装法兰；仅前法兰=官方明令 Never。</li>
-<li><strong>电源体系两阵营对照框架（F4，<span class="pg">原文p59</span> -<span class="pg">原文p65</span> ）</strong>：<br>V 系 650W / X 系 400W / OS6920 1500/1600W 三阵营，阵营间不可混、同箱 AC+DC 可混，F/R 后缀对应气流方向。</li>
-<li><strong>1+1 冗余模型</strong>：<br>第二电源装入即 standby，无电源开关语义=接电即开机（P11/P21，<span class="pg">原文p12</span> /<span class="pg">原文p59</span> ）。</li>
-<li><strong>气流三件套一致性</strong>：<br>电源与风扇托盘方向必须相同，失配将循环重启（P14/P15，<span class="pg">原文p50</span> /<span class="pg">原文p52</span> ）。</li>
+<li><strong>深机箱机架安装三方案决策树（F3，<span class="source-page">原文p54</span> -<span class="source-page">原文p57</span> ）</strong>：<br>标准机架=前法兰+滑入式后支撑（强制）；深度受限=中装法兰；仅前法兰=官方明令 Never。</li>
+<li><strong>电源体系两阵营对照框架（F4，<span class="source-page">原文p59</span> -<span class="source-page">原文p65</span> ）</strong>：<br>。</li>
 </ul>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>阵营</th>
+<th>电源功率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>V 系</td>
+<td>650W</td>
+</tr>
+<tr>
+<td>X 系</td>
+<td>400W</td>
+</tr>
+<tr>
+<td>OS6920</td>
+<td>1500 / 1600W</td>
+</tr>
+</tbody>
+</table></div>
+<p>阵营间不可混、同箱 AC+DC 可混，F/R 后缀对应气流方向。1+1 冗余模型：第二电源装入即 standby，无电源开关语义=接电即开机（P11/P21，<span class="source-page">原文p12</span> /<span class="source-page">原文p59</span> ）。气流三件套一致性：电源与风扇托盘方向必须相同，失配将循环重启（P14/P15，<span class="source-page">原文p50</span> /<span class="source-page">原文p52</span> ）。</p>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
 <li>安装形态决策：机架（八步双人+后支撑）→ 中装（螺纹孔 mid-mount）→ 桌面（正放、留气流间隙）</li>
 <li>电源选型走 F4 对照表：机型定阵营 → AC 或 DC → F/R 气流方向对齐风扇托盘</li>
-<li>冗余供电：双电源各接独立电路（P26，<span class="pg">原文p15</span> ）；多电源数秒内相继插电（P 系，<span class="pg">原文p20</span> ）</li>
+<li>冗余供电：双电源各接独立电路（P26，<span class="source-page">原文p15</span> ）；多电源数秒内相继插电（P 系，<span class="source-page">原文p20</span> ）</li>
 <li>DC 与接地纪律：按阵营执行线规/过流/受限场所要求，机箱接地统一 Panduit lug 规范</li>
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>机架安装八步</strong>：预标记孔位→装 slot rails→贴平立柱对孔→第二人先装底部螺丝→后方插 slide-in braces 直抵立柱→校水平→四法兰全螺丝拧紧（C8，<span class="pg">原文p54</span> /<span class="pg">原文p55</span> ）</li>
-<li><strong>中装流程</strong>：拆前法兰改装机箱中部螺纹孔，其余同上（C9，<span class="pg">原文p56</span> /<span class="pg">原文p57</span> ）</li>
-<li><strong>装电源三步</strong>：插座朝右手柄竖直滑入→后滑至锁片"咔哒"锁定→插电源线即开机（C11，<span class="pg">原文p67</span> /<span class="pg">原文p68</span> ）</li>
-<li><strong>拆电源</strong>：先从电源源拔线→按锁片释放→按住锁片直向后拉出；空槽装盲板（C12/X10，<span class="pg">原文p69</span> ）</li>
-<li><strong>DC 接线（V/X 系）</strong>：连接器插至 click；三根 12AWG（绿黄=地/黑=return/红=-48VDC）接熔丝面板（C13，<span class="pg">原文p66</span> ）</li>
-<li><strong>OS6920 DC 环形端子</strong>：自制线缆——电源端子 8AWG（孔径 4.3mm 等）、接地端子 6AWG；分支过流 50A、6AWG 铜导体（C14/X13，<span class="pg">原文p66</span> /<span class="pg">原文p67</span> ）</li>
-<li><strong>机箱接地</strong>：Panduit LCD8-10A-L lug + 10-32 3/8" 螺丝 + 8AWG 铜导线，扭矩 30-60 in-lb（C15，<span class="pg">原文p73</span> ）</li>
-<li><strong>风扇托盘更换</strong>（60 秒内）：松 captive 螺丝→直拉出→直插新托盘至背板→两侧螺丝拧紧（C16/X22，<span class="pg">原文p72</span> ）</li>
-<li><strong>上电</strong>：全部电源线插易触及接地插座自动开机；多电源数秒内相继插电（C2，<span class="pg">原文p20</span> ）</li>
+<li><strong>机架安装八步</strong>：预标记孔位→装 slot rails→贴平立柱对孔→第二人先装底部螺丝→后方插 slide-in braces 直抵立柱→校水平→四法兰全螺丝拧紧（C8，<span class="source-page">原文p54</span> /<span class="source-page">原文p55</span> ）</li>
+<li><strong>中装流程</strong>：拆前法兰改装机箱中部螺纹孔，其余同上（C9，<span class="source-page">原文p56</span> /<span class="source-page">原文p57</span> ）</li>
+<li><strong>装电源三步</strong>：插座朝右手柄竖直滑入→后滑至锁片"咔哒"锁定→插电源线即开机（C11，<span class="source-page">原文p67</span> /<span class="source-page">原文p68</span> ）</li>
+<li><strong>拆电源</strong>：先从电源源拔线→按锁片释放→按住锁片直向后拉出；空槽装盲板（C12/X10，<span class="source-page">原文p69</span> ）</li>
+<li><strong>DC 接线（V/X 系）</strong>：连接器插至 click；三根 12AWG（绿黄=地/黑=return/红=-48VDC）接熔丝面板（C13，<span class="source-page">原文p66</span> ）</li>
+<li><strong>OS6920 DC 环形端子</strong>：自制线缆——电源端子 8AWG（孔径 4.3mm 等）、接地端子 6AWG；分支过流 50A、6AWG 铜导体（C14/X13，<span class="source-page">原文p66</span> /<span class="source-page">原文p67</span> ）</li>
+<li><strong>机箱接地</strong>：Panduit LCD8-10A-L lug + 10-32 3/8" 螺丝 + 8AWG 铜导线，扭矩 30-60 in-lb（C15，<span class="source-page">原文p73</span> ）</li>
+<li><strong>风扇托盘更换</strong>（60 秒内）：松 captive 螺丝→直拉出→直插新托盘至背板→两侧螺丝拧紧（C16/X22，<span class="source-page">原文p72</span> ）</li>
+<li><strong>上电</strong>：全部电源线插易触及接地插座自动开机；多电源数秒内相继插电（C2，<span class="source-page">原文p20</span> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>深机箱标准机架安装全流程（后支撑插入 slot rails 直抵立柱）（C8，<span class="pg">原文p54-55</span> ）</li>
-<li>OS6920 DC 环形端子自制线缆九项尺寸规格（C14，<span class="pg">原文p67</span> ）</li>
-<li>X48C6 需 IEC 60945 船用认证时必须换 OS-DNV-DC-PWR 双磁环线缆（P25/X16，<span class="pg">原文p63</span> ）</li>
-<li><strong>OS6920 AC 双压输入</strong>：<br>100-127V 仅 12V/83.33A（220-240V 得 125A 全功率），hold time &lt;20ms（P22/X12，<span class="pg">原文p64</span> ）</li>
+<li>深机箱标准机架安装全流程（后支撑插入 slot rails 直抵立柱）（C8，<span class="source-page">原文p54-55</span> ）</li>
+<li>OS6920 DC 环形端子自制线缆九项尺寸规格（C14，<span class="source-page">原文p67</span> ）</li>
+<li>X48C6 需 IEC 60945 船用认证时必须换 OS-DNV-DC-PWR 双磁环线缆（P25/X16，<span class="source-page">原文p63</span> ）</li>
+<li><strong>OS6920 AC 双压输入</strong>：<br>100-127V 仅 12V/83.33A（220-240V 得 125A 全功率），hold time &lt;20ms（P22/X12，<span class="source-page">原文p64</span> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>
-<li><strong>两代电源不可混</strong>：<br>"Do not mix OS6900-V72/C32/C32E/X48C4E/V48C8 power supplies with T48C6/X48C6/T24C2/X24C2 power supplies"（650W 系与 400W 系外观相近互不兼容）（X8/P20，<span class="pg">原文p60</span> -<span class="pg">原文p65</span> ）</li>
-<li><strong>仅前法兰安装禁令</strong>：<br>深机箱必致下垂/损坏，后支撑是全部机架安装的强制件（X24/X25，<span class="pg">原文p54</span> /<span class="pg">原文p55</span> ）</li>
-<li>风扇托盘不可缺位运行、型号不可乱装（F/R 方向且随机型专用）、更换超 60 秒有过热风险（X21/X23/X22，<span class="pg">原文p70</span> /<span class="pg">原文p71</span> /<span class="pg">原文p72</span> ）</li>
-<li>禁用延长线；违电涌军规可失保；DC 源必须在受限场所且地线 EMC 强制（X17/X19/X14/X15，<span class="pg">原文p15</span> /<span class="pg">原文p16</span> /<span class="pg">原文p66</span> /<span class="pg">原文p87</span> ）</li>
-<li>拆电源必须先断电源源；检修/搬动前断开全部电源线（X10/X35，<span class="pg">原文p69</span> /<span class="pg">原文p86</span> ）</li>
-<li>禁倒放/侧放；盲板（空模块槽/电源槽）必须常装以调节气流（X26/X27，<span class="pg">原文p58</span> /<span class="pg">原文p53</span> /<span class="pg">原文p85</span> ）</li>
-<li>空机架螺丝自备（用机架厂商螺丝）；必须专业安装者作业（X28/X29，<span class="pg">原文p54</span> /<span class="pg">原文p14</span> ）</li>
+<li><strong>两代电源不可混</strong>：<br>"Do not mix OS6900-V72/C32/C32E/X48C4E/V48C8 power supplies with T48C6/X48C6/T24C2/X24C2 power supplies"（650W 系与 400W 系外观相近互不兼容）（X8/P20，<span class="source-page">原文p60</span> -<span class="source-page">原文p65</span> ）</li>
+<li><strong>仅前法兰安装禁令</strong>：<br>深机箱必致下垂/损坏，后支撑是全部机架安装的强制件（X24/X25，<span class="source-page">原文p54</span> /<span class="source-page">原文p55</span> ）</li>
+<li>风扇托盘不可缺位运行、型号不可乱装（F/R 方向且随机型专用）、更换超 60 秒有过热风险（X21/X23/X22，<span class="source-page">原文p70</span> /<span class="source-page">原文p71</span> /<span class="source-page">原文p72</span> ）</li>
+<li>禁用延长线；违电涌军规可失保；DC 源必须在受限场所且地线 EMC 强制（X17/X19/X14/X15，<span class="source-page">原文p15</span> /<span class="source-page">原文p16</span> /<span class="source-page">原文p66</span> /<span class="source-page">原文p87</span> ）</li>
+<li>拆电源必须先断电源源；检修/搬动前断开全部电源线（X10/X35，<span class="source-page">原文p69</span> /<span class="source-page">原文p86</span> ）</li>
+<li>禁倒放/侧放；盲板（空模块槽/电源槽）必须常装以调节气流（X26/X27，<span class="source-page">原文p58</span> /<span class="source-page">原文p53</span> /<span class="source-page">原文p85</span> ）</li>
+<li>空机架螺丝自备（用机架厂商螺丝）；必须专业安装者作业（X28/X29，<span class="source-page">原文p54</span> /<span class="source-page">原文p14</span> ）</li>
 </ul>
-<p>来源：OmniSwitch 6900 Hardware Users Guide（Ch2 快速入门 + Ch3 机箱安装/电源/风扇，p14-75）</p><div class="pn"><a href="os6900-chassis-modules.html">⬅ 上一单元：os6900-chassis-modules</a><a class="nxt" href="os6900-ops-troubleshoot.html">下一单元：os6900-ops-troubleshoot ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<p>来源：OmniSwitch 6900 Hardware Users Guide（Ch2 快速入门 + Ch3 机箱安装/电源/风扇，p14-75）</p></article>
+<nav class="previous-next" aria-label="知识单元翻页"><a href="/hardware/os6900/skills/os6900-chassis-modules.html"><span>上一单元</span><b>os6900-chassis-modules</b></a><a class="next" href="/hardware/os6900/skills/os6900-ops-troubleshoot.html"><span>下一单元</span><b>os6900-ops-troubleshoot</b></a></nav>    <footer class="content-footer">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</footer>
+  </main>
+</div>
+  <script src="/assets/js/app.js?v=4" defer></script>
+  <script src="/assets/js/search.js?v=4" defer></script>
+  <script src="/assets/js/lightbox.js?v=5" defer></script>
+</body>
+</html>

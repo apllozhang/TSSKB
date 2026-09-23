@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="面向售前、售后与网络工程师的 ALE 内部技术知识平台">
+  <meta name="theme-color" content="#6B489D">
+  <title>grfp-nms — Golden RFP · 标准标书需求库</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=4">
+  <link rel="stylesheet" href="/assets/css/layout.css?v=4">
+  <link rel="stylesheet" href="/assets/css/components.css?v=4">
+  <link rel="stylesheet" href="/assets/css/content.css?v=7">
+  <script src="/assets/js/auth-config.js?v=4"></script>
+  <script src="/assets/js/auth-core.js?v=4"></script>
+  <script src="/assets/js/auth-guard.js?v=4"></script>
+</head>
+<body data-page-kind="course">
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <header class="topbar" data-topbar>
+    <a class="brand" href="/index.html" aria-label="返回 ALE 技术培训门户首页">
+      <img src="/assets/ale-logo-color.png" alt="Alcatel-Lucent Enterprise">
+      <span>ALE 培训门户</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-controls="primary-nav" aria-expanded="false" data-nav-toggle>
+      <span aria-hidden="true">☰</span><span class="sr-only">打开导航</span>
+    </button>
+    <nav id="primary-nav" class="primary-nav" aria-label="主导航">
+      <a href="/index.html">首页</a>
+      <a href="/paths.html">学习路径</a>
+      <a href="/presales/index.html" aria-current="page">售前</a>
+      <a href="/postsales/index.html">售后</a>
+      <a href="/wlan/index.html">无线</a>
+      <a href="/aos/index.html">AOS 手册</a>
+      <a href="/hardware/index.html">硬件</a>
+      <a href="/brochures/index.html">彩页</a>
+      <a href="/solutions/index.html">解决方案</a>
+      <a href="/security/index.html">安全</a>
+    </nav>
+    <button id="logout-btn" class="logout-btn" type="button" hidden>退出登录</button>
+  </header>
+<div class="course-layout">
+<aside class="course-sidebar" id="course-sidebar" data-sidebar>
+  <div class="sidebar-heading">
+    <p class="eyebrow">COURSE</p>
+    <h2>Golden RFP · 标准标书需求库</h2>
+    <p>7 份 Golden RFP · AOS 8.10R4 软件特性 / AI-DC / 机型 / Stellar WLAN / OmniVista 10.5（C/PC/NC 分级弹药）</p>
+  </div>
+<div class="search" data-search>
+  <label class="sr-only" for="course-search">搜索全站课程和知识单元</label>
+  <input id="course-search" type="search" placeholder="搜索课程编号、产品型号或技术关键词…" autocomplete="off" data-search-input>
+  <div class="search-results" role="listbox" aria-live="polite" data-search-results></div>
+</div>  <nav class="course-nav" aria-label="课程目录">
+    <a href="/presales/golden-rfp/index.html">课程首页</a>
+    <a href="/presales/golden-rfp/digest.html">精华长文</a>
+    <a href="/presales/golden-rfp/overview.html">教书理解</a>
+    <a href="/presales/golden-rfp/glossary.html">术语词典</a>
+    <p class="course-nav-group">使用指南</p>
+      <a href="/presales/golden-rfp/skills/grfp-guide.html">grfp-guide</a>
+    <p class="course-nav-group">需求矩阵</p>
+      <a href="/presales/golden-rfp/skills/grfp-sw-features.html">grfp-sw-features</a>
+      <a href="/presales/golden-rfp/skills/grfp-aidc.html">grfp-aidc</a>
+      <a href="/presales/golden-rfp/skills/grfp-wlan.html">grfp-wlan</a>
+      <a aria-current="page" href="/presales/golden-rfp/skills/grfp-nms.html">grfp-nms</a>
+    <p class="course-nav-group">机型对比</p>
+      <a href="/presales/golden-rfp/skills/grfp-lan-access.html">grfp-lan-access</a>
+  </nav>
+</aside>  <main id="main-content" class="course-main prose">
+    <nav class="breadcrumbs" aria-label="面包屑"><a href="/index.html">培训门户</a><span>/</span><a href="/presales/index.html">售前 · Presales</a><span>/</span><a href="/presales/golden-rfp/index.html">Golden RFP</a><span>/</span><span aria-current="page">grfp-nms</span></nav>
+<header class="skill-heading"><div><p class="eyebrow">KNOWLEDGE UNIT</p><h1>grfp-nms</h1></div><dl><div><dt>Skill ID</dt><dd>grfp-nms</dd></div></dl></header>    <article class="markdown-body"><h2 id="r">R（何时用）</h2>
+<ul>
+<li>标书含网管平台章节，需要逐条应答 NMS 需求</li>
+<li>客户问云管 vs 本地部署（Cirrus/Terra）能力差异</li>
+<li>配合 LAN/WLAN 项目报统一管理与 NAC 模块（UPAM）</li>
+</ul>
+<h2 id="i">I(核心理念)</h2>
+<ul>
+<li><strong>OmniVista release 10 是一套代码两个交付形态</strong>：<br>云上 OmniVista Cirrus 10（OVCX，区域数据中心托管）+ 本地 OmniVista Terra 10（OVTX），特性集等效。</li>
+<li><strong>底层卖点</strong>：<br>微服务架构免停机持续升级、"always up-to-date"自动补丁、订阅制按设备类别计费、有线无线"unified management"。</li>
+<li>文档共 11 章 72 条编号需求（1 Ordering → 11 NAC），每条 "The NMS platform shall …" + C/PC/NC。</li>
+<li><strong>两处边界要背下来</strong>：<br>Scope 明说<strong>不含 Stellar WLAN 特性</strong>；IoT 章开头注明 <strong>Stellar 特有的 IoT 需求另见它文</strong>。</li>
+</ul>
+<h2 id="a1">A1（决策要点)</h2>
+<ol>
+<li>形态选择：客户要数据主权/内网隔离 → OVTX 本地版（req #10：私网环境单/多租户单/多站点且不依赖第三方组件）；客户要多国多站点全球化 → OVCX 云（req #8-9：US/EU 合规框架+区域 DC）。</li>
+<li>计费口径：licensing 按设备类别（req #4）+ SaaS 订阅生命周期自服务（req #1-3）。</li>
+<li>MSP 场景必引第 4 章：单一 supervisor 账号下库存/用户/告警多租户管理 + RBAC 外部认证（req #20-23）。</li>
+<li>NAC 对比话术：内置 RADIUS 不作为独立售卖项（req #60 原文 "RADIUS must not be proposed as separated feature"）——这是和分离式 NAC 产品的正面差异点。</li>
+</ol>
+<h2 id="a2">A2（细节速查表）</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>章</th>
+<th>条目范围</th>
+<th>高价值条目抽样</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 订购激活</td>
+<td>#1-4</td>
+<td>Quote-to-Cash 自服务流程；订阅生命周期灵活管理；按设备类别计费</td>
+</tr>
+<tr>
+<td>2 架构总览</td>
+<td>#5-15</td>
+<td>微服务高可用(#5)；SOC1/SOC2 合规节能数据中心(#7)；本地版免第三方组件的多租户多站点(#10/#13)；有线无线 unified management(#15)</td>
+</tr>
+<tr>
+<td>3 部署</td>
+<td>#16-19</td>
+<td>plug-and-play + Zero-touch Provisioning(#17)；设备分组配置(#18)；从老 OmniVista 迁移到 release 10 的简易流程(#19)</td>
+</tr>
+<tr>
+<td>4 多租户</td>
+<td>#20-24</td>
+<td>MSP 单监控账号统管库存/用户/告警(#20)；组织-租户两级角色视图(#21-22)；RBAC+外部认证(#23)；地理信息服务(#24)</td>
+</tr>
+<tr>
+<td>5 LAN 管理</td>
+<td>#25-29</td>
+<td>L2 GRE 隧道终结服务覆盖各类终端(#25)；VLAN manager(L2)/IP manager(L3)(#26-27)；全 IPv6 支持(#28)；纳管后基于交换机配置的自动化下发(#29)</td>
+</tr>
+<tr>
+<td>6 可编程</td>
+<td>#30-33</td>
+<td>安全 RESTful API(#30)；第三方集成(#31)；API 鉴权(#32)；OpenAPI 文档带用例(#33)</td>
+</tr>
+<tr>
+<td>7 安全隐私</td>
+<td>#34-39</td>
+<td>设备到云管理流量加密(#34)；证书认证加密(#35)；RADsec client(#36)；管理员双因素(#37)；企业 IdP SSO(#38)；强密码策略(#39)</td>
+</tr>
+<tr>
+<td>8 维护运维</td>
+<td>#40-42</td>
+<td>自动定时固件升级减少维护窗口(#40)；统一 LAN+WLAN 拓扑可视化及设备操作(#41)；自动化即时配置备份含安全配置(#42)</td>
+</tr>
+<tr>
+<td>9 监控分析</td>
+<td>#43-54</td>
+<td>实时 KPI 定制仪表盘(#43)；WLAN 用户 QoE 指标与根因分析(#44-45)；live+历史客户端分析≥30 天(#47)；信道/频段分布报表(#48)；应用使用分析(#49)；计划任务报表(#51)；告警模板(#52)；可配置数据保存期(#53)；≥4 台远程 syslog(#54)</td>
+</tr>
+<tr>
+<td>10 IoT</td>
+<td>#55-58</td>
+<td>IoT 资产清单含上下文识别(#55)；策略管控(#56)；最简安全 onboarding 免第三方组件(#57)；集成诊断工具箱(#58)</td>
+</tr>
+<tr>
+<td>11 NAC</td>
+<td>#59-72</td>
+<td>一体化 NAC：802.1x/MAC/证书认证(#59)；内置 RADIUS+Captive Portal 且 RADIUS 不单独售卖(#60)；≥1 内置 RADIUS + 1 内置 LDAP(#61)；外部身份源集成与角色映射(#62)；属性分组 profile(#63)；动态过滤 ID（VLAN/Private Groups）支撑扩展 WLAN 用户组(#64)；LAN/WLAN 统一准入策略(#65)；DPI 应用识别至 L7 含 HTTPS 并可做 QoS/封堵(#66)；内置员工访客账户库(#67)；Guest GRE 隔离(#68)；外置+内嵌 Captive Portal 双支持(#69)；位置+时段策略(#70)、分级服务(#71)、时长/流量配额(#72)</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="e">E（场景案例/怎么用）</h2>
+<ul>
+<li><strong>投 MSP 托管项目</strong>：<br>把 #20-24 与 #34-39 组合成"多租户运营 + 安全合规"两段应答。</li>
+<li><strong>客户招标写"网管须支持应用层管控"</strong>：<br>引 #66（L7 DPI 含 HTTPS、带宽管理/阻断），注意这是 NMS 平台能力而非交换机 ACL。</li>
+<li><strong>竞品说他们 NAC 更全</strong>：<br>反手引 #60+#61——RADIUS/LDAP/Captive Portal 全内置不开票，再引 #69 的内外部 portal 双兼容讲开放性。</li>
+</ul>
+<h2 id="b">B(限制与坑)</h2>
+<ul>
+<li><strong>只管平台不管无线特性</strong>：Scope 明示 "does not cover Stellar WLAN features"，涉及 AP 能力的条目回 grfp-wlan 单元应答。</li>
+<li>IoT 章明确排除 Stellar 特有需求（原文注明指向其他材料），别当全能 IoT 应答模板。</li>
+<li><strong>文中个别编号用 "should"（非 shall）</strong>：<br>#2、#45、#40、#42 等，严格评标时 should 类承诺弹性更高，引用时保留原措辞。</li>
+<li><strong>版本演进快</strong>：<br>10.4.3(2024-12) → 10.5.1(2025-09) → 10.5.2(2026-01)，与 OVCX/OVTX 版本同步绑定；对标书写的旧版本要先确认降级影响。</li>
+<li>OCR 断词（如 "platorm"、"3th-party"），对外引用英文条款前修正拼写。</li>
+</ul>
+<p>来源：omnivista-ng-10.5-golden-rfp-en.docx（sources/grfp-ovng.md，Release Version 表 + Scope + 全部 72 条）</p></article>
+<nav class="previous-next" aria-label="知识单元翻页"><a href="/presales/golden-rfp/skills/grfp-wlan.html"><span>上一单元</span><b>grfp-wlan</b></a><a class="next" href="/presales/golden-rfp/skills/grfp-lan-access.html"><span>下一单元</span><b>grfp-lan-access</b></a></nav>    <footer class="content-footer">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</footer>
+  </main>
+</div>
+  <script src="/assets/js/app.js?v=4" defer></script>
+  <script src="/assets/js/search.js?v=4" defer></script>
+  <script src="/assets/js/lightbox.js?v=5" defer></script>
+</body>
+</html>

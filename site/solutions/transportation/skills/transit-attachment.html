@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="面向售前、售后与网络工程师的 ALE 内部技术知识平台">
+  <meta name="theme-color" content="#6B489D">
+  <title>transit-attachment — 轨道交通解决方案 · 设计指南</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=4">
+  <link rel="stylesheet" href="/assets/css/layout.css?v=4">
+  <link rel="stylesheet" href="/assets/css/components.css?v=4">
+  <link rel="stylesheet" href="/assets/css/content.css?v=7">
+  <script src="/assets/js/auth-config.js?v=4"></script>
+  <script src="/assets/js/auth-core.js?v=4"></script>
+  <script src="/assets/js/auth-guard.js?v=4"></script>
+</head>
+<body data-page-kind="course">
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <header class="topbar" data-topbar>
+    <a class="brand" href="/index.html" aria-label="返回 ALE 技术培训门户首页">
+      <img src="/assets/ale-logo-color.png" alt="Alcatel-Lucent Enterprise">
+      <span>ALE 培训门户</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-controls="primary-nav" aria-expanded="false" data-nav-toggle>
+      <span aria-hidden="true">☰</span><span class="sr-only">打开导航</span>
+    </button>
+    <nav id="primary-nav" class="primary-nav" aria-label="主导航">
+      <a href="/index.html">首页</a>
+      <a href="/paths.html">学习路径</a>
+      <a href="/presales/index.html">售前</a>
+      <a href="/postsales/index.html">售后</a>
+      <a href="/wlan/index.html">无线</a>
+      <a href="/aos/index.html">AOS 手册</a>
+      <a href="/hardware/index.html">硬件</a>
+      <a href="/brochures/index.html">彩页</a>
+      <a href="/solutions/index.html" aria-current="page">解决方案</a>
+      <a href="/security/index.html">安全</a>
+    </nav>
+    <button id="logout-btn" class="logout-btn" type="button" hidden>退出登录</button>
+  </header>
+<div class="course-layout">
+<aside class="course-sidebar" id="course-sidebar" data-sidebar>
+  <div class="sidebar-heading">
+    <p class="eyebrow">COURSE</p>
+    <h2>轨道交通解决方案 · 设计指南</h2>
+    <p>两版设计指南 112 页 · 分层架构 / SPB 织构 / 组播 / 容量测算 / 安全纵深 / 产品选型</p>
+  </div>
+<div class="search" data-search>
+  <label class="sr-only" for="course-search">搜索全站课程和知识单元</label>
+  <input id="course-search" type="search" placeholder="搜索课程编号、产品型号或技术关键词…" autocomplete="off" data-search-input>
+  <div class="search-results" role="listbox" aria-live="polite" data-search-results></div>
+</div>  <nav class="course-nav" aria-label="课程目录">
+    <a href="/solutions/transportation/index.html">课程首页</a>
+    <a href="/solutions/transportation/digest.html">精华长文</a>
+    <a href="/solutions/transportation/overview.html">教书理解</a>
+    <a href="/solutions/transportation/glossary.html">术语词典</a>
+    <p class="course-nav-group">架构</p>
+      <a href="/solutions/transportation/skills/transit-overview.html">transit-overview</a>
+      <a href="/solutions/transportation/skills/transit-architecture.html">transit-architecture</a>
+    <p class="course-nav-group">织构设计</p>
+      <a href="/solutions/transportation/skills/transit-spb-design.html">transit-spb-design</a>
+      <a href="/solutions/transportation/skills/transit-multicast.html">transit-multicast</a>
+      <a href="/solutions/transportation/skills/transit-capacity.html">transit-capacity</a>
+    <p class="course-nav-group">接入与运维</p>
+      <a aria-current="page" href="/solutions/transportation/skills/transit-attachment.html">transit-attachment</a>
+      <a href="/solutions/transportation/skills/transit-ops.html">transit-ops</a>
+    <p class="course-nav-group">安全与选型</p>
+      <a href="/solutions/transportation/skills/transit-security.html">transit-security</a>
+      <a href="/solutions/transportation/skills/transit-products.html">transit-products</a>
+  </nav>
+</aside>  <main id="main-content" class="course-main prose">
+    <nav class="breadcrumbs" aria-label="面包屑"><a href="/index.html">培训门户</a><span>/</span><a href="/solutions/index.html">解决方案 · Solutions</a><span>/</span><a href="/solutions/transportation/index.html">轨道交通解决方案</a><span>/</span><span aria-current="page">transit-attachment</span></nav>
+<header class="skill-heading"><div><p class="eyebrow">KNOWLEDGE UNIT</p><h1>transit-attachment</h1></div><dl><div><dt>Skill ID</dt><dd>transit-attachment</dd></div></dl></header>    <article class="markdown-body"><h2 id="r">R（何时用）</h2>
+<ul>
+<li>设计车站/站点接入网（ERP 环或 STP）到骨干 BEB 的挂接方式</li>
+<li>双归双 BEB 后的成环风险治理（STP 域规划、LBD 部署）</li>
+<li>规划成千上万端设备的自动开通方案（Network Profiles + RADIUS + MVRP）</li>
+<li>排查接入网广播风暴冲击骨干、SAP 端口被误 shutdown 等问题</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<ul>
+<li>站点接入网双归到两台 BEB 后，SPB 骨干逻辑上就是一台"大交换机"，接入侧的误配置和故障可能造出横跨接入网与骨干的大环、引发广播风暴（通用版 p48）。</li>
+<li><strong>防环三层递进</strong>：<br>ERP 挂接、STP 挂接、LBD 兜底。</li>
+<li><strong>ERP 挂接两法</strong>：<br>子环经 SAP 口接到两台 BEB、只通过 SPB 骨干闭环（通用，但不是所有故障模式都能保 50ms）；或利用骨干本身也是环、两台 BEB 间有直连链路的特点，让 ERP 保护 VLAN 与业务 VLAN 直接跑在 BEB 互联链路上用 ring port 闭环、再经 hairpin 映射 SAP（可保子环故障 50ms）（通用版 p45-47）。</li>
+<li>STP 挂接时 NNI 口对 BVLAN 自动关闭 STP、SAP 口默认透传 BPDU；L2 全站共享 VLAN/ISID 会让所有站落进同一个 STP 域，须按站分 MSTP region 并用 max-hop 约束（通用版 p47）。</li>
+<li>LBD 周期发探测帧、收到即判定成环并 shutdown 整个物理端口，应在所有 UNI 口开启（通用版 p48）。</li>
+<li><strong>开通自动化靠 Network Profiles</strong>：<br>按 MAC/IP/VLAN 标签/802.1x 或 MAC 认证把设备绑到 VLAN 或 SPB 服务，VLAN/服务不存在可动态创建，并携带 ACL 与 QoS 策略（通用版 p49-51）。</li>
+</ul>
+<h2 id="a1">A1（决策要点）</h2>
+<ol>
+<li>ERP 子环挂接选型：追求子环故障 50ms 收敛选 ERP UNI 闭环法（借 BEB 互联链路跑 ring port）；通用场景用 SAP UNI 挂接法，但明确不承诺所有故障模式 50ms（通用版 p45-47）</li>
+<li>子环不得用额外 ring/SAP 口自行闭环，只能经 SPB 骨干闭环；子环业务 VLAN 必须与 BEB SAP 匹配（tagged/untagged 均可）（通用版 p45）</li>
+<li>STP 挂接：NNI 口 BVLAN 的 STP 自动关闭；共享 VLAN/ISID 的 L2 场景必须按站分 MSTP region + max-hop（通用版 p47）</li>
+<li>LBD 在所有 UNI 口开启；SAP 口检测到环会 shutdown 整个物理口（不只是该 SAP），要有运维预案（通用版 p48）</li>
+<li>开通方案定型：接入交换机按认证/MAC/IP 绑 VLAN + MVRP 动态上联；BEB 侧 SAP UNI 用 SPB NP 按 VLAN 标签绑服务、可动态建服务；VLAN UNI 侧则配 trunk 静态放行；hairpin 两侧静态配置（通用版 p50）</li>
+<li>Network Profiles 同时承载差异化 ACL/QoS——安全与 SLA 随设备类型自动下发（通用版 p50-51）</li>
+</ol>
+<h2 id="a2">A2（细节速查表）</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>挂接/防环方式</th>
+<th>机制</th>
+<th>关键约束</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ERPv2 子环 + SAP UNI</td>
+<td>子环经两 BEB 的 SAP 口、由 SPB 骨干闭环，R-APS PDU 经骨干隧道</td>
+<td>子环业务 VLAN 须匹配 SAP；非所有故障模式保 50ms</td>
+<td>通用版 p45-46</td>
+</tr>
+<tr>
+<td>ERP + ERP UNI（BEB 直连链路闭环）</td>
+<td>ERP VLAN 与 BVLAN 同跑 BEB 互联链路，ring port 闭环 + hairpin 映射 SAP</td>
+<td>SAP 口不能做 ring port，故用 hairpin；可保 50ms；L2/L3 设计均可用</td>
+<td>通用版 p46-47</td>
+</tr>
+<tr>
+<td>STP 挂接</td>
+<td>站内非环拓扑或三方设备不支持 ERP 时用</td>
+<td>NNI 口 BVLAN 自动关 STP；SAP 默认透传 BPDU；共享 VLAN/ISID 需分 MSTP region + max-hop</td>
+<td>通用版 p47</td>
+</tr>
+<tr>
+<td>Loopback Detection</td>
+<td>周期发 LBD 帧，收到即 shutdown 端口 + trap + log</td>
+<td>与 STP/ERP 叠加运行；SAP 口检测到环关闭整个物理口；应开在所有 UNI 口</td>
+<td>通用版 p48</td>
+</tr>
+</tbody>
+</table></div>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Network Profiles 绑定依据</th>
+<th>适用</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MAC 地址（或段）</td>
+<td>哑终端、固定设备</td>
+<td>通用版 p50</td>
+</tr>
+<tr>
+<td>IP 地址</td>
+<td>固定地址终端</td>
+<td>通用版 p50</td>
+</tr>
+<tr>
+<td>VLAN 标签</td>
+<td>按 VLAN 归类（BEB SAP UNI 绑 SPB 服务）</td>
+<td>通用版 p50</td>
+</tr>
+<tr>
+<td>802.1x / MAC 认证（RADIUS）</td>
+<td>需准入控制的场景，返回 UNP</td>
+<td>通用版 p50、p63-64</td>
+</tr>
+<tr>
+<td>MVRP 动态上联</td>
+<td>接入侧新建 VLAN 自动加到上联（前提 VLAN 已存在于他机）</td>
+<td>通用版 p50</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="e">E（场景案例）</h2>
+<ul>
+<li>ERPv2 子环经 SAP UNI 挂接、R-APS 经 SPB 隧道传到对端 BEB 的参考拓扑（通用版 p46）</li>
+<li>借 BEB 互联链路用 ring port 闭环 ERP 环、hairpin 完成 SAP 映射的 50ms 方案（通用版 p47）</li>
+<li>全站共享 VLAN/ISID 导致所有站在同一 STP 域、用 MSTP region + max-hop 拆分的场景（通用版 p47）</li>
+<li>LBD 探测帧从各 SAP 发出、命中即关端口的骨干保护场景（通用版 p48-49）</li>
+<li>接入交换机认证绑 VLAN → MVRP 上联 → BEB SPB NP 动态建服务的端到端自动开通链（通用版 p50-51）</li>
+</ul>
+<h2 id="b">B（限制与坑）</h2>
+<ul>
+<li>SAP UNI 挂接法对外承诺 50ms——原文明确"非所有故障模式都能 50ms"（通用版 p45）</li>
+<li>子环私接 ring/SAP 口自行闭环——破坏"只经骨干闭环"的设计前提（通用版 p45）</li>
+<li>L2 共享 VLAN/ISID + SAP 透传 BPDU = 全网一个 STP 域，域内故障全域震荡（通用版 p47）</li>
+<li><strong>LBD 误伤</strong>：<br>一个 SAP 成环 shutdown 整个物理口，同口其他 SAP 陪葬（通用版 p48）</li>
+<li><strong>通用版文档评审批注提示</strong>：<br>ERP UNI 闭环法与 STP 挂接的实验室验证状态不一、LBD 存在已知问题可能不再推荐——落地前须向 ALE 核实最新支持状态（通用版 p46-48）</li>
+</ul>
+<h2 id="_1">来源</h2>
+<p>Transportation Networks Design Guide（p45-51）+ SPB-based Transportation Networks Design Guide（p34-38，内容基本对应）</p></article>
+<nav class="previous-next" aria-label="知识单元翻页"><a href="/solutions/transportation/skills/transit-capacity.html"><span>上一单元</span><b>transit-capacity</b></a><a class="next" href="/solutions/transportation/skills/transit-ops.html"><span>下一单元</span><b>transit-ops</b></a></nav>    <footer class="content-footer">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</footer>
+  </main>
+</div>
+  <script src="/assets/js/app.js?v=4" defer></script>
+  <script src="/assets/js/search.js?v=4" defer></script>
+  <script src="/assets/js/lightbox.js?v=5" defer></script>
+</body>
+</html>

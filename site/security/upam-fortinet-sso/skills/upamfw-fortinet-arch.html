@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="面向售前、售后与网络工程师的 ALE 内部技术知识平台">
+  <meta name="theme-color" content="#6B489D">
+  <title>upamfw-fortinet-arch — UPAM × Fortinet SSO 集成 · 应用笔记</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=4">
+  <link rel="stylesheet" href="/assets/css/layout.css?v=4">
+  <link rel="stylesheet" href="/assets/css/components.css?v=4">
+  <link rel="stylesheet" href="/assets/css/content.css?v=7">
+  <script src="/assets/js/auth-config.js?v=4"></script>
+  <script src="/assets/js/auth-core.js?v=4"></script>
+  <script src="/assets/js/auth-guard.js?v=4"></script>
+</head>
+<body data-page-kind="course">
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <header class="topbar" data-topbar>
+    <a class="brand" href="/index.html" aria-label="返回 ALE 技术培训门户首页">
+      <img src="/assets/ale-logo-color.png" alt="Alcatel-Lucent Enterprise">
+      <span>ALE 培训门户</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-controls="primary-nav" aria-expanded="false" data-nav-toggle>
+      <span aria-hidden="true">☰</span><span class="sr-only">打开导航</span>
+    </button>
+    <nav id="primary-nav" class="primary-nav" aria-label="主导航">
+      <a href="/index.html">首页</a>
+      <a href="/paths.html">学习路径</a>
+      <a href="/presales/index.html">售前</a>
+      <a href="/postsales/index.html">售后</a>
+      <a href="/wlan/index.html">无线</a>
+      <a href="/aos/index.html">AOS 手册</a>
+      <a href="/hardware/index.html">硬件</a>
+      <a href="/brochures/index.html">彩页</a>
+      <a href="/solutions/index.html">解决方案</a>
+      <a href="/security/index.html" aria-current="page">安全</a>
+    </nav>
+    <button id="logout-btn" class="logout-btn" type="button" hidden>退出登录</button>
+  </header>
+<div class="course-layout">
+<aside class="course-sidebar" id="course-sidebar" data-sidebar>
+  <div class="sidebar-heading">
+    <p class="eyebrow">COURSE</p>
+    <h2>UPAM × Fortinet SSO 集成 · 应用笔记</h2>
+    <p>Fortinet FortiGate SSO Application Note · 17 页 · Accounting 直发 / FortiAuthenticator 汇聚</p>
+  </div>
+<div class="search" data-search>
+  <label class="sr-only" for="course-search">搜索全站课程和知识单元</label>
+  <input id="course-search" type="search" placeholder="搜索课程编号、产品型号或技术关键词…" autocomplete="off" data-search-input>
+  <div class="search-results" role="listbox" aria-live="polite" data-search-results></div>
+</div>  <nav class="course-nav" aria-label="课程目录">
+    <a href="/security/upam-fortinet-sso/index.html">课程首页</a>
+    <a href="/security/upam-fortinet-sso/digest.html">精华长文</a>
+    <a href="/security/upam-fortinet-sso/overview.html">教书理解</a>
+    <a href="/security/upam-fortinet-sso/glossary.html">术语词典</a>
+    <p class="course-nav-group">机制</p>
+      <a href="/security/upam-fortinet-sso/skills/upamfw-sso-overview.html">upamfw-sso-overview</a>
+    <p class="course-nav-group">Fortinet 集成</p>
+      <a aria-current="page" href="/security/upam-fortinet-sso/skills/upamfw-fortinet-arch.html">upamfw-fortinet-arch</a>
+      <a href="/security/upam-fortinet-sso/skills/upamfw-fortinet-config.html">upamfw-fortinet-config</a>
+  </nav>
+</aside>  <main id="main-content" class="course-main prose">
+    <nav class="breadcrumbs" aria-label="面包屑"><a href="/index.html">培训门户</a><span>/</span><a href="/security/index.html">安全 · Security</a><span>/</span><a href="/security/upam-fortinet-sso/index.html">UPAM × Fortinet SSO 集成</a><span>/</span><span aria-current="page">upamfw-fortinet-arch</span></nav>
+<header class="skill-heading"><div><p class="eyebrow">KNOWLEDGE UNIT</p><h1>upamfw-fortinet-arch</h1></div><dl><div><dt>Skill ID</dt><dd>upamfw-fortinet-arch</dd></div></dl></header>    <article class="markdown-body"><h2 id="r">R（触发场景）</h2>
+<ul>
+<li><strong>动手配置前先理清 Fortinet 集成的数据流</strong>：<br>accounting 消息从哪发、到哪收</li>
+<li><strong>规划多防火墙部署</strong>：<br>直接发 FortiGate 还是经 FortiAuthenticator 汇聚</li>
+<li>排查"防火墙迟迟识别不到用户 IP"——理解首包/后续 accounting 报文差异</li>
+<li>清点两侧配置任务清单，估计工作量与依赖顺序</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<ul>
+<li><strong>Fortinet 侧的机制核心是一句话</strong>：<br>AAA Server Profile 里认证指向 UPAM，记账（accounting）指向 FortiGate/FortiAuthenticator；记账报文由交换机或 AP <strong>直接</strong>发给防火墙，UPAM 不做代理（<span class="source-page">原文p5</span> ）。</li>
+<li>防火墙从 RADIUS Accounting 消息里提取用户名与角色（Filter-Id），策略即可按角色而非仅按 IP 下发。</li>
+<li>多防火墙部署时可把 accounting 统一发 FortiAuthenticator，免得每个 FortiGate 配一套 AAA profile。</li>
+<li>设备 IP 通常在认证后第一笔 accounting 里就有（DHCP 需时间，有的场景要等第二笔起），interim interval 调小可加快防火墙侧信息更新。</li>
+</ul>
+<h2 id="a1">A1（行动框架）</h2>
+<ol>
+<li>画数据流：终端 →(802.1x/MAC/Portal 认证)→ 交换机/AP →(RADIUS 认证)→ UPAM（可再代理外部库）；交换机/AP →(RADIUS Accounting, UDP 1813)→ FortiGate 或 FortiAuthenticator（<span class="source-page">原文p5</span> ）</li>
+<li>定接收端：单防火墙 → FortiGate 本体；多防火墙 → FortiAuthenticator 统一收（<span class="source-page">原文p5</span> ）</li>
+<li>核对前提：中间防火墙放行 UDP 1813；交换机/AP 能解析所填服务器名（不行就填 IP）；默认 ARP 已建好并映射到交换机/AP 组（<span class="source-page">原文p6</span> /<span class="source-page">原文p8</span> ）</li>
+<li>记 interim interval 决策：默认 600 秒，或交给 RADIUS 服务器侧下发（<span class="source-page">原文p7</span> ）</li>
+</ol>
+<h2 id="a2">A2（细节速查）</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>要点</th>
+<th>说明/默认值</th>
+<th>来源</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>认证/记账分离</td>
+<td>AAA profile：认证指 UPAMRadiusServer，记账指 FortiGate/FortiAuthenticator</td>
+<td>Fortinet</td>
+<td>p5/p7</td>
+</tr>
+<tr>
+<td>Accounting 路径</td>
+<td>交换机/AP 直发，不经 UPAM 代理</td>
+<td>Fortinet</td>
+<td>p5</td>
+</tr>
+<tr>
+<td>端口</td>
+<td>UDP 1813，中间设备需放行</td>
+<td>Fortinet</td>
+<td>p6</td>
+</tr>
+<tr>
+<td>服务器名解析</td>
+<td>配名字则网络设备需能查 DNS，否则配 IP</td>
+<td>Fortinet</td>
+<td>p6</td>
+</tr>
+<tr>
+<td>FortiAuthenticator 价值</td>
+<td>多防火墙场景统一记账入口，免多套 AAA profile</td>
+<td>Fortinet</td>
+<td>p5</td>
+</tr>
+<tr>
+<td>Interim Interval</td>
+<td>默认 600 秒；可改由 RADIUS 服务器侧设置</td>
+<td>Fortinet</td>
+<td>p7</td>
+</tr>
+<tr>
+<td>设备 IP 出现时机</td>
+<td>多数在认证后首笔 accounting 即含；有时仅第二笔起才有</td>
+<td>Fortinet</td>
+<td>p7</td>
+</tr>
+<tr>
+<td>角色字段</td>
+<td>Filter-Id = UPAM 的 Access Role Profile（ARP）/uNP 值</td>
+<td>Fortinet</td>
+<td>p13</td>
+</tr>
+<tr>
+<td>侧任务清单</td>
+<td>OV 侧 4 步；FortiGate 侧 7 步</td>
+<td>Fortinet</td>
+<td>p5</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="e">E（场景案例）</h2>
+<ul>
+<li>IoT 设备经交换机 MAC 认证后，accounting 直达 FortiGate，防火墙拿到"192.168.10.1: IoT_Camera"式映射（<span class="source-page">原文p4</span>  Figure 2）</li>
+<li>多 FortiGate 企业网把 accounting 全部改发 FortiAuthenticator，AAA profile 只维护一份（<span class="source-page">原文p5</span> ）</li>
+</ul>
+<h2 id="b">B（限制与坑）</h2>
+<ul>
+<li><strong>最常见的坑</strong>：<br>把 accounting 当成 UPAM 转发——实际是网络设备直发，抓包/排障要在交换机/AP 与防火墙之间看（<span class="source-page">原文p5</span> ）</li>
+<li>填了服务器名但交换机/AP 没有 DNS → 记账发不出去，建议直接填 IP（<span class="source-page">原文p6</span> ）</li>
+<li>中间路径上任何防火墙没放行 UDP 1813 → 防火墙侧静默收不到（<span class="source-page">原文p6</span> ）</li>
+<li>设备 IP 只在第二笔 accounting 出现的场景，600 秒 interim 意味着最长等几分钟才有用户映射（<span class="source-page">原文p7</span> ）</li>
+</ul>
+<h2 id="_1">来源</h2>
+<p>来源：OmniVista 2500 UPAM and Fortinet Single Sign-On Application Note（Mechanism/Procedure overview 及各配置章节的机制性说明，p4-7、p13）</p></article>
+<nav class="previous-next" aria-label="知识单元翻页"><a href="/security/upam-fortinet-sso/skills/upamfw-sso-overview.html"><span>上一单元</span><b>upamfw-sso-overview</b></a><a class="next" href="/security/upam-fortinet-sso/skills/upamfw-fortinet-config.html"><span>下一单元</span><b>upamfw-fortinet-config</b></a></nav>    <footer class="content-footer">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</footer>
+  </main>
+</div>
+  <script src="/assets/js/app.js?v=4" defer></script>
+  <script src="/assets/js/search.js?v=4" defer></script>
+  <script src="/assets/js/lightbox.js?v=5" defer></script>
+</body>
+</html>

@@ -1,101 +1,81 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>aos-stacking-virtual-chassis — DT00XTE220 · OmniSwitch R6/R8 Bootcamp</title>
-<style>
-:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
-*{box-sizing:border-box}
-body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
-a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
-.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin:16px 0}
-.gallery figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px}
-.gallery img{width:100%;max-height:340px;object-fit:contain;background:#fff;border-radius:6px}
-.gallery figcaption{font-size:12.5px;color:var(--mut);text-align:center;margin-top:6px}
-/* 侧栏折叠 + 图片灯箱 */
-.tgl{position:fixed;left:0;top:45%;z-index:60;background:var(--card);border:1px solid var(--line);border-right:none;border-radius:0 8px 8px 0;color:var(--tx);padding:10px 6px;cursor:pointer;font-size:13px;line-height:1.1;writing-mode:vertical-lr}
-.tgl:hover{background:var(--acc);color:#0f172a}
-.layout.full{grid-template-columns:0 1fr}
-.layout.full aside{display:none}
-.lb{position:fixed;inset:0;background:rgba(5,10,20,.92);z-index:100;display:flex;align-items:center;justify-content:center;flex-direction:column}
-.lb img{max-width:92vw;max-height:82vh;background:#fff;border-radius:6px;transition:transform .12s}
-.lb .lbb{margin-top:10px;display:flex;gap:10px}
-.lb button{background:var(--card);border:1px solid var(--line);color:var(--tx);border-radius:8px;padding:6px 14px;cursor:pointer;font-size:14px}
-.lb button:hover{background:var(--acc);color:#0f172a}
-.search{margin:0 0 14px}
-.search input{width:100%;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--tx);font-size:13px;outline:none}
-.search input:focus{border-color:var(--acc)}
-#qres{max-height:340px;overflow-y:auto;margin-top:6px}
-#qres .qi{display:block;padding:6px 8px;border-radius:6px;font-size:12.5px;color:var(--tx);border-left:2px solid transparent}
-#qres .qi:hover{background:var(--card);text-decoration:none;border-left-color:var(--acc)}
-#qres .qi .qp{color:var(--mut);font-size:11px;display:block}
-#qres .qi b{color:var(--acc)}
-.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
-main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
-.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
-aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
-aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
-aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
-aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
-aside a:hover{background:var(--card);text-decoration:none}
-aside a.on{background:var(--card);color:var(--acc)}
-main{padding:36px 48px;max-width:1000px}
-h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
-h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
-table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
-th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
-th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
-code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
-pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
-pre code{background:none;padding:0}
-blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
-.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
-.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
-.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
-.meta{font-size:13px;color:var(--mut)}
-hr{border:none;border-top:1px solid var(--line);margin:26px 0}
-.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
-.badge.soon{background:#475569;color:#cbd5e1}
-main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
-main{padding:28px 48px 40px;max-width:1040px}
-h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
-blockquote p{margin:6px 0}
-.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
-.crumbs a{color:var(--acc)}
-.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
-.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
-.pn a:hover{border-color:var(--acc)}
-.pn .nxt{text-align:right}
-.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
-@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
-</style></head>
-<body><div class="layout"><aside><h1>DT00XTE220 · OmniSwitch R6/R8 Bootcamp</h1>
-<div class="search"><input id="qk" type="search" placeholder="🔍 搜索全站…" autocomplete="off"><div id="qres"></div></div>
-
-<div class="sub">Issue 25 · 1207 页 · 五天全科训练营（新流水线重制版，全文可溯源）</div>
-<a href="../index.html">🏠 课程首页</a>
-<a href="../digest.html">📖 精华长文 DIGEST</a>
-
-<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
-<a href="../glossary.html">🔤 术语词典</a>
-<a href="../../../index.html">⬅️ 返回培训门户</a>
-<a href="../index.html">──── Skills ────</a>
-<div class="grp">开局与系统管理</div>
-<a href="../skills/aos-bootcamp-switch-fundamentals.html">aos-bootcamp-switch-fundamentals</a>
-<a href="../skills/aos-flash-config-management.html">aos-flash-config-management</a>
-<a href="../skills/aos-stacking-virtual-chassis.html" class="on">aos-stacking-virtual-chassis</a>
-<div class="grp">二层基础与冗余</div>
-<a href="../skills/aos-vlan-l2-foundations.html">aos-vlan-l2-foundations</a>
-<a href="../skills/aos-lacp-stp-redundancy.html">aos-lacp-stp-redundancy</a>
-<a href="../skills/aos-vrrp-first-hop-redundancy.html">aos-vrrp-first-hop-redundancy</a>
-<div class="grp">策略与准入</div>
-<a href="../skills/aos-qos-policy-engine.html">aos-qos-policy-engine</a>
-<a href="../skills/aos-access-guardian-unp-bootcamp.html">aos-access-guardian-unp-bootcamp</a>
-<a href="../skills/aos-poe-power.html">aos-poe-power</a>
-<div class="grp">路由与安全</div>
-<a href="../skills/aos-ip-routing-rip-ospf.html">aos-ip-routing-rip-ospf</a>
-<a href="../skills/aos-security-vrf-macsec.html">aos-security-vrf-macsec</a>
-<div class="grp">组播与织构</div>
-<a href="../skills/aos-multicast-erp-spb.html">aos-multicast-erp-spb</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../postsales/index.html">售后</a> › <a href="../index.html">DT00XTE220</a> › <span>aos-stacking-virtual-chassis</span></nav><h1>aos-stacking-virtual-chassis</h1><p class="meta"><span class="badge">SKILL</span> aos-stacking-virtual-chassis · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="面向售前、售后与网络工程师的 ALE 内部技术知识平台">
+  <meta name="theme-color" content="#6B489D">
+  <title>aos-stacking-virtual-chassis — DT00XTE220 · OmniSwitch R6/R8 Bootcamp</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=4">
+  <link rel="stylesheet" href="/assets/css/layout.css?v=4">
+  <link rel="stylesheet" href="/assets/css/components.css?v=4">
+  <link rel="stylesheet" href="/assets/css/content.css?v=7">
+  <script src="/assets/js/auth-config.js?v=4"></script>
+  <script src="/assets/js/auth-core.js?v=4"></script>
+  <script src="/assets/js/auth-guard.js?v=4"></script>
+</head>
+<body data-page-kind="course">
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <header class="topbar" data-topbar>
+    <a class="brand" href="/index.html" aria-label="返回 ALE 技术培训门户首页">
+      <img src="/assets/ale-logo-color.png" alt="Alcatel-Lucent Enterprise">
+      <span>ALE 培训门户</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-controls="primary-nav" aria-expanded="false" data-nav-toggle>
+      <span aria-hidden="true">☰</span><span class="sr-only">打开导航</span>
+    </button>
+    <nav id="primary-nav" class="primary-nav" aria-label="主导航">
+      <a href="/index.html">首页</a>
+      <a href="/paths.html">学习路径</a>
+      <a href="/presales/index.html">售前</a>
+      <a href="/postsales/index.html" aria-current="page">售后</a>
+      <a href="/wlan/index.html">无线</a>
+      <a href="/aos/index.html">AOS 手册</a>
+      <a href="/hardware/index.html">硬件</a>
+      <a href="/brochures/index.html">彩页</a>
+      <a href="/solutions/index.html">解决方案</a>
+      <a href="/security/index.html">安全</a>
+    </nav>
+    <button id="logout-btn" class="logout-btn" type="button" hidden>退出登录</button>
+  </header>
+<div class="course-layout">
+<aside class="course-sidebar" id="course-sidebar" data-sidebar>
+  <div class="sidebar-heading">
+    <p class="eyebrow">COURSE</p>
+    <h2>DT00XTE220 · OmniSwitch R6/R8 Bootcamp</h2>
+    <p>Issue 25 · 1207 页 · 五天全科训练营（新流水线重制版，全文可溯源）</p>
+  </div>
+<div class="search" data-search>
+  <label class="sr-only" for="course-search">搜索全站课程和知识单元</label>
+  <input id="course-search" type="search" placeholder="搜索课程编号、产品型号或技术关键词…" autocomplete="off" data-search-input>
+  <div class="search-results" role="listbox" aria-live="polite" data-search-results></div>
+</div>  <nav class="course-nav" aria-label="课程目录">
+    <a href="/postsales/dt00xte220-bootcamp/index.html">课程首页</a>
+    <a href="/postsales/dt00xte220-bootcamp/digest.html">精华长文</a>
+    <a href="/postsales/dt00xte220-bootcamp/overview.html">教书理解</a>
+    <a href="/postsales/dt00xte220-bootcamp/glossary.html">术语词典</a>
+    <p class="course-nav-group">开局与系统管理</p>
+      <a href="/postsales/dt00xte220-bootcamp/skills/aos-bootcamp-switch-fundamentals.html">aos-bootcamp-switch-fundamentals</a>
+      <a href="/postsales/dt00xte220-bootcamp/skills/aos-flash-config-management.html">aos-flash-config-management</a>
+      <a aria-current="page" href="/postsales/dt00xte220-bootcamp/skills/aos-stacking-virtual-chassis.html">aos-stacking-virtual-chassis</a>
+    <p class="course-nav-group">二层基础与冗余</p>
+      <a href="/postsales/dt00xte220-bootcamp/skills/aos-vlan-l2-foundations.html">aos-vlan-l2-foundations</a>
+      <a href="/postsales/dt00xte220-bootcamp/skills/aos-lacp-stp-redundancy.html">aos-lacp-stp-redundancy</a>
+      <a href="/postsales/dt00xte220-bootcamp/skills/aos-vrrp-first-hop-redundancy.html">aos-vrrp-first-hop-redundancy</a>
+    <p class="course-nav-group">策略与准入</p>
+      <a href="/postsales/dt00xte220-bootcamp/skills/aos-qos-policy-engine.html">aos-qos-policy-engine</a>
+      <a href="/postsales/dt00xte220-bootcamp/skills/aos-access-guardian-unp-bootcamp.html">aos-access-guardian-unp-bootcamp</a>
+      <a href="/postsales/dt00xte220-bootcamp/skills/aos-poe-power.html">aos-poe-power</a>
+    <p class="course-nav-group">路由与安全</p>
+      <a href="/postsales/dt00xte220-bootcamp/skills/aos-ip-routing-rip-ospf.html">aos-ip-routing-rip-ospf</a>
+      <a href="/postsales/dt00xte220-bootcamp/skills/aos-security-vrf-macsec.html">aos-security-vrf-macsec</a>
+    <p class="course-nav-group">组播与织构</p>
+      <a href="/postsales/dt00xte220-bootcamp/skills/aos-multicast-erp-spb.html">aos-multicast-erp-spb</a>
+  </nav>
+</aside>  <main id="main-content" class="course-main prose">
+    <nav class="breadcrumbs" aria-label="面包屑"><a href="/index.html">培训门户</a><span>/</span><a href="/postsales/index.html">售后 · Postsales</a><span>/</span><a href="/postsales/dt00xte220-bootcamp/index.html">DT00XTE220</a><span>/</span><span aria-current="page">aos-stacking-virtual-chassis</span></nav>
+<header class="skill-heading"><div><p class="eyebrow">KNOWLEDGE UNIT</p><h1>aos-stacking-virtual-chassis</h1></div><dl><div><dt>Skill ID</dt><dd>aos-stacking-virtual-chassis</dd></div></dl></header>    <article class="markdown-body"><h2 id="r">R（触发场景）</h2>
 <ul>
 <li>多台同家族交换机需要单一 IP 管理、设备级冗余</li>
 <li>堆叠出现 Slot-ID 冲突（Pass-Through/DUP-SLOT）需要修正槽号</li>
@@ -105,53 +85,53 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="i">I（核心理念）</h2>
 <ul>
-<li>堆叠把 2-8 台同家族交换机变成一个管理实体，四角色 Primary/Secondary/Idle/Pass-Through，Slot-ID 冲突时后来者进 Pass-Through（不阻流量但不成栈）（P38/P39，<span class="pg">原文p251-255</span> ）。</li>
-<li><strong>R8 的 Virtual Chassis 更进一步</strong>：<br>多台物理机经 VFL 互联成单一路由器/网桥，接入-核心之间免 STP/VRRP（P46，<span class="pg">原文p290</span> ）。</li>
-<li>两个体系共同的纪律是"切换前必须同步"（P42，<span class="pg">原文p260</span> ）和"原主回来不重选举、MAC retention 恒开"（P50，<span class="pg">原文p297</span> ）。</li>
-<li>脑裂是 VC 最大风险——两 Master 同 IP 同 MAC 会引发网络级故障，须用 RCD/VCSP 双保险（P53，<span class="pg">原文p306-307</span> ）。</li>
+<li>堆叠把 2-8 台同家族交换机变成一个管理实体，四角色 Primary/Secondary/Idle/Pass-Through，Slot-ID 冲突时后来者进 Pass-Through（不阻流量但不成栈）（P38/P39，<span class="source-page">原文p251-255</span> ）。</li>
+<li><strong>R8 的 Virtual Chassis 更进一步</strong>：<br>多台物理机经 VFL 互联成单一路由器/网桥，接入-核心之间免 STP/VRRP（P46，<span class="source-page">原文p290</span> ）。</li>
+<li>两个体系共同的纪律是"切换前必须同步"（P42，<span class="source-page">原文p260</span> ）和"原主回来不重选举、MAC retention 恒开"（P50，<span class="source-page">原文p297</span> ）。</li>
+<li>脑裂是 VC 最大风险——两 Master 同 IP 同 MAC 会引发网络级故障，须用 RCD/VCSP 双保险（P53，<span class="source-page">原文p306-307</span> ）。</li>
 </ul>
 <h2 id="a1">A1（决策/选型）</h2>
 <ol>
-<li>冗余方案定位：STP 仅 50% 带宽 → LACP 仅链路冗余 → VC 链路+设备冗余+统一管理 → DHL 链路+设备冗余 100% 带宽（F16，<span class="pg">原文p481</span> ）</li>
-<li>机型混堆规则：仅同家族可堆叠；6450-10 只能与 6450-10 混堆、不支持远程堆叠；6350-10/P10 不支持堆叠（<span class="pg">原文p251-253</span> ）</li>
-<li>VC 规格：6900 最多 6 台 mesh、5 VFL/机箱、16 端口/VFL；6860 最多 8 台 ring、专用 2x20G VFL 口；6860/6865 混合 VC 上限仍 8 台 ring（P51/P52，<span class="pg">原文p299-301</span> ）</li>
-<li>防脑裂选型：有 EMP 口用 RCD（周期通告）；无 EMP（如 6860）用 VCSP（经 helper 链路聚合发 PDU）（P53，<span class="pg">原文p306-307</span> ）</li>
+<li>冗余方案定位：STP 仅 50% 带宽 → LACP 仅链路冗余 → VC 链路+设备冗余+统一管理 → DHL 链路+设备冗余 100% 带宽（F16，<span class="source-page">原文p481</span> ）</li>
+<li>机型混堆规则：仅同家族可堆叠；6450-10 只能与 6450-10 混堆、不支持远程堆叠；6350-10/P10 不支持堆叠（<span class="source-page">原文p251-253</span> ）</li>
+<li>VC 规格：6900 最多 6 台 mesh、5 VFL/机箱、16 端口/VFL；6860 最多 8 台 ring、专用 2x20G VFL 口；6860/6865 混合 VC 上限仍 8 台 ring（P51/P52，<span class="source-page">原文p299-301</span> ）</li>
+<li>防脑裂选型：有 EMP 口用 RCD（周期通告）；无 EMP（如 6860）用 VCSP（经 helper 链路聚合发 PDU）（P53，<span class="source-page">原文p306-307</span> ）</li>
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ol>
-<li>堆叠槽号修正：全部写 boot.slot.cfg slot 1 同时上电 → <code>show stack topology</code> 见 PASS-THRU DUP-SLOT → <code>stack set slot 1001 saved-slot 2</code>（逐台）→ <code>reload all</code> → 验证 1 PRIMARY/2 SECONDARY/3-4 IDLE（C10，<span class="pg">原文p251-262</span> ）；无 boot.slot.cfg 时按 MAC 法（15 秒内同时上电）或 uptime 法分配（P40，<span class="pg">原文p256</span> ）</li>
-<li>同步与切换：<code>write memory</code> → <code>copy working certified flash-synchro</code> → <code>takeover</code> → <code>show stack topology</code> 确认角色迁移、<code>show running-directory</code> 看 Flash SYNCHRONIZED（C11/P43，<span class="pg">原文p264-286</span> ）</li>
-<li>
-<p>MAC Retention：<code>mac-retention status enable</code> + <code>mac-retention dup-mac-trap enable</code>；</p>
-<ul>
-<li>takeover 后 <code>show mac-retention status</code> 显示 Retained；</li>
-<li><code>mac release</code> 主动释放（C12/P44，<span class="pg">原文p273, 271-272</span> ）；</li>
-</ul>
-</li>
-<li>
-<p>拆堆叠：<code>stack set slot N mode standalone</code>（逐台）→ <code>rm boot.slot.cfg</code> → 恢复 labinit 配置 → <code>reload working no rollback-timeout</code>（C11，<span class="pg">原文p264-286</span> ）</p>
-</li>
-<li>VC 建立（R8）：vcsetup.cfg（机箱 ID/组/VFL）+ vcboot.cfg 双文件须在运行目录（P48，<span class="pg">原文p294</span> ）；Master 选举五级：现任 Master &gt; chassis priority &gt; 最长在线 &gt; 最小 Chassis ID &gt; 最小 MAC（P49，<span class="pg">原文p296</span> ）</li>
-<li>auto-VC 出厂流程：boot 提示 "Do you want to disable auto-configurations [Y/N]?" 输 N → 自动 VFL/Chassis ID 协商（无 vcsetup.cfg 时自动选 Chassis ID、最低 MAC 为 Master）→ <code>show stack topology</code> 查看（C13/P181，<span class="pg">原文p937-940</span> ）</li>
-<li>禁 VC/恢复：<code>no virtual-chassis vf-link 0 member 2/1</code> 逐口删 → 恢复 <code>reload from virtual_dir no rollback-timeout</code>（C13，<span class="pg">原文p937-940</span> ）</li>
-<li>SSP（R6 堆叠分裂保护）：堆叠链双断时备份子堆叠经 helper 收 SSP PDU 后关用户端口、不升主（P45，<span class="pg">原文p275</span> ）</li>
+<li>堆叠槽号修正：全部写 boot.slot.cfg slot 1 同时上电 → <code>show stack topology</code> 见 PASS-THRU DUP-SLOT → <code>stack set slot 1001 saved-slot 2</code>（逐台）→ <code>reload all</code> → 验证 1 PRIMARY/2 SECONDARY/3-4 IDLE（C10，<span class="source-page">原文p251-262</span> ）；无 boot.slot.cfg 时按 MAC 法（15 秒内同时上电）或 uptime 法分配（P40，<span class="source-page">原文p256</span> ）</li>
+<li>同步与切换：<code>write memory</code> → <code>copy working certified flash-synchro</code> → <code>takeover</code> → <code>show stack topology</code> 确认角色迁移、<code>show running-directory</code> 看 Flash SYNCHRONIZED（C11/P43，<span class="source-page">原文p264-286</span> ）</li>
+<li>MAC Retention：<code>mac-retention status enable</code> + <code>mac-retention dup-mac-trap enable</code>；takeover 后 <code>show mac-retention status</code> 显示 Retained；<code>mac release</code> 主动释放（C12/P44，<span class="source-page">原文p273, 271-272</span> ）</li>
+<li>拆堆叠：<code>stack set slot N mode standalone</code>（逐台）→ <code>rm boot.slot.cfg</code> → 恢复 labinit 配置 → <code>reload working no rollback-timeout</code>（C11，<span class="source-page">原文p264-286</span> ）</li>
+<li>VC 建立（R8）：vcsetup.cfg（机箱 ID/组/VFL）+ vcboot.cfg 双文件须在运行目录（P48，<span class="source-page">原文p294</span> ）；Master 选举五级：现任 Master &gt; chassis priority &gt; 最长在线 &gt; 最小 Chassis ID &gt; 最小 MAC（P49，<span class="source-page">原文p296</span> ）</li>
+<li>auto-VC 出厂流程：boot 提示 "Do you want to disable auto-configurations [Y/N]?" 输 N → 自动 VFL/Chassis ID 协商（无 vcsetup.cfg 时自动选 Chassis ID、最低 MAC 为 Master）→ <code>show stack topology</code> 查看（C13/P181，<span class="source-page">原文p937-940</span> ）</li>
+<li>禁 VC/恢复：<code>no virtual-chassis vf-link 0 member 2/1</code> 逐口删 → 恢复 <code>reload from virtual_dir no rollback-timeout</code>（C13，<span class="source-page">原文p937-940</span> ）</li>
+<li>SSP（R6 堆叠分裂保护）：堆叠链双断时备份子堆叠经 helper 收 SSP PDU 后关用户端口、不升主（P45，<span class="source-page">原文p275</span> ）</li>
 </ol>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>C10 Slot-ID 选举三法对比（saved-slot/MAC/uptime）（<span class="pg">原文p251-262</span> ）</li>
-<li>C11 同步→takeover→拆堆叠全流程（<span class="pg">原文p264-286</span> ）</li>
-<li>C13 6900 auto-VC 与禁用恢复（<span class="pg">原文p937-940</span> ）</li>
+<li>C10 Slot-ID 选举三法对比（saved-slot/MAC/uptime）（<span class="source-page">原文p251-262</span> ）</li>
+<li>C11 同步→takeover→拆堆叠全流程（<span class="source-page">原文p264-286</span> ）</li>
+<li>C13 6900 auto-VC 与禁用恢复（<span class="source-page">原文p937-940</span> ）</li>
 </ul>
 <h2 id="b">B（反例与坑）</h2>
 <ul>
-<li>堆叠不超过 8 台且版本必须一致（X25，<span class="pg">原文p261</span> ）；无法登录 Idle/Pass-Through 单元（X26）；Secondary 上仅允许 takeover 等极少数命令（X27，<span class="pg">原文p262</span> ）</li>
-<li>槽号必须唯一且建议从 1 连续分配（X28，<span class="pg">原文p279</span> ）；takeover 前必须完成同步（X29）、<code>reload all</code> 可能落在 certified 分区（X30，<span class="pg">原文p260</span> ）</li>
-<li>6450-10 混堆限制（X4）、6350-10/P10 不可堆叠（X5）、6450-10/P10 不支持远程堆叠（X6，<span class="pg">原文p252-253</span> ）</li>
-<li>VC 仅限 AOS R8 且须同机型（X32，<span class="pg">原文p290</span> ）；VC 脑裂双 Master 同 IP 同 MAC（X33，<span class="pg">原文p305</span> ）</li>
-<li>6860 无 EMP 口故不能用 RCD 防脑裂（X11，<span class="pg">原文p306</span> ）；专用 VFL 口不能当普通口（X9，<span class="pg">原文p300</span> ）；6900-T 固定 10GBase-T 口不能作 VFL（X10，<span class="pg">原文p299</span> ）</li>
-<li>VC 中 write memory 在拓扑变化时受保护警告（X31/X89，<span class="pg">原文p317</span> ）；VC 成员含非 E 型 6860 仍需有效 license（X86，<span class="pg">原文p59</span> ）；V72/C32 用 Yos.img（X84，<span class="pg">原文p86-87</span> ）</li>
+<li>堆叠不超过 8 台且版本必须一致（X25，<span class="source-page">原文p261</span> ）；无法登录 Idle/Pass-Through 单元（X26）；Secondary 上仅允许 takeover 等极少数命令（X27，<span class="source-page">原文p262</span> ）</li>
+<li>槽号必须唯一且建议从 1 连续分配（X28，<span class="source-page">原文p279</span> ）；takeover 前必须完成同步（X29）、<code>reload all</code> 可能落在 certified 分区（X30，<span class="source-page">原文p260</span> ）</li>
+<li>6450-10 混堆限制（X4）、6350-10/P10 不可堆叠（X5）、6450-10/P10 不支持远程堆叠（X6，<span class="source-page">原文p252-253</span> ）</li>
+<li>VC 仅限 AOS R8 且须同机型（X32，<span class="source-page">原文p290</span> ）；VC 脑裂双 Master 同 IP 同 MAC（X33，<span class="source-page">原文p305</span> ）</li>
+<li>6860 无 EMP 口故不能用 RCD 防脑裂（X11，<span class="source-page">原文p306</span> ）；专用 VFL 口不能当普通口（X9，<span class="source-page">原文p300</span> ）；6900-T 固定 10GBase-T 口不能作 VFL（X10，<span class="source-page">原文p299</span> ）</li>
+<li>VC 中 write memory 在拓扑变化时受保护警告（X31/X89，<span class="source-page">原文p317</span> ）；VC 成员含非 E 型 6860 仍需有效 license（X86，<span class="source-page">原文p59</span> ）；V72/C32 用 Yos.img（X84，<span class="source-page">原文p86-87</span> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
 <ul>
 <li>principles·P38-P53/P181；frameworks·F12/F16；cases·C10-C13；counter-examples·X4-X6/X9-X11/X25-X33/X84/X86/X89</li>
-</ul><div class="pn"><a href="aos-flash-config-management.html">⬅ 上一单元：aos-flash-config-management</a><a class="nxt" href="aos-vlan-l2-foundations.html">下一单元：aos-vlan-l2-foundations ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+</ul></article>
+<nav class="previous-next" aria-label="知识单元翻页"><a href="/postsales/dt00xte220-bootcamp/skills/aos-flash-config-management.html"><span>上一单元</span><b>aos-flash-config-management</b></a><a class="next" href="/postsales/dt00xte220-bootcamp/skills/aos-vlan-l2-foundations.html"><span>下一单元</span><b>aos-vlan-l2-foundations</b></a></nav>    <footer class="content-footer">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</footer>
+  </main>
+</div>
+  <script src="/assets/js/app.js?v=4" defer></script>
+  <script src="/assets/js/search.js?v=4" defer></script>
+  <script src="/assets/js/lightbox.js?v=5" defer></script>
+</body>
+</html>

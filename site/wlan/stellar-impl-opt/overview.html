@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="面向售前、售后与网络工程师的 ALE 内部技术知识平台">
+  <meta name="theme-color" content="#6B489D">
+  <title>教书理解 BOOK_OVERVIEW — Stellar 桥接与 Multi-Mesh 实施</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=4">
+  <link rel="stylesheet" href="/assets/css/layout.css?v=4">
+  <link rel="stylesheet" href="/assets/css/components.css?v=4">
+  <link rel="stylesheet" href="/assets/css/content.css?v=7">
+  <script src="/assets/js/auth-config.js?v=4"></script>
+  <script src="/assets/js/auth-core.js?v=4"></script>
+  <script src="/assets/js/auth-guard.js?v=4"></script>
+</head>
+<body data-page-kind="course">
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <header class="topbar" data-topbar>
+    <a class="brand" href="/index.html" aria-label="返回 ALE 技术培训门户首页">
+      <img src="/assets/ale-logo-color.png" alt="Alcatel-Lucent Enterprise">
+      <span>ALE 培训门户</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-controls="primary-nav" aria-expanded="false" data-nav-toggle>
+      <span aria-hidden="true">☰</span><span class="sr-only">打开导航</span>
+    </button>
+    <nav id="primary-nav" class="primary-nav" aria-label="主导航">
+      <a href="/index.html">首页</a>
+      <a href="/paths.html">学习路径</a>
+      <a href="/presales/index.html">售前</a>
+      <a href="/postsales/index.html">售后</a>
+      <a href="/wlan/index.html" aria-current="page">无线</a>
+      <a href="/aos/index.html">AOS 手册</a>
+      <a href="/hardware/index.html">硬件</a>
+      <a href="/brochures/index.html">彩页</a>
+      <a href="/solutions/index.html">解决方案</a>
+      <a href="/security/index.html">安全</a>
+    </nav>
+    <button id="logout-btn" class="logout-btn" type="button" hidden>退出登录</button>
+  </header>
+<div class="course-layout">
+<aside class="course-sidebar" id="course-sidebar" data-sidebar>
+  <div class="sidebar-heading">
+    <p class="eyebrow">COURSE</p>
+    <h2>Stellar 桥接与 Multi-Mesh 实施</h2>
+    <p>Bridging &amp; Meshing Guidelines · 32 页 · 室外桥接 / 多点 Mesh / 家庭 Mesh / OV2500 配置 / 链路监测</p>
+  </div>
+<div class="search" data-search>
+  <label class="sr-only" for="course-search">搜索全站课程和知识单元</label>
+  <input id="course-search" type="search" placeholder="搜索课程编号、产品型号或技术关键词…" autocomplete="off" data-search-input>
+  <div class="search-results" role="listbox" aria-live="polite" data-search-results></div>
+</div>  <nav class="course-nav" aria-label="课程目录">
+    <a href="/wlan/stellar-impl-opt/index.html">课程首页</a>
+    <a href="/wlan/stellar-impl-opt/digest.html">精华长文</a>
+    <a aria-current="page" href="/wlan/stellar-impl-opt/overview.html">教书理解</a>
+    <a href="/wlan/stellar-impl-opt/glossary.html">术语词典</a>
+    <p class="course-nav-group">架构与用例</p>
+      <a href="/wlan/stellar-impl-opt/skills/sol-bridge-mesh-overview.html">sol-bridge-mesh-overview</a>
+      <a href="/wlan/stellar-impl-opt/skills/sol-bridge-mesh-usecases.html">sol-bridge-mesh-usecases</a>
+    <p class="course-nav-group">室外设计</p>
+      <a href="/wlan/stellar-impl-opt/skills/sol-bridge-mesh-outdoor-design.html">sol-bridge-mesh-outdoor-design</a>
+    <p class="course-nav-group">配置与运维</p>
+      <a href="/wlan/stellar-impl-opt/skills/sol-bridge-mesh-config.html">sol-bridge-mesh-config</a>
+      <a href="/wlan/stellar-impl-opt/skills/sol-bridge-mesh-monitor.html">sol-bridge-mesh-monitor</a>
+  </nav>
+</aside>  <main id="main-content" class="course-main prose">
+    <nav class="breadcrumbs" aria-label="面包屑"><a href="/index.html">培训门户</a><span>/</span><a href="/wlan/index.html">无线网络 · WLAN</a><span>/</span><a href="/wlan/stellar-impl-opt/index.html">Stellar 桥接与 Multi-Mesh 实施</a><span>/</span><span aria-current="page">教书理解 BOOK_OVERVIEW</span></nav>
+<header class="page-intro compact"><p class="eyebrow">COURSE REFERENCE</p><h1>教书理解 BOOK_OVERVIEW</h1></header>    <article class="markdown-body"><h1 id="book_overview">书籍理解 BOOK_OVERVIEW</h1>
+<h2 id="_1">书籍定位</h2>
+<ul>
+<li>《OmniAccess Stellar Bridging / Multi-Point Meshing Guidelines》（ALE Network Solution Guide for SMB，Edition 01，AWOS 4.0.4 + OmniVista Cirrus 4.6.2，2022）是 ALE 官方的 Stellar 无线桥接与多点网状组网方案指南。</li>
+<li>
+<p><strong>面向网络工程师与售前/销售工程师，回答三个问题</strong>：<br>。</p>
+</li>
+<li>
+<p><strong>什么时候用</strong>：bridge（两站点 LAN 延伸）vs Multi-Point mesh（难布线区域多点覆盖），覆盖室外、工业室内与家庭三类场景</p>
+</li>
+<li><strong>怎么设计</strong>：架构约束（角色、带宽减半、16 AP/5 SSID 上限）、室外工程（天线/Fresnel/法规/防雷）、距离-吞吐权衡、Ekahau PRO 勘测</li>
+<li><strong>怎么配置与运维</strong>：OV2500 Enterprise 模式四步配置 + APUI Express 模式 + SSH 控制台监控排障</li>
+</ul>
+<p>书的结构：p5-8 架构（含 Auto-Mesh、WDS）→ p8-17 用例与前提（室外 bridge、室外/室内多点、家庭）→ p11-15 室外工程与距离 → p18-20 勘测 → p20-27 配置（Enterprise/APUI）→ p27-32 监控。</p>
+<h2 id="_2">单元导航</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>单元</th>
+<th>主题</th>
+<th>覆盖页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="/wlan/stellar-impl-opt/skills/sol-bridge-mesh-overview.html">sol-bridge-mesh-overview</a></td>
+<td>架构总览：bridge vs mesh 选型、root/mesh 角色、双 root、WDS 4 地址、Auto-Mesh、带宽共享、下联口与 PoE 输出</td>
+<td>p5-8</td>
+</tr>
+<tr>
+<td><a href="/wlan/stellar-impl-opt/skills/sol-bridge-mesh-usecases.html">sol-bridge-mesh-usecases</a></td>
+<td>三大用例与前提：室外 bridge、室外多点、室内多点/家庭；mesh 节点六条规则；各场景支持 AP 清单</td>
+<td>p8-11, 15-17</td>
+</tr>
+<tr>
+<td><a href="/wlan/stellar-impl-opt/skills/sol-bridge-mesh-outdoor-design.html">sol-bridge-mesh-outdoor-design</a></td>
+<td>室外工程与勘测：天线摆位、Fresnel 60% 净空、法规防雷、配件清单、距离-吞吐、长距天线门槛、Ekahau PRO</td>
+<td>p11-15, 18-20</td>
+</tr>
+<tr>
+<td><a href="/wlan/stellar-impl-opt/skills/sol-bridge-mesh-config.html">sol-bridge-mesh-config</a></td>
+<td>配置流程：OV2500 AP Group/RF Profile/SSID/角色/uNP 下联口 + APUI 配置</td>
+<td>p20-27</td>
+</tr>
+<tr>
+<td><a href="/wlan/stellar-impl-opt/skills/sol-bridge-mesh-monitor.html">sol-bridge-mesh-monitor</a></td>
+<td>监控排障：SSH 开启、rfprofile.conf、iwlist/iwconfig/wlanconfig、链路质量与客户端指标</td>
+<td>p27-32</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="_3">读者路径建议</h2>
+<ul>
+<li><strong>售前/设计</strong>：overview → usecases → outdoor-design（选型、限制、勘测报价）</li>
+<li><strong>实施/运维</strong>：overview → config → monitor（照路径配置、SSH 排障）</li>
+<li><strong>快速查限制</strong>：usecases 的 A2 表（16 AP、5 SSID、无漫游、VoIP 尽力转发、吞吐 ÷2）</li>
+</ul></article>
+    <footer class="content-footer">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</footer>
+  </main>
+</div>
+  <script src="/assets/js/app.js?v=4" defer></script>
+  <script src="/assets/js/search.js?v=4" defer></script>
+  <script src="/assets/js/lightbox.js?v=5" defer></script>
+</body>
+</html>

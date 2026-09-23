@@ -1,92 +1,72 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>aos-cli-map-l2-access — AOS 8.10R04 · CLI Reference 命令地图</title>
-<style>
-:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
-*{box-sizing:border-box}
-body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
-a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
-.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin:16px 0}
-.gallery figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px}
-.gallery img{width:100%;max-height:340px;object-fit:contain;background:#fff;border-radius:6px}
-.gallery figcaption{font-size:12.5px;color:var(--mut);text-align:center;margin-top:6px}
-/* 侧栏折叠 + 图片灯箱 */
-.tgl{position:fixed;left:0;top:45%;z-index:60;background:var(--card);border:1px solid var(--line);border-right:none;border-radius:0 8px 8px 0;color:var(--tx);padding:10px 6px;cursor:pointer;font-size:13px;line-height:1.1;writing-mode:vertical-lr}
-.tgl:hover{background:var(--acc);color:#0f172a}
-.layout.full{grid-template-columns:0 1fr}
-.layout.full aside{display:none}
-.lb{position:fixed;inset:0;background:rgba(5,10,20,.92);z-index:100;display:flex;align-items:center;justify-content:center;flex-direction:column}
-.lb img{max-width:92vw;max-height:82vh;background:#fff;border-radius:6px;transition:transform .12s}
-.lb .lbb{margin-top:10px;display:flex;gap:10px}
-.lb button{background:var(--card);border:1px solid var(--line);color:var(--tx);border-radius:8px;padding:6px 14px;cursor:pointer;font-size:14px}
-.lb button:hover{background:var(--acc);color:#0f172a}
-.search{margin:0 0 14px}
-.search input{width:100%;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--tx);font-size:13px;outline:none}
-.search input:focus{border-color:var(--acc)}
-#qres{max-height:340px;overflow-y:auto;margin-top:6px}
-#qres .qi{display:block;padding:6px 8px;border-radius:6px;font-size:12.5px;color:var(--tx);border-left:2px solid transparent}
-#qres .qi:hover{background:var(--card);text-decoration:none;border-left-color:var(--acc)}
-#qres .qi .qp{color:var(--mut);font-size:11px;display:block}
-#qres .qi b{color:var(--acc)}
-.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
-main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
-.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
-aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
-aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
-aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
-aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
-aside a:hover{background:var(--card);text-decoration:none}
-aside a.on{background:var(--card);color:var(--acc)}
-main{padding:36px 48px;max-width:1000px}
-h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
-h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
-table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
-th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
-th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
-code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
-pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
-pre code{background:none;padding:0}
-blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
-.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
-.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
-.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
-.meta{font-size:13px;color:var(--mut)}
-hr{border:none;border-top:1px solid var(--line);margin:26px 0}
-.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
-.badge.soon{background:#475569;color:#cbd5e1}
-main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
-main{padding:28px 48px 40px;max-width:1040px}
-h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
-blockquote p{margin:6px 0}
-.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
-.crumbs a{color:var(--acc)}
-.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
-.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
-.pn a:hover{border-color:var(--acc)}
-.pn .nxt{text-align:right}
-.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
-@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
-</style></head>
-<body><div class="layout"><aside><h1>AOS 8.10R04 · CLI Reference 命令地图</h1>
-<div class="search"><input id="qk" type="search" placeholder="🔍 搜索全站…" autocomplete="off"><div id="qres"></div></div>
-
-<div class="sub">6240 页 · 70 章命令字典导航（约 2480 条命令，按 5 域组织）</div>
-<a href="../index.html">🏠 课程首页</a>
-<a href="../digest.html">📖 精华长文 DIGEST</a>
-
-<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
-<a href="../glossary.html">🔤 术语词典</a>
-<a href="../../../index.html">⬅️ 返回培训门户</a>
-<a href="../index.html">──── Skills ────</a>
-<div class="grp">二层与接入</div>
-<a href="../skills/aos-cli-map-l2-access.html" class="on">aos-cli-map-l2-access</a>
-<div class="grp">骨干与路由</div>
-<a href="../skills/aos-cli-map-fabric.html">aos-cli-map-fabric</a>
-<a href="../skills/aos-cli-map-routing.html">aos-cli-map-routing</a>
-<div class="grp">策略与运维</div>
-<a href="../skills/aos-cli-map-multicast-qos.html">aos-cli-map-multicast-qos</a>
-<a href="../skills/aos-cli-map-mgmt-oam.html">aos-cli-map-mgmt-oam</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../aos/index.html">AOS 软件手册</a> › <a href="../index.html">AOS 8.10R04</a> › <span>aos-cli-map-l2-access</span></nav><h1>aos-cli-map-l2-access</h1><p class="meta"><span class="badge">SKILL</span> aos-cli-map-l2-access · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="面向售前、售后与网络工程师的 ALE 内部技术知识平台">
+  <meta name="theme-color" content="#6B489D">
+  <title>aos-cli-map-l2-access — AOS 8.10R04 · CLI Reference 命令地图</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=4">
+  <link rel="stylesheet" href="/assets/css/layout.css?v=4">
+  <link rel="stylesheet" href="/assets/css/components.css?v=4">
+  <link rel="stylesheet" href="/assets/css/content.css?v=7">
+  <script src="/assets/js/auth-config.js?v=4"></script>
+  <script src="/assets/js/auth-core.js?v=4"></script>
+  <script src="/assets/js/auth-guard.js?v=4"></script>
+</head>
+<body data-page-kind="course">
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <header class="topbar" data-topbar>
+    <a class="brand" href="/index.html" aria-label="返回 ALE 技术培训门户首页">
+      <img src="/assets/ale-logo-color.png" alt="Alcatel-Lucent Enterprise">
+      <span>ALE 培训门户</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-controls="primary-nav" aria-expanded="false" data-nav-toggle>
+      <span aria-hidden="true">☰</span><span class="sr-only">打开导航</span>
+    </button>
+    <nav id="primary-nav" class="primary-nav" aria-label="主导航">
+      <a href="/index.html">首页</a>
+      <a href="/paths.html">学习路径</a>
+      <a href="/presales/index.html">售前</a>
+      <a href="/postsales/index.html">售后</a>
+      <a href="/wlan/index.html">无线</a>
+      <a href="/aos/index.html" aria-current="page">AOS 手册</a>
+      <a href="/hardware/index.html">硬件</a>
+      <a href="/brochures/index.html">彩页</a>
+      <a href="/solutions/index.html">解决方案</a>
+      <a href="/security/index.html">安全</a>
+    </nav>
+    <button id="logout-btn" class="logout-btn" type="button" hidden>退出登录</button>
+  </header>
+<div class="course-layout">
+<aside class="course-sidebar" id="course-sidebar" data-sidebar>
+  <div class="sidebar-heading">
+    <p class="eyebrow">COURSE</p>
+    <h2>AOS 8.10R04 · CLI Reference 命令地图</h2>
+    <p>6240 页 · 70 章命令字典导航（约 2480 条命令，按 5 域组织）</p>
+  </div>
+<div class="search" data-search>
+  <label class="sr-only" for="course-search">搜索全站课程和知识单元</label>
+  <input id="course-search" type="search" placeholder="搜索课程编号、产品型号或技术关键词…" autocomplete="off" data-search-input>
+  <div class="search-results" role="listbox" aria-live="polite" data-search-results></div>
+</div>  <nav class="course-nav" aria-label="课程目录">
+    <a href="/aos/cli-reference/index.html">课程首页</a>
+    <a href="/aos/cli-reference/digest.html">精华长文</a>
+    <a href="/aos/cli-reference/overview.html">教书理解</a>
+    <a href="/aos/cli-reference/glossary.html">术语词典</a>
+    <p class="course-nav-group">二层与接入</p>
+      <a aria-current="page" href="/aos/cli-reference/skills/aos-cli-map-l2-access.html">aos-cli-map-l2-access</a>
+    <p class="course-nav-group">骨干与路由</p>
+      <a href="/aos/cli-reference/skills/aos-cli-map-fabric.html">aos-cli-map-fabric</a>
+      <a href="/aos/cli-reference/skills/aos-cli-map-routing.html">aos-cli-map-routing</a>
+    <p class="course-nav-group">策略与运维</p>
+      <a href="/aos/cli-reference/skills/aos-cli-map-multicast-qos.html">aos-cli-map-multicast-qos</a>
+      <a href="/aos/cli-reference/skills/aos-cli-map-mgmt-oam.html">aos-cli-map-mgmt-oam</a>
+  </nav>
+</aside>  <main id="main-content" class="course-main prose">
+    <nav class="breadcrumbs" aria-label="面包屑"><a href="/index.html">培训门户</a><span>/</span><a href="/aos/index.html">AOS 软件手册 · Software Guides</a><span>/</span><a href="/aos/cli-reference/index.html">AOS 8.10R04</a><span>/</span><span aria-current="page">aos-cli-map-l2-access</span></nav>
+<header class="skill-heading"><div><p class="eyebrow">KNOWLEDGE UNIT</p><h1>aos-cli-map-l2-access</h1></div><dl><div><dt>Skill ID</dt><dd>aos-cli-map-l2-access</dd></div></dl></header>    <article class="markdown-body"><h2 id="r">R（触发场景）</h2>
 <ul>
 <li>要查某条 L2/接入命令的完整语法、默认值、平台支持矩阵</li>
 <li>不确定某配置属于哪一章，需要"域→章→命令"导航</li>
@@ -94,10 +74,9 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="i">I（核心理念）</h2>
 <ul>
-<li>CLI Reference 是 6240 页命令字典，每条命令按"语法→参数→默认值→平台矩阵→用法指南→示例→Release History→相关命令→MIB Objects"固定结构展开；
-正确用法是先定位章（按本地图），再回书按页码查命令全文，不做通读。</li>
+<li>CLI Reference 是 6240 页命令字典，每条命令按"语法→参数→默认值→平台矩阵→用法指南→示例→Release History→相关命令→MIB Objects"固定结构展开；正确用法是先定位章（按本地图），再回书按页码查命令全文，不做通读。</li>
 <li><strong>本域覆盖接入层命令</strong>：<br><code>interfaces</code>（30+ 子命令）、<code>lanpower</code>、<code>vlan</code>/<code>pvlan</code>、<code>linkagg</code>、<code>spanty</code>/<code>bridge</code>、<code>erp</code>/<code>mrp</code>、<code>virtual-chassis</code>。</li>
-<li>页码取 PDF 全文标记 <code>&lt;&lt;&lt;PAGE N&gt;&gt;&gt;</code>（第 1 章始于 <span class="pg">原文p67</span> ，对应书内页 1-1）。</li>
+<li>页码取 PDF 全文标记 <code>&lt;&lt;&lt;PAGE N&gt;&gt;&gt;</code>（第 1 章始于 <span class="source-page">原文p67</span> ，对应书内页 1-1）。</li>
 </ul>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
@@ -109,42 +88,850 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a2">A2（操作步骤）·章节清单与代表命令</h2>
 <ul>
-<li><strong>Ch1 Ethernet Port（<span class="pg">原文p67</span> ，约 85 条）</strong>：<code>interfaces &lt;port&gt; speed|duplex|fec|break-out|eee|ddm</code>、<code>interfaces link-monitoring link-flap-threshold</code>、<code>violation</code>/<code>clear violation</code>；<code>show interfaces status/counters/counters errors/ddm</code>（P1/P2）</li>
-<li><strong>Ch2 PoE（<span class="pg">原文p254</span> ，约 38 条）</strong>：<br><code>lanpower slot port ...</code>（供电/预算/优先级/power rule）；</li>
-<li>802.3at 须先 <code>lanpower slot class-detection</code>，802.3bt（固件 3.xx）自动启用；</li>
-<li>power rule 先创建再绑定（P3/X7）；</li>
-<li>
-<p>6465 不能自动检测电源类型，必须手工配置（P4/X9）；</p>
-</li>
-<li>
-<p><strong>Ch3 UDLD（<span class="pg">原文p327</span> ，约 12 条）</strong>：<code>udld port ...</code> 单向链路检测</p>
-</li>
-<li><strong>Ch4 Source Learning（<span class="pg">原文p351</span> ，约 33 条）</strong>：<code>mac-address-table</code> 学习/过滤/老化</li>
-<li><strong>Ch5 VLAN Management（<span class="pg">原文p427</span> ，约 13 条）</strong>：<br><code>vlan vlan_id [admin-state {enable|disable}] [name | prompt-on-deletion]</code>（默认 enable/disable）；</li>
-<li><code>vlan 10-15</code> 区间写法；</li>
-<li>删除 VLAN 自动剥离成员、端口回落 VLAN 1（P5/P6）；</li>
-<li>
-<p><code>pvlan</code>/<code>pvlan secondary</code>/<code>pvlan mapping</code>（P7）；</p>
-</li>
-<li>
-<p><strong>Ch6 HA VLAN（<span class="pg">原文p455</span> ，约 10 条）</strong>：跨机箱 VLAN 高可用同步</p>
-</li>
-<li><strong>Ch7 VLAN Stacking（<span class="pg">原文p476</span> ，约 40 条）</strong>：<code>vlan stacking</code>（QinQ 双层标签/保留 VLAN/NNI-UNI 角色）；保留 VLAN 不能用标准 vlan 命令配（X18）</li>
-<li><strong>Ch8 Distributed Spanning Tree（<span class="pg">原文p567</span> ，约 50 条）</strong>：<code>spanty</code>/<code>bridge</code></li>
-<li><strong>Ch12 Loopback Detection（<span class="pg">原文p1070</span> ，约 11 条）</strong>：<code>loopback-detection</code></li>
-<li><strong>Ch13 Link Aggregation（<span class="pg">原文p1092</span> ，约 46 条）</strong>：<br><code>linkagg ...</code>（静态/LACP，动态仅兼容 IEEE 802.3ad）；</li>
-<li><code>hash-control brief</code> 模式哈希退化为源 MAC（L2）/源 IP（L3）（P10/X16）；</li>
-<li>
-<p>聚合不能配在 AppMon 已启用端口（X12）；</p>
-</li>
-<li>
-<p><strong>Ch14 Virtual Chassis（<span class="pg">原文p1198</span> ，约 32 条）</strong>：<code>virtual-chassis</code>（VFL/chassis group）；chassis id 下次重启才生效（X10）；VC 只支持同型号两台（如 6860 与 6900 之间不支持）（X20）</p>
-</li>
-<li><strong>Ch15 ERP（<span class="pg">原文p1268</span> ，约 16 条）</strong>：<code>erp</code>（ITU-T G.8032 环倒换）</li>
-<li><strong>Ch16 MRP（<span class="pg">原文p1306</span> ，约 11 条）</strong>：<code>mrp</code>（IEC 62439-2 工业环）</li>
-<li><strong>Ch17 MVRP（<span class="pg">原文p1340</span> ，约 23 条）</strong>：<code>mvrp</code>（802.1ak 动态 VLAN 注册）</li>
-<li><strong>Ch20 Automatic Fabric（<span class="pg">原文p1523</span> ，约 12 条）</strong>：<code>fabric</code>/<code>auto-fabric</code></li>
+<li><strong>Ch1 Ethernet Port（<span class="source-page">原文p67</span> ，约 85 条）</strong>：<code>interfaces &lt;port&gt; speed|duplex|fec|break-out|eee|ddm</code>、<code>interfaces link-monitoring link-flap-threshold</code>、<code>violation</code>/<code>clear violation</code>；<code>show interfaces status/counters/counters errors/ddm</code>（P1/P2）</li>
+<li><strong>Ch2 PoE（<span class="source-page">原文p254</span> ，约 38 条）</strong>：<code>lanpower slot port ...</code>（供电/预算/优先级/power rule）；802.3at 须先 <code>lanpower slot class-detection</code>，802.3bt（固件 3.xx）自动启用；power rule 先创建再绑定（P3/X7）；6465 不能自动检测电源类型，必须手工配置（P4/X9）</li>
+<li><strong>Ch3 UDLD（<span class="source-page">原文p327</span> ，约 12 条）</strong>：<code>udld port ...</code> 单向链路检测</li>
+<li><strong>Ch4 Source Learning（<span class="source-page">原文p351</span> ，约 33 条）</strong>：<code>mac-address-table</code> 学习/过滤/老化</li>
+<li><strong>Ch5 VLAN Management（<span class="source-page">原文p427</span> ，约 13 条）</strong>：<code>vlan vlan_id [admin-state {enable|disable}] [name | prompt-on-deletion]</code>（默认 enable/disable）；<code>vlan 10-15</code> 区间写法；删除 VLAN 自动剥离成员、端口回落 VLAN 1（P5/P6）；<code>pvlan</code>/<code>pvlan secondary</code>/<code>pvlan mapping</code>（P7）</li>
+<li><strong>Ch6 HA VLAN（<span class="source-page">原文p455</span> ，约 10 条）</strong>：跨机箱 VLAN 高可用同步</li>
+<li><strong>Ch7 VLAN Stacking（<span class="source-page">原文p476</span> ，约 40 条）</strong>：<code>vlan stacking</code>（QinQ 双层标签/保留 VLAN/NNI-UNI 角色）；保留 VLAN 不能用标准 vlan 命令配（X18）</li>
+<li><strong>Ch8 Distributed Spanning Tree（<span class="source-page">原文p567</span> ，约 50 条）</strong>：<code>spanty</code>/<code>bridge</code></li>
+<li><strong>Ch12 Loopback Detection（<span class="source-page">原文p1070</span> ，约 11 条）</strong>：<code>loopback-detection</code></li>
+<li><strong>Ch13 Link Aggregation（<span class="source-page">原文p1092</span> ，约 46 条）</strong>：<code>linkagg ...</code>（静态/LACP，动态仅兼容 IEEE 802.3ad）；<code>hash-control brief</code> 模式哈希退化为源 MAC（L2）/源 IP（L3）（P10/X16）；聚合不能配在 AppMon 已启用端口（X12）</li>
+<li><strong>Ch14 Virtual Chassis（<span class="source-page">原文p1198</span> ，约 32 条）</strong>：<code>virtual-chassis</code>（VFL/chassis group）；chassis id 下次重启才生效（X10）；VC 只支持同型号两台（如 6860 与 6900 之间不支持）（X20）</li>
+<li><strong>Ch15 ERP（<span class="source-page">原文p1268</span> ，约 16 条）</strong>：<code>erp</code>（ITU-T G.8032 环倒换）</li>
+<li><strong>Ch16 MRP（<span class="source-page">原文p1306</span> ，约 11 条）</strong>：<code>mrp</code>（IEC 62439-2 工业环）</li>
+<li><strong>Ch17 MVRP（<span class="source-page">原文p1340</span> ，约 23 条）</strong>：<code>mvrp</code>（802.1ak 动态 VLAN 注册）</li>
+<li><strong>Ch20 Automatic Fabric（<span class="source-page">原文p1523</span> ，约 12 条）</strong>：<code>fabric</code>/<code>auto-fabric</code></li>
 </ul>
+<h2 id="a3">A3（核心命令速查）</h2>
+<p>语法/默认值/示例均摘自原书第 1-8、12-17、20 章对应条目；页码为 fulltext <code>&lt;&lt;&lt;PAGE N&gt;&gt;&gt;</code> 标记值。<code>{enable | disable}</code> 表示"多选一"。</p>
+<h3 id="1">端口物理层（第 1 章）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>语法要点</th>
+<th>关键参数与默认值</th>
+<th>典型用法（一行示例）</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>interfaces</td>
+<td><code>interfaces {slot chassis/slot \| port chassis/slot/port[-port2]} {autoneg {enable \| disable} ...}</code></td>
+<td>端口/槽位级参数入口，支持端口区间</td>
+<td><code>-&gt; interfaces port 1/3/1 autoneg disable</code></td>
+<td>70</td>
+</tr>
+<tr>
+<td>interfaces speed</td>
+<td><code>interfaces {slot ... \| port ...} speed {auto \| 10 \| 100 \| 1000 ...}</code></td>
+<td>默认 auto</td>
+<td><code>-&gt; interfaces port 1/3/1 speed 100</code></td>
+<td>72</td>
+</tr>
+<tr>
+<td>interfaces duplex</td>
+<td><code>interfaces {slot ... \| port ...} duplex {full \| half \| auto}</code></td>
+<td>默认 auto</td>
+<td><code>-&gt; interfaces port 1/3/1 duplex auto</code></td>
+<td>77</td>
+</tr>
+<tr>
+<td>interfaces max-frame-size</td>
+<td><code>interfaces {slot ... \| port ...} max-frame-size size</code></td>
+<td>size 1518-9216（依平台）</td>
+<td><code>-&gt; interfaces port 1/3/1 max-frame-size 1518</code></td>
+<td>83</td>
+</tr>
+<tr>
+<td>interfaces fec</td>
+<td><code>interfaces {slot ... \| port ...} fec {auto \| fc \| rs ...}</code></td>
+<td>默认 auto</td>
+<td><code>-&gt; interfaces port 1/1/1 fec fc</code></td>
+<td>113</td>
+</tr>
+<tr>
+<td>interfaces break-out mode</td>
+<td><code>interfaces port chassis/slot/port break-out mode {4x100g \| 2x200g \| 2x100g-8 ...}</code></td>
+<td>默认单口模式（None）；先 <code>break-out enable</code></td>
+<td><code>-&gt; interfaces port 1/1/1 break-out mode 4x100g</code></td>
+<td>111</td>
+</tr>
+<tr>
+<td>interfaces pause</td>
+<td><code>interfaces {slot ... \| port ...} pause {tx \| rx \| tx-and-rx}</code></td>
+<td>默认流控 disabled</td>
+<td><code>-&gt; interfaces port 1/2/4 pause rx</code></td>
+<td>93</td>
+</tr>
+<tr>
+<td>interfaces flood-limit</td>
+<td><code>interfaces {...} flood-limit {bcast \| uucast \| all} rate {mbps value \| cap% value} [low-threshold pct] [action {trap \| shutdown}]</code></td>
+<td>广播/未知单播泛洪限速</td>
+<td><code>-&gt; interfaces port 1/1/1 flood-limit bcast rate mbps 60 low-threshold 40</code></td>
+<td>87</td>
+</tr>
+<tr>
+<td>interfaces link-monitoring link-flap-threshold</td>
+<td><code>interfaces {...} link-monitoring link-flap-threshold count</code></td>
+<td>默认 5 次；time-window 默认 300 秒</td>
+<td><code>-&gt; interfaces port 1/1/1 link-monitoring link-flap-threshold 3</code></td>
+<td>177</td>
+</tr>
+<tr>
+<td>interfaces ddm</td>
+<td><code>interfaces ddm {enable \| disable}</code></td>
+<td>光模块数字诊断</td>
+<td><code>-&gt; interfaces ddm enable</code></td>
+<td>97</td>
+</tr>
+<tr>
+<td>violation recovery-time</td>
+<td><code>violation [slot ... \| port ...] recovery-time seconds</code></td>
+<td>全局默认 300 秒</td>
+<td><code>-&gt; violation recovery-time 600</code></td>
+<td>127</td>
+</tr>
+<tr>
+<td>clear violation</td>
+<td><code>clear violation {port chassis/slot/port[-port2] \| linkagg id}</code></td>
+<td>清除违例记录使端口恢复</td>
+<td><code>-&gt; clear violation port 1/1/10</code></td>
+<td>123</td>
+</tr>
+<tr>
+<td>show interfaces status</td>
+<td><code>show interfaces [slot ... \| port ...] status</code></td>
+<td>端口状态首查</td>
+<td><code>-&gt; show interfaces status</code></td>
+<td>138</td>
+</tr>
+<tr>
+<td>show interfaces counters errors</td>
+<td><code>show interfaces [port ...] counters errors</code></td>
+<td>错误计数排障</td>
+<td><code>-&gt; show interfaces port 1/2/1 counters errors</code></td>
+<td>148</td>
+</tr>
+<tr>
+<td>show interfaces ddm</td>
+<td><code>show interfaces [port ...] ddm [w-low \| w-high \| a-low \| a-high \| status]</code></td>
+<td>光功率阈值/状态</td>
+<td><code>-&gt; show interfaces ddm status</code></td>
+<td>156</td>
+</tr>
+<tr>
+<td>show transceivers</td>
+<td><code>show transceivers [slot chassis/slot [transceiver num]]</code></td>
+<td>光模块信息</td>
+<td><code>-&gt; show transceivers</code></td>
+<td>163</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="poe-2">PoE 供电（第 2 章）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>语法要点</th>
+<th>关键参数与默认值</th>
+<th>典型用法（一行示例）</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>lanpower service</td>
+<td><code>lanpower {chassis id \| slot c/s} service {start \| stop}</code></td>
+<td>PoE 全局默认 disabled</td>
+<td><code>-&gt; lanpower slot 2/1 service start</code></td>
+<td>256</td>
+</tr>
+<tr>
+<td>lanpower port admin-state</td>
+<td><code>lanpower port chassis/slot/port admin-state {enable \| disable}</code></td>
+<td>端口级供电开关</td>
+<td><code>-&gt; lanpower port 2/1/1 admin-state enable</code></td>
+<td>258</td>
+</tr>
+<tr>
+<td>lanpower power</td>
+<td><code>lanpower {chassis id \| slot c/s \| port c/s/p} power milliwatts</code></td>
+<td>预算默认见硬件手册</td>
+<td><code>-&gt; lanpower port 1/1/24 power 25000</code></td>
+<td>259</td>
+</tr>
+<tr>
+<td>lanpower priority</td>
+<td><code>lanpower {chassis \| slot \| port ...} priority {low \| high \| critical}</code></td>
+<td>断电抢占优先级</td>
+<td><code>-&gt; lanpower port 1/1/6 priority critical</code></td>
+<td>264</td>
+</tr>
+<tr>
+<td>lanpower class-detection</td>
+<td><code>lanpower {chassis id \| slot c/s} class-detection {enable \| disable}</code></td>
+<td>802.3at 必须先启用（X7）；802.3bt 自动启用</td>
+<td><code>-&gt; lanpower slot 1/1 class-detection enable</code></td>
+<td>275</td>
+</tr>
+<tr>
+<td>lanpower power-rule</td>
+<td><code>lanpower power-rule name [admin-state {enable \| disable}] power {on \| off} at {time hh:mm \| minutes n} days ... [timezone utc]</code>，<code>no</code> 删除</td>
+<td>定时供电规则；先创建后绑定</td>
+<td><code>-&gt; lanpower power-rule RuleTest2 admin-state enable power on at minutes 10 days fri</code></td>
+<td>270</td>
+</tr>
+<tr>
+<td>lanpower power-policy</td>
+<td><code>lanpower [slot c/s \| port c/s/p] power-policy name</code>，<code>no</code> 解除</td>
+<td>将规则编成策略绑定对象</td>
+<td><code>-&gt; lanpower port 1/1/23 power-policy NewPolicy</code></td>
+<td>273</td>
+</tr>
+<tr>
+<td>lanpower usage-threshold</td>
+<td><code>lanpower {chassis \| slot ...} usage-threshold pct</code></td>
+<td>功耗告警阈值</td>
+<td><code>-&gt; lanpower slot 1/1 usage-threshold 50</code></td>
+<td>279</td>
+</tr>
+<tr>
+<td>lanpower 802.3bt / 4pair</td>
+<td><code>lanpower {slot c/s \| port c/s/p} {802.3bt \| 4pair} {enable \| disable}</code></td>
+<td>bt 供电（固件 3.xx 自动启用）</td>
+<td><code>-&gt; lanpower slot 1/1 802.3bt enable</code></td>
+<td>289</td>
+</tr>
+<tr>
+<td>lanpower port reset</td>
+<td><code>lanpower port chassis/slot/port reset</code></td>
+<td>端口供电复位</td>
+<td><code>-&gt; lanpower port 1/1/1 reset</code></td>
+<td>301</td>
+</tr>
+<tr>
+<td>show lanpower</td>
+<td><code>show lanpower {slot c/s [port-config] ...}</code></td>
+<td>供电总览</td>
+<td><code>-&gt; show lanpower slot 1/1</code></td>
+<td>307</td>
+</tr>
+<tr>
+<td>show lanpower status</td>
+<td><code>show lanpower slot chassis/slot status</code></td>
+<td>各端口 PD 状态</td>
+<td><code>-&gt; show lanpower slot 1/1 status</code></td>
+<td>325</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="udld-mac-3-4">UDLD / MAC 学习（第 3-4 章）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>语法要点</th>
+<th>关键参数与默认值</th>
+<th>典型用法（一行示例）</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>udld</td>
+<td><code>udld {enable \| disable}</code></td>
+<td>单向链路检测全局开关</td>
+<td><code>-&gt; udld enable</code></td>
+<td>328</td>
+</tr>
+<tr>
+<td>udld port</td>
+<td><code>udld port chassis/slot/port[-port2] {enable \| disable}</code></td>
+<td>端口级启用</td>
+<td><code>-&gt; udld port 1/1/3 enable</code></td>
+<td>330</td>
+</tr>
+<tr>
+<td>udld mode</td>
+<td><code>udld [port ...] mode {normal \| aggressive}</code></td>
+<td>aggressive 状态机更严格</td>
+<td><code>-&gt; udld mode aggressive</code></td>
+<td>332</td>
+</tr>
+<tr>
+<td>udld probe-timer / echo-wait-timer</td>
+<td><code>udld [port ...] {probe-timer \| echo-wait-timer} seconds</code>，<code>no</code> 恢复默认</td>
+<td>探测/等待计时器</td>
+<td><code>-&gt; udld probe-timer 20</code></td>
+<td>334/336</td>
+</tr>
+<tr>
+<td>show udld status port</td>
+<td><code>show udld status port [chassis/slot/port]</code></td>
+<td>默认列出全部端口</td>
+<td><code>-&gt; show udld status port</code></td>
+<td>348</td>
+</tr>
+<tr>
+<td>mac-learning</td>
+<td><code>mac-learning {vlan vlan[-vlan2] \| port ... \| linkagg id} {enable \| disable}</code></td>
+<td>按域关闭源学习</td>
+<td><code>-&gt; mac-learning vlan 10 disable</code></td>
+<td>353</td>
+</tr>
+<tr>
+<td>mac-learning aging-time</td>
+<td><code>mac-learning aging-time {seconds \| default}</code>，<code>no</code> 恢复</td>
+<td>默认 300 秒</td>
+<td><code>-&gt; mac-learning aging-time 1200</code></td>
+<td>389</td>
+</tr>
+<tr>
+<td>mac-learning static mac-address</td>
+<td><code>mac-learning vlan vlan_id port c/s/p static mac-address mac {bridging \| filtering}</code></td>
+<td>静态桥接/过滤表项</td>
+<td><code>-&gt; mac-learning vlan 10 port 1/1/10 static mac-address 00:00:39:59:f1:0c bridging</code></td>
+<td>373</td>
+</tr>
+<tr>
+<td>mac-learning flush</td>
+<td><code>mac-learning flush {dynamic \| static} [mac-address mac]</code>；domain 子域 all/vlan/spb/vxlan/l2gre/local/vpls/evpn-vxlan 可选</td>
+<td>清除动态/静态 MAC</td>
+<td><code>-&gt; mac-learning flush dynamic</code></td>
+<td>355</td>
+</tr>
+<tr>
+<td>show mac-learning</td>
+<td><code>show mac-learning [summary]</code>；domain 子域同上</td>
+<td>默认全部表项</td>
+<td><code>-&gt; show mac-learning domain vlan summary</code></td>
+<td>392</td>
+</tr>
+<tr>
+<td>mac-ping</td>
+<td><code>mac-ping dst-mac mac vlan vlan_id [count n] [size n] [isid-check id]</code></td>
+<td>L2 连通性探测</td>
+<td><code>-&gt; mac-ping dst-mac 00:11:11:11:11:11 vlan 10</code></td>
+<td>424</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="vlan-pvlan-5">VLAN / PVLAN（第 5 章）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>语法要点</th>
+<th>关键参数与默认值</th>
+<th>典型用法（一行示例）</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>vlan</td>
+<td><code>vlan vlan_id [admin-state {enable \| disable}] [name desc] [prompt-on-deletion {enable \| disable}]</code>，<code>no vlan vlan_id</code></td>
+<td>默认 enable；prompt-on-deletion 默认 disable（删 VLAN 不弹确认，X22）；支持区间 <code>vlan 10-15</code></td>
+<td><code>-&gt; vlan 200 name "Corporate VLAN"</code></td>
+<td>428</td>
+</tr>
+<tr>
+<td>vlan members tagged/untagged</td>
+<td><code>vlan vlan_id[-id2] members {port c/s/p[-p2] \| linkagg id[-id2]} {tagged \| untagged}</code>，<code>no</code> 移除</td>
+<td>VLAN 1 为全部端口默认 untagged VLAN</td>
+<td><code>-&gt; vlan 20 members port 1/1/1-24 tagged</code></td>
+<td>430/432</td>
+</tr>
+<tr>
+<td>vlan mtu-ip</td>
+<td><code>vlan vlan_id mtu-ip size</code></td>
+<td>默认 1500 字节</td>
+<td><code>-&gt; vlan 200 mtu-ip 9198</code></td>
+<td>434</td>
+</tr>
+<tr>
+<td>show vlan / members</td>
+<td><code>show vlan [vlan_id]</code> / <code>show vlan [id] members [port ...]</code></td>
+<td>默认全部</td>
+<td><code>-&gt; show vlan members</code></td>
+<td>436/439</td>
+</tr>
+<tr>
+<td>pvlan</td>
+<td><code>pvlan vlan_id[-id2] [admin-state ...] [name ...]</code>，<code>no</code> 删除</td>
+<td>主 PVLAN</td>
+<td><code>-&gt; pvlan 200 name "Corporate PVLAN"</code></td>
+<td>442</td>
+</tr>
+<tr>
+<td>pvlan secondary</td>
+<td><code>pvlan vlan_id secondary vlan_id[-id2] type {isolated \| community}</code></td>
+<td>从 VLAN 类型</td>
+<td><code>-&gt; pvlan 200 secondary 250 type isolated</code></td>
+<td>444</td>
+</tr>
+<tr>
+<td>pvlan members</td>
+<td><code>pvlan vlan_id members {port ... \| linkagg ...} {tagged \| untagged} [isl]</code></td>
+<td>—</td>
+<td><code>-&gt; pvlan 200 members port 1/1/1-5 tagged</code></td>
+<td>446</td>
+</tr>
+<tr>
+<td>show pvlan / mapping</td>
+<td><code>show pvlan [vlan_id]</code> / <code>show pvlan [id] mapping</code></td>
+<td>默认全部</td>
+<td><code>-&gt; show pvlan mapping</code></td>
+<td>448-450</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="vlan-stacking-qinq-7">VLAN Stacking / QinQ（第 7 章）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>语法要点</th>
+<th>关键参数与默认值</th>
+<th>典型用法（一行示例）</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ethernet-service svlan</td>
+<td><code>ethernet-service svlan {svlan_id[-id2]} [admin-state {enable \| disable}] [name desc]</code>，<code>no</code> 删除</td>
+<td>服务商 VLAN；平台 6360/6920 为 No</td>
+<td><code>-&gt; ethernet-service svlan 1001-1005 admin-state enable name "Customer ABC"</code></td>
+<td>478</td>
+</tr>
+<tr>
+<td>ethernet-service nni</td>
+<td><code>ethernet-service nni {port ... \| linkagg ...} [tpid tpid_value] [[stp \| mvrp] legacy-bpdu {enable \| disable}]</code>，<code>no</code> 撤销</td>
+<td>NNI 口；非 0x8100 TPID 配后不可改（X18）</td>
+<td><code>-&gt; ethernet-service nni port 1/1/1 tpid 0x9100</code></td>
+<td>482</td>
+</tr>
+<tr>
+<td>ethernet-service sap</td>
+<td><code>ethernet-service sap sap_id service-name service_name</code>，<code>no ethernet-service sap sap_id</code></td>
+<td>创建即关联 default-sap-profile</td>
+<td><code>-&gt; ethernet-service sap 10 service-name CustomerA</code></td>
+<td>487</td>
+</tr>
+<tr>
+<td>ethernet-service uni-profile</td>
+<td><code>ethernet-service uni-profile name [bandwidth ...] [priority ...] [protocol 动作] ...</code>，<code>no</code> 删除</td>
+<td>协议动作 peer/discard/tunnel/mac-tunnel（stp 默认 tunnel 等，见原书表）；sap-profile 默认 shared、0 Mbps、preserve、fixed 0</td>
+<td><code>-&gt; ethernet-service uni-profile ...</code>（详见原书 7-23）</td>
+<td>498</td>
+</tr>
+<tr>
+<td>ethernet-service mac-tunneling</td>
+<td><code>ethernet-service mac-tunneling {enable \| disable}</code></td>
+<td>默认 enable；全局改动需重启生效；默认隧道 MAC 01:00:0C:CD:CD:D0</td>
+<td><code>-&gt; ethernet-service mac-tunneling enable</code></td>
+<td>512</td>
+</tr>
+<tr>
+<td>show ethernet-service</td>
+<td><code>show ethernet-service [svlan ...]</code></td>
+<td>SVLAN/NNI/UNI/SAP 全套子命令（sap/nni/uni/port/uni-profile/mac-tunneling）</td>
+<td><code>-&gt; show ethernet-service sap</code></td>
+<td>522+</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="stp-8">分布式生成树 STP（第 8 章）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>语法要点</th>
+<th>关键参数与默认值</th>
+<th>典型用法（一行示例）</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>spantree mode</td>
+<td><code>spantree mode {flat \| per-vlan}</code></td>
+<td>默认 per-vlan</td>
+<td><code>-&gt; spantree mode flat</code></td>
+<td>569</td>
+</tr>
+<tr>
+<td>spantree protocol</td>
+<td><code>spantree [cist \| vlan vlan_id] protocol {stp \| rstp \| mstp}</code></td>
+<td>默认 RSTP</td>
+<td><code>-&gt; spantree protocol mstp</code></td>
+<td>571</td>
+</tr>
+<tr>
+<td>spantree priority</td>
+<td><code>spantree [cist \| msti id \| vlan id] priority priority</code></td>
+<td>桥优先级默认 32768；端口优先级默认 7</td>
+<td><code>-&gt; spantree priority 8192</code></td>
+<td>585</td>
+</tr>
+<tr>
+<td>spantree hello-time / max-age / forward-delay</td>
+<td><code>spantree [cist \| vlan id] {hello-time \| max-age \| forward-delay} seconds</code></td>
+<td>hello=2、max-age=20、forward-delay=15</td>
+<td><code>-&gt; spantree max-age 10</code></td>
+<td>588-592</td>
+</tr>
+<tr>
+<td>spantree mst region</td>
+<td><code>spantree mst region {name n \| revision-level n \| max-hops n}</code></td>
+<td>name 默认空、revision 0、max-hops 20</td>
+<td><code>-&gt; spantree mst region name SalesRegion</code></td>
+<td>575</td>
+</tr>
+<tr>
+<td>spantree msti vlan</td>
+<td><code>spantree msti msti_id vlan vlan_id[-id2]</code>，<code>no</code> 移除</td>
+<td>默认全部 VLAN 属 MSTI 0（CIST）</td>
+<td><code>-&gt; spantree msti 10 vlan 100-115</code></td>
+<td>583</td>
+</tr>
+<tr>
+<td>spantree cist / vlan（端口级）</td>
+<td><code>spantree {cist \| vlan id} {port ... \| linkagg ...} {enable \| disable}</code></td>
+<td>默认 eligible 端口启用</td>
+<td><code>-&gt; spantree cist port 1/4/1 enable</code></td>
+<td>602/604</td>
+</tr>
+<tr>
+<td>spantree path-cost</td>
+<td><code>spantree {cist \| msti id \| vlan id} {port ... \| linkagg ...} path-cost cost</code></td>
+<td>默认 0（自动）</td>
+<td><code>-&gt; spantree cist port 1/4/1 path-cost 19</code></td>
+<td>606-610</td>
+</tr>
+<tr>
+<td>spantree admin-edge / auto-edge</td>
+<td><code>spantree {cist \| vlan id} {port ... \| linkagg ...} {admin-edge \| auto-edge} {enable \| disable}</code></td>
+<td>admin-edge 默认 off；auto-edge 默认 on</td>
+<td><code>-&gt; spantree cist linkagg 15 admin-edge enable</code></td>
+<td>622/626</td>
+</tr>
+<tr>
+<td>spantree loop-guard</td>
+<td><code>spantree {port ... \| linkagg ...} loop-guard {enable \| disable}</code></td>
+<td>默认 disabled</td>
+<td><code>-&gt; spantree port 1/1/2 loop-guard enable</code></td>
+<td>614</td>
+</tr>
+<tr>
+<td>show spantree</td>
+<td><code>show spantree</code>；子命令 cist/msti/vlan/ports/mst/mode/map-msti</td>
+<td>拓扑首查</td>
+<td><code>-&gt; show spantree vlan 200</code></td>
+<td>642-687</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="lacpdhl-13">链路聚合 LACP/DHL（第 13 章）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>语法要点</th>
+<th>关键参数与默认值</th>
+<th>典型用法（一行示例）</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>linkagg static agg</td>
+<td><code>linkagg static agg agg_id[-id2] size size [name n] [admin-state ...] [hash ...]</code>，<code>no</code> 删除</td>
+<td>静态聚合；size 为成员端口上限</td>
+<td><code>-&gt; linkagg static agg 4 size 2</code></td>
+<td>1094</td>
+</tr>
+<tr>
+<td>linkagg static port agg</td>
+<td><code>linkagg static port chassis/slot/port[-port2] agg agg_id</code>，<code>no</code> 移除</td>
+<td>—</td>
+<td><code>-&gt; linkagg static port 1/2/1-5 agg 4</code></td>
+<td>1107</td>
+</tr>
+<tr>
+<td>linkagg lacp agg</td>
+<td><code>linkagg lacp agg agg_id[-id2] size size [name n] [admin-state ...] [actor ...]</code>，<code>no</code> 删除</td>
+<td>动态 LACP 聚合（IEEE 802.3ad）</td>
+<td><code>-&gt; linkagg lacp agg 2-5 size 4</code></td>
+<td>1109</td>
+</tr>
+<tr>
+<td>linkagg lacp agg actor system-priority</td>
+<td><code>linkagg lacp agg agg_id actor system-priority value</code>，<code>no</code> 恢复</td>
+<td>LACP 系统 ID 仲裁</td>
+<td><code>-&gt; linkagg lacp agg 3 actor system-priority 100</code></td>
+<td>1120</td>
+</tr>
+<tr>
+<td>linkagg lacp agg pre-empt / timer</td>
+<td><code>linkagg lacp agg agg_id pre-empt {enable \| disable} [timer seconds]</code></td>
+<td>timer 默认 30 秒</td>
+<td><code>-&gt; linkagg lacp agg 2 pre-empt enable</code></td>
+<td>1157/1159</td>
+</tr>
+<tr>
+<td>linkagg lacp port actor admin-state</td>
+<td><code>linkagg lacp port c/s/p actor admin-state {[active] [timeout] [aggregate] [synchronize] [collect] [distribute] \| none}</code></td>
+<td>LACP 端口状态位</td>
+<td><code>-&gt; linkagg lacp port 1/4/2 actor admin-state synchronize collect distribute</code></td>
+<td>1133</td>
+</tr>
+<tr>
+<td>dhl</td>
+<td><code>dhl dhl_num linka {port c/s/p \| linkagg id} linkb {port c/s/p \| linkagg id}</code>；<code>dhl dhl_num admin-state {enable \| disable}</code></td>
+<td>双主链路；每机箱仅 1 个 DHL 会话、2 条链路</td>
+<td><code>-&gt; dhl 1 linka port 1/1/1 linkb port 1/1/2</code></td>
+<td>1161-1165</td>
+</tr>
+<tr>
+<td>show linkagg</td>
+<td><code>show linkagg [agg agg_id[-id2]] [port ...]</code>；另有 accounting/counters/traffic</td>
+<td>默认全部聚合组</td>
+<td><code>-&gt; show linkagg port</code></td>
+<td>1178</td>
+</tr>
+<tr>
+<td>clear linkagg-statistics</td>
+<td><code>clear linkagg-statistics [agg agg_id[-id2]]</code></td>
+<td>默认清全部</td>
+<td><code>-&gt; clear linkagg-statistics agg 10</code></td>
+<td>1196</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="virtual-chassis-14">Virtual Chassis（第 14 章）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>语法要点</th>
+<th>关键参数与默认值</th>
+<th>典型用法（一行示例）</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>virtual-chassis configured-chassis-id</td>
+<td><code>virtual-chassis [chassis-id oper] configured-chassis-id id</code>，<code>no</code> 撤销</td>
+<td>chassis id 下次重启生效（X10）</td>
+<td><code>-&gt; virtual-chassis configured-chassis-id 1</code></td>
+<td>1200</td>
+</tr>
+<tr>
+<td>virtual-chassis chassis-group</td>
+<td><code>virtual-chassis [chassis-id oper] chassis-group group</code></td>
+<td>VC 只支持同型号两台（X20）</td>
+<td><code>-&gt; virtual-chassis chassis-id 1 chassis-group 10</code></td>
+<td>1202</td>
+</tr>
+<tr>
+<td>virtual-chassis vf-link create / member-port</td>
+<td><code>virtual-chassis [chassis-id oper] vf-link vfl_id create</code> + <code>vf-link vfl_id member-port slot/port</code>，<code>no</code> 删除</td>
+<td>VFL 成员口</td>
+<td><code>-&gt; virtual-chassis vf-link 1 create</code></td>
+<td>1210</td>
+</tr>
+<tr>
+<td>virtual-chassis split-protection</td>
+<td><code>virtual-chassis split-protection {admin-state {enable \| disable} \| linkagg agg_id \| guard-timer t}</code></td>
+<td>双活保护</td>
+<td><code>-&gt; virtual-chassis split-protection admin-state enable</code></td>
+<td>1252</td>
+</tr>
+<tr>
+<td>show virtual-chassis topology</td>
+<td><code>show virtual-chassis [chassis-id id] topology</code>；另有 consistency/vf-link/neighbors/split-protection</td>
+<td>VC 拓扑首查</td>
+<td><code>-&gt; show virtual-chassis topology</code></td>
+<td>1231</td>
+</tr>
+<tr>
+<td>vc-takeover / ssh-chassis</td>
+<td><code>vc-takeover</code> / <code>ssh-chassis [user@chassis-id]</code></td>
+<td>VC 内主备切换/跨机箱登录</td>
+<td><code>-&gt; ssh-chassis guest@2</code></td>
+<td>1225/1227</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="erp-mrp-15-16">环网 ERP / MRP（第 15-16 章）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>语法要点</th>
+<th>关键参数与默认值</th>
+<th>典型用法（一行示例）</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>erp-ring</td>
+<td><code>erp-ring ring_id port1 {c/s/p \| linkagg} port2 {...} service-vlan vlan level {0-7} [enable]</code>，<code>no</code> 删除</td>
+<td>G.8032 主环；创建时默认 disabled</td>
+<td><code>-&gt; erp-ring 1 port1 1/1/1 port2 2/4/1 service-vlan 10 level 2 enable</code></td>
+<td>1269</td>
+</tr>
+<tr>
+<td>erp-ring rpl-node</td>
+<td><code>erp-ring ring_id rpl-node {port c/s/p \| linkagg id}</code>，<code>no</code> 撤销</td>
+<td>RPL 拥塞节点每环一个</td>
+<td><code>-&gt; erp-ring 1 rpl-node port 1/2/1</code></td>
+<td>1273</td>
+</tr>
+<tr>
+<td>erp-ring wait-to-restore / guard-timer</td>
+<td><code>erp-ring ring_id {wait-to-restore min \| guard-timer sec}</code>，<code>no</code> 恢复</td>
+<td>WTR 默认 5 分钟</td>
+<td><code>-&gt; erp-ring 1 wait-to-restore 6</code></td>
+<td>1275/1279</td>
+</tr>
+<tr>
+<td>erp-ring revertive / clear</td>
+<td><code>erp-ring ring_id revertive {enable \| disable}</code> / <code>erp-ring ring_id clear</code></td>
+<td>回切模式/清状态</td>
+<td><code>-&gt; erp-ring 1 clear</code></td>
+<td>1286/1288</td>
+</tr>
+<tr>
+<td>show erp / statistics</td>
+<td><code>show erp [ring id [port ...]]</code> / <code>show erp statistics [...]</code>；<code>clear erp statistics</code></td>
+<td>默认全部环</td>
+<td><code>-&gt; show erp statistics ring 5</code></td>
+<td>1296-1298</td>
+</tr>
+<tr>
+<td>mrp domain</td>
+<td><code>mrp domain domain_index [name n] [uuid u] port1 {...} port2 {...} [admin-role {manager \| client}] [recovery-time ...]</code>，<code>no</code> 删除</td>
+<td>IEC 62439-2 工业环</td>
+<td><code>-&gt; mrp domain 1 vlan 10</code></td>
+<td>1309</td>
+</tr>
+<tr>
+<td>show mrp</td>
+<td><code>show mrp [domain ... [detail \| counters \| elected-manager]]</code>；另有 port/interconnect 子命令；<code>clear mrp ... counters</code></td>
+<td>—</td>
+<td><code>-&gt; show mrp domain counters</code></td>
+<td>1317-1334</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="mvrp-171220">MVRP / 环回检测 / 自动织构（第 17/12/20 章）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>语法要点</th>
+<th>关键参数与默认值</th>
+<th>典型用法（一行示例）</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mvrp</td>
+<td><code>mvrp {enable \| disable}</code></td>
+<td>全局默认 disabled</td>
+<td><code>-&gt; mvrp enable</code></td>
+<td>1341</td>
+</tr>
+<tr>
+<td>mvrp port / linkagg</td>
+<td><code>mvrp {port c/s/p[-p2] \| linkagg id[-id2]} {enable \| disable}</code></td>
+<td>端口级默认 disabled</td>
+<td><code>-&gt; mvrp port 1/1/2 enable</code></td>
+<td>1343</td>
+</tr>
+<tr>
+<td>mvrp maximum-vlan</td>
+<td><code>mvrp maximum-vlan vlan_limit</code></td>
+<td>默认 256</td>
+<td><code>-&gt; mvrp maximum-vlan 100</code></td>
+<td>1347</td>
+</tr>
+<tr>
+<td>mvrp registration</td>
+<td><code>mvrp {port ... \| linkagg ...} registration {normal \| fixed \| forbidden}</code></td>
+<td>注册模式</td>
+<td><code>-&gt; mvrp port 1/1/5 registration normal</code></td>
+<td>1349</td>
+</tr>
+<tr>
+<td>mvrp timer</td>
+<td><code>mvrp {port ... \| linkagg ...} timer {join ms \| leave ms \| leaveall ms \| periodic-timer s}</code></td>
+<td>计时器组</td>
+<td><code>-&gt; mvrp port 1/1/2 timer join 600</code></td>
+<td>1353-1359</td>
+</tr>
+<tr>
+<td>show mvrp</td>
+<td><code>show mvrp {configuration \| port ... \| timer \| statistics \| last-pdu-origin ...}</code>；<code>mvrp clear-statistics</code></td>
+<td>—</td>
+<td><code>-&gt; show mvrp port 1/1/1 statistics</code></td>
+<td>1369-1387</td>
+</tr>
+<tr>
+<td>loopback-detection</td>
+<td><code>loopback-detection [remote-origin] {enable \| disable}</code>；<code>loopback-detection port c/s/p[-p2] [remote-origin] {enable \| disable}</code></td>
+<td>全局/端口级 LBD</td>
+<td><code>-&gt; loopback-detection enable</code></td>
+<td>1071</td>
+</tr>
+<tr>
+<td>loopback-detection transmission-timer / autorecovery-timer</td>
+<td><code>loopback-detection {transmission-timer \| autorecovery-timer} seconds</code></td>
+<td>发送/自恢复计时</td>
+<td><code>-&gt; loopback-detection transmission-timer 35</code></td>
+<td>1077/1079</td>
+</tr>
+<tr>
+<td>show loopback-detection</td>
+<td><code>show loopback-detection [port ...]</code>；另有 linkagg/statistics port 子命令</td>
+<td>默认显示全局 LBD 配置</td>
+<td><code>-&gt; show loopback-detection port</code></td>
+<td>1081-1088</td>
+</tr>
+<tr>
+<td>auto-fabric admin-state / discovery</td>
+<td><code>auto-fabric admin-state {enable \| disable}</code> / <code>auto-fabric discovery start</code></td>
+<td>自动织构开关与手动发现</td>
+<td><code>-&gt; auto-fabric admin-state enable</code></td>
+<td>1524/1528</td>
+</tr>
+<tr>
+<td>auto-fabric protocols</td>
+<td><code>auto-fabric protocols {lacp \| mvrp \| spb \| loopback-detection \| ip ospfv2/ospfv3/isis ...} admin-state ...</code></td>
+<td>按协议启停并套默认模板</td>
+<td><code>-&gt; auto-fabric protocols spb default-profile single-service</code></td>
+<td>1529</td>
+</tr>
+<tr>
+<td>show auto-fabric config</td>
+<td><code>show auto-fabric config [interface ...]</code></td>
+<td>织构配置总览</td>
+<td><code>-&gt; show auto-fabric config</code></td>
+<td>1542</td>
+</tr>
+</tbody>
+</table></div>
 <h2 id="e">E（实证案例）</h2>
 <ul>
 <li>本系列为命令地图型 skill，不搬运配置案例；原书每条命令自带 Example 小节，定位到章后按页码回查即可（cases 原件未创建，E 段说明见书报告）</li>
@@ -153,7 +940,7 @@ blockquote p{margin:6px 0}
 <ul>
 <li>802.3at 供电必须先 <code>lanpower slot class-detection</code> 启用分级检测；802.3bt 下自动启用、手工命令不受支持（X7）</li>
 <li>6465 不能自动检测电源类型，不手工配置则系统与 PoE 功率信息显示错误（X9）</li>
-<li>默认删除带成员端口的 VLAN 不弹确认——误删风险由 prompt-on-deletion 兜底，默认 disable（X22，<span class="pg">原文p428</span> ）</li>
+<li>默认删除带成员端口的 VLAN 不弹确认——误删风险由 prompt-on-deletion 兜底，默认 disable（X22，<span class="source-page">原文p428</span> ）</li>
 <li>VLAN Stacking 保留 VLAN 不可用标准 vlan 命令配置；NNI 口成为 stacking 口后 TPID（非 0x8100 时）不可再改（X18）</li>
 <li>legacy BPDU 仅 flat STP 模式支持，且只应在连 legacy 设备的 Stacking 网络端口启用（X19）</li>
 <li>VC 只支持同型号两台；<code>no virtual-chassis</code> 仅在无任何 VFL 配置时可用（X20）</li>
@@ -164,4 +951,12 @@ blockquote p{margin:6px 0}
 <ul>
 <li>OmniSwitch AOS Release 810R04 CLI Reference User Guide 第 1-8、12-17、20 章（&lt;&lt;<PAGE 67-689、1070-1390、1523-1549>&gt;&gt;）。</li>
 <li><strong>条目来源</strong>：<br>principles P1-P7/P10；counter-examples X7/X9/X10/X12/X15/X16/X18-X20/X22；frameworks F1-F3/F5（域分组）。</li>
-</ul><div class="pn"><a href="../index.html">⬅ 返回课程首页</a><a class="nxt" href="aos-cli-map-fabric.html">下一单元：aos-cli-map-fabric ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+</ul></article>
+<nav class="previous-next" aria-label="知识单元翻页"><a href="/aos/cli-reference/index.html"><span>上一单元</span><b>返回课程首页</b></a><a class="next" href="/aos/cli-reference/skills/aos-cli-map-fabric.html"><span>下一单元</span><b>aos-cli-map-fabric</b></a></nav>    <footer class="content-footer">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</footer>
+  </main>
+</div>
+  <script src="/assets/js/app.js?v=4" defer></script>
+  <script src="/assets/js/search.js?v=4" defer></script>
+  <script src="/assets/js/lightbox.js?v=5" defer></script>
+</body>
+</html>

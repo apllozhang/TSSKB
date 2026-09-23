@@ -1,98 +1,78 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ov-unified-access-profiles — OmniVista 2500 4.9R2 User Guide</title>
-<style>
-:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
-*{box-sizing:border-box}
-body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
-a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
-.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin:16px 0}
-.gallery figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px}
-.gallery img{width:100%;max-height:340px;object-fit:contain;background:#fff;border-radius:6px}
-.gallery figcaption{font-size:12.5px;color:var(--mut);text-align:center;margin-top:6px}
-/* 侧栏折叠 + 图片灯箱 */
-.tgl{position:fixed;left:0;top:45%;z-index:60;background:var(--card);border:1px solid var(--line);border-right:none;border-radius:0 8px 8px 0;color:var(--tx);padding:10px 6px;cursor:pointer;font-size:13px;line-height:1.1;writing-mode:vertical-lr}
-.tgl:hover{background:var(--acc);color:#0f172a}
-.layout.full{grid-template-columns:0 1fr}
-.layout.full aside{display:none}
-.lb{position:fixed;inset:0;background:rgba(5,10,20,.92);z-index:100;display:flex;align-items:center;justify-content:center;flex-direction:column}
-.lb img{max-width:92vw;max-height:82vh;background:#fff;border-radius:6px;transition:transform .12s}
-.lb .lbb{margin-top:10px;display:flex;gap:10px}
-.lb button{background:var(--card);border:1px solid var(--line);color:var(--tx);border-radius:8px;padding:6px 14px;cursor:pointer;font-size:14px}
-.lb button:hover{background:var(--acc);color:#0f172a}
-.search{margin:0 0 14px}
-.search input{width:100%;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--tx);font-size:13px;outline:none}
-.search input:focus{border-color:var(--acc)}
-#qres{max-height:340px;overflow-y:auto;margin-top:6px}
-#qres .qi{display:block;padding:6px 8px;border-radius:6px;font-size:12.5px;color:var(--tx);border-left:2px solid transparent}
-#qres .qi:hover{background:var(--card);text-decoration:none;border-left-color:var(--acc)}
-#qres .qi .qp{color:var(--mut);font-size:11px;display:block}
-#qres .qi b{color:var(--acc)}
-.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
-main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
-.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
-aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
-aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
-aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
-aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
-aside a:hover{background:var(--card);text-decoration:none}
-aside a.on{background:var(--card);color:var(--acc)}
-main{padding:36px 48px;max-width:1000px}
-h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
-h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
-table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
-th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
-th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
-code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
-pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
-pre code{background:none;padding:0}
-blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
-.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
-.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
-.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
-.meta{font-size:13px;color:var(--mut)}
-hr{border:none;border-top:1px solid var(--line);margin:26px 0}
-.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
-.badge.soon{background:#475569;color:#cbd5e1}
-main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
-main{padding:28px 48px 40px;max-width:1040px}
-h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
-blockquote p{margin:6px 0}
-.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
-.crumbs a{color:var(--acc)}
-.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
-.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
-.pn a:hover{border-color:var(--acc)}
-.pn .nxt{text-align:right}
-.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
-@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
-</style></head>
-<body><div class="layout"><aside><h1>OmniVista 2500 4.9R2 User Guide</h1>
-<div class="search"><input id="qk" type="search" placeholder="🔍 搜索全站…" autocomplete="off"><div id="qres"></div></div>
-
-<div class="sub">935 页 · GUI 参考手册全科（控制台/Analytics/发现拓扑/资源管理/统一接入/UPAM/SSID 高级/隔离/VM 织构）</div>
-<a href="../index.html">🏠 课程首页</a>
-<a href="../digest.html">📖 精华长文 DIGEST</a>
-
-<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
-<a href="../glossary.html">🔤 术语词典</a>
-<a href="../../../index.html">⬅️ 返回培训门户</a>
-<a href="../index.html">──── Skills ────</a>
-<div class="grp">控制台与分析</div>
-<a href="../skills/ov-console-basics-dashboard.html">ov-console-basics-dashboard</a>
-<a href="../skills/ov-analytics-reports.html">ov-analytics-reports</a>
-<div class="grp">发现与资源</div>
-<a href="../skills/ov-discovery-topology-views.html">ov-discovery-topology-views</a>
-<a href="../skills/ov-resource-manager-ops.html">ov-resource-manager-ops</a>
-<a href="../skills/ov-cli-scripting-mib.html">ov-cli-scripting-mib</a>
-<div class="grp">接入与策略</div>
-<a href="../skills/ov-unified-access-profiles.html" class="on">ov-unified-access-profiles</a>
-<a href="../skills/ov-upam-guest-byod.html">ov-upam-guest-byod</a>
-<a href="../skills/ov-quarantine-policyview.html">ov-quarantine-policyview</a>
-<div class="grp">无线高级与织构</div>
-<a href="../skills/ov-wlan-ssid-advanced.html">ov-wlan-ssid-advanced</a>
-<a href="../skills/ov-vm-vxlan-fabric.html">ov-vm-vxlan-fabric</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../manuals/index.html">OV2500 配置手册</a> › <a href="../index.html">OmniVista 2500 4.9R2 User Guide</a> › <span>ov-unified-access-profiles</span></nav><h1>ov-unified-access-profiles</h1><p class="meta"><span class="badge">SKILL</span> ov-unified-access-profiles · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="面向售前、售后与网络工程师的 ALE 内部技术知识平台">
+  <meta name="theme-color" content="#6B489D">
+  <title>ov-unified-access-profiles — OmniVista 2500 4.9R2 User Guide</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=4">
+  <link rel="stylesheet" href="/assets/css/layout.css?v=4">
+  <link rel="stylesheet" href="/assets/css/components.css?v=4">
+  <link rel="stylesheet" href="/assets/css/content.css?v=7">
+  <script src="/assets/js/auth-config.js?v=4"></script>
+  <script src="/assets/js/auth-core.js?v=4"></script>
+  <script src="/assets/js/auth-guard.js?v=4"></script>
+</head>
+<body data-page-kind="course">
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <header class="topbar" data-topbar>
+    <a class="brand" href="/index.html" aria-label="返回 ALE 技术培训门户首页">
+      <img src="/assets/ale-logo-color.png" alt="Alcatel-Lucent Enterprise">
+      <span>ALE 培训门户</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-controls="primary-nav" aria-expanded="false" data-nav-toggle>
+      <span aria-hidden="true">☰</span><span class="sr-only">打开导航</span>
+    </button>
+    <nav id="primary-nav" class="primary-nav" aria-label="主导航">
+      <a href="/index.html">首页</a>
+      <a href="/paths.html">学习路径</a>
+      <a href="/presales/index.html">售前</a>
+      <a href="/postsales/index.html">售后</a>
+      <a href="/wlan/index.html">无线</a>
+      <a href="/aos/index.html">AOS 手册</a>
+      <a href="/hardware/index.html">硬件</a>
+      <a href="/brochures/index.html">彩页</a>
+      <a href="/solutions/index.html">解决方案</a>
+      <a href="/security/index.html">安全</a>
+    </nav>
+    <button id="logout-btn" class="logout-btn" type="button" hidden>退出登录</button>
+  </header>
+<div class="course-layout">
+<aside class="course-sidebar" id="course-sidebar" data-sidebar>
+  <div class="sidebar-heading">
+    <p class="eyebrow">COURSE</p>
+    <h2>OmniVista 2500 4.9R2 User Guide</h2>
+    <p>935 页 · GUI 参考手册全科（控制台/Analytics/发现拓扑/资源管理/统一接入/UPAM/SSID 高级/隔离/VM 织构）</p>
+  </div>
+<div class="search" data-search>
+  <label class="sr-only" for="course-search">搜索全站课程和知识单元</label>
+  <input id="course-search" type="search" placeholder="搜索课程编号、产品型号或技术关键词…" autocomplete="off" data-search-input>
+  <div class="search-results" role="listbox" aria-live="polite" data-search-results></div>
+</div>  <nav class="course-nav" aria-label="课程目录">
+    <a href="/manuals/ov2500-userguide/index.html">课程首页</a>
+    <a href="/manuals/ov2500-userguide/digest.html">精华长文</a>
+    <a href="/manuals/ov2500-userguide/overview.html">教书理解</a>
+    <a href="/manuals/ov2500-userguide/glossary.html">术语词典</a>
+    <p class="course-nav-group">控制台与分析</p>
+      <a href="/manuals/ov2500-userguide/skills/ov-console-basics-dashboard.html">ov-console-basics-dashboard</a>
+      <a href="/manuals/ov2500-userguide/skills/ov-analytics-reports.html">ov-analytics-reports</a>
+    <p class="course-nav-group">发现与资源</p>
+      <a href="/manuals/ov2500-userguide/skills/ov-discovery-topology-views.html">ov-discovery-topology-views</a>
+      <a href="/manuals/ov2500-userguide/skills/ov-resource-manager-ops.html">ov-resource-manager-ops</a>
+      <a href="/manuals/ov2500-userguide/skills/ov-cli-scripting-mib.html">ov-cli-scripting-mib</a>
+    <p class="course-nav-group">接入与策略</p>
+      <a aria-current="page" href="/manuals/ov2500-userguide/skills/ov-unified-access-profiles.html">ov-unified-access-profiles</a>
+      <a href="/manuals/ov2500-userguide/skills/ov-upam-guest-byod.html">ov-upam-guest-byod</a>
+      <a href="/manuals/ov2500-userguide/skills/ov-quarantine-policyview.html">ov-quarantine-policyview</a>
+    <p class="course-nav-group">无线高级与织构</p>
+      <a href="/manuals/ov2500-userguide/skills/ov-wlan-ssid-advanced.html">ov-wlan-ssid-advanced</a>
+      <a href="/manuals/ov2500-userguide/skills/ov-vm-vxlan-fabric.html">ov-vm-vxlan-fabric</a>
+  </nav>
+</aside>  <main id="main-content" class="course-main prose">
+    <nav class="breadcrumbs" aria-label="面包屑"><a href="/index.html">培训门户</a><span>/</span><a href="/manuals/index.html">OV2500 配置手册 · Manuals</a><span>/</span><a href="/manuals/ov2500-userguide/index.html">OmniVista 2500 4.9R2 User Guide</a><span>/</span><span aria-current="page">ov-unified-access-profiles</span></nav>
+<header class="skill-heading"><div><p class="eyebrow">KNOWLEDGE UNIT</p><h1>ov-unified-access-profiles</h1></div><dl><div><dt>Skill ID</dt><dd>ov-unified-access-profiles</dd></div></dl></header>    <article class="markdown-body"><h2 id="r">R（触发场景）</h2>
 <ul>
 <li>园区要做 802.1X / MAC 认证，认证结果映射 UNP + VLAN</li>
 <li>打印机/IPTV 等静默设备不走认证，要按分类规则给默认角色</li>
@@ -106,103 +86,51 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="a1">A1（行动框架）</h2>
 <ol>
-<li><strong>途径选型</strong>（frameworks·F15，<span class="pg">原文p592</span> ）：新场景走 Workflow 向导；标准化批量走 Template；个别设备差异走 Device Config（改动只影响所选设备不回写模板）</li>
-<li>
-<p>L2 认证与分类决策流（principles·P159，<span class="pg">原文p591-592</span> ）：优先 802.1X，非 supplicant 或禁用时用 MAC；</p>
-<ul>
-<li>RADIUS 返回有效 UNP→映射 Access Role Profile+VLAN；</li>
-<li>认证未启用/失败/无有效 UNP 且启用分类→按 Port/Group ID/MAC/LLDP/认证类型/IP 分类规则给 Default UNP；</li>
-<li>UNP 与 VLAN 一旦分配不再改变；</li>
-</ul>
-</li>
-<li>
-<p><strong>模板清单</strong>（principles·P161，<span class="pg">原文p593-594</span> ）：Access Auth Profile：</p>
-</li>
-<li>WLAN Service</li>
-<li>Access Role Profile</li>
-<li>AAA Server Profile</li>
-<li>Location+Period Policy</li>
-<li>Access Classification</li>
-<li>Customer Domain</li>
-<li>SPB</li>
-<li>Far End IP</li>
-<li>Static Service</li>
-<li>VXLAN</li>
-<li>Tunnel</li>
-<li>Legacy Wireless</li>
-<li>Global Configuration</li>
+<li><strong>途径选型</strong>（frameworks·F15，<span class="source-page">原文p592</span> ）：新场景走 Workflow 向导；标准化批量走 Template；个别设备差异走 Device Config（改动只影响所选设备不回写模板）</li>
+<li><strong>L2 认证与分类决策流</strong>（principles·P159，<span class="source-page">原文p591-592</span> ）：优先 802.1X，非 supplicant 或禁用时用 MAC；RADIUS 返回有效 UNP→映射 Access Role Profile+VLAN；认证未启用/失败/无有效 UNP 且启用分类→按 Port/Group ID/MAC/LLDP/认证类型/IP 分类规则给 Default UNP；UNP 与 VLAN 一旦分配不再改变</li>
+<li><strong>模板清单</strong>（principles·P161，<span class="source-page">原文p593-594</span> ）：Access Auth Profile / WLAN Service / Access Role Profile / AAA Server Profile / Location+Period Policy / Access Classification / Customer Domain / SPB / Far End IP / Static Service / VXLAN / Tunnel / Legacy Wireless / Global Configuration</li>
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>创建并下发 Access Role Profile</strong>：Unified Profile→Access Role Profile→Add：General（Auth Flag/Mobile Tag/Redirect Status/Policy List/Location+Period Policy/Inactivity Interval）+Bandwidth Control+Client Session Logging+WCF+Walled Garden+Allowed Contacts+CP Attributes→Create→Apply To Devices：Configure Mapping Method（Map to VLAN/SPB/VXLAN/Static Service/Tunnel/VLAN+Tunnel）→Select Devices→Apply（cases·C53，<span class="pg">原文p608-613</span> ）</li>
-<li><strong>Access Auth Profile 关键机制</strong>：<br>Port Bounce（COA 换 VLAN 后触发 DHCP 重新，无线与 AOS 6x 恒开）；</li>
-<li>AP Mode 默认开（自动检测 Stellar AP）；</li>
-<li>Trust Tag 默认关；</li>
-<li>Bypass VLAN 芯片直通（优先于 Trust Tag，推荐 HD IPTV）；</li>
-<li>
-<p>Bypass Status/MAC Allow EAP 组合决定 802.1X 跳过逻辑（principles·P162，<span class="pg">原文p594-601</span> ）；</p>
-</li>
-<li>
-<p><strong>无线转发模式</strong>：<br>Tunnel（GRE 到控制器）/Bridge（AP 本地）/Split Tunnel/Decrypt Tunnel；</p>
-</li>
-<li>Drop Broadcast/Multicast 与 ARP 转 Unicast 仅限 Tunnel 模式；</li>
-<li>
-<p>Band Steering：Force/Prefer（默认）/Band Balancing（principles·P163，<span class="pg">原文p598-599</span> ）；</p>
-</li>
-<li>
-<p><strong>WLAN Service 角色分配优先级</strong>：802.1X/MAC 认证返回角色 &gt; Classification Rules（仅当认证未返回或未匹配时）&gt; Default Access Role Profile；ESSID ≤32 字符（principles·P164，<span class="pg">原文p602-603</span> ）</p>
-</li>
-<li><strong>AAA Server Profile</strong>：<br>每类服务器可配主+多级备份；</li>
-<li>无线 CP 主备被忽略；</li>
-<li>Session Timeout 默认 43200；</li>
-<li>Inactivity 默认 600（须大于交换机 MAC 老化时间）；</li>
-<li>
-<p>所有超时参数修改不追溯已在线用户（principles·P167，<span class="pg">原文p614-618</span> ）；</p>
-</li>
-<li>
-<p><strong>Access Classification 规则</strong>：<br>九种类型（MAC/MAC Range/IP Address/VLAN Tag/Location(仅 Legacy AP)/ESSID/DHCP Option/DHCP Option 77/Encryption Type）；</p>
-</li>
-<li>均可附 VLAN Tag 与 Customer Domain ID；</li>
-<li>
-<p>映射 VLAN/SPB/VXLAN/Static Service 四选一（principles·P168，<span class="pg">原文p621-623</span> ）；</p>
-</li>
-<li>
-<p><strong>SPB/VXLAN/Static Service/Tunnel 映射</strong>：<br>SPB/VXLAN Profile 设备动态入档案时自动建 SAP；</p>
-</li>
-<li>Tunnel Profile：Keepalive 默认 5s、MTU 建议 Raw GRE 1476；</li>
-<li>Tunnel ID 与 Entropy 只有两种合法组合（AOS 终结=非 0 ID+Entropy 开；</li>
-<li>
-<p>非 AOS/OV VPN=0 ID+Entropy 关）（principles·P170，<span class="pg">原文p625-630</span> ）；</p>
-</li>
-<li>
-<p><strong>Global Configuration</strong>：<br>Redirect Pause Timer 默认 0；</p>
-</li>
-<li>Auth Server Down Timeout 默认 60；</li>
-<li>Redirect Port Bounce 默认 Enabled；</li>
-<li>Auth Server Down Access Role Profile=RADIUS 不可达兜底角色（principles·P172，<span class="pg">原文p634-635</span> ）；</li>
+<li><strong>创建并下发 Access Role Profile</strong>：Unified Profile→Access Role Profile→Add：General（Auth Flag/Mobile Tag/Redirect Status/Policy List/Location+Period Policy/Inactivity Interval）+Bandwidth Control+Client Session Logging+WCF+Walled Garden+Allowed Contacts+CP Attributes→Create→Apply To Devices：Configure Mapping Method（Map to VLAN/SPB/VXLAN/Static Service/Tunnel/VLAN+Tunnel）→Select Devices→Apply（cases·C53，<span class="source-page">原文p608-613</span> ）</li>
+<li><strong>Access Auth Profile 关键机制</strong>：Port Bounce（COA 换 VLAN 后触发 DHCP 重新，无线与 AOS 6x 恒开）；AP Mode 默认开（自动检测 Stellar AP）；Trust Tag 默认关；Bypass VLAN 芯片直通（优先于 Trust Tag，推荐 HD IPTV）；Bypass Status/MAC Allow EAP 组合决定 802.1X 跳过逻辑（principles·P162，<span class="source-page">原文p594-601</span> ）</li>
+<li><strong>无线转发模式</strong>：Tunnel（GRE 到控制器）/Bridge（AP 本地）/Split Tunnel/Decrypt Tunnel；Drop Broadcast/Multicast 与 ARP 转 Unicast 仅限 Tunnel 模式；Band Steering：Force/Prefer（默认）/Band Balancing（principles·P163，<span class="source-page">原文p598-599</span> ）</li>
+<li><strong>WLAN Service 角色分配优先级</strong>：802.1X/MAC 认证返回角色 &gt; Classification Rules（仅当认证未返回或未匹配时）&gt; Default Access Role Profile；ESSID ≤32 字符（principles·P164，<span class="source-page">原文p602-603</span> ）</li>
+<li><strong>AAA Server Profile</strong>：每类服务器可配主+多级备份；无线 CP 主备被忽略；Session Timeout 默认 43200；Inactivity 默认 600（须大于交换机 MAC 老化时间）；所有超时参数修改不追溯已在线用户（principles·P167，<span class="source-page">原文p614-618</span> ）</li>
+<li><strong>Access Classification 规则</strong>：九种类型（MAC/MAC Range/IP Address/VLAN Tag/Location(仅 Legacy AP)/ESSID/DHCP Option/DHCP Option 77/Encryption Type）；均可附 VLAN Tag 与 Customer Domain ID；映射 VLAN/SPB/VXLAN/Static Service 四选一（principles·P168，<span class="source-page">原文p621-623</span> ）</li>
+<li><strong>SPB/VXLAN/Static Service/Tunnel 映射</strong>：SPB/VXLAN Profile 设备动态入档案时自动建 SAP；Tunnel Profile：Keepalive 默认 5s、MTU 建议 Raw GRE 1476；Tunnel ID 与 Entropy 只有两种合法组合（AOS 终结=非 0 ID+Entropy 开；非 AOS/OV VPN=0 ID+Entropy 关）（principles·P170，<span class="source-page">原文p625-630</span> ）</li>
+<li><strong>Global Configuration</strong>：Redirect Pause Timer 默认 0；Auth Server Down Timeout 默认 60；Redirect Port Bounce 默认 Enabled；Auth Server Down Access Role Profile=RADIUS 不可达兜底角色（principles·P172，<span class="source-page">原文p634-635</span> ）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>Access Role Profile 从建档案到 Apply To Devices 全字段（cases·C53，<span class="pg">原文p608-613</span> ）</li>
-<li>L2 认证/分类决策流全链路（principles·P159，<span class="pg">原文p591-592</span> ）</li>
-<li>802.1X/MAC 无线认证 Profile 组合（principles·P171，<span class="pg">原文p631-633</span> ）</li>
+<li>Access Role Profile 从建档案到 Apply To Devices 全字段（cases·C53，<span class="source-page">原文p608-613</span> ）</li>
+<li>L2 认证/分类决策流全链路（principles·P159，<span class="source-page">原文p591-592</span> ）</li>
+<li>802.1X/MAC 无线认证 Profile 组合（principles·P171，<span class="source-page">原文p631-633</span> ）</li>
 </ul>
 <h2 id="b">B（反例/坑）</h2>
 <ul>
-<li>Redirect 开启后 Access Role Profile 只能映射 VLAN（principles·P166，<span class="pg">原文p608-613</span> ）</li>
+<li>Redirect 开启后 Access Role Profile 只能映射 VLAN（principles·P166，<span class="source-page">原文p608-613</span> ）</li>
 <li>每 Access Role Profile 仅 1 个 Policy List；PolicyView Expert 策略设备集须与档案设备集一致（principles·P166）</li>
-<li><strong>常见分配失败</strong>：<br>链路聚合成员/tagged 口不能启 UNP；VLAN 不存在或非 Standard VLAN；Port-Template 与 L2 Profile 冲突（principles·P162，<span class="pg">原文p594-601</span> ）</li>
+<li><strong>常见分配失败</strong>：<br>链路聚合成员/tagged 口不能启 UNP；VLAN 不存在或非 Standard VLAN；Port-Template 与 L2 Profile 冲突（principles·P162，<span class="source-page">原文p594-601</span> ）</li>
 <li>AP Mode 的 Secure 未勾时，AP 认证失败其客户端流量仍被信任（principles·P162）</li>
 <li><strong>取消端口分配的正规流程</strong>：<br>Device Config 删除后重推剩余端口，不要直接改档案（principles·P162）</li>
-<li>Stellar AP VLAN 须 1-4094 或 untagged 否则忽略；Stellar AP 的 VLAN 只能经 Access Role Profile 映射创建（principles·P166 / P188，<span class="pg">原文p608-613, 790-808</span> ）</li>
-<li>分类规则（MAC 规则）改动会 flush 已分类 MAC；Location 分类仅 Legacy AP，Stellar 不支持（principles·P168，<span class="pg">原文p621-623</span> ）</li>
-<li>AAA 超时参数改了不追溯已在线用户，要 flush 或重新认证才生效（principles·P167，<span class="pg">原文p614-618</span> ）</li>
-<li>同 AP 多 SSID 静态路由会累积且目的子网不得重复；勿手写隧道 VLAN 对应子网路由（AP 自动建，手写致性能劣化）（principles·P170，<span class="pg">原文p625-630</span> ）</li>
-<li>Captive Portal 不支持 OS6350（principles·P161，<span class="pg">原文p593-594</span> ）</li>
-<li>Hide SSID 几乎无安全价值（principles·P164，<span class="pg">原文p602-603</span> ）</li>
+<li>Stellar AP VLAN 须 1-4094 或 untagged 否则忽略；Stellar AP 的 VLAN 只能经 Access Role Profile 映射创建（principles·P166 / P188，<span class="source-page">原文p608-613, 790-808</span> ）</li>
+<li>分类规则（MAC 规则）改动会 flush 已分类 MAC；Location 分类仅 Legacy AP，Stellar 不支持（principles·P168，<span class="source-page">原文p621-623</span> ）</li>
+<li>AAA 超时参数改了不追溯已在线用户，要 flush 或重新认证才生效（principles·P167，<span class="source-page">原文p614-618</span> ）</li>
+<li>同 AP 多 SSID 静态路由会累积且目的子网不得重复；勿手写隧道 VLAN 对应子网路由（AP 自动建，手写致性能劣化）（principles·P170，<span class="source-page">原文p625-630</span> ）</li>
+<li>Captive Portal 不支持 OS6350（principles·P161，<span class="source-page">原文p593-594</span> ）</li>
+<li>Hide SSID 几乎无安全价值（principles·P164，<span class="source-page">原文p602-603</span> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
 <ul>
-<li>OmniVista 2500 NMS 4.9R2 User Guide 第 32 章 Unified Access（<span class="pg">原文p590-655</span> ）、Profile Polling（<span class="pg">原文p677</span> ）、DHCP Option 82（<span class="pg">原文p643-644</span> ）。</li>
+<li>OmniVista 2500 NMS 4.9R2 User Guide 第 32 章 Unified Access（<span class="source-page">原文p590-655</span> ）、Profile Polling（<span class="source-page">原文p677</span> ）、DHCP Option 82（<span class="source-page">原文p643-644</span> ）。</li>
 <li><strong>条目来源</strong>：<br>frameworks F15；cases C53；principles P159-P175。</li>
-</ul><div class="pn"><a href="ov-cli-scripting-mib.html">⬅ 上一单元：ov-cli-scripting-mib</a><a class="nxt" href="ov-upam-guest-byod.html">下一单元：ov-upam-guest-byod ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+</ul></article>
+<nav class="previous-next" aria-label="知识单元翻页"><a href="/manuals/ov2500-userguide/skills/ov-cli-scripting-mib.html"><span>上一单元</span><b>ov-cli-scripting-mib</b></a><a class="next" href="/manuals/ov2500-userguide/skills/ov-upam-guest-byod.html"><span>下一单元</span><b>ov-upam-guest-byod</b></a></nav>    <footer class="content-footer">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</footer>
+  </main>
+</div>
+  <script src="/assets/js/app.js?v=4" defer></script>
+  <script src="/assets/js/search.js?v=4" defer></script>
+  <script src="/assets/js/lightbox.js?v=5" defer></script>
+</body>
+</html>

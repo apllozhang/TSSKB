@@ -1,112 +1,92 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>精华长文 DIGEST — DT00XTE220 · OmniSwitch R6/R8 Bootcamp</title>
-<style>
-:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
-*{box-sizing:border-box}
-body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
-a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
-.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin:16px 0}
-.gallery figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px}
-.gallery img{width:100%;max-height:340px;object-fit:contain;background:#fff;border-radius:6px}
-.gallery figcaption{font-size:12.5px;color:var(--mut);text-align:center;margin-top:6px}
-/* 侧栏折叠 + 图片灯箱 */
-.tgl{position:fixed;left:0;top:45%;z-index:60;background:var(--card);border:1px solid var(--line);border-right:none;border-radius:0 8px 8px 0;color:var(--tx);padding:10px 6px;cursor:pointer;font-size:13px;line-height:1.1;writing-mode:vertical-lr}
-.tgl:hover{background:var(--acc);color:#0f172a}
-.layout.full{grid-template-columns:0 1fr}
-.layout.full aside{display:none}
-.lb{position:fixed;inset:0;background:rgba(5,10,20,.92);z-index:100;display:flex;align-items:center;justify-content:center;flex-direction:column}
-.lb img{max-width:92vw;max-height:82vh;background:#fff;border-radius:6px;transition:transform .12s}
-.lb .lbb{margin-top:10px;display:flex;gap:10px}
-.lb button{background:var(--card);border:1px solid var(--line);color:var(--tx);border-radius:8px;padding:6px 14px;cursor:pointer;font-size:14px}
-.lb button:hover{background:var(--acc);color:#0f172a}
-.search{margin:0 0 14px}
-.search input{width:100%;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--tx);font-size:13px;outline:none}
-.search input:focus{border-color:var(--acc)}
-#qres{max-height:340px;overflow-y:auto;margin-top:6px}
-#qres .qi{display:block;padding:6px 8px;border-radius:6px;font-size:12.5px;color:var(--tx);border-left:2px solid transparent}
-#qres .qi:hover{background:var(--card);text-decoration:none;border-left-color:var(--acc)}
-#qres .qi .qp{color:var(--mut);font-size:11px;display:block}
-#qres .qi b{color:var(--acc)}
-.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
-main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
-.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
-aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
-aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
-aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
-aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
-aside a:hover{background:var(--card);text-decoration:none}
-aside a.on{background:var(--card);color:var(--acc)}
-main{padding:36px 48px;max-width:1000px}
-h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
-h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
-table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
-th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
-th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
-code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
-pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
-pre code{background:none;padding:0}
-blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
-.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
-.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
-.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
-.meta{font-size:13px;color:var(--mut)}
-hr{border:none;border-top:1px solid var(--line);margin:26px 0}
-.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
-.badge.soon{background:#475569;color:#cbd5e1}
-main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
-main{padding:28px 48px 40px;max-width:1040px}
-h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
-blockquote p{margin:6px 0}
-.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
-.crumbs a{color:var(--acc)}
-.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
-.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
-.pn a:hover{border-color:var(--acc)}
-.pn .nxt{text-align:right}
-.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
-@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
-</style></head>
-<body><div class="layout"><aside><h1>DT00XTE220 · OmniSwitch R6/R8 Bootcamp</h1>
-<div class="search"><input id="qk" type="search" placeholder="🔍 搜索全站…" autocomplete="off"><div id="qres"></div></div>
-
-<div class="sub">Issue 25 · 1207 页 · 五天全科训练营（新流水线重制版，全文可溯源）</div>
-<a href="index.html">🏠 课程首页</a>
-<a href="digest.html">📖 精华长文 DIGEST</a>
-
-<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
-<a href="glossary.html">🔤 术语词典</a>
-<a href="../../index.html">⬅️ 返回培训门户</a>
-<a href="index.html">──── Skills ────</a>
-<div class="grp">开局与系统管理</div>
-<a href="skills/aos-bootcamp-switch-fundamentals.html">aos-bootcamp-switch-fundamentals</a>
-<a href="skills/aos-flash-config-management.html">aos-flash-config-management</a>
-<a href="skills/aos-stacking-virtual-chassis.html">aos-stacking-virtual-chassis</a>
-<div class="grp">二层基础与冗余</div>
-<a href="skills/aos-vlan-l2-foundations.html">aos-vlan-l2-foundations</a>
-<a href="skills/aos-lacp-stp-redundancy.html">aos-lacp-stp-redundancy</a>
-<a href="skills/aos-vrrp-first-hop-redundancy.html">aos-vrrp-first-hop-redundancy</a>
-<div class="grp">策略与准入</div>
-<a href="skills/aos-qos-policy-engine.html">aos-qos-policy-engine</a>
-<a href="skills/aos-access-guardian-unp-bootcamp.html">aos-access-guardian-unp-bootcamp</a>
-<a href="skills/aos-poe-power.html">aos-poe-power</a>
-<div class="grp">路由与安全</div>
-<a href="skills/aos-ip-routing-rip-ospf.html">aos-ip-routing-rip-ospf</a>
-<a href="skills/aos-security-vrf-macsec.html">aos-security-vrf-macsec</a>
-<div class="grp">组播与织构</div>
-<a href="skills/aos-multicast-erp-spb.html">aos-multicast-erp-spb</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../postsales/index.html">售后</a> › <a href="index.html">DT00XTE220</a> › <span>精华长文 DIGEST</span></nav><h1>精华长文 DIGEST</h1><h1 id="omniswitch-r6r8-bootcamp-issue-25dt00cte120digest">《OmniSwitch R6/R8 Bootcamp Issue 25（DT00CTE120）》蒸馏精华（DIGEST）</h1>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="面向售前、售后与网络工程师的 ALE 内部技术知识平台">
+  <meta name="theme-color" content="#6B489D">
+  <title>精华长文 DIGEST — DT00XTE220 · OmniSwitch R6/R8 Bootcamp</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=4">
+  <link rel="stylesheet" href="/assets/css/layout.css?v=4">
+  <link rel="stylesheet" href="/assets/css/components.css?v=4">
+  <link rel="stylesheet" href="/assets/css/content.css?v=7">
+  <script src="/assets/js/auth-config.js?v=4"></script>
+  <script src="/assets/js/auth-core.js?v=4"></script>
+  <script src="/assets/js/auth-guard.js?v=4"></script>
+</head>
+<body data-page-kind="course">
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <header class="topbar" data-topbar>
+    <a class="brand" href="/index.html" aria-label="返回 ALE 技术培训门户首页">
+      <img src="/assets/ale-logo-color.png" alt="Alcatel-Lucent Enterprise">
+      <span>ALE 培训门户</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-controls="primary-nav" aria-expanded="false" data-nav-toggle>
+      <span aria-hidden="true">☰</span><span class="sr-only">打开导航</span>
+    </button>
+    <nav id="primary-nav" class="primary-nav" aria-label="主导航">
+      <a href="/index.html">首页</a>
+      <a href="/paths.html">学习路径</a>
+      <a href="/presales/index.html">售前</a>
+      <a href="/postsales/index.html" aria-current="page">售后</a>
+      <a href="/wlan/index.html">无线</a>
+      <a href="/aos/index.html">AOS 手册</a>
+      <a href="/hardware/index.html">硬件</a>
+      <a href="/brochures/index.html">彩页</a>
+      <a href="/solutions/index.html">解决方案</a>
+      <a href="/security/index.html">安全</a>
+    </nav>
+    <button id="logout-btn" class="logout-btn" type="button" hidden>退出登录</button>
+  </header>
+<div class="course-layout">
+<aside class="course-sidebar" id="course-sidebar" data-sidebar>
+  <div class="sidebar-heading">
+    <p class="eyebrow">COURSE</p>
+    <h2>DT00XTE220 · OmniSwitch R6/R8 Bootcamp</h2>
+    <p>Issue 25 · 1207 页 · 五天全科训练营（新流水线重制版，全文可溯源）</p>
+  </div>
+<div class="search" data-search>
+  <label class="sr-only" for="course-search">搜索全站课程和知识单元</label>
+  <input id="course-search" type="search" placeholder="搜索课程编号、产品型号或技术关键词…" autocomplete="off" data-search-input>
+  <div class="search-results" role="listbox" aria-live="polite" data-search-results></div>
+</div>  <nav class="course-nav" aria-label="课程目录">
+    <a href="/postsales/dt00xte220-bootcamp/index.html">课程首页</a>
+    <a aria-current="page" href="/postsales/dt00xte220-bootcamp/digest.html">精华长文</a>
+    <a href="/postsales/dt00xte220-bootcamp/overview.html">教书理解</a>
+    <a href="/postsales/dt00xte220-bootcamp/glossary.html">术语词典</a>
+    <p class="course-nav-group">开局与系统管理</p>
+      <a href="/postsales/dt00xte220-bootcamp/skills/aos-bootcamp-switch-fundamentals.html">aos-bootcamp-switch-fundamentals</a>
+      <a href="/postsales/dt00xte220-bootcamp/skills/aos-flash-config-management.html">aos-flash-config-management</a>
+      <a href="/postsales/dt00xte220-bootcamp/skills/aos-stacking-virtual-chassis.html">aos-stacking-virtual-chassis</a>
+    <p class="course-nav-group">二层基础与冗余</p>
+      <a href="/postsales/dt00xte220-bootcamp/skills/aos-vlan-l2-foundations.html">aos-vlan-l2-foundations</a>
+      <a href="/postsales/dt00xte220-bootcamp/skills/aos-lacp-stp-redundancy.html">aos-lacp-stp-redundancy</a>
+      <a href="/postsales/dt00xte220-bootcamp/skills/aos-vrrp-first-hop-redundancy.html">aos-vrrp-first-hop-redundancy</a>
+    <p class="course-nav-group">策略与准入</p>
+      <a href="/postsales/dt00xte220-bootcamp/skills/aos-qos-policy-engine.html">aos-qos-policy-engine</a>
+      <a href="/postsales/dt00xte220-bootcamp/skills/aos-access-guardian-unp-bootcamp.html">aos-access-guardian-unp-bootcamp</a>
+      <a href="/postsales/dt00xte220-bootcamp/skills/aos-poe-power.html">aos-poe-power</a>
+    <p class="course-nav-group">路由与安全</p>
+      <a href="/postsales/dt00xte220-bootcamp/skills/aos-ip-routing-rip-ospf.html">aos-ip-routing-rip-ospf</a>
+      <a href="/postsales/dt00xte220-bootcamp/skills/aos-security-vrf-macsec.html">aos-security-vrf-macsec</a>
+    <p class="course-nav-group">组播与织构</p>
+      <a href="/postsales/dt00xte220-bootcamp/skills/aos-multicast-erp-spb.html">aos-multicast-erp-spb</a>
+  </nav>
+</aside>  <main id="main-content" class="course-main prose">
+    <nav class="breadcrumbs" aria-label="面包屑"><a href="/index.html">培训门户</a><span>/</span><a href="/postsales/index.html">售后 · Postsales</a><span>/</span><a href="/postsales/dt00xte220-bootcamp/index.html">DT00XTE220</a><span>/</span><span aria-current="page">精华长文 DIGEST</span></nav>
+<header class="page-intro compact"><p class="eyebrow">COURSE REFERENCE</p><h1>精华长文 DIGEST</h1></header>    <article class="markdown-body"><h1 id="omniswitch-r6r8-bootcamp-issue-25dt00cte120digest">《OmniSwitch R6/R8 Bootcamp Issue 25（DT00CTE120）》蒸馏精华（DIGEST）</h1>
 <blockquote>
 <p>来源：Bootcamp Issue 25 DT00CTE120（1207 页五天训练营 Participant's Guide），全部知识点带原书页码（&lt;&lt;<PAGE N>&gt;&gt; 格式）。</p>
 </blockquote>
 <h2 id="_1">一、本书定位</h2>
 <ul>
-<li><strong>这是 ALE 新人 ACFE/ACSE 培养的主教材</strong>：<br>五天全科训练营，从硬件认知一路讲到 SPB 织构，每天都是"Overview 原理 + Lab 完整 CLI 实操"的结构（F1，<span class="pg">原文p8-13</span> ）。</li>
+<li><strong>这是 ALE 新人 ACFE/ACSE 培养的主教材</strong>：<br>五天全科训练营，从硬件认知一路讲到 SPB 织构，每天都是"Overview 原理 + Lab 完整 CLI 实操"的结构（F1，<span class="source-page">原文p8-13</span> ）。</li>
 <li>与参考书不同，它的最大价值在 Lab 的完整命令序列与验证输出——每个特性都能对照着敲一遍。</li>
 <li>本知识库将其聚类为 12 个技能。</li>
 </ul>
 <h2 id="12">二、12 个技能摘要</h2>
-<table>
+<div class="table-scroll"><table>
 <thead>
 <tr>
 <th>#</th>
@@ -118,80 +98,80 @@ blockquote p{margin:6px 0}
 <tbody>
 <tr>
 <td>1</td>
-<td>aos-bootcamp-switch-fundamentals</td>
+<td><a href="/postsales/dt00xte220-bootcamp/skills/aos-bootcamp-switch-fundamentals.html">aos-bootcamp-switch-fundamentals</a></td>
 <td>Day1</td>
 <td>产品三层线（堆叠/加固/模块化）×速率演进主线；电源冗余 N+1 只防模块故障；9900 无背板直连</td>
 </tr>
 <tr>
 <td>2</td>
-<td>aos-flash-config-management</td>
+<td><a href="/postsales/dt00xte220-bootcamp/skills/aos-flash-config-management.html">aos-flash-config-management</a></td>
 <td>Day1+扩展</td>
 <td>working/certified 双目录互为回滚；升级四步"传 working→reload 验证→copy certified"；snapshot 文本恢复</td>
 </tr>
 <tr>
 <td>3</td>
-<td>aos-stacking-virtual-chassis</td>
+<td><a href="/postsales/dt00xte220-bootcamp/skills/aos-stacking-virtual-chassis.html">aos-stacking-virtual-chassis</a></td>
 <td>Day1</td>
 <td>堆叠四角色与 Slot-ID 唯一性；VC 五级选举；脑裂双 Master 同 IP 同 MAC，RCD/VCSP 双保险</td>
 </tr>
 <tr>
 <td>4</td>
-<td>aos-vlan-l2-foundations</td>
+<td><a href="/postsales/dt00xte220-bootcamp/skills/aos-vlan-l2-foundations.html">aos-vlan-l2-foundations</a></td>
 <td>Day2</td>
 <td>VLAN 四途径入组、动态分类五级优先序；Loopback0 是管理锚点；LLDP-MED 让话机自动上线</td>
 </tr>
 <tr>
 <td>5</td>
-<td>aos-lacp-stp-redundancy</td>
+<td><a href="/postsales/dt00xte220-bootcamp/skills/aos-lacp-stp-redundancy.html">aos-lacp-stp-redundancy</a></td>
 <td>Day2</td>
 <td>聚合靠 admin key 两端一致；MSTP 同域三要素+双实例分流；DHL 双上行 100% 带宽</td>
 </tr>
 <tr>
 <td>6</td>
-<td>aos-vrrp-first-hop-redundancy</td>
+<td><a href="/postsales/dt00xte220-bootcamp/skills/aos-vrrp-first-hop-redundancy.html">aos-vrrp-first-hop-redundancy</a></td>
 <td>Day3</td>
 <td>虚拟 MAC 00-00-5E-00-01-{VRID}；Skew_Time=(256-Priority)/256 错峰升主；Tracking 扣优先级触发切换</td>
 </tr>
 <tr>
 <td>7</td>
-<td>aos-qos-policy-engine</td>
+<td><a href="/postsales/dt00xte220-bootcamp/skills/aos-qos-policy-engine.html">aos-qos-policy-engine</a></td>
 <td>Day3</td>
 <td>QoS 与 ACL 同一策略三元组引擎；默认全 accept+端口不信任是两大事故源；R8 QSet 三 Profile</td>
 </tr>
 <tr>
 <td>8</td>
-<td>aos-access-guardian-unp-bootcamp</td>
+<td><a href="/postsales/dt00xte220-bootcamp/skills/aos-access-guardian-unp-bootcamp.html">aos-access-guardian-unp-bootcamp</a></td>
 <td>Day3</td>
 <td>UNP=VLAN+策略列表随人走；RADIUS Filter-ID 下发、失败走降级链；R8 十六级分类+IoT 指纹画像</td>
 </tr>
 <tr>
 <td>9</td>
-<td>aos-poe-power</td>
+<td><a href="/postsales/dt00xte220-bootcamp/skills/aos-poe-power.html">aos-poe-power</a></td>
 <td>Day3</td>
 <td>动态按需供电至预算上限；默认 oper down 须 lanpower start；critical 优先级最后断电</td>
 </tr>
 <tr>
 <td>10</td>
-<td>aos-ip-routing-rip-ospf</td>
+<td><a href="/postsales/dt00xte220-bootcamp/skills/aos-ip-routing-rip-ospf.html">aos-ip-routing-rip-ospf</a></td>
 <td>Day4+扩展</td>
 <td>偏好值 Local 1/Static 2/OSPF 10/RIP 100 定乾坤；区域=LSA 集合；GR 靠 helper 契约；BGP/IS-IS/SLB/IPv6 扩展并入</td>
 </tr>
 <tr>
 <td>11</td>
-<td>aos-security-vrf-macsec</td>
+<td><a href="/postsales/dt00xte220-bootcamp/skills/aos-security-vrf-macsec.html">aos-security-vrf-macsec</a></td>
 <td>Day4+扩展</td>
 <td>AOS 安全组合拳"默认收紧、显式信任"；VRF 隔离是默认、互通是例外（route-map 泄漏）</td>
 </tr>
 <tr>
 <td>12</td>
-<td>aos-multicast-erp-spb</td>
+<td><a href="/postsales/dt00xte220-bootcamp/skills/aos-multicast-erp-spb.html">aos-multicast-erp-spb</a></td>
 <td>Day5+扩展</td>
 <td>组播两层解（IPMS 本段/PIM-SM 跨段）；ERP 牺牲一条 RPL 换全环无环；Auto-fabric 七步零接触</td>
 </tr>
 </tbody>
-</table>
+</table></div>
 <h2 id="_2">三、五天页码索引表</h2>
-<table>
+<div class="table-scroll"><table>
 <thead>
 <tr>
 <th>天</th>
@@ -204,65 +184,57 @@ blockquote p{margin:6px 0}
 <tr>
 <td>Day 1</td>
 <td>硬件产品线 + System Management（目录/回滚/CLI/远程访问，7 个 Lab）+ Stacking R6 + Virtual Chassis + 诊断</td>
-<td><span class="pg">原文p18-356</span></td>
+<td><span class="source-page">原文p18-356</span></td>
 <td>1 / 2 / 3</td>
 </tr>
 <tr>
 <td>Day 2</td>
 <td>VLAN + LACP + 802.1q + STP/MSTP + DHL + 高级 IP 接口/DHCP Relay + LLDP</td>
-<td><span class="pg">原文p358-521</span></td>
+<td><span class="source-page">原文p358-521</span></td>
 <td>4 / 5</td>
 </tr>
 <tr>
 <td>Day 3</td>
 <td>VRRP + QoS + ACL + Access Guardian(UNP)/IoT + PoE</td>
-<td><span class="pg">原文p522-710</span></td>
+<td><span class="source-page">原文p522-710</span></td>
 <td>6 / 7 / 8 / 9</td>
 </tr>
 <tr>
 <td>Day 4</td>
 <td>IP 路由 RIP/OSPF（GR）+ AOS 网络安全（LPS 等）+ VRF</td>
-<td><span class="pg">原文p711-864</span></td>
+<td><span class="source-page">原文p711-864</span></td>
 <td>10 / 11</td>
 </tr>
 <tr>
 <td>Day 5</td>
 <td>IP 组播（PIM-SM）+ 二层高级（ERP）+ Intelligent Fabric（SPB + Lab）</td>
-<td><span class="pg">原文p865-960</span></td>
+<td><span class="source-page">原文p865-960</span></td>
 <td>12</td>
 </tr>
 <tr>
 <td>扩展</td>
 <td>代码升级 / MVRP / SLB / 静态聚合 / AG Captive Portal / MACsec / BGP / ISIS / 安全认证 / IPv6</td>
-<td><span class="pg">原文p961-1138</span></td>
+<td><span class="source-page">原文p961-1138</span></td>
 <td>2 / 5 / 8 / 10 / 11 / 12</td>
 </tr>
 <tr>
 <td>附录</td>
 <td>ProActive Lifecycle / CodeGuardian / 全系列机型速查</td>
-<td><span class="pg">原文p1139-1207</span></td>
+<td><span class="source-page">原文p1139-1207</span></td>
 <td>1</td>
 </tr>
 </tbody>
-</table>
+</table></div>
 <h2 id="_3">四、贯穿五天的三条主线</h2>
 <ol>
 <li>
-<p>一切变更先设计回滚路径。</p>
-<ul>
-<li>Day 1 的 working/certified 双目录是全书的方法论地基（<span class="pg">原文p126-133</span> ）：Lab 里每次实验都以 <code>reload working no rollback-timeout</code> 收尾、升级以"验证后才 <code>copy working certified</code>"收口（<span class="pg">原文p962-965</span> ）。</li>
-<li>堆叠/VC 的 takeover 同样要求先 <code>copy flash-synchro</code> 同步（<span class="pg">原文p260</span> ）。</li>
-</ul>
+<p><strong>一切变更先设计回滚路径。</strong> Day 1 的 working/certified 双目录是全书的方法论地基（<span class="source-page">原文p126-133</span> ）：Lab 里每次实验都以 <code>reload working no rollback-timeout</code> 收尾、升级以"验证后才 <code>copy working certified</code>"收口（<span class="source-page">原文p962-965</span> ）。堆叠/VC 的 takeover 同样要求先 <code>copy flash-synchro</code> 同步（<span class="source-page">原文p260</span> ）。</p>
 </li>
 <li>
 <p><strong>enable 分层开关 + show 族验证。</strong> AOS 的配置节奏统一是"先建对象（VLAN/聚合/接口/策略）→ 挂成员 → 最后统一 admin-state enable"，验证一律走配套 show 命令族——从 <code>show stack topology</code> 到 <code>show ip pim sgroute</code>，每个特性都有状态对照表。</p>
 </li>
 <li>
-<p>默认值是最大的坑。</p>
-<ul>
-<li>全书反例高度集中于默认行为：远程访问默认全关（<span class="pg">原文p184</span> ）、IPMS 默认禁用（<span class="pg">原文p877</span> ）、PoE 默认 oper down（<span class="pg">原文p697</span> ）、QoS 默认全 accept 而端口默认不信任（<span class="pg">原文p558, 590</span> ）、LPS 默认只学 1 个 MAC（<span class="pg">原文p850</span> ）、端口默认不信任 DHCP Offer/ACK（<span class="pg">原文p830</span> ）。</li>
-<li>上线清单的第一件事就是把这批默认值过一遍。</li>
-</ul>
+<p><strong>默认值是最大的坑。</strong> 全书反例高度集中于默认行为：远程访问默认全关（<span class="source-page">原文p184</span> ）、IPMS 默认禁用（<span class="source-page">原文p877</span> ）、PoE 默认 oper down（<span class="source-page">原文p697</span> ）、QoS 默认全 accept 而端口默认不信任（<span class="source-page">原文p558, 590</span> ）、LPS 默认只学 1 个 MAC（<span class="source-page">原文p850</span> ）、端口默认不信任 DHCP Offer/ACK（<span class="source-page">原文p830</span> ）。上线清单的第一件事就是把这批默认值过一遍。</p>
 </li>
 </ol>
 <h2 id="_4">五、使用建议</h2>
@@ -270,4 +242,12 @@ blockquote p{margin:6px 0}
 <li><strong>查部署步骤</strong>：<br>进对应 skill 的 A2；查禁区先看各 skill 的 B 节。</li>
 <li>R6/R8 命令差异（如 <code>vlan port default</code> vs <code>vlan members port</code>、<code>lacp linkagg</code> vs <code>linkagg lacp agg</code>）在各 skill 的 A2 中成对标注。</li>
 <li>术语速查见同目录 GLOSSARY.md（按五天主题分组）。</li>
-</ul><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+</ul></article>
+    <footer class="content-footer">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</footer>
+  </main>
+</div>
+  <script src="/assets/js/app.js?v=4" defer></script>
+  <script src="/assets/js/search.js?v=4" defer></script>
+  <script src="/assets/js/lightbox.js?v=5" defer></script>
+</body>
+</html>

@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="面向售前、售后与网络工程师的 ALE 内部技术知识平台">
+  <meta name="theme-color" content="#6B489D">
+  <title>transit-multicast — 轨道交通解决方案 · 设计指南</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=4">
+  <link rel="stylesheet" href="/assets/css/layout.css?v=4">
+  <link rel="stylesheet" href="/assets/css/components.css?v=4">
+  <link rel="stylesheet" href="/assets/css/content.css?v=7">
+  <script src="/assets/js/auth-config.js?v=4"></script>
+  <script src="/assets/js/auth-core.js?v=4"></script>
+  <script src="/assets/js/auth-guard.js?v=4"></script>
+</head>
+<body data-page-kind="course">
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <header class="topbar" data-topbar>
+    <a class="brand" href="/index.html" aria-label="返回 ALE 技术培训门户首页">
+      <img src="/assets/ale-logo-color.png" alt="Alcatel-Lucent Enterprise">
+      <span>ALE 培训门户</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-controls="primary-nav" aria-expanded="false" data-nav-toggle>
+      <span aria-hidden="true">☰</span><span class="sr-only">打开导航</span>
+    </button>
+    <nav id="primary-nav" class="primary-nav" aria-label="主导航">
+      <a href="/index.html">首页</a>
+      <a href="/paths.html">学习路径</a>
+      <a href="/presales/index.html">售前</a>
+      <a href="/postsales/index.html">售后</a>
+      <a href="/wlan/index.html">无线</a>
+      <a href="/aos/index.html">AOS 手册</a>
+      <a href="/hardware/index.html">硬件</a>
+      <a href="/brochures/index.html">彩页</a>
+      <a href="/solutions/index.html" aria-current="page">解决方案</a>
+      <a href="/security/index.html">安全</a>
+    </nav>
+    <button id="logout-btn" class="logout-btn" type="button" hidden>退出登录</button>
+  </header>
+<div class="course-layout">
+<aside class="course-sidebar" id="course-sidebar" data-sidebar>
+  <div class="sidebar-heading">
+    <p class="eyebrow">COURSE</p>
+    <h2>轨道交通解决方案 · 设计指南</h2>
+    <p>两版设计指南 112 页 · 分层架构 / SPB 织构 / 组播 / 容量测算 / 安全纵深 / 产品选型</p>
+  </div>
+<div class="search" data-search>
+  <label class="sr-only" for="course-search">搜索全站课程和知识单元</label>
+  <input id="course-search" type="search" placeholder="搜索课程编号、产品型号或技术关键词…" autocomplete="off" data-search-input>
+  <div class="search-results" role="listbox" aria-live="polite" data-search-results></div>
+</div>  <nav class="course-nav" aria-label="课程目录">
+    <a href="/solutions/transportation/index.html">课程首页</a>
+    <a href="/solutions/transportation/digest.html">精华长文</a>
+    <a href="/solutions/transportation/overview.html">教书理解</a>
+    <a href="/solutions/transportation/glossary.html">术语词典</a>
+    <p class="course-nav-group">架构</p>
+      <a href="/solutions/transportation/skills/transit-overview.html">transit-overview</a>
+      <a href="/solutions/transportation/skills/transit-architecture.html">transit-architecture</a>
+    <p class="course-nav-group">织构设计</p>
+      <a href="/solutions/transportation/skills/transit-spb-design.html">transit-spb-design</a>
+      <a aria-current="page" href="/solutions/transportation/skills/transit-multicast.html">transit-multicast</a>
+      <a href="/solutions/transportation/skills/transit-capacity.html">transit-capacity</a>
+    <p class="course-nav-group">接入与运维</p>
+      <a href="/solutions/transportation/skills/transit-attachment.html">transit-attachment</a>
+      <a href="/solutions/transportation/skills/transit-ops.html">transit-ops</a>
+    <p class="course-nav-group">安全与选型</p>
+      <a href="/solutions/transportation/skills/transit-security.html">transit-security</a>
+      <a href="/solutions/transportation/skills/transit-products.html">transit-products</a>
+  </nav>
+</aside>  <main id="main-content" class="course-main prose">
+    <nav class="breadcrumbs" aria-label="面包屑"><a href="/index.html">培训门户</a><span>/</span><a href="/solutions/index.html">解决方案 · Solutions</a><span>/</span><a href="/solutions/transportation/index.html">轨道交通解决方案</a><span>/</span><span aria-current="page">transit-multicast</span></nav>
+<header class="skill-heading"><div><p class="eyebrow">KNOWLEDGE UNIT</p><h1>transit-multicast</h1></div><dl><div><dt>Skill ID</dt><dd>transit-multicast</dd></div></dl></header>    <article class="markdown-body"><h2 id="r">R（何时用）</h2>
+<ul>
+<li>规划 CCTV、乘客广播、PIS 等组播/广播业务的承载方式</li>
+<li>选 Head-End 还是 Tandem 复制模式，决定 ISID 的复制配置</li>
+<li>L3 组播模式选型（PIM-SM/BIDIR/SSM）与 RP 位置设计</li>
+<li>估算不同设计下组播对环链路带宽的占用（链路容量规划的前置输入）</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<ul>
+<li><strong>SPB 对 BUM（广播/未知单播/组播）有三种复制模式</strong>：<br>Head-End 在入口 BEB 复制成多份单播（省资源、费带宽）；Tandem (S,G) 建独立组播 SPT、任一链路只发一份（最省带宽、费资源）；Tandem (*,G) 按 BVLAN 建共享树、根在 bridge priority 决定的节点（折中，适合流量都过 OCC 根的场景）（通用版 p35-36）。</li>
+<li><strong>轨交组播两类典型形态</strong>：<br>源在 OCC 收看在车站（PIS/PA/Infotainment），源在车站收看在 OCC（CCTV）（通用版 p37）。</li>
+<li>L3 用 PIM-SM 且 RP 放 OCC——反正源或收端总有一头在 OCC；应用支持时叠开 SSM 让同站源收直连、绕开 RP（通用版 p37-38）。</li>
+<li><strong>最要命的坑</strong>：<br>L2 设计+全站共享 VLAN/ISID+Head-End 复制，站源组播总流量按 N×(N+1) 随站数平方爆炸，必须换 Tandem——而这套设计本身就因 BUM 泛洪不被推荐（通用版 p39）。</li>
+</ul>
+<h2 id="a1">A1（决策要点）</h2>
+<ol>
+<li>复制模式选型：组播流量大的系统（CCTV）选 Tandem (S,G)；组播少、源多收少的场景 Head-End（配 IGMP Snooping，AOS 8.4.1R01 起）即可；流量都过根桥且不需一致性时可选 Tandem (*,G)（通用版 p35-36）</li>
+<li>L3 组播基准配置：PIM-SM + RP 在 OCC；应用支持就加 SSM 解决同站源收（通用版 p37-38）</li>
+<li>同站源收的本地组播（站内 CCTV 大屏）不上环，不计入环容量（通用版 p37）</li>
+<li>源在 OCC 场景优先"Tandem:1"或"L3 RP 在 OCC:1"这类单份上环的形态（通用版 p38）</li>
+<li>任何"全站共享 VLAN/ISID 的 L2 设计"直接判负——即便没有组播，广播与未知单播也要全网泛洪（通用版 p39）</li>
+</ol>
+<h2 id="a2">A2（细节速查表）</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>复制模式</th>
+<th>工作机制</th>
+<th>带宽效率</th>
+<th>资源占用</th>
+<th>与单播 SPT 一致</th>
+<th>适用</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Head-End</td>
+<td>入口 BEB 复制为多份单播</td>
+<td>低</td>
+<td>低</td>
+<td>是</td>
+<td>组播流量小；源多收少（配 IGMP Snooping）</td>
+<td>通用版 p35-36</td>
+</tr>
+<tr>
+<td>Tandem (S,G)</td>
+<td>独立组播 SPT，分叉点复制</td>
+<td>高</td>
+<td>高（额外 SPT+组播 FDB）</td>
+<td>是</td>
+<td>组播流量大；源少收多</td>
+<td>通用版 p35-36</td>
+</tr>
+<tr>
+<td>Tandem (*,G)</td>
+<td>每 BVLAN 一棵共享树</td>
+<td>高</td>
+<td>低-中</td>
+<td>否</td>
+<td>流量集中过根桥（OCC 为根）；与三方设备互通</td>
+<td>通用版 p35-36</td>
+</tr>
+</tbody>
+</table></div>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>场景（N 站，1 源）</th>
+<th>设计</th>
+<th>IP 层复制</th>
+<th>环上总流量（Tandem）</th>
+<th>环上总流量（Head-End）</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>源在 OCC</td>
+<td>L2，各站独立 VLAN/ISID</td>
+<td>每站一份(N)</td>
+<td>N</td>
+<td>2N</td>
+<td>通用版 p38</td>
+</tr>
+<tr>
+<td>源在 OCC</td>
+<td>L2，全站共享 VLAN/ISID</td>
+<td>无</td>
+<td>1</td>
+<td>N+1</td>
+<td>通用版 p38</td>
+</tr>
+<tr>
+<td>源在 OCC</td>
+<td>L3 VPN，RP 在 OCC</td>
+<td>无</td>
+<td>1</td>
+<td>N+1</td>
+<td>通用版 p38</td>
+</tr>
+<tr>
+<td>每站 1 源</td>
+<td>L2，各站独立 VLAN/ISID</td>
+<td>无</td>
+<td>N</td>
+<td>2N</td>
+<td>通用版 p39</td>
+</tr>
+<tr>
+<td>每站 1 源</td>
+<td>L2，全站共享 VLAN/ISID</td>
+<td>无</td>
+<td>N</td>
+<td><strong>N×(N+1)</strong></td>
+<td>通用版 p39</td>
+</tr>
+<tr>
+<td>每站 1 源</td>
+<td>L3 VPN，RP 在 OCC</td>
+<td>无</td>
+<td>N</td>
+<td>无</td>
+<td>通用版 p39</td>
+</tr>
+</tbody>
+</table></div>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>L3 组播要点</th>
+<th>说明</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>支持模式</td>
+<td>PIM Sparse/Dense/BIDIR/SSM</td>
+<td>通用版 p37</td>
+</tr>
+<tr>
+<td>RP 位置</td>
+<td>OCC（源或收端必有一头在 OCC）</td>
+<td>通用版 p37-38</td>
+</tr>
+<tr>
+<td>L2 设计下的 L3 组播</td>
+<td>源收不同子网即触发，至少在 OCC BEB 路由</td>
+<td>通用版 p37</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="e">E（场景案例）</h2>
+<ul>
+<li><strong>轻轨案例</strong>：<br>CCTV ISID 用 Tandem (S,G)、PIM-SM RP 在 OCC、SSM 直收同站源的组合配置（通用版 p41）</li>
+<li><strong>表 9/表 10 全形态推演</strong>：<br>同一业务在不同设计下环流量从 1 份到 N×(N+1) 份的量级差异（通用版 p38-39）</li>
+<li>Tandem (*,G) 以 OCC 为根桥、PIS/PA 这类"OCC 发全网收"业务的适配（通用版 p36）</li>
+</ul>
+<h2 id="b">B（限制与坑）</h2>
+<ul>
+<li>Head-End 用于站源 CCTV + 共享 VLAN/ISID——流量平方级爆炸（通用版 p39）</li>
+<li>L2 共享 VLAN/ISID 设计即便无组播也逃不掉 BUM 全网泛洪（通用版 p39）</li>
+<li>组播密集系统误用 Head-End——原文明确推荐 Tandem（通用版 p39）</li>
+<li><strong>通用版文档评审批注提示</strong>：<br>该章节数字当时尚未经实验室验证，且现实项目常在车站配录像机本地存储、只上传选中流，实际流量模型可能与表 9/10 不同，规划前应核实（通用版 p37、p41）</li>
+<li>8.4.1R01 前 Head-End 无 IGMP Snooping 配套，优化条件不成立（通用版 p36）</li>
+</ul>
+<h2 id="_1">来源</h2>
+<p>Transportation Networks Design Guide（p35-39）+ SPB-based Transportation Networks Design Guide（p26-29，表 9/10 相同；Head-End 优化条件在该版写作时标注为 Multicast Optimization Phase II，需联系 ALE 确认可用性）</p></article>
+<nav class="previous-next" aria-label="知识单元翻页"><a href="/solutions/transportation/skills/transit-spb-design.html"><span>上一单元</span><b>transit-spb-design</b></a><a class="next" href="/solutions/transportation/skills/transit-capacity.html"><span>下一单元</span><b>transit-capacity</b></a></nav>    <footer class="content-footer">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</footer>
+  </main>
+</div>
+  <script src="/assets/js/app.js?v=4" defer></script>
+  <script src="/assets/js/search.js?v=4" defer></script>
+  <script src="/assets/js/lightbox.js?v=5" defer></script>
+</body>
+</html>

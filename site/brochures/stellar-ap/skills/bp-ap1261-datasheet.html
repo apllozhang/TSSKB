@@ -1,102 +1,83 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>bp-ap1261-datasheet — OmniAccess Stellar WLAN · 官方数据表</title>
-<style>
-:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
-*{box-sizing:border-box}
-body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
-a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
-.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin:16px 0}
-.gallery figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px}
-.gallery img{width:100%;max-height:340px;object-fit:contain;background:#fff;border-radius:6px}
-.gallery figcaption{font-size:12.5px;color:var(--mut);text-align:center;margin-top:6px}
-/* 侧栏折叠 + 图片灯箱 */
-.tgl{position:fixed;left:0;top:45%;z-index:60;background:var(--card);border:1px solid var(--line);border-right:none;border-radius:0 8px 8px 0;color:var(--tx);padding:10px 6px;cursor:pointer;font-size:13px;line-height:1.1;writing-mode:vertical-lr}
-.tgl:hover{background:var(--acc);color:#0f172a}
-.layout.full{grid-template-columns:0 1fr}
-.layout.full aside{display:none}
-.lb{position:fixed;inset:0;background:rgba(5,10,20,.92);z-index:100;display:flex;align-items:center;justify-content:center;flex-direction:column}
-.lb img{max-width:92vw;max-height:82vh;background:#fff;border-radius:6px;transition:transform .12s}
-.lb .lbb{margin-top:10px;display:flex;gap:10px}
-.lb button{background:var(--card);border:1px solid var(--line);color:var(--tx);border-radius:8px;padding:6px 14px;cursor:pointer;font-size:14px}
-.lb button:hover{background:var(--acc);color:#0f172a}
-.search{margin:0 0 14px}
-.search input{width:100%;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--tx);font-size:13px;outline:none}
-.search input:focus{border-color:var(--acc)}
-#qres{max-height:340px;overflow-y:auto;margin-top:6px}
-#qres .qi{display:block;padding:6px 8px;border-radius:6px;font-size:12.5px;color:var(--tx);border-left:2px solid transparent}
-#qres .qi:hover{background:var(--card);text-decoration:none;border-left-color:var(--acc)}
-#qres .qi .qp{color:var(--mut);font-size:11px;display:block}
-#qres .qi b{color:var(--acc)}
-.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
-main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
-.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
-aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
-aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
-aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
-aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
-aside a:hover{background:var(--card);text-decoration:none}
-aside a.on{background:var(--card);color:var(--acc)}
-main{padding:36px 48px;max-width:1000px}
-h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
-h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
-table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
-th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
-th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
-code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
-pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
-pre code{background:none;padding:0}
-blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
-.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
-.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
-.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
-.meta{font-size:13px;color:var(--mut)}
-hr{border:none;border-top:1px solid var(--line);margin:26px 0}
-.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
-.badge.soon{background:#475569;color:#cbd5e1}
-main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
-main{padding:28px 48px 40px;max-width:1040px}
-h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
-blockquote p{margin:6px 0}
-.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
-.crumbs a{color:var(--acc)}
-.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
-.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
-.pn a:hover{border-color:var(--acc)}
-.pn .nxt{text-align:right}
-.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
-@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
-</style></head>
-<body><div class="layout"><aside><h1>OmniAccess Stellar WLAN · 官方数据表</h1>
-<div class="search"><input id="qk" type="search" placeholder="🔍 搜索全站…" autocomplete="off"><div id="qres"></div></div>
-
-<div class="sub">2026-08 快照 · 14 份 128 页 · AP1261-AP1570 全系选型速查</div>
-<a href="../index.html">🏠 课程首页</a>
-<a href="../digest.html">📖 精华长文 DIGEST</a>
-
-<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
-<a href="../glossary.html">🔤 术语词典</a>
-<a href="../../../index.html">⬅️ 返回培训门户</a>
-<a href="../index.html">──── Skills ────</a>
-<div class="grp">Wi-Fi 7 旗舰</div>
-<a href="../skills/bp-ap1540-datasheet.html">bp-ap1540-datasheet</a>
-<a href="../skills/bp-ap1561-datasheet.html">bp-ap1561-datasheet</a>
-<a href="../skills/bp-ap1570-datasheet.html">bp-ap1570-datasheet</a>
-<div class="grp">Wi-Fi 6E</div>
-<a href="../skills/bp-ap1431-datasheet.html">bp-ap1431-datasheet</a>
-<a href="../skills/bp-ap1451-datasheet.html">bp-ap1451-datasheet</a>
-<div class="grp">Wi-Fi 6</div>
-<a href="../skills/bp-ap1261-datasheet.html" class="on">bp-ap1261-datasheet</a>
-<a href="../skills/bp-ap1301-datasheet.html">bp-ap1301-datasheet</a>
-<a href="../skills/bp-ap1301h-datasheet.html">bp-ap1301h-datasheet</a>
-<a href="../skills/bp-ap1331-datasheet.html">bp-ap1331-datasheet</a>
-<a href="../skills/bp-ap1351-datasheet.html">bp-ap1351-datasheet</a>
-<a href="../skills/bp-ap1360-datasheet.html">bp-ap1360-datasheet</a>
-<div class="grp">Wi-Fi 7 中端</div>
-<a href="../skills/bp-ap1501-datasheet.html">bp-ap1501-datasheet</a>
-<a href="../skills/bp-ap1511-datasheet.html">bp-ap1511-datasheet</a>
-<a href="../skills/bp-ap1521-datasheet.html">bp-ap1521-datasheet</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../brochures/index.html">产品彩页</a> › <a href="../index.html">OmniAccess Stellar WLAN</a> › <span>bp-ap1261-datasheet</span></nav><h1>bp-ap1261-datasheet</h1><p class="meta"><span class="badge">SKILL</span> bp-ap1261-datasheet · 来源页码: </p><p><img alt="AP1261 数据表速查（室外 802.11ac Wave2 老将） · 产品实物图（官方彩页）" src="images/ap1261.jpeg" /></p>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="面向售前、售后与网络工程师的 ALE 内部技术知识平台">
+  <meta name="theme-color" content="#6B489D">
+  <title>bp-ap1261-datasheet — OmniAccess Stellar WLAN · 官方数据表</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=4">
+  <link rel="stylesheet" href="/assets/css/layout.css?v=4">
+  <link rel="stylesheet" href="/assets/css/components.css?v=4">
+  <link rel="stylesheet" href="/assets/css/content.css?v=7">
+  <script src="/assets/js/auth-config.js?v=4"></script>
+  <script src="/assets/js/auth-core.js?v=4"></script>
+  <script src="/assets/js/auth-guard.js?v=4"></script>
+</head>
+<body data-page-kind="course">
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <header class="topbar" data-topbar>
+    <a class="brand" href="/index.html" aria-label="返回 ALE 技术培训门户首页">
+      <img src="/assets/ale-logo-color.png" alt="Alcatel-Lucent Enterprise">
+      <span>ALE 培训门户</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-controls="primary-nav" aria-expanded="false" data-nav-toggle>
+      <span aria-hidden="true">☰</span><span class="sr-only">打开导航</span>
+    </button>
+    <nav id="primary-nav" class="primary-nav" aria-label="主导航">
+      <a href="/index.html">首页</a>
+      <a href="/paths.html">学习路径</a>
+      <a href="/presales/index.html">售前</a>
+      <a href="/postsales/index.html">售后</a>
+      <a href="/wlan/index.html">无线</a>
+      <a href="/aos/index.html">AOS 手册</a>
+      <a href="/hardware/index.html">硬件</a>
+      <a href="/brochures/index.html" aria-current="page">彩页</a>
+      <a href="/solutions/index.html">解决方案</a>
+      <a href="/security/index.html">安全</a>
+    </nav>
+    <button id="logout-btn" class="logout-btn" type="button" hidden>退出登录</button>
+  </header>
+<div class="course-layout">
+<aside class="course-sidebar" id="course-sidebar" data-sidebar>
+  <div class="sidebar-heading">
+    <p class="eyebrow">COURSE</p>
+    <h2>OmniAccess Stellar WLAN · 官方数据表</h2>
+    <p>2026-08 快照 · 14 份 128 页 · AP1261-AP1570 全系选型速查</p>
+  </div>
+<div class="search" data-search>
+  <label class="sr-only" for="course-search">搜索全站课程和知识单元</label>
+  <input id="course-search" type="search" placeholder="搜索课程编号、产品型号或技术关键词…" autocomplete="off" data-search-input>
+  <div class="search-results" role="listbox" aria-live="polite" data-search-results></div>
+</div>  <nav class="course-nav" aria-label="课程目录">
+    <a href="/brochures/stellar-ap/index.html">课程首页</a>
+    <a href="/brochures/stellar-ap/digest.html">精华长文</a>
+    <a href="/brochures/stellar-ap/overview.html">教书理解</a>
+    <a href="/brochures/stellar-ap/glossary.html">术语词典</a>
+    <p class="course-nav-group">Wi-Fi 7 旗舰（1540/1561/1570）</p>
+      <a href="/brochures/stellar-ap/skills/bp-ap1540-datasheet.html">bp-ap1540-datasheet</a>
+      <a href="/brochures/stellar-ap/skills/bp-ap1561-datasheet.html">bp-ap1561-datasheet</a>
+      <a href="/brochures/stellar-ap/skills/bp-ap1570-datasheet.html">bp-ap1570-datasheet</a>
+    <p class="course-nav-group">Wi-Fi 7 中端（1501/1511/1521）</p>
+      <a href="/brochures/stellar-ap/skills/bp-ap1501-datasheet.html">bp-ap1501-datasheet</a>
+      <a href="/brochures/stellar-ap/skills/bp-ap1511-datasheet.html">bp-ap1511-datasheet</a>
+      <a href="/brochures/stellar-ap/skills/bp-ap1521-datasheet.html">bp-ap1521-datasheet</a>
+    <p class="course-nav-group">Wi-Fi 6E（1431/1451）</p>
+      <a href="/brochures/stellar-ap/skills/bp-ap1431-datasheet.html">bp-ap1431-datasheet</a>
+      <a href="/brochures/stellar-ap/skills/bp-ap1451-datasheet.html">bp-ap1451-datasheet</a>
+    <p class="course-nav-group">Wi-Fi 6 系列（1301-1360）</p>
+      <a href="/brochures/stellar-ap/skills/bp-ap1301-datasheet.html">bp-ap1301-datasheet</a>
+      <a href="/brochures/stellar-ap/skills/bp-ap1301h-datasheet.html">bp-ap1301h-datasheet</a>
+      <a href="/brochures/stellar-ap/skills/bp-ap1331-datasheet.html">bp-ap1331-datasheet</a>
+      <a href="/brochures/stellar-ap/skills/bp-ap1351-datasheet.html">bp-ap1351-datasheet</a>
+      <a href="/brochures/stellar-ap/skills/bp-ap1360-datasheet.html">bp-ap1360-datasheet</a>
+    <p class="course-nav-group">Wi-Fi 5 系列（1261）</p>
+      <a aria-current="page" href="/brochures/stellar-ap/skills/bp-ap1261-datasheet.html">bp-ap1261-datasheet</a>
+  </nav>
+</aside>  <main id="main-content" class="course-main prose">
+    <nav class="breadcrumbs" aria-label="面包屑"><a href="/index.html">培训门户</a><span>/</span><a href="/brochures/index.html">产品彩页 · Product Datasheets</a><span>/</span><a href="/brochures/stellar-ap/index.html">OmniAccess Stellar WLAN</a><span>/</span><span aria-current="page">bp-ap1261-datasheet</span></nav>
+<header class="skill-heading"><div><p class="eyebrow">KNOWLEDGE UNIT</p><h1>bp-ap1261-datasheet</h1></div><dl><div><dt>Skill ID</dt><dd>bp-ap1261-datasheet</dd></div></dl></header>    <article class="markdown-body"><p><img alt="AP1261 数据表速查（室外 802.11ac Wave2 老将） · 产品实物图（官方彩页）" src="images/ap1261.jpeg"></p>
 <h2 id="r">R（触发场景）</h2>
 <ul>
 <li>老室外网扩容/替换，库里还有 AP1261（OAW-AP1261-RW-B）行项，核对规格与供电</li>
@@ -105,7 +86,7 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="i">I（核心理念）</h2>
 <ul>
-<li>室外 802.11ac Wave2 双频 2x2 入门机型，全产品线里唯一的"前 Wi-Fi 6"在售型号（X10，<span class="pg">原文p1</span> /<span class="pg">原文p3</span> ）。</li>
+<li>室外 802.11ac Wave2 双频 2x2 入门机型，全产品线里唯一的"前 Wi-Fi 6"在售型号（X10，<span class="source-page">原文p1</span> /<span class="source-page">原文p3</span> ）。</li>
 <li>双射频（5G ac 2x2 + 2.4G n 2x2），无扫描/IoT 射频、无 USB、单 GbE 口。</li>
 </ul>
 <h2 id="a1">A1（选型差异）</h2>
@@ -115,7 +96,7 @@ blockquote p{margin:6px 0}
 <li><strong>AP1261 仅适合</strong>：<br>11ac 补点、价格极敏感、单口单电的存量环境</li>
 </ul>
 <h2 id="a2">A2（规格速查表）</h2>
-<table>
+<div class="table-scroll"><table>
 <thead>
 <tr>
 <th>项目</th>
@@ -127,103 +108,111 @@ blockquote p{margin:6px 0}
 <tr>
 <td>射频架构</td>
 <td>5GHz 802.11ac 2x2:2 MU-MIMO（867Mbps）+ 2.4GHz 802.11n 2x2:2（300Mbps）</td>
-<td><span class="pg">原文p3</span></td>
+<td><span class="source-page">原文p3</span></td>
 </tr>
 <tr>
 <td>聚合速率</td>
 <td>1.2Gbps（867M@5G + 300M@2.4G）</td>
-<td><span class="pg">原文p1</span></td>
+<td><span class="source-page">原文p1</span></td>
 </tr>
 <tr>
 <td>MIMO/速率档</td>
 <td>5G 最高 VHT80；2.4G HT40；A-MPDU/A-MSDU 聚合；TxBF 波束赋形</td>
-<td><span class="pg">原文p3</span></td>
+<td><span class="source-page">原文p3</span></td>
 </tr>
 <tr>
 <td>以太网口</td>
 <td>1x 10/100/1000BASE-T（RJ-45），802.3at PoE in；无第二口</td>
-<td><span class="pg">原文p3</span></td>
+<td><span class="source-page">原文p3</span></td>
 </tr>
 <tr>
 <td>PoE/供电</td>
 <td>仅 802.3at，最大功耗 20W；无 DC 口、无降级链描述</td>
-<td><span class="pg">原文p3</span></td>
+<td><span class="source-page">原文p3</span></td>
 </tr>
 <tr>
 <td>USB-IoT</td>
 <td>无 USB、无 BLE/Zigbee</td>
-<td><span class="pg">原文p3</span></td>
+<td><span class="source-page">原文p3</span></td>
 </tr>
 <tr>
 <td>蓝牙</td>
 <td>无</td>
-<td><span class="pg">原文p3</span></td>
+<td><span class="source-page">原文p3</span></td>
 </tr>
 <tr>
 <td>天线</td>
 <td>内置 2x2：2.4G 最大增益 7.67dBi、5G 7.77dBi；集成宽带天线</td>
-<td><span class="pg">原文p3</span></td>
+<td><span class="source-page">原文p3</span></td>
 </tr>
 <tr>
 <td>发射功率</td>
 <td>每链 23dBm（2.4G/5G，受管制限制）</td>
-<td><span class="pg">原文p3</span></td>
+<td><span class="source-page">原文p3</span></td>
 </tr>
 <tr>
 <td>工作温度</td>
 <td>-20°C ~ 55°C；存储 -40~85°C；湿度 5-95% 非凝结</td>
-<td><span class="pg">原文p3</span></td>
+<td><span class="source-page">原文p3</span></td>
 </tr>
 <tr>
 <td>防护</td>
 <td>IP67</td>
-<td><span class="pg">原文p3</span></td>
+<td><span class="source-page">原文p3</span></td>
 </tr>
 <tr>
 <td>Mount</td>
 <td>抱杆/壁装，套件随 AP 默认附带（角度不可调）——全线唯一默认送套件的机型</td>
-<td><span class="pg">原文p3</span></td>
+<td><span class="source-page">原文p3</span></td>
 </tr>
 <tr>
 <td>容量</td>
 <td>每射频 8 SSID（总 16）；384 客户端/AP</td>
-<td><span class="pg">原文p4</span></td>
+<td><span class="source-page">原文p4</span></td>
 </tr>
 <tr>
 <td>尺寸重量</td>
 <td>180x298x86.5mm，1065g</td>
-<td><span class="pg">原文p4</span></td>
+<td><span class="source-page">原文p4</span></td>
 </tr>
 <tr>
 <td>管理平台</td>
 <td>OmniVista Cirrus 云 / OmniVista 2500 / Web 集群 255 AP（Admin/Viewer/GuestOperator）</td>
-<td><span class="pg">原文p1</span> /<span class="pg">原文p2</span> /<span class="pg">原文p4</span></td>
+<td><span class="source-page">原文p1</span> /<span class="source-page">原文p2</span> /<span class="source-page">原文p4</span></td>
 </tr>
 <tr>
 <td>安全</td>
 <td>802.11i/WPA2/WPA3/802.1X、ACL、wIPS/wIDS、Portal 认证</td>
-<td><span class="pg">原文p3</span></td>
+<td><span class="source-page">原文p3</span></td>
 </tr>
 <tr>
 <td>订购</td>
 <td>仅 OAW-AP1261-RW-B 一个 SKU</td>
-<td><span class="pg">原文p4</span></td>
+<td><span class="source-page">原文p4</span></td>
 </tr>
 </tbody>
-</table>
+</table></div>
 <h2 id="e">E（适用场景）</h2>
 <ul>
-<li>仓储/园区/停车场等室外基础覆盖，终端以 11ac/n 为主（<span class="pg">原文p1</span> ）</li>
-<li>应用感知 QoS（语音/视频/桌面共享分级）+ RDA 自动信道功率（DFS/TPC）（<span class="pg">原文p2</span> ）</li>
-<li>需要 RTLS 生态（Stanley Healthcare/Aeroscout）可用的老医疗外场（<span class="pg">原文p11</span>  系列同述）</li>
+<li>仓储/园区/停车场等室外基础覆盖，终端以 11ac/n 为主（<span class="source-page">原文p1</span> ）</li>
+<li>应用感知 QoS（语音/视频/桌面共享分级）+ RDA 自动信道功率（DFS/TPC）（<span class="source-page">原文p2</span> ）</li>
+<li>需要 RTLS 生态（Stanley Healthcare/Aeroscout）可用的老医疗外场（<span class="source-page">原文p11</span>  系列同述）</li>
 </ul>
 <h2 id="b">B（限制与坑）</h2>
 <ul>
-<li><strong>11ac Wave2 已是上一代</strong>：<br>新项目优先 AP1360（Wi-Fi 6）或 AP1561（Wi-Fi 7）（X10，<span class="pg">原文p3</span> ）</li>
-<li><strong>无 USB/无 BLE/无第二网口</strong>：<br>IoT 定位、有线扩展都做不了（X10，<span class="pg">原文p3</span> ）</li>
-<li>单 GbE 上联限制 867Mbps 射频能力，回程瓶颈要提前算（<span class="pg">原文p3</span> ）</li>
-<li>"部分功能受当地管制设置限制"（X23，<span class="pg">原文p4</span> ），报价前的管制域核对不可省</li>
-<li>L3 漫游需 CSP/ESP；无 OmniVista 时部分功能受限（<span class="pg">原文p4</span> ）</li>
-<li>硬件终身保修 HLLW + 一年合作伙伴 SUPPORT 软件（<span class="pg">原文p4</span> ）</li>
+<li><strong>11ac Wave2 已是上一代</strong>：<br>新项目优先 AP1360（Wi-Fi 6）或 AP1561（Wi-Fi 7）（X10，<span class="source-page">原文p3</span> ）</li>
+<li><strong>无 USB/无 BLE/无第二网口</strong>：<br>IoT 定位、有线扩展都做不了（X10，<span class="source-page">原文p3</span> ）</li>
+<li>单 GbE 上联限制 867Mbps 射频能力，回程瓶颈要提前算（<span class="source-page">原文p3</span> ）</li>
+<li>"部分功能受当地管制设置限制"（X23，<span class="source-page">原文p4</span> ），报价前的管制域核对不可省</li>
+<li>L3 漫游需 CSP/ESP；无 OmniVista 时部分功能受限（<span class="source-page">原文p4</span> ）</li>
+<li>硬件终身保修 HLLW + 一年合作伙伴 SUPPORT 软件（<span class="source-page">原文p4</span> ）</li>
 </ul>
-<p>来源：bp-stellar-ap-datasheets fulltext.md p1-5；verified.md X10/X20/X23/P1/P26/F1</p><div class="pn"><a href="bp-ap1451-datasheet.html">⬅ 上一单元：bp-ap1451-datasheet</a><a class="nxt" href="bp-ap1301-datasheet.html">下一单元：bp-ap1301-datasheet ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<p>来源：bp-stellar-ap-datasheets fulltext.md p1-5；verified.md X10/X20/X23/P1/P26/F1</p></article>
+<nav class="previous-next" aria-label="知识单元翻页"><a href="/brochures/stellar-ap/skills/bp-ap1360-datasheet.html"><span>上一单元</span><b>bp-ap1360-datasheet</b></a><a class="next" href="/brochures/stellar-ap/digest.html"><span>下一单元</span><b>查看课程精华</b></a></nav>    <footer class="content-footer">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</footer>
+  </main>
+</div>
+  <script src="/assets/js/app.js?v=4" defer></script>
+  <script src="/assets/js/search.js?v=4" defer></script>
+  <script src="/assets/js/lightbox.js?v=5" defer></script>
+</body>
+</html>

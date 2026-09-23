@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="面向售前、售后与网络工程师的 ALE 内部技术知识平台">
+  <meta name="theme-color" content="#6B489D">
+  <title>upamfw-pan-config — UPAM × Palo Alto 集成 · 应用笔记</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=4">
+  <link rel="stylesheet" href="/assets/css/layout.css?v=4">
+  <link rel="stylesheet" href="/assets/css/components.css?v=4">
+  <link rel="stylesheet" href="/assets/css/content.css?v=7">
+  <script src="/assets/js/auth-config.js?v=4"></script>
+  <script src="/assets/js/auth-core.js?v=4"></script>
+  <script src="/assets/js/auth-guard.js?v=4"></script>
+</head>
+<body data-page-kind="course">
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <header class="topbar" data-topbar>
+    <a class="brand" href="/index.html" aria-label="返回 ALE 技术培训门户首页">
+      <img src="/assets/ale-logo-color.png" alt="Alcatel-Lucent Enterprise">
+      <span>ALE 培训门户</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-controls="primary-nav" aria-expanded="false" data-nav-toggle>
+      <span aria-hidden="true">☰</span><span class="sr-only">打开导航</span>
+    </button>
+    <nav id="primary-nav" class="primary-nav" aria-label="主导航">
+      <a href="/index.html">首页</a>
+      <a href="/paths.html">学习路径</a>
+      <a href="/presales/index.html">售前</a>
+      <a href="/postsales/index.html">售后</a>
+      <a href="/wlan/index.html">无线</a>
+      <a href="/aos/index.html">AOS 手册</a>
+      <a href="/hardware/index.html">硬件</a>
+      <a href="/brochures/index.html">彩页</a>
+      <a href="/solutions/index.html">解决方案</a>
+      <a href="/security/index.html" aria-current="page">安全</a>
+    </nav>
+    <button id="logout-btn" class="logout-btn" type="button" hidden>退出登录</button>
+  </header>
+<div class="course-layout">
+<aside class="course-sidebar" id="course-sidebar" data-sidebar>
+  <div class="sidebar-heading">
+    <p class="eyebrow">COURSE</p>
+    <h2>UPAM × Palo Alto 集成 · 应用笔记</h2>
+    <p>UPAM PAN Firewall Integration · 15 页 · User-ID / syslog 字段 / Accounting-only</p>
+  </div>
+<div class="search" data-search>
+  <label class="sr-only" for="course-search">搜索全站课程和知识单元</label>
+  <input id="course-search" type="search" placeholder="搜索课程编号、产品型号或技术关键词…" autocomplete="off" data-search-input>
+  <div class="search-results" role="listbox" aria-live="polite" data-search-results></div>
+</div>  <nav class="course-nav" aria-label="课程目录">
+    <a href="/security/upam-pan-sso/index.html">课程首页</a>
+    <a href="/security/upam-pan-sso/digest.html">精华长文</a>
+    <a href="/security/upam-pan-sso/overview.html">教书理解</a>
+    <a href="/security/upam-pan-sso/glossary.html">术语词典</a>
+    <p class="course-nav-group">机制</p>
+      <a href="/security/upam-pan-sso/skills/upamfw-sso-overview.html">upamfw-sso-overview</a>
+    <p class="course-nav-group">Palo Alto 集成</p>
+      <a href="/security/upam-pan-sso/skills/upamfw-pan-arch.html">upamfw-pan-arch</a>
+      <a aria-current="page" href="/security/upam-pan-sso/skills/upamfw-pan-config.html">upamfw-pan-config</a>
+  </nav>
+</aside>  <main id="main-content" class="course-main prose">
+    <nav class="breadcrumbs" aria-label="面包屑"><a href="/index.html">培训门户</a><span>/</span><a href="/security/index.html">安全 · Security</a><span>/</span><a href="/security/upam-pan-sso/index.html">UPAM × Palo Alto 集成</a><span>/</span><span aria-current="page">upamfw-pan-config</span></nav>
+<header class="skill-heading"><div><p class="eyebrow">KNOWLEDGE UNIT</p><h1>upamfw-pan-config</h1></div><dl><div><dt>Skill ID</dt><dd>upamfw-pan-config</dd></div></dl></header>    <article class="markdown-body"><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>按手册落地 UPAM ↔ PAN 集成，需要逐步操作路径与菜单入口</li>
+<li><strong>配完映射出不来</strong>：<br>syslog 测试报"连不上"、<code>show user ip-user-mapping all</code> 空、策略不命中角色</li>
+<li>新增角色（ARP/uNP）后需要在 PAN 侧补配解析与策略引用</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<ul>
+<li>配置分两条线。</li>
+<li>OV 侧与 Fortinet 方案前半段相同（AAA profile → 策略链 → Access Auth Profile），差别在：AAA profile 的认证与记账<strong>都</strong>指向 UPAM（记账不再外发防火墙），并额外在 Settings → External Log Server 把日志以 syslog（UDP 514）发往 PAN。</li>
+<li><strong>PAN 侧四件事</strong>：<br>目标 Zone 开 User-ID；接口管理配置文件开 User-ID Syslog Listener 并登记 UPAM 的 IP；建 Syslog Parse Profile 告诉防火墙从 UPAM 日志里取 username 或 filterID；建 Syslog Sender 型 Server Monitoring 把三者串起来。</li>
+<li>策略里引用角色（filter-id）时全部用小写。</li>
+</ul>
+<h2 id="a1">A1（行动框架）</h2>
+<ol>
+<li>OV 侧四步：① AAA Server Profile：认证与记账均指 UPAMRadiusServer（按 802.1x/MAC 分别配；interim 默认 600s，须 &lt; 防火墙 45 分钟超时）→ ② 建 Authentication Strategy（默认 ARP 先行）与 Access Policy（按 SSID/NAS IP/Location）→ ③ Settings → External Log Server：启用，Syslog 默认端口 514，可加第二台取证服务器 → ④ Access Auth Profile（default + pass-alternate）应用到交换机/AP 组（<span class="source-page">原文p6-10</span> ）</li>
+<li>PAN 侧四步：① Network → Zones 对相关 Zone 勾 User-ID（可配 include/exclude ACL）→ ② Network Profiles → Interface Management 勾 User-ID Syslog Listener UDP，加入 UPAM IP，套到接收接口 → ③ Device → User Identification → User Mapping 齿轮 → Syslog Filters → Add：映射 username+deviceIP，或更简单地只映射 filterID（角色）→ ④ Server Monitoring → Add：类型 Syslog Sender、UDP、UPAM IP、选上面的解析过滤器，可补域名前缀（<span class="source-page">原文p10-13</span> ）</li>
+<li>策略与验证：Policies → Security → User 标签加入角色（小写）；CLI <code>show user ip-user-mapping all</code> 验证映射；Monitor → Logs → Traffic 验证策略命中（<span class="source-page">原文p14</span> ）</li>
+</ol>
+<h2 id="a2">A2（细节速查）</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>菜单/命令路径</th>
+<th>关键参数</th>
+<th>来源</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AAA Server Profile</td>
+<td>Unified Access → Template → AAA Server Profile，"+"</td>
+<td>认证+记账均指 UPAMRadiusServer；interim 默认 600s</td>
+<td>PAN</td>
+<td>p6-7</td>
+</tr>
+<tr>
+<td>Authentication Strategy</td>
+<td>UPAM → Authentication → Authentication Strategy，"+"</td>
+<td>默认 ARP 须先建</td>
+<td>PAN</td>
+<td>p8</td>
+</tr>
+<tr>
+<td>Access Policy</td>
+<td>UPAM → Authentication → Access Policy，"+"</td>
+<td>按 SSID/NAS IP/Location 匹配</td>
+<td>PAN</td>
+<td>p9</td>
+</tr>
+<tr>
+<td>外部 syslog</td>
+<td>UPAM → Settings → External Log Server</td>
+<td>Syslog，端口 514；可加第二台服务器</td>
+<td>PAN</td>
+<td>p9</td>
+</tr>
+<tr>
+<td>Zone 开 User-ID</td>
+<td>Network → Zones</td>
+<td>勾选 User-ID；可选 include/exclude ACL</td>
+<td>PAN</td>
+<td>p10</td>
+</tr>
+<tr>
+<td>Syslog 监听</td>
+<td>Network Profiles → Interface Management</td>
+<td>勾 User-ID Syslog Listener UDP，登记 UPAM IP，套到接收接口</td>
+<td>PAN</td>
+<td>p11</td>
+</tr>
+<tr>
+<td>解析过滤器</td>
+<td>Device → User Identification → User Mapping → 齿轮 → Syslog Filters → Add</td>
+<td>映射 username/deviceIP 或 filterID（角色）</td>
+<td>PAN</td>
+<td>p11-13</td>
+</tr>
+<tr>
+<td>Server Monitoring</td>
+<td>Device → User Identification → Server Monitoring → Add</td>
+<td>类型 Syslog Sender、UDP、UPAM IP、选过滤器；可配域名前缀与子网 include/exclude</td>
+<td>PAN</td>
+<td>p13</td>
+</tr>
+<tr>
+<td>User-ID 策略</td>
+<td>Policies → Security → User 标签 → Add</td>
+<td>角色（filter-id）全小写；用户名方案则逐个列或建本地组</td>
+<td>PAN</td>
+<td>p14</td>
+</tr>
+<tr>
+<td>验证映射</td>
+<td>CLI <code>show user ip-user-mapping all</code></td>
+<td>大写用户名会显示为小写</td>
+<td>PAN</td>
+<td>p14</td>
+</tr>
+<tr>
+<td>验证策略</td>
+<td>Monitor → Logs → Traffic</td>
+<td>示例：integration_test 策略对 iot_stb 角色 block ping</td>
+<td>PAN</td>
+<td>p14</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="e">E（场景案例）</h2>
+<ul>
+<li><strong>IoT 机顶盒角色管控</strong>：<br>filter-id=iot_stb（set-top box）加入策略 Source，日志确认 ping 被阻（<span class="source-page">原文p14</span> ）</li>
+<li><strong>MAC 认证 + 角色映射组合</strong>：<br>无需在防火墙本地库创建任何用户即可按角色下发策略（<span class="source-page">原文p12</span> ）</li>
+<li><strong>UPAM 日志双发</strong>：<br>一份进 PAN 做映射，一份进独立 syslog 服务器留真实用户名备取证（<span class="source-page">原文p9</span> /<span class="source-page">原文p12</span> ）</li>
+</ul>
+<h2 id="b">B（限制与坑）</h2>
+<ul>
+<li>UPAM 上测试 syslog 连接会报 "The server cannot connect"——PAN 不回应 syslog 连接测试，这是预期行为；仍要手工确认 UDP 514 连通（<span class="source-page">原文p9</span> ）</li>
+<li>Syslog Listener 忘了套到实际接收接口，或没登记 UPAM 的 IP → 日志被丢弃（<span class="source-page">原文p11</span> ）</li>
+<li><strong>策略里角色大小写</strong>：<br>PAN 会把用户名转小写，策略用大写引用不命中（<span class="source-page">原文p14</span> ）</li>
+<li><strong>每个 syslog 源仅一个解析过滤器，只配了 Accounting</strong>：<br>断线不会即时登出，靠 45 分钟超时（<span class="source-page">原文p5</span> ）</li>
+<li>认证本地库时日志无域名，可在 Server Monitoring 里配域名前缀补齐（<span class="source-page">原文p13</span> ）</li>
+</ul>
+<h2 id="_1">来源</h2>
+<p>来源：OmniVista UPAM and Palo Alto Networks User-ID Integration Guide（§7-18 Procedure overview 至 Verifying User-ID policies，p6-14）</p></article>
+<nav class="previous-next" aria-label="知识单元翻页"><a href="/security/upam-pan-sso/skills/upamfw-pan-arch.html"><span>上一单元</span><b>upamfw-pan-arch</b></a><a class="next" href="/security/upam-pan-sso/digest.html"><span>下一单元</span><b>查看课程精华</b></a></nav>    <footer class="content-footer">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</footer>
+  </main>
+</div>
+  <script src="/assets/js/app.js?v=4" defer></script>
+  <script src="/assets/js/search.js?v=4" defer></script>
+  <script src="/assets/js/lightbox.js?v=5" defer></script>
+</body>
+</html>

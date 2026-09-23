@@ -1,98 +1,78 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>精华长文 DIGEST — DT00XTE368 · Stellar WLAN Enterprise Basic</title>
-<style>
-:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
-*{box-sizing:border-box}
-body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
-a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
-.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin:16px 0}
-.gallery figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px}
-.gallery img{width:100%;max-height:340px;object-fit:contain;background:#fff;border-radius:6px}
-.gallery figcaption{font-size:12.5px;color:var(--mut);text-align:center;margin-top:6px}
-/* 侧栏折叠 + 图片灯箱 */
-.tgl{position:fixed;left:0;top:45%;z-index:60;background:var(--card);border:1px solid var(--line);border-right:none;border-radius:0 8px 8px 0;color:var(--tx);padding:10px 6px;cursor:pointer;font-size:13px;line-height:1.1;writing-mode:vertical-lr}
-.tgl:hover{background:var(--acc);color:#0f172a}
-.layout.full{grid-template-columns:0 1fr}
-.layout.full aside{display:none}
-.lb{position:fixed;inset:0;background:rgba(5,10,20,.92);z-index:100;display:flex;align-items:center;justify-content:center;flex-direction:column}
-.lb img{max-width:92vw;max-height:82vh;background:#fff;border-radius:6px;transition:transform .12s}
-.lb .lbb{margin-top:10px;display:flex;gap:10px}
-.lb button{background:var(--card);border:1px solid var(--line);color:var(--tx);border-radius:8px;padding:6px 14px;cursor:pointer;font-size:14px}
-.lb button:hover{background:var(--acc);color:#0f172a}
-.search{margin:0 0 14px}
-.search input{width:100%;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--tx);font-size:13px;outline:none}
-.search input:focus{border-color:var(--acc)}
-#qres{max-height:340px;overflow-y:auto;margin-top:6px}
-#qres .qi{display:block;padding:6px 8px;border-radius:6px;font-size:12.5px;color:var(--tx);border-left:2px solid transparent}
-#qres .qi:hover{background:var(--card);text-decoration:none;border-left-color:var(--acc)}
-#qres .qi .qp{color:var(--mut);font-size:11px;display:block}
-#qres .qi b{color:var(--acc)}
-.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
-main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
-.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
-aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
-aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
-aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
-aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
-aside a:hover{background:var(--card);text-decoration:none}
-aside a.on{background:var(--card);color:var(--acc)}
-main{padding:36px 48px;max-width:1000px}
-h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
-h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
-table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
-th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
-th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
-code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
-pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
-pre code{background:none;padding:0}
-blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
-.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
-.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
-.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
-.meta{font-size:13px;color:var(--mut)}
-hr{border:none;border-top:1px solid var(--line);margin:26px 0}
-.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
-.badge.soon{background:#475569;color:#cbd5e1}
-main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
-main{padding:28px 48px 40px;max-width:1040px}
-h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
-blockquote p{margin:6px 0}
-.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
-.crumbs a{color:var(--acc)}
-.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
-.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
-.pn a:hover{border-color:var(--acc)}
-.pn .nxt{text-align:right}
-.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
-@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
-</style></head>
-<body><div class="layout"><aside><h1>DT00XTE368 · Stellar WLAN Enterprise Basic</h1>
-<div class="search"><input id="qk" type="search" placeholder="🔍 搜索全站…" autocomplete="off"><div id="qres"></div></div>
-
-<div class="sub">Edition 14 · 515 页 · 无线理论 + OV2500 企业模式实操二合一</div>
-<a href="index.html">🏠 课程首页</a>
-<a href="digest.html">📖 精华长文 DIGEST</a>
-
-<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
-<a href="glossary.html">🔤 术语词典</a>
-<a href="../../index.html">⬅️ 返回培训门户</a>
-<a href="index.html">──── Skills ────</a>
-<div class="grp">理论与勘测</div>
-<a href="skills/wlan-theory-fundamentals.html">wlan-theory-fundamentals</a>
-<a href="skills/site-survey-ekahau.html">site-survey-ekahau</a>
-<div class="grp">开局与业务</div>
-<a href="skills/enterprise-mode-onboarding.html">enterprise-mode-onboarding</a>
-<a href="skills/employee-ssid-8021x.html">employee-ssid-8021x</a>
-<a href="skills/upam-guest-access.html">upam-guest-access</a>
-<div class="grp">漫游与远程</div>
-<a href="skills/roaming-l2-l3.html">roaming-l2-l3</a>
-<a href="skills/rap-remote-deployment.html">rap-remote-deployment</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../postsales/index.html">售后</a> › <a href="index.html">DT00XTE368</a> › <span>精华长文 DIGEST</span></nav><h1>精华长文 DIGEST</h1><h1 id="digest-omniaccess-stellar-wlan-enterprise-basicdt00xte368en">DIGEST · OmniAccess Stellar WLAN Enterprise Basic（DT00XTE368EN）精华长文</h1>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="面向售前、售后与网络工程师的 ALE 内部技术知识平台">
+  <meta name="theme-color" content="#6B489D">
+  <title>精华长文 DIGEST — DT00XTE368 · Stellar WLAN Enterprise Basic</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=4">
+  <link rel="stylesheet" href="/assets/css/layout.css?v=4">
+  <link rel="stylesheet" href="/assets/css/components.css?v=4">
+  <link rel="stylesheet" href="/assets/css/content.css?v=7">
+  <script src="/assets/js/auth-config.js?v=4"></script>
+  <script src="/assets/js/auth-core.js?v=4"></script>
+  <script src="/assets/js/auth-guard.js?v=4"></script>
+</head>
+<body data-page-kind="course">
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <header class="topbar" data-topbar>
+    <a class="brand" href="/index.html" aria-label="返回 ALE 技术培训门户首页">
+      <img src="/assets/ale-logo-color.png" alt="Alcatel-Lucent Enterprise">
+      <span>ALE 培训门户</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-controls="primary-nav" aria-expanded="false" data-nav-toggle>
+      <span aria-hidden="true">☰</span><span class="sr-only">打开导航</span>
+    </button>
+    <nav id="primary-nav" class="primary-nav" aria-label="主导航">
+      <a href="/index.html">首页</a>
+      <a href="/paths.html">学习路径</a>
+      <a href="/presales/index.html">售前</a>
+      <a href="/postsales/index.html" aria-current="page">售后</a>
+      <a href="/wlan/index.html">无线</a>
+      <a href="/aos/index.html">AOS 手册</a>
+      <a href="/hardware/index.html">硬件</a>
+      <a href="/brochures/index.html">彩页</a>
+      <a href="/solutions/index.html">解决方案</a>
+      <a href="/security/index.html">安全</a>
+    </nav>
+    <button id="logout-btn" class="logout-btn" type="button" hidden>退出登录</button>
+  </header>
+<div class="course-layout">
+<aside class="course-sidebar" id="course-sidebar" data-sidebar>
+  <div class="sidebar-heading">
+    <p class="eyebrow">COURSE</p>
+    <h2>DT00XTE368 · Stellar WLAN Enterprise Basic</h2>
+    <p>Edition 14 · 515 页 · 无线理论 + OV2500 企业模式实操二合一</p>
+  </div>
+<div class="search" data-search>
+  <label class="sr-only" for="course-search">搜索全站课程和知识单元</label>
+  <input id="course-search" type="search" placeholder="搜索课程编号、产品型号或技术关键词…" autocomplete="off" data-search-input>
+  <div class="search-results" role="listbox" aria-live="polite" data-search-results></div>
+</div>  <nav class="course-nav" aria-label="课程目录">
+    <a href="/postsales/stellar-enterprise-basic/index.html">课程首页</a>
+    <a aria-current="page" href="/postsales/stellar-enterprise-basic/digest.html">精华长文</a>
+    <a href="/postsales/stellar-enterprise-basic/overview.html">教书理解</a>
+    <a href="/postsales/stellar-enterprise-basic/glossary.html">术语词典</a>
+    <p class="course-nav-group">理论与勘测</p>
+      <a href="/postsales/stellar-enterprise-basic/skills/wlan-theory-fundamentals.html">无线理论基础（802.11 / 天线 / 安全原理）</a>
+      <a href="/postsales/stellar-enterprise-basic/skills/site-survey-ekahau.html">站点勘测方法（Ekahau 全流程）</a>
+    <p class="course-nav-group">开局与业务</p>
+      <a href="/postsales/stellar-enterprise-basic/skills/enterprise-mode-onboarding.html">Enterprise 模式开局（OV2500 发现与 AP 纳管）</a>
+      <a href="/postsales/stellar-enterprise-basic/skills/employee-ssid-8021x.html">Employee SSID 与 AD 认证（802.1X / PEAP）</a>
+      <a href="/postsales/stellar-enterprise-basic/skills/upam-guest-access.html">UPAM Guest 与用户角色（门户 / 带宽 / 策略 / WCF）</a>
+    <p class="course-nav-group">漫游与远程</p>
+      <a href="/postsales/stellar-enterprise-basic/skills/roaming-l2-l3.html">L2 移动性与漫游</a>
+      <a href="/postsales/stellar-enterprise-basic/skills/rap-remote-deployment.html">RAP 远程部署（Cirrus + VPN Server）</a>
+  </nav>
+</aside>  <main id="main-content" class="course-main prose">
+    <nav class="breadcrumbs" aria-label="面包屑"><a href="/index.html">培训门户</a><span>/</span><a href="/postsales/index.html">售后 · Postsales</a><span>/</span><a href="/postsales/stellar-enterprise-basic/index.html">DT00XTE368</a><span>/</span><span aria-current="page">精华长文 DIGEST</span></nav>
+<header class="page-intro compact"><p class="eyebrow">COURSE REFERENCE</p><h1>精华长文 DIGEST</h1></header>    <article class="markdown-body"><h1 id="digest-omniaccess-stellar-wlan-enterprise-basicdt00xte368en">DIGEST · OmniAccess Stellar WLAN Enterprise Basic（DT00XTE368EN）精华长文</h1>
 <blockquote>
 <p>教材 515 页，ALE 售后 Newcomers 路径。本文是"不读全书、只看精华"的压缩版：理论要点、OV2500 交付主线、勘测方法、参数速查、陷阱清单，一篇文章拿走。</p>
 </blockquote>
-<hr />
+<hr>
 <h2 id="_1">一、一页看懂这门课</h2>
 <p>这门课是<strong>无线基础理论 + OV2500 企业模式实操</strong>的二合一课（教材 p3-497）：</p>
 <ul>
@@ -102,7 +82,7 @@ blockquote p{margin:6px 0}
 <li><strong>附录（p467-497）</strong>：RAP 部署详解、SSID 高级选项。</li>
 </ul>
 <p>一句话定位：与 T360（Cirrus 云管线）互补的 <strong>OV2500 本地管路线</strong>——同一个"AP 上线→SSID→策略→漫游"生命周期，网管换成 OV2500。要提醒的是：理论章节每主题只有 10-20 页，属于入门级深度；OV2500 的 GUI 截图时效绑定 4.9R2 版本。</p>
-<hr />
+<hr>
 <h2 id="_2">二、无线理论速成地图（四大块要点）</h2>
 <h3 id="1-80211-p10-32">1. 802.11 原理与标准演进（p10-32）</h3>
 <ul>
@@ -127,7 +107,7 @@ blockquote p{margin:6px 0}
 <li><strong>四阶段任务地图</strong>：<br>PLAN（需求+预测）→ VALIDATE（预部署勘测→安装→后部署勘测）→ MONITOR/TROUBLESHOOT（频谱/抓包/巡检/持续监控）（p85）。</li>
 <li><strong>核心认知</strong>：<br><strong>勘测是时间快照，快照越多越懂环境</strong>（p133）。</li>
 </ul>
-<hr />
+<hr>
 <h2 id="enterprise-7-skill">三、Enterprise 模式交付主线（串起 7 个 skill）</h2>
 <p>标准交付顺序，就是教材 DAY 1 到 DAY 2 的展开：</p>
 <p><strong>① 开局（enterprise-mode-onboarding）</strong>
@@ -141,7 +121,7 @@ Guest 工作流（p343）：Guest Usage 建 SSID → 勾强制门户 → 认证�
 <p><strong>⑤ 远程站点（rap-remote-deployment）</strong>
 门店/展会/居家广播企业 SSID：Cirrus 4 录序列号 + ALE VPN Server 双隧道（管理 VPN + 数据 L2GRE），五步上线（p439）。注意 AP1101 不兼容，Tunnel ID 必须填 0。</p>
 <p>理论模块（wlan-theory-fundamentals）和勘测模块（site-survey-ekahau）横贯全程，分别回答"为什么这么配"和"AP 放哪、放多少"。</p>
-<hr />
+<hr>
 <h2 id="ekahau">四、勘测 Ekahau 七步法精要</h2>
 <p>预测勘测七步（p110-121）：<strong>导入楼层图 → 标比例画墙（赋 dB 衰减）→ 导入设置 → Area 圈区设终端 → Auto-Planner 自动摆 AP → 复核调参重跑 → 出报告</strong>。</p>
 <p>现场验证两招：
@@ -149,10 +129,10 @@ Guest 工作流（p343）：Guest Usage 建 SSID → 勾强制门户 → 认证�
 - <strong>后部署主动勘测（p127-128）</strong>：<br>网内装 ePerf 吞吐服务器，Continuous Survey 匀速走测，采集认证/丢包/RTT/吞吐，出报告留作性能基线。</p>
 <p>现场排障三步法：平面图定位 → 实测五查（AP 型号、同频/邻频、覆盖空洞、功率、布放）→ 五类纠正（换型号/重做 RF/收窄信道/删低速率/改善布放）。</p>
 <p>两条铁律：<strong>禁止 Over provisioning——信道数是硬上限，堆 AP 会自干扰</strong>；勘测复现不了大规模并发负载，也建议不了天线朝向，"勘测全绿、用户吐槽"优先查并发负载与天线朝向两个盲区。</p>
-<hr />
+<hr>
 <h2 id="_3">五、关键参数速查表</h2>
 <h3 id="p136">材质衰减（p136 画墙仿真用）</h3>
-<table>
+<div class="table-scroll"><table>
 <thead>
 <tr>
 <th>材质</th>
@@ -189,9 +169,9 @@ Guest 工作流（p343）：Guest Usage 建 SSID → 勾强制门户 → 认证�
 <td>按屏蔽体处理（金属吸收、电梯大幅阻挡）</td>
 </tr>
 </tbody>
-</table>
+</table></div>
 <h3 id="_4">天线与功率</h3>
-<table>
+<div class="table-scroll"><table>
 <thead>
 <tr>
 <th>场景</th>
@@ -221,9 +201,9 @@ Guest 工作流（p343）：Guest Usage 建 SSID → 勾强制门户 → 认证�
 <td>EU 禁标准功率室外</td>
 </tr>
 </tbody>
-</table>
+</table></div>
 <h3 id="_5">安全与认证</h3>
-<table>
+<div class="table-scroll"><table>
 <thead>
 <tr>
 <th>对象</th>
@@ -252,9 +232,9 @@ Guest 工作流（p343）：Guest Usage 建 SSID → 勾强制门户 → 认证�
 <td>Enterprise 级默认 15 min</td>
 </tr>
 </tbody>
-</table>
+</table></div>
 <h3 id="p424">漫游阈值（p424）</h3>
-<table>
+<div class="table-scroll"><table>
 <thead>
 <tr>
 <th>参数</th>
@@ -271,105 +251,43 @@ Guest 工作流（p343）：Guest Usage 建 SSID → 勾强制门户 → 认证�
 <td>15</td>
 </tr>
 </tbody>
-</table>
-<hr />
+</table></div>
+<hr>
 <h2 id="7-skill">六、学习路径（7 个 skill 的顺序）</h2>
 <ol>
-<li>wlan-theory-fundamentals —— 理论地基。<ul>
-<li>理论薄弱的先读这个：BSS/ESS、WiFi 6/7、天线、安全演进，后面所有配置都在这条理论链上落地。</li>
-<li>
-<ol>
-<li>enterprise-mode-onboarding —— 第一段实操。</li>
-</ol>
-</li>
-<li>AP 怎么上线、OV2500 怎么发现设备，不懂三平面规则后面排障没抓手。</li>
-<li>
-<ol>
-<li>employee-ssid-8021x —— 第一个 SSID，向导三步 + AD 对接，掌握 OV2500 的对象模型。</li>
-</ol>
-</li>
-<li>
-<ol>
-<li>upam-guest-access —— 在 SSID 基础上加门户、限速、策略、内容过滤。</li>
-</ol>
-</li>
-<li>
-<ol>
-<li>roaming-l2-l3 —— 网络成型后调漫游，判定树 + RSSI 阈值。</li>
-</ol>
-</li>
-<li>
-<ol>
-<li>rap-remote-deployment —— 进阶场景，把企业网延伸到远程站点。</li>
-</ol>
-</li>
-<li>
-<ol>
-<li>site-survey-ekahau —— 勘测方法贯穿项目始终，可放在最后系统学，也可在设计阶段提前用。</li>
-</ol>
-</li>
-</ul>
-</li>
+<li><strong><a href="/postsales/stellar-enterprise-basic/skills/wlan-theory-fundamentals.html">wlan-theory-fundamentals</a></strong> —— 理论地基。理论薄弱的先读这个：BSS/ESS、WiFi 6/7、天线、安全演进，后面所有配置都在这条理论链上落地。</li>
+<li><strong><a href="/postsales/stellar-enterprise-basic/skills/enterprise-mode-onboarding.html">enterprise-mode-onboarding</a></strong> —— 第一段实操。AP 怎么上线、OV2500 怎么发现设备，不懂三平面规则后面排障没抓手。</li>
+<li><strong><a href="/postsales/stellar-enterprise-basic/skills/employee-ssid-8021x.html">employee-ssid-8021x</a></strong> —— 第一个 SSID，向导三步 + AD 对接，掌握 OV2500 的对象模型。</li>
+<li><strong><a href="/postsales/stellar-enterprise-basic/skills/upam-guest-access.html">upam-guest-access</a></strong> —— 在 SSID 基础上加门户、限速、策略、内容过滤。</li>
+<li><strong><a href="/postsales/stellar-enterprise-basic/skills/roaming-l2-l3.html">roaming-l2-l3</a></strong> —— 网络成型后调漫游，判定树 + RSSI 阈值。</li>
+<li><strong><a href="/postsales/stellar-enterprise-basic/skills/rap-remote-deployment.html">rap-remote-deployment</a></strong> —— 进阶场景，把企业网延伸到远程站点。</li>
+<li><strong><a href="/postsales/stellar-enterprise-basic/skills/site-survey-ekahau.html">site-survey-ekahau</a></strong> —— 勘测方法贯穿项目始终，可放在最后系统学，也可在设计阶段提前用。</li>
 </ol>
 <p>最小路径建议：赶交付就 2→3→4；带新人或做售前讲解，务必从 1 开始。</p>
-<hr />
+<hr>
 <h2 id="top10">七、交付陷阱 TOP10</h2>
 <ol>
-<li>国家码不匹配 = 射频全关（p243）。<ul>
-<li>实验室禁选 USA/日本/以色列，教材统一选 FR。</li>
-<li>
-<ol>
-<li>Express 切 Enterprise 不迁移配置，集群配置全丢——变更窗口预留重建时间。</li>
-</ol>
-</li>
-<li>
-<ol>
-<li>RADIUS 只走 IPv4，即使管理面已 IPv6 也要留 IPv4 通路。</li>
-</ol>
-</li>
-<li>
-<ol>
-<li>改认证源后客户端要清掉已存网络重连，否则沿用旧凭据误判"认证失败"。</li>
-</ol>
-</li>
-<li>
-<ol>
-<li>RSSI 阈值双向失败（p424）："信号差不断线"查阈值偏低（粘住弱 AP），"频繁掉线"查偏高（切换过频丢包）。</li>
-</ol>
-</li>
-<li>漫游决定权在终端，网络只能引导。</li>
-<li>
-<ol>
-<li>L3 漫游默认关闭，忘开会把跨 VLAN 移动当新客户端处理——IP 变、会话断。</li>
-</ol>
-</li>
-<li>直角走廊里两台 AP 电波互不可见则漫游不发生，需两边互配静态 Neighbor AP（p423）。</li>
-<li>
-<ol>
-<li>OV2500 没配 DNS，WCF 停在 Not in service——访客内容过滤验收第一步查这个；且 AP1101/AP1201H 不支持 WCF。</li>
-</ol>
-</li>
-<li>
-<ol>
-<li>策略在认证成功时套用：改完必须断开重连强制重认证，否则误判"没生效"。</li>
-</ol>
-</li>
-<li>门户重定向也只对 HTTP 触发，HTTPS 站点不跳门户。</li>
-<li>
-<ol>
-<li>OV2500 与 AP 时间不同步，访客账号"没过期却登不上"——两侧 <code>date</code> 核对，根治配 NTP。</li>
-</ol>
-</li>
-<li>
-<ol>
-<li>RAP 三坑：AP1101 不兼容；Tunnel ID 必须填 0；VPN .conf 导出后丢失只能重导，立即备份。</li>
-</ol>
-</li>
-</ul>
-</li>
+<li><strong>国家码不匹配 = 射频全关</strong>（p243）。实验室禁选 USA/日本/以色列，教材统一选 FR。</li>
+<li><strong>Express 切 Enterprise 不迁移配置</strong>，集群配置全丢——变更窗口预留重建时间。</li>
+<li><strong>RADIUS 只走 IPv4</strong>，即使管理面已 IPv6 也要留 IPv4 通路。</li>
+<li><strong>改认证源后客户端要清掉已存网络重连</strong>，否则沿用旧凭据误判"认证失败"。</li>
+<li><strong>RSSI 阈值双向失败</strong>（p424）："信号差不断线"查阈值偏低（粘住弱 AP），"频繁掉线"查偏高（切换过频丢包）。漫游决定权在终端，网络只能引导。</li>
+<li><strong>L3 漫游默认关闭</strong>，忘开会把跨 VLAN 移动当新客户端处理——IP 变、会话断。直角走廊里两台 AP 电波互不可见则漫游不发生，需两边互配静态 Neighbor AP（p423）。</li>
+<li><strong>OV2500 没配 DNS，WCF 停在 Not in service</strong>——访客内容过滤验收第一步查这个；且 AP1101/AP1201H 不支持 WCF。</li>
+<li><strong>策略在认证成功时套用</strong>：改完必须断开重连强制重认证，否则误判"没生效"。门户重定向也只对 HTTP 触发，HTTPS 站点不跳门户。</li>
+<li><strong>OV2500 与 AP 时间不同步</strong>，访客账号"没过期却登不上"——两侧 <code>date</code> 核对，根治配 NTP。</li>
+<li><strong>RAP 三坑</strong>：AP1101 不兼容；Tunnel ID 必须填 0；VPN .conf 导出后丢失只能重导，立即备份。</li>
 </ol>
 <p>外加一条勘测红线：<strong>别承诺"测一次管五年"</strong>——勘测预测不了未来的使用模式、扩容和外部干扰。</p>
-<hr />
+<hr>
 <blockquote>
-<p>。</p>
-</blockquote><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<p>由 内部整理流程从 DT00XTE368EN 蒸馏生成。</p>
+</blockquote></article>
+    <footer class="content-footer">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</footer>
+  </main>
+</div>
+  <script src="/assets/js/app.js?v=4" defer></script>
+  <script src="/assets/js/search.js?v=4" defer></script>
+  <script src="/assets/js/lightbox.js?v=5" defer></script>
+</body>
+</html>

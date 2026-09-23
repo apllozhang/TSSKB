@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="面向售前、售后与网络工程师的 ALE 内部技术知识平台">
+  <meta name="theme-color" content="#6B489D">
+  <title>transit-products — 轨道交通解决方案 · 设计指南</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=4">
+  <link rel="stylesheet" href="/assets/css/layout.css?v=4">
+  <link rel="stylesheet" href="/assets/css/components.css?v=4">
+  <link rel="stylesheet" href="/assets/css/content.css?v=7">
+  <script src="/assets/js/auth-config.js?v=4"></script>
+  <script src="/assets/js/auth-core.js?v=4"></script>
+  <script src="/assets/js/auth-guard.js?v=4"></script>
+</head>
+<body data-page-kind="course">
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <header class="topbar" data-topbar>
+    <a class="brand" href="/index.html" aria-label="返回 ALE 技术培训门户首页">
+      <img src="/assets/ale-logo-color.png" alt="Alcatel-Lucent Enterprise">
+      <span>ALE 培训门户</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-controls="primary-nav" aria-expanded="false" data-nav-toggle>
+      <span aria-hidden="true">☰</span><span class="sr-only">打开导航</span>
+    </button>
+    <nav id="primary-nav" class="primary-nav" aria-label="主导航">
+      <a href="/index.html">首页</a>
+      <a href="/paths.html">学习路径</a>
+      <a href="/presales/index.html">售前</a>
+      <a href="/postsales/index.html">售后</a>
+      <a href="/wlan/index.html">无线</a>
+      <a href="/aos/index.html">AOS 手册</a>
+      <a href="/hardware/index.html">硬件</a>
+      <a href="/brochures/index.html">彩页</a>
+      <a href="/solutions/index.html" aria-current="page">解决方案</a>
+      <a href="/security/index.html">安全</a>
+    </nav>
+    <button id="logout-btn" class="logout-btn" type="button" hidden>退出登录</button>
+  </header>
+<div class="course-layout">
+<aside class="course-sidebar" id="course-sidebar" data-sidebar>
+  <div class="sidebar-heading">
+    <p class="eyebrow">COURSE</p>
+    <h2>轨道交通解决方案 · 设计指南</h2>
+    <p>两版设计指南 112 页 · 分层架构 / SPB 织构 / 组播 / 容量测算 / 安全纵深 / 产品选型</p>
+  </div>
+<div class="search" data-search>
+  <label class="sr-only" for="course-search">搜索全站课程和知识单元</label>
+  <input id="course-search" type="search" placeholder="搜索课程编号、产品型号或技术关键词…" autocomplete="off" data-search-input>
+  <div class="search-results" role="listbox" aria-live="polite" data-search-results></div>
+</div>  <nav class="course-nav" aria-label="课程目录">
+    <a href="/solutions/transportation/index.html">课程首页</a>
+    <a href="/solutions/transportation/digest.html">精华长文</a>
+    <a href="/solutions/transportation/overview.html">教书理解</a>
+    <a href="/solutions/transportation/glossary.html">术语词典</a>
+    <p class="course-nav-group">架构</p>
+      <a href="/solutions/transportation/skills/transit-overview.html">transit-overview</a>
+      <a href="/solutions/transportation/skills/transit-architecture.html">transit-architecture</a>
+    <p class="course-nav-group">织构设计</p>
+      <a href="/solutions/transportation/skills/transit-spb-design.html">transit-spb-design</a>
+      <a href="/solutions/transportation/skills/transit-multicast.html">transit-multicast</a>
+      <a href="/solutions/transportation/skills/transit-capacity.html">transit-capacity</a>
+    <p class="course-nav-group">接入与运维</p>
+      <a href="/solutions/transportation/skills/transit-attachment.html">transit-attachment</a>
+      <a href="/solutions/transportation/skills/transit-ops.html">transit-ops</a>
+    <p class="course-nav-group">安全与选型</p>
+      <a href="/solutions/transportation/skills/transit-security.html">transit-security</a>
+      <a aria-current="page" href="/solutions/transportation/skills/transit-products.html">transit-products</a>
+  </nav>
+</aside>  <main id="main-content" class="course-main prose">
+    <nav class="breadcrumbs" aria-label="面包屑"><a href="/index.html">培训门户</a><span>/</span><a href="/solutions/index.html">解决方案 · Solutions</a><span>/</span><a href="/solutions/transportation/index.html">轨道交通解决方案</a><span>/</span><span aria-current="page">transit-products</span></nav>
+<header class="skill-heading"><div><p class="eyebrow">KNOWLEDGE UNIT</p><h1>transit-products</h1></div><dl><div><dt>Skill ID</dt><dd>transit-products</dd></div></dl></header>    <article class="markdown-body"><h2 id="r">R（何时用）</h2>
+<ul>
+<li>按网络角色（核心/骨干/接入/数据中心）初选机型并核对关键特性</li>
+<li>轨道旁/路边加固场景选型（无风扇、DIN 安装、EN 50121/NEMA TS-2）</li>
+<li>需要现场快速换机（USB 备份恢复）与外部告警接入（告警继电器）时评估 OS6465</li>
+<li><strong>规划备件与支持合同</strong>：<br>10 年长期支持的订购时点</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<ul>
+<li><strong>选型按"角色→机型"走</strong>：<br>核心/骨干节点用模块化 OS9900 或可堆叠 OS6900（SPB/VC/ISSU 齐全），高级接入或接入骨干合一（collapsed）用加固 OS6865（无风扇、DIN 安装、IP-30、EN 50121/NEMA TS-2/DNV）或非加固 OS6860；价值接入用新加固 OS6465（L2 增强 + MACsec + 1588v2 + HPoE 60W）；基础管理型用 6350；数据中心角色复用 9900/6900（通用版 p65-67）。</li>
+<li><strong>OS6465 两个独门硬件特性直接服务轨交运维</strong>：<br>USB 盘自动存镜像与配置、换新机插 USB 即可开机恢复（非专业人员也能换机）；告警继电器输出可映射电源/端口/温度等故障事件、输入可映射到 trap/syslog/继电器输出（通用版 p67-69）。</li>
+<li><strong>轨交是十年级投资</strong>：<br>8.5R1 及以上各线产品提供 10 年长期支持（硬件、7×24 远程支持、升级更新、每年一个维护版本、知识库、SR 状态），须在最后订购日（LOD）前至少 6 个月下单（通用版 p69）。</li>
+</ul>
+<h2 id="a1">A1（决策要点）</h2>
+<ol>
+<li>骨干节点在 9900（模块化、端口最全）与 6900（堆叠 6 台、1588v2）之间按容量与机房型态选（通用版 p66）</li>
+<li>轨道旁/路边一律加固机型：6865（L3 完整、SPB）为主，L2 够用的价值点位用 6465（通用版 p66-67）</li>
+<li>需要数据面加密的接入点位在 6860/6860E/6465 中按 MACsec 端口能力选（通用版 p66-67，细节见 transit-security 单元）</li>
+<li>现场无专家的部署点优先 OS6465，利用 USB 备份恢复实现"拔旧插新"换机（通用版 p68）</li>
+<li>电源/端口/温度故障需要硬接线告警外送的机柜，用 OS6465 告警继电器输出（通用版 p69）</li>
+<li>投标即锁定 LTS：LOD 前 ≥6 个月订 10 年支持合同（通用版 p69）</li>
+</ol>
+<h2 id="a2">A2（细节速查表）</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>角色</th>
+<th>子类</th>
+<th>推荐机型</th>
+<th>关键特性</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Core Node</td>
+<td>模块化</td>
+<td>OS9900</td>
+<td>SPB、VC(2)、ISSU、MACsec、10G-100G</td>
+<td>p66</td>
+</tr>
+<tr>
+<td>Core Node</td>
+<td>堆叠</td>
+<td>OS6900</td>
+<td>SPB、VC(6)、ISSU、IEEE 1588v2</td>
+<td>p66</td>
+</tr>
+<tr>
+<td>Backbone Node</td>
+<td>模块化/堆叠</td>
+<td>OS9900 / OS6900</td>
+<td>同上</td>
+<td>p66</td>
+</tr>
+<tr>
+<td>Advanced / Collapsed Access+Backbone</td>
+<td>加固</td>
+<td>OS6865</td>
+<td>无风扇、抗振、DIN、IP-30、SPB、VC(2)、ISSU、NAC、1588v2、EN 50121/NEMA-TS2/DNV</td>
+<td>p66</td>
+</tr>
+<tr>
+<td>同上</td>
+<td>非加固</td>
+<td>OS6860</td>
+<td>SPB、VC(8)、ISSU、MACsec、NAC、SDN、1588v2</td>
+<td>p66</td>
+</tr>
+<tr>
+<td>Value Access</td>
+<td>加固</td>
+<td>OS6465</td>
+<td>无风扇、DIN/挂墙、IP-30、ERPv2、MACsec、1588v2、PoE+/HPoE、告警继电器、EN 50121/NEMA-TS2/DNV</td>
+<td>p66</td>
+</tr>
+<tr>
+<td>Value Access</td>
+<td>非加固</td>
+<td>OS6450 / OS6560</td>
+<td>ERPv2/堆叠；mGig</td>
+<td>p67</td>
+</tr>
+<tr>
+<td>Basic Access</td>
+<td>非加固</td>
+<td>OS6350</td>
+<td>QoS、NAC、堆叠（部分型号）</td>
+<td>p67</td>
+</tr>
+<tr>
+<td>Data Centre Core/TOR</td>
+<td>—</td>
+<td>OS9900 / OS6900</td>
+<td>6900 另有 FCoE、VXLAN</td>
+<td>p67</td>
+</tr>
+</tbody>
+</table></div>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>OS6465 特性</th>
+<th>说明</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>型号节奏</td>
+<td>P6/P12 随 8.5R1；P28 随 8.5R02</td>
+<td>p67</td>
+</tr>
+<tr>
+<td>环境</td>
+<td>-40C 到 75C、无风扇、DIN 安装</td>
+<td>p67</td>
+</tr>
+<tr>
+<td>供电</td>
+<td>HPoE 60W + 802.3at 30W + 802.3af 15W（PTZ 摄像机）</td>
+<td>p67</td>
+</tr>
+<tr>
+<td>USB 备份恢复</td>
+<td>插 USB 默认存镜像+配置；write memory 同步落盘；新机插 USB 可引导恢复</td>
+<td>p68</td>
+</tr>
+<tr>
+<td>告警继电器输出</td>
+<td>电源/端口/温度超限、console 会话被禁后仍尝试访问等事件可映射到输出</td>
+<td>p69</td>
+</tr>
+<tr>
+<td>告警继电器输入</td>
+<td>外部输入事件可映射 Trap/Syslog/继电器输出</td>
+<td>p69</td>
+</tr>
+</tbody>
+</table></div>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>10 年 LTS 要点</th>
+<th>内容</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>覆盖产品</td>
+<td>8.5R1+：OS6465/6865/6560/6860/6900/9900/OmniVista</td>
+<td>p69</td>
+</tr>
+<tr>
+<td>包含</td>
+<td>硬件支持、7×24 远程支持、升级更新、EoM 后每年 1 个维护版本、知识库、SR 状态</td>
+<td>p69</td>
+</tr>
+<tr>
+<td>订购时限</td>
+<td>LOD 前至少 6 个月</td>
+<td>p69</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="e">E（场景案例）</h2>
+<ul>
+<li><strong>轻轨全栈选型</strong>：<br>OCC/BCC 骨干 9900、车站 BEB 6865（加固）、站内价值接入 6465 的组合（映射表直接套用，p66-67）</li>
+<li><strong>现场换机</strong>：<br>故障机拔下 → 新 OS6465 插入存有镜像与配置的 USB → 开机提示从 USB 引导即恢复（p68）</li>
+<li><strong>机柜级告警</strong>：<br>6465 电源故障经告警继电器输出点亮机柜告警灯，外部干接点信号经继电器输入转 Syslog（p69）</li>
+</ul>
+<h2 id="b">B（限制与坑）</h2>
+<ul>
+<li>本单元仅通用版含产品选型与 LTS 章节，SPB 版机型陈述较旧（如推荐 6855/6865），以较新的通用版为准（通用版 p65-70、SPB 版 p12）</li>
+<li>OS6465 定位是"价值型 L2"，需要完整 L3/SPB 的轨道旁点位仍选 6865（通用版 p67）</li>
+<li>P28 型号依赖 8.5R02，早期版本项目只能选 P6/P12（通用版 p67）</li>
+<li>LTS 临近 LOD 才想起来订——6 个月门槛错过后无法补救（通用版 p69）</li>
+</ul>
+<h2 id="_1">来源</h2>
+<p>Transportation Networks Design Guide（p65-70）</p></article>
+<nav class="previous-next" aria-label="知识单元翻页"><a href="/solutions/transportation/skills/transit-security.html"><span>上一单元</span><b>transit-security</b></a><a class="next" href="/solutions/transportation/digest.html"><span>下一单元</span><b>查看课程精华</b></a></nav>    <footer class="content-footer">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</footer>
+  </main>
+</div>
+  <script src="/assets/js/app.js?v=4" defer></script>
+  <script src="/assets/js/search.js?v=4" defer></script>
+  <script src="/assets/js/lightbox.js?v=5" defer></script>
+</body>
+</html>

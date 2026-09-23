@@ -1,92 +1,72 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>aos-cli-map-mgmt-oam — AOS 8.10R04 · CLI Reference 命令地图</title>
-<style>
-:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
-*{box-sizing:border-box}
-body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
-a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
-.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin:16px 0}
-.gallery figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px}
-.gallery img{width:100%;max-height:340px;object-fit:contain;background:#fff;border-radius:6px}
-.gallery figcaption{font-size:12.5px;color:var(--mut);text-align:center;margin-top:6px}
-/* 侧栏折叠 + 图片灯箱 */
-.tgl{position:fixed;left:0;top:45%;z-index:60;background:var(--card);border:1px solid var(--line);border-right:none;border-radius:0 8px 8px 0;color:var(--tx);padding:10px 6px;cursor:pointer;font-size:13px;line-height:1.1;writing-mode:vertical-lr}
-.tgl:hover{background:var(--acc);color:#0f172a}
-.layout.full{grid-template-columns:0 1fr}
-.layout.full aside{display:none}
-.lb{position:fixed;inset:0;background:rgba(5,10,20,.92);z-index:100;display:flex;align-items:center;justify-content:center;flex-direction:column}
-.lb img{max-width:92vw;max-height:82vh;background:#fff;border-radius:6px;transition:transform .12s}
-.lb .lbb{margin-top:10px;display:flex;gap:10px}
-.lb button{background:var(--card);border:1px solid var(--line);color:var(--tx);border-radius:8px;padding:6px 14px;cursor:pointer;font-size:14px}
-.lb button:hover{background:var(--acc);color:#0f172a}
-.search{margin:0 0 14px}
-.search input{width:100%;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--tx);font-size:13px;outline:none}
-.search input:focus{border-color:var(--acc)}
-#qres{max-height:340px;overflow-y:auto;margin-top:6px}
-#qres .qi{display:block;padding:6px 8px;border-radius:6px;font-size:12.5px;color:var(--tx);border-left:2px solid transparent}
-#qres .qi:hover{background:var(--card);text-decoration:none;border-left-color:var(--acc)}
-#qres .qi .qp{color:var(--mut);font-size:11px;display:block}
-#qres .qi b{color:var(--acc)}
-.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
-main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
-.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
-aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
-aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
-aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
-aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
-aside a:hover{background:var(--card);text-decoration:none}
-aside a.on{background:var(--card);color:var(--acc)}
-main{padding:36px 48px;max-width:1000px}
-h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
-h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
-table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
-th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
-th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
-code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
-pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
-pre code{background:none;padding:0}
-blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
-.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
-.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
-.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
-.meta{font-size:13px;color:var(--mut)}
-hr{border:none;border-top:1px solid var(--line);margin:26px 0}
-.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
-.badge.soon{background:#475569;color:#cbd5e1}
-main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
-main{padding:28px 48px 40px;max-width:1040px}
-h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
-blockquote p{margin:6px 0}
-.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
-.crumbs a{color:var(--acc)}
-.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
-.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
-.pn a:hover{border-color:var(--acc)}
-.pn .nxt{text-align:right}
-.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
-@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
-</style></head>
-<body><div class="layout"><aside><h1>AOS 8.10R04 · CLI Reference 命令地图</h1>
-<div class="search"><input id="qk" type="search" placeholder="🔍 搜索全站…" autocomplete="off"><div id="qres"></div></div>
-
-<div class="sub">6240 页 · 70 章命令字典导航（约 2480 条命令，按 5 域组织）</div>
-<a href="../index.html">🏠 课程首页</a>
-<a href="../digest.html">📖 精华长文 DIGEST</a>
-
-<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
-<a href="../glossary.html">🔤 术语词典</a>
-<a href="../../../index.html">⬅️ 返回培训门户</a>
-<a href="../index.html">──── Skills ────</a>
-<div class="grp">二层与接入</div>
-<a href="../skills/aos-cli-map-l2-access.html">aos-cli-map-l2-access</a>
-<div class="grp">骨干与路由</div>
-<a href="../skills/aos-cli-map-fabric.html">aos-cli-map-fabric</a>
-<a href="../skills/aos-cli-map-routing.html">aos-cli-map-routing</a>
-<div class="grp">策略与运维</div>
-<a href="../skills/aos-cli-map-multicast-qos.html">aos-cli-map-multicast-qos</a>
-<a href="../skills/aos-cli-map-mgmt-oam.html" class="on">aos-cli-map-mgmt-oam</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../aos/index.html">AOS 软件手册</a> › <a href="../index.html">AOS 8.10R04</a> › <span>aos-cli-map-mgmt-oam</span></nav><h1>aos-cli-map-mgmt-oam</h1><p class="meta"><span class="badge">SKILL</span> aos-cli-map-mgmt-oam · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="面向售前、售后与网络工程师的 ALE 内部技术知识平台">
+  <meta name="theme-color" content="#6B489D">
+  <title>aos-cli-map-mgmt-oam — AOS 8.10R04 · CLI Reference 命令地图</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=4">
+  <link rel="stylesheet" href="/assets/css/layout.css?v=4">
+  <link rel="stylesheet" href="/assets/css/components.css?v=4">
+  <link rel="stylesheet" href="/assets/css/content.css?v=7">
+  <script src="/assets/js/auth-config.js?v=4"></script>
+  <script src="/assets/js/auth-core.js?v=4"></script>
+  <script src="/assets/js/auth-guard.js?v=4"></script>
+</head>
+<body data-page-kind="course">
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <header class="topbar" data-topbar>
+    <a class="brand" href="/index.html" aria-label="返回 ALE 技术培训门户首页">
+      <img src="/assets/ale-logo-color.png" alt="Alcatel-Lucent Enterprise">
+      <span>ALE 培训门户</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-controls="primary-nav" aria-expanded="false" data-nav-toggle>
+      <span aria-hidden="true">☰</span><span class="sr-only">打开导航</span>
+    </button>
+    <nav id="primary-nav" class="primary-nav" aria-label="主导航">
+      <a href="/index.html">首页</a>
+      <a href="/paths.html">学习路径</a>
+      <a href="/presales/index.html">售前</a>
+      <a href="/postsales/index.html">售后</a>
+      <a href="/wlan/index.html">无线</a>
+      <a href="/aos/index.html" aria-current="page">AOS 手册</a>
+      <a href="/hardware/index.html">硬件</a>
+      <a href="/brochures/index.html">彩页</a>
+      <a href="/solutions/index.html">解决方案</a>
+      <a href="/security/index.html">安全</a>
+    </nav>
+    <button id="logout-btn" class="logout-btn" type="button" hidden>退出登录</button>
+  </header>
+<div class="course-layout">
+<aside class="course-sidebar" id="course-sidebar" data-sidebar>
+  <div class="sidebar-heading">
+    <p class="eyebrow">COURSE</p>
+    <h2>AOS 8.10R04 · CLI Reference 命令地图</h2>
+    <p>6240 页 · 70 章命令字典导航（约 2480 条命令，按 5 域组织）</p>
+  </div>
+<div class="search" data-search>
+  <label class="sr-only" for="course-search">搜索全站课程和知识单元</label>
+  <input id="course-search" type="search" placeholder="搜索课程编号、产品型号或技术关键词…" autocomplete="off" data-search-input>
+  <div class="search-results" role="listbox" aria-live="polite" data-search-results></div>
+</div>  <nav class="course-nav" aria-label="课程目录">
+    <a href="/aos/cli-reference/index.html">课程首页</a>
+    <a href="/aos/cli-reference/digest.html">精华长文</a>
+    <a href="/aos/cli-reference/overview.html">教书理解</a>
+    <a href="/aos/cli-reference/glossary.html">术语词典</a>
+    <p class="course-nav-group">二层与接入</p>
+      <a href="/aos/cli-reference/skills/aos-cli-map-l2-access.html">aos-cli-map-l2-access</a>
+    <p class="course-nav-group">骨干与路由</p>
+      <a href="/aos/cli-reference/skills/aos-cli-map-fabric.html">aos-cli-map-fabric</a>
+      <a href="/aos/cli-reference/skills/aos-cli-map-routing.html">aos-cli-map-routing</a>
+    <p class="course-nav-group">策略与运维</p>
+      <a href="/aos/cli-reference/skills/aos-cli-map-multicast-qos.html">aos-cli-map-multicast-qos</a>
+      <a aria-current="page" href="/aos/cli-reference/skills/aos-cli-map-mgmt-oam.html">aos-cli-map-mgmt-oam</a>
+  </nav>
+</aside>  <main id="main-content" class="course-main prose">
+    <nav class="breadcrumbs" aria-label="面包屑"><a href="/index.html">培训门户</a><span>/</span><a href="/aos/index.html">AOS 软件手册 · Software Guides</a><span>/</span><a href="/aos/cli-reference/index.html">AOS 8.10R04</a><span>/</span><span aria-current="page">aos-cli-map-mgmt-oam</span></nav>
+<header class="skill-heading"><div><p class="eyebrow">KNOWLEDGE UNIT</p><h1>aos-cli-map-mgmt-oam</h1></div><dl><div><dt>Skill ID</dt><dd>aos-cli-map-mgmt-oam</dd></div></dl></header>    <article class="markdown-body"><h2 id="r">R（触发场景）</h2>
 <ul>
 <li><strong>网络排障</strong>：<br>要镜像端口、采 sFlow、配 RMON 告警、查 Switch Health</li>
 <li><strong>OAM 诊断</strong>：<br>802.1ag CFM（MEP/MAID）、802.3ah LINK OAM、CPE Test Head 拨测、SAA 探测</li>
@@ -96,7 +76,7 @@ blockquote p{margin:6px 0}
 <h2 id="i">I（核心理念）</h2>
 <ul>
 <li><strong>双 OAM 体系（P33）</strong>：<br>Ethernet OAM/CFM（802.1ag，MEP/MAID/远端 MEP 状态）面向连通性故障管理；LINK OAM（802.3ah）面向单链路监测。</li>
-<li>管理命令集中在全书尾部（<span class="pg">原文p5313-6240</span> ）；LLDP（第 18 章）属监测域但页码靠前。</li>
+<li>管理命令集中在全书尾部（<span class="source-page">原文p5313-6240</span> ）；LLDP（第 18 章）属监测域但页码靠前。</li>
 <li>页码取 PDF 全文标记 <code>&lt;&lt;&lt;PAGE N&gt;&gt;&gt;</code>。</li>
 </ul>
 <h2 id="a1">A1（决策框架）</h2>
@@ -109,40 +89,658 @@ blockquote p{margin:6px 0}
 </ol>
 <h2 id="a2">A2（操作步骤）·章节清单与代表命令</h2>
 <ul>
-<li><strong>Ch18 802.1AB/LLDP（<span class="pg">原文p1390</span> ，约 40 条）</strong>：<code>lldp</code>（LLDPDU/邻居数据库/TLV）；<code>ethernet-service uni</code> 控制带标签/无标签 LLDPDU 处理——默认两者均丢弃（P32/X24）</li>
-<li><strong>Ch19 SIP（<span class="pg">原文p1486</span> ，约 18 条）</strong>：会话/互联类（章名缩写未展开，域归属待确认）</li>
-<li><strong>Ch50 Port Mirroring and Monitoring（<span class="pg">原文p5256</span> ，约 9 条）</strong>：<code>ports mirror</code></li>
-<li><strong>Ch51 sFlow（<span class="pg">原文p5277</span> ，约 13 条）</strong>：<code>sflow</code></li>
-<li><strong>Ch52 RMON（<span class="pg">原文p5305</span> ，约 4 条）</strong>：<code>rmon</code></li>
-<li><strong>Ch53 Switch Logging（<span class="pg">原文p5313</span> ，约 14 条）</strong>：<code>syslog</code>（级别/服务器/过滤）</li>
-<li><strong>Ch54 Health Monitoring（<span class="pg">原文p5347</span> ，约 6 条）</strong>：CPU/内存/进程阈值检查</li>
-<li><strong>Ch55 Ethernet OAM（<span class="pg">原文p5358</span> ，约 46 条）</strong>：<code>cfm</code>/<code>ethernet-oam</code>（MEP/MAID/CCM）</li>
-<li><strong>Ch56 LINK OAM（<span class="pg">原文p5432</span> ，约 23 条）</strong>：802.3ah 远端发现/环回/远端故障指示</li>
-<li><strong>Ch57 CPE Test Head（<span class="pg">原文p5503</span> ，约 31 条）</strong>：接入侧业务拨测</li>
-<li><strong>Ch59 SAA（<span class="pg">原文p5597</span> ，约 19 条）</strong>：<code>saa</code>（ping/ftp/http 等业务质量探测）</li>
-<li><strong>Ch60 CMM（<span class="pg">原文p5645</span> ，约 29 条）</strong>：CMM 控制模块冗余/同步</li>
-<li><strong>Ch61 Chassis Management（<span class="pg">原文p5697</span> ，约 91 条）</strong>：<code>chassis</code>/<code>temperature</code>/<code>fan</code>/<code>psu</code></li>
-<li><strong>Ch62 NTP（<span class="pg">原文p5884</span> ，约 25 条）</strong>：<code>ntp</code>/SNTP</li>
-<li><strong>Ch63 Session Management（<span class="pg">原文p5936</span> ，约 35 条）</strong>：CLI 会话/telnet/SSH 超时</li>
-<li><strong>Ch64 File Management（<span class="pg">原文p5999</span> ，约 21 条）</strong>：<code>copy</code>/<code>delete</code>/<code>directory</code>/脚本</li>
-<li><strong>Ch65 Web Management（<span class="pg">原文p6040</span> ，约 11 条）</strong>：内嵌 Web 开关与 HTTP/HTTPS</li>
-<li><strong>Ch66 Configuration File Manager（<span class="pg">原文p6060</span> ，约 11 条）</strong>：<code>configuration</code>/<code>working-set</code>（running/committed 双区、VC 批量配置）（P34）</li>
-<li><strong>Ch67 SNMP（<span class="pg">原文p6079</span> ，约 26 条）</strong>：v1/v2c/v3 团体/用户/陷阱</li>
-<li><strong>Ch68 OmniVista Cirrus（<span class="pg">原文p6132</span> ，约 10 条）</strong>：云管理平台对接</li>
-<li><strong>Ch69 OpenFlow（<span class="pg">原文p6151</span> ，约 8 条）</strong>：SDN 控制器/流表混合模式</li>
-<li><strong>Ch70 DNS（<span class="pg">原文p6169</span> ，约 6 条）</strong>：DNS 客户端解析</li>
-<li><strong>数据中心散章</strong>：<br>Ch45 FIP Snooping（<span class="pg">原文p5039</span> ，约 22 条）；</li>
-<li>Ch46 FCoE/FC Gateway（<span class="pg">原文p5090</span> ，约 27 条）；</li>
-<li>Ch47 VXLAN Snooping（<span class="pg">原文p5152</span> ，约 20 条）；</li>
-<li>Ch48 Port Mapping（<span class="pg">原文p5195</span> ，约 9 条）；</li>
+<li><strong>Ch18 802.1AB/LLDP（<span class="source-page">原文p1390</span> ，约 40 条）</strong>：<code>lldp</code>（LLDPDU/邻居数据库/TLV）；<code>ethernet-service uni</code> 控制带标签/无标签 LLDPDU 处理——默认两者均丢弃（P32/X24）</li>
+<li><strong>Ch19 SIP（<span class="source-page">原文p1486</span> ，约 18 条）</strong>：会话/互联类（章名缩写未展开，域归属待确认）</li>
+<li><strong>Ch50 Port Mirroring and Monitoring（<span class="source-page">原文p5256</span> ，约 9 条）</strong>：<code>ports mirror</code></li>
+<li><strong>Ch51 sFlow（<span class="source-page">原文p5277</span> ，约 13 条）</strong>：<code>sflow</code></li>
+<li><strong>Ch52 RMON（<span class="source-page">原文p5305</span> ，约 4 条）</strong>：<code>rmon</code></li>
+<li><strong>Ch53 Switch Logging（<span class="source-page">原文p5313</span> ，约 14 条）</strong>：<code>syslog</code>（级别/服务器/过滤）</li>
+<li><strong>Ch54 Health Monitoring（<span class="source-page">原文p5347</span> ，约 6 条）</strong>：CPU/内存/进程阈值检查</li>
+<li><strong>Ch55 Ethernet OAM（<span class="source-page">原文p5358</span> ，约 46 条）</strong>：<code>cfm</code>/<code>ethernet-oam</code>（MEP/MAID/CCM）</li>
+<li><strong>Ch56 LINK OAM（<span class="source-page">原文p5432</span> ，约 23 条）</strong>：802.3ah 远端发现/环回/远端故障指示</li>
+<li><strong>Ch57 CPE Test Head（<span class="source-page">原文p5503</span> ，约 31 条）</strong>：接入侧业务拨测</li>
+<li><strong>Ch59 SAA（<span class="source-page">原文p5597</span> ，约 19 条）</strong>：<code>saa</code>（ping/ftp/http 等业务质量探测）</li>
+<li><strong>Ch60 CMM（<span class="source-page">原文p5645</span> ，约 29 条）</strong>：CMM 控制模块冗余/同步</li>
+<li><strong>Ch61 Chassis Management（<span class="source-page">原文p5697</span> ，约 91 条）</strong>：<code>chassis</code>/<code>temperature</code>/<code>fan</code>/<code>psu</code></li>
+<li><strong>Ch62 NTP（<span class="source-page">原文p5884</span> ，约 25 条）</strong>：<code>ntp</code>/SNTP</li>
+<li><strong>Ch63 Session Management（<span class="source-page">原文p5936</span> ，约 35 条）</strong>：CLI 会话/telnet/SSH 超时</li>
+<li><strong>Ch64 File Management（<span class="source-page">原文p5999</span> ，约 21 条）</strong>：<code>copy</code>/<code>delete</code>/<code>directory</code>/脚本</li>
+<li><strong>Ch65 Web Management（<span class="source-page">原文p6040</span> ，约 11 条）</strong>：内嵌 Web 开关与 HTTP/HTTPS</li>
+<li><strong>Ch66 Configuration File Manager（<span class="source-page">原文p6060</span> ，约 11 条）</strong>：<code>configuration</code>/<code>working-set</code>（running/committed 双区、VC 批量配置）（P34）</li>
+<li><strong>Ch67 SNMP（<span class="source-page">原文p6079</span> ，约 26 条）</strong>：v1/v2c/v3 团体/用户/陷阱</li>
+<li><strong>Ch68 OmniVista Cirrus（<span class="source-page">原文p6132</span> ，约 10 条）</strong>：云管理平台对接</li>
+<li><strong>Ch69 OpenFlow（<span class="source-page">原文p6151</span> ，约 8 条）</strong>：SDN 控制器/流表混合模式</li>
+<li><strong>Ch70 DNS（<span class="source-page">原文p6169</span> ，约 6 条）</strong>：DNS 客户端解析</li>
+<li><strong>数据中心散章</strong>：Ch45 FIP Snooping（<span class="source-page">原文p5039</span> ，约 22 条）；Ch46 FCoE/FC Gateway（<span class="source-page">原文p5090</span> ，约 27 条）；Ch47 VXLAN Snooping（<span class="source-page">原文p5152</span> ，约 20 条）；Ch48 Port Mapping（<span class="source-page">原文p5195</span> ，约 9 条）</li>
 </ul>
+<h2 id="a3">A3（核心命令速查）</h2>
+<ul>
+<li>语法/默认值/示例均摘自原书第 18-19、45-48、50-70 章对应条目；页码为 fulltext <code>&lt;&lt;&lt;PAGE N&gt;&gt;&gt;</code> 标记值。</li>
+<li><code>{enable | disable}</code> 表示"多选一"。</li>
+</ul>
+<h3 id="lldp-18">LLDP（第 18 章）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>语法要点</th>
+<th>关键参数与默认值</th>
+<th>典型用法（一行示例）</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>lldp lldpdu</td>
+<td><code>lldp [non-tpmr \| nearest-customer \| nearest-bridge \| all] {port c/s/p[-p2] \| slot c/s} lldpdu {tx \| rx \| tx-and-rx \| disable}</code></td>
+<td>按 agent 控制收发；带标签/无标签控制帧默认丢弃（X24，需 ethernet-service uni / l2profile 处理）</td>
+<td><code>-&gt; lldp port 1/1/5 lldpdu tx-and-rx</code></td>
+<td>1402</td>
+</tr>
+<tr>
+<td>lldp transmit interval / hold-multiplier</td>
+<td><code>lldp transmit interval seconds</code> / <code>lldp transmit hold-multiplier num</code></td>
+<td>全局通告计时器</td>
+<td><code>-&gt; lldp transmit interval 30</code></td>
+<td>1394/1396</td>
+</tr>
+<tr>
+<td>lldp tlv management / dot1 / dot3 / med</td>
+<td><code>lldp [agent] {port ...} tlv {management {port-description \| system-name \| ...} \| dot1 ... \| dot3 ... \| med ...} {enable \| disable}</code></td>
+<td>TLV 粒度控制</td>
+<td><code>-&gt; lldp port 1/1/5 tlv management system-name enable</code></td>
+<td>1411-1422</td>
+</tr>
+<tr>
+<td>lldp network-policy / med network-policy</td>
+<td><code>lldp network-policy {policy-id ...}</code> / <code>lldp med network-policy ...</code></td>
+<td>语音/策略通告</td>
+<td><code>-&gt; lldp network-policy voice vlan 110</code></td>
+<td>1406/1409</td>
+</tr>
+<tr>
+<td>lldp trust-agent</td>
+<td><code>lldp trust-agent ...</code> + <code>violation-action</code></td>
+<td>信任代理与违例动作</td>
+<td><code>-&gt; lldp trust-agent ...</code></td>
+<td>1476/1479</td>
+</tr>
+<tr>
+<td>show lldp config / remote-system</td>
+<td><code>show lldp config [port ...]</code> / <code>show lldp remote-system [port ...]</code>；med/application-tlv/power-via-mdi 变体</td>
+<td>邻居首查</td>
+<td><code>-&gt; show lldp remote-system</code></td>
+<td>1446/1453</td>
+</tr>
+<tr>
+<td>show lldp statistics / system-statistics</td>
+<td><code>show lldp statistics [port ...]</code></td>
+<td>计数排障</td>
+<td><code>-&gt; show lldp statistics</code></td>
+<td>1436/1434</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="50">端口镜像与监测（第 50 章）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>语法要点</th>
+<th>关键参数与默认值</th>
+<th>典型用法（一行示例）</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>port-mirroring source destination</td>
+<td><code>port-mirroring session_id source port c/s/p[-p2] destination {port c/s/p \| linkagg id} [rpmir-vlan vlan] [bidirectional \| inport \| outport] [loopback] [tag-remove] [enable \| disable]</code>；<code>no source/destination</code> 拆源/目的</td>
+<td>会话级镜像</td>
+<td><code>-&gt; port-mirroring 1 source port 1/1/5 destination port 1/1/10 enable</code></td>
+<td>5257</td>
+</tr>
+<tr>
+<td>port-monitoring source</td>
+<td><code>port-monitoring session_id source port c/s/p [file filename [size n] \| no file] [overwrite {on \| off}] [inport \| outport \| bidirectional] [timeout s] [capture-type {full \| brief}]</code></td>
+<td>抓包到文件</td>
+<td><code>-&gt; port-monitoring 1 source port 1/1/5 file cap.txt bidirectional</code></td>
+<td>5262</td>
+</tr>
+<tr>
+<td>show port-mirroring / port-monitoring status</td>
+<td><code>show port-mirroring status [session_id]</code> / <code>show port-monitoring status</code> + <code>file</code></td>
+<td>—</td>
+<td><code>-&gt; show port-mirroring status</code></td>
+<td>5271/5273-5275</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="sflow-rmon-51-52">sFlow / RMON（第 51-52 章）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>语法要点</th>
+<th>关键参数与默认值</th>
+<th>典型用法（一行示例）</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>sflow receiver</td>
+<td><code>[vrf name] sflow receiver index {name string \| timeout {seconds \| forever} \| address ip \| udp-port p \| packet-size n \| version n \| release}</code></td>
+<td>采集器定义</td>
+<td><code>-&gt; sflow receiver 1 address 10.0.0.99</code></td>
+<td>5281</td>
+</tr>
+<tr>
+<td>sflow sampler</td>
+<td><code>[vrf name] sflow sampler num port c/s/p {receiver index \| rate value \| sample-hdr-size n}</code>，<code>no</code> 删除</td>
+<td>端口采样率</td>
+<td><code>-&gt; sflow sampler 1 port 1/1/5 receiver 1 rate 512</code></td>
+<td>5284</td>
+</tr>
+<tr>
+<td>sflow poller</td>
+<td><code>[vrf name] sflow poller num port ... {receiver index \| interval s}</code></td>
+<td>计数器轮询</td>
+<td><code>-&gt; sflow poller 1 port 1/1/5 receiver 1 interval 20</code></td>
+<td>5286</td>
+</tr>
+<tr>
+<td>show sflow</td>
+<td><code>show sflow {agent \| receiver [n] \| sampler [n] \| poller [n]}</code></td>
+<td>—</td>
+<td><code>-&gt; show sflow sampler</code></td>
+<td>5294-5302</td>
+</tr>
+<tr>
+<td>rmon probes</td>
+<td><code>rmon probes {stats \| history \| alarm} [entry_number] {enable \| disable}</code></td>
+<td>探针类别开关</td>
+<td><code>-&gt; rmon probes alarm 4012 enable</code></td>
+<td>5306</td>
+</tr>
+<tr>
+<td>show rmon</td>
+<td><code>show rmon probes [entry]</code>；<code>show rmon events</code></td>
+<td>—</td>
+<td><code>-&gt; show rmon probes</code></td>
+<td>5308/5311</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="53-54">日志与健康（第 53-54 章）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>语法要点</th>
+<th>关键参数与默认值</th>
+<th>典型用法（一行示例）</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>swlog</td>
+<td><code>swlog {enable \| disable \| preamble \| hash-time-limit seconds \| duplicate-detect \| console level num \| default level level}</code>，<code>no swlog [preamble \| duplicate-detect]</code></td>
+<td>日志总开关与去重</td>
+<td><code>-&gt; swlog enable</code></td>
+<td>5314</td>
+</tr>
+<tr>
+<td>swlog output / appid / syslog-facility-id</td>
+<td><code>swlog output {console \| file \| socket} ...</code>；<code>swlog appid ...</code>；<code>swlog syslog-facility-id ...</code></td>
+<td>输出目的地/应用级别</td>
+<td><code>-&gt; swlog output file enable</code></td>
+<td>5320+</td>
+</tr>
+<tr>
+<td>swlog clear</td>
+<td><code>swlog clear</code></td>
+<td>清日志</td>
+<td><code>-&gt; swlog clear</code></td>
+<td>5327</td>
+</tr>
+<tr>
+<td>show log swlog / show log events</td>
+<td><code>show log swlog</code> / <code>show log events [output ...]</code></td>
+<td>查询历史</td>
+<td><code>-&gt; show log swlog</code></td>
+<td>5333/5343</td>
+</tr>
+<tr>
+<td>health threshold</td>
+<td><code>health threshold {rx pct \| txrx pct \| memory pct \| cpu pct \| flash pct}</code></td>
+<td>资源阈值告警</td>
+<td><code>-&gt; health threshold cpu 80</code></td>
+<td>5348</td>
+</tr>
+<tr>
+<td>health interval</td>
+<td><code>health interval seconds</code></td>
+<td>采样间隔</td>
+<td><code>-&gt; health interval 20</code></td>
+<td>5350</td>
+</tr>
+<tr>
+<td>show health</td>
+<td><code>show health [configuration \| all]</code></td>
+<td>健康总览</td>
+<td><code>-&gt; show health all</code></td>
+<td>5352-5356</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="ethernet-oam-cfm-8021ag-55">Ethernet OAM / CFM 802.1ag（第 55 章）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>语法要点</th>
+<th>关键参数与默认值</th>
+<th>典型用法（一行示例）</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ethoam domain</td>
+<td><code>ethoam domain md_name format {none \| dnsname \| mac-address-uint \| string} level num</code>，<code>no</code> 删除</td>
+<td>MD 层级 level 0-7</td>
+<td><code>-&gt; ethoam domain MD format none level 3</code></td>
+<td>5362</td>
+</tr>
+<tr>
+<td>ethoam association</td>
+<td><code>ethoam association ma_name format {vpnid \| unsignedint \| string \| primaryvid \| icc-based} domain md_name</code>，<code>no</code> 删除</td>
+<td>MA（维护集）</td>
+<td><code>-&gt; ethoam association MA format string domain MD</code></td>
+<td>5368</td>
+</tr>
+<tr>
+<td>ethoam association ccm-interval</td>
+<td><code>ethoam association ma domain md ccm-interval {interval100ms \| interval1s \| interval10s \| interval1m \| interval10m}</code></td>
+<td>CCM 周期</td>
+<td><code>-&gt; ethoam association MA domain MD ccm-interval interval1s</code></td>
+<td>5376</td>
+</tr>
+<tr>
+<td>ethoam endpoint</td>
+<td><code>ethoam endpoint mep_id domain md association ma direction {up \| down} {port c/s/p \| virtual \| linkagg id} [primary-vlan vlan \| cvlan vlan]</code>，<code>no</code> 删除</td>
+<td>MEP 创建</td>
+<td><code>-&gt; ethoam endpoint 100 domain MD association MA direction down port 1/1/5</code></td>
+<td>5391</td>
+</tr>
+<tr>
+<td>ethoam endpoint ccm</td>
+<td><code>ethoam endpoint mep_id domain md association ma ccm {enable \| disable}</code></td>
+<td>连续性检测报文</td>
+<td><code>-&gt; ethoam endpoint 100 domain MD association MA ccm enable</code></td>
+<td>5397</td>
+</tr>
+<tr>
+<td>ethoam loopback</td>
+<td><code>ethoam loopback {target-endpoint mep \| target-macaddress mac} source-endpoint mep domain md association ma [number n] [data string]</code></td>
+<td>LBM/LBR 连通性探测</td>
+<td><code>-&gt; ethoam loopback target-endpoint 101 source-endpoint 100 domain MD association MA</code></td>
+<td>5407</td>
+</tr>
+<tr>
+<td>ethoam linktrace</td>
+<td><code>ethoam linktrace {target-macaddress mac \| target-endpoint mep} source-endpoint mep domain {md \| mac} association ma [flag ...] [hop-count n]</code></td>
+<td>逐跳路径追踪</td>
+<td><code>-&gt; ethoam linktrace target-endpoint 101 source-endpoint 100 domain MD association MA</code></td>
+<td>5405</td>
+</tr>
+<tr>
+<td>ethoam one-way-delay / two-way-delay</td>
+<td><code>ethoam {one-way-delay \| two-way-delay} {target-endpoint mep \| ...} source-endpoint mep domain md association ma</code></td>
+<td>时延/抖动测量</td>
+<td><code>-&gt; ethoam two-way-delay target-endpoint 101 source-endpoint 100 domain MD association MA</code></td>
+<td>5414/5416</td>
+</tr>
+<tr>
+<td>show ethoam</td>
+<td><code>show ethoam [domain [md [association [end-point]]]]</code>；另有 remote-endpoint/linktrace-reply/statistics/config-error 等</td>
+<td>CFM 排障族</td>
+<td><code>-&gt; show ethoam domain MD association MA end-point</code></td>
+<td>5419-5449</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="link-oam-8023ah-56">LINK OAM 802.3ah（第 56 章）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>语法要点</th>
+<th>关键参数与默认值</th>
+<th>典型用法（一行示例）</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>efm-oam admin-state</td>
+<td><code>efm-oam admin-state {enable \| disable}</code></td>
+<td>全局默认 disabled</td>
+<td><code>-&gt; efm-oam admin-state enable</code></td>
+<td>5454</td>
+</tr>
+<tr>
+<td>efm-oam port admin-state / mode</td>
+<td><code>efm-oam port c/s/p admin-state {enable \| disable}</code> / <code>efm-oam port c/s/p mode {active \| passive}</code></td>
+<td>mode 默认 active</td>
+<td><code>-&gt; efm-oam port 1/1/1 mode passive</code></td>
+<td>5456/5458</td>
+</tr>
+<tr>
+<td>efm-oam port keepalive / hello interval</td>
+<td><code>efm-oam port c/s/p {keepalive-interval \| hello-interval} seconds</code></td>
+<td>计时器</td>
+<td><code>-&gt; efm-oam port 1/1/1 hello-interval 5</code></td>
+<td>5460/5462</td>
+</tr>
+<tr>
+<td>efm-oam port remote-loopback</td>
+<td><code>efm-oam port c/s/p remote-loopback {process \| ignore}</code> + <code>start</code> 发起</td>
+<td>默认 ignore 对端环回请求</td>
+<td><code>-&gt; efm-oam port 1/1/1 remote-loopback process</code></td>
+<td>5464/5466</td>
+</tr>
+<tr>
+<td>efm-oam port l1-ping</td>
+<td><code>efm-oam port c/s/p l1-ping [num-frames n] [delay ms] [start]</code></td>
+<td>物理层 ping</td>
+<td><code>-&gt; efm-oam port 1/1/12 l1-ping num-frames 6 delay 300 start</code></td>
+<td>5478</td>
+</tr>
+<tr>
+<td>efm-oam errored-frame 族</td>
+<td><code>efm-oam {errored-frame \| errored-frame-period \| errored-frame-seconds-summary \| multiple-pdu-count} ...</code></td>
+<td>误帧阈值监测</td>
+<td><code>-&gt; efm-oam errored-frame ...</code></td>
+<td>5470-5477</td>
+</tr>
+<tr>
+<td>show efm-oam</td>
+<td><code>show efm-oam [configuration \| port [detail \| statistics \| remote detail \| history \| l1-ping detail]]</code></td>
+<td>—</td>
+<td><code>-&gt; show efm-oam port detail</code></td>
+<td>5480-5497</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="cpe-test-head-saa-5759">CPE Test Head / SAA（第 57/59 章）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>语法要点</th>
+<th>关键参数与默认值</th>
+<th>典型用法（一行示例）</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>test-oam</td>
+<td><code>test-oam name [descr description]</code>，<code>no</code> 删除</td>
+<td>CPE 拨测测试定义</td>
+<td><code>-&gt; test-oam Test1</code></td>
+<td>5505</td>
+</tr>
+<tr>
+<td>show test-oam</td>
+<td><code>show test-oam [statistics [saa] \| group [saa statistics \| statistics]]</code></td>
+<td>拨测结果</td>
+<td><code>-&gt; show test-oam statistics</code></td>
+<td>5530-5569</td>
+</tr>
+<tr>
+<td>saa</td>
+<td><code>[vrf name] saa string [descr d] [interval i] [jitter-threshold j] [rtt-threshold r]</code>，<code>no</code> 删除</td>
+<td>SAA 探测实例</td>
+<td><code>-&gt; saa saa1 interval 10</code></td>
+<td>5598</td>
+</tr>
+<tr>
+<td>saa type ip-ping / mac-ping / ethoam-loopback 等</td>
+<td><code>[vrf] saa name type {ip-ping destination-ip ip source-ip ip [num-pkts n] [inter-pkt-delay d] [payload-size s] \| mac-ping ... \| ethoam-loopback ... \| ethoam-two-way-delay ...}</code></td>
+<td>探测类型配置；<code>saa spb ...</code> 为 SPB 专测</td>
+<td><code>-&gt; saa saa1 type ip-ping destination-ip 10.0.0.8 source-ip 10.0.0.1</code></td>
+<td>5601-5617</td>
+</tr>
+<tr>
+<td>saa start / stop</td>
+<td><code>[vrf] saa name start [at yyyy-mm-dd,hh:mm:ss]</code> / <code>stop [never \| at ...]</code></td>
+<td>默认立即开始/停止</td>
+<td><code>-&gt; saa saa1 start</code></td>
+<td>5620/5622</td>
+</tr>
+<tr>
+<td>show saa</td>
+<td><code>show saa [type config \| statistics \| spb \| xml \| vrf]</code></td>
+<td>—</td>
+<td><code>-&gt; show saa statistics</code></td>
+<td>5628-5642</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="cmm-ntp-60-64">CMM / 机箱硬件 / NTP / 会话 / 文件（第 60-64 章）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>语法要点</th>
+<th>关键参数与默认值</th>
+<th>典型用法（一行示例）</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>write memory</td>
+<td><code>write memory [flash-synchro]</code></td>
+<td>running→running-directory（主 CMM）</td>
+<td><code>-&gt; write memory flash-synchro</code></td>
+<td>5660</td>
+</tr>
+<tr>
+<td>copy certified</td>
+<td><code>copy certified image_dir [make-running-directory]</code></td>
+<td>certified→指定目录</td>
+<td><code>-&gt; copy certified mydir</code></td>
+<td>5655</td>
+</tr>
+<tr>
+<td>copy flash-synchro</td>
+<td><code>copy flash-synchro</code></td>
+<td>主备 CMM certified 同步</td>
+<td><code>-&gt; copy flash-synchro</code></td>
+<td>5666</td>
+</tr>
+<tr>
+<td>show chassis / slot / module</td>
+<td><code>show chassis</code> / <code>show slot [c/s]</code> / <code>show module [long \| status]</code></td>
+<td>硬件清单首查</td>
+<td><code>-&gt; show module</code></td>
+<td>5763-5774</td>
+</tr>
+<tr>
+<td>show powersupply / fan / temperature</td>
+<td><code>show powersupply</code> / <code>show fan [tray]</code> / <code>show temperature</code></td>
+<td>电源/风扇/温度</td>
+<td><code>-&gt; show temperature</code></td>
+<td>5776-5783</td>
+</tr>
+<tr>
+<td>show system / tech-support</td>
+<td><code>show system</code> / <code>show tech-support</code></td>
+<td>一键收集</td>
+<td><code>-&gt; show tech-support</code></td>
+<td>5758/5820</td>
+</tr>
+<tr>
+<td>ntp client</td>
+<td><code>ntp client admin-state {enable \| disable}</code></td>
+<td>NTP 默认 disabled</td>
+<td><code>-&gt; ntp client enable</code></td>
+<td>5894</td>
+</tr>
+<tr>
+<td>ntp server / peer / master</td>
+<td><code>ntp server {ip \| name} [key id] [prefer] [burst \| iburst]</code>；<code>ntp peer ip ...</code>；<code>ntp master stratum</code></td>
+<td>时间源三层</td>
+<td><code>-&gt; ntp server 10.0.0.99 prefer</code></td>
+<td>5886/5916/5908</td>
+</tr>
+<tr>
+<td>show ntp status / server status</td>
+<td><code>show ntp status</code> / <code>show ntp server status</code></td>
+<td>同步状态</td>
+<td><code>-&gt; show ntp status</code></td>
+<td>5919/5927</td>
+</tr>
+<tr>
+<td>session timeout</td>
+<td><code>session {cli \| http \| ftp} timeout minutes</code></td>
+<td>CLI/HTTP/FTP 空闲超时</td>
+<td><code>-&gt; session cli timeout 5</code></td>
+<td>5944</td>
+</tr>
+<tr>
+<td>telnet / show ssh</td>
+<td><code>[vrf name] telnet {port [default \| p] \| admin-state ...}</code>；<code>show ssh</code></td>
+<td>管理服务</td>
+<td><code>-&gt; telnet admin-state disable</code></td>
+<td>5978/5997</td>
+</tr>
+<tr>
+<td>copy / delete / dir（文件管理）</td>
+<td><code>copy source destination</code>、<code>delete filename</code>、<code>directory</code> 等（第 64 章）</td>
+<td>flash 文件操作</td>
+<td><code>-&gt; copy certified /flash/mydir</code></td>
+<td>5999+</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="snmp-openflow-dns-66-70">配置文件 / SNMP / OpenFlow / DNS（第 66-70 章）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>语法要点</th>
+<th>关键参数与默认值</th>
+<th>典型用法（一行示例）</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>configuration apply</td>
+<td><code>configuration apply filename [at hh:mm month dd [year]] [in hh[:mm]] [verbose]</code></td>
+<td>立即/定时应用配置</td>
+<td><code>-&gt; configuration apply cfg.txt in 5 verbose</code></td>
+<td>6061</td>
+</tr>
+<tr>
+<td>configuration snapshot</td>
+<td><code>configuration snapshot [feature_list \| all] [path/filename]</code></td>
+<td>默认文件名 asc.#.snap</td>
+<td><code>-&gt; configuration snapshot all</code></td>
+<td>6071</td>
+</tr>
+<tr>
+<td>configuration apply network-sync</td>
+<td><code>configuration apply network-sync filename [community name \| local-apply]</code></td>
+<td>AMS 发布/订阅网络级同步</td>
+<td><code>-&gt; configuration apply network-sync preprovision.txt</code></td>
+<td>6078</td>
+</tr>
+<tr>
+<td>write terminal</td>
+<td><code>write terminal</code></td>
+<td>查看当前运行配置</td>
+<td><code>-&gt; write terminal</code></td>
+<td>6075</td>
+</tr>
+<tr>
+<td>snmp station</td>
+<td><code>snmp station {ip \| ipv6 \| domain} [port] [username] [v1 \| v2 \| v3 [tsm ...]] [enable \| disable]</code>，<code>no</code> 删除</td>
+<td>trap 接收站</td>
+<td><code>-&gt; snmp station 10.0.0.99 v3</code></td>
+<td>6081</td>
+</tr>
+<tr>
+<td>snmp community-map</td>
+<td><code>snmp community-map {community_string} user useraccount [enable \| disable]</code>，<code>no</code> 删除</td>
+<td>团体串映射用户（默认认证启用）</td>
+<td><code>-&gt; snmp community-map public user snmpuser</code></td>
+<td>6091</td>
+</tr>
+<tr>
+<td>snmp security</td>
+<td><code>snmp security {no-security \| authentication set \| all \| privacy set \| all \| trap-only \| tls {enable \| disable}}</code></td>
+<td>SNMPv3 安全模式</td>
+<td><code>-&gt; snmp security authentication all</code></td>
+<td>6097</td>
+</tr>
+<tr>
+<td>show snmp</td>
+<td><code>show snmp {station \| security \| statistics \| community-map ...}</code></td>
+<td>—</td>
+<td><code>-&gt; show snmp station</code></td>
+<td>6084+</td>
+</tr>
+<tr>
+<td>openflow logical-switch</td>
+<td><code>openflow logical-switch name [probe-time n \| failure-detect-time n \| dpid string] [admin-state ...] [mode {normal \| api \| pfc-channel}] [version {1.0 \| 1.3.1}] [vlan vlan_id] [table-miss-action {drop \| controller}]</code>，<code>no</code> 删除</td>
+<td>SDN 逻辑交换机</td>
+<td><code>-&gt; openflow logical-switch LS1 admin-state enable</code></td>
+<td>6156</td>
+</tr>
+<tr>
+<td>openflow logical-switch controller</td>
+<td><code>openflow logical-switch name controller {ip \| domain}[:port] [priority n] admin-state {enable \| disable}</code></td>
+<td>控制器连接</td>
+<td><code>-&gt; openflow logical-switch LS1 controller 10.0.0.10 admin-state enable</code></td>
+<td>6159</td>
+</tr>
+<tr>
+<td>show openflow</td>
+<td><code>show openflow [logical-switch [name]]</code></td>
+<td>—</td>
+<td><code>-&gt; show openflow logical-switch</code></td>
+<td>6163/6165</td>
+</tr>
+<tr>
+<td>ip name-server</td>
+<td><code>ip name-server server1 [server2 [server3]]</code></td>
+<td>最多 3 个 DNS 服务器</td>
+<td><code>-&gt; ip name-server 10.255.11.66</code></td>
+<td>6172</td>
+</tr>
+<tr>
+<td>show dns</td>
+<td><code>show dns</code></td>
+<td>解析配置</td>
+<td><code>-&gt; show dns</code></td>
+<td>6178</td>
+</tr>
+</tbody>
+</table></div>
 <h2 id="e">E（实证案例）</h2>
 <ul>
 <li>命令地图型 skill，不搬运案例；原书每条命令自带 Example，按章首页码回查（cases 原件未创建）</li>
 </ul>
 <h2 id="b">B（反例/坑）</h2>
 <ul>
-<li><strong>LLDP 控制帧默认丢弃</strong>：<br>带标签与无标签 802.1AB 控制帧默认均丢弃，需 <code>ethernet-service uni</code> 显式配置处理方式（X24，<span class="pg">原文p1390</span> ）</li>
+<li><strong>LLDP 控制帧默认丢弃</strong>：<br>带标签与无标签 802.1AB 控制帧默认均丢弃，需 <code>ethernet-service uni</code> 显式配置处理方式（X24，<span class="source-page">原文p1390</span> ）</li>
 <li>LINK OAM 镜像口不支持（Specifications Guide 佐证）</li>
 <li>第 19 章 SIP 域归属为建议值（章名缩写在目录中未展开，待确认）</li>
 </ul>
@@ -150,4 +748,12 @@ blockquote p{margin:6px 0}
 <ul>
 <li>OmniSwitch AOS Release 810R04 CLI Reference User Guide 第 18-19、45-48、50-70 章（&lt;&lt;<PAGE 1390-1486、5039-5212、5256-6240>&gt;&gt;）。</li>
 <li><strong>条目来源</strong>：<br>principles P32-P34；counter-examples X24；frameworks F9/F11。</li>
-</ul><div class="pn"><a href="aos-cli-map-multicast-qos.html">⬅ 上一单元：aos-cli-map-multicast-qos</a><a class="nxt" href="../digest.html">查看课程精华 DIGEST ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+</ul></article>
+<nav class="previous-next" aria-label="知识单元翻页"><a href="/aos/cli-reference/skills/aos-cli-map-multicast-qos.html"><span>上一单元</span><b>aos-cli-map-multicast-qos</b></a><a class="next" href="/aos/cli-reference/digest.html"><span>下一单元</span><b>查看课程精华</b></a></nav>    <footer class="content-footer">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</footer>
+  </main>
+</div>
+  <script src="/assets/js/app.js?v=4" defer></script>
+  <script src="/assets/js/search.js?v=4" defer></script>
+  <script src="/assets/js/lightbox.js?v=5" defer></script>
+</body>
+</html>

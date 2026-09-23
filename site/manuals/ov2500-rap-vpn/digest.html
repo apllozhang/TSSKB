@@ -1,91 +1,71 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>精华长文 DIGEST — OV2500 4.9R2 · RAP 与 VPN VA 安装</title>
-<style>
-:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
-*{box-sizing:border-box}
-body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
-a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
-.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin:16px 0}
-.gallery figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px}
-.gallery img{width:100%;max-height:340px;object-fit:contain;background:#fff;border-radius:6px}
-.gallery figcaption{font-size:12.5px;color:var(--mut);text-align:center;margin-top:6px}
-/* 侧栏折叠 + 图片灯箱 */
-.tgl{position:fixed;left:0;top:45%;z-index:60;background:var(--card);border:1px solid var(--line);border-right:none;border-radius:0 8px 8px 0;color:var(--tx);padding:10px 6px;cursor:pointer;font-size:13px;line-height:1.1;writing-mode:vertical-lr}
-.tgl:hover{background:var(--acc);color:#0f172a}
-.layout.full{grid-template-columns:0 1fr}
-.layout.full aside{display:none}
-.lb{position:fixed;inset:0;background:rgba(5,10,20,.92);z-index:100;display:flex;align-items:center;justify-content:center;flex-direction:column}
-.lb img{max-width:92vw;max-height:82vh;background:#fff;border-radius:6px;transition:transform .12s}
-.lb .lbb{margin-top:10px;display:flex;gap:10px}
-.lb button{background:var(--card);border:1px solid var(--line);color:var(--tx);border-radius:8px;padding:6px 14px;cursor:pointer;font-size:14px}
-.lb button:hover{background:var(--acc);color:#0f172a}
-.search{margin:0 0 14px}
-.search input{width:100%;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--tx);font-size:13px;outline:none}
-.search input:focus{border-color:var(--acc)}
-#qres{max-height:340px;overflow-y:auto;margin-top:6px}
-#qres .qi{display:block;padding:6px 8px;border-radius:6px;font-size:12.5px;color:var(--tx);border-left:2px solid transparent}
-#qres .qi:hover{background:var(--card);text-decoration:none;border-left-color:var(--acc)}
-#qres .qi .qp{color:var(--mut);font-size:11px;display:block}
-#qres .qi b{color:var(--acc)}
-.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
-main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
-.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
-aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
-aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
-aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
-aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
-aside a:hover{background:var(--card);text-decoration:none}
-aside a.on{background:var(--card);color:var(--acc)}
-main{padding:36px 48px;max-width:1000px}
-h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
-h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
-table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
-th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
-th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
-code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
-pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
-pre code{background:none;padding:0}
-blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
-.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
-.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
-.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
-.meta{font-size:13px;color:var(--mut)}
-hr{border:none;border-top:1px solid var(--line);margin:26px 0}
-.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
-.badge.soon{background:#475569;color:#cbd5e1}
-main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
-main{padding:28px 48px 40px;max-width:1040px}
-h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
-blockquote p{margin:6px 0}
-.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
-.crumbs a{color:var(--acc)}
-.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
-.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
-.pn a:hover{border-color:var(--acc)}
-.pn .nxt{text-align:right}
-.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
-@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
-</style></head>
-<body><div class="layout"><aside><h1>OV2500 4.9R2 · RAP 与 VPN VA 安装</h1>
-<div class="search"><input id="qk" type="search" placeholder="🔍 搜索全站…" autocomplete="off"><div id="qres"></div></div>
-
-<div class="sub">84 页 · 远程 AP 安全回连方案部署</div>
-<a href="index.html">🏠 课程首页</a>
-<a href="digest.html">📖 精华长文 DIGEST</a>
-
-<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
-<a href="glossary.html">🔤 术语词典</a>
-<a href="../../index.html">⬅️ 返回培训门户</a>
-<a href="index.html">──── Skills ────</a>
-<div class="grp">规划</div>
-<a href="skills/rap-vpn-mode-registration.html">rap-vpn-mode-registration</a>
-<div class="grp">部署与配置</div>
-<a href="skills/vpn-va-deploy-capacity.html">vpn-va-deploy-capacity</a>
-<a href="skills/rap-data-tunnel-config.html">rap-data-tunnel-config</a>
-<div class="grp">排障</div>
-<a href="skills/rap-vpn-troubleshooting.html">rap-vpn-troubleshooting</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../manuals/index.html">OV2500 配置手册</a> › <a href="index.html">OV2500 4.9R2</a> › <span>精华长文 DIGEST</span></nav><h1>精华长文 DIGEST</h1><h1 id="ov2500-rap-vpn-va">OV2500 RAP 与 VPN VA 精华速读</h1>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="面向售前、售后与网络工程师的 ALE 内部技术知识平台">
+  <meta name="theme-color" content="#6B489D">
+  <title>精华长文 DIGEST — OV2500 4.9R2 · RAP 与 VPN VA 安装</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=4">
+  <link rel="stylesheet" href="/assets/css/layout.css?v=4">
+  <link rel="stylesheet" href="/assets/css/components.css?v=4">
+  <link rel="stylesheet" href="/assets/css/content.css?v=7">
+  <script src="/assets/js/auth-config.js?v=4"></script>
+  <script src="/assets/js/auth-core.js?v=4"></script>
+  <script src="/assets/js/auth-guard.js?v=4"></script>
+</head>
+<body data-page-kind="course">
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <header class="topbar" data-topbar>
+    <a class="brand" href="/index.html" aria-label="返回 ALE 技术培训门户首页">
+      <img src="/assets/ale-logo-color.png" alt="Alcatel-Lucent Enterprise">
+      <span>ALE 培训门户</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-controls="primary-nav" aria-expanded="false" data-nav-toggle>
+      <span aria-hidden="true">☰</span><span class="sr-only">打开导航</span>
+    </button>
+    <nav id="primary-nav" class="primary-nav" aria-label="主导航">
+      <a href="/index.html">首页</a>
+      <a href="/paths.html">学习路径</a>
+      <a href="/presales/index.html">售前</a>
+      <a href="/postsales/index.html">售后</a>
+      <a href="/wlan/index.html">无线</a>
+      <a href="/aos/index.html">AOS 手册</a>
+      <a href="/hardware/index.html">硬件</a>
+      <a href="/brochures/index.html">彩页</a>
+      <a href="/solutions/index.html">解决方案</a>
+      <a href="/security/index.html">安全</a>
+    </nav>
+    <button id="logout-btn" class="logout-btn" type="button" hidden>退出登录</button>
+  </header>
+<div class="course-layout">
+<aside class="course-sidebar" id="course-sidebar" data-sidebar>
+  <div class="sidebar-heading">
+    <p class="eyebrow">COURSE</p>
+    <h2>OV2500 4.9R2 · RAP 与 VPN VA 安装</h2>
+    <p>84 页 · 远程 AP 安全回连方案部署</p>
+  </div>
+<div class="search" data-search>
+  <label class="sr-only" for="course-search">搜索全站课程和知识单元</label>
+  <input id="course-search" type="search" placeholder="搜索课程编号、产品型号或技术关键词…" autocomplete="off" data-search-input>
+  <div class="search-results" role="listbox" aria-live="polite" data-search-results></div>
+</div>  <nav class="course-nav" aria-label="课程目录">
+    <a href="/manuals/ov2500-rap-vpn/index.html">课程首页</a>
+    <a aria-current="page" href="/manuals/ov2500-rap-vpn/digest.html">精华长文</a>
+    <a href="/manuals/ov2500-rap-vpn/overview.html">教书理解</a>
+    <a href="/manuals/ov2500-rap-vpn/glossary.html">术语词典</a>
+    <p class="course-nav-group">规划</p>
+      <a href="/manuals/ov2500-rap-vpn/skills/rap-vpn-mode-registration.html">RAP VPN 模式选型与注册规划</a>
+    <p class="course-nav-group">部署与配置</p>
+      <a href="/manuals/ov2500-rap-vpn/skills/vpn-va-deploy-capacity.html">VPN VA 部署与容量规划（三平台）</a>
+      <a href="/manuals/ov2500-rap-vpn/skills/rap-data-tunnel-config.html">数据隧道配置：设置文件、SSID 与 Local Breakout</a>
+    <p class="course-nav-group">排障</p>
+      <a href="/manuals/ov2500-rap-vpn/skills/rap-vpn-troubleshooting.html">RAP 隧道排障决策树</a>
+  </nav>
+</aside>  <main id="main-content" class="course-main prose">
+    <nav class="breadcrumbs" aria-label="面包屑"><a href="/index.html">培训门户</a><span>/</span><a href="/manuals/index.html">OV2500 配置手册 · Manuals</a><span>/</span><a href="/manuals/ov2500-rap-vpn/index.html">OV2500 4.9R2</a><span>/</span><span aria-current="page">精华长文 DIGEST</span></nav>
+<header class="page-intro compact"><p class="eyebrow">COURSE REFERENCE</p><h1>精华长文 DIGEST</h1></header>    <article class="markdown-body"><h1 id="ov2500-rap-vpn-va">OV2500 RAP 与 VPN VA 精华速读</h1>
 <blockquote>
 <p>目标读者：要做居家办公/分支 AP 回连交付的网络工程师。读完这篇，不翻原书也能把方案选型、部署主线、配置要点、排障路径和版本红线装进脑子。</p>
 </blockquote>
@@ -95,24 +75,15 @@ blockquote p{margin:6px 0}
 <li><strong>OVE 全隧道模式（真 RAP）</strong>：AP 由企业本地 OmniVista Enterprise（OVE，OmniVista 企业版）管理。开箱首连 OVC Device Registration Server 取回参数（含 OVE IP），密钥导出到总部 RAP VPN Server，先建 WireGuard 管理隧道接受 OVE 管理，再配数据隧道承载业务——两条隧道。</li>
 <li><strong>OVC 仅数据模式</strong>：AP 由 OmniVista Cirrus（OVC，ALE 云管平台）管理，技术上不算 RAP。管理通道走 OVC 云内 OpenVPN，不配 Management VPN Server；只有数据流量要回传总部时，才对企业的 VPN Server 另建一条 Data VPN 隧道（p4）。</li>
 </ul>
-<p>拓扑上抓住一个可达性判断：本地 AP 靠 DHCP option 138 直连 OV 就能管；
-远程站点 AP 对企业侧不可直达，连接与管理必须走 VPN 隧道（p4）。VPN VA 是专有隧道终结点，与 Cirrus/OV2500 打配合（p5）。</p>
+<p>拓扑上抓住一个可达性判断：本地 AP 靠 DHCP option 138 直连 OV 就能管；远程站点 AP 对企业侧不可直达，连接与管理必须走 VPN 隧道（p4）。VPN VA 是专有隧道终结点，与 Cirrus/OV2500 打配合（p5）。</p>
 <h2 id="_1">二、部署主线</h2>
 <p>顺序错一步，隧道就建不起来。主线五段：</p>
 <ol>
 <li><strong>账号</strong>：注册 registration.ovcirrus.com 建 Cirrus Freemium 账号（验证邮件来自 noreply@ovcirrus.com，正文含设备 OS 下载链接）（p6-7）。</li>
-<li>
-<p>目录：先定 VPN Server 四参数——Public IP、Port、VPN IP（私网地址，必须与客户端池同网段）、Client VPN IP Pool（p10-11）——再把 AP 加进 Device Catalog 并预置 Security Keys。</p>
-<ul>
-<li>首次 VPN Settings 用 Create New，后续 AP 用 Choose Existing 复用。</li>
-<li>CSV 批量导入时 RAP 列必须为 TRUE。</li>
-</ul>
-</li>
-<li>
-<p><strong>VPN VA</strong>：按 RAP 台数选容量档（p13）：</p>
-</li>
+<li><strong>目录</strong>：先定 VPN Server 四参数——Public IP、Port、VPN IP（私网地址，必须与客户端池同网段）、Client VPN IP Pool（p10-11）——再把 AP 加进 Device Catalog 并预置 Security Keys。首次 VPN Settings 用 Create New，后续 AP 用 Choose Existing 复用。CSV 批量导入时 RAP 列必须为 TRUE。</li>
 </ol>
-<table>
+<h3 id="3-vpn-va-rap-p13">3. <strong>VPN VA</strong>：按 RAP 台数选容量档（p13）</h3>
+<div class="table-scroll"><table>
 <thead>
 <tr>
 <th>RAP 数量</th>
@@ -142,7 +113,7 @@ blockquote p{margin:6px 0}
 <td>16GB</td>
 </tr>
 </tbody>
-</table>
+</table></div>
 <p>超 250 台建议部署第二台 VPN VA——产品<strong>不支持冗余</strong>（p14 Known Limitations），别按双机热备设计。吞吐参考：Local Breakout 兜底每 RAP 10-20 Mbps，全隧道 20-100 Mbps；500 台以上标配 10G 网卡（p13-14）。</p>
 <ol>
 <li><strong>隧道</strong>：导入 OVF/qcow2（先删 *.mf）→ 三网卡（Eth0 公网/Eth1 私网/Eth2 桥接，桥接网卡禁配 IP + 开混杂模式，p20/p55）→ 控制台初装、配 SSH、加回程路由。</li>
@@ -166,44 +137,27 @@ blockquote p{margin:6px 0}
 <h2 id="_2">四、排障决策树</h2>
 <p>按四层下钻，先看隧道再查其上的业务：</p>
 <ol>
-<li>
-<p>隧道层：wg 查接口在不在；</p>
-<ul>
-<li>管理隧道 down → grep AP IP 是否在 VPN.conf、防火墙双向放行；</li>
-<li>数据隧道 down → cat /tmp/config/datavpn.conf 看配置推没推、Data VPN Server 绑没绑 AP Group、ifconfig wg1 有没有 IP（p81）；</li>
-</ul>
-</li>
-<li>
-<p>注册层：隧道 up 但 OV 里没 AP → OV ping AP，加 OV 到 AP wg0 子网的静态路由（p81）。</p>
-<ul>
-<li>
-<ol>
-<li>DHCP 层：双隧道 up 客户端拿不到 IP → AP 上 sta_list 查关联与 TUNNELID/FARENDIP，brctl show 确认 ath0x 桥到 br-g1，再查交换机 MAC 表与 DHCP relay（p81）。</li>
-</ol>
-</li>
-<li>
-<ol>
-<li>LAN 层：客户端 ping 不通同网段设备/网关——vSwitch 混杂模式默认 Reject 是头号原因（p20/p81 两处强调）；
-勾了 Override 则 Promiscuous Mode、MAC address changes、Forged transmits 三项全 Accept，端口组继承时确认 vSwitch0。</li>
-</ol>
-</li>
-</ul>
-</li>
+<li><strong>隧道层</strong>：wg 查接口在不在；管理隧道 down → grep AP IP 是否在 VPN.conf、防火墙双向放行；数据隧道 down → cat /tmp/config/datavpn.conf 看配置推没推、Data VPN Server 绑没绑 AP Group、ifconfig wg1 有没有 IP（p81）。</li>
+<li><strong>注册层</strong>：隧道 up 但 OV 里没 AP → OV ping AP，加 OV 到 AP wg0 子网的静态路由（p81）。</li>
+<li><strong>DHCP 层</strong>：双隧道 up 客户端拿不到 IP → AP 上 sta_list 查关联与 TUNNELID/FARENDIP，brctl show 确认 ath0x 桥到 br-g1，再查交换机 MAC 表与 DHCP relay（p81）。</li>
+<li><strong>LAN 层</strong>：客户端 ping 不通同网段设备/网关——<strong>vSwitch 混杂模式默认 Reject 是头号原因</strong>（p20/p81 两处强调）；勾了 Override 则 Promiscuous Mode、MAC address changes、Forged transmits 三项全 Accept，端口组继承时确认 vSwitch0。</li>
 </ol>
 <p>排障前先问"最近改过什么"：加 AP 没重传设置文件、改配置没重新导出、VA 升级后 profile 没回导（升级停机约 5 分钟，p19），都是高发根因。</p>
 <h2 id="_3">五、端口与版本红线清单</h2>
 <ul>
 <li><strong>hypervisor</strong>：ESXi 6.5/6.7/7.0.2/8.0，<strong>5.5 明确不支持</strong>；Hyper-V 2016/2019/2022；另支持 Ubuntu 22.04 LTS + KVM（p5）。</li>
 <li><strong>版本配套</strong>：AWOS ≥5.0.2（文档三处口径打架：p7 邮件写 5.0.1、p71 写 4.0.1 疑笔误，按最严 5.0.2+ 核对）；VPN VA 4.9.2.2 配 OV2500 4.9R2 / OVC 4.9.2（p5）。</li>
-<li><strong>网卡与端口</strong>：<br>Eth0 公网口/Eth1 私网口/Eth2 桥接口（L2 隧道禁配 IP）；</li>
-<li>Hyper-V Teaming 仅 Switch Independent + Address Hash 实测可用（Switch Independent 下另两种不通过）；</li>
-<li>
-<p>KVM 安装前必须对 VirtIO 盘设 Discard=unmap，点完 Begin Installation 就无法回头；</p>
-</li>
-<li>
-<p><strong>导入红线</strong>：解压后先删 *.mf 再导 OVF，否则 VMware/Hyper-V 都会卡在导入步骤。</p>
-</li>
+<li><strong>网卡与端口</strong>：Eth0 公网口/Eth1 私网口/Eth2 桥接口（L2 隧道禁配 IP）；Hyper-V Teaming 仅 Switch Independent + Address Hash 实测可用（Switch Independent 下另两种不通过）；KVM 安装前必须对 VirtIO 盘设 Discard=unmap，点完 Begin Installation 就无法回头。</li>
+<li><strong>导入红线</strong>：解压后先删 *.mf 再导 OVF，否则 VMware/Hyper-V 都会卡在导入步骤。</li>
 <li><strong>License 红线</strong>：下行口认证需 Premium/Business 账号；CSV 的 RAP 列留空或 FALSE，导入看似成功但 AP 不带隧道配置。</li>
 </ul>
-<hr />
-<p>。</p><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<hr>
+<p>由 内部整理流程从 OV2500 4.9R2 RAP and VPN VA Installation 蒸馏生成。</p></article>
+    <footer class="content-footer">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</footer>
+  </main>
+</div>
+  <script src="/assets/js/app.js?v=4" defer></script>
+  <script src="/assets/js/search.js?v=4" defer></script>
+  <script src="/assets/js/lightbox.js?v=5" defer></script>
+</body>
+</html>

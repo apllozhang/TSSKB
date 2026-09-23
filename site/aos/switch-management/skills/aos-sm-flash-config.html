@@ -1,93 +1,73 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>aos-sm-flash-config — AOS 8.10R04 · Switch Management</title>
-<style>
-:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
-*{box-sizing:border-box}
-body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
-a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
-.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin:16px 0}
-.gallery figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px}
-.gallery img{width:100%;max-height:340px;object-fit:contain;background:#fff;border-radius:6px}
-.gallery figcaption{font-size:12.5px;color:var(--mut);text-align:center;margin-top:6px}
-/* 侧栏折叠 + 图片灯箱 */
-.tgl{position:fixed;left:0;top:45%;z-index:60;background:var(--card);border:1px solid var(--line);border-right:none;border-radius:0 8px 8px 0;color:var(--tx);padding:10px 6px;cursor:pointer;font-size:13px;line-height:1.1;writing-mode:vertical-lr}
-.tgl:hover{background:var(--acc);color:#0f172a}
-.layout.full{grid-template-columns:0 1fr}
-.layout.full aside{display:none}
-.lb{position:fixed;inset:0;background:rgba(5,10,20,.92);z-index:100;display:flex;align-items:center;justify-content:center;flex-direction:column}
-.lb img{max-width:92vw;max-height:82vh;background:#fff;border-radius:6px;transition:transform .12s}
-.lb .lbb{margin-top:10px;display:flex;gap:10px}
-.lb button{background:var(--card);border:1px solid var(--line);color:var(--tx);border-radius:8px;padding:6px 14px;cursor:pointer;font-size:14px}
-.lb button:hover{background:var(--acc);color:#0f172a}
-.search{margin:0 0 14px}
-.search input{width:100%;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--tx);font-size:13px;outline:none}
-.search input:focus{border-color:var(--acc)}
-#qres{max-height:340px;overflow-y:auto;margin-top:6px}
-#qres .qi{display:block;padding:6px 8px;border-radius:6px;font-size:12.5px;color:var(--tx);border-left:2px solid transparent}
-#qres .qi:hover{background:var(--card);text-decoration:none;border-left-color:var(--acc)}
-#qres .qi .qp{color:var(--mut);font-size:11px;display:block}
-#qres .qi b{color:var(--acc)}
-.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
-main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
-.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
-aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
-aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
-aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
-aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
-aside a:hover{background:var(--card);text-decoration:none}
-aside a.on{background:var(--card);color:var(--acc)}
-main{padding:36px 48px;max-width:1000px}
-h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
-h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
-table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
-th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
-th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
-code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
-pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
-pre code{background:none;padding:0}
-blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
-.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
-.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
-.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
-.meta{font-size:13px;color:var(--mut)}
-hr{border:none;border-top:1px solid var(--line);margin:26px 0}
-.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
-.badge.soon{background:#475569;color:#cbd5e1}
-main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
-main{padding:28px 48px 40px;max-width:1040px}
-h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
-blockquote p{margin:6px 0}
-.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
-.crumbs a{color:var(--acc)}
-.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
-.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
-.pn a:hover{border-color:var(--acc)}
-.pn .nxt{text-align:right}
-.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
-@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
-</style></head>
-<body><div class="layout"><aside><h1>AOS 8.10R04 · Switch Management</h1>
-<div class="search"><input id="qk" type="search" placeholder="🔍 搜索全站…" autocomplete="off"><div id="qres"></div></div>
-
-<div class="sub">511 页 · 交换机管理（Flash/升级/CLI 用户/SNMP Web 纳管/日志健康/机箱 CMM）</div>
-<a href="../index.html">🏠 课程首页</a>
-<a href="../digest.html">📖 精华长文 DIGEST</a>
-
-<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
-<a href="../glossary.html">🔤 术语词典</a>
-<a href="../../../index.html">⬅️ 返回培训门户</a>
-<a href="../index.html">──── Skills ────</a>
-<div class="grp">配置与升级</div>
-<a href="../skills/aos-sm-flash-config.html" class="on">aos-sm-flash-config</a>
-<a href="../skills/aos-sm-software-upgrade.html">aos-sm-software-upgrade</a>
-<div class="grp">用户与纳管</div>
-<a href="../skills/aos-sm-cli-session-usermgmt.html">aos-sm-cli-session-usermgmt</a>
-<a href="../skills/aos-sm-mgmt-services.html">aos-sm-mgmt-services</a>
-<div class="grp">运维与硬件</div>
-<a href="../skills/aos-sm-logging-health.html">aos-sm-logging-health</a>
-<a href="../skills/aos-sm-chassis-cmm.html">aos-sm-chassis-cmm</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../aos/index.html">AOS 软件手册</a> › <a href="../index.html">AOS 8.10R04</a> › <span>aos-sm-flash-config</span></nav><h1>aos-sm-flash-config</h1><p class="meta"><span class="badge">SKILL</span> aos-sm-flash-config · 来源页码: </p><h2 id="r">R（触发场景）</h2>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="面向售前、售后与网络工程师的 ALE 内部技术知识平台">
+  <meta name="theme-color" content="#6B489D">
+  <title>aos-sm-flash-config — AOS 8.10R04 · Switch Management</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=4">
+  <link rel="stylesheet" href="/assets/css/layout.css?v=4">
+  <link rel="stylesheet" href="/assets/css/components.css?v=4">
+  <link rel="stylesheet" href="/assets/css/content.css?v=7">
+  <script src="/assets/js/auth-config.js?v=4"></script>
+  <script src="/assets/js/auth-core.js?v=4"></script>
+  <script src="/assets/js/auth-guard.js?v=4"></script>
+</head>
+<body data-page-kind="course">
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <header class="topbar" data-topbar>
+    <a class="brand" href="/index.html" aria-label="返回 ALE 技术培训门户首页">
+      <img src="/assets/ale-logo-color.png" alt="Alcatel-Lucent Enterprise">
+      <span>ALE 培训门户</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-controls="primary-nav" aria-expanded="false" data-nav-toggle>
+      <span aria-hidden="true">☰</span><span class="sr-only">打开导航</span>
+    </button>
+    <nav id="primary-nav" class="primary-nav" aria-label="主导航">
+      <a href="/index.html">首页</a>
+      <a href="/paths.html">学习路径</a>
+      <a href="/presales/index.html">售前</a>
+      <a href="/postsales/index.html">售后</a>
+      <a href="/wlan/index.html">无线</a>
+      <a href="/aos/index.html" aria-current="page">AOS 手册</a>
+      <a href="/hardware/index.html">硬件</a>
+      <a href="/brochures/index.html">彩页</a>
+      <a href="/solutions/index.html">解决方案</a>
+      <a href="/security/index.html">安全</a>
+    </nav>
+    <button id="logout-btn" class="logout-btn" type="button" hidden>退出登录</button>
+  </header>
+<div class="course-layout">
+<aside class="course-sidebar" id="course-sidebar" data-sidebar>
+  <div class="sidebar-heading">
+    <p class="eyebrow">COURSE</p>
+    <h2>AOS 8.10R04 · Switch Management</h2>
+    <p>511 页 · 交换机管理（Flash/升级/CLI 用户/SNMP Web 纳管/日志健康/机箱 CMM）</p>
+  </div>
+<div class="search" data-search>
+  <label class="sr-only" for="course-search">搜索全站课程和知识单元</label>
+  <input id="course-search" type="search" placeholder="搜索课程编号、产品型号或技术关键词…" autocomplete="off" data-search-input>
+  <div class="search-results" role="listbox" aria-live="polite" data-search-results></div>
+</div>  <nav class="course-nav" aria-label="课程目录">
+    <a href="/aos/switch-management/index.html">课程首页</a>
+    <a href="/aos/switch-management/digest.html">精华长文</a>
+    <a href="/aos/switch-management/overview.html">教书理解</a>
+    <a href="/aos/switch-management/glossary.html">术语词典</a>
+    <p class="course-nav-group">配置与升级</p>
+      <a aria-current="page" href="/aos/switch-management/skills/aos-sm-flash-config.html">aos-sm-flash-config</a>
+      <a href="/aos/switch-management/skills/aos-sm-software-upgrade.html">aos-sm-software-upgrade</a>
+    <p class="course-nav-group">用户与纳管</p>
+      <a href="/aos/switch-management/skills/aos-sm-cli-session-usermgmt.html">aos-sm-cli-session-usermgmt</a>
+      <a href="/aos/switch-management/skills/aos-sm-mgmt-services.html">aos-sm-mgmt-services</a>
+    <p class="course-nav-group">运维与硬件</p>
+      <a href="/aos/switch-management/skills/aos-sm-logging-health.html">aos-sm-logging-health</a>
+      <a href="/aos/switch-management/skills/aos-sm-chassis-cmm.html">aos-sm-chassis-cmm</a>
+  </nav>
+</aside>  <main id="main-content" class="course-main prose">
+    <nav class="breadcrumbs" aria-label="面包屑"><a href="/index.html">培训门户</a><span>/</span><a href="/aos/index.html">AOS 软件手册 · Software Guides</a><span>/</span><a href="/aos/switch-management/index.html">AOS 8.10R04</a><span>/</span><span aria-current="page">aos-sm-flash-config</span></nav>
+<header class="skill-heading"><div><p class="eyebrow">KNOWLEDGE UNIT</p><h1>aos-sm-flash-config</h1></div><dl><div><dt>Skill ID</dt><dd>aos-sm-flash-config</dd></div></dl></header>    <article class="markdown-body"><h2 id="r">R（触发场景）</h2>
 <ul>
 <li>搞不清 certified / working / RUNNING DIRECTORY / RUNNING CONFIGURATION 的关系，改动重启后丢失</li>
 <li>要把试验配置先放用户目录验证，再认证回 certified（软件回滚）</li>
@@ -97,50 +77,58 @@ blockquote p{margin:6px 0}
 </ul>
 <h2 id="i">I（核心理念）</h2>
 <ul>
-<li><strong>CMM 双目录配置管理体系（F2，<span class="pg">原文p94-101</span> ）</strong>：<br>certified（已认证的最可靠基线，不可直接写）+ working/用户目录（新文件试验场）+ RUNNING CONFIGURATION（RAM 中的当前配置）三层模型。</li>
-<li>正常重启时若 certified 与 RUNNING DIRECTORY 内容不同则从 certified 启动（P4，<span class="pg">原文p95</span> ），这套目录结构本身就是回滚机制——新镜像/新配置先进 working 验证，可靠后 <code>copy running certified</code>（P5）。</li>
-<li>vcboot.cfg 是启动配置文件，启动时按名查找（P6，<span class="pg">原文p94</span> ）。</li>
-<li>配置文件即 ASCII 文本，可上传、快照、定时应用，构成可复制的批量部署底座（P47，<span class="pg">原文p122</span> ）。</li>
+<li><strong>CMM 双目录配置管理体系（F2，<span class="source-page">原文p94-101</span> ）</strong>：<br>certified（已认证的最可靠基线，不可直接写）+ working/用户目录（新文件试验场）+ RUNNING CONFIGURATION（RAM 中的当前配置）三层模型。</li>
+<li>正常重启时若 certified 与 RUNNING DIRECTORY 内容不同则从 certified 启动（P4，<span class="source-page">原文p95</span> ），这套目录结构本身就是回滚机制——新镜像/新配置先进 working 验证，可靠后 <code>copy running certified</code>（P5）。</li>
+<li>vcboot.cfg 是启动配置文件，启动时按名查找（P6，<span class="source-page">原文p94</span> ）。</li>
+<li>配置文件即 ASCII 文本，可上传、快照、定时应用，构成可复制的批量部署底座（P47，<span class="source-page">原文p122</span> ）。</li>
 </ul>
 <h2 id="a1">A1（决策框架）</h2>
 <ol>
-<li><strong>改动要落盘</strong>：运行目录为 certified 时不能直接保存（X1），先 <code>modify running-directory</code> 切用户目录，<code>write memory</code> 落盘，验证后 <code>copy running certified</code>（C20，<span class="pg">原文p104, 106</span> ）</li>
-<li><strong>要试验回滚</strong>：<code>reload from working rollback-timeout 5</code> 带回滚超时重启，超时自动正常重启兜底（C21，<span class="pg">原文p105</span> ）</li>
+<li><strong>改动要落盘</strong>：运行目录为 certified 时不能直接保存（X1），先 <code>modify running-directory</code> 切用户目录，<code>write memory</code> 落盘，验证后 <code>copy running certified</code>（C20，<span class="source-page">原文p104, 106</span> ）</li>
+<li><strong>要试验回滚</strong>：<code>reload from working rollback-timeout 5</code> 带回滚超时重启，超时自动正常重启兜底（C21，<span class="source-page">原文p105</span> ）</li>
 <li><strong>批量配置下发</strong>：工作站文本编辑器/快照/内置 vi 三种来源（P54），<code>configuration syntax-check</code> 预检（P57）→ <code>configuration apply</code>（可 at/in 定时，P55）→ <code>show configuration status</code> 验证（C27/C28）</li>
 <li><strong>留档/回退</strong>：<code>configuration snapshot</code> 导出非默认配置（P58）；<code>configuration backup</code> tar 备份上限 10 份（P59）；<code>reset-to-factory</code> config/retain-vc/all 三档（P60）</li>
 <li><strong>文件传输选型</strong>：FTP/SFTP/SCP 加密优先，TFTP 仅单会话且受 flash 空间限制（P11/P12）</li>
 </ol>
 <h2 id="a2">A2（操作步骤）</h2>
 <ul>
-<li><strong>目录查看与运行目录管理</strong>：<code>ls /flash</code>、<code>cd</code>、<code>freespace</code>；<code>show running-directory</code>（不 certified 则 <code>write memory flash-synchro</code>）（C3，<span class="pg">原文p23</span> ）</li>
-<li><strong>切换运行目录并保存</strong>：<code>modify running-directory user-config1</code> → <code>write memory</code> → <code>copy running certified</code>（C20，<span class="pg">原文p104, 106</span> ）</li>
-<li><strong>带回滚重启/定时重启</strong>：<code>reload from working rollback-timeout 5</code>；<code>reload from working no rollback-timeout in 3:03</code>（C21，<span class="pg">原文p105</span> ）</li>
-<li><strong>配置文件应用</strong>：PC 建 dhcp_relay.txt → 上传 → <code>configuration apply dhcp_relay.txt</code> → <code>show configuration status</code> → 业务命令验证（C27，<span class="pg">原文p133</span> ）；定时 <code>configuration apply bncom_cfg.txt at 09:00 july 4</code> / <code>in 6:15</code>，<code>configuration cancel</code> 取消（C28，<span class="pg">原文p134-135</span> ）</li>
-<li><strong>快照与恢复出厂</strong>：<code>configuration snapshot all</code>（或 vlan qos snmp/名称.snap）；<code>reset-to-factory config retain-vc in 60</code>（C29，<span class="pg">原文p139, 141</span> ）</li>
+<li><strong>目录查看与运行目录管理</strong>：<code>ls /flash</code>、<code>cd</code>、<code>freespace</code>；<code>show running-directory</code>（不 certified 则 <code>write memory flash-synchro</code>）（C3，<span class="source-page">原文p23</span> ）</li>
+<li><strong>切换运行目录并保存</strong>：<code>modify running-directory user-config1</code> → <code>write memory</code> → <code>copy running certified</code>（C20，<span class="source-page">原文p104, 106</span> ）</li>
+<li><strong>带回滚重启/定时重启</strong>：<code>reload from working rollback-timeout 5</code>；<code>reload from working no rollback-timeout in 3:03</code>（C21，<span class="source-page">原文p105</span> ）</li>
+<li><strong>配置文件应用</strong>：PC 建 dhcp_relay.txt → 上传 → <code>configuration apply dhcp_relay.txt</code> → <code>show configuration status</code> → 业务命令验证（C27，<span class="source-page">原文p133</span> ）；定时 <code>configuration apply bncom_cfg.txt at 09:00 july 4</code> / <code>in 6:15</code>，<code>configuration cancel</code> 取消（C28，<span class="source-page">原文p134-135</span> ）</li>
+<li><strong>快照与恢复出厂</strong>：<code>configuration snapshot all</code>（或 vlan qos snmp/名称.snap）；<code>reset-to-factory config retain-vc in 60</code>（C29，<span class="source-page">原文p139, 141</span> ）</li>
 <li><strong>文件系统维护</strong>：<code>fsck no-repair|repair</code> 修复（P9）；<code>newfs</code> 极危险；Linux 工具 watch/cut/paste/tee 直接可用（P10）</li>
 <li><strong>TFTP 传输</strong>：镜像 binary 模式、配置 ASCII 模式（P11）</li>
 </ul>
 <h2 id="e">E（实证案例）</h2>
 <ul>
-<li>保存运行配置绕开 certified 限制全流程（C20，<span class="pg">原文p104, 106</span> ）</li>
-<li>指定目录带回滚超时重启（C21，<span class="pg">原文p105</span> ）</li>
-<li>DHCP Relay 三命令配置文件教程（C27，<span class="pg">原文p133</span> ）</li>
-<li>配置文件定时应用会话（C28，<span class="pg">原文p134-135</span> ）</li>
-<li>快照与恢复出厂三档（C29，<span class="pg">原文p139, 141</span> ）</li>
+<li>保存运行配置绕开 certified 限制全流程（C20，<span class="source-page">原文p104, 106</span> ）</li>
+<li>指定目录带回滚超时重启（C21，<span class="source-page">原文p105</span> ）</li>
+<li>DHCP Relay 三命令配置文件教程（C27，<span class="source-page">原文p133</span> ）</li>
+<li>配置文件定时应用会话（C28，<span class="source-page">原文p134-135</span> ）</li>
+<li>快照与恢复出厂三档（C29，<span class="source-page">原文p139, 141</span> ）</li>
 </ul>
 <h2 id="b">B（反例/坑）</h2>
 <ul>
-<li>certified 目录不能直接保存配置，运行目录为 certified 时改动重启即丢（X1，<span class="pg">原文p94, 95</span> ）</li>
-<li>未保存的 RUNNING CONFIGURATION 重启后回退 certified，改动全丢（X2，<span class="pg">原文p95</span> ）</li>
-<li>FTP/TFTP 用主机名需先配好 DNS 解析器（X7，<span class="pg">原文p63</span> ）</li>
-<li>TFTP 同一时刻仅一个会话；下载文件不得超过剩余 flash 空间（X8，<span class="pg">原文p64</span> ）</li>
-<li>Bash 特殊字符（$、!）会被解释为变量/参数，CLI 中须单引号包裹（X28，<span class="pg">原文p123</span> ）</li>
-<li>同时只能有一个配置定时会话，后设覆盖先设（X30，<span class="pg">原文p136</span> ）</li>
-<li>应用出错生成 <code>.n.err</code> 文件，error-file-limit 控制保留（P56，<span class="pg">原文p137</span> ）</li>
-<li>reset-to-factory all 档连 license/证书一并清除（P60，<span class="pg">原文p141</span> ）</li>
+<li>certified 目录不能直接保存配置，运行目录为 certified 时改动重启即丢（X1，<span class="source-page">原文p94, 95</span> ）</li>
+<li>未保存的 RUNNING CONFIGURATION 重启后回退 certified，改动全丢（X2，<span class="source-page">原文p95</span> ）</li>
+<li>FTP/TFTP 用主机名需先配好 DNS 解析器（X7，<span class="source-page">原文p63</span> ）</li>
+<li>TFTP 同一时刻仅一个会话；下载文件不得超过剩余 flash 空间（X8，<span class="source-page">原文p64</span> ）</li>
+<li>Bash 特殊字符（$、!）会被解释为变量/参数，CLI 中须单引号包裹（X28，<span class="source-page">原文p123</span> ）</li>
+<li>同时只能有一个配置定时会话，后设覆盖先设（X30，<span class="source-page">原文p136</span> ）</li>
+<li>应用出错生成 <code>.n.err</code> 文件，error-file-limit 控制保留（P56，<span class="source-page">原文p137</span> ）</li>
+<li>reset-to-factory all 档连 license/证书一并清除（P60，<span class="source-page">原文p141</span> ）</li>
 </ul>
 <h2 id="_1">来源</h2>
 <ul>
-<li>OmniSwitch AOS 8.10R4 Switch Management Guide 第 3 章 System Files（<span class="pg">原文p52-64</span> ）、第 4 章 CMM Directory（<span class="pg">原文p94-107</span> ）、第 6 章 Configuration Files（<span class="pg">原文p122-141</span> ）。</li>
+<li>OmniSwitch AOS 8.10R4 Switch Management Guide 第 3 章 System Files（<span class="source-page">原文p52-64</span> ）、第 4 章 CMM Directory（<span class="source-page">原文p94-107</span> ）、第 6 章 Configuration Files（<span class="source-page">原文p122-141</span> ）。</li>
 <li><strong>条目来源</strong>：<br>cases C3/C20/C21/C27/C28/C29；principles P1-P12/P47/P54-P60；counter-examples X1/X2/X7/X8/X28/X30；frameworks F2。</li>
-</ul><div class="pn"><a href="../index.html">⬅ 返回课程首页</a><a class="nxt" href="aos-sm-software-upgrade.html">下一单元：aos-sm-software-upgrade ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+</ul></article>
+<nav class="previous-next" aria-label="知识单元翻页"><a href="/aos/switch-management/index.html"><span>上一单元</span><b>返回课程首页</b></a><a class="next" href="/aos/switch-management/skills/aos-sm-software-upgrade.html"><span>下一单元</span><b>aos-sm-software-upgrade</b></a></nav>    <footer class="content-footer">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</footer>
+  </main>
+</div>
+  <script src="/assets/js/app.js?v=4" defer></script>
+  <script src="/assets/js/search.js?v=4" defer></script>
+  <script src="/assets/js/lightbox.js?v=5" defer></script>
+</body>
+</html>

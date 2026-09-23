@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="面向售前、售后与网络工程师的 ALE 内部技术知识平台">
+  <meta name="theme-color" content="#6B489D">
+  <title>upamfw-sso-overview — UPAM × Palo Alto 集成 · 应用笔记</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=4">
+  <link rel="stylesheet" href="/assets/css/layout.css?v=4">
+  <link rel="stylesheet" href="/assets/css/components.css?v=4">
+  <link rel="stylesheet" href="/assets/css/content.css?v=7">
+  <script src="/assets/js/auth-config.js?v=4"></script>
+  <script src="/assets/js/auth-core.js?v=4"></script>
+  <script src="/assets/js/auth-guard.js?v=4"></script>
+</head>
+<body data-page-kind="course">
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <header class="topbar" data-topbar>
+    <a class="brand" href="/index.html" aria-label="返回 ALE 技术培训门户首页">
+      <img src="/assets/ale-logo-color.png" alt="Alcatel-Lucent Enterprise">
+      <span>ALE 培训门户</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-controls="primary-nav" aria-expanded="false" data-nav-toggle>
+      <span aria-hidden="true">☰</span><span class="sr-only">打开导航</span>
+    </button>
+    <nav id="primary-nav" class="primary-nav" aria-label="主导航">
+      <a href="/index.html">首页</a>
+      <a href="/paths.html">学习路径</a>
+      <a href="/presales/index.html">售前</a>
+      <a href="/postsales/index.html">售后</a>
+      <a href="/wlan/index.html">无线</a>
+      <a href="/aos/index.html">AOS 手册</a>
+      <a href="/hardware/index.html">硬件</a>
+      <a href="/brochures/index.html">彩页</a>
+      <a href="/solutions/index.html">解决方案</a>
+      <a href="/security/index.html" aria-current="page">安全</a>
+    </nav>
+    <button id="logout-btn" class="logout-btn" type="button" hidden>退出登录</button>
+  </header>
+<div class="course-layout">
+<aside class="course-sidebar" id="course-sidebar" data-sidebar>
+  <div class="sidebar-heading">
+    <p class="eyebrow">COURSE</p>
+    <h2>UPAM × Palo Alto 集成 · 应用笔记</h2>
+    <p>UPAM PAN Firewall Integration · 15 页 · User-ID / syslog 字段 / Accounting-only</p>
+  </div>
+<div class="search" data-search>
+  <label class="sr-only" for="course-search">搜索全站课程和知识单元</label>
+  <input id="course-search" type="search" placeholder="搜索课程编号、产品型号或技术关键词…" autocomplete="off" data-search-input>
+  <div class="search-results" role="listbox" aria-live="polite" data-search-results></div>
+</div>  <nav class="course-nav" aria-label="课程目录">
+    <a href="/security/upam-pan-sso/index.html">课程首页</a>
+    <a href="/security/upam-pan-sso/digest.html">精华长文</a>
+    <a href="/security/upam-pan-sso/overview.html">教书理解</a>
+    <a href="/security/upam-pan-sso/glossary.html">术语词典</a>
+    <p class="course-nav-group">机制</p>
+      <a aria-current="page" href="/security/upam-pan-sso/skills/upamfw-sso-overview.html">upamfw-sso-overview</a>
+    <p class="course-nav-group">Palo Alto 集成</p>
+      <a href="/security/upam-pan-sso/skills/upamfw-pan-arch.html">upamfw-pan-arch</a>
+      <a href="/security/upam-pan-sso/skills/upamfw-pan-config.html">upamfw-pan-config</a>
+  </nav>
+</aside>  <main id="main-content" class="course-main prose">
+    <nav class="breadcrumbs" aria-label="面包屑"><a href="/index.html">培训门户</a><span>/</span><a href="/security/index.html">安全 · Security</a><span>/</span><a href="/security/upam-pan-sso/index.html">UPAM × Palo Alto 集成</a><span>/</span><span aria-current="page">upamfw-sso-overview</span></nav>
+<header class="skill-heading"><div><p class="eyebrow">KNOWLEDGE UNIT</p><h1>upamfw-sso-overview</h1></div><dl><div><dt>Skill ID</dt><dd>upamfw-sso-overview</dd></div></dl></header>    <article class="markdown-body"><h2 id="r">R（触发场景）</h2>
+<ul>
+<li>评审或规划"局域网认证身份同步给防火墙"方案，先搞清整体原理与路线选型</li>
+<li>回答"为什么不让防火墙自己认用户"——需要零信任视角论证</li>
+<li>判断某类终端（AD 域机 vs BYOD/IoT）应该走哪条集成路径</li>
+<li>对比 Fortinet（RADIUS Accounting）与 PAN（Syslog）两种机制，做产品侧选型说明</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<ul>
+<li><strong>传统防火墙按"接在哪里"定信任</strong>：<br>内网隐式可信。</li>
+<li>移动办公与 IoT 时代这套失效——BYOD 可能带毒、IoT 设备天然有漏洞、内部用户也可能恶意，所以今天的范式是零信任（Zero Trust）：无论从哪里接入，永不信任、始终验证（两份笔记 p3）。</li>
+<li>而验证的核心是先确定身份。</li>
+<li>UPAM 是 OmniSwitch/OmniAccess Stellar 的统一接入管理平台，内置 captive portal 与 RADIUS 服务器（两份笔记 p3）。</li>
+<li><strong>集成的本质</strong>：<br>终端在 LAN/WLAN 认证一次，UPAM 侧把"用户/角色 + IP"的映射推给防火墙，防火墙即可按角色（而非仅 IP）做策略、日志与取证。</li>
+<li><strong>两大分支</strong>：<br>企业 AD 设备首选直接在 AD 上集成；BYOD/IoT 设备（往往没有 AD 账号）则直接以 UPAM 为集成点（两份笔记 p4），这是两份笔记的主题。</li>
+</ul>
+<h2 id="a1">A1（行动框架）</h2>
+<ol>
+<li>选集成路线（两份笔记 <span class="source-page">原文p4</span> ）：终端是 AD 域设备 → 走 AD/NPAS 集成（防火墙厂商文档，本笔记不展开）；终端是 BYOD/IoT、直接对 UPAM 本地库或外部 RADIUS 认证 → 走本笔记的 UPAM 集成路线</li>
+<li>选推送机制（Fortinet <span class="source-page">原文p5</span> 、PAN <span class="source-page">原文p4-5</span> ）：Fortinet → RADIUS Accounting（UDP 1813，由交换机/AP 直发）；PAN → Syslog（UDP 514，由 UPAM 发）</li>
+<li>身份落点二选一：用户名（MAC 认证时就是 MAC 地址）或角色（Filter-Id / uNP / ARP）——按角色做策略最省事，按用户名做日志取证最完整（PAN <span class="source-page">原文p12</span> ）</li>
+</ol>
+<h2 id="a2">A2（细节速查）</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>要点</th>
+<th>说明</th>
+<th>来源</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>零信任动因</td>
+<td>内网隐式信任过时；BYOD/IoT/恶意内部用户是三大风险</td>
+<td>两份笔记</td>
+<td>p3</td>
+</tr>
+<tr>
+<td>UPAM 能力</td>
+<td>captive portal + RADIUS；MAC/802.1x/Portal 认证；本地库或 AD/LDAP/外部 RADIUS；邮件/短信/社交登录发号</td>
+<td>两份笔记</td>
+<td>p3</td>
+</tr>
+<tr>
+<td>FSSO 定义</td>
+<td>用户对第三方系统认证后即被透明识别到 FortiGate/FortiAuthenticator/FortiCache</td>
+<td>Fortinet</td>
+<td>p3</td>
+</tr>
+<tr>
+<td>PAN User-ID</td>
+<td>PAN 防火墙标准特性，利用多种信息源识别用户</td>
+<td>PAN</td>
+<td>p3</td>
+</tr>
+<tr>
+<td>集成收益</td>
+<td>可视性、最小权限的细粒度策略、按用户/角色的日志报表与取证</td>
+<td>两份笔记</td>
+<td>p3/结论页</td>
+</tr>
+<tr>
+<td>AD 路线 vs UPAM 路线</td>
+<td>域设备集成点在 AD；BYOD/IoT（无 AD 账号）集成点在 UPAM</td>
+<td>两份笔记</td>
+<td>p4</td>
+</tr>
+<tr>
+<td>Fortinet 推送通道</td>
+<td>RADIUS Accounting 消息，交换机/AP 直发 FortiGate（1813）或 FortiAuthenticator</td>
+<td>Fortinet</td>
+<td>p5</td>
+</tr>
+<tr>
+<td>PAN 推送通道</td>
+<td>UPAM 外部 syslog 日志（UDP 514），防火墙解析字段</td>
+<td>PAN</td>
+<td>p4-5</td>
+</tr>
+<tr>
+<td>多防火墙场景</td>
+<td>Fortinet：发给 FortiAuthenticator 可免配多套 AAA profile</td>
+<td>Fortinet</td>
+<td>p5</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="e">E（场景案例）</h2>
+<ul>
+<li>IoT 摄像头/传感器走 MAC 认证、角色 IoT_Camera/IoT_Sensor 推给防火墙的参考拓扑（两份笔记 <span class="source-page">原文p4</span>  Figure 2）</li>
+<li>AD 域用户 Joe/Finance、Jane/Marketing 走 AD 集成的对照拓扑（两份笔记 <span class="source-page">原文p4</span>  Figure 1）</li>
+<li>角色映射后防火墙策略直接引用角色（如 sensor、iot_stb），无需在防火墙建用户（PAN <span class="source-page">原文p12</span> ）</li>
+</ul>
+<h2 id="b">B（限制与坑）</h2>
+<ul>
+<li><strong>集成不改变接入认证本身</strong>：<br>交换机/AP 上的 MAC/802.1x/Portal 配置仍是前提（两份笔记 p4-5）</li>
+<li>域设备走 AD 集成效果更好，硬把所有用户塞进 UPAM 集成不是最佳实践（两份笔记 p4）</li>
+<li>MAC 认证场景下"用户名"就是 MAC 地址，直接拿用户名做策略可读性差——角色（Filter-Id）更合适（PAN p12）</li>
+</ul>
+<h2 id="_1">来源</h2>
+<p>来源：OmniVista 2500 UPAM and Fortinet Single Sign-On Application Note（About/Use case/Mechanism，p3-5）；OmniVista UPAM and Palo Alto Networks User-ID Integration Guide（§1-6，p3-5）</p></article>
+<nav class="previous-next" aria-label="知识单元翻页"><a href="/security/upam-pan-sso/index.html"><span>上一单元</span><b>返回课程首页</b></a><a class="next" href="/security/upam-pan-sso/skills/upamfw-pan-arch.html"><span>下一单元</span><b>upamfw-pan-arch</b></a></nav>    <footer class="content-footer">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</footer>
+  </main>
+</div>
+  <script src="/assets/js/app.js?v=4" defer></script>
+  <script src="/assets/js/search.js?v=4" defer></script>
+  <script src="/assets/js/lightbox.js?v=5" defer></script>
+</body>
+</html>

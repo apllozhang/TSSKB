@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="面向售前、售后与网络工程师的 ALE 内部技术知识平台">
+  <meta name="theme-color" content="#6B489D">
+  <title>grfp-guide — Golden RFP · 标准标书需求库</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=4">
+  <link rel="stylesheet" href="/assets/css/layout.css?v=4">
+  <link rel="stylesheet" href="/assets/css/components.css?v=4">
+  <link rel="stylesheet" href="/assets/css/content.css?v=7">
+  <script src="/assets/js/auth-config.js?v=4"></script>
+  <script src="/assets/js/auth-core.js?v=4"></script>
+  <script src="/assets/js/auth-guard.js?v=4"></script>
+</head>
+<body data-page-kind="course">
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <header class="topbar" data-topbar>
+    <a class="brand" href="/index.html" aria-label="返回 ALE 技术培训门户首页">
+      <img src="/assets/ale-logo-color.png" alt="Alcatel-Lucent Enterprise">
+      <span>ALE 培训门户</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-controls="primary-nav" aria-expanded="false" data-nav-toggle>
+      <span aria-hidden="true">☰</span><span class="sr-only">打开导航</span>
+    </button>
+    <nav id="primary-nav" class="primary-nav" aria-label="主导航">
+      <a href="/index.html">首页</a>
+      <a href="/paths.html">学习路径</a>
+      <a href="/presales/index.html" aria-current="page">售前</a>
+      <a href="/postsales/index.html">售后</a>
+      <a href="/wlan/index.html">无线</a>
+      <a href="/aos/index.html">AOS 手册</a>
+      <a href="/hardware/index.html">硬件</a>
+      <a href="/brochures/index.html">彩页</a>
+      <a href="/solutions/index.html">解决方案</a>
+      <a href="/security/index.html">安全</a>
+    </nav>
+    <button id="logout-btn" class="logout-btn" type="button" hidden>退出登录</button>
+  </header>
+<div class="course-layout">
+<aside class="course-sidebar" id="course-sidebar" data-sidebar>
+  <div class="sidebar-heading">
+    <p class="eyebrow">COURSE</p>
+    <h2>Golden RFP · 标准标书需求库</h2>
+    <p>7 份 Golden RFP · AOS 8.10R4 软件特性 / AI-DC / 机型 / Stellar WLAN / OmniVista 10.5（C/PC/NC 分级弹药）</p>
+  </div>
+<div class="search" data-search>
+  <label class="sr-only" for="course-search">搜索全站课程和知识单元</label>
+  <input id="course-search" type="search" placeholder="搜索课程编号、产品型号或技术关键词…" autocomplete="off" data-search-input>
+  <div class="search-results" role="listbox" aria-live="polite" data-search-results></div>
+</div>  <nav class="course-nav" aria-label="课程目录">
+    <a href="/presales/golden-rfp/index.html">课程首页</a>
+    <a href="/presales/golden-rfp/digest.html">精华长文</a>
+    <a href="/presales/golden-rfp/overview.html">教书理解</a>
+    <a href="/presales/golden-rfp/glossary.html">术语词典</a>
+    <p class="course-nav-group">使用指南</p>
+      <a aria-current="page" href="/presales/golden-rfp/skills/grfp-guide.html">grfp-guide</a>
+    <p class="course-nav-group">需求矩阵</p>
+      <a href="/presales/golden-rfp/skills/grfp-sw-features.html">grfp-sw-features</a>
+      <a href="/presales/golden-rfp/skills/grfp-aidc.html">grfp-aidc</a>
+      <a href="/presales/golden-rfp/skills/grfp-wlan.html">grfp-wlan</a>
+      <a href="/presales/golden-rfp/skills/grfp-nms.html">grfp-nms</a>
+    <p class="course-nav-group">机型对比</p>
+      <a href="/presales/golden-rfp/skills/grfp-lan-access.html">grfp-lan-access</a>
+  </nav>
+</aside>  <main id="main-content" class="course-main prose">
+    <nav class="breadcrumbs" aria-label="面包屑"><a href="/index.html">培训门户</a><span>/</span><a href="/presales/index.html">售前 · Presales</a><span>/</span><a href="/presales/golden-rfp/index.html">Golden RFP</a><span>/</span><span aria-current="page">grfp-guide</span></nav>
+<header class="skill-heading"><div><p class="eyebrow">KNOWLEDGE UNIT</p><h1>grfp-guide</h1></div><dl><div><dt>Skill ID</dt><dd>grfp-guide</dd></div></dl></header>    <article class="markdown-body"><h2 id="r">R（何时用）</h2>
+<ul>
+<li>客户发来招标书 / RFx，需要把 ALE 产品能力逐条映射成投标响应</li>
+<li>写标书前要选对"母本"——该抄哪份 Golden RFP、版本是否匹配客户引用的产品版本</li>
+<li><strong>评标时核对厂商响应表</strong>：<br>哪些答法会被判无效</li>
+<li>售前要给客户解释"Golden RFP 是什么、怎么用"</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<ul>
+<li><strong>Golden RFP 的本质是一份"预写好的需求答案库"</strong>：<br>ALE 把自家产品的可应答需求条目整理成标准矩阵，售前直接照条目和参数搬进标书，评委按同一口径核对。</li>
+<li>所有机型类文档的格式是"需求条目 + C/PC/NC 三级勾选列"（grfp-2260 全文每条都带 C/PC/NC 列）；软件特性类是"Section 分域 + 编号条目 + Pass C/PC/NC"（grfp-sw-features 每个机型一张表）。</li>
+<li>
+<p>分级含义以 AI-DC 文档定义最完整（sources/grfp-aidc.md Introduction）：C = Compliant 完全满足；PC = Partially Compliant 部分满足且必须描述差距；NC = Non-Compliant 不满足。</p>
+</li>
+<li>
+<p><strong>三条硬规则决定了整个体系的严肃性</strong>：<br>1. <strong>必答</strong>："The bidder must answer every requirement"（aidc，Introduction 后）——一条都不许空。</p>
+</li>
+<li>
+<ol>
+<li><strong>空白即出局</strong>："A blank cell, a dash, or 'see datasheet' will be treated as Non-Compliant"（aidc，Introduction 后）。</li>
+</ol>
+</li>
+<li>填表时"详见数据手册"等于自认不满足。</li>
+<li>
+<ol>
+<li><strong>C 要举证</strong>："must provide the public datasheet, release-notes reference, or test report that substantiates each 'C' answer"（aidc，同段）——每个 C 都要有公开数据表、版本说明或测试报告背书。</li>
+</ol>
+</li>
+</ul>
+<h2 id="a1">A1（决策要点）</h2>
+<ol>
+<li><strong>选文档</strong>：客户问整机硬指标（端口/PoE/温度/MTBF）→ 机型类 Golden RFP；问软件功能清单 → grfp-sw-features 按机型找 Section；AI 数据中心项目 → aidc；无线 → wlan；网管平台 → ovng。</li>
+<li><strong>选版本</strong>：Golden RFP 有版本对应关系，引用时要与客户标的的 AOS/固件版本一致。对应关系：6360/6465 基于 AOS 8.10R4；sw-features 为 OMNISWITCH GOLDEN RFP - 8.10R4 总表；ovng 10.5.2 对应 OVCX/OVTX 10.5.2；wlan 6.0.2 对应 AWOS 5.0.5 + OVCX/OVTX 10.6.1 + OVE 4.9R3；2260/2360 用独立版本号 V5.1；aidc v1（2026-05）基于 AI-DC Offer Phase 2。</li>
+<li><strong>评判口径</strong>：自己写标书时标 C 必须能在公开资料里找到依据，宁可标 PC 并写清差距，也不要虚标 C 被评标澄清打回。</li>
+<li><strong>逐条必答</strong>：哪怕整节不适用也要逐行给结论，不留空格、不给横线。</li>
+</ol>
+<h2 id="a2">A2（细节速查表）</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>文档</th>
+<th>定位</th>
+<th>版本锚点</th>
+<th>来源文件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OS6360 Golden RFP</td>
+<td>接入堆叠千兆机型</td>
+<td>AOS 8.10R4</td>
+<td>sources/grfp-6360.md</td>
+</tr>
+<tr>
+<td>OS6465 Golden RFP</td>
+<td>工业加固无风扇机型（DIN 导轨/-40~75°C/MACsec）</td>
+<td>Version 8.10R4</td>
+<td>sources/grfp-6465.md</td>
+</tr>
+<tr>
+<td>OS2260 Golden RFP</td>
+<td>WebSmart 轻管理接入（V5.1，英文版）</td>
+<td>V5.1</td>
+<td>sources/grfp-2260.md</td>
+</tr>
+<tr>
+<td>OS2360 Golden RFP</td>
+<td>SME 可堆叠接入（法文版！）</td>
+<td>V5.1</td>
+<td>sources/grfp-2360.md</td>
+</tr>
+<tr>
+<td>OmniSwitch SW features</td>
+<td>12 个机型族 × 功能域需求总矩阵（97 页）</td>
+<td>AOS 8.10R4</td>
+<td>sources/grfp-sw-features.md</td>
+</tr>
+<tr>
+<td>AI-DC Golden RFP</td>
+<td>GPU 集群后端无损以太网 + 前端 EVPN-VXLAN 全套</td>
+<td>v1 (2026-05, Phase 2)</td>
+<td>sources/grfp-aidc.md</td>
+</tr>
+<tr>
+<td>Stellar WLAN Golden RFP</td>
+<td>AP Type A-Q2 共 22 类 + 管理/RF 通用需求</td>
+<td>6.0.2 (2026-08)</td>
+<td>sources/grfp-wlan.md</td>
+</tr>
+<tr>
+<td>OmniVista NMS 10.5 Golden RFP</td>
+<td>SaaS 网管平台 72 条编号需求</td>
+<td>10.5.2 (2026-01)</td>
+<td>sources/grfp-ovng.md</td>
+</tr>
+</tbody>
+</table></div>
+<p>sw-features 总表覆盖机型族（按文中出现顺序）：OS6360 / OS6465 / OS6560 / OS6570M / OS6575 / OS6860N / OS6865 / OS6870 / OS6900-V72/C32 / OS6920 / OS9900。每个机型的 Section 编号体系一致（1 Management、2 Resiliency、3 Layer 2、4 IPv4、5 IPv6、6 QoS、7 Multicast、8 Multi-technology fabric、9 Service technologies、10 Security、11 Security framework、12 Timing、15 Network performance、16 PoE、17 Metro Ethernet、18 Monitoring/Troubleshooting、19 Data Center（仅 6920）、20 SDN、21 Certifications），低阶机型没有的域直接缺席（如 6360 无 Section 8/9/17）。</p>
+<h2 id="e">E（场景案例/怎么用）</h2>
+<ul>
+<li><strong>场景一</strong>：<br>标书要求"提供全系列交换机的 PoE 能力矩阵"。做法：从 lan-access 单元拿 2260/2360/6360/6465 的 PoE budget 行，从 sw-features 各机型 Section 16 拿 Perpetual/Fast PoE 条目，合成一张带出处页码的对比表，全部标 C 并附 8.10R4 数据表链接。</li>
+<li><strong>场景二</strong>：<br>评标发现某竞品响应表里写 "see datasheet"。按 aidc Introduction 规则可直接提质疑：视同 NC。</li>
+<li><strong>场景三</strong>：<br>客户写的是 AOS 8.10R2。此时不能直接抄 8.10R4 版 Golden RFP 答 C，需先确认特性在 8.10R2 已交付，否则标 PC。</li>
+</ul>
+<h2 id="b">B(限制与坑)</h2>
+<ul>
+<li><strong>2360 是法文版</strong>（文件名 omniswitch-2360-golden-rfp-fr），"Le commutateur doit prendre en charge les éléments suivants" 就是"The switch must support the following"；搬进中文/英文标书时需自行翻译并复核数字（如逗号小数点习惯："68,4 Mpps" 即 68.4 Mpps）。个别地方保留英文（PoE perpétuel et rapide = Perpetual and Fast PoE）。</li>
+<li><strong>wlan 版本时效最强</strong>：AP 型号随 WiFi 代际快速更替（Type D AP1411 已标注 Planned phase-out in 2026；Type A 在美国不可售）。引用 AP 具体型号前先核可用性脚注。</li>
+<li><strong>ovng 明确不含 Stellar WLAN 特性</strong>（Scope 一节原文声明），也别把它的 NAC 条目当独占能力——Guest Access 另有专门 Golden RFP。</li>
+<li><strong>C/PC/NC 不是评分等级</strong>，是符合性声明；评级高低的应该是招标方自己的打分模型，别混淆。</li>
+<li>sw-features 提取文本有 OCR 断词（如 "Bloetooth"、"108bGbps"、"Pv6"），引用英文原句时先修正。</li>
+</ul>
+<p>来源：ALE Golden RFP 系列 8 份文档的 Introduction / Scope / Gold Rules 相关章节（sources/*.md 开头部分）</p></article>
+<nav class="previous-next" aria-label="知识单元翻页"><a href="/presales/golden-rfp/index.html"><span>上一单元</span><b>返回课程首页</b></a><a class="next" href="/presales/golden-rfp/skills/grfp-sw-features.html"><span>下一单元</span><b>grfp-sw-features</b></a></nav>    <footer class="content-footer">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</footer>
+  </main>
+</div>
+  <script src="/assets/js/app.js?v=4" defer></script>
+  <script src="/assets/js/search.js?v=4" defer></script>
+  <script src="/assets/js/lightbox.js?v=5" defer></script>
+</body>
+</html>

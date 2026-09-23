@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="面向售前、售后与网络工程师的 ALE 内部技术知识平台">
+  <meta name="theme-color" content="#6B489D">
+  <title>教书理解 BOOK_OVERVIEW — UPAM × Fortinet SSO 集成 · 应用笔记</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=4">
+  <link rel="stylesheet" href="/assets/css/layout.css?v=4">
+  <link rel="stylesheet" href="/assets/css/components.css?v=4">
+  <link rel="stylesheet" href="/assets/css/content.css?v=7">
+  <script src="/assets/js/auth-config.js?v=4"></script>
+  <script src="/assets/js/auth-core.js?v=4"></script>
+  <script src="/assets/js/auth-guard.js?v=4"></script>
+</head>
+<body data-page-kind="course">
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <header class="topbar" data-topbar>
+    <a class="brand" href="/index.html" aria-label="返回 ALE 技术培训门户首页">
+      <img src="/assets/ale-logo-color.png" alt="Alcatel-Lucent Enterprise">
+      <span>ALE 培训门户</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-controls="primary-nav" aria-expanded="false" data-nav-toggle>
+      <span aria-hidden="true">☰</span><span class="sr-only">打开导航</span>
+    </button>
+    <nav id="primary-nav" class="primary-nav" aria-label="主导航">
+      <a href="/index.html">首页</a>
+      <a href="/paths.html">学习路径</a>
+      <a href="/presales/index.html">售前</a>
+      <a href="/postsales/index.html">售后</a>
+      <a href="/wlan/index.html">无线</a>
+      <a href="/aos/index.html">AOS 手册</a>
+      <a href="/hardware/index.html">硬件</a>
+      <a href="/brochures/index.html">彩页</a>
+      <a href="/solutions/index.html">解决方案</a>
+      <a href="/security/index.html" aria-current="page">安全</a>
+    </nav>
+    <button id="logout-btn" class="logout-btn" type="button" hidden>退出登录</button>
+  </header>
+<div class="course-layout">
+<aside class="course-sidebar" id="course-sidebar" data-sidebar>
+  <div class="sidebar-heading">
+    <p class="eyebrow">COURSE</p>
+    <h2>UPAM × Fortinet SSO 集成 · 应用笔记</h2>
+    <p>Fortinet FortiGate SSO Application Note · 17 页 · Accounting 直发 / FortiAuthenticator 汇聚</p>
+  </div>
+<div class="search" data-search>
+  <label class="sr-only" for="course-search">搜索全站课程和知识单元</label>
+  <input id="course-search" type="search" placeholder="搜索课程编号、产品型号或技术关键词…" autocomplete="off" data-search-input>
+  <div class="search-results" role="listbox" aria-live="polite" data-search-results></div>
+</div>  <nav class="course-nav" aria-label="课程目录">
+    <a href="/security/upam-fortinet-sso/index.html">课程首页</a>
+    <a href="/security/upam-fortinet-sso/digest.html">精华长文</a>
+    <a aria-current="page" href="/security/upam-fortinet-sso/overview.html">教书理解</a>
+    <a href="/security/upam-fortinet-sso/glossary.html">术语词典</a>
+    <p class="course-nav-group">机制</p>
+      <a href="/security/upam-fortinet-sso/skills/upamfw-sso-overview.html">upamfw-sso-overview</a>
+    <p class="course-nav-group">Fortinet 集成</p>
+      <a href="/security/upam-fortinet-sso/skills/upamfw-fortinet-arch.html">upamfw-fortinet-arch</a>
+      <a href="/security/upam-fortinet-sso/skills/upamfw-fortinet-config.html">upamfw-fortinet-config</a>
+  </nav>
+</aside>  <main id="main-content" class="course-main prose">
+    <nav class="breadcrumbs" aria-label="面包屑"><a href="/index.html">培训门户</a><span>/</span><a href="/security/index.html">安全 · Security</a><span>/</span><a href="/security/upam-fortinet-sso/index.html">UPAM × Fortinet SSO 集成</a><span>/</span><span aria-current="page">教书理解 BOOK_OVERVIEW</span></nav>
+<header class="page-intro compact"><p class="eyebrow">COURSE REFERENCE</p><h1>教书理解 BOOK_OVERVIEW</h1></header>    <article class="markdown-body"><h1 id="omnivista-upam-sso">OmniVista UPAM 防火墙 SSO 集成课程书</h1>
+<h2 id="_1">定位</h2>
+<p>本书由两份 ALE 应用笔记蒸馏而成，覆盖 OmniVista UPAM 与第三方下一代防火墙的单点登录（SSO）集成：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>源文档</th>
+<th>篇幅</th>
+<th>集成对象</th>
+<th>推送机制</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OmniVista 2500 UPAM and Fortinet Single Sign-On Application Note（2021-03）</td>
+<td>17 页</td>
+<td>Fortinet FortiGate / FortiAuthenticator（FSSO/RSSO）</td>
+<td>RADIUS Accounting（UDP 1813，网络设备直发）</td>
+</tr>
+<tr>
+<td>OmniVista UPAM and Palo Alto Networks User-ID Integration Guide（2020-07）</td>
+<td>15 页</td>
+<td>Palo Alto PAN 防火墙（User-ID）</td>
+<td>Syslog（UDP 514，UPAM 发送）</td>
+</tr>
+</tbody>
+</table></div>
+<p>两份笔记共享同一套叙事骨架（零信任动因 → UPAM 简介 → AD 路线 vs BYOD/IoT 路线 → 机制 → 两侧分步配置 → 验证 → 结论），区别只在防火墙侧的身份推送通道与配置细节，适合对照学习。</p>
+<h2 id="_2">单元导航</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>单元</th>
+<th>内容</th>
+<th>主要来源与页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="/security/upam-fortinet-sso/skills/upamfw-sso-overview.html">upamfw-sso-overview</a></td>
+<td>SSO 机制总览：零信任动因、UPAM 能力、AD 路线与 BYOD/IoT 路线分界、两种推送机制对比</td>
+<td>两份笔记 p3-5</td>
+</tr>
+<tr>
+<td><a href="/security/upam-fortinet-sso/skills/upamfw-fortinet-arch.html">upamfw-fortinet-arch</a></td>
+<td>Fortinet 集成架构：RADIUS Accounting 直发、FortiAuthenticator 汇聚、interim interval、任务清单</td>
+<td>Fortinet 笔记 p4-7、p13</td>
+</tr>
+<tr>
+<td><a href="/security/upam-fortinet-sso/skills/upamfw-fortinet-config.html">upamfw-fortinet-config</a></td>
+<td>Fortinet 集成配置：OV 侧 4 步 + FortiGate 侧 7 步全菜单路径与验证命令</td>
+<td>Fortinet 笔记 p5-16</td>
+</tr>
+<tr>
+<td>upamfw-pan-arch</td>
+<td>PAN 集成架构：User-ID、syslog 字段解析、Accounting-only 过滤与 45 分钟登出局限</td>
+<td>PAN 笔记 p3-6、p12</td>
+</tr>
+<tr>
+<td>upamfw-pan-config</td>
+<td>PAN 集成配置：OV 侧 4 步 + PAN 侧 7 步全菜单路径与验证命令</td>
+<td>PAN 笔记 p6-14</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="_3">建议学习路径</h2>
+<ol>
+<li>先读 upamfw-sso-overview 建立全局图景与路线判断</li>
+<li>按目标防火墙二选一：Fortinet → arch → config；PAN → arch → config</li>
+<li>动手前通读对应 config 单元的 B（限制与坑）一节</li>
+</ol></article>
+    <footer class="content-footer">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</footer>
+  </main>
+</div>
+  <script src="/assets/js/app.js?v=4" defer></script>
+  <script src="/assets/js/search.js?v=4" defer></script>
+  <script src="/assets/js/lightbox.js?v=5" defer></script>
+</body>
+</html>

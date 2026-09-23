@@ -1,129 +1,99 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>精华长文 DIGEST — 园区网络架构 · 设计指南</title>
-<style>
-:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
-*{box-sizing:border-box}
-body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
-a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
-.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin:16px 0}
-.gallery figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px}
-.gallery img{width:100%;max-height:340px;object-fit:contain;background:#fff;border-radius:6px}
-.gallery figcaption{font-size:12.5px;color:var(--mut);text-align:center;margin-top:6px}
-/* 侧栏折叠 + 图片灯箱 */
-.tgl{position:fixed;left:0;top:45%;z-index:60;background:var(--card);border:1px solid var(--line);border-right:none;border-radius:0 8px 8px 0;color:var(--tx);padding:10px 6px;cursor:pointer;font-size:13px;line-height:1.1;writing-mode:vertical-lr}
-.tgl:hover{background:var(--acc);color:#0f172a}
-.layout.full{grid-template-columns:0 1fr}
-.layout.full aside{display:none}
-.lb{position:fixed;inset:0;background:rgba(5,10,20,.92);z-index:100;display:flex;align-items:center;justify-content:center;flex-direction:column}
-.lb img{max-width:92vw;max-height:82vh;background:#fff;border-radius:6px;transition:transform .12s}
-.lb .lbb{margin-top:10px;display:flex;gap:10px}
-.lb button{background:var(--card);border:1px solid var(--line);color:var(--tx);border-radius:8px;padding:6px 14px;cursor:pointer;font-size:14px}
-.lb button:hover{background:var(--acc);color:#0f172a}
-.search{margin:0 0 14px}
-.search input{width:100%;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--tx);font-size:13px;outline:none}
-.search input:focus{border-color:var(--acc)}
-#qres{max-height:340px;overflow-y:auto;margin-top:6px}
-#qres .qi{display:block;padding:6px 8px;border-radius:6px;font-size:12.5px;color:var(--tx);border-left:2px solid transparent}
-#qres .qi:hover{background:var(--card);text-decoration:none;border-left-color:var(--acc)}
-#qres .qi .qp{color:var(--mut);font-size:11px;display:block}
-#qres .qi b{color:var(--acc)}
-.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
-main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
-.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
-aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
-aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
-aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
-aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
-aside a:hover{background:var(--card);text-decoration:none}
-aside a.on{background:var(--card);color:var(--acc)}
-main{padding:36px 48px;max-width:1000px}
-h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
-h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
-table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
-th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
-th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
-code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
-pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
-pre code{background:none;padding:0}
-blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
-.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
-.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
-.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
-.meta{font-size:13px;color:var(--mut)}
-hr{border:none;border-top:1px solid var(--line);margin:26px 0}
-.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
-.badge.soon{background:#475569;color:#cbd5e1}
-main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
-main{padding:28px 48px 40px;max-width:1040px}
-h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
-blockquote p{margin:6px 0}
-.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
-.crumbs a{color:var(--acc)}
-.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
-.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
-.pn a:hover{border-color:var(--acc)}
-.pn .nxt{text-align:right}
-.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
-@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
-</style></head>
-<body><div class="layout"><aside><h1>园区网络架构 · 设计指南</h1>
-<div class="search"><input id="qk" type="search" placeholder="🔍 搜索全站…" autocomplete="off"><div id="qres"></div></div>
-
-<div class="sub">2 份 47 页 · 园区架构指南 + Hybrid POL 彩页（分层设计/AP 发现/漫游/NMS/POL）</div>
-<a href="index.html">🏠 课程首页</a>
-<a href="digest.html">📖 精华长文 DIGEST</a>
-
-<a href="overview.html">📘 教书理解 BOOK_OVERVIEW</a>
-<a href="glossary.html">🔤 术语词典</a>
-<a href="../../index.html">⬅️ 返回培训门户</a>
-<a href="index.html">──── Skills ────</a>
-<div class="grp">设计与运维</div>
-<a href="skills/sol-campus-lan-wlan-design.html">sol-campus-lan-wlan-design</a>
-<a href="skills/sol-campus-nms-security.html">sol-campus-nms-security</a>
-<div class="grp">POL 方案</div>
-<a href="skills/sol-campus-hybrid-pol.html">sol-campus-hybrid-pol</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../index.html">🏠 培训门户</a> › <a href="../../solutions/index.html">解决方案</a> › <a href="index.html">园区网络架构</a> › <span>精华长文 DIGEST</span></nav><h1>精华长文 DIGEST</h1><h1 id="digest-sol-campus-architecture">DIGEST — 园区架构指南（sol-campus-architecture）精华</h1>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="面向售前、售后与网络工程师的 ALE 内部技术知识平台">
+  <meta name="theme-color" content="#6B489D">
+  <title>精华长文 DIGEST — 园区网络架构 · 设计指南</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=4">
+  <link rel="stylesheet" href="/assets/css/layout.css?v=4">
+  <link rel="stylesheet" href="/assets/css/components.css?v=4">
+  <link rel="stylesheet" href="/assets/css/content.css?v=7">
+  <script src="/assets/js/auth-config.js?v=4"></script>
+  <script src="/assets/js/auth-core.js?v=4"></script>
+  <script src="/assets/js/auth-guard.js?v=4"></script>
+</head>
+<body data-page-kind="course">
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <header class="topbar" data-topbar>
+    <a class="brand" href="/index.html" aria-label="返回 ALE 技术培训门户首页">
+      <img src="/assets/ale-logo-color.png" alt="Alcatel-Lucent Enterprise">
+      <span>ALE 培训门户</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-controls="primary-nav" aria-expanded="false" data-nav-toggle>
+      <span aria-hidden="true">☰</span><span class="sr-only">打开导航</span>
+    </button>
+    <nav id="primary-nav" class="primary-nav" aria-label="主导航">
+      <a href="/index.html">首页</a>
+      <a href="/paths.html">学习路径</a>
+      <a href="/presales/index.html">售前</a>
+      <a href="/postsales/index.html">售后</a>
+      <a href="/wlan/index.html">无线</a>
+      <a href="/aos/index.html">AOS 手册</a>
+      <a href="/hardware/index.html">硬件</a>
+      <a href="/brochures/index.html">彩页</a>
+      <a href="/solutions/index.html" aria-current="page">解决方案</a>
+      <a href="/security/index.html">安全</a>
+    </nav>
+    <button id="logout-btn" class="logout-btn" type="button" hidden>退出登录</button>
+  </header>
+<div class="course-layout">
+<aside class="course-sidebar" id="course-sidebar" data-sidebar>
+  <div class="sidebar-heading">
+    <p class="eyebrow">COURSE</p>
+    <h2>园区网络架构 · 设计指南</h2>
+    <p>2 份 47 页 · 园区架构指南 + Hybrid POL 彩页（分层设计/AP 发现/漫游/NMS/POL）</p>
+  </div>
+<div class="search" data-search>
+  <label class="sr-only" for="course-search">搜索全站课程和知识单元</label>
+  <input id="course-search" type="search" placeholder="搜索课程编号、产品型号或技术关键词…" autocomplete="off" data-search-input>
+  <div class="search-results" role="listbox" aria-live="polite" data-search-results></div>
+</div>  <nav class="course-nav" aria-label="课程目录">
+    <a href="/solutions/campus-architecture/index.html">课程首页</a>
+    <a aria-current="page" href="/solutions/campus-architecture/digest.html">精华长文</a>
+    <a href="/solutions/campus-architecture/overview.html">教书理解</a>
+    <a href="/solutions/campus-architecture/glossary.html">术语词典</a>
+    <p class="course-nav-group">设计与运维</p>
+      <a href="/solutions/campus-architecture/skills/sol-campus-lan-wlan-design.html">sol-campus-lan-wlan-design</a>
+      <a href="/solutions/campus-architecture/skills/sol-campus-nms-security.html">sol-campus-nms-security</a>
+    <p class="course-nav-group">POL 方案</p>
+      <a href="/solutions/campus-architecture/skills/sol-campus-hybrid-pol.html">sol-campus-hybrid-pol</a>
+  </nav>
+</aside>  <main id="main-content" class="course-main prose">
+    <nav class="breadcrumbs" aria-label="面包屑"><a href="/index.html">培训门户</a><span>/</span><a href="/solutions/index.html">解决方案 · Solutions</a><span>/</span><a href="/solutions/campus-architecture/index.html">园区网络架构</a><span>/</span><span aria-current="page">精华长文 DIGEST</span></nav>
+<header class="page-intro compact"><p class="eyebrow">COURSE REFERENCE</p><h1>精华长文 DIGEST</h1></header>    <article class="markdown-body"><h1 id="digest-sol-campus-architecture">DIGEST — 园区架构指南（sol-campus-architecture）精华</h1>
 <ul>
 <li>本书是 ALE Mobile Campus Architecture Guide（p1-43）+ Hybrid POL 彩页（p44-47）合册（47 页）。</li>
 <li><strong>主线</strong>：<br>园区网四目标（可用/扩展/安全/性能）下，LAN 分层设计 + Stellar 无控制器 WLAN + NMS/安全 + POL 混合光园区的全栈设计参考。</li>
 </ul>
 <h2 id="_1">一、知识地图（三技能单元）</h2>
 <ol>
-<li>LAN/WLAN 设计（sol-campus-lan-wlan-design）：拓扑模型、接入构件、互联与路由选型、RF 规划、分布式控制面、AP 双域发现、漫游判定、VLAN 池与 QoS（p5-32）。<ul>
-<li>
-<ol>
-<li>NMS 与安全（sol-campus-nms-security）：OmniVista 三形态与 HA、AP onboarding、UPAM 统一接入、认证谱系、角色化策略、隔离与 wIDS/wIPS（p33-42）。</li>
-</ol>
-</li>
-<li>
-<ol>
-<li>Hybrid POL（sol-campus-hybrid-pol）：POL+以太混合架构、两档推荐架构、降本模型（p44-47）。</li>
-</ol>
-</li>
-</ul>
-</li>
+<li><strong>LAN/WLAN 设计</strong>（sol-campus-lan-wlan-design）：拓扑模型、接入构件、互联与路由选型、RF 规划、分布式控制面、AP 双域发现、漫游判定、VLAN 池与 QoS（p5-32）。</li>
+<li><strong>NMS 与安全</strong>（sol-campus-nms-security）：OmniVista 三形态与 HA、AP onboarding、UPAM 统一接入、认证谱系、角色化策略、隔离与 wIDS/wIPS（p33-42）。</li>
+<li><strong>Hybrid POL</strong>（sol-campus-hybrid-pol）：POL+以太混合架构、两档推荐架构、降本模型（p44-47）。</li>
 </ol>
 <h2 id="_2">二、三单元要点串讲</h2>
 <h3 id="1-lanwlan-wi-fi">1. LAN/WLAN：分层栈与无控制器 Wi-Fi</h3>
 <ul>
-<li>两层折叠核心适合中小网（少部件少跳数），三层模型适合大型复杂网（<span class="pg">原文p7</span> ）。</li>
-<li><strong>接入层基线</strong>：<br>VC 堆叠、VLAN 动态分配+MVRP（勿全量建 VLAN）、Trunk/LACP（<span class="pg">原文p8-9</span> ）。</li>
-<li><strong>互联选型</strong>：<br>SPB 大园区扁平 L2、EVPN 跨广域 L2+多归属、MPLS 流量工程；RIP 不推荐（<span class="pg">原文p10-12</span> ）。</li>
-<li><strong>Stellar 无控制器三面分离</strong>：<br>管理面集中 OmniVista、控制面分布（AP 间 NMP over-the-air/over-the-LAN）、数据面本地桥接优先按 ARP 动态切 L2GRE（<span class="pg">原文p15-17</span> ）。</li>
-<li><strong>AP 发现双域命令集互为镜像</strong>：<br>VLAN 域（bridge 口+defaultWLANProfile map vlan）vs 服务域（access 口+l2profile peer+defaultWLANAccessProfile map service-type spb）（<span class="pg">原文p23</span> /<span class="pg">原文p25</span> ）。</li>
-<li><strong>漫游三分支判定</strong>：<br>无上下文→新客户端；上下文+ARP 匹配→L2；VLAN 不匹配→L3 漫游 L2GRE 回家乡 AP（<span class="pg">原文p26</span> ）。</li>
-<li><strong>用户 VLAN</strong>：<br>/24+VLAN 池首选（<span class="pg">原文p28</span> ）。</li>
+<li>两层折叠核心适合中小网（少部件少跳数），三层模型适合大型复杂网（<span class="source-page">原文p7</span> ）。</li>
+<li><strong>接入层基线</strong>：<br>VC 堆叠、VLAN 动态分配+MVRP（勿全量建 VLAN）、Trunk/LACP（<span class="source-page">原文p8-9</span> ）。</li>
+<li><strong>互联选型</strong>：<br>SPB 大园区扁平 L2、EVPN 跨广域 L2+多归属、MPLS 流量工程；RIP 不推荐（<span class="source-page">原文p10-12</span> ）。</li>
+<li><strong>Stellar 无控制器三面分离</strong>：<br>管理面集中 OmniVista、控制面分布（AP 间 NMP over-the-air/over-the-LAN）、数据面本地桥接优先按 ARP 动态切 L2GRE（<span class="source-page">原文p15-17</span> ）。</li>
+<li><strong>AP 发现双域命令集互为镜像</strong>：<br>VLAN 域（bridge 口+defaultWLANProfile map vlan）vs 服务域（access 口+l2profile peer+defaultWLANAccessProfile map service-type spb）（<span class="source-page">原文p23</span> /<span class="source-page">原文p25</span> ）。</li>
+<li><strong>漫游三分支判定</strong>：<br>无上下文→新客户端；上下文+ARP 匹配→L2；VLAN 不匹配→L3 漫游 L2GRE 回家乡 AP（<span class="source-page">原文p26</span> ）。</li>
+<li><strong>用户 VLAN</strong>：<br>/24+VLAN 池首选（<span class="source-page">原文p28</span> ）。</li>
 </ul>
 <h3 id="2-nms">2. NMS 与安全：角色化全生命周期</h3>
 <ul>
-<li><strong>OmniVista 三管理模式（Express/Enterprise/Cloud）按规模递进；HA 选型</strong>：<br>L2 HA 复用 Cluster IP 零改造，L3 HA 跨子网但 sFlow/策略执行受限、Preferred Node 走 CLI（<span class="pg">原文p35-36</span> ）。</li>
-<li><strong>安全框架五段</strong>：<br>UPAM 中央认证→谱系（IoT 指纹/802.1x/访客四式/BYOD）→角色（UNP/ARP）定 VLAN+ACL+QoS→Quarantine+QMR 处置→wIDS/wIPS（干扰 AP 非威胁、流氓 AP 才遏制且默认关闭）（<span class="pg">原文p36-42</span> ）。</li>
+<li><strong>OmniVista 三管理模式（Express/Enterprise/Cloud）按规模递进；HA 选型</strong>：<br>L2 HA 复用 Cluster IP 零改造，L3 HA 跨子网但 sFlow/策略执行受限、Preferred Node 走 CLI（<span class="source-page">原文p35-36</span> ）。</li>
+<li><strong>安全框架五段</strong>：<br>UPAM 中央认证→谱系（IoT 指纹/802.1x/访客四式/BYOD）→角色（UNP/ARP）定 VLAN+ACL+QoS→Quarantine+QMR 处置→wIDS/wIPS（干扰 AP 非威胁、流氓 AP 才遏制且默认关闭）（<span class="source-page">原文p36-42</span> ）。</li>
 </ul>
 <h3 id="3-hybrid-pol">3. Hybrid POL：光承载+以太边缘</h3>
 <ul>
-<li>Nokia POL 单纤点对多点+ONT 作承载，ALE 交换机/AP 作服务边缘；省铜缆/机房/有源设备/能耗四类成本，密集部署可去汇聚层（<span class="pg">原文p45</span> ）。</li>
-<li><strong>两档选型</strong>：<br>需全层冗余/SPB/MACsec/高密 PoE→SFP ONT+OmniSwitch；基础特性→纯 ONT+Stellar AP（<span class="pg">原文p46</span> ）。</li>
+<li>Nokia POL 单纤点对多点+ONT 作承载，ALE 交换机/AP 作服务边缘；省铜缆/机房/有源设备/能耗四类成本，密集部署可去汇聚层（<span class="source-page">原文p45</span> ）。</li>
+<li><strong>两档选型</strong>：<br>需全层冗余/SPB/MACsec/高密 PoE→SFP ONT+OmniSwitch；基础特性→纯 ONT+Stellar AP（<span class="source-page">原文p46</span> ）。</li>
 </ul>
 <h2 id="_3">三、本书在知识库中的位置</h2>
 <ul>
@@ -134,4 +104,12 @@ blockquote p{margin:6px 0}
 <ul>
 <li>ale_campus-architecture-guide-en.pdf（p1-43）+ ale-hybrid-pol-solution-brochure-en.pdf（p44-47）。</li>
 <li><strong>verified.md</strong>：<br>C1-C15；X1-X22；F1-F6；P1-P66；glossary 约 80 条。</li>
-</ul><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+</ul></article>
+    <footer class="content-footer">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</footer>
+  </main>
+</div>
+  <script src="/assets/js/app.js?v=4" defer></script>
+  <script src="/assets/js/search.js?v=4" defer></script>
+  <script src="/assets/js/lightbox.js?v=5" defer></script>
+</body>
+</html>

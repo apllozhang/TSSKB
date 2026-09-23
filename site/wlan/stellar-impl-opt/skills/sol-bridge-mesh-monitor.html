@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="面向售前、售后与网络工程师的 ALE 内部技术知识平台">
+  <meta name="theme-color" content="#6B489D">
+  <title>sol-bridge-mesh-monitor — Stellar 桥接与 Multi-Mesh 实施</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=4">
+  <link rel="stylesheet" href="/assets/css/layout.css?v=4">
+  <link rel="stylesheet" href="/assets/css/components.css?v=4">
+  <link rel="stylesheet" href="/assets/css/content.css?v=7">
+  <script src="/assets/js/auth-config.js?v=4"></script>
+  <script src="/assets/js/auth-core.js?v=4"></script>
+  <script src="/assets/js/auth-guard.js?v=4"></script>
+</head>
+<body data-page-kind="course">
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <header class="topbar" data-topbar>
+    <a class="brand" href="/index.html" aria-label="返回 ALE 技术培训门户首页">
+      <img src="/assets/ale-logo-color.png" alt="Alcatel-Lucent Enterprise">
+      <span>ALE 培训门户</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-controls="primary-nav" aria-expanded="false" data-nav-toggle>
+      <span aria-hidden="true">☰</span><span class="sr-only">打开导航</span>
+    </button>
+    <nav id="primary-nav" class="primary-nav" aria-label="主导航">
+      <a href="/index.html">首页</a>
+      <a href="/paths.html">学习路径</a>
+      <a href="/presales/index.html">售前</a>
+      <a href="/postsales/index.html">售后</a>
+      <a href="/wlan/index.html" aria-current="page">无线</a>
+      <a href="/aos/index.html">AOS 手册</a>
+      <a href="/hardware/index.html">硬件</a>
+      <a href="/brochures/index.html">彩页</a>
+      <a href="/solutions/index.html">解决方案</a>
+      <a href="/security/index.html">安全</a>
+    </nav>
+    <button id="logout-btn" class="logout-btn" type="button" hidden>退出登录</button>
+  </header>
+<div class="course-layout">
+<aside class="course-sidebar" id="course-sidebar" data-sidebar>
+  <div class="sidebar-heading">
+    <p class="eyebrow">COURSE</p>
+    <h2>Stellar 桥接与 Multi-Mesh 实施</h2>
+    <p>Bridging &amp; Meshing Guidelines · 32 页 · 室外桥接 / 多点 Mesh / 家庭 Mesh / OV2500 配置 / 链路监测</p>
+  </div>
+<div class="search" data-search>
+  <label class="sr-only" for="course-search">搜索全站课程和知识单元</label>
+  <input id="course-search" type="search" placeholder="搜索课程编号、产品型号或技术关键词…" autocomplete="off" data-search-input>
+  <div class="search-results" role="listbox" aria-live="polite" data-search-results></div>
+</div>  <nav class="course-nav" aria-label="课程目录">
+    <a href="/wlan/stellar-impl-opt/index.html">课程首页</a>
+    <a href="/wlan/stellar-impl-opt/digest.html">精华长文</a>
+    <a href="/wlan/stellar-impl-opt/overview.html">教书理解</a>
+    <a href="/wlan/stellar-impl-opt/glossary.html">术语词典</a>
+    <p class="course-nav-group">架构与用例</p>
+      <a href="/wlan/stellar-impl-opt/skills/sol-bridge-mesh-overview.html">sol-bridge-mesh-overview</a>
+      <a href="/wlan/stellar-impl-opt/skills/sol-bridge-mesh-usecases.html">sol-bridge-mesh-usecases</a>
+    <p class="course-nav-group">室外设计</p>
+      <a href="/wlan/stellar-impl-opt/skills/sol-bridge-mesh-outdoor-design.html">sol-bridge-mesh-outdoor-design</a>
+    <p class="course-nav-group">配置与运维</p>
+      <a href="/wlan/stellar-impl-opt/skills/sol-bridge-mesh-config.html">sol-bridge-mesh-config</a>
+      <a aria-current="page" href="/wlan/stellar-impl-opt/skills/sol-bridge-mesh-monitor.html">sol-bridge-mesh-monitor</a>
+  </nav>
+</aside>  <main id="main-content" class="course-main prose">
+    <nav class="breadcrumbs" aria-label="面包屑"><a href="/index.html">培训门户</a><span>/</span><a href="/wlan/index.html">无线网络 · WLAN</a><span>/</span><a href="/wlan/stellar-impl-opt/index.html">Stellar 桥接与 Multi-Mesh 实施</a><span>/</span><span aria-current="page">sol-bridge-mesh-monitor</span></nav>
+<header class="skill-heading"><div><p class="eyebrow">KNOWLEDGE UNIT</p><h1>sol-bridge-mesh-monitor</h1></div><dl><div><dt>Skill ID</dt><dd>sol-bridge-mesh-monitor</dd></div></dl></header>    <article class="markdown-body"><h2 id="r">R（何时使用）</h2>
+<ul>
+<li>mesh 链路性能劣化，需要看链路质量、信号强度、SNR、协商速率</li>
+<li>核对各 AP 实际收到的 RF 配置是否与设计一致（rfprofile.conf）</li>
+<li>排查信道利用率、UNII-2 DFS 子带雷达检测告警</li>
+<li>确认 mesh SSID 接口（athXX）与所带客户端的速率/RSSI/能力</li>
+</ul>
+<h2 id="i">I（核心理念)</h2>
+<p><strong>监控主战场在 AP 的 SSH 控制台</strong>，Enterprise 模式下所有 mesh AP 的无线指标都从这里取（P27，<span class="source-page">原文p27</span> ）。前提：AP Group 预先启用 root 账户 SSH。</p>
+<p><strong>链路质量三件套</strong>：Link Quality（基于信号强度与 SNR 的链路健壮度）、Signal level、协商 Bit Rate（链路速率估计）。链路质量骤降说明前提没守住——距离超标、频率配置错、安装不当、室外 nLoS（P30，<span class="source-page">原文p30</span> ）。</p>
+<p><strong>DRM 只在 root 生效</strong>：mesh SSID 上远端客户端的动态射频管理由 root AP 统一处理，别在 mesh AP 上找 DRM 逻辑（P29，<span class="source-page">原文p29</span> ）。</p>
+<h2 id="a1">A1（决策要点）</h2>
+<ol>
+<li><strong>开启 SSH</strong>（P27，<span class="source-page">原文p27</span> ）：<code>OV2500 -&gt; Network -&gt; AP Registration -&gt; AP Group -&gt; 选 mesh AP Group -&gt; Edit</code>，SSH Login 对 root 账户启用并设密码</li>
+<li><strong>核对 RF 配置</strong>（P27-29，<span class="source-page">原文p27</span> ）：<code>cd /tmp/config &amp;&amp; more rfprofile.conf</code>；重点字段：bandSteering/bandSteeringForce5g、LoadBalance、countryCode、airtimeFairnessAt2G/5G、perBandInfo（channelWidth 2.4G=20 / 5G=80、powerSetting、channelLists 如 [100,104,108,112]、chainmask、MuMIMO、highEfficiency、beaconInterval）</li>
+<li><strong>监控信道</strong>（P29-30，<span class="source-page">原文p29</span> ）：<code>iwlist athXX channel</code> 看当前信道与可用频率；UNII-2 DFS 子带的雷达检测会直接打在 AP 控制台（如 <code>_GOLSOH_Radar found on channel 52</code>）；据此精调信道设置优化 mesh 体验</li>
+<li><strong>监控链路</strong>（P30，<span class="source-page">原文p30</span> ）：<code>iwconfig athXX</code>（mesh backhaul 接口如 athap1）看 ESSID、频率、Bit Rate、Tx-Power、Link Quality（如 50/94）、Signal level（如 -76dBm）、Noise level</li>
+<li><strong>监控 mesh SSID 接口</strong>（P31，<span class="source-page">原文p31</span> ）：<code>iwconfig</code> 全量列出接口，找出双频承载客户端 SSID 的接口（示例 ath01=2.4GHz、ath11=5GHz，ESSID "SSID storage"）</li>
+<li><strong>监控客户端</strong>（P32，<span class="source-page">原文p32</span> ）：<code>wlanconfig athXX list</code> 看关联客户端的 TX/RX 速率、RSSI（含 MIN/MAX）、SNR、工作频段、能力（HT/VHT/MU）、关联时长、电源模式</li>
+</ol>
+<h2 id="a2">A2（细节速查表）</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>任务</th>
+<th>命令/位置</th>
+<th>关键输出</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>开启 SSH</td>
+<td>OV2500 -&gt; Network -&gt; AP Registration -&gt; AP Group -&gt; Edit；SSH Login=Enabled（root 账户 + 密码）</td>
+<td>—</td>
+<td><span class="source-page">原文p27</span></td>
+</tr>
+<tr>
+<td>RF 配置核对</td>
+<td><code>cd /tmp/config; more rfprofile.conf</code></td>
+<td>bandSteering、countryCode、perBandInfo（channelWidth/channelLists/powerSetting/MuMIMO/highEfficiency）</td>
+<td><span class="source-page">原文p27-29</span></td>
+</tr>
+<tr>
+<td>信道监控</td>
+<td><code>iwlist athXX channel</code></td>
+<td>当前信道（如 Channel 104 / 5.52GHz）、可用频率列表</td>
+<td><span class="source-page">原文p30</span></td>
+</tr>
+<tr>
+<td>DFS 雷达检测</td>
+<td>AP 控制台直接显示</td>
+<td><code>Radar found on channel 52 (5260MHz)</code></td>
+<td><span class="source-page">原文p30</span></td>
+</tr>
+<tr>
+<td>链路监控</td>
+<td><code>iwconfig athap1</code>（backhaul 接口）</td>
+<td>ESSID、Bit Rate（如 780Mb/s）、Tx-Power、Link Quality=50/94、Signal=-76dBm、Noise=-95dBm</td>
+<td><span class="source-page">原文p30</span></td>
+</tr>
+<tr>
+<td>SSID 接口发现</td>
+<td><code>iwconfig</code> 全量</td>
+<td>ath01（11ng，2.4G）、ath11（11ac，5G）等</td>
+<td><span class="source-page">原文p31</span></td>
+</tr>
+<tr>
+<td>客户端监控</td>
+<td><code>wlanconfig athXX list</code></td>
+<td>ADDR/AID/CHAN/TXRATE/RXRATE/RSSI/SNR/HT-VHT-MU 能力/ASSOCTIME/电源模式</td>
+<td><span class="source-page">原文p32</span></td>
+</tr>
+<tr>
+<td>DRM 生效层级</td>
+<td>root AP 统一处理 mesh SSID 远端客户端</td>
+<td>—</td>
+<td><span class="source-page">原文p29</span></td>
+</tr>
+<tr>
+<td>链路质量口径</td>
+<td>信号强度 + SNR；Bit Rate 为速率估计</td>
+<td>质量骤降→查距离/频率/安装/nLoS</td>
+<td><span class="source-page">原文p30</span></td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="e">E（场景案例）</h2>
+<ul>
+<li><strong>书中实例链路</strong>：<br>athap1（ESSID Stellar-MESH，5.52GHz/信道 104，802.11ac，Bit Rate 780Mb/s，Link Quality 50/94，Signal -76dBm）——Link Quality 50/94 说明链路尚可但有衰减（P30，<span class="source-page">原文p30</span> ）</li>
+<li><strong>同 AP 上客户端接口对比</strong>：<br>ath11（5GHz 客户端）Link Quality 94/94、Signal -23dBm 远好于 ath01（2.4GHz）的 53/94、-75dBm，可据此引导双频终端优先走 5GHz（P31，<span class="source-page">原文p31</span> ）</li>
+<li><strong>客户端清单实例</strong>：<br>2.4GHz 客户端 72M 收发速率、RSSI 63、SNR 63、11NG_HT20 模式、无 VHT/MU 能力（P32，<span class="source-page">原文p32</span> ）</li>
+<li><strong>信道调优闭环</strong>：<br>iwlist 看各信道利用率 + 控制台 DFS 检测记录 → 调整 channelLists（P29-30，<span class="source-page">原文p29</span> ）</li>
+</ul>
+<h2 id="b">B（限制与坑）</h2>
+<ul>
+<li><strong>SSH 不预开就没法监控</strong>——必须在 mesh 专用 AP Group 里提前启用 root 账户 SSH（P27，<span class="source-page">原文p27</span> ）</li>
+<li>Link Quality 骤降基本都指向前提违规（距离、频率、安装、nLoS），先查物理层再怀疑软件（P30，<span class="source-page">原文p30</span> ）</li>
+<li>Bit Rate 是链路速率估计值，拿来对比排障可以，别当合同承诺速率（P30，<span class="source-page">原文p30</span> ）</li>
+<li>DRM 只在 root 层处理 mesh SSID 的远端客户端，mesh AP 上看不到独立的 DRM 行为（P29，<span class="source-page">原文p29</span> ）</li>
+<li><strong>mesh 接口命名要分清</strong>：<br>backhaul（athap1 类）与客户端 SSID 接口（ath01/ath11 类）监控命令相同但含义不同，看错对象会误判（P30-31，<span class="source-page">原文p30</span> ）</li>
+<li>rfprofile.conf 是 AP 实际生效配置，与 OV2500 设计值对不上时以排障视角先看这份文件（P27-29，<span class="source-page">原文p27</span> ）</li>
+</ul>
+<p>来源：OmniAccess Stellar Bridging/Multi-Point Meshing Guidelines，p27-32（Monitoring Mesh：RF 配置/链路/SSID/客户端）</p></article>
+<nav class="previous-next" aria-label="知识单元翻页"><a href="/wlan/stellar-impl-opt/skills/sol-bridge-mesh-config.html"><span>上一单元</span><b>sol-bridge-mesh-config</b></a><a class="next" href="/wlan/stellar-impl-opt/digest.html"><span>下一单元</span><b>查看课程精华</b></a></nav>    <footer class="content-footer">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</footer>
+  </main>
+</div>
+  <script src="/assets/js/app.js?v=4" defer></script>
+  <script src="/assets/js/search.js?v=4" defer></script>
+  <script src="/assets/js/lightbox.js?v=5" defer></script>
+</body>
+</html>

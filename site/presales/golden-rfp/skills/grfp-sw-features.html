@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="面向售前、售后与网络工程师的 ALE 内部技术知识平台">
+  <meta name="theme-color" content="#6B489D">
+  <title>grfp-sw-features — Golden RFP · 标准标书需求库</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=4">
+  <link rel="stylesheet" href="/assets/css/layout.css?v=4">
+  <link rel="stylesheet" href="/assets/css/components.css?v=4">
+  <link rel="stylesheet" href="/assets/css/content.css?v=7">
+  <script src="/assets/js/auth-config.js?v=4"></script>
+  <script src="/assets/js/auth-core.js?v=4"></script>
+  <script src="/assets/js/auth-guard.js?v=4"></script>
+</head>
+<body data-page-kind="course">
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <header class="topbar" data-topbar>
+    <a class="brand" href="/index.html" aria-label="返回 ALE 技术培训门户首页">
+      <img src="/assets/ale-logo-color.png" alt="Alcatel-Lucent Enterprise">
+      <span>ALE 培训门户</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-controls="primary-nav" aria-expanded="false" data-nav-toggle>
+      <span aria-hidden="true">☰</span><span class="sr-only">打开导航</span>
+    </button>
+    <nav id="primary-nav" class="primary-nav" aria-label="主导航">
+      <a href="/index.html">首页</a>
+      <a href="/paths.html">学习路径</a>
+      <a href="/presales/index.html" aria-current="page">售前</a>
+      <a href="/postsales/index.html">售后</a>
+      <a href="/wlan/index.html">无线</a>
+      <a href="/aos/index.html">AOS 手册</a>
+      <a href="/hardware/index.html">硬件</a>
+      <a href="/brochures/index.html">彩页</a>
+      <a href="/solutions/index.html">解决方案</a>
+      <a href="/security/index.html">安全</a>
+    </nav>
+    <button id="logout-btn" class="logout-btn" type="button" hidden>退出登录</button>
+  </header>
+<div class="course-layout">
+<aside class="course-sidebar" id="course-sidebar" data-sidebar>
+  <div class="sidebar-heading">
+    <p class="eyebrow">COURSE</p>
+    <h2>Golden RFP · 标准标书需求库</h2>
+    <p>7 份 Golden RFP · AOS 8.10R4 软件特性 / AI-DC / 机型 / Stellar WLAN / OmniVista 10.5（C/PC/NC 分级弹药）</p>
+  </div>
+<div class="search" data-search>
+  <label class="sr-only" for="course-search">搜索全站课程和知识单元</label>
+  <input id="course-search" type="search" placeholder="搜索课程编号、产品型号或技术关键词…" autocomplete="off" data-search-input>
+  <div class="search-results" role="listbox" aria-live="polite" data-search-results></div>
+</div>  <nav class="course-nav" aria-label="课程目录">
+    <a href="/presales/golden-rfp/index.html">课程首页</a>
+    <a href="/presales/golden-rfp/digest.html">精华长文</a>
+    <a href="/presales/golden-rfp/overview.html">教书理解</a>
+    <a href="/presales/golden-rfp/glossary.html">术语词典</a>
+    <p class="course-nav-group">使用指南</p>
+      <a href="/presales/golden-rfp/skills/grfp-guide.html">grfp-guide</a>
+    <p class="course-nav-group">需求矩阵</p>
+      <a aria-current="page" href="/presales/golden-rfp/skills/grfp-sw-features.html">grfp-sw-features</a>
+      <a href="/presales/golden-rfp/skills/grfp-aidc.html">grfp-aidc</a>
+      <a href="/presales/golden-rfp/skills/grfp-wlan.html">grfp-wlan</a>
+      <a href="/presales/golden-rfp/skills/grfp-nms.html">grfp-nms</a>
+    <p class="course-nav-group">机型对比</p>
+      <a href="/presales/golden-rfp/skills/grfp-lan-access.html">grfp-lan-access</a>
+  </nav>
+</aside>  <main id="main-content" class="course-main prose">
+    <nav class="breadcrumbs" aria-label="面包屑"><a href="/index.html">培训门户</a><span>/</span><a href="/presales/index.html">售前 · Presales</a><span>/</span><a href="/presales/golden-rfp/index.html">Golden RFP</a><span>/</span><span aria-current="page">grfp-sw-features</span></nav>
+<header class="skill-heading"><div><p class="eyebrow">KNOWLEDGE UNIT</p><h1>grfp-sw-features</h1></div><dl><div><dt>Skill ID</dt><dd>grfp-sw-features</dd></div></dl></header>    <article class="markdown-body"><h2 id="r">R（何时用）</h2>
+<ul>
+<li>标书软件功能章节需要逐条写"交换机必须支持……"式需求并给出 ALE 应答</li>
+<li>快速判断某特性在哪个机型档位有/没有（如 ERPv2 只有部分接入机型列、VXLAN 只在中高端）</li>
+<li><strong>组标书功能矩阵</strong>：<br>同一条目跨 OS6360→OS9900 抽样对比</li>
+</ul>
+<h2 id="i">I（核心理念）</h2>
+<ul>
+<li><strong>总表结构</strong>：<br>每个机型族一张"Golden RFP – OSxxxx"，内分 Section 1-21 功能域，条目格式为"编号 + ALE 特性名 + 描述 + Pass C/PC/NC"。</li>
+<li>同一 Section 在不同机型的差异本身就是选型信息——例如 Section 8（Multi-technology fabric）与 Section 9（Service technologies，SPB 全家桶）只在 6575/6865/6870/6920 等中高端出现（6360/6465 版本无此节）；Section 19 Data Center 仅出现在 OS6920。</li>
+<li>下面按域抽样，页码为 sources/grfp-sw-features.md 的 &lt;&lt;<PAGE N>&gt;&gt; 标记。</li>
+</ul>
+<h2 id="a1">A1（决策要点）</h2>
+<ul>
+<li><strong>选型时按四个档位判断需求下限</strong>：<br>接入轻量（6360/6465）、接入堆叠（6560/6570M）、汇聚全功能（6575/6860N/6865/6870，带 SPB+EVPN-VXLAN fabric）、核心数据中心（6900/6920/9900，加 DC 节）。</li>
+<li>若招标需求包含 IEEE 802.1aq SPB 或 EVPN，低阶机型直接 NC，不要硬凑。</li>
+</ul>
+<h2 id="a2">A2（细节速查表）</h2>
+<p><strong>S1 Management</strong>（P3 起，各机型均有）</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>条目</th>
+<th>要点</th>
+<th>出处</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Automatic Remote Configuration Download (RCL)</td>
+<td>大规模部署免手工逐台配置</td>
+<td>P3</td>
+</tr>
+<tr>
+<td>Dying Gasp</td>
+<td>断电经 SNMP/syslog 上报（光进铜退/远端局场景高频考点）</td>
+<td>P3</td>
+</tr>
+<tr>
+<td>Embedded Python Scripting / RESTful API (SDN 20.1)</td>
+<td>内嵌 Python；可编程 OS RESTful API</td>
+<td>P3, P8</td>
+</tr>
+<tr>
+<td>Thin Client 模式</td>
+<td>本机不保存最终配置，由 NMS 下发</td>
+<td>P3</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>S2 Resiliency / 高可靠</strong>（P3-P4）</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>条目</th>
+<th>要点</th>
+<th>出处</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Virtual chassis up to 8 nodes</td>
+<td>多虚一统一管理，节点+链路冗余无需 STP/VRRP</td>
+<td>P3</td>
+</tr>
+<tr>
+<td>VCSP 脑裂保护</td>
+<td>VC 分裂时子 VC 关闭面板端口防环路</td>
+<td>P4</td>
+</tr>
+<tr>
+<td>Remote virtual chassis</td>
+<td>最长 10km 远程堆叠</td>
+<td>P4</td>
+</tr>
+<tr>
+<td>STP(1X1/RSTP/MSTP) + LACP 802.3ad/802.1AX + LBD 非协议环检测</td>
+<td>二层基本功组合</td>
+<td>P4</td>
+</tr>
+<tr>
+<td>VRRP with tracking（IPv4）/ VRRP v3（IPv6 节）</td>
+<td>网关冗余</td>
+<td>P4</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>S3 Layer 2</strong></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>条目</th>
+<th>要点</th>
+<th>出处</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ITU-T G.8032/Y.1344 ERPv2 以太环网</td>
+<td>重点圈阅项</td>
+<td>P3</td>
+</tr>
+<tr>
+<td>MVRP 动态 VLAN 注册传播</td>
+<td>802.1Q 配套</td>
+<td>P3</td>
+</tr>
+<tr>
+<td>Port Mapping 用户口/网络口隔离</td>
+<td>类似端口隔离私网</td>
+<td>P3</td>
+</tr>
+<tr>
+<td>LLDP + MED</td>
+<td>发现相邻设备/IP 电话</td>
+<td>P3</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>S4/S5 IPv4/IPv6</strong>：DHCP relay（v4/v6）、ARP 各变体（proxy/gratuitous/filtering）、ECMP、静态路由、DHCP Snooping/RA Guard/DHCP Guard 等 IPv6 安全套件（P4）。</p>
+<p><strong>S6 QoS</strong></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>条目</th>
+<th>要点</th>
+<th>出处</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>入向分类标记：IP precedence / 802.1p / Auto QoS for IP Phone</td>
+<td>语音自动提优先级</td>
+<td>P5</td>
+</tr>
+<tr>
+<td>每端口 8 个硬件出队列，QSP 队列模板（预定义+自定义），SP/WRR 调度</td>
+<td>硬件 QoS 底座</td>
+<td>P5</td>
+</tr>
+<tr>
+<td>Condition groups + QoS policy list（多 IPv4/MAC/服务/端口/VLAN 组条件）</td>
+<td>策略颗粒度卖点</td>
+<td>P5</td>
+</tr>
+<tr>
+<td>双向限速：ingress policing / egress shaping per port</td>
+<td>带宽管理</td>
+<td>P5</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>S10 Security</strong>（P6，以 6870 版最全）</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>条目</th>
+<th>要点</th>
+<th>出处</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Signed AOS Image（RSA-2048 + SHA-256 签名校验）+ Secure Boot + Uboot/ONIE 认证</td>
+<td>供应链安全三件套</td>
+<td>P6/P64</td>
+</tr>
+<tr>
+<td>Change Password on First Access / ALE CA 签发证书</td>
+<td>合规基线</td>
+<td>P6</td>
+</tr>
+<tr>
+<td>MACsec 点对点链路加密 + "MACsec on Network Port for SPB/L2GRE/VxLAN"；IPsec L3</td>
+<td>数据面加密</td>
+<td>P64</td>
+</tr>
+<tr>
+<td>LPS（MAC 学习授权：按时限/按数量）+ Quarantine Manager 隔离用户</td>
+<td>接入面管控</td>
+<td>P6/P65</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>S11 Security framework / UNP 准入</strong></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>条目</th>
+<th>要点</th>
+<th>出处</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>UNP 网络档案：MAC/802.1X/内外部 Captive Portal 认证后动态下发 VLAN、QoS、ACL</td>
+<td>ALE 统一准入核心话术</td>
+<td>P6-P7</td>
+</tr>
+<tr>
+<td>IoT Device Profiling（DHCP fingerprinting + MAC OUI）</td>
+<td>物联网终端识别</td>
+<td>P7</td>
+</tr>
+<tr>
+<td>ARP Poisoning Protection + DoS Filtering（IPv4/IPv6）+ Storm control（广播/未知单播/组播限速，可 trap/shutdown）</td>
+<td>攻击防护组合</td>
+<td>P7/P65</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>S8/S9 Fabric 与业务技术</strong>（中高端，P63-64 为 6870 版）</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>条目</th>
+<th>要点</th>
+<th>出处</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hardware-ready: EVPN over VXLAN / MPLS / GRE / VXLAN / SPB-M 802.1aq</td>
+<td>五种 fabric 硬件就绪声明</td>
+<td>P63</td>
+</tr>
+<tr>
+<td>SPB：PBB 802.1ah、≥16 ECT、head-end/tandem 复制组播、E-LINE/E-LAN/E-Tree/L3 VPN over I-SID、ERP over SPB</td>
+<td>运营商级以太网卖点最密一节</td>
+<td>P63-64</td>
+</tr>
+<tr>
+<td>L2 GRE 隧道及聚合终结（tunnel domain ↔ VLAN domain）</td>
+<td>跨 IP 网二层打通</td>
+<td>P65</td>
+</tr>
+<tr>
+<td>17 Metro Ethernet（部分机型）：CFM/OAM 类需求</td>
+<td>城域合规</td>
+<td>对应机型节</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>S12/S15/S16/S18/S21</strong></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>条目</th>
+<th>要点</th>
+<th>出处</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Timing：NTP v4/IPv6；中高端加 PTP 1588v2 End-to-End Transparent Clock；SyncE（高端/工业口）</td>
+<td>授时分档</td>
+<td>P7/P65</td>
+</tr>
+<tr>
+<td>SAA 流量生成测性能</td>
+<td>网络健康测量</td>
+<td>P7</td>
+</tr>
+<tr>
+<td>PoE：Perpetual PoE、Fast PoE、PoE scheduling 定时供电、LLDP 802.3at功率 TLV、HPOE</td>
+<td>PoE 六连问</td>
+<td>P7</td>
+</tr>
+<tr>
+<td>Monitoring：port mirroring（本地/远程/policy-based）、sFlow、RMON、Syslog</td>
+<td>可观测性全家桶</td>
+<td>P8</td>
+</tr>
+<tr>
+<td>Certifications：Common Criteria NDcPP (EAL1) 认证（附证书链接 st_vid11404）</td>
+<td>安全认证压舱石</td>
+<td>P8</td>
+</tr>
+</tbody>
+</table></div>
+<p>核心路由（OS6900/9900）另有 OSPF/BGP/BFD/MPLS/VRF 大节，见该机型 Section 4/9（如 OS9900 从 P8131 行起）。</p>
+<h2 id="e">E（场景案例/怎么用）</h2>
+<ul>
+<li><strong>写"安全性要求"章节</strong>：<br>把 S10+S11+S21 组合成三层叙事——供应链安全（签名镜像/安全启动/CC 认证）、数据面加密（MACsec/IPsec）、接入管控（UNP/IoT 识别/Quarantine），每层引 2-3 条原文条目标 C。</li>
+<li><strong>客户对比友商问"你们环网保护和 SPB 能不能共存"</strong>：<br>直接引 "ERP Over SPB for Unicast Client / Multiple ERP ring over SPB"（P64）答 C。</li>
+<li><strong>写 PoE 章节</strong>：<br>复制 S16 六条 + lan-access 单元的 budget 数字表。</li>
+</ul>
+<h2 id="b">B（限制与坑）</h2>
+<ul>
+<li><strong>分机型可用性必须核对</strong>：上文每条都注明是哪个档位的版本；把 6870 才有的 MACsec-over-VXLAN 抄到 6360 标书就是虚假应答。通用做法：先查对应机型族那张表。</li>
+<li>Section 编号有跳号（无 S13/S14 于多数机型；S14 Industrial protocols、S17 Metro Ethernet 仅部分机型出现），抄编号前看原文。</li>
+<li>OCR 文本断行严重，条目描述要人工拼回完整句再引用英文原句。</li>
+<li>版本锁定 AOS 8.10R4；客户环境更老/更新都要重新对版。</li>
+</ul>
+<p>来源：OMNISWITCH GOLDEN RFP - 8.10R4（sources/grfp-sw-features.md，OS6360 P3-P8 / OS6870 P62-P66 为代表性引用页）</p></article>
+<nav class="previous-next" aria-label="知识单元翻页"><a href="/presales/golden-rfp/skills/grfp-guide.html"><span>上一单元</span><b>grfp-guide</b></a><a class="next" href="/presales/golden-rfp/skills/grfp-aidc.html"><span>下一单元</span><b>grfp-aidc</b></a></nav>    <footer class="content-footer">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</footer>
+  </main>
+</div>
+  <script src="/assets/js/app.js?v=4" defer></script>
+  <script src="/assets/js/search.js?v=4" defer></script>
+  <script src="/assets/js/lightbox.js?v=5" defer></script>
+</body>
+</html>

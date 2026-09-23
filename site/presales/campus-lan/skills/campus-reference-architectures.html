@@ -1,100 +1,80 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>campus-reference-architectures — DT00XPS281 · Campus LAN 售前</title>
-<style>
-:root{--bg:#0f172a;--panel:#1e293b;--card:#243447;--tx:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--line:#334155}
-*{box-sizing:border-box}
-body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);line-height:1.75}
-a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
-.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin:16px 0}
-.gallery figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px}
-.gallery img{width:100%;max-height:340px;object-fit:contain;background:#fff;border-radius:6px}
-.gallery figcaption{font-size:12.5px;color:var(--mut);text-align:center;margin-top:6px}
-/* 侧栏折叠 + 图片灯箱 */
-.tgl{position:fixed;left:0;top:45%;z-index:60;background:var(--card);border:1px solid var(--line);border-right:none;border-radius:0 8px 8px 0;color:var(--tx);padding:10px 6px;cursor:pointer;font-size:13px;line-height:1.1;writing-mode:vertical-lr}
-.tgl:hover{background:var(--acc);color:#0f172a}
-.layout.full{grid-template-columns:0 1fr}
-.layout.full aside{display:none}
-.lb{position:fixed;inset:0;background:rgba(5,10,20,.92);z-index:100;display:flex;align-items:center;justify-content:center;flex-direction:column}
-.lb img{max-width:92vw;max-height:82vh;background:#fff;border-radius:6px;transition:transform .12s}
-.lb .lbb{margin-top:10px;display:flex;gap:10px}
-.lb button{background:var(--card);border:1px solid var(--line);color:var(--tx);border-radius:8px;padding:6px 14px;cursor:pointer;font-size:14px}
-.lb button:hover{background:var(--acc);color:#0f172a}
-.search{margin:0 0 14px}
-.search input{width:100%;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--tx);font-size:13px;outline:none}
-.search input:focus{border-color:var(--acc)}
-#qres{max-height:340px;overflow-y:auto;margin-top:6px}
-#qres .qi{display:block;padding:6px 8px;border-radius:6px;font-size:12.5px;color:var(--tx);border-left:2px solid transparent}
-#qres .qi:hover{background:var(--card);text-decoration:none;border-left-color:var(--acc)}
-#qres .qi .qp{color:var(--mut);font-size:11px;display:block}
-#qres .qi b{color:var(--acc)}
-.pg{display:inline-block;font-size:11px;line-height:1;padding:2px 6px;border-radius:8px;background:rgba(56,189,248,.15);color:var(--acc);border:1px solid rgba(56,189,248,.3);vertical-align:1px;white-space:nowrap}
-main img{max-width:100%;border-radius:8px;border:1px solid var(--line);margin:8px 0;background:#fff}
-.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
-aside{background:var(--panel);padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto}
-aside h1{font-size:17px;margin:0 0 4px} aside .sub{font-size:12px;color:var(--mut);margin-bottom:18px}
-aside .grp{font-size:11px;letter-spacing:.1em;color:var(--mut);margin:16px 0 6px;text-transform:uppercase}
-aside a{display:block;padding:6px 10px;border-radius:6px;color:var(--tx);font-size:14px}
-aside a:hover{background:var(--card);text-decoration:none}
-aside a.on{background:var(--card);color:var(--acc)}
-main{padding:36px 48px;max-width:1000px}
-h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:10px}
-h2{margin-top:34px;color:var(--acc)} h3{color:var(--acc2)}
-table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
-th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
-th{background:var(--card)} tr:nth-child(even) td{background:#1b2740}
-code{background:#2b3b52;padding:1px 6px;border-radius:4px;font-size:.92em;color:#7dd3fc}
-pre{background:#0b1222;border:1px solid var(--line);padding:14px;border-radius:8px;overflow-x:auto}
-pre code{background:none;padding:0}
-blockquote{border-left:4px solid var(--acc2);background:var(--card);margin:12px 0;padding:8px 16px;border-radius:0 8px 8px 0}
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
-.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:border-color .15s}
-.card:hover{border-color:var(--acc)} .card a{font-weight:600;font-size:16px}
-.card p{font-size:13px;color:var(--mut);margin:8px 0 0}
-.meta{font-size:13px;color:var(--mut)}
-hr{border:none;border-top:1px solid var(--line);margin:26px 0}
-.badge{display:inline-block;background:var(--acc);color:#062033;font-size:12px;border-radius:20px;padding:1px 10px;font-weight:700}
-.badge.soon{background:#475569;color:#cbd5e1}
-main p,main li,main td{overflow-wrap:break-word;word-break:break-word}
-main{padding:28px 48px 40px;max-width:1040px}
-h1{font-size:26px}h2{margin-top:30px;padding-top:10px;border-top:1px solid var(--line)}h3{margin-top:22px}
-blockquote p{margin:6px 0}
-.crumbs{font-size:13px;color:var(--mut);margin:0 0 14px}
-.crumbs a{color:var(--acc)}
-.pn{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px solid var(--line)}
-.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
-.pn a:hover{border-color:var(--acc)}
-.pn .nxt{text-align:right}
-.foot{margin-top:34px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
-@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static;height:auto}main{padding:20px}}
-</style></head>
-<body><div class="layout"><aside><h1>DT00XPS281 · Campus LAN 售前</h1>
-<div class="search"><input id="qk" type="search" placeholder="🔍 搜索全站…" autocomplete="off"><div id="qres"></div></div>
-
-<div class="sub">Edition 29 · 480 页 · 园区网售前全科（特性→网管→选型→License→产品组合）</div>
-<a href="../index.html">🏠 课程首页</a>
-<a href="../digest.html">📖 精华长文 DIGEST</a>
-
-<a href="../overview.html">📘 教书理解 BOOK_OVERVIEW</a>
-<a href="../glossary.html">🔤 术语词典</a>
-<a href="../../../index.html">⬅️ 返回培训门户</a>
-<a href="../index.html">──── Skills ────</a>
-<div class="grp">设计与高可用</div>
-<a href="../skills/campus-design-tiering-and-ha.html">campus-design-tiering-and-ha</a>
-<a href="../skills/virtual-chassis-design.html">virtual-chassis-design</a>
-<a href="../skills/dhl-erp-ring-protection.html">dhl-erp-ring-protection</a>
-<div class="grp">机型与架构</div>
-<a href="../skills/omniswitch-model-selection.html">omniswitch-model-selection</a>
-<a href="../skills/campus-reference-architectures.html" class="on">campus-reference-architectures</a>
-<div class="grp">织物与自动化</div>
-<a href="../skills/spb-vxlan-core-fabric.html">spb-vxlan-core-fabric</a>
-<a href="../skills/ifab-zero-touch-automation.html">ifab-zero-touch-automation</a>
-<div class="grp">网管与商务</div>
-<a href="../skills/nms-platform-and-network-advisor.html">nms-platform-and-network-advisor</a>
-<a href="../skills/license-wwpl-pricing.html">license-wwpl-pricing</a>
-<div class="grp">安全与垂直</div>
-<a href="../skills/security-unified-access.html">security-unified-access</a>
-<a href="../skills/video-surveillance-design.html">video-surveillance-design</a><script src="/search.js"></script></aside><main><nav class="crumbs"><a href="../../../index.html">🏠 培训门户</a> › <a href="../../../presales/index.html">售前</a> › <a href="../index.html">DT00XPS281</a> › <span>园区参考架构模板库（含垂直行业案例）</span></nav><h1>园区参考架构模板库（含垂直行业案例）</h1><p class="meta"><span class="badge">SKILL</span> campus-reference-architectures · 来源页码: </p><h1 id="_1">园区参考架构模板库（含垂直行业案例）</h1>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="面向售前、售后与网络工程师的 ALE 内部技术知识平台">
+  <meta name="theme-color" content="#6B489D">
+  <title>园区参考架构模板库（含垂直行业案例） — DT00XPS281 · Campus LAN 售前</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=4">
+  <link rel="stylesheet" href="/assets/css/layout.css?v=4">
+  <link rel="stylesheet" href="/assets/css/components.css?v=4">
+  <link rel="stylesheet" href="/assets/css/content.css?v=7">
+  <script src="/assets/js/auth-config.js?v=4"></script>
+  <script src="/assets/js/auth-core.js?v=4"></script>
+  <script src="/assets/js/auth-guard.js?v=4"></script>
+</head>
+<body data-page-kind="course">
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <header class="topbar" data-topbar>
+    <a class="brand" href="/index.html" aria-label="返回 ALE 技术培训门户首页">
+      <img src="/assets/ale-logo-color.png" alt="Alcatel-Lucent Enterprise">
+      <span>ALE 培训门户</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-controls="primary-nav" aria-expanded="false" data-nav-toggle>
+      <span aria-hidden="true">☰</span><span class="sr-only">打开导航</span>
+    </button>
+    <nav id="primary-nav" class="primary-nav" aria-label="主导航">
+      <a href="/index.html">首页</a>
+      <a href="/paths.html">学习路径</a>
+      <a href="/presales/index.html" aria-current="page">售前</a>
+      <a href="/postsales/index.html">售后</a>
+      <a href="/wlan/index.html">无线</a>
+      <a href="/aos/index.html">AOS 手册</a>
+      <a href="/hardware/index.html">硬件</a>
+      <a href="/brochures/index.html">彩页</a>
+      <a href="/solutions/index.html">解决方案</a>
+      <a href="/security/index.html">安全</a>
+    </nav>
+    <button id="logout-btn" class="logout-btn" type="button" hidden>退出登录</button>
+  </header>
+<div class="course-layout">
+<aside class="course-sidebar" id="course-sidebar" data-sidebar>
+  <div class="sidebar-heading">
+    <p class="eyebrow">COURSE</p>
+    <h2>DT00XPS281 · Campus LAN 售前</h2>
+    <p>Edition 29 · 480 页 · 园区网售前全科（特性→网管→选型→License→产品组合）</p>
+  </div>
+<div class="search" data-search>
+  <label class="sr-only" for="course-search">搜索全站课程和知识单元</label>
+  <input id="course-search" type="search" placeholder="搜索课程编号、产品型号或技术关键词…" autocomplete="off" data-search-input>
+  <div class="search-results" role="listbox" aria-live="polite" data-search-results></div>
+</div>  <nav class="course-nav" aria-label="课程目录">
+    <a href="/presales/campus-lan/index.html">课程首页</a>
+    <a href="/presales/campus-lan/digest.html">精华长文</a>
+    <a href="/presales/campus-lan/overview.html">教书理解</a>
+    <a href="/presales/campus-lan/glossary.html">术语词典</a>
+    <p class="course-nav-group">设计与高可用</p>
+      <a href="/presales/campus-lan/skills/campus-design-tiering-and-ha.html">园区网分层设计法与高可用方案横比</a>
+      <a href="/presales/campus-lan/skills/virtual-chassis-design.html">虚拟机箱（VC）堆叠设计</a>
+      <a href="/presales/campus-lan/skills/dhl-erp-ring-protection.html">DHL 双归属与 ERPv2 环网保护</a>
+    <p class="course-nav-group">机型与架构</p>
+      <a href="/presales/campus-lan/skills/omniswitch-model-selection.html">OmniSwitch 机型选型决策表与容量常数库</a>
+      <a aria-current="page" href="/presales/campus-lan/skills/campus-reference-architectures.html">园区参考架构模板库（含垂直行业案例）</a>
+    <p class="course-nav-group">织物与自动化</p>
+      <a href="/presales/campus-lan/skills/spb-vxlan-core-fabric.html">SPB/VXLAN 核心织构与多租户设计</a>
+      <a href="/presales/campus-lan/skills/ifab-zero-touch-automation.html">iFab 智能织构与零接触自动化</a>
+    <p class="course-nav-group">网管与商务</p>
+      <a href="/presales/campus-lan/skills/nms-platform-and-network-advisor.html">网管平台选型与 Network Advisor AI 运维</a>
+      <a href="/presales/campus-lan/skills/license-wwpl-pricing.html">License、WWPL 与下单 BOM</a>
+    <p class="course-nav-group">安全与垂直</p>
+      <a href="/presales/campus-lan/skills/security-unified-access.html">安全与统一接入（AG/UNP/画像/MACsec/AppMon）</a>
+      <a href="/presales/campus-lan/skills/video-surveillance-design.html">视频监控网络方案（Milestone VMS + 插件）</a>
+  </nav>
+</aside>  <main id="main-content" class="course-main prose">
+    <nav class="breadcrumbs" aria-label="面包屑"><a href="/index.html">培训门户</a><span>/</span><a href="/presales/index.html">售前 · Presales</a><span>/</span><a href="/presales/campus-lan/index.html">DT00XPS281</a><span>/</span><span aria-current="page">园区参考架构模板库（含垂直行业案例）</span></nav>
+<header class="skill-heading"><div><p class="eyebrow">KNOWLEDGE UNIT</p><h1>园区参考架构模板库（含垂直行业案例）</h1></div><dl><div><dt>Skill ID</dt><dd>campus-reference-architectures</dd></div></dl></header>    <article class="markdown-body"><h1 id="_1">园区参考架构模板库（含垂直行业案例）</h1>
 <h2 id="r">R · 原文引用</h2>
 <blockquote>
 <p>"OMNISWITCH COMPACT CORE NETWORK — Network virtualized using Virtual Chassis (VC) for simplified two-layer architecture; Fully redundant and resilient; UNP for NAC security and QoS; Server farm dual home connected directly to network core with LAG" (p314)</p>
@@ -102,8 +82,8 @@ blockquote p{margin:6px 0}
 <p>"SMB solution — Short installation and set-up time with zero-touch configuration … Fully integrated and lab tested, single vendor, plug and play solution (IP Network + Wi-Fi + Voice + Mobility)" (p305)</p>
 </blockquote>
 <h2 id="i">I · 方法论骨架</h2>
-<p>四大园区模板 + 垂直案例，按判定信号选模板再改端口出 BOM：</p>
-<table>
+<h3 id="bom">四大园区模板 + 垂直案例，按判定信号选模板再改端口出 BOM</h3>
+<div class="table-scroll"><table>
 <thead>
 <tr>
 <th>模板</th>
@@ -157,19 +137,14 @@ blockquote p{margin:6px 0}
 <td>10G LAG / DHL</td>
 </tr>
 </tbody>
-</table>
-<p>垂直行业案例：城域商业管理服务（c01：10G 环 6860N 汇聚 + 6465-P28 双归 IP/MPLS，opt82/ARP 检查/802.1ad/SPB/EVPN over I-SID 特性清单）；
-住宅 Triple-Play（c02：6560/E 接入 + 组播 TV VLAN）；
-数据中心 POD（c03：6×6900 Mesh，服务器 1/10G L2、POD 间 10/40/100G L2/L3）。</p>
+</table></div>
+<p>垂直行业案例：城域商业管理服务（c01：10G 环 6860N 汇聚 + 6465-P28 双归 IP/MPLS，opt82/ARP 检查/802.1ad/SPB/EVPN over I-SID 特性清单）；住宅 Triple-Play（c02：6560/E 接入 + 组播 TV VLAN）；数据中心 POD（c03：6×6900 Mesh，服务器 1/10G L2、POD 间 10/40/100G L2/L3）。</p>
 <h2 id="a1">A1 · 书中案例</h2>
 <p>见上表括注（c01-c03、c05、c06、c08、c10-c13），全部为书中 p296-319 的官方架构页，可直接改写为方案分册章节。</p>
 <h2 id="a2-skill">A2 · 触发场景（含与相邻 skill 的区分）</h2>
 <ul>
 <li><strong>触发</strong>：<br>需求清单到手要 30 分钟出架构图与机型 BOM 框架；投标技术分册要参考架构章节。</li>
-<li><strong>区分</strong>：<br>本 skill 是成品模板库（拿来改端口就用）；</li>
-<li>先做架构分层决策与高可用选型走 <code><a href="campus-design-tiering-and-ha.html">campus-design-tiering-and-ha</a></code>；</li>
-<li>模板里用到的 VC/ERP/SPB 机制细节分别走 <code><a href="virtual-chassis-design.html">virtual-chassis-design</a></code>、<code><a href="dhl-erp-ring-protection.html">dhl-erp-ring-protection</a></code>、<code><a href="spb-vxlan-core-fabric.html">spb-vxlan-core-fabric</a></code>；</li>
-<li>视频监控垂直方案独立在 <code><a href="video-surveillance-design.html">video-surveillance-design</a></code>；</li>
+<li><strong>区分</strong>：<br>本 skill 是<strong>成品模板库</strong>（拿来改端口就用）；先做架构分层决策与高可用选型走 <code><a href="/presales/campus-lan/skills/campus-design-tiering-and-ha.html">campus-design-tiering-and-ha</a></code>；模板里用到的 VC/ERP/SPB 机制细节分别走 <code><a href="/presales/campus-lan/skills/virtual-chassis-design.html">virtual-chassis-design</a></code>、<code><a href="/presales/campus-lan/skills/dhl-erp-ring-protection.html">dhl-erp-ring-protection</a></code>、<code><a href="/presales/campus-lan/skills/spb-vxlan-core-fabric.html">spb-vxlan-core-fabric</a></code>；视频监控垂直方案独立在 <code><a href="/presales/campus-lan/skills/video-surveillance-design.html">video-surveillance-design</a></code>。</li>
 </ul>
 <h2 id="e">E · 可执行步骤</h2>
 <ol>
@@ -186,5 +161,13 @@ blockquote p{margin:6px 0}
 <li>c01/c02 城域案例涉 Metro 特性多为许可制，BOM 补许可行（见 license skill）。</li>
 <li>模板不回答"为什么选这个架构"——答辩前先过分层设计法的决策依据。</li>
 </ul>
-<hr />
-<p>来源条目: f07 · f08 · f09 · f10 · c01 · c02 · c03 · c05 · c06 · c08 · c10 · c11 · c12 · c13 · g03</p><div class="pn"><a href="omniswitch-model-selection.html">⬅ 上一单元：omniswitch-model-selection</a><a class="nxt" href="spb-vxlan-core-fabric.html">下一单元：spb-vxlan-core-fabric ➡</a></div><div class="foot">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</div></main></div></body></html>
+<hr>
+<p>来源条目: f07 · f08 · f09 · f10 · c01 · c02 · c03 · c05 · c06 · c08 · c10 · c11 · c12 · c13 · g03</p></article>
+<nav class="previous-next" aria-label="知识单元翻页"><a href="/presales/campus-lan/skills/omniswitch-model-selection.html"><span>上一单元</span><b>OmniSwitch 机型选型决策表与容量常数库</b></a><a class="next" href="/presales/campus-lan/skills/spb-vxlan-core-fabric.html"><span>下一单元</span><b>SPB/VXLAN 核心织构与多租户设计</b></a></nav>    <footer class="content-footer">仅供内部学习使用 · 教材版权归 ALE Training Services 所有</footer>
+  </main>
+</div>
+  <script src="/assets/js/app.js?v=4" defer></script>
+  <script src="/assets/js/search.js?v=4" defer></script>
+  <script src="/assets/js/lightbox.js?v=5" defer></script>
+</body>
+</html>
